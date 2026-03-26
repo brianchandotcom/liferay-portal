@@ -106,13 +106,50 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
-	public void testImportComponents() throws Exception {
-		_importFragmentsByType(FragmentConstants.TYPE_COMPONENT);
+	public void testImportEntriesWithSections() throws Exception {
+		_importFragmentsByType(FragmentConstants.TYPE_SECTION);
+	}
+
+	@Test
+	public void testImportFragmentEntries() throws Exception {
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 0, fragmentCollections.size());
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file,
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 1, fragmentCollections.size());
+
+		FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+		List<FragmentEntry> fragmentEntries =
+			_fragmentEntryLocalService.getFragmentEntries(
+				fragmentCollection.getFragmentCollectionId());
+
+		Assert.assertFalse(fragmentEntries.isEmpty());
 	}
 
 	@Test
 	@TestInfo("LPD-81251")
-	public void testImportFragmentEntryConfigurationJSONObject()
+	public void testImportFragmentEntriesConfigurationJSONObject()
 		throws Exception {
 
 		List<FragmentCollection> fragmentCollections =
@@ -171,75 +208,7 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
-	@TestInfo("LPS-151013")
-	public void testImportFragmentResourcesCreatesNewResourceWithoutPropagation()
-		throws Exception {
-
-		_testResources(2, "[resources:image (1).png]");
-	}
-
-	@Test
-	@TestInfo("LPS-151013")
-	public void testImportFragmentResourcesCreatesNoNewResourceWithPropagation()
-		throws Exception {
-
-		_configurationProvider.saveCompanyConfiguration(
-			FragmentServiceConfiguration.class, _group.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"propagateChanges", true
-			).build());
-
-		try {
-			_testResources(1, "[resources:image.png]");
-		}
-		finally {
-			_configurationProvider.saveCompanyConfiguration(
-				FragmentServiceConfiguration.class, _group.getCompanyId(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"propagateChanges", false
-				).build());
-		}
-	}
-
-	@Test
-	public void testImportFragments() throws Exception {
-		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getFragmentCollections(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			fragmentCollections.toString(), 0, fragmentCollections.size());
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		try {
-			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-
-		fragmentCollections =
-			_fragmentCollectionLocalService.getFragmentCollections(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			fragmentCollections.toString(), 1, fragmentCollections.size());
-
-		FragmentCollection fragmentCollection = fragmentCollections.get(0);
-
-		List<FragmentEntry> fragmentEntries =
-			_fragmentEntryLocalService.getFragmentEntries(
-				fragmentCollection.getFragmentCollectionId());
-
-		Assert.assertFalse(fragmentEntries.isEmpty());
-	}
-
-	@Test
-	public void testImportFragmentsSystemWide() throws Exception {
+	public void testImportFragmentEntriesSystem() throws Exception {
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(
 				CompanyConstants.SYSTEM, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -279,7 +248,9 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
-	public void testImportFragmentsWithFolderResources() throws Exception {
+	public void testImportFragmentEntriesWithFolderResources()
+		throws Exception {
+
 		File fileWithFolderResources = _generateZipFileWithFolderResources();
 
 		ServiceContextThreadLocal.pushServiceContext(
@@ -324,92 +295,7 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
-	public void testImportFragmentsWithReservedNames() throws Exception {
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		try {
-			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-
-		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getFragmentCollections(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		FragmentCollection fragmentCollection = fragmentCollections.get(0);
-
-		List<String> fragmentEntryNames = TransformUtil.transform(
-			_fragmentEntryLocalService.getFragmentEntries(
-				fragmentCollection.getFragmentCollectionId()),
-			FragmentEntry::getFragmentEntryKey);
-
-		Assert.assertTrue(fragmentEntryNames.contains("resource"));
-	}
-
-	@Test
-	public void testImportFragmentsWithThumbnailPathAndPropagation()
-		throws Exception {
-
-		_configurationProvider.saveCompanyConfiguration(
-			FragmentServiceConfiguration.class, _group.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"propagateChanges", true
-			).build());
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		try {
-			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.OVERWRITE, false);
-
-			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.fetchFragmentEntry(
-					_group.getGroupId(), "heading");
-
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					null, _user.getUserId(), _group.getGroupId(), null,
-					fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						fragmentEntry.getGroupId(), _group.getGroupId()),
-					0, 0, fragmentEntry.getCss(), fragmentEntry.getHtml(),
-					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-					StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK, 0,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
-
-			Assert.assertTrue(fragmentEntryLink.isLatestVersion());
-
-			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.OVERWRITE, false);
-
-			fragmentEntryLink =
-				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					fragmentEntryLink.getFragmentEntryLinkId());
-
-			Assert.assertTrue(fragmentEntryLink.isLatestVersion());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-
-			_configurationProvider.saveCompanyConfiguration(
-				FragmentServiceConfiguration.class, _group.getCompanyId(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"propagateChanges", false
-				).build());
-		}
-	}
-
-	@Test
-	public void testImportFragmentWithIcon() throws Exception {
+	public void testImportFragmentEntriesWithIcon() throws Exception {
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -454,7 +340,9 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
-	public void testImportFragmentWithInvalidConfiguration() throws Exception {
+	public void testImportFragmentEntriesWithInvalidConfiguration()
+		throws Exception {
+
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -490,7 +378,7 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
-	public void testImportFragmentWithInvalidHTML() throws Exception {
+	public void testImportFragmentEntriesWithInvalidHTML() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -525,7 +413,43 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
-	public void testImportFragmentWithUpdatedName() throws Exception {
+	public void testImportFragmentEntriesWithInvalidReactConfiguration()
+		throws Exception {
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			List<FragmentsImporterResultEntry>
+				filteredFragmentsImporterResultEntries = ListUtil.filter(
+					_fragmentsImporter.importFragmentEntries(
+						_user.getUserId(), _group.getGroupId(), 0, _file,
+						FragmentsImportStrategy.DO_NOT_OVERWRITE, false),
+					fragmentsImporterResultEntry -> Objects.equals(
+						fragmentsImporterResultEntry.getName(),
+						"React Fragment With Invalid Configuration"));
+
+			Assert.assertEquals(
+				filteredFragmentsImporterResultEntries.toString(), 1,
+				filteredFragmentsImporterResultEntries.size());
+
+			FragmentsImporterResultEntry fragmentsImporterResultEntry =
+				filteredFragmentsImporterResultEntries.get(0);
+
+			Assert.assertEquals(
+				FragmentsImporterResultEntry.Status.INVALID,
+				fragmentsImporterResultEntry.getStatus());
+			Assert.assertEquals(
+				FragmentsImporterResultEntry.Type.FRAGMENT,
+				fragmentsImporterResultEntry.getType());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testImportFragmentEntriesWithName() throws Exception {
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -612,7 +536,157 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
-	public void testImportInputFragmentWithTypeOptions() throws Exception {
+	public void testImportFragmentEntriesWithReservedNames() throws Exception {
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file,
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+		List<String> fragmentEntryNames = TransformUtil.transform(
+			_fragmentEntryLocalService.getFragmentEntries(
+				fragmentCollection.getFragmentCollectionId()),
+			FragmentEntry::getFragmentEntryKey);
+
+		Assert.assertTrue(fragmentEntryNames.contains("resource"));
+	}
+
+	@Test
+	@TestInfo("LPS-151013")
+	public void testImportFragmentEntriesWithResources() throws Exception {
+		_testResources(2, "[resources:image (1).png]");
+	}
+
+	@Test
+	@TestInfo("LPS-151013")
+	public void testImportFragmentEntriesWithResourcesPropagation()
+		throws Exception {
+
+		_configurationProvider.saveCompanyConfiguration(
+			FragmentServiceConfiguration.class, _group.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"propagateChanges", true
+			).build());
+
+		try {
+			_testResources(1, "[resources:image.png]");
+		}
+		finally {
+			_configurationProvider.saveCompanyConfiguration(
+				FragmentServiceConfiguration.class, _group.getCompanyId(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"propagateChanges", false
+				).build());
+		}
+	}
+
+	@Test
+	public void testImportFragmentEntriesWithThumbnail() throws Exception {
+		_configurationProvider.saveCompanyConfiguration(
+			FragmentServiceConfiguration.class, _group.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"propagateChanges", true
+			).build());
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file,
+				FragmentsImportStrategy.OVERWRITE, false);
+
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLocalService.fetchFragmentEntry(
+					_group.getGroupId(), "heading");
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					null, _user.getUserId(), _group.getGroupId(), null,
+					fragmentEntry.getExternalReferenceCode(),
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						fragmentEntry.getGroupId(), _group.getGroupId()),
+					0, 0, fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK, 0,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId()));
+
+			Assert.assertTrue(fragmentEntryLink.isLatestVersion());
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file,
+				FragmentsImportStrategy.OVERWRITE, false);
+
+			fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+			Assert.assertTrue(fragmentEntryLink.isLatestVersion());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
+			_configurationProvider.saveCompanyConfiguration(
+				FragmentServiceConfiguration.class, _group.getCompanyId(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"propagateChanges", false
+				).build());
+		}
+	}
+
+	@Test
+	public void testImportFragmentEntriesWithTypeComponent() throws Exception {
+		_importFragmentsByType(FragmentConstants.TYPE_COMPONENT);
+	}
+
+	@Test
+	@TestInfo("LPS-96113")
+	public void testImportFragmentEntriesWithValidation() throws Exception {
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				_generateZipFile(
+					_PATH_DEPENDENCIES +
+						"fragments-collection/collection-name"),
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				_generateZipFile(
+					_PATH_DEPENDENCIES + "fragments-collection/freemarker"),
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				_generateZipFile(
+					_PATH_DEPENDENCIES + "fragments-collection/widgets"),
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testImportInputFragmentEntriesWithTypeOptions()
+		throws Exception {
+
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -670,7 +744,9 @@ public class FragmentsImporterTest {
 
 	@Test
 	@TestInfo("LPS-188478")
-	public void testImportInvalidFragmentComposition() throws Exception {
+	public void testImportInvalidEntriesWithFragmentComposition()
+		throws Exception {
+
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -697,78 +773,6 @@ public class FragmentsImporterTest {
 			Assert.assertEquals(
 				FragmentsImporterResultEntry.Type.COMPOSITION,
 				fragmentsImporterResultEntry.getType());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-	}
-
-	@Test
-	public void testImportReactFragmentWithInvalidConfiguration()
-		throws Exception {
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		try {
-			List<FragmentsImporterResultEntry>
-				filteredFragmentsImporterResultEntries = ListUtil.filter(
-					_fragmentsImporter.importFragmentEntries(
-						_user.getUserId(), _group.getGroupId(), 0, _file,
-						FragmentsImportStrategy.DO_NOT_OVERWRITE, false),
-					fragmentsImporterResultEntry -> Objects.equals(
-						fragmentsImporterResultEntry.getName(),
-						"React Fragment With Invalid Configuration"));
-
-			Assert.assertEquals(
-				filteredFragmentsImporterResultEntries.toString(), 1,
-				filteredFragmentsImporterResultEntries.size());
-
-			FragmentsImporterResultEntry fragmentsImporterResultEntry =
-				filteredFragmentsImporterResultEntries.get(0);
-
-			Assert.assertEquals(
-				FragmentsImporterResultEntry.Status.INVALID,
-				fragmentsImporterResultEntry.getStatus());
-			Assert.assertEquals(
-				FragmentsImporterResultEntry.Type.FRAGMENT,
-				fragmentsImporterResultEntry.getType());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-	}
-
-	@Test
-	public void testImportSections() throws Exception {
-		_importFragmentsByType(FragmentConstants.TYPE_SECTION);
-	}
-
-	@Test
-	@TestInfo("LPS-96113")
-	public void testValidateFragments() throws Exception {
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		try {
-			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0,
-				_generateZipFile(
-					_PATH_DEPENDENCIES +
-						"fragments-collection/collection-name"),
-				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
-
-			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0,
-				_generateZipFile(
-					_PATH_DEPENDENCIES + "fragments-collection/freemarker"),
-				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
-
-			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0,
-				_generateZipFile(
-					_PATH_DEPENDENCIES + "fragments-collection/widgets"),
-				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

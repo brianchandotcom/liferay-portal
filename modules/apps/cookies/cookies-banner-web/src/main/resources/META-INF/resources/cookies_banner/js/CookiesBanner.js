@@ -48,12 +48,16 @@ export default function ({
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 	if (!editMode) {
-		if (isCookiesPreferenceHandlingConfigurationModified(modifiedDate)) {
-			removeAllCookies(
-				optionalConsentCookieTypeNames,
-				requiredConsentCookieTypeNames
-			);
-		}
+		isCookiesPreferenceHandlingConfigurationModified(modifiedDate).then(
+			(value) => {
+				if (value) {
+					removeAllCookies(
+						optionalConsentCookieTypeNames,
+						requiredConsentCookieTypeNames
+					);
+				}
+			}
+		);
 
 		const consentManager = document.getElementById(
 			'_com_liferay_my_account_web_portlet_MyAccountPortlet_cookiesBannerConfigurationForm'
@@ -302,12 +306,12 @@ function isCookieTypesAccepted(cookieTypes) {
 	return cookieTypes.every((cookieType) => checkConsent(cookieType));
 }
 
-function isCookiesPreferenceHandlingConfigurationModified(modifiedDate) {
+async function isCookiesPreferenceHandlingConfigurationModified(modifiedDate) {
 	if (modifiedDate === 0) {
 		return false;
 	}
 
-	const userConfigDateCookie = getCookie(userConfigDateCookieName);
+	const userConfigDateCookie = await getCookie(userConfigDateCookieName);
 
 	if (
 		userConfigDateCookie === undefined ||
@@ -320,15 +324,23 @@ function isCookiesPreferenceHandlingConfigurationModified(modifiedDate) {
 }
 
 function setBannerVisibility(cookieBanner, modifiedDate) {
-	if (
-		!isCookiesPreferenceHandlingConfigurationModified(modifiedDate) &&
-		getCookie(userConfigCookieName)
-	) {
-		cookieBanner.style.display = 'none';
-	}
-	else {
-		cookieBanner.style.display = 'block';
-	}
+	isCookiesPreferenceHandlingConfigurationModified(modifiedDate).then(
+		(value) => {
+			if (!value) {
+				getCookie(userConfigCookieName).then((cookie) => {
+					if (cookie) {
+						cookieBanner.style.display = 'none';
+					}
+					else {
+						cookieBanner.style.display = 'block';
+					}
+				});
+			}
+			else {
+				cookieBanner.style.display = 'block';
+			}
+		}
+	);
 }
 
 export {checkCookieConsentForTypes, openCookieConsentModal};

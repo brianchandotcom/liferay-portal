@@ -38,12 +38,15 @@ export default function ({
 
 		toggleSwitch.addEventListener('click', notifyCookiePreferenceUpdate);
 
-		if (getCookie(userConfigCookieName)) {
-			toggleSwitch.checked = getCookie(cookieKey) === 'true';
-		}
-		else {
-			toggleSwitch.checked = toggleSwitch.dataset.prechecked === 'true';
-		}
+		toggleSwitch.checked = toggleSwitch.dataset.prechecked;
+
+		getCookie(userConfigCookieName).then((cookie) => {
+			if (cookie) {
+				getCookie(cookieKey).then((cookie) => {
+					toggleSwitch.checked = cookie === 'true';
+				});
+			}
+		});
 
 		notifyCookiePreferenceUpdate();
 

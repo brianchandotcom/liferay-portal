@@ -1,0 +1,261 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LatestActivity renders the component with provided data 1`] = `
+<body>
+  <div>
+    <div
+      class="latest-activity-fds"
+    >
+      <div
+        class="fds"
+      >
+        <div
+          class="data-set-wrapper visualization-mode-table"
+          data-testid="visualization-mode-table"
+        >
+          <div
+            class="data-set data-set-inline"
+          >
+            <div
+              class="data-set-content-wrapper"
+            >
+              <input
+                name="test-namespace_id"
+                readonly=""
+                type="hidden"
+                value=""
+              />
+              <div
+                class="table-responsive"
+              >
+                <table
+                  class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped table-valign-middle table-sort"
+                  style="table-layout: fixed;"
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        class="cell-name table-head-title"
+                        data-id="string,name"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        name
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="cell-action table-head-title"
+                        data-id="string,action"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        action
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="cell-createDate table-head-title"
+                        data-id="string,createDate"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        timestamp
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="table-head-title"
+                        data-id="string,visibility"
+                        style="width: 64px;"
+                        tabindex="-1"
+                      >
+                        <span
+                          class="sr-only"
+                        >
+                          manage-columns-visibility
+                        </span>
+                        <div
+                          class="dropdown"
+                        >
+                          <button
+                            aria-haspopup="true"
+                            aria-label="manage-columns-visibility"
+                            class="dropdown-toggle btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
+                            title="manage-columns-visibility"
+                            type="button"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-caret-bottom"
+                              role="presentation"
+                            >
+                              <use
+                                href="#caret-bottom"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      data-id="string,$.0"
+                      tabindex="-1"
+                    >
+                      <td
+                        aria-colindex="1"
+                        class="cell-name"
+                        data-id="string,null:name"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        <div
+                          class="d-flex inline-item"
+                        >
+                          <span
+                            class="sticker sticker-user-icon"
+                          >
+                            <span
+                              class="sticker-overlay"
+                            >
+                              <img
+                                alt="John Doe"
+                                class="sticker-img"
+                                src="https://test.com/logo.png"
+                              />
+                            </span>
+                          </span>
+                          <p
+                            class="font-weight-semi-bold inline-item-after mb-0"
+                          >
+                            John Doe
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        aria-colindex="2"
+                        class="cell-action"
+                        data-id="string,null:action"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        created a new document
+                      </td>
+                      <td
+                        aria-colindex="3"
+                        class="cell-createDate"
+                        data-id="string,null:createDate"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        2 hours ago
+                      </td>
+                      <td
+                        aria-colindex="4"
+                        class="cell-item-actions"
+                        data-id="string,null:actions"
+                        style="width: auto;"
+                        tabindex="-1"
+                      />
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="lfr-tooltip-scope"
+  >
+    <div
+      class="fds-side-panel-nav-cover navigation-bar border-bottom is-hidden"
+      style="top: 0px;"
+    >
+      <div
+        class="container"
+      >
+        <ul
+          class="navbar-nav"
+        >
+          <li
+            class="nav-item"
+          >
+            <button
+              aria-label="back"
+              class="btn btn-unstyled nav-link"
+              title="back"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-angle-left"
+                role="presentation"
+              >
+                <use
+                  href="#angle-left"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="fds-side-panel fds-side-panel-lg is-hidden is-loading"
+      style="top: 0px;"
+    >
+      <div
+        class="tab-content"
+      >
+        <div
+          class="loader"
+        >
+          <span
+            aria-hidden="true"
+            class="loading-animation"
+          />
+        </div>
+        <div
+          class="active fade show tab-pane"
+          role="tabpanel"
+        >
+          <iframe
+            frameborder="0"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-live-announcer="true"
+    style="border: 0px; clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+  >
+    <div
+      aria-live="assertive"
+      aria-relevant="additions"
+      role="log"
+    />
+    <div
+      aria-live="polite"
+      aria-relevant="additions"
+      role="log"
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    id="clay-id-1"
+    style="display: none;"
+  >
+    sortable-column
+  </div>
+</body>
+`;

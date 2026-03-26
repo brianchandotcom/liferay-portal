@@ -9,6 +9,8 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -24,7 +26,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -153,65 +154,96 @@ public class ViewCategoriesDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws PortalException {
 
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				HttpComponentsUtil.addParameters(
-					_portal.getLayoutFullURL(
-						_layoutLocalService.getLayoutByFriendlyURL(
-							_themeDisplay.getScopeGroupId(), false,
-							"/categorization/edit-category"),
-						_themeDisplay),
-					"categoryId", "{id}", "parentCategoryId", getCategoryId(),
-					"vocabularyId", "{taxonomyVocabularyId}"),
-				"pencil", "edit", _language.get(_httpServletRequest, "edit"),
-				"get", "update", null),
-			new FDSActionDropdownItem(
-				HttpComponentsUtil.addParameters(
-					_portal.getLayoutFullURL(
-						_layoutLocalService.getLayoutByFriendlyURL(
-							_themeDisplay.getScopeGroupId(), false,
-							"/categorization/edit-category"),
-						_themeDisplay),
-					"parentCategoryId", "{id}", "vocabularyId",
-					"{taxonomyVocabularyId}"),
-				null, "add-subcategory",
-				_language.get(_httpServletRequest, "add-subcategory"), "get",
-				"update", null),
-			new FDSActionDropdownItem(
-				HttpComponentsUtil.addParameters(
-					PortalUtil.getLayoutFullURL(
-						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-							_themeDisplay.getScopeGroupId(), false,
-							"/categorization/view-categories"),
-						_themeDisplay),
-					"categoryId", "{id}", "vocabularyId",
-					"{taxonomyVocabularyId}"),
-				null, "view-categories",
-				_language.get(_httpServletRequest, "view-subcategories"), "get",
-				null, null),
-			new FDSActionDropdownItem(
-				HttpComponentsUtil.addParameter(
-					PortalUtil.getLayoutFullURL(
-						_layoutLocalService.getLayoutByFriendlyURL(
-							_themeDisplay.getScopeGroupId(), false,
-							"/categorization/view-category-usages"),
-						_themeDisplay),
-					"categoryId", "{id}"),
-				null, "view-category-usages",
-				_language.get(_httpServletRequest, "view-usages"), "get", null,
-				null),
-			new FDSActionDropdownItem(
-				null, "move-folder", "move",
-				_language.get(_httpServletRequest, "move"), "get", "update",
-				null),
-			new FDSActionDropdownItem(
-				_getEditPermissionsURL(), "password-policies", "permissions",
-				_language.get(_httpServletRequest, "permissions"), "get", null,
-				"modal-permissions"),
-			new FDSActionDropdownItem(
-				null, "trash", "delete",
-				_language.get(_httpServletRequest, "delete"), null, "delete",
-				null));
+		return FDSActionDropdownItemList.of(
+			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+				FDSActionDropdownItemList.of(
+					new FDSActionDropdownItem(
+						HttpComponentsUtil.addParameters(
+							_portal.getLayoutFullURL(
+								_layoutLocalService.getLayoutByFriendlyURL(
+									_themeDisplay.getScopeGroupId(), false,
+									"/categorization/edit-category"),
+								_themeDisplay),
+							"categoryId", "{id}", "parentCategoryId",
+							getCategoryId(), "vocabularyId",
+							"{taxonomyVocabularyId}"),
+						"pencil", "edit",
+						_language.get(_httpServletRequest, "edit"), "get",
+						"update", null),
+					new FDSActionDropdownItem(
+						HttpComponentsUtil.addParameters(
+							_portal.getLayoutFullURL(
+								_layoutLocalService.getLayoutByFriendlyURL(
+									_themeDisplay.getScopeGroupId(), false,
+									"/categorization/edit-category"),
+								_themeDisplay),
+							"parentCategoryId", "{id}", "vocabularyId",
+							"{taxonomyVocabularyId}"),
+						null, "add-subcategory",
+						_language.get(_httpServletRequest, "add-subcategory"),
+						"get", "update", null),
+					new FDSActionDropdownItem(
+						HttpComponentsUtil.addParameters(
+							PortalUtil.getLayoutFullURL(
+								LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+									_themeDisplay.getScopeGroupId(), false,
+									"/categorization/view-categories"),
+								_themeDisplay),
+							"categoryId", "{id}", "vocabularyId",
+							"{taxonomyVocabularyId}"),
+						null, "view-categories",
+						_language.get(
+							_httpServletRequest, "view-subcategories"),
+						"get", null, null),
+					new FDSActionDropdownItem(
+						HttpComponentsUtil.addParameter(
+							PortalUtil.getLayoutFullURL(
+								_layoutLocalService.getLayoutByFriendlyURL(
+									_themeDisplay.getScopeGroupId(), false,
+									"/categorization/view-category-usages"),
+								_themeDisplay),
+							"categoryId", "{id}"),
+						null, "view-category-usages",
+						_language.get(_httpServletRequest, "view-usages"),
+						"get", null, null))
+			).setSeparator(
+				true
+			).setType(
+				"group"
+			).build(
+				"add-view"
+			),
+			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+				FDSActionDropdownItemList.of(
+					new FDSActionDropdownItem(
+						null, "move-folder", "move",
+						_language.get(_httpServletRequest, "move"), "get",
+						"update", null),
+					new FDSActionDropdownItem(
+						_getEditPermissionsURL(), "password-policies",
+						"permissions",
+						_language.get(_httpServletRequest, "permissions"),
+						"get", null, "modal-permissions"))
+			).setSeparator(
+				true
+			).setType(
+				"group"
+			).build(
+				"permissions"
+			),
+			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+				FDSActionDropdownItemList.of(
+					new FDSActionDropdownItem(
+						null, "trash", "delete",
+						_language.get(_httpServletRequest, "delete"), null,
+						"delete", null))
+			).setSeparator(
+				true
+			).setType(
+				"group"
+			).build(
+				"delete"
+			));
 	}
 
 	public long getVocabularyId() {

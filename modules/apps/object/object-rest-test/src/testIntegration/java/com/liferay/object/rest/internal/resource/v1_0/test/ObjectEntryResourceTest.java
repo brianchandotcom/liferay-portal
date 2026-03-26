@@ -10295,6 +10295,95 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-80355")
+	public void testPostCustomObjectEntryWithLocalizedAttachmentObjectFieldAndNotLocalizedValue()
+		throws Exception {
+
+		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				objectDefinitionName,
+				Collections.singletonList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("localizedAttachment")
+					).localized(
+						true
+					).name(
+						"localizedAttachment"
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS
+							).value(
+								"txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE
+							).value(
+								ObjectFieldSettingConstants.
+									VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								"100"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_SHOW_FILES_IN_LIBRARY
+							).value(
+								StringPool.TRUE
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_STORAGE_DL_FOLDER_PATH
+							).value(
+								StringPool.SLASH + objectDefinitionName
+							).build())
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				TestPropsValues.getUserId());
+
+		byte[] fileContent = DLTestUtil.randomTextFileBytes();
+
+		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry = _toFileEntry(
+			Base64::encode, fileContent, RandomTestUtil.randomString() + ".txt",
+			null, null, ContentTypes.TEXT_PLAIN);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"localizedAttachment",
+				JSONFactoryUtil.createJSONObject(fileEntry.toString())
+			).toString(),
+			objectDefinition.getRESTContextPath() +
+				"?nestedFields=localizedAttachment.fileBase64",
+			Http.Method.POST);
+
+		JSONObject localizedAttachmentI18nJSONObject = jsonObject.getJSONObject(
+			"localizedAttachment_i18n");
+
+		Assert.assertNotNull(localizedAttachmentI18nJSONObject);
+
+		JSONObject defaultLanguageJSONObject =
+			localizedAttachmentI18nJSONObject.getJSONObject("en_US");
+
+		Assert.assertNotNull(defaultLanguageJSONObject);
+		Assert.assertEquals(
+			Base64.encode(fileContent),
+			defaultLanguageJSONObject.getString("fileBase64"));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
 	public void testPostCustomObjectEntryWithManyToOneRelationshipPriorities()
 		throws Exception {
 

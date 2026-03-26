@@ -180,15 +180,13 @@ public class TestScriptGenerator {
 
 		sb.append("}\n\n");
 		sb.append("function _execute_command {\n");
-		sb.append("\tlocal command_exit_code=\"\"\n\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo \"Running: ${1}\"\n");
 		sb.append("\techo \"\"\n\n");
 		sb.append("\t(\n");
 		sb.append("\t\teval \"${1}\"\n");
 		sb.append("\t)\n\n");
-		sb.append("\tcommand_exit_code=${?}\n\n");
-		sb.append("\treturn ${command_exit_code}\n");
+		sb.append("\treturn ${?}\n");
 		sb.append("}\n\n");
 		sb.append("function _execute_commands {\n");
 		sb.append("\tlocal exit_code=0\n");

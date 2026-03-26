@@ -59,8 +59,8 @@ public class SharingEntryObjectEntryLocalServiceWrapper
 			return objectEntry;
 		}
 
-		Indexer<Object> indexer = _indexerRegistry.getIndexer(
-			className.getValue());
+		Indexer<SharingEntry> indexer = _indexerRegistry.getIndexer(
+			SharingEntry.class.getName());
 
 		if (indexer == null) {
 			return objectEntry;

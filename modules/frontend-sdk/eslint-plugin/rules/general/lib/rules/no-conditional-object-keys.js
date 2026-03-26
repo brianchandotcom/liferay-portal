@@ -61,8 +61,7 @@ module.exports = {
 			category: 'Best Practices',
 			description: 'Object.keys({}) always evaluates truthy',
 			recommended: false,
-			url:
-				'https://github.com/liferay/liferay-frontend-projects/issues/10',
+			url: 'https://github.com/liferay/liferay-frontend-projects/issues/10',
 		},
 		fixable: 'code',
 		schema: [],

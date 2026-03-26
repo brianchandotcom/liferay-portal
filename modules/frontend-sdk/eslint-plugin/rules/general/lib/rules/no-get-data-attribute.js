@@ -47,9 +47,8 @@ module.exports = {
 							else if (
 								node.callee.object.type === 'MemberExpression'
 							) {
-								const memberExpressionString = sourceCode.getText(
-									node.callee.object
-								);
+								const memberExpressionString =
+									sourceCode.getText(node.callee.object);
 
 								return fixer.replaceText(
 									node,
@@ -70,8 +69,7 @@ module.exports = {
 			category: 'Best Practices',
 			description: 'use dataset instead of getAttribute("data-*")',
 			recommended: false,
-			url:
-				'https://github.com/liferay/liferay-frontend-projects/issues/311',
+			url: 'https://github.com/liferay/liferay-frontend-projects/issues/311',
 		},
 		fixable: 'code',
 		schema: [],

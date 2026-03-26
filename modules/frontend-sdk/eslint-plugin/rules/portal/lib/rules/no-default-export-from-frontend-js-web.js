@@ -33,8 +33,7 @@ module.exports = {
 			category: 'Best Practices',
 			description: DESCRIPTION,
 			recommended: false,
-			url:
-				'https://github.com/liferay/liferay-frontend-projects/issues/918',
+			url: 'https://github.com/liferay/liferay-frontend-projects/issues/918',
 		},
 		fixable: null,
 		schema: [],

@@ -41,6 +41,7 @@ import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import createSiteTemplate from '../../layout-set-prototype-web/main/utils/createSiteTemplate';
+import {cmsPagesTest} from '../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
 import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
 import {
 	getFDSDateTimeFormat,
@@ -83,6 +84,7 @@ const assigneeTest = test;
 
 const cmsTest = mergeTests(
 	test,
+	cmsPagesTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: false},
 		'LPD-17564': {enabled: true},
@@ -566,6 +568,145 @@ cmsTest.describe('Manage attachment ObjectField storage locations', () => {
 			await expect(
 				viewObjectEntriesPage.page.getByText('astronaut.png')
 			).toBeVisible();
+		}
+	);
+
+	cmsTest(
+		'creates nested CMS folders when attachment storage path contains subfolders',
+		{tag: '@LPD-80971'},
+		async ({apiHelpers, page, spaceSummaryPage, viewObjectEntriesPage}) => {
+			const childFolderName = `Child${getRandomString()}`;
+			const parentFolderName = `Parent${getRandomString()}`;
+			const spaceName = getRandomString();
+
+			const space =
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: generateObjectFields({
+						objectFieldBusinessTypes: [
+							{
+								businessType: 'Attachment',
+								name: 'userComputerToCMSBasicDocument',
+								objectFieldSettings: [
+									{
+										name: 'acceptedFileExtensions',
+										value: 'jpeg, jpg, pdf, png, txt',
+									},
+									{
+										name: 'maximumFileSize',
+										value: 0,
+									},
+									{
+										name: 'fileSource',
+										value: 'userComputerToCMSBasicDocument',
+									},
+									{
+										name: 'showFilesInLibrary',
+										value: true,
+									},
+									{
+										name: 'storageDLFolderPath',
+										value: `/${parentFolderName}/${childFolderName}`,
+									},
+									{
+										name: 'storageDepotGroup',
+										value: space.externalReferenceCode,
+									},
+								],
+							},
+						],
+					}),
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await test.step('Create object entry uploading a file from user computer', async () => {
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+
+				await viewObjectEntriesPage.selectFileFromUserComputer(
+					__dirname,
+					'astronaut.png'
+				);
+
+				await page
+					.getByRole('button', {name: 'astronaut.png'})
+					.waitFor({state: 'visible'});
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await waitForAlert(page);
+			});
+
+			await test.step('Verify nested folders were created in CMS Files', async () => {
+				await spaceSummaryPage.goto(space.name);
+
+				const filesSection = page.locator('div').filter({
+					has: page.getByText('View All Files', {exact: true}),
+				});
+
+				const folderCard = filesSection.locator('.card').first();
+
+				await expect(folderCard).toBeVisible();
+
+				await folderCard.getByRole('button').click();
+
+				await Promise.all([
+					page.waitForURL(/\/web\/cms\/e\/view-folder\//),
+					page
+						.getByRole('menuitem', {
+							exact: true,
+							name: 'View Folder',
+						})
+						.click(),
+				]);
+
+				await expect(
+					page.getByText(`${parentFolderName}/${childFolderName}`, {
+						exact: true,
+					})
+				).toHaveCount(0);
+
+				const childFolderCard = page.locator('.card').first();
+
+				await expect(childFolderCard).toBeVisible();
+
+				const currentURL = page.url();
+
+				await childFolderCard.getByRole('button').click();
+
+				await Promise.all([
+					page.waitForURL(
+						(url) =>
+							/\/web\/cms\/e\/view-folder\//.test(
+								url.toString()
+							) && url.toString() !== currentURL
+					),
+					page
+						.getByRole('menuitem', {
+							exact: true,
+							name: 'View Folder',
+						})
+						.click(),
+				]);
+
+				await expect(
+					page.getByText('astronaut.png', {exact: false}).first()
+				).toBeVisible();
+			});
 		}
 	);
 

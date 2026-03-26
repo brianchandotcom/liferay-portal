@@ -24,11 +24,59 @@ import {
 	fetch,
 	navigate as navigateUtil,
 } from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import ExperienceDropdown from '../components/ExperienceDropdown';
+import ShadowDomContainer from '../components/ShadowDomContainer';
 import {WorkflowStatusLabel} from '../components/WorkflowStatusLabel';
 import ChangeTrackingWorkflowView from './ChangeTrackingWorkflowView';
+
+const DIFF_HTML_STYLES = `
+.taglib-diff-html div.diff-removed-image {
+	background: #fdc6c6;
+	height: 300px;
+	margin: 2px;
+	opacity: 0.55;
+	position: absolute;
+	width: 200px;
+}
+
+.taglib-diff-html div.diff-added-image {
+	background: #cfc;
+	height: 300px;
+	margin: 2px;
+	opacity: 0.55;
+	position: absolute;
+	width: 200px;
+}
+
+.taglib-diff-html span.diff-html-added {
+	background-color: #cfc;
+	font-size: 1em;
+}
+
+.taglib-diff-html span.diff-html-added img {
+	border: 2px solid #cfc;
+}
+
+.taglib-diff-html span.diff-html-changed {
+	border-bottom: 1px dotted #009;
+}
+
+.taglib-diff-html span.diff-html-changed img {
+	border: 2px dotted #009;
+}
+
+.taglib-diff-html span.diff-html-removed {
+	background-color: #fdc6c6;
+	font-size: 1em;
+	text-decoration: line-through;
+}
+
+.taglib-diff-html span.diff-html-removed img {
+	border: 2px solid #fdc6c6;
+}
+`;
 
 const LocalizationDropdown = ({
 	currentLocale,
@@ -175,6 +223,15 @@ export default function ChangeTrackingRenderView({
 		renderData: null,
 		view: VIEW_UNIFIED,
 	});
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+	useEffect(() => {
+		const handleResize = () => setWindowWidth(window.innerWidth);
+
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
 	useEffect(() => {
 		setLoading(true);
@@ -346,6 +403,16 @@ export default function ChangeTrackingRenderView({
 		return Liferay.Language.get('unified-view');
 	};
 
+	const getPreviewZoom = useCallback(() => {
+		if (state.view === VIEW_SPLIT) {
+			return Math.min(1, (windowWidth / 2 - 48) / 1280);
+		}
+
+		return Math.min(1, (windowWidth - 96) / 1280);
+	}, [state.view, windowWidth]);
+
+	const previewZoom = getPreviewZoom();
+
 	const renderPreviewLeft = () => {
 		if (
 			state.contentType === CONTENT_TYPE_RENDER &&
@@ -393,10 +460,10 @@ export default function ChangeTrackingRenderView({
 		) {
 			if (state.renderData.leftPreview) {
 				return (
-					<div
-						dangerouslySetInnerHTML={{
-							__html: state.renderData.leftPreview,
-						}}
+					<ShadowDomContainer
+						html={state.renderData.leftPreview}
+						previewStyles={state.renderData.leftPreviewStyles}
+						zoom={previewZoom}
 					/>
 				);
 			}
@@ -416,12 +483,14 @@ export default function ChangeTrackingRenderView({
 		) {
 			if (state.renderData.leftLocalizedPreview[currentLocale.label]) {
 				return (
-					<div
-						dangerouslySetInnerHTML={{
-							__html: state.renderData.leftLocalizedPreview[
+					<ShadowDomContainer
+						html={
+							state.renderData.leftLocalizedPreview[
 								currentLocale.label
-							],
-						}}
+							]
+						}
+						previewStyles={state.renderData.leftPreviewStyles}
+						zoom={previewZoom}
 					/>
 				);
 			}
@@ -512,10 +581,10 @@ export default function ChangeTrackingRenderView({
 		) {
 			if (state.renderData.rightPreview) {
 				return (
-					<div
-						dangerouslySetInnerHTML={{
-							__html: state.renderData.rightPreview,
-						}}
+					<ShadowDomContainer
+						html={state.renderData.rightPreview}
+						previewStyles={state.renderData.rightPreviewStyles}
+						zoom={previewZoom}
 					/>
 				);
 			}
@@ -535,12 +604,14 @@ export default function ChangeTrackingRenderView({
 		) {
 			if (state.renderData.rightLocalizedPreview[currentLocale.label]) {
 				return (
-					<div
-						dangerouslySetInnerHTML={{
-							__html: state.renderData.rightLocalizedPreview[
+					<ShadowDomContainer
+						html={
+							state.renderData.rightLocalizedPreview[
 								currentLocale.label
-							],
-						}}
+							]
+						}
+						previewStyles={state.renderData.rightPreviewStyles}
+						zoom={previewZoom}
 					/>
 				);
 			}
@@ -618,13 +689,13 @@ export default function ChangeTrackingRenderView({
 		) {
 			if (state.renderData.unifiedPreview) {
 				return (
-					<div className="taglib-diff-html">
-						<div
-							dangerouslySetInnerHTML={{
-								__html: state.renderData.unifiedPreview,
-							}}
-						/>
-					</div>
+					<ShadowDomContainer
+						className="taglib-diff-html"
+						html={state.renderData.unifiedPreview}
+						previewStyles={state.renderData.rightPreviewStyles}
+						styles={DIFF_HTML_STYLES}
+						zoom={previewZoom}
+					/>
 				);
 			}
 
@@ -643,16 +714,17 @@ export default function ChangeTrackingRenderView({
 		) {
 			if (state.renderData.unifiedLocalizedPreview[currentLocale.label]) {
 				return (
-					<div className="taglib-diff-html">
-						<div
-							dangerouslySetInnerHTML={{
-								__html: state.renderData
-									.unifiedLocalizedPreview[
-									currentLocale.label
-								],
-							}}
-						/>
-					</div>
+					<ShadowDomContainer
+						className="taglib-diff-html"
+						html={
+							state.renderData.unifiedLocalizedPreview[
+								currentLocale.label
+							]
+						}
+						previewStyles={state.renderData.rightPreviewStyles}
+						styles={DIFF_HTML_STYLES}
+						zoom={previewZoom}
+					/>
 				);
 			}
 

@@ -290,12 +290,18 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 						path=var.infrastructure_provider_helm_chart_config.path
 					}
 				),
-				{
-					chart=var.infrastructure_provider_helm_chart_config.chart_name
-					kustomize={}
-					repoURL=var.infrastructure_provider_helm_chart_config.chart_url
-					targetRevision=var.infrastructure_provider_helm_chart_version
-				},
+				merge(
+					{
+						kustomize={}
+						repoURL=var.infrastructure_provider_helm_chart_config.chart_url
+						targetRevision=var.infrastructure_provider_helm_chart_version
+					},
+					var.infrastructure_provider_helm_chart_config.path == null ? {
+						chart=var.infrastructure_provider_helm_chart_config.chart_name
+					} : {
+						path=var.infrastructure_provider_helm_chart_config.path
+					},
+				),
 				{
 					ref="values"
 					repoURL=local.infrastructure_git_repo_url

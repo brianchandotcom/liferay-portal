@@ -47,6 +47,13 @@ export function declineAllCookies(
 	});
 }
 
+function deleteStoredCookie(name) {
+	fetch(`/o/cookies/v1.0/cookies-consent-preferences/by-name/${name}`, {
+		headers: HEADERS,
+		method: 'DELETE',
+	});
+}
+
 async function fetchStoredCookie(name) {
 	fetch(`/o/cookies/v1.0/cookies-consent-preferences/by-name/${name}`, {
 		headers: HEADERS,
@@ -71,6 +78,8 @@ async function fetchStoredCookie(name) {
 				return getCookieUtil(name, COOKIE_TYPES.NECESSARY);
 			}
 			else {
+				deleteStoredCookie(name);
+
 				return undefined;
 			}
 		});

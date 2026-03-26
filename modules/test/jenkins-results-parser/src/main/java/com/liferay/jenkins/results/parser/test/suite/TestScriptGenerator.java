@@ -181,7 +181,7 @@ public class TestScriptGenerator {
 		sb.append("}\n\n");
 		sb.append("function _execute_commands {\n");
 		sb.append("\tlocal exit_code=0\n");
-		sb.append("\tlocal results_output=\"Results:\\n\\n\"\n\n");
+		sb.append("\tlocal results_output=\"\\nResults:\\n\\n\"\n\n");
 		sb.append("\tfor command in \"${@}\"\n");
 		sb.append("\tdo\n");
 		sb.append("\t\tif [ \"${exit_code}\" -ne 0 ]\n");
@@ -208,7 +208,6 @@ public class TestScriptGenerator {
 		sb.append("$(((SECONDS - command_start_time) % 60 ))s] ");
 		sb.append("${command}\\n\"\n");
 		sb.append("\tdone\n\n");
-		sb.append("\techo \"\"\n");
 		sb.append("\techo -e \"${results_output}\"\n\n");
 		sb.append("\texit ${exit_code}\n");
 		sb.append("}\n\n");

@@ -12,12 +12,10 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -95,18 +93,6 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 				String.valueOf(objectDefinition.getCompanyId()),
 				role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 
-			Portlet portlet = _portletLocalService.fetchPortletById(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getPortletId());
-
-			if (portlet != null) {
-				_resourcePermissionLocalService.addResourcePermission(
-					objectDefinition.getCompanyId(), portlet.getRootPortletId(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(objectDefinition.getCompanyId()),
-					role.getRoleId(), ActionKeys.VIEW);
-			}
-
 			_resourcePermissionLocalService.setResourcePermissions(
 				objectDefinition.getCompanyId(),
 				objectDefinition.getClassName(),
@@ -132,9 +118,6 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CMSPermissionsObjectDefinitionLocalServiceWrapper.class);
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

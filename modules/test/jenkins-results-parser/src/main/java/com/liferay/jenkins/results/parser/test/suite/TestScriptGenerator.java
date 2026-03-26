@@ -201,14 +201,14 @@ public class TestScriptGenerator {
 		sb.append("\t\tif [ \"${exit_code}\" -ne 0 ]\n");
 		sb.append("\t\tthen\n");
 		sb.append("\t\t\tfailed_command=\"${command}\"\n");
-		sb.append("\t\t\tresults_output+=\"[FAILED in $(_format_duration ");
-		sb.append("$((${SECONDS} - ${command_start_time})))] ");
-		sb.append("${command}\\n\"\n");
+		sb.append("\t\t\tresults_output+=\"[FAILED \"\n");
 		sb.append("\t\telse\n");
-		sb.append("\t\t\tresults_output+=\"[SUCCESS in $(_format_duration ");
-		sb.append("$((${SECONDS} - ${command_start_time})))] ");
+		sb.append("\t\t\tresults_output+=\"[SUCCESS \"\n");
+		sb.append("\t\tfi\n\n");
+		sb.append("\t\tresults_output+=\"in ");
+		sb.append("$(((SECONDS - command_start_time) / 60 ))m ");
+		sb.append("$(((SECONDS - command_start_time) % 60 ))s] ");
 		sb.append("${command}\\n\"\n");
-		sb.append("\t\tfi\n");
 		sb.append("\tdone\n\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo -e \"${results_output}\"\n\n");
@@ -218,14 +218,6 @@ public class TestScriptGenerator {
 		sb.append("\\\"${failed_command}\\\"\"\n");
 		sb.append("\tfi\n\n");
 		sb.append("\texit ${exit_code}\n");
-		sb.append("}\n\n");
-		sb.append("function _format_duration {\n");
-		sb.append("\tif [ \"$((${1} / 60))\" -gt 0 ]\n");
-		sb.append("\tthen\n");
-		sb.append("\t\techo \"$((${1} / 60))m $((${1} % 60))s\"\n");
-		sb.append("\telse\n");
-		sb.append("\t\techo \"$((${1} % 60))s\"\n");
-		sb.append("\tfi\n");
 		sb.append("}\n\n");
 		sb.append("main");
 

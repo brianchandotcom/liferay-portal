@@ -4,7 +4,7 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
-import {CopyFragmentModal} from '@liferay/layout-js-components-web';
+import {FragmentSetModal} from '@liferay/layout-js-components-web';
 import {
 	openConfirmModal,
 	openSelectionModal,
@@ -39,7 +39,7 @@ const ACTIONS = {
 		fragmentCollections
 	) {
 		render(
-			CopyFragmentModal,
+			FragmentSetModal,
 			{
 				copyFragmentEntriesURL: copyFragmentEntryURL,
 				fragmentCollections,

@@ -251,8 +251,6 @@ public class RenderLayoutStructureTagTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		_originalName = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
@@ -261,9 +259,6 @@ public class RenderLayoutStructureTagTest {
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-
-		ContentLayoutTestUtil.publishLayout(
-			_layout.fetchDraftLayout(), _layout);
 	}
 
 	@After
@@ -928,48 +923,6 @@ public class RenderLayoutStructureTagTest {
 			content, content.contains(submitButtonAttributes + " disabled"));
 		Assert.assertTrue(content, content.contains(submitButtonAttributes));
 		Assert.assertTrue(content, content.contains(textInputIdAttribute));
-	}
-
-	@Test
-	@TestInfo("LPD-82690")
-	public void testPageRenderWhenFirstFragmentHasWebContentTemplate()
-		throws Exception {
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		JournalArticle basicJournalArticle =
-			JournalTestUtil.addArticleWithXMLContent(
-				_read("basic_journal_article_content.xml"), "BASIC-WEB-CONTENT",
-				null);
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionService.addFragmentCollection(
-				null, _group.getGroupId(), "Fragment Collection",
-				StringPool.BLANK, _serviceContext);
-
-		FragmentEntry editableFragment = _addFragmentEntry(
-			null, fragmentCollection, "fragment_editable_type_html.html",
-			"Editable FragmentEntry");
-
-		FragmentEntry configurableFragment = _addFragmentEntry(
-			"configuration_journal_article.json", fragmentCollection,
-			"fragment_configurable.html", "Configurable FragmentEntry");
-
-		_addFragmentEntryLinkToLayout(
-			configurableFragment,
-			_buildConfigurableFragmentValue(basicJournalArticle));
-
-		_addFragmentEntryLinkToLayout(
-			editableFragment, _buildEditableFragmentValue(journalArticle));
-
-		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
-			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()));
-
-		Assert.assertTrue(html.contains(basicJournalArticle.getTitle()));
 	}
 
 	@Test
@@ -3213,6 +3166,80 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-82690")
+	public void testRenderJournalArticle() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle basicJournalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_read("journal_article_content.xml"), "BASIC-WEB-CONTENT",
+				null);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				null, _group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, _serviceContext);
+
+		FragmentEntry editableFragment = _addFragmentEntry();
+
+		FragmentEntry configurableFragment = _addFragmentEntry(
+			"journal_article_item_selector.json", fragmentCollection,
+			"journal_article_item_selector.html",
+			RandomTestUtil.randomString());
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				"com.liferay.fragment.entry.processor.freemarker." +
+					"FreeMarkerFragmentEntryProcessor",
+				JSONUtil.put(
+					"contentSelector",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						String.valueOf(
+							_portal.getClassNameId(
+								JournalArticle.class.getName()))
+					).put(
+						"classPK",
+						String.valueOf(basicJournalArticle.getResourcePrimKey())
+					).put(
+						"classTypeId",
+						String.valueOf(basicJournalArticle.getDDMStructureId())
+					))
+			).toString(),
+			configurableFragment.getCss(),
+			configurableFragment.getConfiguration(),
+			configurableFragment.getExternalReferenceCode(), null,
+			configurableFragment.getHtml(), configurableFragment.getJs(),
+			layout, null, FragmentConstants.TYPE_COMPONENT, null, 0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			_buildEditableFragmentValue(journalArticle),
+			editableFragment.getCss(), editableFragment.getConfiguration(),
+			editableFragment.getExternalReferenceCode(), null,
+			editableFragment.getHtml(), editableFragment.getJs(), layout, null,
+			FragmentConstants.TYPE_COMPONENT, null, 0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		Assert.assertTrue(html.contains(basicJournalArticle.getTitle()));
+	}
+
+	@Test
 	@TestInfo("LPD-41653")
 	public void testViewAssertAnalyticsTargetableCollectionIdForCollectionStyledLayoutStructureItem()
 		throws Exception {
@@ -3552,19 +3579,6 @@ public class RenderLayoutStructureTagTest {
 		}
 
 		return fragmentEntryLinks;
-	}
-
-	private void _addFragmentEntryLinkToLayout(
-			FragmentEntry fragmentEntry, String value)
-		throws Exception {
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			value, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getExternalReferenceCode(), null,
-			fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout, null,
-			FragmentConstants.TYPE_COMPONENT, null, 0,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
@@ -3983,14 +3997,6 @@ public class RenderLayoutStructureTagTest {
 		).put(
 			"classTypeId", String.valueOf(article.getDDMStructureId())
 		);
-	}
-
-	private String _buildConfigurableFragmentValue(JournalArticle article) {
-		return JSONUtil.put(
-			"com.liferay.fragment.entry.processor.freemarker." +
-				"FreeMarkerFragmentEntryProcessor",
-			JSONUtil.put("contentSelector", _buildArticleSelectorJSON(article))
-		).toString();
 	}
 
 	private String _buildEditableFragmentValue(JournalArticle article) {
@@ -4452,8 +4458,6 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private Language _language;
-
-	private Layout _layout;
 
 	@Inject
 	private LayoutDisplayPageProviderRegistry

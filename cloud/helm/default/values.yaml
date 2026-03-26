@@ -273,10 +273,6 @@ overlay:
 podAnnotations: {}
 podLabels: {}
 podSecurityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-        drop:
-            -   ALL
     fsGroup: 1000
     runAsNonRoot: true
     runAsUser: 1000
@@ -315,7 +311,8 @@ securityContext:
     capabilities:
         drop:
             -   ALL
-    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
     seccompProfile:
         type: RuntimeDefault
 service:

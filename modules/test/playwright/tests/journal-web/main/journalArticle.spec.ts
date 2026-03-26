@@ -2197,13 +2197,15 @@ ckeditor5Test(
 		);
 
 		await ckeditor5Test.step(
-			'Change article in source editing',
+			'Change article in source editing and then switch to wyswyg view',
 			async () => {
 				await sourceButton.click();
 
 				await sourceTextarea.fill(
 					'<a href="#" onclick="alert()">foo</a><script>alert()</script>'
 				);
+
+				await sourceButton.click();
 			}
 		);
 

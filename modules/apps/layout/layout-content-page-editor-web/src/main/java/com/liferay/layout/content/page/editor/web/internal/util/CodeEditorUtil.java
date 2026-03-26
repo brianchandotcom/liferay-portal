@@ -225,6 +225,8 @@ public class CodeEditorUtil {
 				_createSidebarElement(
 					httpServletRequest, "userId", StringPool.BLANK, "user-id"))
 		).put(
+			"key", "fields"
+		).put(
 			"label", LanguageUtil.get(httpServletRequest, "fields")
 		);
 	}
@@ -241,6 +243,8 @@ public class CodeEditorUtil {
 					httpServletRequest, ddmExpressionFunction._content,
 					ddmExpressionFunction._helpTextKey,
 					ddmExpressionFunction._key))
+		).put(
+			"key", "functions"
 		).put(
 			"label", LanguageUtil.get(httpServletRequest, "functions")
 		);
@@ -262,6 +266,8 @@ public class CodeEditorUtil {
 					httpServletRequest, "segmentsEntryIds", StringPool.BLANK,
 					"segment-entries-ids"))
 		).put(
+			"key", "generalVariables"
+		).put(
 			"label", LanguageUtil.get(httpServletRequest, "general-variables")
 		);
 	}
@@ -278,6 +284,8 @@ public class CodeEditorUtil {
 					httpServletRequest, ddmExpressionOperator._content,
 					ddmExpressionOperator._helpTextKey,
 					ddmExpressionOperator._key))
+		).put(
+			"key", "operators"
 		).put(
 			"label", LanguageUtil.get(httpServletRequest, "operators")
 		);

@@ -162,8 +162,7 @@ ruleTester.run('no-metal-plugins', rule, {
 			],
 		},
 		{
-			code:
-				"import {LocalStorageMechanism, Storage} from 'metal-storage';",
+			code: "import {LocalStorageMechanism, Storage} from 'metal-storage';",
 			errors: [
 				{
 					messageId: 'no-metal-storage',

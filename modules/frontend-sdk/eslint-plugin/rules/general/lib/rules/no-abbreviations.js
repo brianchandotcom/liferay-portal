@@ -64,8 +64,7 @@ module.exports = {
 			category: 'Best Practices',
 			description: 'Avoid abbreviations',
 			recommended: false,
-			url:
-				'https://github.com/liferay/liferay-frontend-projects/blob/master/guidelines/general/naming.md#avoid-abbreviations',
+			url: 'https://github.com/liferay/liferay-frontend-projects/blob/master/guidelines/general/naming.md#avoid-abbreviations',
 		},
 		fixable: null,
 		schema: [],

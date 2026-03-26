@@ -110,8 +110,7 @@ module.exports = {
 			category: 'Best Practices',
 			description: 'imports must come before other statements',
 			recommended: false,
-			url:
-				'https://github.com/liferay/liferay-frontend-guidelines/issues/60',
+			url: 'https://github.com/liferay/liferay-frontend-guidelines/issues/60',
 		},
 		fixable: null,
 		schema: [

@@ -41,8 +41,17 @@ const matchesVisibilityFilters = (
 		action?.data?.visibilityFilters;
 
 	return Object.keys(visibilityFilters).every(
-		(key: string) =>
-			getLocalizedValue(itemData, key)?.value === visibilityFilters[key]
+		(key: string) => {
+			let value1 = getLocalizedValue(itemData, key)?.value;
+			let value2 = visibilityFilters[key];
+			if (value2 &&
+			    typeof value2 === 'string') {
+
+                return String(value1) === value2
+            } else {
+                return value1 === value2
+            }
+        }
 	);
 };
 

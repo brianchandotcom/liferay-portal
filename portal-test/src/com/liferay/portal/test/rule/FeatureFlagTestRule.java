@@ -55,11 +55,12 @@ public class FeatureFlagTestRule
 	protected Map<String, String> beforeClass(Description description)
 		throws Throwable {
 
-		_autoCloseable = ReflectionTestUtil.setFieldValueWithAutoCloseable(
-			FeatureFlagManagerUtil.class, "_featureFlagManager",
-			new MockFeatureFlagManager(
-				ReflectionTestUtil.getFieldValue(
-					FeatureFlagManagerUtil.class, "_featureFlagManager")));
+		FeatureFlagManager featureFlagManager =
+			FeatureFlagManagerUtil.getFeatureFlagManager();
+
+		_autoCloseable =
+			FeatureFlagManagerUtil.setFeatureFlagManagerWithAutoCloseable(
+				new MockFeatureFlagManager(featureFlagManager));
 
 		return _updateFeatureFlags(description);
 	}

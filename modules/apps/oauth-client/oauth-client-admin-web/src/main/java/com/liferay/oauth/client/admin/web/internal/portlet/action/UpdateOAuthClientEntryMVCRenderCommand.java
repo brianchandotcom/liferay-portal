@@ -6,8 +6,8 @@
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPortletKeys;
 import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientWebKeys;
+import com.liferay.oauth.client.constants.OAuthClientAdminPortletKeys;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryService;
 import com.liferay.portal.kernel.exception.PortalException;

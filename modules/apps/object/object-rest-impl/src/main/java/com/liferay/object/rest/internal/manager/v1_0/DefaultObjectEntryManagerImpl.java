@@ -3074,26 +3074,24 @@ public class DefaultObjectEntryManagerImpl
 		if (objectField.isLocalized()) {
 			Object value = values.get(objectField.getI18nObjectFieldName());
 
-			if ((value == null) || !(value instanceof Map<?, ?>)) {
+			if ((value != null) && (value instanceof Map<?, ?>)) {
+				Map<String, Serializable> localizedValues =
+					(Map<String, Serializable>)value;
+
+				for (Map.Entry<String, Serializable> entry :
+						localizedValues.entrySet()) {
+
+					long fileEntryId = _processAttachment(
+						objectDefinition, objectField, entry.getValue(),
+						scopeKey, serviceContext);
+
+					if (fileEntryId > 0) {
+						entry.setValue(fileEntryId);
+					}
+				}
+
 				return;
 			}
-
-			Map<String, Serializable> localizedValues =
-				(Map<String, Serializable>)value;
-
-			for (Map.Entry<String, Serializable> entry :
-					localizedValues.entrySet()) {
-
-				long fileEntryId = _processAttachment(
-					objectDefinition, objectField, entry.getValue(), scopeKey,
-					serviceContext);
-
-				if (fileEntryId > 0) {
-					entry.setValue(fileEntryId);
-				}
-			}
-
-			return;
 		}
 
 		long fileEntryId = _processAttachment(

@@ -10,8 +10,8 @@ import {OverwriteStrategy} from './ImportOptionsModal';
 import {Results} from './ImportResults';
 
 interface ResponseAPI {
+	hasConflicts: boolean;
 	importResults: Results;
-	invalid: boolean;
 }
 
 interface ImportZipFileProps {

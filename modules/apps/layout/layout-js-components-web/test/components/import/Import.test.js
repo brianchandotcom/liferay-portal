@@ -13,7 +13,7 @@ import {Import} from '../../../src/main/resources/META-INF/resources/js';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
-	fetch: () => Promise.resolve({json: () => ({valid: false})}),
+	fetch: () => Promise.resolve({json: () => ({hasConflicts: true})}),
 	navigate: jest.fn(),
 }));
 

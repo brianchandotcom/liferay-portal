@@ -36,7 +36,10 @@ describe('importZipFile', () => {
 	it('handle successful import', async () => {
 		const mockResponse = {
 			json: () =>
-				Promise.resolve({importResults: {test: 'result'}, valid: true}),
+				Promise.resolve({
+					hasConflicts: false,
+					importResults: {test: 'result'},
+				}),
 			ok: true,
 		};
 
@@ -50,7 +53,10 @@ describe('importZipFile', () => {
 		);
 
 		expect(mockProps.handleResponse).toHaveBeenCalledWith(
-			{importResults: {test: 'result'}, valid: true},
+			{
+				hasConflicts: false,
+				importResults: {test: 'result'},
+			},
 			mockProps.file
 		);
 
@@ -126,7 +132,10 @@ describe('importZipFile', () => {
 	it('pass overwrite strategy if provided', async () => {
 		const mockResponse = {
 			json: () =>
-				Promise.resolve({importResults: {test: 'result'}, valid: true}),
+				Promise.resolve({
+					hasConflicts: false,
+					importResults: {test: 'result'},
+				}),
 			ok: true,
 		};
 

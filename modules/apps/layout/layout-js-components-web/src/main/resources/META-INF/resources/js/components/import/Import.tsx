@@ -53,8 +53,8 @@ export default function Import({
 			try {
 				await importZipFile({
 					file,
-					handleResponse: ({importResults, invalid}, file) => {
-						if (invalid) {
+					handleResponse: ({hasConflicts, importResults}, file) => {
+						if (hasConflicts) {
 							setImportOptionsModalVisible(true);
 
 							return;

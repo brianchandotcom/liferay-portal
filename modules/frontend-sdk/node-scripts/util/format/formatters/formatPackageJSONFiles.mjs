@@ -14,7 +14,7 @@ import projectScopeRequire from '../../projectScopeRequire.mjs';
 export default async function formatPackageJSONFiles() {
 	let checksPassed = true;
 
-	print(1, false, print.subTitle(`> Checking 'package.json' files...\n`));
+	print(1, print.subTitle(`> Checking 'package.json' files...\n`));
 
 	let packages = await fg('**/package.json', {
 		absolute: true,
@@ -60,13 +60,12 @@ export default async function formatPackageJSONFiles() {
 		const signalError = (message) => {
 			print(
 				2,
-				true,
 				print.error('ERROR:'),
 				'File',
 				print.underline(path.relative(PORTAL_DIR, pkg)),
 				'has problems'
 			);
-			print(3, true, `${message}\n`);
+			print(3, `${message}\n`);
 
 			checksPassed = false;
 		};

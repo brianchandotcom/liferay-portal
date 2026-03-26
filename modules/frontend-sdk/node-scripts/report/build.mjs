@@ -21,7 +21,6 @@ export default async function main() {
 	if (!timingsDir) {
 		print(
 			0,
-			true,
 			print.info('\nERROR:'),
 			`Please provide the path to the timings dir as an argument or set`,
 			`\n       the LIFERAY_NPM_SCRIPTS_TIMING environment variable.\n`
@@ -118,7 +117,7 @@ export default async function main() {
 
 	await fs.writeFile(filePath, report.data, 'utf-8');
 
-	print(0, true, print.info('\nINFO:'), `Wrote report file: ${filePath}\n`);
+	print(0, print.info('\nINFO:'), `Wrote report file: ${filePath}\n`);
 }
 
 function append(report, ...messages) {

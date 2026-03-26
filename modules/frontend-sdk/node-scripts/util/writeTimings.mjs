@@ -25,7 +25,6 @@ export default async function writeTimings(start, endConfig) {
 
 		print(
 			0,
-			true,
 			print.info('INFO:'),
 			'Appending timing information to',
 			print.underline(csvFilePath)

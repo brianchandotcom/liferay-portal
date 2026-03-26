@@ -26,7 +26,6 @@ export default async function formatTypeScript(projectDirs) {
 
 	print(
 		1,
-		false,
 		print.subTitle(
 			`> Checking ${projectDirs.length} TypeScript projects...\n`
 		)
@@ -38,7 +37,6 @@ export default async function formatTypeScript(projectDirs) {
 		if (stats) {
 			print(
 				2,
-				true,
 				print.info('INFO:'),
 				`Oldest '.tsbuildinfo' file is from`,
 				print.bold(stats.oldestMtime),
@@ -50,7 +48,6 @@ export default async function formatTypeScript(projectDirs) {
 		else {
 			print(
 				2,
-				true,
 				print.warning('WARNING:'),
 				`No '.tsbuildinfo' files could be found; expect TypeScript checks to take a long time\n`
 			);

@@ -9,14 +9,9 @@ import indent from './indent.mjs';
  * Prints messages to `stderr`
  *
  * @param {number} indentLevel level of indentation (honors line feeds)
- * @param {boolean} prioritary whether or not to show message at CI
  * @param {...*} things stuff to print
  */
-export default function print(indentLevel, prioritary, ...things) {
-	if (process.env.CI && !prioritary) {
-		return;
-	}
-
+export default function print(indentLevel, ...things) {
 	process.stderr.write(indent(indentLevel * 4, things.join(' ')));
 	process.stderr.write('\n');
 }
@@ -27,7 +22,6 @@ export function printDuration(start, indentLevel, description) {
 	if (lapse < 60) {
 		print(
 			indentLevel,
-			true,
 			print.info('INFO:'),
 			`${description} took ${lapse.toFixed(0)} seconds.\n`
 		);
@@ -35,7 +29,6 @@ export function printDuration(start, indentLevel, description) {
 	else {
 		print(
 			indentLevel,
-			true,
 			print.info('INFO:'),
 			`${description} took ${(lapse / 60).toFixed(1)} minutes.\n`
 		);

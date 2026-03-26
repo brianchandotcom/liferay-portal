@@ -31,7 +31,6 @@ export default async function main() {
 
 		print(
 			0,
-			true,
 			print.info('\nINFO:'),
 			`Bundle served at 'localhost:${port}'\n`
 		);

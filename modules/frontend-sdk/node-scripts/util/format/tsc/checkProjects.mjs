@@ -154,7 +154,6 @@ async function checkProject(projectDir, errors) {
 
 		print(
 			2,
-			true,
 			print.error('ERROR:'),
 			'File',
 			print.underline(filePath),
@@ -172,7 +171,6 @@ async function checkProject(projectDir, errors) {
 
 			print(
 				3,
-				true,
 				print.bold(position),
 				print.red(`(${error.label})`),
 				error.message,

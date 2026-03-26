@@ -66,7 +66,6 @@ export default async function installSassBinary() {
 	catch (error) {
 		print(
 			0,
-			true,
 			print.warning('\nWARNING:'),
 			`Unable to download binary SASS compiler (will use Node.js based one): ${error}\n`
 		);
@@ -88,7 +87,7 @@ async function downloadAndExtract(url, dir) {
 	const bundleName = parts[parts.length - 1];
 	const bundlePath = path.join(dir, bundleName);
 
-	print(0, true, print.info('INFO:'), 'Downloading binary Sass compiler...');
+	print(0, print.info('INFO:'), 'Downloading binary Sass compiler...');
 
 	const response = await fetch(url, {redirect: 'follow'});
 
@@ -115,7 +114,7 @@ async function downloadAndExtract(url, dir) {
 		throw new Error(`Don't know how to uncompress ${bundlePath}`);
 	}
 
-	print(0, true, print.success('SUCCESS:'), 'Binary Sass compiler is ready!');
+	print(0, print.success('SUCCESS:'), 'Binary Sass compiler is ready!');
 }
 
 async function setPermissions(dir) {

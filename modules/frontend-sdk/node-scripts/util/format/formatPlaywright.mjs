@@ -14,7 +14,7 @@ export default async function formatPlaywright(check, files) {
 		checksPassed = false;
 	}
 
-	if (!formatTypeScript([PLAYWRIGHT_DIR])) {
+	if (!(await formatTypeScript([PLAYWRIGHT_DIR]))) {
 		checksPassed = false;
 	}
 

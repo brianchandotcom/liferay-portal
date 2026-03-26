@@ -14,7 +14,7 @@ const REGEX_API_DIR = /\/resources\/js\/api\/api\.(js|ts)$/;
 export default async function formatAPISubmodules() {
 	let checksPassed = true;
 
-	print(1, false, print.subTitle('> Checking API submodules...\n'));
+	print(1, print.subTitle('> Checking API submodules...\n'));
 
 	const nodeScriptConfigs = await fg('**/node-scripts.config.js', {
 		ignore: ['**/build', '**/classes', '**/node_modules'],
@@ -36,7 +36,6 @@ export default async function formatAPISubmodules() {
 		if (!REGEX_API_DIR.test(config.submodules.api)) {
 			print(
 				2,
-				true,
 				print.error('ERROR:'),
 				'Invalid API module found at path',
 				print.underline(path),

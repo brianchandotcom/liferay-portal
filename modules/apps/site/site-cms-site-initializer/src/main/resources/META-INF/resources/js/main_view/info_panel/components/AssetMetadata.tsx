@@ -129,31 +129,83 @@ const AssetMetadata = () => {
 		>
 			<ClayPanel.Body>
 				{type === ASSET_TYPE.FILES && (
-					<div className="asset-metadata-section mt-0">
-						<p className="d-block font-weight-bold mb-0">
-							{Liferay.Language.get('url')}
-						</p>
+					<>
+						<div className="asset-metadata-section mt-0">
+							<p className="d-block font-weight-bold mb-0">
+								{Liferay.Language.get('url')}
+							</p>
 
-						<ClayInput.Group className="mb-3 mt-1">
-							<ClayInput.GroupItem prepend>
-								<ClayInput
-									disabled={true}
-									placeholder={asset.file?.link?.href}
-									type="text"
-								/>
-							</ClayInput.GroupItem>
+							<ClayInput.Group className="mb-3 mt-1">
+								<ClayInput.GroupItem prepend>
+									<ClayInput
+										disabled={true}
+										placeholder={asset.file?.link?.href}
+										type="text"
+									/>
+								</ClayInput.GroupItem>
 
-							<ClayInput.GroupItem append shrink>
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('copy')}
-									data-clipboard-text={asset.file?.link?.href}
-									displayType="secondary"
-									onClick={copyText}
-									symbol="copy"
-								></ClayButtonWithIcon>
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</div>
+								<ClayInput.GroupItem append shrink>
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'copy'
+										)}
+										data-clipboard-text={
+											asset.file?.link?.href
+										}
+										displayType="secondary"
+										onClick={copyText}
+										symbol="copy"
+									/>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</div>
+
+						{asset?.file?.extension && (
+							<div className="asset-metadata-section mt-3">
+								<p className="d-block font-weight-bold mb-0">
+									{Liferay.Language.get('extension')}
+								</p>
+
+								<p className="d-block">
+									{asset.file?.extension}
+								</p>
+							</div>
+						)}
+
+						{asset?.file?.size && (
+							<div className="asset-metadata-section mt-3">
+								<p className="d-block font-weight-bold mb-0">
+									{Liferay.Language.get('size')}
+								</p>
+
+								<p className="d-block">{asset.file?.size}</p>
+							</div>
+						)}
+
+						{asset?.file?.metadata?.resolution && (
+							<div className="asset-metadata-section mt-3">
+								<p className="d-block font-weight-bold mb-0">
+									{Liferay.Language.get('resolution')}
+								</p>
+
+								<p className="mb-0">
+									{asset.file?.metadata?.resolution}
+								</p>
+							</div>
+						)}
+
+						{asset?.file?.metadata?.aspectRatio && (
+							<div className="asset-metadata-section mt-3">
+								<p className="d-block font-weight-bold mb-0">
+									{Liferay.Language.get('aspect-ratio')}
+								</p>
+
+								<p className="d-block">
+									{asset.file?.metadata?.aspectRatio}
+								</p>
+							</div>
+						)}
+					</>
 				)}
 
 				{type === ASSET_TYPE.FOLDER && (

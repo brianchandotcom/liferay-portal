@@ -197,9 +197,11 @@ public class TestScriptGenerator {
 		sb.append("\t\telse\n");
 		sb.append("\t\t\tresults_output+=\"[SUCCESS \"\n");
 		sb.append("\t\tfi\n\n");
+		sb.append("\t\tlocal command_duration=$((SECONDS - ");
+		sb.append("command_start_time))\n\n");
 		sb.append("\t\tresults_output+=\"in ");
-		sb.append("$(((SECONDS - command_start_time) / 60 ))m ");
-		sb.append("$(((SECONDS - command_start_time) % 60 ))s] ");
+		sb.append("$((command_duration / 60))m ");
+		sb.append("$((command_duration % 60))s] ");
 		sb.append("${command}\\n\"\n");
 		sb.append("\tdone\n\n");
 		sb.append("\techo -e \"${results_output}\"\n\n");

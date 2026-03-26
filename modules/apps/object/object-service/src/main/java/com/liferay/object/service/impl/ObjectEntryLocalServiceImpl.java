@@ -731,23 +731,32 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry objectEntry = getObjectEntry(objectEntryId);
 
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderPersistence.findByPrimaryKey(objectEntryFolderId);
+		long groupId = objectEntry.getGroupId();
+
+		if (objectEntryFolderId !=
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderPersistence.findByPrimaryKey(
+					objectEntryFolderId);
+
+			groupId = objectEntryFolder.getGroupId();
+		}
 
 		_checkObjectDefinitionScope(
-			objectEntry.getObjectDefinitionId(),
-			objectEntryFolder.getGroupId());
+			objectEntry.getObjectDefinitionId(), groupId);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
 		_removeInvalidAssetCategories(
-			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
-			objectEntryId, serviceContext);
+			groupId, objectDefinition.getClassName(), objectEntryId,
+			serviceContext);
 		_removeInvalidAssetTags(
-			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
-			objectEntryId, serviceContext);
+			groupId, objectDefinition.getClassName(), objectEntryId,
+			serviceContext);
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getCustomObjectFields(
@@ -771,9 +780,9 @@ public class ObjectEntryLocalServiceImpl
 		serviceContext.setAttribute(Constants.ACTION, Constants.COPY);
 
 		return addObjectEntry(
-			objectEntryFolder.getGroupId(), userId,
-			objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
-			objectEntry.getDefaultLanguageId(), values, serviceContext);
+			groupId, userId, objectDefinition.getObjectDefinitionId(),
+			objectEntryFolderId, objectEntry.getDefaultLanguageId(), values,
+			serviceContext);
 	}
 
 	@Override

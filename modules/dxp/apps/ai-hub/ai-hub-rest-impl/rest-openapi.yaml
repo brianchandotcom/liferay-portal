@@ -67,6 +67,12 @@ components:
                 text:
                     type: string
             type: object
+        Site:
+            properties:
+                externalReferenceCode:
+                    readOnly: true
+                    type: string
+            type: object
         Status:
             properties:
                 code:
@@ -265,3 +271,18 @@ paths:
                     content:
                         text/event-stream: {}
             tags: ["Chat"]
+    "/sites/by-external-reference-code/{externalReferenceCode}/site-initializer":
+        put:
+            operationId: putSiteByExternalReferenceCodeSiteInitializer
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Site"]

@@ -170,9 +170,6 @@ public class UserViewsFDSDataProvider implements FDSDataProvider<UserView> {
 				dataSetEntries.put(externalReferenceCode, label);
 			}
 		}
-		catch (PortalException portalException) {
-			throw portalException;
-		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}

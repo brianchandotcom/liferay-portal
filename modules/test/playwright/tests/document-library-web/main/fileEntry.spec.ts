@@ -17,6 +17,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
 import {DLFILE_STATUS} from '../../../helpers/json-web-services/JSONWebServicesDocumentLibraryApiHelper';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
@@ -1107,5 +1108,38 @@ test(
 		await expect(
 			page.getByRole('button', {name: 'Select All'})
 		).not.toBeVisible();
+	}
+);
+
+test(
+	'Check accessibility of the search container in DM',
+	{
+		tag: ['@LPD-83985'],
+	},
+	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+
+		const title = getRandomString();
+
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			title,
+			site.friendlyUrlPath
+		);
+
+		const views: string[] = ['table', 'list', 'cards'];
+
+		for (const view of views) {
+			await test.step(`Change visualization mode to ${view}`, async () => {
+				await documentLibraryPage.changeView(view);
+
+				await checkAccessibility({
+					bestPractices: true,
+					page,
+					selectors: [
+						'#_com_liferay_document_library_web_portlet_DLAdminPortlet_documentLibraryContainer',
+					],
+				});
+			});
+		}
 	}
 );

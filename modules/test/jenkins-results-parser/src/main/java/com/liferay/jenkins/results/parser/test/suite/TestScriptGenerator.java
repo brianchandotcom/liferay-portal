@@ -170,7 +170,7 @@ public class TestScriptGenerator {
 			sb.append(command);
 
 			if (i < (commandCount - 1)) {
-				sb.append(" \\");
+				sb.append(" \\\n\t\t\\");
 			}
 
 			sb.append("\n");

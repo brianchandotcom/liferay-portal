@@ -24,6 +24,111 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
+test('assert that the user is able to use the ERC field in Sort, on the Custom Views tab', async ({
+	apiHelpers,
+	page,
+	viewObjectEntriesPage,
+}) => {
+	const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+	const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
+
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
+
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition({
+			active: true,
+			enableLocalization: true,
+			label: {
+				en_US: objectDefinitionLabel,
+			},
+			name: objectDefinitionName,
+			objectFields,
+			pluralLabel: {
+				en_US: objectDefinitionLabel,
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
+			},
+			titleObjectFieldName: objectFields[0].name,
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	const objectViewAPIClient = await apiHelpers.buildRestClient(ObjectViewAPI);
+
+	await objectViewAPIClient.postObjectDefinitionObjectView(
+		objectDefinition.id,
+		{
+			defaultObjectView: true,
+			name: {en_US: getRandomString()},
+			objectViewColumns: [
+				{
+					objectFieldName: objectFields[0].name,
+					priority: 0,
+				},
+				{
+					objectFieldName: 'externalReferenceCode',
+					priority: 1,
+				},
+			],
+			objectViewSortColumns: [
+				{
+					objectFieldName: 'externalReferenceCode',
+					priority: 0,
+					sortOrder: 'asc',
+				},
+			],
+		}
+	);
+
+	const {objectEntry} = await generateObjectEntryValues({
+		objectEntryFormat: 'API',
+		objectFields,
+	});
+
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+	const entry1 = 'Entry A';
+	const entry2 = 'Entry B';
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{...objectEntry, externalReferenceCode: entry1},
+		applicationName
+	);
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{...objectEntry, externalReferenceCode: entry2},
+		applicationName
+	);
+
+	await viewObjectEntriesPage.goto(objectDefinition.className);
+
+	await expect(page.locator('.cell-externalReferenceCode').nth(1)).toHaveText(
+		entry1
+	);
+	await expect(page.locator('.cell-externalReferenceCode').nth(2)).toHaveText(
+		entry2
+	);
+
+	await page.getByTitle('Sortable Column').dblclick();
+
+	await expect(page.locator('.cell-externalReferenceCode').nth(1)).toHaveText(
+		entry2
+	);
+	await expect(page.locator('.cell-externalReferenceCode').nth(2)).toHaveText(
+		entry1
+	);
+});
+
 test('can add and remove new object fields from object view while maintaining correct logic order', async ({
 	apiHelpers,
 	editObjectViewPage,
@@ -304,109 +409,4 @@ test('cannot create an object custom view using empty multiselectpicklist entry'
 	await expect(
 		page.frameLocator('iframe').getByText('Required')
 	).toBeVisible();
-});
-
-test('assert that the user is able to use the ERC field in Sort, on the Custom Views tab', async ({
-	apiHelpers,
-	page,
-	viewObjectEntriesPage,
-}) => {
-	const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
-	const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
-
-	const objectFields = generateObjectFields({
-		objectFieldBusinessTypes: ['Text'],
-	});
-
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	const {body: objectDefinition} =
-		await objectDefinitionAPIClient.postObjectDefinition({
-			active: true,
-			enableLocalization: true,
-			label: {
-				en_US: objectDefinitionLabel,
-			},
-			name: objectDefinitionName,
-			objectFields,
-			pluralLabel: {
-				en_US: objectDefinitionLabel,
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-			titleObjectFieldName: objectFields[0].name,
-		});
-
-	apiHelpers.data.push({
-		id: objectDefinition.id,
-		type: 'objectDefinition',
-	});
-
-	const objectViewAPIClient = await apiHelpers.buildRestClient(ObjectViewAPI);
-
-	await objectViewAPIClient.postObjectDefinitionObjectView(
-		objectDefinition.id,
-		{
-			defaultObjectView: true,
-			name: {en_US: getRandomString()},
-			objectViewColumns: [
-				{
-					objectFieldName: objectFields[0].name,
-					priority: 0,
-				},
-				{
-					objectFieldName: 'externalReferenceCode',
-					priority: 1,
-				},
-			],
-			objectViewSortColumns: [
-				{
-					objectFieldName: 'externalReferenceCode',
-					priority: 0,
-					sortOrder: 'asc',
-				},
-			],
-		}
-	);
-
-	const {objectEntry} = await generateObjectEntryValues({
-		objectEntryFormat: 'API',
-		objectFields,
-	});
-
-	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
-	const entry1 = 'Entry A';
-	const entry2 = 'Entry B';
-
-	await apiHelpers.objectEntry.postObjectEntry(
-		{...objectEntry, externalReferenceCode: entry1},
-		applicationName
-	);
-
-	await apiHelpers.objectEntry.postObjectEntry(
-		{...objectEntry, externalReferenceCode: entry2},
-		applicationName
-	);
-
-	await viewObjectEntriesPage.goto(objectDefinition.className);
-
-	await expect(page.locator('.cell-externalReferenceCode').nth(1)).toHaveText(
-		entry1
-	);
-	await expect(page.locator('.cell-externalReferenceCode').nth(2)).toHaveText(
-		entry2
-	);
-
-	await page.getByTitle('Sortable Column').dblclick();
-
-	await expect(page.locator('.cell-externalReferenceCode').nth(1)).toHaveText(
-		entry2
-	);
-	await expect(page.locator('.cell-externalReferenceCode').nth(2)).toHaveText(
-		entry1
-	);
 });

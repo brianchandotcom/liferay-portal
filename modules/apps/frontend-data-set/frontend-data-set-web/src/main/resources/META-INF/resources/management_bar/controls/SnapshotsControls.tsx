@@ -83,17 +83,17 @@ function SaveSnapshotModalBody({
 	initialLabel,
 	labelInputRef,
 	namespace,
-	onValidatedLabelChange,
+	setLabelGetterFunction,
 }: {
 	initialLabel: string;
 	labelInputRef: React.MutableRefObject<HTMLInputElement>;
 	namespace: string;
-	onValidatedLabelChange: (validatedLabel: () => null | string) => void;
+	setLabelGetterFunction: (labelGetterFunction: () => null | string) => void;
 }) {
 	const [nameValidationError, setNameValidationError] = useState(false);
 
 	useEffect(() => {
-		onValidatedLabelChange(() => {
+		setLabelGetterFunction(() => {
 			const label = labelInputRef.current?.value ?? '';
 			const trimmedLabel = label.trim();
 
@@ -109,9 +109,9 @@ function SaveSnapshotModalBody({
 		});
 
 		return () => {
-			onValidatedLabelChange(() => null);
+			setLabelGetterFunction(() => null);
 		};
-	}, [onValidatedLabelChange, labelInputRef]);
+	}, [setLabelGetterFunction, labelInputRef]);
 
 	return (
 		<ClayForm.Group className={nameValidationError ? 'has-error' : ''}>
@@ -186,10 +186,10 @@ const SnapshotsControls = () => {
 		defaultSnapshotItem;
 
 	const labelInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-	const validatedLabelRef = useRef<() => null | string>(() => null);
-	const setValidatedLabel = useCallback(
-		(validatedLabel: () => null | string) => {
-			validatedLabelRef.current = validatedLabel;
+	const labelGetterFunctionRef = useRef<() => null | string>(() => null);
+	const setLabelGetterFunction = useCallback(
+		(labelGetterFunction: () => null | string) => {
+			labelGetterFunctionRef.current = labelGetterFunction;
 		},
 		[]
 	);
@@ -288,7 +288,7 @@ const SnapshotsControls = () => {
 					initialLabel={initialLabel}
 					labelInputRef={labelInputRef}
 					namespace={namespace ?? ''}
-					onValidatedLabelChange={setValidatedLabel}
+					setLabelGetterFunction={setLabelGetterFunction}
 				/>
 			),
 			buttons: [
@@ -300,7 +300,7 @@ const SnapshotsControls = () => {
 				{
 					label: Liferay.Language.get('save'),
 					onClick: ({processClose}) => {
-						const label = validatedLabelRef.current();
+						const label = labelGetterFunctionRef.current();
 
 						if (!label) {
 							return;
@@ -379,7 +379,7 @@ const SnapshotsControls = () => {
 					initialLabel={initialLabel}
 					labelInputRef={labelInputRef}
 					namespace={namespace ?? ''}
-					onValidatedLabelChange={setValidatedLabel}
+					setLabelGetterFunction={setLabelGetterFunction}
 				/>
 			),
 			buttons: [
@@ -391,7 +391,7 @@ const SnapshotsControls = () => {
 				{
 					label: Liferay.Language.get('save'),
 					onClick: ({processClose}) => {
-						const label = validatedLabelRef.current();
+						const label = labelGetterFunctionRef.current();
 
 						if (!label) {
 							return;

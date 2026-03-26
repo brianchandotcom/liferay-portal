@@ -91,6 +91,17 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 						/>
 					</clay:content-col>
 				</c:if>
+
+				<c:if test="<%= cookiesBannerDisplayContext.isStoreConsent() %>">
+					<clay:content-col>
+						<clay:checkbox
+							checked="<%= false %>"
+							id='<%= liferayPortletResponse.getNamespace() + "storeConsent" %>'
+							label="cookie-store-consent"
+							name='<%= liferayPortletResponse.getNamespace() + "storeConsent" %>'
+						/>
+					</clay:content-col>
+				</c:if>
 			</clay:content-row>
 		</clay:row>
 	</clay:container-fluid>

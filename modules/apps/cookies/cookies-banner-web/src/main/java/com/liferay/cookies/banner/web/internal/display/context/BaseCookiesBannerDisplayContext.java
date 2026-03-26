@@ -12,6 +12,7 @@ import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.kernel.cookies.ConsentCookieType;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -92,6 +93,21 @@ public class BaseCookiesBannerDisplayContext {
 
 	public boolean isIncludeDeclineAllButton() {
 		return cookiesBannerConfiguration.includeDeclineAllButton();
+	}
+
+	public boolean isStoreConsent() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isSignedIn() &&
+			FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-75032")) {
+
+			return cookiesPreferenceHandlingConfiguration.storeConsent();
+		}
+
+		return false;
 	}
 
 	protected JSONArray getConsentCookieTypeNamesJSONArray(

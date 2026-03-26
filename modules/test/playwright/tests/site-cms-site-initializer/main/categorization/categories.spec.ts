@@ -600,3 +600,68 @@ test.describe('Subcategory tests', () => {
 		}
 	);
 });
+
+test(
+	'Content can be saved when all asset subtypes are required in a vocabulary',
+	{tag: '@LPD-83651'},
+	async ({apiHelpers, contentsPage, page}) => {
+		const categoryName = getRandomString();
+
+		await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+			{
+				name: categoryName,
+				vocabularyId,
+			}
+		);
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent('Basic Web Content');
+
+		const title = getRandomString();
+
+		await contentsPage.fillData([{label: 'Title', value: title}]);
+
+		await contentsPage.openSidePanel('Categorization');
+
+		const categoriesAutocomplete = page.getByPlaceholder('Add category');
+
+		await categoriesAutocomplete.fill(categoryName);
+
+		const option = page.getByRole('option', {name: categoryName});
+
+		await option.waitFor();
+		await option.click();
+
+		await contentsPage.saveContent();
+
+		await expect(
+			page.getByRole('link', {exact: true, name: `${title}`})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Folder can be saved when all asset subtypes are required in a vocabulary',
+	{tag: '@LPD-83651'},
+	async ({apiHelpers, contentsPage, page}) => {
+		const categoryName = getRandomString();
+
+		await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+			{
+				name: categoryName,
+				vocabularyId,
+			}
+		);
+
+		await contentsPage.goto();
+
+		const folderName = getRandomString();
+
+		await contentsPage.createFolder(folderName, 'Default');
+
+		await expect(
+			page.getByRole('link', {exact: true, name: `${folderName}`})
+		).toBeVisible();
+	}
+);

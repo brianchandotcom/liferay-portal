@@ -114,10 +114,9 @@ public class ImportMVCResourceCommandTest {
 			validFile
 		);
 
-		JSONObject jsonObject = _serveResource(
-			_createZipFile(true, true, false));
-
-		_assertResponseJSONObject(jsonObject, hasConflicts, false);
+		_assertResponseJSONObject(
+			_serveResource(_createZipFile(true, true, false)), hasConflicts,
+			false);
 	}
 
 	private File _createZipFile(

@@ -104,12 +104,6 @@ public class FaroProjectFilterTest {
 		JSONObject jsonObject = Mockito.mock(JSONObject.class);
 
 		Mockito.when(
-			jsonObject.getString("name")
-		).thenReturn(
-			ProductConstants.DATA_PLATFORM_PRODUCT_NAME
-		);
-
-		Mockito.when(
 			jsonObject.getLong("individualsCountSinceLastAnniversary")
 		).thenReturn(
 			1500L
@@ -119,6 +113,12 @@ public class FaroProjectFilterTest {
 			jsonObject.getLong("individualsLimit")
 		).thenReturn(
 			1000L
+		);
+
+		Mockito.when(
+			jsonObject.getString("name")
+		).thenReturn(
+			ProductConstants.DATA_PLATFORM_PRODUCT_NAME
 		);
 
 		Mockito.when(
@@ -179,12 +179,6 @@ public class FaroProjectFilterTest {
 		JSONObject jsonObject = Mockito.mock(JSONObject.class);
 
 		Mockito.when(
-			jsonObject.getString("name")
-		).thenReturn(
-			ProductConstants.DATA_PLATFORM_PRODUCT_NAME
-		);
-
-		Mockito.when(
 			jsonObject.getLong("individualsCountSinceLastAnniversary")
 		).thenReturn(
 			500L
@@ -194,6 +188,12 @@ public class FaroProjectFilterTest {
 			jsonObject.getLong("individualsLimit")
 		).thenReturn(
 			1000L
+		);
+
+		Mockito.when(
+			jsonObject.getString("name")
+		).thenReturn(
+			ProductConstants.DATA_PLATFORM_PRODUCT_NAME
 		);
 
 		Mockito.when(
@@ -358,12 +358,6 @@ public class FaroProjectFilterTest {
 		JSONObject jsonObject = Mockito.mock(JSONObject.class);
 
 		Mockito.when(
-			jsonObject.getString("name")
-		).thenReturn(
-			ProductConstants.DATA_PLATFORM_PRODUCT_NAME
-		);
-
-		Mockito.when(
 			jsonObject.getLong("individualsCountSinceLastAnniversary")
 		).thenReturn(
 			500L
@@ -373,6 +367,12 @@ public class FaroProjectFilterTest {
 			jsonObject.getLong("individualsLimit")
 		).thenReturn(
 			1000L
+		);
+
+		Mockito.when(
+			jsonObject.getString("name")
+		).thenReturn(
+			ProductConstants.DATA_PLATFORM_PRODUCT_NAME
 		);
 
 		Mockito.when(

@@ -84,14 +84,11 @@ public class FaroProjectFilter extends BaseFilter {
 			long individualsCountSinceLastAnniversary =
 				subscriptionJSONObject.getLong(
 					"individualsCountSinceLastAnniversary");
-
 			long individualsLimit = subscriptionJSONObject.getLong(
 				"individualsLimit");
-
 			long pageViewsCountSinceLastAnniversary =
 				subscriptionJSONObject.getLong(
 					"pageViewsCountSinceLastAnniversary");
-
 			long pageViewsLimit = subscriptionJSONObject.getLong(
 				"pageViewsLimit");
 

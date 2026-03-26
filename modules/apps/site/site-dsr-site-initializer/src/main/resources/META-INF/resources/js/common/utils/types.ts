@@ -138,6 +138,7 @@ export interface IRoomObjectEntry {
 		label: string;
 		label_i18n: string;
 	};
+	trend: number;
 }
 
 export interface IRoomShareProps {

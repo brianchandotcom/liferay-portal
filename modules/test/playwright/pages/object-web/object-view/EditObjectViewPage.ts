@@ -92,26 +92,24 @@ export class EditObjectViewPage {
 			)
 			.last();
 
-		const defaultSortModal = this.sidePanel.getByLabel(
-			'New Default Sort'
-		);
+		const defaultSortModal = this.sidePanel.getByLabel('New Default Sort');
 
 		const columnsCombobox = defaultSortModal.getByLabel('Columns');
 
 		// Keep trying until the New Default Sort modal opens
+
 		for (let attempt = 0; attempt < 3; attempt++) {
+
 			// Wait for Default Sort tab content to load
+
 			await this.sidePanel
 				.getByText('Default Sort', {exact: true})
 				.first()
 				.waitFor({state: 'visible'});
 
 			// Click the appropriate trigger button
-			if (
-				await newDefaultSortButton
-					.isVisible()
-					.catch(() => false)
-			) {
+
+			if (await newDefaultSortButton.isVisible().catch(() => false)) {
 				await newDefaultSortButton.click();
 			}
 			else {
@@ -119,6 +117,7 @@ export class EditObjectViewPage {
 			}
 
 			// Dismiss Add Columns modal if it appears
+
 			const addColumnsAppeared = await this.addColumnsModal
 				.waitFor({state: 'visible', timeout: 3000})
 				.then(() => true)
@@ -133,6 +132,7 @@ export class EditObjectViewPage {
 			}
 
 			// Check if the New Default Sort modal opened
+
 			const modalOpened = await columnsCombobox
 				.waitFor({state: 'visible', timeout: 3000})
 				.then(() => true)
@@ -145,23 +145,15 @@ export class EditObjectViewPage {
 
 		await columnsCombobox.click();
 
-		await this.sidePanel
-			.getByRole('option', {name: columnName})
-			.click();
+		await this.sidePanel.getByRole('option', {name: columnName}).click();
 
-		const sortingCombobox = defaultSortModal
-			.getByRole('combobox')
-			.last();
+		const sortingCombobox = defaultSortModal.getByRole('combobox').last();
 
 		await sortingCombobox.click();
 
-		await this.sidePanel
-			.getByRole('option', {name: sortOrder})
-			.click();
+		await this.sidePanel.getByRole('option', {name: sortOrder}).click();
 
-		await defaultSortModal
-			.getByRole('button', {name: 'Save'})
-			.click();
+		await defaultSortModal.getByRole('button', {name: 'Save'}).click();
 	}
 
 	async selectObjectFields(objectFieldNames: string[]) {

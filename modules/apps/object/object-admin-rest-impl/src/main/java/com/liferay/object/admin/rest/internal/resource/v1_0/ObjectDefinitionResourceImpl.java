@@ -1349,14 +1349,19 @@ public class ObjectDefinitionResourceImpl
 	private long _getObjectFolderId(String objectFolderExternalReferenceCode)
 		throws Exception {
 
+		ObjectFolder objectFolder;
+
 		if (Validator.isNull(objectFolderExternalReferenceCode)) {
-			return 0;
+			objectFolder =
+				_objectFolderLocalService.getOrAddDefaultObjectFolder(
+					contextCompany.getCompanyId());
+
+			return objectFolder.getObjectFolderId();
 		}
 
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.getOrAddEmptyObjectFolder(
-				objectFolderExternalReferenceCode,
-				contextCompany.getCompanyId(), contextUser.getUserId());
+		objectFolder = _objectFolderLocalService.getOrAddEmptyObjectFolder(
+			objectFolderExternalReferenceCode, contextCompany.getCompanyId(),
+			contextUser.getUserId());
 
 		return objectFolder.getObjectFolderId();
 	}

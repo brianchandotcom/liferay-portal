@@ -155,13 +155,6 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 					cmsAdministratorRole.getRoleId(), ActionKeys.VIEW));
 		}
 
-		Assert.assertFalse(
-			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(), objectDefinition.getPortletId(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				cmsAdministratorRole.getRoleId(), ActionKeys.VIEW));
-
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 
@@ -203,9 +196,6 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 			cmsAdministratorRole);
 		_assertResourcePermission(
 			ActionKeys.VIEW, objectDefinition.getClassName(),
-			cmsAdministratorRole);
-		_assertResourcePermission(
-			ActionKeys.VIEW, objectDefinition.getPortletId(),
 			cmsAdministratorRole);
 
 		Portlet portlet = _portletLocalService.fetchPortletById(

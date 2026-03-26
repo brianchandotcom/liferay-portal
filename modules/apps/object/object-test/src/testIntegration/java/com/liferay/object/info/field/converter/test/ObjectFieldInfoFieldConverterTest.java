@@ -7,7 +7,9 @@ package com.liferay.object.info.field.converter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
@@ -20,17 +22,32 @@ import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.context.path.RESTContextPathResolver;
+import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -50,6 +67,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Carolina Barbosa
+ * @author Víctor Galán
  */
 @RunWith(Arquillian.class)
 public class ObjectFieldInfoFieldConverterTest {
@@ -87,6 +105,91 @@ public class ObjectFieldInfoFieldConverterTest {
 			).userId(
 				TestPropsValues.getUserId()
 			).build());
+	}
+
+	@Test
+	public void testAddRelationshipInfoFieldAttributes() throws Exception {
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinition,
+				objectDefinition2);
+
+		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
+			new ObjectFieldInfoFieldConverter(
+				null, null, null, _objectDefinitionLocalService,
+				_objectFieldLocalService, null, _objectRelationshipLocalService,
+				_objectScopeProviderRegistry, null, null, _portal,
+				_restContextPathResolverRegistry, null);
+
+		InfoField.FinalStep finalStep = InfoField.builder(
+		).infoFieldType(
+			RelationshipInfoFieldType.INSTANCE
+		).namespace(
+			RandomTestUtil.randomString()
+		).name(
+			RandomTestUtil.randomString()
+		);
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			_getRelationshipURL(
+				finalStep, objectFieldInfoFieldConverter, objectRelationship,
+				null));
+
+		Group group = GroupTestUtil.addGroup();
+
+		String url = _getRelationshipURL(
+			finalStep, objectFieldInfoFieldConverter, objectRelationship,
+			_getServiceContext(group.getGroupId(), null));
+
+		Assert.assertTrue(
+			url.startsWith(
+				_portal.getPortalURL(new MockHttpServletRequest()) +
+					_portal.getPathContext()));
+
+		Group cmsGroup = GroupLocalServiceUtil.fetchGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CMS);
+
+		if (cmsGroup == null) {
+			cmsGroup = GroupTestUtil.addGroup(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
+				GroupConstants.CMS);
+		}
+
+		RESTContextPathResolver restContextPathResolver =
+			_restContextPathResolverRegistry.getRESTContextPathResolver(
+				_objectDefinition.getClassName());
+
+		String portalURL = _portal.getPortalURL(new MockHttpServletRequest());
+		String pathContext = _portal.getPathContext();
+
+		Assert.assertEquals(
+			portalURL + pathContext +
+				restContextPathResolver.getRESTContextPath(0),
+			_getRelationshipURL(
+				finalStep, objectFieldInfoFieldConverter, objectRelationship,
+				_getServiceContext(cmsGroup.getGroupId(), null)));
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), 0, null,
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+
+		Group siteGroup = GroupTestUtil.addGroup();
+
+		objectEntry.setGroupId(siteGroup.getGroupId());
+
+		String restContextPath = restContextPathResolver.getRESTContextPath(
+			siteGroup.getGroupId());
+
+		Assert.assertEquals(
+			portalURL + pathContext + restContextPath,
+			_getRelationshipURL(
+				finalStep, objectFieldInfoFieldConverter, objectRelationship,
+				_getServiceContext(cmsGroup.getGroupId(), objectEntry)));
 	}
 
 	@Test
@@ -141,6 +244,48 @@ public class ObjectFieldInfoFieldConverterTest {
 		}
 	}
 
+	private String _getRelationshipURL(
+		InfoField.FinalStep finalStep,
+		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
+		ObjectRelationship objectRelationship, ServiceContext serviceContext) {
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			InfoField<RelationshipInfoFieldType> infoField =
+				(InfoField<RelationshipInfoFieldType>)
+					objectFieldInfoFieldConverter.
+						addRelationshipInfoFieldAttributes(
+							finalStep, objectRelationship);
+
+			return infoField.getAttribute(RelationshipInfoFieldType.URL);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	private ServiceContext _getServiceContext(
+			long groupId, ObjectEntry objectEntry)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		if (objectEntry != null) {
+			mockHttpServletRequest.setAttribute(
+				InfoDisplayWebKeys.INFO_ITEM, objectEntry);
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setRequest(mockHttpServletRequest);
+		serviceContext.setScopeGroupId(groupId);
+
+		return serviceContext;
+	}
+
 	@Inject
 	private DDMExpressionFactory _ddmExpressionFactory;
 
@@ -151,9 +296,30 @@ public class ObjectFieldInfoFieldConverterTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
 	private ObjectField _objectField;
 
 	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private RESTContextPathResolverRegistry _restContextPathResolverRegistry;
 
 }

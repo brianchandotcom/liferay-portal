@@ -55,10 +55,13 @@ function deleteStoredCookie(name) {
 }
 
 async function fetchStoredCookie(name) {
-	fetch(`/o/cookies/v1.0/cookies-consent-preferences/by-name/${name}`, {
-		headers: HEADERS,
-		method: 'GET',
-	})
+	return await fetch(
+		`/o/cookies/v1.0/cookies-consent-preferences/by-name/${name}`,
+		{
+			headers: HEADERS,
+			method: 'GET',
+		}
+	)
 		.then((response) => {
 			if (response.status === 200) {
 				return response.json();
@@ -93,7 +96,7 @@ async function fetchStoredCookie(name) {
 		});
 }
 
-export function getCookie(name) {
+export async function getCookie(name) {
 	const cookie = getCookieUtil(name, COOKIE_TYPES.NECESSARY);
 
 	if (
@@ -104,7 +107,7 @@ export function getCookie(name) {
 		return cookie;
 	}
 
-	return fetchStoredCookie(name);
+	return await fetchStoredCookie(name);
 }
 
 export function removeAllCookies(

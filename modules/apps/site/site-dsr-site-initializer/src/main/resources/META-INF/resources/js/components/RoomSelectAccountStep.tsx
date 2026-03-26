@@ -6,7 +6,6 @@
 import Autocomplete from '@clayui/autocomplete';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import Sticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {debounce, sub} from 'frontend-js-web';
 import React, {
@@ -17,36 +16,12 @@ import React, {
 	useState,
 } from 'react';
 
+import AccountSticker from '../common/components/AccountSticker';
 import RoomService from '../common/services/RoomService';
 import {displayErrorToast} from '../common/utils/toastUtil';
 import {IAccount, IRoomContext, IRoomStepProps} from '../common/utils/types';
 import FieldErrorMessage from './FieldErrorMessage';
 import {RoomContext} from './RoomInitializer';
-
-function getInitials(name: string) {
-	return name
-		.split(' ')
-		.map((chunk) => chunk.charAt(0).toUpperCase())
-		.join('');
-}
-
-function getRandomColor(str: string) {
-	const colors = [
-		'#0B5FFF',
-		'#AF78FF',
-		'#50D2A0',
-		'#FF73C3',
-		'#FFB46E',
-		'#FF5F5F',
-	];
-	let hash = 0;
-
-	for (let i = 0; i < str.length; i++) {
-		hash = str.charCodeAt(i) + ((hash << 5) - hash);
-	}
-
-	return colors[Math.abs(hash) % colors.length];
-}
 
 function getAccountId(
 	accountName: string | undefined,
@@ -259,31 +234,14 @@ function RoomSelectAccountStep({
 								textValue={item.name}
 							>
 								<div className="align-items-center d-flex">
-									<Sticker
+									<AccountSticker
 										className="c-mr-2 flex-shrink-0"
+										initialColor="#FFF"
+										logoURL={item.logoURL}
+										name={item.name}
 										shape="circle"
 										size="sm"
-										style={
-											item.logoURL
-												? undefined
-												: {
-														backgroundColor:
-															getRandomColor(
-																item.name
-															),
-														color: '#FFF',
-													}
-										}
-									>
-										{item.logoURL ? (
-											<Sticker.Image
-												alt={item.name}
-												src={item.logoURL}
-											/>
-										) : (
-											getInitials(item.name)
-										)}
-									</Sticker>
+									/>
 
 									<span>{item.name}</span>
 								</div>

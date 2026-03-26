@@ -68,7 +68,10 @@ export default function MergeTagsModalContent({
 		};
 
 		getTags();
-	}, [cmsGroupId, currentTag]);
+
+		// eslint-disable-next-line react-compiler/react-compiler
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [cmsGroupId]);
 
 	const _getConfirmationMessage = () => {
 		const tagNames =
@@ -119,7 +122,7 @@ export default function MergeTagsModalContent({
 		closeModal();
 	};
 
-	const {handleSubmit} = useFormik({
+	const {handleSubmit, setFieldValue} = useFormik({
 		initialValues: {
 			currentTag,
 		},
@@ -394,11 +397,21 @@ export default function MergeTagsModalContent({
 						</label>
 
 						<ClaySelectWithOption
-							onChange={(event) =>
-								setCurrentTag(event.target.dataset as Tag)
-							}
-							options={selectIntoTags}
-							value={currentTag.label}
+							onChange={(event) => {
+								const selectedId = event.target.value;
+
+								const tag = selectedTags.find(
+									(item) => String(item.value) === selectedId
+								);
+
+								if (tag) {
+									setCurrentTag(tag);
+
+									setFieldValue('currentTag', tag);
+								}
+							}}
+							options={selectedTags}
+							value={currentTag.value}
 						/>
 					</Form.Group>
 				</ClayModal.Body>

@@ -17,8 +17,10 @@ import {
 import {format} from './format';
 import {parse} from './parse';
 
+export type FirstDayOfWeekLocale = keyof typeof FIRST_DAY_OF_WEEK_MAP;
+
 function getFirstDayOfWeek(
-	locale = Liferay.ThemeDisplay.getBCP47LanguageId() as keyof typeof FIRST_DAY_OF_WEEK_MAP
+	locale = Liferay.ThemeDisplay.getBCP47LanguageId() as FirstDayOfWeekLocale
 ): number {
 	if (!(locale in FIRST_DAY_OF_WEEK_MAP)) {
 		console.warn(`No locale for '${locale}' found. Defaulting to 'en-US'.`);

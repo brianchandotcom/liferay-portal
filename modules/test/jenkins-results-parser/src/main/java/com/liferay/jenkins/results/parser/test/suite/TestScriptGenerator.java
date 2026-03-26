@@ -179,15 +179,6 @@ public class TestScriptGenerator {
 		}
 
 		sb.append("}\n\n");
-		sb.append("function _execute_command {\n");
-		sb.append("\techo \"\"\n");
-		sb.append("\techo \"Running: ${1}\"\n");
-		sb.append("\techo \"\"\n\n");
-		sb.append("\t(\n");
-		sb.append("\t\teval \"${1}\"\n");
-		sb.append("\t)\n\n");
-		sb.append("\treturn ${?}\n");
-		sb.append("}\n\n");
 		sb.append("function _execute_commands {\n");
 		sb.append("\tlocal exit_code=0\n");
 		sb.append("\tlocal failed_command=\"\"\n");
@@ -200,7 +191,12 @@ public class TestScriptGenerator {
 		sb.append("\t\t\tcontinue\n");
 		sb.append("\t\tfi\n\n");
 		sb.append("\t\tlocal command_start_time=${SECONDS}\n\n");
-		sb.append("\t\t_execute_command \"${command}\"\n\n");
+		sb.append("\t\techo \"\"\n");
+		sb.append("\t\techo \"Running: ${command}\"\n");
+		sb.append("\t\techo \"\"\n\n");
+		sb.append("\t\t(\n");
+		sb.append("\t\t\teval \"${command}\"\n");
+		sb.append("\t\t)\n\n");
 		sb.append("\t\texit_code=${?}\n\n");
 		sb.append("\t\tif [ \"${exit_code}\" -ne 0 ]\n");
 		sb.append("\t\tthen\n");

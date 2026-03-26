@@ -142,6 +142,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -240,8 +241,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		InfoPermissionProvider infoPermissionProvider =
 			new ObjectEntryInfoPermissionProvider(
-				objectDefinition, _portletLocalService,
-				portletResourcePermission);
+				objectDefinition, _objectDefinitionModelResourcePermission,
+				_portletLocalService, portletResourcePermission);
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
@@ -835,6 +836,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
 
 	@Reference
 	private ObjectEntryDisplayContextFactory _objectEntryDisplayContextFactory;

@@ -15,9 +15,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 
 /**
  * @author Lourdes Fernández Besada
@@ -27,10 +27,14 @@ public class ObjectEntryInfoPermissionProvider
 
 	public ObjectEntryInfoPermissionProvider(
 		ObjectDefinition objectDefinition,
+		ModelResourcePermission<ObjectDefinition>
+			objectDefinitionModelResourcePermission,
 		PortletLocalService portletLocalService,
 		PortletResourcePermission portletResourcePermission) {
 
 		_objectDefinition = objectDefinition;
+		_objectDefinitionModelResourcePermission =
+			objectDefinitionModelResourcePermission;
 		_portletLocalService = portletLocalService;
 		_portletResourcePermission = portletResourcePermission;
 	}
@@ -66,8 +70,9 @@ public class ObjectEntryInfoPermissionProvider
 		}
 
 		try {
-			return PortletPermissionUtil.contains(
-				permissionChecker, portlet.getRootPortletId(), ActionKeys.VIEW);
+			return _objectDefinitionModelResourcePermission.contains(
+				permissionChecker, _objectDefinition.getObjectDefinitionId(),
+				ActionKeys.VIEW);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -82,6 +87,8 @@ public class ObjectEntryInfoPermissionProvider
 		ObjectEntryInfoPermissionProvider.class);
 
 	private final ObjectDefinition _objectDefinition;
+	private final ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
 	private final PortletLocalService _portletLocalService;
 	private final PortletResourcePermission _portletResourcePermission;
 

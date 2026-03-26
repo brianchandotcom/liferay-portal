@@ -13,6 +13,7 @@ import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
 import {ApiBuilderHelper} from './ApiBuilderHelper';
+import {CookiesApiHelper} from './CookiesApiHelper';
 import {DataEngineApiHelper} from './DataEngineApiHelper';
 import {DynamicDataMappingApiHelper} from './DynamicDataMappingApiHelper';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
@@ -118,6 +119,7 @@ export async function getHeader(
 export class ApiHelpers {
 	readonly apiBuilder: ApiBuilderHelper;
 	readonly baseUrl: string;
+	readonly cookies: CookiesApiHelper;
 	readonly featureFlag: FeatureFlagApiHelper;
 	readonly dataEngine: DataEngineApiHelper;
 	readonly dynamicDataMapping: DynamicDataMappingApiHelper;
@@ -194,6 +196,7 @@ export class ApiHelpers {
 		this.baseUrl = baseUrl
 			? baseUrl + '/o/'
 			: liferayConfig.environment.baseUrl + '/o/';
+		this.cookies = new CookiesApiHelper(this);
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.dataEngine = new DataEngineApiHelper(this);
 		this.dynamicDataMapping = new DynamicDataMappingApiHelper(this);

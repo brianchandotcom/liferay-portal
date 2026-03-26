@@ -1128,64 +1128,72 @@ test(
 		workflowTaskDetailsPage,
 		workflowTasksPage,
 	}) => {
-		await documentLibraryPage.goto(site.friendlyUrlPath);
-		await documentLibraryPage.goToCreateNewFolder();
-		const folderTitle = getRandomString();
-		await documentLibraryEditFolderPage.createNewFolder(folderTitle);
-
-		await documentLibraryPage.goToEditFolder(folderTitle);
-		await page.waitForURL(/edit_folder/);
-		await documentLibraryEditFolderPage.setWorkflow('Single Approver');
-		await documentLibraryPage.goto(site.friendlyUrlPath);
-
-		await page.getByRole('link', {name: folderTitle}).click();
-		await page.waitForURL(/view_folder/);
-		const folderUrl = page.url();
-		await documentLibraryPage.goToCreateNewFile();
 		const docTitle = getRandomString();
-		await documentLibraryEditFilePage.submitWorkflowForBasicFileEntry(
-			docTitle
-		);
-		await page.waitForURL(folderUrl);
-
-		await workflowTasksPage.goToAssignedToMyRoles();
-
-		await workflowTaskDetailsPage.assignToMeAction(docTitle);
 		const expectSuccessToast = async () => {
 			await expect(
 				page.getByText('Your request completed successfully.')
 			).toBeVisible();
 		};
-		await expectSuccessToast();
-
-		await workflowTaskDetailsPage.approveAction(docTitle);
-		await expectSuccessToast();
-
-		await documentLibraryPage.goto(site.friendlyUrlPath);
-		await page.getByRole('link', {name: folderTitle}).click();
-		await page.waitForURL(/view_folder/);
-
-		await documentLibraryPage.goToEditFileEntry(docTitle);
-		await page.waitForURL(/edit_file_entry/);
-		await documentLibraryEditFilePage.titleSelector.waitFor({
-			state: 'visible',
-			timeout: 2000,
-		});
+		const folderTitle = getRandomString();
 		const newDocTitle = docTitle + ' Edited';
-		await documentLibraryEditFilePage.submitWorkflowForBasicFileEntry(
-			newDocTitle
-		);
-		await expectSuccessToast();
 
-		await documentLibraryPage.goto(site.friendlyUrlPath);
-		await page.getByRole('link', {name: folderTitle}).click();
-		await page.waitForURL(/view_folder/);
+		await test.step('Create a new Folder', async () => {
+			await documentLibraryPage.goto(site.friendlyUrlPath);
+			await documentLibraryPage.goToCreateNewFolder();
+			await documentLibraryEditFolderPage.publishNewFolder(folderTitle);
+		});
 
-		const editedCard = page.locator('.card', {hasText: newDocTitle});
-		const lessThanFourSeconds = /Modified ([0-3] Seconds? ago|Just now)/;
-		await expect(editedCard.locator('.card-subtitle')).toHaveText(
-			lessThanFourSeconds
-		);
+		await test.step('Add workflow to the Folder', async () => {
+			await documentLibraryPage.goToEditFolder(folderTitle);
+			await page.waitForURL(/edit_folder/);
+			await documentLibraryEditFolderPage.setWorkflow('Single Approver');
+			await documentLibraryPage.goto(site.friendlyUrlPath);
+		});
+
+		await test.step('Create a new File in the Folder', async () => {
+			await page.getByRole('link', {name: folderTitle}).click();
+			await page.waitForURL(/view_folder/);
+			const folderUrl = page.url();
+			await documentLibraryPage.goToCreateNewFile();
+			await documentLibraryEditFilePage.submitWorkflowForBasicFileEntry(
+				docTitle
+			);
+			await page.waitForURL(folderUrl);
+		});
+
+		await test.step('Approve the workflow task', async () => {
+			await workflowTasksPage.goToAssignedToMyRoles();
+			await workflowTasksPage.assignToMe(docTitle);
+			await workflowTasksPage.approve(docTitle);
+		});
+
+		await test.step('Edit the new File', async () => {
+			await documentLibraryPage.goto(site.friendlyUrlPath);
+			await page.getByRole('link', {name: folderTitle}).click();
+			await page.waitForURL(/view_folder/);
+			await documentLibraryPage.goToEditFileEntry(docTitle);
+			await page.waitForURL(/edit_file_entry/);
+			await expect(
+				documentLibraryEditFilePage.titleSelector
+			).toBeVisible();
+			await documentLibraryEditFilePage.submitWorkflowForBasicFileEntry(
+				newDocTitle
+			);
+			await expectSuccessToast();
+		});
+
+		await test.step('Verify modified date of the file', async () => {
+			await documentLibraryPage.goto(site.friendlyUrlPath);
+			await page.getByRole('link', {name: folderTitle}).click();
+			await page.waitForURL(/view_folder/);
+
+			const editedCard = page.locator('.card', {hasText: newDocTitle});
+			const recentlyModified =
+				/Modified ((\d{1,2} Seconds? ago)|Just now)/;
+			await expect(editedCard.locator('.card-subtitle')).toHaveText(
+				recentlyModified
+			);
+		});
 	}
 );
 

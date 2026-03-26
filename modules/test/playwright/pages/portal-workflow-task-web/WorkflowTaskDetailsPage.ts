@@ -13,10 +13,8 @@ const MY_WORKFLOW_TASK_PORTLET_NAMESPACE =
 
 export class WorkflowTaskDetailsPage {
 	readonly activitiesButton: Locator;
-	readonly approveButton: Locator;
 	readonly approveMenuItem: Locator;
 	readonly assignToDialogIFRAME: FrameLocator;
-	readonly assignToMeButton: Locator;
 	readonly assignToMenuItem: Locator;
 	readonly assignToSingleSelect: Locator;
 	readonly assigneeDoneButton: Locator;
@@ -35,19 +33,14 @@ export class WorkflowTaskDetailsPage {
 	readonly reviewComment: Locator;
 	readonly subscribeButton: Locator;
 	readonly viewButton: Locator;
-	readonly workflowTaskIframe: FrameLocator;
 	readonly workflowTasksPage: WorkflowTasksPage;
 
 	constructor(page: Page) {
 		this.activitiesButton = page.getByRole('button', {name: 'Activities'});
-		this.approveButton = page.getByRole('menuitem', {name: 'Approve'});
 		this.approveMenuItem = page.getByRole('menuitem', {name: 'approve'});
 		this.assignToDialogIFRAME = page.frameLocator(
 			`iframe[id="${MY_WORKFLOW_TASK_PORTLET_NAMESPACE}assignToDialog_iframe_"]`
 		);
-		this.assignToMeButton = page.getByRole('menuitem', {
-			name: 'Assign to Me',
-		});
 		this.assignToMenuItem = page.locator(
 			'button[data-title="Assign to..."]'
 		);
@@ -79,43 +72,12 @@ export class WorkflowTaskDetailsPage {
 		this.commentsTextbox = page.frameLocator('iframe').getByRole('textbox');
 		this.viewButton = page.getByRole('button', {name: 'View'});
 		this.workflowTasksPage = new WorkflowTasksPage(page);
-		this.workflowTaskIframe = page.frameLocator(
-			`iframe[id*="${MY_WORKFLOW_TASK_PORTLET_NAMESPACE}"]`
-		);
 	}
 
 	async addComment(comment: string) {
 		await this.commentsButton.click();
 		await this.commentsTextbox.fill(comment);
 		await this.replyButton.click();
-		await this.page.waitForLoadState('networkidle');
-	}
-
-	async approveAction(assetTitle: string) {
-		const taskRow = this.page.locator('tr', {hasText: assetTitle});
-		await taskRow.getByLabel('Open Actions Menu').click();
-		await this.approveButton.click();
-		await this.doneButton.waitFor({
-			state: 'visible',
-			timeout: 1000,
-		});
-		await this.doneButton.click();
-		await this.page.waitForLoadState('networkidle');
-	}
-
-	async assignToMeAction(assetTitle: string) {
-		const taskRow = this.page.locator('tr', {hasText: assetTitle});
-		await taskRow.getByLabel('Open Actions Menu').click();
-		await this.assignToMeButton.click();
-		await this.workflowTaskIframe
-			.locator('button:has-text("Done")')
-			.waitFor({
-				state: 'visible',
-				timeout: 1000,
-			});
-		await this.workflowTaskIframe
-			.locator('button:has-text("Done")')
-			.click();
 		await this.page.waitForLoadState('networkidle');
 	}
 

@@ -1,6 +1,7 @@
 import AccountName from 'shared/components/table/cell-components/AccountName';
 import Checkbox from 'shared/components/Checkbox';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import getCN from 'classnames';
 import InfoPopover from 'shared/components/InfoPopover';
 import Label from 'shared/components/Label';
@@ -580,6 +581,21 @@ export const eventListColumns = {
 		className: 'table-cell-expand-small',
 		label: Liferay.Language.get('event-name')
 	}
+};
+
+/**
+ * Frontend Data Set Columns
+ */
+
+export const frontendDataSetColumns = {
+	cmsLabel: ({displayType, label}) => (
+		<ClayLabel
+			className='font-weight-semi-bold rounded'
+			displayType={displayType}
+		>
+			{label}
+		</ClayLabel>
+	)
 };
 
 /**

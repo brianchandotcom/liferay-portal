@@ -42,7 +42,9 @@ jest.mock(
 );
 
 const mockProps = {
+	addFragmentCollectionURL: '/o/test/add_fragment_collection',
 	body: 'Test Body',
+	fragmentCollections: [{fragmentCollectionId: 1, name: 'Set Name'}],
 	fragmentPortletNamespace: 'testNamespace',
 	fragmentsImportURL: '/testImportURL',
 	heading: 'Test Heading',
@@ -147,7 +149,10 @@ describe('MarketplaceButton', () => {
 			expect(openModalComponent).toHaveBeenCalledWith({
 				ModalComponent: MarketplacePresentationModal,
 				modalComponentProps: {
+					addFragmentCollectionURL:
+						mockProps.addFragmentCollectionURL,
 					body: mockProps.body,
+					fragmentCollections: mockProps.fragmentCollections,
 					fragmentPortletNamespace:
 						mockProps.fragmentPortletNamespace,
 					fragmentsImportURL: mockProps.fragmentsImportURL,

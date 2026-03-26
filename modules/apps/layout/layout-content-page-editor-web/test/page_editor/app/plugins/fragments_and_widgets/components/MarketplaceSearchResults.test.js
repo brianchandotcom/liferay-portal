@@ -74,6 +74,8 @@ jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
+			addFragmentCollectionURL: '/mockAddFragmentCollectionURL',
+			fragmentCollections: [{fragmentCollectionId: 1, name: 'Set Name'}],
 			fragmentPortletNamespace: 'mockNamespace',
 			fragmentsImportURL: '/mockImportURL',
 			portletNamespace: 'testPortlet',
@@ -449,7 +451,11 @@ describe('MarketplaceSearchResults', () => {
 			require('@liferay/layout-js-components-web').MarketplaceModal
 		).toHaveBeenCalledWith(
 			expect.objectContaining({
+				addFragmentCollectionURL: '/mockAddFragmentCollectionURL',
 				children: expect.anything(),
+				fragmentCollections: [
+					{fragmentCollectionId: 1, name: 'Set Name'},
+				],
 				fragmentPortletNamespace: 'mockNamespace',
 				fragmentsImportURL: '/mockImportURL',
 				hideBackButton: true,

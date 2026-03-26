@@ -212,12 +212,17 @@ public class CalendarStagedModelDataHandler
 					calendar.isEnableComments(), calendar.isEnableRatings(),
 					serviceContext);
 
-				importedCalendar.setUuid(calendar.getUuid());
-				importedCalendar.setCreateDate(calendar.getCreateDate());
-				importedCalendar.setModifiedDate(calendar.getModifiedDate());
+				if (!Objects.equals(
+						existingCalendar.getUuid(), calendar.getUuid())) {
 
-				importedCalendar = _calendarLocalService.updateCalendar(
-					importedCalendar);
+					importedCalendar.setUuid(calendar.getUuid());
+					importedCalendar.setCreateDate(calendar.getCreateDate());
+					importedCalendar.setModifiedDate(
+						calendar.getModifiedDate());
+
+					importedCalendar = _calendarLocalService.updateCalendar(
+						importedCalendar);
+				}
 			}
 		}
 		else {
@@ -301,11 +306,11 @@ public class CalendarStagedModelDataHandler
 				companyId, groupId, name);
 		}
 
-		if (existingStagedModel == null) {
-			return false;
+		if (existingStagedModel != null) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Reference

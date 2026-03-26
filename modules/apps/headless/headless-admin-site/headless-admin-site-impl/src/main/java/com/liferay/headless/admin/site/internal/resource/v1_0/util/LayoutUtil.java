@@ -165,7 +165,8 @@ public class LayoutUtil {
 					serviceContext.getAttribute(
 						"layout.page.template.entry.type"))) {
 
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"A master page cannot reference another master page");
 			}
 
 			ItemExternalReference itemExternalReference =
@@ -175,7 +176,9 @@ public class LayoutUtil {
 					itemExternalReference.getExternalReferenceCode())) {
 
 				if (itemExternalReference.getScope() != null) {
-					throw new UnsupportedOperationException();
+					throw new IllegalArgumentException(
+						"The master page reference does not belong to the " +
+							"same scope as the target page");
 				}
 
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -189,7 +192,9 @@ public class LayoutUtil {
 						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 						layoutPageTemplateEntry.getType())) {
 
-					throw new UnsupportedOperationException();
+					throw new IllegalArgumentException(
+						"The master page reference does not point to a " +
+							"master page");
 				}
 
 				if (layoutPageTemplateEntry == null) {
@@ -263,7 +268,8 @@ public class LayoutUtil {
 				 PageSpecification.Status.DRAFT)) ||
 			layout.isDraftLayout()) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The draft page specification is not in draft status");
 		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -276,7 +282,9 @@ public class LayoutUtil {
 			!Objects.equals(
 				draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The draft page specification's external reference code does " +
+					"not match the expected value");
 		}
 
 		return updateLayout(
@@ -458,7 +466,9 @@ public class LayoutUtil {
 				layout.getExternalReferenceCode(),
 				publishedContentPageSpecification.getExternalReferenceCode())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The published page specification's external reference code " +
+					"does not match the expected value");
 		}
 
 		int draftLayoutStatus = WorkflowConstants.STATUS_APPROVED;
@@ -688,7 +698,9 @@ public class LayoutUtil {
 		}
 
 		if (itemExternalReference.getScope() != null) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The master page references do not belong to the same scope " +
+					"as the current page");
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -700,7 +712,8 @@ public class LayoutUtil {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"A master page cannot reference another master page");
 		}
 
 		layoutPageTemplateEntry =
@@ -713,7 +726,8 @@ public class LayoutUtil {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The master page reference does not point to a master page");
 		}
 
 		if (layoutPageTemplateEntry == null) {
@@ -779,7 +793,9 @@ public class LayoutUtil {
 						return null;
 					}))) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The look and feel preferences cannot be modified using " +
+					"widget configuration");
 		}
 
 		if (configurationMap == null) {
@@ -964,7 +980,8 @@ public class LayoutUtil {
 				Validator.isNotNull(
 					settings.getThemeSpritemapClientExtension())) {
 
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"Utility pages do not support client extensions");
 			}
 
 			return;
@@ -1267,7 +1284,9 @@ public class LayoutUtil {
 			(widgetPageSections.length !=
 				layoutTypePortlet.getNumOfColumns())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The widget layout template columns do not match the widget " +
+					"page columns");
 		}
 
 		List<String> columns = layoutTypePortlet.getColumns();
@@ -1304,7 +1323,9 @@ public class LayoutUtil {
 				if (!columns.contains(widgetPageSection.getId()) ||
 					(!layoutCustomizable && customizable)) {
 
-					throw new UnsupportedOperationException();
+					throw new IllegalArgumentException(
+						"The widget page section is missing, or the page is " +
+							"not customizable");
 				}
 
 				for (WidgetPageWidgetInstance widgetPageWidgetInstance :

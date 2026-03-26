@@ -190,23 +190,7 @@ const SelectionControls = ({
 		<>
 			<ManagementToolbar.Item>
 				<ClayCheckbox
-					aria-label={
-						checkboxStatus === 'unchecked'
-							? sub(
-									Liferay.Language.get(
-										'select-all-x-on-the-page'
-									),
-									itemsType
-								)
-							: sub(
-									Liferay.Language.get(
-										'clear-selection.-there-are-currently-x-of-x-x-selected'
-									),
-									selectedItems,
-									itemsTotal,
-									itemsType
-								)
-					}
+					aria-labelledby="itemsSelectorLabel"
 					checked={checkboxStatus !== 'unchecked'}
 					disabled={disabled}
 					indeterminate={checkboxStatus === 'indeterminate'}
@@ -235,7 +219,25 @@ const SelectionControls = ({
 							}
 						);
 					}}
-				/>
+				>
+					<span className="sr-only" id="itemsSelectorLabel">
+						{checkboxStatus === 'unchecked'
+							? sub(
+									Liferay.Language.get(
+										'select-all-x-on-the-page'
+									),
+									itemsType
+								)
+							: sub(
+									Liferay.Language.get(
+										'clear-selection.-there-are-currently-x-of-x-x-selected'
+									),
+									selectedItems,
+									itemsTotal,
+									itemsType
+								)}
+					</span>
+				</ClayCheckbox>
 			</ManagementToolbar.Item>
 
 			<>

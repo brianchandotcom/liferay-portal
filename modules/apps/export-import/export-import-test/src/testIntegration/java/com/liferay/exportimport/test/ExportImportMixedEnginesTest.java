@@ -76,14 +76,14 @@ public class ExportImportMixedEnginesTest {
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
 
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		serviceContext.setAssetCategoryIds(
-			new long[] {assetCategory.getCategoryId()});
+			new long[] {assetCategory1.getCategoryId()});
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -107,7 +107,7 @@ public class ExportImportMixedEnginesTest {
 
 		_journalArticleLocalService.deleteArticle(journalArticle);
 
-		_assetCategoryLocalService.deleteCategory(assetCategory);
+		_assetCategoryLocalService.deleteCategory(assetCategory1);
 
 		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
 
@@ -116,15 +116,20 @@ public class ExportImportMixedEnginesTest {
 			larFile);
 
 		Assert.assertNotNull(
-			_assetCategoryLocalService.
-				fetchAssetCategoryByExternalReferenceCode(
-					assetCategory.getExternalReferenceCode(),
-					_group.getGroupId()));
-		Assert.assertNotNull(
 			_assetVocabularyLocalService.
 				fetchAssetVocabularyByExternalReferenceCode(
 					assetVocabulary.getExternalReferenceCode(),
 					_group.getGroupId()));
+
+		AssetCategory assetCategory2 =
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					assetCategory1.getExternalReferenceCode(),
+					_group.getGroupId());
+
+		Assert.assertNotNull(assetCategory2);
+		Assert.assertEquals(assetCategory1.getName(), assetCategory2.getName());
+
 		Assert.assertNotNull(
 			_journalArticleLocalService.
 				fetchLatestArticleByExternalReferenceCode(
@@ -136,12 +141,12 @@ public class ExportImportMixedEnginesTest {
 	public void testExportImportAssetTagsReferencedByJournalArticle()
 		throws Exception {
 
-		AssetTag assetTag = AssetTestUtil.addTag(_group.getGroupId());
+		AssetTag assetTag1 = AssetTestUtil.addTag(_group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
+		serviceContext.setAssetTagNames(new String[] {assetTag1.getName()});
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -165,15 +170,19 @@ public class ExportImportMixedEnginesTest {
 
 		_journalArticleLocalService.deleteArticle(journalArticle);
 
-		_assetTagLocalService.deleteAssetTag(assetTag.getTagId());
+		_assetTagLocalService.deleteAssetTag(assetTag1.getTagId());
 
 		_exportImportLocalService.importLayouts(
 			_addImportLayoutConfiguration(_group.getGroupId(), parameterMap),
 			larFile);
 
-		Assert.assertNotNull(
+		AssetTag assetTag2 =
 			_assetTagLocalService.getAssetTagByExternalReferenceCode(
-				assetTag.getExternalReferenceCode(), _group.getGroupId()));
+				assetTag1.getExternalReferenceCode(), _group.getGroupId());
+
+		Assert.assertNotNull(assetTag2);
+		Assert.assertEquals(assetTag1.getName(), assetTag2.getName());
+
 		Assert.assertNotNull(
 			_journalArticleLocalService.
 				fetchLatestArticleByExternalReferenceCode(

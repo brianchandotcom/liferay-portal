@@ -181,7 +181,6 @@ public class TestScriptGenerator {
 		sb.append("}\n\n");
 		sb.append("function _execute_commands {\n");
 		sb.append("\tlocal exit_code=0\n");
-		sb.append("\tlocal failed_command=\"\"\n");
 		sb.append("\tlocal results_output=\"Results:\\n\\n\"\n\n");
 		sb.append("\tfor command in \"${@}\"\n");
 		sb.append("\tdo\n");
@@ -200,7 +199,6 @@ public class TestScriptGenerator {
 		sb.append("\t\texit_code=${?}\n\n");
 		sb.append("\t\tif [ \"${exit_code}\" -ne 0 ]\n");
 		sb.append("\t\tthen\n");
-		sb.append("\t\t\tfailed_command=\"${command}\"\n");
 		sb.append("\t\t\tresults_output+=\"[FAILED \"\n");
 		sb.append("\t\telse\n");
 		sb.append("\t\t\tresults_output+=\"[SUCCESS \"\n");
@@ -212,11 +210,6 @@ public class TestScriptGenerator {
 		sb.append("\tdone\n\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo -e \"${results_output}\"\n\n");
-		sb.append("\tif [ -n \"${failed_command}\" ]\n");
-		sb.append("\tthen\n");
-		sb.append("\t\techo \"Failed while executing: ");
-		sb.append("\\\"${failed_command}\\\"\"\n");
-		sb.append("\tfi\n\n");
 		sb.append("\texit ${exit_code}\n");
 		sb.append("}\n\n");
 		sb.append("main");

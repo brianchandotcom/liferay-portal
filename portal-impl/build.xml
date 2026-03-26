@@ -223,7 +223,7 @@
 
 		<delete file="ServiceBuilder.temp" />
 
-		<ant dir="../portal-kernel" inheritAll="false" target="compile" />
+		<ant dir="../portal-kernel" inheritAll="false" target="compile" unless:true="${build.service.skip.compile}" />
 	</target>
 
 	<target name="build-service-counter">
@@ -292,9 +292,17 @@
 	</target>
 
 	<target name="build-services">
-		<antcall target="build-service-counter" />
-		<antcall target="build-service-portal" />
-		<antcall target="build-service-portlets" />
+		<antcall target="build-service-counter">
+			<param name="build.service.skip.compile" value="true" />
+		</antcall>
+		<antcall target="build-service-portal">
+			<param name="build.service.skip.compile" value="true" />
+		</antcall>
+		<antcall target="build-service-portlets">
+			<param name="build.service.skip.compile" value="true" />
+		</antcall>
+
+		<ant dir="../portal-kernel" inheritAll="false" target="compile" />
 
 		<java
 			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"

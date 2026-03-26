@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {designLibrariesPageTest} from './fixtures/designLibrariesPageTest';
 
 const test = mergeTests(
@@ -21,11 +22,11 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('Check if Design Library is working correctly', async ({
+test('Check if design Library is working correctly', async ({
 	designLibrariesPage,
 	page,
 }) => {
-	await test.step('Can navigate to Design Libraries page', async () => {
+	await test.step('Can navigate to design libraries page', async () => {
 		await designLibrariesPage.goto();
 
 		await expect(page.getByTestId('header')).toHaveText('Design Libraries');
@@ -52,7 +53,7 @@ test('Check if Design Library is working correctly', async ({
 	});
 });
 
-test('Can navigate to a Design Library dashboard', async ({
+test('Can navigate to a design library dashboard', async ({
 	apiHelpers,
 	designLibrariesPage,
 	page,
@@ -60,14 +61,14 @@ test('Can navigate to a Design Library dashboard', async ({
 	const designLibraryName = getRandomString();
 
 	const depot =
-		await test.step('Create temporary Design Library via headless', async () => {
+		await test.step('Create temporary design library via headless', async () => {
 			return await apiHelpers.jsonWebServicesDepot.addDepotEntry(
 				designLibraryName,
 				{type: apiHelpers.jsonWebServicesDepot.depotType.DESIGN_LIBRARY}
 			);
 		});
 
-	await test.step('Navigate to a Design Library dashboard', async () => {
+	await test.step('Navigate to a design library dashboard', async () => {
 		await designLibrariesPage.goto();
 
 		const designLibraryLink = page.getByRole('link', {
@@ -129,9 +130,105 @@ test('Can navigate to a Design Library dashboard', async ({
 		).toBeVisible();
 	});
 
-	await test.step('Remove temporary Design Library', async () => {
+	await test.step('Remove temporary design library', async () => {
 		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
 			depot.depotEntryId
 		);
+	});
+});
+
+test('Should allow managing design libraries through creation, validation, and deletion', async ({
+	designLibrariesPage,
+	page,
+}) => {
+	const mainDesignLibraryName = getRandomString();
+
+	const successScenarios = [
+		{
+			description: getRandomString(),
+			name: mainDesignLibraryName,
+			stepName: 'Create a design library with all fields populated',
+		},
+		{
+			name: getRandomString(),
+			stepName: 'Create a design library with only mandatory fields',
+		},
+	];
+
+	async function expectRedirectionToLibrary(name: string) {
+		const breadcrumb = page.getByRole('navigation', {
+			name: 'Breadcrumb',
+		});
+
+		await expect(breadcrumb).toBeVisible();
+
+		const links = breadcrumb.getByRole('link');
+
+		await expect(links).toHaveCount(2);
+
+		await expect(links.first()).toHaveText('Design Libraries');
+		await expect(links.last()).toHaveText(name);
+	}
+
+	for (const scenario of successScenarios) {
+		await test.step(scenario.stepName, async () => {
+			await designLibrariesPage.goto();
+
+			await designLibrariesPage.create(scenario);
+
+			await waitForAlert(
+				page,
+				`Success:${scenario.name} was created successfully.`
+			);
+
+			await expectRedirectionToLibrary(scenario.name);
+		});
+	}
+
+	await test.step('Prevent creation of design library with empty name', async () => {
+		await designLibrariesPage.goto();
+
+		await designLibrariesPage.create({
+			name: '',
+		});
+
+		await expect(
+			page
+				.locator('.form-feedback-item')
+				.getByText('Error: This field is required.')
+		).toBeVisible();
+
+		await expect(page.getByRole('button', {name: 'Save'})).toBeDisabled();
+	});
+
+	await test.step('Prevent creation of duplicate design libraries and maintain modal state', async () => {
+		await designLibrariesPage.goto();
+
+		await designLibrariesPage.create({
+			name: mainDesignLibraryName,
+		});
+
+		await waitForAlert(page, 'Error:Please enter a unique name.', {
+			timeout: 5000,
+			type: 'danger',
+		});
+
+		await expect(
+			page
+				.locator('.form-feedback-item')
+				.getByText('Error: Please enter a unique name.')
+		).toBeVisible();
+
+		await expect(page.getByLabel('Name')).toHaveValue(
+			mainDesignLibraryName
+		);
+	});
+
+	await test.step('Delete created design libraries', async () => {
+		await designLibrariesPage.goto();
+
+		for (const {name} of successScenarios) {
+			await designLibrariesPage.delete(name);
+		}
 	});
 });

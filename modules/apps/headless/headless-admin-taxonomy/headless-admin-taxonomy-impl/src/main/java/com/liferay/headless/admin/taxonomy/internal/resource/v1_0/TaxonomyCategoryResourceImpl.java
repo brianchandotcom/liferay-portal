@@ -336,7 +336,7 @@ public class TaxonomyCategoryResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryService.fetchGroupDepotEntry(
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 			assetLibraryId);
 
 		return SearchUtil.search(
@@ -363,9 +363,7 @@ public class TaxonomyCategoryResourceImpl
 					AssetCategoriesPermission.RESOURCE_NAME, assetLibraryId)
 			).build(),
 			booleanQuery -> {
-				if ((depotEntry != null) &&
-					(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
-
+				if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
 					return;
 				}
 

@@ -222,15 +222,15 @@ public abstract class BaseBundlePersistentResource
 
 	@Override
 	protected void update() {
+		JSONObject dataJSONObject = getDataJSONObject();
+
+		if (dataJSONObject == null) {
+			start();
+
+			return;
+		}
+
 		if (!isController()) {
-			JSONObject dataJSONObject = getDataJSONObject();
-
-			if (dataJSONObject == null) {
-				start();
-
-				return;
-			}
-
 			setControllerBuildURL(
 				dataJSONObject.optString("controller_build_url"));
 

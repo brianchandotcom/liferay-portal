@@ -3870,6 +3870,34 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static boolean isBuildCachingEnabled(
+		String jobName, String testSuiteName) {
+
+		if (!isCloudCINode()) {
+			return false;
+		}
+
+		String buildCachingEnabled = System.getenv("BUILD_CACHING_ENABLED");
+
+		if (!isNullOrEmpty(buildCachingEnabled)) {
+			return Objects.equals(buildCachingEnabled, "true");
+		}
+
+		try {
+			buildCachingEnabled = getBuildProperty(
+				"build.caching.enabled", jobName, testSuiteName);
+
+			if (Objects.equals(buildCachingEnabled, "true")) {
+				return true;
+			}
+		}
+		catch (IOException ioException) {
+			return false;
+		}
+
+		return false;
+	}
+
 	public static boolean isCINode() {
 		if (_ciNode == null) {
 			if (isNullOrEmpty(System.getenv("JENKINS_URL")) &&

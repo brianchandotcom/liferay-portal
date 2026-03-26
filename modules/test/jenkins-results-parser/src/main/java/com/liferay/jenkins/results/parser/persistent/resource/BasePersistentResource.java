@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -160,6 +162,10 @@ public abstract class BasePersistentResource implements PersistentResource {
 	}
 
 	protected JSONObject getDataJSONObject() {
+		if (!isBuildCachingEnabled()) {
+			return _dataJSONObject;
+		}
+
 		String dataS3ObjectPath = _getDataS3ObjectPath();
 
 		if (!CloudBucketUtil.isS3ObjectPathAvailable(dataS3ObjectPath)) {
@@ -212,6 +218,37 @@ public abstract class BasePersistentResource implements PersistentResource {
 		}
 
 		return true;
+	}
+
+	protected boolean isBuildCachingEnabled() {
+		if (_buildCachingEnabled != null) {
+			return _buildCachingEnabled;
+		}
+
+		String currentTopLevelBuildURL = getCurrentTopLevelBuildURL();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(currentTopLevelBuildURL)) {
+			_buildCachingEnabled = false;
+
+			return _buildCachingEnabled;
+		}
+
+		Matcher matcher = _buildURLPattern.matcher(currentTopLevelBuildURL);
+
+		if (!matcher.find()) {
+			_buildCachingEnabled = false;
+
+			return _buildCachingEnabled;
+		}
+
+		Map<String, String> buildParameters =
+			JenkinsResultsParserUtil.getBuildParameters(
+				currentTopLevelBuildURL);
+
+		_buildCachingEnabled = JenkinsResultsParserUtil.isBuildCachingEnabled(
+			matcher.group("jobName"), buildParameters.get("CI_TEST_SUITE"));
+
+		return _buildCachingEnabled;
 	}
 
 	protected boolean isController() {
@@ -271,6 +308,12 @@ public abstract class BasePersistentResource implements PersistentResource {
 			"status", String.valueOf(getStatus())
 		);
 
+		if (!isBuildCachingEnabled()) {
+			_dataJSONObject = dataJSONObject;
+
+			return;
+		}
+
 		try {
 			CloudBucketUtil.uploadS3Object(
 				String.valueOf(dataJSONObject), _getDataS3ObjectPath());
@@ -311,9 +354,14 @@ public abstract class BasePersistentResource implements PersistentResource {
 
 	private static final long _MAX_WAIT_TIME = 1000 * 60 * 120;
 
+	private static final Pattern _buildURLPattern = Pattern.compile(
+		"https?://.+/job/(?<jobName>[^/]+)/(?<buildNumber>\\d+)");
+
 	private final Map<String, Artifact> _artifacts = new HashMap<>();
+	private Boolean _buildCachingEnabled;
 	private final BuildDatabase _buildDatabase;
 	private String _controllerBuildURL;
+	private JSONObject _dataJSONObject;
 	private String _producerBuildURL;
 	private JenkinsMaster _producerJenkinsMaster;
 	private long _producerQueueId;

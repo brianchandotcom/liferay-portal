@@ -284,7 +284,10 @@ public class JobFactory {
 
 		String key = null;
 
-		if (jsonObject == null) {
+		if ((jsonObject == null) &&
+			JenkinsResultsParserUtil.isBuildCachingEnabled(
+				jobName, testSuiteName)) {
+
 			jsonObject = JobCacheUtil.getCachedJobJSONObject(
 				jobName, portalGitWorkingDirectory, testSuiteName);
 		}

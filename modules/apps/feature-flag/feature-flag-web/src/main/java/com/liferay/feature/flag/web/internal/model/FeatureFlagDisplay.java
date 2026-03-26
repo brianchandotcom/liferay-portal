@@ -5,7 +5,6 @@
 
 package com.liferay.feature.flag.web.internal.model;
 
-import com.liferay.portal.feature.flag.model.FeatureFlagWrapper;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 
 import java.util.List;

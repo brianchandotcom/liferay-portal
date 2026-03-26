@@ -6,11 +6,11 @@
 package com.liferay.feature.flag.web.internal.display;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBag;
+import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBagProvider;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagDisplay;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.feature.flag.FeatureFlagsBag;
-import com.liferay.portal.feature.flag.FeatureFlagsBagProvider;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;

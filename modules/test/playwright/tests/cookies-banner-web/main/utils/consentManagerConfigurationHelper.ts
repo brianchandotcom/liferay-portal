@@ -16,13 +16,9 @@ interface ConsentManagerConfiguration {
 	storeConsent?: boolean;
 }
 
-export async function clearConsentCookies(systemSettingsPage) {
-	await systemSettingsPage.page
-		.context()
-		.clearCookies({name: /^CONSENT_TYPE_/});
-	await systemSettingsPage.page
-		.context()
-		.clearCookies({name: /^USER_CONSENT_CONFIGURED/});
+export async function clearConsentCookies(page) {
+	await page.context().clearCookies({name: /^CONSENT_TYPE_/});
+	await page.context().clearCookies({name: /^USER_CONSENT_CONFIGURED/});
 }
 
 export async function resetAllConsentManagerConfigurations(systemSettingsPage) {

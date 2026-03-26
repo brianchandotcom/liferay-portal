@@ -13,19 +13,38 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import {
+	disableSystemFeatureFlag,
+	enableSystemFeatureFlag,
+} from '../../../utils/systemFeatureFlag';
 import {zipFolder} from '../../../utils/zip';
 
 const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	featureFlagsTest({
-		'LPD-48372': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
 	fragmentsPagesTest,
 	pageEditorPagesTest
 );
+
+test.beforeEach(async ({page}) => {
+	await enableSystemFeatureFlag({
+		page,
+		title: 'AMD Loader',
+		type: 'Deprecation',
+	});
+});
+
+test.afterEach(async ({page}) => {
+	await disableSystemFeatureFlag({
+		page,
+		title: 'AMD Loader',
+		type: 'Deprecation',
+	});
+});
 
 test(
 	'View react fragment is rendered correctly in page',

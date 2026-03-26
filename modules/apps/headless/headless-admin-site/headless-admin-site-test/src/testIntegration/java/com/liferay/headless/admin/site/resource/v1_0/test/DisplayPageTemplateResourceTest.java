@@ -1782,10 +1782,9 @@ public class DisplayPageTemplateResourceTest
 				randomDisplayPageTemplate.setParentFolder(
 					nonexistingDisplayPageTemplateFolder);
 
-				return _toDisplayPageTemplate(
-					_displayPageTemplateResource.postSiteDisplayPageTemplate(
-						testGroup.getExternalReferenceCode(),
-						_toDisplayPageTemplate(randomDisplayPageTemplate)));
+				return _displayPageTemplateResource.postSiteDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					randomDisplayPageTemplate);
 			});
 	}
 
@@ -1908,11 +1907,10 @@ public class DisplayPageTemplateResourceTest
 				postDisplayPageTemplate.setParentFolder(
 					nonexistingDisplayPageTemplateFolder);
 
-				return _toDisplayPageTemplate(
-					_displayPageTemplateResource.putSiteDisplayPageTemplate(
-						testGroup.getExternalReferenceCode(),
-						postDisplayPageTemplate.getExternalReferenceCode(),
-						_toDisplayPageTemplate(postDisplayPageTemplate)));
+				return _displayPageTemplateResource.putSiteDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					postDisplayPageTemplate.getExternalReferenceCode(),
+					postDisplayPageTemplate);
 			});
 	}
 

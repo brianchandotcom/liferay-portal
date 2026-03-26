@@ -1782,7 +1782,7 @@ public class DisplayPageTemplateResourceTest
 				randomDisplayPageTemplate.setParentFolder(
 					nonexistingDisplayPageTemplateFolder);
 
-				return _displayPageTemplateResource.postSiteDisplayPageTemplate(
+				return displayPageTemplateResource.postSiteDisplayPageTemplate(
 					testGroup.getExternalReferenceCode(),
 					randomDisplayPageTemplate);
 			});
@@ -1907,7 +1907,7 @@ public class DisplayPageTemplateResourceTest
 				postDisplayPageTemplate.setParentFolder(
 					nonexistingDisplayPageTemplateFolder);
 
-				return _displayPageTemplateResource.putSiteDisplayPageTemplate(
+				return displayPageTemplateResource.putSiteDisplayPageTemplate(
 					testGroup.getExternalReferenceCode(),
 					postDisplayPageTemplate.getExternalReferenceCode(),
 					postDisplayPageTemplate);

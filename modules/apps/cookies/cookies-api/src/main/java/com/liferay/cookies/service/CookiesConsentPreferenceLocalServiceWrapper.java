@@ -51,6 +51,18 @@ public class CookiesConsentPreferenceLocalServiceWrapper
 			addCookiesConsentPreference(cookiesConsentPreference);
 	}
 
+	@Override
+	public com.liferay.cookies.model.CookiesConsentPreference
+			addCookiesConsentPreference(
+				long userId, String domain, java.util.Date expirationDate,
+				String name, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cookiesConsentPreferenceLocalService.
+			addCookiesConsentPreference(
+				userId, domain, expirationDate, name, value);
+	}
+
 	/**
 	 * Creates a new cookies consent preference with the primary key. Does not add the cookies consent preference to the database.
 	 *
@@ -115,6 +127,27 @@ public class CookiesConsentPreferenceLocalServiceWrapper
 
 		return _cookiesConsentPreferenceLocalService.
 			deleteCookiesConsentPreference(cookiesConsentPreferenceId);
+	}
+
+	@Override
+	public void deleteCookiesConsentPreference(
+			long userId, String domain, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreference(
+			userId, domain, name);
+	}
+
+	@Override
+	public void deleteCookiesConsentPreferences(long userId) {
+		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreferences(
+			userId);
+	}
+
+	@Override
+	public void deleteCookiesConsentPreferences(long userId, String domain) {
+		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreferences(
+			userId, domain);
 	}
 
 	/**
@@ -265,6 +298,14 @@ public class CookiesConsentPreferenceLocalServiceWrapper
 			getCookiesConsentPreference(cookiesConsentPreferenceId);
 	}
 
+	@Override
+	public com.liferay.cookies.model.CookiesConsentPreference
+		getCookiesConsentPreference(long userId, String domain, String name) {
+
+		return _cookiesConsentPreferenceLocalService.
+			getCookiesConsentPreference(userId, domain, name);
+	}
+
 	/**
 	 * Returns a range of all the cookies consent preferences.
 	 *
@@ -282,6 +323,14 @@ public class CookiesConsentPreferenceLocalServiceWrapper
 
 		return _cookiesConsentPreferenceLocalService.
 			getCookiesConsentPreferences(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.cookies.model.CookiesConsentPreference>
+		getCookiesConsentPreferences(long userId, String domain) {
+
+		return _cookiesConsentPreferenceLocalService.
+			getCookiesConsentPreferences(userId, domain);
 	}
 
 	/**
@@ -368,4 +417,4 @@ public class CookiesConsentPreferenceLocalServiceWrapper
 		_cookiesConsentPreferenceLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1645628574
+// LIFERAY-SERVICE-BUILDER-HASH:492301751

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -66,6 +67,11 @@ public interface CookiesConsentPreferenceLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CookiesConsentPreference addCookiesConsentPreference(
 		CookiesConsentPreference cookiesConsentPreference);
+
+	public CookiesConsentPreference addCookiesConsentPreference(
+			long userId, String domain, Date expirationDate, String name,
+			String value)
+		throws PortalException;
 
 	/**
 	 * Creates a new cookies consent preference with the primary key. Does not add the cookies consent preference to the database.
@@ -112,6 +118,14 @@ public interface CookiesConsentPreferenceLocalService
 	public CookiesConsentPreference deleteCookiesConsentPreference(
 			long cookiesConsentPreferenceId)
 		throws PortalException;
+
+	public void deleteCookiesConsentPreference(
+			long userId, String domain, String name)
+		throws PortalException;
+
+	public void deleteCookiesConsentPreferences(long userId);
+
+	public void deleteCookiesConsentPreferences(long userId, String domain);
 
 	/**
 	 * @throws PortalException
@@ -211,6 +225,10 @@ public interface CookiesConsentPreferenceLocalService
 			long cookiesConsentPreferenceId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CookiesConsentPreference getCookiesConsentPreference(
+		long userId, String domain, String name);
+
 	/**
 	 * Returns a range of all the cookies consent preferences.
 	 *
@@ -225,6 +243,10 @@ public interface CookiesConsentPreferenceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CookiesConsentPreference> getCookiesConsentPreferences(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CookiesConsentPreference> getCookiesConsentPreferences(
+		long userId, String domain);
 
 	/**
 	 * Returns the number of cookies consent preferences.
@@ -267,4 +289,4 @@ public interface CookiesConsentPreferenceLocalService
 		CookiesConsentPreference cookiesConsentPreference);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:18513469
+// LIFERAY-SERVICE-BUILDER-HASH:1908241217

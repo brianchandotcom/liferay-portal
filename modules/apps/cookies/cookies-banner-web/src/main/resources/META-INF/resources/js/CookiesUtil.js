@@ -22,28 +22,50 @@ export const userConfigDateCookieName = 'USER_CONSENT_CONFIGURED_DATE';
 export function acceptAllCookies(
 	consentRenewalPeriod,
 	optionalConsentCookieTypeNames,
-	requiredConsentCookieTypeNames
+	requiredConsentCookieTypeNames,
+	storeConsent
 ) {
 	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
-		setCookie(consentRenewalPeriod, optionalConsentCookieTypeName, 'true');
+		setCookie(
+			consentRenewalPeriod,
+			optionalConsentCookieTypeName,
+			storeConsent,
+			'true'
+		);
 	});
 
 	requiredConsentCookieTypeNames.forEach((requiredConsentCookieTypeName) => {
-		setCookie(consentRenewalPeriod, requiredConsentCookieTypeName, 'true');
+		setCookie(
+			consentRenewalPeriod,
+			requiredConsentCookieTypeName,
+			storeConsent,
+			'true'
+		);
 	});
 }
 
 export function declineAllCookies(
 	consentRenewalPeriod,
 	optionalConsentCookieTypeNames,
-	requiredConsentCookieTypeNames
+	requiredConsentCookieTypeNames,
+	storeConsent
 ) {
 	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
-		setCookie(consentRenewalPeriod, optionalConsentCookieTypeName, 'false');
+		setCookie(
+			consentRenewalPeriod,
+			optionalConsentCookieTypeName,
+			storeConsent,
+			'false'
+		);
 	});
 
 	requiredConsentCookieTypeNames.forEach((requiredConsentCookieTypeName) => {
-		setCookie(consentRenewalPeriod, requiredConsentCookieTypeName, 'true');
+		setCookie(
+			consentRenewalPeriod,
+			requiredConsentCookieTypeName,
+			storeConsent,
+			'true'
+		);
 	});
 }
 
@@ -110,6 +132,30 @@ export async function getCookie(name) {
 	return await fetchStoredCookie(name);
 }
 
+export async function hasPreviouslyStoredConsent() {
+	return await fetch(
+		`/o/cookies/v1.0/cookies-consent-preferences/by-name/${userConfigCookieName}`,
+		{
+			headers: HEADERS,
+			method: 'GET',
+		}
+	)
+		.then((response) => {
+			if (response.status === 200) {
+				return response.json();
+			}
+
+			return false;
+		})
+		.then((jsonObject) => {
+			if (jsonObject !== undefined && jsonObject !== false) {
+				return true;
+			}
+
+			return false;
+		});
+}
+
 export function removeAllCookies(
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames
@@ -125,7 +171,12 @@ export function removeAllCookies(
 	removeCookieUtil(userConfigDateCookieName);
 }
 
-export function setCookie(consentRenewalPeriod, name, value) {
+export function setCookie(
+	consentRenewalPeriod,
+	name,
+	storeConsent = false,
+	value
+) {
 	const expirationInSeconds =
 		60 * 60 * 24 * 365 * (consentRenewalPeriod / 12);
 
@@ -136,7 +187,8 @@ export function setCookie(consentRenewalPeriod, name, value) {
 
 	if (
 		Liferay.FeatureFlags['LPD-75032'] &&
-		Liferay.ThemeDisplay.isSignedIn()
+		Liferay.ThemeDisplay.isSignedIn() &&
+		storeConsent
 	) {
 		const expirationDate = new Date();
 		expirationDate.setSeconds(
@@ -159,12 +211,13 @@ export function setCookie(consentRenewalPeriod, name, value) {
 	}
 }
 
-export function setUserConfigCookie(consentRenewalPeriod) {
-	setCookie(consentRenewalPeriod, userConfigCookieName, 'true');
+export function setUserConfigCookie(consentRenewalPeriod, storeConsent) {
+	setCookie(consentRenewalPeriod, userConfigCookieName, storeConsent, 'true');
 
 	setCookie(
 		consentRenewalPeriod,
 		userConfigDateCookieName,
+		storeConsent,
 		new Date().getTime()
 	);
 

@@ -142,7 +142,7 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check" id="<portlet:namespace />storeConsent" name="<portlet:namespace />storeConsent" type="checkbox" />
+							<input class="toggle-switch-check" disabled id="<portlet:namespace />storeConsent" name="<portlet:namespace />storeConsent" type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>

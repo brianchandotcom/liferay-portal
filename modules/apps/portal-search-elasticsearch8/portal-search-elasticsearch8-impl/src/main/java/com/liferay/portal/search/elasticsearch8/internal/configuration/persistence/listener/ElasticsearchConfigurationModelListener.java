@@ -69,7 +69,7 @@ public class ElasticsearchConfigurationModelListener
 		int indexMaxResultWindow = GetterUtil.getInteger(
 			properties.get("indexMaxResultWindow"));
 		int trackTotalHitsLimit = GetterUtil.getInteger(
-			properties.get("trackTotalHitsLimit"));
+			properties.get("trackTotalHitsLimit"), 2147483647);
 
 		if (trackTotalHitsLimit >= indexMaxResultWindow) {
 			return;

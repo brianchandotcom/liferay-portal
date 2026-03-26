@@ -589,11 +589,9 @@ test('LPD-62112 Cannot Preview Pending Version of Page in a Publication', async 
 
 	await page.getByRole('menuitem', {name: ctCollection.body.name}).click();
 
-	const publicationIFrame = page.frameLocator('iframe[src*="preview"]');
+	const previewContent = page.locator('.publications-render-view-content');
 
-	const newHeading = publicationIFrame.getByText('Edited');
-
-	await expect(newHeading).toBeVisible();
+	await expect(previewContent.getByText('Edited')).toBeVisible();
 
 	// Disable workflow for Content Pages
 

@@ -1,0 +1,123 @@
+components:
+    schemas:
+        CookiesConsentPreference:
+            description:
+                Stored value of a user's consent preference cookie.
+            properties:
+                domain:
+                    description:
+                        The domain of the consent preference cookie.
+                    type: string
+                expirationDate:
+                    format: date-time
+                    type: string
+                id:
+                    description:
+                        The cookies consent preference ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        The name of the consent preference cookie.
+                    type: string
+                userId:
+                    description:
+                        The user's ID.
+                    format: int64
+                    type: integer
+                value:
+                    description:
+                        The value of the consent preference cookie.
+                    type: string
+            required:
+                -   domain
+                -   expirationDate
+                -   name
+                -   userId
+                -   value
+            type: object
+info:
+    description:
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.cookies.rest.client', and version '1.0.0'."
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Cookies
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/cookies-consent-preferences":
+        delete:
+            description:
+                Deletes all cookies consent preference entries of the user who made the request.
+            operationId: deleteCookiesConsentPreferences
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CookiesConsentPreference"]
+        put:
+            description:
+                Replaces the cookies consent preference with information sent in the request body. Any missing fields
+                are deleted unless they are required.
+            operationId: putCookiesConsentPreference
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CookiesConsentPreference"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CookiesConsentPreference"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CookiesConsentPreference"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CookiesConsentPreference"
+                    description:
+                        "Cookies Consent Preference successfully replaced"
+            tags: ["CookiesConsentPreference"]
+    "/cookies-consent-preferences/by-name/{name}":
+        delete:
+            description:
+                Deletes the specified cookies consent preference of the user who made the request.
+            operationId: deleteCookiesConsentPreferenceByName
+            parameters:
+                -   in: path
+                    name: name
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CookiesConsentPreference"]
+        get:
+            description:
+                Retrieves the specified cookies consent preference of the user who made the request.
+            operationId: getCookiesConsentPreferenceByName
+            parameters:
+                -   in: path
+                    name: name
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CookiesConsentPreference"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CookiesConsentPreference"
+            tags: ["CookiesConsentPreference"]

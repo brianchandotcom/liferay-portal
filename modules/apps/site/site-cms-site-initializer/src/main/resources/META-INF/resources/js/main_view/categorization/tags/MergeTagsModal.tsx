@@ -90,7 +90,7 @@ export default function MergeTagsModalContent({
 	};
 
 	const _handleTagChange = (items: Tag[]) => {
-		setSelectedTags(tags.filter((item) => items.includes(item)));
+		setSelectedTags(items);
 	};
 
 	const mergeTags = (tag: Tag) => {

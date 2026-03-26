@@ -90,6 +90,47 @@ public class FileEntry implements Serializable {
 	private Supplier<String> _alternativeTextSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getExtension() {
+		if (_extensionSupplier != null) {
+			extension = _extensionSupplier.get();
+
+			_extensionSupplier = null;
+		}
+
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+
+		_extensionSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExtension(
+		UnsafeSupplier<String, Exception> extensionUnsafeSupplier) {
+
+		_extensionSupplier = () -> {
+			try {
+				return extensionUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String extension;
+
+	@JsonIgnore
+	private Supplier<String> _extensionSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -555,6 +596,45 @@ public class FileEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<com.liferay.portal.vulcan.scope.Scope> _scopeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getSize() {
+		if (_sizeSupplier != null) {
+			size = _sizeSupplier.get();
+
+			_sizeSupplier = null;
+		}
+
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+
+		_sizeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSize(UnsafeSupplier<String, Exception> sizeUnsafeSupplier) {
+		_sizeSupplier = () -> {
+			try {
+				return sizeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String size;
+
+	@JsonIgnore
+	private Supplier<String> _sizeSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "optional field that specifies the thumbnail of the file to be used, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.thumbnailURL`)"
 	)
@@ -639,6 +719,22 @@ public class FileEntry implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(alternativeText));
+
+			sb.append("\"");
+		}
+
+		String extension = getExtension();
+
+		if (extension != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"extension\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(extension));
 
 			sb.append("\"");
 		}
@@ -797,6 +893,22 @@ public class FileEntry implements Serializable {
 			sb.append("\"scope\": ");
 
 			sb.append(scope);
+		}
+
+		String size = getSize();
+
+		if (size != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"size\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(size));
+
+			sb.append("\"");
 		}
 
 		String thumbnailURL = getThumbnailURL();

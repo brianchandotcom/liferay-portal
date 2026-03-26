@@ -45,12 +45,12 @@ import {
 	TableToolbar,
 } from '@ckeditor/ckeditor5-table/dist/index.js';
 import {BlockToolbar} from '@ckeditor/ckeditor5-ui/dist/index.js';
+import {WritingAssistant} from '@liferay/ai-hub-cell-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import AICreator from '../plugins/AICreator';
 import HeadlessItemSelector from '../plugins/HeadlessItemSelector';
 import ItemSelector from '../plugins/ItemSelector';
-import WritingAssistant from '../plugins/WritingAssistant/WritingAssistant';
 import {EEditorConfigPreset, EEditorVariant} from './types';
 
 const getDefaultEditorConfig = ({

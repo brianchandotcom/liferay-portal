@@ -71,9 +71,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -240,6 +243,70 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 
 		return ResponseEntity.ok(account);
+	}
+
+	@PostMapping("product-feedback/{id}")
+	public void postProductFeedback(
+			@RequestBody String json, @PathVariable("id") long id)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("POST email dispatch " + json);
+		}
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		if (!jsonObject.has("modelDTOProduct")) {
+			return;
+		}
+
+		String objectActionTriggerKey = jsonObject.getString(
+			"objectActionTriggerKey");
+
+		if (!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
+			return;
+		}
+
+		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
+			"modelCPDefinition");
+
+		Product product = _marketplaceService.getProduct(
+			modelCPDefinitionJSONObject.getLong("CProductId"));
+
+		_marketplaceService.postNotificationQueueEntry(
+			null, "MARKETPLACE-PRODUCT-FEEDBACK",
+			new HashMapBuilder<String, Object>().put(
+				"[%PRODUCT_TYPE%]", product.getProductType()
+			).put(
+				"[%EMAIL_DESCRIPTION%]",
+				StringBundler.concat(
+					"p>It has been a few weeks since you started using <b>CMP </b>" +
+						"Beta via the Marketplace. We hope it’s helping you" +
+							"streamline your Liferay operations. Could you spare" +
+								"<b>5 minutes</b> to let us know how we’re doing?</p>)")
+			).put(
+				"[%ENVIROMENT%]", "liferay"
+			).put(
+				"[%CATALOG_NAME%]",
+				() -> {
+					Catalog catalog = product.getCatalog();
+
+					return catalog.getName();
+				}
+			).put(
+				"[%ORDER_ID%]", String.valueOf(product.getId())
+			).put(
+				"[%PRODUCT_NAME%]",
+				product.getName(
+				).get(
+					modelCPDefinitionJSONObject.getString("defaultLanguageId")
+				)
+			).put(
+				"[%PRODUCT_THUMBNAIL%]",
+				new URL(
+					"http://" + lxcDXPMainDomain + product.getThumbnail()
+				).toString()
+			).build());
 	}
 
 	@PostMapping("/tax-calculate/{orderId}")
@@ -445,40 +512,37 @@ public class MarketplaceRestController extends BaseRestController {
 		return publisherAssetLinks;
 	}
 
-	@PostMapping("product-feedback-notification")
-	private void _processProductFeedbackNotification(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
+	@PostMapping("request-product-feedback/{orderId}")
+	private void _postRequestProductFeedback(
+			@AuthenticationPrincipal Jwt jwt, @PathVariable long orderId)
 		throws Exception {
 
 		_defaultServiceAccountPermission.check(jwt);
 
+		Order order = _marketplaceService.getOrder(orderId);
+
+		OrderItem[] orderItems = order.getOrderItems();
+
+		OrderItem orderItem = orderItems[0];
+
+		long skuId = orderItem.getSkuId();
+
 		if (_log.isInfoEnabled()) {
-			_log.info("POST product feedback " + json);
+			_log.info("POST product feedback " + skuId);
 		}
 
-		JSONObject jsonObject = new JSONObject(json);
+		Product product = _marketplaceService.getProductBySkuId(skuId);
 
-		if (!jsonObject.has("modelDTOProduct")) {
-			return;
-		}
-
-		String objectActionTriggerKey = jsonObject.getString(
-			"objectActionTriggerKey");
-
-		if (!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
-			return;
-		}
-
-		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
-			"modelCPDefinition");
-
-		Product product = _marketplaceService.getProductBySkuId(
-			modelCPDefinitionJSONObject.getLong("skuId"));
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				product.getProductId());
 
 		_marketplaceService.postNotificationQueueEntry(
-			null, "MARKETPLACE-PRODUCT-FEEDBACK",
-			new HashMapBuilder<String, Object>().put(
-				"[%APP_TYPE%]", product.getProductType()
+			order.getCreatorEmailAddress(), "MARKETPLACE-PRODUCT-FEEDBACK",
+			HashMapBuilder.put(
+				"[%CATALOG_NAME%]",
+				product.getCatalog(
+				).getName()
 			).put(
 				"[%EMAIL_DESCRIPTION%]",
 				StringBundler.concat(
@@ -487,27 +551,28 @@ public class MarketplaceRestController extends BaseRestController {
 					"streamline your Liferay operations. Could you spare ",
 					"<b>5 minutes</b> to let us know how we’re doing?</p>")
 			).put(
-				"[%ENVIROMENT%]", "liferay"
+				"[%ENVIROMENT%]",
+				lxcDXPServerProtocol + "://" + lxcDXPMainDomain
 			).put(
-				"[%CATALOG_NAME%]",
-				() -> {
-					Catalog catalog = product.getCatalog();
-
-					return catalog.getName();
-				}
+				"[%ORDER_ID%]", String.valueOf(orderId)
 			).put(
-				"[%ORDER_ID%]", String.valueOf(product.getId())
-			).put(
-				"[%CPDEFINITION_NAME%]",
+				"[%PRODUCT_NAME%]",
 				product.getName(
 				).get(
-					modelCPDefinitionJSONObject.getString("defaultLanguageId")
+					"en_US"
 				)
 			).put(
-				"[%CPDEFINITION_THUMBNAIL%]",
+				"[%PRODUCT_THUMBNAIL%]",
 				new URL(
-					"http://" + lxcDXPMainDomain + product.getThumbnail()
-				).toString()
+					StringBundler.concat(
+						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+						product.getThumbnail())
+				).toString(
+				).replaceAll(
+					"(?<=accounts/)-?\\d+(?=/images)", "-1"
+				)
+			).put(
+				"[%PRODUCT_TYPE%]", productSpecificationsMap.get("app-beta")
 			).build());
 	}
 
@@ -583,70 +648,6 @@ public class MarketplaceRestController extends BaseRestController {
 			orderMetadataJSONObject.put(
 				"exchangeRate", currency.getRate()
 			).toString());
-	}
-
-	@PostMapping("product-feedback/{id}")
-	public void postProductFeedback(@RequestBody String json, @PathVariable("id") long id) throws Exception{
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST email dispatch " + json);
-		}
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		if (!jsonObject.has("modelDTOProduct")) {
-			return;
-		}
-
-		String objectActionTriggerKey = jsonObject.getString(
-				"objectActionTriggerKey");
-
-		if (!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
-			return;
-		}
-
-		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
-				"modelCPDefinition");
-
-
-		Product product = _marketplaceService.getProduct(
-				modelCPDefinitionJSONObject.getLong("CProductId"));
-
-		_marketplaceService.postNotificationQueueEntry(
-				null, "MARKETPLACE-PRODUCT-FEEDBACK",
-				new HashMapBuilder<String, Object>().put(
-						"[%APP_TYPE%]",
-						product.getProductType()
-				).put(
-						"[%EMAIL_DESCRIPTION%]",
-						StringBundler.concat(
-								"p>It has been a few weeks since you started using <b>CMP </b>" +
-										"Beta via the Marketplace. We hope it’s helping you" +
-										"streamline your Liferay operations. Could you spare" +
-										"<b>5 minutes</b> to let us know how we’re doing?</p>)")
-				).put(
-						"[%ENVIROMENT%]",
-						"liferay"
-				).put(
-						"[%CATALOG_NAME%]",
-						() -> {
-							Catalog catalog = product.getCatalog();
-							return catalog.getName();
-						}
-				).put(
-						"[%ORDER_ID%]", String.valueOf(product.getId())
-				).put(
-						"[%CPDEFINITION_NAME%]",
-						product.getName(
-						).get(
-								modelCPDefinitionJSONObject.getString("defaultLanguageId")
-						)
-				).put(
-						"[%CPDEFINITION_THUMBNAIL%]",
-						new URL(
-								"http://" + lxcDXPMainDomain + product.getThumbnail()
-						).toString()
-				).build());
 	}
 
 	private static final int _ACCOUNT_TYPE_BUSINESS = 2;

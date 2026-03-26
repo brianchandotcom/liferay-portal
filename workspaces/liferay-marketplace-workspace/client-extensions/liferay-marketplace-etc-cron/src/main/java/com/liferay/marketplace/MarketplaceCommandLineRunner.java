@@ -31,6 +31,7 @@ import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResou
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
@@ -80,7 +81,7 @@ public class MarketplaceCommandLineRunner
 
 		_invoke(this::_processPendingOrders, "Pending Orders");
 
-		_invoke(this::_processProductFeedback, "Product Feedback");
+		_invoke(this::_processProductFeedbackNotification, "Product Feedback");
 
 		_invoke(
 			this::_processProjectsUsingMarketplaceApps,
@@ -478,6 +479,67 @@ public class MarketplaceCommandLineRunner
 			).toUri());
 	}
 
+	private void _processProductFeedbackNotification() throws Exception {
+		ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+
+		int windowSizeHours = 6;
+
+		int windowIndex = now.getHour() / windowSizeHours;
+
+		ZonedDateTime currentWindowStart = now.withHour(
+			windowIndex * windowSizeHours
+		).withMinute(
+			0
+		).withSecond(
+			0
+		).withNano(
+			0
+		);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
+		String filter = StringBundler.concat(
+				"orderTypeExternalReferenceCode eq 'CMP_BETA' and createDate ge ",
+				formatter.format(
+						currentWindowStart.minusDays(
+								7
+						).minusHours(
+								windowSizeHours
+						)),
+				" and createDate le ",
+				formatter.format(currentWindowStart.minusDays(7)));
+
+		Page<Order> page = _getOrdersPage(filter, -1, -1);
+
+		if (page.getTotalCount() == 0) {
+			if (_log.isInfoEnabled()) {
+				_log.info("There are no product feedback to be sent");
+			}
+
+			return;
+		}
+
+		for (Order order : page.getItems()) {
+			try {
+				OrderItem[] orderItems = order.getOrderItems();
+
+				OrderItem orderItem = orderItems[0];
+
+				if (orderItem == null) {
+					continue;
+				}
+
+				_sendProductFeedbackNotification(order.getId());
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Error processing product feedback for order " +
+					order.getId(),
+					exception);
+			}
+		}
+	}
+
 	private void _postTrialExpire(long orderId) throws Exception {
 		post(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -734,67 +796,6 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
-	private void _processProductFeedback() throws Exception {
-		ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-
-		int windowSizeHours = 6;
-
-		int windowIndex = now.getHour() / windowSizeHours;
-
-		ZonedDateTime currentWindowStart = now.withHour(
-			windowIndex * windowSizeHours
-		).withMinute(
-			0
-		).withSecond(
-			0
-		).withNano(
-			0
-		);
-
-		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-
-		String filter = String.format(
-			"orderTypeExternalReferenceCode eq '%s' and createDate ge %s and " +
-				"createDate lt %s",
-			"CMP_BETA",
-			formatter.format(currentWindowStart.minusHours(windowSizeHours)),
-			formatter.format(currentWindowStart));
-
-		Page<Order> page = _getOrdersPage(filter, -1, -1);
-
-		if (page.getTotalCount() == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info("There are no product feedback to be sent");
-			}
-
-			return;
-		}
-
-		for (Order order : page.getItems()) {
-			try {
-				OrderItem[] orderItems = order.getOrderItems();
-
-				if (ArrayUtil.isEmpty(orderItems)) {
-					continue;
-				}
-
-				OrderItem orderItem = orderItems[0];
-
-				if (orderItem.getOrderId() == null) {
-					continue;
-				}
-
-				_sendProductFeedback(orderItem.getSkuId());
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Error processing product feedback for order " +
-						order.getId(),
-					exception);
-			}
-		}
-	}
-
 	private void _processProjectsUsingMarketplaceApps() throws Exception {
 		Map<String, JSONObject> projectsUsingMarketplace = new HashMap<>();
 
@@ -958,31 +959,17 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
-	private void _sendProductFeedback(Long skuId) throws Exception {
-		JSONObject bodyJSONObject = new JSONObject(
-		).put(
-			"modelCPDefinition",
-			new JSONObject(
-			).put(
-				"defaultLanguageId", "en_US"
-			).put(
-				"skuId", skuId
-			)
-		).put(
-			"modelDTOProduct", true
-		).put(
-			"objectActionTriggerKey", "onAfterAdd"
-		);
-
+	private void _sendProductFeedbackNotification(long orderId) throws Exception {
 		post(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes),
-			bodyJSONObject.toString(),
+				"",
 			UriComponentsBuilder.fromUriString(
 				_liferayMarketplaceEtcSpringBootURL +
-					"/marketplace/product-feedback-notification"
+					"/marketplace/request-product-feedback/" + orderId
 			).build(
-			).toUri());
+			).toUri()
+		);
 	}
 
 	private void _updateOrder(long orderId, int orderStatus) throws Exception {

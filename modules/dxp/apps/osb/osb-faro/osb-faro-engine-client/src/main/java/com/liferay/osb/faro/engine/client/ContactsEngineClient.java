@@ -217,8 +217,8 @@ public interface ContactsEngineClient {
 		String assetType, int cur, int delta, List<OrderByField> orderByFields);
 
 	public Results<AssetSummary> getAssetSummaries(
-		FaroProject faroProject, long channelId, String keywords, int rangeKey,
-		int cur, int delta, String sort);
+		FaroProject faroProject, long channelId, String filter, String keywords,
+		int rangeKey, int cur, int delta, String sort);
 
 	public Results<AssetSummaryType> getAssetSummaryTypes(
 		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,

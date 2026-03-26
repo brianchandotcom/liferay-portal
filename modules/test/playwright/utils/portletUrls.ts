@@ -38,6 +38,8 @@ export const PORTLET_URLS = {
 	cmsVocabularies: 'web/cms/categorization/view-vocabularies',
 	collections:
 		'/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet',
+	commerceChannels:
+		'/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet',
 	contentDashboard:
 		'/~/control_panel/manage?p_p_id=com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet',
 	depotAdmin:

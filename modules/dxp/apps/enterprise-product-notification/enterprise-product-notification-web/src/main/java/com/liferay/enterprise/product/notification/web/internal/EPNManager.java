@@ -126,8 +126,8 @@ public class EPNManager {
 	private final KeyValuePair[] _keyValuePairs = {
 		new KeyValuePair(
 			"enterprise.search",
-			"dxp/latest/en/using-search/liferay-enterprise-search" +
-				"/activating-liferay-enterprise-search.html")
+			"w/dxp/search/liferay-enterprise-search" +
+				"/deactivating-liferay-enterprise-search")
 	};
 
 	@Reference

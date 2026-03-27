@@ -816,7 +816,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewNoPortletsPresentCP(portlet = null, panel = null, category = null) {
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = ${panel});
 

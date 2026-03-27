@@ -1294,7 +1294,7 @@ definition {
 		}
 
 		task ("Then on the Applications Menu -> Commerce, the Discount Manager can see only Price Lists and Promotions") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Commerce");
 

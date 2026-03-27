@@ -99,7 +99,7 @@ definition {
 
 	@priority = 3
 	test AssertSearchTuningDisabled {
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 

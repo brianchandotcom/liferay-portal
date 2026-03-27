@@ -553,7 +553,7 @@ definition {
 		task ("Assert the Custom Object is present on the application menu and go to it") {
 			Navigator.openURL();
 
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
@@ -562,7 +562,7 @@ definition {
 				key_portlet = "Custom Objects 163066",
 				locator1 = "ApplicationsMenu#PORTLET");
 
-			ApplicationsMenuHelper.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				portlet = "Custom Objects 163066");
 		}

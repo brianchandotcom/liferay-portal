@@ -282,7 +282,7 @@ definition {
 		}
 
 		task ("Assert the role is working") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Applications");
 
@@ -659,7 +659,7 @@ definition {
 		}
 
 		task ("Assert the role is working") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Applications");
 

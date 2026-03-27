@@ -1224,7 +1224,7 @@ definition {
 			locator1 = "Questions#TAGS_LIST_TAB_NAMES",
 			value1 = "Display the page in English (United States)");
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		AssertElementPresent(
 			key_panel = "Control Panel",

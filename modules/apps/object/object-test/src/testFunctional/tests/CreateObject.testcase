@@ -2967,7 +2967,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
@@ -3243,7 +3243,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Painel de Controle");
 
@@ -6568,7 +6568,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
@@ -6646,7 +6646,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 

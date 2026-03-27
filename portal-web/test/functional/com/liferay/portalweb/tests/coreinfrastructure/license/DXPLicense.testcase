@@ -28,7 +28,7 @@ definition {
 
 		SignIn.signInTestSetup();
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		AssertElementPresent(
 			key_panel = "Applications",

@@ -92,7 +92,7 @@ definition {
 		property custom.properties = "company.log.enabled=false";
 
 		task ("Verify the user cannot access the company logs portlet with company logging disabled") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Control Panel");
 

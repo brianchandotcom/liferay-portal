@@ -1,18 +1,45 @@
 @import 'cadmin-variables';
 
-html#{$cadmin-selector} .cadmin .layout__length-input {
-	&__button.btn {
-		border-bottom-left-radius: 0;
-		border-top-left-radius: 0;
-		font-size: 0.75rem;
-		min-width: 45px;
+html#{$cadmin-selector} .cadmin {
+	.layout__length-input {
+		&__button.btn {
+			background-color: transparent;
+			font-size: 12px;
+			height: 28px;
+			margin: 2px;
+			padding: 4px;
+			width: 28px;
+			z-index: 1;
+
+			&:focus,
+			&:hover {
+				background-color: rgba($cadmin-dark, 0.06);
+			}
+		}
+
+		.form-control {
+			padding-right: 4px;
+
+			&:not(:focus-visible) {
+				border-color: transparent;
+			}
+		}
+
+		.input-group {
+			background-color: $cadmin-light;
+			border: 1px solid $cadmin-secondary-l3;
+
+			&:not(:focus-within) .input-group-inset-item-before {
+				border-color: transparent;
+			}
+		}
 	}
 
-	&__dropdown {
-		min-width: 96px;
-
-		.dropdown-item {
-			font-size: 0.75rem;
+	div:not(.old).layout__length-input {
+		.input-group {
+			&:hover {
+				border-color: $cadmin-secondary-l0;
+			}
 		}
 	}
 }

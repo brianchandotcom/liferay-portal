@@ -26,6 +26,7 @@ import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -430,6 +431,42 @@ public class EditAssetListDisplayContextTest {
 
 	@Test
 	public void testGetResolvedReferencedModelsGroupIds() throws Exception {
+		long siteGroupId = 100L;
+
+		Group siteGroup = _setUpGroup(siteGroupId, false, "");
+
+		Mockito.when(
+			_groupService.getGroup(siteGroupId)
+		).thenReturn(
+			siteGroup
+		);
+
+		EditAssetListDisplayContext displayContext = Mockito.spy(
+			_getEditAssetListDisplayContext(new UnicodeProperties()));
+
+		Mockito.doReturn(
+			new long[] {siteGroupId}
+		).when(
+			displayContext
+		).getReferencedModelsGroupIds();
+
+		Mockito.when(
+			_groupService.getGroup(
+				Mockito.anyLong(), Mockito.eq(GroupConstants.CMS))
+		).thenThrow(
+			new NoSuchGroupException()
+		);
+
+		long[] resolvedGroupIds =
+			displayContext.getResolvedReferencedModelsGroupIds();
+
+		Assert.assertTrue(ArrayUtil.contains(resolvedGroupIds, siteGroupId));
+	}
+
+	@Test
+	public void testGetResolvedReferencedModelsGroupIdsWithSpaces()
+		throws Exception {
+
 		long cmsGroupId = 300L;
 
 		Group cmsGroup = _setUpGroup(cmsGroupId);
@@ -478,39 +515,6 @@ public class EditAssetListDisplayContextTest {
 		Assert.assertFalse(ArrayUtil.contains(resolvedGroupIds, spaceGroupId));
 		Assert.assertEquals(
 			Arrays.toString(resolvedGroupIds), 2, resolvedGroupIds.length);
-	}
-
-	@Test(expected = PortalException.class)
-	public void testGetResolvedReferencedModelsGroupIdsWithSpaces()
-		throws Exception {
-
-		long spaceGroupId = 200L;
-
-		Group spaceGroup = _setUpGroup(spaceGroupId, true, "1");
-
-		Mockito.when(
-			_groupService.getGroup(spaceGroupId)
-		).thenReturn(
-			spaceGroup
-		);
-
-		Mockito.when(
-			_groupService.getGroup(
-				Mockito.anyLong(), Mockito.eq(GroupConstants.CMS))
-		).thenThrow(
-			new PortalException()
-		);
-
-		EditAssetListDisplayContext displayContext = Mockito.spy(
-			_getEditAssetListDisplayContext(new UnicodeProperties()));
-
-		Mockito.doReturn(
-			new long[] {spaceGroupId}
-		).when(
-			displayContext
-		).getReferencedModelsGroupIds();
-
-		displayContext.getResolvedReferencedModelsGroupIds();
 	}
 
 	@Test

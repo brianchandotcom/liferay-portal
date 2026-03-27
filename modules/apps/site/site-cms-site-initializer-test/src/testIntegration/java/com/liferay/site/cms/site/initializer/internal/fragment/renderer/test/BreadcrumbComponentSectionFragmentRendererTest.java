@@ -74,6 +74,12 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 		CMSTestUtil.getOrAddGroup(
 			BreadcrumbComponentSectionFragmentRendererTest.class);
 
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		_cmsAdministratorUser = UserTestUtil.addUser(
+			_company, RoleConstants.CMS_ADMINISTRATOR);
+
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
@@ -83,12 +89,6 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 			).build(),
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
-
-		_company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		_cmsAdministratorUser = UserTestUtil.addUser(
-			_company, RoleConstants.CMS_ADMINISTRATOR);
 	}
 
 	@Test
@@ -115,7 +115,6 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 			jsonArray -> _assertLabelsEquals(
 				jsonArray, "unpin-from-product-menu", "space-settings",
 				"export", "import"));
-
 		_testGetProps(
 			ActionKeys.VIEW,
 			jsonArray -> _assertLabelsEquals(

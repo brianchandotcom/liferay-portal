@@ -210,7 +210,6 @@ public class BreadcrumbDisplayContext {
 							).put(
 								"target", "manageMembersModal"
 							));
-
 						unsafeConsumer.accept(
 							JSONUtil.put(
 								"href", StringPool.BLANK

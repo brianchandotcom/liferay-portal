@@ -815,7 +815,9 @@ public class GitWorkingDirectory {
 
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
-		if (executionResult.getExitValue() != 0) {
+		if ((executionResult == null) ||
+			(executionResult.getExitValue() != 0)) {
+
 			System.out.println(gitBranchesSHAReportStringBuilder.toString());
 
 			throw new GitWorkingDirectoryRuntimeException(
@@ -967,7 +969,9 @@ public class GitWorkingDirectory {
 
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
-		if (executionResult.getExitValue() != 0) {
+		if ((executionResult == null) ||
+			(executionResult.getExitValue() != 0)) {
+
 			System.out.println(gitBranchesSHAReportStringBuilder.toString());
 
 			throw new GitWorkingDirectoryRuntimeException(

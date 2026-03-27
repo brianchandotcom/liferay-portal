@@ -212,7 +212,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/commons-collections4.jar</file-name>
-				<version>4.4</version>
+				<version>4.5.0</version>
 				<project-name>Apache Commons Collections</project-name>
 				<project-url>http://commons.apache.org/proper/commons-collections</project-url>
 				<licenses>

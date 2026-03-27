@@ -13,4 +13,8 @@ public class DSRSiteInitializerFDSNames {
 	public static final String DSR_ROOM =
 		DSRSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-room";
 
+	public static final String MOST_ACTIVE_VISITORS =
+		DSRSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-most-active-visitors";
+
 }

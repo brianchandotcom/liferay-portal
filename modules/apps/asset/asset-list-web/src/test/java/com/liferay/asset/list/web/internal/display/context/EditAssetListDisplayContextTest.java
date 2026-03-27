@@ -348,7 +348,7 @@ public class EditAssetListDisplayContextTest {
 	public void testGetReferencedModelsGroupIdsWithConnectedDepots()
 		throws Exception {
 
-		long connectedDepotGroupId = 2002L;
+		long connectedDepotGroupId = RandomTestUtil.randomLong();
 		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
 
 		Mockito.when(
@@ -365,7 +365,7 @@ public class EditAssetListDisplayContextTest {
 			Collections.singletonList(depotEntry)
 		);
 
-		long scopeGroupId = 1001L;
+		long scopeGroupId = RandomTestUtil.randomLong();
 
 		Group scopeGroup = _setUpGroup(scopeGroupId);
 
@@ -396,7 +396,7 @@ public class EditAssetListDisplayContextTest {
 	public void testGetReferencedModelsGroupIdsWithNoConnectedDepots()
 		throws Exception {
 
-		long scopeGroupId = 1001L;
+		long scopeGroupId = RandomTestUtil.randomLong();
 
 		Group scopeGroup = _setUpGroup(scopeGroupId);
 
@@ -424,14 +424,14 @@ public class EditAssetListDisplayContextTest {
 		EditAssetListDisplayContext displayContext =
 			_getEditAssetListDisplayContext(new UnicodeProperties());
 
-		long[] resultGroupIds = displayContext.getReferencedModelsGroupIds();
-
-		Assert.assertArrayEquals(new long[] {scopeGroupId}, resultGroupIds);
+		Assert.assertArrayEquals(
+			new long[] {scopeGroupId},
+			displayContext.getReferencedModelsGroupIds());
 	}
 
 	@Test
 	public void testGetResolvedReferencedModelsGroupIds() throws Exception {
-		long siteGroupId = 100L;
+		long siteGroupId = RandomTestUtil.randomLong();
 
 		Group siteGroup = _setUpGroup(siteGroupId, false, "");
 
@@ -467,7 +467,7 @@ public class EditAssetListDisplayContextTest {
 	public void testGetResolvedReferencedModelsGroupIdsWithSpaces()
 		throws Exception {
 
-		long cmsGroupId = 300L;
+		long cmsGroupId = RandomTestUtil.randomLong();
 
 		Group cmsGroup = _setUpGroup(cmsGroupId);
 
@@ -478,7 +478,7 @@ public class EditAssetListDisplayContextTest {
 			cmsGroup
 		);
 
-		long siteGroupId = 100L;
+		long siteGroupId = RandomTestUtil.randomLong();
 
 		Group siteGroup = _setUpGroup(siteGroupId, false, "");
 
@@ -488,7 +488,7 @@ public class EditAssetListDisplayContextTest {
 			siteGroup
 		);
 
-		long spaceGroupId = 200L;
+		long spaceGroupId = RandomTestUtil.randomLong();
 
 		Group spaceGroup = _setUpGroup(spaceGroupId, true, "1");
 
@@ -593,7 +593,7 @@ public class EditAssetListDisplayContextTest {
 
 	@Test
 	public void testGetVocabularyIdsWithMissingVocabulary() throws Exception {
-		long spaceGroupId = 5001L;
+		long spaceGroupId = RandomTestUtil.randomLong();
 
 		Group spaceGroup = _setUpGroup(spaceGroupId);
 
@@ -630,7 +630,7 @@ public class EditAssetListDisplayContextTest {
 			AssetVocabularyGroupRel assetVocabularyGroupRel = Mockito.mock(
 				AssetVocabularyGroupRel.class);
 
-			long vocabularyId = 999L;
+			long vocabularyId = RandomTestUtil.randomLong();
 
 			Mockito.when(
 				assetVocabularyGroupRel.getVocabularyId()
@@ -668,7 +668,7 @@ public class EditAssetListDisplayContextTest {
 
 	@Test
 	public void testGetVocabularyIdsWithSpaceCMS() throws Exception {
-		long spaceGroupId = 5001L;
+		long spaceGroupId = RandomTestUtil.randomLong();
 
 		Group spaceGroup = _setUpGroup(spaceGroupId);
 
@@ -707,7 +707,7 @@ public class EditAssetListDisplayContextTest {
 
 			AssetVocabulary vocabulary = Mockito.mock(AssetVocabulary.class);
 
-			long vocabularyId = 999L;
+			long vocabularyId = RandomTestUtil.randomLong();
 
 			Mockito.when(
 				assetVocabularyGroupRel.getVocabularyId()

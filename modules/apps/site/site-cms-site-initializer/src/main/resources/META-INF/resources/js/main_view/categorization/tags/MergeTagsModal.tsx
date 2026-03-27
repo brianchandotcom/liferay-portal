@@ -11,7 +11,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {useFormik} from 'formik';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
 import ApiHelper from '../../../common/services/ApiHelper';
@@ -38,6 +38,8 @@ export default function MergeTagsModalContent({
 	const [tags, setTags] = useState<Tag[]>([]);
 	const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
+	const selectedTagRef = useRef(false);
+
 	useEffect(() => {
 		const getTags = async () => {
 			const {data} = await ApiHelper.get<{items: any[]}>(
@@ -54,14 +56,18 @@ export default function MergeTagsModalContent({
 
 				setTags(allTags);
 
-				const selectedTag = allTags.find(
-					(tag: Tag) =>
-						tag.value === selectIntoTags[0].value &&
-						tag.label === selectIntoTags[0].label
-				);
+				if (!selectedTagRef.current) {
+					const selectedTag = allTags.find(
+						(tag: Tag) =>
+							tag.value === selectIntoTags[0].value &&
+							tag.label === selectIntoTags[0].label
+					);
 
-				if (selectedTag) {
-					setSelectedTags([selectedTag]);
+					if (selectedTag) {
+						setSelectedTags([selectedTag]);
+
+						selectedTagRef.current = true;
+					}
 				}
 			}
 		};

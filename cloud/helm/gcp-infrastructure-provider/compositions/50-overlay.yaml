@@ -1,0 +1,40 @@
+{{- if $overlay.enabled }}
+apiVersion: storage.gcp.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-overlay-bucket
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $baseName }}-overlay
+spec:
+    forProvider:
+        {{- if $cmkEnabled }}
+        encryption:
+            defaultKmsKeyName: {{ $cmkKeyName }}
+        {{- end }}
+        forceDestroy: {{ $forceDestroy }}
+        labels:
+            {{- $labels | toYaml | nindent 12 }}
+        location: {{ $overlay.region | default $region }}
+        storageClass: STANDARD
+        uniformBucketLevelAccess: true
+        versioning:
+            enabled: true
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: storage.gcp.m.upbound.io/v1beta1
+kind: BucketIAMMember
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-gsa-overlay-bucket-iam
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+spec:
+    forProvider:
+        bucketRef:
+            name: {{ $baseName }}-overlay
+        member: serviceAccount:{{ $gsaEmail }}
+        role: roles/storage.objectViewer
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

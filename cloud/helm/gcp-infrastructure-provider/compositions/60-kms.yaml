@@ -1,0 +1,60 @@
+{{- if $cmkEnabled }}
+apiVersion: kms.gcp.m.upbound.io/v1beta1
+kind: KeyRing
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-keyring
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $baseName }}-keyring
+spec:
+    forProvider:
+        location: {{ $region }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: kms.gcp.m.upbound.io/v1beta1
+kind: CryptoKey
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-cryptokey
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $baseName }}-key
+spec:
+    forProvider:
+        keyRingSelector:
+            matchControllerRef: true
+        purpose: ENCRYPT_DECRYPT
+        rotationPeriod: 86400s
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: kms.gcp.m.upbound.io/v1beta1
+kind: CryptoKeyIAMMember
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-sql-kms-binding
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+spec:
+    forProvider:
+        cryptoKeyIdRef:
+            name: {{ $baseName }}-key
+        member: serviceAccount:service-{{ $env.projectNumber }}@gcp-sa-cloud-sql.iam.gserviceaccount.com
+        role: roles/cloudkms.cryptoKeyEncrypterDecrypter
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: kms.gcp.m.upbound.io/v1beta1
+kind: CryptoKeyIAMMember
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-storage-kms-binding
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+spec:
+    forProvider:
+        cryptoKeyIdRef:
+            name: {{ $baseName }}-key
+        member: serviceAccount:service-{{ $env.projectNumber }}@gs-project-accounts.iam.gserviceaccount.com
+        role: roles/cloudkms.cryptoKeyEncrypterDecrypter
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

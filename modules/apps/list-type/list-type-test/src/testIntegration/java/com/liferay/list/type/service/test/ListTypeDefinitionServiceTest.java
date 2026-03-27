@@ -6,29 +6,33 @@
 package com.liferay.list.type.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.constants.ListTypeActionKeys;
+import com.liferay.list.type.constants.ListTypeConstants;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeDefinitionService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
 
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -49,203 +53,324 @@ public class ListTypeDefinitionServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_adminUser = TestPropsValues.getUser();
-		_originalName = PrincipalThreadLocal.getName();
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
 		_user = UserTestUtil.addUser();
-	}
-
-	@After
-	public void tearDown() {
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
-		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
 	public void testAddListTypeDefinition() throws Exception {
-		try {
-			_testAddListTypeDefinition(_user);
 
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			String message = principalException.getMessage();
+		// Can add list type definition with permission
 
-			Assert.assertTrue(
-				message.contains(
-					"User " + _user.getUserId() +
-						" must have ADD_LIST_TYPE_DEFINITION permission for"));
-		}
+		_setResourcePermissions(
+			ListTypeConstants.RESOURCE_NAME, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), RoleConstants.USER,
+			new String[] {ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION});
 
-		_testAddListTypeDefinition(_adminUser);
+		_testAddListTypeDefinition(_user);
+
+		// Cannot add list type definition without permission
+
+		_removeResourcePermission(
+			ListTypeConstants.RESOURCE_NAME, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), RoleConstants.USER,
+			ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ",
+				ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION, " permission for ",
+				ListTypeConstants.RESOURCE_NAME, StringPool.SPACE),
+			() -> _testAddListTypeDefinition(_user));
 	}
 
 	@Test
 	public void testDeleteListTypeDefinition() throws Exception {
-		try {
-			_testDeleteListTypeDefinition(_adminUser, _user);
 
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			String message = principalException.getMessage();
+		// Can delete list type definition with individual model permission
 
-			Assert.assertTrue(
-				message.contains(
-					"User " + _user.getUserId() +
-						" must have DELETE permission for"));
-		}
+		ListTypeDefinition listTypeDefinition1 = _addListTypeDefinition(
+			_adminUser);
 
-		_testDeleteListTypeDefinition(_adminUser, _adminUser);
-		_testDeleteListTypeDefinition(_user, _user);
+		_setResourcePermissions(
+			ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(listTypeDefinition1.getListTypeDefinitionId()),
+			RoleConstants.USER, new String[] {ActionKeys.DELETE});
+
+		_testDeleteListTypeDefinition(listTypeDefinition1, _user);
+
+		// Can delete list type definition with model permission
+
+		_setResourcePermissions(
+			ListTypeDefinition.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), RoleConstants.USER,
+			new String[] {ActionKeys.DELETE});
+
+		_testDeleteListTypeDefinition(
+			_addListTypeDefinition(_adminUser), _user);
+
+		_removeResourcePermission(
+			ListTypeDefinition.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), RoleConstants.USER,
+			ActionKeys.DELETE);
+
+		// Can delete list type definition with owner permission
+
+		_testDeleteListTypeDefinition(_addListTypeDefinition(_user), _user);
+
+		// Cannot delete list type definition without model permission
+
+		ListTypeDefinition listTypeDefinition2 = _addListTypeDefinition(
+			_adminUser);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ", ActionKeys.DELETE,
+				" permission for ", ListTypeDefinition.class.getName(),
+				StringPool.SPACE,
+				listTypeDefinition2.getListTypeDefinitionId()),
+			() -> _testDeleteListTypeDefinition(listTypeDefinition2, _user));
+
+		// Cannot delete list type definition without owner permission
+
+		ListTypeDefinition listTypeDefinition3 = _addListTypeDefinition(_user);
+
+		_removeResourcePermission(
+			ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(listTypeDefinition3.getListTypeDefinitionId()),
+			RoleConstants.OWNER, ActionKeys.DELETE);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ", ActionKeys.DELETE,
+				" permission for ", ListTypeDefinition.class.getName(),
+				StringPool.SPACE,
+				listTypeDefinition3.getListTypeDefinitionId()),
+			() -> _testDeleteListTypeDefinition(listTypeDefinition3, _user));
 	}
 
 	@Test
 	public void testGetListTypeDefinition() throws Exception {
-		try {
-			_testGetListTypeDefinition(_adminUser, _user);
 
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			String message = principalException.getMessage();
+		// Can get list type definition with individual model permission
 
-			Assert.assertTrue(
-				message.contains(
-					"User " + _user.getUserId() +
-						" must have VIEW permission for"));
-		}
+		ListTypeDefinition listTypeDefinition1 = _addListTypeDefinition(
+			_adminUser);
 
-		_testGetListTypeDefinition(_adminUser, _adminUser);
-		_testGetListTypeDefinition(_user, _user);
+		_setResourcePermissions(
+			ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(listTypeDefinition1.getListTypeDefinitionId()),
+			RoleConstants.USER, new String[] {ActionKeys.VIEW});
+
+		_testGetListTypeDefinition(listTypeDefinition1, _user);
+
+		// Can get list type definition with model permission
+
+		_setResourcePermissions(
+			ListTypeDefinition.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), RoleConstants.USER,
+			new String[] {ActionKeys.VIEW});
+
+		_testGetListTypeDefinition(_addListTypeDefinition(_adminUser), _user);
+
+		_removeResourcePermission(
+			ListTypeDefinition.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), RoleConstants.USER,
+			ActionKeys.VIEW);
+
+		// Can get list type definition with owner permission
+
+		_testGetListTypeDefinition(_addListTypeDefinition(_user), _user);
+
+		// Cannot get list type definition without model permission
+
+		ListTypeDefinition listTypeDefinition2 = _addListTypeDefinition(
+			_adminUser);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ", ActionKeys.VIEW,
+				" permission for ", ListTypeDefinition.class.getName(),
+				StringPool.SPACE,
+				listTypeDefinition2.getListTypeDefinitionId()),
+			() -> _testGetListTypeDefinition(listTypeDefinition2, _user));
+
+		// Cannot get list type definition without owner permission
+
+		ListTypeDefinition listTypeDefinition3 = _addListTypeDefinition(_user);
+
+		_removeResourcePermission(
+			ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(listTypeDefinition3.getListTypeDefinitionId()),
+			RoleConstants.OWNER, ActionKeys.VIEW);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ", ActionKeys.VIEW,
+				" permission for ", ListTypeDefinition.class.getName(),
+				StringPool.SPACE,
+				listTypeDefinition3.getListTypeDefinitionId()),
+			() -> _testGetListTypeDefinition(listTypeDefinition3, _user));
 	}
 
 	@Test
 	public void testUpdateListTypeDefinition() throws Exception {
-		try {
-			_testUpdateListTypeDefinition(_adminUser, _user);
 
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			String message = principalException.getMessage();
+		// Can update list type definition with individual model permission
 
-			Assert.assertTrue(
-				message.contains(
-					"User " + _user.getUserId() +
-						" must have UPDATE permission for"));
-		}
+		ListTypeDefinition listTypeDefinition1 = _addListTypeDefinition(
+			_adminUser);
 
-		_testUpdateListTypeDefinition(_adminUser, _adminUser);
-		_testUpdateListTypeDefinition(_user, _user);
+		_setResourcePermissions(
+			ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(listTypeDefinition1.getListTypeDefinitionId()),
+			RoleConstants.USER, new String[] {ActionKeys.UPDATE});
+
+		_testUpdateListTypeDefinition(listTypeDefinition1, _user);
+
+		// Can update list type definition with model permission
+
+		_setResourcePermissions(
+			ListTypeDefinition.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), RoleConstants.USER,
+			new String[] {ActionKeys.UPDATE});
+
+		_testUpdateListTypeDefinition(
+			_addListTypeDefinition(_adminUser), _user);
+
+		_removeResourcePermission(
+			ListTypeDefinition.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), RoleConstants.USER,
+			ActionKeys.UPDATE);
+
+		// Can update list type definition with owner permission
+
+		_testUpdateListTypeDefinition(_addListTypeDefinition(_user), _user);
+
+		// Cannot update list type definition without model permission
+
+		ListTypeDefinition listTypeDefinition2 = _addListTypeDefinition(
+			_adminUser);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ", ActionKeys.UPDATE,
+				" permission for ", ListTypeDefinition.class.getName(),
+				StringPool.SPACE,
+				listTypeDefinition2.getListTypeDefinitionId()),
+			() -> _testUpdateListTypeDefinition(listTypeDefinition2, _user));
+
+		// Cannot update list type definition without owner permission
+
+		ListTypeDefinition listTypeDefinition3 = _addListTypeDefinition(_user);
+
+		_removeResourcePermission(
+			ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(listTypeDefinition3.getListTypeDefinitionId()),
+			RoleConstants.OWNER, ActionKeys.UPDATE);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ", ActionKeys.UPDATE,
+				" permission for ", ListTypeDefinition.class.getName(),
+				StringPool.SPACE,
+				listTypeDefinition3.getListTypeDefinitionId()),
+			() -> _testUpdateListTypeDefinition(listTypeDefinition3, _user));
 	}
 
 	private ListTypeDefinition _addListTypeDefinition(User user)
 		throws Exception {
 
 		return _listTypeDefinitionLocalService.addListTypeDefinition(
-			null, user.getUserId(),
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
 			false, Collections.emptyList(), new ServiceContext());
 	}
 
-	private void _setUser(User user) {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+	private long _getRoleId(String roleName) throws Exception {
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), roleName);
 
-		PrincipalThreadLocal.setName(user.getUserId());
+		return role.getRoleId();
+	}
+
+	private void _removeResourcePermission(
+			String name, int scope, String primKey, String roleName,
+			String actionId)
+		throws Exception {
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(), name, scope, primKey,
+			_getRoleId(roleName), actionId);
+	}
+
+	private void _setResourcePermissions(
+			String name, int scope, String primKey, String roleName,
+			String[] actionIds)
+		throws Exception {
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), name, scope, primKey,
+			_getRoleId(roleName), actionIds);
 	}
 
 	private void _testAddListTypeDefinition(User user) throws Exception {
-		ListTypeDefinition listTypeDefinition = null;
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
 
-		try {
-			_setUser(user);
-
-			listTypeDefinition =
-				_listTypeDefinitionService.addListTypeDefinition(
-					null,
-					Collections.singletonMap(
-						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-					false, Collections.emptyList(), new ServiceContext());
-		}
-		finally {
-			if (listTypeDefinition != null) {
-				_listTypeDefinitionLocalService.deleteListTypeDefinition(
-					listTypeDefinition);
-			}
+			_listTypeDefinitionService.addListTypeDefinition(
+				null, RandomTestUtil.randomLocaleStringMap(), false,
+				Collections.emptyList(), new ServiceContext());
 		}
 	}
 
-	private void _testDeleteListTypeDefinition(User ownerUser, User user)
+	private void _testDeleteListTypeDefinition(
+			ListTypeDefinition listTypeDefinition, User user)
 		throws Exception {
 
-		ListTypeDefinition deleteListTypeDefinition = null;
-		ListTypeDefinition listTypeDefinition = null;
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
 
-		try {
-			_setUser(user);
-
-			listTypeDefinition = _addListTypeDefinition(ownerUser);
-
-			deleteListTypeDefinition =
-				_listTypeDefinitionService.deleteListTypeDefinition(
-					listTypeDefinition.getListTypeDefinitionId());
-		}
-		finally {
-			if (deleteListTypeDefinition == null) {
-				_listTypeDefinitionLocalService.deleteListTypeDefinition(
-					listTypeDefinition);
-			}
+			_listTypeDefinitionService.deleteListTypeDefinition(
+				listTypeDefinition.getListTypeDefinitionId());
 		}
 	}
 
-	private void _testGetListTypeDefinition(User ownerUser, User user)
+	private void _testGetListTypeDefinition(
+			ListTypeDefinition listTypeDefinition, User user)
 		throws Exception {
 
-		ListTypeDefinition listTypeDefinition = null;
-
-		try {
-			_setUser(user);
-
-			listTypeDefinition = _addListTypeDefinition(ownerUser);
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
 
 			_listTypeDefinitionService.getListTypeDefinition(
 				listTypeDefinition.getListTypeDefinitionId());
 		}
-		finally {
-			if (listTypeDefinition != null) {
-				_listTypeDefinitionLocalService.deleteListTypeDefinition(
-					listTypeDefinition);
-			}
-		}
 	}
 
-	private void _testUpdateListTypeDefinition(User ownerUser, User user)
+	private void _testUpdateListTypeDefinition(
+			ListTypeDefinition listTypeDefinition, User user)
 		throws Exception {
 
-		ListTypeDefinition listTypeDefinition = null;
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
 
-		try {
-			_setUser(user);
-
-			listTypeDefinition = _addListTypeDefinition(ownerUser);
-
-			listTypeDefinition =
-				_listTypeDefinitionService.updateListTypeDefinition(
-					listTypeDefinition.getExternalReferenceCode(),
-					listTypeDefinition.getListTypeDefinitionId(),
-					Collections.singletonMap(
-						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-					Collections.emptyList(), new ServiceContext());
-		}
-		finally {
-			if (listTypeDefinition != null) {
-				_listTypeDefinitionLocalService.deleteListTypeDefinition(
-					listTypeDefinition);
-			}
+			_listTypeDefinitionService.updateListTypeDefinition(
+				listTypeDefinition.getExternalReferenceCode(),
+				listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomLocaleStringMap(), Collections.emptyList(),
+				new ServiceContext());
 		}
 	}
 
@@ -257,11 +382,12 @@ public class ListTypeDefinitionServiceTest {
 	@Inject
 	private ListTypeDefinitionService _listTypeDefinitionService;
 
-	private String _originalName;
-	private PermissionChecker _originalPermissionChecker;
-	private User _user;
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
-	@Inject(type = UserLocalService.class)
-	private UserLocalService _userLocalService;
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	private User _user;
 
 }

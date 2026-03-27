@@ -12,7 +12,11 @@ metadata:
     name: {{ .Values.gateway.name }}-attachment
     namespace: {{ .Release.Namespace }}
 spec:
+    {{- if .Values.gateway.clientTrafficPolicySpec }}
+    {{- toYaml .Values.gateway.clientTrafficPolicySpec | nindent 4 }}
+    {{- else }}
     enableProxyProtocol: true
+    {{- end }}
     targetRefs:
         -   group: gateway.networking.k8s.io
             kind: Gateway
@@ -31,6 +35,9 @@ metadata:
     name: {{ .Values.gateway.name }}
     namespace: {{ .Release.Namespace }}
 spec:
+    {{- if .Values.gateway.spec }}
+    {{- toYaml .Values.gateway.spec | nindent 4 }}
+    {{- else }}
     gatewayClassName: {{ .Values.gateway.className }}
     listeners:
         {{- if not (hasKey .Values.endpoints "http") }}
@@ -68,4 +75,5 @@ spec:
                 mode: {{ .mode | default "Terminate" }}
             {{- end }}
         {{- end }}
+    {{- end }}
 {{- end -}}

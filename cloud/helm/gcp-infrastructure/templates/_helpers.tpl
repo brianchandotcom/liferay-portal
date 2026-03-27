@@ -12,18 +12,18 @@
 
 {{- define "liferay.getFullCertificateSecretName" -}}
 {{- $trimmed := (. | trimPrefix "/") -}}
-{{- if hasPrefix "liferay/certificates/" $trimmed }}
+{{- if hasPrefix "liferay-certificates-" $trimmed }}
 {{- $trimmed -}}
 {{- else }}
-{{- printf "liferay/certificates/%s" $trimmed -}}
+{{- printf "liferay-certificates-%s" $trimmed -}}
 {{- end }}
 {{- end -}}
 
 {{- define "liferay.getFullLicenseSecretName" -}}
 {{- $trimmed := (. | trimPrefix "/") -}}
-{{- if hasPrefix "liferay/licenses/" $trimmed -}}
+{{- if hasPrefix "liferay-licenses-" $trimmed -}}
 {{- $trimmed -}}
 {{- else }}
-{{- printf "liferay/licenses/%s" $trimmed -}}
+{{- printf "liferay-licenses-%s" $trimmed -}}
 {{- end }}
 {{- end -}}

@@ -410,9 +410,15 @@ export class ExportImportPage {
 
 		for (const itemLocator of await itemsLocator.all()) {
 			const title = await itemLocator.locator('strong').textContent();
-			const countText = await itemLocator
-				.locator('.staging-taglib-checkbox-items')
-				.textContent();
+			const countLocator = itemLocator.locator(
+				'.staging-taglib-checkbox-items'
+			);
+
+			if ((await countLocator.count()) === 0) {
+				continue;
+			}
+
+			const countText = await countLocator.textContent();
 
 			const countMatch = countText ? countText.match(/\d+/) : null;
 

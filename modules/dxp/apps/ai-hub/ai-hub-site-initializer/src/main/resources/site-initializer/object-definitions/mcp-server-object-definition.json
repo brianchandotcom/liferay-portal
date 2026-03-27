@@ -99,7 +99,7 @@
 			"DBType": "Long",
 			"businessType": "Relationship",
 			"defaultValue": "null",
-			"externalReferenceCode": "RELATIONSHIP",
+			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_MCP_SERVERS",
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {

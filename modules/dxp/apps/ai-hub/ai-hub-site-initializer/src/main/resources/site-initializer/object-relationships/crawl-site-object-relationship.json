@@ -9,5 +9,5 @@
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubCrawlTarget$]",
 	"objectDefinitionName2": "AIHubCrawlTarget",
 	"system": true,
-	"type": "oneToMany"
+	"type": "manyToMany"
 }

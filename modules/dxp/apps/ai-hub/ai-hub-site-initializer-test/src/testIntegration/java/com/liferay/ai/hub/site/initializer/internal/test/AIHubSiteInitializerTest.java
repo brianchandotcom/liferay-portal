@@ -59,14 +59,16 @@ public class AIHubSiteInitializerTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testInitialize() throws Exception {
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer(
 				"com.liferay.ai.hub.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
-		_assertObjectDefinitionExists();
+		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
+		_assertObjectDefinitionExists("L_AI_HUB_CRAWL_TARGET");
+		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
@@ -89,11 +91,13 @@ public class AIHubSiteInitializerTest {
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
 	}
 
-	private void _assertObjectDefinitionExists() throws Exception {
+	private void _assertObjectDefinitionExists(String externalReferenceCode)
+		throws Exception {
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_MCP_SERVER", TestPropsValues.getCompanyId());
+					externalReferenceCode, TestPropsValues.getCompanyId());
 
 		Assert.assertTrue(objectDefinition.isApproved());
 		Assert.assertTrue(objectDefinition.isSystem());

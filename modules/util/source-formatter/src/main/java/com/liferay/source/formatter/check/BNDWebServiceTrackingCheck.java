@@ -51,15 +51,15 @@ public class BNDWebServiceTrackingCheck extends BaseFileCheck {
 
 		int index = absolutePath.lastIndexOf(CharPool.SLASH);
 
-		File lfrBuildPortalFile = new File(
-			absolutePath.substring(0, index + 1) + ".lfrbuild-portal");
+		String dirName = absolutePath.substring(0, index + 1);
+
+		File lfrBuildPortalFile = new File(dirName + ".lfrbuild-portal");
 
 		if (!lfrBuildPortalFile.exists()) {
 			return content;
 		}
 
-		File buildGradleFile = new File(
-			absolutePath.substring(0, index + 1) + "build.gradle");
+		File buildGradleFile = new File(dirName + "build.gradle");
 
 		if (!buildGradleFile.exists()) {
 			return content;
@@ -75,7 +75,7 @@ public class BNDWebServiceTrackingCheck extends BaseFileCheck {
 		}
 
 		List<String> jspFileNames = SourceFormatterUtil.scanForFileNames(
-			absolutePath.substring(0, index + 1), new String[0],
+			dirName, new String[0],
 			new String[] {
 				"**/resources/META-INF/resources/**/*.{jsp,jspf,jspx}"
 			},
@@ -86,7 +86,7 @@ public class BNDWebServiceTrackingCheck extends BaseFileCheck {
 		}
 
 		List<String> javaFileNames = SourceFormatterUtil.scanForFileNames(
-			absolutePath.substring(0, index + 1), new String[0],
+			dirName, new String[0],
 			new String[] {"**/src/main/java/com/liferay/**/*.java"},
 			new SourceFormatterExcludes(), false);
 
@@ -99,14 +99,15 @@ public class BNDWebServiceTrackingCheck extends BaseFileCheck {
 					annotationsBlock, SourceUtil.getIndent(annotationsBlock));
 
 				for (String annotation : annotations) {
-					if (!annotation.startsWith("@Component(")) {
+					String trimmedAnnotation = annotation.trim();
+
+					if (!trimmedAnnotation.startsWith("@Component(")) {
 						continue;
 					}
 
-					annotation = annotation.trim();
-
 					Map<String, String> annotationMemberValuePair =
-						SourceUtil.getAnnotationMemberValuePair(annotation);
+						SourceUtil.getAnnotationMemberValuePair(
+							trimmedAnnotation);
 
 					String service = annotationMemberValuePair.get("service");
 

@@ -23,4 +23,5 @@ BNDLineBreaksCheck | [Styling](styling_checks.md#styling-checks) | Finds missing
 BNDStylingCheck | [Styling](styling_checks.md#styling-checks) | Applies rules to enforce consistency in code style. |
 [BNDSuiteCheck](check/bnd_suite_check.md#bndsuitecheck) | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | Checks that deprecated apps are moved to the `archived` folder. |
 [BNDWebContextPathCheck](check/bnd_web_context_path_check.md#bndwebcontextpathcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks if the property value for `Web-ContextPath` matches the module directory. |
+BNDWebServiceTrackingCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds missing `Web-ServiceTracking: false`. |
 BNDWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary whitespace in `.bnd` files. |

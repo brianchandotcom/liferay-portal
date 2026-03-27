@@ -96,6 +96,10 @@ public class FDSAdminDisplayContext {
 			));
 	}
 
+	public String getDataSetEntriesURL() {
+		return _getDataProviderURL("dataSetEntries");
+	}
+
 	public String getDataSetPermissionsURL() {
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
@@ -293,10 +297,6 @@ public class FDSAdminDisplayContext {
 					"title", systemFDSEntry.getTitle()
 				);
 			});
-	}
-
-	public String getUserViewsURL() {
-		return _getDataProviderURL("userViews");
 	}
 
 	public boolean hasAddDataSetObjectEntryPermission() {

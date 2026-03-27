@@ -45,6 +45,7 @@ locals {
 	}
 	direct_provider_ksas={
 		compute="roles/compute.admin"
+		kms="roles/cloudkms.admin"
 		sql="roles/cloudsql.admin"
 		storage="roles/storage.admin"
 	}

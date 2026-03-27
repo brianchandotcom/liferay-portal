@@ -1,0 +1,51 @@
+apiVersion: cloudplatform.gcp.m.upbound.io/v1beta1
+kind: ServiceAccount
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-gsa
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $gsaName }}
+spec:
+    forProvider:
+        displayName: Liferay {{ $gsaName }} Service Account
+---
+apiVersion: cloudplatform.gcp.m.upbound.io/v1beta1
+kind: ServiceAccountIAMMember
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-wi-binding
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+spec:
+    forProvider:
+        member: serviceAccount:{{ $env.projectId }}.svc.id.goog[{{ $namespace }}/liferay-default]
+        role: roles/iam.workloadIdentityUser
+        serviceAccountIdRef:
+            name: {{ $gsaName }}
+---
+apiVersion: cloudplatform.gcp.m.upbound.io/v1beta1
+kind: ProjectIAMMember
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-sql-instance-user-role
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+spec:
+    forProvider:
+        member: serviceAccount:{{ $gsaEmail }}
+        project: {{ $env.projectId }}
+        role: roles/cloudsql.instanceUser
+---
+apiVersion: cloudplatform.gcp.m.upbound.io/v1beta1
+kind: ProjectIAMMember
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-sql-client-role
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+spec:
+    forProvider:
+        member: serviceAccount:{{ $gsaEmail }}
+        project: {{ $env.projectId }}
+        role: roles/cloudsql.client

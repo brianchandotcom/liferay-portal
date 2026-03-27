@@ -1,0 +1,9 @@
+apiVersion: apiextensions.crossplane.io/v1beta1
+data:
+    deploymentName: {{ $.Values.deploymentName | quote }}
+    projectId: {{ $.Values.gcp.projectId | quote }}
+    projectNumber: {{ $.Values.gcp.projectNumber | quote }}
+    vpcName: {{ printf "%s-vpc" ($.Values.deploymentName | default "default") | quote }}
+kind: EnvironmentConfig
+metadata:
+    name: environment-config

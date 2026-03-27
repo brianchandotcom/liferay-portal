@@ -16,7 +16,7 @@ import {
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
@@ -40,6 +40,7 @@ export function AdvancedSelectField({
 
 	const [activeItemId] = activeItemIds;
 
+	const elementFocusRef = useRef(null);
 	const globalContext = useGlobalContext();
 	const helpTextId = useId();
 	const triggerId = useId();
@@ -51,6 +52,7 @@ export function AdvancedSelectField({
 		!isNullOrUndefined(tokenValues[value]) || !value
 	);
 	const [nextValue, setNextValue] = useControlledState(value);
+	const [shouldFocusInput, setShouldFocusElement] = useState(false);
 
 	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const selectedViewportSize = useSelector(
@@ -141,16 +143,39 @@ export function AdvancedSelectField({
 		[selectedViewportSize]
 	);
 
+	useEffect(() => {
+		if (shouldFocusInput) {
+			elementFocusRef.current?.focus();
+
+			setShouldFocusElement(false);
+		}
+	}, [isTokenValueOrInherited, shouldFocusInput]);
+
+	const detachStyle = () => {
+		onSetValue({
+			isTokenValue: false,
+			value: tokenValues[value]
+				? tokenValues[value].value
+				: defaultOptionComputedValue,
+		});
+	};
+
+	const setValueFromStylebook = () => {
+		setActive(false);
+		onSetValue({
+			isTokenValue: true,
+			value,
+		});
+	};
+
 	return (
 		<div
 			aria-label={field.label}
-			className={classNames(
-				'd-flex input-group-item-focusable page-editor__select-field rounded',
-				{
-					custom: !isTokenValueOrInherited,
-					old: !Liferay.FeatureFlags['LPD-40054'],
-				}
-			)}
+			className={classNames('d-flex  page-editor__select-field rounded', {
+				'custom': !isTokenValueOrInherited,
+				'input-group-item-focusable': Liferay.FeatureFlags['LPD-40054'],
+				'old': !Liferay.FeatureFlags['LPD-40054'],
+			})}
 			role="group"
 		>
 			{isTokenValueOrInherited ? (
@@ -161,6 +186,7 @@ export function AdvancedSelectField({
 					helpTextId={helpTextId}
 					onChange={handleSelectChange}
 					options={options}
+					ref={elementFocusRef}
 					value={nextValue}
 				/>
 			) : field.typeOptions?.showLengthField ? (
@@ -168,6 +194,7 @@ export function AdvancedSelectField({
 					className="mb-0"
 					field={field}
 					onValueSelect={onValueSelect}
+					ref={elementFocusRef}
 					showLabel={!field.icon}
 					value={nextValue}
 				/>
@@ -179,6 +206,7 @@ export function AdvancedSelectField({
 						setNextValue(event.target.value);
 					}}
 					onKeyDown={handleInputKeyDown}
+					ref={elementFocusRef}
 					value={nextValue}
 				/>
 			)}
@@ -190,12 +218,13 @@ export function AdvancedSelectField({
 						className="border-0 flex-shrink-0 mb-0 page-editor__select-field__action-button"
 						displayType="secondary"
 						onClick={() => {
-							onSetValue({
-								isTokenValue: false,
-								value: tokenValues[value]
-									? tokenValues[value].value
-									: defaultOptionComputedValue,
-							});
+							detachStyle();
+						}}
+						onKeyDown={(event) => {
+							if (event.key === 'Enter') {
+								detachStyle();
+								setShouldFocusElement(true);
+							}
 						}}
 						size="sm"
 						symbol="chain-broken"
@@ -238,11 +267,13 @@ export function AdvancedSelectField({
 									<ClayDropDown.Item
 										key={value}
 										onClick={() => {
-											setActive(false);
-											onSetValue({
-												isTokenValue: true,
-												value,
-											});
+											setValueFromStylebook();
+										}}
+										onKeyDown={(event) => {
+											if (event.key === 'Enter') {
+												setValueFromStylebook();
+												setShouldFocusElement(true);
+											}
 										}}
 									>
 										{label}
@@ -259,9 +290,16 @@ export function AdvancedSelectField({
 					aria-label={resetButtonLabel}
 					className="border-0 flex-shrink-0 mb-0 page-editor__select-field__action-button"
 					displayType="secondary"
-					onClick={() =>
-						onSetValue({isTokenValue: true, value: null})
-					}
+					onClick={() => {
+						onSetValue({isTokenValue: true, value: null});
+					}}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							onSetValue({isTokenValue: true, value: null});
+
+							setShouldFocusElement(true);
+						}
+					}}
 					size="sm"
 					symbol="restore"
 					title={resetButtonLabel}
@@ -285,110 +323,119 @@ export function AdvancedSelectField({
 	);
 }
 
-const SingleSelectWithIcon = ({
-	defaultOptionComputedValue,
-	disabled,
-	field,
-	helpTextId,
-	onChange,
-	options,
-	value,
-}) => {
-	const inputId = useId();
+const SingleSelectWithIcon = forwardRef(
+	(
+		{
+			defaultOptionComputedValue,
+			disabled,
+			field,
+			helpTextId,
+			onChange,
+			options,
+			value,
+		},
+		ref
+	) => {
+		const inputId = useId();
 
-	const selectedOptionLabel = useMemo(() => {
-		if (value === field.defaultValue) {
-			return defaultOptionComputedValue;
-		}
+		const selectedOptionLabel = useMemo(() => {
+			if (value === field.defaultValue) {
+				return defaultOptionComputedValue;
+			}
+
+			return (
+				options.find((option) => option.value === value)?.label ||
+				defaultOptionComputedValue
+			);
+		}, [defaultOptionComputedValue, field.defaultValue, options, value]);
 
 		return (
-			options.find((option) => option.value === value)?.label ||
-			defaultOptionComputedValue
-		);
-	}, [defaultOptionComputedValue, field.defaultValue, options, value]);
+			<div className="btn btn-unstyled flex-grow-1 m-0 p-0 page-editor__single-select-with-icon">
+				<label
+					className="mb-0 page-editor__single-select-with-icon__label-icon px-1 py-2 text-center"
+					htmlFor={inputId}
+				>
+					<ClayIcon
+						className="lfr-portal-tooltip"
+						data-title={field.label}
+						symbol={field.icon}
+					/>
 
-	return (
-		<div className="btn btn-unstyled flex-grow-1 m-0 p-0 page-editor__single-select-with-icon">
-			<label
-				className="mb-0 page-editor__single-select-with-icon__label-icon px-1 py-2 text-center"
-				htmlFor={inputId}
-			>
-				<ClayIcon
-					className="lfr-portal-tooltip"
-					data-title={field.label}
-					symbol={field.icon}
-				/>
+					<span className="sr-only">{field.label}</span>
+				</label>
 
-				<span className="sr-only">{field.label}</span>
-			</label>
-
-			<ClaySelectWithOption
-				aria-describedby={field.description ? helpTextId : null}
-				className="page-editor__single-select-with-icon__select"
-				disabled={Boolean(disabled)}
-				id={inputId}
-				onChange={onChange}
-				options={options}
-				value={value || ''}
-			/>
-
-			<div
-				className={classNames(
-					'page-editor__single-select-with-icon__label p-2 w-100 d-flex',
-					{disabled}
-				)}
-				role="presentation"
-			>
-				<span className="text-truncate">{selectedOptionLabel}</span>
-
-				{!value && field.inherited ? (
-					<span
-						className="inherited"
-						title={Liferay.Language.get('inherited-value')}
-					></span>
-				) : null}
-			</div>
-		</div>
-	);
-};
-
-const InputWithIcon = ({field, onBlur, onChange, onKeyDown, value}) => {
-	const inputId = useId();
-
-	return (
-		<ClayInput.Group>
-			<ClayInput.GroupItem>
-				<ClayInput
-					aria-label={field.label}
+				<ClaySelectWithOption
+					aria-describedby={field.description ? helpTextId : null}
+					className="page-editor__single-select-with-icon__select"
+					disabled={Boolean(disabled)}
 					id={inputId}
-					insetBefore={Boolean(field.icon)}
-					onBlur={onBlur}
 					onChange={onChange}
-					onKeyDown={onKeyDown}
-					sizing="sm"
-					value={value}
+					options={options}
+					ref={ref}
+					value={value || ''}
 				/>
 
-				{field.icon ? (
-					<ClayInput.GroupInsetItem before>
-						<label
-							className="mb-0 page-editor__input-with-icon__label-icon pl-1 pr-3 text-center"
-							htmlFor={inputId}
-						>
-							<ClayIcon
-								className="lfr-portal-tooltip"
-								data-title={field.label}
-								symbol={field.icon}
-							/>
+				<div
+					className={classNames(
+						'page-editor__single-select-with-icon__label p-2 w-100 d-flex',
+						{disabled}
+					)}
+					role="presentation"
+				>
+					<span className="text-truncate">{selectedOptionLabel}</span>
 
-							<span className="sr-only">{field.label}</span>
-						</label>
-					</ClayInput.GroupInsetItem>
-				) : null}
-			</ClayInput.GroupItem>
-		</ClayInput.Group>
-	);
-};
+					{!value && field.inherited ? (
+						<span
+							className="inherited"
+							title={Liferay.Language.get('inherited-value')}
+						></span>
+					) : null}
+				</div>
+			</div>
+		);
+	}
+);
+
+const InputWithIcon = forwardRef(
+	({field, onBlur, onChange, onKeyDown, value}, ref) => {
+		const inputId = useId();
+
+		return (
+			<ClayInput.Group>
+				<ClayInput.GroupItem>
+					<ClayInput
+						aria-label={field.label}
+						id={inputId}
+						insetBefore={Boolean(field.icon)}
+						onBlur={onBlur}
+						onChange={onChange}
+						onKeyDown={onKeyDown}
+						ref={ref}
+						sizing="sm"
+						value={value}
+					/>
+
+					{field.icon ? (
+						<ClayInput.GroupInsetItem before>
+							<label
+								className="mb-0 page-editor__input-with-icon__label-icon pl-1 pr-3 text-center"
+								htmlFor={inputId}
+							>
+								<ClayIcon
+									className="lfr-portal-tooltip"
+									data-title={field.label}
+									symbol={field.icon}
+								/>
+
+								<span className="sr-only">{field.label}</span>
+							</label>
+						</ClayInput.GroupInsetItem>
+					) : null}
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+		);
+	}
+);
 
 AdvancedSelectField.propTypes = {
 	disabled: PropTypes.bool,

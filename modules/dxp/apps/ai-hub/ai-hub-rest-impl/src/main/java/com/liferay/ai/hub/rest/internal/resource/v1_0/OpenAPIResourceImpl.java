@@ -93,6 +93,8 @@ public class OpenAPIResourceImpl {
 
 			add(MessageResourceImpl.class);
 
+			add(SiteResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

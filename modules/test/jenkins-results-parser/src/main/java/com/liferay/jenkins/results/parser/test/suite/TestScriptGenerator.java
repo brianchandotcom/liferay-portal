@@ -154,7 +154,11 @@ public class TestScriptGenerator {
 			return;
 		}
 
-		sb.append("\t_execute_commands \\\n");
+		sb.append("\tcd \"$(git rev-parse --show-toplevel)\" || exit 1\n\n");
+		sb.append("\tlocal command\n");
+		sb.append("\tlocal exit_code=0\n");
+		sb.append("\tlocal results=\"\\nResults:\\n\\n\"\n\n");
+		sb.append("\tfor command in \\\n");
 
 		int i = 0;
 
@@ -171,12 +175,6 @@ public class TestScriptGenerator {
 			i++;
 		}
 
-		sb.append("}\n\n");
-		sb.append("function _execute_commands {\n");
-		sb.append("\tcd \"$(git rev-parse --show-toplevel)\" || exit 1\n\n");
-		sb.append("\tlocal exit_code=0\n");
-		sb.append("\tlocal results_output=\"\\nResults:\\n\\n\"\n\n");
-		sb.append("\tfor command in \"${@}\"\n");
 		sb.append("\tdo\n");
 		sb.append("\t\tif [ \"${exit_code}\" -ne 0 ]\n");
 		sb.append("\t\tthen\n");

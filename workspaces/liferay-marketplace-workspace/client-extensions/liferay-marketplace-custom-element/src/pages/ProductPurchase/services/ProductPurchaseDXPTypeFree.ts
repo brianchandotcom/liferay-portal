@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {z} from 'zod';
+import { z } from 'zod';
 
-import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
-import {Liferay} from '../../../liferay/liferay';
+import { OrderCustomFields, OrderTypes } from '../../../enums/Order';
+import { Liferay } from '../../../liferay/liferay';
 import zodSchema from '../../../schema/zod';
 import provisioningOAuth2 from '../../../services/oauth/Provisioning';
-import {getSiteURL} from '../../../utils/site';
+import HeadlessDXPFreeRequest from '../../../services/rest/HeadlessDXPFreeRequest';
+import { getSiteURL } from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
 type ActivationKeyForm = z.infer<typeof zodSchema.activationKey>;
@@ -44,15 +45,21 @@ export default class ProductPurchaseDXPTypeFree extends ProductPurchase {
 		}
 
 		const cart = this.getCart();
+		console.log("🚀 => cart:", cart)
 
 		const order = await super.createOrder(cart);
 
-		await provisioningOAuth2.createLicenseKeyTypeFree({
-			assetReceiptLicenseUuid: order.id,
-			domains: this.form.domain,
-			owner:
-				this.form.businessEmail ||
-				Liferay.ThemeDisplay.getUserEmailAddress(),
+		// await provisioningOAuth2.createLicenseKeyTypeFree({
+		// 	assetReceiptLicenseUuid: order.id,
+		// 	domains: this.form.domain,
+		// 	owner:
+		// 		this.form.businessEmail ||
+		// 		Liferay.ThemeDisplay.getUserEmailAddress(),
+		// });
+
+		await HeadlessDXPFreeRequest.createDXPFreeRequest({
+			...this.form,
+			r_orderToDXPFreeActivationKeyRequest_commerceOrderId: order.id,
 		});
 
 		return order;

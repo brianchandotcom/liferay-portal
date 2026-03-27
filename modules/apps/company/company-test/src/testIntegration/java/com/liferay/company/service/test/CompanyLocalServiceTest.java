@@ -1656,17 +1656,10 @@ public class CompanyLocalServiceTest {
 			if (maxUsers < 0) {
 				Assert.fail();
 			}
-			else {
-				Assert.assertEquals(maxUsers, _company.getMaxUsers());
-			}
 		}
 		catch (CompanyMaxUsersException companyMaxUsersException) {
-			if (maxUsers < 0) {
-				Assert.assertTrue(maxUsers < 0)
-			}
-			else {
-				Assert.assertEquals(originalMaxUsers, _company.getMaxUsers());
-			}
+			Assert.assertTrue(maxUsers < 0)
+			Assert.assertEquals(originalMaxUsers, _company.getMaxUsers());
 		}
 		finally {
 			_company = _companyLocalService.updateCompany(

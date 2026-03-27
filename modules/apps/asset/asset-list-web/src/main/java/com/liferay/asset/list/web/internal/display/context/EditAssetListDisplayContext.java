@@ -55,6 +55,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1528,10 +1529,17 @@ public class EditAssetListDisplayContext {
 			}
 		}
 
-		Group cmsGroup = _groupService.getGroup(
-			_themeDisplay.getCompanyId(), GroupConstants.CMS);
+		try {
+			Group cmsGroup = _groupService.getGroup(
+				_themeDisplay.getCompanyId(), GroupConstants.CMS);
 
-		groupIdList.add(cmsGroup.getGroupId());
+			groupIdList.add(cmsGroup.getGroupId());
+		}
+		catch (NoSuchGroupException noSuchGroupException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchGroupException);
+			}
+		}
 
 		return ArrayUtil.toLongArray(groupIdList);
 	}

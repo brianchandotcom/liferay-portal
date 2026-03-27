@@ -1,19 +1,58 @@
+cmk:
+    enabled: false
 database:
     databaseVersion: POSTGRES_16
+    deletionProtection: true
     instanceType: db-custom-1-3840
+    queryInsightsEnabled: true
     storageGB: 20
+deletionProtection: true
 enabled: true
 endpoints: {}
 environmentId: ""
+forceDestroy: false
 gateway:
     className: ""
+    clientTrafficPolicySpec: {}
     name: ""
+    spec: {}
 license:
     externalSecretName: ""
     targetSecretName: liferay-license
+orphanOnDelete: false
+overlay:
+    enabled: false
+    githubRepo: ""
+    region: ""
 projectId: ""
+region: ""
 search:
     elasticsearch:
-        name: ""
+        annotations:
+            instrumentation.opentelemetry.io/inject-dotnet: "false"
+            instrumentation.opentelemetry.io/inject-java: "false"
+            instrumentation.opentelemetry.io/inject-nodejs: "false"
+            instrumentation.opentelemetry.io/inject-python: "false"
+            sidecar.opentelemetry.io/inject: "false"
+        enabled: true
+        nodeCount: 1
+        podSecurityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+                type: RuntimeDefault
+        securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+                drop:
+                    -   ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+        version: 8.12.0
+        volumeSize: 10Gi
 secretStoreName: ""
-storage: {}
+storage:
+    enableVersioning: true
+    region: ""

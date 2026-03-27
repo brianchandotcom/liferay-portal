@@ -1,0 +1,100 @@
+{{- $search := .Values.search.elasticsearch -}}
+{{- $elasticsearchNamespace := printf "%s-elasticsearch" .Release.Namespace -}}
+{{- if $search.enabled }}
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+    annotations:
+        {{- $search.annotations | toYaml | nindent 8 }}
+    name: {{ include "elasticsearch.name" . }}
+    namespace: {{ $elasticsearchNamespace }}
+spec:
+    http:
+        tls:
+            selfSignedCertificate:
+                disabled: true
+    nodeSets:
+        -   config:
+                xpack.security.authc.anonymous:
+                    authz_exception: true
+                    roles: superuser
+                    username: anonymous_user
+            count: {{ $search.nodeCount }}
+            name: default
+            podTemplate:
+                metadata:
+                    annotations:
+                        {{- $search.annotations | toYaml | nindent 24 }}
+                spec:
+                    containers:
+                        -   env:
+                            {{- if or $search.env $search.customEnv }}
+                                {{- with $search.env }}
+                                {{- toYaml . | nindent 32 }}
+                                {{- end }}
+                                    {{- range $k, $v := $search.customEnv }}
+                                    {{- toYaml $v | nindent 32 }}
+                                    {{- end }}
+                                {{- else }}
+                                -   name:   ES_JAVA_OPTS
+                                    value: -Xms4g -Xmx4g
+                                {{- end }}
+                            name: elasticsearch
+                            resources:
+                                {{- if $search.resources -}}
+                                {{ $search.resources | toYaml | nindent 32 }}
+                                {{- else }}
+                                limits:
+                                    cpu: 1000m
+                                    memory: 8Gi
+                                requests:
+                                    cpu: 500m
+                                    memory: 4Gi
+                                {{- end }}
+                            securityContext:
+                                {{- $search.securityContext | toYaml | nindent 32 }}
+                    initContainers:
+                        -   command:
+                                -   sh
+                                -   -c
+                                -   |
+                                    elasticsearch-plugin \
+                                        install \
+                                        --batch \
+                                        analysis-{icu,kuromoji,smartcn,stempel}
+                            name: install-plugins
+                            securityContext:
+                                {{- $search.securityContext | toYaml | nindent 32 }}
+                    securityContext:
+                        {{- $search.podSecurityContext | toYaml | nindent 24 }}
+            volumeClaimTemplates:
+                -   metadata:
+                        name: elasticsearch-data
+                    spec:
+                        accessModes:
+                            -   ReadWriteOnce
+                        resources:
+                            requests:
+                                storage: {{ $search.volumeSize }}
+                        storageClassName: standard-rwo
+    version: {{ $search.version }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+    labels:
+        name: {{ $elasticsearchNamespace }}
+        pod-security.kubernetes.io/enforce: restricted
+    name: {{ $elasticsearchNamespace }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: elasticsearch-connection-details
+    namespace: {{ .Release.Namespace }}
+stringData:
+    ELASTICSEARCH_DEFAULT_PASSWORD_SECRET_NAME: "{{ include "elasticsearch.name" . }}-es-elastic-user"
+    ELASTICSEARCH_DEFAULT_USERNAME: elastic
+    ELASTICSEARCH_URL: http://{{ include "elasticsearch.name" . }}-es-http.{{ $elasticsearchNamespace }}.svc:9200
+type: Opaque
+{{- end -}}

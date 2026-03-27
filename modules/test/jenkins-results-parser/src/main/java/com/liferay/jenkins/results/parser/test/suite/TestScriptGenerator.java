@@ -185,9 +185,7 @@ public class TestScriptGenerator {
 		sb.append("\t\techo \"\"\n");
 		sb.append("\t\techo \"Running: ${command}\"\n");
 		sb.append("\t\techo \"\"\n\n");
-		sb.append("\t\t(\n");
-		sb.append("\t\t\teval \"${command}\"\n");
-		sb.append("\t\t)\n\n");
+		sb.append("\t\t(eval \"${command}\")\n\n");
 		sb.append("\t\texit_code=${?}\n\n");
 		sb.append("\t\tif [ \"${exit_code}\" -ne 0 ]\n");
 		sb.append("\t\tthen\n");

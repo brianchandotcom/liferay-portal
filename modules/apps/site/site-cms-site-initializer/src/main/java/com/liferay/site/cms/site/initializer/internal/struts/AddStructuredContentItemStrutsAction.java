@@ -20,6 +20,8 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -96,12 +98,14 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 			String.valueOf(ParamUtil.getLong(httpServletRequest, "groupId")));
 
 		httpServletResponse.sendRedirect(
-			ActionUtil.getEditURL(
-				_formManager, _fragmentEntryLinkListenerRegistry,
-				_fragmentEntryLinkService, _fragmentRendererRegistry,
-				httpServletRequest, String.valueOf(objectEntry.getId()),
-				_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
-				objectDefinition));
+			HttpComponentsUtil.addParameter(
+				ActionUtil.getEditURL(
+					_formManager, _fragmentEntryLinkListenerRegistry,
+					_fragmentEntryLinkService, _fragmentRendererRegistry,
+					httpServletRequest, String.valueOf(objectEntry.getId()),
+					_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
+					objectDefinition),
+				Constants.CMD, Constants.ADD));
 
 		return null;
 	}

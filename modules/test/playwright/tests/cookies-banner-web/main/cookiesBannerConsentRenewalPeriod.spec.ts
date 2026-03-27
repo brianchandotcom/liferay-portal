@@ -5,9 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {consentManagerConfigurationPageTest} from '../../../fixtures/consentManagerConfigurationPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {ConsentManagerConfigurationPage} from '../../../pages/cookies-banner-web/ConsentManagerConfigurationPage';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
@@ -25,6 +27,7 @@ const cookieKeys = [
 ]; //
 
 export const test = mergeTests(
+	consentManagerConfigurationPageTest,
 	featureFlagsTest({
 		'LPD-75032': {enabled: true},
 	}),
@@ -64,73 +67,89 @@ test.beforeEach(async ({page}) => {
 test(
 	'Consent Renewal Period configuration field validation',
 	{tag: '@LPD-68505'},
-	async ({page}) => {
-		const consentRenewalPeriodField = await page
-			.getByLabel('Consent Renewal Period')
-			.first();
-
+	async ({consentManagerConfigurationPage}) => {
 		await test.step('Validate Consent Renewal Period field', async () => {
 			await test.step('Validate default value of 12 months', async () => {
-				await expect(await consentRenewalPeriodField).toHaveValue('12');
+				await expect(
+					await consentManagerConfigurationPage.consentRenewalPeriodInput
+				).toHaveValue('12');
 			});
 
 			await test.step('Validate value cannot be less than 1', async () => {
-				await expect(await consentRenewalPeriodField).toHaveAttribute(
-					'min',
-					'1'
-				);
+				await expect(
+					await consentManagerConfigurationPage.consentRenewalPeriodInput
+				).toHaveAttribute('min', '1');
 				await validateConsentRenewalPeriodValue(
+					consentManagerConfigurationPage,
 					false,
 					'0',
-					page,
 					false
 				);
 			});
 
 			await test.step('Validate value cannot be more than 12', async () => {
-				await expect(await consentRenewalPeriodField).toHaveAttribute(
-					'max',
-					'12'
-				);
+				await expect(
+					await consentManagerConfigurationPage.consentRenewalPeriodInput
+				).toHaveAttribute('max', '12');
 				await validateConsentRenewalPeriodValue(
+					consentManagerConfigurationPage,
 					false,
 					'13',
-					page,
 					false
 				);
 			});
 
 			await test.step('Validate value cannot be null', async () => {
-				await validateConsentRenewalPeriodValue(false, '', page, false);
+				await validateConsentRenewalPeriodValue(
+					consentManagerConfigurationPage,
+					false,
+					'',
+					false
+				);
 			});
 
 			await test.step('Validate value must be a number', async () => {
-				await expect(await consentRenewalPeriodField).toHaveAttribute(
-					'type',
-					'number'
-				);
+				await expect(
+					await consentManagerConfigurationPage.consentRenewalPeriodInput
+				).toHaveAttribute('type', 'number');
 			});
 		});
 
 		await test.step('Verify alert appears if changing the value', async () => {
-			page.once('dialog', async (dialogWindow) => {
-				await expect(dialogWindow.message()).toContain(
-					'You are about to change the consent renewal period'
-				);
+			consentManagerConfigurationPage.page.once(
+				'dialog',
+				async (dialogWindow) => {
+					await expect(dialogWindow.message()).toContain(
+						'You are about to change the consent renewal period'
+					);
 
-				await dialogWindow.dismiss();
-			});
+					await dialogWindow.dismiss();
+				}
+			);
 		});
 
 		await test.step('Verify dismissing the dialog does not change configuration value', async () => {
-			await validateConsentRenewalPeriodValue(false, '1', page, false);
+			await validateConsentRenewalPeriodValue(
+				consentManagerConfigurationPage,
+				false,
+				'1',
+				false
+			);
 		});
 
 		await test.step('Verify accepting dialog updates configuration value and Cookies Banner appears again', async () => {
-			page.once('dialog', async (dialogWindow) => {
-				await dialogWindow.accept();
-			});
-			await validateConsentRenewalPeriodValue(false, '1', page, true);
+			consentManagerConfigurationPage.page.once(
+				'dialog',
+				async (dialogWindow) => {
+					await dialogWindow.accept();
+				}
+			);
+			await validateConsentRenewalPeriodValue(
+				consentManagerConfigurationPage,
+				false,
+				'1',
+				true
+			);
 		});
 	}
 );
@@ -138,18 +157,14 @@ test(
 test(
 	'Verify alert only appears if changing the value',
 	{tag: '@LPD-79710'},
-	async ({page}) => {
-		const enabledButton = await page.getByLabel('Enabled', {exact: true});
+	async ({consentManagerConfigurationPage, page}) => {
+		await consentManagerConfigurationPage.enabledCheckbox.setChecked(true);
 
-		await enabledButton.setChecked(true);
+		await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
+			'12'
+		);
 
-		const consentRenewalPeriodField = await page
-			.getByLabel('Consent Renewal Period')
-			.first();
-
-		await consentRenewalPeriodField.fill('12');
-
-		await page.getByRole('button', {name: 'Update'}).click();
+		await consentManagerConfigurationPage.updateButton.click();
 
 		await page.waitForTimeout(1000);
 
@@ -159,7 +174,9 @@ test(
 
 		await expect(cookiesBanner).not.toBeVisible();
 
-		await consentRenewalPeriodField.fill('11');
+		await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
+			'11'
+		);
 
 		page.once('dialog', async (dialogWindow) => {
 			await expect(dialogWindow.message()).toContain(
@@ -169,7 +186,7 @@ test(
 			await dialogWindow.accept();
 		});
 
-		await page.getByRole('button', {name: 'Update'}).click();
+		await consentManagerConfigurationPage.updateButton.click();
 
 		await expect(cookiesBanner).toBeVisible();
 	}
@@ -178,14 +195,14 @@ test(
 test(
 	'Verify Consent Manager can be saved with Enabled set to false',
 	{tag: '@LPD-78627'},
-	async ({page}) => {
+	async ({consentManagerConfigurationPage, page}) => {
 		await test.step('Disable Consent Manager and save configuration', async () => {
 			await updateConsentManagerConfiguration(page, {
 				enabled: false,
 			});
 
 			await expect(
-				page.getByLabel('Enabled', {exact: true})
+				consentManagerConfigurationPage.enabledCheckbox
 			).not.toBeChecked();
 		});
 	}
@@ -194,36 +211,40 @@ test(
 test(
 	'Verify Consent Renewal Period can be changed immediately after checking Enabled',
 	{tag: '@LPD-79710'},
-	async ({page}) => {
-		const enabledButton = await page.getByLabel('Enabled', {exact: true});
+	async ({consentManagerConfigurationPage}) => {
+		await consentManagerConfigurationPage.enabledCheckbox.setChecked(false);
 
-		await enabledButton.setChecked(false);
+		await expect(
+			consentManagerConfigurationPage.consentRenewalPeriodInput
+		).not.toBeEnabled();
 
-		const consentRenewalPeriod = await page
-			.getByLabel('Consent Renewal Period')
-			.first();
+		await consentManagerConfigurationPage.enabledCheckbox.setChecked(true);
 
-		await expect(consentRenewalPeriod).not.toBeEnabled();
-
-		await enabledButton.setChecked(true);
-
-		await expect(consentRenewalPeriod).toBeEnabled();
+		await expect(
+			consentManagerConfigurationPage.consentRenewalPeriodInput
+		).toBeEnabled();
 	}
 );
 
 test(
 	'Verify Consent Renewal Period correctly sets cookie expiration',
 	{tag: '@LPD-68505'},
-	async ({page}) => {
-		await validateConsentRenewalPeriodCookieExpiration(false, page);
+	async ({consentManagerConfigurationPage}) => {
+		await validateConsentRenewalPeriodCookieExpiration(
+			consentManagerConfigurationPage,
+			false
+		);
 	}
 );
 
 test(
 	'Verify Consent Renewal Period for Dissent correctly sets cookie expiration',
 	{tag: '@LPD-80057'},
-	async ({page}) => {
-		await validateConsentRenewalPeriodCookieExpiration(true, page);
+	async ({consentManagerConfigurationPage}) => {
+		await validateConsentRenewalPeriodCookieExpiration(
+			consentManagerConfigurationPage,
+			true
+		);
 	}
 );
 
@@ -272,19 +293,29 @@ test(
 );
 
 async function validateConsentRenewalPeriodCookieExpiration(
-	dissent: boolean,
-	page
+	consentManagerConfigurationPage: ConsentManagerConfigurationPage,
+	dissent: boolean
 ) {
 	const dateBeforeCookiesSet = new Date().getTime();
 
 	await test.step('Set Consent Renewal Period to 1 month', async () => {
-		page.once('dialog', async (dialogWindow) => {
-			await dialogWindow.accept();
-		});
-		await validateConsentRenewalPeriodValue(dissent, '1', page, true);
+		consentManagerConfigurationPage.page.once(
+			'dialog',
+			async (dialogWindow) => {
+				await dialogWindow.accept();
+			}
+		);
+		await validateConsentRenewalPeriodValue(
+			consentManagerConfigurationPage,
+			dissent,
+			'1',
+			true
+		);
 	});
 
-	const cookies = await page.context().cookies();
+	const cookies = await consentManagerConfigurationPage.page
+		.context()
+		.cookies();
 
 	let userConsentConfiguredDate;
 
@@ -333,48 +364,50 @@ async function validateConsentRenewalPeriodCookieExpiration(
 }
 
 async function validateConsentRenewalPeriodValue(
+	consentManagerConfigurationPage: ConsentManagerConfigurationPage,
 	dissent: boolean,
 	newValue: string,
-	page,
 	saveSuccessful: boolean
 ) {
-	let consentRenewalPeriodField = await page
-		.getByLabel('Consent Renewal Period')
-		.first();
+	let consentRenewalPeriodField =
+		consentManagerConfigurationPage.consentRenewalPeriodInput;
 
 	if (dissent) {
-		consentRenewalPeriodField = await page.getByLabel(
-			'Consent Renewal Period for Dissent'
-		);
+		consentRenewalPeriodField =
+			consentManagerConfigurationPage.consentRenewalPeriodForDissentInput;
 	}
 
 	let expectedValue = await consentRenewalPeriodField.getAttribute('value');
 
 	await consentRenewalPeriodField.fill(newValue);
 
-	await page.getByRole('button', {name: 'Update'}).click();
+	await consentManagerConfigurationPage.updateButton.click();
 
 	if (saveSuccessful) {
 		expectedValue = newValue;
 
-		await waitForAlert(page);
+		await waitForAlert(consentManagerConfigurationPage.page);
 
-		await page
+		await consentManagerConfigurationPage.page
 			.getByRole('dialog', {name: 'banner cookies'})
 			.waitFor({state: 'visible'});
 
 		if (dissent) {
-			await page.getByRole('button', {name: 'Decline All'}).click();
+			await consentManagerConfigurationPage.page
+				.getByRole('button', {name: 'Decline All'})
+				.click();
 		}
 		else {
-			await page.getByRole('button', {name: 'Accept All'}).click();
+			await consentManagerConfigurationPage.page
+				.getByRole('button', {name: 'Accept All'})
+				.click();
 		}
 	}
 	else {
-		await page.reload();
+		await consentManagerConfigurationPage.page.reload();
 
-		await page.waitForLoadState();
+		await consentManagerConfigurationPage.page.waitForLoadState();
 	}
 
-	await expect(await consentRenewalPeriodField).toHaveValue(expectedValue);
+	await expect(consentRenewalPeriodField).toHaveValue(expectedValue);
 }

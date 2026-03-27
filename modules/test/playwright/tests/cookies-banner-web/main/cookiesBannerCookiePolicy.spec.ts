@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {consentManagerConfigurationPageTest} from '../../../fixtures/consentManagerConfigurationPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
@@ -22,6 +23,7 @@ const hideableCookieTypes = [
 ];
 
 export const test = mergeTests(
+	consentManagerConfigurationPageTest,
 	featureFlagsTest({
 		'LPD-75032': {enabled: true},
 	}),
@@ -39,16 +41,22 @@ test.afterEach(async ({systemSettingsPage}) => {
 	});
 });
 
-test('LPD-30561 Cookie Banner Cookie Policy Page', async ({page}) => {
+test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
+	consentManagerConfigurationPage,
+	page,
+}) => {
 	await test.step('Enable Consent Manager with Explicit Cookie Consent Mode', async () => {
-		await updateConsentManagerConfiguration(page, {
-			enabled: true,
-			explicitCookieConsentMode: true,
-			forceReload: true,
-		});
+		await updateConsentManagerConfiguration(
+			consentManagerConfigurationPage.page,
+			{
+				enabled: true,
+				explicitCookieConsentMode: true,
+				forceReload: true,
+			}
+		);
 
 		await expect(
-			page.getByLabel('Explicit Cookie Consent Mode')
+			consentManagerConfigurationPage.explicitCookieConsentModeCheckbox
 		).toBeChecked();
 	});
 

@@ -1125,7 +1125,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
-
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			this::safeGetDocument);
 

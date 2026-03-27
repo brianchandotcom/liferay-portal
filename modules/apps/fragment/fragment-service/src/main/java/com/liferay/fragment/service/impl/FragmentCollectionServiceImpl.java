@@ -5,21 +5,33 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
+import com.liferay.document.library.kernel.model.DLFileShortcutTable;
+import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentCollectionTable;
+import com.liferay.fragment.model.FragmentCompositionTable;
+import com.liferay.fragment.model.FragmentEntryTable;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.base.FragmentCollectionServiceBaseImpl;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +144,90 @@ public class FragmentCollectionServiceImpl
 
 		return fragmentCollectionLocalService.fetchFragmentCollection(
 			fragmentCollectionId);
+	}
+
+	@Override
+	public List<FragmentCollection> getExportableFragmentCollections(
+		long[] groupIds, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.dslQuery(
+			_getExportableFragmentCollectionsDSLQuery(
+				_getExportablePredicate(
+					FragmentCollectionTable.INSTANCE.groupId.in(
+						_toLongObjects(groupIds))),
+				start, end, orderByComparator));
+	}
+
+	@Override
+	public List<FragmentCollection> getExportableFragmentCollections(
+		long[] groupIds, long[] fragmentCollectionIds) {
+
+		return fragmentCollectionPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				FragmentCollectionTable.INSTANCE
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getExportablePredicate(
+					FragmentCollectionTable.INSTANCE.groupId.in(
+						_toLongObjects(groupIds)
+					).and(
+						FragmentCollectionTable.INSTANCE.fragmentCollectionId.
+							in(_toLongObjects(fragmentCollectionIds))
+					))
+			));
+	}
+
+	@Override
+	public List<FragmentCollection> getExportableFragmentCollections(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.dslQuery(
+			_getExportableFragmentCollectionsDSLQuery(
+				_getExportablePredicate(
+					FragmentCollectionTable.INSTANCE.groupId.in(
+						_toLongObjects(groupIds)
+					).and(
+						FragmentCollectionTable.INSTANCE.name.like(
+							_customSQL.keywords(
+								name, false, WildcardMode.SURROUND)[0])
+					)),
+				start, end, orderByComparator));
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCount(long[] groupIds) {
+		return fragmentCollectionPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getExportablePredicate(
+					FragmentCollectionTable.INSTANCE.groupId.in(
+						_toLongObjects(groupIds)))
+			));
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCount(
+		long[] groupIds, String name) {
+
+		return fragmentCollectionPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getExportablePredicate(
+					FragmentCollectionTable.INSTANCE.groupId.in(
+						_toLongObjects(groupIds)
+					).and(
+						FragmentCollectionTable.INSTANCE.name.like(
+							_customSQL.keywords(
+								name, false, WildcardMode.SURROUND)[0])
+					))
+			));
 	}
 
 	@Override
@@ -355,6 +451,125 @@ public class FragmentCollectionServiceImpl
 			fragmentCollectionId, name, description);
 	}
 
+	private DSLQuery _getExportableFragmentCollectionsDSLQuery(
+		Predicate predicate, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		if (orderByComparator == null) {
+			return DSLQueryFactoryUtil.select(
+				FragmentCollectionTable.INSTANCE
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				predicate
+			).limit(
+				start, end
+			);
+		}
+
+		return DSLQueryFactoryUtil.select(
+			FragmentCollectionTable.INSTANCE
+		).from(
+			FragmentCollectionTable.INSTANCE
+		).where(
+			predicate
+		).orderBy(
+			FragmentCollectionTable.INSTANCE, orderByComparator
+		).limit(
+			start, end
+		);
+	}
+
+	private Predicate _getExportablePredicate(Predicate predicate) {
+		DLFolderTable childDLFolderTable = DLFolderTable.INSTANCE.as(
+			"childDLFolderTable");
+		DLFileEntryTable dlFileEntryTable = DLFileEntryTable.INSTANCE.as(
+			"dlFileEntryTable");
+		DLFileShortcutTable dlFileShortcutTable =
+			DLFileShortcutTable.INSTANCE.as("dlFileShortcutTable");
+
+		DLFolderTable rootDLFolderTable = DLFolderTable.INSTANCE.as(
+			"rootDLFolderTable");
+		RepositoryTable repositoryTable = RepositoryTable.INSTANCE.as(
+			"repositoryTable");
+
+		Predicate repositoryPredicate = repositoryTable.groupId.eq(
+			FragmentCollectionTable.INSTANCE.groupId
+		).and(
+			repositoryTable.portletId.eq(FragmentPortletKeys.FRAGMENT)
+		).and(
+			rootDLFolderTable.parentFolderId.eq(repositoryTable.dlFolderId)
+		);
+
+		return predicate.and(
+			FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
+				DSLQueryFactoryUtil.selectDistinct(
+					FragmentCompositionTable.INSTANCE.fragmentCollectionId
+				).from(
+					FragmentCompositionTable.INSTANCE
+				).where(
+					FragmentCompositionTable.INSTANCE.marketplace.eq(false)
+				))
+		).or(
+			predicate.and(
+				FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
+					DSLQueryFactoryUtil.selectDistinct(
+						FragmentEntryTable.INSTANCE.fragmentCollectionId
+					).from(
+						FragmentEntryTable.INSTANCE
+					).where(
+						FragmentEntryTable.INSTANCE.marketplace.eq(
+							false
+						).and(
+							FragmentEntryTable.INSTANCE.type.neq(
+								FragmentConstants.TYPE_REACT)
+						).and(
+							FragmentEntryTable.INSTANCE.head.eq(true)
+						)
+					)))
+		).or(
+			predicate.and(
+				FragmentCollectionTable.INSTANCE.fragmentCollectionKey.in(
+					DSLQueryFactoryUtil.selectDistinct(
+						rootDLFolderTable.name
+					).from(
+						repositoryTable
+					).innerJoinON(
+						rootDLFolderTable,
+						repositoryTable.repositoryId.eq(
+							rootDLFolderTable.repositoryId)
+					).where(
+						repositoryPredicate.and(
+							rootDLFolderTable.folderId.in(
+								DSLQueryFactoryUtil.selectDistinct(
+									childDLFolderTable.parentFolderId
+								).from(
+									childDLFolderTable
+								).where(
+									childDLFolderTable.status.eq(
+										WorkflowConstants.STATUS_APPROVED)
+								))
+						).or(
+							repositoryPredicate.and(
+								rootDLFolderTable.folderId.in(
+									DSLQueryFactoryUtil.selectDistinct(
+										dlFileEntryTable.folderId
+									).from(
+										dlFileEntryTable
+									)))
+						).or(
+							repositoryPredicate.and(
+								rootDLFolderTable.folderId.in(
+									DSLQueryFactoryUtil.selectDistinct(
+										dlFileShortcutTable.folderId
+									).from(
+										dlFileShortcutTable
+									)))
+						)
+					)))
+		);
+	}
+
 	private long[] _getGroupIds(long groupId, boolean includeSystem) {
 		long[] groupIds = {groupId};
 
@@ -363,6 +578,16 @@ public class FragmentCollectionServiceImpl
 		}
 
 		return groupIds;
+	}
+
+	private Long[] _toLongObjects(long[] values) {
+		Long[] boxedValues = new Long[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			boxedValues[i] = values[i];
+		}
+
+		return boxedValues;
 	}
 
 	@Reference

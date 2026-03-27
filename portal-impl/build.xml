@@ -19,6 +19,59 @@
 		/>
 	</path>
 
+	<macrodef name="build-service">
+		<attribute default="portal-hbm.xml" name="hbm.file" />
+		<attribute name="service.file" />
+		<attribute default="false" name="skip.compile" />
+		<sequential>
+			<java
+				classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
+				classpathref="service.builder.classpath"
+				failonerror="true"
+				fork="${fork.mode}"
+				logError="true"
+				newenvironment="${fork.mode}"
+			>
+				<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
+				<jvmarg if:true="${jvm.debug}" value="-Dfile.encoding=UTF-8" />
+				<jvmarg if:true="${jvm.debug}" value="-XX:MaxMetaspaceSize=512m" />
+				<jvmarg if:true="${jvm.debug}" value="-Xms512m" />
+				<jvmarg if:true="${jvm.debug}" value="-Xmx1024m" />
+				<jvmarg if:true="${jvm.debug}" value="-Xss2048k" />
+				<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+				<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
+				<arg value="service.api.dir=${basedir}/../portal-kernel/src" />
+				<arg value="service.auto.import.default.references=true" />
+				<arg value="service.auto.namespace.tables=false" />
+				<arg value="service.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
+				<arg value="service.build.number=1" />
+				<arg value="service.build.number.increment=true" />
+				<arg value="service.hbm.file=${basedir}/src/META-INF/@{hbm.file}" />
+				<arg value="service.impl.dir=${basedir}/src" />
+				<arg value="service.incubation.features=${service.builder.incubation.features}" />
+				<arg value="service.input.file=@{service.file}" />
+				<arg value="service.model.hints.configs=${basedir}/src/META-INF/portal-model-hints.xml" />
+				<arg value="service.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml" />
+				<arg value="service.osgi.module=false" />
+				<arg value="service.plugin.name=" />
+				<arg value="service.props.util=com.liferay.portal.kernel.util.PropsUtil" />
+				<arg value="service.resources.dir=${basedir}/src" />
+				<arg value="service.spring.file=${basedir}/src/META-INF/portal-spring.xml" />
+				<arg value="service.spring.namespaces=beans" />
+				<arg value="service.sql.dir=${basedir}/../sql" />
+				<arg value="service.sql.file=portal-tables.sql" />
+				<arg value="service.sql.indexes.file=indexes.sql" />
+				<arg value="service.sql.sequences.file=sequences.sql" />
+				<arg value="service.target.entity.name=${service.target.entity.name}" />
+				<arg value="service.test.dir=${basedir}/../modules/test/persistence-test/src/testIntegration/java" />
+			</java>
+
+			<delete file="ServiceBuilder.temp" />
+
+			<ant dir="../portal-kernel" inheritAll="false" target="compile" unless:true="@{skip.compile}" />
+		</sequential>
+	</macrodef>
+
 	<target name="build-db">
 		<ant dir="../sql" target="build-db" />
 	</target>
@@ -176,131 +229,129 @@
 		</java>
 	</target>
 
-	<target name="build-service">
-		<property name="hbm.file" value="portal-hbm.xml" />
-
-		<java
-			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
-			classpathref="service.builder.classpath"
-			failonerror="true"
-			fork="${fork.mode}"
-			logError="true"
-			newenvironment="${fork.mode}"
-		>
-			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
-			<jvmarg if:true="${jvm.debug}" value="-Dfile.encoding=UTF-8" />
-			<jvmarg if:true="${jvm.debug}" value="-XX:MaxMetaspaceSize=512m" />
-			<jvmarg if:true="${jvm.debug}" value="-Xms512m" />
-			<jvmarg if:true="${jvm.debug}" value="-Xmx1024m" />
-			<jvmarg if:true="${jvm.debug}" value="-Xss2048k" />
-			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
-			<arg value="service.api.dir=${basedir}/../portal-kernel/src" />
-			<arg value="service.auto.import.default.references=true" />
-			<arg value="service.auto.namespace.tables=false" />
-			<arg value="service.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
-			<arg value="service.build.number=1" />
-			<arg value="service.build.number.increment=true" />
-			<arg value="service.hbm.file=${basedir}/src/META-INF/${hbm.file}" />
-			<arg value="service.impl.dir=${basedir}/src" />
-			<arg value="service.incubation.features=${service.builder.incubation.features}" />
-			<arg value="service.input.file=${service.file}" />
-			<arg value="service.model.hints.configs=${basedir}/src/META-INF/portal-model-hints.xml" />
-			<arg value="service.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml" />
-			<arg value="service.osgi.module=false" />
-			<arg value="service.plugin.name=" />
-			<arg value="service.props.util=com.liferay.portal.kernel.util.PropsUtil" />
-			<arg value="service.resources.dir=${basedir}/src" />
-			<arg value="service.spring.file=${basedir}/src/META-INF/portal-spring.xml" />
-			<arg value="service.spring.namespaces=beans" />
-			<arg value="service.sql.dir=${basedir}/../sql" />
-			<arg value="service.sql.file=portal-tables.sql" />
-			<arg value="service.sql.indexes.file=indexes.sql" />
-			<arg value="service.sql.sequences.file=sequences.sql" />
-			<arg value="service.target.entity.name=${service.target.entity.name}" />
-			<arg value="service.test.dir=${basedir}/../modules/test/persistence-test/src/testIntegration/java" />
-		</java>
-
-		<delete file="ServiceBuilder.temp" />
-
-		<ant dir="../portal-kernel" inheritAll="false" target="compile" unless:true="${build.service.skip.compile}" />
-	</target>
-
 	<target name="build-service-counter">
-		<antcall target="build-service">
-			<param name="hbm.file" value="counter-hbm.xml" />
-			<param name="service.file" value="${basedir}/src/com/liferay/counter/service.xml" />
-		</antcall>
+		<build-service
+			hbm.file="counter-hbm.xml"
+			service.file="${basedir}/src/com/liferay/counter/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portal">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portal/service.xml" />
-		</antcall>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portal/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portlet-announcements">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/announcements/service.xml" />
-		</antcall>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/announcements/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portlet-asset">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/asset/service.xml" />
-		</antcall>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/asset/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portlet-documentlibrary">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/documentlibrary/service.xml" />
-		</antcall>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/documentlibrary/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portlet-expando">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/expando/service.xml" />
-		</antcall>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/expando/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portlet-exportimport">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/exportimport/service.xml" />
-		</antcall>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/exportimport/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portlet-ratings">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/ratings/service.xml" />
-		</antcall>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/ratings/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portlet-social">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/social/service.xml" />
-		</antcall>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/social/service.xml"
+		/>
 	</target>
 
 	<target name="build-service-portlets">
-		<antcall target="build-service-portlet-announcements" />
-		<antcall target="build-service-portlet-asset" />
-		<antcall target="build-service-portlet-documentlibrary" />
-		<antcall target="build-service-portlet-expando" />
-		<antcall target="build-service-portlet-exportimport" />
-		<antcall target="build-service-portlet-ratings" />
-		<antcall target="build-service-portlet-social" />
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/announcements/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/asset/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/documentlibrary/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/expando/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/exportimport/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/ratings/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/social/service.xml"
+		/>
 	</target>
 
 	<target name="build-services">
-		<antcall target="build-service-counter">
-			<param name="build.service.skip.compile" value="true" />
-		</antcall>
-		<antcall target="build-service-portal">
-			<param name="build.service.skip.compile" value="true" />
-		</antcall>
-		<antcall target="build-service-portlets">
-			<param name="build.service.skip.compile" value="true" />
-		</antcall>
+		<build-service
+			hbm.file="counter-hbm.xml"
+			service.file="${basedir}/src/com/liferay/counter/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portal/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/announcements/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/asset/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/documentlibrary/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/expando/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/exportimport/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/ratings/service.xml"
+			skip.compile="true"
+		/>
+		<build-service
+			service.file="${basedir}/src/com/liferay/portlet/social/service.xml"
+			skip.compile="true"
+		/>
 
 		<ant dir="../portal-kernel" inheritAll="false" target="compile" />
 

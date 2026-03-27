@@ -1,0 +1,13 @@
+{
+	"deletionType": "cascade",
+	"externalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CRAWL_TARGETS",
+	"label": {
+		"en_US": "Account to Crawl Targets"
+	},
+	"name": "accountToCrawlTargets",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubCrawlTarget$]",
+	"objectDefinitionName2": "AIHubCrawlTarget",
+	"system": true,
+	"type": "oneToMany"
+}

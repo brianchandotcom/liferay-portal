@@ -8,7 +8,9 @@ import {Locator, Page} from '@playwright/test';
 export class EditObjectValidationPage {
 	readonly addObjectFieldsButton: Locator;
 	readonly addTwoObjectFieldsErrorMessage: Locator;
+	readonly fieldsMandatoryCombobox: Locator;
 	readonly page: Page;
+	readonly partialValidationInlineRadio: Locator;
 	readonly saveObjectFieldsButton: Locator;
 	readonly saveObjectValidationButton: Locator;
 	readonly selectAllFields: Locator;
@@ -21,7 +23,13 @@ export class EditObjectValidationPage {
 		this.addTwoObjectFieldsErrorMessage = page.getByText(
 			'Add a minimum of two object fields to create unique composite keys.'
 		);
+		this.fieldsMandatoryCombobox = page
+			.frameLocator('iframe')
+			.getByRole('combobox', {name: 'Fields Mandatory'});
 		this.page = page;
+		this.partialValidationInlineRadio = page
+			.frameLocator('iframe')
+			.getByRole('radio', {name: 'Partial Validation (Inline Field)'});
 		this.saveObjectFieldsButton = page.getByText('Save');
 		this.saveObjectValidationButton = page
 			.frameLocator('iframe')

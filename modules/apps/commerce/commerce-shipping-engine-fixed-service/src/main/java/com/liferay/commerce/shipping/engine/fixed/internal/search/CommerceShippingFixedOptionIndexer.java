@@ -153,8 +153,11 @@ public class CommerceShippingFixedOptionIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCommerceShippingFixedOptions(companyId);
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _commerceShippingFixedOptionLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -170,20 +173,6 @@ public class CommerceShippingFixedOptionIndexer
 		}
 
 		return super.isUseSearchResultPermissionFilter(searchContext);
-	}
-
-	private void _reindexCommerceShippingFixedOptions(long companyId)
-		throws Exception {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_commerceShippingFixedOptionLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

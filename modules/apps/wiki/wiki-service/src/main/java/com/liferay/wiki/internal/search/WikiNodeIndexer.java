@@ -116,20 +116,9 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexEntries(companyId);
-	}
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-	@Reference
-	protected UIDFactory uidFactory;
-
-	private void _deleteDocument(WikiNode wikiNode) throws Exception {
-		_indexWriterHelper.deleteDocument(
-			wikiNode.getCompanyId(), uidFactory.getUID(wikiNode),
-			isCommitImmediately());
-	}
-
-	private void _reindexEntries(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_wikiNodeLocalService.getIndexableActionableDynamicQuery();
 
@@ -140,11 +129,17 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 				dynamicQuery.add(
 					property.eq(WorkflowConstants.STATUS_APPROVED));
 			});
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
 
-		indexableActionableDynamicQuery.performActions();
+		return indexableActionableDynamicQuery;
+	}
+
+	@Reference
+	protected UIDFactory uidFactory;
+
+	private void _deleteDocument(WikiNode wikiNode) throws Exception {
+		_indexWriterHelper.deleteDocument(
+			wikiNode.getCompanyId(), uidFactory.getUID(wikiNode),
+			isCommitImmediately());
 	}
 
 	@Reference

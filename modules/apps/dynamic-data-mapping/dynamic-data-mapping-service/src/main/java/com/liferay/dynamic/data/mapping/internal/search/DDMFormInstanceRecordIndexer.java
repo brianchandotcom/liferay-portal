@@ -233,8 +233,42 @@ public class DDMFormInstanceRecordIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexFormInstanceRecords(companyId);
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			ddmFormInstanceRecordLocalService.
+				getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property formInstanceRecordIdProperty =
+					PropertyFactoryUtil.forName("formInstanceRecordId");
+
+				DynamicQuery ddmFormInstanceRecordVersionDynamicQuery =
+					ddmFormInstanceRecordVersionLocalService.dynamicQuery();
+
+				ddmFormInstanceRecordVersionDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("formInstanceRecordId"));
+
+				dynamicQuery.add(
+					formInstanceRecordIdProperty.in(
+						ddmFormInstanceRecordVersionDynamicQuery));
+
+				Property formInstanceProperty = PropertyFactoryUtil.forName(
+					"formInstanceId");
+
+				DynamicQuery ddmFormInstanceDynamicQuery =
+					ddmFormInstanceLocalService.dynamicQuery();
+
+				ddmFormInstanceDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("formInstanceId"));
+
+				dynamicQuery.add(
+					formInstanceProperty.in(ddmFormInstanceDynamicQuery));
+			});
+
+		return indexableActionableDynamicQuery;
 	}
 
 	protected ClassNameLocalService classNameLocalService;
@@ -311,45 +345,6 @@ public class DDMFormInstanceRecordIndexer
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private void _reindexFormInstanceRecords(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			ddmFormInstanceRecordLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property formInstanceRecordIdProperty =
-					PropertyFactoryUtil.forName("formInstanceRecordId");
-
-				DynamicQuery ddmFormInstanceRecordVersionDynamicQuery =
-					ddmFormInstanceRecordVersionLocalService.dynamicQuery();
-
-				ddmFormInstanceRecordVersionDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("formInstanceRecordId"));
-
-				dynamicQuery.add(
-					formInstanceRecordIdProperty.in(
-						ddmFormInstanceRecordVersionDynamicQuery));
-
-				Property formInstanceProperty = PropertyFactoryUtil.forName(
-					"formInstanceId");
-
-				DynamicQuery ddmFormInstanceDynamicQuery =
-					ddmFormInstanceLocalService.dynamicQuery();
-
-				ddmFormInstanceDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("formInstanceId"));
-
-				dynamicQuery.add(
-					formInstanceProperty.in(ddmFormInstanceDynamicQuery));
-			});
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

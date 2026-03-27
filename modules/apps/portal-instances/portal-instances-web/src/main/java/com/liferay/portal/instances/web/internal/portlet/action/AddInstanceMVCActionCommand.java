@@ -64,8 +64,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			if (exception instanceof CompanyMaxUsersException) {
 				errorMessage = "please-enter-a-valid-max-users";
 			}
-
-			if (exception instanceof CompanyMxException) {
+			else if (exception instanceof CompanyMxException) {
 				errorMessage = "please-enter-a-valid-mail-domain";
 			}
 			else if (exception instanceof CompanyVirtualHostException) {

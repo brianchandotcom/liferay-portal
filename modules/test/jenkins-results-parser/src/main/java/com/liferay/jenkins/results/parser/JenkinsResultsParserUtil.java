@@ -4891,7 +4891,7 @@ public class JenkinsResultsParserUtil {
 
 			int returnCode = remoteExecutor.execute(
 				1, new String[] {destinationHostName},
-				new String[] {"mkdir -p " + destinationDirPath});
+				new String[] {"mkdir -p " + escapeForBash(destinationDirPath)});
 
 			if (returnCode != 0) {
 				throw new RuntimeException("Unable to create target directory");
@@ -4910,8 +4910,10 @@ public class JenkinsResultsParserUtil {
 			public Process execute() {
 				String command = _combineCommandArgs(
 					"time", "timeout", "1200", "rsync", argumentString,
-					_getRyncPath(sourceHostName, sourceFilePath),
-					_getRyncPath(destinationHostName, destinationDirPath));
+					_getRyncPath(sourceHostName, escapeForBash(sourceFilePath)),
+					_getRyncPath(
+						destinationHostName,
+						escapeForBash(destinationDirPath)));
 
 				try {
 					return executeBashCommands(command);

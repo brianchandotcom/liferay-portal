@@ -123,6 +123,9 @@ public interface BuildDatabase {
 		List<String> distNodes, String distPath, String preDistCommand,
 		String postDistCommand, int threadCount);
 
+	public void rsyncBuildDatabaseFileToJenkinsMaster(
+		String destinationDirPath, JenkinsMaster jenkinsMaster);
+
 	public void uploadBuildDatabaseFileToCloudBucket();
 
 	public void uploadBuildDatabaseFileToCloudBucket(String path);

@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -195,11 +194,10 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
-		buildDatabase.rsyncBuildDatabaseFile(
-			Collections.singletonList(buildData.getTopLevelMasterHostname()),
+		buildDatabase.rsyncBuildDatabaseFileToJenkinsMaster(
 			"/opt/java/jenkins/userContent/" +
 				buildData.getUserContentRelativePath(),
-			null, null, _THREADS_FILE_PROPAGATOR_THREAD_SIZE);
+			JenkinsMaster.getInstance(buildData.getTopLevelMasterHostname()));
 	}
 
 	protected void publishJenkinsReport() {

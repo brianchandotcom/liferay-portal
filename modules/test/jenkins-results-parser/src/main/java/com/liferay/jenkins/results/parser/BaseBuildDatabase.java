@@ -634,6 +634,42 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public void rsyncBuildDatabaseFileToJenkinsMaster(
+		String destinationDirPath, JenkinsMaster jenkinsMaster) {
+
+		synchronized (_buildDatabaseFile) {
+			File tempBuildDatabaseFile = new File(
+				JenkinsResultsParserUtil.combine(
+					System.getProperty("java.io.tmpdir"), "/",
+					String.valueOf(_buildDatabaseFile.hashCode()), "/",
+					_buildDatabaseFile.getName()));
+
+			try {
+				JenkinsResultsParserUtil.write(
+					_buildDatabaseFile, _jsonObject.toString());
+
+				JenkinsResultsParserUtil.copy(
+					_buildDatabaseFile, tempBuildDatabaseFile);
+
+				if (!destinationDirPath.endsWith("/")) {
+					destinationDirPath += "/";
+				}
+
+				JenkinsResultsParserUtil.rsync(
+					jenkinsMaster.getName(), destinationDirPath, null,
+					JenkinsResultsParserUtil.getCanonicalPath(
+						tempBuildDatabaseFile));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+			finally {
+				JenkinsResultsParserUtil.delete(tempBuildDatabaseFile);
+			}
+		}
+	}
+
+	@Override
 	public void uploadBuildDatabaseFileToCloudBucket() {
 		uploadBuildDatabaseFileToCloudBucket(
 			System.getenv("S3_BUCKET_DIST_PATH") + "/" +

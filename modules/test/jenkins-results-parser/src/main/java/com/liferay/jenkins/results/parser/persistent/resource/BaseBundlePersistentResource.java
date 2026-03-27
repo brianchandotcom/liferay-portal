@@ -397,8 +397,7 @@ public abstract class BaseBundlePersistentResource
 
 			_topLevelBuild.addDownstreamBuild(_build);
 		}
-
-		if (Objects.equals(producerBuildURL, _build.getBuildURL())) {
+		else if (Objects.equals(producerBuildURL, _build.getBuildURL())) {
 			return;
 		}
 
@@ -412,18 +411,13 @@ public abstract class BaseBundlePersistentResource
 
 		buildDatabase.uploadBuildDatabaseFileToCloudBucket();
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("usercontent/jobs/");
-		sb.append(getStartProperty("TOP_LEVEL_JOB_NAME"));
-		sb.append("/builds/");
-		sb.append(getStartProperty("TOP_LEVEL_BUILD_NUMBER"));
-		sb.append("/");
-
-		buildDatabase.rsyncBuildDatabaseFile(
-			Collections.singletonList(
-				getStartProperty("TOP_LEVEL_JENKINS_MASTER")),
-			sb.toString(), null, null, 1);
+		buildDatabase.rsyncBuildDatabaseFileToJenkinsMaster(
+			JenkinsResultsParserUtil.combine(
+				System.getenv("JENKINS_HOME"), "/userContent/jobs/",
+				getStartProperty("TOP_LEVEL_JOB_NAME"), "/builds/",
+				getStartProperty("TOP_LEVEL_BUILD_NUMBER")),
+			JenkinsMaster.getInstance(
+				getStartProperty("TOP_LEVEL_MASTER_HOSTNAME")));
 	}
 
 	private static final String _BASE_INVOCATION_URL =

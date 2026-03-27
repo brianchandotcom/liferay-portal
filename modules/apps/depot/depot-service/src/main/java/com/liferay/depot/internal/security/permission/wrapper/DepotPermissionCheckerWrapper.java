@@ -42,17 +42,17 @@ import java.util.Set;
 public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 	public DepotPermissionCheckerWrapper(
-		PermissionChecker permissionChecker,
+		GroupLocalService groupLocalService,
 		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission,
 		ModelResourcePermission<Role> roleModelResourcePermission,
-		GroupLocalService groupLocalService, RoleLocalService roleLocalService,
+		PermissionChecker permissionChecker, RoleLocalService roleLocalService,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
 		super(permissionChecker);
 
+		_groupLocalService = groupLocalService;
 		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
 		_roleModelResourcePermission = roleModelResourcePermission;
-		_groupLocalService = groupLocalService;
 		_roleLocalService = roleLocalService;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}

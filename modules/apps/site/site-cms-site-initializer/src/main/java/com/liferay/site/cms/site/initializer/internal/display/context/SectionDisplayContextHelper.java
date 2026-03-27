@@ -432,9 +432,9 @@ public class SectionDisplayContextHelper {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (!permissionChecker.isOmniadmin() &&
-			!permissionChecker.isCompanyAdmin() &&
-			!permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId())) {
+		if (!(permissionChecker.isOmniadmin() ||
+			  permissionChecker.isCompanyAdmin() ||
+			  permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()))) {
 
 			shareFDSActionDropdownItem.setVisibilityFilters(
 				HashMapBuilder.<String, Object>put(

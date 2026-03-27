@@ -790,7 +790,7 @@ public class GitWorkingDirectory {
 
 		try {
 			executionResult = executeBashCommands(
-				retries, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 15, true,
+				retries, GitUtil.MILLIS_RETRY_DELAY, true, 1000 * 60 * 15,
 				sb.toString());
 		}
 		catch (TimeoutException timeoutException) {
@@ -942,7 +942,7 @@ public class GitWorkingDirectory {
 
 		try {
 			executionResult = executeBashCommands(
-				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, true,
+				3, GitUtil.MILLIS_RETRY_DELAY, true, 1000 * 60 * 30,
 				sb.toString());
 		}
 		catch (TimeoutException timeoutException) {
@@ -2585,8 +2585,8 @@ public class GitWorkingDirectory {
 	}
 
 	protected synchronized GitUtil.ExecutionResult executeBashCommands(
-			int maxRetries, long retryDelay, long timeout,
-			boolean throwExceptions, String... commands)
+			int maxRetries, long retryDelay, boolean throwExceptions,
+			long timeout, String... commands)
 		throws IOException, TimeoutException {
 
 		String command = String.join(" ", commands);
@@ -2598,7 +2598,7 @@ public class GitWorkingDirectory {
 		}
 
 		GitUtil.ExecutionResult executionResult = GitUtil.executeBashCommands(
-			maxRetries, retryDelay, timeout, throwExceptions, _workingDirectory,
+			maxRetries, retryDelay, throwExceptions, timeout, _workingDirectory,
 			commands);
 
 		_executionResults.put(command, executionResult);
@@ -2611,7 +2611,7 @@ public class GitWorkingDirectory {
 
 		try {
 			return executeBashCommands(
-				maxRetries, retryDelay, timeout, false, commands);
+				maxRetries, retryDelay, false, timeout, commands);
 		}
 		catch (IOException | TimeoutException exception) {
 			throw new RuntimeException(

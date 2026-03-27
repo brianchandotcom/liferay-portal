@@ -461,8 +461,8 @@ public class GitUtil {
 	}
 
 	protected static ExecutionResult executeBashCommands(
-			int maxRetries, long retryDelay, long timeout,
-			boolean throwExceptions, File workingDirectory, String... commands)
+			int maxRetries, long retryDelay, boolean throwExceptions,
+			long timeout, File workingDirectory, String... commands)
 		throws IOException, TimeoutException {
 
 		Process process = null;
@@ -597,7 +597,7 @@ public class GitUtil {
 
 		try {
 			return executeBashCommands(
-				maxRetries, retryDelay, timeout, false, workingDirectory,
+				maxRetries, retryDelay, false, timeout, workingDirectory,
 				commands);
 		}
 		catch (IOException | TimeoutException exception) {

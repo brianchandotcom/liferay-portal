@@ -3874,8 +3874,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.getCompanyId(), groupId, classNameId, classPK,
 			StringPool.BLANK, friendlyURL);
 
-		if ((classNameId <= 0) || (type == GroupConstants.TYPE_DEPOT) ||
-			className.equals(Group.class.getName())) {
+		if (((classNameId <= 0) || (type == GroupConstants.TYPE_DEPOT) ||
+			 className.equals(Group.class.getName())) &&
+			!Objects.equals(group.getGroupKey(), groupKey)) {
 
 			validateGroupKey(
 				group.getGroupId(), group.getCompanyId(), groupKey,

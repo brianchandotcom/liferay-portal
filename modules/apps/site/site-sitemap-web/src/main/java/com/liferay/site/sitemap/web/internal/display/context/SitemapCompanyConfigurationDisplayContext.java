@@ -74,7 +74,7 @@ public class SitemapCompanyConfigurationDisplayContext {
 					group -> (group != null) && !group.isGuest()),
 				new GroupNameComparator(true, _themeDisplay.getLocale())));
 
-		searchContainer.setResultsAndTotal(groups);
+		searchContainer.setResultsAndTotal(() -> groups, groups.size());
 
 		_groupSearchContainer = searchContainer;
 
@@ -124,16 +124,18 @@ public class SitemapCompanyConfigurationDisplayContext {
 				_liferayPortletResponse.createRenderURL(), headerNames,
 				"no-objects-or-cms-structures-were-found");
 
+		List<ObjectDefinition> objectDefinitions = ListUtil.filter(
+			TransformUtil.transformToList(
+				_sitemapConfigurationManager.
+					getCompanySitemapObjectDefinitionIds(
+						_themeDisplay.getCompanyId()),
+				objectDefinitionId ->
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						objectDefinitionId)),
+			objectDefinition -> objectDefinition != null);
+
 		searchContainer.setResultsAndTotal(
-			ListUtil.filter(
-				TransformUtil.transformToList(
-					_sitemapConfigurationManager.
-						getCompanySitemapObjectDefinitionIds(
-							_themeDisplay.getCompanyId()),
-					objectDefinitionId ->
-						_objectDefinitionLocalService.fetchObjectDefinition(
-							objectDefinitionId)),
-				objectDefinition -> objectDefinition != null));
+			() -> objectDefinitions, objectDefinitions.size());
 
 		_objectDefinitionSearchContainer = searchContainer;
 

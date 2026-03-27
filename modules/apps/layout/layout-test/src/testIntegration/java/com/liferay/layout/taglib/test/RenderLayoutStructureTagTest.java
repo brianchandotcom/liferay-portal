@@ -3176,7 +3176,7 @@ public class RenderLayoutStructureTagTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		JournalArticle basicJournalArticle =
+		JournalArticle basicWebContentJournalArticle =
 			JournalTestUtil.addArticleWithXMLContent(
 				_read("journal_article_content.xml"), "BASIC-WEB-CONTENT",
 				null);
@@ -3186,11 +3186,8 @@ public class RenderLayoutStructureTagTest {
 				null, _group.getGroupId(), RandomTestUtil.randomString(),
 				StringPool.BLANK, _serviceContext);
 
-		FragmentEntry editableFragment = _addFragmentEntry();
-
-		FragmentEntry configurableFragment = _addFragmentEntry(
-			"journal_article_item_selector.json", fragmentCollection,
-			"journal_article_item_selector.html",
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"configuration.json", fragmentCollection, "index.html",
 			RandomTestUtil.randomString());
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
@@ -3208,19 +3205,22 @@ public class RenderLayoutStructureTagTest {
 								JournalArticle.class.getName()))
 					).put(
 						"classPK",
-						String.valueOf(basicJournalArticle.getResourcePrimKey())
+						String.valueOf(
+							basicWebContentJournalArticle.getResourcePrimKey())
 					).put(
 						"classTypeId",
-						String.valueOf(basicJournalArticle.getDDMStructureId())
+						String.valueOf(
+							basicWebContentJournalArticle.getDDMStructureId())
 					))
 			).toString(),
-			configurableFragment.getCss(),
-			configurableFragment.getConfiguration(),
-			configurableFragment.getExternalReferenceCode(), null,
-			configurableFragment.getHtml(), configurableFragment.getJs(),
-			layout, null, FragmentConstants.TYPE_COMPONENT, null, 0,
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getExternalReferenceCode(), null,
+			fragmentEntry.getHtml(), fragmentEntry.getJs(), layout, null,
+			FragmentConstants.TYPE_COMPONENT, null, 0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
+
+		fragmentEntry = _addFragmentEntry();
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			JSONUtil.put(
@@ -3246,9 +3246,9 @@ public class RenderLayoutStructureTagTest {
 						"_ddmTemplate_" + journalArticle.getDDMTemplateKey()
 					))
 			).toString(),
-			editableFragment.getCss(), editableFragment.getConfiguration(),
-			editableFragment.getExternalReferenceCode(), null,
-			editableFragment.getHtml(), editableFragment.getJs(), layout, null,
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getExternalReferenceCode(), null,
+			fragmentEntry.getHtml(), fragmentEntry.getJs(), layout, null,
 			FragmentConstants.TYPE_COMPONENT, null, 0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
@@ -3258,7 +3258,8 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
 
-		Assert.assertTrue(html.contains(basicJournalArticle.getTitle()));
+		Assert.assertTrue(
+			html.contains(basicWebContentJournalArticle.getTitle()));
 	}
 
 	@Test

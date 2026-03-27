@@ -53,6 +53,10 @@ public class BNDWebServiceTrackingCheck extends BaseFileCheck {
 
 		String dirName = absolutePath.substring(0, index + 1);
 
+		if (dirName.endsWith("-test-util/")) {
+			return content;
+		}
+
 		File lfrBuildPortalFile = new File(dirName + ".lfrbuild-portal");
 
 		if (!lfrBuildPortalFile.exists()) {

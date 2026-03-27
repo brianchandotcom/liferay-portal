@@ -28,8 +28,7 @@ const test = mergeTests(
 );
 
 test(
-	'LPD-78504 Can anonymize object entries',
-	{tag: '@LPD-78504'},
+	'can anonymize object entries',
 	async ({
 		apiHelpers,
 		page,
@@ -137,8 +136,7 @@ test(
 );
 
 test(
-	'LPD-78504 Can delete object entries via personal data management',
-	{tag: '@LPD-78504'},
+	'can delete object entries via personal data management',
 	async ({
 		apiHelpers,
 		page,
@@ -312,8 +310,7 @@ test(
 );
 
 test(
-	'LPD-78504 Can export object entries via personal data management',
-	{tag: '@LPD-78504'},
+	'can export object entries via personal data management',
 	async ({
 		apiHelpers,
 		exportUserDataPage,

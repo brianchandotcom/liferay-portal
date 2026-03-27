@@ -8,12 +8,17 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 
@@ -60,22 +65,14 @@ public class ExportFragmentCollectionsMVCResourceCommand
 		}
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			List<FragmentCollection> fragmentCollections =
-				TransformUtil.transformToList(
-					exportFragmentCollectionIds,
-					exportFragmentCollectionId -> {
-						FragmentCollection fragmentCollection =
-							_fragmentCollectionService.fetchFragmentCollection(
-								exportFragmentCollectionId);
-
-						if ((fragmentCollection != null) &&
-							fragmentCollection.isExportable()) {
-
-							return fragmentCollection;
-						}
-
-						return null;
-					});
+				_fragmentCollectionService.getExportableFragmentCollections(
+					_getGroupIds(resourceRequest, themeDisplay),
+					exportFragmentCollectionIds);
 
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
@@ -94,6 +91,31 @@ public class ExportFragmentCollectionsMVCResourceCommand
 		}
 
 		return false;
+	}
+
+	private long[] _getGroupIds(
+		ResourceRequest resourceRequest, ThemeDisplay themeDisplay) {
+
+		long[] groupIds = {themeDisplay.getScopeGroupId()};
+
+		if (ParamUtil.getBoolean(
+				resourceRequest, "includeGlobalFragmentCollections")) {
+
+			groupIds = new long[] {
+				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyGroupId()
+			};
+		}
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (scopeGroup.isCompany() &&
+			(themeDisplay.getCompanyId() ==
+				PortalInstancePool.getDefaultCompanyId())) {
+
+			groupIds = ArrayUtil.append(groupIds, CompanyConstants.SYSTEM);
+		}
+
+		return groupIds;
 	}
 
 	@Reference

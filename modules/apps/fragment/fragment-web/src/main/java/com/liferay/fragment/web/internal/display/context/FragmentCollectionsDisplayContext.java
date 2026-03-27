@@ -28,6 +28,8 @@ import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Objects;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -76,7 +78,7 @@ public class FragmentCollectionsDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<FragmentCollection> searchContainer =
-			new SearchContainer(
+			new SearchContainer<>(
 				_renderRequest, _getPortletURL(), null,
 				"there-are-no-fragment-sets");
 
@@ -86,6 +88,64 @@ public class FragmentCollectionsDisplayContext {
 				_getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 
+		long[] allGroupIds = _getGroupIds(themeDisplay);
+
+		if (_isExportFragmentCollectionsSelector()) {
+			if (_isSearch()) {
+				searchContainer.setResultsAndTotal(
+					() ->
+						FragmentCollectionServiceUtil.
+							getExportableFragmentCollections(
+								allGroupIds, _getKeywords(),
+								searchContainer.getStart(),
+								searchContainer.getEnd(),
+								searchContainer.getOrderByComparator()),
+					FragmentCollectionServiceUtil.
+						getExportableFragmentCollectionsCount(
+							allGroupIds, _getKeywords()));
+			}
+			else {
+				searchContainer.setResultsAndTotal(
+					() ->
+						FragmentCollectionServiceUtil.
+							getExportableFragmentCollections(
+								allGroupIds, searchContainer.getStart(),
+								searchContainer.getEnd(),
+								searchContainer.getOrderByComparator()),
+					FragmentCollectionServiceUtil.
+						getExportableFragmentCollectionsCount(allGroupIds));
+			}
+		}
+		else if (_isSearch()) {
+			searchContainer.setResultsAndTotal(
+				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+					allGroupIds, _getKeywords(),
+					_isIncludeMarketplaceFragmentCollections(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+					allGroupIds, _getKeywords(),
+					_isIncludeMarketplaceFragmentCollections()));
+		}
+		else {
+			searchContainer.setResultsAndTotal(
+				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+					allGroupIds, _isIncludeMarketplaceFragmentCollections(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+					allGroupIds, _isIncludeMarketplaceFragmentCollections()));
+		}
+
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
+	}
+
+	private long[] _getGroupIds(ThemeDisplay themeDisplay) {
 		long[] groupIds = {themeDisplay.getScopeGroupId()};
 
 		if (_isIncludeGlobalFragmentCollections()) {
@@ -103,55 +163,7 @@ public class FragmentCollectionsDisplayContext {
 			groupIds = ArrayUtil.append(groupIds, CompanyConstants.SYSTEM);
 		}
 
-		long[] allGroupIds = groupIds;
-
-		if (_isSearch()) {
-			if (_isIncludeMarketplaceFragmentCollections()) {
-				searchContainer.setResultsAndTotal(
-					() -> FragmentCollectionServiceUtil.getFragmentCollections(
-						allGroupIds, _getKeywords(), searchContainer.getStart(),
-						searchContainer.getEnd(),
-						searchContainer.getOrderByComparator()),
-					FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-						allGroupIds, _getKeywords()));
-			}
-			else {
-				searchContainer.setResultsAndTotal(
-					() -> FragmentCollectionServiceUtil.getFragmentCollections(
-						allGroupIds, _getKeywords(), false,
-						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator()),
-					FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-						allGroupIds, _getKeywords(), false));
-			}
-		}
-		else {
-			if (_isIncludeMarketplaceFragmentCollections()) {
-				searchContainer.setResultsAndTotal(
-					() -> FragmentCollectionServiceUtil.getFragmentCollections(
-						allGroupIds, searchContainer.getStart(),
-						searchContainer.getEnd(),
-						searchContainer.getOrderByComparator()),
-					FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-						allGroupIds));
-			}
-			else {
-				searchContainer.setResultsAndTotal(
-					() -> FragmentCollectionServiceUtil.getFragmentCollections(
-						allGroupIds, false, searchContainer.getStart(),
-						searchContainer.getEnd(),
-						searchContainer.getOrderByComparator()),
-					FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-						allGroupIds, false));
-			}
-		}
-
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
-		_searchContainer = searchContainer;
-
-		return _searchContainer;
+		return groupIds;
 	}
 
 	private String _getKeywords() {
@@ -192,6 +204,15 @@ public class FragmentCollectionsDisplayContext {
 				return null;
 			}
 		).setParameter(
+			"action",
+			() -> {
+				if (_isExportFragmentCollectionsSelector()) {
+					return "export";
+				}
+
+				return null;
+			}
+		).setParameter(
 			"eventName", getEventName()
 		).setParameter(
 			"includeGlobalFragmentCollections",
@@ -222,6 +243,11 @@ public class FragmentCollectionsDisplayContext {
 				return null;
 			}
 		).buildPortletURL();
+	}
+
+	private boolean _isExportFragmentCollectionsSelector() {
+		return Objects.equals(
+			ParamUtil.getString(_httpServletRequest, "action"), "export");
 	}
 
 	private boolean _isIncludeGlobalFragmentCollections() {

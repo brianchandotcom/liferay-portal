@@ -284,6 +284,17 @@ public class NotificationTemplateResourceImpl
 		return postNotificationTemplate(notificationTemplate);
 	}
 
+	@Override
+	protected void preparePatch(
+		NotificationTemplate notificationTemplate,
+		NotificationTemplate existingNotificationTemplate) {
+
+		if (notificationTemplate.getRecipients() != null) {
+			existingNotificationTemplate.setRecipients(
+				notificationTemplate.getRecipients());
+		}
+	}
+
 	private Locale _getLocale() {
 		if (contextUser != null) {
 			return contextUser.getLocale();

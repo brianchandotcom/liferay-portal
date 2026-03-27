@@ -10,7 +10,7 @@
 			},
 			{
 				"externalReferenceCode": "AIHUBPRIMARYNAVIGATION2",
-				"friendlyURL": "/agents",
+				"friendlyURL": "/agent-builder",
 				"privateLayout": false,
 				"type": "layout"
 			}

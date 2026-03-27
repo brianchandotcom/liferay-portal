@@ -526,7 +526,7 @@
 </tr>
 <tr>
 	<td>SELECTED_ASSIGNMENTS_VALUE</td>
-	<td>//*[contains(@class,'d-flex')]</td>
+	<td>//div[@role='tab' and normalize-space()='Assignments']/following-sibling::div[@role='tabpanel']//*[contains(@class,'d-flex')]</td>
 	<td></td>
 </tr>
 <tr>

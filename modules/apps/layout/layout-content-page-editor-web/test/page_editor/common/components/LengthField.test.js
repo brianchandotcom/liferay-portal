@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -35,15 +35,19 @@ const renderLengthField = ({
 	);
 
 describe('LengthField', () => {
-	async function openUnitDropdown() {
+	afterEach(() => {
+		Liferay.FeatureFlags['LPD-40054'] = false;
 
-		// Hackily work around:
-		//
-		//      "TypeError: Cannot read property '_defaultView' of undefined"
-		//
-		// Caused by: https://github.com/jsdom/jsdom/issues/2499
+		jest.runOnlyPendingTimers();
+		jest.useRealTimers();
+	});
 
-		await userEvent.click(screen.getByLabelText('select-a-unit'));
+	beforeEach(() => {
+		Liferay.FeatureFlags['LPD-40054'] = true;
+	});
+
+	async function openUnitDropdown(user = userEvent) {
+		await user.click(screen.getByLabelText('select-a-unit'));
 	}
 
 	it('renders LengthField', () => {
@@ -124,13 +128,25 @@ describe('LengthField', () => {
 	});
 
 	it('focuses the input when custom option is selected', async () => {
+		jest.useFakeTimers();
+
+		const user = userEvent.setup({
+			advanceTimers: jest.advanceTimersByTime,
+		});
+
 		renderLengthField();
 
-		await openUnitDropdown();
+		await openUnitDropdown(user);
 
-		await userEvent.click(screen.getByText('CUSTOM'));
+		await user.click(screen.getByText('CUSTOM'));
+
+		act(() => {
+			jest.advanceTimersByTime(1000);
+		});
 
 		expect(screen.getByLabelText('length-field')).toHaveFocus();
+
+		jest.useRealTimers();
 	});
 
 	it('does not allow typing letters when a unit is selected', async () => {
@@ -194,13 +210,25 @@ describe('LengthField', () => {
 		};
 
 		it('focuses the input when the currently option is custom and a other unit is selected', async () => {
+			jest.useFakeTimers();
+
+			const user = userEvent.setup({
+				advanceTimers: jest.advanceTimersByTime,
+			});
+
 			renderLengthField({field, value: 'calc(12px - 3px)'});
 
-			await openUnitDropdown();
+			await openUnitDropdown(user);
 
-			await userEvent.click(screen.getByText('%'));
+			await user.click(screen.getByText('%'));
+
+			act(() => {
+				jest.advanceTimersByTime(1000);
+			});
 
 			expect(screen.getByLabelText('length-field')).toHaveFocus();
+
+			jest.useRealTimers();
 		});
 
 		it('does not save the value and keeps the previous value when the input is cleared', async () => {

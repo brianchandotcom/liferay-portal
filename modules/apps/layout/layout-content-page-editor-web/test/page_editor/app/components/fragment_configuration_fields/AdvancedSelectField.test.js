@@ -128,15 +128,25 @@ jest.mock(
 );
 
 describe('AdvancedSelectField', () => {
+	afterEach(() => {
+		Liferay.FeatureFlags['LPD-40054'] = false;
+	});
+
+	beforeEach(() => {
+		Liferay.FeatureFlags['LPD-40054'] = true;
+	});
+
 	it('renders AdvancedSelectField', () => {
 		renderAdvancedSelectField();
 
-		expect(screen.getByLabelText('font-size')).toBeInTheDocument();
+		expect(
+			screen.getByRole('combobox', {name: 'font-size'})
+		).toBeInTheDocument();
 	});
 
 	it('changes the value', async () => {
 		renderAdvancedSelectField();
-		const select = screen.getByLabelText('font-size');
+		const select = screen.getByRole('combobox', {name: 'font-size'});
 
 		await userEvent.selectOptions(select, 'fontSizeSm');
 		fireEvent.change(select);
@@ -152,7 +162,7 @@ describe('AdvancedSelectField', () => {
 
 	it('only renders the inherited value indicator if the style is inherited and no value is selected', async () => {
 		renderAdvancedSelectField();
-		const select = screen.getByLabelText('font-size');
+		const select = screen.getByRole('combobox', {name: 'font-size'});
 
 		expect(select.tagName).toBe('SELECT');
 		expect(screen.getByTitle('inherited-value')).toBeInTheDocument();
@@ -166,7 +176,9 @@ describe('AdvancedSelectField', () => {
 	it('renders a custom input when there is no value and the style is not inherited', () => {
 		renderAdvancedSelectField({field: {...FIELD, inherited: false}});
 
-		expect(screen.getByLabelText('font-size').tagName).toBe('INPUT');
+		expect(screen.getByRole('textbox', {name: 'font-size'}).tagName).toBe(
+			'INPUT'
+		);
 		expect(screen.queryByTitle('inherited-value')).not.toBeInTheDocument();
 	});
 
@@ -175,7 +187,7 @@ describe('AdvancedSelectField', () => {
 
 		await userEvent.click(screen.getByTitle('detach-style'));
 
-		const input = screen.getByLabelText('font-size');
+		const input = screen.getByRole('textbox', {name: 'font-size'});
 
 		expect(input).toBeInTheDocument();
 		expect(input).toHaveValue('1.125rem');
@@ -187,7 +199,7 @@ describe('AdvancedSelectField', () => {
 			onValueSelect,
 			value: 'mystyle',
 		});
-		const input = screen.getByLabelText('font-size');
+		const input = screen.getByRole('textbox', {name: 'font-size'});
 
 		fireEvent.change(input, {target: {value: 'initial'}});
 		fireEvent.blur(input);
@@ -202,7 +214,7 @@ describe('AdvancedSelectField', () => {
 			onValueSelect,
 			value: 'mystyle',
 		});
-		const input = screen.getByLabelText('font-size');
+		const input = screen.getByRole('textbox', {name: 'font-size'});
 
 		await userEvent.clear(input);
 		await userEvent.type(input, 'initial');
@@ -216,7 +228,7 @@ describe('AdvancedSelectField', () => {
 		renderAdvancedSelectField({
 			value: 'mystyle',
 		});
-		const input = screen.getByLabelText('font-size');
+		const input = screen.getByRole('textbox', {name: 'font-size'});
 
 		await userEvent.clear(input);
 		fireEvent.blur(input);
@@ -232,7 +244,9 @@ describe('AdvancedSelectField', () => {
 		await userEvent.click(screen.getByTitle('value-from-stylebook'));
 		await userEvent.click(screen.getByText('Font Size Base'));
 
-		expect(screen.getByLabelText('font-size').tagName).toBe('SELECT');
+		expect(screen.getByRole('combobox', {name: 'font-size'}).tagName).toBe(
+			'SELECT'
+		);
 	});
 
 	it('renders the LengthField when the field has units', () => {
@@ -276,7 +290,7 @@ describe('AdvancedSelectField', () => {
 
 		await userEvent.click(screen.getByTitle('reset-to-initial-value'));
 
-		const select = screen.getByLabelText('font-size');
+		const select = screen.getByRole('combobox', {name: 'font-size'});
 
 		expect(select.tagName).toBe('SELECT');
 		expect(select.nextSibling.textContent).toBe('');
@@ -290,7 +304,7 @@ describe('AdvancedSelectField', () => {
 
 		await userEvent.click(screen.getByTitle('reset-to-tablet-value'));
 
-		const select = screen.getByLabelText('font-size');
+		const select = screen.getByRole('combobox', {name: 'font-size'});
 
 		expect(select.tagName).toBe('SELECT');
 		expect(select.nextSibling.textContent).toBe('Font Size Base');

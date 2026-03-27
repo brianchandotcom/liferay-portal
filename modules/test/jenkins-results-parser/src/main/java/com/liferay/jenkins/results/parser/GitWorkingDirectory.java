@@ -797,7 +797,8 @@ public class GitWorkingDirectory {
 			Matcher matcher = GitRemote.getRemoteURLMatcher(remoteURL);
 
 			if (matcher.find()) {
-				throw new RuntimeException(
+				throw new GitWorkingDirectoryRuntimeException(
+					this,
 					JenkinsResultsParserUtil.combine(
 						"Unable to fetch branch history.\n",
 						"Please rebase with liferay/",
@@ -951,7 +952,8 @@ public class GitWorkingDirectory {
 			Matcher matcher = GitRemote.getRemoteURLMatcher(remoteURL);
 
 			if (matcher.find()) {
-				throw new RuntimeException(
+				throw new GitWorkingDirectoryRuntimeException(
+					this,
 					JenkinsResultsParserUtil.combine(
 						"Unable to fetch branch history.\n",
 						"Please rebase with liferay/",

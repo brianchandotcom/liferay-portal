@@ -154,6 +154,32 @@ public class ReportController extends BaseFaroController {
 				Map.class);
 		}
 		catch (FaroEngineClientException faroEngineClientException) {
+			if (faroEngineClientException instanceof InvalidFilterException) {
+				Response.ResponseBuilder responseBuilder = Response.status(
+					Response.Status.BAD_REQUEST);
+
+				String description = "";
+
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					faroEngineClientException.getMessage());
+
+				JSONObject errorAttributesJSONObject = jsonObject.getJSONObject(
+					"errorAttributes");
+
+				if (errorAttributesJSONObject != null) {
+					description = errorAttributesJSONObject.getString(
+						"message", "");
+				}
+
+				return responseBuilder.entity(
+					HashMapBuilder.put(
+						"description", description
+					).put(
+						"message", "Bad Request"
+					).build()
+				).build();
+			}
+
 			_log.error(faroEngineClientException);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -161,31 +187,6 @@ public class ReportController extends BaseFaroController {
 
 			return _reportControllerResponseFactory.create(
 				jsonObject.getString("message"), jsonObject.getInt("status"));
-		}
-		catch (InvalidFilterException invalidFilterException) {
-			Response.ResponseBuilder responseBuilder = Response.status(
-				Response.Status.BAD_REQUEST);
-
-			String description = "";
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				invalidFilterException.getMessage());
-
-			JSONObject errorAttributesJSONObject = jsonObject.getJSONObject(
-				"errorAttributes");
-
-			if (errorAttributesJSONObject != null) {
-				description = errorAttributesJSONObject.getString(
-					"message", "");
-			}
-
-			return responseBuilder.entity(
-				HashMapBuilder.put(
-					"description", description
-				).put(
-					"message", "Bad Request"
-				).build()
-			).build();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

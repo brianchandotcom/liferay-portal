@@ -8,7 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
-import {getFDSInternalCellRenderer} from '@liferay/frontend-data-set-web';
+import {getFDSInternalRenderer} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -22,7 +22,7 @@ function Item(props) {
 			{props.fields.map((field, i) => {
 				const value = getValueFromItem(props.itemData, field.fieldName);
 
-				const cellRenderer = getFDSInternalCellRenderer(
+				const cellRenderer = getFDSInternalRenderer(
 					field.contentRenderer
 				);
 

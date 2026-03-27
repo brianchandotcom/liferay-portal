@@ -181,6 +181,13 @@ export type IUserAccountsDTO = {
 	totalCount: number;
 };
 
+export type TLatestActivity = {
+	action: string;
+	createDate: string;
+	logoURL?: string;
+	name: string;
+};
+
 export type TVisitor = {
 	activitiesCount: number;
 	emailAddress: string;

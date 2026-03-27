@@ -1349,7 +1349,7 @@ public class ObjectDefinitionResourceImpl
 	private long _getObjectFolderId(String objectFolderExternalReferenceCode)
 		throws Exception {
 
-		ObjectFolder objectFolder;
+		ObjectFolder objectFolder = null;
 
 		if (Validator.isNull(objectFolderExternalReferenceCode)) {
 			objectFolder =

@@ -677,17 +677,12 @@
 </tr>
 <tr>
 	<td>SEARCH</td>
-	<td>//input[contains(@title,'S') or contains(@title,'s')][contains(@title,'earch')] | //input[contains(@aria-label,'S') or contains(@aria-label,'s') or contains(@title,'s')][contains(@aria-label,'earch')] | //input[contains(@name,'keywords')] | //input[(ancestor::header[@id='banner'])][contains(@data-qa-id,'searchInput')]</td>
+	<td>//input[contains(@title,'S') or contains(@title,'s')][contains(@title,'earch')][not(@data-qa-id='sideNavigationSearchInput')] | //input[contains(@aria-label,'S') or contains(@aria-label,'s') or contains(@title,'s')][contains(@aria-label,'earch')][not(@data-qa-id='sideNavigationSearchInput')] | //input[contains(@name,'keywords')] | //input[(ancestor::header[@id='banner'])][contains(@data-qa-id,'searchInput')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_DISABLED</td>
 	<td>//input[@disabled and contains(@name,'keywords')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_2</td>
-	<td>xpath=(//input[@title='Search'])[2]</td>
 	<td></td>
 </tr>
 <tr>

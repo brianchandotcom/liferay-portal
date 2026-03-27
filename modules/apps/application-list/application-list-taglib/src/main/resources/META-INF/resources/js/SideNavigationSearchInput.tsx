@@ -28,6 +28,7 @@ function SideNavigationSearchInput({
 			<ClayInput
 				aria-label={Liferay.Language.get('search')}
 				className="c-pl-3"
+				data-qa-id="sideNavigationSearchInput"
 				onChange={(event) => setQuery(event.target.value)}
 				placeholder={Liferay.Language.get('search')}
 				type="search"

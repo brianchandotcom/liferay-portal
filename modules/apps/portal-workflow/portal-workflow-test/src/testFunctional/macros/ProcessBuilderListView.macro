@@ -27,7 +27,7 @@ definition {
 			value1 = ${workflowName});
 
 		KeyPress(
-			locator1 = "TextInput#SEARCH",
+			locator1 = "ProcessBuilderListView#SEARCH_FIELD",
 			value1 = "\RETURN");
 	}
 

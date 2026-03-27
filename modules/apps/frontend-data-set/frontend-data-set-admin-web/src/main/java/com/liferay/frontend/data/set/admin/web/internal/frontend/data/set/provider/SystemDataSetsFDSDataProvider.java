@@ -26,8 +26,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -121,28 +119,12 @@ public class SystemDataSetsFDSDataProvider
 	}
 
 	private List<SystemFDSEntry> _getSystemFDSEntries(String keywords) {
-		Set<String> systemFDSNames =
-			_systemFDSEntryRegistry.getSystemFDSNames();
+		List<SystemFDSEntry> systemFDSEntries =
+			FDSDataProviderUtil.getSystemFDSEntries(
+				keywords, _systemFDSEntryRegistry);
 
-		if (systemFDSNames == null) {
+		if (ListUtil.isEmpty(systemFDSEntries)) {
 			return Collections.emptyList();
-		}
-
-		List<SystemFDSEntry> systemFDSEntries = new ArrayList<>();
-
-		for (String systemFDSName : systemFDSNames) {
-			SystemFDSEntry systemFDSEntry =
-				_systemFDSEntryRegistry.getSystemFDSEntry(systemFDSName);
-
-			if ((systemFDSEntry == null) ||
-				(Validator.isNotNull(keywords) &&
-				 !StringUtil.matchesIgnoreCase(
-					 systemFDSEntry.getTitle(), keywords))) {
-
-				continue;
-			}
-
-			systemFDSEntries.add(systemFDSEntry);
 		}
 
 		Collections.sort(

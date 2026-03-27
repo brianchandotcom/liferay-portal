@@ -7,6 +7,7 @@ package com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.provi
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
+import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletFDSNames;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model.SystemDataSet;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
@@ -44,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Arroyo
  */
 @Component(
-	property = "fds.data.provider.key=systemDataSets",
+	property = "fds.data.provider.key=" + FDSAdminPortletFDSNames.SYSTEM_DATA_SETS,
 	service = FDSDataProvider.class
 )
 public class SystemDataSetsFDSDataProvider

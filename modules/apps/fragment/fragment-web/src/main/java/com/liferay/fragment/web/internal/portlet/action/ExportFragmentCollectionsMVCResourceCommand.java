@@ -7,8 +7,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -61,21 +60,9 @@ public class ExportFragmentCollectionsMVCResourceCommand
 
 		try {
 			List<FragmentCollection> fragmentCollections =
-				TransformUtil.transformToList(
-					exportFragmentCollectionIds,
-					exportFragmentCollectionId -> {
-						FragmentCollection fragmentCollection =
-							_fragmentCollectionService.fetchFragmentCollection(
-								exportFragmentCollectionId);
-
-						if ((fragmentCollection != null) &&
-							fragmentCollection.isExportable()) {
-
-							return fragmentCollection;
-						}
-
-						return null;
-					});
+				_fragmentCollectionLocalService.
+					getExportableFragmentCollections(
+						exportFragmentCollectionIds);
 
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
@@ -97,7 +84,7 @@ public class ExportFragmentCollectionsMVCResourceCommand
 	}
 
 	@Reference
-	private FragmentCollectionService _fragmentCollectionService;
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Reference
 	private ZipWriterFactory _zipWriterFactory;

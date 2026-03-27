@@ -32,7 +32,7 @@ async function getObjectEntry(
 }
 
 async function patchObjectEntry(
-	data: IAssetObjectEntry,
+	data: Partial<IAssetObjectEntry>,
 	url: string,
 	nestedFields = 'embeddedTaxonomyCategory,systemProperties.objectDefinitionBrief'
 ): Promise<RequestResult<IAssetObjectEntry>> {

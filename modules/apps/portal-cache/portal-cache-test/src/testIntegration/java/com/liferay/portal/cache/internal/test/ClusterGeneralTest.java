@@ -141,13 +141,10 @@ public class ClusterGeneralTest implements Serializable {
 		String tomcatNode2ClusterNodeId = _tomcatNode2.syncExecute(
 			ClusterGeneralTest::_getLocalClusterNodeId);
 
-		String masterNodeClusterNodeId;
+		String masterNodeClusterNodeId = tomcatNode2ClusterNodeId;
 
 		if (_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster)) {
 			masterNodeClusterNodeId = tomcatNode1ClusterNodeId;
-		}
-		else {
-			masterNodeClusterNodeId = tomcatNode2ClusterNodeId;
 		}
 
 		Assert.assertEquals(

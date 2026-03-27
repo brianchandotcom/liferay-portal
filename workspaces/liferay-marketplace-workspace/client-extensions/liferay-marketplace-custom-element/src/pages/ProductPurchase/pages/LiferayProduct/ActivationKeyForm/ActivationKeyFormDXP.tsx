@@ -4,26 +4,26 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayDropDown, { Align } from '@clayui/drop-down';
-import ClayForm, { ClayCheckbox, ClayInput } from '@clayui/form';
+import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
 
-import { RequiredMask } from '../../../../../components/FieldBase';
-import { Input } from '../../../../../components/Input/Input';
+import {RequiredMask} from '../../../../../components/FieldBase';
+import {Input} from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import i18n from '../../../../../i18n';
-import { Liferay } from '../../../../../liferay/liferay';
-import zodSchema, { z } from '../../../../../schema/zod';
-import { productAgreements } from '../../../../../utils/agreements';
-import { phones } from '../../../../../utils/phones';
-import { useProductPurchaseOutletContext } from '../../../ProductPurchaseOutlet';
+import {Liferay} from '../../../../../liferay/liferay';
+import zodSchema, {z} from '../../../../../schema/zod';
+import {productAgreements} from '../../../../../utils/agreements';
+import {phones} from '../../../../../utils/phones';
+import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import ProductPurchaseDXPTypeFree from '../../../services/ProductPurchaseDXPTypeFree';
-import { PURPOSE_OPTIONS } from './constants';
+import {PURPOSE_OPTIONS} from './constants';
 
 import './ActivationKeyForm.scss';
 
@@ -36,24 +36,24 @@ const ActivationKeyFormDXP = () => {
 	const [active, setActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const { handlePurchase, product, selectedAccount } =
+	const {handlePurchase, product, selectedAccount} =
 		useProductPurchaseOutletContext();
 
 	const {
-		formState: { errors, isValid },
+		formState: {errors, isValid},
 		handleSubmit,
 		register,
 		setValue,
 		watch,
 	} = useForm<z.infer<typeof zodSchema.activationKey>>({
 		defaultValues: {
-			businessEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
+			businessEmailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
 			companyName: '',
 			country: '',
 			domain: '',
 			extension: '',
 			fullName: Liferay.ThemeDisplay.getUserName(),
-			intlCode: { code: '+1', flag: 'en-us' },
+			intlCode: {code: '+1', flag: 'en-us'},
 			jobTitle: '',
 			notifyMeAboutProducts: false,
 			phoneNumber: '',
@@ -122,14 +122,11 @@ const ActivationKeyFormDXP = () => {
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<Input
-							{...register('businessEmail')}
+							{...register('businessEmailAddress')}
 							className="w-100"
-							errorMessage={errors.businessEmail?.message}
-							id="businessEmail"
-							label={i18n.translate('business-email')}
-							placeholder={i18n.translate(
-								'enter-your-business-email'
-							)}
+							errorMessage={errors.businessEmailAddress?.message}
+							id="businessEmailAddress"
+							label={i18n.translate('business-email-address')}
 							required
 						/>
 					</ClayInput.GroupItem>
@@ -260,7 +257,7 @@ const ActivationKeyFormDXP = () => {
 				<ClayDropDown
 					active={active}
 					alignmentPosition={Align.BottomLeft}
-					menuElementAttrs={{ className: 'dropdown-menu-purpose' }}
+					menuElementAttrs={{className: 'dropdown-menu-purpose'}}
 					onActiveChange={setActive}
 					trigger={
 						<ClayButton

@@ -10,9 +10,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Full Name"
+				"en_US": "Administrator Email Address"
 			},
-			"name": "fullName",
+			"name": "administratorEmailAddress",
 			"required": true,
 			"type": "String"
 		},
@@ -21,9 +21,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Business Email"
+				"en_US": "AI Hub Account Name"
 			},
-			"name": "businessEmail",
+			"name": "aiHubAccountName",
 			"required": true,
 			"type": "String"
 		},
@@ -32,21 +32,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Country"
+				"en_US": "Business Email Address"
 			},
-			"name": "country",
+			"name": "businessEmailAddress",
 			"required": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Job Title"
-			},
-			"name": "jobTitle",
-			"required": false,
 			"type": "String"
 		},
 		{
@@ -65,6 +54,39 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en_US": "Country"
+			},
+			"name": "country",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Extension"
+			},
+			"name": "extension",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Full Name"
+			},
+			"name": "fullName",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en_US": "Intl. Code"
 			},
 			"name": "intlCode",
@@ -76,9 +98,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Phone Number"
+				"en_US": "Job Title"
 			},
-			"name": "phoneNumber",
+			"name": "jobTitle",
 			"required": false,
 			"type": "String"
 		},
@@ -87,9 +109,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Extension"
+				"en_US": "Phone Number"
 			},
-			"name": "extension",
+			"name": "phoneNumber",
 			"required": false,
 			"type": "String"
 		},
@@ -113,28 +135,6 @@
 			},
 			"name": "purposeDescription",
 			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "AI Hub Account Name"
-			},
-			"name": "aiHubAccountName",
-			"required": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Administration Email"
-			},
-			"name": "administrationEmail",
-			"required": true,
 			"type": "String"
 		}
 	],

@@ -118,7 +118,7 @@ export default {
 	'business': 'Business',
 	'business-account': 'Business Account',
 	'business-address': 'Business Address',
-	'business-email': 'Business Email',
+	'business-email-address': 'Business Email Address',
 	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
@@ -256,7 +256,6 @@ export default {
 	'email-address': 'Email Address',
 	'end-user-license-agreement': 'End User License Agreement',
 	'enter-administration-email-address': 'Enter administration email address',
-	'enter-ai-hub-account-name': 'Enter AI Hub Account Name',
 	'enter-app-description': 'Enter app description',
 	'enter-domain-here': 'Enter domain here',
 	'enter-email-address': 'Enter email address',
@@ -270,7 +269,6 @@ export default {
 	'enter-the-required-ram': 'Enter the required RAM',
 	'enter-the-required-ram-0-is-valid': 'Enter the required RAM (0 is valid)',
 	'enter-title-header': 'Enter title header',
-	'enter-your-business-email': 'Enter your business email',
 	'enter-your-company-name': 'Enter your company name',
 	'enter-your-contact-details-in-the-fields-below-in-the-request-description-enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit-we-will-be-in-contact-regarding-your-request':
 		'Enter your contact details in the fields below. In the Request Description, enter the name and a brief description of the app you would like to submit. We will be in contact regarding your request.',

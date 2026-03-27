@@ -10,43 +10,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Full Name"
+				"en_US": "Business Email Address"
 			},
-			"name": "fullName",
+			"name": "businessEmailAddress",
 			"required": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Business Email"
-			},
-			"name": "businessEmail",
-			"required": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Country"
-			},
-			"name": "country",
-			"required": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Job Title"
-			},
-			"name": "jobTitle",
-			"required": false,
 			"type": "String"
 		},
 		{
@@ -65,6 +32,50 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en_US": "Country"
+			},
+			"name": "country",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Domain"
+			},
+			"name": "domain",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Extension"
+			},
+			"name": "extension",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Full Name"
+			},
+			"name": "fullName",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en_US": "Intl. Code"
 			},
 			"name": "intlCode",
@@ -76,20 +87,32 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Phone Number"
+				"en_US": "Job Title"
 			},
-			"name": "phoneNumber",
+			"name": "jobTitle",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Notify Me"
+			},
+			"name": "notifyMe",
+			"required": false,
+			"type": "Boolean"
 		},
 		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Extension"
+				"en_US": "Phone Number"
 			},
-			"name": "extension",
+			"name": "phoneNumber",
 			"required": false,
 			"type": "String"
 		},
@@ -113,29 +136,6 @@
 			},
 			"name": "purposeDescription",
 			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "Boolean",
-			"businessType": "Boolean",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Notify Me"
-			},
-			"name": "notifyMe",
-			"required": false,
-			"type": "Boolean"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Domain"
-			},
-			"name": "domain",
-			"required": true,
 			"type": "String"
 		}
 	],

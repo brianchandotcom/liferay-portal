@@ -69,7 +69,6 @@ const CategorizationTabContent = () => {
 					error,
 				} = await ObjectEntryService.patchObjectEntry(
 					{
-						...currentAsset,
 						keywords: keywords || currentAsset.keywords,
 						taxonomyCategoryIds:
 							taxonomyCategoryIds ||

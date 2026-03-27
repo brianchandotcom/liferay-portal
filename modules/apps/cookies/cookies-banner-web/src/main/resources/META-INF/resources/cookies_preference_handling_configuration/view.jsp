@@ -68,6 +68,12 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 	<div class="col-sm-12 form-group">
 		<div class="form-group__inner">
 			<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' label="cookie-dissent-renewal-period" max="12" min="0" name='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriod() %>" />
+
+			<div aria-hidden="true" class="form-feedback-group">
+				<div class="form-text text-weight-normal">
+					<liferay-ui:message key="cookie-dissent-renewal-period-help" />
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

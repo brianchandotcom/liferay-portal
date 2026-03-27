@@ -36,8 +36,9 @@ public interface CookiesPreferenceHandlingConfiguration {
 	public long customFloatingIconImageId();
 
 	@Meta.AD(
-		deflt = "12", max = "12", min = "0",
-		name = "cookie-dissent-renewal-period", required = false
+		deflt = "12", description = "cookie-dissent-renewal-period-help",
+		max = "12", min = "0", name = "cookie-dissent-renewal-period",
+		required = false
 	)
 	public int dissentRenewalPeriod();
 

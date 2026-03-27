@@ -85,7 +85,7 @@ apiVersion: v1
 kind: Secret
 metadata:
     name: elasticsearch-connection-details
-    namespace: {{ $elasticsearchNamespace }}
+    namespace: {{ .Release.Namespace }}
 stringData:
     ELASTICSEARCH_DEFAULT_PASSWORD_SECRET_NAME: "{{ include "elasticsearch.name" . }}-es-elastic-user"
     ELASTICSEARCH_DEFAULT_USERNAME: elastic

@@ -22,6 +22,9 @@ ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext = (ViewRoomsSectio
 			id="<%= DSRSiteInitializerFDSNames.ROOM %>"
 			propsTransformer="{RoomsFDSPropsTransformer} from site-dsr-site-initializer"
 			selectedItemsKey="embedded.id"
+			showManagementBar="<%= !viewRoomsSectionDisplayContext.isHomePage() %>"
+			showPagination="<%= !viewRoomsSectionDisplayContext.isHomePage() %>"
+			showSearch="<%= !viewRoomsSectionDisplayContext.isHomePage() %>"
 		/>
 	</div>
 </div>

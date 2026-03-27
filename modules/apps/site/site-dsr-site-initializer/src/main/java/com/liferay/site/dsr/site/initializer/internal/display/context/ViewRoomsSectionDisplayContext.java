@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.dsr.site.initializer.internal.constants.DSRConstants;
 
@@ -34,11 +35,14 @@ import java.util.Map;
 public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public ViewRoomsSectionDisplayContext(
+		Map<String, Object> configurationMap,
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition,
 		ObjectEntryService objectEntryService) {
 
-		super(httpServletRequest, objectDefinition, objectEntryService);
+		super(
+			configurationMap, httpServletRequest, objectDefinition,
+			objectEntryService);
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -59,19 +63,23 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
 		sb.append("filter=objectDefinitionId eq ");
 		sb.append(objectDefinition.getObjectDefinitionId());
 		sb.append("&nestedFields=embedded,r_accountToDSRRooms_accountEntryId");
 
+		if (isHomePage()) {
+			sb.append("&pageSize=5&sort=dateModified:desc");
+		}
+
 		return sb.toString();
 	}
 
 	@Override
 	public CreationMenu getCreationMenu() throws Exception {
-		if (!hasAddObjectEntryPortletResourcePermission()) {
+		if (isHomePage() || !hasAddObjectEntryPortletResourcePermission()) {
 			return null;
 		}
 
@@ -147,6 +155,10 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 			).build(
 				"delete"
 			));
+	}
+
+	public boolean isHomePage() {
+		return GetterUtil.getBoolean(configurationMap.get("isHomePage"));
 	}
 
 	private JSONObject _getLayoutSetPrototypeJSONObject(

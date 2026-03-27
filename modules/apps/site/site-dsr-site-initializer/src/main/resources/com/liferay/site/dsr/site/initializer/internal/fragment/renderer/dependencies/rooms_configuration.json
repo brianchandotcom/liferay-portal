@@ -1,0 +1,17 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "home-page",
+					"name": "isHomePage",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

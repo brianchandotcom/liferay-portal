@@ -18,6 +18,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -27,10 +28,12 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseSectionDisplayContext {
 
 	public BaseSectionDisplayContext(
+		Map<String, Object> configurationMap,
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition,
 		ObjectEntryService objectEntryService) {
 
+		this.configurationMap = configurationMap;
 		this.httpServletRequest = httpServletRequest;
 		this.objectDefinition = objectDefinition;
 
@@ -63,6 +66,7 @@ public abstract class BaseSectionDisplayContext {
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
 	}
 
+	protected final Map<String, Object> configurationMap;
 	protected final HttpServletRequest httpServletRequest;
 	protected final ObjectDefinition objectDefinition;
 

@@ -9,7 +9,6 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -82,9 +81,6 @@ public abstract class BaseJSPSectionFragmentRenderer<T>
 	}
 
 	protected abstract String getLabelKey();
-
-	@Reference
-	protected Language language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.dsr.site.initializer)"

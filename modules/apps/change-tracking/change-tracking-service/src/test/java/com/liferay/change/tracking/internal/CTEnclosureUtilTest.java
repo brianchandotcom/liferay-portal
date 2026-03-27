@@ -157,6 +157,10 @@ public class CTEnclosureUtilTest {
 				new AbstractMap.SimpleImmutableEntry<>(
 					node2.getClassNameId(), node2.getPrimaryKey())),
 			CTEnclosureUtil.getEnclosureParentEntries(ctClosure, enclosureMap));
+
+		Assert.assertFalse(
+			CTEnclosureUtil.traverseParentEntries(
+				ctClosure, enclosureMap, parentEntry -> false));
 	}
 
 }

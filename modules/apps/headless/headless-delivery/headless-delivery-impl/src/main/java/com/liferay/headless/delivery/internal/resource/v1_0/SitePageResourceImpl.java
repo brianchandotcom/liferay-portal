@@ -595,12 +595,12 @@ public class SitePageResourceImpl
 	}
 
 	private SegmentsExperience _getSegmentsExperience(
-			Layout layout, String segmentsExperienceKey,
-			ThemeDisplay themeDisplay)
+			HttpServletRequest httpServletRequest, Layout layout,
+			String segmentsExperienceKey)
 		throws Exception {
 
 		if (Validator.isNull(segmentsExperienceKey)) {
-			return _getUserSegmentsExperience(layout, themeDisplay);
+			return _getUserSegmentsExperience(httpServletRequest, layout);
 		}
 
 		return _segmentsExperienceService.fetchSegmentsExperience(
@@ -619,21 +619,18 @@ public class SitePageResourceImpl
 	}
 
 	private SegmentsExperience _getUserSegmentsExperience(
-			Layout layout, ThemeDisplay themeDisplay)
+			HttpServletRequest httpServletRequest, Layout layout)
 		throws Exception {
-
-		contextHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
-			layout.getGroupId(), contextUser.getUserId(),
-			_requestContextMapper.map(contextHttpServletRequest), new long[0]);
 
 		long[] segmentsExperienceIds =
 			_segmentsExperienceRequestProcessorRegistry.
 				getSegmentsExperienceIds(
-					contextHttpServletRequest, null, layout.getGroupId(),
-					layout.getPlid(), segmentsEntryIds);
+					httpServletRequest, null, layout.getGroupId(),
+					layout.getPlid(),
+					_segmentsEntryRetriever.getSegmentsEntryIds(
+						layout.getGroupId(), contextUser.getUserId(),
+						_requestContextMapper.map(httpServletRequest),
+						new long[0]));
 
 		if (ArrayUtil.isEmpty(segmentsExperienceIds)) {
 			return _segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -766,7 +763,7 @@ public class SitePageResourceImpl
 			themeDisplay.setRequest(httpServletRequest);
 
 			SegmentsExperience segmentsExperience = _getSegmentsExperience(
-				layout, segmentsExperienceKey, themeDisplay);
+				httpServletRequest, layout, segmentsExperienceKey);
 
 			if (segmentsExperience != null) {
 				httpServletRequest.setAttribute(
@@ -818,10 +815,11 @@ public class SitePageResourceImpl
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
 			dtoConverterContext.setAttribute(
 				"segmentsExperience",
-				_getUserSegmentsExperience(
-					layout, serviceContext.getThemeDisplay()));
+				_getUserSegmentsExperience(themeDisplay.getRequest(), layout));
 
 			return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
 		}

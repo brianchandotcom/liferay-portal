@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayDropDown, {Align} from '@clayui/drop-down';
+import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
@@ -12,6 +12,7 @@ import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {
 	KeyboardEvent,
+	Ref,
 	useEffect,
 	useMemo,
 	useRef,
@@ -89,6 +90,38 @@ interface Props {
 	value?: string;
 }
 
+type TriggerButtonProps = {
+	defaultUnit: Unit;
+	unit: Unit;
+};
+
+const TriggerButton = React.forwardRef(
+	(
+		{defaultUnit, unit, ...props}: TriggerButtonProps,
+		ref: Ref<HTMLButtonElement>
+	) => {
+		return (
+			<ClayButton
+				{...props}
+				aria-label={sub(Liferay.Language.get('select-a-unit'), unit)}
+				className="border-0 layout__length-input__button p-1"
+				displayType="secondary"
+				monospaced
+				ref={ref}
+				size="sm"
+				title={Liferay.Language.get('select-units')}
+			>
+				{defaultUnit ||
+					(unit === CUSTOM ? (
+						<ClayIcon symbol="code" />
+					) : (
+						unit.toUpperCase()
+					))}
+			</ClayButton>
+		);
+	}
+);
+
 export default function LengthInput({
 	className,
 	defaultUnit,
@@ -98,7 +131,6 @@ export default function LengthInput({
 	showLabel = true,
 	value: currentValue,
 }: Props) {
-	const [active, setActive] = useState(false);
 	const [error, setError] = useState(false);
 	const inputId = useId();
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -110,13 +142,9 @@ export default function LengthInput({
 
 	const [value, setValue] = useControlledState(initialValue.value);
 	const [unit, setUnit] = useState(initialValue.unit);
-	const triggerId = useId();
 
 	const onSelectUnit = (selectedUnit: Unit) => {
-		setActive(false);
 		setUnit(selectedUnit);
-
-		document.getElementById(triggerId)!.focus();
 
 		if (!value || selectedUnit === unit) {
 			return;
@@ -220,7 +248,9 @@ export default function LengthInput({
 
 	return (
 		<ClayForm.Group
-			className={classNames(className, 'layout__length-input')}
+			className={classNames(className, 'layout__length-input', {
+				old: !Liferay.FeatureFlags['LPD-40054'],
+			})}
 		>
 			<label
 				className={classNames({'sr-only': !showLabel})}
@@ -229,7 +259,7 @@ export default function LengthInput({
 				{field.label}
 			</label>
 
-			<ClayInput.Group>
+			<ClayInput.Group className="rounded">
 				<ClayInput.GroupItem prepend>
 					<ClayInput
 						aria-label={field.label}
@@ -266,54 +296,17 @@ export default function LengthInput({
 					) : null}
 				</ClayInput.GroupItem>
 
-				<ClayInput.GroupItem append shrink>
-					<ClayDropDown
-						active={active}
-						alignmentPosition={Align.BottomRight}
-						menuElementAttrs={{
-							className: 'layout__length-input__dropdown',
-							containerProps: {
-								className: 'cadmin',
-							},
-						}}
-						onActiveChange={setActive}
-						renderMenuOnClick
-						trigger={
-							<ClayButton
-								aria-expanded={active}
-								aria-haspopup="true"
-								aria-label={sub(
-									Liferay.Language.get('select-a-unit'),
-									unit
-								)}
-								className="layout__length-input__button p-1"
-								disabled={Boolean(defaultUnit)}
-								displayType="secondary"
-								id={triggerId}
-								size="sm"
-								title={Liferay.Language.get('select-units')}
-							>
-								{defaultUnit ||
-									(unit === CUSTOM ? (
-										<ClayIcon symbol="code" />
-									) : (
-										unit.toUpperCase()
-									))}
-							</ClayButton>
-						}
-					>
-						<ClayDropDown.ItemList aria-labelledby={triggerId}>
-							{UNITS.map((unit) => (
-								<ClayDropDown.Item
-									key={unit}
-									onClick={() => onSelectUnit(unit)}
-								>
-									{unit.toUpperCase()}
-								</ClayDropDown.Item>
-							))}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-				</ClayInput.GroupItem>
+				<Picker
+					as={TriggerButton}
+					defaultSelectedKey={defaultUnit || UNITS[0]}
+					defaultUnit={defaultUnit}
+					disabled={Boolean(defaultUnit)}
+					items={[...UNITS]}
+					onSelectionChange={(unit) => onSelectUnit(unit as Unit)}
+					unit={unit}
+				>
+					{(item) => <Option key={item}>{item.toUpperCase()}</Option>}
+				</Picker>
 
 				{error ? (
 					<span aria-live="assertive" className="sr-only">

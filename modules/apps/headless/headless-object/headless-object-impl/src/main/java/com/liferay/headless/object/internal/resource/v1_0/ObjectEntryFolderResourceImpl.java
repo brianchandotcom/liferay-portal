@@ -614,7 +614,6 @@ public class ObjectEntryFolderResourceImpl
 				"externalReferenceCode",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS),
 			BooleanClauseOccur.MUST_NOT);
-
 		booleanFilter.add(
 			new TermFilter(
 				"externalReferenceCode",

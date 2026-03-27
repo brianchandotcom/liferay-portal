@@ -445,6 +445,8 @@ public class FragmentDisplayContext {
 			).setMVCRenderCommandName(
 				"/fragment/view_fragment_collections"
 			).setParameter(
+				"action", "delete"
+			).setParameter(
 				"includeMarketplaceFragmentCollections", true
 			).setWindowState(
 				LiferayWindowState.POP_UP
@@ -456,9 +458,11 @@ public class FragmentDisplayContext {
 			).setMVCRenderCommandName(
 				"/fragment/view_fragment_collections"
 			).setParameter(
+				"action", "export"
+			).setParameter(
 				"includeGlobalFragmentCollections", true
 			).setParameter(
-				"includeMarketplaceFragmentCollections", false
+				"includeMarketplaceFragmentCollections", true
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()

@@ -38,6 +38,7 @@ const test = mergeTests(
 	loginTest(),
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	journalPagesTest,
 	pageEditorPagesTest,
@@ -62,11 +63,10 @@ test(
 		remotePage,
 		remoteStagingPage,
 		webContentDisplayPage,
-		widgetPagePage,
 	}) => {
 		test.slow();
 
-		let layouts: Array<Layout> = [];
+		let layouts: Array<Layout & {title: string}> = [];
 		let remoteSite: Site;
 		let site: Site;
 
@@ -90,40 +90,66 @@ test(
 			});
 		});
 
-		await test.step('Create a hierarchy of pages on the local site', async () => {
+		const WC_DISPLAY =
+			'com_liferay_journal_content_web_portlet_JournalContentPortlet';
+
+		const widgets = [WC_DISPLAY, WC_DISPLAY];
+
+		await test.step('Create a hierarchy of pages with Web Content Display portlets on the local site', async () => {
 			layouts = await createLayoutHierarchy({
 				apiHelpers,
 				pageNodes: [
 					{
 						children: [
 							{
-								children: [{title: 'Page 111'}],
+								children: [
+									{
+										title: 'Page 111',
+										widgets,
+									},
+								],
 								title: 'Page 11',
+								widgets,
 							},
-							{title: 'Page 12'},
+							{
+								title: 'Page 12',
+								widgets,
+							},
 						],
 						title: 'Page 1',
+						widgets,
 					},
 					{
-						children: [{title: 'Page 21'}, {title: 'Page 22'}],
+						children: [
+							{
+								title: 'Page 21',
+								widgets,
+							},
+							{
+								title: 'Page 22',
+								widgets,
+							},
+						],
 						title: 'Page 2',
+						widgets,
 					},
 					{
-						children: [{title: 'Page 31'}, {title: 'Page 32'}],
+						children: [
+							{
+								title: 'Page 31',
+								widgets,
+							},
+							{
+								title: 'Page 32',
+								widgets,
+							},
+						],
 						title: 'Page 3',
+						widgets,
 					},
 				],
 				siteId: site.id,
 			});
-		});
-
-		await test.step('Add two Web Content Display portlets to each page of the local site', async () => {
-			for (const layout of layouts) {
-				await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-				await widgetPagePage.addPortlet('Web Content Display');
-				await widgetPagePage.addPortlet('Web Content Display');
-			}
 		});
 
 		const webContentTitle = getRandomString();
@@ -177,11 +203,11 @@ test(
 					return [
 						{
 							name: `Openpage${pageNum}`,
-							value: layout.nameCurrentValue,
+							value: layout.title,
 						},
 						{
 							name: `URL${pageNum}`,
-							value: `/web${site.friendlyUrlPath}${layout.friendlyURL}`,
+							value: `/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`,
 						},
 					];
 				});
@@ -262,27 +288,22 @@ test(
 			for (const [i, layout] of layouts.entries()) {
 				await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-				const webContentPortlets = page.locator(
-					'[id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible'
-				);
-
 				await webContentDisplayPage.addWebContentWithDisplay({
-					customLocator: webContentPortlets.nth(0),
 					pageType: 'content',
 					webContentName: webContentTitle,
 				});
 
 				await webContentDisplayPage.addWebContentWithDisplay({
-					customLocator: webContentPortlets.nth(1),
 					pageType: 'content',
 					webContentName: `Title-${pageNumbers[i]}`,
 				});
+
+				await pageEditorPage.publishPage();
 			}
 		});
-
 		await test.step('Publish to live and verify content and links on the remote site', async () => {
 			await remoteStagingPage.publishToLive({
-				layoutFriendlyURL: layouts[0].friendlyURL,
+				layoutFriendlyURL: layouts[0].friendlyUrlPath,
 				siteFriendlyUrl: site.friendlyUrlPath,
 			});
 

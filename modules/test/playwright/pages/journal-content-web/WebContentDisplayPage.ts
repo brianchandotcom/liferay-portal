@@ -135,11 +135,9 @@ export class WebContentDisplayPage {
 	}
 
 	async addWebContentWithDisplay({
-		customLocator,
 		pageType = 'content',
 		webContentName,
 	}: {
-		customLocator?: Locator;
 		pageType?: 'content' | 'widget';
 		webContentName?: string;
 	} = {}) {
@@ -147,10 +145,7 @@ export class WebContentDisplayPage {
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayContent.click();
 
-		if (customLocator) {
-			await customLocator.click();
-		}
-		else if (pageType === 'widget') {
+		if (pageType === 'widget') {
 			await this.page
 				.locator('[id*="JournalContentPortlet"]')
 				.getByRole('button', {name: 'Options'})

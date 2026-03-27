@@ -1,3 +1,8 @@
+.edit-object-definition-wrapper {
+	position: relative;
+	top: -3.5rem;
+}
+
 .lfr-objects__object-definition-details {
 	margin-bottom: 25px;
 	margin-top: 5.5rem;
@@ -9,7 +14,7 @@
 }
 
 .lfr-objects__object-definition-details-management-toolbar {
-	position: fixed;
+	position: sticky;
 	top: 3.5rem;
 	width: 100%;
 	z-index: 1;

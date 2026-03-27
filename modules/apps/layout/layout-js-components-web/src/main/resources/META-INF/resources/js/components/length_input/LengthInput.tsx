@@ -13,7 +13,9 @@ import {sub} from 'frontend-js-web';
 import React, {
 	KeyboardEvent,
 	Ref,
+	forwardRef,
 	useEffect,
+	useImperativeHandle,
 	useMemo,
 	useRef,
 	useState,
@@ -86,9 +88,14 @@ interface Props {
 	field: Field;
 	onEnter?: () => {};
 	onValueSelect: (fieldName: string, value: string) => void;
+	ref?: React.Ref<HTMLInputElement>;
 	showLabel?: boolean;
 	value?: string;
 }
+
+type LengthInputRef = {
+	focus: () => void;
+};
 
 type TriggerButtonProps = {
 	defaultUnit: Unit;
@@ -122,200 +129,219 @@ const TriggerButton = React.forwardRef(
 	}
 );
 
-export default function LengthInput({
-	className,
-	defaultUnit,
-	field,
-	onEnter,
-	onValueSelect,
-	showLabel = true,
-	value: currentValue,
-}: Props) {
-	const [error, setError] = useState(false);
-	const inputId = useId();
-	const inputRef = useRef<HTMLInputElement>(null);
+const LengthInput = forwardRef<LengthInputRef, Props>(
+	(
+		{
+			className,
+			defaultUnit,
+			field,
+			onEnter,
+			onValueSelect,
+			showLabel = true,
+			value: currentValue,
+		},
+		ref
+	) => {
+		const [error, setError] = useState(false);
+		const inputId = useId();
+		const inputRef = useRef<HTMLInputElement>(null);
 
-	const initialValue = useMemo(
-		() => getInitialValue(currentValue),
-		[currentValue]
-	);
+		const initialValue = useMemo(
+			() => getInitialValue(currentValue),
+			[currentValue]
+		);
 
-	const [value, setValue] = useControlledState(initialValue.value);
-	const [unit, setUnit] = useState(initialValue.unit);
+		const [value, setValue] = useControlledState(initialValue.value);
+		const [unit, setUnit] = useState(initialValue.unit);
 
-	const onSelectUnit = (selectedUnit: Unit) => {
-		setUnit(selectedUnit);
+		useImperativeHandle(ref, () => ({
+			focus: () => {
+				inputRef.current?.focus();
+			},
+		}));
 
-		if (!value || selectedUnit === unit) {
-			return;
-		}
+		const onSelectUnit = (selectedUnit: Unit) => {
+			setUnit(selectedUnit);
 
-		let valueWithUnits = `${value}${selectedUnit}`;
+			if (!value || selectedUnit === unit) {
+				return;
+			}
 
-		if (selectedUnit === CUSTOM) {
-			inputRef.current!.focus();
+			let valueWithUnits = `${value}${selectedUnit}`;
 
-			setValue('');
+			if (selectedUnit === CUSTOM) {
+				inputRef.current!.focus();
 
-			return;
-		}
-		else if (typeof value !== 'number' || isNaN(value)) {
-			valueWithUnits = '';
-
-			inputRef.current!.focus();
-
-			if (field.typeOptions?.showLengthField) {
-				setValue(valueWithUnits);
+				setValue('');
 
 				return;
 			}
-		}
+			else if (typeof value !== 'number' || isNaN(value)) {
+				valueWithUnits = '';
 
-		if (valueWithUnits !== currentValue) {
-			onValueSelect(field.name, valueWithUnits);
-		}
-	};
+				inputRef.current!.focus();
 
-	const handleValueSelect = () => {
-		if (value === currentValue && unit !== CUSTOM) {
-			return;
-		}
+				if (field.typeOptions?.showLengthField) {
+					setValue(valueWithUnits);
 
-		const match = value.toString().toLowerCase().match(REGEX);
-		let valueWithUnits = value;
-
-		if (match) {
-			const [, nextNumber, nextUnit] = match;
-
-			valueWithUnits = `${nextNumber}${nextUnit}`;
-
-			setValue(nextNumber);
-			setUnit(nextUnit as Unit);
-		}
-		else if (unit !== CUSTOM && value) {
-			valueWithUnits = `${value}${unit}`;
-		}
-
-		if (
-			field.typeOptions?.showLengthField &&
-			(!valueWithUnits ||
-				!isValidStyleValue(
-					field.cssProperty || '',
-					valueWithUnits.toString()
-				))
-		) {
-			const {nextNumber, nextUnit} = getNextValue(currentValue, unit);
-
-			setValue(nextNumber);
-			setUnit(nextUnit);
-			setError(true);
-
-			setTimeout(() => setError(false), 1000);
-
-			return;
-		}
-
-		if (valueWithUnits !== currentValue) {
-			onValueSelect(field.name, valueWithUnits.toString());
-		}
-	};
-
-	const handleKeyUp = (event: KeyboardEvent) => {
-		if (unit !== CUSTOM && KEYS_NOT_ALLOWED.has(event.key)) {
-			event.preventDefault();
-		}
-
-		if (event.key === 'Enter') {
-			if (onEnter) {
-				onEnter();
+					return;
+				}
 			}
 
-			handleValueSelect();
-		}
-	};
+			if (valueWithUnits !== currentValue) {
+				onValueSelect(field.name, valueWithUnits);
+			}
+		};
 
-	useEffect(() => {
-		if (!currentValue) {
-			return;
-		}
+		const handleValueSelect = () => {
+			if (value === currentValue && unit !== CUSTOM) {
+				return;
+			}
 
-		setUnit((previousUnit) => {
-			const {nextUnit} = getNextValue(currentValue, previousUnit);
+			const match = value.toString().toLowerCase().match(REGEX);
+			let valueWithUnits = value;
 
-			return nextUnit;
-		});
-	}, [currentValue]);
+			if (match) {
+				const [, nextNumber, nextUnit] = match;
 
-	return (
-		<ClayForm.Group
-			className={classNames(className, 'layout__length-input', {
-				old: !Liferay.FeatureFlags['LPD-40054'],
-			})}
-		>
-			<label
-				className={classNames({'sr-only': !showLabel})}
-				htmlFor={inputId}
+				valueWithUnits = `${nextNumber}${nextUnit}`;
+
+				setValue(nextNumber);
+				setUnit(nextUnit as Unit);
+			}
+			else if (unit !== CUSTOM && value) {
+				valueWithUnits = `${value}${unit}`;
+			}
+
+			if (
+				field.typeOptions?.showLengthField &&
+				(!valueWithUnits ||
+					!isValidStyleValue(
+						field.cssProperty || '',
+						valueWithUnits.toString()
+					))
+			) {
+				const {nextNumber, nextUnit} = getNextValue(currentValue, unit);
+
+				setValue(nextNumber);
+				setUnit(nextUnit);
+				setError(true);
+
+				setTimeout(() => setError(false), 1000);
+
+				return;
+			}
+
+			if (valueWithUnits !== currentValue) {
+				onValueSelect(field.name, valueWithUnits.toString());
+			}
+		};
+
+		const handleKeyUp = (event: KeyboardEvent) => {
+			if (unit !== CUSTOM && KEYS_NOT_ALLOWED.has(event.key)) {
+				event.preventDefault();
+			}
+
+			if (event.key === 'Enter') {
+				if (onEnter) {
+					onEnter();
+				}
+
+				handleValueSelect();
+			}
+		};
+
+		useEffect(() => {
+			if (!currentValue) {
+				return;
+			}
+
+			setUnit((previousUnit) => {
+				const {nextUnit} = getNextValue(currentValue, previousUnit);
+
+				return nextUnit;
+			});
+		}, [currentValue]);
+
+		return (
+			<ClayForm.Group
+				className={classNames(className, 'layout__length-input w-100', {
+					old: !Liferay.FeatureFlags['LPD-40054'],
+				})}
 			>
-				{field.label}
-			</label>
-
-			<ClayInput.Group className="rounded">
-				<ClayInput.GroupItem prepend>
-					<ClayInput
-						aria-label={field.label}
-						id={inputId}
-						insetBefore={Boolean(field.icon)}
-						onBlur={() => handleValueSelect()}
-						onChange={(event) => {
-							setValue(event.target.value);
-						}}
-						onKeyUp={handleKeyUp}
-						ref={inputRef}
-						sizing="sm"
-						type={
-							!defaultUnit && unit === CUSTOM ? 'text' : 'number'
-						}
-						value={value}
-					/>
-
-					{field.icon ? (
-						<ClayInput.GroupInsetItem before>
-							<label
-								className="layout__input-with-icon__label-icon mb-0 pl-1 pr-3 text-center"
-								htmlFor={inputId}
-							>
-								<ClayIcon
-									className="lfr-portal-tooltip"
-									data-title={field.label}
-									symbol={field.icon}
-								/>
-
-								<span className="sr-only">{field.label}</span>
-							</label>
-						</ClayInput.GroupInsetItem>
-					) : null}
-				</ClayInput.GroupItem>
-
-				<Picker
-					as={TriggerButton}
-					defaultSelectedKey={defaultUnit || UNITS[0]}
-					defaultUnit={defaultUnit}
-					disabled={Boolean(defaultUnit)}
-					items={[...UNITS]}
-					onSelectionChange={(unit) => onSelectUnit(unit as Unit)}
-					unit={unit}
+				<label
+					className={classNames({'sr-only': !showLabel})}
+					htmlFor={inputId}
 				>
-					{(item) => <Option key={item}>{item.toUpperCase()}</Option>}
-				</Picker>
+					{field.label}
+				</label>
 
-				{error ? (
-					<span aria-live="assertive" className="sr-only">
-						{Liferay.Language.get(
-							'this-field-requires-a-valid-style-value'
+				<ClayInput.Group className="rounded">
+					<ClayInput.GroupItem prepend>
+						<ClayInput
+							aria-label={field.label}
+							id={inputId}
+							insetBefore={Boolean(field.icon)}
+							onBlur={() => handleValueSelect()}
+							onChange={(event) => {
+								setValue(event.target.value);
+							}}
+							onKeyUp={handleKeyUp}
+							ref={inputRef}
+							sizing="sm"
+							type={
+								!defaultUnit && unit === CUSTOM
+									? 'text'
+									: 'number'
+							}
+							value={value}
+						/>
+
+						{field.icon ? (
+							<ClayInput.GroupInsetItem before>
+								<label
+									className="layout__input-with-icon__label-icon mb-0 pl-1 pr-3 text-center"
+									htmlFor={inputId}
+								>
+									<ClayIcon
+										className="lfr-portal-tooltip"
+										data-title={field.label}
+										symbol={field.icon}
+									/>
+
+									<span className="sr-only">
+										{field.label}
+									</span>
+								</label>
+							</ClayInput.GroupInsetItem>
+						) : null}
+					</ClayInput.GroupItem>
+
+					<Picker
+						as={TriggerButton}
+						defaultSelectedKey={defaultUnit || UNITS[0]}
+						defaultUnit={defaultUnit}
+						disabled={Boolean(defaultUnit)}
+						items={[...UNITS]}
+						onSelectionChange={(unit) => onSelectUnit(unit as Unit)}
+						unit={unit}
+					>
+						{(item) => (
+							<Option key={item}>{item.toUpperCase()}</Option>
 						)}
-					</span>
-				) : null}
-			</ClayInput.Group>
-		</ClayForm.Group>
-	);
-}
+					</Picker>
+
+					{error ? (
+						<span aria-live="assertive" className="sr-only">
+							{Liferay.Language.get(
+								'this-field-requires-a-valid-style-value'
+							)}
+						</span>
+					) : null}
+				</ClayInput.Group>
+			</ClayForm.Group>
+		);
+	}
+);
+
+export default LengthInput;

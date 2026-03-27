@@ -91,19 +91,19 @@ function _bump_chart_yaml_version {
 function _check_bootstrap {
 	local bootstrap_name="${1}"
 
-    shift
+	shift
 
 	local git_blame_sha
 
 	git_blame_sha=$(_git_blame_sha '"liferay-'"${bootstrap_name}"'-bootstrap": ".*"' "${_VERSIONS_JSON_FILE}")
 
-    local bootstrap_sources
+	local bootstrap_sources
 
-    mapfile -d '' bootstrap_sources < <(printf '%s\0' "$@")
+	mapfile -d '' bootstrap_sources < <(printf '%s\0' "$@")
 
-    for source in "${bootstrap_sources[@]}"
+	for source in "${bootstrap_sources[@]}"
 	do
-        local clean_source="${source%$'\0'}"
+		local clean_source="${source%$'\0'}"
 
 		local commit_count
 
@@ -182,7 +182,7 @@ function _update_default_chart_version {
 	local helm_chart_yaml="${1}"
 	local new_version="${2}"
 
-    local helm_chart_name
+	local helm_chart_name
 
 	helm_chart_name=$(basename "$(dirname "${helm_chart_yaml}")")
 

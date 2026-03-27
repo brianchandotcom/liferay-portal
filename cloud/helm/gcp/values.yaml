@@ -93,7 +93,7 @@ liferay-default:
             backendRequest: 300s
             request: 300s
     overlay:
-        bucketName: $[env:LIFERAY_OVERLAY_BUCKET_NAME]
+        bucketName: ""
         driver: gcsfuse.csi.storage.gke.io
         enabled: false
     podAnnotations:

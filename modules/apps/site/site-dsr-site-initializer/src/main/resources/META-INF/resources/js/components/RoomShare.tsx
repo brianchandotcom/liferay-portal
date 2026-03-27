@@ -13,7 +13,6 @@ import {openToast} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import RoomService from '../common/services/RoomService';
-import {openRoomUserAccountDeleteConfirmationModal} from '../common/utils/openModalUtil';
 import {IRoomShareProps, IUserAccount} from '../common/utils/types';
 
 export const DSR_SITE_ROLES = [
@@ -177,13 +176,35 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 	}, [emailAddresses, loadUsers, roleKey, roomId]);
 
 	const handleRemoveUser = useCallback(
-		(userId: number, isInvitedMember?: boolean) => {
-			openRoomUserAccountDeleteConfirmationModal({
-				isInvitedMember,
-				loadData: loadUsers,
-				roomId,
-				userId,
-			});
+		async (userId: number, isInvitedMember?: boolean) => {
+			setLoading(true);
+
+			try {
+				if (isInvitedMember) {
+					await RoomService.deleteRoomInvitedMember(roomId, userId);
+				}
+				else {
+					await RoomService.deleteRoomUserAccount(roomId, userId);
+				}
+
+				openToast({
+					message: Liferay.Language.get(
+						'user-was-removed-successfully'
+					),
+					type: 'success',
+				});
+
+				loadUsers();
+			}
+			catch (error) {
+				openToast({
+					message: Liferay.Language.get('an-error-occurred'),
+					type: 'danger',
+				});
+			}
+			finally {
+				setLoading(false);
+			}
 		},
 		[loadUsers, roomId]
 	);

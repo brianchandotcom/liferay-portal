@@ -824,7 +824,8 @@ public class GitWorkingDirectory {
 			throw new GitWorkingDirectoryRuntimeException(
 				this,
 				JenkinsResultsParserUtil.combine(
-					"Unable to fetch remote url ", remoteURL, " after ",
+					"Unable to fetch remote Git ref ", remoteGitRefName,
+					" after ",
 					JenkinsResultsParserUtil.toDurationString(duration), "\n",
 					executionResult.getStandardError()));
 		}

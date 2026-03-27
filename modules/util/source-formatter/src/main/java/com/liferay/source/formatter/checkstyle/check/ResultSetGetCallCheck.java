@@ -77,6 +77,10 @@ public class ResultSetGetCallCheck extends BaseCheck {
 		DetailAST variableDefinitionDetailAST = getVariableDefinitionDetailAST(
 			detailAST, names.get(0));
 
+		if (variableDefinitionDetailAST == null) {
+			return;
+		}
+
 		String typeName = getTypeName(
 			variableDefinitionDetailAST.findFirstToken(TokenTypes.TYPE), true);
 

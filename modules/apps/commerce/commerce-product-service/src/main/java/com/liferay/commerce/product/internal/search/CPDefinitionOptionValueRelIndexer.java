@@ -181,22 +181,11 @@ public class CPDefinitionOptionValueRelIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCPDefinitionOptionValueRels(companyId);
-	}
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-	private void _reindexCPDefinitionOptionValueRels(long companyId)
-		throws Exception {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_cpDefinitionOptionValueRelLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _cpDefinitionOptionValueRelLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

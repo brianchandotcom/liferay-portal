@@ -195,8 +195,11 @@ public class CommerceInventoryWarehouseIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCommerceInventoryWarehouses(companyId);
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _commerceInventoryWarehouseLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -232,20 +235,6 @@ public class CommerceInventoryWarehouseIndexer
 		}
 
 		return count;
-	}
-
-	private void _reindexCommerceInventoryWarehouses(long companyId)
-		throws Exception {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_commerceInventoryWarehouseLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

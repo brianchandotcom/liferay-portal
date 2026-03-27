@@ -118,15 +118,10 @@ public class PatcherAccountIndexer extends BaseIndexer<PatcherAccount> {
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_patcherAccountLocalService.getIndexableActionableDynamicQuery();
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _patcherAccountLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Reference

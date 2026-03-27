@@ -182,22 +182,11 @@ public class CommerceSubscriptionEntryIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCommerceSubscriptionEntries(companyId);
-	}
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-	private void _reindexCommerceSubscriptionEntries(long companyId)
-		throws Exception {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_commerceSubscriptionEntryLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _commerceSubscriptionEntryLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

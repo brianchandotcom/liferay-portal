@@ -151,8 +151,11 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCommerceChannels(companyId);
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _commerceChannelLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -168,17 +171,6 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 		}
 
 		return super.isUseSearchResultPermissionFilter(searchContext);
-	}
-
-	private void _reindexCommerceChannels(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_commerceChannelLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

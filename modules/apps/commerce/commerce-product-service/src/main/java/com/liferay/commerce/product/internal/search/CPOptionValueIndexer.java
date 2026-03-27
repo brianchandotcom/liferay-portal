@@ -138,19 +138,10 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCPOptionValues(companyId);
-	}
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-	private void _reindexCPOptionValues(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_cpOptionValueLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _cpOptionValueLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

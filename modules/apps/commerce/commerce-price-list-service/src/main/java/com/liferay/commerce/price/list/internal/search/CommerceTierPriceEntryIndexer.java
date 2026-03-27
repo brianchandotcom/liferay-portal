@@ -165,22 +165,11 @@ public class CommerceTierPriceEntryIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCommerceTierPriceEntries(companyId);
-	}
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-	private void _reindexCommerceTierPriceEntries(long companyId)
-		throws Exception {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_commerceTierPriceEntryLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _commerceTierPriceEntryLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

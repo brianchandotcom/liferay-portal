@@ -235,8 +235,21 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexKBArticles(companyId);
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			kbArticleLocalService.getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					property.eq(WorkflowConstants.STATUS_APPROVED));
+			});
+
+		return indexableActionableDynamicQuery;
 	}
 
 	@Reference
@@ -277,24 +290,6 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 		indexWriterHelper.updateDocuments(
 			kbArticle.getCompanyId(), documents, isCommitImmediately());
-	}
-
-	private void _reindexKBArticles(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			kbArticleLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property property = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					property.eq(WorkflowConstants.STATUS_APPROVED));
-			});
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference(

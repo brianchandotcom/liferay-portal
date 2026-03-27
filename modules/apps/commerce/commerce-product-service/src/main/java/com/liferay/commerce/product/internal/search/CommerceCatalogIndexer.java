@@ -146,19 +146,11 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCommerceCatalogs(companyId);
-	}
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-	private void _reindexCommerceCatalogs(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_commerceCatalogLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _commerceCatalogLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -128,16 +128,11 @@ public class PatcherProjectVersionIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_patcherProjectVersionLocalService.
-				getIndexableActionableDynamicQuery();
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _patcherProjectVersionLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Reference

@@ -282,22 +282,11 @@ public class CPAttachmentFileEntryIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexCPAttachmentFileEntries(companyId);
-	}
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-	private void _reindexCPAttachmentFileEntries(long companyId)
-		throws Exception {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_cpAttachmentFileEntryLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _cpAttachmentFileEntryLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

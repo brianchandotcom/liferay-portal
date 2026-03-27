@@ -108,16 +108,11 @@ public class PatcherFixComponentIndexer
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_patcherFixComponentLocalService.
-				getIndexableActionableDynamicQuery();
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
+		return _patcherFixComponentLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Reference

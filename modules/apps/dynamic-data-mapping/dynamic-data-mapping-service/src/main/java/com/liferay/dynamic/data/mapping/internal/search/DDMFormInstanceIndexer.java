@@ -81,24 +81,15 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 	}
 
 	@Override
-	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexFormInstances(companyId);
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return ddmFormInstanceLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
 	protected IndexerRegistry indexerRegistry;
 	protected IndexWriterHelper indexWriterHelper;
-
-	private void _reindexFormInstances(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			ddmFormInstanceLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
-	}
 
 	private void _reindexRecords(DDMFormInstance ddmFormInstance)
 		throws Exception {

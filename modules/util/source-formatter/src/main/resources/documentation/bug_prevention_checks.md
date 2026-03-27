@@ -22,6 +22,7 @@ BNDBreakingChangeCommitMessageCheck | .bnd | Checks that commit message should c
 [BNDRangeCheck](check/bnd_range_check.md#bndrangecheck) | .bnd | Checks for use or range expressions. |
 [BNDSchemaVersionCheck](check/bnd_schema_version_check.md#bndschemaversioncheck) | .bnd | Checks for incorrect use of property `Liferay-Require-SchemaVersion`. |
 [BNDWebContextPathCheck](check/bnd_web_context_path_check.md#bndwebcontextpathcheck) | .bnd | Checks if the property value for `Web-ContextPath` matches the module directory. |
+BNDWebServiceTrackingCheck | .bnd | Finds missing `Web-ServiceTracking: false`. |
 CDNCheck | | Checks the URL in `artifact.properties` files. |
 CIMergeAndGitRepoFileCheck | .gitrepo or ci-merge | Checks that `ci-merge` and `.gitrepo` files can not be added or modified. |
 CQLKeywordCheck | .cql | Checks that Cassandra keywords are upper case. |

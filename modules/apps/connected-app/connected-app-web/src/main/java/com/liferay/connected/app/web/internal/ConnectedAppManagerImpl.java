@@ -10,12 +10,12 @@ import com.liferay.connected.app.ConnectedAppManager;
 import com.liferay.connected.app.ConnectedAppProvider;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -41,18 +41,23 @@ public class ConnectedAppManagerImpl implements ConnectedAppManager {
 
 	@Override
 	public List<ConnectedApp> getConnectedApps(User user) {
-		return TransformUtil.transform(
-			(List<ConnectedAppProvider>)_serviceTrackerList,
-			connectedAppProvider -> {
-				try {
-					return connectedAppProvider.getConnectedApp(user);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-				}
+		List<ConnectedApp> connectedApps = new ArrayList<>();
 
-				return null;
-			});
+		for (ConnectedAppProvider connectedAppProvider : _serviceTrackerList) {
+			try {
+				ConnectedApp connectedApp =
+					connectedAppProvider.getConnectedApp(user);
+
+				if (connectedApp != null) {
+					connectedApps.add(connectedApp);
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+
+		return connectedApps;
 	}
 
 	@Activate

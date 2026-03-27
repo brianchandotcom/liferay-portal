@@ -1653,12 +1653,13 @@ public class CompanyLocalServiceTest {
 				_company.getCompanyId(), _company.getVirtualHostname(),
 				_company.getMx(), maxUsers, _company.isActive());
 
-			if (maxUsers < 0) {
-				Assert.fail();
-			}
+			Assert.assertTrue(maxUsers >= 0);
+
+			Assert.assertEquals(maxUsers, _company.getMaxUsers());
 		}
 		catch (CompanyMaxUsersException companyMaxUsersException) {
-			Assert.assertTrue(maxUsers < 0)
+			Assert.assertTrue(maxUsers < 0);
+
 			Assert.assertEquals(originalMaxUsers, _company.getMaxUsers());
 		}
 		finally {

@@ -5047,6 +5047,23 @@
 	},
 	{
 		"classNames": [
+			"CommerceOrderItemWrapper"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-54263",
+		"methodsToFormat": [
+			{
+				"from": "@Override\n\tpublic long getBookedQuantityId",
+				"to": "@Override\n\tpublic long getCommerceInventoryBookedQuantityId"
+			},
+			{
+				"from": "@Override\n\tpublic void setBookedQuantityId",
+				"to": "@Override\n\tpublic void setCommerceInventoryBookedQuantityId"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"TemplateContextHelper"
 		],
 		"from": "getHelperUtilities(ClassLoader paramName, boolean paramName)",

@@ -106,7 +106,7 @@
 			"DBType": "Long",
 			"businessType": "Relationship",
 			"defaultValue": "null",
-			"externalReferenceCode": "RELATIONSHIP",
+			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_CRAWL_TARGETS",
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {

@@ -822,6 +822,7 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds incorrect use of `ResultSet.get*` calls." />
 			<property name="enabled" value="false" />
+			<message key="method.use" value="Use &quot;resultSet.getInt&quot; for count" />
 			<message key="set.call.parameter.incorrect.1" value="Use the simple column name instead of column index when calling method &quot;resultSet.get*&quot;" />
 			<message key="set.call.parameter.incorrect.2" value="Use the simple column name instead of &quot;TableName.ColumnName&quot; when calling method &quot;resultSet.get*&quot;" />
 		</module>

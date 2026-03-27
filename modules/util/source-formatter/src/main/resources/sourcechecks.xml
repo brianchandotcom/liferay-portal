@@ -648,10 +648,6 @@
 			<category name="Bug Prevention" />
 			<description name="Finds unnecessary empty constructor." />
 		</check>
-		<check name="JavaResultSetCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks for correct use `java.sql.ResultSet.getInt(int)`." />
-		</check>
 		<check name="JavaReturnStatementCheck">
 			<category name="Styling" />
 			<description name="Finds unnecessary `else` statement (when `if` and `else` statement both end with `return` statement)." />

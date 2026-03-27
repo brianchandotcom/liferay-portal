@@ -63,4 +63,16 @@ public class ResultSetGetCall {
 		}
 	}
 
+	protected void method3(Connection connection) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(*) as count from Table");
+
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				System.out.println(resultSet.getLong("count"));
+			}
+		}
+	}
+
 }

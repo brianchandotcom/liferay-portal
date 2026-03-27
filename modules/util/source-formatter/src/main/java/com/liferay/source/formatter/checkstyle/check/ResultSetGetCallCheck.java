@@ -124,10 +124,13 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			parentDetailAST = parentDetailAST.getParent();
 
-			if ((parentDetailAST.getType() != TokenTypes.METHOD_CALL) ||
-				!ArrayUtil.contains(
-					_GET_METHOD_NAMES, getMethodName(parentDetailAST))) {
+			if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				continue;
+			}
 
+			String methodName = getMethodName(parentDetailAST);
+
+			if (!ArrayUtil.contains(_GET_METHOD_NAMES, methodName)) {
 				continue;
 			}
 
@@ -154,11 +157,15 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			String text = firstChildDetailAST.getText();
 
-			if (!text.contains(".")) {
+			if (methodName.equals("getLong") && text.equals("\"count\"")) {
+				log(firstChildDetailAST, _MSG_METHOD_USE);
+
 				continue;
 			}
 
-			log(firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER_2);
+			if (text.contains(".")) {
+				log(firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER_2);
+			}
 		}
 	}
 
@@ -176,5 +183,7 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 	private static final String _MSG_INCORRECT_SET_CALL_PARAMETER_2 =
 		"set.call.parameter.incorrect.2";
+
+	private static final String _MSG_METHOD_USE = "method.use";
 
 }

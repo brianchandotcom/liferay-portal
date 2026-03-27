@@ -866,12 +866,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testResultCountSet() throws Exception {
-		test(
-			"ResultSetCount.testjava", "Use resultSet.getInt(1) for count", 26);
-	}
-
-	@Test
 	public void testResultSetGetCall() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
@@ -884,6 +878,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use the simple column name instead of column index when " +
 					"calling method \"resultSet.get*\"",
 				59
+			).addExpectedMessage(
+				"Use \"resultSet.getInt\" for count", 73
 			));
 	}
 

@@ -2252,6 +2252,16 @@ public class DefaultObjectEntryManagerImpl
 		return getGroupId(objectDefinition, scopeKey, true);
 	}
 
+	private String _getGroupExternalReferenceCode(FileEntry fileEntry) {
+		Scope scope = fileEntry.getScope();
+
+		if (scope != null) {
+			return scope.getExternalReferenceCode();
+		}
+
+		return null;
+	}
+
 	private BaseModel<ExternalReferenceCodeModel> _getManyToOneRelatedModel(
 			ObjectRelationship objectRelationship, long primaryKey,
 			ObjectDefinition relatedObjectDefinition)
@@ -2946,6 +2956,24 @@ public class DefaultObjectEntryManagerImpl
 				"File source " + fileSource + " is not supported");
 		}
 
+		if (Validator.isNotNull(fileEntry.getExternalReferenceCode())) {
+			long groupId = _getFileEntryGroupId(
+				_getGroupExternalReferenceCode(fileEntry), objectDefinition,
+				scopeKey);
+
+			com.liferay.portal.kernel.repository.model.FileEntry
+				existingFileEntry =
+					_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+						groupId, fileEntry.getExternalReferenceCode());
+
+			if ((existingFileEntry != null) &&
+				(objectField.getCompanyId() ==
+					existingFileEntry.getCompanyId())) {
+
+				return existingFileEntry.getFileEntryId();
+			}
+		}
+
 		byte[] fileContent = {};
 
 		if (fileEntry.getFileBase64() != null) {
@@ -2993,13 +3021,8 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.portal.kernel.repository.model.FileEntry
 			serviceBuilderFileEntry = null;
 
-		String groupExternalReferenceCode = null;
-
-		Scope scope = fileEntry.getScope();
-
-		if (scope != null) {
-			groupExternalReferenceCode = scope.getExternalReferenceCode();
-		}
+		String groupExternalReferenceCode = _getGroupExternalReferenceCode(
+			fileEntry);
 
 		if (StringUtil.equals(
 				fileSource,

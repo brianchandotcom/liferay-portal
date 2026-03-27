@@ -8,7 +8,7 @@ package com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.provi
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
-import com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model.UserView;
+import com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model.DataSetEntry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -51,13 +51,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Arroyo
  */
 @Component(
-	property = "fds.data.provider.key=userViews",
+	property = "fds.data.provider.key=dataSetEntries",
 	service = FDSDataProvider.class
 )
-public class UserViewsFDSDataProvider implements FDSDataProvider<UserView> {
+public class DataSetEntriesFDSDataProvider
+	implements FDSDataProvider<DataSetEntry> {
 
 	@Override
-	public List<UserView> getItems(
+	public List<DataSetEntry> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
@@ -80,15 +81,16 @@ public class UserViewsFDSDataProvider implements FDSDataProvider<UserView> {
 			return Collections.emptyList();
 		}
 
-		List<UserView> userViews = new ArrayList<>();
+		List<DataSetEntry> dataSetEntries = new ArrayList<>();
 
 		for (Map.Entry<String, String> entry :
 				sortedDataSetEntries.subList(start, end)) {
 
-			userViews.add(new UserView(entry.getValue(), entry.getKey()));
+			dataSetEntries.add(
+				new DataSetEntry(entry.getValue(), entry.getKey()));
 		}
 
-		return userViews;
+		return dataSetEntries;
 	}
 
 	@Override

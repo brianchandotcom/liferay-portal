@@ -293,10 +293,6 @@ test(
 
 		await digitalSalesRoomUsersPage.removeUserButton(email).click();
 
-		await expect(digitalSalesRoomUsersPage.removeUserModal).toBeVisible();
-
-		await digitalSalesRoomUsersPage.removeUserModalRemoveButton.click();
-
 		await waitForAlert(page, 'Success:User was removed successfully.');
 
 		await expect(

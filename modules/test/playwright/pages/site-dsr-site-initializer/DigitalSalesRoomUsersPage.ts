@@ -9,8 +9,6 @@ export class DigitalSalesRoomUsersPage {
 	readonly doneButton: Locator;
 	readonly inviteButton: Locator;
 	readonly page: Page;
-	readonly removeUserModal: Locator;
-	readonly removeUserModalRemoveButton: Locator;
 	readonly shareButton: Locator;
 	readonly shareModal: Locator;
 	readonly shareModalEmailInput: Locator;
@@ -22,11 +20,6 @@ export class DigitalSalesRoomUsersPage {
 		this.doneButton = page.getByRole('button', {name: 'Done'});
 		this.inviteButton = page.locator('[data-testid="inviteButton"]');
 		this.page = page;
-		this.removeUserModal = page.locator('.modal-dialog.modal-danger');
-		this.removeUserModalRemoveButton = this.removeUserModal.getByRole(
-			'button',
-			{name: 'Remove'}
-		);
 		this.shareButton = page.getByRole('button', {name: 'share'});
 		this.shareModal = page.locator('.modal-dialog');
 		this.shareModalEmailInput = this.shareModal.locator(

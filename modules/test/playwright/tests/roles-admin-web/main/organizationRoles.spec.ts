@@ -130,7 +130,6 @@ test(
 				)
 			).row
 		).toBeVisible();
-
 		expect(
 			(
 				await editUserPage.selectOrganizationRolesTable
@@ -138,5 +137,20 @@ test(
 					.all()
 			).length
 		).toEqual(2);
+
+		await editUserPage.selectOrganizationRolesSearchBar.fill(
+			organization.name
+		);
+		await editUserPage.selectOrganizationRolesSearchBarButton.click();
+
+		await page.waitForTimeout(500);
+
+		expect(
+			(
+				await editUserPage.selectOrganizationRolesTable
+					.getByRole('row')
+					.all()
+			).length
+		).toEqual(0);
 	}
 );

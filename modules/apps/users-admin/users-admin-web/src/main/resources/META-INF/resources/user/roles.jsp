@@ -472,7 +472,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						title: '<liferay-ui:message arguments="organization-role" key="select-x" />',
 
 						<%
-						boolean hasSingleOrganization = (organizationIds != null) && (organizationIds.length == 1);
+						int count = (organizationIds != null) ? organizationIds.length : 0;
 
 						PortletURL selectOrganizationRoleURL = PortletURLBuilder.create(
 							PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE)
@@ -481,7 +481,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						).setParameter(
 							"groupEventName", groupEventName
 						).setParameter(
-							"organizationId", hasSingleOrganization ? String.valueOf(organizationIds[0]) : null
+							"organizationId", (count == 1) ? String.valueOf(organizationIds[0]) : null
 						).setParameter(
 							"organizationIds", StringUtil.merge(organizationIds)
 						).setParameter(
@@ -489,7 +489,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						).setParameter(
 							"roleType", RoleConstants.TYPE_ORGANIZATION
 						).setParameter(
-							"step", hasSingleOrganization ? "2" : "1"
+							"step", (count == 1) ? "2" : "1"
 						).setWindowState(
 							LiferayWindowState.POP_UP
 						).buildPortletURL();

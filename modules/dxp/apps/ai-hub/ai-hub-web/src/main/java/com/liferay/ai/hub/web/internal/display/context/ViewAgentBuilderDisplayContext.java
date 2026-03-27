@@ -26,9 +26,9 @@ import java.util.List;
  * @author Feliphe Marinho
  * @author João Victor Alves
  */
-public class ViewAgentDefinitionsDisplayContext {
+public class ViewAgentBuilderDisplayContext {
 
-	public ViewAgentDefinitionsDisplayContext(
+	public ViewAgentBuilderDisplayContext(
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest) {
 

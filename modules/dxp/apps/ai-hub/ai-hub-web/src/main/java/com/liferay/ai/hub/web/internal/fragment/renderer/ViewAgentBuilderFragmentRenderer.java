@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.fragment.renderer;
 
-import com.liferay.ai.hub.web.internal.display.context.ViewAgentDefinitionsDisplayContext;
+import com.liferay.ai.hub.web.internal.display.context.ViewAgentBuilderDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author João Victor Alves
  */
 @Component(service = FragmentRenderer.class)
-public class ViewAgentDefinitionsFragmentRenderer
-	extends BaseFragmentRenderer<ViewAgentDefinitionsDisplayContext> {
+public class ViewAgentBuilderFragmentRenderer
+	extends BaseFragmentRenderer<ViewAgentBuilderDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -55,16 +55,16 @@ public class ViewAgentDefinitionsFragmentRenderer
 	}
 
 	@Override
-	protected ViewAgentDefinitionsDisplayContext getDisplayContext(
+	protected ViewAgentBuilderDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewAgentDefinitionsDisplayContext(
+		return new ViewAgentBuilderDisplayContext(
 			_groupLocalService, httpServletRequest);
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_agent_definitions.jsp";
+		return "/view_agent_builder.jsp";
 	}
 
 	@Reference

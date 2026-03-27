@@ -347,6 +347,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.commerce.report.impl.jar!commons-beanutils2.jar</file-name>
+				<version>2.0.0-M2</version>
+				<project-name>Apache Commons BeanUtils</project-name>
+				<project-url>https://commons.apache.org/proper/commons-beanutils/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.commerce.report.impl.jar!commons-collections4.jar</file-name>
+				<version>4.5.0</version>
+				<project-name>Apache Commons Collections</project-name>
+				<project-url>https://commons.apache.org/proper/commons-collections/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!commons-dbcp2.jar</file-name>
 				<version>2.0</version>
 				<project-name>Apache Commons DBCP</project-name>
@@ -355,6 +379,18 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.commerce.report.impl.jar!commons-lang3.jar</file-name>
+				<version>3.18.0</version>
+				<project-name>Apache Commons Lang</project-name>
+				<project-url>https://commons.apache.org/proper/commons-lang/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -394,8 +430,20 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.commerce.report.impl.jar!jackson-dataformat-xml.jar</file-name>
+				<version>2.15.2</version>
+				<project-name>Jackson-dataformat-XML</project-name>
+				<project-url>https://github.com/FasterXML/jackson-dataformat-xml</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!jasperreports-fonts.jar</file-name>
-				<version>6.20.0</version>
+				<version>7.0.6</version>
 				<project-name>JasperReports Font Extension</project-name>
 				<project-url>http://jasperreports.sourceforge.net</project-url>
 				<licenses>
@@ -406,8 +454,20 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.commerce.report.impl.jar!jasperreports-jdt.jar</file-name>
+				<version>7.0.6</version>
+				<project-name>JasperReports JDT</project-name>
+				<project-url>http://jasperreports.sourceforge.net</project-url>
+				<licenses>
+					<license>
+						<license-name>GNU Lesser General Public License</license-name>
+						<license-url>http://jasperreports.sourceforge.net/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!jasperreports-metadata.jar</file-name>
-				<version>6.20.0</version>
+				<version>7.0.6</version>
 				<project-name>JasperReports Metadata</project-name>
 				<project-url>http://jasperreports.sourceforge.net</project-url>
 				<licenses>
@@ -418,8 +478,20 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.commerce.report.impl.jar!jasperreports-pdf.jar</file-name>
+				<version>7.0.6</version>
+				<project-name>JasperReports PDF</project-name>
+				<project-url>http://jasperreports.sourceforge.net</project-url>
+				<licenses>
+					<license>
+						<license-name>GNU Lesser General Public License</license-name>
+						<license-url>http://jasperreports.sourceforge.net/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!jasperreports.jar</file-name>
-				<version>6.20.0</version>
+				<version>7.0.6</version>
 				<project-name>JasperReports Library</project-name>
 				<project-url>http://jasperreports.sourceforge.net</project-url>
 				<licenses>
@@ -498,12 +570,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!openpdf.jar</file-name>
-				<version>1.3.11</version>
+				<version>1.3.32</version>
 				<project-name>openpdf</project-name>
 				<licenses>
 					<license>
 						<license-name>Mozilla Public License Version 2.0</license-name>
-						<license-url>http://www.mozilla.org/MPL/2.0/</license-url>
+						<license-url>https://www.mozilla.org/en-US/MPL/2.0/</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4436,12 +4508,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-collections4.jar</file-name>
-				<version>4.4</version>
+				<version>4.5.0</version>
 				<project-name>Apache Commons Collections</project-name>
 				<project-url>https://commons.apache.org/proper/commons-collections/</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>

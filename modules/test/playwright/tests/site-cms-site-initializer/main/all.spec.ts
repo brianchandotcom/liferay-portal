@@ -847,6 +847,115 @@ test(
 );
 
 test(
+	'Info Panel Categories tab for file type asset',
+	{tag: '@LPD-68491'},
+	async ({apiHelpers, assetsPage, infoPanelPage, page}) => {
+		const categoryName = getRandomString();
+		const fileTitle = `title ${getRandomString()}`;
+		const tagName = getRandomString();
+
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					name: `file_${getRandomString()}.png`,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: fileTitle,
+			},
+			'cms/basic-documents',
+			'Default'
+		);
+
+		apiHelpers.data.push({
+			id: objectEntry.id,
+			type: 'document',
+		});
+
+		const vocabularyId = await apiHelpers.headlessAdminTaxonomy
+			.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1, name: 'All Spaces'}],
+				assetTypes: [
+					{
+						required: false,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name: getRandomString(),
+				siteId,
+				visibilityType: 'PUBLIC',
+			})
+			.then((response) => response.id);
+
+		apiHelpers.data.push({
+			id: vocabularyId,
+			type: 'taxonomyVocabulary',
+		});
+
+		await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+			{
+				name: categoryName,
+				vocabularyId,
+			}
+		);
+
+		// Go to All Assets and open the Info Panel Categorization Tab
+
+		await assetsPage.gotoAll();
+
+		await assetsPage.execItemAction({
+			action: 'Show Details',
+			filter: fileTitle,
+		});
+
+		await expect(
+			page.getByRole('heading', {name: fileTitle})
+		).toBeVisible();
+
+		await infoPanelPage.selectTab('Categorization').click();
+
+		// Add a new tag to the file
+
+		const tagsAutocomplete = page.getByPlaceholder('Add tag');
+
+		await tagsAutocomplete.fill(tagName);
+
+		const newTagOption = page.getByRole('option', {
+			name: 'Create New Tag:',
+		});
+
+		await newTagOption.waitFor();
+		await newTagOption.click();
+
+		const tagLabel = page.locator('.label-item', {hasText: tagName});
+
+		await expect(tagLabel).toBeAttached();
+
+		// Add a new category to the file
+
+		const categoriesAutocomplete = page.getByPlaceholder('Add category');
+
+		await categoriesAutocomplete.fill(categoryName);
+
+		const option = page.getByRole('option', {name: categoryName});
+
+		await option.waitFor();
+		await option.click();
+
+		const categoryLabel = page.locator('.label-item', {
+			hasText: categoryName,
+		});
+
+		await expect(categoryLabel).toBeAttached();
+	}
+);
+
+test(
 	'Dragging and dropping files into the data set opens upload modal',
 	{tag: '@LPD-58618'},
 	async ({assetsPage, page}) => {

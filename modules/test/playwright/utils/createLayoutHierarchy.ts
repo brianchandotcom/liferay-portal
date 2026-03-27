@@ -4,29 +4,43 @@
  */
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
+import getPageDefinition from '../tests/layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../tests/layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import getRandomString from './getRandomString';
 
 export type PageNode = {
 	children?: Array<PageNode>;
 	title: string;
+	widgets?: Array<string>;
 };
 
 export async function createLayoutHierarchy({
 	apiHelpers,
 	pageNodes,
-	parentLayoutId = '0',
+	parentSitePage,
 	siteId,
 }: {
 	apiHelpers: ApiHelpers;
 	pageNodes: Array<PageNode>;
-	parentLayoutId?: string;
+	parentSitePage?: {friendlyUrlPath: string};
 	siteId: string;
-}): Promise<Array<Layout>> {
-	const layouts: Array<Layout> = [];
+}): Promise<Array<any>> {
+	const layouts: Array<any> = [];
 
 	for (const node of pageNodes) {
-		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: siteId,
-			parentLayoutId,
+		const widgetDefinitions = (node.widgets || []).map((widgetName) =>
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName,
+			})
+		);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: widgetDefinitions.length
+				? getPageDefinition(widgetDefinitions)
+				: undefined,
+			parentSitePage,
+			siteId,
 			title: node.title,
 		});
 
@@ -36,9 +50,10 @@ export async function createLayoutHierarchy({
 			const childLayouts = await createLayoutHierarchy({
 				apiHelpers,
 				pageNodes: node.children,
-				parentLayoutId: layout.layoutId,
+				parentSitePage: {friendlyUrlPath: layout.friendlyUrlPath},
 				siteId,
 			});
+
 			layouts.push(...childLayouts);
 		}
 	}

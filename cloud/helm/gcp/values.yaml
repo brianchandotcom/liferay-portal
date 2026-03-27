@@ -1,6 +1,17 @@
 liferay-default:
+    annotations:
+        instrumentation.opentelemetry.io/inject-dotnet: "false"
+        instrumentation.opentelemetry.io/inject-java: "false"
+        instrumentation.opentelemetry.io/inject-nodejs: "false"
+        instrumentation.opentelemetry.io/inject-python: "false"
+        sidecar.opentelemetry.io/inject: "false"
     configmap:
         data:
+            com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config: |
+                authenticationEnabled=B"false"
+                httpSSLEnabled=B"false"
+                networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
+                productionModeEnabled=B"true"
             com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config: |
                 bucketName="$[env:LIFERAY_GCS_BUCKET_NAME]"
     customEnv:
@@ -9,22 +20,84 @@ liferay-default:
                 value: "true"
             -   name: LIFERAY_DL_PERIOD_STORE_PERIOD_IMPL
                 value: com.liferay.portal.store.gcs.GCSStore
+            -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME
+                value: org.postgresql.Driver
+            -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL
+                value: jdbc:postgresql://localhost:${env.DATABASE_PORT}/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+            -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME
+                value: ${env.DATABASE_USERNAME}
+            -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PORT_PERIOD_ENABLED
+                value: "true"
+            -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PROTOCOL_PERIOD_ENABLED
+                value: "true"
     customEnvFrom:
         x-liferay-gcp:
             -   configMapRef:
-                    name: liferay-company-domain-config
+                    name: liferay-network
+            -   secretRef:
+                    name: elasticsearch-connection-details
             -   secretRef:
                     name: managed-service-details
+    customInitContainers:
+        x-cloud-sql-auth-proxy-enabled:
+            -   args:
+                    -   "$(DATABASE_INSTANCE_NAME)"
+                    -   "--auto-iam-authn"
+                    -   "--port=$(DATABASE_PORT)"
+                    -   "--private-ip"
+                    -   "--structured-logs"
+                env:
+                    -   name: CSQL_PROXY_HEALTH_CHECK
+                        value: "true"
+                    -   name: CSQL_PROXY_HTTP_ADDRESS
+                        value: 0.0.0.0
+                    -   name: CSQL_PROXY_HTTP_PORT
+                        value: "9801"
+                envFrom:
+                    -   secretRef:
+                            name: managed-service-details
+                image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.14.1
+                name: cloud-sql-proxy
+                restartPolicy: Always
+                securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                        drop:
+                            -   ALL
+                    runAsNonRoot: true
+                    seccompProfile:
+                        type: RuntimeDefault
     customLabels:
         origin: liferay-gcp
     customVolumeMounts:
+        x-license:
+            -   mountPath: /etc/liferay/mount/files/deploy/license.xml
+                name: liferay-license
+                subPath: license.xml
         x-liferay-gcp:
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
+                name: liferay-configmap
+                subPath: com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config
+    customVolumes:
+        x-license:
+            -   name: liferay-license
+                secret:
+                    secretName: liferay-license
     network:
         enabled: true
         hostnames: []
+        timeouts:
+            backendRequest: 300s
+            request: 300s
+    overlay:
+        bucketName: $[env:LIFERAY_OVERLAY_BUCKET_NAME]
+        driver: gcsfuse.csi.storage.gke.io
+        enabled: false
+    podAnnotations:
+        gke-gcsfuse/volumes: "true"
     podSecurityContext:
         fsGroup: 1000
         runAsNonRoot: true
@@ -35,8 +108,8 @@ liferay-default:
             cpu: 4000m
             memory: 12Gi
         requests:
-            cpu: 500m
-            memory: 1.5Gi
+            cpu: 2000m
+            memory: 4Gi
     securityContext:
         allowPrivilegeEscalation: false
         capabilities:
@@ -46,6 +119,18 @@ liferay-default:
         runAsUser: 1000
         seccompProfile:
             type: RuntimeDefault
+    startupProbe:
+        exec:
+            command:
+                -   /bin/sh
+                -   -c
+                -   |
+                        curl -f http://localhost:9801/startup && \
+                        curl -f http://localhost:8080/c/portal/robots
+        failureThreshold: 90
+        httpGet: null
+        periodSeconds: 10
+        timeoutSeconds: 5
     volumeClaimTemplates:
         -   metadata:
                 name: liferay-persistent-volume

@@ -1,11 +1,15 @@
+{{- $liferayDefault := index .Values "liferay-default" | default dict -}}
+{{- $network := $liferayDefault.network | default dict -}}
+{{- if and $network $network.enabled }}
 apiVersion: v1
 data:
-    {{- if and .Values.network .Values.network.enabled .Values.network.hostnames }}
-    LIFERAY_COMPANY_PERIOD_DEFAULT_PERIOD_VIRTUAL_PERIOD_HOST_PERIOD_NAME: {{ index .Values.network.hostnames 0 | quote }}
-    LIFERAY_COMPANY_PERIOD_DEFAULT_PERIOD_WEB_PERIOD_ID: {{ index .Values.network.hostnames 0 | quote }}
-    LIFERAY_VIRTUAL_PERIOD_HOSTS_PERIOD_VALID_PERIOD_HOSTS: {{ join "," .Values.network.hostnames | quote }}
+    {{- if $network.hostnames }}
+    LIFERAY_COMPANY_PERIOD_DEFAULT_PERIOD_VIRTUAL_PERIOD_HOST_PERIOD_NAME: {{ index $network.hostnames 0 | quote }}
+    LIFERAY_COMPANY_PERIOD_DEFAULT_PERIOD_WEB_PERIOD_ID: {{ index $network.hostnames 0 | quote }}
+    LIFERAY_VIRTUAL_PERIOD_HOSTS_PERIOD_VALID_PERIOD_HOSTS: {{ concat $network.hostnames (list "localhost" "${env.POD_IP}") | join "," | quote }}
     {{- end }}
 kind: ConfigMap
 metadata:
     name: liferay-network
     namespace: {{ .Release.Namespace }}
+{{- end }}

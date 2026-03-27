@@ -6,6 +6,6 @@
 	"name": "orderToDXPFreeActivationKeyRequest",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CommerceOrder$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:DXPFreeActivationKeyRequest$]",
-	"objectDefinitionName2": "DXPFreeActivationRequest",
+	"objectDefinitionName2": "DXPFreeActivationKeyRequest",
 	"type": "oneToMany"
 }

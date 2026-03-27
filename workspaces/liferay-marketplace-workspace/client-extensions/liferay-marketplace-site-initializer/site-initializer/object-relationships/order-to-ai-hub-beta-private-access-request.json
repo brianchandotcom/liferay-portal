@@ -6,6 +6,6 @@
 	"name": "orderToAIHubBetaPrivateAccessRequest",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CommerceOrder$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubBetaPrivateAccessRequest$]",
-	"objectDefinitionName2": "AiHubBetaAccessRequest",
+	"objectDefinitionName2": "AIHubBetaPrivateAccessRequest",
 	"type": "oneToMany"
 }

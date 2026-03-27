@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { z } from 'zod';
+import {z} from 'zod';
 
-import { OrderCustomFields, OrderTypes } from '../../../enums/Order';
+import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
 import zodSchema from '../../../schema/zod';
 import HeadlessAIHubBetaRequestAccess from '../../../services/rest/HeadlessAIHubBetaRequestAccess';
-import { getSiteURL } from '../../../utils/site';
+import {getSiteURL} from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
 type AIHubForm = z.infer<typeof zodSchema.aiHubForm>;
@@ -32,7 +32,7 @@ export class ProductPurchaseAIHub extends ProductPurchase {
 				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
 					aiHubForm: {
-						...this.form
+						...this.form,
 					},
 				}),
 			},

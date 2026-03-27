@@ -7,8 +7,12 @@ package com.liferay.site.dsr.site.initializer.internal.display.context;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.site.dsr.site.initializer.internal.constants.DSRSiteInitializerFDSNames;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 /**
  * @author Gianmarco Brunialti Masera
@@ -22,6 +26,15 @@ public class ViewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext
 		ObjectEntryService objectEntryService) {
 
 		super(httpServletRequest, objectDefinition, objectEntryService);
+	}
+
+	@Override
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>putAll(
+			super.getProps()
+		).put(
+			"namespace", DSRSiteInitializerFDSNames.MOST_ACTIVE_VISITORS
+		).build();
 	}
 
 }

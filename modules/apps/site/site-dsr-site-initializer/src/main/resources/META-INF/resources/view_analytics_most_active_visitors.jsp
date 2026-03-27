@@ -9,5 +9,8 @@
 
 <div>
 	<div class="custom-empty-state dsr-section">
+		<react:component
+			module="{MostActiveVisitors} from site-dsr-site-initializer"
+		/>
 	</div>
 </div>

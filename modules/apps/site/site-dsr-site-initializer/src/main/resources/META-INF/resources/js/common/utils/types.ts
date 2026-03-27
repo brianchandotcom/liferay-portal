@@ -180,3 +180,11 @@ export type IUserAccountsDTO = {
 	pageSize: number;
 	totalCount: number;
 };
+
+export type TVisitor = {
+	activitiesCount: number;
+	emailAddress: string;
+	firstName: string;
+	lastName: string;
+	logoURL: string | undefined;
+};

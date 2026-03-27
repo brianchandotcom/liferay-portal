@@ -1,0 +1,152 @@
+{
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountToAIHubCrawlTargets_accountEntryId",
+	"className": "com.liferay.object.model.ObjectDefinition#M1W1",
+	"enableFormContainer": false,
+	"enableIndexSearch": true,
+	"externalReferenceCode": "L_AI_HUB_CRAWL_TARGET",
+	"friendlyURLSeparator": "l",
+	"label": {
+		"en_US": "Crawl Target"
+	},
+	"modifiable": true,
+	"name": "AIHubCrawlTarget",
+	"objectActions": [
+	],
+	"objectDefinitionSettings": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": true,
+			"externalReferenceCode": "CRAWL_DATE",
+			"indexed": true,
+			"label": {
+				"en_US": "Crawl Date"
+			},
+			"name": "crawlDate",
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"defaultValue": "null",
+			"externalReferenceCode": "DESCRIPTION",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": true,
+			"system": true,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "INDEX_NAME",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Index Name"
+			},
+			"name": "indexName",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"required": true,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "TITLE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Title"
+			},
+			"localized": true,
+			"name": "title",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "URL",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "URL"
+			},
+			"name": "url",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"required": true,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"defaultValue": "null",
+			"externalReferenceCode": "RELATIONSHIP",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Account to Crawl Targets"
+			},
+			"name": "r_accountToAIHubCrawlTargets_accountEntryId",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AccountEntry"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_accountToAIHubCrawlTargets_accountEntryERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CRAWL_TARGETS",
+			"readOnly": "false",
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
+		}
+	],
+	"objectFolderExternalReferenceCode": "default",
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectValidationRules": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Crawl Targets"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": true,
+	"titleObjectFieldName": "title"
+}

@@ -60,18 +60,24 @@ export default async function checkProjects(projectDirs) {
  * @return {Promise<boolean>}
  */
 async function checkProject(projectDir, errors) {
-	if (!(await fileExists(path.join(projectDir, SRC_TSCONFIG_PATH)))) {
+	let configPath;
+
+	if (await fileExists(path.join(projectDir, SRC_TSCONFIG_PATH))) {
+		configPath = path.join(
+			'src',
+			'main',
+			'resources',
+			'META-INF',
+			'resources',
+			'tsconfig.json'
+		);
+	}
+	else if (await fileExists(path.join(projectDir, 'tsconfig.json'))) {
+		configPath = 'tsconfig.json';
+	}
+	else {
 		return true;
 	}
-
-	const configPath = path.join(
-		'src',
-		'main',
-		'resources',
-		'META-INF',
-		'resources',
-		'tsconfig.json'
-	);
 
 	const {all} = await $({
 		all: true,

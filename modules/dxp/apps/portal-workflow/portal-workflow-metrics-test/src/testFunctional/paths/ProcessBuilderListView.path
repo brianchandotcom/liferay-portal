@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@placeholder='Search for']</td>
+	<td>//input[@placeholder='Search for'][not(@data-qa-id='sideNavigationSearchInput')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -71,24 +71,17 @@ public class ImportMVCResourceCommandTest {
 	@Test
 	@TestInfo("LPD-63086")
 	public void testServeResourceHasConflicts() throws Exception {
-		_assertServeResourceHasConflicts(true, false);
-		_assertServeResourceHasConflicts(false, true);
+		_testServeResourceHasConflicts(true, false);
+		_testServeResourceHasConflicts(false, true);
 	}
 
 	@Test
 	@TestInfo("LPD-63086")
 	public void testServeResourceNeedsFragmentCollection() throws Exception {
-		_assertResponseJSONObject(
-			_serveResource(_createZipFile(false, false, false)), false, false);
-
-		_assertResponseJSONObject(
-			_serveResource(_createZipFile(true, false, false)), false, false);
-
-		_assertResponseJSONObject(
-			_serveResource(_createZipFile(false, false, true)), false, false);
-
-		_assertResponseJSONObject(
-			_serveResource(_createZipFile(false, true, false)), false, true);
+		_testServeResourceNeedsFragmentCollection(false, false, false, false);
+		_testServeResourceNeedsFragmentCollection(true, false, false, false);
+		_testServeResourceNeedsFragmentCollection(false, false, true, false);
+		_testServeResourceNeedsFragmentCollection(false, true, false, true);
 	}
 
 	private void _assertResponseJSONObject(
@@ -100,23 +93,6 @@ public class ImportMVCResourceCommandTest {
 		Assert.assertEquals(
 			needsFragmentCollection,
 			jsonObject.getBoolean("needsFragmentCollection"));
-	}
-
-	private void _assertServeResourceHasConflicts(
-			boolean hasConflicts, boolean validFile)
-		throws Exception {
-
-		Mockito.when(
-			_fragmentsImporter.validateFragmentEntries(
-				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong(),
-				Mockito.any(File.class))
-		).thenReturn(
-			validFile
-		);
-
-		_assertResponseJSONObject(
-			_serveResource(_createZipFile(true, true, false)), hasConflicts,
-			false);
 	}
 
 	private File _createZipFile(
@@ -320,6 +296,36 @@ public class ImportMVCResourceCommandTest {
 		).thenReturn(
 			RandomTestUtil.randomLong()
 		);
+	}
+
+	private void _testServeResourceHasConflicts(
+			boolean hasConflicts, boolean validFile)
+		throws Exception {
+
+		Mockito.when(
+			_fragmentsImporter.validateFragmentEntries(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong(),
+				Mockito.any(File.class))
+		).thenReturn(
+			validFile
+		);
+
+		_assertResponseJSONObject(
+			_serveResource(_createZipFile(true, true, false)), hasConflicts,
+			false);
+	}
+
+	private void _testServeResourceNeedsFragmentCollection(
+			boolean includeCollectionEntry, boolean includeFragmentEntry,
+			boolean includeNonfragmentEntry, boolean needsFragmentCollection)
+		throws Exception {
+
+		_assertResponseJSONObject(
+			_serveResource(
+				_createZipFile(
+					includeCollectionEntry, includeFragmentEntry,
+					includeNonfragmentEntry)),
+			false, needsFragmentCollection);
 	}
 
 	private final FragmentsImporter _fragmentsImporter = Mockito.mock(

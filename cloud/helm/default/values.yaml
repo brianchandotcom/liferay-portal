@@ -77,8 +77,8 @@ customInitContainers:
                                 /temp/osgi/client-extensions \
                                 /temp/osgi/configs \
                                 /temp/osgi/modules \
-                                /temp/system/tmp \
                                 /temp/osgi/state \
+                                /temp/system/tmp \
                                 /temp/tomcat/logs \
                                 /temp/tomcat/temp \
                                 /temp/tomcat/work

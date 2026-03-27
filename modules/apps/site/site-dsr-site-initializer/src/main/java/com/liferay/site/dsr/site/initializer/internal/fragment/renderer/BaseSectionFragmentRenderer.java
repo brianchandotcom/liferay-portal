@@ -5,11 +5,27 @@
 
 package com.liferay.site.dsr.site.initializer.internal.fragment.renderer;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
+import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -19,15 +35,84 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseSectionFragmentRenderer implements FragmentRenderer {
 
 	@Override
+	public JSONObject getConfigurationJSONObject(
+		FragmentRendererContext fragmentRendererContext) {
+
+		if (Validator.isNull(getConfigurationPath())) {
+			return FragmentRenderer.super.getConfigurationJSONObject(
+				fragmentRendererContext);
+		}
+
+		try {
+			JSONObject jsonObject = jsonFactory.createJSONObject(
+				StringUtil.read(getClass(), getConfigurationPath()));
+
+			return fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject,
+				ResourceBundleUtil.getBundle("content.Language", getClass()));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return FragmentRenderer.super.getConfigurationJSONObject(
+				fragmentRendererContext);
+		}
+	}
+
+	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
 		return true;
 	}
 
-	@Reference
-	protected GroupLocalService groupLocalService;
+	protected String getConfigurationPath() {
+		return StringPool.BLANK;
+	}
+
+	protected Map<String, Object> getConfigurationValuesMap(
+		FragmentRendererContext fragmentRendererContext) {
+
+		Map<String, Object> configurationValuesMap = new HashMap<>();
+
+		JSONObject configurationJSONObject = getConfigurationJSONObject(
+			fragmentRendererContext);
+
+		if (configurationJSONObject == null) {
+			return configurationValuesMap;
+		}
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		for (FragmentConfigurationField fragmentConfigurationField :
+				fragmentEntryConfigurationParser.getFragmentConfigurationFields(
+					configurationJSONObject)) {
+
+			configurationValuesMap.put(
+				fragmentConfigurationField.getName(),
+				fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getEditableValuesJSONObject(),
+					fragmentConfigurationField,
+					fragmentRendererContext.getLocale()));
+		}
+
+		return configurationValuesMap;
+	}
 
 	@Reference
-	protected TranslationInfoItemFieldValuesExporterRegistry
-		translationInfoItemFieldValuesExporterRegistry;
+	protected FragmentEntryConfigurationParser fragmentEntryConfigurationParser;
+
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected Language language;
+
+	@Reference
+	protected Portal portal;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseSectionFragmentRenderer.class);
 
 }

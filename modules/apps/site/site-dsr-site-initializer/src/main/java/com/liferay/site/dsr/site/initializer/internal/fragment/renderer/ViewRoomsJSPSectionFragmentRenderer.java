@@ -36,6 +36,11 @@ public class ViewRoomsJSPSectionFragmentRenderer
 	}
 
 	@Override
+	protected String getConfigurationPath() {
+		return "dependencies/rooms_configuration.json";
+	}
+
+	@Override
 	protected ViewRoomsSectionDisplayContext getDisplayContext(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
@@ -45,6 +50,7 @@ public class ViewRoomsJSPSectionFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		return new ViewRoomsSectionDisplayContext(
+			getConfigurationValuesMap(fragmentRendererContext),
 			httpServletRequest,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(

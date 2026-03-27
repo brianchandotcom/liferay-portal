@@ -7,7 +7,6 @@ package com.liferay.site.dsr.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,7 +34,7 @@ public class ViewAnalyticsJSPSectionFragmentRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "analytics");
+		return language.get(locale, "analytics");
 	}
 
 	@Override
@@ -61,9 +60,6 @@ public class ViewAnalyticsJSPSectionFragmentRenderer
 			throw new RuntimeException(exception);
 		}
 	}
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v7_1_1.test;
+package com.liferay.journal.internal.upgrade.v6_1_8.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
@@ -119,7 +119,7 @@ public class DDMFieldAttributeUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.mapping.internal.upgrade.v7_1_1." +
+		"com.liferay.journal.internal.upgrade.v6_1_8." +
 			"DDMFieldAttributeUpgradeProcess";
 
 	private static final long _STORAGE_ID = 0;
@@ -128,7 +128,7 @@ public class DDMFieldAttributeUpgradeProcessTest {
 	private static DDMFieldLocalService _ddmFieldLocalService;
 
 	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 

@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -43,7 +43,6 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -181,33 +180,19 @@ public class DataSetEntriesFDSDataProvider
 	private void _addSystemFDSEntries(
 		Map<String, String> dataSetEntries, String keywords) {
 
-		Set<String> systemFDSNames =
-			_systemFDSEntryRegistry.getSystemFDSNames();
+		List<SystemFDSEntry> systemFDSEntries =
+			FDSDataProviderUtil.getSystemFDSEntries(
+				keywords, _systemFDSEntryRegistry);
 
-		if (systemFDSNames == null) {
+		if (ListUtil.isEmpty(systemFDSEntries)) {
 			return;
 		}
 
-		for (String systemFDSName : systemFDSNames) {
-			SystemFDSEntry systemFDSEntry =
-				_systemFDSEntryRegistry.getSystemFDSEntry(systemFDSName);
-
-			if (systemFDSEntry == null) {
-				continue;
-			}
-
+		for (SystemFDSEntry systemFDSEntry : systemFDSEntries) {
 			String label = systemFDSEntry.getTitle();
 
 			if (Validator.isNull(label)) {
 				label = systemFDSEntry.getName();
-			}
-
-			if (Validator.isNotNull(keywords) &&
-				!StringUtil.matchesIgnoreCase(label, keywords) &&
-				!StringUtil.matchesIgnoreCase(
-					systemFDSEntry.getName(), keywords)) {
-
-				continue;
 			}
 
 			dataSetEntries.put(systemFDSEntry.getName(), label);

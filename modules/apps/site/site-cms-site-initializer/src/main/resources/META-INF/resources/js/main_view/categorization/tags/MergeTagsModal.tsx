@@ -36,7 +36,6 @@ export default function MergeTagsModalContent({
 	selectIntoTags: Tag[];
 }) {
 	const [tags, setTags] = useState<Tag[]>([]);
-	const [currentTag, setCurrentTag] = useState(selectIntoTags[0]);
 	const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
 	useEffect(() => {
@@ -57,8 +56,8 @@ export default function MergeTagsModalContent({
 
 				const selectedTag = allTags.find(
 					(tag: Tag) =>
-						tag.value === currentTag.value &&
-						tag.label === currentTag.label
+						tag.value === selectIntoTags[0].value &&
+						tag.label === selectIntoTags[0].label
 				);
 
 				if (selectedTag) {
@@ -68,16 +67,12 @@ export default function MergeTagsModalContent({
 		};
 
 		getTags();
+	}, [cmsGroupId, selectIntoTags]);
 
-		// eslint-disable-next-line react-compiler/react-compiler
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [cmsGroupId]);
-
-	const _getConfirmationMessage = () => {
+	const _getConfirmationMessage = (tag: Tag) => {
 		const tagNames =
 			'"' + selectedTags.map((item) => item.label).join(', ') + '"';
-		const intoTagName =
-			'"' + Liferay.Util.escapeHTML(currentTag.label) + '"';
+		const intoTagName = '"' + Liferay.Util.escapeHTML(tag.label) + '"';
 
 		return sub(
 			Liferay.Language.get(
@@ -111,10 +106,10 @@ export default function MergeTagsModalContent({
 			successMessage: sub(
 				Liferay.Language.get('x-and-x-have-been-successfully-merged'),
 				selectedTags
-					.filter((item) => item.label !== currentTag.label)
+					.filter((item) => item.label !== tag.label)
 					.map((item) => item.label)
 					.join(', '),
-				`${Liferay.Util.escapeHTML(currentTag.label)}`
+				`${Liferay.Util.escapeHTML(tag.label)}`
 			),
 			url,
 		});
@@ -122,9 +117,9 @@ export default function MergeTagsModalContent({
 		closeModal();
 	};
 
-	const {handleSubmit, setFieldValue} = useFormik({
+	const {handleSubmit, setFieldValue, values} = useFormik({
 		initialValues: {
-			currentTag,
+			currentTag: selectIntoTags[0],
 		},
 		onSubmit: (values) => {
 			const mergeModel = document.querySelector(
@@ -157,7 +152,7 @@ export default function MergeTagsModalContent({
 			}
 
 			openCMSModal({
-				bodyHTML: _getConfirmationMessage(),
+				bodyHTML: _getConfirmationMessage(values.currentTag),
 				buttons: [
 					{
 						autoFocus: true,
@@ -405,13 +400,11 @@ export default function MergeTagsModalContent({
 								);
 
 								if (tag) {
-									setCurrentTag(tag);
-
 									setFieldValue('currentTag', tag);
 								}
 							}}
 							options={selectedTags}
-							value={currentTag.value}
+							value={values.currentTag.value}
 						/>
 					</Form.Group>
 				</ClayModal.Body>

@@ -53,6 +53,7 @@ public class ResultSetGetCall {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select objectDefinitionId, name from ObjectDefinition");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

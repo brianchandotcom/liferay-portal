@@ -60,7 +60,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONUtil.put("needsFragmentCollection", false);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -74,8 +74,6 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 		File file = uploadPortletRequest.getFile("file");
 
 		String importType = ParamUtil.getString(resourceRequest, "importType");
-
-		jsonObject.put("needsFragmentCollection", false);
 
 		boolean validFragmentEntries = true;
 

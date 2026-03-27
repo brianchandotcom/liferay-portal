@@ -325,9 +325,25 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
+		List<File> modifiedFiles = new ArrayList<>();
+
+		for (File modifiedFile :
+				portalGitWorkingDirectory.getModifiedFilesList()) {
+
+			if (JenkinsResultsParserUtil.isFileIncluded(
+					getModifiedFilesExcludesPathMatchers(),
+					getModifiedFilesIncludesPathMatchers(), modifiedFile)) {
+
+				modifiedFiles.add(modifiedFile);
+			}
+		}
+
+		List<File> modifiedModuleDirs =
+			JenkinsResultsParserUtil.getDirectoriesContainingFiles(
+				portalGitWorkingDirectory.getModuleDirsList(), modifiedFiles);
+
 		return _getModifiedModuleProjectDirsList(
-			portalGitWorkingDirectory.getModifiedFilesList(),
-			portalGitWorkingDirectory.getModifiedModuleDirsList());
+			modifiedFiles, modifiedModuleDirs);
 	}
 
 	protected PortalGitWorkingDirectory getPortalGitWorkingDirectory() {

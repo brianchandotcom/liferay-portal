@@ -207,8 +207,8 @@ public class EntriesChecker extends RowChecker {
 		}
 
 		sb.append(HtmlUtil.buildData(data));
-		sb.append("><span class=\"custom-control-label\"></span>");
-		sb.append("<span class=\"sr-only\">");
+		sb.append("><span class=\"custom-control-label\"></span><span ");
+		sb.append("class=\"sr-only\">");
 		sb.append(LanguageUtil.get(httpServletRequest.getLocale(), "select"));
 		sb.append("</span></label></div>");
 

@@ -5,6 +5,7 @@
 
 import {Page} from '@playwright/test';
 
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {ConsentManagerConfigurationPage} from '../../../../pages/cookies-banner-web/ConsentManagerConfigurationPage';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {reloadUntilVisible} from '../../../../utils/reloadUntilVisible';
@@ -19,6 +20,10 @@ interface ConsentManagerConfiguration {
 }
 
 export async function clearConsentCookies(page) {
+	const apiHelpers = new ApiHelpers(page);
+
+	await apiHelpers.cookies.deleteCookiesConsentPreferences();
+
 	await page.context().clearCookies({name: /^CONSENT_TYPE_/});
 	await page.context().clearCookies({name: /^USER_CONSENT_CONFIGURED/});
 }

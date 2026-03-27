@@ -6,24 +6,22 @@
 package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.Arrays;
+import java.util.Dictionary;
 
 import net.bytebuddy.agent.builder.ResettableClassFileTransformer;
 
@@ -36,6 +34,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Kevin Lee
@@ -71,6 +72,8 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 		resetLicenseData();
 		resetLifecycleAction();
 
+		ConfigurationTestUtil.deleteConfiguration(_CKEDITOR_CONFIG_ID);
+
 		if (_CKEDITOR_CONFIG_FILE.exists()) {
 			_CKEDITOR_CONFIG_FILE.delete();
 		}
@@ -84,16 +87,16 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testEnterpriseLicense() throws Exception {
-		String privateLicenseKey = _getCKEditorPrivateLicenseKey();
+		assertLicensePropertiesNotExisted(getPortalProductId());
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
 
 		File binaryFile = deployEnterprisePortalLicense(Time.HOUR);
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
-		_assertCKEditorConfiguration(true, privateLicenseKey);
+		_assertCKEditorConfiguration(_getCKEditorPrivateLicenseKey(), true);
 
 		binaryFile.delete();
 
@@ -104,58 +107,58 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseNotRegistered);
 
-		_assertCKEditorConfiguration(true, privateLicenseKey);
+		_assertCKEditorConfiguration(_getCKEditorPrivateLicenseKey(), true);
 
 		deployFreeTierPortalLicense(Time.HOUR);
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
 	}
 
 	@Test
 	public void testFreeTierLicense() throws Exception {
-		String privateLicenseKey = _getCKEditorPrivateLicenseKey();
+		assertLicensePropertiesNotExisted(getPortalProductId());
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID,
 			() -> FileUtil.write(
 				_CKEDITOR_CONFIG_FILE,
-				"licenseKey=\"" + privateLicenseKey + "\""));
+				"licenseKey=\"" + _getCKEditorPrivateLicenseKey() + "\""));
 
-		_assertCKEditorConfiguration(true, privateLicenseKey);
+		_assertCKEditorConfiguration(_getCKEditorPrivateLicenseKey(), true);
 
 		deployFreeTierPortalLicense(Time.HOUR);
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID,
 			() -> FileUtil.write(
 				_CKEDITOR_CONFIG_FILE,
-				"licenseKey=\"" + privateLicenseKey + "\""));
+				"licenseKey=\"" + _getCKEditorPrivateLicenseKey() + "\""));
 
-		_assertCKEditorConfiguration(true, privateLicenseKey);
+		_assertCKEditorConfiguration(_getCKEditorPrivateLicenseKey(), true);
 
 		resetCheckInterval();
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
 	}
 
 	@Test
 	public void testFreeTierLicenseCustomKey() throws Exception {
-		String privateLicenseKey = _getCKEditorPrivateLicenseKey();
+		assertLicensePropertiesNotExisted(getPortalProductId());
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
 
 		deployFreeTierPortalLicense(Time.HOUR);
 
@@ -164,7 +167,7 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
 
 		String customLicenseKey = RandomTestUtil.randomString();
 
@@ -178,90 +181,73 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 				assertPortalLicenseRegistered();
 			});
 
-		_assertCKEditorConfiguration(true, customLicenseKey);
+		_assertCKEditorConfiguration(customLicenseKey, true);
 
 		resetCheckInterval();
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
-		_assertCKEditorConfiguration(true, customLicenseKey);
+		_assertCKEditorConfiguration(customLicenseKey, true);
 	}
 
 	@Test
-	public void testFreeTierLicensePrivateKeyInDatabase() throws Exception {
-		String privateLicenseKey = _getCKEditorPrivateLicenseKey();
+	public void testFreeTierLicensePrivateKeyWithoutConfigurationFile()
+		throws Exception {
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		assertLicensePropertiesNotExisted(getPortalProductId());
+
+		_assertCKEditorConfiguration(null, false);
 
 		deployFreeTierPortalLicense(Time.HOUR);
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
 
-		String customLicenseKey = RandomTestUtil.randomString();
-
-		ConfigurationTestUtil.updateConfiguration(
+		ConfigurationTestUtil.saveConfiguration(
 			_CKEDITOR_CONFIG_ID,
-			() -> {
-				FileUtil.write(
-					_CKEDITOR_CONFIG_FILE,
-					"licenseKey=\"" + customLicenseKey + "\"");
+			HashMapDictionaryBuilder.<String, Object>put(
+				"licenseKey", _getCKEditorPrivateLicenseKey()
+			).build());
 
-				assertPortalLicenseRegistered();
-			});
-
-		_assertCKEditorConfiguration(true, customLicenseKey);
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Configuration_ set dictionary = ? where " +
-					"configurationId = ?")) {
-
-			preparedStatement.setString(
-				1,
-				StringUtil.replace(
-					_readConfigurationFromDatabase(), customLicenseKey,
-					privateLicenseKey));
-			preparedStatement.setString(2, _CKEDITOR_CONFIG_ID);
-
-			preparedStatement.executeUpdate();
-		}
+		_assertCKEditorConfiguration(_getCKEditorPrivateLicenseKey(), false);
 
 		resetCheckInterval();
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
-		_assertCKEditorConfiguration(false, privateLicenseKey);
+		_assertCKEditorConfiguration(null, false);
+
+		String customLicenseKey = RandomTestUtil.randomString();
+
+		ConfigurationTestUtil.saveConfiguration(
+			_CKEDITOR_CONFIG_ID,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"licenseKey", customLicenseKey
+			).build());
+
+		_assertCKEditorConfiguration(customLicenseKey, false);
+
+		resetCheckInterval();
+
+		_assertCKEditorConfiguration(customLicenseKey, false);
 	}
 
 	private void _assertCKEditorConfiguration(
-			boolean containsLicenseKey, String licenseKey)
+			String licenseKey, boolean fileExisted)
 		throws Exception {
 
-		if (containsLicenseKey) {
-			Assert.assertTrue(_CKEDITOR_CONFIG_FILE.exists());
+		Assert.assertEquals(licenseKey, _getCurrentLicenseKey());
 
+		Assert.assertSame(fileExisted, _CKEDITOR_CONFIG_FILE.exists());
+
+		if (fileExisted) {
 			String content = FileUtil.read(_CKEDITOR_CONFIG_FILE);
 
 			Assert.assertTrue(content.contains(licenseKey));
-		}
-		else if (_CKEDITOR_CONFIG_FILE.exists()) {
-			String content = FileUtil.read(_CKEDITOR_CONFIG_FILE);
-
-			Assert.assertFalse(content.contains(licenseKey));
-		}
-
-		String configuration = _readConfigurationFromDatabase();
-
-		if (containsLicenseKey) {
-			Assert.assertTrue(configuration.contains(licenseKey));
-		}
-		else {
-			Assert.assertFalse(configuration.contains(licenseKey));
 		}
 	}
 
@@ -269,22 +255,22 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 		return getProperty("ckeditor.private.license.key");
 	}
 
-	private String _readConfigurationFromDatabase() throws Exception {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select dictionary from Configuration_ where configurationId " +
-					"= ?")) {
+	private String _getCurrentLicenseKey() throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			"(service.pid=" + _CKEDITOR_CONFIG_ID + ")");
 
-			preparedStatement.setString(1, _CKEDITOR_CONFIG_ID);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getString(1);
-				}
-			}
+		if (configurations == null) {
+			return null;
 		}
 
-		return StringPool.BLANK;
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
+
+		Configuration configuration = configurations[0];
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		return (String)properties.get("licenseKey");
 	}
 
 	private static final File _CKEDITOR_CONFIG_FILE = new File(
@@ -299,5 +285,8 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 		_disableKeyValidatorResettableClassFileTransformer;
 	private static ResettableClassFileTransformer
 		_setVersionResettableClassFileTransformer;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 }

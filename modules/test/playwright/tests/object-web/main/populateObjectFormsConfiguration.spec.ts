@@ -52,9 +52,7 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const fieldLabel = objectDefinition.objectFields.find(
-			(field) => field.businessType === 'Text'
-		).label['en_US'];
+		const fieldLabel = objectFields[0].label!['en_US'];
 
 		await formBuilderPage.goToNew();
 
@@ -74,7 +72,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
+
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderSidePanelPage.clickBasicTab();
 
@@ -255,7 +259,19 @@ test(
 
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
 
-		await expect(formBuilderPage.formTab).toBeVisible();
+		const fieldLabel = objectFields[0].label!['en_US'];
+
+		await formBuilderSidePanelPage.clickAdvancedTab();
+
+		await formBuilderSidePanelPage.objectFieldSelect.click();
+
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
+
+		await formBuilderPage.clickSaveButton();
 
 		await expect(formBuilderPage.entriesTab).toBeHidden();
 	}

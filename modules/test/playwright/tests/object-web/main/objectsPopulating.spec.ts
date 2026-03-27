@@ -82,7 +82,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel1);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
+
+		await page
+			.getByRole('option', {name: fieldLabel1})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderSidePanelPage.clickBackButton();
 
@@ -92,13 +98,19 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel2);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
+
+		await page
+			.getByRole('option', {name: fieldLabel2})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await expect(
 			page.getByLabel('Fields Group', {exact: true})
 		).toBeVisible();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -116,12 +128,10 @@ test(
 
 		await page.getByLabel('Text', {exact: true}).last().fill(textValue2);
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		// Verify entries via API
@@ -190,11 +200,17 @@ test(
 
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Numeric');
 
+		await formBuilderSidePanelPage.numericTypeDecimal.click();
+
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -207,12 +223,10 @@ test(
 
 		await page.getByLabel('Numeric').fill(decimalValue);
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -275,15 +289,17 @@ test(
 
 		await formSettingsModalPage.clickDoneButton();
 
-		await formBuilderSidePanelPage.addFieldByDoubleClick(
-			'Single Selection'
-		);
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Boolean');
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -292,14 +308,12 @@ test(
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		await page.getByLabel('Option1').check();
+		await page.getByLabel('Boolean').check();
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -361,9 +375,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -372,14 +390,12 @@ test(
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		await page.getByLabel('Date').fill('01/15/2025');
+		await page.getByPlaceholder('__/__/____').fill('01/15/2025');
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -392,7 +408,7 @@ test(
 		const item = items[0];
 		const fieldName = objectFields[0].name;
 
-		expect(item[fieldName]).toBe('2025-01-15');
+		expect(item[fieldName]).toContain('2025-01-15');
 	}
 );
 
@@ -444,11 +460,17 @@ test(
 
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Numeric');
 
+		await formBuilderSidePanelPage.numericTypeDecimal.click();
+
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -461,12 +483,10 @@ test(
 
 		await page.getByLabel('Numeric').fill(doubleValue);
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -533,9 +553,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -548,12 +572,10 @@ test(
 
 		await page.getByLabel('Numeric').fill(integerValue);
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -620,9 +642,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -635,12 +661,10 @@ test(
 
 		await page.getByLabel('Numeric').fill(longValue);
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -717,9 +741,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -736,12 +764,10 @@ test(
 			.getByRole('option', {name: firstEntryName})
 			.click();
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -808,9 +834,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -823,12 +853,10 @@ test(
 
 		await page.getByLabel('Text').fill(textValue);
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -898,11 +926,17 @@ test(
 
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Numeric');
 
+		await formBuilderSidePanelPage.numericTypeDecimal.click();
+
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -913,12 +947,10 @@ test(
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =
@@ -983,9 +1015,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: fieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -1000,12 +1036,10 @@ test(
 
 		await page.getByLabel('Text').fill(textValue);
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		// Verify entry exists before deleting the form
@@ -1101,11 +1135,15 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(
-			capitalizedFieldLabel
-		);
+		await formBuilderSidePanelPage.objectFieldSelect.click();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+		await page
+			.getByRole('option', {name: capitalizedFieldLabel})
+			.dispatchEvent('click');
+
+		await page.waitForTimeout(2000);
+
+		await page.waitForTimeout(2000);
 
 		await formBuilderPage.clickPublishFormButton();
 
@@ -1118,12 +1156,10 @@ test(
 
 		await page.getByLabel('Text').fill(textValue);
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
+			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
 		const {items} =

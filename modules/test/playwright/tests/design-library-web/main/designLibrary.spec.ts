@@ -16,13 +16,14 @@ const test = mergeTests(
 	apiHelpersTest,
 	designLibrariesPageTest,
 	featureFlagsTest({
+		'LPD-17564': {enabled: true},
 		'LPD-36105': {enabled: true},
 		'LPD-57283': {enabled: true},
 	}),
 	loginTest()
 );
 
-test('Check if design Library is working correctly', async ({
+test('Check if design library is working correctly', async ({
 	designLibrariesPage,
 	page,
 }) => {
@@ -60,12 +61,13 @@ test('Can navigate to a design library dashboard', async ({
 }) => {
 	const designLibraryName = getRandomString();
 
-	const depot =
+	const createdDesignLibrary =
 		await test.step('Create temporary design library via headless', async () => {
-			return await apiHelpers.jsonWebServicesDepot.addDepotEntry(
-				designLibraryName,
-				{type: apiHelpers.jsonWebServicesDepot.depotType.DESIGN_LIBRARY}
-			);
+			return await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: designLibraryName,
+				settings: {},
+				type: 'DesignLibrary',
+			});
 		});
 
 	await test.step('Navigate to a design library dashboard', async () => {
@@ -131,8 +133,8 @@ test('Can navigate to a design library dashboard', async ({
 	});
 
 	await test.step('Remove temporary design library', async () => {
-		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
-			depot.depotEntryId
+		await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
+			createdDesignLibrary.externalReferenceCode
 		);
 	});
 });

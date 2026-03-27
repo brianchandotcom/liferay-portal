@@ -1,0 +1,146 @@
+{
+	"externalReferenceCode": "AI-HUB-BETA-PRIVATE-ACCESS-REQUEST",
+	"label": {
+		"en_US": "AI Hub Beta Private Access Request"
+	},
+	"name": "AIHubBetaPrivateAccessRequest",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Full Name"
+			},
+			"name": "fullName",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Business Email"
+			},
+			"name": "businessEmail",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Country"
+			},
+			"name": "country",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Job Title"
+			},
+			"name": "jobTitle",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Company Name"
+			},
+			"name": "companyName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Intl. Code"
+			},
+			"name": "intlCode",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Phone Number"
+			},
+			"name": "phoneNumber",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Extension"
+			},
+			"name": "extension",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Purpose"
+			},
+			"name": "purpose",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Purpose Description"
+			},
+			"name": "purposeDescription",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "AI Hub Account Name"
+			},
+			"name": "aiHubAccountName",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Administration Email"
+			},
+			"name": "administrationEmail",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
+	"pluralLabel": {
+		"en_US": "AI Hub Beta Private Access Requests"
+	},
+	"scope": "company"
+}

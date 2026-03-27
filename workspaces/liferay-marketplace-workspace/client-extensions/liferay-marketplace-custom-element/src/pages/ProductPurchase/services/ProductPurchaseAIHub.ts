@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {z} from 'zod';
+import { z } from 'zod';
 
-import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
+import { OrderCustomFields, OrderTypes } from '../../../enums/Order';
 import zodSchema from '../../../schema/zod';
-import {getSiteURL} from '../../../utils/site';
+import HeadlessAIHubBetaRequestAccess from '../../../services/rest/HeadlessAIHubBetaRequestAccess';
+import { getSiteURL } from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
 type AIHubForm = z.infer<typeof zodSchema.aiHubForm>;
@@ -31,19 +32,7 @@ export class ProductPurchaseAIHub extends ProductPurchase {
 				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
 					aiHubForm: {
-						administrationEmailAddress:
-							this.form?.administrationEmailAddress,
-						aiHubAccountName: this.form?.aiHubAccountName,
-						businessEmail: this.form?.businessEmail,
-						companyName: this.form?.companyName,
-						country: this.form?.country,
-						extension: this.form?.extension,
-						fullName: this.form?.fullname,
-						intlCode: this.form?.intlCode.code,
-						jobTitle: this.form?.jobTitle,
-						phoneNumber: this.form?.phoneNumber,
-						purpose: this.form?.purpose,
-						purposeOther: this.form?.purposeOther,
+						...this.form
 					},
 				}),
 			},
@@ -58,6 +47,11 @@ export class ProductPurchaseAIHub extends ProductPurchase {
 		const cart = this.getCart();
 
 		const order = await super.createOrder(cart);
+
+		await HeadlessAIHubBetaRequestAccess.createAIHubBetaRequestAccess({
+			...this.form,
+			r_orderToAIHubBetaPrivateAccessRequest_commerceOrderId: order?.id,
+		});
 
 		return order;
 	}

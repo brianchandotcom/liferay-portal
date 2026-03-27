@@ -4,26 +4,26 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayDropDown, {Align} from '@clayui/drop-down';
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayDropDown, { Align } from '@clayui/drop-down';
+import ClayForm, { ClayCheckbox, ClayInput } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {zodResolver} from '@hookform/resolvers/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import classNames from 'classnames';
-import {useState} from 'react';
-import {useForm} from 'react-hook-form';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import {RequiredMask} from '../../../../../components/FieldBase';
-import {Input} from '../../../../../components/Input/Input';
+import { RequiredMask } from '../../../../../components/FieldBase';
+import { Input } from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import i18n from '../../../../../i18n';
-import {Liferay} from '../../../../../liferay/liferay';
-import zodSchema, {z} from '../../../../../schema/zod';
-import {productAgreements} from '../../../../../utils/agreements';
-import {phones} from '../../../../../utils/phones';
-import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
-import {ProductPurchaseAIHub} from '../../../services/ProductPurchaseAIHub';
-import {PURPOSE_OPTIONS} from '../ActivationKeyForm/constants';
+import { Liferay } from '../../../../../liferay/liferay';
+import zodSchema, { z } from '../../../../../schema/zod';
+import { productAgreements } from '../../../../../utils/agreements';
+import { phones } from '../../../../../utils/phones';
+import { useProductPurchaseOutletContext } from '../../../ProductPurchaseOutlet';
+import { ProductPurchaseAIHub } from '../../../services/ProductPurchaseAIHub';
+import { PURPOSE_OPTIONS } from '../ActivationKeyForm/constants';
 
 import './AIHubForm.scss';
 
@@ -38,30 +38,30 @@ const AIHubForm = () => {
 	const [active, setActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const {handlePurchase, product, selectedAccount} =
+	const { handlePurchase, product, selectedAccount } =
 		useProductPurchaseOutletContext();
 
 	const {
-		formState: {errors, isValid},
+		formState: { errors, isValid },
 		handleSubmit,
 		register,
 		setValue,
 		watch,
 	} = useForm<z.infer<typeof zodSchema.aiHubForm>>({
 		defaultValues: {
-			administrationEmailAddress:
+			administrationEmail:
 				Liferay.ThemeDisplay.getUserEmailAddress(),
 			aiHubAccountName: '',
 			businessEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
 			companyName: '',
 			country: '',
 			extension: '',
-			fullname: '',
-			intlCode: {code: '+1', flag: 'en-us'},
+			fullName: '',
+			intlCode: { code: '+1', flag: 'en-us' },
 			jobTitle: '',
 			phoneNumber: '',
 			purpose: '',
-			purposeOther: '',
+			purposeDescription: '',
 			termsAndConditions: false,
 			userAgreement: false,
 		},
@@ -70,7 +70,7 @@ const AIHubForm = () => {
 		resolver: zodResolver(zodSchema.aiHubForm),
 	});
 
-	const {intlCode, purpose, termsAndConditions, userAgreement} = watch();
+	const { intlCode, purpose, termsAndConditions, userAgreement } = watch();
 
 	const [currentPhonesFlags, setCurrentPhonesFlags] = useState(intlCode);
 
@@ -108,9 +108,9 @@ const AIHubForm = () => {
 
 			<ClayForm.Group>
 				<Input
-					{...register('fullname')}
+					{...register('fullName')}
 					className="w-100"
-					errorMessage={errors.fullname?.message}
+					errorMessage={errors.fullName?.message}
 					label={i18n.translate('full-name')}
 					placeholder={i18n.translate('enter-your-full-name')}
 					required
@@ -262,7 +262,7 @@ const AIHubForm = () => {
 					active={active}
 					alignmentPosition={Align.BottomLeft}
 					className="w-100"
-					menuElementAttrs={{className: 'dropdown-menu-purpose'}}
+					menuElementAttrs={{ className: 'dropdown-menu-purpose' }}
 					onActiveChange={setActive}
 					trigger={
 						<ClayButton
@@ -310,7 +310,7 @@ const AIHubForm = () => {
 					className="custom-input mt-5 rounded-lg w-100"
 					placeholder="Please describe why you would like to test AI Hub in this private beta"
 					rows={5}
-					{...register('purposeOther')}
+					{...register('purposeDescription')}
 				/>
 
 				<p className="h4 mt-6">
@@ -335,10 +335,10 @@ const AIHubForm = () => {
 
 					<ClayInput.GroupItem>
 						<Input
-							{...register('administrationEmailAddress')}
+							{...register('administrationEmail')}
 							className="w-100"
 							errorMessage={
-								errors.administrationEmailAddress?.message
+								errors.administrationEmail?.message
 							}
 							helpMessage={i18n.translate(
 								'this-is-the-email-address-that-will-receive-the-ai-hub-account-management-invite'

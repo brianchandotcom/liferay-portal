@@ -193,12 +193,12 @@ const zodSchema = {
 	}),
 	aiHubForm: z.object({
 		...personalInformationSchema,
-		administrationEmailAddress: z
+		administrationEmail: z
 			.string()
 			.email('Please fill in valid email'),
 		aiHubAccountName: z.string().min(3, 'AI Hub Account Name is required'),
 		purpose: z.string().min(3, 'Purpose is required'),
-		purposeOther: z
+		purposeDescription: z
 			.string()
 			.min(3, 'Purpose is required')
 			.optional()

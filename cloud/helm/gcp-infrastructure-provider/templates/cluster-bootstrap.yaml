@@ -1,0 +1,42 @@
+{{- $clusterBootstrapConfig := .Values.clusterBootstrap -}}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+    name: cluster-bootstrap
+    namespace: cluster-bootstrap-system
+spec:
+    selector:
+        matchLabels:
+            app: cluster-bootstrap
+    template:
+        metadata:
+            labels:
+                app: cluster-bootstrap
+        spec:
+            containers:
+                -   image: registry.k8s.io/pause:3.9
+                    name: pause
+                    resources:
+                        {{- $clusterBootstrapConfig.resources | toYaml | nindent 24 }}
+            initContainers:
+                -   command:
+                        -   sh
+                        -   -c
+                        -   |
+                            {{- .Values.clusterBootstrap.script | nindent 28 }}
+                    image: {{ $clusterBootstrapConfig.image }}
+                    name: init-bootstraper
+                    resources:
+                        {{- $clusterBootstrapConfig.resources | toYaml | nindent 24 }}
+                    securityContext:
+                        privileged: true
+                        runAsUser: 0
+            nodeSelector:
+                kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+    labels:
+        name: cluster-bootstrap-system
+    name: cluster-bootstrap-system

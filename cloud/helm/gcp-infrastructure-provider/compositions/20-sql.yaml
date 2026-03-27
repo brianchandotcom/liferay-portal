@@ -1,0 +1,107 @@
+apiVersion: sql.gcp.m.upbound.io/v1beta1
+kind: DatabaseInstance
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: database-primary
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $databaseInstanceName }}
+spec:
+    forProvider:
+        databaseVersion: {{ $databaseSpec.databaseVersion | default "POSTGRES_16" }}
+        deletionProtection: {{ $databaseSpec.deletionProtection | default $deletionProtection }}
+        {{- if $cmkEnabled }}
+        encryptionKmsKeyName: {{ $cmkKeyName }}
+        {{- end }}
+        region: {{ $region }}
+        rootPasswordSecretRef:
+            key: password
+            name: {{ $databaseSpec.rootPasswordSecretName }}
+        settings:
+            databaseFlags:
+                -   name: cloudsql.iam_authentication
+                    value: "on"
+            diskSize: {{ $databaseSpec.storageGB | default 10 }}
+            diskType: PD_SSD
+            edition: ENTERPRISE
+            insightsConfig:
+                queryInsightsEnabled: {{ $databaseSpec.queryInsightsEnabled | default true }}
+            ipConfiguration:
+                ipv4Enabled: false
+                privateNetwork: projects/{{ $env.projectId }}/global/networks/{{ $env.vpcName }}
+                sslMode: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+            tier: {{ $databaseSpec.instanceType | default "db-custom-1-3840" }}
+            userLabels:
+                {{- $labels | toYaml | nindent 16 }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: sql.gcp.m.upbound.io/v1beta1
+kind: Database
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $databaseName }}
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-db
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $xr.metadata.name }}-db
+spec:
+    forProvider:
+        charset: UTF8
+        collation: en_US.UTF8
+        instanceSelector:
+            matchControllerRef: true
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: sql.gcp.m.upbound.io/v1beta1
+kind: User
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $databaseIamUser }}
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-iam-user
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $xr.metadata.name }}-db-user
+spec:
+    forProvider:
+        instanceSelector:
+            matchControllerRef: true
+        type: CLOUD_IAM_SERVICE_ACCOUNT
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: protection.crossplane.io/v1beta1
+kind: Usage
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: usage-instance-by-database
+    name: {{ $xr.metadata.name }}-instance-by-database
+    namespace: {{ $namespace }}
+spec:
+    by:
+        apiVersion: sql.gcp.m.upbound.io/v1beta1
+        kind: Database
+        resourceRef:
+            name: {{ $xr.metadata.name }}-db
+    of:
+        apiVersion: sql.gcp.m.upbound.io/v1beta1
+        kind: DatabaseInstance
+        resourceRef:
+            name: {{ $databaseInstanceName }}
+---
+apiVersion: protection.crossplane.io/v1beta1
+kind: Usage
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: usage-instance-by-user
+    name: {{ $xr.metadata.name }}-instance-by-user
+    namespace: {{ $namespace }}
+spec:
+    by:
+        apiVersion: sql.gcp.m.upbound.io/v1beta1
+        kind: User
+        resourceRef:
+            name: {{ $xr.metadata.name }}-db-user
+    of:
+        apiVersion: sql.gcp.m.upbound.io/v1beta1
+        kind: DatabaseInstance
+        resourceRef:
+            name: {{ $databaseInstanceName }}

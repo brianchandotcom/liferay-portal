@@ -1,0 +1,166 @@
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-ksa
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $xr.metadata.name }}-ksa
+spec:
+    forProvider:
+        manifest:
+            apiVersion: v1
+            kind: ServiceAccount
+            metadata:
+                annotations:
+                    iam.gke.io/gcp-service-account: {{ $gsaEmail }}
+                labels:
+                    {{- $labels | toYaml | nindent 20 }}
+                name: liferay-default
+                namespace: {{ $namespace }}
+---
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-db-grant-job
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $jobName }}
+spec:
+    forProvider:
+        manifest:
+            apiVersion: batch/v1
+            kind: Job
+            metadata:
+                labels:
+                    {{- $labels | toYaml | nindent 20 }}
+                name: {{ $jobName }}
+                namespace: {{ $namespace }}
+            spec:
+                template:
+                    spec:
+                        containers:
+                            -   args:
+                                    -   |
+                                            set -e
+                                            until pg_isready -h 127.0.0.1 -p {{ $databasePort }} -U postgres; do sleep 2; done
+                                            psql -h 127.0.0.1 -v "ON_ERROR_STOP=1" -U postgres -d {{ $databaseName }} <<EOF
+                                            GRANT ALL PRIVILEGES ON DATABASE "{{ $databaseName }}" TO "{{ $databaseIamUser }}";
+                                            GRANT ALL ON ALL TABLES IN SCHEMA public TO "{{ $databaseIamUser }}";
+                                            GRANT cloudsqlsuperuser TO "{{ $databaseIamUser }}";
+                                            EOF
+                                command:
+                                    -   /bin/sh
+                                    -   -c
+                                env:
+                                    -   name: PGPASSWORD
+                                        valueFrom:
+                                            secretKeyRef:
+                                                key: password
+                                                name: {{ $databaseSpec.rootPasswordSecretName }}
+                                image: postgres:16-alpine
+                                name: sql-runner
+                                resources:
+                                    limits:
+                                        cpu: 200m
+                                        memory: 256Mi
+                                    requests:
+                                        cpu: 100m
+                                        memory: 128Mi
+                                securityContext:
+                                    allowPrivilegeEscalation: false
+                                    capabilities:
+                                        drop:
+                                            -   ALL
+                                    runAsNonRoot: true
+                                    runAsUser: 1000
+                                    seccompProfile:
+                                        type: RuntimeDefault
+                        initContainers:
+                            -   args:
+                                    -   --auto-iam-authn
+                                    -   --port={{ $databasePort }}
+                                    -   --private-ip
+                                    -   --structured-logs
+                                    -   "{{ $instanceConnectionName }}"
+                                image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.14.1
+                                name: cloud-sql-proxy
+                                resources:
+                                    limits:
+                                        cpu: 200m
+                                        memory: 256Mi
+                                    requests:
+                                        cpu: 100m
+                                        memory: 128Mi
+                                restartPolicy: Always
+                                securityContext:
+                                    allowPrivilegeEscalation: false
+                                    capabilities:
+                                        drop:
+                                            -   ALL
+                                    runAsNonRoot: true
+                                    runAsUser: 65532
+                                    seccompProfile:
+                                        type: RuntimeDefault
+                        restartPolicy: OnFailure
+                        securityContext:
+                            fsGroup: 1000
+                            runAsNonRoot: true
+                            seccompProfile:
+                                type: RuntimeDefault
+                        serviceAccountName: liferay-default
+                        volumes:
+                            -   emptyDir: {}
+                                name: term-log
+    managementPolicies: {{ $managementPoliciesOnce }}
+    readiness:
+        celQuery: object.status.succeeded == 1
+        policy: DeriveFromCelQuery
+---
+{{- $isReady := false -}}
+{{- if .observed.resources -}}
+    {{- if (index .observed.resources "liferay-db-grant-job") -}}
+        {{- $job := index .observed.resources "liferay-db-grant-job" -}}
+        {{- range $cond := $job.resource.status.conditions | default list }}
+            {{- if and (eq $cond.type "Ready") (eq $cond.status "True") }}
+                {{- $isReady = true }}
+            {{- end }}
+        {{- end }}
+    {{- end }}
+{{- end }}
+{{- if $isReady }}
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-managed-service-details-secret
+        gotemplating.fn.crossplane.io/composition-resource-name: managed-service-details-secret
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $baseName }}-managed-service-details-secret
+spec:
+    forProvider:
+        manifest:
+            apiVersion: v1
+            kind: Secret
+            metadata:
+                labels:
+                    {{- $labels | toYaml | nindent 20 }}
+                name: managed-service-details
+                namespace: {{ $namespace }}
+            stringData:
+                DATABASE_ENDPOINT: localhost
+                DATABASE_INSTANCE_NAME: {{ $instanceConnectionName }}
+                DATABASE_PORT: {{ $databasePort | default 5432 | quote }}
+                DATABASE_USERNAME: {{ $databaseIamUser | toString }}
+                LIFERAY_GCS_BUCKET_NAME: {{ $baseName }}-dl
+                LIFERAY_OVERLAY_BUCKET_NAME: {{ $baseName }}-overlay
+            type: Opaque
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}
+---
+apiVersion: gcp.liferay.com/v1alpha1
+kind: LiferayInfrastructure
+status:
+    managedServiceDetailsReady: {{ $isReady }}

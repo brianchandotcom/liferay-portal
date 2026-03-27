@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+    labels:
+        name: elastic-system
+        pod-security.kubernetes.io/enforce: restricted
+    name: elastic-system

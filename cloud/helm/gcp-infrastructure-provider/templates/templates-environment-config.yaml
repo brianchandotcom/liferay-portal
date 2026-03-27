@@ -1,0 +1,15 @@
+{{- $templates := list -}}
+{{- range $path, $_ := .Files.Glob "compositions/**" -}}
+    {{- $content := $.Files.Get $path | trim -}}
+    {{- if $content -}}
+        {{- $templates = append $templates $content -}}
+    {{- end -}}
+{{- end -}}
+{{- $liferayTemplates := join "\n" $templates -}}
+apiVersion: apiextensions.crossplane.io/v1beta1
+data:
+    liferay-templates: |
+        {{- $liferayTemplates | nindent 8 }}
+kind: EnvironmentConfig
+metadata:
+    name: liferay-template-store

@@ -1,0 +1,38 @@
+apiVersion: storage.gcp.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-gcs-bucket
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $baseName }}-dl
+spec:
+    forProvider:
+        {{- if $cmkEnabled }}
+        encryption:
+            defaultKmsKeyName: {{ $cmkKeyName }}
+        {{- end }}
+        forceDestroy: {{ $forceDestroy }}
+        labels:
+            {{- $labels | toYaml | nindent 12 }}
+        location: {{ $storage.region | default $region }}
+        storageClass: STANDARD
+        uniformBucketLevelAccess: true
+        versioning:
+            enabled: {{ $storage.enableVersioning | default true }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: storage.gcp.m.upbound.io/v1beta1
+kind: BucketIAMMember
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-gcs-iam
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+spec:
+    forProvider:
+        bucketRef:
+            name: {{ $baseName }}-dl
+        member: serviceAccount:{{ $gsaEmail }}
+        role: roles/storage.admin
+    managementPolicies: {{ $managementPolicies }}

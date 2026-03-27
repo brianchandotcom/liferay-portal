@@ -523,6 +523,10 @@ public abstract class BaseNotificationType implements NotificationType {
 			notificationRecipientSetting.setValueMap(
 				LocalizedMapUtil.getLocalizedMap((LinkedHashMap)value));
 		}
+		else if (value instanceof Map) {
+			notificationRecipientSetting.setValueMap(
+				(Map<Locale, String>)value);
+		}
 		else {
 			notificationRecipientSetting.setValue(String.valueOf(value));
 		}

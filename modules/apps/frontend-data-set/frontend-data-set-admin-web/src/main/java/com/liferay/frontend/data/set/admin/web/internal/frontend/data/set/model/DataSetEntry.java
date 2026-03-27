@@ -8,9 +8,9 @@ package com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model
 /**
  * @author Miguel Arroyo
  */
-public class UserView {
+public class DataSetEntry {
 
-	public UserView(String label, String value) {
+	public DataSetEntry(String label, String value) {
 		_label = label;
 		_value = value;
 	}

@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {SystemSettingsPage} from '../../../../pages/configuration-admin-web/SystemSettingsPage';
+import {Page} from '@playwright/test';
+
+import {ConsentManagerConfigurationPage} from '../../../../pages/cookies-banner-web/ConsentManagerConfigurationPage';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {reloadUntilVisible} from '../../../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../../../utils/waitForAlert';
@@ -120,7 +122,7 @@ export async function saveOrUpdateConfiguration(dialog: boolean, page) {
 }
 
 export async function updateConsentManagerConfiguration(
-	page,
+	page: Page,
 	{
 		consentRenewalPeriod,
 		enabled,
@@ -129,68 +131,65 @@ export async function updateConsentManagerConfiguration(
 		storeConsent,
 	}: ConsentManagerConfiguration
 ) {
+	const consentManagerConfigurationPage = new ConsentManagerConfigurationPage(
+		page
+	);
+
 	if (forceReload) {
-		const systemSettingsPage = new SystemSettingsPage(page);
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
+		await consentManagerConfigurationPage.goTo();
 	}
 
-	const consentRenewalPeriodField = page
-		.getByLabel('Consent Renewal Period')
-		.first();
-	const enabledCheckbox = page.getByLabel('Enabled', {exact: true});
-
-	await enabledCheckbox.waitFor({state: 'visible'});
+	await consentManagerConfigurationPage.enabledCheckbox.waitFor({
+		state: 'visible',
+	});
 
 	let dialog = false;
 
 	if (enabled === false) {
-		await enabledCheckbox.setChecked(false);
+		await consentManagerConfigurationPage.enabledCheckbox.setChecked(false);
 	}
 	else {
 		if (
-			enabledCheckbox.isChecked() &&
+			(await consentManagerConfigurationPage.enabledCheckbox.isChecked()) &&
 			consentRenewalPeriod &&
 			consentRenewalPeriod !==
-				consentRenewalPeriodField.getAttribute('value')
+				(await consentManagerConfigurationPage.consentRenewalPeriodInput.getAttribute(
+					'value'
+				))
 		) {
 			dialog = true;
 		}
 
 		if (enabled === true) {
-			await enabledCheckbox.setChecked(true);
+			await consentManagerConfigurationPage.enabledCheckbox.setChecked(
+				true
+			);
 		}
 	}
 
-	if (await enabledCheckbox.isChecked()) {
-		const explicitCookieConsentModeLocator = await page.getByLabel(
-			'Explicit Cookie Consent Mode'
-		);
-
-		while (await explicitCookieConsentModeLocator.isDisabled()) {
+	if (await consentManagerConfigurationPage.enabledCheckbox.isChecked()) {
+		while (
+			await consentManagerConfigurationPage.explicitCookieConsentModeCheckbox.isDisabled()
+		) {
 			await page.waitForTimeout(250);
 		}
 
 		if (explicitCookieConsentMode !== undefined) {
-			await explicitCookieConsentModeLocator.setChecked(
+			await consentManagerConfigurationPage.explicitCookieConsentModeCheckbox.setChecked(
 				explicitCookieConsentMode
 			);
 		}
 
 		if (consentRenewalPeriod) {
-			await consentRenewalPeriodField.fill(consentRenewalPeriod);
+			await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
+				consentRenewalPeriod
+			);
 		}
 
 		if (storeConsent !== undefined) {
-			const systemSettingsPageLocator = await page.locator(
-				'[id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_fm"]'
+			await consentManagerConfigurationPage.storeConsentCheckbox.setChecked(
+				storeConsent
 			);
-
-			await systemSettingsPageLocator
-				.getByLabel('Store Consent')
-				.setChecked(storeConsent);
 		}
 	}
 

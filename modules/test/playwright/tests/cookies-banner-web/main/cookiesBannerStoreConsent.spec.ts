@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {consentManagerConfigurationPageTest} from '../../../fixtures/consentManagerConfigurationPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
@@ -15,6 +16,7 @@ import {
 } from './utils/consentManagerConfigurationHelper';
 
 export const test = mergeTests(
+	consentManagerConfigurationPageTest,
 	featureFlagsTest({
 		'LPD-75032': {enabled: true},
 	}),
@@ -54,20 +56,25 @@ test.beforeEach(async ({page}) => {
 test(
 	'Store Consent configuration field validation',
 	{tag: '@LPD-78076'},
-	async ({page}) => {
-		const storeConsentField = page.getByLabel('Store Consent');
-
+	async ({consentManagerConfigurationPage}) => {
 		await test.step('Validate Store Consent field is not enabled by default', async () => {
-			await expect(storeConsentField).not.toBeChecked();
+			await expect(
+				consentManagerConfigurationPage.storeConsentCheckbox
+			).not.toBeChecked();
 		});
 
 		await test.step('Verify Store Consent field can be saved', async () => {
-			await updateConsentManagerConfiguration(page, {
-				enabled: true,
-				storeConsent: true,
-			});
+			await updateConsentManagerConfiguration(
+				consentManagerConfigurationPage.page,
+				{
+					enabled: true,
+					storeConsent: true,
+				}
+			);
 
-			await expect(storeConsentField).toBeChecked();
+			await expect(
+				consentManagerConfigurationPage.storeConsentCheckbox
+			).toBeChecked();
 		});
 	}
 );

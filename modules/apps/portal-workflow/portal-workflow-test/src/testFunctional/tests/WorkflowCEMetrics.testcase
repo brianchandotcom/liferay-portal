@@ -25,7 +25,7 @@ definition {
 	test MetricsUnavailableForCECustomers {
 		property portal.acceptance = "false";
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Applications");
 

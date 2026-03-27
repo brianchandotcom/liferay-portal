@@ -642,7 +642,7 @@ definition {
 		}
 
 		task ("Then the supplier user cannot view the Channel panel") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Commerce");
 
@@ -2724,7 +2724,7 @@ definition {
 		}
 
 		task ("Then both Inventory and Warehouses are not present on the Application Menu") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Commerce");
 
@@ -3241,7 +3241,7 @@ definition {
 		}
 
 		task ("Then the supplier user cannot view the Discounts panel") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Commerce");
 

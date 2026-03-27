@@ -21,7 +21,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewCommerceAvailable() {
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		AssertElementPresent(
 			key_panel = "Applications",
@@ -34,7 +34,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewCommerceMissing() {
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		AssertElementPresent(
 			key_panel = "Applications",

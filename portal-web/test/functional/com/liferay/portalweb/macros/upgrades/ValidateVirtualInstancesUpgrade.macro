@@ -5,7 +5,7 @@ definition {
 		task ("Assert custom object on default instance") {
 			Navigator.openURL();
 
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
@@ -38,7 +38,7 @@ definition {
 		task ("Assert custom object on second instance") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
@@ -71,7 +71,7 @@ definition {
 		task ("Assert custom object on third instance") {
 			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Control Panel");
 

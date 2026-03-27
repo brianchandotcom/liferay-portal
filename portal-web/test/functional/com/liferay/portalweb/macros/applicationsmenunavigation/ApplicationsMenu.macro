@@ -1,6 +1,15 @@
 definition {
 
 	@summary = "Default summary"
+	macro closeApplicationsMenu() {
+		if (IsElementPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
+			Click(locator1 = "ApplicationsMenu#TOGGLE");
+		}
+
+		WaitForElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
+	}
+
+	@summary = "Default summary"
 	macro expandCategory(category = null) {
 		if (IsElementPresent(key_category = ${category}, locator1 = "ApplicationsMenu#COLLAPSED_CATEGORY")) {
 			Click(
@@ -15,13 +24,17 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoPanel(panel = null) {
-		ApplicationsMenuHelper.openApplicationsMenu();
+		if(IsElementNotPresent(key_panel = ${panel}, locator1 = "ApplicationsMenu#PANEL_TITLE")) {
+			ApplicationsMenu.openApplicationsMenu();
 
-		Click(
-			key_panel = ${panel},
-			locator1 = "ApplicationsMenu#PANEL");
+			Click(
+				key_panel = ${panel},
+				locator1 = "ApplicationsMenu#PANEL");
 
-		WaitForElementPresent(locator1 = "ApplicationsMenu#SIDE_NAVIGATION");
+			WaitForElementPresent(locator1 = "ApplicationsMenu#SIDE_NAVIGATION");
+
+			WaitForElementPresent(key_panel = ${panel}, locator1 = "ApplicationsMenu#PANEL_TITLE");
+		}
 	}
 
 	@summary = "Default summary"
@@ -30,14 +43,15 @@ definition {
 
 		ApplicationsMenu.expandCategory(category = ${category});
 
-		ApplicationsMenuHelper.gotoPortlet(
-			category = ${category},
-			portlet = ${portlet});
+		Click(
+			key_category = ${category},
+			key_portlet = ${portlet},
+			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 	@summary = "Default summary"
 	macro gotoSite(site = null) {
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		if (IsElementPresent(key_site = ${site}, locator1 = "ApplicationsMenu#SITE_LINK")) {
 			Click(
@@ -54,10 +68,19 @@ definition {
 			SiteSelector.selectSite(site = ${site});
 		}
 		else {
-			ApplicationsMenuHelper.closeApplicationsMenu();
+			ApplicationsMenu.closeApplicationsMenu();
 
 			Navigator.openSiteURL(siteName = ${site});
 		}
+	}
+
+	@summary = "Default summary"
+	macro openApplicationsMenu() {
+		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
+			Click(locator1 = "ApplicationsMenu#TOGGLE");
+		}
+
+		WaitForElementPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
 	}
 
 }

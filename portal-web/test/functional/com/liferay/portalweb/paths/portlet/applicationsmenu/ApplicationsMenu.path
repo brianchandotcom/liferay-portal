@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_TITLE</td>
+	<td>//div[@data-qa-id='sideNavigation']//span[@data-qa-id='sideNavigationLabel' and normalize-space()='${key_panel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET</td>
 	<td>//div[@data-qa-id='sideNavigation']//ul[@role='menubar']//button[@role='menuitem' and contains(., '${key_category}')]/following-sibling::ul//a[@role='menuitem' and normalize-space()='${key_portlet}']</td>
 	<td></td>

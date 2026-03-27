@@ -146,7 +146,7 @@ definition {
 
 	@summary = "Default summary"
 	macro assertIsDisplayedOnControlPanel(itemMenu = null) {
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 

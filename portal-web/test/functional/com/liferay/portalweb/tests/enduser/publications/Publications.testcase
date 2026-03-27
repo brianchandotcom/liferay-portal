@@ -206,7 +206,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		Navigator.gotoNavTab(navTab = "Applications");
 
@@ -588,7 +588,7 @@ definition {
 		}
 
 		task ("Assert Roles showing in Application Menu") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
@@ -605,7 +605,7 @@ definition {
 		}
 
 		task ("Assert Roles is not showing in Application Menu") {
-			ApplicationsMenuHelper.openApplicationsMenu();
+			ApplicationsMenu.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Control Panel");
 

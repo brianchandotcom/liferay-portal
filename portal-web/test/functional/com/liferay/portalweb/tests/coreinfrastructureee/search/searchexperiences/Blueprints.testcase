@@ -5362,7 +5362,7 @@ definition {
 
 		Blueprints.addElement(element = "Boost Tags Match");
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Experiences",
@@ -5375,7 +5375,7 @@ definition {
 			key_element = "Boost Tags Match",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Experiences",
@@ -5443,7 +5443,7 @@ definition {
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = ${elementSourceJson});
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Experiences",
@@ -5456,7 +5456,7 @@ definition {
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = "Unsaved Element");
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Experiences",

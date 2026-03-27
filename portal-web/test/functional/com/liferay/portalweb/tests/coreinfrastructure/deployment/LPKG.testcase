@@ -56,7 +56,7 @@ definition {
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
@@ -71,7 +71,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenu.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 

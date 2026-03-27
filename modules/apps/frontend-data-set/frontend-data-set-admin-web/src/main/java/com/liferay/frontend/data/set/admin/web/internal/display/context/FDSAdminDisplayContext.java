@@ -9,6 +9,7 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
+import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletFDSNames;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.portlet.FDSAdminPortlet;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
@@ -97,7 +98,7 @@ public class FDSAdminDisplayContext {
 	}
 
 	public String getDataSetEntriesURL() {
-		return _getDataProviderURL("dataSetEntries");
+		return _getDataProviderURL(FDSAdminPortletFDSNames.DATA_SET_ENTRIES);
 	}
 
 	public String getDataSetPermissionsURL() {
@@ -261,7 +262,7 @@ public class FDSAdminDisplayContext {
 	}
 
 	public String getSystemDataSetsURL() {
-		return _getDataProviderURL("systemDataSets");
+		return _getDataProviderURL(FDSAdminPortletFDSNames.SYSTEM_DATA_SETS);
 	}
 
 	public JSONArray getSystemFDSEntryJSONArray() throws Exception {

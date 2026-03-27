@@ -31,6 +31,7 @@ import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningHubService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -38,6 +39,7 @@ import com.liferay.petra.string.StringBundler;
 import java.math.BigDecimal;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -201,6 +203,12 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			PostalAddress.class);
 	}
 
+	private String _getSkuExternalReferenceCode(Product product) {
+		Map<String, String> properties = product.getProperties();
+
+		return "SF-" + properties.get("salesforce-product-id");
+	}
+
 	private UserAccount _getUserAccount(String emailAddress) throws Exception {
 		Page<UserAccount> userAccountsPage =
 			_marketplaceService.getUserAccountsPage(
@@ -216,6 +224,14 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		return null;
 	}
 
+	private boolean _isOKStatusCode(int stausCode) {
+		if ((stausCode / 200) == 2) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _processKoroneikiAccount(
 			AckReplyConsumer ackReplyConsumer,
 			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
@@ -225,7 +241,12 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		for (ExternalLink externalLink : koroneikiAccount.getExternalLinks()) {
 			if (Objects.equals(externalLink.getDomain(), "salesforce") &&
 				Objects.equals(externalLink.getEntityName(), "project")) {
-				_log.info("Skipping over account {" + koroneikiAccount.getKey() + "} because it is a project \n");
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping over account: " + koroneikiAccount.getKey() +
+							" because it is a project");
+				}
 
 				ackReplyConsumer.ack();
 
@@ -253,7 +274,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 			int statusCode = httpResponse.getStatusCode();
 
-			if ((statusCode / 100) == 2) {
+			if (_isOKStatusCode(statusCode)) {
 				account = Account.toDTO(httpResponse.getContent());
 			}
 			else if ((statusCode == HttpStatus.CONFLICT.value()) ||
@@ -302,7 +323,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 				int statusCode = httpResponse.getStatusCode();
 
-				if ((statusCode / 100) == 2) {
+				if (_isOKStatusCode(statusCode)) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							"Creating user with email address: " +
@@ -454,7 +475,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 											() -> new BigDecimal(
 												productPurchase.getQuantity()));
 										setSkuExternalReferenceCode(
-											() -> "SF-01tcX000009wZReQAM");
+											() -> _getSkuExternalReferenceCode(
+												productPurchase.getProduct()));
 									}
 								}
 							});

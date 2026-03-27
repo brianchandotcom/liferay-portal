@@ -145,6 +145,7 @@ const LengthInput = forwardRef<LengthInputRef, Props>(
 		const [error, setError] = useState(false);
 		const inputId = useId();
 		const inputRef = useRef<HTMLInputElement>(null);
+		const shouldFocusInputRef = useRef(false);
 
 		const initialValue = useMemo(
 			() => getInitialValue(currentValue),
@@ -160,6 +161,16 @@ const LengthInput = forwardRef<LengthInputRef, Props>(
 			},
 		}));
 
+		useEffect(() => {
+			if (shouldFocusInputRef.current) {
+				shouldFocusInputRef.current = false;
+
+				setTimeout(() => {
+					inputRef.current?.focus();
+				}, 100);
+			}
+		}, [unit]);
+
 		const onSelectUnit = (selectedUnit: Unit) => {
 			setUnit(selectedUnit);
 
@@ -170,7 +181,7 @@ const LengthInput = forwardRef<LengthInputRef, Props>(
 			let valueWithUnits = `${value}${selectedUnit}`;
 
 			if (selectedUnit === CUSTOM) {
-				inputRef.current!.focus();
+				shouldFocusInputRef.current = true;
 
 				setValue('');
 
@@ -179,7 +190,7 @@ const LengthInput = forwardRef<LengthInputRef, Props>(
 			else if (typeof value !== 'number' || isNaN(value)) {
 				valueWithUnits = '';
 
-				inputRef.current!.focus();
+				shouldFocusInputRef.current = true;
 
 				if (field.typeOptions?.showLengthField) {
 					setValue(valueWithUnits);

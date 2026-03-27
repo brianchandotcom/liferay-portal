@@ -91,14 +91,8 @@ public class BNDWebServiceTrackingCheck extends BaseFileCheck {
 			new SourceFormatterExcludes(), false);
 
 		for (String javaFileName : javaFileNames) {
-			File file = new File(javaFileName);
-
-			if (!file.exists()) {
-				continue;
-			}
-
 			List<String> annotationsBlocks = SourceUtil.getAnnotationsBlocks(
-				FileUtil.read(file));
+				FileUtil.read(new File(javaFileName)));
 
 			for (String annotationsBlock : annotationsBlocks) {
 				List<String> annotations = SourceUtil.splitAnnotations(

@@ -115,10 +115,7 @@ export class PersonalMenuPage {
 		this.newPageButton = page.getByRole('button', {name: 'New'});
 		this.notFoundCode = page.getByText('404');
 		this.notFoundMessage = page.getByText('Page Not Found');
-		this.notificationsHeading = page.getByRole('heading', {
-			level: 2,
-			name: 'Notifications',
-		});
+		this.notificationsHeading = page.getByTestId('headerTitle');
 		this.notificationsMenuItem = page.getByRole('menuitem', {
 			name: 'Notifications',
 		});

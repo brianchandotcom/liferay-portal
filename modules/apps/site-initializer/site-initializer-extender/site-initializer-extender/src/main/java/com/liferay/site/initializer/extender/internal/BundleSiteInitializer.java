@@ -2428,6 +2428,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					FileUtil.getShortFileName(resourcePath));
 			}
 
+			articleId = StringUtil.toUpperCase(StringUtil.trim(articleId));
+
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				LocaleUtil.getSiteDefault(), jsonObject.getString("name"));
 

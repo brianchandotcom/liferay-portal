@@ -138,6 +138,7 @@
 		<check name="BNDWebServiceTrackingCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds missing `Web-ServiceTracking: false`." />
+			<property name="enabled" value="false" />
 		</check>
 	</source-processor>
 	<source-processor name="CIMergeAndGitRepoSourceProcessor">

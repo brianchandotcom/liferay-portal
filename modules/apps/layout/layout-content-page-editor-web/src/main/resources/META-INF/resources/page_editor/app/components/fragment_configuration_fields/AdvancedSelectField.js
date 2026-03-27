@@ -143,6 +143,7 @@ export function AdvancedSelectField({
 
 	return (
 		<div
+			aria-label={field.label}
 			className={classNames(
 				'd-flex input-group-item-focusable page-editor__select-field rounded',
 				{
@@ -150,6 +151,7 @@ export function AdvancedSelectField({
 					old: !Liferay.FeatureFlags['LPD-40054'],
 				}
 			)}
+			role="group"
 		>
 			{isTokenValueOrInherited ? (
 				<SingleSelectWithIcon

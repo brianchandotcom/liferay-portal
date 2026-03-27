@@ -3,16 +3,134 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragment": {
-						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewAgentDefinitionsFragmentRenderer"
-					},
-					"fragmentConfig": {
-					},
-					"fragmentFields": [
-					],
-					"indexed": true
+					"indexed": true,
+					"layout": {
+					}
 				},
-				"type": "Fragment"
+				"pageElements": [
+					{
+						"definition": {
+							"cssClasses": [
+								"ai-hub-section-header",
+								"container-fluid"
+							],
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"contentDisplay": "FlexColumn",
+								"justify": "Center"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"cssClasses": [
+										"ai-hub-home-title"
+									],
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h1"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Agent Builder"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginLeft": "3",
+										"paddingBottom": "3",
+										"paddingLeft": "3",
+										"paddingRight": "3",
+										"paddingTop": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-tabs"
+							},
+							"fragmentConfig": {
+								"numberOfTabs": 2,
+								"persistSelectedTab": true
+							},
+							"fragmentFields": [
+								{
+									"id": "title1",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Agents"
+											}
+										}
+									}
+								},
+								{
+									"id": "title2",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Data Sources"
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentDropZoneId": "1"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewAgentDefinitionsFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+									"fragmentDropZoneId": "2"
+								},
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
 			}
 		],
 		"type": "Root"

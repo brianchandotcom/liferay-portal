@@ -11,12 +11,6 @@
 ViewAgentDefinitionsDisplayContext viewAgentDefinitionsDisplayContext = (ViewAgentDefinitionsDisplayContext)request.getAttribute(ViewAgentDefinitionsDisplayContext.class.getName());
 %>
 
-<div class="ai-hub-section-header align-items-center container-fluid d-flex">
-	<div class="ml-2 p-3">
-		<h2><liferay-ui:message key="agents" /></h2>
-	</div>
-</div>
-
 <frontend-data-set:headless-display
 	apiURL="<%= viewAgentDefinitionsDisplayContext.getAPIURL() %>"
 	creationMenu="<%= viewAgentDefinitionsDisplayContext.getCreationMenu() %>"

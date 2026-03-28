@@ -69,6 +69,18 @@ export function declineAllCookies(
 	});
 }
 
+export function deleteStoredCookies() {
+	if (
+		Liferay.FeatureFlags['LPD-75032'] &&
+		Liferay.ThemeDisplay.isSignedIn()
+	) {
+		fetch('/o/cookies/v1.0/cookies-consent-preferences/', {
+			headers: HEADERS,
+			method: 'DELETE',
+		});
+	}
+}
+
 function deleteStoredCookie(name) {
 	fetch(`/o/cookies/v1.0/cookies-consent-preferences/by-name/${name}`, {
 		headers: HEADERS,
@@ -220,6 +232,10 @@ export function setUserConfigCookie(consentRenewalPeriod, storeConsent) {
 		storeConsent,
 		new Date().getTime()
 	);
+
+	if (!storeConsent) {
+		deleteStoredCookies();
+	}
 
 	getOpener()?.Liferay.fire('cookieBannerSetCookie');
 }

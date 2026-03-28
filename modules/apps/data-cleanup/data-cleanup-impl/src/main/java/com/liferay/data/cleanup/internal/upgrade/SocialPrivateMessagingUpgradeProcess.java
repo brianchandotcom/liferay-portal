@@ -50,7 +50,8 @@ public class SocialPrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				_mbThreadLocalService.deleteMBThread(resultSet.getLong(1));
+				_mbThreadLocalService.deleteMBThread(
+					resultSet.getLong("mbThreadId"));
 			}
 		}
 	}

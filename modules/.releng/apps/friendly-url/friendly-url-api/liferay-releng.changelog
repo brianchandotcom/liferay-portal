@@ -162,3 +162,8 @@ a1e3968ef5c9ccff725e6f22292de80b4ac6e783^..f67aec190323f8a8d24f84c3ed3e9e90bcdec
 # Bundle Version 11.1.3
 #
 f67aec190323f8a8d24f84c3ed3e9e90bcdecb23^..ffe9c5eeba83bc33d74521f1cc7f5de64a0bbc16=LPD-68649
+
+#
+# Bundle Version 12.0.0
+#
+ffe9c5eeba83bc33d74521f1cc7f5de64a0bbc16^..37a36d7c5104ed45383b9fd577e60e1ddb91c407=LPD-82927 LPD-83108 LPD-83622

@@ -33,81 +33,8 @@ public class ResultSetGetCallCheck extends BaseCheck {
 		String variableTypeName = getVariableTypeName(
 			detailAST, variableName, false);
 
-		if (!variableTypeName.equals("ResultSet")) {
-			return;
-		}
-
-		DetailAST assignDetailAST = detailAST.findFirstToken(TokenTypes.ASSIGN);
-
-		if (assignDetailAST == null) {
-			return;
-		}
-
-		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
-
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
-
-			return;
-		}
-
-		firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
-
-			return;
-		}
-
-		DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
-			TokenTypes.DOT);
-
-		if (dotDetailAST == null) {
-			return;
-		}
-
-		List<String> names = getNames(dotDetailAST, false);
-
-		if ((names.size() != 2) ||
-			!StringUtil.equals(names.get(1), "executeQuery")) {
-
-			return;
-		}
-
-		DetailAST variableDefinitionDetailAST = getVariableDefinitionDetailAST(
-			detailAST, names.get(0));
-
-		if (variableDefinitionDetailAST == null) {
-			return;
-		}
-
-		String typeName = getTypeName(
-			variableDefinitionDetailAST.findFirstToken(TokenTypes.TYPE), true);
-
-		if (!typeName.equals("PreparedStatement")) {
-			return;
-		}
-
-		assignDetailAST = variableDefinitionDetailAST.findFirstToken(
-			TokenTypes.ASSIGN);
-
-		if (assignDetailAST == null) {
-			return;
-		}
-
-		List<DetailAST> stringLiteralDetailASTs = getAllChildTokens(
-			assignDetailAST, true, TokenTypes.STRING_LITERAL);
-
-		if (stringLiteralDetailASTs.isEmpty()) {
-			return;
-		}
-
-		for (DetailAST stringLiteralDetailAST : stringLiteralDetailASTs) {
-			String text = stringLiteralDetailAST.getText();
-
-			if (text.contains("select ")) {
-				break;
-			}
+		if (!variableTypeName.equals("ResultSet") ||
+			!_containsSelect(detailAST)) {
 
 			return;
 		}
@@ -143,7 +70,8 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			DetailAST parameterExprDetailAST = parameterExprDetailASTs.get(0);
 
-			firstChildDetailAST = parameterExprDetailAST.getFirstChild();
+			DetailAST firstChildDetailAST =
+				parameterExprDetailAST.getFirstChild();
 
 			if (firstChildDetailAST.getType() == TokenTypes.NUM_INT) {
 				log(firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER_1);
@@ -167,6 +95,83 @@ public class ResultSetGetCallCheck extends BaseCheck {
 				log(firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER_2);
 			}
 		}
+	}
+
+	private boolean _containsSelect(DetailAST detailAST) {
+		DetailAST assignDetailAST = detailAST.findFirstToken(TokenTypes.ASSIGN);
+
+		if (assignDetailAST == null) {
+			return false;
+		}
+
+		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return false;
+		}
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.DOT);
+
+		if (dotDetailAST == null) {
+			return false;
+		}
+
+		List<String> names = getNames(dotDetailAST, false);
+
+		if ((names.size() != 2) ||
+			!StringUtil.equals(names.get(1), "executeQuery")) {
+
+			return false;
+		}
+
+		DetailAST variableDefinitionDetailAST = getVariableDefinitionDetailAST(
+			detailAST, names.get(0));
+
+		if (variableDefinitionDetailAST == null) {
+			return false;
+		}
+
+		String typeName = getTypeName(
+			variableDefinitionDetailAST.findFirstToken(TokenTypes.TYPE), true);
+
+		if (!typeName.equals("PreparedStatement")) {
+			return false;
+		}
+
+		assignDetailAST = variableDefinitionDetailAST.findFirstToken(
+			TokenTypes.ASSIGN);
+
+		if (assignDetailAST == null) {
+			return false;
+		}
+
+		List<DetailAST> stringLiteralDetailASTs = getAllChildTokens(
+			assignDetailAST, true, TokenTypes.STRING_LITERAL);
+
+		if (stringLiteralDetailASTs.isEmpty()) {
+			return false;
+		}
+
+		for (DetailAST stringLiteralDetailAST : stringLiteralDetailASTs) {
+			String text = stringLiteralDetailAST.getText();
+
+			if (text.contains("select ")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String[] _GET_METHOD_NAMES = {

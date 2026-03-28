@@ -71,7 +71,7 @@ public class DBCopyTablesProcess {
 		_targetDataSource = targetDataSource;
 
 		if (partitionName == null) {
-			_partitionMessage = "";
+			_partitionMessage = " in default schema";
 		}
 		else {
 			_partitionMessage = " in partition " + partitionName;

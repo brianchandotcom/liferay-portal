@@ -48,6 +48,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.sql.DataSource;
 
@@ -66,9 +67,15 @@ public class DBCopyTablesProcess {
 		String partitionName, DataSource sourceDataSource,
 		DataSource targetDataSource) {
 
-		_partitionName = partitionName;
 		_sourceDataSource = sourceDataSource;
 		_targetDataSource = targetDataSource;
+
+		if (partitionName == null) {
+			_partitionMessage = "";
+		}
+		else {
+			_partitionMessage = " in partition " + partitionName;
+		}
 	}
 
 	public void run() throws Exception {
@@ -158,6 +165,8 @@ public class DBCopyTablesProcess {
 		Iterator<String> sourceIterator = sourceTableNames.iterator();
 		Iterator<String> targetIterator = targetTableNames.iterator();
 
+		AtomicInteger processedTables = new AtomicInteger();
+
 		ThrowableCollector throwableCollector = new ThrowableCollector();
 
 		while (sourceIterator.hasNext()) {
@@ -169,6 +178,16 @@ public class DBCopyTablesProcess {
 					() -> {
 						try {
 							_copyTable(sourceTableName, targetTableName);
+
+							int count = processedTables.incrementAndGet();
+
+							if ((count % 10) == 0) {
+								System.out.println(
+									StringBundler.concat(
+										"Copied ", count, " tables out of ",
+										sourceTableNames.size(),
+										_partitionMessage));
+							}
 						}
 						catch (Exception exception) {
 							throwableCollector.collect(exception);
@@ -179,6 +198,8 @@ public class DBCopyTablesProcess {
 		for (Future<?> future : futures) {
 			future.get();
 		}
+
+		System.out.println("All tables copied" + _partitionMessage);
 
 		Throwable throwable = throwableCollector.getThrowable();
 
@@ -572,12 +593,7 @@ public class DBCopyTablesProcess {
 				sb.append(targetTableName);
 				sb.append(" has only ");
 				sb.append(targetColumnNames.size());
-
-				if (_partitionName != null) {
-					sb.append(" in partition ");
-					sb.append(_partitionName);
-				}
-
+				sb.append(_partitionMessage);
 				sb.append(StringPool.NEW_LINE);
 			}
 		}
@@ -589,7 +605,7 @@ public class DBCopyTablesProcess {
 
 	private static final int _SQL_TYPE_ORACLE_BINARY_DOUBLE = 101;
 
-	private final String _partitionName;
+	private final String _partitionMessage;
 	private final Map<String, List<String>> _sourceColumnNamesMap =
 		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 	private final Map<String, Integer> _sourceColumnsType = new HashMap<>();

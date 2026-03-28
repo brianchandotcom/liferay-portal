@@ -78,15 +78,15 @@ public class ResourcePermissionPostupgradeDataCleanupProcess
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				StringBundler.concat(
-					"select count(1), name from ResourcePermission where name ",
-					"like 'com\\_liferay\\_%' ", escapeClause,
+					"select count(1) as count, name from ResourcePermission ",
+					"where name like 'com\\_liferay\\_%' ", escapeClause,
 					"and scope = ? group by name"))) {
 
 			preparedStatement.setInt(1, ResourceConstants.SCOPE_INDIVIDUAL);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String name = resultSet.getString(2);
+					String name = resultSet.getString("name");
 
 					if (portletIds.contains(name)) {
 						continue;
@@ -95,10 +95,8 @@ public class ResourcePermissionPostupgradeDataCleanupProcess
 					_resourcePermissionLocalService.deleteResourcePermissions(
 						name);
 
-					int count = resultSet.getInt(1);
-
 					DataCleanupLoggingUtil.logDelete(
-						_log, count,
+						_log, resultSet.getInt("count"),
 						_dbInspector.normalizeName("ResourcePermission"),
 						StringBundler.concat("\"", name, "\" was not found"));
 				}

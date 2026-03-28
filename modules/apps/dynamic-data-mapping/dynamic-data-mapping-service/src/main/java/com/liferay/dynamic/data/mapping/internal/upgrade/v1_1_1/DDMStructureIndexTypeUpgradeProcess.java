@@ -54,7 +54,7 @@ public class DDMStructureIndexTypeUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.setString(1, newDefinition);
 
-					long structureId = resultSet.getLong(2);
+					long structureId = resultSet.getLong("structureId");
 
 					preparedStatement2.setLong(2, structureId);
 

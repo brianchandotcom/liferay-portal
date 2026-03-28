@@ -131,14 +131,15 @@ public class CountryUpgradeProcessTest {
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from " + tableName + " where companyId = ?")) {
+				"select count(*) as count from " + tableName +
+					" where companyId = ?")) {
 
 			preparedStatement.setLong(1, _company.getCompanyId());
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 	}

@@ -69,7 +69,8 @@ public class UpgradePartitionedControlTableTest
 					try (Connection connection = dataSource.getConnection()) {
 						try (PreparedStatement preparedStatement =
 								connection.prepareStatement(
-									"select count(1) from " + TEST_TABLE_NAME);
+									"select count(1) as count from " +
+										TEST_TABLE_NAME);
 
 							ResultSet resultSet =
 								preparedStatement.executeQuery()) {
@@ -77,7 +78,7 @@ public class UpgradePartitionedControlTableTest
 							int count = 0;
 
 							if (resultSet.next()) {
-								count = resultSet.getInt(1);
+								count = resultSet.getInt("count");
 							}
 
 							Assert.assertEquals(1, count);

@@ -72,8 +72,10 @@ public class DatabaseUtil {
 			while (resultSet.next()) {
 				companies.add(
 					new Company(
-						resultSet.getLong(1), resultSet.getString(3),
-						resultSet.getString(4), resultSet.getString(2)));
+						resultSet.getLong("companyId"),
+						resultSet.getString("name"),
+						resultSet.getString("hostname"),
+						resultSet.getString("webId")));
 			}
 		}
 

@@ -640,13 +640,13 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(1) from ", partitionName, StringPool.PERIOD,
-					tableName, whereClause));
+					"select count(1) as count from ", partitionName,
+					StringPool.PERIOD, tableName, whereClause));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 
@@ -655,12 +655,12 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	private int _getDefaultSchemaCount(String tableName) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(1) from " + tableName);
+				"select count(1) as count from " + tableName);
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 
@@ -669,14 +669,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	private int _getJobsCount(String partitionName) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(1) from " + partitionName +
+				"select count(1) as count from " + partitionName +
 					".QUARTZ_JOB_DETAILS where JOB_GROUP = ?")) {
 
 			preparedStatement.setString(1, _JOB_GROUP_NAME);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getInt(1);
+					return resultSet.getInt("count");
 				}
 			}
 		}
@@ -687,7 +687,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private int _getJobsCountByCompany(long companyId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(1) from ", getPartitionName(companyId),
+					"select count(1) as count from ",
+					getPartitionName(companyId),
 					".QUARTZ_JOB_DETAILS where JOB_GROUP = ? and JOB_NAME ",
 					"like ?"))) {
 
@@ -696,7 +697,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getInt(1);
+					return resultSet.getInt("count");
 				}
 			}
 		}
@@ -739,13 +740,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(1) from ", getPartitionName(companyId),
-					StringPool.PERIOD, tableName, whereClause));
+					"select count(1) as count from ",
+					getPartitionName(companyId), StringPool.PERIOD, tableName,
+					whereClause));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 

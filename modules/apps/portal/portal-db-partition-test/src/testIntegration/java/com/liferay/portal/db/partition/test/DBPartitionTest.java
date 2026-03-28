@@ -229,8 +229,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				if (resultSet.next()) {
-					classNameValue = resultSet.getString(1);
-					classNameId = resultSet.getLong(2);
+					classNameValue = resultSet.getString("value");
+					classNameId = resultSet.getLong("classNameId");
 				}
 			}
 		}
@@ -264,12 +264,12 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
-							"select count(1) from Configuration_");
+							"select count(1) as count from Configuration_");
 
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					if (resultSet.next()) {
-						rowCount = resultSet.getInt(1);
+						rowCount = resultSet.getInt("count");
 					}
 				}
 
@@ -306,10 +306,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				if (resultSet.next()) {
-					actionId = resultSet.getString(3);
-					bitwiseValue = resultSet.getLong(4);
-					name = resultSet.getString(2);
-					resourceActionId = resultSet.getLong(1);
+					actionId = resultSet.getString("actionId");
+					bitwiseValue = resultSet.getLong("bitwiseValue");
+					name = resultSet.getString("name");
+					resourceActionId = resultSet.getLong("resourceActionId");
 				}
 			}
 		}

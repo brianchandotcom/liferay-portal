@@ -245,7 +245,7 @@ public class UpgradePartitionedConfigurationTableTest
 									Assert.assertTrue(resultSet.next());
 									Assert.assertEquals(
 										configurationEntry.getDictionary(),
-										resultSet.getString(1));
+										resultSet.getString("dictionary"));
 								}
 								else {
 									Assert.assertFalse(resultSet.next());

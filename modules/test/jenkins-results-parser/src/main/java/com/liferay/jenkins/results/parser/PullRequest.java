@@ -327,14 +327,17 @@ public class PullRequest {
 		for (int i = 0; i < statusesJSONArray.length(); i++) {
 			JSONObject jsonObject = statusesJSONArray.getJSONObject(i);
 
-			Matcher matcher = _liferayContextPattern.matcher(
-				jsonObject.getString("context"));
+			String testSuiteName = jsonObject.getString("context");
 
-			if (!matcher.find()) {
-				continue;
+			if (!Objects.equals(testSuiteName, "default")) {
+				Matcher matcher = _liferayContextPattern.matcher(testSuiteName);
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				testSuiteName = matcher.group("testSuiteName");
 			}
-
-			String testSuiteName = matcher.group("testSuiteName");
 
 			if (testSuiteNames.contains(testSuiteName)) {
 				continue;
@@ -509,14 +512,21 @@ public class PullRequest {
 		for (int i = 0; i < statusesJSONArray.length(); i++) {
 			JSONObject jsonObject = statusesJSONArray.getJSONObject(i);
 
-			Matcher matcher = _liferayContextPattern.matcher(
-				jsonObject.getString("context"));
+			String testSuiteName = jsonObject.getString("context");
 
-			if (!matcher.find()) {
-				continue;
+			if (!Objects.equals(testSuiteName, "default")) {
+				Matcher matcher = _liferayContextPattern.matcher(testSuiteName);
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				testSuiteName = matcher.group("testSuiteName");
 			}
 
-			String testSuiteName = matcher.group("testSuiteName");
+			if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+				testSuiteName = "default";
+			}
 
 			if (testSuiteNames.contains(testSuiteName) ||
 				!Objects.equals(jsonObject.getString("state"), "success")) {
@@ -1308,7 +1318,7 @@ public class PullRequest {
 			"https://github.com/(?<owner>[^/]+)/",
 			"(?<gitHubRemoteGitRepositoryName>[^/]+)/pull/(?<number>\\d+)"));
 	private static final Pattern _liferayContextPattern = Pattern.compile(
-		"liferay/ci:test:(?<testSuiteName>[^:]+)");
+		"liferay/ci:test(:(?<testSuiteName>[^:]+))?");
 
 	private Boolean _autoCloseCommentAvailable;
 	private String _ciMergeSHA = "";

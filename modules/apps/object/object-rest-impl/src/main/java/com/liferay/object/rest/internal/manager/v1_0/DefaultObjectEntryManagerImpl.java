@@ -3451,14 +3451,21 @@ public class DefaultObjectEntryManagerImpl
 					serviceBuilderParentObjectEntry)
 			).put(
 				"versions",
-				_addAction(
-					ObjectActionKeys.OBJECT_ENTRY_HISTORY,
-					new String[] {
-						"getByExternalReferenceCodeVersionsPage",
-						"getScopeScopeKeyByExternalReferenceCodeVersionsPage"
-					},
-					objectDefinition, serviceBuilderObjectEntry, null,
-					dtoConverterContext.getUriInfo())
+				() -> {
+					if (!objectDefinition.isEnableObjectEntryHistory()) {
+						return null;
+					}
+
+					return _addAction(
+						ObjectActionKeys.OBJECT_ENTRY_HISTORY,
+						new String[] {
+							"getByExternalReferenceCodeVersionsPage",
+							"getScopeScopeKeyByExternalReferenceCodeVersions" +
+								"Page"
+						},
+						objectDefinition, serviceBuilderObjectEntry, null,
+						dtoConverterContext.getUriInfo());
+				}
 			).putAll(
 				_getSubscriptionActions(
 					dtoConverterContext, objectDefinition,

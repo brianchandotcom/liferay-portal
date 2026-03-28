@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.LicenseUtil;
 
@@ -22,6 +23,7 @@ import net.bytebuddy.agent.builder.ResettableClassFileTransformer;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -61,6 +63,17 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 	@After
 	public void tearDown() throws Exception {
 		resetLicenseData();
+	}
+
+	@Test
+	public void testCheckLicenseForCMP() throws Exception {
+		assertLicensePropertiesNotExisted(getCMPProductId());
+
+		deployCMPLicense(Time.HOUR);
+
+		assertLicensePropertiesExisted(getCMPProductId());
+
+		Assert.assertTrue(LicenseManagerUtil.isCMPEnabled());
 	}
 
 	@Test

@@ -9017,6 +9017,47 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-79894")
+	public void testPatchObjectEntryWithKeywordsAndExistingAttachmentObjectField()
+		throws Exception {
+
+		JSONObject objectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				_toFileEntryJSONObject(
+					DLTestUtil.randomTextFileBytes(),
+					RandomTestUtil.randomString() + ".txt", null,
+					ContentTypes.TEXT_PLAIN,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)
+			).toString(),
+			_getEndpoint(_objectDefinition1, _testGroupId), Http.Method.POST);
+
+		Assert.assertNotNull(
+			objectEntryJSONObject.get(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
+
+		JSONObject patchedJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"keywords", JSONUtil.putAll("tag1")
+			).toString(),
+			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+				objectEntryJSONObject.getString("id"),
+			Http.Method.PATCH);
+
+		Assert.assertNotNull(
+			patchedJSONObject.get(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
+
+		JSONArray keywordsJSONArray = patchedJSONObject.getJSONArray(
+			"keywords");
+
+		Assert.assertEquals(1, keywordsJSONArray.length());
+		Assert.assertEquals("tag1", keywordsJSONArray.get(0));
+	}
+
+	@Test
 	public void testPatchObjectEntryWithRequiredObjectFields()
 		throws Exception {
 

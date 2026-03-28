@@ -63,6 +63,8 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 	@After
 	public void tearDown() throws Exception {
 		resetLicenseData();
+
+		resetLifecycleAction();
 	}
 
 	@Test
@@ -127,6 +129,8 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 		LicenseManagerUtil.checkLicense(getPortalProductId());
 
 		assertLicensePropertiesExisted(getPortalProductId());
+
+		assertPortalLicenseRegistered();
 	}
 
 	private static ResettableClassFileTransformer

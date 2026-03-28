@@ -7,3 +7,8 @@
 # Bundle Version 2.0.0
 #
 7bf5235fd34c9e0f30012814ea422aeb06883ece^..bb02778a6c249d1af0a5124e1bd7072f8f89bad2=LPD-24745
+
+#
+# Bundle Version 3.0.0
+#
+bb02778a6c249d1af0a5124e1bd7072f8f89bad2^..4b3cd568245227d8aa91716ca9bcfcce314dd43a=LPD-82927 LPD-83108 LPD-83622

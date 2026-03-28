@@ -107,6 +107,25 @@ public class FragmentEntryLinkModelListenerTest {
 	}
 
 	@Test
+	public void testAddFragmentEntryLinkDoesNotEscapeLinkFieldHTMLContent()
+		throws Exception {
+
+		String editableFieldValue =
+			"<img alt=\"Icon\" src=\"/documents/icon.svg\" /> Read More";
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-button"),
+			_createEditableValues("link", editableFieldValue), _serviceContext);
+
+		Assert.assertEquals(
+			_createEditableValues(
+				"link",
+				"<img alt=\"Icon\" src=\"/documents/icon.svg\">\n Read More"),
+			fragmentEntryLink.getEditableValues());
+	}
+
+	@Test
 	public void testAddFragmentEntryLinkEscapeTextField() throws Exception {
 		String editableValues = _createEditableValues(
 			"element-text",
@@ -119,6 +138,29 @@ public class FragmentEntryLinkModelListenerTest {
 
 		Assert.assertEquals(
 			editableValues, fragmentEntryLink.getEditableValues());
+	}
+
+	@Test
+	public void testAddFragmentEntryLinkSanitizesLinkFieldScriptContent()
+		throws Exception {
+
+		String editableFieldValue = "<script>alert('xss');</script>Read More";
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.security.antisamy.internal." +
+					"AntiSamySanitizerImpl",
+				LoggerTestUtil.WARN)) {
+
+			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
+					"BASIC_COMPONENT-button"),
+				_createEditableValues("link", editableFieldValue),
+				_serviceContext);
+
+			Assert.assertEquals(
+				_createEditableValues("link", "Read More"),
+				fragmentEntryLink.getEditableValues());
+		}
 	}
 
 	@Test

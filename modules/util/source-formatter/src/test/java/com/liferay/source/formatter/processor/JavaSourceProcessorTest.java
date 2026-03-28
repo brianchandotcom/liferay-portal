@@ -877,9 +877,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"Use the simple column name instead of column index when " +
 					"calling method \"resultSet.get*\"",
-				59
+				60
 			).addExpectedMessage(
-				"Use \"resultSet.getInt\" for count", 73
+				"Use \"resultSet.getInt\" for count", 74
 			));
 	}
 

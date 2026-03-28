@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -284,52 +285,73 @@ public abstract class BaseLicenseTestCase {
 	}
 
 	public void resetLifecycleAction() throws Exception {
-		Object lifecycleAction = ReflectionsHolder._lifecycleActionField.get(
-			null);
+		String originalPriority = Log4JUtil.getPriority(
+			_BUNDLE_START_STOP_LOGGER);
 
-		Class<?> lifecycleActionClass = lifecycleAction.getClass();
-
-		for (Method method : lifecycleActionClass.getDeclaredMethods()) {
-			if (Arrays.equals(
-					method.getParameterTypes(),
-					new Class<?>[] {
-						BundleContext.class, Map.class, Framework.class
-					})) {
-
-				method.setAccessible(true);
-
-				for (Field field : lifecycleActionClass.getDeclaredFields()) {
-					if (Map.class.isAssignableFrom(field.getType())) {
-						field.setAccessible(true);
-
-						Object bundleData = field.get(lifecycleAction);
-
-						if (bundleData != null) {
-							method.invoke(
-								lifecycleAction,
-								SystemBundleUtil.getBundleContext(), bundleData,
-								ModuleFrameworkUtil.getFramework());
-						}
-					}
-				}
-
-				break;
-			}
+		if (!Objects.equals(originalPriority, "OFF")) {
+			Log4JUtil.setLevel(_BUNDLE_START_STOP_LOGGER, "OFF", false);
 		}
 
-		for (Field field : lifecycleActionClass.getDeclaredFields()) {
-			if (!Modifier.isFinal(field.getModifiers())) {
-				field.setAccessible(true);
+		try {
+			Object lifecycleAction =
+				ReflectionsHolder._lifecycleActionField.get(null);
 
-				if (Objects.equals(field.getType(), long.class)) {
-					field.set(lifecycleAction, 0L);
+			Class<?> lifecycleActionClass = lifecycleAction.getClass();
+
+			for (Method method : lifecycleActionClass.getDeclaredMethods()) {
+				if (Arrays.equals(
+						method.getParameterTypes(),
+						new Class<?>[] {
+							BundleContext.class, Map.class, Framework.class
+						})) {
+
+					method.setAccessible(true);
+
+					for (Field field :
+							lifecycleActionClass.getDeclaredFields()) {
+
+						if (Map.class.isAssignableFrom(field.getType())) {
+							field.setAccessible(true);
+
+							Object bundleData = field.get(lifecycleAction);
+
+							if (bundleData != null) {
+								method.invoke(
+									lifecycleAction,
+									SystemBundleUtil.getBundleContext(),
+									bundleData,
+									ModuleFrameworkUtil.getFramework());
+							}
+						}
+					}
+
+					break;
 				}
-				else if (Objects.equals(field.getType(), boolean.class)) {
-					field.set(lifecycleAction, false);
+			}
+
+			for (Field field : lifecycleActionClass.getDeclaredFields()) {
+				if (!Modifier.isFinal(field.getModifiers())) {
+					field.setAccessible(true);
+
+					if (Objects.equals(field.getType(), long.class)) {
+						field.set(lifecycleAction, 0L);
+					}
+					else if (Objects.equals(field.getType(), boolean.class)) {
+						field.set(lifecycleAction, false);
+					}
+					else {
+						field.set(lifecycleAction, null);
+					}
 				}
-				else {
-					field.set(lifecycleAction, null);
-				}
+			}
+		}
+		finally {
+			if (!Objects.equals(
+					originalPriority,
+					Log4JUtil.getPriority(_BUNDLE_START_STOP_LOGGER))) {
+
+				Log4JUtil.setLevel(
+					_BUNDLE_START_STOP_LOGGER, originalPriority, false);
 			}
 		}
 	}
@@ -515,6 +537,9 @@ public abstract class BaseLicenseTestCase {
 
 		return HttpUtil.URLtoString(options);
 	}
+
+	private static final String _BUNDLE_START_STOP_LOGGER =
+		"com.liferay.portal.bootstrap.log.BundleStartStopLogger";
 
 	private static final String _CMP_LICENSE_TYPE = "production";
 

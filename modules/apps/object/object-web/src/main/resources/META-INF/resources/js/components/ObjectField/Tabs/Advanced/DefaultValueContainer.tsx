@@ -75,6 +75,7 @@ const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
 	Integer: NumericDefaultValueInput,
 	LongInteger: NumericDefaultValueInput,
 	LongText: TextDefaultValueInput,
+	PhoneNumber: TextDefaultValueInput,
 	Picklist: ListTypeDefaultValueSelect,
 	PrecisionDecimal: NumericDefaultValueInput,
 	RichText: RichTextDefaultValue,

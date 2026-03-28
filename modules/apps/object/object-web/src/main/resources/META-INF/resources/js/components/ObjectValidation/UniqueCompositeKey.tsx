@@ -87,6 +87,7 @@ export function UniqueCompositeKey({
 	const allowedObjectFieldBusinessTypes = [
 		'AutoIncrement',
 		'Integer',
+		'PhoneNumber',
 		'Picklist',
 		'Relationship',
 		'Text',

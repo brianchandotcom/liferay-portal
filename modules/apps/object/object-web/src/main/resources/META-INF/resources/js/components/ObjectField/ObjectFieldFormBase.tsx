@@ -130,6 +130,15 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 		],
 	],
 	[
+		'PhoneNumber',
+		[
+			{
+				name: 'showCounter',
+				value: false,
+			},
+		],
+	],
+	[
 		'Text',
 		[
 			{
@@ -803,7 +812,8 @@ export default function ObjectFieldFormBase({
 					</ClayForm.Group>
 				)}
 
-			{(values.businessType === 'Text' ||
+			{(values.businessType === 'PhoneNumber' ||
+				values.businessType === 'Text' ||
 				values.businessType === 'Integer') && (
 				<UniqueValues
 					disabled={disabled}

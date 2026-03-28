@@ -103,6 +103,7 @@ export function ModalAddObjectField({
 
 	const showEnableTranslationToggle =
 		values.businessType === 'LongText' ||
+		values.businessType === 'PhoneNumber' ||
 		values.businessType === 'RichText' ||
 		values.businessType === 'Text' ||
 		values.businessType === 'Attachment' ||

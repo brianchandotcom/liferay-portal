@@ -13,6 +13,7 @@ export const DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES = [
 	'Integer',
 	'LongInteger',
 	'LongText',
+	'PhoneNumber',
 	'PrecisionDecimal',
 	'RichText',
 	'Text',

@@ -18,6 +18,7 @@ const objectFieldBusinessTypeLabels = {
 	LongInteger: Liferay.Language.get('long-integer'),
 	LongText: Liferay.Language.get('long-text'),
 	MultiselectPicklist: Liferay.Language.get('multiselect-picklist'),
+	PhoneNumber: Liferay.Language.get('phone-number'),
 	Picklist: Liferay.Language.get('picklist'),
 	PrecisionDecimal: Liferay.Language.get('precision-decimal'),
 	Relationship: Liferay.Language.get('relationship'),

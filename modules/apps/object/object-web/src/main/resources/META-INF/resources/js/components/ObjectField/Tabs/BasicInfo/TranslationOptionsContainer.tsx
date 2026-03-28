@@ -38,6 +38,7 @@ export function TranslationOptionsContainer({
 }: TranslationOptionsContainerProps) {
 	const translatableField =
 		(values.businessType === 'LongText' ||
+			values.businessType === 'PhoneNumber' ||
 			values.businessType === 'RichText' ||
 			values.businessType === 'Text' ||
 			values.businessType === 'Attachment' ||

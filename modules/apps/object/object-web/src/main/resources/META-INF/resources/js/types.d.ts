@@ -324,6 +324,7 @@ type ObjectFieldBusinessTypeName =
 	| 'LongInteger'
 	| 'LongText'
 	| 'MultiselectPicklist'
+	| 'PhoneNumber'
 	| 'Picklist'
 	| 'PrecisionDecimal'
 	| 'Relationship'

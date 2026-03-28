@@ -38,6 +38,7 @@ export function MaxLengthProperties({
 }: IMaxLengthPropertiesProps) {
 	const [defaultMaxLength, defaultMaxLengthText] =
 		objectField.businessType === 'Encrypted' ||
+		objectField.businessType === 'PhoneNumber' ||
 		objectField.businessType === 'Text'
 			? [280, '280']
 			: [65000, '65,000'];
@@ -54,6 +55,7 @@ export function MaxLengthProperties({
 				inputElement: inputRef.current,
 				keepCharPositions: true,
 				mask:
+					objectField.businessType === 'PhoneNumber' ||
 					objectField.businessType === 'Text'
 						? [/\d/, /\d/, /\d/]
 						: [/\d/, /\d/, /\d/, /\d/, /\d/],

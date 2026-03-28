@@ -254,6 +254,7 @@ export function useObjectFieldForm({
 		}
 		else if (
 			(field.businessType === 'LongText' ||
+				field.businessType === 'PhoneNumber' ||
 				field.businessType === 'Text') &&
 			settings.showCounter &&
 			!settings.maxLength

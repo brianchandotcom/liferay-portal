@@ -9,6 +9,7 @@ import {checkConsent, getOpener} from 'frontend-js-web';
 import {
 	acceptAllCookies,
 	declineAllCookies,
+	deleteStoredCookies,
 	getCookie,
 	removeAllCookies,
 	setCookie,
@@ -102,6 +103,10 @@ export default function ({
 
 		Liferay.on('storeCookiesConsentPreferenceUpdate', (event) => {
 			storeConsentCheckbox.checked = event.value;
+
+			if (!storeConsentCheckbox.checked) {
+				deleteStoredCookies();
+			}
 		});
 
 		acceptAllButton.addEventListener('click', () => {

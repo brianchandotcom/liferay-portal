@@ -13,11 +13,13 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -75,6 +77,22 @@ public class EnterpriseDatabaseTest extends BaseLicenseTestCase {
 			finally {
 				resetLicenseData();
 			}
+		}
+	}
+
+	@Test
+	public void testFreeTierLicenseSetupWizard() throws Exception {
+		Assume.assumeTrue(PropsValues.SETUP_WIZARD_ENABLED);
+
+		deployFreeTierPortalLicense(Time.HOUR);
+
+		assertPortalLicenseRegistered();
+
+		String response = hitHomePage("localhost", 8080);
+
+		for (DBType dbType : _DB_TYPES) {
+			Assert.assertTrue(
+				response.contains("value=\"" + dbType.getName() + "\""));
 		}
 	}
 

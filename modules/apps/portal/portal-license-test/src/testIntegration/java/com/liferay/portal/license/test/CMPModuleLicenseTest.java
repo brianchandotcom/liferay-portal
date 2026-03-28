@@ -46,8 +46,8 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
-	public void testEmptyCMPFile() throws Exception {
-		assertPortalInvalidatedWithEmptyFile(getProperty("cmp.file.path"));
+	public void testBrokenCMPFile() throws Exception {
+		assertPortalInvalidatedWithBrokenFile(getProperty("cmp.file.path"));
 	}
 
 	@Test
@@ -126,11 +126,6 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 		assertPortalLicenseRegistered();
 
 		assertBundlesNotExisted(_getCMPSymbolicNames());
-	}
-
-	@Test
-	public void testMissingCMPFile() throws Exception {
-		assertPortalInvalidatedWithMissingFile(getProperty("cmp.file.path"));
 	}
 
 	private String[] _getCMPSymbolicNames() {

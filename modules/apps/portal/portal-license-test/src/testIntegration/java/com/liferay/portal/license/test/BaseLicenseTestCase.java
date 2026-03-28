@@ -334,66 +334,13 @@ public abstract class BaseLicenseTestCase {
 		}
 	}
 
-	protected void assertPortalInvalidatedWithEmptyFile(String filePath)
+	protected void assertPortalInvalidatedWithBrokenFile(String filePath)
 		throws Exception {
 
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+		_assertPortalInvalidatedWithBrokenFile(filePath, null);
 
-		PortalClassLoaderUtil.setClassLoader(
-			new WrapperClassLoader(classLoader) {
-
-				@Override
-				public InputStream getResourceAsStream(String name) {
-					if (name.equals(filePath)) {
-						return InputStream.nullInputStream();
-					}
-
-					return classLoader.getResourceAsStream(name);
-				}
-
-			});
-
-		try {
-			assertPortalLicenseNotRegistered();
-
-			deployEnterprisePortalLicense(Time.HOUR);
-
-			assertPortalLicenseInvalid();
-		}
-		finally {
-			PortalClassLoaderUtil.setClassLoader(classLoader);
-		}
-	}
-
-	protected void assertPortalInvalidatedWithMissingFile(String filePath)
-		throws Exception {
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		PortalClassLoaderUtil.setClassLoader(
-			new WrapperClassLoader(classLoader) {
-
-				@Override
-				public InputStream getResourceAsStream(String name) {
-					if (name.equals(filePath)) {
-						return null;
-					}
-
-					return classLoader.getResourceAsStream(name);
-				}
-
-			});
-
-		try {
-			assertPortalLicenseNotRegistered();
-
-			deployEnterprisePortalLicense(Time.HOUR);
-
-			assertPortalLicenseInvalid();
-		}
-		finally {
-			PortalClassLoaderUtil.setClassLoader(classLoader);
-		}
+		_assertPortalInvalidatedWithBrokenFile(
+			filePath, InputStream.nullInputStream());
 	}
 
 	protected String getCMPProductId() {
@@ -471,6 +418,53 @@ public abstract class BaseLicenseTestCase {
 		).installOn(
 			ReflectionsHolder._instrumentation
 		);
+	}
+
+	private void _assertPortalInvalidatedWithBrokenFile(
+			String filePath, InputStream inputStream)
+		throws Exception {
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		PortalClassLoaderUtil.setClassLoader(
+			new ClassLoader(classLoader) {
+
+				@Override
+				public boolean equals(Object object) {
+					return classLoader.equals(object);
+				}
+
+				@Override
+				public InputStream getResourceAsStream(String name) {
+					if (name.equals(filePath)) {
+						return inputStream;
+					}
+
+					return classLoader.getResourceAsStream(name);
+				}
+
+				@Override
+				public int hashCode() {
+					return classLoader.hashCode();
+				}
+
+			});
+
+		try {
+			assertPortalLicenseNotRegistered();
+
+			deployFreeTierPortalLicense(Time.HOUR);
+
+			assertLicensePropertiesExisted(getPortalProductId());
+
+			assertPortalLicenseInvalid();
+		}
+		finally {
+			PortalClassLoaderUtil.setClassLoader(classLoader);
+
+			resetLicenseData();
+			resetLifecycleAction();
+		}
 	}
 
 	private File _buildBinaryFile(
@@ -603,26 +597,6 @@ public abstract class BaseLicenseTestCase {
 				}
 			}
 		}
-
-	}
-
-	private static class WrapperClassLoader extends ClassLoader {
-
-		public WrapperClassLoader(ClassLoader classLoader) {
-			_classLoader = classLoader;
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			return _classLoader.equals(object);
-		}
-
-		@Override
-		public int hashCode() {
-			return _classLoader.hashCode();
-		}
-
-		private final ClassLoader _classLoader;
 
 	}
 

@@ -69,8 +69,8 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
-	public void testEmptyBundlesFile() throws Exception {
-		assertPortalInvalidatedWithEmptyFile(getProperty("bundles.file.path"));
+	public void testBrokenBundlesFile() throws Exception {
+		assertPortalInvalidatedWithBrokenFile(getProperty("bundles.file.path"));
 	}
 
 	@Test
@@ -175,12 +175,6 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 			dxpOnlyBundle.uninstall();
 			enterpriseAppBundle.uninstall();
 		}
-	}
-
-	@Test
-	public void testMissingBundlesFile() throws Exception {
-		assertPortalInvalidatedWithMissingFile(
-			getProperty("bundles.file.path"));
 	}
 
 	private String _getDxpOnlyModuleSymbolicName() {

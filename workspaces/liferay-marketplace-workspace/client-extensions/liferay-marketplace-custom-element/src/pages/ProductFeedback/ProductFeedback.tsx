@@ -60,6 +60,7 @@ export function ProductFeedback() {
 		try {
 			await HeadlessProductFeedback.createProductFeedback({
 				...form,
+				orderType: order!.orderTypeExternalReferenceCode,
 				[productRelationKey]: product!.id,
 				r_orderToProductFeedback_commerceOrderId: order!.id,
 			});

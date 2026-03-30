@@ -67,7 +67,9 @@ const LiferayProductsListView = () => {
 							{
 								hidden: (row: PlacedOrder) =>
 									row.orderTypeExternalReferenceCode !==
-									OrderTypes.CMP,
+										OrderTypes.CMP &&
+									row.orderTypeExternalReferenceCode !==
+										OrderTypes.AI_HUB,
 								name: i18n.translate('share-your-feedback'),
 								onClick: (row: PlacedOrder) =>
 									Liferay.Util.navigate(

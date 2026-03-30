@@ -7,6 +7,11 @@ package com.liferay.exportimport.web.internal.portlet;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
 
@@ -55,6 +60,18 @@ public class ImportPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		String backURL = ParamUtil.getString(renderRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(backURL);
+		}
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 

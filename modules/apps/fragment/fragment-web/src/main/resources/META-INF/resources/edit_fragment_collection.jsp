@@ -10,7 +10,9 @@
 <%
 long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 
-FragmentCollection fragmentCollection = FragmentCollectionLocalServiceUtil.fetchFragmentCollection(fragmentCollectionId);
+FragmentCollectionLocalService fragmentCollectionLocalService = (FragmentCollectionLocalService)request.getAttribute(FragmentCollectionLocalService.class.getName());
+
+FragmentCollection fragmentCollection = fragmentCollectionLocalService.fetchFragmentCollection(fragmentCollectionId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(fragmentDisplayContext.getRedirect());

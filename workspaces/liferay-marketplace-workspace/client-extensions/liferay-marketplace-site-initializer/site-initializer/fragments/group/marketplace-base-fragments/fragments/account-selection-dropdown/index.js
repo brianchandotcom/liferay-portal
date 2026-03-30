@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const MIN_ACCOUNTS_FOR_SEARCH = 5;
 const PAGE_SIZE = 20;
 const SEARCH_DELAY = 500;
 
-let divider;
 let dropdownList;
 let menu;
 let profileAccountImage;
@@ -23,7 +21,6 @@ function initializeElements() {
 	accountSelectionDropdown = fragmentElement.querySelector(
 		'.account-selection-dropdown'
 	);
-	divider = fragmentElement.querySelector('#divider');
 	dropdownList = fragmentElement.querySelector('#dropdownList');
 	menu = fragmentElement.querySelector('.dropdown-menu-container');
 	profileAccountImage = document.getElementById('profile-account-image');
@@ -98,12 +95,7 @@ function setAccountImage(logoURL) {
 	}
 }
 
-function showSearchElements(show) {
-	divider.style.display = show ? 'block' : 'none';
-	searchInput.style.display = show ? 'block' : 'none';
-}
-
-function renderAccounts(accounts, currentAccountId, search) {
+function renderAccounts(accounts, currentAccountId) {
 	if (!dropdownList) {
 		return;
 	}
@@ -114,13 +106,7 @@ function renderAccounts(accounts, currentAccountId, search) {
 
 	dropdownList.innerHTML = '';
 
-	showSearchElements(accounts.length >= MIN_ACCOUNTS_FOR_SEARCH || !search);
-
 	if (!accounts.length) {
-		dropdownList.style.display = 'none';
-		divider.style.display = 'none';
-		searchInput.style.display = 'none';
-
 		if (emptyAccountContainer) {
 			emptyAccountContainer.classList.remove('d-none');
 		}
@@ -230,7 +216,7 @@ async function fetchAccounts(search) {
 	try {
 		const response = await getAccounts(
 			new URLSearchParams({
-				fields: 'id,name,logoURL',
+				fields: 'id,name,logoURL,type',
 				filter: `contains(name, '${search}')`,
 				page: 1,
 				pageSize: PAGE_SIZE.toString(),

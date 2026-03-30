@@ -10,6 +10,10 @@ package com.liferay.site.dsr.site.initializer.internal.constants;
  */
 public class DSRSiteInitializerFDSNames {
 
+	public static final String DSR_DOCUMENTS_STATISTICS =
+		DSRSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-documents-statistics";
+
 	public static final String DSR_ROOM =
 		DSRSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-room";
 

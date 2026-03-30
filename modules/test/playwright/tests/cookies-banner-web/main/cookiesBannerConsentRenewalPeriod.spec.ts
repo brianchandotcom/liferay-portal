@@ -250,6 +250,19 @@ test(
 );
 
 test(
+	'Verify Consent Renewal Period for Dissent correctly sets cookie expiration after 1 Week',
+	{tag: '@LPD-84142'},
+	async ({consentManagerConfigurationPage}) => {
+		await validateConsentRenewalPeriodCookieExpiration(
+			consentManagerConfigurationPage,
+			true,
+			'1',
+			'days'
+		);
+	}
+);
+
+test(
 	'Verify updating Consent Renewal Period removes consent cookies',
 	{tag: '@LPD-68505'},
 	async ({page}) => {
@@ -295,7 +308,9 @@ test(
 
 async function validateConsentRenewalPeriodCookieExpiration(
 	consentManagerConfigurationPage: ConsentManagerConfigurationPage,
-	dissent: boolean
+	dissent: boolean,
+	newValue = '1',
+	unit: 'days' | 'weeks' | 'months' = 'months'
 ) {
 	const dateBeforeCookiesSet = new Date().getTime();
 
@@ -310,7 +325,8 @@ async function validateConsentRenewalPeriodCookieExpiration(
 			consentManagerConfigurationPage,
 			dissent,
 			'1',
-			true
+			true,
+			unit
 		);
 	});
 
@@ -337,9 +353,24 @@ async function validateConsentRenewalPeriodCookieExpiration(
 		);
 	});
 
-	await test.step('Verify Consent Cookies expire in 1 month', async () => {
-		const oneMonthFromNowInSeconds =
-			userConsentConfiguredDate / 1000 + 60 * 60 * 24 * 365 * (1 / 12);
+	await test.step(`Verify Consent Cookies expire in ${newValue} ${unit}`, async () => {
+		const secondsInDay = 60 * 60 * 24;
+		let expirationOffsetInSeconds = 0;
+		const period = Number(newValue);
+
+		if (unit === 'days') {
+			expirationOffsetInSeconds = secondsInDay * period;
+		}
+		else if (unit === 'weeks') {
+			expirationOffsetInSeconds = secondsInDay * 7 * period;
+		}
+		else {
+			expirationOffsetInSeconds = secondsInDay * 365 * (period / 12);
+		}
+
+		const expectedExpiration = Math.floor(
+			userConsentConfiguredDate / 1000 + expirationOffsetInSeconds
+		);
 
 		for (const cookieKey of cookieKeys) {
 			const cookie = cookies.find((cookie) => cookie.name === cookieKey);
@@ -353,10 +384,10 @@ async function validateConsentRenewalPeriodCookieExpiration(
 			// Expect expiration within +/- 1 second
 
 			expect(cookieExpiration).toBeGreaterThanOrEqual(
-				oneMonthFromNowInSeconds - 1
+				expectedExpiration - 1
 			);
 			expect(cookieExpiration).toBeLessThanOrEqual(
-				oneMonthFromNowInSeconds + 1
+				expectedExpiration + 1
 			);
 		}
 	});
@@ -366,17 +397,22 @@ async function validateConsentRenewalPeriodValue(
 	consentManagerConfigurationPage: ConsentManagerConfigurationPage,
 	dissent: boolean,
 	newValue: string,
-	saveSuccessful: boolean
+	saveSuccessful: boolean,
+	unit: 'days' | 'weeks' | 'months' = 'months'
 ) {
 	let consentRenewalPeriodField =
 		consentManagerConfigurationPage.consentRenewalPeriodInput;
 
+	let expectedValue = await consentRenewalPeriodField.getAttribute('value');
+
 	if (dissent) {
 		consentRenewalPeriodField =
 			consentManagerConfigurationPage.consentRenewalPeriodForDissentInput;
-	}
 
-	let expectedValue = await consentRenewalPeriodField.getAttribute('value');
+		await consentManagerConfigurationPage.dissentRenewalPeriodUnitSelect.selectOption(
+			unit
+		);
+	}
 
 	await consentRenewalPeriodField.fill(newValue);
 

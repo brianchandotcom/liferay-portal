@@ -10,6 +10,8 @@ import {SystemSettingsPage} from '../configuration-admin-web/SystemSettingsPage'
 export class ConsentManagerConfigurationPage {
 	readonly consentRenewalPeriodInput: Locator;
 	readonly consentRenewalPeriodForDissentInput: Locator;
+	readonly consentRenewalPeriodUnitSelect: Locator;
+	readonly dissentRenewalPeriodUnitSelect: Locator;
 	readonly enabledCheckbox: Locator;
 	readonly explicitCookieConsentModeCheckbox: Locator;
 	readonly floatingIconEnabledCheckbox: Locator;
@@ -25,14 +27,19 @@ export class ConsentManagerConfigurationPage {
 		);
 
 		this.consentRenewalPeriodForDissentInput =
-			this.systemSettingsPortletForm.getByLabel(
-				'Consent Renewal Period for Dissent',
-				{exact: true}
+			this.systemSettingsPortletForm.locator(
+				'input[name$="dissentRenewalPeriod"]'
 			);
-		this.consentRenewalPeriodInput =
-			this.systemSettingsPortletForm.getByLabel(
-				'Consent Renewal Period Required',
-				{exact: true}
+		this.consentRenewalPeriodInput = this.systemSettingsPortletForm.locator(
+			'input[name$="consentRenewalPeriod"]'
+		);
+		this.consentRenewalPeriodUnitSelect =
+			this.systemSettingsPortletForm.locator(
+				'select[name$="consentRenewalPeriodTimeUnit"]'
+			);
+		this.dissentRenewalPeriodUnitSelect =
+			this.systemSettingsPortletForm.locator(
+				'select[name$="dissentRenewalPeriodTimeUnit"]'
 			);
 		this.enabledCheckbox = this.systemSettingsPortletForm.getByRole(
 			'checkbox',

@@ -209,6 +209,18 @@ export type TLatestActivity = {
 	name: string;
 };
 
+export type TRoomDocumentsStatistics = {
+	download: number;
+	lastViewed: string;
+	title: string;
+	totalTimeViewingAsset: number;
+	totalViews: number;
+	type: string;
+	userInvolved: string[];
+};
+
+export type TRoomDocumentsStatisticsProps = TRoomDocumentsStatistics[];
+
 export type TVisitor = {
 	activitiesCount: number;
 	emailAddress: string;

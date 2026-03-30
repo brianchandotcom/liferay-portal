@@ -10,6 +10,7 @@ import {Button} from '../../components/button';
 import {CTA} from '../../components/cta';
 import {LocationDetails} from '../../components/location-details';
 import {LocalizedField} from '../../liferay/index';
+import {SetupGuide} from '../../components/setup-guide';
 import {liferay} from '../../liferay/server';
 import {getReadingTime} from '../../utils';
 import {getEventsData} from './data';
@@ -31,6 +32,18 @@ export default async function Home({
 }: Readonly<{
 	params: Promise<{lang: string}>;
 }>) {
+	const missingEnvVars = liferay.getMissingEnvVars();
+
+	if (missingEnvVars.length > 0) {
+		return (
+			<PageTemplate>
+				<div className="container mx-auto px-4 py-12">
+					<SetupGuide envVars={missingEnvVars} />
+				</div>
+			</PageTemplate>
+		);
+	}
+
 	const {lang} = await params;
 	const {data: eventsPage, error} = await getEventsData({
 		lang,

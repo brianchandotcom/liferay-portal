@@ -58,6 +58,16 @@ export const liferay = {
 	getSupportedLanguages: () => {
 		return LIFERAY_LANGUAGES.split(',');
 	},
+
+	getMissingEnvVars: () => {
+		const required = [
+			'LIFERAY_CONTENT_PATH',
+			'LIFERAY_HOST',
+			'LIFERAY_SPACE_ID',
+		];
+
+		return required.filter((key) => !process.env[key]);
+	},
 };
 
 export type Liferay = typeof liferay;

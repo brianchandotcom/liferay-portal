@@ -5,6 +5,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.asset.categories.thread.local.AssetVocabularyThreadLocal;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
@@ -953,17 +954,36 @@ public class ObjectEntryFolderLocalServiceImpl
 			ObjectEntryFolder objectEntryFolder, ServiceContext serviceContext)
 		throws PortalException {
 
-		_assetEntryLocalService.updateEntry(
-			serviceContext.getUserId(), objectEntryFolder.getGroupId(),
-			objectEntryFolder.getCreateDate(),
-			objectEntryFolder.getModifiedDate(),
-			ObjectEntryFolder.class.getName(),
-			objectEntryFolder.getObjectEntryFolderId(),
-			objectEntryFolder.getUuid(), 0,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(), true, true, null, null,
-			objectEntryFolder.getCreateDate(), null, null,
-			objectEntryFolder.getName(), null, null, null, null, 0, 0, null);
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			objectEntryFolder.getGroupId());
+
+		boolean originalSkipRequiredCategoryValidation =
+			AssetVocabularyThreadLocal.isSkipRequiredCategoryValidation();
+
+		if ((depotEntry != null) &&
+			(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
+
+			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(true);
+		}
+
+		try {
+			_assetEntryLocalService.updateEntry(
+				serviceContext.getUserId(), objectEntryFolder.getGroupId(),
+				objectEntryFolder.getCreateDate(),
+				objectEntryFolder.getModifiedDate(),
+				ObjectEntryFolder.class.getName(),
+				objectEntryFolder.getObjectEntryFolderId(),
+				objectEntryFolder.getUuid(), 0,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(), true, true, null, null,
+				objectEntryFolder.getCreateDate(), null, null,
+				objectEntryFolder.getName(), null, null, null, null, 0, 0,
+				null);
+		}
+		finally {
+			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(
+				originalSkipRequiredCategoryValidation);
+		}
 	}
 
 	private void _updateObjectEntryFolderName(

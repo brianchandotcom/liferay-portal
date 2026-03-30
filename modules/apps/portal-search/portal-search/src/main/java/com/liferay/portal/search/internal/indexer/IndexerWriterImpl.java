@@ -112,6 +112,9 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			_batchIndexingHelper.getBulkSize(
 				_modelSearchSettings.getClassName()));
 
+		_modelIndexerWriterContributor.customize(
+			indexableActionableDynamicQuery, _indexerDocumentBuilder);
+
 		return indexableActionableDynamicQuery;
 	}
 
@@ -287,9 +290,6 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 						getIndexableActionableDynamicQuery();
 
 				indexableActionableDynamicQuery.setCompanyId(companyId);
-
-				_modelIndexerWriterContributor.customize(
-					indexableActionableDynamicQuery, _indexerDocumentBuilder);
 
 				try {
 					indexableActionableDynamicQuery.performActions();

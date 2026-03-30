@@ -119,6 +119,10 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
+	public void setCacheKeySuffix(String cacheKeySuffix) {
+		_cacheKeySuffix = "#" + cacheKeySuffix;
+	}
+
 	public void setClassLoader(ClassLoader classLoader) {
 		_classLoader = classLoader;
 	}
@@ -305,6 +309,7 @@ public class IndexableActionableDynamicQuery {
 
 	private Consumer<DynamicQuery> _addCriteriaConsumer;
 	private BaseLocalService _baseLocalService;
+	private String _cacheKeySuffix;
 	private ClassLoader _classLoader;
 	private long _companyId;
 	private long _count;

@@ -219,12 +219,17 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest
 	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
 		LayoutSEOEntry layoutSEOEntry = (LayoutSEOEntry)ctModel;
 
-		return _layoutSEOEntryLocalService.updateLayoutSEOEntry(
+		layoutSEOEntry = _layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			layoutSEOEntry.getUserId(), layoutSEOEntry.getGroupId(),
 			layoutSEOEntry.isPrivateLayout(), layoutSEOEntry.getLayoutId(),
 			true, RandomTestUtil.randomLocaleStringMap(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_updateDDMStorageId(
+			_ddmStorageId, layoutSEOEntry.getLayoutSEOEntryId());
+
+		return layoutSEOEntry;
 	}
 
 	private static void _addDDMStorageIdColumn() throws Exception {

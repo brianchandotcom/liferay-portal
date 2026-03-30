@@ -7,7 +7,7 @@ package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.web.internal.util.FragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -36,9 +36,11 @@ import java.util.Objects;
 public class FragmentCollectionsDisplayContext {
 
 	public FragmentCollectionsDisplayContext(
+		FragmentCollectionService fragmentCollectionService,
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
+		_fragmentCollectionService = fragmentCollectionService;
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -94,46 +96,46 @@ public class FragmentCollectionsDisplayContext {
 			if (_isSearch()) {
 				searchContainer.setResultsAndTotal(
 					() ->
-						FragmentCollectionServiceUtil.
+						_fragmentCollectionService.
 							getExportableFragmentCollections(
 								allGroupIds, _getKeywords(),
 								searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
-					FragmentCollectionServiceUtil.
+					_fragmentCollectionService.
 						getExportableFragmentCollectionsCount(
 							allGroupIds, _getKeywords()));
 			}
 			else {
 				searchContainer.setResultsAndTotal(
 					() ->
-						FragmentCollectionServiceUtil.
+						_fragmentCollectionService.
 							getExportableFragmentCollections(
 								allGroupIds, searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
-					FragmentCollectionServiceUtil.
+					_fragmentCollectionService.
 						getExportableFragmentCollectionsCount(allGroupIds));
 			}
 		}
 		else if (_isSearch()) {
 			searchContainer.setResultsAndTotal(
-				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+				() -> _fragmentCollectionService.getFragmentCollections(
 					allGroupIds, _getKeywords(),
 					_isIncludeMarketplaceFragmentCollections(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+				_fragmentCollectionService.getFragmentCollectionsCount(
 					allGroupIds, _getKeywords(),
 					_isIncludeMarketplaceFragmentCollections()));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
-				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+				() -> _fragmentCollectionService.getFragmentCollections(
 					allGroupIds, _isIncludeMarketplaceFragmentCollections(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+				_fragmentCollectionService.getFragmentCollectionsCount(
 					allGroupIds, _isIncludeMarketplaceFragmentCollections()));
 		}
 
@@ -277,6 +279,7 @@ public class FragmentCollectionsDisplayContext {
 	}
 
 	private String _eventName;
+	private final FragmentCollectionService _fragmentCollectionService;
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _includeGlobalFragmentCollections;
 	private Boolean _includeMarketplaceFragmentCollections;

@@ -71,6 +71,8 @@ public class ObjectEntryModelIndexerWriterContributor
 				dynamicQuery.add(
 					objectDefinitionIdProperty.eq(_objectDefinitionId));
 			});
+		indexableActionableDynamicQuery.setCacheKeySuffix(
+			String.valueOf(_objectDefinitionId));
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(

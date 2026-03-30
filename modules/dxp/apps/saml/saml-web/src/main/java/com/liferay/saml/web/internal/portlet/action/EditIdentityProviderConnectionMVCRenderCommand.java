@@ -8,6 +8,7 @@ package com.liferay.saml.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlPortletKeys;
 import com.liferay.saml.constants.SamlWebKeys;
@@ -80,7 +81,7 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 					samlSpIdpConnectionId);
 
 			SamlPermissionUtil.checkPermission(
-				samlSpIdpConnection.getCompanyId());
+				_portal.getCompanyId(renderRequest), samlSpIdpConnection);
 		}
 
 		renderRequest.setAttribute(
@@ -103,6 +104,9 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 
 		return "/admin/edit_identity_provider_connection.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

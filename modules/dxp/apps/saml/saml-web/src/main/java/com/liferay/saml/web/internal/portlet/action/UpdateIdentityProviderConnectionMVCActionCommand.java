@@ -67,7 +67,7 @@ public class UpdateIdentityProviderConnectionMVCActionCommand
 					samlSpIdpConnectionId);
 
 			SamlPermissionUtil.checkPermission(
-				samlSpIdpConnection.getCompanyId());
+				_portal.getCompanyId(actionRequest), samlSpIdpConnection);
 		}
 
 		SamlSpIdpConnectionProcessor samlSpIdpConnectionProcessor =

@@ -5,7 +5,7 @@
 
 package com.liferay.saml.web.internal.util;
 
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -15,14 +15,15 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
  */
 public class SamlPermissionUtil {
 
-	public static void checkPermission(long companyId)
+	public static void checkPermission(
+			long companyId, ShardedModel shardedModel)
 		throws PrincipalException {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (!permissionChecker.isCompanyAdmin() ||
-			(companyId != CompanyThreadLocal.getCompanyId())) {
+			(shardedModel.getCompanyId() != companyId)) {
 
 			throw new PrincipalException();
 		}

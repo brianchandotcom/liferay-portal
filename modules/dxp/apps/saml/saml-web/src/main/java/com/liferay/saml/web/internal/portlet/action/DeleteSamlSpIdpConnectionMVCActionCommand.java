@@ -8,8 +8,8 @@ package com.liferay.saml.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.saml.constants.SamlPortletKeys;
-import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.web.internal.util.SamlPermissionUtil;
 
@@ -40,15 +40,17 @@ public class DeleteSamlSpIdpConnectionMVCActionCommand
 		long samlSpIdpConnectionId = ParamUtil.getLong(
 			actionRequest, "samlSpIdpConnectionId");
 
-		SamlSpIdpConnection samlSpIdpConnection =
+		SamlPermissionUtil.checkPermission(
+			_portal.getCompanyId(actionRequest),
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-				samlSpIdpConnectionId);
-
-		SamlPermissionUtil.checkPermission(samlSpIdpConnection.getCompanyId());
+				samlSpIdpConnectionId));
 
 		_samlSpIdpConnectionLocalService.deleteSamlSpIdpConnection(
 			samlSpIdpConnectionId);
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;

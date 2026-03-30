@@ -42,24 +42,6 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 				userId, metadataJSON, wellKnownURISuffix);
 	}
 
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			addOAuthClientASLocalMetadata(
-				long userId, String authorizationEndpoint, String issuer,
-				String jwksURI, boolean localWellKnownEnabled,
-				String registrationEndpoint, String[] supportedGrantTypes,
-				String[] supportedScopes, String[] supportedSubjectTypes,
-				String tokenEndpoint, String userInfoEndpoint)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuthClientASLocalMetadataLocalService.
-			addOAuthClientASLocalMetadata(
-				userId, authorizationEndpoint, issuer, jwksURI,
-				localWellKnownEnabled, registrationEndpoint,
-				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
-				tokenEndpoint, userInfoEndpoint);
-	}
-
 	/**
 	 * Adds the o auth client as local metadata to the database. Also notifies the appropriate model listeners.
 	 *
@@ -78,6 +60,25 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 
 		return _oAuthClientASLocalMetadataLocalService.
 			addOAuthClientASLocalMetadata(oAuthClientASLocalMetadata);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			addOAuthClientASLocalMetadata(
+				String externalReferenceCode, long userId,
+				String authorizationEndpoint, String issuer, String jwksURI,
+				boolean localWellKnownEnabled, String registrationEndpoint,
+				String[] supportedGrantTypes, String[] supportedScopes,
+				String[] supportedSubjectTypes, String tokenEndpoint,
+				String userInfoEndpoint)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataLocalService.
+			addOAuthClientASLocalMetadata(
+				externalReferenceCode, userId, authorizationEndpoint, issuer,
+				jwksURI, localWellKnownEnabled, registrationEndpoint,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpoint, userInfoEndpoint);
 	}
 
 	/**
@@ -587,4 +588,4 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 		_oAuthClientASLocalMetadataLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1824355054
+// LIFERAY-SERVICE-BUILDER-HASH:1972772895

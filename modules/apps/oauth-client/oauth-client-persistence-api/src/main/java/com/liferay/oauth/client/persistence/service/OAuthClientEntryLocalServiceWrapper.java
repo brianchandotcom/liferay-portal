@@ -29,22 +29,6 @@ public class OAuthClientEntryLocalServiceWrapper
 		_oAuthClientEntryLocalService = oAuthClientEntryLocalService;
 	}
 
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
-			addOAuthClientEntry(
-				long userId, String authRequestParametersJSON,
-				String authServerWellKnownURI, String customClaimsJSON,
-				String infoJSON, String matcherField, long metadataCacheTime,
-				String oidcUserInfoMapperJSON,
-				String tokenRequestParametersJSON)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuthClientEntryLocalService.addOAuthClientEntry(
-			userId, authRequestParametersJSON, authServerWellKnownURI,
-			customClaimsJSON, infoJSON, matcherField, metadataCacheTime,
-			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
-	}
-
 	/**
 	 * Adds the o auth client entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -63,6 +47,23 @@ public class OAuthClientEntryLocalServiceWrapper
 
 		return _oAuthClientEntryLocalService.addOAuthClientEntry(
 			oAuthClientEntry);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
+			addOAuthClientEntry(
+				String externalReferenceCode, long userId,
+				String authRequestParametersJSON, String authServerWellKnownURI,
+				String customClaimsJSON, String infoJSON, String matcherField,
+				long metadataCacheTime, String oidcUserInfoMapperJSON,
+				String tokenRequestParametersJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientEntryLocalService.addOAuthClientEntry(
+			externalReferenceCode, userId, authRequestParametersJSON,
+			authServerWellKnownURI, customClaimsJSON, infoJSON, matcherField,
+			metadataCacheTime, oidcUserInfoMapperJSON,
+			tokenRequestParametersJSON);
 	}
 
 	/**
@@ -514,4 +515,4 @@ public class OAuthClientEntryLocalServiceWrapper
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:787674703
+// LIFERAY-SERVICE-BUILDER-HASH:1217783188

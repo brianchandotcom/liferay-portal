@@ -40,17 +40,18 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			String authorizationEndpoint, String issuer, String jwksURI,
-			boolean localWellKnownEnabled, String registrationEndpoint,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpoint,
-			String userInfoEndpoint)
+			String externalReferenceCode, String authorizationEndpoint,
+			String issuer, String jwksURI, boolean localWellKnownEnabled,
+			String registrationEndpoint, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
-			authorizationEndpoint, issuer, jwksURI, localWellKnownEnabled,
-			registrationEndpoint, supportedGrantTypes, supportedScopes,
-			supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
+			externalReferenceCode, authorizationEndpoint, issuer, jwksURI,
+			localWellKnownEnabled, registrationEndpoint, supportedGrantTypes,
+			supportedScopes, supportedSubjectTypes, tokenEndpoint,
+			userInfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
@@ -81,6 +82,16 @@ public class OAuthClientASLocalMetadataServiceUtil {
 		throws PortalException {
 
 		return getService().fetchOAuthClientASLocalMetadata(companyId, issuer);
+	}
+
+	public static OAuthClientASLocalMetadata
+			fetchOAuthClientASLocalMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().
+			fetchOAuthClientASLocalMetadataByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	public static List<OAuthClientASLocalMetadata>
@@ -118,6 +129,16 @@ public class OAuthClientASLocalMetadataServiceUtil {
 		throws PortalException {
 
 		return getService().getOAuthClientASLocalMetadata(localWellKnownURI);
+	}
+
+	public static OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().
+			getOAuthClientASLocalMetadataByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -176,4 +197,4 @@ public class OAuthClientASLocalMetadataServiceUtil {
 			OAuthClientASLocalMetadataService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-725033921
+// LIFERAY-SERVICE-BUILDER-HASH:10584258

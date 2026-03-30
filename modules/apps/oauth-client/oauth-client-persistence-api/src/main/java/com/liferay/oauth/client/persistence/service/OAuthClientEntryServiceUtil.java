@@ -31,16 +31,18 @@ public class OAuthClientEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientEntry addOAuthClientEntry(
-			long userId, String authRequestParametersJSON,
-			String authServerWellKnownURI, String customClaimsJSON,
-			String infoJSON, String matcherField, long metadataCacheTime,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+			String externalReferenceCode, long userId,
+			String authRequestParametersJSON, String authServerWellKnownURI,
+			String customClaimsJSON, String infoJSON, String matcherField,
+			long metadataCacheTime, String oidcUserInfoMapperJSON,
+			String tokenRequestParametersJSON)
 		throws PortalException {
 
 		return getService().addOAuthClientEntry(
-			userId, authRequestParametersJSON, authServerWellKnownURI,
-			customClaimsJSON, infoJSON, matcherField, metadataCacheTime,
-			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
+			externalReferenceCode, userId, authRequestParametersJSON,
+			authServerWellKnownURI, customClaimsJSON, infoJSON, matcherField,
+			metadataCacheTime, oidcUserInfoMapperJSON,
+			tokenRequestParametersJSON);
 	}
 
 	public static OAuthClientEntry deleteOAuthClientEntry(
@@ -56,6 +58,14 @@ public class OAuthClientEntryServiceUtil {
 
 		return getService().deleteOAuthClientEntry(
 			companyId, authServerWellKnownURI, clientId);
+	}
+
+	public static OAuthClientEntry fetchOAuthClientEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchOAuthClientEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<OAuthClientEntry>
@@ -85,6 +95,14 @@ public class OAuthClientEntryServiceUtil {
 
 		return getService().getOAuthClientEntry(
 			companyId, authServerWellKnownURI, clientId);
+	}
+
+	public static OAuthClientEntry getOAuthClientEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getOAuthClientEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -131,4 +149,4 @@ public class OAuthClientEntryServiceUtil {
 			OAuthClientEntryServiceUtil.class, OAuthClientEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1742141951
+// LIFERAY-SERVICE-BUILDER-HASH:-1194067550

@@ -1,0 +1,22 @@
+{
+	"fieldSets": [
+		{
+			"customComponentModule": "{DataSetConfigurationFields} from @liferay/frontend-data-set-fragment-web",
+			"fields": [
+				{
+					"label": "data-set-view",
+					"name": "itemSelector",
+					"type": "itemSelector",
+					"typeOptions": {
+						"itemType": "FDSView"
+					}
+				},
+				{
+					"name": "apiURLTokenValues",
+					"type": "text"
+				}
+			],
+			"label": "data-set-options"
+		}
+	]
+}

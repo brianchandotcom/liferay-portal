@@ -31,6 +31,12 @@ public interface CookiesPreferenceHandlingConfiguration {
 	public int consentRenewalPeriod();
 
 	@Meta.AD(
+		deflt = "months", optionLabels = {"days", "weeks", "months"},
+		optionValues = {"days", "weeks", "months"}, required = false
+	)
+	public String consentRenewalPeriodTimeUnit();
+
+	@Meta.AD(
 		deflt = "0", name = "custom-floating-icon-image-id", required = false
 	)
 	public long customFloatingIconImageId();
@@ -41,6 +47,12 @@ public interface CookiesPreferenceHandlingConfiguration {
 		required = false
 	)
 	public int dissentRenewalPeriod();
+
+	@Meta.AD(
+		deflt = "months", optionLabels = {"days", "weeks", "months"},
+		optionValues = {"days", "weeks", "months"}, required = false
+	)
+	public String dissentRenewalPeriodTimeUnit();
 
 	@Meta.AD(
 		deflt = "false", description = "cookie-enabled-help", name = "enabled",

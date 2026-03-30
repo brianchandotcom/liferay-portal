@@ -52,13 +52,27 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 
 <div class="row">
 	<div class="col-sm-12 form-group">
-		<div class="form-group__inner">
-			<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriod" %>' label="cookie-consent-renewal-period" max="12" min="1" name='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriod" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= (cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() == 0) ? 12 : cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>" />
+		<label class="c-mb-1 c-mt-2 font-weight-semi-bold <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />consentRenewalPeriodLabel" name="<portlet:namespace />consentRenewalPeriodLabel">
+			<liferay-ui:message key="cookie-consent-renewal-period" />
+		</label>
 
-			<div aria-hidden="true" class="form-feedback-group">
-				<div class="form-text text-weight-normal">
-					<liferay-ui:message key="cookie-consent-renewal-period-help" />
-				</div>
+		<div class="form-group-autofit">
+			<div class="form-group-item">
+				<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriod" %>' label="" max="12" min="1" name='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriodLabel" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>" />
+			</div>
+
+			<div class="form-group-item">
+				<aui:select disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriodTimeUnit" %>' label="" name='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriodTimeUnit" %>' title="time-unit" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriodTimeUnit() %>">
+					<aui:option label="days" value="days" />
+					<aui:option label="weeks" value="weeks" />
+					<aui:option label="months" selected="<%= true %>" value="months" />
+				</aui:select>
+			</div>
+		</div>
+
+		<div aria-hidden="true" class="c-mb-1 form-feedback-group">
+			<div class="form-text text-weight-normal">
+				<liferay-ui:message key="cookie-consent-renewal-period-help" />
 			</div>
 		</div>
 	</div>
@@ -66,13 +80,27 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 
 <div class="row">
 	<div class="col-sm-12 form-group">
-		<div class="form-group__inner">
-			<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' label="cookie-dissent-renewal-period" max="12" min="0" name='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriod() %>" />
+		<label class="c-mb-1 c-mt-2 disabled font-weight-semi-bold" id="<portlet:namespace />dissentRenewalPeriodLabel" name="<portlet:namespace />dissentRenewalPeriodLabel">
+			<liferay-ui:message key="cookie-dissent-renewal-period" />
+		</label>
 
-			<div aria-hidden="true" class="form-feedback-group">
-				<div class="form-text text-weight-normal">
-					<liferay-ui:message key="cookie-dissent-renewal-period-help" />
-				</div>
+		<div class="form-group-autofit">
+			<div class="form-group-item">
+				<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' label="" max="12" min="0" name='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriod() %>" />
+			</div>
+
+			<div class="form-group-item">
+				<aui:select disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriodTimeUnit" %>' label="" name='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriodTimeUnit" %>' title="time-unit" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriodTimeUnit() %>">
+					<aui:option label="days" value="days" />
+					<aui:option label="weeks" value="weeks" />
+					<aui:option label="months" selected="<%= true %>" value="months" />
+				</aui:select>
+			</div>
+		</div>
+
+		<div aria-hidden="true" class="c-mb-1 form-feedback-group">
+			<div class="form-text text-weight-normal">
+				<liferay-ui:message key="cookie-dissent-renewal-period-help" />
 			</div>
 		</div>
 	</div>

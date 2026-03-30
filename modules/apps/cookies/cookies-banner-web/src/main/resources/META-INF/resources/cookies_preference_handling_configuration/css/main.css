@@ -13,3 +13,7 @@
     height: 30px;
     width: 30px;
 }
+
+.form-group-autofit {
+	margin-bottom: 0;
+}

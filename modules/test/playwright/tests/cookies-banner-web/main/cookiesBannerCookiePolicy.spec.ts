@@ -127,7 +127,7 @@ test(
 			});
 		});
 
-		const cookiesBanner = await page.getByRole('dialog', {
+		const cookiesBanner = page.getByRole('dialog', {
 			name: 'banner cookies',
 		});
 
@@ -173,7 +173,7 @@ test(
 			await waitForAlert(page);
 
 			for (const hideFromEndUserCheckbox of await hideFromEndUserCheckboxes.all()) {
-				await expect(await hideFromEndUserCheckbox).toBeChecked();
+				await expect(hideFromEndUserCheckbox).toBeChecked();
 			}
 
 			await expectCookiesBannerTypes(browser);
@@ -189,7 +189,7 @@ test(
 			await waitForAlert(page);
 
 			for (const hideFromEndUserCheckbox of await hideFromEndUserCheckboxes.all()) {
-				await expect(await hideFromEndUserCheckbox).not.toBeChecked();
+				await expect(hideFromEndUserCheckbox).not.toBeChecked();
 			}
 
 			await expectCookiesBannerTypes(browser, hideableCookieTypes, false);

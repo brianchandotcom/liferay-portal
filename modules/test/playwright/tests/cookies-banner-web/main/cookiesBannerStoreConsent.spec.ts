@@ -43,7 +43,7 @@ test.beforeEach(async ({page}) => {
 	});
 
 	await test.step('Verify Cookies Banner appears, then Accept All cookies', async () => {
-		const cookiesBanner = await page.getByRole('dialog', {
+		const cookiesBanner = page.getByRole('dialog', {
 			name: 'banner cookies',
 		});
 

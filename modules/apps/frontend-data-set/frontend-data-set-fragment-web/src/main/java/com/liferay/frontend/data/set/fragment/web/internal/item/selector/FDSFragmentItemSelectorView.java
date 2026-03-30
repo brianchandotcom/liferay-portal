@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.data.set.admin.web.internal.item.selector;
+package com.liferay.frontend.data.set.fragment.web.internal.item.selector;
 
-import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminWebKeys;
-import com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminItemSelectorDisplayContext;
+import com.liferay.frontend.data.set.fragment.web.internal.constants.FDSFragmentWebKeys;
+import com.liferay.frontend.data.set.fragment.web.internal.display.context.FDSFragmentItemSelectorDisplayContext;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(service = ItemSelectorView.class)
-public class FDSAdminItemSelectorView
+public class FDSFragmentItemSelectorView
 	implements InfoItemSelectorView,
 			   ItemSelectorView<InfoItemItemSelectorCriterion> {
 
@@ -92,13 +92,13 @@ public class FDSAdminItemSelectorView
 		ServletContext servletContext = getServletContext();
 
 		servletRequest.setAttribute(
-			FDSAdminWebKeys.FDS_ADMIN_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			new FDSAdminItemSelectorDisplayContext(
+			FDSFragmentWebKeys.FDS_FRAGMENT_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			new FDSFragmentItemSelectorDisplayContext(
 				(HttpServletRequest)servletRequest));
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(
-				"/item/selector/fds_admin_item_selector.jsp");
+				"/item/selector/fds_fragment_item_selector.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
@@ -111,7 +111,7 @@ public class FDSAdminItemSelectorView
 	private Language _language;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.data.set.admin.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.data.set.fragment.web)"
 	)
 	private ServletContext _servletContext;
 

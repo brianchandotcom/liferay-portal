@@ -1,0 +1,24 @@
+{
+	"dependencies": {
+		"@clayui/button": "^3.159.0",
+		"@clayui/drop-down": "^3.159.0",
+		"@clayui/form": "^3.159.0",
+		"@clayui/modal": "^3.159.0",
+		"@liferay/frontend-data-set-admin-web": "*",
+		"@liferay/frontend-data-set-web": "*",
+		"@liferay/frontend-js-item-selector-web": "*",
+		"frontend-js-components-web": "*",
+		"frontend-js-web": "*",
+		"react": "18.2.0"
+	},
+	"main": "js/index.ts",
+	"name": "@liferay/frontend-data-set-fragment-web",
+	"private": true,
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
+		"test": "node-scripts test"
+	},
+	"version": "1.0.0"
+}

@@ -8,12 +8,12 @@
 <%@ include file="/init.jsp" %>
 
 <react:component
-	module="{FDSAdminItemSelector} from frontend-data-set-admin-web"
+	module="{FDSFragmentItemSelector} from frontend-data-set-fragment-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"className", fdsAdminItemSelectorDisplayContext.getClassName()
+			"className", fdsFragmentItemSelectorDisplayContext.getClassName()
 		).put(
-			"classNameId", fdsAdminItemSelectorDisplayContext.getClassNameId()
+			"classNameId", fdsFragmentItemSelectorDisplayContext.getClassNameId()
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).build()

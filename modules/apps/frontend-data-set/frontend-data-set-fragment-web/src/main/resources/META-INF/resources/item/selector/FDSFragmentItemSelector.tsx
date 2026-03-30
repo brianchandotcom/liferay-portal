@@ -5,13 +5,11 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
+import {getDataSetResourceURL} from '@liferay/frontend-data-set-admin-web';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React, {useState} from 'react';
 
-import {FDS_DEFAULT_PROPS} from '../../js/utils/constants';
-
-import './FDSAdminItemSelector.scss';
-import getDataSetResourceURL from '../../js/utils/getDataSetResourceURL';
+import './FDSFragmentItemSelector.scss';
 
 interface ISelectedItem {
 	externalReferenceCode: string;
@@ -62,7 +60,7 @@ const views = [
 	},
 ];
 
-const FDSAdminItemSelector = ({
+const FDSFragmentItemSelector = ({
 	className,
 	classNameId,
 	namespace,
@@ -94,17 +92,19 @@ const FDSAdminItemSelector = ({
 	);
 
 	return (
-		<div className="fds-admin-item-selector">
+		<div className="data-set-item-selector">
 			<ClayModal.Body>
 				<FrontendDataSet
-					{...FDS_DEFAULT_PROPS}
+
+					// {...FDS_DEFAULT_PROPS}
+
 					apiURL={getDataSetResourceURL({
 						params: {
 							nestedFields:
 								'dataSetToDataSetCardsSections, dataSetToDataSetTableSections, dataSetToDataSetListSections',
 						},
 					})}
-					id={`${namespace}FDSAdminItemSelector`}
+					id={`${namespace}FDSFragmentItemSelector`}
 					onSelectedItemsChange={(
 						selectedItems: Array<ISelectedItem>
 					) => {
@@ -145,4 +145,4 @@ const FDSAdminItemSelector = ({
 	);
 };
 
-export default FDSAdminItemSelector;
+export default FDSFragmentItemSelector;

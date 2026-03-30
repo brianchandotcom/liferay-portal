@@ -437,7 +437,7 @@ const ActionForm = ({
 	};
 
 	return (
-		<>
+		<div className="fds-admin-actions">
 			<h2 className="mb-0 p-4">
 				{editing && initialValues?.label}
 
@@ -1016,7 +1016,7 @@ const ActionForm = ({
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 			</ClayButton.Group>
-		</>
+		</div>
 	);
 };
 

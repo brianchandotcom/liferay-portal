@@ -13,7 +13,4 @@ public class FDSAdminWebKeys {
 	public static final String FDS_ADMIN_DISPLAY_CONTEXT =
 		"FDS_ADMIN_DISPLAY_CONTEXT";
 
-	public static final String FDS_ADMIN_ITEM_SELECTOR_DISPLAY_CONTEXT =
-		"FDS_ADMIN_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
 }

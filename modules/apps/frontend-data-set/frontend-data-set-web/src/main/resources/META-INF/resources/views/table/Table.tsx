@@ -529,10 +529,14 @@ function HeadCellResizer({
 	}, [columnName, resizeColumn, updateDraggingColumnName]);
 
 	function initializeDrag() {
+		document.body.style.userSelect = 'none';
+
 		window.addEventListener('mousemove', handleDrag);
 		window.addEventListener(
 			'mouseup',
 			() => {
+				document.body.style.userSelect = '';
+
 				updateDraggingAllowed(true);
 				updateDraggingColumnName(null);
 				window.removeEventListener('mousemove', handleDrag);

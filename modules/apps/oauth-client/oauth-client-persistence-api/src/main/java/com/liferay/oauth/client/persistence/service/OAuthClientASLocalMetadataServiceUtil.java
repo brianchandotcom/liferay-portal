@@ -63,10 +63,11 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			String localWellKnownURI)
+			long companyId, String localWellKnownURI)
 		throws PortalException {
 
-		return getService().deleteOAuthClientASLocalMetadata(localWellKnownURI);
+		return getService().deleteOAuthClientASLocalMetadata(
+			companyId, localWellKnownURI);
 	}
 
 	public static OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
@@ -124,13 +125,6 @@ public class OAuthClientASLocalMetadataServiceUtil {
 		return getService().getOAuthClientASLocalMetadata(companyId, issuer);
 	}
 
-	public static OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			String localWellKnownURI)
-		throws PortalException {
-
-		return getService().getOAuthClientASLocalMetadata(localWellKnownURI);
-	}
-
 	public static OAuthClientASLocalMetadata
 			getOAuthClientASLocalMetadataByExternalReferenceCode(
 				String externalReferenceCode, long companyId)
@@ -139,6 +133,15 @@ public class OAuthClientASLocalMetadataServiceUtil {
 		return getService().
 			getOAuthClientASLocalMetadataByExternalReferenceCode(
 				externalReferenceCode, companyId);
+	}
+
+	public static OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByLocalWellKnownURI(
+				long companyId, String localWellKnownURI)
+		throws PortalException {
+
+		return getService().getOAuthClientASLocalMetadataByLocalWellKnownURI(
+			companyId, localWellKnownURI);
 	}
 
 	/**
@@ -197,4 +200,4 @@ public class OAuthClientASLocalMetadataServiceUtil {
 			OAuthClientASLocalMetadataService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:10584258
+// LIFERAY-SERVICE-BUILDER-HASH:-37496820

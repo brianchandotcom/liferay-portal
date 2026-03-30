@@ -60,7 +60,7 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			String localWellKnownURI)
+			long companyId, String localWellKnownURI)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -100,14 +100,15 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			String localWellKnownURI)
+	public OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata
-			getOAuthClientASLocalMetadataByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
+			getOAuthClientASLocalMetadataByLocalWellKnownURI(
+				long companyId, String localWellKnownURI)
 		throws PortalException;
 
 	/**
@@ -139,4 +140,4 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1756099555
+// LIFERAY-SERVICE-BUILDER-HASH:-439566548

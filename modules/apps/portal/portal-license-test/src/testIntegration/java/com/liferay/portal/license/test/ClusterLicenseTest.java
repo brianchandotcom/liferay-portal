@@ -60,11 +60,6 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
-
-	@ClassRule
 	public static final TomcatClusterTestRule tomcatClusterTestRule =
 		new TomcatClusterTestRule();
 

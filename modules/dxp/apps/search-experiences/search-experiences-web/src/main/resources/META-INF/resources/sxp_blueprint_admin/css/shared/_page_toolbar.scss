@@ -1,6 +1,6 @@
 .page-toolbar-root {
-	position: fixed;
-	width: 100%;
+	position: sticky;
+	top: $navigationBarHeight;
 	z-index: 971;
 
 	.entry-description {

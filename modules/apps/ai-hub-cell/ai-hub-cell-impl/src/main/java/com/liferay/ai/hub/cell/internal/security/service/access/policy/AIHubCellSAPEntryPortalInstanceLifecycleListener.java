@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.cell.internal.security.service.access.policy;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,9 +49,12 @@ public class AIHubCellSAPEntryPortalInstanceLifecycleListener
 
 			_sapEntryLocalService.addSAPEntry(
 				_userLocalService.getGuestUserId(company.getCompanyId()),
-				"com.liferay.portal.search.rest.internal.resource.v1_0." +
-					"SearchResultResourceImpl#getSearchPage",
-				false, true, _SAP_ENTRY_NAME,
+				StringBundler.concat(
+					"com.liferay.ai.hub.cell.rest.internal.resource.v1_0.",
+					"AuthorizationTokenResourceImpl#postAuthorizationToken\n",
+					"com.liferay.portal.search.rest.internal.resource.v1_0.",
+					"SearchResultResourceImpl#getSearchPage"),
+				true, true, _SAP_ENTRY_NAME,
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), _SAP_ENTRY_NAME),
 				new ServiceContext());

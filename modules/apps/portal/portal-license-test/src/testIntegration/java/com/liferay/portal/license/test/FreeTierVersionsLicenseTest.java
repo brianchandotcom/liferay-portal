@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -50,8 +51,12 @@ public class FreeTierVersionsLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		_disableKeyValidatorResettableClassFileTransformer = disableValidate();
+
+		_ignoredVersionField = findField(
+			PortalClassLoaderUtil.getClassLoader(),
+			getProperty("ignored.version.filed"));
 	}
 
 	@AfterClass
@@ -104,15 +109,11 @@ public class FreeTierVersionsLicenseTest extends BaseLicenseTestCase {
 	}
 
 	private String _getIgnoredVersion() throws Exception {
-		Field field = getIgnoredVersionField();
-
-		return (String)field.get(null);
+		return (String)_ignoredVersionField.get(null);
 	}
 
 	private String _getLicensePackageName() {
-		Field field = getIgnoredVersionField();
-
-		Class<?> clazz = field.getDeclaringClass();
+		Class<?> clazz = _ignoredVersionField.getDeclaringClass();
 
 		String className = clazz.getName();
 
@@ -181,5 +182,6 @@ public class FreeTierVersionsLicenseTest extends BaseLicenseTestCase {
 
 	private static ResettableClassFileTransformer
 		_disableKeyValidatorResettableClassFileTransformer;
+	private static Field _ignoredVersionField;
 
 }

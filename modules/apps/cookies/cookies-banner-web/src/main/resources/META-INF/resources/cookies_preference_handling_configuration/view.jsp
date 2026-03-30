@@ -199,7 +199,9 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 		}
 	}
 
-	toggleLogoSelector();
+	if (Liferay.FeatureFlags['LPD-75027']) {
+		toggleLogoSelector();
+	}
 
 	var floatingIcons = document.querySelectorAll(
 		'input[name="<portlet:namespace />floatingIcon"]'

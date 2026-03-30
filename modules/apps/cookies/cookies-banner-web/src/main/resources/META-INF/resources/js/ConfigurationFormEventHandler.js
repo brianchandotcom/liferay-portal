@@ -11,20 +11,24 @@ export default function ({namespace}) {
 		'change',
 		'input[type="checkbox"]',
 		(event) => {
-			const consentRenewalPeriod = document.querySelector(
-				`input[type='number'][name='${namespace}consentRenewalPeriod']`
+			const consentRenewalPeriod = document.getElementById(
+				`${namespace}consentRenewalPeriod`
+			);
+			const consentRenewalPeriodLabel = document.getElementById(
+				`${namespace}consentRenewalPeriodLabel`
+			);
+			const consentRenewalPeriodTimeUnit = document.getElementById(
+				`${namespace}consentRenewalPeriodTimeUnit`
 			);
 
-			const consentRenewalPeriodLabel = document.querySelector(
-				`label[for='${namespace}consentRenewalPeriod']`
+			const dissentRenewalPeriod = document.getElementById(
+				`${namespace}dissentRenewalPeriod`
 			);
-
-			const dissentRenewalPeriod = document.querySelector(
-				`input[type='number'][name='${namespace}dissentRenewalPeriod']`
+			const dissentRenewalPeriodLabel = document.getElementById(
+				`${namespace}dissentRenewalPeriodLabel`
 			);
-
-			const dissentRenewalPeriodLabel = document.querySelector(
-				`label[for='${namespace}dissentRenewalPeriod']`
+			const dissentRenewalPeriodTimeUnit = document.getElementById(
+				`${namespace}dissentRenewalPeriodTimeUnit`
 			);
 
 			const explicitConsentMode = document.querySelector(
@@ -53,10 +57,14 @@ export default function ({namespace}) {
 					consentRenewalPeriod.removeAttribute('disabled');
 					consentRenewalPeriod.required = true;
 					consentRenewalPeriodLabel?.classList.remove('disabled');
+					consentRenewalPeriodTimeUnit.classList.remove('disabled');
+					consentRenewalPeriodTimeUnit.removeAttribute('disabled');
 					dissentRenewalPeriod.classList.remove('disabled');
 					dissentRenewalPeriod.removeAttribute('disabled');
 					dissentRenewalPeriod.required = true;
 					dissentRenewalPeriodLabel?.classList.remove('disabled');
+					dissentRenewalPeriodTimeUnit.classList.remove('disabled');
+					dissentRenewalPeriodTimeUnit.removeAttribute('disabled');
 					explicitConsentMode.removeAttribute('disabled');
 
 					if (Liferay.FeatureFlags['LPD-75027']) {
@@ -92,10 +100,14 @@ export default function ({namespace}) {
 					consentRenewalPeriod.required = false;
 					consentRenewalPeriod.setAttribute('disabled', '');
 					consentRenewalPeriodLabel?.classList.add('disabled');
+					consentRenewalPeriodTimeUnit.classList.add('disabled');
+					consentRenewalPeriodTimeUnit.setAttribute('disabled', '');
 					dissentRenewalPeriod.classList.add('disabled');
 					dissentRenewalPeriod.required = false;
 					dissentRenewalPeriod.setAttribute('disabled', '');
 					dissentRenewalPeriodLabel?.classList.add('disabled');
+					dissentRenewalPeriodTimeUnit.classList.add('disabled');
+					dissentRenewalPeriodTimeUnit.setAttribute('disabled', '');
 					explicitConsentMode.setAttribute('disabled', '');
 
 					if (Liferay.FeatureFlags['LPD-75027']) {

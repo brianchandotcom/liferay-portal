@@ -113,46 +113,93 @@ resource "helm_release" "alloy" {
 				alloy={
 					configMap={
 						content=<<-EOT
-							discovery.kubernetes "endpoints" {
-							  role="endpoints"
-							}
-							discovery.kubernetes "endpointslices" {
-							  role="endpointslice"
-							}
-							discovery.kubernetes "ingresses" {
-							  role="ingress"
+							discovery.kubernetes "kube_state_metrics_service" {
+								namespaces {
+									own_namespace=false
+							  	}
+								role="service"
+								selectors {
+									label="app.kubernetes.io/name=kube-state-metrics"
+									role="service"
+								}
 							}
 							discovery.kubernetes "nodes" {
-							  role="node"
+								role = "node"
 							}
-							discovery.kubernetes "pods" {
-							  role="pod"
+							discovery.relabel "kubelet_relabel" {
+								rule {
+									action="replace"
+									replacement="$1:10250"
+									source_labels=["__meta_kubernetes_node_address_InternalIP"]
+									target_label="__address__"
+								}
+								rule {
+									action="replace"
+									replacement="https"
+									target_label="__scheme__"
+								}
+								rule {
+									action="replace"
+									replacement="/metrics/resource"
+									target_label="__metrics_path__"
+								}
+								targets = discovery.kubernetes.nodes.targets
 							}
-							discovery.kubernetes "services" {
-							  role="service"
+							discovery.relabel "kube_state_metrics_relabel" {
+								rule {
+									action="keep"
+									regex="kube-state-metrics"
+									source_labels=["__meta_kubernetes_service_name"]
+								}
+								rule {
+									action="keep"
+									source_labels=["__meta_kubernetes_service_port"]
+									regex="http-metrics|metrics|8080"
+								}
+								rule {
+									regex="(.+):\\d+"
+									replacement="$1:8080"
+									source_labels=["__address__"]
+									target_label="__address__"
+								}
+								rule {
+									replacement="kube-state-metrics"
+									target_label="job"
+								}
+								rule {
+									replacement="/metrics"
+									target_label="__metrics_path__"
+								}
+								rule {
+									replacement="http"
+									target_label="__scheme__"
+								}
+								targets=discovery.kubernetes.kube_state_metrics_service.targets
 							}
 							logging {
-							  format="logfmt"
-							  level="info"
+								format="logfmt"
+								level="info"
 							}
 							prometheus.remote_write "amp" {
-                				endpoint {
-                    				url="${aws_prometheus_workspace.amp[0].prometheus_endpoint}api/v1/remote_write"
+								endpoint {
+									url="${aws_prometheus_workspace.amp[0].prometheus_endpoint}api/v1/remote_write"
 									sigv4 {
 										region="${var.region}"
 									}
-                				}
-            				}
-							prometheus.scrape "k8s" {
-								targets=array.concat(
-									discovery.kubernetes.endpoints.targets,
-									discovery.kubernetes.endpointslices.targets,
-									discovery.kubernetes.ingresses.targets,
-									discovery.kubernetes.nodes.targets,
-									discovery.kubernetes.pods.targets,
-									discovery.kubernetes.services.targets,
-								)
+							  }
+							}
+							prometheus.scrape "kube_state_metrics" {
+								targets=discovery.relabel.kube_state_metrics_relabel.output
 								forward_to=[prometheus.remote_write.amp.receiver]
+							}
+							prometheus.scrape "kubelet_resource" {
+								bearer_token_file="/var/run/secrets/kubernetes.io/serviceaccount/token"
+								forward_to=[prometheus.remote_write.amp.receiver]
+								targets=discovery.relabel.kubelet_relabel.output
+								tls_config {
+									ca_file="/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+									insecure_skip_verify=true
+								}
 							}
 						EOT
 					}

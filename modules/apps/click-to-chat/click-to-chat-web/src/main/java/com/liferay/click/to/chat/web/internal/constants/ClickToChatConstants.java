@@ -14,9 +14,9 @@ public interface ClickToChatConstants {
 		"zendesk_web_widget";
 
 	public static final String[] CHAT_PROVIDER_IDS = {
-		"chatwoot", "crisp", "hubspot", "intercom", "jivochat", "livechat",
-		"liveperson", "smartsupp", "tawkto", "tidio", "zendesk_web_widget",
-		"zendesk_web_widget_classic"
+		"aihub", "chatwoot", "crisp", "hubspot", "intercom", "jivochat",
+		"livechat", "liveperson", "smartsupp", "tawkto", "tidio",
+		"zendesk_web_widget", "zendesk_web_widget_classic"
 	};
 
 	public static final String[] SITE_SETTINGS_STRATEGIES = {

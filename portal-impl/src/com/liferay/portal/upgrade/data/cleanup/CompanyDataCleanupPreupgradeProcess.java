@@ -89,8 +89,8 @@ public class CompanyDataCleanupPreupgradeProcess
 
 				DataCleanupLoggingUtil.logUpdate(
 					_log, count, sourceTableName, companyIdColumnName, null,
-					"missing values were populated from the " +
-						targetTableName + " table.");
+					"missing values were populated from table " +
+						targetTableName);
 			}
 		}
 

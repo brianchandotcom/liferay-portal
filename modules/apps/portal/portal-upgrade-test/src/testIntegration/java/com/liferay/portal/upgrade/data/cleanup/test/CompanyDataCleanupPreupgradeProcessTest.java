@@ -148,8 +148,8 @@ public class CompanyDataCleanupPreupgradeProcessTest
 						"Table ", _dbInspector.normalizeName(tableName),
 						", 2 rows updated column ",
 						_dbInspector.normalizeName("companyId"),
-						" because missing values were populated from the ",
-						_dbInspector.normalizeName("Group_"), " table.")));
+						" because missing values were populated from table ",
+						_dbInspector.normalizeName("Group_"))));
 
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(

@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -172,10 +171,6 @@ public class SearchEngineInitializer implements Runnable {
 	}
 
 	private void _reindex(int delay) {
-		if (IndexWriterHelperUtil.isIndexReadOnly()) {
-			return;
-		}
-
 		if (_log.isInfoEnabled()) {
 			_log.info("Reindexing started");
 		}

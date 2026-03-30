@@ -66,11 +66,12 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			deleteOAuthClientASLocalMetadata(String localWellKnownURI)
+			deleteOAuthClientASLocalMetadata(
+				long companyId, String localWellKnownURI)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataService.
-			deleteOAuthClientASLocalMetadata(localWellKnownURI);
+			deleteOAuthClientASLocalMetadata(companyId, localWellKnownURI);
 	}
 
 	@Override
@@ -145,15 +146,6 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			getOAuthClientASLocalMetadata(String localWellKnownURI)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuthClientASLocalMetadataService.getOAuthClientASLocalMetadata(
-			localWellKnownURI);
-	}
-
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			getOAuthClientASLocalMetadataByExternalReferenceCode(
 				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -161,6 +153,17 @@ public class OAuthClientASLocalMetadataServiceWrapper
 		return _oAuthClientASLocalMetadataService.
 			getOAuthClientASLocalMetadataByExternalReferenceCode(
 				externalReferenceCode, companyId);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByLocalWellKnownURI(
+				long companyId, String localWellKnownURI)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataService.
+			getOAuthClientASLocalMetadataByLocalWellKnownURI(
+				companyId, localWellKnownURI);
 	}
 
 	/**
@@ -237,4 +240,4 @@ public class OAuthClientASLocalMetadataServiceWrapper
 		_oAuthClientASLocalMetadataService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-141211143
+// LIFERAY-SERVICE-BUILDER-HASH:649312499

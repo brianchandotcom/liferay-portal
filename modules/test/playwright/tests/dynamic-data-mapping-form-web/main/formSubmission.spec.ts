@@ -358,7 +358,9 @@ test.describe('Manage forms through submission page', () => {
 
 			await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-			await page.getByLabel('Text').fill('Text field value');
+			await page
+				.getByLabel('Text', {exact: true})
+				.fill('Text field value');
 
 			const submitButton = page.getByRole('button', {name: 'Submit'});
 

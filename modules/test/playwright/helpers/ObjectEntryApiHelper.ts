@@ -149,6 +149,17 @@ export class ObjectEntryApiHelper {
 		);
 	}
 
+	async postObjectEntryCollaborators(
+		data: DataObject[],
+		applicationName: string,
+		objectEntryId: number,
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${applicationName}/${objectEntryId}/collaborators`,
+			{data}
+		);
+	}
+
 	async putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode({
 		applicationName,
 		currentExternalReferenceCode,

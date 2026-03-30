@@ -16,7 +16,6 @@ const test = mergeTests(
 	cmsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
 	}),
 	loginTest()
@@ -39,14 +38,14 @@ test(
 			});
 		});
 
-		const assetTitle = `Content ${getRandomString()}`;
+		const objectEntryTitle = `Content ${getRandomString()}`;
 		let objectEntry = null;
 
 		await test.step('Create a content', async () => {
 			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 				{
 					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: assetTitle,
+					title: objectEntryTitle,
 				},
 				'cms/basic-web-contents',
 				spaceName
@@ -70,10 +69,8 @@ test(
 		});
 
 		await test.step('Share the content to the user', async () => {
-			await apiHelpers.post(
-				`/o/cms/basic-web-contents/${objectEntry.id}/collaborators`,
-				{
-					data: [
+			await apiHelpers.objectEntry.postObjectEntryCollaborators(
+				[
 						{
 							actionIds: ['DOWNLOAD', 'VIEW'],
 							id: user.id,
@@ -81,34 +78,21 @@ test(
 							type: 'User',
 						},
 					],
-				}
+					'cms/basic-web-contents',
+					objectEntry.id
 			);
 		});
 
 		await test.step('Verify user can see shared asset', async () => {
 			await performUserSwitch(page, user.alternateName);
 
-			sharedWithMePage.goto();
-
-			const assetRow = page.getByRole('row', {name: assetTitle});
-
-			await expect(
-				assetRow.locator('.cell-title').getByRole('link')
-			).toBeVisible();
-
-			await expect(
-				assetRow.locator('.cell-visible').getByText('Not Visible')
-			).not.toBeVisible();
-
-			await expect(
-				assetRow.locator('.cell-item-actions .lexicon-icon')
-			).toBeVisible();
+			await sharedWithMePage.expectAssetEntryToBeVisible(objectEntryTitle);
 		});
 
 		await test.step('Delete the content so it goes into the Recycle Bin', async () => {
 			await performUserSwitch(page, 'test');
 
-			expect(
+			await expect(
 				await apiHelpers.delete(
 					`/o/cms/basic-web-contents/${objectEntry.id}`
 				)
@@ -118,21 +102,7 @@ test(
 		await test.step('Verify user can see deleted shared asset as "Not Visible"', async () => {
 			await performUserSwitch(page, user.alternateName);
 
-			sharedWithMePage.goto();
-
-			const assetRow = page.getByRole('row', {name: assetTitle});
-
-			await expect(
-				assetRow.locator('.cell-title').getByRole('link')
-			).not.toBeVisible();
-
-			await expect(
-				assetRow.locator('.cell-visible').getByText('Not Visible')
-			).toBeVisible();
-
-			await expect(
-				assetRow.locator('.cell-item-actions .lexicon-icon')
-			).not.toBeVisible();
+			await sharedWithMePage.expectAssetEntryNotToBeVisible(objectEntryTitle);
 		});
 	}
 );

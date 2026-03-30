@@ -125,7 +125,7 @@ test(
 
 		await waitForAlert(page);
 
-		const cookiesBanner = await page.getByRole('dialog', {
+		const cookiesBanner = page.getByRole('dialog', {
 			name: 'banner cookies',
 		});
 
@@ -155,14 +155,11 @@ test(
 		});
 
 		await test.step('Verify all button names and ordering', async () => {
-			const cookiesManagerConsentPanel =
-				await accountSettingsPage.page.locator(
-					'[id="_com_liferay_my_account_web_portlet_MyAccountPortlet_cookiesBannerConfigurationForm"]'
-				);
-
-			await expectCookieConsentPanelButtons(
-				await cookiesManagerConsentPanel
+			const cookiesManagerConsentPanel = accountSettingsPage.page.locator(
+				'[id="_com_liferay_my_account_web_portlet_MyAccountPortlet_cookiesBannerConfigurationForm"]'
 			);
+
+			await expectCookieConsentPanelButtons(cookiesManagerConsentPanel);
 		});
 	}
 );
@@ -174,14 +171,14 @@ test(
 		await test.step('AC1: Verify Data And Privacy tab exists within Account Settings', async () => {
 			await accountSettingsPage.goToAccountSettings();
 
-			const dataAndPrivacyTab = await accountSettingsPage.page.locator(
+			const dataAndPrivacyTab = accountSettingsPage.page.locator(
 				'.nav-link',
 				{
 					hasText: 'Data And Privacy',
 				}
 			);
 
-			await expect(await dataAndPrivacyTab).toBeVisible();
+			await expect(dataAndPrivacyTab).toBeVisible();
 		});
 
 		await test.step('AC2: Verify Consent Manager panel is visible from Data and Privacy tab', async () => {
@@ -197,11 +194,11 @@ test(
 			}
 
 			for (const cookieHeadingName of cookieHeadingNames) {
-				const cookieHeading = await page.getByRole('heading', {
+				const cookieHeading = page.getByRole('heading', {
 					name: cookieHeadingName,
 				});
 
-				await expect(await cookieHeading).toBeVisible();
+				await expect(cookieHeading).toBeVisible();
 			}
 		});
 	}
@@ -214,7 +211,7 @@ test(
 		await test.step('Open the Cookie Banner Consent Panel', async () => {
 			await page.goto('/');
 
-			const cookiesBanner = await page.getByRole('dialog', {
+			const cookiesBanner = page.getByRole('dialog', {
 				name: 'banner cookies',
 			});
 
@@ -226,11 +223,9 @@ test(
 		});
 
 		await test.step('Verify all button names and ordering', async () => {
-			const consentPanelFooter = await page.locator(
-				'[class="modal-footer"]'
-			);
+			const consentPanelFooter = page.locator('[class="modal-footer"]');
 
-			await expectCookieConsentPanelButtons(await consentPanelFooter);
+			await expectCookieConsentPanelButtons(consentPanelFooter);
 		});
 	}
 );
@@ -262,18 +257,18 @@ test(
 			const actualCookies = await page.context().cookies();
 
 			for (const cookieKey of cookieKeys) {
-				const cookieKeyToggle = await page.locator(
+				const cookieKeyToggle = page.locator(
 					`[data-cookie-key="${cookieKey}"]`
 				);
 
-				await expect(await cookieKeyToggle).toBeChecked();
+				await expect(cookieKeyToggle).toBeChecked();
 
-				const actualCookie = await actualCookies.find(
+				const actualCookie = actualCookies.find(
 					(actualCookie) => actualCookie.name === cookieKey
 				);
 
-				await expect(actualCookie).toBeDefined();
-				await expect(actualCookie.value).toEqual('true');
+				expect(actualCookie).toBeDefined();
+				expect(actualCookie.value).toEqual('true');
 			}
 		});
 	}
@@ -305,7 +300,7 @@ test(
 			.getByRole('button', {name: 'Change Custom Icon'})
 			.click();
 
-		const uploadImageFrame = await systemSettingsPage.page.frameLocator(
+		const uploadImageFrame = systemSettingsPage.page.frameLocator(
 			'iframe[title="Upload Custom Icon"]'
 		);
 
@@ -333,7 +328,7 @@ test(
 			systemSettingsPage.page,
 			`Success:Your request completed successfully.`
 		);
-		const imageButton = await systemSettingsPage.page.locator(
+		const imageButton = systemSettingsPage.page.locator(
 			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton'
 		);
 
@@ -341,7 +336,7 @@ test(
 
 		const imageSrc = await imageButton.getAttribute('src');
 
-		await expect(imageSrc.includes('/image/floating_icon?')).toBeTruthy();
+		expect(imageSrc.includes('/image/floating_icon?')).toBeTruthy();
 	}
 );
 
@@ -468,14 +463,13 @@ test(
 
 		await expect(acceptAllButton).not.toBeVisible();
 
-		const enabledButton = await systemSettingsPage.page.getByLabel(
-			'Enabled',
-			{exact: true}
-		);
+		const enabledButton = systemSettingsPage.page.getByLabel('Enabled', {
+			exact: true,
+		});
 
 		await enabledButton.setChecked(false);
 
-		const floatingIconEnabled = await systemSettingsPage.page.getByLabel(
+		const floatingIconEnabled = systemSettingsPage.page.getByLabel(
 			'Floating Icon Enabled'
 		);
 
@@ -586,7 +580,7 @@ async function expectCookieConsentPanelButtons(locator: Locator) {
 	const buttons = await locator.getByRole('button').all();
 
 	expect(buttons).toHaveLength(3);
-	await expect(await buttons[0]).toContainText('Use Necessary Cookies Only');
-	await expect(await buttons[1]).toContainText('Accept Selected');
-	await expect(await buttons[2]).toContainText('Accept All');
+	await expect(buttons[0]).toContainText('Use Necessary Cookies Only');
+	await expect(buttons[1]).toContainText('Accept Selected');
+	await expect(buttons[2]).toContainText('Accept All');
 }

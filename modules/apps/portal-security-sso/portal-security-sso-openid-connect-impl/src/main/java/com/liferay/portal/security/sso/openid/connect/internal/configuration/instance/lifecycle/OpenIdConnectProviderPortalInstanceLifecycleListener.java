@@ -102,12 +102,13 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 	}
 
 	private void _addOAuthClientEntry(
-			Dictionary<String, ?> properties, long guestUserId)
+			long companyId, Dictionary<String, ?> properties, long guestUserId)
 		throws Exception {
 
 		_oAuthClientEntryLocalService.addOAuthClientEntry(
 			null, guestUserId, _generateAuthRequestParametersJSON(properties),
-			_updateOAuthClientASLocalMetadata(guestUserId, properties),
+			_updateOAuthClientASLocalMetadata(
+				companyId, guestUserId, properties),
 			_generateCustomClaimsJSON(properties),
 			_generateInfoJSON(properties),
 			GetterUtil.getString(properties.get("matcherField")),
@@ -118,7 +119,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 	}
 
 	private String _deleteOAuthClientASLocalMetadata(
-			Dictionary<String, ?> properties)
+			long companyId, Dictionary<String, ?> properties)
 		throws Exception {
 
 		String discoveryEndpoint = _getPropertyAsString(
@@ -134,7 +135,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 				_getPropertyAsString("tokenEndpoint", properties));
 
 		_oAuthClientASLocalMetadataLocalService.
-			deleteOAuthClientASLocalMetadata(localWellKnownURI);
+			deleteOAuthClientASLocalMetadata(companyId, localWellKnownURI);
 
 		return localWellKnownURI;
 	}
@@ -159,7 +160,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 
 		try {
 			String authServerWellKnownURI = _deleteOAuthClientASLocalMetadata(
-				properties);
+				companyId, properties);
 
 			_oAuthClientEntryLocalService.deleteOAuthClientEntry(
 				companyId, authServerWellKnownURI,
@@ -380,7 +381,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 	}
 
 	private String _updateOAuthClientASLocalMetadata(
-			long guestUserId, Dictionary<String, ?> properties)
+			long companyId, long guestUserId, Dictionary<String, ?> properties)
 		throws Exception {
 
 		String discoveryEndpoint = _getPropertyAsString(
@@ -397,7 +398,8 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			_oAuthClientASLocalMetadataLocalService.
-				fetchOAuthClientASLocalMetadata(localWellKnownURI);
+				fetchOAuthClientASLocalMetadataByLocalWellKnownURI(
+					companyId, localWellKnownURI);
 
 		if (oAuthClientASLocalMetadata == null) {
 			_oAuthClientASLocalMetadataLocalService.
@@ -437,7 +439,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 			if (oldProperties != null) {
 				String oldAuthServerWellKnownURI =
 					_updateOAuthClientASLocalMetadata(
-						guestUserId, oldProperties);
+						companyId, guestUserId, oldProperties);
 
 				OAuthClientEntry oldOAuthClientEntry =
 					_oAuthClientEntryLocalService.fetchOAuthClientEntry(
@@ -450,7 +452,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 						oldOAuthClientEntry.getOAuthClientEntryId(),
 						_generateAuthRequestParametersJSON(properties),
 						_updateOAuthClientASLocalMetadata(
-							guestUserId, properties),
+							companyId, guestUserId, properties),
 						_generateCustomClaimsJSON(properties),
 						_generateInfoJSON(properties),
 						GetterUtil.getString(properties.get("matcherField")),
@@ -460,11 +462,11 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 						_generateTokenRequestParametersJSON(properties));
 				}
 				else {
-					_addOAuthClientEntry(properties, guestUserId);
+					_addOAuthClientEntry(companyId, properties, guestUserId);
 				}
 			}
 			else {
-				_addOAuthClientEntry(properties, guestUserId);
+				_addOAuthClientEntry(companyId, properties, guestUserId);
 			}
 
 			OpenIdConnectProviderUtil.removeOAuthClientEntryIdsByCompanyId(

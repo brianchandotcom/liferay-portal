@@ -215,18 +215,31 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 										label:
 											lifecycleStagesLabelMap[value].label
 									}),
-								lastActiveRenderer: ({value}) => (
+								accountNameRenderer: ({itemData, value}) => {
+									const itemTitle = value || itemData.id;
+
+									return (
+										<Link
+											className='font-weight-semi-bold text-dark'
+											href={toRoute(
+												Routes.CONTACTS_ACCOUNT,
+												{
+													groupId,
+													id: itemData.id
+												}
+											)}
+										>
+											{itemTitle}
+										</Link>
+									);
+								},
+								dateRenderer: ({date}) => (
 									<div>
 										{formatUTCDate(
-											value,
+											date,
 											CUSTOM_DATE_FORMAT
 										)}
 									</div>
-								),
-								testRenderer: ({value}) => (
-									<span>
-										<b>{value}</b>
-									</span>
 								)
 							}}
 							emptyState={{
@@ -285,6 +298,8 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 									schema: {
 										fields: [
 											{
+												contentRenderer:
+													'accountNameRenderer',
 												fieldName: 'accountName',
 												label: Liferay.Language.get(
 													'account'
@@ -297,7 +312,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 												label: Liferay.Language.get(
 													'industry'
 												),
-												sortable: false
+												sortable: true
 											},
 											{
 												contentRenderer:
@@ -306,11 +321,10 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 												label: Liferay.Language.get(
 													'lifecycle-stage'
 												),
-												sortable: false
+												sortable: true
 											},
 											{
-												contentRenderer:
-													'lastActiveRenderer',
+												contentRenderer: 'dateRenderer',
 												fieldName: 'lastActive',
 												label: Liferay.Language.get(
 													'last-active'

@@ -11,7 +11,7 @@ import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
 import {waitForAlert} from '../../../../../utils/waitForAlert';
-import {systemDataSetsPageTest} from '../../../../frontend-data-set-admin-web/main/tests/data-set-admin/fixtures/systemDataSetsPageTest';
+import {systemDataSetsPageTest} from '../../../../frontend-data-set-admin-web/main/fixtures/systemDataSetsPageTest';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(

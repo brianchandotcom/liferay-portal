@@ -1040,6 +1040,8 @@ public abstract class BaseSectionDisplayContextTestCase
 				}
 			).build()
 		).put(
+			"allowPropagate", false
+		).put(
 			"roles",
 			() -> TransformUtil.transformToArray(
 				RoleLocalServiceUtil.getGroupRolesAndTeamRoles(

@@ -137,6 +137,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubContentRetriever", "/ai-hub/content-retrievers"
 		).put(
+			"AIHubInstructionDefinition", "/ai-hub/instruction-definitions"
+		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"
 		).put(
 			"APIApplication", "/headless-builder/applications"

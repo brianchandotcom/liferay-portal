@@ -41,7 +41,11 @@ const AssetTypeInfoPanelFilesView = () => {
 							<Tabs.Item
 								active={active >= MAIN_TABS.length}
 								innerProps={{
-									'aria-controls': 'tabpanel-4',
+									'aria-controls': `tabpanel-${
+										active >= MAIN_TABS.length
+											? ALL_TABS[active]?.id
+											: DROPDOWN_TABS[0]?.id
+									}`,
 								}}
 							>
 								{Liferay.Language.get('more')}
@@ -62,7 +66,6 @@ const AssetTypeInfoPanelFilesView = () => {
 									active={active === tabIndex}
 									key={tab.id}
 									onClick={() => setActive(tabIndex)}
-									role="tab"
 								>
 									{tab.name}
 								</DropDown.Item>

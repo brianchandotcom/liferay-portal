@@ -7,8 +7,7 @@ package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
-import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.web.internal.util.FragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -37,9 +36,11 @@ import java.util.Objects;
 public class FragmentCollectionsDisplayContext {
 
 	public FragmentCollectionsDisplayContext(
+		FragmentCollectionLocalService fragmentCollectionLocalService,
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
+		_fragmentCollectionLocalService = fragmentCollectionLocalService;
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -95,46 +96,46 @@ public class FragmentCollectionsDisplayContext {
 			if (_isSearch()) {
 				searchContainer.setResultsAndTotal(
 					() ->
-						FragmentCollectionLocalServiceUtil.
+						_fragmentCollectionLocalService.
 							getExportableFragmentCollections(
 								allGroupIds, _getKeywords(),
 								searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
-					FragmentCollectionLocalServiceUtil.
+					_fragmentCollectionLocalService.
 						getExportableFragmentCollectionsCount(
 							allGroupIds, _getKeywords()));
 			}
 			else {
 				searchContainer.setResultsAndTotal(
 					() ->
-						FragmentCollectionLocalServiceUtil.
+						_fragmentCollectionLocalService.
 							getExportableFragmentCollections(
 								allGroupIds, searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
-					FragmentCollectionLocalServiceUtil.
+					_fragmentCollectionLocalService.
 						getExportableFragmentCollectionsCount(allGroupIds));
 			}
 		}
 		else if (_isSearch()) {
 			searchContainer.setResultsAndTotal(
-				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+				() -> _fragmentCollectionLocalService.getFragmentCollections(
 					allGroupIds, _getKeywords(),
 					_isIncludeMarketplaceFragmentCollections(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+				_fragmentCollectionLocalService.getFragmentCollectionsCount(
 					allGroupIds, _getKeywords(),
 					_isIncludeMarketplaceFragmentCollections()));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
-				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+				() -> _fragmentCollectionLocalService.getFragmentCollections(
 					allGroupIds, _isIncludeMarketplaceFragmentCollections(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+				_fragmentCollectionLocalService.getFragmentCollectionsCount(
 					allGroupIds, _isIncludeMarketplaceFragmentCollections()));
 		}
 
@@ -278,6 +279,8 @@ public class FragmentCollectionsDisplayContext {
 	}
 
 	private String _eventName;
+	private final FragmentCollectionLocalService
+		_fragmentCollectionLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _includeGlobalFragmentCollections;
 	private Boolean _includeMarketplaceFragmentCollections;

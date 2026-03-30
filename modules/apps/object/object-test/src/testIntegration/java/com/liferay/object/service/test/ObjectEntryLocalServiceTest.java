@@ -1410,8 +1410,14 @@ public class ObjectEntryLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, "name", "name")),
 				objectFolder.getObjectFolderId(),
-				ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.SCOPE_DEPOT,
 				TestPropsValues.getUserId());
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
 
 		String assetTagName = StringUtil.randomString();
 
@@ -1430,8 +1436,14 @@ public class ObjectEntryLocalServiceTest {
 
 		serviceContext.setAssetTagNames(new String[] {assetTagName});
 
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
 		_addObjectEntry(
-			TestPropsValues.getGroupId(), objectDefinition,
+			depotEntry.getGroupId(), objectDefinition,
 			HashMapBuilder.<String, Serializable>put(
 				"name", StringUtil.randomString()
 			).build(),

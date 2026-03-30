@@ -52,6 +52,19 @@ test(
 			);
 		});
 
+		const objectEntryFolderTitle = `Folder ${getRandomString()}`;
+		let objectEntryFolder = null;
+
+		await test.step('Create a folder', async () => {
+			objectEntryFolder = await apiHelpers.objectFolder.createObjectEntryFolder(
+				{
+					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					scopeKey: spaceName,
+					title: objectEntryFolderTitle,
+				}
+			);
+		});
+
 		let user = null;
 
 		await test.step('Create a user', async () => {
@@ -83,26 +96,49 @@ test(
 			);
 		});
 
-		await test.step('Verify user can see shared asset', async () => {
+		await test.step('Share the folder to the user', async () => {
+			await apiHelpers.objectFolder.postObjectEntryFolderCollaborators(
+				[
+						{
+							actionIds: ['VIEW'],
+							id: user.id,
+							share: false,
+							type: 'User',
+						},
+					],
+					objectEntryFolder.id
+			);
+		});
+
+		await test.step('Verify that the user can see the shared assets', async () => {
 			await performUserSwitch(page, user.alternateName);
 
 			await sharedWithMePage.expectAssetEntryToBeVisible(objectEntryTitle);
+			await sharedWithMePage.expectAssetEntryToBeVisible(objectEntryFolderTitle);
 		});
 
-		await test.step('Delete the content so it goes into the Recycle Bin', async () => {
+		await test.step('Delete the content and the folder so they go into the Recycle Bin', async () => {
 			await performUserSwitch(page, 'test');
 
 			await expect(
-				await apiHelpers.delete(
-					`/o/cms/basic-web-contents/${objectEntry.id}`
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					'cms/basic-web-contents',
+					objectEntry.id
+				)
+			).toBeOK();
+
+			await expect(
+				await apiHelpers.objectFolder.deleteObjectEntryFolder(
+					objectEntryFolder.id
 				)
 			).toBeOK();
 		});
 
-		await test.step('Verify user can see deleted shared asset as "Not Visible"', async () => {
+		await test.step('Verify that the user can see deleted shared assets as "Not Visible"', async () => {
 			await performUserSwitch(page, user.alternateName);
 
 			await sharedWithMePage.expectAssetEntryNotToBeVisible(objectEntryTitle);
+			await sharedWithMePage.expectAssetEntryNotToBeVisible(objectEntryFolderTitle);
 		});
 	}
 );

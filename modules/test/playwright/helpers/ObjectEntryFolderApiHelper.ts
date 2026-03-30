@@ -12,6 +12,17 @@ export class ObjectEntryFolderApiHelper {
 		this.apiHelpers = apiHelpers;
 	}
 
+	async postObjectEntryFolderCollaborators(
+			data: DataObject[],
+			objectEntryFolderId: number,
+		) {
+
+		return this.apiHelpers.post(
+			`/o/headless-object/v1.0/object-entry-folders/${objectEntryFolderId}/collaborators`,
+			{data}
+		);
+	}
+
 	async createObjectEntryFolder({
 		parentObjectEntryFolderExternalReferenceCode = 'L_FILES',
 		scopeKey,

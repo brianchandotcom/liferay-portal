@@ -48,7 +48,7 @@ export const SetupGuide = ({envVars}: {envVars: string[]}) => {
 				<div className="flex flex-wrap gap-4">
 					<a
 						className="bg-blue-600 flex font-semibold hover:bg-blue-700 items-center px-6 py-3 rounded-md text-white transition-colors"
-						href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/content-page#run-the-template"
+						href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/content-page#set-up-your-local-liferay-instance"
 						rel="noopener noreferrer"
 						target="_blank"
 					>

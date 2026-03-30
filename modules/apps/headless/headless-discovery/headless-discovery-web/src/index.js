@@ -10,19 +10,18 @@ import App from './js/App.es';
 
 globalThis.MonacoEnvironment = {
 	getWorkerUrl(_workerId, label) {
-		const basePath = document
-			.querySelector('script[src*="headless-discovery-web-min"]')
-			?.src.replace(/[^/]+$/, '');
+		const basePath =
+			document
+				.querySelector('script[src*="headless-discovery-web-min"]')
+				?.src?.replace(/[^/]+$/, '') || '';
 
-		if (label === 'graphql') {
-			return basePath + 'graphql.worker.js';
-		}
+		const workerFile =
+			{
+				graphql: 'graphql.worker.js',
+				json: 'json.worker.js',
+			}[label] || 'editor.worker.js';
 
-		if (label === 'json') {
-			return basePath + 'json.worker.js';
-		}
-
-		return basePath + 'editor.worker.js';
+		return `${basePath}${workerFile}`;
 	},
 };
 

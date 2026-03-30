@@ -27,6 +27,12 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 			getCookiesPreferenceHandlingConsentRenewalPeriod(_scope, _scopePK);
 	}
 
+	public String getCookiesPreferenceHandlingConsentRenewalPeriodTimeUnit() {
+		return _cookiesConfigurationProvider.
+			getCookiesPreferenceHandlingConsentRenewalPeriodTimeUnit(
+				_scope, _scopePK);
+	}
+
 	public long getCookiesPreferenceHandlingCustomFloatingIconImageId() {
 		return _cookiesConfigurationProvider.
 			getCookiesPreferenceHandlingCustomFloatingIconImageId(
@@ -36,6 +42,12 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 	public int getCookiesPreferenceHandlingDissentRenewalPeriod() {
 		return _cookiesConfigurationProvider.
 			getCookiesPreferenceHandlingDissentRenewalPeriod(_scope, _scopePK);
+	}
+
+	public String getCookiesPreferenceHandlingDissentRenewalPeriodTimeUnit() {
+		return _cookiesConfigurationProvider.
+			getCookiesPreferenceHandlingDissentRenewalPeriodTimeUnit(
+				_scope, _scopePK);
 	}
 
 	public boolean getCookiesPreferenceHandlingEnabled() {

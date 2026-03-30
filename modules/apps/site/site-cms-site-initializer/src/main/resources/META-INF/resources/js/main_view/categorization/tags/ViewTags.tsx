@@ -254,9 +254,7 @@ export default function ViewTags({
 									<ClayLink
 										data-senna-off
 										href="#"
-										onClick={(
-											event: React.MouseEvent
-										) => {
+										onClick={(event: React.MouseEvent) => {
 											event.preventDefault();
 
 											editTag({itemData, loadData});

@@ -16,3 +16,12 @@ export interface DesignLibraryItem {
 	id: number;
 	name: string;
 }
+
+export interface Site {
+	descriptiveName: string;
+	externalReferenceCode: string;
+	id: string;
+	logo: string;
+	name: string;
+	searchable: boolean;
+}

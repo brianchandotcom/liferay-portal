@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -232,28 +233,34 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 
 		_user = UserTestUtil.addUser();
 
-		PermissionThreadLocal.setPermissionChecker(
-			_mockPermissionChecker(
-				ActionKeys.UPDATE, true, "com.liferay.blogs.model.BlogsEntry"));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user)) {
 
-		MockHttpServletRequest mockHttpServletRequest =
-			(MockHttpServletRequest)_getHttpServletRequest();
+			PermissionThreadLocal.setPermissionChecker(
+				_mockPermissionChecker(
+					ActionKeys.UPDATE, true,
+					"com.liferay.blogs.model.BlogsEntry"));
 
-		mockHttpServletRequest.setAttribute(
-			AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE,
-			new InfoItemReference(Layout.class.getName(), plid));
-		mockHttpServletRequest.setParameter("p_l_id", String.valueOf(plid));
+			MockHttpServletRequest mockHttpServletRequest =
+				(MockHttpServletRequest)_getHttpServletRequest();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)mockHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			mockHttpServletRequest.setAttribute(
+				AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE,
+				new InfoItemReference(Layout.class.getName(), plid));
+			mockHttpServletRequest.setParameter("p_l_id", String.valueOf(plid));
 
-		themeDisplay.setPlid(plid);
-		themeDisplay.setSignedIn(true);
-		themeDisplay.setUser(_user);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)mockHttpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		Assert.assertTrue(
-			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));
+			themeDisplay.setPlid(plid);
+			themeDisplay.setSignedIn(true);
+			themeDisplay.setUser(_user);
+
+			Assert.assertTrue(
+				_productNavigationControlMenuEntry.isShow(
+					mockHttpServletRequest));
+		}
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws PortalException {

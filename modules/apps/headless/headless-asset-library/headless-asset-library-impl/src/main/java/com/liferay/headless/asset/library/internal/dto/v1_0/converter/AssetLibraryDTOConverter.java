@@ -94,11 +94,11 @@ public class AssetLibraryDTOConverter
 							depotEntryGroupRel -> _toConnectedSite(
 								depotEntryGroupRel, dtoConverterContext),
 							ConnectedSite.class)));
-				setCreatorUserId(group::getCreatorUserId);
 				setCreator(
 					() -> CreatorUtil.toCreator(
 						_portal,
 						_userLocalService.fetchUser(group.getCreatorUserId())));
+				setCreatorUserId(group::getCreatorUserId);
 				setDateCreated(depotEntry::getCreateDate);
 				setDateModified(
 					() -> GetterUtil.getObject(

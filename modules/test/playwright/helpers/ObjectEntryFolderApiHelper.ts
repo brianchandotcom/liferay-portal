@@ -13,10 +13,9 @@ export class ObjectEntryFolderApiHelper {
 	}
 
 	async postObjectEntryFolderCollaborators(
-			data: DataObject[],
-			objectEntryFolderId: number,
-		) {
-
+		data: DataObject[],
+		objectEntryFolderId: number
+	) {
 		return this.apiHelpers.post(
 			`/o/headless-object/v1.0/object-entry-folders/${objectEntryFolderId}/collaborators`,
 			{data}

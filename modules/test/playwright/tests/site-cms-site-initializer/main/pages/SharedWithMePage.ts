@@ -25,18 +25,18 @@ export class SharedWithMePage {
 		await this.goto();
 
 		const assetRow = this.page.getByRole('row', {name: title});
-		
+
 		await expect(
 			assetRow.locator('.cell-title').getByRole('link')
 		).toBeVisible();
-		
+
 		await expect(
 			assetRow.locator('.cell-visible').getByText('Not Visible')
 		).not.toBeVisible();
-		
+
 		await expect(
 			assetRow.locator('.cell-item-actions .lexicon-icon')
-		).toBeVisible();		
+		).toBeVisible();
 	}
 
 	async expectAssetEntryNotToBeVisible(title: string) {

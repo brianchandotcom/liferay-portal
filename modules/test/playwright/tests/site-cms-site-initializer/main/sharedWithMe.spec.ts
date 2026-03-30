@@ -56,13 +56,12 @@ test(
 		let objectEntryFolder = null;
 
 		await test.step('Create a folder', async () => {
-			objectEntryFolder = await apiHelpers.objectFolder.createObjectEntryFolder(
-				{
+			objectEntryFolder =
+				await apiHelpers.objectFolder.createObjectEntryFolder({
 					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 					scopeKey: spaceName,
 					title: objectEntryFolderTitle,
-				}
-			);
+				});
 		});
 
 		let user = null;
@@ -84,37 +83,41 @@ test(
 		await test.step('Share the content to the user', async () => {
 			await apiHelpers.objectEntry.postObjectEntryCollaborators(
 				[
-						{
-							actionIds: ['DOWNLOAD', 'VIEW'],
-							id: user.id,
-							share: false,
-							type: 'User',
-						},
-					],
-					'cms/basic-web-contents',
-					objectEntry.id
+					{
+						actionIds: ['DOWNLOAD', 'VIEW'],
+						id: user.id,
+						share: false,
+						type: 'User',
+					},
+				],
+				'cms/basic-web-contents',
+				objectEntry.id
 			);
 		});
 
 		await test.step('Share the folder to the user', async () => {
 			await apiHelpers.objectFolder.postObjectEntryFolderCollaborators(
 				[
-						{
-							actionIds: ['VIEW'],
-							id: user.id,
-							share: false,
-							type: 'User',
-						},
-					],
-					objectEntryFolder.id
+					{
+						actionIds: ['VIEW'],
+						id: user.id,
+						share: false,
+						type: 'User',
+					},
+				],
+				objectEntryFolder.id
 			);
 		});
 
 		await test.step('Verify that the user can see the shared assets', async () => {
 			await performUserSwitch(page, user.alternateName);
 
-			await sharedWithMePage.expectAssetEntryToBeVisible(objectEntryTitle);
-			await sharedWithMePage.expectAssetEntryToBeVisible(objectEntryFolderTitle);
+			await sharedWithMePage.expectAssetEntryToBeVisible(
+				objectEntryTitle
+			);
+			await sharedWithMePage.expectAssetEntryToBeVisible(
+				objectEntryFolderTitle
+			);
 		});
 
 		await test.step('Delete the content and the folder so they go into the Recycle Bin', async () => {
@@ -137,8 +140,12 @@ test(
 		await test.step('Verify that the user can see deleted shared assets as "Not Visible"', async () => {
 			await performUserSwitch(page, user.alternateName);
 
-			await sharedWithMePage.expectAssetEntryNotToBeVisible(objectEntryTitle);
-			await sharedWithMePage.expectAssetEntryNotToBeVisible(objectEntryFolderTitle);
+			await sharedWithMePage.expectAssetEntryNotToBeVisible(
+				objectEntryTitle
+			);
+			await sharedWithMePage.expectAssetEntryNotToBeVisible(
+				objectEntryFolderTitle
+			);
 		});
 	}
 );

@@ -152,7 +152,7 @@ export class ObjectEntryApiHelper {
 	async postObjectEntryCollaborators(
 		data: DataObject[],
 		applicationName: string,
-		objectEntryId: number,
+		objectEntryId: number
 	) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${applicationName}/${objectEntryId}/collaborators`,

@@ -113,6 +113,10 @@ public interface OAuthClientASLocalMetadataLocalService
 			long oAuthClientASLocalMetadataId)
 		throws PortalException;
 
+	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
+			long companyId, String localWellKnownURI)
+		throws PortalException;
+
 	/**
 	 * Deletes the o auth client as local metadata from the database. Also notifies the appropriate model listeners.
 	 *
@@ -127,10 +131,6 @@ public interface OAuthClientASLocalMetadataLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata)
-		throws PortalException;
-
-	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			String localWellKnownURI)
 		throws PortalException;
 
 	/**
@@ -226,13 +226,14 @@ public interface OAuthClientASLocalMetadataLocalService
 		long companyId, String issuer);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
-		String localWellKnownURI);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata
 		fetchOAuthClientASLocalMetadataByExternalReferenceCode(
 			String externalReferenceCode, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthClientASLocalMetadata
+		fetchOAuthClientASLocalMetadataByLocalWellKnownURI(
+			long companyId, String localWellKnownURI);
 
 	/**
 	 * Returns the o auth client as local metadata with the matching UUID and company.
@@ -279,7 +280,7 @@ public interface OAuthClientASLocalMetadataLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			String localWellKnownURI)
+			long companyId, String localWellKnownURI)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -379,4 +380,4 @@ public interface OAuthClientASLocalMetadataLocalService
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2082896890
+// LIFERAY-SERVICE-BUILDER-HASH:311012242

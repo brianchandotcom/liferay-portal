@@ -186,7 +186,8 @@ public class OAuthClientASLocalMetadataServiceHttp {
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				deleteOAuthClientASLocalMetadata(
-					HttpPrincipal httpPrincipal, String localWellKnownURI)
+					HttpPrincipal httpPrincipal, long companyId,
+					String localWellKnownURI)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -196,7 +197,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_deleteOAuthClientASLocalMetadataParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, localWellKnownURI);
+				methodKey, companyId, localWellKnownURI);
 
 			Object returnObj = null;
 
@@ -530,18 +531,19 @@ public class OAuthClientASLocalMetadataServiceHttp {
 
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-				getOAuthClientASLocalMetadata(
-					HttpPrincipal httpPrincipal, String localWellKnownURI)
+				getOAuthClientASLocalMetadataByExternalReferenceCode(
+					HttpPrincipal httpPrincipal, String externalReferenceCode,
+					long companyId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientASLocalMetadataServiceUtil.class,
-				"getOAuthClientASLocalMetadata",
-				_getOAuthClientASLocalMetadataParameterTypes11);
+				"getOAuthClientASLocalMetadataByExternalReferenceCode",
+				_getOAuthClientASLocalMetadataByExternalReferenceCodeParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, localWellKnownURI);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -574,19 +576,19 @@ public class OAuthClientASLocalMetadataServiceHttp {
 
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-				getOAuthClientASLocalMetadataByExternalReferenceCode(
-					HttpPrincipal httpPrincipal, String externalReferenceCode,
-					long companyId)
+				getOAuthClientASLocalMetadataByLocalWellKnownURI(
+					HttpPrincipal httpPrincipal, long companyId,
+					String localWellKnownURI)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientASLocalMetadataServiceUtil.class,
-				"getOAuthClientASLocalMetadataByExternalReferenceCode",
-				_getOAuthClientASLocalMetadataByExternalReferenceCodeParameterTypes12);
+				"getOAuthClientASLocalMetadataByLocalWellKnownURI",
+				_getOAuthClientASLocalMetadataByLocalWellKnownURIParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
+				methodKey, companyId, localWellKnownURI);
 
 			Object returnObj = null;
 
@@ -809,7 +811,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		};
 	private static final Class<?>[]
 		_deleteOAuthClientASLocalMetadataParameterTypes3 = new Class[] {
-			String.class
+			long.class, String.class
 		};
 	private static final Class<?>[]
 		_fetchOAuthClientASLocalMetadataParameterTypes4 = new Class[] {
@@ -840,12 +842,11 @@ public class OAuthClientASLocalMetadataServiceHttp {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_getOAuthClientASLocalMetadataParameterTypes11 = new Class[] {
-			String.class
-		};
-	private static final Class<?>[]
-		_getOAuthClientASLocalMetadataByExternalReferenceCodeParameterTypes12 =
+		_getOAuthClientASLocalMetadataByExternalReferenceCodeParameterTypes11 =
 			new Class[] {String.class, long.class};
+	private static final Class<?>[]
+		_getOAuthClientASLocalMetadataByLocalWellKnownURIParameterTypes12 =
+			new Class[] {long.class, String.class};
 	private static final Class<?>[]
 		_getUserOAuthClientASLocalMetadataParameterTypes13 = new Class[] {
 			long.class
@@ -866,4 +867,4 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1042036558
+// LIFERAY-SERVICE-BUILDER-HASH:-850527146

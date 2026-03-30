@@ -1,0 +1,264 @@
+components:
+    schemas:
+        OAuthClientASLocalMetadata:
+            properties:
+                creator:
+                    $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
+                    readOnly: true
+                dateCreated:
+                    format: date
+                    type: string
+                dateModified:
+                    format: date
+                    type: string
+                externalReferenceCode:
+                    type: string
+                issuer:
+                    type: string
+                localWellKnownEnabled:
+                    type: boolean
+                localWellKnownURI:
+                    type: string
+                metadataJSON:
+                    type: string
+                oAuthASLocalWellKnownURI:
+                    type: string
+                oAuthASMetadataJSON:
+                    type: string
+        OAuthClientEntry:
+            properties:
+                authRequestParametersJSON:
+                    type: string
+                authServerWellKnownURI:
+                    type: string
+                clientId:
+                    type: string
+                creator:
+                    $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
+                    readOnly: true
+                customClaims:
+                    type: string
+                dateCreated:
+                    format: date
+                    type: string
+                dateModified:
+                    format: date
+                    type: string
+                externalReferenceCode:
+                    type: string
+                infoJSON:
+                    type: string
+                matcherField:
+                    type: string
+                metadataCacheTime:
+                    format: int64
+                    type: integer
+                oAuthClientASLocalMetadata:
+                    items:
+                        $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+                    type: object
+                oidcUserInfoMapperJSON:
+                    type: string
+                tokenRequestParametersJSON:
+                    type: string
+            type: object
+info:
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: ""
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/oauth-client-as-local-metadata/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteOAuthClientASLocalMetadataByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["OAuthClientASLocalMetadata"]
+        get:
+            operationId: getOAuthClientASLocalMetadataByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+            tags: ["OAuthClientASLocalMetadata"]
+        put:
+            operationId: putOAuthClientASLocalMetadataByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+            tags: ["OAuthClientASLocalMetadata"]
+    "/oauth-client-as-local-metadatas":
+        get:
+            operationId: getOAuthClientASLocalMetadatasPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+                                type: array
+            tags: ["OAuthClientASLocalMetadata"]
+        post:
+            operationId: postOAuthClientASLocalMetadata
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientASLocalMetadata"
+            tags: ["OAuthClientASLocalMetadata"]
+    "/oauth-client-entries":
+        get:
+            operationId: getOAuthClientEntriesPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OAuthClientEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OAuthClientEntry"
+                                type: array
+            tags: ["OAuthClientEntry"]
+        post:
+            operationId: postOAuthClientEntry
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OAuthClientEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OAuthClientEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientEntry"
+            tags: ["OAuthClientEntry"]
+    "/oauth-client-entries/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteOAuthClientEntryByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["OAuthClientEntry"]
+        get:
+            operationId: getOAuthClientEntryByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientEntry"
+            tags: ["OAuthClientEntry"]
+        put:
+            operationId: putOAuthClientEntryByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OAuthClientEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OAuthClientEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OAuthClientEntry"
+            tags: ["OAuthClientEntry"]

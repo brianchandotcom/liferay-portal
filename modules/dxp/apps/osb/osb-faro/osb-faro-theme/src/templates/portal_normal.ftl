@@ -47,10 +47,15 @@
 	<#else>
 		<script ${nonceAttribute}>
 			document.addEventListener('DOMContentLoaded', () => {
-				const targetLink = document.querySelector('link[href*="/o/osb-faro-theme/css/clay.css"]');
+				const liferayAUICSS = document.querySelector('#liferayAUICSS');
+				const liferayThemeCSS = document.querySelector('#liferayThemeCSS');
 
-				if (targetLink) {
-					targetLink.remove();
+				if (liferayAUICSS) {
+					liferayAUICSS.remove();
+				}
+
+				if (liferayThemeCSS) {
+					liferayThemeCSS.remove();
 				}
 			});
 		</script>

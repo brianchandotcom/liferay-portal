@@ -122,18 +122,14 @@ public class CTEnclosureUtil {
 					Set<Long> enclosureClassPKs = enclosureMap.get(
 						parentClassNameId);
 
-					if ((enclosureClassPKs != null) &&
-						enclosureClassPKs.contains(parentClassPK)) {
+					if (((enclosureClassPKs == null) ||
+						 !enclosureClassPKs.contains(parentClassPK)) &&
+						!predicate.test(parentEntry)) {
 
-						queue.add(parentEntry);
+						return false;
 					}
-					else {
-						if (!predicate.test(parentEntry)) {
-							return false;
-						}
 
-						queue.add(parentEntry);
-					}
+					queue.add(parentEntry);
 				}
 			}
 		}

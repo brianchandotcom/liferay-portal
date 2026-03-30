@@ -205,6 +205,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 							// apiURL={`o/contacts/${groupId}/account/search`}
 							// Use this to test empty states
 							// apiURL='/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked'
+							configInURLBehavior='off'
 							customDataRenderers={{
 								accountLifecycleStageRenderer: ({value}) =>
 									frontendDataSetColumns.cmsLabel({
@@ -244,17 +245,13 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 									type: 'selection'
 								},
 								{
-									id: 'company',
-									items: [
-										{
-											label: Liferay.Language.get(
-												'liferay'
-											),
-											value: 'liferay'
-										}
-									],
+									apiURL: `/o/contacts/${groupId}/account/industries`,
+									entityFieldType: 'string',
+									id: 'industry',
+									itemKey: 'industry',
+									itemLabel: 'name',
 									label: Liferay.Language.get('industry'),
-									name: 'companyId',
+									multiple: true,
 									type: 'selection'
 								}
 							]}

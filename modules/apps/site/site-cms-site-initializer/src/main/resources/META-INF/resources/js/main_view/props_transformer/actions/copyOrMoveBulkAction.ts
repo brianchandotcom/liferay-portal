@@ -46,10 +46,14 @@ const folderItemSelectorBulkAction = ({
 	);
 
 	if (hasFileOrFolder && hasContent) {
-		const actionType = action === 'move' ? 'moved' : 'copied';
-		const message = Liferay.Language.get(
-			`assets-with-different-content-types-cannot-be-${actionType}-together.-select-assets-with-the-same-content-type-and-try-again`
+		const moveMessage = Liferay.Language.get(
+			'assets-with-different-content-types-cannot-be-moved-together.-select-assets-with-the-same-content-type-and-try-again'
 		);
+		const copyMessage = Liferay.Language.get(
+			'assets-with-different-content-types-cannot-be-copied-together.-select-assets-with-the-same-content-type-and-try-again'
+		);
+
+		const message = action === 'move' ? moveMessage : copyMessage;
 
 		return openActionNotAllowedModal({message});
 	}
@@ -62,7 +66,7 @@ const folderItemSelectorBulkAction = ({
 		{
 			action,
 			apiURL,
-			assetLibraries: additionalProps.candidateAssetLibraries,
+			assetLibraries: additionalProps.assetLibraries,
 			dataSetId,
 			isBulk: true,
 			itemData: {

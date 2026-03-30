@@ -86,6 +86,24 @@
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "null",
+			"externalReferenceCode": "TYPE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Type"
+			},
+			"localized": true,
+			"name": "type",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
 			"externalReferenceCode": "URL",
 			"indexed": true,
 			"indexedLanguageId": "en_US",

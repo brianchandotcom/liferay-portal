@@ -348,11 +348,11 @@ public class VirtualHostFilter extends BasePortalFilter {
 					companyId, friendlyURL);
 
 				if (friendlyURL.equals(StringPool.SLASH) || (plid <= 0)) {
-					Group group = layoutSet.getGroup();
+					Group layoutSetGroup = layoutSet.getGroup();
 
 					if (isDocumentFriendlyURL(
 							httpServletRequest, httpServletResponse,
-							group.getGroupId(), friendlyURL)) {
+							layoutSetGroup.getGroupId(), friendlyURL)) {
 
 						processFilter(
 							VirtualHostFilter.class.getName(),
@@ -363,7 +363,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 					}
 
 					if (Objects.equals(
-							group.getGroupKey(),
+							layoutSetGroup.getGroupKey(),
 							PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
 						friendlyURL.equals(StringPool.SLASH) &&
 						!layoutSet.isPrivateLayout()) {
@@ -377,7 +377,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 						if (friendlyURL.equals(StringPool.SLASH)) {
 							if (layoutSet.isPrivateLayout()) {
-								if (group.isUser()) {
+								if (layoutSetGroup.isUser()) {
 									sb.append(_PRIVATE_USER_SERVLET_MAPPING);
 								}
 								else {
@@ -388,12 +388,12 @@ public class VirtualHostFilter extends BasePortalFilter {
 								sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 							}
 
-							sb.append(group.getFriendlyURL());
+							sb.append(layoutSetGroup.getFriendlyURL());
 						}
 					}
 					else {
 						if (layoutSet.isPrivateLayout()) {
-							if (group.isUser()) {
+							if (layoutSetGroup.isUser()) {
 								sb.append(_PRIVATE_USER_SERVLET_MAPPING);
 							}
 							else {
@@ -404,7 +404,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 							sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 						}
 
-						sb.append(group.getFriendlyURL());
+						sb.append(layoutSetGroup.getFriendlyURL());
 					}
 				}
 			}

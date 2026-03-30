@@ -167,6 +167,15 @@ resource "helm_release" "alloy" {
 			})
 	]
 }
+resource "helm_release" "kube_state_metrics" {
+	chart="kube-state-metrics"
+	count=var.observability_config.enabled ? 1 : 0
+	name="kube-state-metrics"
+	namespace="kube-system"
+	repository="https://prometheus-community.github.io/helm-charts"
+	version="7.2.2"
+	wait=false
+}
 resource "time_rotating" "grafana_api_key" {
 	count=var.observability_config.enabled ? 1 : 0
 	rotation_hours=1

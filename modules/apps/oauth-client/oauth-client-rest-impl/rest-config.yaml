@@ -1,0 +1,14 @@
+apiDir: ../oauth-client-rest-api/src/main/java
+apiPackagePath: com.liferay.oauth.client.rest
+application:
+    baseURI: /oauth-client
+    className: OAuthClientRESTApplication
+    name: Liferay.OAuth.Client.REST
+author: Manuele Castro
+clientDir: ../oauth-client-rest-client/src/main/java
+compatibilityVersion: 14
+forcePredictableOperationId: true
+generateBatch: true
+generateGraphQL: false
+javaEEPackage: jakarta
+testDir: ../oauth-client-rest-test/src/testIntegration/java

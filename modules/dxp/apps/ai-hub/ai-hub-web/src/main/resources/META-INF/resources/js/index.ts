@@ -4,3 +4,4 @@
  */
 
 export {default as AgentDefinitionForm} from './agent_definition_form/AgentDefinitionForm';
+export {default as InstructionDefinitionForm} from './instruction_definition_form/InstructionDefinitionForm';

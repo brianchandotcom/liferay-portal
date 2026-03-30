@@ -155,11 +155,6 @@ public class ObjectEntryFolderAssetRenderer
 		return false;
 	}
 
-	@Override
-	public boolean isDisplayable() {
-		return false;
-	}
-
 	private boolean _hasPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException {

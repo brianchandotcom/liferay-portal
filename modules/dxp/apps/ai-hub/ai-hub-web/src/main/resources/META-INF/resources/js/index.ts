@@ -5,3 +5,4 @@
 
 export {default as AgentDefinitionForm} from './agent_definition_form/AgentDefinitionForm';
 export {default as AgentDefinitionItemTitlePropsTransformer} from './agent_definition_item_title/AgentDefinitionItemTitlePropsTransformer';
+export {default as InstructionDefinitionForm} from './instruction_definition_form/InstructionDefinitionForm';

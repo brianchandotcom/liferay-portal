@@ -8,47 +8,39 @@ import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import React, {useEffect, useState} from 'react';
 
-import './AgentDefinitionForm.scss';
+import './InstructionDefinitionForm.scss';
 
 import Button from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import Icon from '@clayui/icon';
 import Link from '@clayui/link';
-import {Provider} from '@clayui/provider';
 import {openToast} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 
 import Toolbar from '../components/ToolBar';
 import {
-	getAgentDefinition,
-	putAgentDefinition,
-} from './services/AgentDefinitionService';
+	getInstructionDefinition,
+	putInstructionDefinition,
+} from './services/InstructionDefinitionService';
 import {
-	getWorkflowDefinition,
-	getWorkflowDefinitions,
-} from './services/WorkflowDefinitionService';
-import {AgentDefinition} from './types/AgentDefinition';
-import {WorkflowDefinition} from './types/WorkflowDefinition';
+	ListTypeEntry,
+	getListTypeEntries,
+} from './services/ListTypeDefinitionService';
+import {InstructionDefinition} from './types/InstructionDefinition';
 
-export default function AgentDefinitionForm({
+export default function InstructionDefinitionForm({
 	accountEntryExternalReferenceCode,
 	backURL,
 	externalReferenceCode,
-	readonly,
-	workflowDefinitionURL,
 }: {
 	accountEntryExternalReferenceCode: string;
 	backURL: string;
 	externalReferenceCode: string;
-	readonly: boolean;
-	workflowDefinitionURL: string;
 }) {
-	const [formData, setFormData] = useState<AgentDefinition>(
-		{} as AgentDefinition
+	const [formData, setFormData] = useState<InstructionDefinition>(
+		{} as InstructionDefinition
 	);
-	const [workflowDefinitions, setWorkflowDefinitions] = useState<
-		WorkflowDefinition[]
-	>([]);
+	const [scopeOptions, setScopeOptions] = useState<ListTypeEntry[]>([]);
 
 	const handleActive = () => {
 		setFormData((prev) => ({
@@ -69,23 +61,21 @@ export default function AgentDefinitionForm({
 		}));
 	};
 
-	const handleViewWorkflow = () => {
-		window.location.href = workflowDefinitionURL;
-	};
-
 	const handleSubmit = async () => {
 		try {
-			const response = await putAgentDefinition(formData);
+			const response = await putInstructionDefinition(formData);
 
-			if (response?.status?.label === 'approved') {
+			if (response?.externalReferenceCode) {
 				openToast({
-					message: Liferay.Language.get('agent-saved-successfully'),
+					message: Liferay.Language.get(
+						'instruction-saved-successfully'
+					),
 					type: 'success',
 				});
 			}
 			else {
 				openToast({
-					message: Liferay.Language.get('failed-to-save-agent'),
+					message: Liferay.Language.get('failed-to-save-instruction'),
 					type: 'danger',
 				});
 			}
@@ -107,83 +97,79 @@ export default function AgentDefinitionForm({
 					active: false,
 					description: '',
 					externalReferenceCode: '',
-					inputVariables: '',
-					outputVariable: '',
-					r_accountToAIHubAgentDefinitions_accountEntryERC:
+					instruction: '',
+					r_accountToAIHubInstructionDefinitions_accountEntryERC:
 						accountEntryExternalReferenceCode,
+					scope: '',
 					title_i18n: {},
-					workflowDefinitionName: '',
 				});
 
 				return;
 			}
 
 			try {
-				const agentDefinition = await getAgentDefinition(
+				const instructionDefinition = await getInstructionDefinition(
 					externalReferenceCode
 				);
 
 				setFormData({
-					active: agentDefinition.active,
-					description: agentDefinition.description,
+					active: instructionDefinition.active,
+					description: instructionDefinition.description,
 					externalReferenceCode:
-						agentDefinition.externalReferenceCode,
-					inputVariables: agentDefinition.inputVariables,
-					outputVariable: agentDefinition.outputVariable,
-					r_accountToAIHubAgentDefinitions_accountEntryERC:
-						agentDefinition.r_accountToAIHubAgentDefinitions_accountEntryERC,
-					title_i18n: agentDefinition.title_i18n,
-					workflowDefinitionName:
-						agentDefinition.workflowDefinitionName,
+						instructionDefinition.externalReferenceCode,
+					instruction: instructionDefinition.instruction,
+					r_accountToAIHubInstructionDefinitions_accountEntryERC:
+						instructionDefinition.r_accountToAIHubInstructionDefinitions_accountEntryERC,
+					scope: instructionDefinition.scope?.key || '',
+					title_i18n: instructionDefinition.title_i18n,
 				});
 			}
 			catch (error) {
-				openToast({
-					message: Liferay.Language.get('failed-to-load-agent-data'),
-					type: 'danger',
-				});
-			}
-		}
-
-		fetchFormData();
-	}, [accountEntryExternalReferenceCode, externalReferenceCode, readonly]);
-
-	useEffect(() => {
-		async function fetchWorkflowDefinitions() {
-			try {
-				if (readonly) {
-					const response = await getWorkflowDefinition(
-						formData.workflowDefinitionName
-					);
-
-					setWorkflowDefinitions([response]);
-
-					return;
-				}
-				const response = await getWorkflowDefinitions();
-
-				setWorkflowDefinitions(response.items || []);
-			}
-			catch (error) {
-				console.error(error);
-
 				openToast({
 					message: Liferay.Language.get(
-						'failed-to-load-workflow-definitions'
+						'failed-to-load-instruction-data'
 					),
 					type: 'danger',
 				});
 			}
 		}
 
-		fetchWorkflowDefinitions();
-	}, [formData, readonly]);
+		fetchFormData();
+	}, [accountEntryExternalReferenceCode, externalReferenceCode]);
+
+	useEffect(() => {
+		async function fetchScopeOptions() {
+			try {
+				const response = await getListTypeEntries(
+					'L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES'
+				);
+
+				setScopeOptions(response.items || []);
+			}
+			catch (error) {
+				console.error(error);
+
+				openToast({
+					message: Liferay.Language.get(
+						'failed-to-load-scope-options'
+					),
+					type: 'danger',
+				});
+			}
+		}
+
+		fetchScopeOptions();
+	}, []);
 
 	return (
 		<>
 			<Toolbar
 				backURL={backURL}
-				title={Liferay.Language.get('create-agent')}
+				title={
+					externalReferenceCode
+						? Liferay.Language.get('edit-instruction')
+						: Liferay.Language.get('create-instruction')
+				}
 			>
 				<Toolbar.Item>
 					<Link
@@ -200,10 +186,9 @@ export default function AgentDefinitionForm({
 
 				<Toolbar.Item>
 					<Button
-						aria-labelledby="saveButton"
+						aria-label={Liferay.Language.get('save')}
 						data-title="Save Button"
 						data-title-set-as-html
-						disabled={readonly}
 						onClick={handleSubmit}
 						size="sm"
 					>
@@ -212,49 +197,38 @@ export default function AgentDefinitionForm({
 				</Toolbar.Item>
 			</Toolbar>
 
-			<ClayLayout.ContainerFluid className="agent-definition-form">
+			<ClayLayout.ContainerFluid className="instruction-definition-form">
 				<ClayForm>
-					<div className="agent-definition-header">
-						<ClayToggle
-							disabled={readonly}
-							label={Liferay.Language.get('enable-agent')}
-							name="active-toggle"
-							onBlur={(
-								event: React.FocusEvent<HTMLInputElement>
-							) => {
-								event.stopPropagation();
-							}}
-							onToggle={handleActive}
-							toggled={formData.active}
-						/>
-
-						<Provider spritemap={Liferay.Icons.spritemap}>
-							<Button
-								displayType="secondary"
-								onClick={handleViewWorkflow}
-							>
-								<span className="inline-item inline-item-before">
-									<Icon symbol="icon-rule-builder" />
-								</span>
-
-								{Liferay.Language.get('view-workflow')}
-							</Button>
-						</Provider>
-					</div>
-
 					<ClayLayout.Row>
 						<ClayLayout.Col md={12}>
 							<ClayPanel
-								className="agent-definition-details"
+								className="instruction-definition-form-details"
 								collapsable={false}
 								title={Liferay.Language.get('details')}
 							>
 								<ClayPanel.Body>
-									<h2>{Liferay.Language.get('details')}</h2>
+									<div className="instruction-definition-form-header">
+										<h2>
+											{Liferay.Language.get('details')}
+										</h2>
+
+										<ClayToggle
+											label={Liferay.Language.get(
+												'enable-instruction'
+											)}
+											name="enabled-toggle"
+											onBlur={(
+												event: React.FocusEvent<HTMLInputElement>
+											) => {
+												event.stopPropagation();
+											}}
+											onToggle={handleActive}
+											toggled={formData.active}
+										/>
+									</div>
 
 									<ClayForm.Group>
 										<InputLocalized
-											disabled={readonly}
 											id="title"
 											label={Liferay.Language.get(
 												'title'
@@ -290,7 +264,6 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
-											disabled={readonly}
 											id="externalReferenceCode"
 											name="externalReferenceCode"
 											onChange={handleInputChange}
@@ -310,6 +283,26 @@ export default function AgentDefinitionForm({
 											{Liferay.Language.get(
 												'description'
 											)}
+										</label>
+
+										<textarea
+											className="form-control"
+											id="description"
+											name="description"
+											onChange={handleInputChange}
+											placeholder={Liferay.Language.get(
+												'add-a-description'
+											)}
+											rows={3}
+											value={formData.description}
+										/>
+									</ClayForm.Group>
+
+									<ClayForm.Group>
+										<label htmlFor="instruction">
+											{Liferay.Language.get(
+												'instruction'
+											)}
 
 											<span className="ml-1 reference-mark text-warning">
 												<Icon symbol="asterisk" />
@@ -318,68 +311,21 @@ export default function AgentDefinitionForm({
 
 										<textarea
 											className="form-control"
-											disabled={readonly}
-											id="description"
-											name="description"
+											id="instruction"
+											name="instruction"
 											onChange={handleInputChange}
 											placeholder={Liferay.Language.get(
-												'add-a-description'
+												'add-an-instruction'
 											)}
-											rows={4}
-											value={formData.description}
+											rows={6}
+											value={formData.instruction}
 										/>
 									</ClayForm.Group>
 
 									<ClayForm.Group>
-										<label htmlFor="input-variables">
+										<label htmlFor="scope">
 											{Liferay.Language.get(
-												'input-variables'
-											)}
-
-											<span className="ml-1 reference-mark text-warning">
-												<Icon symbol="asterisk" />
-											</span>
-										</label>
-
-										<ClayInput
-											disabled={readonly}
-											id="input-variables"
-											name="inputVariables"
-											onChange={handleInputChange}
-											placeholder="inputVariable1,inputVariable2"
-											required={true}
-											type="text"
-											value={formData.inputVariables}
-										/>
-									</ClayForm.Group>
-
-									<ClayForm.Group>
-										<label htmlFor="output-variable">
-											{Liferay.Language.get(
-												'output-variable'
-											)}
-
-											<span className="ml-1 reference-mark text-warning">
-												<Icon symbol="asterisk" />
-											</span>
-										</label>
-
-										<ClayInput
-											disabled={readonly}
-											id="output-variable"
-											name="outputVariable"
-											onChange={handleInputChange}
-											placeholder="outputVariable"
-											required={true}
-											type="text"
-											value={formData.outputVariable}
-										/>
-									</ClayForm.Group>
-
-									<ClayForm.Group>
-										<label htmlFor="workflowDefinitionName">
-											{Liferay.Language.get(
-												'workflow-definition'
+												'where-to-use'
 											)}
 
 											<span className="ml-1 reference-mark text-warning">
@@ -388,28 +334,27 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<Picker
-											className="agent-workflow-definition"
-											disabled={readonly}
-											items={workflowDefinitions.map(
-												(workflowDefinition) => ({
-													label: workflowDefinition.title,
-													value: workflowDefinition.name,
+											className="instruction-definition-form-scope-field"
+											items={scopeOptions.map(
+												(option) => ({
+													label:
+														option.name_i18n?.[
+															Liferay.ThemeDisplay.getDefaultLanguageId()
+														] || option.name,
+													value: option.key,
 												})
 											)}
 											onSelectionChange={(value) => {
 												setFormData((prev) => ({
 													...prev,
-													workflowDefinitionName:
-														value as string,
+													scope: value as string,
 												}));
 											}}
 											placeholder={Liferay.Language.get(
-												'workflow-definition'
+												'select-an-option'
 											)}
 											required={true}
-											selectedKey={
-												formData.workflowDefinitionName
-											}
+											selectedKey={formData.scope}
 										>
 											{({label, value}) => (
 												<Option key={value}>

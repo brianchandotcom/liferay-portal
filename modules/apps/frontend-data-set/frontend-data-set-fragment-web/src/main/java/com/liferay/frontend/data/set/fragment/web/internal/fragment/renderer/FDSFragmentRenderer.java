@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.data.set.admin.web.internal.fragment.renderer;
+package com.liferay.frontend.data.set.fragment.web.internal.fragment.renderer;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
@@ -12,7 +12,6 @@ import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.data.set.renderer.FDSRenderer;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -30,9 +29,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,6 +39,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
@@ -65,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(service = FragmentRenderer.class)
-public class FDSAdminFragmentRenderer implements FragmentRenderer {
+public class FDSFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -76,21 +77,21 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
-		return JSONUtil.put(
-			"fieldSets",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"fields",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"label", "data-set-view"
-						).put(
-							"name", "itemSelector"
-						).put(
-							"type", "itemSelector"
-						).put(
-							"typeOptions", JSONUtil.put("itemType", "FDSView")
-						)))));
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				StringUtil.read(getClass(), "fds/configuration.json"));
+
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject,
+				ResourceBundleUtil.getBundle("content.Language", getClass()));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return null;
+		}
 	}
 
 	@Override
@@ -560,7 +561,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FDSAdminFragmentRenderer.class);
+		FDSFragmentRenderer.class);
 
 	private static final Pattern _pattern = Pattern.compile("\\{(.*?)\\}");
 
@@ -575,9 +576,6 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

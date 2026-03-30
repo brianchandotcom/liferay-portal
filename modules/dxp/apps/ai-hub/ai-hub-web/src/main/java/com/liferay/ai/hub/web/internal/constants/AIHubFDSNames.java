@@ -13,4 +13,7 @@ public class AIHubFDSNames {
 	public static final String AGENT_DEFINITIONS =
 		AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + "-agentDefinitions";
 
+	public static final String INSTRUCTION_DEFINITIONS =
+		AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + "-instructionDefinitions";
+
 }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export const SetupGuide = ({envVars}: {envVars: string[]}) => {
+export function SetupGuide({envVars}: {envVars: string[]}) {
 	return (
 		<section className="bg-white border flex flex-col gap-8 max-w-2xl mx-auto p-12 rounded-lg shadow-sm text-gray-800">
 			<div className="space-y-4">
@@ -25,10 +25,11 @@ export const SetupGuide = ({envVars}: {envVars: string[]}) => {
 				<ul className="gap-2 grid grid-cols-1 sm:grid-cols-2">
 					{envVars.map((envVar) => (
 						<li
-							className="bg-red-50 border border-red-100 flex items-center gap-2 font-mono p-3 rounded-md text-red-700 text-sm"
+							className="bg-red-50 border border-red-100 flex font-mono gap-2 items-center p-3 rounded-md text-red-700 text-sm"
 							key={envVar}
 						>
 							<span className="bg-red-200 h-2 rounded-full w-2" />
+
 							{envVar}
 						</li>
 					))}
@@ -67,4 +68,4 @@ export const SetupGuide = ({envVars}: {envVars: string[]}) => {
 			</div>
 		</section>
 	);
-};
+}

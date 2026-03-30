@@ -80,7 +80,7 @@ const getNormalizedSearchParams = async ({
 export default async function ProductCatalogPage(props: PageProps<'/'>) {
 	const missingEnvVars = liferay.getMissingEnvVars();
 
-	if (missingEnvVars.length > 0) {
+	if (missingEnvVars.length) {
 		return <SetupGuide envVars={missingEnvVars} />;
 	}
 

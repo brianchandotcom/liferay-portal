@@ -9,8 +9,8 @@ import {PropsWithChildren} from 'react';
 import {Button} from '../../components/button';
 import {CTA} from '../../components/cta';
 import {LocationDetails} from '../../components/location-details';
-import {LocalizedField} from '../../liferay/index';
 import {SetupGuide} from '../../components/setup-guide';
+import {LocalizedField} from '../../liferay/index';
 import {liferay} from '../../liferay/server';
 import {getReadingTime} from '../../utils';
 import {getEventsData} from './data';
@@ -34,7 +34,7 @@ export default async function Home({
 }>) {
 	const missingEnvVars = liferay.getMissingEnvVars();
 
-	if (missingEnvVars.length > 0) {
+	if (missingEnvVars.length) {
 		return (
 			<PageTemplate>
 				<div className="container mx-auto px-4 py-12">

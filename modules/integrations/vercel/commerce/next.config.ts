@@ -12,13 +12,13 @@ const imageDomain = process.env.LIFERAY_HOST
 const nextConfig: NextConfig = {
 	images: {
 		domains: [imageDomain],
+		qualities: [100],
 		remotePatterns: [
 			{
 				hostname: imageDomain,
 				protocol: 'https',
 			},
 		],
-		qualities: [100],
 	},
 };
 

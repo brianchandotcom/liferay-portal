@@ -24,7 +24,7 @@ export default async function Home({
 }) {
 	const missingEnvVars = liferay.getMissingEnvVars();
 
-	if (missingEnvVars.length > 0) {
+	if (missingEnvVars.length) {
 		return (
 			<PageTemplate>
 				<SetupGuide envVars={missingEnvVars} />

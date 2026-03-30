@@ -55,10 +55,6 @@ export const liferay = {
 		return documentPath;
 	},
 
-	getSupportedLanguages: () => {
-		return LIFERAY_LANGUAGES.split(',');
-	},
-
 	getMissingEnvVars: () => {
 		const required = [
 			'LIFERAY_CONTENT_PATH',
@@ -67,6 +63,10 @@ export const liferay = {
 		];
 
 		return required.filter((key) => !process.env[key]);
+	},
+
+	getSupportedLanguages: () => {
+		return LIFERAY_LANGUAGES.split(',');
 	},
 };
 

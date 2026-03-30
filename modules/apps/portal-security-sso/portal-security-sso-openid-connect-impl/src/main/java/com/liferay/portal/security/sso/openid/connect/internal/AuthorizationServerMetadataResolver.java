@@ -28,14 +28,15 @@ import org.osgi.service.component.annotations.Reference;
 public class AuthorizationServerMetadataResolver {
 
 	public OIDCProviderMetadata resolveOIDCProviderMetadata(
-			String authServerWellKnownURI, int metadataCacheInSeconds,
-			long oAuthClientEntryId)
+			String authServerWellKnownURI, long companyId,
+			int metadataCacheInSeconds, long oAuthClientEntryId)
 		throws Exception {
 
 		if (authServerWellKnownURI.endsWith("local")) {
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 				_oAuthClientASLocalMetadataLocalService.
-					getOAuthClientASLocalMetadata(authServerWellKnownURI);
+					getOAuthClientASLocalMetadata(
+						companyId, authServerWellKnownURI);
 
 			return OIDCProviderMetadata.parse(
 				oAuthClientASLocalMetadata.getMetadataJSON());

@@ -137,6 +137,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		OIDCProviderMetadata oidcProviderMetadata =
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
 				oAuthClientEntry.getAuthServerWellKnownURI(),
+				oAuthClientEntry.getCompanyId(),
 				oAuthClientEntry.getMetadataCacheInSeconds(),
 				oAuthClientEntry.getOAuthClientEntryId());
 
@@ -248,6 +249,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				_authorizationServerMetadataResolver.
 					resolveOIDCProviderMetadata(
 						oAuthClientEntry.getAuthServerWellKnownURI(),
+						oAuthClientEntry.getCompanyId(),
 						oAuthClientEntry.getMetadataCacheInSeconds(),
 						oAuthClientEntryId);
 

@@ -14,11 +14,12 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -44,9 +45,12 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 	public boolean processAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			if (!FeatureFlagManagerUtil.isEnabled(
-					CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
+					themeDisplay.getCompanyId(), "LPD-63415")) {
 
 				String localWellKnownURI = ParamUtil.getString(
 					actionRequest, "localWellKnownURI");
@@ -61,7 +65,8 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 				else {
 					OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 						_oAuthClientASLocalMetadataService.
-							getOAuthClientASLocalMetadata(localWellKnownURI);
+							getOAuthClientASLocalMetadataByLocalWellKnownURI(
+								themeDisplay.getCompanyId(), localWellKnownURI);
 
 					_oAuthClientASLocalMetadataService.
 						updateOAuthClientASLocalMetadata(

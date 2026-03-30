@@ -140,6 +140,7 @@ public class OpenIdConnectBackchannelLogoutServlet extends HttpServlet {
 		OIDCProviderMetadata oidcProviderMetadata =
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
 				oAuthClientEntry.getAuthServerWellKnownURI(),
+				oAuthClientEntry.getCompanyId(),
 				oAuthClientEntry.getMetadataCacheInSeconds(),
 				oAuthClientEntry.getOAuthClientEntryId());
 

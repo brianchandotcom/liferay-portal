@@ -70,10 +70,11 @@ export default function CreateDesignLibraryModal({
 			}
 			catch (error: any) {
 				const errorMessage =
-					error?.error ||
+					error?.title ??
+					error?.message ??
 					Liferay.Language.get('an-unexpected-error-occurred');
 
-				if (error?.error) {
+				if (error?.title || error?.message) {
 					setNameInputError(errorMessage);
 				}
 

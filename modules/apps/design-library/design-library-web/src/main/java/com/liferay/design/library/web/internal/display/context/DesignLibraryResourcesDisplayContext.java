@@ -44,7 +44,7 @@ public class DesignLibraryResourcesDisplayContext {
 		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
-			"actionItems", _getActionItemsJSONArray()
+			"actionItems", _getActionItemsJSONArray(designLibraryEntryId)
 		).put(
 			"breadcrumbItems",
 			_getBreadcrumbItemsJSONArray(designLibraryEntryId)
@@ -77,7 +77,7 @@ public class DesignLibraryResourcesDisplayContext {
 				"link"));
 	}
 
-	private JSONArray _getActionItemsJSONArray() {
+	private JSONArray _getActionItemsJSONArray(long designLibraryEntryId) {
 		return JSONUtil.putAll(
 			JSONUtil.put(
 				"href", "#settings"
@@ -91,8 +91,17 @@ public class DesignLibraryResourcesDisplayContext {
 			).put(
 				"symbolLeft", "globe"
 			).put(
+				"target", "connected-sites"
+			).put(
 				"title",
 				LanguageUtil.get(_httpServletRequest, "connected-sites")
+			)
+			.put(
+				"externalReferenceCode",
+				() -> DepotEntryLocalServiceUtil.fetchDepotEntry(
+					designLibraryEntryId
+				).getGroup(
+				).getExternalReferenceCode()
 			),
 			JSONUtil.put(
 				"href", "#manage-members"

@@ -57,21 +57,15 @@ export default function SharedItemRenderer({
 	}
 
 	const isFolder = itemData?.className === OBJECT_ENTRY_FOLDER_CLASS_NAME;
+	const visible = itemData?.visible;
 
 	const shouldOpenModal =
-		!itemData?.actionIds?.includes('UPDATE') &&
-		!isFolder &&
-		itemData?.visible;
+		!itemData?.actionIds?.includes('UPDATE') && !isFolder && visible;
 
 	const linkHref = useMemo(() => {
 		const {actionId} = options;
 
-		if (
-			shouldOpenModal ||
-			!actions.length ||
-			!actionId ||
-			!itemData?.visible
-		) {
+		if (shouldOpenModal || !actions.length || !actionId || !visible) {
 			return null;
 		}
 
@@ -88,7 +82,7 @@ export default function SharedItemRenderer({
 		}
 
 		return replaceTokens(selectedAction.href, itemData);
-	}, [actions, isFolder, itemData, options, shouldOpenModal]);
+	}, [actions, isFolder, itemData, options, shouldOpenModal, visible]);
 
 	return (
 		<span className="align-items-center c-gap-2 d-flex table-list-title">

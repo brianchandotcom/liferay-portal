@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List rendering should match the snapshot 1`] = `
+<div>
+  <div
+    class="index-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <header
+      class="header-root"
+    >
+      <div
+        class="header-container"
+      >
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <ol
+            class="breadcrumb breadcrumbs-root"
+          >
+            <li
+              class="breadcrumb-item"
+            >
+              <button
+                class="breadcrumb-text-truncate btn btn-unstyled"
+                type="button"
+              >
+                Channel 1
+              </button>
+            </li>
+          </ol>
+        </div>
+        <div
+          class="header-section title-section"
+        >
+          <span
+            class="align-items-center d-flex"
+          >
+            <h1
+              class="title text-truncate"
+            >
+              <span
+                class="text-truncate"
+                data-tooltip="false"
+                title=""
+              >
+                Assets
+              </span>
+            </h1>
+          </span>
+        </div>
+      </div>
+    </header>
+    <div
+      class="sub-header-root"
+    >
+      <div
+        class="row-root align-items-center d-flex justify-content-between header-container"
+      >
+        <div
+          class="d-flex justify-content-end w-100"
+        >
+          <div
+            data-testid="dropdown-range-key"
+          >
+            <span
+              data-testid="current-range-key"
+            >
+              30
+            </span>
+            <button
+              data-testid="change-range-btn"
+            >
+              Change Range
+            </button>
+            <button
+              data-testid="change-range-custom-btn"
+            >
+              Change to Custom Range
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="body-root page-container"
+    >
+      <span
+        class="children-wrapper"
+      >
+        <div
+          class="card card-root"
+        >
+          <div
+            data-testid="fds-component"
+            id="assetTable"
+          />
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+`;

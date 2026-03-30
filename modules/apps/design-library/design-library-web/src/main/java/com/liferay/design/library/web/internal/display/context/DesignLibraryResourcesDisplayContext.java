@@ -84,7 +84,7 @@ public class DesignLibraryResourcesDisplayContext {
 			).put(
 				"symbolLeft", "cog"
 			).put(
-				"title", LanguageUtil.get(_httpServletRequest, "settings")
+				"label", LanguageUtil.get(_httpServletRequest, "settings")
 			),
 			JSONUtil.put(
 				"href", "#connected-sites"
@@ -93,7 +93,7 @@ public class DesignLibraryResourcesDisplayContext {
 			).put(
 				"target", "connected-sites"
 			).put(
-				"title",
+				"label",
 				LanguageUtil.get(_httpServletRequest, "connected-sites")
 			)
 			.put(
@@ -108,28 +108,28 @@ public class DesignLibraryResourcesDisplayContext {
 			).put(
 				"symbolLeft", "users"
 			).put(
-				"title", LanguageUtil.get(_httpServletRequest, "manage-members")
+				"label", LanguageUtil.get(_httpServletRequest, "manage-members")
 			),
 			JSONUtil.put(
 				"href", "#import"
 			).put(
 				"symbolLeft", "import"
 			).put(
-				"title", LanguageUtil.get(_httpServletRequest, "import")
+				"label", LanguageUtil.get(_httpServletRequest, "import")
 			),
 			JSONUtil.put(
 				"href", "#export"
 			).put(
 				"symbolLeft", "export"
 			).put(
-				"title", LanguageUtil.get(_httpServletRequest, "export")
+				"label", LanguageUtil.get(_httpServletRequest, "export")
 			),
 			JSONUtil.put(
 				"href", "#delete"
 			).put(
 				"symbolLeft", "trash"
 			).put(
-				"title", LanguageUtil.get(_httpServletRequest, "delete")
+				"label", LanguageUtil.get(_httpServletRequest, "delete")
 			));
 	}
 

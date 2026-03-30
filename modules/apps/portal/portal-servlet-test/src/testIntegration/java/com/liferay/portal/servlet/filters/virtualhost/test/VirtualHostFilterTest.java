@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.struts.LastPath;
@@ -56,7 +57,9 @@ public class VirtualHostFilterTest {
 
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
-		_layoutSet = _layoutSetLocalService.getLayoutSet(
+		_privateLayoutSet = _layoutSetLocalService.getLayoutSet(
+			TestPropsValues.getGroupId(), true);
+		_publicLayoutSet = _layoutSetLocalService.getLayoutSet(
 			TestPropsValues.getGroupId(), false);
 	}
 
@@ -103,12 +106,106 @@ public class VirtualHostFilterTest {
 	}
 
 	@Test
+	public void testProcessFilterForwardedURLWithPublicServletMappingDisabled() {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
+
+			Assert.assertEquals(
+				"/web" + groupFriendlyURL + "/home",
+				_getForwardedURL(groupFriendlyURL + "/home"));
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Test
+	public void testProcessFilterForwardedURLWithPublicServletMappingDisabledDoesNotAffectPrivateGroupURL() {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			String groupFriendlyURL = _getGroupFriendlyURL(_privateLayoutSet);
+
+			Assert.assertEquals(
+				"/group" + groupFriendlyURL + "/home",
+				_getForwardedURL(_privateLayoutSet, "/home"));
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Test
+	public void testProcessFilterForwardedURLWithPublicServletMappingDisabledDoesNotAffectVirtualHostURL() {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			String forwardedURL = _getForwardedURL("/home");
+
+			String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
+
+			Assert.assertEquals(
+				"/web" + groupFriendlyURL + "/home", forwardedURL);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Test
+	public void testProcessFilterForwardedURLWithPublicServletMappingDisabledWithoutLayoutSet() {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
+
+			Assert.assertEquals(
+				"/web" + groupFriendlyURL + "/home",
+				_getForwardedURL(null, groupFriendlyURL + "/home"));
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Test
 	public void testProcessFilterLastPath() {
 		_testProcessFilterLastPath(
 			_PATH_PROXY + _PATH_CONTEXT, _PATH_PROXY,
 			_PATH_CONTEXT + _LAST_PATH);
 		_testProcessFilterLastPath(_PATH_PROXY, StringPool.BLANK, _LAST_PATH);
 		_testProcessFilterLastPath(_PATH_PROXY, _PATH_PROXY, _LAST_PATH);
+	}
+
+	private String _getForwardedURL(LayoutSet layoutSet, String requestURI) {
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layoutSet, requestURI);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_virtualHostFilter.init(new MockFilterConfig());
+
+		ReflectionTestUtil.invoke(
+			_virtualHostFilter, "processFilter",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				FilterChain.class
+			},
+			mockHttpServletRequest, mockHttpServletResponse,
+			new MockFilterChain());
+
+		return mockHttpServletResponse.getForwardedUrl();
 	}
 
 	private String _getForwardedURL(String requestURI) {
@@ -130,6 +227,14 @@ public class VirtualHostFilterTest {
 			new MockFilterChain());
 
 		return mockHttpServletResponse.getForwardedUrl();
+	}
+
+	private String _getGroupFriendlyURL(LayoutSet layoutSet)
+		throws PortalException {
+
+		Group group = layoutSet.getGroup();
+
+		return group.getFriendlyURL();
 	}
 
 	private String _getLastPath(String requestURI) {
@@ -158,16 +263,22 @@ public class VirtualHostFilterTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-		String requestURI) {
+		LayoutSet layoutSet, String requestURI) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _layoutSet);
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
 		mockHttpServletRequest.setRequestURI(requestURI);
 
 		return mockHttpServletRequest;
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(
+		String requestURI) {
+
+		return _getMockHttpServletRequest(_publicLayoutSet, requestURI);
 	}
 
 	private void _testProcessFilterLastPath(
@@ -186,10 +297,11 @@ public class VirtualHostFilterTest {
 
 	private static final String _PATH_PROXY = "/proxy";
 
-	private static LayoutSet _layoutSet;
-
 	@Inject
 	private static LayoutSetLocalService _layoutSetLocalService;
+
+	private static LayoutSet _privateLayoutSet;
+	private static LayoutSet _publicLayoutSet;
 
 	private String _pathContext;
 	private String _pathProxy;

@@ -459,6 +459,152 @@ public class PortalImplUnitTest {
 	}
 
 	@Test
+	public void testGetLayoutSetFriendlyURLWithPublicServletMappingDisabled()
+		throws Exception {
+
+		boolean publicServletMappingEnabled =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED;
+
+		try {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED", false);
+
+			_setUpPortalImpl(StringPool.BLANK);
+
+			_assertGetLayoutSetFriendlyURL(
+				"/test-group", "http://liferay.com:8080", false,
+				new TreeMap<>());
+		}
+		finally {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+				publicServletMappingEnabled);
+		}
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLWithPublicServletMappingDisabledAndContextPath()
+		throws Exception {
+
+		boolean publicServletMappingEnabled =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED;
+
+		try {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED", false);
+
+			_setUpPortalImpl("context-path");
+
+			_assertGetLayoutSetFriendlyURL(
+				"/context-path/test-group",
+				"http://liferay.com:8080/context-path", false, new TreeMap<>());
+		}
+		finally {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+				publicServletMappingEnabled);
+		}
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLWithPublicServletMappingDisabledAndPrivateGroup()
+		throws Exception {
+
+		boolean publicServletMappingEnabled =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED;
+
+		try {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED", false);
+
+			_setUpPortalImpl(StringPool.BLANK);
+
+			_assertGetLayoutSetFriendlyURL(
+				"/group/test-group", "http://liferay.com:8080", true,
+				new TreeMap<>());
+		}
+		finally {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+				publicServletMappingEnabled);
+		}
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLWithPublicServletMappingDisabledAndUserGroup()
+		throws Exception {
+
+		boolean publicServletMappingEnabled =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED;
+
+		try {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED", false);
+
+			_setUpPortalImpl(StringPool.BLANK, true);
+
+			_assertGetLayoutSetFriendlyURL(
+				"/user/test-group", "http://liferay.com:8080", true,
+				new TreeMap<>());
+		}
+		finally {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+				publicServletMappingEnabled);
+		}
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLWithPublicServletMappingDisabledAndVirtualHost()
+		throws Exception {
+
+		boolean publicServletMappingEnabled =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED;
+
+		try {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED", false);
+
+			_setUpPortalImpl(StringPool.BLANK);
+
+			_assertGetLayoutSetFriendlyURL(
+				"/test-group", "http://liferay.com:8080", false,
+				TreeMapBuilder.put(
+					"test.com", StringPool.BLANK
+				).build());
+		}
+		finally {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+				publicServletMappingEnabled);
+		}
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLWithPublicServletMappingEnabled()
+		throws Exception {
+
+		boolean publicServletMappingEnabled =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED;
+
+		try {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED", true);
+
+			_setUpPortalImpl(StringPool.BLANK);
+
+			_assertGetLayoutSetFriendlyURL(
+				"/web/test-group", "http://liferay.com:8080", false,
+				new TreeMap<>());
+		}
+		finally {
+			setPropsValuesValue(
+				"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+				publicServletMappingEnabled);
+		}
+	}
+
+	@Test
 	public void testGetOriginalServletRequest() {
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 

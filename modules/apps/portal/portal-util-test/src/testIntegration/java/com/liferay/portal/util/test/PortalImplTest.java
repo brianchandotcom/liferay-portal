@@ -7,16 +7,24 @@ package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.portlet.MockPortletRequest;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -25,6 +33,7 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -54,6 +63,83 @@ public class PortalImplTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetLayoutFriendlyURLWithPublicServletMappingDisabled()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			Company company = _companyLocalService.getCompany(
+				TestPropsValues.getCompanyId());
+
+			Group group = _groupLocalService.fetchGroup(
+				company.getCompanyId(), GroupConstants.GUEST);
+
+			Layout layout = _layoutLocalService.fetchDefaultLayout(
+				group.getGroupId(), false);
+
+			_assertLayoutFriendlyURL(
+				company, group, layout, "localhost",
+				group.getFriendlyURL() + layout.getFriendlyURL());
+		}
+	}
+
+	@Test
+	public void testGetLayoutFriendlyURLWithPublicServletMappingDisabledAndCompanyVirtualHost()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			Company company = _companyLocalService.getCompany(
+				TestPropsValues.getCompanyId());
+
+			Group group = _groupLocalService.fetchGroup(
+				company.getCompanyId(), GroupConstants.GUEST);
+
+			Layout layout = _layoutLocalService.fetchDefaultLayout(
+				group.getGroupId(), false);
+
+			_assertLayoutFriendlyURL(
+				company, group, layout, company.getVirtualHostname(),
+				group.getFriendlyURL() + layout.getFriendlyURL());
+		}
+	}
+
+	@Test
+	public void testGetLayoutFriendlyURLWithPublicServletMappingDisabledAndLayoutSetVirtualHost()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			Company company = CompanyTestUtil.addCompany();
+
+			try {
+				Group group = _groupLocalService.fetchGroup(
+					company.getCompanyId(), GroupConstants.GUEST);
+
+				Layout layout = _layoutLocalService.fetchDefaultLayout(
+					group.getGroupId(), false);
+
+				String hostname = _setLayoutSetVirtualHost(company, group);
+
+				_assertLayoutFriendlyURL(
+					company, group, layout, hostname, layout.getFriendlyURL());
+			}
+			finally {
+				_companyLocalService.deleteCompany(company);
+			}
+		}
+	}
 
 	@Test
 	public void testGetPortletTitleFromPortletRequestWithDeployedPortletId()
@@ -130,6 +216,26 @@ public class PortalImplTest {
 		}
 	}
 
+	private void _assertLayoutFriendlyURL(
+			Company company, Group group, Layout layout, String virtualHostname,
+			String expectedURL)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(company);
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+		themeDisplay.setPortalDomain(virtualHostname);
+		themeDisplay.setServerName(virtualHostname);
+		themeDisplay.setServerPort(8080);
+		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		Assert.assertEquals(
+			expectedURL, _portal.getLayoutFriendlyURL(themeDisplay));
+	}
+
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -177,6 +283,22 @@ public class PortalImplTest {
 		};
 	}
 
+	private String _setLayoutSetVirtualHost(Company company, Group group) {
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		String hostname =
+			RandomTestUtil.randomString() + "." +
+				RandomTestUtil.randomString(3);
+
+		_virtualHostLocalService.updateVirtualHosts(
+			company.getCompanyId(), layoutSet.getLayoutSetId(),
+			TreeMapBuilder.put(
+				hostname, StringPool.BLANK
+			).build());
+
+		return hostname;
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -197,5 +319,8 @@ public class PortalImplTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

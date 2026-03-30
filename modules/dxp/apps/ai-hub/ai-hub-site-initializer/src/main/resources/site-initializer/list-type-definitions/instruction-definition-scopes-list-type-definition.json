@@ -1,0 +1,13 @@
+{
+	"externalReferenceCode": "L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "CLICK_TO_CHAT",
+			"key": "clickToChat",
+			"name": "Click to Chat",
+			"system": true
+		}
+	],
+	"name": "AI Hub Instruction Definition Scopes",
+	"system": true
+}

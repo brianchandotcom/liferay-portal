@@ -133,6 +133,53 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 		return StringPool.BLANK;
 	}
 
+	private boolean _hasFragmentCollection(ZipFile zipFile) {
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			if (zipEntry.isDirectory()) {
+				continue;
+			}
+
+			String zipEntryName = zipEntry.getName();
+
+			if (zipEntryName.endsWith(
+					FragmentExportImportConstants.FILE_NAME_COLLECTION)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _hasFragmentEntries(ZipFile zipFile) {
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			if (zipEntry.isDirectory()) {
+				continue;
+			}
+
+			String zipEntryName = zipEntry.getName();
+
+			if (zipEntryName.endsWith(
+					FragmentExportImportConstants.FILE_NAME_FRAGMENT) ||
+				zipEntryName.endsWith(
+					FragmentExportImportConstants.
+						FILE_NAME_FRAGMENT_COMPOSITION)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private JSONObject _importFragmentEntries(
 		File file, long fragmentCollectionId, long groupId,
 		FragmentsImportStrategy fragmentsImportStrategy, Locale locale,
@@ -195,38 +242,15 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private boolean _needsFragmentCollection(File file) throws Exception {
-		boolean hasFragmentEntries = false;
-
 		try (ZipFile zipFile = new ZipFile(file)) {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+			if (!_hasFragmentCollection(zipFile) &&
+				_hasFragmentEntries(zipFile)) {
 
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
-
-				if (zipEntry.isDirectory()) {
-					continue;
-				}
-
-				String zipEntryName = zipEntry.getName();
-
-				if (zipEntryName.endsWith(
-						FragmentExportImportConstants.FILE_NAME_FRAGMENT) ||
-					zipEntryName.endsWith(
-						FragmentExportImportConstants.
-							FILE_NAME_FRAGMENT_COMPOSITION)) {
-
-					hasFragmentEntries = true;
-				}
-
-				if (zipEntryName.endsWith(
-						FragmentExportImportConstants.FILE_NAME_COLLECTION)) {
-
-					return false;
-				}
+				return true;
 			}
-		}
 
-		return hasFragmentEntries;
+			return false;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

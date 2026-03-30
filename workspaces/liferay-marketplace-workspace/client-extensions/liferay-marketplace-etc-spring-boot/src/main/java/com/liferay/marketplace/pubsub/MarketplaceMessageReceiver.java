@@ -225,12 +225,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	}
 
 	private boolean _isOKStatusCode(int stausCode) {
-		if ((stausCode / 200) == 2) {
-			return true;
-		}
-
-		return false;
-	}
+	    return (stausCode / 200) == 2;
+    }
 
 	private void _processKoroneikiAccount(
 			AckReplyConsumer ackReplyConsumer,
@@ -244,7 +240,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Skipping over account: " + koroneikiAccount.getKey() +
+						"Skipping over account " + koroneikiAccount.getKey() +
 							" because it is a project");
 				}
 
@@ -282,8 +278,10 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Ran into a race condition (HTTP " + statusCode +
-							" ) nacking to retry later");
+						StringBundler.concat(
+							"Race condition detected for account ",
+							koroneikiAccount.getKey(),
+							" with HTTP status code ", statusCode));
 				}
 
 				ackReplyConsumer.nack();
@@ -294,8 +292,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				throw new Exception(
 					StringBundler.concat(
 						"Failed to process account for ",
-						koroneikiAccount.getKey(), ". HTTP ", statusCode, " - ",
-						httpResponse.getContent()));
+						koroneikiAccount.getKey(), "with HTTP status code ",
+						statusCode, " - ", httpResponse.getContent()));
 			}
 		}
 
@@ -326,8 +324,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				if (_isOKStatusCode(statusCode)) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Creating user with email address: " +
-								emailAddress);
+							"Creating user with email address " + emailAddress);
 					}
 
 					_marketplaceService.postAccountUserAccountByEmailAddress(
@@ -338,7 +335,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Another thread is processing user: " +
+							"Another thread is processing user " +
 								emailAddress);
 					}
 				}
@@ -425,7 +422,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 		if (opportunityId == null) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Skipping product purchase: missing opportunity Id");
+				_log.info("Skipping product purchase: missing opportunity ID");
 			}
 
 			return;

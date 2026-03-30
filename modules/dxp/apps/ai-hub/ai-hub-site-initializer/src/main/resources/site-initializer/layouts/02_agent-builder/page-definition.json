@@ -67,7 +67,7 @@
 								"key": "BASIC_COMPONENT-tabs"
 							},
 							"fragmentConfig": {
-								"numberOfTabs": 2,
+								"numberOfTabs": 3,
 								"persistSelectedTab": true
 							},
 							"fragmentFields": [
@@ -85,6 +85,18 @@
 								},
 								{
 									"id": "title2",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Instructions"
+											}
+										}
+									}
+								},
+								{
+									"id": "title3",
 									"value": {
 										"fragmentLink": {
 										},
@@ -123,6 +135,27 @@
 							{
 								"definition": {
 									"fragmentDropZoneId": "2"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewInstructionDefinitionsFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+									"fragmentDropZoneId": "3"
 								},
 								"pageElements": [
 									{

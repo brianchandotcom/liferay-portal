@@ -130,11 +130,13 @@ export class StyleBooksPage {
 	async markAsDefault(styleBookName: string) {
 		await this.search(styleBookName);
 
-		this.page.once('dialog', (dialog) => {
-			dialog.accept();
-		});
+		const confirmationDialog = this.page
+			.waitForEvent('dialog')
+			.then(async (dialog) => await dialog.accept());
 
 		await this.clickOnAction(styleBookName, 'Mark as Default');
+
+		await confirmationDialog;
 	}
 
 	async clickOnPublishAction(action: string) {

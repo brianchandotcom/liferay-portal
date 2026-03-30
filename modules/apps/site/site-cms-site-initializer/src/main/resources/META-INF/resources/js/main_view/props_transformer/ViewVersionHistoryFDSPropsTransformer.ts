@@ -6,6 +6,7 @@
 import {IInternalRenderer, replaceTokens} from '@liferay/frontend-data-set-web';
 import {navigate, sessionStorage, sub} from 'frontend-js-web';
 
+import StatusLabel from '../../common/components/StatusLabel';
 import {openCMSModal} from '../../common/utils/openCMSModal';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import confirmAndDeleteEntryAction from './actions/confirmAndDeleteEntryAction';
@@ -43,6 +44,11 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 				{
 					component: VersionRenderer,
 					name: 'versionTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({value}) => StatusLabel(value),
+					name: 'statusTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],

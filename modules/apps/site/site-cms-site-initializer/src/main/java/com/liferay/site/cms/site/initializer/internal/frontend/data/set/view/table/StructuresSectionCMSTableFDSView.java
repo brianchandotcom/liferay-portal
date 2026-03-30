@@ -56,7 +56,7 @@ public class StructuresSectionCMSTableFDSView extends BaseCMSTableFDSView {
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
+				"statusTableCellRenderer")
 		).build();
 	}
 

@@ -47,7 +47,7 @@ public class ViewVersionHistoryCMSTableFDSView extends BaseCMSTableFDSView {
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
+				"statusTableCellRenderer")
 		).add(
 			"creator.name", "author",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

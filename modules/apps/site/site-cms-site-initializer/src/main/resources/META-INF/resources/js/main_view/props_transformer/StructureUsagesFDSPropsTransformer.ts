@@ -5,6 +5,7 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import StatusLabel from '../../common/components/StatusLabel';
 import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
@@ -37,6 +38,11 @@ export default function StructureUsagesFDSPropsTransformer({
 				{
 					component: TypeRenderer,
 					name: 'typeTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({value}) => StatusLabel(value),
+					name: 'statusTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],

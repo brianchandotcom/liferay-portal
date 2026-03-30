@@ -5,6 +5,7 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import StatusLabel from '../../common/components/StatusLabel';
 import {IBulkActionFDSData} from '../../common/types/BulkActionTask';
 import {ObjectDefinition} from '../../common/types/ObjectDefinition';
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
@@ -46,6 +47,11 @@ export default function StructuresFDSPropsTransformer({
 				{
 					component: TypeRenderer,
 					name: 'typeTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({value}) => StatusLabel(value),
+					name: 'statusTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],

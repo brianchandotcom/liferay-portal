@@ -115,13 +115,16 @@ public class BNDWebServiceTrackingCheck extends BaseFileCheck {
 
 					String service = annotationMemberValuePair.get("service");
 
-					if (!service.contains("Portlet.class")) {
+					if ((service == null) ||
+						!service.contains("Portlet.class")) {
+
 						continue;
 					}
 
 					String property = annotationMemberValuePair.get("property");
 
-					if (property.contains(
+					if ((property != null) &&
+						property.contains(
 							"jakarta.portlet.init-param.view-template")) {
 
 						continue;

@@ -85,7 +85,7 @@ test(
 		await test.step('Set the new style book as default', async () => {
 			const sticker = styleBooksPage
 				.getStyleBookCard(styleBookName)
-				.getByTitle('Marked as Default for Classic Theme');
+				.getByTitle(/Marked as Default for \w+ Theme/);
 
 			await expect(sticker).toBeHidden();
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -387,7 +388,10 @@ public class BreadcrumbDisplayContext {
 			_httpServletRequest, _getGroup(), portletId, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
-		return portletURL.toString();
+		return HttpComponentsUtil.addParameter(
+			portletURL.toString(),
+			PortalUtil.getPortletNamespace(portletId) + "backURL",
+			_themeDisplay.getURLCurrent());
 	}
 
 	private Group _getGroup() throws Exception {

@@ -381,6 +381,10 @@ public abstract class BaseLicenseTestCase {
 		return getProperty("product.id.cmp");
 	}
 
+	protected Field getIgnoredVersionField() {
+		return ReflectionsHolder._ignoredVersionField;
+	}
+
 	protected String getPortalProductId() {
 		return getProperty("product.id.portal");
 	}
@@ -583,6 +587,7 @@ public abstract class BaseLicenseTestCase {
 		private static final Log _log = LogFactoryUtil.getLog(
 			BaseLicenseTestCase.class);
 
+		private static Field _ignoredVersionField;
 		private static Instrumentation _instrumentation;
 		private static Class<?> _licenseManagerHelperClass;
 		private static Field _lifecycleActionField;
@@ -612,6 +617,8 @@ public abstract class BaseLicenseTestCase {
 				}
 
 				try {
+					_ignoredVersionField = _findField(
+						classLoader, getProperty("ignored.version.filed"));
 					_lifecycleActionField = _findField(
 						classLoader, getProperty("lifecycle.action.field"));
 					_validateMethod = _findMethod(

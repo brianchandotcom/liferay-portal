@@ -124,6 +124,21 @@
 								"definition": {
 									"fragmentDropZoneId": "2"
 								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewContentRetrieversFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
 								"type": "FragmentDropZone"
 							}
 						],

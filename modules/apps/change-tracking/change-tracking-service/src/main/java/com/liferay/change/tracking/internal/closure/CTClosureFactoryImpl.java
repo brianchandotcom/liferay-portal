@@ -120,7 +120,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		Map<Node, Collection<Node>> ctClosureMap = new HashMap<>();
 
-		Collection<Node> nodes = new LinkedHashSet<>();
+		Collection<Node> rootNodes = new LinkedHashSet<>();
 
 		Set<Node> visitedNodes = new HashSet<>();
 
@@ -135,7 +135,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				List<Long> rootPKs = rootPKsMap.get(node.getClassNameId());
 
 				if (rootPKs.contains(node.getPrimaryKey())) {
-					nodes.add(node);
+					rootNodes.add(node);
 				}
 			}
 
@@ -148,9 +148,9 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				(childClassNameId, childPKs) -> {
 					if (validClassNameIds.contains(childClassNameId)) {
 						childPKs.forEach(
-							childPK -> {
+							childClassPK -> {
 								Node childNode = new Node(
-									childClassNameId, childPK);
+									childClassNameId, childClassPK);
 
 								childNodes.add(childNode);
 
@@ -164,7 +164,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			}
 		}
 
-		ctClosureMap.put(Node.ROOT_NODE, nodes);
+		ctClosureMap.put(Node.ROOT_NODE, rootNodes);
 
 		return new CTClosureImpl(ctCollectionId, ctClosureMap);
 	}

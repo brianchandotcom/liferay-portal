@@ -1,12 +1,10 @@
 @import 'cadmin-variables';
 
-html#{$cadmin-selector} .cadmin {
-	.dsm-toggle-switch {
-		.simple-toggle-switch.toggle-switch-sm {
-			.toggle-switch-label {
-				max-width: 100%;
-				padding-left: 0.5rem;
-			}
-		}
-	}
+html#{$cadmin-selector}
+	.cadmin.fds-admin
+	.dsm-toggle-switch
+	.simple-toggle-switch.toggle-switch-sm
+	.toggle-switch-label {
+	max-width: 100%;
+	padding-left: 0.5rem;
 }

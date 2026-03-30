@@ -15,33 +15,31 @@ html#{$cadmin-selector} {
 	}
 }
 
-html#{$cadmin-selector} .cadmin {
-	.panel-unstyled {
-		margin-bottom: 0;
-		padding: 1rem 1.5rem;
+html#{$cadmin-selector} .cadmin.fds-admin .fds-admin-actions .panel-unstyled {
+	margin-bottom: 0;
+	padding: 1rem 1.5rem;
 
-		.panel-header {
-			&,
-			&.collapsed {
-				border-color: $gray-400;
-			}
-
-			&.panel-header-link {
-				border-radius: 0;
-			}
+	.panel-header {
+		&,
+		&.collapsed {
+			border-color: $gray-400;
 		}
 
-		.tab-content.status-messages-content .tab-pane {
-			padding: 2rem 0;
+		&.panel-header-link {
+			border-radius: 0;
 		}
+	}
 
-		.field-feedback {
-			font-size: 14px;
+	.tab-content.status-messages-content .tab-pane {
+		padding: 2rem 0;
+	}
 
-			&:last-child {
-				color: #6b6c7e;
-				font-weight: 600;
-			}
+	.field-feedback {
+		font-size: 14px;
+
+		&:last-child {
+			color: #6b6c7e;
+			font-weight: 600;
 		}
 	}
 }

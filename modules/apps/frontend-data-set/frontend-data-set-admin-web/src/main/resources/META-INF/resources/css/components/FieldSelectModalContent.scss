@@ -1,7 +1,7 @@
 @import 'atlas-variables';
 @import 'cadmin-variables';
 
-html#{$cadmin-selector} .cadmin .field-select-modal {
+html#{$cadmin-selector} .cadmin.fds-admin .field-select-modal {
 	.selection-mode-multiple {
 		.custom-control-label {
 			line-height: 24px;

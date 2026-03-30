@@ -143,7 +143,7 @@ const DataSet = ({
 
 	return (
 		<LearnResourcesContext.Provider value={learnResources}>
-			<div className="cadmin fds-view">
+			<div className="cadmin fds-admin">
 				<ClayNavigationBar
 					triggerLabel={NAVIGATION_BAR_ITEMS[activeIndex].label}
 				>

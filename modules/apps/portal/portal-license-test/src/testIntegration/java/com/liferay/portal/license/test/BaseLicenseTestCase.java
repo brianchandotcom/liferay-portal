@@ -356,6 +356,51 @@ public abstract class BaseLicenseTestCase {
 		}
 	}
 
+	protected static Field findField(
+			ClassLoader classLoader, String fieldString)
+		throws Exception {
+
+		return ReflectionTestUtil.getField(
+			classLoader.loadClass(
+				fieldString.substring(
+					0, fieldString.lastIndexOf(StringPool.PERIOD))),
+			fieldString.substring(
+				fieldString.lastIndexOf(StringPool.PERIOD) + 1));
+	}
+
+	protected static Method findMethod(
+			ClassLoader classLoader, String methodString)
+		throws Exception {
+
+		String methodName = methodString.substring(
+			0, methodString.indexOf(StringPool.OPEN_PARENTHESIS));
+
+		String className = methodName.substring(
+			0, methodName.lastIndexOf(StringPool.PERIOD));
+		String methodSimpleName = methodName.substring(
+			methodName.lastIndexOf(StringPool.PERIOD) + 1);
+
+		String parameterString = methodString.substring(
+			methodString.indexOf(StringPool.OPEN_PARENTHESIS) + 1,
+			methodString.length() - 1);
+
+		if (Validator.isNull(parameterString)) {
+			return ReflectionTestUtil.getMethod(
+				classLoader.loadClass(className), methodSimpleName);
+		}
+
+		String[] parameterNames = parameterString.split(StringPool.COMMA);
+
+		Class<?>[] parameterTypes = new Class<?>[parameterNames.length];
+
+		for (int i = 0; i < parameterNames.length; i++) {
+			parameterTypes[i] = classLoader.loadClass(parameterNames[i]);
+		}
+
+		return ReflectionTestUtil.getMethod(
+			classLoader.loadClass(className), methodSimpleName, parameterTypes);
+	}
+
 	protected static String getProperty(String propertyKey) {
 		String value = _licenseTestProperties.getProperty(propertyKey);
 
@@ -387,50 +432,6 @@ public abstract class BaseLicenseTestCase {
 
 	protected String getPortalProductId() {
 		return getProperty("product.id.portal");
-	}
-
-	private static Field _findField(ClassLoader classLoader, String fieldString)
-		throws Exception {
-
-		return ReflectionTestUtil.getField(
-			classLoader.loadClass(
-				fieldString.substring(
-					0, fieldString.lastIndexOf(StringPool.PERIOD))),
-			fieldString.substring(
-				fieldString.lastIndexOf(StringPool.PERIOD) + 1));
-	}
-
-	private static Method _findMethod(
-			ClassLoader classLoader, String methodString)
-		throws Exception {
-
-		String methodName = methodString.substring(
-			0, methodString.indexOf(StringPool.OPEN_PARENTHESIS));
-
-		String className = methodName.substring(
-			0, methodName.lastIndexOf(StringPool.PERIOD));
-		String methodSimpleName = methodName.substring(
-			methodName.lastIndexOf(StringPool.PERIOD) + 1);
-
-		String parameterString = methodString.substring(
-			methodString.indexOf(StringPool.OPEN_PARENTHESIS) + 1,
-			methodString.length() - 1);
-
-		if (Validator.isNull(parameterString)) {
-			return ReflectionTestUtil.getMethod(
-				classLoader.loadClass(className), methodSimpleName);
-		}
-
-		String[] parameterNames = parameterString.split(StringPool.COMMA);
-
-		Class<?>[] parameterTypes = new Class<?>[parameterNames.length];
-
-		for (int i = 0; i < parameterNames.length; i++) {
-			parameterTypes[i] = classLoader.loadClass(parameterNames[i]);
-		}
-
-		return ReflectionTestUtil.getMethod(
-			classLoader.loadClass(className), methodSimpleName, parameterTypes);
 	}
 
 	private static ResettableClassFileTransformer _transformMethod(
@@ -617,13 +618,13 @@ public abstract class BaseLicenseTestCase {
 				}
 
 				try {
-					_ignoredVersionField = _findField(
+					_ignoredVersionField = findField(
 						classLoader, getProperty("ignored.version.filed"));
-					_lifecycleActionField = _findField(
+					_lifecycleActionField = findField(
 						classLoader, getProperty("lifecycle.action.field"));
-					_validateMethod = _findMethod(
+					_validateMethod = findMethod(
 						classLoader, getProperty("validate.method"));
-					_versionMethod = _findMethod(
+					_versionMethod = findMethod(
 						classLoader, getProperty("version.method"));
 
 					ByteBuddyAgent.install();

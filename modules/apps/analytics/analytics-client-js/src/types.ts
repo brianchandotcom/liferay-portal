@@ -98,6 +98,9 @@ export namespace Analytics {
 		dataset: {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]: Analytics.ElementAction;
+			[Analytics.DataSetList.AnalyticsAssetCategories]?: string;
+			[Analytics.DataSetList.AnalyticsAssetMimeType]?: string;
+			[Analytics.DataSetList.AnalyticsAssetTags]?: string;
 			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
 			[Analytics.DataSetList.AnalyticsAssetType]: Analytics.ElementType;
 			[Analytics.DataSetList.AnalyticsExternalReferenceCode]: string;
@@ -107,14 +110,17 @@ export namespace Analytics {
 	}
 
 	export enum DataSetList {
+		AnalyticsAssetMimeType = 'analyticsAssetMimeType',
 		AnalyticsAssetAction = 'analyticsAssetAction',
+		AnalyticsAssetCategories = 'analyticsAssetCategories',
 		AnalyticsAssetCategory = 'analyticsAssetCategory',
-		AnalyticsExternalReferenceCode = 'analyticsExternalReferenceCode',
 		AnalyticsAssetId = 'analyticsAssetId',
 		AnalyticsAssetSubtype = 'analyticsAssetSubtype',
+		AnalyticsAssetTags = 'analyticsAssetTags',
 		AnalyticsAssetTitle = 'analyticsAssetTitle',
 		AnalyticsAssetType = 'analyticsAssetType',
 		AnalyticsAssetVersion = 'analyticsAssetVersion',
+		AnalyticsExternalReferenceCode = 'analyticsExternalReferenceCode',
 		AnalyticsObjectDefinitionName = 'analyticsObjectDefinitionName',
 		AnalyticsWebContentResourcePk = 'analyticsWebContentResourcePk',
 	}

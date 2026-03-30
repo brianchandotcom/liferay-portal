@@ -11,7 +11,7 @@ definition {
 
 	@summary = "Default summary"
 	macro expandCategory(category = null) {
-		if (IsElementPresent(key_category = ${category}, locator1 = "ApplicationsMenu#COLLAPSED_CATEGORY")) {
+		if (isSet(category) && (IsElementPresent(key_category = ${category}, locator1 = "ApplicationsMenu#COLLAPSED_CATEGORY"))) {
 			Click(
 				key_category = ${category},
 				locator1 = "ApplicationsMenu#COLLAPSED_CATEGORY");
@@ -24,7 +24,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoPanel(panel = null) {
-		if(IsElementNotPresent(key_panel = ${panel}, locator1 = "ApplicationsMenu#PANEL_TITLE")) {
+		if (isSet(panel) && (IsElementNotPresent(key_panel = ${panel}, locator1 = "ApplicationsMenu#PANEL_TITLE"))) {
 			ApplicationsMenu.openApplicationsMenu();
 
 			Click(
@@ -33,7 +33,9 @@ definition {
 
 			WaitForElementPresent(locator1 = "ApplicationsMenu#SIDE_NAVIGATION");
 
-			WaitForElementPresent(key_panel = ${panel}, locator1 = "ApplicationsMenu#PANEL_TITLE");
+			WaitForElementPresent(
+				key_panel = ${panel},
+				locator1 = "ApplicationsMenu#PANEL_TITLE");
 		}
 	}
 

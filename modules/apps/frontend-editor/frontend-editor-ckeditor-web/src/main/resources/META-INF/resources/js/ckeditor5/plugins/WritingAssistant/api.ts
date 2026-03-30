@@ -18,7 +18,7 @@ export async function createEventSource() {
 	}
 
 	return new EventSource(
-		`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/tasks/subscribe`,
+		`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/agent-instances/subscribe`,
 		{
 			fetch: (input, init) =>
 				fetch(input as RequestInfo, {
@@ -80,20 +80,24 @@ export async function postAgentInstance(
 		return;
 	}
 
-	await fetch(`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/tasks`, {
-		body: JSON.stringify({
-			context: {
-				text: content,
-			},
-			sseEventSinkKey: eventSourceReference,
-			type,
-		}),
-		headers: new Headers({
-			'Accept': 'application/json',
-			'Authorization': `Bearer ${authorizationToken.accessToken}`,
-			'Content-Type': 'application/json',
-			'Liferay-AI-Hub-Cell-On-Behalf-Of': authorizationToken.userToken,
-		}),
-		method: 'POST',
-	});
+	await fetch(
+		`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/agent-instances`,
+		{
+			body: JSON.stringify({
+				context: {
+					text: content,
+				},
+				sseEventSinkKey: eventSourceReference,
+				type,
+			}),
+			headers: new Headers({
+				'Accept': 'application/json',
+				'Authorization': `Bearer ${authorizationToken.accessToken}`,
+				'Content-Type': 'application/json',
+				'Liferay-AI-Hub-Cell-On-Behalf-Of':
+					authorizationToken.userToken,
+			}),
+			method: 'POST',
+		}
+	);
 }

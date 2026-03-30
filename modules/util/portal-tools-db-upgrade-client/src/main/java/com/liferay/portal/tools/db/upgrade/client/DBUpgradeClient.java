@@ -423,7 +423,18 @@ public class DBUpgradeClient {
 			}
 		}
 
-		return String.join(" ", jdkOptions);
+		StringBuilder sb = new StringBuilder();
+
+		for (String jdkOption : jdkOptions) {
+			sb.append(jdkOption);
+			sb.append(' ');
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private void _close(Closeable closeable) throws IOException {

@@ -4,6 +4,7 @@
  */
 
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayLink from '@clayui/link';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
@@ -35,6 +36,7 @@ export default function ViewTags({
 	tagsURL: string;
 	vocabulariesURL: string;
 }) {
+	const NAME_TABLE_CELL_RENDERER_NAME = 'NameTableCellRenderer';
 	const VIEWS_SPACE_TABLE_CELL_RENDERER_NAME = 'ViewsSpaceTableCellRenderer';
 
 	const creationMenu = {
@@ -83,6 +85,7 @@ export default function ViewTags({
 			schema: {
 				fields: [
 					{
+						contentRenderer: NAME_TABLE_CELL_RENDERER_NAME,
 						fieldName: 'name',
 						label: Liferay.Language.get('title'),
 						sortable: true,
@@ -237,6 +240,35 @@ export default function ViewTags({
 				creationMenu={creationMenu}
 				customRenderers={{
 					tableCell: [
+						{
+							component: ({
+								itemData,
+								loadData,
+								value,
+							}: {
+								itemData: any;
+								loadData: () => {};
+								value: string;
+							}) => (
+								<div className="table-list-title">
+									<ClayLink
+										data-senna-off
+										href="#"
+										onClick={(
+											event: React.MouseEvent
+										) => {
+											event.preventDefault();
+
+											editTag({itemData, loadData});
+										}}
+									>
+										{value}
+									</ClayLink>
+								</div>
+							),
+							name: NAME_TABLE_CELL_RENDERER_NAME,
+							type: 'internal',
+						},
 						{
 							component: MultipleSpacesRenderer,
 							name: VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,

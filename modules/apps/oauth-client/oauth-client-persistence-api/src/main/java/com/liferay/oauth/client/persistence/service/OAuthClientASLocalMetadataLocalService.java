@@ -58,14 +58,6 @@ public interface OAuthClientASLocalMetadataLocalService
 			long userId, String metadataJSON, String wellKnownURISuffix)
 		throws PortalException;
 
-	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, String issuer,
-			String jwksURI, boolean localWellKnownEnabled,
-			String registrationEndpoint, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpoint, String userInfoEndpoint)
-		throws PortalException;
-
 	/**
 	 * Adds the o auth client as local metadata to the database. Also notifies the appropriate model listeners.
 	 *
@@ -79,6 +71,15 @@ public interface OAuthClientASLocalMetadataLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata);
+
+	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
+			String externalReferenceCode, long userId,
+			String authorizationEndpoint, String issuer, String jwksURI,
+			boolean localWellKnownEnabled, String registrationEndpoint,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
+		throws PortalException;
 
 	/**
 	 * Creates a new o auth client as local metadata with the primary key. Does not add the o auth client as local metadata to the database.
@@ -378,4 +379,4 @@ public interface OAuthClientASLocalMetadataLocalService
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1679597407
+// LIFERAY-SERVICE-BUILDER-HASH:-2082896890

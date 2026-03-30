@@ -36,18 +36,6 @@ public class OAuthClientEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static OAuthClientEntry addOAuthClientEntry(
-			long userId, String authRequestParametersJSON,
-			String authServerWellKnownURI, String customClaimsJSON,
-			String infoJSON, String matcherField, long metadataCacheTime,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
-		throws PortalException {
-
-		return getService().addOAuthClientEntry(
-			userId, authRequestParametersJSON, authServerWellKnownURI,
-			customClaimsJSON, infoJSON, matcherField, metadataCacheTime,
-			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
-	}
 
 	/**
 	 * Adds the o auth client entry to the database. Also notifies the appropriate model listeners.
@@ -63,6 +51,21 @@ public class OAuthClientEntryLocalServiceUtil {
 		OAuthClientEntry oAuthClientEntry) {
 
 		return getService().addOAuthClientEntry(oAuthClientEntry);
+	}
+
+	public static OAuthClientEntry addOAuthClientEntry(
+			String externalReferenceCode, long userId,
+			String authRequestParametersJSON, String authServerWellKnownURI,
+			String customClaimsJSON, String infoJSON, String matcherField,
+			long metadataCacheTime, String oidcUserInfoMapperJSON,
+			String tokenRequestParametersJSON)
+		throws PortalException {
+
+		return getService().addOAuthClientEntry(
+			externalReferenceCode, userId, authRequestParametersJSON,
+			authServerWellKnownURI, customClaimsJSON, infoJSON, matcherField,
+			metadataCacheTime, oidcUserInfoMapperJSON,
+			tokenRequestParametersJSON);
 	}
 
 	/**
@@ -430,4 +433,4 @@ public class OAuthClientEntryLocalServiceUtil {
 			OAuthClientEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1154000020
+// LIFERAY-SERVICE-BUILDER-HASH:206070149

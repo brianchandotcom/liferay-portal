@@ -44,21 +44,6 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 			userId, metadataJSON, wellKnownURISuffix);
 	}
 
-	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, String issuer,
-			String jwksURI, boolean localWellKnownEnabled,
-			String registrationEndpoint, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpoint, String userInfoEndpoint)
-		throws PortalException {
-
-		return getService().addOAuthClientASLocalMetadata(
-			userId, authorizationEndpoint, issuer, jwksURI,
-			localWellKnownEnabled, registrationEndpoint, supportedGrantTypes,
-			supportedScopes, supportedSubjectTypes, tokenEndpoint,
-			userInfoEndpoint);
-	}
-
 	/**
 	 * Adds the o auth client as local metadata to the database. Also notifies the appropriate model listeners.
 	 *
@@ -74,6 +59,22 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 
 		return getService().addOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadata);
+	}
+
+	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
+			String externalReferenceCode, long userId,
+			String authorizationEndpoint, String issuer, String jwksURI,
+			boolean localWellKnownEnabled, String registrationEndpoint,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
+		throws PortalException {
+
+		return getService().addOAuthClientASLocalMetadata(
+			externalReferenceCode, userId, authorizationEndpoint, issuer,
+			jwksURI, localWellKnownEnabled, registrationEndpoint,
+			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+			tokenEndpoint, userInfoEndpoint);
 	}
 
 	/**
@@ -486,4 +487,4 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 			OAuthClientASLocalMetadataLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2087291659
+// LIFERAY-SERVICE-BUILDER-HASH:-1835271154

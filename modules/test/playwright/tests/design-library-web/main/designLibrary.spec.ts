@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -22,6 +22,21 @@ const test = mergeTests(
 	}),
 	loginTest()
 );
+
+async function expectRedirectionToLibrary(name: string, page: Page) {
+	const breadcrumb = page.getByRole('navigation', {
+		name: 'Breadcrumb',
+	});
+
+	await expect(breadcrumb).toBeVisible();
+
+	const links = breadcrumb.getByRole('link');
+
+	await expect(links).toHaveCount(2);
+
+	await expect(links.first()).toHaveText('Design Libraries');
+	await expect(links.last()).toHaveText(name);
+}
 
 test('Check if design library is working correctly', async ({
 	designLibrariesPage,
@@ -157,21 +172,6 @@ test('Should allow managing design libraries through creation, validation, and d
 		},
 	];
 
-	async function expectRedirectionToLibrary(name: string) {
-		const breadcrumb = page.getByRole('navigation', {
-			name: 'Breadcrumb',
-		});
-
-		await expect(breadcrumb).toBeVisible();
-
-		const links = breadcrumb.getByRole('link');
-
-		await expect(links).toHaveCount(2);
-
-		await expect(links.first()).toHaveText('Design Libraries');
-		await expect(links.last()).toHaveText(name);
-	}
-
 	for (const scenario of successScenarios) {
 		await test.step(scenario.stepName, async () => {
 			await designLibrariesPage.goto();
@@ -183,7 +183,7 @@ test('Should allow managing design libraries through creation, validation, and d
 				`Success:${scenario.name} was created successfully.`
 			);
 
-			await expectRedirectionToLibrary(scenario.name);
+			await expectRedirectionToLibrary(scenario.name, page);
 		});
 	}
 
@@ -232,5 +232,88 @@ test('Should allow managing design libraries through creation, validation, and d
 		for (const {name} of successScenarios) {
 			await designLibrariesPage.delete(name);
 		}
+	});
+});
+
+test('Can connect and disconnect a site from a design library', async ({
+	designLibrariesPage,
+	page,
+}) => {
+	const designLibraryName = getRandomString();
+	const siteName = 'Liferay DXP';
+
+	const connectedSitesDialog = page.getByRole('dialog');
+
+	await test.step('Create a new design library', async () => {
+		await designLibrariesPage.goto();
+
+		await designLibrariesPage.create({name: designLibraryName});
+
+		await waitForAlert(
+			page,
+			`Success:${designLibraryName} was created successfully.`
+		);
+
+		await expectRedirectionToLibrary(designLibraryName, page);
+	});
+
+	await test.step('Connect a site to design library', async () => {
+		const connectedSitesMenuItem = page
+			.getByRole('menu')
+			.getByRole('menuitem', {name: 'Connected Sites'});
+
+		await page
+			.getByRole('button', {
+				name: 'More Actions',
+			})
+			.click();
+
+		await expect(page.getByRole('menu')).toBeVisible();
+
+		await expect(connectedSitesMenuItem).toBeVisible();
+
+		await connectedSitesMenuItem.click();
+
+		await connectedSitesDialog
+			.getByPlaceholder('Select a Site')
+			.fill(siteName);
+
+		await page.getByRole('option', {name: siteName}).click();
+
+		await expect(
+			connectedSitesDialog.getByRole('button', {name: 'Connect'})
+		).toBeEnabled();
+
+		await connectedSitesDialog
+			.getByRole('button', {name: 'Connect'})
+			.click();
+
+		await waitForAlert(
+			page,
+			`Success:Site ${siteName} was successfully connected to the design library.`,
+			{autoClose: false}
+		);
+	});
+
+	await test.step('Disconnect a site from a design library', async () => {
+		await expect(
+			connectedSitesDialog.getByRole('button', {name: 'Disconnect'})
+		).toBeVisible();
+
+		await connectedSitesDialog
+			.getByRole('button', {name: 'Disconnect'})
+			.click();
+
+		await waitForAlert(
+			page,
+			`Success:Site ${siteName} was successfully disconnected from the design library.`,
+			{autoClose: false}
+		);
+	});
+
+	await test.step('Delete created design library', async () => {
+		await designLibrariesPage.goto();
+
+		await designLibrariesPage.delete(designLibraryName);
 	});
 });

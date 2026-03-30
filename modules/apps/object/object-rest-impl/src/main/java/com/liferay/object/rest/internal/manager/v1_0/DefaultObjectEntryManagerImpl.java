@@ -2957,20 +2957,19 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		if (Validator.isNotNull(fileEntry.getExternalReferenceCode())) {
-			long groupId = _getFileEntryGroupId(
-				_getGroupExternalReferenceCode(fileEntry), objectDefinition,
-				scopeKey);
-
 			com.liferay.portal.kernel.repository.model.FileEntry
-				existingFileEntry =
+				serviceBuilderFileEntry =
 					_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
-						groupId, fileEntry.getExternalReferenceCode());
+						_getFileEntryGroupId(
+							_getGroupExternalReferenceCode(fileEntry),
+							objectDefinition, scopeKey),
+						fileEntry.getExternalReferenceCode());
 
-			if ((existingFileEntry != null) &&
+			if ((serviceBuilderFileEntry != null) &&
 				(objectField.getCompanyId() ==
-					existingFileEntry.getCompanyId())) {
+					serviceBuilderFileEntry.getCompanyId())) {
 
-				return existingFileEntry.getFileEntryId();
+				return serviceBuilderFileEntry.getFileEntryId();
 			}
 		}
 

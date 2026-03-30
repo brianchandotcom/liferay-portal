@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'd0ac054fdacb791f08677a96c3d447da466604c5d44f04db0be4d424c91a5b82',
+	hash: 'a88a8d828e0d7c34031923df9643c5a95a45836ba670dc33009c7809ea0fba2b',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -85,6 +85,7 @@ module.exports = {
 		'@liferay/frontend-css-cadmin-web': [],
 		'@liferay/frontend-css-common': [],
 		'@liferay/frontend-data-set-admin-web': [],
+		'@liferay/frontend-data-set-fragment-web': [],
 		'@liferay/frontend-data-set-sample-web': [],
 		'@liferay/frontend-data-set-taglib': [],
 		'@liferay/frontend-data-set-web': [],

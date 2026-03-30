@@ -145,6 +145,27 @@ export interface IRoomShareProps {
 	roomId: number;
 }
 
+export interface IRoomStatistics {
+	timeViewedMinutes?: number;
+	totalActions?: number;
+	totalComments?: number;
+	totalVisits?: number;
+	uniqueVisitors?: number;
+}
+
+export interface IRoomStatisticsItem {
+	className: string;
+	icon: string;
+	id: string;
+	label: string;
+	value: string | number;
+}
+
+export interface IRoomStatisticsProps {
+	data?: IRoomStatistics | null;
+	isLoading?: boolean;
+}
+
 export interface IRoomStepProps {
 	setHandleStepSubmit(
 		callback: SetStateAction<(event: Event) => Promise<boolean>>

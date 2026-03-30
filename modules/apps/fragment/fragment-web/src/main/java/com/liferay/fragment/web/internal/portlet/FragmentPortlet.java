@@ -11,7 +11,7 @@ import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvide
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.item.selector.ItemSelector;
@@ -103,6 +103,9 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentCollectionContributorRegistry.class.getName(),
 			_fragmentCollectionContributorRegistry);
 		renderRequest.setAttribute(
+			FragmentCollectionLocalService.class.getName(),
+			_fragmentCollectionLocalService);
+		renderRequest.setAttribute(
 			FragmentEntryProcessorRegistry.class.getName(),
 			_fragmentEntryProcessorRegistry);
 		renderRequest.setAttribute(
@@ -113,14 +116,14 @@ public class FragmentPortlet extends MVCPortlet {
 			_fragmentRendererController);
 		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTIONS,
-			_fragmentCollectionService.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				themeDisplay.getScopeGroupId()));
 		renderRequest.setAttribute(
 			FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS,
 			_getInheritedFragmentCollections(themeDisplay));
 		renderRequest.setAttribute(
 			FragmentWebKeys.SYSTEM_FRAGMENT_COLLECTIONS,
-			_fragmentCollectionService.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				CompanyConstants.SYSTEM));
 		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 
@@ -140,7 +143,7 @@ public class FragmentPortlet extends MVCPortlet {
 			new TreeMap<>();
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionService.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				themeDisplay.getCompanyGroupId());
 
 		if (ListUtil.isNotEmpty(fragmentCollections)) {
@@ -164,7 +167,7 @@ public class FragmentPortlet extends MVCPortlet {
 		_fragmentCollectionContributorRegistry;
 
 	@Reference
-	private FragmentCollectionService _fragmentCollectionService;
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

@@ -1,8 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 
 async function create({
@@ -20,37 +21,34 @@ async function create({
 				name,
 				type: 'DesignLibrary',
 			}),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+			headers: DEFAULT_FETCH_HEADERS,
 			method: 'POST',
 		}
 	);
 
-	const data = await response.json().catch(() => ({}));
-
 	if (!response.ok) {
-		throw {
-			error: data.title || 'UNKNOWN_ERROR',
-			status: data.status || response.status,
-		};
+		const errorData = await response.json().catch(() => {
+			return null;
+		});
+
+		throw errorData;
 	}
 
-	return data as {id: string};
+	return await response.json();
 }
 
 async function remove({href, method}: {href: string; method: string}) {
 	const response = await fetch(href, {
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-		},
+		headers: DEFAULT_FETCH_HEADERS,
 		method,
 	});
 
 	if (!response.ok) {
-		throw new Error(Liferay.Language.get('an-unexpected-error-occurred'));
+		const errorData = await response.json().catch(() => {
+			return null;
+		});
+
+		throw errorData;
 	}
 }
 

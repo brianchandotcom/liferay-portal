@@ -1,11 +1,9 @@
 $sxpElementHeaderHeight: 48px;
 
 .edit-sxp-element-root {
-	height: calc(100vh - 96px);
-
 	.sxp-element-row {
-		height: 100%;
-		padding-top: 64px;
+		height: calc(100vh - 124px);
+		padding-top: 12px;
 
 		&.shifted {
 			margin-right: $sidebarWidth;

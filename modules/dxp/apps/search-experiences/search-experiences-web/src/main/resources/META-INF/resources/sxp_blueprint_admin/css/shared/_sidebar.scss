@@ -74,7 +74,7 @@
 	height: calc(
 		100% - var(--control-menu-container-height) - #{$navigationBarHeight}
 	);
-	margin-top: $navigationBarHeight;
+	margin-top: -$tabsNavigationBarHeight;
 	position: fixed;
 	right: 0;
 	transform: translateX(100%);

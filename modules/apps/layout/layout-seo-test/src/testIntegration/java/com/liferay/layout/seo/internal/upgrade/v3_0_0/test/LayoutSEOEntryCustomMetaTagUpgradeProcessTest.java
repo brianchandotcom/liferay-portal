@@ -97,17 +97,13 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-	}
 
-	@Test
-	public void testUpgrade() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		_serviceContext.setAddGroupPermissions(true);
+		_serviceContext.setAddGuestPermissions(true);
+		_serviceContext.setScopeGroupId(_group.getGroupId());
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
@@ -120,8 +116,21 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest
 			clazz.getClassLoader(),
 			"com/liferay/layout/seo/internal/upgrade/v3_0_0/test/dependencies" +
 				"/custom-meta-tags-structure.xml",
-			serviceContext);
+			_serviceContext);
 
+		_ddmStructure = _ddmStructureLocalService.getStructure(
+			companyGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(
+				LayoutSEOEntry.class.getName()),
+			"custom-meta-tags");
+
+		_ddmStorageId = _ddmStorageEngineManager.create(
+			companyGroup.getCompanyId(), _ddmStructure.getStructureId(),
+			_createDDMFormValues(_ddmStructure.getDDMForm()), _serviceContext);
+	}
+
+	@Test
+	public void testUpgrade() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -132,23 +141,14 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			companyGroup.getGroupId(),
-			_classNameLocalService.getClassNameId(
-				LayoutSEOEntry.class.getName()),
-			"custom-meta-tags");
-
-		long ddmStorageId = _ddmStorageEngineManager.create(
-			layoutSEOEntry.getCompanyId(), ddmStructure.getStructureId(),
-			_createDDMFormValues(ddmStructure.getDDMForm()), serviceContext);
-
-		_updateDDMStorageId(ddmStorageId, layoutSEOEntry.getLayoutSEOEntryId());
+		_updateDDMStorageId(
+			_ddmStorageId, layoutSEOEntry.getLayoutSEOEntryId());
 
 		runUpgrade();
 
 		Assert.assertNull(
 			_ddmStructureLocalService.fetchStructure(
-				ddmStructure.getStructureId()));
+				_ddmStructure.getStructureId()));
 
 		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
 			_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
@@ -330,6 +330,9 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest
 	@Inject
 	private DDMStorageEngineManager _ddmStorageEngineManager;
 
+	private long _ddmStorageId;
+	private DDMStructure _ddmStructure;
+
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
 
@@ -347,5 +350,7 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	private ServiceContext _serviceContext;
 
 }

@@ -61,7 +61,7 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select ctCollectionId, layoutSEOEntryId, groupId, " +
 					"companyId, ddmStorageId from LayoutSEOEntry where " +
-						"ddmStorageId > 0");
+						"ddmStorageId > 0 order by ddmStorageId");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -72,13 +72,27 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcess extends UpgradeProcess {
 						"property, content) values (?, ?, ?, ?, ?, ?, ?, ?)"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
+			long ddmStorageId = 0;
+
 			while (resultSet.next()) {
+				if ((ddmStorageId != 0) &&
+					(ddmStorageId != resultSet.getLong("ddmStorageId"))) {
+
+					_ddmStorageEngineManager.deleteByClass(ddmStorageId);
+				}
+
+				ddmStorageId = resultSet.getLong("ddmStorageId");
+
 				_addLayoutSEOEntryCustomMetaTags(
 					resultSet.getLong("companyId"),
 					resultSet.getLong("ctCollectionId"),
 					resultSet.getLong("ddmStorageId"),
 					resultSet.getLong("groupId"),
 					resultSet.getLong("layoutSEOEntryId"), preparedStatement2);
+			}
+
+			if (ddmStorageId != 0) {
+				_ddmStorageEngineManager.deleteByClass(ddmStorageId);
 			}
 
 			preparedStatement2.executeBatch();
@@ -173,8 +187,6 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.addBatch();
 		}
-
-		_ddmStorageEngineManager.deleteByClass(ddmStorageId);
 	}
 
 	private boolean _isLegacyDDMFormFieldValue(

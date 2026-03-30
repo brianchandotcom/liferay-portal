@@ -10,6 +10,7 @@ import {liferay} from '../app/liferay/server';
 import {Button} from './components/button';
 import {Pagination} from './components/pagination';
 import {SearchBar} from './components/search-bar';
+import {SetupGuide} from './components/setup-guide';
 import {getCMSBlogPostings} from './data';
 
 const PageTemplate = ({children}: PropsWithChildren) => {
@@ -21,6 +22,16 @@ export default async function Home({
 }: {
 	searchParams: Promise<{page?: string; q?: string}>;
 }) {
+	const missingEnvVars = liferay.getMissingEnvVars();
+
+	if (missingEnvVars.length > 0) {
+		return (
+			<PageTemplate>
+				<SetupGuide envVars={missingEnvVars} />
+			</PageTemplate>
+		);
+	}
+
 	const params = await searchParams;
 	const page = Number(params.page || 1);
 	const searchQuery = params.q || '';

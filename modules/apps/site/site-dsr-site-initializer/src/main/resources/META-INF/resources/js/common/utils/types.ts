@@ -180,3 +180,15 @@ export type IUserAccountsDTO = {
 	pageSize: number;
 	totalCount: number;
 };
+
+export type TRoomDocumentsStatistics = {
+	download: number;
+	lastViewed: string;
+	title: string;
+	totalTimeViewingAsset: number;
+	totalViews: number;
+	type: string;
+	userInvolved: string[];
+};
+
+export type TRoomDocumentsStatisticsProps = TRoomDocumentsStatistics[];

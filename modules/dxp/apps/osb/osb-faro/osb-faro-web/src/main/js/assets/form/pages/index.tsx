@@ -74,7 +74,6 @@ const Form: React.FC<{
 						label: selectedChannel?.name
 					}),
 					breadcrumbs.getAssets({channelId, groupId}),
-					breadcrumbs.getForms({channelId, groupId}),
 					breadcrumbs.getEntityName({label: decodedTitle})
 				]}
 				groupId={groupId}

@@ -12,16 +12,20 @@ import {useQuery} from '@apollo/react-hooks';
 
 interface ICommonVariables extends SafeRangeSelectors, Filters {
 	interval: Interval;
+	type?: string;
 }
 
-export const useAssetVariables = (commonVariables: ICommonVariables) => {
+export const useAssetVariables = (variables: ICommonVariables) => {
+	const {type, ...commonVariables} = variables;
 	const {assetId, channelId, title, touchpoint} = useParams();
 
 	return {
 		assetId: getSafeDecodedURIComponent(assetId),
-		channelId,
-		title: getSafeDecodedURIComponent(title),
 		touchpoint: getSafeTouchpoint(touchpoint),
+		...(type !== 'objectEntry' && {
+			channelId,
+			title: getSafeDecodedURIComponent(title)
+		}),
 		...commonVariables
 	};
 };

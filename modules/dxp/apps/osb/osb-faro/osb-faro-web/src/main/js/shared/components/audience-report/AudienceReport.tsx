@@ -117,9 +117,11 @@ function AudienceReport<TRawData>({
 		fetchPolicy: fetchPolicyDefinition(rangeSelectors),
 		variables: {
 			assetId,
-			channelId,
-			title: getSafeDecodedURIComponent(title),
 			touchpoint: getSafeTouchpoint(touchpoint),
+			...(otherProps.name !== Name.ObjectEntry && {
+				channelId,
+				title: getSafeDecodedURIComponent(title)
+			}),
 			...getFilters(filters),
 			...getSafeRangeSelectors(rangeSelectors)
 		}

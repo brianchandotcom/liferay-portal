@@ -75,7 +75,6 @@ const DocumentAndMedia: React.FC<{
 						label: selectedChannel?.name
 					}),
 					breadcrumbs.getAssets({channelId, groupId}),
-					breadcrumbs.getDocumentsAndMedia({channelId, groupId}),
 					breadcrumbs.getEntityName({label: decodedTitle})
 				]}
 				groupId={groupId}

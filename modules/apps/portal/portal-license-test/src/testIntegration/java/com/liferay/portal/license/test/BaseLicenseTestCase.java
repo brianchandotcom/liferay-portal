@@ -29,6 +29,7 @@ import com.liferay.portal.util.LicenseUtil;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
@@ -61,7 +62,7 @@ import org.osgi.framework.launch.Framework;
 /**
  * @author Tina Tian
  */
-public abstract class BaseLicenseTestCase {
+public abstract class BaseLicenseTestCase implements Serializable {
 
 	public static ResettableClassFileTransformer disableValidate() {
 		return _transformMethod(ReflectionsHolder._validateMethod, true);
@@ -118,19 +119,31 @@ public abstract class BaseLicenseTestCase {
 	}
 
 	public void assertPortalLicenseInvalid() throws Exception {
-		String response = _hitHomePage("localhost", 8080);
+		String response = hitHomePage("localhost", 8080);
 
 		Assert.assertTrue(response.contains(_INVALID_LICENSE_KEY));
 	}
 
 	public void assertPortalLicenseNotRegistered() throws Exception {
-		String response = _hitHomePage("localhost", 8080);
+		String response = hitHomePage("localhost", 8080);
+
+		Assert.assertTrue(response.contains(_NOT_REGISTERED_LICENSE_KEY));
+	}
+
+	public void assertPortalLicenseNotRegistered(int port) throws Exception {
+		String response = hitHomePage("localhost", port);
 
 		Assert.assertTrue(response.contains(_NOT_REGISTERED_LICENSE_KEY));
 	}
 
 	public void assertPortalLicenseRegistered() throws Exception {
-		String response = _hitHomePage("localhost", 8080);
+		String response = hitHomePage("localhost", 8080);
+
+		Assert.assertFalse(response.contains(_LICENSE_PAGE_KEY));
+	}
+
+	public void assertPortalLicenseRegistered(int port) throws Exception {
+		String response = hitHomePage("localhost", port);
 
 		Assert.assertFalse(response.contains(_LICENSE_PAGE_KEY));
 	}
@@ -430,6 +443,16 @@ public abstract class BaseLicenseTestCase {
 		return getProperty("product.id.portal");
 	}
 
+	protected String hitHomePage(String host, int port) throws Exception {
+		Http.Options options = new Http.Options();
+
+		options.setCookieSpec(Http.CookieSpec.IGNORE_COOKIES);
+		options.setLocation(String.format("http://%s:%d/", host, port));
+		options.setMethod(Http.Method.GET);
+
+		return HttpUtil.URLtoString(options);
+	}
+
 	private static ResettableClassFileTransformer _transformMethod(
 		Method method, Object returnValue) {
 
@@ -527,16 +550,6 @@ public abstract class BaseLicenseTestCase {
 		}
 
 		return bundleSymbolicNames;
-	}
-
-	private String _hitHomePage(String host, int port) throws Exception {
-		Http.Options options = new Http.Options();
-
-		options.setCookieSpec(Http.CookieSpec.IGNORE_COOKIES);
-		options.setLocation(String.format("http://%s:%d/", host, port));
-		options.setMethod(Http.Method.GET);
-
-		return HttpUtil.URLtoString(options);
 	}
 
 	private static final String _BUNDLE_START_STOP_LOGGER =

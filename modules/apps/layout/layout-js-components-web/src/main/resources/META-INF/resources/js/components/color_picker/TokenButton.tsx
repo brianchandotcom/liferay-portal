@@ -31,7 +31,7 @@ export default function TokenButton({
 	return (
 		<ClayButton
 			aria-label={sub(
-				Liferay.Language.get('select-color.-color-selected-x'),
+				Liferay.Language.get('select-color.-color-x-is-selected'),
 				label
 			)}
 			className="align-items-center border-0 d-flex font-weight-normal layout__color-picker__token-button text-body w-100"

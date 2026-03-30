@@ -127,7 +127,7 @@ describe('ColorPicker', () => {
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(
-				getByLabelText('select-color.-color-selected-Green')
+				getByLabelText('select-color.-color-Green-is-selected')
 			).toBeInTheDocument();
 		});
 
@@ -135,7 +135,7 @@ describe('ColorPicker', () => {
 			const {baseElement, getByLabelText} = renderColorPicker();
 
 			await userEvent.click(
-				getByLabelText('select-color.-color-selected-Green')
+				getByLabelText('select-color.-color-Green-is-selected')
 			);
 
 			expect(baseElement.querySelector(COLOR_PICKER_CLASS)).toHaveClass(
@@ -147,7 +147,7 @@ describe('ColorPicker', () => {
 			renderColorPicker();
 
 			await userEvent.click(
-				screen.getByLabelText('select-color.-color-selected-Green')
+				screen.getByLabelText('select-color.-color-Green-is-selected')
 			);
 
 			expect(screen.getByText('value-from-stylebook')).toHaveAttribute(
@@ -258,7 +258,7 @@ describe('ColorPicker', () => {
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(
-				getByLabelText('select-color.-color-selected-Blue')
+				getByLabelText('select-color.-color-Blue-is-selected')
 			).toBeInTheDocument();
 		});
 
@@ -273,7 +273,7 @@ describe('ColorPicker', () => {
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(
-				getByLabelText('select-color.-color-selected-Green')
+				getByLabelText('select-color.-color-Green-is-selected')
 			).toBeInTheDocument();
 		});
 
@@ -438,7 +438,7 @@ describe('ColorPicker', () => {
 	describe('Filter a Value from Stylebook', () => {
 		const goToStylebookTab = async () => {
 			await userEvent.click(
-				screen.getByLabelText('select-color.-color-selected-Green')
+				screen.getByLabelText('select-color.-color-Green-is-selected')
 			);
 			await userEvent.click(screen.getByText('value-from-stylebook'));
 		};

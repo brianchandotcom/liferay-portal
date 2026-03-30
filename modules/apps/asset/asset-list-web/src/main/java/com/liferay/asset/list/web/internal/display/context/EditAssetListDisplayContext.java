@@ -855,22 +855,28 @@ public class EditAssetListDisplayContext {
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(
 				getSelectedGroupIds(), true);
 
-		Set<Long> connectedGroupIds = new LinkedHashSet<>();
+		Set<Long> referenceModelsGroupIdSet = new LinkedHashSet<>();
 
-		for (long groupId : currentAndAncestorSiteGroupIds) {
-			connectedGroupIds.add(groupId);
+		for (long currentAndAncestorSiteGroupId :
+				currentAndAncestorSiteGroupIds) {
 
-			List<DepotEntry> depotEntries =
+			referenceModelsGroupIdSet.add(currentAndAncestorSiteGroupId);
+
+			List<DepotEntry> currentAndGroupConnectedDepotEntries =
 				_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
-					groupId, DepotConstants.TYPE_ANY, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
+					currentAndAncestorSiteGroupId, DepotConstants.TYPE_ANY,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			for (DepotEntry depotEntry : depotEntries) {
-				connectedGroupIds.add(depotEntry.getGroupId());
+			for (DepotEntry currentAndGroupConnectedDepotEntry :
+					currentAndGroupConnectedDepotEntries) {
+
+				referenceModelsGroupIdSet.add(
+					currentAndGroupConnectedDepotEntry.getGroupId());
 			}
 		}
 
-		_referencedModelsGroupIds = ArrayUtil.toLongArray(connectedGroupIds);
+		_referencedModelsGroupIds = ArrayUtil.toLongArray(
+			referenceModelsGroupIdSet);
 
 		return _referencedModelsGroupIds;
 	}
@@ -1045,22 +1051,29 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
-		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
-			getReferencedModelsGroupIds());
+		long[] currentAndAncestorSiteGroupIds =
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				getReferencedModelsGroupIds());
 
 		Set<AssetVocabulary> groupsVocabularies = new LinkedHashSet<>(
-			_assetVocabularyService.getGroupsVocabularies(groupIds));
+			_assetVocabularyService.getGroupsVocabularies(
+				currentAndAncestorSiteGroupIds));
 
-		if (_containsSpaceDepotEntryGroups(groupIds) &&
-			!ArrayUtil.contains(groupIds, GroupConstants.GROUP_ID_ALL)) {
+		if (_containsSpaceDepotEntryGroups(currentAndAncestorSiteGroupIds) &&
+			!ArrayUtil.contains(
+				currentAndAncestorSiteGroupIds, GroupConstants.GROUP_ID_ALL)) {
 
-			groupIds = ArrayUtil.append(groupIds, GroupConstants.GROUP_ID_ALL);
+			currentAndAncestorSiteGroupIds = ArrayUtil.append(
+				currentAndAncestorSiteGroupIds, GroupConstants.GROUP_ID_ALL);
 		}
 
-		for (long groupId : groupIds) {
+		for (long currentAndAncestorSiteGroupId :
+				currentAndAncestorSiteGroupIds) {
+
 			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 				_assetVocabularyGroupRelLocalService.
-					getAssetVocabularyGroupRelsByGroupId(groupId);
+					getAssetVocabularyGroupRelsByGroupId(
+						currentAndAncestorSiteGroupId);
 
 			for (AssetVocabularyGroupRel assetVocabularyGroupRel :
 					assetVocabularyGroupRels) {

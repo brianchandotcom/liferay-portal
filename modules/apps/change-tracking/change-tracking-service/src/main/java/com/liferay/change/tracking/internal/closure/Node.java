@@ -62,7 +62,7 @@ public class Node {
 	}
 
 	public List<Node> getChildren() {
-		return _children;
+		return Collections.unmodifiableList(_children);
 	}
 
 	public long getClassNameId() {
@@ -70,7 +70,7 @@ public class Node {
 	}
 
 	public List<Node> getParents() {
-		return _parents;
+		return Collections.unmodifiableList(_parents);
 	}
 
 	public long getPrimaryKey() {

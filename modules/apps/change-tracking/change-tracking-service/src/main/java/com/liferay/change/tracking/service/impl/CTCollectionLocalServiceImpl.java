@@ -824,12 +824,16 @@ public class CTCollectionLocalServiceImpl
 				modelClassNameId);
 
 			if (ctService == null) {
-				throw new SystemException(
-					StringBundler.concat(
-						"Unable to check for unapproved changes for change ",
-						"tracking collection ", ctCollectionId,
-						" because the service for ", modelClassNameId,
-						" is missing"));
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to check for unapproved changes for ",
+							"change tracking collection ", ctCollectionId,
+							" because the service for ", modelClassNameId,
+							" is missing"));
+				}
+
+				continue;
 			}
 
 			CTPersistence<?> ctPersistence = ctService.getCTPersistence();

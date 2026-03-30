@@ -211,9 +211,7 @@ public class DBUpgradeClient {
 
 		Map<String, String> environment = processBuilder.environment();
 
-		if (_isGTJDK8()) {
-			environment.put("JDK_JAVA_OPTIONS", _buildJDKJavaOptions());
-		}
+		environment.put("JDK_JAVA_OPTIONS", _buildJDKJavaOptions());
 
 		Process process = processBuilder.start();
 
@@ -423,18 +421,7 @@ public class DBUpgradeClient {
 			}
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		for (String jdkOption : jdkOptions) {
-			sb.append(jdkOption);
-			sb.append(' ');
-		}
-
-		if (sb.length() > 0) {
-			sb.setLength(sb.length() - 1);
-		}
-
-		return sb.toString();
+		return String.join(" ", jdkOptions);
 	}
 
 	private void _close(Closeable closeable) throws IOException {
@@ -536,19 +523,6 @@ public class DBUpgradeClient {
 
 	private boolean _isEmpty(String value) {
 		if ((value == null) || value.isEmpty()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isGTJDK8() {
-		String javaVersion = System.getProperty("java.version");
-
-		int majorVersion = Integer.parseInt(
-			javaVersion.substring(0, javaVersion.indexOf('.')));
-
-		if (majorVersion > 8) {
 			return true;
 		}
 

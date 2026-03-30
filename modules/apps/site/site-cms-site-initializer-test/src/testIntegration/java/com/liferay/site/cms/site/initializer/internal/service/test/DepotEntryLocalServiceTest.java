@@ -14,11 +14,14 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -243,12 +246,31 @@ public class DepotEntryLocalServiceTest {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BASIC_DOCUMENT", TestPropsValues.getCompanyId());
 
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFieldsByBusinessType(
+				objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT);
+
+		String attachmentDownloadActionKey = null;
+
+		for (ObjectField objectField : objectFields) {
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				attachmentDownloadActionKey =
+					objectField.getAttachmentDownloadActionKey();
+
+				break;
+			}
+		}
+
 		Assert.assertArrayEquals(
 			new String[] {
 				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
 				ActionKeys.DELETE_DISCUSSION, ActionKeys.DOWNLOAD,
 				ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
-				ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+				ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW,
+				attachmentDownloadActionKey
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
@@ -258,7 +280,8 @@ public class DepotEntryLocalServiceTest {
 				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
 				ActionKeys.DELETE_DISCUSSION, ActionKeys.DOWNLOAD,
 				ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
-				ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+				ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW,
+				attachmentDownloadActionKey
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
@@ -266,7 +289,8 @@ public class DepotEntryLocalServiceTest {
 		Assert.assertArrayEquals(
 			new String[] {
 				ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
-				ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
+				ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW,
+				attachmentDownloadActionKey
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
@@ -405,6 +429,9 @@ public class DepotEntryLocalServiceTest {
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;

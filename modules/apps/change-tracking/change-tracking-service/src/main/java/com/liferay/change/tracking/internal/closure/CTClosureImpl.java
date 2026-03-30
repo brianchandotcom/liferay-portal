@@ -61,9 +61,8 @@ public class CTClosureImpl implements CTClosure {
 
 			Queue<Node> queue = new LinkedList<>(childNodes);
 
-			while (queue.size() > 0) {
-				Collection<Node> grandchildNodes = closureMap.get(
-					queue.poll());
+			while (!queue.isEmpty()) {
+				Collection<Node> grandchildNodes = closureMap.get(queue.poll());
 
 				if (grandchildNodes != null) {
 					for (Node grandchildNode : grandchildNodes) {

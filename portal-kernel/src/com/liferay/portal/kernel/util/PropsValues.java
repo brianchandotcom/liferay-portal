@@ -1085,6 +1085,13 @@ public class PropsValues {
 	public static final String LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING =
 		PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 
+	public static final boolean
+		LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED =
+			GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED));
+
 	public static final boolean LAYOUT_GUEST_SHOW_MAX_ICON =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LAYOUT_GUEST_SHOW_MAX_ICON));

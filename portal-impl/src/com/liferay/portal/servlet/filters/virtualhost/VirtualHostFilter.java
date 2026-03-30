@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -260,6 +261,35 @@ public class VirtualHostFilter extends BasePortalFilter {
 		}
 
 		if (layoutSet == null) {
+			Group group = _fetchGroupByFriendlyURLPrefix(
+				CompanyThreadLocal.getCompanyId(), friendlyURL);
+
+			if (!PropsValues.
+					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
+				(group != null)) {
+
+				StringBundler sb = new StringBundler(3);
+
+				if (i18nLanguageId != null) {
+					sb.append(i18nLanguageId);
+				}
+
+				sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
+				sb.append(friendlyURL);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Forward to " + sb.toString());
+				}
+
+				RequestDispatcher requestDispatcher =
+					_servletContext.getRequestDispatcher(sb.toString());
+
+				requestDispatcher.forward(
+					httpServletRequest, httpServletResponse);
+
+				return;
+			}
+
 			processFilter(
 				VirtualHostFilter.class.getName(), httpServletRequest,
 				httpServletResponse, filterChain);
@@ -304,37 +334,64 @@ public class VirtualHostFilter extends BasePortalFilter {
 					StringPool.BLANK);
 			}
 
-			if (friendlyURL.equals(StringPool.SLASH) ||
-				(PortalUtil.getPlidFromFriendlyURL(companyId, friendlyURL) <=
-					0)) {
+			Group group = _fetchGroupByFriendlyURLPrefix(
+				companyId, friendlyURL);
 
-				Group group = layoutSet.getGroup();
+			if (!PropsValues.
+					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
+				!layoutSet.isPrivateLayout() && (group != null)) {
 
-				if (isDocumentFriendlyURL(
-						httpServletRequest, httpServletResponse,
-						group.getGroupId(), friendlyURL)) {
+				sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
+			}
+			else {
+				long plid = PortalUtil.getPlidFromFriendlyURL(
+					companyId, friendlyURL);
 
-					processFilter(
-						VirtualHostFilter.class.getName(), httpServletRequest,
-						httpServletResponse, filterChain);
+				if (friendlyURL.equals(StringPool.SLASH) || (plid <= 0)) {
+					Group group = layoutSet.getGroup();
 
-					return;
-				}
+					if (isDocumentFriendlyURL(
+							httpServletRequest, httpServletResponse,
+							group.getGroupId(), friendlyURL)) {
 
-				if (Objects.equals(
-						group.getGroupKey(),
-						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
-					friendlyURL.equals(StringPool.SLASH) &&
-					!layoutSet.isPrivateLayout()) {
+						processFilter(
+							VirtualHostFilter.class.getName(),
+							httpServletRequest, httpServletResponse,
+							filterChain);
 
-					String homeURL = PortalUtil.getRelativeHomeURL(
-						httpServletRequest);
-
-					if (Validator.isNotNull(homeURL)) {
-						friendlyURL = homeURL;
+						return;
 					}
 
-					if (friendlyURL.equals(StringPool.SLASH)) {
+					if (Objects.equals(
+							group.getGroupKey(),
+							PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
+						friendlyURL.equals(StringPool.SLASH) &&
+						!layoutSet.isPrivateLayout()) {
+
+						String homeURL = PortalUtil.getRelativeHomeURL(
+							httpServletRequest);
+
+						if (Validator.isNotNull(homeURL)) {
+							friendlyURL = homeURL;
+						}
+
+						if (friendlyURL.equals(StringPool.SLASH)) {
+							if (layoutSet.isPrivateLayout()) {
+								if (group.isUser()) {
+									sb.append(_PRIVATE_USER_SERVLET_MAPPING);
+								}
+								else {
+									sb.append(_PRIVATE_GROUP_SERVLET_MAPPING);
+								}
+							}
+							else {
+								sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
+							}
+
+							sb.append(group.getFriendlyURL());
+						}
+					}
+					else {
 						if (layoutSet.isPrivateLayout()) {
 							if (group.isUser()) {
 								sb.append(_PRIVATE_USER_SERVLET_MAPPING);
@@ -349,21 +406,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 						sb.append(group.getFriendlyURL());
 					}
-				}
-				else {
-					if (layoutSet.isPrivateLayout()) {
-						if (group.isUser()) {
-							sb.append(_PRIVATE_USER_SERVLET_MAPPING);
-						}
-						else {
-							sb.append(_PRIVATE_GROUP_SERVLET_MAPPING);
-						}
-					}
-					else {
-						sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
-					}
-
-					sb.append(group.getFriendlyURL());
 				}
 			}
 
@@ -391,6 +433,28 @@ public class VirtualHostFilter extends BasePortalFilter {
 				VirtualHostFilter.class.getName(), httpServletRequest,
 				httpServletResponse, filterChain);
 		}
+	}
+
+	private Group _fetchGroupByFriendlyURLPrefix(
+		long companyId, String friendlyURL) {
+
+		if (friendlyURL.equals(StringPool.SLASH)) {
+			return null;
+		}
+
+		int index = friendlyURL.indexOf(CharPool.SLASH, 1);
+
+		String groupFriendlyURL;
+
+		if (index != -1) {
+			groupFriendlyURL = friendlyURL.substring(0, index);
+		}
+		else {
+			groupFriendlyURL = friendlyURL;
+		}
+
+		return GroupLocalServiceUtil.fetchFriendlyURLGroup(
+			companyId, groupFriendlyURL);
 	}
 
 	private String _findLanguageId(String friendlyURL) {

@@ -1373,6 +1373,10 @@ public interface PropsKeys {
 	public static final String LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING =
 		"layout.friendly.url.public.servlet.mapping";
 
+	public static final String
+		LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED =
+			"layout.friendly.url.public.servlet.mapping.enabled";
+
 	public static final String LAYOUT_GUEST_SHOW_MAX_ICON =
 		"layout.guest.show.max.icon";
 

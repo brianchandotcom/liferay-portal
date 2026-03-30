@@ -137,6 +137,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubCrawlTarget", "/ai-hub/crawl-targets"
 		).put(
+			"AIHubInstructionDefinition", "/ai-hub/instruction-definitions"
+		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"
 		).put(
 			"APIApplication", "/headless-builder/applications"

@@ -48,11 +48,11 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			String authorizationEndpoint, String issuer, String jwksURI,
-			boolean localWellKnownEnabled, String registrationEndpoint,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpoint,
-			String userInfoEndpoint)
+			String externalReferenceCode, String authorizationEndpoint,
+			String issuer, String jwksURI, boolean localWellKnownEnabled,
+			String registrationEndpoint, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
@@ -71,6 +71,12 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 			long companyId, String issuer)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthClientASLocalMetadata
+			fetchOAuthClientASLocalMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -96,6 +102,12 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
 			String localWellKnownURI)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**
@@ -127,4 +139,4 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1793556359
+// LIFERAY-SERVICE-BUILDER-HASH:1756099555

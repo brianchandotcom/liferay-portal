@@ -54,12 +54,6 @@ public interface OAuthClientEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth client entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuthClientEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public OAuthClientEntry addOAuthClientEntry(
-			long userId, String authRequestParametersJSON,
-			String authServerWellKnownURI, String customClaimsJSON,
-			String infoJSON, String matcherField, long metadataCacheTime,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
-		throws PortalException;
 
 	/**
 	 * Adds the o auth client entry to the database. Also notifies the appropriate model listeners.
@@ -74,6 +68,14 @@ public interface OAuthClientEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthClientEntry addOAuthClientEntry(
 		OAuthClientEntry oAuthClientEntry);
+
+	public OAuthClientEntry addOAuthClientEntry(
+			String externalReferenceCode, long userId,
+			String authRequestParametersJSON, String authServerWellKnownURI,
+			String customClaimsJSON, String infoJSON, String matcherField,
+			long metadataCacheTime, String oidcUserInfoMapperJSON,
+			String tokenRequestParametersJSON)
+		throws PortalException;
 
 	/**
 	 * Creates a new o auth client entry with the primary key. Does not add the o auth client entry to the database.
@@ -340,4 +342,4 @@ public interface OAuthClientEntryLocalService
 		OAuthClientEntry oAuthClientEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1275340058
+// LIFERAY-SERVICE-BUILDER-HASH:-1590557953

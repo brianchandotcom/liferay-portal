@@ -39,7 +39,7 @@ public class DBCopyTablesProcessTest {
 
 			Assert.assertEquals(
 				"Source table User_ has 3 columns, but target table User_ " +
-					"has only 2\n",
+					"has only 2 in the default schema\n",
 				exception.getMessage());
 		}
 	}

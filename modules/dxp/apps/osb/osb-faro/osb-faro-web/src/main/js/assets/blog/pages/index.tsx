@@ -74,7 +74,6 @@ const Blog: React.FC<{
 						label: selectedChannel?.name
 					}),
 					breadcrumbs.getAssets({channelId, groupId}),
-					breadcrumbs.getBlogs({channelId, groupId}),
 					breadcrumbs.getEntityName({label: decodedTitle})
 				]}
 				groupId={groupId}

@@ -1,14 +1,12 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
-import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
 import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
 import Filter from '../hocs/Filter';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
-import {CSVType} from 'shared/components/download-report/utils';
 import {ENABLE_GLOBAL_FILTER} from 'shared/util/constants';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
@@ -21,12 +19,13 @@ import {useDataSource} from 'shared/hooks/useDataSource';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const Overview = lazy(
-	() => import(/* webpackChunkName: "WebContentOverview" */ './Overview')
+	() => import(/* webpackChunkName: "ObjectEntryOverview" */ './Overview')
 );
+
 const KnownIndividuals = lazy(
 	() =>
 		import(
-			/* webpackChunkName: "WebContentKnownIndividuals" */ './KnownIndividuals'
+			/* webpackChunkName: "ObjectEntryKnownIndividuals" */ './KnownIndividualsListCard'
 		)
 );
 
@@ -34,16 +33,16 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.ASSETS_WEB_CONTENT_OVERVIEW
+		route: Routes.ASSETS_OBJECT_ENTRY_OVERVIEW
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('known-individuals'),
-		route: Routes.ASSETS_WEB_CONTENT_KNOWN_INDIVIDUALS
+		route: Routes.ASSETS_OBJECT_ENTRY_KNOWN_INDIVIDUALS
 	}
 ];
 
-const WebContent: React.FC<{
+const ObjectEntry: React.FC<{
 	className: string;
 	router: Router;
 }> = ({className, router}) => {
@@ -94,7 +93,7 @@ const WebContent: React.FC<{
 			</BasePage.Header>
 
 			{getMatchedRoute(NAV_ITEMS) ===
-				Routes.ASSETS_WEB_CONTENT_OVERVIEW && (
+				Routes.ASSETS_OBJECT_ENTRY_OVERVIEW && (
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadPDFReport
@@ -110,22 +109,12 @@ const WebContent: React.FC<{
 				</BasePage.SubHeader>
 			)}
 
-			{getMatchedRoute(NAV_ITEMS) ===
-				Routes.ASSETS_WEB_CONTENT_KNOWN_INDIVIDUALS && (
-				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
-						<DownloadCSVReport
-							assetId={assetId}
-							assetType='journal'
-							disabled={dataSourceStates.empty}
-							type={CSVType.Individual}
-							typeLang={Liferay.Language.get('known-individuals')}
-						/>
-					</div>
-				</BasePage.SubHeader>
-			)}
-
-			<BasePage.Context.Provider value={{filters, router}}>
+			<BasePage.Context.Provider
+				value={{
+					filters,
+					router
+				}}
+			>
 				{ENABLE_GLOBAL_FILTER && (
 					<BasePage.SubHeader>
 						<Filter onChange={setFilters} />
@@ -133,13 +122,13 @@ const WebContent: React.FC<{
 				)}
 
 				<BasePage.Body>
-					<Suspense fallback={<Loading />}>
+					<Suspense fallback={<Loading center />}>
 						<Switch>
 							<BundleRouter
 								data={Overview}
 								destructured={false}
 								exact
-								path={Routes.ASSETS_WEB_CONTENT_OVERVIEW}
+								path={Routes.ASSETS_OBJECT_ENTRY_OVERVIEW}
 							/>
 
 							<BundleRouter
@@ -147,7 +136,7 @@ const WebContent: React.FC<{
 								destructured={false}
 								exact
 								path={
-									Routes.ASSETS_WEB_CONTENT_KNOWN_INDIVIDUALS
+									Routes.ASSETS_OBJECT_ENTRY_KNOWN_INDIVIDUALS
 								}
 							/>
 
@@ -160,4 +149,4 @@ const WebContent: React.FC<{
 	);
 };
 
-export default WebContent;
+export default ObjectEntry;

@@ -33,11 +33,12 @@ export type TData = {
 };
 
 export enum Name {
-	Page = 'page',
 	Blog = 'blog',
+	Document = 'document',
 	Form = 'form',
 	Journal = 'journal',
-	Document = 'document'
+	ObjectEntry = 'objectEntry',
+	Page = 'page'
 }
 
 export interface IAudienceReportBaseCardProps {

@@ -1,7 +1,11 @@
 .lfr__management-toolbar {
-	position: fixed;
+	position: sticky;
 	width: 100%;
 	z-index: 2;
+
+	.has-control-menu & {
+		top: var(--control-menu-container-height);
+	}
 
 	&--box-shadow {
 		box-shadow: 0 0.125rem 0.75rem rgb(0 0 0 / 8%);

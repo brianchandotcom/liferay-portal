@@ -38,6 +38,12 @@ export const liferay = {
 			siteName: LIFERAY_SITE_NAME,
 		};
 	},
+
+	getMissingEnvVars: () => {
+		const required = ['LIFERAY_CHANNEL_ID', 'LIFERAY_HOST'];
+
+		return required.filter((key) => !process.env[key]);
+	},
 };
 
 export type Liferay = typeof liferay;

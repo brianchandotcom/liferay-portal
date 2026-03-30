@@ -7,6 +7,7 @@ import {Metadata} from 'next';
 
 import {ProductCatalog} from '../components/product/product-catalog';
 import {ProductFilters} from '../components/product/product-filters';
+import {SetupGuide} from '../components/setup-guide';
 import {liferay} from '../liferay/index';
 import {getServerURL} from '../utils/server';
 import {getProductsPage} from './data';
@@ -77,6 +78,12 @@ const getNormalizedSearchParams = async ({
 };
 
 export default async function ProductCatalogPage(props: PageProps<'/'>) {
+	const missingEnvVars = liferay.getMissingEnvVars();
+
+	if (missingEnvVars.length > 0) {
+		return <SetupGuide envVars={missingEnvVars} />;
+	}
+
 	const {keywords, page, pageSize, specificationValues, viewMode} =
 		await getNormalizedSearchParams({searchParams: props.searchParams});
 

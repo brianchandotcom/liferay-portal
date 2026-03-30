@@ -621,7 +621,15 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		objectEntryFolder.setStatus(status);
 
-		return objectEntryFolderPersistence.update(objectEntryFolder);
+		objectEntryFolder = objectEntryFolderPersistence.update(
+			objectEntryFolder);
+
+		_assetEntryLocalService.updateEntry(
+			ObjectEntryFolder.class.getName(),
+			objectEntryFolder.getObjectEntryFolderId(), null, null, true,
+			objectEntryFolder.getStatus() == WorkflowConstants.STATUS_APPROVED);
+
+		return objectEntryFolder;
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(
@@ -961,8 +969,9 @@ public class ObjectEntryFolderLocalServiceImpl
 			objectEntryFolder.getObjectEntryFolderId(),
 			objectEntryFolder.getUuid(), 0,
 			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(), true, true, null, null,
-			objectEntryFolder.getCreateDate(), null, null,
+			serviceContext.getAssetTagNames(), true,
+			objectEntryFolder.getStatus() == WorkflowConstants.STATUS_APPROVED,
+			null, null, objectEntryFolder.getCreateDate(), null, null,
 			objectEntryFolder.getName(), null, null, null, null, 0, 0, null);
 	}
 

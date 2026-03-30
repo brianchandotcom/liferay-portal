@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
@@ -72,6 +73,10 @@ public class ReindexPortalBackgroundTaskExecutor
 	protected void reindex(
 			String className, long[] companyIds, String executionMode)
 		throws Exception {
+
+		if (IndexWriterHelperUtil.isIndexReadOnly()) {
+			return;
+		}
 
 		long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
 		ExecutorService executorService =

@@ -32,30 +32,26 @@ public class CTClosureImpl implements CTClosure {
 
 		_ctCollectionId = ctCollectionId;
 
-		Map<Node, Node> internMap = new HashMap<>();
+		Map<Node, Node> nodesMap = new HashMap<>();
 
 		for (Map.Entry<Node, Collection<Node>> entry : closureMap.entrySet()) {
-			Node key = entry.getKey();
+			Node node = entry.getKey();
 
-			internMap.putIfAbsent(key, key);
+			nodesMap.putIfAbsent(node, node);
 
-			for (Node child : entry.getValue()) {
-				internMap.putIfAbsent(child, child);
-			}
-		}
-
-		Collection<Node> rootChildren = closureMap.get(Node.ROOT_NODE);
-
-		if (rootChildren != null) {
-			for (Node rootChild : rootChildren) {
-				_rootNodes.add(internMap.get(rootChild));
+			for (Node childNode : entry.getValue()) {
+				nodesMap.putIfAbsent(childNode, childNode);
 			}
 		}
 
 		for (Map.Entry<Node, Collection<Node>> entry : closureMap.entrySet()) {
-			Node parentNode = internMap.get(entry.getKey());
+			Node node = nodesMap.get(entry.getKey());
 
-			if (parentNode.equals(Node.ROOT_NODE)) {
+			if (node.equals(Node.ROOT_NODE)) {
+				for (Node childNode : entry.getValue()) {
+					_rootNodes.add(nodesMap.get(childNode));
+				}
+
 				continue;
 			}
 
@@ -66,12 +62,13 @@ public class CTClosureImpl implements CTClosure {
 			Queue<Node> queue = new LinkedList<>(childNodes);
 
 			while (queue.size() > 0) {
-				Collection<Node> grandchildren = closureMap.get(queue.poll());
+				Collection<Node> grandchildNodes = closureMap.get(
+					queue.poll());
 
-				if (grandchildren != null) {
-					for (Node grandchild : grandchildren) {
-						if (excludedNodes.add(grandchild)) {
-							queue.add(grandchild);
+				if (grandchildNodes != null) {
+					for (Node grandchildNode : grandchildNodes) {
+						if (excludedNodes.add(grandchildNode)) {
+							queue.add(grandchildNode);
 						}
 					}
 				}
@@ -82,15 +79,15 @@ public class CTClosureImpl implements CTClosure {
 					continue;
 				}
 
-				Node child = internMap.get(childNode);
+				childNode = nodesMap.get(childNode);
 
-				child.addParent(parentNode);
+				childNode.addParent(node);
 
-				parentNode.addChild(child);
+				node.addChild(childNode);
 			}
 		}
 
-		for (Node node : internMap.values()) {
+		for (Node node : nodesMap.values()) {
 			if (!node.equals(Node.ROOT_NODE)) {
 				_nodeMap.put(node, node);
 			}
@@ -107,13 +104,13 @@ public class CTClosureImpl implements CTClosure {
 			return Collections.emptyMap();
 		}
 
-		List<Node> children = node.getChildren();
+		List<Node> childNodes = node.getChildren();
 
-		if (children.isEmpty()) {
+		if (childNodes.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		return _toMap(children);
+		return _toMap(childNodes);
 	}
 
 	@Override
@@ -131,13 +128,13 @@ public class CTClosureImpl implements CTClosure {
 			return Collections.emptyMap();
 		}
 
-		List<Node> parents = node.getParents();
+		List<Node> parentNodes = node.getParents();
 
-		if (parents.isEmpty()) {
+		if (parentNodes.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		return _toMap(parents);
+		return _toMap(parentNodes);
 	}
 
 	@Override

@@ -477,14 +477,14 @@ public class ViewChangesDisplayContext {
 					classPKs.add(_modelClassPK);
 				}
 
-				for (Map.Entry<Long, List<Long>> parentEntry :
+				for (Map.Entry<Long, List<Long>> entry :
 						ctClosure.getParentPKsMap(
 							_modelClassNameId, _modelClassPK
 						).entrySet()) {
 
-					long classNameId = parentEntry.getKey();
+					long classNameId = entry.getKey();
 
-					for (long classPK : parentEntry.getValue()) {
+					for (long classPK : entry.getValue()) {
 						ModelInfoKey modelInfoKey = new ModelInfoKey(
 							classNameId, classPK);
 
@@ -492,11 +492,11 @@ public class ViewChangesDisplayContext {
 							modelInfoMap.put(
 								modelInfoKey, new ModelInfo(modelKeyCounter++));
 
-							Set<Long> parentClassPKs =
+							Set<Long> classPKs =
 								classNameIdClassPKsMap.computeIfAbsent(
 									classNameId, key -> new HashSet<>());
 
-							parentClassPKs.add(classPK);
+							classPKs.add(classPK);
 						}
 					}
 				}

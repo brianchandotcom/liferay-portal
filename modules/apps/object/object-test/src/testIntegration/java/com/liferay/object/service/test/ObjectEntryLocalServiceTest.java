@@ -2502,6 +2502,69 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectEntryWithHierarchyAndWorkflow() throws Exception {
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			Collections.singletonList(
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionA,
+					objectDefinitionAA,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					"objectRelationship")));
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_updateWorkflowDefinitionLink(
+				objectDefinitionAA, "Single Approver");
+
+		ObjectEntry relatedObjectEntry = _addObjectEntry(
+			0, objectDefinitionAA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"r_objectRelationship_" +
+					objectDefinitionA.getPKObjectFieldName(),
+				() -> {
+					ObjectEntry objectEntryA = _addObjectEntry(
+						0, objectDefinitionA.getObjectDefinitionId(),
+						Collections.emptyMap());
+
+					return objectEntryA.getObjectEntryId();
+				}
+			).build());
+
+		Assert.assertNotEquals(0, relatedObjectEntry.getRootObjectEntryId());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, relatedObjectEntry);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		ObjectEntry unrelatedObjectEntry = _addObjectEntry(
+			0, objectDefinitionAA, Collections.emptyMap(), serviceContext);
+
+		Assert.assertEquals(0, unrelatedObjectEntry.getRootObjectEntryId());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, unrelatedObjectEntry);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionA.getName(), objectDefinitionAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
+	}
+
+	@Test
 	public void testAddObjectEntryWithLocalizedAttachmentObjectField()
 		throws Exception {
 

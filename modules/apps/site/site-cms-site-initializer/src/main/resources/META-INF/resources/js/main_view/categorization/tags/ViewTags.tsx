@@ -261,7 +261,7 @@ export default function ViewTags({
 						data: {
 							permissionKey: 'get',
 						},
-						icon: 'null',
+						icon: 'list-ul',
 						id: 'viewUsages',
 						label: Liferay.Language.get('view-usages'),
 					},

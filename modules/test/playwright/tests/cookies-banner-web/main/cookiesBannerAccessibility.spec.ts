@@ -47,7 +47,7 @@ test('LPD-30822 Cookie Banner Accessibility', async ({page}) => {
 			.getByRole('dialog', {name: 'banner cookies'})
 			.waitFor({state: 'visible'});
 
-		const cookiesBannerContainer = await page.locator(
+		const cookiesBannerContainer = page.locator(
 			'//div[@role="dialog"][@aria-label="banner cookies"]'
 		);
 

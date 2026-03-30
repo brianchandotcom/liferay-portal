@@ -54,7 +54,7 @@ test.beforeEach(async ({page}) => {
 	});
 
 	await test.step('Verify Cookies Banner appears, then Accept All cookies', async () => {
-		const cookiesBanner = await page.getByRole('dialog', {
+		const cookiesBanner = page.getByRole('dialog', {
 			name: 'banner cookies',
 		});
 
@@ -71,13 +71,13 @@ test(
 		await test.step('Validate Consent Renewal Period field', async () => {
 			await test.step('Validate default value of 12 months', async () => {
 				await expect(
-					await consentManagerConfigurationPage.consentRenewalPeriodInput
+					consentManagerConfigurationPage.consentRenewalPeriodInput
 				).toHaveValue('12');
 			});
 
 			await test.step('Validate value cannot be less than 1', async () => {
 				await expect(
-					await consentManagerConfigurationPage.consentRenewalPeriodInput
+					consentManagerConfigurationPage.consentRenewalPeriodInput
 				).toHaveAttribute('min', '1');
 				await validateConsentRenewalPeriodValue(
 					consentManagerConfigurationPage,
@@ -89,7 +89,7 @@ test(
 
 			await test.step('Validate value cannot be more than 12', async () => {
 				await expect(
-					await consentManagerConfigurationPage.consentRenewalPeriodInput
+					consentManagerConfigurationPage.consentRenewalPeriodInput
 				).toHaveAttribute('max', '12');
 				await validateConsentRenewalPeriodValue(
 					consentManagerConfigurationPage,
@@ -110,7 +110,7 @@ test(
 
 			await test.step('Validate value must be a number', async () => {
 				await expect(
-					await consentManagerConfigurationPage.consentRenewalPeriodInput
+					consentManagerConfigurationPage.consentRenewalPeriodInput
 				).toHaveAttribute('type', 'number');
 			});
 		});
@@ -119,7 +119,7 @@ test(
 			consentManagerConfigurationPage.page.once(
 				'dialog',
 				async (dialogWindow) => {
-					await expect(dialogWindow.message()).toContain(
+					expect(dialogWindow.message()).toContain(
 						'You are about to change the consent renewal period'
 					);
 
@@ -168,7 +168,7 @@ test(
 
 		await page.waitForTimeout(1000);
 
-		const cookiesBanner = await page.getByRole('dialog', {
+		const cookiesBanner = page.getByRole('dialog', {
 			name: 'banner cookies',
 		});
 
@@ -179,7 +179,7 @@ test(
 		);
 
 		page.once('dialog', async (dialogWindow) => {
-			await expect(dialogWindow.message()).toContain(
+			expect(dialogWindow.message()).toContain(
 				'You are about to change the consent renewal period'
 			);
 
@@ -256,11 +256,11 @@ test(
 			const cookies = await page.context().cookies();
 
 			for (const cookieKey of cookieKeys) {
-				const cookie = await cookies.find(
+				const cookie = cookies.find(
 					(cookie) => cookie.name === cookieKey
 				);
 
-				await expect(cookie).toBeDefined();
+				expect(cookie).toBeDefined();
 			}
 		});
 
@@ -282,11 +282,11 @@ test(
 			const cookies = await page.context().cookies();
 
 			for (const cookieKey of cookieKeys) {
-				const cookie = await cookies.find(
+				const cookie = cookies.find(
 					(cookie) => cookie.name === cookieKey
 				);
 
-				await expect(cookie).toBeUndefined();
+				expect(cookie).toBeUndefined();
 			}
 		});
 	}
@@ -320,18 +320,18 @@ async function validateConsentRenewalPeriodCookieExpiration(
 	let userConsentConfiguredDate;
 
 	await test.step('Verify USER_CONSENT_CONFIGURED_DATE cookie value is now', async () => {
-		const cookie = await cookies.find(
+		const cookie = cookies.find(
 			(cookie) => cookie.name === 'USER_CONSENT_CONFIGURED_DATE'
 		);
 
-		await expect(cookie).toBeDefined();
+		expect(cookie).toBeDefined();
 
 		userConsentConfiguredDate = Number(cookie.value);
 
-		await expect(userConsentConfiguredDate).toBeGreaterThanOrEqual(
+		expect(userConsentConfiguredDate).toBeGreaterThanOrEqual(
 			dateBeforeCookiesSet
 		);
-		await expect(userConsentConfiguredDate).toBeLessThanOrEqual(
+		expect(userConsentConfiguredDate).toBeLessThanOrEqual(
 			new Date().getTime()
 		);
 	});
@@ -341,11 +341,9 @@ async function validateConsentRenewalPeriodCookieExpiration(
 			userConsentConfiguredDate / 1000 + 60 * 60 * 24 * 365 * (1 / 12);
 
 		for (const cookieKey of cookieKeys) {
-			const cookie = await cookies.find(
-				(cookie) => cookie.name === cookieKey
-			);
+			const cookie = cookies.find((cookie) => cookie.name === cookieKey);
 
-			await expect(cookie).toBeDefined();
+			expect(cookie).toBeDefined();
 
 			// Normalize cookie.expires by removing millis
 
@@ -353,10 +351,10 @@ async function validateConsentRenewalPeriodCookieExpiration(
 
 			// Expect expiration within +/- 1 second
 
-			await expect(cookieExpiration).toBeGreaterThanOrEqual(
+			expect(cookieExpiration).toBeGreaterThanOrEqual(
 				oneMonthFromNowInSeconds - 1
 			);
-			await expect(cookieExpiration).toBeLessThanOrEqual(
+			expect(cookieExpiration).toBeLessThanOrEqual(
 				oneMonthFromNowInSeconds + 1
 			);
 		}

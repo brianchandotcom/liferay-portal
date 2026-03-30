@@ -851,6 +851,101 @@ public class ObjectEntryServiceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithAccountEntryRestrictedAndHierarchy()
+		throws Exception {
+
+		ObjectDefinition accountEntryObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(),
+				AccountEntry.class.getSimpleName());
+
+		ObjectDefinition objectDefinitionAA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				accountEntryObjectDefinition.getObjectDefinitionId(),
+				objectDefinitionAA.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"relationship", false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		objectDefinitionAA.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship.getObjectFieldId2());
+
+		objectDefinitionAA.setAccountEntryRestricted(true);
+
+		objectDefinitionAA =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				objectDefinitionAA);
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, "account", null,
+			null, null, null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		Tree tree = TreeTestUtil.createObjectEntryTree(
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			_rootObjectDefinition.getObjectDefinitionId());
+
+		ObjectEntry relatedObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				"AA1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
+				objectDefinitionAA.getObjectDefinitionId());
+
+		Assert.assertNotEquals(0, relatedObjectEntry.getRootObjectEntryId());
+
+		ObjectEntry unrelatedObjectEntry =
+			_objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				objectDefinitionAA.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"r_relationship_accountEntryId",
+					accountEntry.getAccountEntryId()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(0, unrelatedObjectEntry.getRootObjectEntryId());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), _user.getUserId());
+
+		_setUser(_user);
+
+		Node rootNode = tree.getRootNode();
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have VIEW permission for ",
+				_rootObjectDefinition.getClassName(), " ",
+				rootNode.getPrimaryKey()),
+			() -> _objectEntryService.getObjectEntry(
+				relatedObjectEntry.getObjectEntryId()));
+
+		Assert.assertNotNull(
+			_objectEntryService.getObjectEntry(
+				unrelatedObjectEntry.getObjectEntryId()));
+
+		_setUser(_adminUser);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		_accountEntryLocalService.deleteAccountEntry(accountEntry);
+	}
+
+	@Test
 	public void testGetOrAddEmptyObjectEntry() throws Exception {
 
 		// Lazy referencing disabled

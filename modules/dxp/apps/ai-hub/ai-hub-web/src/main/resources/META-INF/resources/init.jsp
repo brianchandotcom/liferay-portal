@@ -19,6 +19,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.ai.hub.web.internal.display.context.EditAgentDefinitionDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewAgentDefinitionsDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewContentRetrieversDisplayContext" %><%@
+page import="com.liferay.ai.hub.web.internal.display.context.ViewInstructionDefinitionsDisplayContext" %><%@
 page import="com.liferay.portal.workflow.constants.WorkflowPortletKeys" %>
 
 <liferay-frontend:defineObjects />

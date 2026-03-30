@@ -1,6 +1,24 @@
 module "eks" {
 	addons={
 		amazon-cloudwatch-observability={
+			configuration_values=jsonencode({
+				containerLogs={
+					enabled=true
+				},
+				dcgmExporter={
+					enabled=false
+				},
+				manager={
+					applicationSignals={
+						autoMonitor={
+							monitorAllServices=false
+						}
+					}
+				},
+				neuronMonitor={
+					enabled=false
+				}
+			})
 			most_recent=true
 		}
 		aws-ebs-csi-driver={

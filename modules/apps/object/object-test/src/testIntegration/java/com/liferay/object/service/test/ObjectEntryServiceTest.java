@@ -813,6 +813,32 @@ public class ObjectEntryServiceTest {
 				_objectEntryService.getObjectEntry(
 					objectEntry.getObjectEntryId())));
 
+		// Unrelated object entry must not inherit permissions
+
+		ObjectDefinition objectDefinitionAA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
+
+		ObjectEntry unrelatedObjectEntry =
+			_objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				objectDefinitionAA.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(0, unrelatedObjectEntry.getRootObjectEntryId());
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have VIEW permission for ",
+				objectDefinitionAA.getClassName(), " ",
+				unrelatedObjectEntry.getObjectEntryId()),
+			() -> _objectEntryService.getObjectEntry(
+				unrelatedObjectEntry.getObjectEntryId()));
+
 		// User can view an object entry of a descendant object definition
 		// with the update permission
 

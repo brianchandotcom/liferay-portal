@@ -540,7 +540,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	private void _assertProblemException(
-			String status, String title,
+			String expectedStatus, String expectedTitle,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -552,8 +552,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals(status, problem.getStatus());
-			Assert.assertEquals(title, problem.getTitle());
+			Assert.assertEquals(expectedStatus, problem.getStatus());
+			Assert.assertEquals(expectedTitle, problem.getTitle());
 		}
 	}
 

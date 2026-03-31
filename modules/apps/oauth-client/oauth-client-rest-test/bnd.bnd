@@ -1,4 +1,6 @@
 Bundle-Name: Liferay OAuth Client REST Test
 Bundle-SymbolicName: com.liferay.oauth.client.rest.test
 Bundle-Version: 1.0.0
--includeresource: com.liferay.oauth.client.rest.client.jar=com.liferay.oauth.client.rest.client-*.jar;lib:=true
+-includeresource:\
+	com.liferay.headless.batch.engine.client.jar=com.liferay.headless.batch.engine.client-*.jar;lib:=true,\
+	com.liferay.oauth.client.rest.client.jar=com.liferay.oauth.client.rest.client-*.jar;lib:=true

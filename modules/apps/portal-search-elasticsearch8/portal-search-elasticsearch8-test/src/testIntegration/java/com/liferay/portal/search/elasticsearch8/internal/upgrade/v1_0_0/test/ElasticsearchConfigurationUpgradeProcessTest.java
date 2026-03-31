@@ -59,7 +59,7 @@ public class ElasticsearchConfigurationUpgradeProcessTest {
 			).put(
 				"embeddedHttpPort", 9202
 			).put(
-				"operationMode", "REMOTE"
+				"operationMode", "EMBEDDED"
 			).put(
 				"restClientLoggerLevel", "ERROR"
 			).put(
@@ -79,7 +79,7 @@ public class ElasticsearchConfigurationUpgradeProcessTest {
 			).put(
 				"embeddedHttpPort", 9202
 			).put(
-				"operationMode", "REMOTE"
+				"operationMode", "EMBEDDED"
 			).put(
 				"restClientLoggerLevel", "ERROR"
 			).put(
@@ -112,7 +112,7 @@ public class ElasticsearchConfigurationUpgradeProcessTest {
 		Assert.assertNull(properties.get("embeddedHttpPort"));
 		Assert.assertNull(properties.get("operationMode"));
 		Assert.assertEquals(
-			Boolean.TRUE,
+			Boolean.FALSE,
 			GetterUtil.getBoolean(properties.get("productionModeEnabled")));
 		Assert.assertNull(properties.get("restClientLoggerLevel"));
 		Assert.assertEquals(

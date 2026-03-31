@@ -46,6 +46,16 @@ public interface FragmentEntryProcessorRegistry {
 		return fragmentEntryLink.getHtml();
 	}
 
+	public default String processFragmentEntryLinkHTML(
+			JSONObject editableValuesJSONObject,
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink, fragmentEntryProcessorContext);
+	}
+
 	public void validateFragmentEntryHTML(
 			String html, JSONObject configurationJSONObject)
 		throws PortalException;

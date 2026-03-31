@@ -18,7 +18,7 @@ import {Provider} from '@clayui/provider';
 import {openToast} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 
-import Toolbar from './components/ToolBar';
+import Toolbar from '../components/ToolBar';
 import {
 	getAgentDefinition,
 	putAgentDefinition,

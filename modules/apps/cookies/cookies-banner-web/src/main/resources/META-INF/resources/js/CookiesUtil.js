@@ -16,6 +16,7 @@ const HEADERS = new Headers({
 	'content-type': 'application/json',
 });
 
+export const guestUserConfigCookieName = 'GUEST_USER_CONSENT_CONFIGURED';
 export const userConfigCookieName = 'USER_CONSENT_CONFIGURED';
 export const userConfigDateCookieName = 'USER_CONSENT_CONFIGURED_DATE';
 
@@ -144,6 +145,21 @@ export async function getCookie(name) {
 	return await fetchStoredCookie(name);
 }
 
+export function hasGuestUserConfigCookie() {
+	const cookie = getCookieUtil(
+		guestUserConfigCookieName,
+		COOKIE_TYPES.NECESSARY
+	);
+
+	if (cookie !== undefined) {
+		removeCookieUtil(guestUserConfigCookieName);
+
+		return true;
+	}
+
+	return false;
+}
+
 export async function hasPreviouslyStoredConsent() {
 	return await fetch(
 		`/o/cookies/v1.0/cookies-consent-preferences/by-name/${userConfigCookieName}`,
@@ -224,6 +240,18 @@ export function setCookie(
 }
 
 export function setUserConfigCookie(consentRenewalPeriod, storeConsent) {
+	if (
+		Liferay.FeatureFlags['LPD-75032'] &&
+		!Liferay.ThemeDisplay.isSignedIn()
+	) {
+		setCookie(
+			consentRenewalPeriod,
+			guestUserConfigCookieName,
+			false,
+			'true'
+		);
+	}
+
 	setCookie(consentRenewalPeriod, userConfigCookieName, storeConsent, 'true');
 
 	setCookie(

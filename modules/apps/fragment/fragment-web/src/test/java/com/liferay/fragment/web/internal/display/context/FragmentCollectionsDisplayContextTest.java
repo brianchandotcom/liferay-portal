@@ -6,7 +6,7 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Group;
@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -63,11 +62,11 @@ public class FragmentCollectionsDisplayContextTest {
 
 	@Test
 	@TestInfo("LPD-83557")
-	public void testGetSearchContainerIteratorURLContainsExportAction() {
+	public void testGetSearchContainerIteratorURLContainsExportMVCRenderCommandName() {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		Mockito.when(
-			_fragmentCollectionService.getExportableFragmentCollections(
+			_fragmentCollectionLocalService.getExportableFragmentCollections(
 				Mockito.any(long[].class), Mockito.anyInt(), Mockito.anyInt(),
 				Mockito.any())
 		).thenReturn(
@@ -75,8 +74,8 @@ public class FragmentCollectionsDisplayContextTest {
 		);
 
 		Mockito.when(
-			_fragmentCollectionService.getExportableFragmentCollectionsCount(
-				Mockito.any(long[].class))
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsCount(Mockito.any(long[].class))
 		).thenReturn(
 			0
 		);
@@ -88,7 +87,8 @@ public class FragmentCollectionsDisplayContextTest {
 			(MockLiferayPortletURL)searchContainer.getIteratorURL();
 
 		Assert.assertEquals(
-			"export", mockLiferayPortletURL.getParameter("action"));
+			"/fragment/view_exportable_fragment_collections",
+			mockLiferayPortletURL.getParameter("mvcRenderCommandName"));
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class FragmentCollectionsDisplayContextTest {
 		_getSearchContainer(httpServletRequest);
 
 		Mockito.verify(
-			_fragmentCollectionService
+			_fragmentCollectionLocalService
 		).getExportableFragmentCollections(
 			Mockito.any(long[].class), Mockito.anyInt(), Mockito.anyInt(),
 			Mockito.any()
@@ -127,7 +127,7 @@ public class FragmentCollectionsDisplayContextTest {
 		_getSearchContainer(httpServletRequest);
 
 		Mockito.verify(
-			_fragmentCollectionService
+			_fragmentCollectionLocalService
 		).getExportableFragmentCollections(
 			Mockito.any(long[].class), Mockito.eq("Banner"), Mockito.eq(0),
 			Mockito.eq(20), Mockito.any()
@@ -166,12 +166,6 @@ public class FragmentCollectionsDisplayContextTest {
 			themeDisplay
 		);
 
-		Mockito.when(
-			httpServletRequest.getParameter("action")
-		).thenReturn(
-			Constants.EXPORT
-		);
-
 		return httpServletRequest;
 	}
 
@@ -204,14 +198,15 @@ public class FragmentCollectionsDisplayContextTest {
 
 		FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext =
 			new FragmentCollectionsDisplayContext(
-				_fragmentCollectionService, httpServletRequest,
+				true, _fragmentCollectionLocalService, httpServletRequest,
 				Mockito.mock(RenderRequest.class), renderResponse);
 
 		return fragmentCollectionsDisplayContext.getSearchContainer();
 	}
 
-	private final FragmentCollectionService _fragmentCollectionService =
-		Mockito.mock(FragmentCollectionService.class);
+	private final FragmentCollectionLocalService
+		_fragmentCollectionLocalService = Mockito.mock(
+			FragmentCollectionLocalService.class);
 	private final MockedStatic<PortalInstancePool>
 		_portalInstancePoolMockedStatic = Mockito.mockStatic(
 			PortalInstancePool.class);

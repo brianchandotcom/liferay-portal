@@ -5,6 +5,7 @@
 
 import {Underline} from '@ckeditor/ckeditor5-basic-styles/dist/index.js';
 import {Bookmark} from '@ckeditor/ckeditor5-bookmark/dist/index.js';
+import ClayButton from '@clayui/button';
 import {
 	CKEditor5ClassicEditor as ClassicEditor,
 	LiferayEditorConfig,
@@ -53,13 +54,13 @@ const CKEditor5ReactClassicEditor = ({
 	return (
 		<div className="container-fluid">
 			<div className="mb-2 row">
-				<button
+				<ClayButton
 					onClick={() => {
 						setDisabled(!disabled);
 					}}
 				>
 					Toggle editor ReadOnly mode
-				</button>
+				</ClayButton>
 			</div>
 
 			<div className="row">

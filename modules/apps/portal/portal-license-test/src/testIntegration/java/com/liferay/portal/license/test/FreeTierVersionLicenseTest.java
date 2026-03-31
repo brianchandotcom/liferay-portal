@@ -6,6 +6,7 @@
 package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -22,8 +23,6 @@ import java.lang.reflect.Field;
 
 import java.util.List;
 import java.util.Objects;
-
-import net.bytebuddy.agent.builder.ResettableClassFileTransformer;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -52,7 +51,7 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_disableKeyValidatorResettableClassFileTransformer = disableValidate();
+		_disableKeyValidatorSafeCloseable = disableValidateWithSafeCloseable();
 
 		_ignoredVersionField = findField(
 			PortalClassLoaderUtil.getClassLoader(),
@@ -61,8 +60,7 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 
 	@AfterClass
 	public static void tearDownClass() {
-		resetClassFileTransformer(
-			_disableKeyValidatorResettableClassFileTransformer);
+		_disableKeyValidatorSafeCloseable.close();
 	}
 
 	@Test
@@ -148,11 +146,10 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 			}
 		}
 
-		ResettableClassFileTransformer resettableClassFileTransformer =
-			setVersion(version);
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_getLicensePackageName(), LoggerTestUtil.ERROR)) {
+				_getLicensePackageName(), LoggerTestUtil.ERROR);
+			SafeCloseable safeCloseable = setVersionWithSafeCloseable(
+				version)) {
 
 			assertLicensePropertiesNotExisted(getPortalProductId());
 
@@ -193,13 +190,10 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 			resetLicenseData();
 
 			resetLifecycleAction();
-
-			resetClassFileTransformer(resettableClassFileTransformer);
 		}
 	}
 
-	private static ResettableClassFileTransformer
-		_disableKeyValidatorResettableClassFileTransformer;
+	private static SafeCloseable _disableKeyValidatorSafeCloseable;
 	private static Field _ignoredVersionField;
 
 }

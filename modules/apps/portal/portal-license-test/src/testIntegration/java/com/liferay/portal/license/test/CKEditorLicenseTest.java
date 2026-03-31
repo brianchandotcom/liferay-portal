@@ -6,6 +6,7 @@
 package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.module.util.BundleUtil;
@@ -29,8 +30,6 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
-
-import net.bytebuddy.agent.builder.ResettableClassFileTransformer;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -64,15 +63,14 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_disableKeyValidatorResettableClassFileTransformer = disableValidate();
-		_setVersionResettableClassFileTransformer = setVersion("2026.Q1.0 LTS");
+		_disableKeyValidatorSafeCloseable = disableValidateWithSafeCloseable();
+		_setVersionSafeCloseable = setVersionWithSafeCloseable("2026.Q1.0 LTS");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		resetClassFileTransformer(
-			_disableKeyValidatorResettableClassFileTransformer);
-		resetClassFileTransformer(_setVersionResettableClassFileTransformer);
+		_disableKeyValidatorSafeCloseable.close();
+		_setVersionSafeCloseable.close();
 	}
 
 	@After
@@ -283,10 +281,8 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 		"com.liferay.frontend.editor.ckeditor.web.internal.configuration." +
 			"CKEditor5Configuration";
 
-	private static ResettableClassFileTransformer
-		_disableKeyValidatorResettableClassFileTransformer;
-	private static ResettableClassFileTransformer
-		_setVersionResettableClassFileTransformer;
+	private static SafeCloseable _disableKeyValidatorSafeCloseable;
+	private static SafeCloseable _setVersionSafeCloseable;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

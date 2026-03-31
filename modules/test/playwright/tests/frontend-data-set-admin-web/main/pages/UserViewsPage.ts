@@ -10,7 +10,6 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 
 export class UserViewsPage {
 	readonly adminOptionsDropdown: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly bulkActions: {
 		actionsDropdownButton: Locator;
 		container: Locator;

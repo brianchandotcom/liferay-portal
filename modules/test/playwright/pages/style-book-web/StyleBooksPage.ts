@@ -49,18 +49,16 @@ export class StyleBooksPage {
 		});
 	}
 
-	async create(styleBookName: string, baseThemeName?: string) {
+	async create(styleBookName: string, baseThemeName = 'Classic Theme') {
 		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
 
 		await this.page
 			.getByRole('textbox', {name: 'Name'})
 			.fill(styleBookName);
 
-		if (baseThemeName) {
-			await this.page.getByLabel('Create Style Book For').click();
+		await this.page.getByLabel('Create Style Book For').click();
 
-			await this.page.getByRole('option', {name: baseThemeName}).click();
-		}
+		await this.page.getByRole('option', {name: baseThemeName}).click();
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 

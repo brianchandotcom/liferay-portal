@@ -501,10 +501,6 @@ public abstract class BaseSectionDisplayContextTestCase
 			WorkflowConstants.STATUS_APPROVED);
 
 		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), false, true,
 			ObjectDefinitionConstants.SCOPE_DEPOT,
 			WorkflowConstants.STATUS_APPROVED);
@@ -516,10 +512,6 @@ public abstract class BaseSectionDisplayContextTestCase
 			objectFolder.getObjectFolderId(), true, true,
 			ObjectDefinitionConstants.SCOPE_DEPOT,
 			WorkflowConstants.STATUS_DRAFT);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
 
 		_assertCreationMenu(
 			getCreationMenu(adminUser),

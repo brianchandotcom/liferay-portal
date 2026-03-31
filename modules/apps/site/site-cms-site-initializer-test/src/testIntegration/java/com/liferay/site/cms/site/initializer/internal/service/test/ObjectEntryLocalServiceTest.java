@@ -164,7 +164,7 @@ public class ObjectEntryLocalServiceTest {
 				true, "Test" + StringUtil.randomString(), null, null, null,
 				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				false, ObjectDefinitionConstants.SCOPE_DEPOT, null, 1,
 				WorkflowConstants.STATUS_DRAFT, Collections.emptyList(),
 				List.of(
 					ObjectFieldUtil.createObjectField(

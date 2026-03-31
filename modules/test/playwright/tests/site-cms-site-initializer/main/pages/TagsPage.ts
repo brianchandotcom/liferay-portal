@@ -21,7 +21,7 @@ export class TagsPage {
 	constructor(page: Page) {
 		this.page = page;
 		this.dataSetFragmentPage = new DataSetPage(page);
-		this.newTagButton = this.page.getByLabel('New');
+		this.newTagButton = this.page.getByRole('button', {name: 'New'});
 		this.saveAndAddAnotherButton = this.page.getByText(
 			'Save and Add Another'
 		);

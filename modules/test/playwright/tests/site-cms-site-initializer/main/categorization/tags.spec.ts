@@ -238,6 +238,18 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await page.locator('.modal').getByRole('button', {name: 'Done'}).click();
 
+	const targetTagSelect = page
+		.locator('.form-group', {hasText: 'Into This Tag:'})
+		.locator('select');
+
+	await expect(
+		targetTagSelect.locator('option', {hasText: tagName1})
+	).toHaveCount(1);
+
+	await expect(
+		targetTagSelect.locator('option', {hasText: tagName2})
+	).toHaveCount(1);
+
 	await clickAndExpectToBeVisible({
 		target: page.getByRole('heading', {name: 'Confirm Merge Tags'}),
 		trigger: tagsPage.saveButton,
@@ -288,6 +300,18 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 			page.locator('.label-secondary', {hasText: tagName2})
 		).toBeVisible();
 	}).toPass();
+
+	const targetTagSelect = page
+		.locator('.form-group', {hasText: 'Into This Tag:'})
+		.locator('select');
+
+	await expect(
+		targetTagSelect.locator('option', {hasText: tagName1})
+	).toHaveCount(1);
+
+	await expect(
+		targetTagSelect.locator('option', {hasText: tagName2})
+	).toHaveCount(1);
 
 	await clickAndExpectToBeVisible({
 		target: page.getByRole('heading', {name: 'Confirm Merge Tags'}),

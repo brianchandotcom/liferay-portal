@@ -501,7 +501,7 @@ public class FragmentCollectionServiceImpl
 			rootDLFolderTable.parentFolderId.eq(repositoryTable.dlFolderId)
 		);
 
-		return predicate.and(
+		Predicate fragmentCompositionsPredicate =
 			FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
 				DSLQueryFactoryUtil.selectDistinct(
 					FragmentCompositionTable.INSTANCE.fragmentCollectionId
@@ -509,65 +509,69 @@ public class FragmentCollectionServiceImpl
 					FragmentCompositionTable.INSTANCE
 				).where(
 					FragmentCompositionTable.INSTANCE.marketplace.eq(false)
-				))
-		).or(
-			predicate.and(
-				FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
-					DSLQueryFactoryUtil.selectDistinct(
-						FragmentEntryTable.INSTANCE.fragmentCollectionId
-					).from(
-						FragmentEntryTable.INSTANCE
-					).where(
-						FragmentEntryTable.INSTANCE.marketplace.eq(
-							false
-						).and(
-							FragmentEntryTable.INSTANCE.type.neq(
-								FragmentConstants.TYPE_REACT)
-						).and(
-							FragmentEntryTable.INSTANCE.head.eq(true)
-						)
-					)))
-		).or(
-			predicate.and(
-				FragmentCollectionTable.INSTANCE.fragmentCollectionKey.in(
-					DSLQueryFactoryUtil.selectDistinct(
-						rootDLFolderTable.name
-					).from(
-						repositoryTable
-					).innerJoinON(
-						rootDLFolderTable,
-						repositoryTable.repositoryId.eq(
-							rootDLFolderTable.repositoryId)
-					).where(
-						repositoryPredicate.and(
+				));
+
+		Predicate fragmentEntriesPredicate =
+			FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
+				DSLQueryFactoryUtil.selectDistinct(
+					FragmentEntryTable.INSTANCE.fragmentCollectionId
+				).from(
+					FragmentEntryTable.INSTANCE
+				).where(
+					FragmentEntryTable.INSTANCE.marketplace.eq(
+						false
+					).and(
+						FragmentEntryTable.INSTANCE.type.neq(
+							FragmentConstants.TYPE_REACT)
+					).and(
+						FragmentEntryTable.INSTANCE.head.eq(true)
+					)
+				));
+
+		Predicate resourcesPredicate =
+			FragmentCollectionTable.INSTANCE.fragmentCollectionKey.in(
+				DSLQueryFactoryUtil.selectDistinct(
+					rootDLFolderTable.name
+				).from(
+					repositoryTable
+				).innerJoinON(
+					rootDLFolderTable,
+					repositoryTable.repositoryId.eq(
+						rootDLFolderTable.repositoryId)
+				).where(
+					repositoryPredicate.and(
+						rootDLFolderTable.folderId.in(
+							DSLQueryFactoryUtil.selectDistinct(
+								childDLFolderTable.parentFolderId
+							).from(
+								childDLFolderTable
+							).where(
+								childDLFolderTable.status.eq(
+									WorkflowConstants.STATUS_APPROVED)
+							)
+						).or(
 							rootDLFolderTable.folderId.in(
 								DSLQueryFactoryUtil.selectDistinct(
-									childDLFolderTable.parentFolderId
+									dlFileEntryTable.folderId
 								).from(
-									childDLFolderTable
-								).where(
-									childDLFolderTable.status.eq(
-										WorkflowConstants.STATUS_APPROVED)
+									dlFileEntryTable
 								))
 						).or(
-							repositoryPredicate.and(
-								rootDLFolderTable.folderId.in(
-									DSLQueryFactoryUtil.selectDistinct(
-										dlFileEntryTable.folderId
-									).from(
-										dlFileEntryTable
-									)))
-						).or(
-							repositoryPredicate.and(
-								rootDLFolderTable.folderId.in(
-									DSLQueryFactoryUtil.selectDistinct(
-										dlFileShortcutTable.folderId
-									).from(
-										dlFileShortcutTable
-									)))
-						)
-					)))
-		);
+							rootDLFolderTable.folderId.in(
+								DSLQueryFactoryUtil.selectDistinct(
+									dlFileShortcutTable.folderId
+								).from(
+									dlFileShortcutTable
+								))
+						).withParentheses())
+				));
+
+		return predicate.and(
+			fragmentCompositionsPredicate.or(
+				fragmentEntriesPredicate
+			).or(
+				resourcesPredicate
+			).withParentheses());
 	}
 
 	private long[] _getGroupIds(long groupId, boolean includeSystem) {

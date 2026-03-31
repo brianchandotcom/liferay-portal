@@ -50,7 +50,9 @@ test(
 					expectedText = `All Selected (${expectedText})`;
 				}
 
-				await expect(page.getByText(expectedText)).toBeVisible();
+				await expect(
+					page.getByText(expectedText, {exact: true})
+				).toBeVisible();
 			}
 		});
 	}

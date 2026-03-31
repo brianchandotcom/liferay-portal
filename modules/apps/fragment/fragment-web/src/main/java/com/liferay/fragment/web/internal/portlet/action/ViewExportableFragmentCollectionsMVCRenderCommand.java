@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,16 +18,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Javier Moral
  */
 @Component(
 	property = {
 		"jakarta.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/view_fragment_collections"
+		"mvc.command.name=/fragment/view_exportable_fragment_collections"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewFragmentCollectionsMVCRenderCommand
+public class ViewExportableFragmentCollectionsMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -37,7 +37,7 @@ public class ViewFragmentCollectionsMVCRenderCommand
 		renderRequest.setAttribute(
 			FragmentCollectionsDisplayContext.class.getName(),
 			new FragmentCollectionsDisplayContext(
-				false, _fragmentCollectionLocalService,
+				true, _fragmentCollectionLocalService,
 				_portal.getHttpServletRequest(renderRequest), renderRequest,
 				renderResponse));
 

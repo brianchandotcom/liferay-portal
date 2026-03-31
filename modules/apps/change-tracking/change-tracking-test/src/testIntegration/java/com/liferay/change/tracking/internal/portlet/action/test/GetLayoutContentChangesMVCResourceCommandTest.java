@@ -11,6 +11,8 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.diff.DiffHtml;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -39,7 +41,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -59,6 +60,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.ByteArrayOutputStream;
+
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -116,8 +119,10 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 			_classNameLocalService.getClassNameId(Layout.class),
 			_layout.getPlid());
 
+		Locale locale = LocaleUtil.SPAIN;
+
 		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayResourceRequest(ctEntry.getCtEntryId());
+			_getMockLiferayResourceRequest(ctEntry.getCtEntryId(), locale);
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
@@ -155,6 +160,10 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 						ctEntryId, mockLiferayResourceRequest,
 						mockLiferayResourceResponse)),
 				HtmlUtil.stripHtml(jsonArrayJSONObject.getString("preview")));
+
+			Assert.assertEquals(
+				_getTitle(ctEntryId, locale),
+				jsonArrayJSONObject.getString("title"));
 		}
 	}
 
@@ -224,7 +233,7 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
-			long ctEntryId)
+			long ctEntryId, Locale locale)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -234,6 +243,8 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_ctCollection.getCompanyId()));
+
+		themeDisplay.setLocale(locale);
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
@@ -289,6 +300,35 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 					mockLiferayResourceResponse)));
 	}
 
+	private String _getTitle(long ctEntryId, Locale locale) throws Exception {
+		CTEntry ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				ctEntry.getModelClassPK());
+
+		if (fragmentEntryLink == null) {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						_ctCollection.getCtCollectionId())) {
+
+				fragmentEntryLink =
+					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+						ctEntry.getModelClassPK());
+			}
+		}
+
+		if (fragmentEntryLink == null) {
+			return null;
+		}
+
+		CTDisplayRenderer<FragmentEntryLink> ctDisplayRenderer =
+			_ctDisplayRendererRegistry.getCTDisplayRenderer(
+				_classNameLocalService.getClassNameId(FragmentEntryLink.class));
+
+		return ctDisplayRenderer.getTitle(locale, fragmentEntryLink);
+	}
+
 	private void _waitForReindex() throws Exception {
 		Destination destination = MessageBusUtil.getDestination(
 			CTDestinationNames.CT_ENTRY_REINDEX);
@@ -326,6 +366,9 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
+	@Inject
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+
 	private FragmentEntryLink _deletedFragmentEntryLink;
 
 	@Inject
@@ -343,9 +386,6 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 
 	private Group _group;
 	private Layout _layout;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	@Inject(
 		filter = "mvc.command.name=/change_tracking/get_layout_content_changes"

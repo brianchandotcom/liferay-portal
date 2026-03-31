@@ -105,6 +105,7 @@ jobs:
                         cloud/scripts/setup_gcp.sh \
                         cloud/scripts/versions_gcp.tfvars \
                         cloud/terraform/gcp/gitops/platform/* \
+                        cloud/terraform/gcp/gitops/resources/* \
                         cloud/terraform/gcp/gke/*
 
                     gcloud storage cp \

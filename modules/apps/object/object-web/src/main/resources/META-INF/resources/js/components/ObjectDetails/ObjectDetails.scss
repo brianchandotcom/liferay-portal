@@ -18,6 +18,10 @@
 	top: 3.5rem;
 	width: 100%;
 	z-index: 1;
+
+	.has-control-menu & .lfr__management-toolbar {
+		top: 0;
+	}
 }
 
 .lfr__object-web-edit-object-details-external-data-source-container {

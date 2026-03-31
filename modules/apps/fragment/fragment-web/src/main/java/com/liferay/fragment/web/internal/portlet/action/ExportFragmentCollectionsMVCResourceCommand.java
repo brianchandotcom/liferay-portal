@@ -8,13 +8,9 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
-import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -71,7 +67,10 @@ public class ExportFragmentCollectionsMVCResourceCommand
 
 			List<FragmentCollection> fragmentCollections =
 				_fragmentCollectionService.getExportableFragmentCollections(
-					_getGroupIds(resourceRequest, themeDisplay),
+					new long[] {
+						themeDisplay.getScopeGroupId(),
+						themeDisplay.getCompanyGroupId()
+					},
 					exportFragmentCollectionIds);
 
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
@@ -91,31 +90,6 @@ public class ExportFragmentCollectionsMVCResourceCommand
 		}
 
 		return false;
-	}
-
-	private long[] _getGroupIds(
-		ResourceRequest resourceRequest, ThemeDisplay themeDisplay) {
-
-		long[] groupIds = {themeDisplay.getScopeGroupId()};
-
-		if (ParamUtil.getBoolean(
-				resourceRequest, "includeGlobalFragmentCollections")) {
-
-			groupIds = new long[] {
-				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyGroupId()
-			};
-		}
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isCompany() &&
-			(themeDisplay.getCompanyId() ==
-				PortalInstancePool.getDefaultCompanyId())) {
-
-			groupIds = ArrayUtil.append(groupIds, CompanyConstants.SYSTEM);
-		}
-
-		return groupIds;
 	}
 
 	@Reference

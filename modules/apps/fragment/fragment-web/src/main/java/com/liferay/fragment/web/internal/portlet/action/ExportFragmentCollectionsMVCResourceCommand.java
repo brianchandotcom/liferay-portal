@@ -5,11 +5,14 @@
 
 package com.liferay.fragment.web.internal.portlet.action;
 
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -65,6 +68,11 @@ public class ExportFragmentCollectionsMVCResourceCommand
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			_portletResourcePermission.check(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
 			List<FragmentCollection> fragmentCollections =
 				_fragmentCollectionService.getExportableFragmentCollections(
 					new long[] {
@@ -94,6 +102,11 @@ public class ExportFragmentCollectionsMVCResourceCommand
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;
+
+	@Reference(
+		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private ZipWriterFactory _zipWriterFactory;

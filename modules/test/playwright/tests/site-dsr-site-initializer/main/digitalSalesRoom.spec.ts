@@ -41,7 +41,7 @@ test(
 
 		const roomName = `A${getRandomInt()}`;
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -53,6 +53,17 @@ test(
 			accountName: account.name,
 			roomName,
 		});
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName, false)
+		).toBeVisible();
+
+		await expect(digitalSalesRoomsPage.roomLink(roomName)).toHaveAttribute(
+			'href',
+			/view_room/
+		);
 
 		await digitalSalesRoomsPage.goto();
 
@@ -82,7 +93,7 @@ test(
 
 		const roomName = `A${getRandomInt()}`;
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -95,7 +106,7 @@ test(
 			roomName,
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(async () => {
 			await (
@@ -131,7 +142,7 @@ test(
 
 		const roomName = `A${getRandomInt()}`;
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -144,7 +155,7 @@ test(
 			roomName,
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(async () => {
 			await (
@@ -180,7 +191,7 @@ test(
 
 		const roomName = `A${getRandomInt()}`;
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -193,7 +204,7 @@ test(
 			roomName,
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(async () => {
 			await (
@@ -241,7 +252,7 @@ test(
 			type: 'business',
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -254,7 +265,7 @@ test(
 			roomName,
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName, false)
@@ -320,7 +331,7 @@ test(
 			type: 'business',
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -362,7 +373,7 @@ test(
 
 		const roomName = `A${getRandomInt()}`;
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -375,7 +386,7 @@ test(
 			roomName,
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(async () => {
 			await (
@@ -419,7 +430,7 @@ test(
 
 		const roomName = `A${getRandomInt()}`;
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -432,7 +443,7 @@ test(
 			roomName,
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(async () => {
 			await (
@@ -481,7 +492,7 @@ test(
 
 		const roomName = `A${getRandomInt()}`;
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -494,7 +505,7 @@ test(
 			roomName,
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(async () => {
 			await (
@@ -545,7 +556,7 @@ test(
 
 		const roomName = `A${getRandomInt()}`;
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
@@ -558,7 +569,7 @@ test(
 			roomName,
 		});
 
-		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.goToRoomsPage();
 
 		await expect(async () => {
 			await (

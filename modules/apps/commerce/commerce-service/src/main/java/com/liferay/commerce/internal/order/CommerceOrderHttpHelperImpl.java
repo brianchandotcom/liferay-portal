@@ -982,11 +982,20 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				 (accountEntry.getAccountEntryId() !=
 					 commerceOrder.getCommerceAccountId()))) {
 
-				commerceOrder = _commerceOrderService.fetchCommerceOrder(
-					accountEntry.getAccountEntryId(),
-					commerceChannel.getGroupId(),
-					_portal.getUserId(httpServletRequest),
-					CommerceOrderConstants.ORDER_STATUS_OPEN);
+				try {
+					commerceOrder = _commerceOrderService.fetchCommerceOrder(
+						accountEntry.getAccountEntryId(),
+						commerceChannel.getGroupId(),
+						_portal.getUserId(httpServletRequest),
+						CommerceOrderConstants.ORDER_STATUS_OPEN);
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+
+					commerceOrder = null;
+				}
 			}
 
 			if (commerceOrder != null) {

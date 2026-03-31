@@ -33,7 +33,6 @@ page import="com.liferay.fragment.model.FragmentComposition" %><%@
 page import="com.liferay.fragment.model.FragmentEntry" %><%@
 page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
 page import="com.liferay.fragment.service.FragmentCollectionLocalServiceUtil" %><%@
-page import="com.liferay.fragment.service.FragmentCollectionService" %><%@
 page import="com.liferay.fragment.web.internal.constants.FragmentWebKeys" %><%@
 page import="com.liferay.fragment.web.internal.display.context.ConfigurationDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.ContributedFragmentManagementToolbarDisplayContext" %><%@

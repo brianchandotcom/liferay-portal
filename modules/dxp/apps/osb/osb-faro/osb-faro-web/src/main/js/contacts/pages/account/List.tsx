@@ -20,72 +20,6 @@ import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 import {useRequest} from 'shared/hooks/useRequest';
 
-const mockItems = {
-	items: [
-		{
-			accountName: 'Acme Corporation',
-			annualRevenue: 10000000,
-			country: 'Australia',
-			id: '001xx000003DGbYAAW',
-			industry: 'Manufacturing',
-			lastActive: '2026-03-24T15:01:15Z',
-			lastEnriched: '2026-03-25T10:00:00Z',
-			lifecycleStage: LifecycleStages.ESTABLISHED
-		},
-		{
-			accountName: 'Globex Corporation',
-			annualRevenue: 25000000,
-			country: 'Canada',
-			id: '001xx000003DGbZAAW',
-			industry: 'Technology',
-			lastActive: '2026-03-20T12:45:30Z',
-			lastEnriched: '2026-03-24T10:00:00Z',
-			lifecycleStage: LifecycleStages.AWARE
-		},
-		{
-			accountName: 'Initech',
-			annualRevenue: 5000000,
-			country: 'United States',
-			id: '001xx000003DGbXAAW',
-			industry: 'Software',
-			lastActive: '2026-03-22T09:30:00Z',
-			lastEnriched: '2026-03-23T10:00:00Z',
-			lifecycleStage: LifecycleStages.AT_RISK
-		},
-		{
-			accountName: 'Umbrella Corporation',
-			annualRevenue: 15918240012,
-			country: 'United States',
-			id: '001xx000003DGbWAAW',
-			industry: 'Pharmaceuticals',
-			lastActive: '2026-03-18T14:15:45Z',
-			lastEnriched: '2026-03-24T10:00:00Z',
-			lifecycleStage: LifecycleStages.PIPELINE
-		},
-		{
-			accountName: 'Hooli',
-			annualRevenue: 7500000,
-			country: 'United States',
-			id: '001xx000003DGbVAAW',
-			industry: 'Technology',
-			lastActive: '2026-03-21T11:00:00Z',
-			lastEnriched: '2026-03-22T10:00:00Z',
-			lifecycleStage: LifecycleStages.ENGAGED
-		},
-		{
-			accountName: 'Stark Industries',
-			annualRevenue: 500000000,
-			country: 'United States',
-			id: '001xx000003DGbUAAW',
-			industry: 'Defense',
-			lastActive: '2026-03-19T16:45:30Z',
-			lastEnriched: '2026-03-18T10:00:00Z',
-			lifecycleStage: LifecycleStages.ONBOARDING
-		}
-	],
-	total: 1
-};
-
 const lifecycleStagesLabelMap = {
 	[LifecycleStages.AT_RISK]: {
 		displayType: 'danger',
@@ -220,11 +154,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 				{dataSourceConnected && FrontendDataSet ? (
 					<Card>
 						<FrontendDataSet
-							// TODO => Use the correct endpoint
-							// apiURL={`o/contacts/${groupId}/account/search`}
-							// Use this to test empty states
-							// apiURL='/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked'
-							apiURL='/o/headless-admin-user/v1.0/roles'
+							apiURL={`/o/contacts/${groupId}/account/search`}
 							configInURLBehavior='off'
 							customDataRenderers={{
 								accountLifecycleStageRenderer: ({value}) => {
@@ -305,7 +235,6 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 									type: 'selection'
 								}
 							]}
-							// items={mockItems.items}
 							id='accounts-list-dataset'
 							loading={dataSourceLoading}
 							pagination={pagination}

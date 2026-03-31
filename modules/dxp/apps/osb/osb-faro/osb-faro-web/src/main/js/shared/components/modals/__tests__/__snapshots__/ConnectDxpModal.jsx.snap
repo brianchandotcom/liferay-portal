@@ -74,7 +74,7 @@ exports[`ConnectDXPModal renders 1`] = `
           <span
             class="text-4 font-weight-bold"
           >
-            Copy this token to your DXP instance.
+            Copy this token to your Liferay DXP instance.
           </span>
         </div>
         <div

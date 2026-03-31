@@ -464,7 +464,7 @@ function setInputValue({
 		input.checked = value === 'true';
 	}
 	else if (value !== null) {
-		input.value = Liferay.Util.unescapeHTML(String(value));
+		input.value = String(value);
 	}
 	else {
 		input.removeAttribute('value');

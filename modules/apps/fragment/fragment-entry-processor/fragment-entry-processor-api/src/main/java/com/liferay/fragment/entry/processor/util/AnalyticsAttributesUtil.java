@@ -130,56 +130,25 @@ public class AnalyticsAttributesUtil {
 			return;
 		}
 
-		String action = ACTION_IMPRESSION;
-
 		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
 			infoItemFieldMapped.getInfoItemReference());
 
-		InfoFieldValue<?> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(
-				infoItemFieldMapped.getFieldName());
-
-		InfoField<?> infoField = infoFieldValue.getInfoField();
-
-		if (Objects.equals(
-				infoField.getInfoFieldType(), HTMLInfoFieldType.INSTANCE) ||
-			Objects.equals(
-				infoField.getInfoFieldType(), LongTextInfoFieldType.INSTANCE)) {
-
-			action = ACTION_VIEW;
-		}
-
-		element.attr("data-analytics-asset-action", action);
-
+		element.attr(
+			"data-analytics-asset-action",
+			_getAnalyticsAssetAction(infoItemFieldMapped, infoItemFieldValues));
 		element.attr(
 			"data-analytics-external-reference-code",
 			_getAnalyticsExternalReferenceCode(
-				infoItemFieldValues, infoItemFieldMapped,
+				infoItemFieldMapped, infoItemFieldValues,
 				fragmentEntryProcessorContext.getLocale()));
+
 		element.attr(
 			"data-analytics-asset-field", infoItemFieldMapped.getFieldName());
-
-		List<AssetCategory> assetCategories =
-			AssetCategoryLocalServiceUtil.getCategories(
-				infoItemFieldMapped.getClassName(),
-				classPKInfoItemIdentifier.getClassPK());
-
-		if (ListUtil.isNotEmpty(assetCategories)) {
-			JSONArray jsonArray = JSONUtil.toJSONArray(
-				assetCategories,
-				assetCategory -> JSONUtil.put(
-					"id", assetCategory.getCategoryId()
-				).put(
-					"name",
-					assetCategory.getTitle(
-						fragmentEntryProcessorContext.getLocale())
-				),
-				_log);
-
-			element.attr(
-				"data-analytics-asset-categories", jsonArray.toString());
-		}
-
+		element.attr(
+			"data-analytics-asset-categories",
+			_getAnalyticsAssetCategories(
+				classPKInfoItemIdentifier, infoItemFieldMapped,
+				fragmentEntryProcessorContext.getLocale()));
 		element.attr(
 			"data-analytics-asset-id",
 			String.valueOf(classPKInfoItemIdentifier.getClassPK()));
@@ -196,6 +165,69 @@ public class AnalyticsAttributesUtil {
 		element.attr(
 			"data-analytics-asset-subtype",
 			_getAnalyticsSubtype(infoItemFieldMapped, infoItemServiceRegistry));
+		element.attr(
+			"data-analytics-asset-tags",
+			_getAnalyticsAssetTags(
+				classPKInfoItemIdentifier, infoItemFieldMapped));
+		element.attr(
+			"data-analytics-asset-title",
+			_getAnalyticsTitle(
+				infoItemFieldValues,
+				fragmentEntryProcessorContext.getLocale()));
+		element.attr(
+			"data-analytics-asset-type",
+			_getAnalyticsAssetType(infoItemFieldMapped.getClassName()));
+	}
+
+	private static String _getAnalyticsAssetAction(
+		InfoItemFieldMapped infoItemFieldMapped,
+		InfoItemFieldValues infoItemFieldValues) {
+
+		InfoFieldValue<?> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(
+				infoItemFieldMapped.getFieldName());
+
+		InfoField<?> infoField = infoFieldValue.getInfoField();
+
+		if (Objects.equals(
+				infoField.getInfoFieldType(), HTMLInfoFieldType.INSTANCE) ||
+			Objects.equals(
+				infoField.getInfoFieldType(), LongTextInfoFieldType.INSTANCE)) {
+
+			return ACTION_VIEW;
+		}
+
+		return ACTION_IMPRESSION;
+	}
+
+	private static String _getAnalyticsAssetCategories(
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier,
+		InfoItemFieldMapped infoItemFieldMapped, Locale locale) {
+
+		List<AssetCategory> assetCategories =
+			AssetCategoryLocalServiceUtil.getCategories(
+				infoItemFieldMapped.getClassName(),
+				classPKInfoItemIdentifier.getClassPK());
+
+		if (ListUtil.isNotEmpty(assetCategories)) {
+			JSONArray jsonArray = JSONUtil.toJSONArray(
+				assetCategories,
+				assetCategory -> JSONUtil.put(
+					"id", assetCategory.getCategoryId()
+				).put(
+					"name", assetCategory.getTitle(locale)
+				),
+				_log);
+
+			return jsonArray.toString();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private static String _getAnalyticsAssetTags(
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier,
+		InfoItemFieldMapped infoItemFieldMapped) {
 
 		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
 			infoItemFieldMapped.getClassName(),
@@ -211,17 +243,10 @@ public class AnalyticsAttributesUtil {
 				),
 				_log);
 
-			element.attr("data-analytics-asset-tags", jsonArray.toString());
+			return jsonArray.toString();
 		}
 
-		element.attr(
-			"data-analytics-asset-title",
-			_getAnalyticsTitle(
-				infoItemFieldValues,
-				fragmentEntryProcessorContext.getLocale()));
-		element.attr(
-			"data-analytics-asset-type",
-			_getAnalyticsAssetType(infoItemFieldMapped.getClassName()));
+		return StringPool.BLANK;
 	}
 
 	private static String _getAnalyticsAssetType(String className) {
@@ -233,8 +258,8 @@ public class AnalyticsAttributesUtil {
 	}
 
 	private static String _getAnalyticsExternalReferenceCode(
-		InfoItemFieldValues infoItemFieldValues,
-		InfoItemFieldMapped infoItemFieldMapped, Locale locale) {
+		InfoItemFieldMapped infoItemFieldMapped,
+		InfoItemFieldValues infoItemFieldValues, Locale locale) {
 
 		Object object = infoItemFieldMapped.getObject();
 

@@ -14,6 +14,7 @@ import {LifecycleStages} from './utils/constants';
 import {pagination} from 'shared/util/frontend-data-set';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
+import {toThousands} from 'shared/util/numbers';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
@@ -23,44 +24,62 @@ const mockItems = {
 	items: [
 		{
 			accountName: 'Acme Corporation',
+			annualRevenue: 10000000,
+			country: 'Australia',
 			id: '001xx000003DGbYAAW',
 			industry: 'Manufacturing',
 			lastActive: '2026-03-24T15:01:15Z',
+			lastEnriched: '2026-03-25T10:00:00Z',
 			lifecycleStage: LifecycleStages.ESTABLISHED
 		},
 		{
 			accountName: 'Globex Corporation',
+			annualRevenue: 25000000,
+			country: 'Canada',
 			id: '001xx000003DGbZAAW',
 			industry: 'Technology',
 			lastActive: '2026-03-20T12:45:30Z',
+			lastEnriched: '2026-03-24T10:00:00Z',
 			lifecycleStage: LifecycleStages.AWARE
 		},
 		{
 			accountName: 'Initech',
+			annualRevenue: 5000000,
+			country: 'United States',
 			id: '001xx000003DGbXAAW',
 			industry: 'Software',
 			lastActive: '2026-03-22T09:30:00Z',
+			lastEnriched: '2026-03-23T10:00:00Z',
 			lifecycleStage: LifecycleStages.AT_RISK
 		},
 		{
 			accountName: 'Umbrella Corporation',
+			annualRevenue: 15918240012,
+			country: 'United States',
 			id: '001xx000003DGbWAAW',
 			industry: 'Pharmaceuticals',
 			lastActive: '2026-03-18T14:15:45Z',
+			lastEnriched: '2026-03-24T10:00:00Z',
 			lifecycleStage: LifecycleStages.PIPELINE
 		},
 		{
 			accountName: 'Hooli',
+			annualRevenue: 7500000,
+			country: 'United States',
 			id: '001xx000003DGbVAAW',
 			industry: 'Technology',
 			lastActive: '2026-03-21T11:00:00Z',
+			lastEnriched: '2026-03-22T10:00:00Z',
 			lifecycleStage: LifecycleStages.ENGAGED
 		},
 		{
 			accountName: 'Stark Industries',
+			annualRevenue: 500000000,
+			country: 'United States',
 			id: '001xx000003DGbUAAW',
 			industry: 'Defense',
 			lastActive: '2026-03-19T16:45:30Z',
+			lastEnriched: '2026-03-18T10:00:00Z',
 			lifecycleStage: LifecycleStages.ONBOARDING
 		}
 	],
@@ -198,23 +217,27 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 				</BasePage.Row>
 			</BasePage.Header>
 			<BasePage.Body>
-				<Card>
-					{dataSourceConnected && FrontendDataSet ? (
+				{dataSourceConnected && FrontendDataSet ? (
+					<Card>
 						<FrontendDataSet
 							// TODO => Use the correct endpoint
 							// apiURL={`o/contacts/${groupId}/account/search`}
 							// Use this to test empty states
 							// apiURL='/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked'
+							apiURL='/o/headless-admin-user/v1.0/roles'
 							configInURLBehavior='off'
 							customDataRenderers={{
-								accountLifecycleStageRenderer: ({value}) =>
-									frontendDataSetColumns.cmsLabel({
-										displayType:
-											lifecycleStagesLabelMap[value]
-												.displayType,
-										label:
-											lifecycleStagesLabelMap[value].label
-									}),
+								accountLifecycleStageRenderer: ({value}) => {
+									value &&
+										frontendDataSetColumns.cmsLabel({
+											displayType:
+												lifecycleStagesLabelMap[value]
+													.displayType,
+											label:
+												lifecycleStagesLabelMap[value]
+													.label
+										});
+								},
 								accountNameRenderer: ({itemData, value}) => {
 									const itemTitle = value || itemData.id;
 
@@ -233,12 +256,16 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 										</Link>
 									);
 								},
-								dateRenderer: ({date}) => (
+								annualRevenueRenderer: ({value}) => (
+									<div>{toThousands(value)}</div>
+								),
+								dateRenderer: ({value}) => (
 									<div>
-										{formatUTCDate(
-											date,
-											CUSTOM_DATE_FORMAT
-										)}
+										{value &&
+											formatUTCDate(
+												value,
+												CUSTOM_DATE_FORMAT
+											)}
 									</div>
 								)
 							}}
@@ -266,9 +293,20 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 									label: Liferay.Language.get('industry'),
 									multiple: true,
 									type: 'selection'
+								},
+								{
+									apiURL: `/o/contacts/${groupId}/account/countries`,
+									entityFieldType: 'string',
+									id: 'country',
+									itemKey: 'country',
+									itemLabel: 'name',
+									label: Liferay.Language.get('country'),
+									multiple: true,
+									type: 'selection'
 								}
 							]}
-							items={mockItems.items}
+							// items={mockItems.items}
+							id='accounts-list-dataset'
 							loading={dataSourceLoading}
 							pagination={pagination}
 							showPagination
@@ -277,16 +315,8 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 								{
 									active: true,
 									direction: 'asc',
-									key: 'alternateName',
-									label: Liferay.Language.get(
-										'alternate-name'
-									)
-								},
-								{
-									active: false,
-									direction: 'asc',
-									key: 'emailAddress',
-									label: Liferay.Language.get('email')
+									key: 'accountName',
+									label: Liferay.Language.get('account')
 								}
 							]}
 							views={[
@@ -324,12 +354,37 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 												sortable: true
 											},
 											{
+												contentRenderer:
+													'annualRevenueRenderer',
+												fieldName: 'annualRevenue',
+												label: Liferay.Language.get(
+													'annual-revenue'
+												),
+												sortable: true
+											},
+											{
+												fieldName: 'country',
+												label: Liferay.Language.get(
+													'country'
+												),
+												sortable: true
+											},
+											{
 												contentRenderer: 'dateRenderer',
 												fieldName: 'lastActive',
 												label: Liferay.Language.get(
 													'last-active'
 												),
 												sortable: true
+											},
+											{
+												contentRenderer: 'dateRenderer',
+												fieldName: 'lastEnriched',
+												label: Liferay.Language.get(
+													'last-enriched'
+												),
+												sortable: true,
+												visible: false
 											}
 										]
 									},
@@ -337,10 +392,10 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 								}
 							]}
 						/>
-					) : (
-						<NoDataSourcesConnected />
-					)}
-				</Card>
+					</Card>
+				) : (
+					<NoDataSourcesConnected />
+				)}
 			</BasePage.Body>
 		</BasePage>
 	);

@@ -66,39 +66,31 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
-	public void testIgnoredVersion() throws Exception {
-		ResettableClassFileTransformer resettableClassFileTransformer =
-			setVersion(_getIgnoredVersion());
-
-		try {
-			assertLicensePropertiesNotExisted(getPortalProductId());
-
-			assertPortalLicenseNotRegistered();
-
-			deployFreeTierPortalLicense(Time.HOUR);
-
-			assertLicensePropertiesExisted(getPortalProductId());
-
-			assertPortalLicenseRegistered();
-		}
-		finally {
-			resetLicenseData();
-
-			resetLifecycleAction();
-
-			resetClassFileTransformer(resettableClassFileTransformer);
-		}
+	public void testIgnoredPatchedVersion() throws Exception {
+		_testVersion(true, true, true);
+		_testVersion(true, false, true);
 	}
 
 	@Test
-	public void testNonignoredVersions() throws Exception {
-		_testNonignoredVersions(true);
-		_testNonignoredVersions(false);
+	public void testNonignoredNonpatchedVersions() throws Exception {
+		_testVersion(false, true, false);
+		_testVersion(false, false, false);
 	}
 
-	private String _generateRandomVersion(boolean ltsVersion) {
+	@Test
+	public void testNonignoredPatchedVersions() throws Exception {
+		_testVersion(false, true, true);
+		_testVersion(false, false, true);
+	}
+
+	private String _generateRandomVersion(boolean ltsVersion, boolean patch) {
 		int year = RandomTestUtil.randomInt(1000, 9999);
-		int patchVersison = RandomTestUtil.randomInt(1, 9999);
+
+		int patchVersison = 0;
+
+		if (patch) {
+			patchVersison = RandomTestUtil.randomInt(1, 9999);
+		}
 
 		if (ltsVersion) {
 			return StringBundler.concat(year, ".Q1.", patchVersison, " LTS");
@@ -126,21 +118,29 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 		return packageName.substring(0, index);
 	}
 
-	private void _testNonignoredVersions(boolean ltsVersion) throws Exception {
+	private void _testVersion(
+			boolean ignored, boolean ltsVersion, boolean patch)
+		throws Exception {
+
 		String ignoredVersion = _getIgnoredVersion();
 
-		String nonignoredRandomVersion = null;
+		String version = null;
 
-		while (true) {
-			nonignoredRandomVersion = _generateRandomVersion(ltsVersion);
+		if (ignored) {
+			version = ignoredVersion;
+		}
+		else {
+			while (true) {
+				version = _generateRandomVersion(ltsVersion, patch);
 
-			if (!Objects.equals(ignoredVersion, nonignoredRandomVersion)) {
-				break;
+				if (!Objects.equals(ignoredVersion, version)) {
+					break;
+				}
 			}
 		}
 
 		ResettableClassFileTransformer resettableClassFileTransformer =
-			setVersion(nonignoredRandomVersion);
+			setVersion(version);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_getLicensePackageName(), LoggerTestUtil.ERROR)) {
@@ -151,25 +151,34 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 
 			deployFreeTierPortalLicense(Time.HOUR);
 
-			logCapture.getLogEntries();
+			if (patch && !ignored) {
+				logCapture.getLogEntries();
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+				List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
 
-			LogEntry logEntry = logEntries.get(0);
+				LogEntry logEntry = logEntries.get(0);
 
-			Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
+				Assert.assertEquals(
+					LoggerTestUtil.ERROR, logEntry.getPriority());
 
-			Throwable throwable = logEntry.getThrowable();
+				Throwable throwable = logEntry.getThrowable();
 
-			Assert.assertEquals(
-				"License is not suppported in " + nonignoredRandomVersion,
-				throwable.getMessage());
+				Assert.assertEquals(
+					"License is not suppported in " + version,
+					throwable.getMessage());
 
-			assertLicensePropertiesExisted(getPortalProductId());
+				assertLicensePropertiesExisted(getPortalProductId());
 
-			assertPortalLicenseInvalid();
+				assertPortalLicenseInvalid();
+			}
+			else {
+				assertLicensePropertiesExisted(getPortalProductId());
+
+				assertPortalLicenseRegistered();
+			}
 		}
 		finally {
 			resetLicenseData();

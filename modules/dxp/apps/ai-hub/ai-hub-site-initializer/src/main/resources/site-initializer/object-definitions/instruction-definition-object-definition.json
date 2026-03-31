@@ -118,5 +118,5 @@
 	"portlet": true,
 	"scope": "company",
 	"system": true,
-	"titleObjectFieldName": "name"
+	"titleObjectFieldName": "title"
 }

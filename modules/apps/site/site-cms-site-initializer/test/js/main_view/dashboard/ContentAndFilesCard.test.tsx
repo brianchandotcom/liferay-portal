@@ -33,6 +33,17 @@ const mockedResponse: IMetricsProps = {
 	vocabulariesCount: 10,
 };
 
+const mockedResponseSingularValues: IMetricsProps = {
+	categoriesCount: 1,
+	tagsCount: 1,
+	totalCount: 1,
+	trend: {
+		classification: TrendClassification.Neutral,
+		percentage: 100.0,
+	},
+	vocabulariesCount: 1,
+};
+
 const WrappedComponent = () => (
 	<ContentAndFilesCard
 		endpointURL="/o/analytics-cms-rest/v1.0/content-overview"
@@ -41,9 +52,11 @@ const WrappedComponent = () => (
 			rangeKey: RangeSelectors.Last7Days,
 			rangeStart: '',
 		}}
-		title={(totalCount) => {
-			return `${totalCount} new content items`;
-		}}
+		title={(totalCount) =>
+			totalCount === 1
+				? `1 new content item`
+				: `${totalCount} new content items`
+		}
 	/>
 );
 
@@ -160,5 +173,33 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 
 		const percentageText = screen.getByText('3.14%');
 		expect(percentageText).toBeInTheDocument();
+	});
+
+	it('renders correctly with singular values', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockedResponseSingularValues,
+			error: null,
+		});
+
+		render(<WrappedComponent />);
+
+		await waitForElementToBeRemoved(
+			screen.getByTestId('loading-animation')
+		);
+
+		const title = screen.getByText('1 new content item');
+		expect(title).toBeInTheDocument();
+
+		const trend = screen.getByText('x-vs-previous-period');
+		expect(trend).toBeInTheDocument();
+
+		const vocabulariesBreakdown = screen.getByText('vocabulary');
+		expect(vocabulariesBreakdown).toBeInTheDocument();
+
+		const categoriesBreakdown = screen.getByText('category');
+		expect(categoriesBreakdown).toBeInTheDocument();
+
+		const tagsBreakdown = screen.getByText('tag');
+		expect(tagsBreakdown).toBeInTheDocument();
 	});
 });

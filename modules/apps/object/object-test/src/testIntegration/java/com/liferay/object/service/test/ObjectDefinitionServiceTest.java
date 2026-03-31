@@ -122,7 +122,8 @@ public class ObjectDefinitionServiceTest {
 			StringBundler.concat(
 				"User ", _user1.getUserId(), " must have ",
 				"ADD_OBJECT_DEFINITION permission for com.liferay.object "),
-			() -> _testAddCustomObjectDefinition(0, _user1));
+			() -> _testAddCustomObjectDefinition(
+				0, ObjectDefinitionConstants.SCOPE_COMPANY, _user1));
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
@@ -131,11 +132,14 @@ public class ObjectDefinitionServiceTest {
 				"com.liferay.object.model.ObjectFolder ",
 				_objectFolder.getObjectFolderId()),
 			() -> _testAddCustomObjectDefinition(
-				_objectFolder.getObjectFolderId(), _user2));
+				_objectFolder.getObjectFolderId(),
+				ObjectDefinitionConstants.SCOPE_COMPANY, _user2));
 
-		_testAddCustomObjectDefinition(0, _adminUser);
 		_testAddCustomObjectDefinition(
-			_objectFolder.getObjectFolderId(), _adminUser);
+			0, ObjectDefinitionConstants.SCOPE_COMPANY, _adminUser);
+		_testAddCustomObjectDefinition(
+			_objectFolder.getObjectFolderId(),
+			ObjectDefinitionConstants.SCOPE_COMPANY, _adminUser);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -148,7 +152,8 @@ public class ObjectDefinitionServiceTest {
 
 		User user = _addCMSAdministratorUser();
 
-		_testAddCustomObjectDefinition(0, user);
+		_testAddCustomObjectDefinition(
+			0, ObjectDefinitionConstants.SCOPE_DEPOT, user);
 
 		ObjectFolder objectFolder =
 			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
@@ -156,14 +161,18 @@ public class ObjectDefinitionServiceTest {
 					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 				user.getCompanyId());
 
-		_testAddCustomObjectDefinition(objectFolder.getObjectFolderId(), user);
+		_testAddCustomObjectDefinition(
+			objectFolder.getObjectFolderId(),
+			ObjectDefinitionConstants.SCOPE_DEPOT, user);
 
 		objectFolder =
 			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
 				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
 				user.getCompanyId());
 
-		_testAddCustomObjectDefinition(objectFolder.getObjectFolderId(), user);
+		_testAddCustomObjectDefinition(
+			objectFolder.getObjectFolderId(),
+			ObjectDefinitionConstants.SCOPE_DEPOT, user);
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -173,7 +182,8 @@ public class ObjectDefinitionServiceTest {
 				"com.liferay.object.model.ObjectFolder ",
 				_objectFolder.getObjectFolderId()),
 			() -> _testAddCustomObjectDefinition(
-				_objectFolder.getObjectFolderId(), user));
+				_objectFolder.getObjectFolderId(),
+				ObjectDefinitionConstants.SCOPE_DEPOT, user));
 	}
 
 	@Test
@@ -421,7 +431,8 @@ public class ObjectDefinitionServiceTest {
 		PrincipalThreadLocal.setName(user.getUserId());
 	}
 
-	private void _testAddCustomObjectDefinition(long objectFolderId, User user)
+	private void _testAddCustomObjectDefinition(
+			long objectFolderId, String scope, User user)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = null;
@@ -438,8 +449,7 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionTestUtil.getRandomName(), null, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					true, ObjectDefinitionConstants.SCOPE_COMPANY,
-					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+					true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Collections.emptyList(),
 					Collections.singletonList(
 						ObjectFieldUtil.createObjectField(

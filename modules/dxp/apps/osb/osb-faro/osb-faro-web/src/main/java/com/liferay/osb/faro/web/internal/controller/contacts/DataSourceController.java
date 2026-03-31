@@ -30,6 +30,7 @@ import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.model.credentials.OAuth1Credentials;
 import com.liferay.osb.faro.engine.client.model.credentials.OAuth2Credentials;
 import com.liferay.osb.faro.engine.client.model.provider.CSVProvider;
+import com.liferay.osb.faro.engine.client.model.provider.DemandbaseProvider;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.model.provider.SalesforceProvider;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
@@ -205,6 +206,21 @@ public class DataSourceController extends BaseFaroController {
 		).put(
 			"publicKey", ""
 		).build();
+	}
+
+	@Path("/demandbase")
+	@POST
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public DataSourceDisplay createTypeDemandbase(
+			@PathParam("groupId") long groupId,
+			@FormParam("credentials") Credentials credentials,
+			@FormParam("name") String name,
+			@DefaultValue("ACTIVE") @FormParam("status") String status)
+		throws Exception {
+
+		return create(
+			groupId, credentials, new DemandbaseProvider(), name, null, null,
+			status);
 	}
 
 	@Path("/liferay")

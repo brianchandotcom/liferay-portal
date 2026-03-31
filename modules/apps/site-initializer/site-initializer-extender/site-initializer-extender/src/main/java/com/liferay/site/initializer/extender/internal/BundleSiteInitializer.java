@@ -5206,8 +5206,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 				stringUtilReplaceValues));
 		R addOrUpdateListTypeDefinitionsR = new R(
 			"addOrUpdateListTypeDefinitions",
-			() -> _addOrUpdateListTypeDefinitions(
-				serviceContext, stringUtilReplaceValues));
+			() -> {
+				try {
+					BundleContext bundleContext =
+						_siteBundle.getBundleContext();
+
+					BatchEngineUnitThreadLocal.setFileName(
+						String.valueOf(bundleContext.getBundle()));
+
+					_addOrUpdateListTypeDefinitions(
+						serviceContext, stringUtilReplaceValues);
+				}
+				finally {
+					BatchEngineUnitThreadLocal.setFileName(StringPool.BLANK);
+				}
+			});
 		R addOrUpdateNotificationTemplatesR = new R(
 			"addOrUpdateNotificationTemplates",
 			() -> _addOrUpdateNotificationTemplates(

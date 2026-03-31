@@ -9,7 +9,7 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletFDSNames;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
-import com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model.SystemDataSet;
+import com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model.SystemFDSEntryInfo;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -43,14 +43,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Arroyo
  */
 @Component(
-	property = "fds.data.provider.key=" + FDSAdminPortletFDSNames.SYSTEM_DATA_SETS,
+	property = "fds.data.provider.key=" + FDSAdminPortletFDSNames.SYSTEM_FDS_ENTRY_INFOS,
 	service = FDSDataProvider.class
 )
-public class SystemDataSetsFDSDataProvider
-	implements FDSDataProvider<SystemDataSet> {
+public class SystemFDSEntryInfoFDSDataProvider
+	implements FDSDataProvider<SystemFDSEntryInfo> {
 
 	@Override
-	public List<SystemDataSet> getItems(
+	public List<SystemFDSEntryInfo> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
@@ -76,17 +76,17 @@ public class SystemDataSetsFDSDataProvider
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET", themeDisplay.getCompanyId());
 
-		List<SystemDataSet> systemDataSets = new ArrayList<>();
+		List<SystemFDSEntryInfo> systemFDSEntryInfos = new ArrayList<>();
 
 		for (SystemFDSEntry systemFDSEntry :
 				systemFDSEntries.subList(start, end)) {
 
-			systemDataSets.add(
-				_toSystemDataSet(
+			systemFDSEntryInfos.add(
+				_toSystemFDSEntryInfo(
 					httpServletRequest, objectDefinition, systemFDSEntry));
 		}
 
-		return systemDataSets;
+		return systemFDSEntryInfos;
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class SystemDataSetsFDSDataProvider
 		return systemFDSEntries;
 	}
 
-	private SystemDataSet _toSystemDataSet(
+	private SystemFDSEntryInfo _toSystemFDSEntryInfo(
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition, SystemFDSEntry systemFDSEntry) {
 
@@ -153,7 +153,7 @@ public class SystemDataSetsFDSDataProvider
 			ObjectDefinitionConstants.GROUP_ID_DEFAULT,
 			objectDefinition.getObjectDefinitionId());
 
-		return new SystemDataSet(
+		return new SystemFDSEntryInfo(
 			systemFDSEntry.getAdditionalAPIURLParameters(httpServletRequest),
 			systemFDSEntry.getDefaultItemsPerPage(),
 			systemFDSEntry.getDescription(), objectEntry != null,

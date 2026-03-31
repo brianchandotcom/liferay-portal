@@ -97,10 +97,6 @@ public class FDSAdminDisplayContext {
 			));
 	}
 
-	public String getFDSEntryFDSSelectionFilterItemsDataProviderURL() {
-		return _getDataProviderURL(FDSAdminPortletFDSNames.FDS_ENTRY_FDS_SELECTION_FILTER_ITEMS);
-	}
-
 	public String getDataSetPermissionsURL() {
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
@@ -147,6 +143,11 @@ public class FDSAdminDisplayContext {
 		).setBackURL(
 			_themeDisplay.getURLCurrent()
 		).buildString();
+	}
+
+	public String getFDSEntryFDSSelectionFilterItemsDataProviderURL() {
+		return _getDataProviderURL(
+			FDSAdminPortletFDSNames.FDS_ENTRY_FDS_SELECTION_FILTER_ITEMS);
 	}
 
 	public JSONArray getFDSFilterCETsJSONArray() throws Exception {
@@ -261,8 +262,9 @@ public class FDSAdminDisplayContext {
 		return resourceURL.toString();
 	}
 
-	public String getSystemDataSetsURL() {
-		return _getDataProviderURL(FDSAdminPortletFDSNames.SYSTEM_DATA_SETS);
+	public String getSystemFDSEntryInfosDataProviderURL() {
+		return _getDataProviderURL(
+			FDSAdminPortletFDSNames.SYSTEM_FDS_ENTRY_INFOS);
 	}
 
 	public JSONArray getSystemFDSEntryJSONArray() throws Exception {

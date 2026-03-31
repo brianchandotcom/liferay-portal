@@ -8,6 +8,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -77,6 +78,9 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 			_exportFragmentCollectionsMVCResourceCommand,
 			"_fragmentCollectionService", _fragmentCollectionService);
 		ReflectionTestUtil.setFieldValue(
+			_exportFragmentCollectionsMVCResourceCommand,
+			"_portletResourcePermission", _portletResourcePermission);
+		ReflectionTestUtil.setFieldValue(
 			_exportFragmentCollectionsMVCResourceCommand, "_zipWriterFactory",
 			_zipWriterFactory);
 	}
@@ -141,6 +145,12 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 		);
 
 		Mockito.when(
+			themeDisplay.getCompanyGroupId()
+		).thenReturn(
+			_COMPANY_GROUP_ID
+		);
+
+		Mockito.when(
 			themeDisplay.getScopeGroupId()
 		).thenReturn(
 			_GROUP_ID
@@ -159,11 +169,14 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 
 		Mockito.when(
 			_fragmentCollectionService.getExportableFragmentCollections(
-				new long[] {_GROUP_ID}, new long[] {_FRAGMENT_COLLECTION_ID})
+				new long[] {_GROUP_ID, _COMPANY_GROUP_ID},
+				new long[] {_FRAGMENT_COLLECTION_ID})
 		).thenReturn(
 			fragmentCollections
 		);
 	}
+
+	private static final long _COMPANY_GROUP_ID = RandomTestUtil.randomLong();
 
 	private static final long _FRAGMENT_COLLECTION_ID =
 		RandomTestUtil.randomLong();
@@ -177,6 +190,8 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 		FragmentCollection.class);
 	private final FragmentCollectionService _fragmentCollectionService =
 		Mockito.mock(FragmentCollectionService.class);
+	private final PortletResourcePermission _portletResourcePermission =
+		Mockito.mock(PortletResourcePermission.class);
 	private final MockedStatic<Time> _timeMockedStatic = Mockito.mockStatic(
 		Time.class);
 	private final ZipWriter _zipWriter = Mockito.mock(ZipWriter.class);

@@ -8,12 +8,10 @@ package com.liferay.jenkins.results.parser.test.suite;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -30,42 +28,31 @@ public class AntAllRelevantRule extends RelevantRule {
 	}
 
 	@Override
-	public List<TestScriptCommand> getTestScriptCommands() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
+	public boolean matches(File modifiedFile) {
+		if (!super.matches(modifiedFile)) {
+			return false;
+		}
+
+		String modifiedFilePath = JenkinsResultsParserUtil.getCanonicalPath(
+			modifiedFile);
+
+		if (!modifiedFilePath.contains("/modules/")) {
+			return true;
+		}
 
 		try {
-			boolean hasDxpModules = false;
+			List<File> modifiedModuleProjectDirsList =
+				getModifiedModuleProjectDirsList();
 
-			for (File modifiedModuleDir :
-					portalGitWorkingDirectory.getModifiedModuleDirsList()) {
-
-				String modifiedModuleDirPath =
-					JenkinsResultsParserUtil.getCanonicalPath(
-						modifiedModuleDir);
-
-				if (modifiedModuleDirPath.contains("/modules/dxp/")) {
-					hasDxpModules = true;
-
-					break;
-				}
+			if (modifiedModuleProjectDirsList.size() > 5) {
+				return true;
 			}
-
-			List<TestScriptCommand> testScriptCommands = new ArrayList<>();
-
-			if (hasDxpModules) {
-				testScriptCommands.add(
-					new TestScriptCommand("ant setup-profile-dxp all", "."));
-			}
-			else {
-				testScriptCommands.add(new TestScriptCommand("ant all", "."));
-			}
-
-			return testScriptCommands;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+
+		return false;
 	}
 
 }

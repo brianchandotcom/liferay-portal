@@ -9,9 +9,22 @@ import {LocalizationInstanceSettingsPage} from '../pages/LocalizationInstanceSet
 
 const localizationPagesTest = test.extend<{
 	localizationInstanceSettingsPage: LocalizationInstanceSettingsPage;
+	restoreInstanceDefaultLanguage: void;
 }>({
 	localizationInstanceSettingsPage: async ({page}, use) => {
 		await use(new LocalizationInstanceSettingsPage(page));
+	},
+	restoreInstanceDefaultLanguage: async (
+		{localizationInstanceSettingsPage},
+		use
+	) => {
+		try {
+			await use();
+		}
+		finally {
+			await localizationInstanceSettingsPage.goto('Language', false);
+			await localizationInstanceSettingsPage.setDefaultLanguage('en_US');
+		}
 	},
 });
 

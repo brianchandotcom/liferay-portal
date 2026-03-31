@@ -7,7 +7,10 @@ import {ObjectField} from '@liferay/object-admin-rest-client-js';
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
-import {getFDSDateFormat} from '../../../tests/object-web/main/utils/dateFormat';
+import {
+	getFDSDateFormat,
+	getFDSDateTimeFormat,
+} from '../../../tests/object-web/main/utils/dateFormat';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 import type {SupportedBusinessType} from '../../../tests/object-web/main/utils/generateObjectEntry';
@@ -448,13 +451,19 @@ export class ViewObjectEntriesPage {
 							objectEntry[objectField.name].toString(),
 					});
 
-					if (
-						objectField.businessType === 'Date' ||
-						objectField.businessType === 'DateTime'
-					) {
+					if (objectField.businessType === 'Date') {
 						objectEntries.push({
 							businessType: objectField.businessType,
 							entry: getFDSDateFormat(
+								new Date(objectEntry[objectField.name])
+							),
+							name: objectField.name,
+						});
+					}
+					else if (objectField.businessType === 'DateTime') {
+						objectEntries.push({
+							businessType: objectField.businessType,
+							entry: getFDSDateTimeFormat(
 								new Date(objectEntry[objectField.name])
 							),
 							name: objectField.name,

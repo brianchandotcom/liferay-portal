@@ -38,6 +38,10 @@ export function getObjectEntryAPIDateFormat(date: Date) {
 		.replace(/\//g, '-');
 }
 
+export function getObjectEntryAPIDateTimeFormat(date: Date) {
+	return date.toISOString();
+}
+
 export function getObjectEntryUIDateFormat(date: Date) {
 	return new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',

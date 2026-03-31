@@ -8,6 +8,10 @@ package com.liferay.ai.hub.site.initializer.internal.test;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -66,8 +70,12 @@ public class AIHubSiteInitializerTest {
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES");
+
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_CONTENT_RETRIEVER");
+		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 
 		_assertWorkflowDefinitionExists(
@@ -89,6 +97,23 @@ public class AIHubSiteInitializerTest {
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_SHORTER,
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
+	}
+
+	private void _assertListTypeDefinitionExists(String externalReferenceCode)
+		throws Exception {
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					externalReferenceCode, TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(listTypeDefinition.isSystem());
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.getListTypeEntry(
+				listTypeDefinition.getListTypeDefinitionId(), "clickToChat");
+
+		Assert.assertTrue(listTypeEntry.isSystem());
 	}
 
 	private void _assertObjectDefinitionExists(String externalReferenceCode)
@@ -124,6 +149,12 @@ public class AIHubSiteInitializerTest {
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

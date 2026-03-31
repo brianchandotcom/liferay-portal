@@ -2220,7 +2220,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
+			fieldLabelName = "Custom Field 62",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
@@ -2234,7 +2234,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field 62");
 
 		AssertElementPresent(locator1 = "ObjectField#MANDATORY_TOGGLE_DISABLED");
 	}
@@ -3268,11 +3268,11 @@ definition {
 		ObjectAdmin.goToFieldsTab();
 
 		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
+			fieldLabel = "Custom Field 84",
 			fieldType = "Text",
 			isMandatory = "true");
 
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field 84");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}
@@ -4293,7 +4293,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
+			fieldLabelName = "Custom Field 110",
 			fieldName = "customField",
 			fieldType = "String",
 			isRequired = "false",
@@ -4305,7 +4305,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field 110");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
 	}
@@ -5675,7 +5675,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Integer",
-			fieldLabelName = "Custom Field",
+			fieldLabelName = "Custom Field 135",
 			fieldName = "customObjectField",
 			fieldType = "Integer",
 			isRequired = "false",
@@ -5687,7 +5687,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field 135");
 
 		ObjectAdmin.selectDropdownItem(
 			labelName = "Type",
@@ -5712,7 +5712,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
+			fieldLabelName = "Custom Field 136",
 			fieldName = "customField",
 			fieldType = "String",
 			isRequired = "false",
@@ -5724,7 +5724,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field 136");
 
 		ObjectAdmin.selectDropdownItem(
 			labelName = "Type",
@@ -5743,7 +5743,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
+			fieldLabelName = "Custom Field 137",
 			fieldName = "customField",
 			fieldType = "String",
 			isRequired = "false",
@@ -5755,7 +5755,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field 137");
 
 		ObjectAdmin.assertKeywordAndText();
 	}
@@ -5770,7 +5770,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
+			fieldLabelName = "Custom Field 138",
 			fieldName = "customField",
 			fieldType = "String",
 			isRequired = "false",
@@ -5782,7 +5782,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field 138");
 
 		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 

@@ -92,7 +92,7 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_checkUpdatePermission(layout, themeDisplay);
+		_checkLayoutUpdatePermission(layout, themeDisplay);
 
 		LayoutStructure layoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
@@ -261,7 +261,7 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 		return null;
 	}
 
-	private void _checkUpdatePermission(
+	private void _checkLayoutUpdatePermission(
 			Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
 

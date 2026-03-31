@@ -10,8 +10,8 @@ package com.liferay.frontend.data.set.admin.web.internal.constants;
  */
 public class FDSAdminPortletFDSNames {
 
-	public static final String DATA_SET_ENTRIES =
-		FDSAdminPortletKeys.FDS_ADMIN + "-dataSetEntries";
+	public static final String FDS_ENTRY_FDS_SELECTION_FILTER_ITEMS =
+		FDSAdminPortletKeys.FDS_ADMIN + "-fdsEntryFDSSelectionFilterItems";
 
 	public static final String SYSTEM_DATA_SETS =
 		FDSAdminPortletKeys.FDS_ADMIN + "-systemDataSets";

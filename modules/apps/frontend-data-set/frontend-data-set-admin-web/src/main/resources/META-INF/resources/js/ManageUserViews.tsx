@@ -26,7 +26,7 @@ import '../css/DataSets.scss';
 
 interface IManageUserViewsProps {
 	currentURL: string;
-	dataSetEntriesURL: string;
+	fdsEntryFDSSelectionFilterItemsDataProviderURL: string;
 	namespace: string;
 	portletId: string;
 	systemDataSetEntries: Array<{name: string; title: string}>;
@@ -93,7 +93,7 @@ const DataSetNameRenderer = ({itemData}: {itemData: {fdsName?: string}}) => {
 
 export default function ManageUserViews({
 	currentURL,
-	dataSetEntriesURL,
+	fdsEntryFDSSelectionFilterItemsDataProviderURL,
 	namespace,
 	portletId,
 	systemDataSetEntries = [],
@@ -239,13 +239,13 @@ export default function ManageUserViews({
 				type: 'selection',
 			},
 			{
-				apiURL: dataSetEntriesURL,
+				apiURL: fdsEntryFDSSelectionFilterItemsDataProviderURL,
 				autocompleteEnabled: true,
 				entityFieldType: 'string',
 				id: 'fdsName',
 				inputPlaceholder: Liferay.Language.get('search'),
-				itemKey: 'value',
-				itemLabel: 'label',
+				itemKey: 'itemKey',
+				itemLabel: 'itemLabel',
 				items: [],
 				label: Liferay.Language.get('data-set'),
 				multiple: true,
@@ -258,7 +258,7 @@ export default function ManageUserViews({
 				type: 'dateRange',
 			},
 		],
-		[dataSetEntriesURL]
+		[fdsEntryFDSSelectionFilterItemsDataProviderURL]
 	);
 
 	return (

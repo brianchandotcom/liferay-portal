@@ -10700,15 +10700,15 @@ public class CommercePriceListPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctMergeColumnNames.add("commerceCurrencyCode");
 		ctMergeColumnNames.add("parentCommercePriceListId");
 		ctMergeColumnNames.add("catalogBasePriceList");
-		ctMergeColumnNames.add("netPrice");
-		ctMergeColumnNames.add("type_");
-		ctMergeColumnNames.add("name");
-		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("commerceCurrencyCode");
 		ctMergeColumnNames.add("displayDate");
 		ctMergeColumnNames.add("expirationDate");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("netPrice");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("type_");
 		ctMergeColumnNames.add("lastPublishDate");
 		ctMergeColumnNames.add("status");
 		ctMergeColumnNames.add("statusByUserId");
@@ -11151,4 +11151,4 @@ public class CommercePriceListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1492353733
+// LIFERAY-SERVICE-BUILDER-HASH:316156819

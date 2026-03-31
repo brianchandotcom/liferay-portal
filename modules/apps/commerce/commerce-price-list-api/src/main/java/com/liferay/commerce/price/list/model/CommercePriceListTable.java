@@ -53,10 +53,6 @@ public class CommercePriceListTable extends BaseTable<CommercePriceListTable> {
 	public final Column<CommercePriceListTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommercePriceListTable, String> commerceCurrencyCode =
-		createColumn(
-			"commerceCurrencyCode", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<CommercePriceListTable, Long>
 		parentCommercePriceListId = createColumn(
 			"parentCommercePriceListId", Long.class, Types.BIGINT,
@@ -65,21 +61,25 @@ public class CommercePriceListTable extends BaseTable<CommercePriceListTable> {
 		createColumn(
 			"catalogBasePriceList", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
-	public final Column<CommercePriceListTable, Boolean> netPrice =
+	public final Column<CommercePriceListTable, String> commerceCurrencyCode =
 		createColumn(
-			"netPrice", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<CommercePriceListTable, String> type = createColumn(
-		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommercePriceListTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommercePriceListTable, Double> priority = createColumn(
-		"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+			"commerceCurrencyCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommercePriceListTable, Date> displayDate =
 		createColumn(
 			"displayDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceListTable, Date> expirationDate =
 		createColumn(
 			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceListTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceListTable, Boolean> netPrice =
+		createColumn(
+			"netPrice", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceListTable, Double> priority = createColumn(
+		"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceListTable, String> type = createColumn(
+		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceListTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,
@@ -101,4 +101,4 @@ public class CommercePriceListTable extends BaseTable<CommercePriceListTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:270303438
+// LIFERAY-SERVICE-BUILDER-HASH:1627587216

@@ -10,17 +10,25 @@ import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectViewColumn;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,7 +41,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,53 +60,112 @@ public class ObjectEntriesTableFDSViewTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		_user.setTimeZoneId("Europe/Madrid");
+
+		_user = _userLocalService.updateUser(_user);
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+	}
+
+	@After
+	public void tearDown() {
+		PrincipalThreadLocal.setName(_originalName);
+	}
+
 	@Test
 	public void testGetFDSTableSchema() throws Exception {
-		User user = UserTestUtil.addUser();
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition();
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		user.setTimeZoneId("Europe/Madrid");
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinition1,
+				_objectDefinition2);
 
-		user = _userLocalService.updateUser(user);
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new AggregationObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				_objectDefinition1.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_FUNCTION
+					).value(
+						ObjectFieldSettingConstants.VALUE_COUNT
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_NAME
+					).value(
+						objectRelationship.getName()
+					).build())
+			).userId(
+				_user.getUserId()
+			).build());
 
-		String originalName = PrincipalThreadLocal.getName();
+		Map<String, FDSTableSchemaField> fdsTableSchemaFieldsMap =
+			_getFDSTableSchemaFieldsMap(_objectDefinition1);
 
-		PrincipalThreadLocal.setName(user.getUserId());
+		Assert.assertFalse(
+			fdsTableSchemaFieldsMap.containsKey("externalReferenceCode"));
 
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
+		_assertFDSTableSchemaField(
+			"Author", true, fdsTableSchemaFieldsMap, "creator.name");
+		_assertFDSTableSchemaField("ID", true, fdsTableSchemaFieldsMap, "id");
+		_assertFDSTableSchemaField(
+			"Status", true, fdsTableSchemaFieldsMap, "status");
+		_assertFDSTableSchemaField(
+			objectField.getLabel(LocaleUtil.US), false, fdsTableSchemaFieldsMap,
+			objectField.getName());
 
 		_objectViewLocalService.addObjectView(
-			user.getUserId(), objectDefinition.getObjectDefinitionId(), true,
+			_user.getUserId(), _objectDefinition1.getObjectDefinitionId(), true,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Arrays.asList(
-				_createObjectViewColumn("createDate"),
-				_createObjectViewColumn("modifiedDate")),
+				_createObjectViewColumn("Create Date", "createDate"),
+				_createObjectViewColumn("Modified Date", "modifiedDate")),
 			Collections.emptyList(), Collections.emptyList());
 
-		List<FDSView> fdsViews = _fdsViewRegistry.getFDSViews(
-			objectDefinition.getPortletId());
+		fdsTableSchemaFieldsMap = _getFDSTableSchemaFieldsMap(
+			_objectDefinition1);
 
-		FDSView fdsView = fdsViews.get(0);
+		_assertFDSTableSchemaField(
+			"Create Date", true, fdsTableSchemaFieldsMap, "dateCreated");
+		_assertFDSTableSchemaField(
+			"Modified Date", true, fdsTableSchemaFieldsMap, "dateModified");
+		_assertTimeZone(
+			fdsTableSchemaFieldsMap, "dateCreated", _user.getTimeZoneId());
+		_assertTimeZone(
+			fdsTableSchemaFieldsMap, "dateModified", _user.getTimeZoneId());
+	}
 
-		FDSTableSchema fdsTableSchema = fdsView.getFDSTableSchema(
-			LocaleUtil.US);
+	private void _assertFDSTableSchemaField(
+		String expectedLabel, boolean expectedSortable,
+		Map<String, FDSTableSchemaField> fdsTableSchemaFieldsMap,
+		String fieldName) {
 
-		_assertTimeZone(fdsTableSchema, "dateCreated", user);
-		_assertTimeZone(fdsTableSchema, "dateModified", user);
+		FDSTableSchemaField fdsTableSchemaField = fdsTableSchemaFieldsMap.get(
+			fieldName);
 
-		PrincipalThreadLocal.setName(originalName);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
-
-		_userLocalService.deleteUser(user);
+		Assert.assertEquals(expectedLabel, fdsTableSchemaField.getLabel());
+		Assert.assertEquals(expectedSortable, fdsTableSchemaField.isSortable());
 	}
 
 	private void _assertTimeZone(
-		FDSTableSchema fdsTableSchema, String fieldName, User user) {
-
-		Map<String, FDSTableSchemaField> fdsTableSchemaFieldsMap =
-			fdsTableSchema.getFDSTableSchemaFieldsMap();
+		Map<String, FDSTableSchemaField> fdsTableSchemaFieldsMap,
+		String fieldName, String expectedTimeZoneId) {
 
 		FDSTableSchemaField fdsTableSchemaField = fdsTableSchemaFieldsMap.get(
 			fieldName);
@@ -106,32 +175,59 @@ public class ObjectEntriesTableFDSViewTest {
 		jsonObject = jsonObject.getJSONObject("format");
 
 		Assert.assertEquals(
-			user.getTimeZoneId(), jsonObject.getString("timeZone"));
+			expectedTimeZoneId, jsonObject.getString("timeZone"));
 	}
 
-	private ObjectViewColumn _createObjectViewColumn(String objectFieldName) {
+	private ObjectViewColumn _createObjectViewColumn(
+		String objectFieldLabel, String objectFieldName) {
+
 		ObjectViewColumn objectViewColumn = _objectViewColumnPersistence.create(
 			0);
 
 		objectViewColumn.setLabelMap(
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+			LocalizedMapUtil.getLocalizedMap(objectFieldLabel));
 		objectViewColumn.setObjectFieldName(objectFieldName);
 		objectViewColumn.setPriority(0);
 
 		return objectViewColumn;
 	}
 
+	private Map<String, FDSTableSchemaField> _getFDSTableSchemaFieldsMap(
+		ObjectDefinition objectDefinition) {
+
+		List<FDSView> fdsViews = _fdsViewRegistry.getFDSViews(
+			objectDefinition.getPortletId());
+
+		FDSView fdsView = fdsViews.get(0);
+
+		FDSTableSchema fdsTableSchema = fdsView.getFDSTableSchema(
+			LocaleUtil.US);
+
+		return fdsTableSchema.getFDSTableSchemaFieldsMap();
+	}
+
 	@Inject
 	private FDSViewRegistry _fdsViewRegistry;
 
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition1;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition2;
+
 	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private ObjectViewColumnPersistence _objectViewColumnPersistence;
 
 	@Inject
 	private ObjectViewLocalService _objectViewLocalService;
+
+	private String _originalName;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

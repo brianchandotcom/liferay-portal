@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration;
@@ -148,24 +147,6 @@ public class ElasticsearchConfigurationUpgradeProcess extends UpgradeProcess {
 				ElasticsearchConnectionConfiguration.class.getName());
 
 		upgradeStep.upgrade();
-
-		String filterString = String.format(
-			"(&(service.factoryPid=%s)(active=%s))",
-			ElasticsearchConnectionConfiguration.class.getName(), true);
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filterString);
-
-		if (ArrayUtil.isEmpty(configurations)) {
-			return;
-		}
-
-		for (Configuration configuration : configurations) {
-			Dictionary<String, Object> elasticsearch8properties =
-				configuration.getProperties();
-
-			configuration.update(elasticsearch8properties);
-		}
 	}
 
 	private static final String _CLASS_NAME_ELASTICSEARCH_CONFIGURATION =

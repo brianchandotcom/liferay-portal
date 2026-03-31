@@ -22,8 +22,6 @@ import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.net.URL;
-
 import java.util.Map;
 import java.util.Objects;
 
@@ -207,7 +205,8 @@ public class ObjectActionProductPurchaseRestController
 				"en_US"
 			)
 		).put(
-			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+			"[%PRODUCT_THUMBNAIL%]",
+			MarketplaceUtil.getProductThumbnail(product)
 		).put(
 			"[%PRODUCT_TYPE%]",
 			productSpecificationsMap.get(
@@ -305,7 +304,8 @@ public class ObjectActionProductPurchaseRestController
 				"en_US"
 			)
 		).put(
-			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+			"[%PRODUCT_THUMBNAIL%]",
+			MarketplaceUtil.getProductThumbnail(product)
 		).put(
 			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
 		).build();
@@ -365,7 +365,8 @@ public class ObjectActionProductPurchaseRestController
 				"en_US"
 			)
 		).put(
-			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+			"[%PRODUCT_THUMBNAIL%]",
+			MarketplaceUtil.getProductThumbnail(product)
 		).put(
 			"[%SUBTOTAL_FORMATTED%]", order.getSubtotalFormatted()
 		).put(
@@ -375,17 +376,6 @@ public class ObjectActionProductPurchaseRestController
 		).putAll(
 			_getPaymentApprovedDescriptionMap(productSpecificationsMap)
 		).build();
-	}
-
-	private String _getProductThumbnail(Product product) throws Exception {
-		return new URL(
-			StringBundler.concat(
-				lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-				product.getThumbnail())
-		).toString(
-		).replaceAll(
-			"(?<=accounts/)-?\\d+(?=/images)", "-1"
-		);
 	}
 
 	private void _postNotificationQueueEntry(Order order) throws Exception {

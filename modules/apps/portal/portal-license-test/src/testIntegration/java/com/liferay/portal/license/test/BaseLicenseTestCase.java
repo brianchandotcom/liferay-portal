@@ -79,17 +79,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			AgentBuilder.RedefinitionStrategy.RETRANSFORMATION);
 	}
 
-	public static String encryptLicenseProperties(
-			Map<String, String> licenseProperties)
-		throws Exception {
-
-		Method method = findMethod(
-			PortalClassLoaderUtil.getClassLoader(),
-			_licenseTestProperties.getProperty("encrypt.method"));
-
-		return (String)method.invoke(null, licenseProperties);
-	}
-
 	public static boolean isReleaseBundle() {
 		if (ReflectionsHolder._licenseManagerHelperClass != null) {
 			return true;

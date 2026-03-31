@@ -63,6 +63,10 @@ generateJSPJava {
 	enabled = false
 }
 
+jarSources {
+	mustRunAfter packageRunWebpack
+}
+
 node {
 	global = false
 	nodeVersion = "18.18.0"

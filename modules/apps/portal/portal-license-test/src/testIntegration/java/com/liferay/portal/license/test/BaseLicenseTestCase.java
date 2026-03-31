@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.util.LicenseUtil;
 
 import java.io.File;
@@ -44,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -418,6 +422,25 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return value;
 	}
 
+	protected void assertLicenseValidationFailedLog(
+		LogCapture logCapture, String message) {
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+		LogEntry logEntry = logEntries.get(0);
+
+		Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
+
+		Assert.assertEquals(
+			"DXP Production license validation failed", logEntry.getMessage());
+
+		Throwable throwable = logEntry.getThrowable();
+
+		Assert.assertEquals(message, throwable.getMessage());
+	}
+
 	protected void assertPortalInvalidatedWithBrokenFile(String filePath)
 		throws Exception {
 
@@ -435,6 +458,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		Method versionMethod = ReflectionsHolder._versionMethod;
 
 		return (String)versionMethod.invoke(null);
+	}
+
+	protected String getLicenseManagerClassName() {
+		return getProperty("license.manager.class.name");
 	}
 
 	protected int getLocalPort() {

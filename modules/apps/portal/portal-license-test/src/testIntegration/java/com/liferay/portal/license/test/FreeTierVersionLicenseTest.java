@@ -15,13 +15,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Field;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.junit.AfterClass;
@@ -111,20 +109,6 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 		return (String)_ignoredVersionField.get(null);
 	}
 
-	private String _getLicensePackageName() {
-		Class<?> clazz = _ignoredVersionField.getDeclaringClass();
-
-		String className = clazz.getName();
-
-		int index = className.lastIndexOf(StringPool.PERIOD);
-
-		String packageName = className.substring(0, index);
-
-		index = packageName.lastIndexOf(StringPool.PERIOD);
-
-		return packageName.substring(0, index);
-	}
-
 	private void _testVersion(
 			boolean ignored, boolean ltsVersion, boolean patch)
 		throws Exception {
@@ -146,35 +130,20 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 			}
 		}
 
+		assertLicensePropertiesNotExisted(getPortalProductId());
+
+		assertPortalLicenseNotRegistered();
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_getLicensePackageName(), LoggerTestUtil.ERROR);
+				getLicenseManagerClassName(), LoggerTestUtil.ERROR);
 			SafeCloseable safeCloseable = setVersionWithSafeCloseable(
 				version)) {
-
-			assertLicensePropertiesNotExisted(getPortalProductId());
-
-			assertPortalLicenseNotRegistered();
 
 			deployFreeTierPortalLicense(Time.HOUR);
 
 			if (patch && !ignored) {
-				logCapture.getLogEntries();
-
-				List<LogEntry> logEntries = logCapture.getLogEntries();
-
-				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
-
-				LogEntry logEntry = logEntries.get(0);
-
-				Assert.assertEquals(
-					LoggerTestUtil.ERROR, logEntry.getPriority());
-
-				Throwable throwable = logEntry.getThrowable();
-
-				Assert.assertEquals(
-					"License is not suppported in " + version,
-					throwable.getMessage());
+				assertLicenseValidationFailedLog(
+					logCapture, "License is not suppported in " + version);
 
 				assertLicensePropertiesExisted(getPortalProductId());
 

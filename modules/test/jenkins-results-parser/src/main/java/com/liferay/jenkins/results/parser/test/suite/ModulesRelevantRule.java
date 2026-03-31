@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.suite;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 
 import java.io.File;
@@ -18,9 +19,9 @@ import java.util.Properties;
 /**
  * @author Kenji Heigel
  */
-public class ModulesJavaUnitTestRelevantRule extends RelevantRule {
+public class ModulesRelevantRule extends RelevantRule {
 
-	public ModulesJavaUnitTestRelevantRule(
+	public ModulesRelevantRule(
 		String filePath, GitWorkingDirectory gitWorkingDirectory, Job job,
 		String name, Properties properties) {
 
@@ -48,7 +49,8 @@ public class ModulesJavaUnitTestRelevantRule extends RelevantRule {
 
 				sb.append(" ");
 				sb.append(getGradlePackageName(modifiedModuleProjectDir));
-				sb.append(":test");
+				sb.append(":");
+				sb.append(getTestScriptModuleGradleTaskName());
 			}
 
 			testScriptCommands.add(
@@ -59,6 +61,12 @@ public class ModulesJavaUnitTestRelevantRule extends RelevantRule {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	public String getTestScriptModuleGradleTaskName() {
+		return JenkinsResultsParserUtil.getProperty(
+			getProperties(), "test.script.module.gradle.task.name", getName(),
+			getTestSuiteName());
 	}
 
 }

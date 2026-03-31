@@ -156,8 +156,8 @@ public class RelevantRuleEngine {
 				properties);
 		}
 
-		if (Objects.equals(ruleType, "modules-java-unit-test")) {
-			relevantRule = new ModulesJavaUnitTestRelevantRule(
+		if (Objects.equals(ruleType, "modules")) {
+			relevantRule = new ModulesRelevantRule(
 				filePath, _gitWorkingDirectory, job, relevantRuleName,
 				properties);
 		}

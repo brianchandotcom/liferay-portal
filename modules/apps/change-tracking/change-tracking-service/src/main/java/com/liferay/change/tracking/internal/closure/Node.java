@@ -24,20 +24,20 @@ public class Node {
 		_primaryKey = primaryKey;
 	}
 
-	public void addChild(Node child) {
-		if (_children == Collections.<Node>emptyList()) {
-			_children = new ArrayList<>();
+	public void addChildNode(Node childNode) {
+		if (_childNodes == Collections.<Node>emptyList()) {
+			_childNodes = new ArrayList<>();
 		}
 
-		_children.add(child);
+		_childNodes.add(childNode);
 	}
 
-	public void addParent(Node parent) {
-		if (_parents == Collections.<Node>emptyList()) {
-			_parents = new ArrayList<>();
+	public void addParentNode(Node parentNode) {
+		if (_parentNodes == Collections.<Node>emptyList()) {
+			_parentNodes = new ArrayList<>();
 		}
 
-		_parents.add(parent);
+		_parentNodes.add(parentNode);
 	}
 
 	@Override
@@ -61,16 +61,16 @@ public class Node {
 		return false;
 	}
 
-	public List<Node> getChildren() {
-		return Collections.unmodifiableList(_children);
+	public List<Node> getChildNodes() {
+		return Collections.unmodifiableList(_childNodes);
 	}
 
 	public long getClassNameId() {
 		return _classNameId;
 	}
 
-	public List<Node> getParents() {
-		return Collections.unmodifiableList(_parents);
+	public List<Node> getParentNodes() {
+		return Collections.unmodifiableList(_parentNodes);
 	}
 
 	public long getPrimaryKey() {
@@ -90,9 +90,9 @@ public class Node {
 			"{classNameId=", _classNameId, ", primaryKey=", _primaryKey, "}");
 	}
 
-	private List<Node> _children = Collections.emptyList();
+	private List<Node> _childNodes = Collections.emptyList();
 	private final long _classNameId;
-	private List<Node> _parents = Collections.emptyList();
+	private List<Node> _parentNodes = Collections.emptyList();
 	private final long _primaryKey;
 
 }

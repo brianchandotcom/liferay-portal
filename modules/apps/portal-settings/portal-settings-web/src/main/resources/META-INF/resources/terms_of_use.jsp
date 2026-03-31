@@ -25,3 +25,34 @@ TermsOfUseContentProvider termsOfUseContentProvider = (TermsOfUseContentProvider
 
 	</c:if>
 </aui:fieldset>
+
+<aui:fieldset>
+	<aui:field-wrapper label="reset-consent-for-all-users">
+		<aui:fieldset>
+			<portlet:actionURL name="/portal_settings/reset_terms_of_use_consent" var="resetTermsOfUseConsentURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:actionURL>
+
+			<aui:script>
+				function <portlet:namespace />handleResetConsent(event) {
+					event.preventDefault();
+
+					Liferay.Util.openConfirmModal({
+						message:
+							'<%= UnicodeLanguageUtil.get(request, "this-will-require-all-users-to-re-accept-the-terms-of-use-are-you-sure-you-want-to-proceed") %>',
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								submitForm(
+									document.hrefFm,
+									'<%= resetTermsOfUseConsentURL.toString() %>'
+								);
+							}
+						},
+					});
+				}
+			</aui:script>
+
+			<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "handleResetConsent(event)" %>' value="reset" />
+		</aui:fieldset>
+	</aui:field-wrapper>
+</aui:fieldset>

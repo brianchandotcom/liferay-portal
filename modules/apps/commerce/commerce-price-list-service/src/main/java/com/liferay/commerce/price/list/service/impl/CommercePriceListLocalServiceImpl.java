@@ -200,16 +200,16 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceList.setCompanyId(user.getCompanyId());
 		commercePriceList.setUserId(user.getUserId());
 		commercePriceList.setUserName(user.getFullName());
-		commercePriceList.setCommerceCurrencyCode(commerceCurrencyCode);
 		commercePriceList.setParentCommercePriceListId(
 			parentCommercePriceListId);
 		commercePriceList.setCatalogBasePriceList(catalogBasePriceList);
-		commercePriceList.setNetPrice(netPrice);
-		commercePriceList.setType(type);
-		commercePriceList.setName(name);
-		commercePriceList.setPriority(priority);
+		commercePriceList.setCommerceCurrencyCode(commerceCurrencyCode);
 		commercePriceList.setDisplayDate(displayDate);
 		commercePriceList.setExpirationDate(expirationDate);
+		commercePriceList.setName(name);
+		commercePriceList.setNetPrice(netPrice);
+		commercePriceList.setPriority(priority);
+		commercePriceList.setType(type);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceList.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -1154,16 +1154,16 @@ public class CommercePriceListLocalServiceImpl
 				CommercePriceListExpirationDateException.class);
 		}
 
-		commercePriceList.setCommerceCurrencyCode(commerceCurrencyCode);
 		commercePriceList.setParentCommercePriceListId(
 			parentCommercePriceListId);
 		commercePriceList.setCatalogBasePriceList(catalogBasePriceList);
-		commercePriceList.setNetPrice(netPrice);
-		commercePriceList.setType(type);
-		commercePriceList.setName(name);
-		commercePriceList.setPriority(priority);
+		commercePriceList.setCommerceCurrencyCode(commerceCurrencyCode);
 		commercePriceList.setDisplayDate(displayDate);
 		commercePriceList.setExpirationDate(expirationDate);
+		commercePriceList.setName(name);
+		commercePriceList.setNetPrice(netPrice);
+		commercePriceList.setPriority(priority);
+		commercePriceList.setType(type);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceList.setStatus(WorkflowConstants.STATUS_DRAFT);

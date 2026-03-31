@@ -63,6 +63,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -107,7 +108,7 @@ public class GetLayoutContentChangesMVCResourceCommand
 				_getLayoutContentChangesSearchResponse(
 					themeDisplay.getCompanyId(), ctEntry.getCtCollectionId(),
 					ParamUtil.getInteger(resourceRequest, "cur"),
-					ctEntry.getModelClassPK());
+					themeDisplay.getLocale(), ctEntry.getModelClassPK());
 
 			List<Document> documents = searchResponse.getDocuments();
 
@@ -124,7 +125,8 @@ public class GetLayoutContentChangesMVCResourceCommand
 							ctEntry.getCtCollectionId()),
 						documents,
 						_portal.getHttpServletRequest(resourceRequest),
-						_portal.getHttpServletResponse(resourceResponse))
+						_portal.getHttpServletResponse(resourceResponse),
+						themeDisplay.getLocale())
 				).put(
 					"total", searchResponse.getTotalHits()
 				));
@@ -146,14 +148,16 @@ public class GetLayoutContentChangesMVCResourceCommand
 		_getLayoutContentChangesJSONArray(
 			CTCollection ctCollection, List<Document> documents,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) {
+			HttpServletResponse httpServletResponse, Locale locale) {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (Document document : documents) {
 			jsonArray = jsonArray.put(
 				JSONUtil.put(
-					Field.TITLE, document.getString(Field.TITLE)
+					Field.TITLE,
+					document.getString(
+						Field.getLocalizedName(locale, Field.TITLE))
 				).put(
 					"ctEntryId", document.getLong(Field.ENTRY_CLASS_PK)
 				).put(
@@ -196,7 +200,8 @@ public class GetLayoutContentChangesMVCResourceCommand
 	}
 
 	private SearchResponse _getLayoutContentChangesSearchResponse(
-		long companyId, long ctCollectionId, int cur, long plid) {
+		long companyId, long ctCollectionId, int cur, Locale locale,
+		long plid) {
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
@@ -205,7 +210,8 @@ public class GetLayoutContentChangesMVCResourceCommand
 			).emptySearchEnabled(
 				true
 			).fields(
-				Field.ENTRY_CLASS_PK, Field.TITLE, "ctCollectionId"
+				Field.ENTRY_CLASS_PK,
+				Field.getLocalizedName(locale, Field.TITLE), "ctCollectionId"
 			).from(
 				cur
 			).modelIndexerClasses(

@@ -7,8 +7,8 @@ package com.liferay.fragment.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
-
 import com.liferay.portal.kernel.json.JSONObject;
+
 import org.jsoup.nodes.Document;
 
 /**
@@ -16,21 +16,19 @@ import org.jsoup.nodes.Document;
  */
 public interface DocumentFragmentEntryProcessor {
 
-	public void processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, Document document,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException;
-
-
-
 	public default void processFragmentEntryLinkHTML(
-		Document document,
-		JSONObject editableValuesJSONObject, FragmentEntryLink fragmentEntryLink,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext)
+			Document document, JSONObject editableValuesJSONObject,
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
 		processFragmentEntryLinkHTML(
 			fragmentEntryLink, document, fragmentEntryProcessorContext);
 	}
+
+	public void processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink, Document document,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException;
 
 }

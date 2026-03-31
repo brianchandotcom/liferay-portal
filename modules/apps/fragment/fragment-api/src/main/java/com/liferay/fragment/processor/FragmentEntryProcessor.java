@@ -46,8 +46,10 @@ public interface FragmentEntryProcessor {
 	}
 
 	public default String processFragmentEntryLinkHTML(
-		JSONObject editableValuesJSONObject, FragmentEntryLink fragmentEntryLink, String html,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext)
+			JSONObject editableValuesJSONObject,
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext,
+			String html)
 		throws PortalException {
 
 		return processFragmentEntryLinkHTML(

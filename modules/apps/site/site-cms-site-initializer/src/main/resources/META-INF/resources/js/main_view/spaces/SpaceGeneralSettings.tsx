@@ -88,9 +88,12 @@ export default function SpaceGeneralSettings({
 
 			if (error) {
 				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred-while-saving-the-space'
-					),
+					message:
+						typeof error === 'string'
+							? error
+							: Liferay.Language.get(
+									'an-unexpected-error-occurred-while-saving-the-space'
+								),
 					type: 'danger',
 				});
 			}

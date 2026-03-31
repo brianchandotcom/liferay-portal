@@ -22,6 +22,8 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.lang.reflect.Method;
+
 import java.util.List;
 import java.util.Set;
 
@@ -100,7 +102,12 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 			deployFreeTierPortalLicense(
 				domain, StringPool.BLANK, startTimeMillis, Time.HOUR);
 
-			return encryptLicenseProperties(
+			Method method = findMethod(
+				PortalClassLoaderUtil.getClassLoader(),
+				getProperty("encrypt.method"));
+
+			return (String)method.invoke(
+				null,
 				LicenseManagerUtil.getLicenseProperties(getPortalProductId()));
 		}
 		finally {

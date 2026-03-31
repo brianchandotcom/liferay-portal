@@ -33,7 +33,7 @@ variable "observability_config" {
 	type=object(
 		{
 			alloy_namespace=optional(string, "alloy")
-			enabled=optional(bool, true)
+			enabled=optional(bool, false)
 		}
 	)
 }

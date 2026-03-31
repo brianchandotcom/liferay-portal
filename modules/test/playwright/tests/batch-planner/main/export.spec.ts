@@ -462,10 +462,6 @@ test('can export as JSONL with excluded fields', async ({
 				href: expect.stringContaining('/o/c/stocks/'),
 				method: 'PATCH',
 			},
-			versions: {
-				href: expect.stringContaining('/o/c/stocks/'),
-				method: 'GET',
-			},
 		});
 	});
 });

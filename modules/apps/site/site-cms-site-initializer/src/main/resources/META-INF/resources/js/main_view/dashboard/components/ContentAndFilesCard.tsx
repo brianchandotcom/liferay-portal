@@ -95,17 +95,26 @@ const ContentAndFilesCard: React.FC<IContentAndFilesCard> = ({
 			breakdown: [
 				{
 					icon: 'vocabulary',
-					label: Liferay.Language.get('vocabularies'),
+					label:
+						metrics?.vocabulariesCount === 1
+							? Liferay.Language.get('vocabulary')
+							: Liferay.Language.get('vocabularies'),
 					value: metrics?.vocabulariesCount ?? 0,
 				},
 				{
 					icon: 'categories',
-					label: Liferay.Language.get('categories'),
+					label:
+						metrics?.categoriesCount === 1
+							? Liferay.Language.get('category')
+							: Liferay.Language.get('categories'),
 					value: metrics?.categoriesCount ?? 0,
 				},
 				{
 					icon: 'tag',
-					label: Liferay.Language.get('tags'),
+					label:
+						metrics?.tagsCount === 1
+							? Liferay.Language.get('tag')
+							: Liferay.Language.get('tags'),
 					value: metrics?.tagsCount ?? 0,
 				},
 			],

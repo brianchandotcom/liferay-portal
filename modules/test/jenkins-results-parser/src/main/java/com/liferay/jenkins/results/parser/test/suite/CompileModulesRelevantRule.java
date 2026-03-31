@@ -18,9 +18,9 @@ import java.util.Properties;
 /**
  * @author Kenji Heigel
  */
-public class ModulesCompileRelevantRule extends RelevantRule {
+public class CompileModulesRelevantRule extends ModulesRelevantRule {
 
-	public ModulesCompileRelevantRule(
+	public CompileModulesRelevantRule(
 		String filePath, GitWorkingDirectory gitWorkingDirectory, Job job,
 		String name, Properties properties) {
 

@@ -139,7 +139,7 @@ public class RelevantRuleEngine {
 		RelevantRule relevantRule = null;
 
 		if (Objects.equals(ruleType, "modules-compile")) {
-			relevantRule = new ModulesCompileRelevantRule(
+			relevantRule = new CompileModulesRelevantRule(
 				filePath, _gitWorkingDirectory, job, relevantRuleName,
 				properties);
 		}

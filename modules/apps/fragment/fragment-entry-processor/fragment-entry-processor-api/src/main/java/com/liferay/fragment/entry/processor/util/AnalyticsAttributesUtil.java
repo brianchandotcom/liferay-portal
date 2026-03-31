@@ -124,7 +124,9 @@ public class AnalyticsAttributesUtil {
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemFieldMapped.getInfoItemIdentifier();
 
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+		if (!(infoItemIdentifier instanceof
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier)) {
+
 			return;
 		}
 
@@ -156,9 +158,6 @@ public class AnalyticsAttributesUtil {
 				fragmentEntryProcessorContext.getLocale()));
 		element.attr(
 			"data-analytics-asset-field", infoItemFieldMapped.getFieldName());
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 		List<AssetCategory> assetCategories =
 			AssetCategoryLocalServiceUtil.getCategories(
@@ -239,15 +238,12 @@ public class AnalyticsAttributesUtil {
 
 		Object object = infoItemFieldMapped.getObject();
 
-		if (object instanceof LiferayFileEntry) {
-			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)object;
-
+		if (object instanceof LiferayFileEntry liferayFileEntry) {
 			object = liferayFileEntry.getDLFileEntry();
 		}
 
-		if (object instanceof ExternalReferenceCodeModel) {
-			ExternalReferenceCodeModel externalReferenceCodeModel =
-				(ExternalReferenceCodeModel)object;
+		if (object instanceof
+				ExternalReferenceCodeModel externalReferenceCodeModel) {
 
 			return externalReferenceCodeModel.getExternalReferenceCode();
 		}

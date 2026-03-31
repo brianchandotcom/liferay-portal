@@ -1,0 +1,26 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.EditChatbotFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "agent-editor-master"
+		}
+	},
+	"version": 1.0
+}

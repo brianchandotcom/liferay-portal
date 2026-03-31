@@ -72,6 +72,15 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
+	public void testIgnoredVersion() throws Exception {
+		String ignoredVersion = _getIgnoredVersion();
+
+		if (!Objects.equals(ignoredVersion, StringPool.NEW_LINE)) {
+			Assert.assertEquals(ignoredVersion, getCurrentVersion());
+		}
+	}
+
+	@Test
 	public void testNonignoredNonpatchedVersions() throws Exception {
 		_testVersion(false, true, false);
 		_testVersion(false, false, false);

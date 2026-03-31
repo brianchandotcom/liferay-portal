@@ -428,6 +428,12 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return getProperty("product.id.cmp");
 	}
 
+	protected String getCurrentVersion() throws Exception {
+		Method versionMethod = ReflectionsHolder._versionMethod;
+
+		return (String)versionMethod.invoke(null);
+	}
+
 	protected int getLocalPort() {
 		int localPort = PortalUtil.getPortalLocalPort(false);
 

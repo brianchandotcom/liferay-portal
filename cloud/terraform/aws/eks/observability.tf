@@ -124,47 +124,24 @@ resource "helm_release" "alloy" {
 								}
 							}
 							discovery.kubernetes "nodes" {
-								role = "node"
-							}
-							discovery.relabel "kubelet_relabel" {
-								rule {
-									action="replace"
-									replacement="$1:10250"
-									source_labels=["__meta_kubernetes_node_address_InternalIP"]
-									target_label="__address__"
-								}
-								rule {
-									action="replace"
-									replacement="https"
-									target_label="__scheme__"
-								}
-								rule {
-									action="replace"
-									replacement="/metrics/resource"
-									target_label="__metrics_path__"
-								}
-								targets = discovery.kubernetes.nodes.targets
+								role="node"
 							}
 							discovery.relabel "kube_state_metrics_relabel" {
+								rule {
+									action="keep"
+									regex="http-metrics|metrics|8080"
+									source_labels=["__meta_kubernetes_service_port"]
+								}
 								rule {
 									action="keep"
 									regex="kube-state-metrics"
 									source_labels=["__meta_kubernetes_service_name"]
 								}
 								rule {
-									action="keep"
-									source_labels=["__meta_kubernetes_service_port"]
-									regex="http-metrics|metrics|8080"
-								}
-								rule {
 									regex="(.+):\\d+"
 									replacement="$1:8080"
 									source_labels=["__address__"]
 									target_label="__address__"
-								}
-								rule {
-									replacement="kube-state-metrics"
-									target_label="job"
 								}
 								rule {
 									replacement="/metrics"
@@ -174,7 +151,30 @@ resource "helm_release" "alloy" {
 									replacement="http"
 									target_label="__scheme__"
 								}
+								rule {
+									replacement="kube-state-metrics"
+									target_label="job"
+								}
 								targets=discovery.kubernetes.kube_state_metrics_service.targets
+							}
+							discovery.relabel "kubelet_relabel" {
+								rule {
+									action="replace"
+									replacement="https"
+									target_label="__scheme__"
+								}
+								rule {
+									action="replace"
+									replacement="$1:10250"
+									source_labels=["__meta_kubernetes_node_address_InternalIP"]
+									target_label="__address__"
+								}
+								rule {
+									action="replace"
+									replacement="/metrics/resource"
+									target_label="__metrics_path__"
+								}
+								targets = discovery.kubernetes.nodes.targets
 							}
 							logging {
 								format="logfmt"
@@ -182,15 +182,15 @@ resource "helm_release" "alloy" {
 							}
 							prometheus.remote_write "amp" {
 								endpoint {
-									url="${aws_prometheus_workspace.amp[0].prometheus_endpoint}api/v1/remote_write"
 									sigv4 {
 										region="${var.region}"
 									}
+								url="${aws_prometheus_workspace.amp[0].prometheus_endpoint}api/v1/remote_write"
 							  }
 							}
 							prometheus.scrape "kube_state_metrics" {
-								targets=discovery.relabel.kube_state_metrics_relabel.output
 								forward_to=[prometheus.remote_write.amp.receiver]
+								targets=discovery.relabel.kube_state_metrics_relabel.output
 							}
 							prometheus.scrape "kubelet_resource" {
 								bearer_token_file="/var/run/secrets/kubernetes.io/serviceaccount/token"

@@ -66,10 +66,10 @@ test(
 
 		await checkBox.check();
 
-		await page.getByRole('button', {name: 'Save'}).click();
+		await page.getByRole('button', {name: 'Update'}).click();
 
 		await expect(async () => {
-			await page.getByRole('button', {name: 'Save'}).click();
+			await page.getByRole('button', {name: 'Update'}).click();
 
 			await expect(
 				page.getByText('Success:Your request completed successfully.')

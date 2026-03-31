@@ -155,7 +155,7 @@ public class FragmentCollectionServiceImpl
 			_getExportableFragmentCollectionsDSLQuery(
 				_getExportablePredicate(
 					FragmentCollectionTable.INSTANCE.groupId.in(
-						_toLongObjects(groupIds))),
+						ArrayUtil.toLongArray(groupIds))),
 				start, end, orderByComparator));
 	}
 
@@ -171,10 +171,10 @@ public class FragmentCollectionServiceImpl
 			).where(
 				_getExportablePredicate(
 					FragmentCollectionTable.INSTANCE.groupId.in(
-						_toLongObjects(groupIds)
+						ArrayUtil.toLongArray(groupIds)
 					).and(
 						FragmentCollectionTable.INSTANCE.fragmentCollectionId.
-							in(_toLongObjects(fragmentCollectionIds))
+							in(ArrayUtil.toLongArray(fragmentCollectionIds))
 					))
 			));
 	}
@@ -188,7 +188,7 @@ public class FragmentCollectionServiceImpl
 			_getExportableFragmentCollectionsDSLQuery(
 				_getExportablePredicate(
 					FragmentCollectionTable.INSTANCE.groupId.in(
-						_toLongObjects(groupIds)
+						ArrayUtil.toLongArray(groupIds)
 					).and(
 						FragmentCollectionTable.INSTANCE.name.like(
 							_customSQL.keywords(
@@ -206,7 +206,7 @@ public class FragmentCollectionServiceImpl
 			).where(
 				_getExportablePredicate(
 					FragmentCollectionTable.INSTANCE.groupId.in(
-						_toLongObjects(groupIds)))
+						ArrayUtil.toLongArray(groupIds)))
 			));
 	}
 
@@ -221,7 +221,7 @@ public class FragmentCollectionServiceImpl
 			).where(
 				_getExportablePredicate(
 					FragmentCollectionTable.INSTANCE.groupId.in(
-						_toLongObjects(groupIds)
+						ArrayUtil.toLongArray(groupIds)
 					).and(
 						FragmentCollectionTable.INSTANCE.name.like(
 							_customSQL.keywords(
@@ -578,16 +578,6 @@ public class FragmentCollectionServiceImpl
 		}
 
 		return groupIds;
-	}
-
-	private Long[] _toLongObjects(long[] values) {
-		Long[] boxedValues = new Long[values.length];
-
-		for (int i = 0; i < values.length; i++) {
-			boxedValues[i] = values[i];
-		}
-
-		return boxedValues;
 	}
 
 	@Reference

@@ -242,25 +242,25 @@ public class EditCommercePriceListMVCActionCommand
 			String type = ParamUtil.getString(actionRequest, "type");
 
 			return _commercePriceListService.addCommercePriceList(
-				null, commerceCatalogGroupId, false, commerceCurrency.getCode(),
-				displayDateDay, displayDateHour, displayDateMinute,
-				displayDateMonth, displayDateYear, expirationDateDay,
-				expirationDateHour, expirationDateMinute, expirationDateMonth,
-				expirationDateYear, name, netPrice, neverExpire,
-				parentCommercePriceListId, priority, type, serviceContext);
+				null, commerceCatalogGroupId, parentCommercePriceListId, false,
+				commerceCurrency.getCode(), displayDateDay, displayDateHour,
+				displayDateMinute, displayDateMonth, displayDateYear,
+				expirationDateDay, expirationDateHour, expirationDateMinute,
+				expirationDateMonth, expirationDateYear, name, netPrice,
+				neverExpire, priority, type, serviceContext);
 		}
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.getCommercePriceList(commercePriceListId);
 
 		return _commercePriceListService.updateCommercePriceList(
-			commercePriceListId, commercePriceList.isCatalogBasePriceList(),
+			commercePriceListId, parentCommercePriceListId,
+			commercePriceList.isCatalogBasePriceList(),
 			commerceCurrency.getCode(), displayDateDay, displayDateHour,
 			displayDateMinute, displayDateMonth, displayDateYear,
 			expirationDateDay, expirationDateHour, expirationDateMinute,
 			expirationDateMonth, expirationDateYear, name, netPrice,
-			neverExpire, parentCommercePriceListId, priority,
-			commercePriceList.getType(), serviceContext);
+			neverExpire, priority, commercePriceList.getType(), serviceContext);
 	}
 
 	@Reference

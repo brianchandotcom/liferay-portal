@@ -123,9 +123,9 @@ public class CommercePriceListIndexerTest {
 			commerceCurrency.getCode());
 
 		_commercePriceListLocalService.addCommercePriceList(
-			null, _user.getUserId(), commerceCatalog.getGroupId(), false,
+			null, _user.getUserId(), commerceCatalog.getGroupId(), 0, false,
 			commerceCurrency.getCode(), 1, 3, 4, 1, 2018, 0, 0, 0, 0, 0,
-			RandomTestUtil.randomString(), true, true, 0, 0,
+			RandomTestUtil.randomString(), true, true, 0,
 			CommercePriceListConstants.TYPE_PRICE_LIST,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

@@ -625,10 +625,11 @@ public class CommercePriceListLocalServiceTest {
 			CommercePriceListTestUtil.updateCommercePriceList(
 				commercePriceList.getGroupId(),
 				commercePriceList.getCommercePriceListId(),
-				currency.getCurrencyCode(),
-				commercePriceList.getParentCommercePriceListId(), name,
-				commercePriceList.getPriority(), false, displayDate,
-				expirationDate);
+				commercePriceList.getParentCommercePriceListId(),
+				commercePriceList.isCatalogBasePriceList(),
+				currency.getCurrencyCode(), displayDate, expirationDate, name,
+				commercePriceList.isNetPrice(), false,
+				commercePriceList.getPriority());
 
 		_assertPriceListAttributes(currency, name, updatedCommercePriceList);
 
@@ -676,9 +677,10 @@ public class CommercePriceListLocalServiceTest {
 		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
 
 		CommercePriceListTestUtil.updateCommercePriceList(
-			commerceCatalog.getGroupId(), commercePriceListId,
-			currency.getCurrencyCode(), 0, RandomTestUtil.randomString(),
-			RandomTestUtil.randomDouble(), true, null, null);
+			commerceCatalog.getGroupId(), commercePriceListId, 0, false,
+			currency.getCurrencyCode(), null, null,
+			RandomTestUtil.randomString(), true, true,
+			RandomTestUtil.randomDouble());
 	}
 
 	@Test
@@ -714,12 +716,14 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList updatedCommercePriceList =
 			CommercePriceListTestUtil.updateCommercePriceList(
-				commercePriceList.getGroupId(),
+				commerceCatalog.getGroupId(),
 				commercePriceList.getCommercePriceListId(),
-				currency.getCurrencyCode(), parentCommercePriceListId, name,
-				commercePriceList.getPriority(), false,
-				commercePriceList.getDisplayDate(),
-				commercePriceList.getExpirationDate());
+				parentCommercePriceListId,
+				commercePriceList.isCatalogBasePriceList(),
+				currency.getCurrencyCode(), commercePriceList.getDisplayDate(),
+				commercePriceList.getExpirationDate(), name,
+				commercePriceList.isNetPrice(), false,
+				commercePriceList.getPriority());
 
 		Assert.assertThat(
 			updatedCommercePriceList.getParentCommercePriceListId(),

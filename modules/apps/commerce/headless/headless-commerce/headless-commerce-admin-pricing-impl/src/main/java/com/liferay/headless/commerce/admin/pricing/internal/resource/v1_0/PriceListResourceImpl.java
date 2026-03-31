@@ -232,15 +232,15 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.addOrUpdateCommercePriceList(
-				externalReferenceCode, 0L, commerceCatalog.getGroupId(), false,
-				commerceCurrency.getCode(), displayDateConfig.getDay(),
+				externalReferenceCode, 0L, commerceCatalog.getGroupId(), 0,
+				false, commerceCurrency.getCode(), displayDateConfig.getDay(),
 				displayDateConfig.getHour(), displayDateConfig.getMinute(),
 				displayDateConfig.getMonth(), displayDateConfig.getYear(),
 				expirationDateConfig.getDay(), expirationDateConfig.getHour(),
 				expirationDateConfig.getMinute(),
 				expirationDateConfig.getMonth(), expirationDateConfig.getYear(),
 				priceList.getName(), true,
-				GetterUtil.getBoolean(priceList.getNeverExpire(), true), 0,
+				GetterUtil.getBoolean(priceList.getNeverExpire(), true),
 				GetterUtil.get(priceList.getPriority(), 0D),
 				CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 
@@ -356,7 +356,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
 		commercePriceList = _commercePriceListService.updateCommercePriceList(
-			commercePriceList.getCommercePriceListId(),
+			commercePriceList.getCommercePriceListId(), 0,
 			commercePriceList.isCatalogBasePriceList(),
 			commerceCurrency.getCode(), displayDateConfig.getDay(),
 			displayDateConfig.getHour(), displayDateConfig.getMinute(),
@@ -365,7 +365,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 			expirationDateConfig.getMinute(), expirationDateConfig.getMonth(),
 			expirationDateConfig.getYear(),
 			GetterUtil.get(priceList.getName(), commercePriceList.getName()),
-			true, GetterUtil.getBoolean(priceList.getNeverExpire(), true), 0,
+			true, GetterUtil.getBoolean(priceList.getNeverExpire(), true),
 			GetterUtil.get(
 				priceList.getPriority(), commercePriceList.getPriority()),
 			commercePriceList.getType(), serviceContext);

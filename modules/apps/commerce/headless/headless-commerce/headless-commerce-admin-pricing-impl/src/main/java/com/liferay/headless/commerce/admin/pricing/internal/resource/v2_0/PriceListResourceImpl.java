@@ -251,6 +251,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 		CommercePriceList commercePriceList =
 			_commercePriceListService.addOrUpdateCommercePriceList(
 				externalReferenceCode, commerceCatalog.getGroupId(), 0L,
+				GetterUtil.get(priceList.getParentPriceListId(), 0L),
 				GetterUtil.get(priceList.getCatalogBasePriceList(), false),
 				commerceCurrency.getCode(), displayDateConfig.getDay(),
 				displayDateConfig.getHour(), displayDateConfig.getMinute(),
@@ -261,7 +262,6 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 				priceList.getName(),
 				GetterUtil.get(priceList.getNetPrice(), true),
 				GetterUtil.getBoolean(priceList.getNeverExpire(), true),
-				GetterUtil.get(priceList.getParentPriceListId(), 0L),
 				GetterUtil.get(priceList.getPriority(), 0D),
 				GetterUtil.get(
 					priceList.getTypeAsString(),
@@ -596,6 +596,9 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		commercePriceList = _commercePriceListService.updateCommercePriceList(
 			commercePriceList.getCommercePriceListId(),
+			GetterUtil.get(
+				priceList.getParentPriceListId(),
+				commercePriceList.getParentCommercePriceListId()),
 			commercePriceList.isCatalogBasePriceList(),
 			commerceCurrency.getCode(), displayDateConfig.getDay(),
 			displayDateConfig.getHour(), displayDateConfig.getMinute(),
@@ -607,9 +610,6 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 			GetterUtil.get(
 				priceList.getNetPrice(), commercePriceList.isNetPrice()),
 			GetterUtil.getBoolean(priceList.getNeverExpire(), true),
-			GetterUtil.get(
-				priceList.getParentPriceListId(),
-				commercePriceList.getParentCommercePriceListId()),
 			GetterUtil.get(
 				priceList.getPriority(), commercePriceList.getPriority()),
 			commercePriceList.getType(), serviceContext);

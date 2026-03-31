@@ -101,6 +101,8 @@ import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
+import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -721,15 +723,36 @@ public class RenderLayoutStructureTagTest {
 	@Test
 	@TestInfo("LPD-69237")
 	public void testEscapeFormInputValues() throws Exception {
-		String name = CharPool.LOWER_CASE_A + RandomTestUtil.randomString();
+		String longTextName =
+			CharPool.LOWER_CASE_A + RandomTestUtil.randomString();
+		String richTextName =
+			CharPool.LOWER_CASE_A + RandomTestUtil.randomString();
+		String textName = CharPool.LOWER_CASE_A + RandomTestUtil.randomString();
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				ListUtil.fromArray(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), name)),
+					new LongTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						longTextName
+					).build(),
+					new RichTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						richTextName
+					).build(),
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						textName
+					).build()),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
 		String xssScript = "\"><script>alert('xss')</script>";
@@ -740,7 +763,11 @@ public class RenderLayoutStructureTagTest {
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			"en_US",
 			HashMapBuilder.<String, Serializable>put(
-				name, xssScript
+				longTextName, xssScript
+			).put(
+				richTextName, xssScript
+			).put(
+				textName, xssScript
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 

@@ -355,20 +355,16 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			}
 		}
 
-		if (infoFieldType instanceof LongTextInfoFieldType ||
-			infoFieldType instanceof TextInfoFieldType) {
+		value = HtmlUtil.escape(value);
 
-			value = HtmlUtil.escape(value);
+		Map<Locale, String> escapedValueI18n = new HashMap<>();
 
-			Map<Locale, String> escapedValueI18n = new HashMap<>();
-
-			for (Map.Entry<Locale, String> entry : valueI18n.entrySet()) {
-				escapedValueI18n.put(
-					entry.getKey(), HtmlUtil.escape(entry.getValue()));
-			}
-
-			valueI18n = escapedValueI18n;
+		for (Map.Entry<Locale, String> entry : valueI18n.entrySet()) {
+			escapedValueI18n.put(
+				entry.getKey(), HtmlUtil.escape(entry.getValue()));
 		}
+
+		valueI18n = escapedValueI18n;
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
 			errorMessage, inputHelpText, inputLabel, localizable, name,

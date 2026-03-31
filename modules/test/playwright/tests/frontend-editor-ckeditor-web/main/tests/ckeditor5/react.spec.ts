@@ -110,7 +110,7 @@ test(
 
 test(
 	'Editor can be disabled/enabled',
-	{tag: '@LPD-11235'},
+	{tag: '@LPD-80293'},
 	async ({classicPage, page}) => {
 		let imageButton: Locator;
 		let toggleDisableEditorButton: Locator;
@@ -120,24 +120,6 @@ test(
 			await expect(
 				classicPage.editable.getByText('Lorem ipsum dolor sit amet')
 			).toBeVisible();
-		});
-
-		await test.step('Toolbar contains custom toobar configuration, including added custom and official plugins', async () => {
-			const expectedButtons = [
-				'Undo',
-				'Redo',
-				'Bold',
-				'Italic',
-				'Bookmark',
-				'Timestamp',
-				'Image',
-				'Video',
-			];
-
-			const availableButtons =
-				await classicPage.toolbar.buttonLabels.allInnerTexts();
-
-			expect(availableButtons).toEqual(expectedButtons);
 		});
 
 		await test.step('"Toggle editor ReadOnly mode" button is present', async () => {

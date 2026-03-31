@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -63,7 +62,7 @@ public class FragmentCollectionsDisplayContextTest {
 
 	@Test
 	@TestInfo("LPD-83557")
-	public void testGetSearchContainerIteratorURLContainsExportAction() {
+	public void testGetSearchContainerIteratorURLContainsExportMVCRenderCommandName() {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		Mockito.when(
@@ -88,7 +87,8 @@ public class FragmentCollectionsDisplayContextTest {
 			(MockLiferayPortletURL)searchContainer.getIteratorURL();
 
 		Assert.assertEquals(
-			"export", mockLiferayPortletURL.getParameter("action"));
+			"/fragment/view_exportable_fragment_collections",
+			mockLiferayPortletURL.getParameter("mvcRenderCommandName"));
 	}
 
 	@Test
@@ -166,12 +166,6 @@ public class FragmentCollectionsDisplayContextTest {
 			themeDisplay
 		);
 
-		Mockito.when(
-			httpServletRequest.getParameter("action")
-		).thenReturn(
-			Constants.EXPORT
-		);
-
 		return httpServletRequest;
 	}
 
@@ -204,7 +198,7 @@ public class FragmentCollectionsDisplayContextTest {
 
 		FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext =
 			new FragmentCollectionsDisplayContext(
-				_fragmentCollectionService, httpServletRequest,
+				true, _fragmentCollectionService, httpServletRequest,
 				Mockito.mock(RenderRequest.class), renderResponse);
 
 		return fragmentCollectionsDisplayContext.getSearchContainer();

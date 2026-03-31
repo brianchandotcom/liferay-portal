@@ -104,6 +104,11 @@ public class OAuthClientASLocalMetadataResourceImpl
 			}
 
 			@Override
+			public int getRank() {
+				return 99;
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.COMPANY;
 			}

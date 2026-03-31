@@ -461,7 +461,11 @@ public class ObjectEntryLocalServiceImpl
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
 
-		if (ExportImportThreadLocal.isImportInProcess()) {
+		boolean copy = StringUtil.equals(
+			GetterUtil.getString(serviceContext.getAttribute(Constants.ACTION)),
+			Constants.COPY);
+
+		if (ExportImportThreadLocal.isImportInProcess() || copy) {
 			if (status == WorkflowConstants.STATUS_EXPIRED) {
 				objectEntry.setExpirationDate(
 					(Date)values.get("expirationDate"));
@@ -532,11 +536,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			serviceContext);
 
-		if (!StringUtil.equals(
-				GetterUtil.getString(
-					serviceContext.getAttribute(Constants.ACTION)),
-				Constants.COPY)) {
-
+		if (!copy) {
 			_deleteTempFileEntries(dlFileEntriesMap);
 		}
 

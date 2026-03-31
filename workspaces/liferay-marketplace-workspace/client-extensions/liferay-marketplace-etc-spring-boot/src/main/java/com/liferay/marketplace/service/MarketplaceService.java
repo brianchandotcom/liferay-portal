@@ -588,6 +588,18 @@ public class MarketplaceService extends BaseService {
 
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
+		if (Validator.isNull(emailAddress)) {
+			emailAddress = _replace(
+				jsonObject.getJSONObject(
+					"to"
+				).getString(
+					"en_US"
+				),
+				map);
+		}
+
+		String finalEmailAddress = emailAddress;
+
 		notificationQueueEntry.setRecipients(
 			() -> new Object[] {
 				new HashMapBuilder<String, Object>().put(
@@ -604,18 +616,7 @@ public class MarketplaceService extends BaseService {
 						"en_US"
 					)
 				).put(
-					"to",
-					() -> {
-						if (Validator.isNotNull(emailAddress)) {
-							return emailAddress;
-						}
-
-						return jsonObject.getJSONObject(
-							"to"
-						).getString(
-							"en_US"
-						);
-					}
+					"to", finalEmailAddress
 				).build()
 			});
 
@@ -636,7 +637,7 @@ public class MarketplaceService extends BaseService {
 				_log.info(
 					StringBundler.concat(
 						"Sent ", externalReferenceCode, " notification to ",
-						emailAddress));
+						finalEmailAddress));
 			}
 		}
 		catch (Exception exception) {

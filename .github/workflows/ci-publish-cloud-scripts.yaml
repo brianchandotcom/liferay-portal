@@ -48,7 +48,7 @@ jobs:
                         --gzip \
                         --verbose \
                         cloud/scripts/setup_aws.sh \
-                        cloud/scripts/versions.tfvars \
+                        cloud/scripts/versions_aws.tfvars \
                         cloud/terraform/aws/eks/* \
                         cloud/terraform/aws/gitops/platform/* \
                         cloud/terraform/aws/gitops/resources/* \
@@ -103,6 +103,7 @@ jobs:
                         --gzip \
                         --verbose \
                         cloud/scripts/setup_gcp.sh \
+                        cloud/scripts/versions_gcp.tfvars \
                         cloud/terraform/gcp/gitops/platform/* \
                         cloud/terraform/gcp/gke/*
 

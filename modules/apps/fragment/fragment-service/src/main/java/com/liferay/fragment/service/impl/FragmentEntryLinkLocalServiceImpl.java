@@ -700,7 +700,6 @@ public class FragmentEntryLinkLocalServiceImpl
 				fragmentEntryLink.getEditableValuesJSONObject();
 
 			fragmentEntryLink.setHtml(html);
-			fragmentEntryLink.setEditableValues(null);
 
 			fragmentEntryLink.setEditableValues(
 				_fragmentEntryProcessorRegistry.mergeDefaultEditableValues(
@@ -1013,7 +1012,8 @@ public class FragmentEntryLinkLocalServiceImpl
 				fragmentEntryLink.getGroupId());
 
 		return _fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-			fragmentEntryLink, fragmentEntryProcessorContext);
+			_jsonFactory.createJSONObject(), fragmentEntryLink,
+			fragmentEntryProcessorContext);
 	}
 
 	private boolean _isValidFragmentEntry(

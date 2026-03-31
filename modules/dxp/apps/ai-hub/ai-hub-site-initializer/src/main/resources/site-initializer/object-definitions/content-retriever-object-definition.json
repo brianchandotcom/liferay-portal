@@ -17,8 +17,8 @@
 	],
 	"objectFields": [
 		{
-			"DBType": "Date",
-			"businessType": "Date",
+			"DBType": "DateTime",
+			"businessType": "DateTime",
 			"defaultValue": true,
 			"externalReferenceCode": "CRAWL_DATE",
 			"indexed": true,
@@ -26,8 +26,14 @@
 				"en_US": "Crawl Date"
 			},
 			"name": "crawlDate",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
 			"system": true,
-			"type": "Date"
+			"type": "DateTime"
 		},
 		{
 			"DBType": "Clob",
@@ -39,6 +45,7 @@
 			"label": {
 				"en_US": "Description"
 			},
+			"localized": true,
 			"name": "description",
 			"objectFieldSettings": [
 			],
@@ -92,7 +99,6 @@
 			"label": {
 				"en_US": "Type"
 			},
-			"localized": true,
 			"name": "type",
 			"objectFieldSettings": [
 			],

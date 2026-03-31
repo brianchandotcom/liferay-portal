@@ -1,0 +1,13 @@
+{
+	"date_detection": false,
+	"properties": {
+		"text": {
+			"index": false,
+			"type": "text"
+		},
+		"text_embedding_3072": {
+			"dims": 3072,
+			"type": "dense_vector"
+		}
+	}
+}

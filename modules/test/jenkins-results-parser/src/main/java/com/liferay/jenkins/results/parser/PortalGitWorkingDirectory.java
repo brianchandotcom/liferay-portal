@@ -379,6 +379,8 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			Properties properties = new Properties();
 
 			String[] propertyNames = {
+				"build.binaries.cache.dir",
+				"build.binaries.cache.repository.name",
 				"nodejs.npm.ci.registry", "nodejs.node.env", "nodejs.npm.args",
 				"nodejs.npm.ci.sass.binary.site"
 			};

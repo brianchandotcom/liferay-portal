@@ -2,7 +2,7 @@
 
 .fds {
 	.data-set-wrapper {
-		/* Hide the entire grid column if it contains a hidden item selector item */
+		/* ---------- Hide the entire grid column if it contains a hidden item selector item ---------- */
 		.col-md-3:has(.hidden-item-selector-item) {
 			display: none;
 		}

@@ -12,6 +12,24 @@ import {openActionNotAllowedModal} from '../../../common/utils/openActionNotAllo
 import FolderItemSelectorModalContent from '../../modal/FolderItemSelectorModalContent';
 import {AdditionalProps} from '../AssetsFDSPropsTransformer';
 
+const getItemCategory = (item: any): 'folder' | 'content' | 'file' => {
+	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
+		return 'folder';
+	}
+
+	const objectFolderERC =
+		item.embedded?.systemProperties?.objectDefinitionBrief
+			?.objectFolderExternalReferenceCode;
+	const entryFolderERC =
+		item.embedded?.objectEntryFolderExternalReferenceCode;
+
+	const isContent =
+		objectFolderERC === 'L_CMS_CONTENT_STRUCTURES' ||
+		entryFolderERC === 'L_CONTENTS';
+
+	return isContent ? 'content' : 'file';
+};
+
 /**
  * Common logic for folder item selector bulk actions (move/copy).
  */
@@ -28,35 +46,26 @@ const folderItemSelectorBulkAction = ({
 	dataSetId?: string;
 	selectedData: Required<IBulkActionFDSData>;
 }) => {
-	const title =
-		selectedData.items.length === 1
-			? selectedData.items[0].title
-			: sub(Liferay.Language.get('x-items'), [selectedData.items.length]);
+	const {items} = selectedData;
+	const uniqueCategories = new Set(items.map(getItemCategory));
 
-	const hasFileOrFolder = selectedData.items.some(
-		(item) =>
-			item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME ||
-			item.embedded?.objectEntryFolderExternalReferenceCode === 'L_FILES'
-	);
-
-	const hasContent = selectedData.items.some(
-		(item) =>
-			item.embedded?.objectEntryFolderExternalReferenceCode ===
-			'L_CONTENTS'
-	);
-
-	if (hasFileOrFolder && hasContent) {
-		const moveMessage = Liferay.Language.get(
-			'assets-with-different-content-types-cannot-be-moved-together.-select-assets-with-the-same-content-type-and-try-again'
-		);
-		const copyMessage = Liferay.Language.get(
-			'assets-with-different-content-types-cannot-be-copied-together.-select-assets-with-the-same-content-type-and-try-again'
-		);
-
-		const message = action === 'move' ? moveMessage : copyMessage;
+	if (uniqueCategories.size > 1) {
+		const message =
+			action === 'move'
+				? Liferay.Language.get(
+						'assets-with-different-content-types-cannot-be-moved-together.-select-assets-with-the-same-content-type-and-try-again'
+					)
+				: Liferay.Language.get(
+						'assets-with-different-content-types-cannot-be-copied-together.-select-assets-with-the-same-content-type-and-try-again'
+					);
 
 		return openActionNotAllowedModal({message});
 	}
+
+	const title =
+		items.length === 1
+			? items[0].title
+			: sub(Liferay.Language.get('x-items'), [items.length]);
 
 	return render(
 

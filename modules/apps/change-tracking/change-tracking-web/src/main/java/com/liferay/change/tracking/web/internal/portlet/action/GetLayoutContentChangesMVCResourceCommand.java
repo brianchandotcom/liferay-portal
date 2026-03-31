@@ -6,10 +6,22 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.change.tracking.web.internal.display.DisplayContextImpl;
+import com.liferay.diff.DiffHtml;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.petra.io.unsync.UnsyncStringReader;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -17,6 +29,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -28,10 +41,12 @@ import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -45,6 +60,7 @@ import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 import java.util.Objects;
@@ -104,8 +120,11 @@ public class GetLayoutContentChangesMVCResourceCommand
 				JSONUtil.put(
 					"layoutContentChanges",
 					_getLayoutContentChangesJSONArray(
+						_ctCollectionLocalService.getCTCollection(
+							ctEntry.getCtCollectionId()),
 						documents,
-						_portal.getHttpServletRequest(resourceRequest))
+						_portal.getHttpServletRequest(resourceRequest),
+						_portal.getHttpServletResponse(resourceResponse))
 				).put(
 					"total", searchResponse.getTotalHits()
 				));
@@ -123,8 +142,11 @@ public class GetLayoutContentChangesMVCResourceCommand
 		}
 	}
 
-	private JSONArray _getLayoutContentChangesJSONArray(
-		List<Document> documents, HttpServletRequest httpServletRequest) {
+	private <T extends BaseModel<T>> JSONArray
+		_getLayoutContentChangesJSONArray(
+			CTCollection ctCollection, List<Document> documents,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
@@ -134,6 +156,26 @@ public class GetLayoutContentChangesMVCResourceCommand
 					Field.TITLE, document.getString(Field.TITLE)
 				).put(
 					"ctEntryId", document.getLong(Field.ENTRY_CLASS_PK)
+				).put(
+					"preview",
+					() -> {
+						CTEntry ctEntry = _ctEntryLocalService.getCTEntry(
+							document.getLong(Field.ENTRY_CLASS_PK));
+
+						CTDisplayRenderer<T> ctDisplayRenderer =
+							_ctDisplayRendererRegistry.getCTDisplayRenderer(
+								ctEntry.getModelClassNameId());
+
+						return _diffHtml.diff(
+							new UnsyncStringReader(
+								_getProductionPreview(
+									ctCollection, ctDisplayRenderer, ctEntry,
+									httpServletRequest, httpServletResponse)),
+							new UnsyncStringReader(
+								_getPublicationPreview(
+									ctCollection, ctDisplayRenderer, ctEntry,
+									httpServletRequest, httpServletResponse)));
+					}
 				).put(
 					"viewChangeURL",
 					PortletURLBuilder.create(
@@ -201,11 +243,191 @@ public class GetLayoutContentChangesMVCResourceCommand
 		return _searcher.search(searchRequestBuilder.build());
 	}
 
+	private <T extends BaseModel<T>> String _getPreview(
+		long ctCollectionId, CTDisplayRenderer<T> ctDisplayRenderer,
+		long ctEntryId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, T model, String type) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try (SafeCloseable safeCloseable1 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId);
+			SafeCloseable safeCloseable2 =
+				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
+
+			return ctDisplayRenderer.renderPreview(
+				new DisplayContextImpl<>(
+					httpServletRequest, httpServletResponse,
+					_classNameLocalService, _ctDisplayRendererRegistry,
+					ctEntryId, themeDisplay.getLocale(), model, type));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return StringPool.BLANK;
+		}
+	}
+
+	private <T extends BaseModel<T>> String _getProductionPreview(
+			CTCollection ctCollection, CTDisplayRenderer<T> ctDisplayRenderer,
+			CTEntry ctEntry, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		long targetCTCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			targetCTCollectionId = ctEntry.getCtCollectionId();
+		}
+
+		CTSQLModeThreadLocal.CTSQLMode targetCTSQLMode =
+			_ctDisplayRendererRegistry.getCTSQLMode(
+				targetCTCollectionId, ctEntry);
+
+		T targetModel = null;
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			long ctCollectionId = ctCollection.getCtCollectionId();
+
+			if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				ctCollectionId = _ctEntryLocalService.getCTRowCTCollectionId(
+					ctEntry);
+			}
+
+			T ctModel = _ctDisplayRendererRegistry.fetchCTModel(
+				ctCollectionId,
+				_ctDisplayRendererRegistry.getCTSQLMode(
+					ctCollectionId, ctEntry),
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+
+			if (ctModel == null) {
+				return StringPool.BLANK;
+			}
+
+			try (SafeCloseable safeCloseable1 =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						targetCTCollectionId);
+				SafeCloseable safeCloseable2 =
+					CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
+						targetCTSQLMode)) {
+
+				targetModel = ctDisplayRenderer.fetchLatestVersionedModel(
+					ctModel);
+			}
+
+			if (targetModel == null) {
+				return StringPool.BLANK;
+			}
+
+			return _getPreview(
+				targetCTCollectionId, ctDisplayRenderer, ctEntry.getCtEntryId(),
+				targetCTSQLMode, httpServletRequest, httpServletResponse,
+				targetModel, CTConstants.TYPE_LATEST);
+		}
+
+		targetModel = _ctDisplayRendererRegistry.fetchCTModel(
+			targetCTCollectionId, targetCTSQLMode,
+			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+
+		return _getPreview(
+			targetCTCollectionId, ctDisplayRenderer, ctEntry.getCtEntryId(),
+			targetCTSQLMode, httpServletRequest, httpServletResponse,
+			targetModel, CTConstants.TYPE_BEFORE);
+	}
+
+	private <T extends BaseModel<T>> String _getPublicationPreview(
+			CTCollection ctCollection, CTDisplayRenderer<T> ctDisplayRenderer,
+			CTEntry ctEntry, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		long targetCTCollectionId = ctCollection.getCtCollectionId();
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			targetCTCollectionId = _ctEntryLocalService.getCTRowCTCollectionId(
+				ctEntry);
+		}
+
+		CTSQLModeThreadLocal.CTSQLMode targetCTSQLMode =
+			_ctDisplayRendererRegistry.getCTSQLMode(
+				targetCTCollectionId, ctEntry);
+
+		T targetModel = null;
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
+			long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+			if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				ctCollectionId = ctEntry.getCtCollectionId();
+			}
+
+			T productionModel = _ctDisplayRendererRegistry.fetchCTModel(
+				ctCollectionId,
+				_ctDisplayRendererRegistry.getCTSQLMode(
+					ctCollectionId, ctEntry),
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+
+			targetCTSQLMode = CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
+
+			if (productionModel != null) {
+				try (SafeCloseable safeCloseable1 =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								targetCTCollectionId);
+					SafeCloseable safeCloseable2 =
+						CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
+							targetCTSQLMode)) {
+
+					targetModel = ctDisplayRenderer.fetchLatestVersionedModel(
+						productionModel);
+				}
+			}
+
+			if (targetModel == null) {
+				return StringPool.BLANK;
+			}
+
+			return _getPreview(
+				targetCTCollectionId, ctDisplayRenderer, ctEntry.getCtEntryId(),
+				targetCTSQLMode, httpServletRequest, httpServletResponse,
+				targetModel, CTConstants.TYPE_LATEST);
+		}
+
+		targetModel = _ctDisplayRendererRegistry.fetchCTModel(
+			targetCTCollectionId, targetCTSQLMode,
+			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+
+		if (targetModel == null) {
+			return StringPool.BLANK;
+		}
+
+		return _getPreview(
+			targetCTCollectionId, ctDisplayRenderer, ctEntry.getCtEntryId(),
+			targetCTSQLMode, httpServletRequest, httpServletResponse,
+			targetModel, CTConstants.TYPE_AFTER);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetLayoutContentChangesMVCResourceCommand.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+
+	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private DiffHtml _diffHtml;
 
 	@Reference
 	private JSONFactory _jsonFactory;

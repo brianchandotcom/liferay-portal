@@ -6,6 +6,7 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionExternalReferenceCodeException;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -49,6 +52,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -362,6 +366,37 @@ public class FragmentCollectionServiceTest {
 
 	@Test
 	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCountWithApprovedResource()
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		_portletFileRepository.addPortletFileEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			FragmentCollection.class.getName(),
+			fragmentCollection.getFragmentCollectionId(),
+			FragmentPortletKeys.FRAGMENT,
+			fragmentCollection.getResourcesFolderId(), new byte[0],
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
+
+		Assert.assertEquals(
+			1,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}));
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 1, fragmentCollections.size());
+		Assert.assertTrue(fragmentCollections.contains(fragmentCollection));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
 	public void testGetExportableFragmentCollectionsCountWithFragmentComposition()
 		throws Exception {
 
@@ -456,6 +491,44 @@ public class FragmentCollectionServiceTest {
 			0,
 			_fragmentCollectionService.getExportableFragmentCollectionsCount(
 				new long[] {_group.getGroupId()}));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCountWithNonapprovedResource()
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			FragmentCollection.class.getName(),
+			fragmentCollection.getFragmentCollectionId(),
+			FragmentPortletKeys.FRAGMENT,
+			fragmentCollection.getResourcesFolderId(), new byte[0],
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_DRAFT,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()),
+			Collections.emptyMap());
+
+		Assert.assertEquals(
+			0,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}));
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(fragmentCollections.isEmpty());
 	}
 
 	@Test

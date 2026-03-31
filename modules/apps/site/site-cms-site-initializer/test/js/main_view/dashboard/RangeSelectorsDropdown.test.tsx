@@ -148,6 +148,46 @@ describe('[CMS Dashboard] Components: RangeSelectorsDropdown', () => {
 		);
 	});
 
+	it('disables "Add Filter" button when date range is invalid', async () => {
+		render(<RangeSelectorsDropdown {...mockedProps} />);
+
+		const rangeSelectorDropdown = screen.getByRole('button');
+
+		await userEvent.click(rangeSelectorDropdown);
+
+		const customRangeOption = screen.getByRole('menuitem', {
+			name: /(custom-range)/,
+		});
+
+		await userEvent.click(customRangeOption);
+
+		const rangeStartInput = (
+			await screen.findByTestId('range-start')
+		).querySelector('input.form-control');
+
+		const rangeEndInput = (
+			await screen.findByTestId('range-end')
+		).querySelector('input.form-control');
+
+		fireEvent.change(rangeStartInput as HTMLInputElement, {
+			target: {value: '2030-01-01'},
+		});
+
+		fireEvent.change(rangeEndInput as HTMLInputElement, {
+			target: {value: '2020-01-01'},
+		});
+
+		const addFilterButton = screen.getByRole('button', {
+			name: 'add-filter',
+		});
+
+		expect(addFilterButton).toBeDisabled();
+
+		expect(
+			screen.getByText('date-range-is-invalid.-from-must-be-before-to')
+		).toBeInTheDocument();
+	});
+
 	it('navigates drill down to select a custom range and cancel action', async () => {
 		render(<RangeSelectorsDropdown {...mockedProps} />);
 

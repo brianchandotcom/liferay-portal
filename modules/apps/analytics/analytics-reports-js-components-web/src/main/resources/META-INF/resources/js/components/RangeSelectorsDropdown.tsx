@@ -7,6 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayDatePicker from '@clayui/date-picker';
 import ClayDropdown from '@clayui/drop-down';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {dateUtils} from 'frontend-js-web';
@@ -128,6 +129,10 @@ const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 	const [rangeStart, setRangeStart] = useState('');
 	const [rangeEnd, setRangeEnd] = useState('');
 
+	const isInvalidDateRange = Boolean(
+		rangeStart && rangeEnd && new Date(rangeStart) > new Date(rangeEnd)
+	);
+
 	return (
 		<>
 			<div className="align-items-center d-flex dropdown-header pl-3">
@@ -157,6 +162,7 @@ const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 					</label>
 
 					<ClayDatePicker
+						aria-invalid={isInvalidDateRange}
 						ariaLabels={{
 							buttonChooseDate: `${Liferay.Language.get(
 								'select-date'
@@ -209,6 +215,7 @@ const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 					</label>
 
 					<ClayDatePicker
+						aria-invalid={isInvalidDateRange}
 						dateFormat="yyyy-MM-dd"
 						inputName="rangeEndId"
 						onChange={setRangeEnd}
@@ -220,6 +227,18 @@ const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 						}}
 					/>
 				</div>
+
+				{isInvalidDateRange && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+							{Liferay.Language.get(
+								'date-range-is-invalid.-from-must-be-before-to'
+							)}
+						</ClayForm.FeedbackItem>
+					</ClayForm.FeedbackGroup>
+				)}
 			</ClayDropdown.Item>
 
 			<ClayDropdown.Divider />
@@ -227,7 +246,7 @@ const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 			<ClayDropdown.Caption>
 				<ClayButton
 					block
-					disabled={!rangeStart || !rangeEnd}
+					disabled={!rangeStart || !rangeEnd || isInvalidDateRange}
 					onClick={() => {
 						onViewChange(View.Default);
 

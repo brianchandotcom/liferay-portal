@@ -82,54 +82,53 @@ public class DesignLibraryResourcesDisplayContext {
 			JSONUtil.put(
 				"href", "#settings"
 			).put(
-				"symbolLeft", "cog"
-			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "settings")
+			).put(
+				"symbolLeft", "cog"
 			),
 			JSONUtil.put(
-				"href", "#connected-sites"
-			).put(
-				"symbolLeft", "globe"
-			).put(
-				"target", "connected-sites"
-			).put(
-				"label",
-				LanguageUtil.get(_httpServletRequest, "connected-sites")
-			)
-			.put(
 				"externalReferenceCode",
 				() -> DepotEntryLocalServiceUtil.fetchDepotEntry(
 					designLibraryEntryId
 				).getGroup(
 				).getExternalReferenceCode()
+			).put(
+				"href", "#connected-sites"
+			).put(
+				"label",
+				LanguageUtil.get(_httpServletRequest, "connected-sites")
+			).put(
+				"symbolLeft", "globe"
+			).put(
+				"target", "connected-sites"
 			),
 			JSONUtil.put(
 				"href", "#manage-members"
 			).put(
-				"symbolLeft", "users"
-			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "manage-members")
+			).put(
+				"symbolLeft", "users"
 			),
 			JSONUtil.put(
 				"href", "#import"
 			).put(
-				"symbolLeft", "import"
-			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "import")
+			).put(
+				"symbolLeft", "import"
 			),
 			JSONUtil.put(
 				"href", "#export"
 			).put(
-				"symbolLeft", "export"
-			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "export")
+			).put(
+				"symbolLeft", "export"
 			),
 			JSONUtil.put(
 				"href", "#delete"
 			).put(
-				"symbolLeft", "trash"
-			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "delete")
+			).put(
+				"symbolLeft", "trash"
 			));
 	}
 

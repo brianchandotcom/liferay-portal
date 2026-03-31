@@ -5,12 +5,14 @@
 
 package com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model;
 
+import com.liferay.frontend.data.set.SystemFDSEntry;
+
 /**
  * @author Miguel Arroyo
  */
-public class SystemDataSet {
+public class SystemFDSEntryInfo implements SystemFDSEntry {
 
-	public SystemDataSet(
+	public SystemFDSEntryInfo(
 		String additionalAPIURLParameters, int defaultItemsPerPage,
 		String description, boolean imported, String name,
 		String restApplication, String restEndpoint, String restSchema,

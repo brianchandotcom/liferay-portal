@@ -92,7 +92,9 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 	public void testCheckLicenseWithBinaryFileBefore2026_Q1_0()
 		throws Exception {
 
-		_testCheckLicense("binary_file_before_2026_Q1_0.li");
+		try (SafeCloseable safeCloseable = disableValidateWithSafeCloseable()) {
+			_testCheckLicense("binary_file_before_2026_Q1_0.li");
+		}
 	}
 
 	@Test

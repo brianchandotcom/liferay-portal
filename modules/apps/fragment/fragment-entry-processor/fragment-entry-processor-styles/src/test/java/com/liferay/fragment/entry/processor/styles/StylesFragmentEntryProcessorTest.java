@@ -90,7 +90,7 @@ public class StylesFragmentEntryProcessorTest {
 		Document document = _getDocument(html);
 
 		_stylesDocumentFragmentEntryProcessor.processFragmentEntryLinkHTML(
-			fragmentEntryLink, document,
+			document, fragmentEntryLink,
 			new DefaultFragmentEntryProcessorContext(
 				fragmentEntryLink.getCompanyId(),
 				_getMockHttpServletRequest(layoutStructure), null,

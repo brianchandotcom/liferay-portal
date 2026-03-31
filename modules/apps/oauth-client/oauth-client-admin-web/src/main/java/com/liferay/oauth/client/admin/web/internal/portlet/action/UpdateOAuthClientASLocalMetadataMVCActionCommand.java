@@ -47,8 +47,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			if (!FeatureFlagManagerUtil.isEnabled(
 					themeDisplay.getCompanyId(), "LPD-63415")) {

@@ -13,6 +13,12 @@
 				"friendlyURL": "/agent-builder",
 				"privateLayout": false,
 				"type": "layout"
+			},
+			{
+				"externalReferenceCode": "AIHUBPRIMARYNAVIGATION3",
+				"friendlyURL": "/chatbots",
+				"privateLayout": false,
+				"type": "layout"
 			}
 		],
 		"name": "AI Hub Navigation Menu"

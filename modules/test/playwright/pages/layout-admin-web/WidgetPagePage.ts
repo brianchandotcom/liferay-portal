@@ -96,10 +96,6 @@ export class WidgetPagePage {
 		}
 
 		await expect(async () => {
-			if ((await item.getAttribute('class')).includes('disabled')) {
-				return;
-			}
-
 			const addButton = item
 				.getByRole('button', {name: 'Add Content'})
 				.first();

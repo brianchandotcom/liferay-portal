@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
@@ -733,7 +734,15 @@ public class TaxonomyVocabularyResourceImpl
 		return Arrays.toString(assetTypes.toArray());
 	}
 
-	private long _getClassNameId(String assetTypeType) {
+	private long _getClassNameId(Long assetTypeId, String assetTypeType) {
+		if (Validator.isNull(assetTypeType)) {
+			if (Validator.isNull(assetTypeId)) {
+				throw new BadRequestException("Invalid Vocabulary Asset Type");
+			}
+
+			return assetTypeId;
+		}
+
 		if (Objects.equals(assetTypeType, "AllAssetTypes")) {
 			return AssetCategoryConstants.ALL_CLASS_NAME_ID;
 		}
@@ -803,7 +812,8 @@ public class TaxonomyVocabularyResourceImpl
 			}
 		}
 
-		throw new BadRequestException("Invalid subtype " + subtype);
+		throw new BadRequestException(
+			"Invalid subtype " + subtype + " for this context");
 	}
 
 	private String _getModelResource(
@@ -856,7 +866,8 @@ public class TaxonomyVocabularyResourceImpl
 		for (int i = 0; i < assetTypes.length; i++) {
 			AssetType assetType = assetTypes[i];
 
-			long classNameId = _getClassNameId(assetType.getType());
+			long classNameId = _getClassNameId(
+				assetType.getTypeId(), assetType.getType());
 
 			classNameIds[i] = classNameId;
 

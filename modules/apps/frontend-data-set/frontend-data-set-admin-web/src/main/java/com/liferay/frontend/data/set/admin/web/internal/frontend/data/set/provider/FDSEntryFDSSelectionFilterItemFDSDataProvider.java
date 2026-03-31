@@ -9,7 +9,7 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletFDSNames;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
-import com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model.DataSetEntry;
+import com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.model.FDSSelectionFilterItem;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -51,14 +51,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Arroyo
  */
 @Component(
-	property = "fds.data.provider.key=" + FDSAdminPortletFDSNames.DATA_SET_ENTRIES,
+	property = "fds.data.provider.key=" + FDSAdminPortletFDSNames.FDS_ENTRY_FDS_SELECTION_FILTER_ITEMS,
 	service = FDSDataProvider.class
 )
-public class DataSetEntriesFDSDataProvider
-	implements FDSDataProvider<DataSetEntry> {
+public class FDSEntryFDSSelectionFilterItemFDSDataProvider
+	implements FDSDataProvider<FDSSelectionFilterItem> {
 
 	@Override
-	public List<DataSetEntry> getItems(
+	public List<FDSSelectionFilterItem> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
@@ -69,28 +69,25 @@ public class DataSetEntriesFDSDataProvider
 
 		_checkPermissions(themeDisplay);
 
-		List<Map.Entry<String, String>> sortedDataSetEntries =
-			_getSortedDataSetEntries(
-				themeDisplay.getCompanyId(), fdsKeywords.getKeywords());
+		List<Map.Entry<String, String>> fdsEntries = _getFDSEntries(
+			themeDisplay.getCompanyId(), fdsKeywords.getKeywords());
 
 		int start = Math.max(fdsPagination.getStartPosition(), 0);
-		int end = Math.min(
-			fdsPagination.getEndPosition(), sortedDataSetEntries.size());
+		int end = Math.min(fdsPagination.getEndPosition(), fdsEntries.size());
 
-		if ((start >= sortedDataSetEntries.size()) || (start >= end)) {
+		if ((start >= fdsEntries.size()) || (start >= end)) {
 			return Collections.emptyList();
 		}
 
-		List<DataSetEntry> dataSetEntries = new ArrayList<>();
+		List<FDSSelectionFilterItem> fdsSelectionFilterItems =
+			new ArrayList<>();
 
-		for (Map.Entry<String, String> entry :
-				sortedDataSetEntries.subList(start, end)) {
-
-			dataSetEntries.add(
-				new DataSetEntry(entry.getValue(), entry.getKey()));
+		for (Map.Entry<String, String> entry : fdsEntries.subList(start, end)) {
+			fdsSelectionFilterItems.add(
+				new FDSSelectionFilterItem(entry.getKey(), entry.getValue()));
 		}
 
-		return dataSetEntries;
+		return fdsSelectionFilterItems;
 	}
 
 	@Override
@@ -104,13 +101,13 @@ public class DataSetEntriesFDSDataProvider
 
 		_checkPermissions(themeDisplay);
 
-		return _getSortedDataSetEntries(
+		return _getFDSEntries(
 			themeDisplay.getCompanyId(), fdsKeywords.getKeywords()
 		).size();
 	}
 
-	private void _addDataSetObjectEntries(
-			Map<String, String> dataSetEntries, long companyId, String keywords)
+	private void _addCustomFDSEntries(
+			Map<String, String> fdsEntries, long companyId, String keywords)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -156,7 +153,7 @@ public class DataSetEntriesFDSDataProvider
 					objectEntry.getExternalReferenceCode();
 
 				if (Validator.isNull(externalReferenceCode) ||
-					dataSetEntries.containsKey(externalReferenceCode)) {
+					fdsEntries.containsKey(externalReferenceCode)) {
 
 					continue;
 				}
@@ -169,7 +166,7 @@ public class DataSetEntriesFDSDataProvider
 					label = externalReferenceCode;
 				}
 
-				dataSetEntries.put(externalReferenceCode, label);
+				fdsEntries.put(externalReferenceCode, label);
 			}
 		}
 		catch (Exception exception) {
@@ -178,7 +175,7 @@ public class DataSetEntriesFDSDataProvider
 	}
 
 	private void _addSystemFDSEntries(
-		Map<String, String> dataSetEntries, String keywords) {
+		Map<String, String> fdsEntries, String keywords) {
 
 		List<SystemFDSEntry> systemFDSEntries =
 			FDSDataProviderUtil.getSystemFDSEntries(
@@ -195,7 +192,7 @@ public class DataSetEntriesFDSDataProvider
 				label = systemFDSEntry.getName();
 			}
 
-			dataSetEntries.put(systemFDSEntry.getName(), label);
+			fdsEntries.put(systemFDSEntry.getName(), label);
 		}
 	}
 
@@ -212,24 +209,24 @@ public class DataSetEntriesFDSDataProvider
 		}
 	}
 
-	private List<Map.Entry<String, String>> _getSortedDataSetEntries(
+	private List<Map.Entry<String, String>> _getFDSEntries(
 			long companyId, String keywords)
 		throws PortalException {
 
-		Map<String, String> dataSetEntries = new LinkedHashMap<>();
+		Map<String, String> fdsEntries = new LinkedHashMap<>();
 
-		_addSystemFDSEntries(dataSetEntries, keywords);
-		_addDataSetObjectEntries(dataSetEntries, companyId, keywords);
+		_addSystemFDSEntries(fdsEntries, keywords);
+		_addCustomFDSEntries(fdsEntries, companyId, keywords);
 
-		List<Map.Entry<String, String>> sortedDataSetEntries = new ArrayList<>(
-			dataSetEntries.entrySet());
+		List<Map.Entry<String, String>> sortedFDSEntries = new ArrayList<>(
+			fdsEntries.entrySet());
 
 		Collections.sort(
-			sortedDataSetEntries,
+			sortedFDSEntries,
 			Comparator.comparing(
 				Map.Entry::getValue, String::compareToIgnoreCase));
 
-		return sortedDataSetEntries;
+		return sortedFDSEntries;
 	}
 
 	@Reference

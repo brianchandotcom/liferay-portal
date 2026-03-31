@@ -97,8 +97,8 @@ public class FDSAdminDisplayContext {
 			));
 	}
 
-	public String getDataSetEntriesURL() {
-		return _getDataProviderURL(FDSAdminPortletFDSNames.DATA_SET_ENTRIES);
+	public String getFDSEntryFDSSelectionFilterItemsDataProviderURL() {
+		return _getDataProviderURL(FDSAdminPortletFDSNames.FDS_ENTRY_FDS_SELECTION_FILTER_ITEMS);
 	}
 
 	public String getDataSetPermissionsURL() {

@@ -43,7 +43,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "manage-user-views"));
 			HashMapBuilder.<String, Object>put(
 				"currentURL", themeDisplay.getURLCurrent()
 			).put(
-				"dataSetEntriesURL", fdsAdminDisplayContext.getDataSetEntriesURL()
+				"fdsEntryFDSSelectionFilterItemsDataProviderURL", fdsAdminDisplayContext.getFDSEntryFDSSelectionFilterItemsDataProviderURL()
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(

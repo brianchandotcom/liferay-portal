@@ -68,42 +68,42 @@ public class ViewContentsSectionDisplayContextTest
 			).build(),
 			fdsActionDropdownItems.get(0));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"info-circle-open", "show-details", "Show Details", null,
-			fdsActionDropdownItems.get(1));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"pencil", "editFolder", "Edit", "get",
 			HashMapBuilder.<String, Object>put(
 				"entryClassName", ObjectEntryFolder.class.getName()
 			).build(),
-			fdsActionDropdownItems.get(2));
+			fdsActionDropdownItems.get(1));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"pencil", "actionLink", "Edit", "get",
+			fdsActionDropdownItems.get(2));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"view", "view-content", "View", null,
 			fdsActionDropdownItems.get(3));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"share", "share", "Share", "get", fdsActionDropdownItems.get(4));
+			"view", "view-file", "View", null, fdsActionDropdownItems.get(4));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"automatic-translate", "translate", "Translate", "get",
 			fdsActionDropdownItems.get(5));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"time", "expire", "Expire", "post", fdsActionDropdownItems.get(6));
+			"share", "share", "Share", "get", fdsActionDropdownItems.get(6));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"view", "view-content", "View", null,
+			"info-circle-open", "show-details", "Show Details", null,
 			fdsActionDropdownItems.get(7));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"view", "view-file", "View", null, fdsActionDropdownItems.get(8));
+			"time", "expire", "Expire", "post", fdsActionDropdownItems.get(8));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"date-time", "version-history", "View History", "get",
 			fdsActionDropdownItems.get(9));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"upload", "export-for-translation", "Export for Translation", null,
+			"move-folder", "move", "Move", null,
 			fdsActionDropdownItems.get(10));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "copy", "Copy To", null, fdsActionDropdownItems.get(11));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"upload", "export-for-translation", "Export for Translation", null,
+			fdsActionDropdownItems.get(12));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"download", "import-translation", "Import Translation", null,
-			fdsActionDropdownItems.get(11));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"copy", "copy", "Copy To", null, fdsActionDropdownItems.get(12));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"move-folder", "move", "Move", null,
 			fdsActionDropdownItems.get(13));
 
 		FDSActionDropdownItem permissionsFDSActionDropdownItem =

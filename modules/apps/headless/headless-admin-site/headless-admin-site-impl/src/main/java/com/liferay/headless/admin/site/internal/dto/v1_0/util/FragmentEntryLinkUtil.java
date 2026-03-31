@@ -60,13 +60,6 @@ public class FragmentEntryLinkUtil {
 				return fragmentEntryLink.getHtml();
 			}
 
-			long mvccVersion = fragmentEntryLink.getMvccVersion();
-
-			// This is a super ugly temporary workaround
-			// https://github.com/brianchandotcom/liferay-portal/pull/171495
-
-			fragmentEntryLink.setMvccVersion(-1);
-
 			try {
 				return fragmentEntryProcessorRegistry.
 					processFragmentEntryLinkHTML(
@@ -84,9 +77,6 @@ public class FragmentEntryLinkUtil {
 				}
 
 				return fragmentEntryLink.getHtml();
-			}
-			finally {
-				fragmentEntryLink.setMvccVersion(mvccVersion);
 			}
 		}
 	}

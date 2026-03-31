@@ -80,9 +80,9 @@ public class CTClosureImpl implements CTClosure {
 
 				childNode = nodesMap.get(childNode);
 
-				childNode.addParent(node);
+				childNode.addParentNode(node);
 
-				node.addChild(childNode);
+				node.addChildNode(childNode);
 			}
 		}
 
@@ -103,7 +103,7 @@ public class CTClosureImpl implements CTClosure {
 			return Collections.emptyMap();
 		}
 
-		List<Node> childNodes = node.getChildren();
+		List<Node> childNodes = node.getChildNodes();
 
 		if (childNodes.isEmpty()) {
 			return Collections.emptyMap();
@@ -127,7 +127,7 @@ public class CTClosureImpl implements CTClosure {
 			return Collections.emptyMap();
 		}
 
-		List<Node> parentNodes = node.getParents();
+		List<Node> parentNodes = node.getParentNodes();
 
 		if (parentNodes.isEmpty()) {
 			return Collections.emptyMap();

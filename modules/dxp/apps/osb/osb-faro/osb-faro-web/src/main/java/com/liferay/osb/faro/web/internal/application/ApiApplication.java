@@ -8,6 +8,7 @@ package com.liferay.osb.faro.web.internal.application;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 
 import com.liferay.osb.faro.web.internal.context.GroupInfoContextProvider;
+import com.liferay.osb.faro.web.internal.controller.api.DemandbaseAccountController;
 import com.liferay.osb.faro.web.internal.controller.api.GraphQLController;
 import com.liferay.osb.faro.web.internal.controller.api.RecommendationController;
 import com.liferay.osb.faro.web.internal.controller.api.ReportController;
@@ -40,6 +41,7 @@ public class ApiApplication extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> singletons = new HashSet<>();
 
+		singletons.add(_demandbaseAccountController);
 		singletons.add(_graphQLController);
 		singletons.add(_groupInfoContextProvider);
 		singletons.add(new JacksonJsonProvider(JSONUtil.getObjectMapper()));
@@ -51,6 +53,9 @@ public class ApiApplication extends Application {
 
 	public static class OAuth2ScopeAliases {
 
+		public static final String ACCOUNTS_WRITE =
+			"Liferay.Analytics.Cloud.REST.accounts.write";
+
 		public static final String RECOMMENDATIONS_EVERYTHING =
 			"Liferay.Analytics.Cloud.REST.recommendations.everything";
 
@@ -58,6 +63,9 @@ public class ApiApplication extends Application {
 			"Liferay.Analytics.Cloud.REST.reports.everything";
 
 	}
+
+	@Reference
+	private DemandbaseAccountController _demandbaseAccountController;
 
 	@Reference
 	private GraphQLController _graphQLController;

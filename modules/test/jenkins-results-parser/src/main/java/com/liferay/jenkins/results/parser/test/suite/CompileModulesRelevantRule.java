@@ -68,7 +68,8 @@ public class CompileModulesRelevantRule extends ModulesRelevantRule {
 			for (File moduleDir : moduleDirs) {
 				sb.append(" ");
 				sb.append(getGradlePackageName(moduleDir));
-				sb.append(":deploy");
+				sb.append(":");
+				sb.append(getTestScriptModuleGradleTaskName());
 			}
 
 			sb.append(" --parallel");

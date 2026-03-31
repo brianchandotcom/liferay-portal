@@ -6,6 +6,7 @@
         -   list:
             -   listitem:
                 -   checkbox "Select All Items on the Page" [disabled]
+                -   text: Select All Items on the Page
             -   listitem: All Selected (0 of 0 Items Selected)
             -   listitem:
                 -   button "Filter"
@@ -20,7 +21,8 @@
     -   navigation:
         -   list:
             -   listitem:
-                -   checkbox /Clear selection\. There are currently \d+ of \d+ Items selected\./ [checked]
+                -   checkbox "Select All Items on the Page" [checked]
+                -   text: /Clear selection\. There are currently \d+ of \d+ Items selected\./
             -   listitem: /\d+ of \d+ Items Selected/
             -   listitem:
                 -   button "Clear"
@@ -35,6 +37,7 @@
         -   list:
             -   listitem:
                 -   checkbox "Select All Items on the Page"
+                -   text: Select All Items on the Page
             -   listitem: /0 of \d+ Items Selected/
             -   listitem:
                 -   button "Filter"
@@ -58,6 +61,7 @@
         -   list:
             -   listitem:
                 -   checkbox "Select All Items on the Page" [disabled]
+                -   text: Select All Items on the Page
             -   listitem: All Selected (0 of 0 Items Selected)
             -   listitem:
                 -   button "Filter"

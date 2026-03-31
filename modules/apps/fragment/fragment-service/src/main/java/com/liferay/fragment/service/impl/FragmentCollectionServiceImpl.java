@@ -5,8 +5,8 @@
 
 package com.liferay.fragment.service.impl;
 
-import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileShortcutTable;
+import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -481,17 +481,10 @@ public class FragmentCollectionServiceImpl
 	}
 
 	private Predicate _getExportablePredicate(Predicate predicate) {
-		DLFolderTable childDLFolderTable = DLFolderTable.INSTANCE.as(
-			"childDLFolderTable");
-		DLFileEntryTable dlFileEntryTable = DLFileEntryTable.INSTANCE.as(
-			"dlFileEntryTable");
-		DLFileShortcutTable dlFileShortcutTable =
-			DLFileShortcutTable.INSTANCE.as("dlFileShortcutTable");
-
-		DLFolderTable rootDLFolderTable = DLFolderTable.INSTANCE.as(
-			"rootDLFolderTable");
 		RepositoryTable repositoryTable = RepositoryTable.INSTANCE.as(
 			"repositoryTable");
+		DLFolderTable rootDLFolderTable = DLFolderTable.INSTANCE.as(
+			"rootDLFolderTable");
 
 		Predicate repositoryPredicate = repositoryTable.groupId.eq(
 			FragmentCollectionTable.INSTANCE.groupId
@@ -528,6 +521,13 @@ public class FragmentCollectionServiceImpl
 					)
 				));
 
+		DLFolderTable childDLFolderTable = DLFolderTable.INSTANCE.as(
+			"childDLFolderTable");
+		DLFileShortcutTable dlFileShortcutTable =
+			DLFileShortcutTable.INSTANCE.as("dlFileShortcutTable");
+		DLFileVersionTable dlFileVersionTable = DLFileVersionTable.INSTANCE.as(
+			"dlFileVersionTable");
+
 		Predicate resourcesPredicate =
 			FragmentCollectionTable.INSTANCE.fragmentCollectionKey.in(
 				DSLQueryFactoryUtil.selectDistinct(
@@ -546,15 +546,26 @@ public class FragmentCollectionServiceImpl
 							).from(
 								childDLFolderTable
 							).where(
-								childDLFolderTable.status.eq(
-									WorkflowConstants.STATUS_APPROVED)
+								childDLFolderTable.repositoryId.eq(
+									repositoryTable.repositoryId
+								).and(
+									childDLFolderTable.status.eq(
+										WorkflowConstants.STATUS_APPROVED)
+								)
 							)
 						).or(
 							rootDLFolderTable.folderId.in(
 								DSLQueryFactoryUtil.selectDistinct(
-									dlFileEntryTable.folderId
+									dlFileVersionTable.folderId
 								).from(
-									dlFileEntryTable
+									dlFileVersionTable
+								).where(
+									dlFileVersionTable.repositoryId.eq(
+										repositoryTable.repositoryId
+									).and(
+										dlFileVersionTable.status.eq(
+											WorkflowConstants.STATUS_APPROVED)
+									)
 								))
 						).or(
 							rootDLFolderTable.folderId.in(
@@ -562,6 +573,13 @@ public class FragmentCollectionServiceImpl
 									dlFileShortcutTable.folderId
 								).from(
 									dlFileShortcutTable
+								).where(
+									dlFileShortcutTable.repositoryId.eq(
+										repositoryTable.repositoryId
+									).and(
+										dlFileShortcutTable.status.eq(
+											WorkflowConstants.STATUS_APPROVED)
+									)
 								))
 						).withParentheses())
 				));

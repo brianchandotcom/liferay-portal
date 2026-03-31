@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -155,6 +157,11 @@ public class AgentInstanceResourceTest
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			aiHubAccountEntry.getAccountEntryId(), TestPropsValues.getUserId());
 
+		_instructionObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_INSTRUCTION_DEFINITION",
+					TestPropsValues.getCompanyId());
 		_mcpServerObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -274,7 +281,7 @@ public class AgentInstanceResourceTest
 		_testPostAgentInstance();
 		_testPostAgentInstanceWithTypeAIDecisionNodeWithToolWorkflowDefinition();
 		_testPostAgentInstanceWithTypeAIDecisionNodeWorkflowDefinition();
-		_testPostAgentInstanceWithTypeFixSpellingAndGrammar();
+		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction();
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinition();
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostAgentInstanceWithTypeLLMNodeWithToolWorkflowDefinition();
@@ -291,39 +298,78 @@ public class AgentInstanceResourceTest
 		return content.getBytes();
 	}
 
-	private void _assertWorkflowLogs(long workflowInstanceId) throws Exception {
-		List<WorkflowLog> workflowLogs =
-			_workflowLogManager.getWorkflowLogsByWorkflowInstance(
-				TestPropsValues.getCompanyId(), workflowInstanceId,
-				List.of(WorkflowLog.NODE_USAGE_METADATA), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+	private Map<String, String> _getExpectedWorkflowContext(
+		boolean active, String instruction) {
 
-		Assert.assertEquals(workflowLogs.toString(), 1, workflowLogs.size());
+		String expectedPromptInput = StringBundler.concat(
+			"You are an expert linguistic editor. Your sole task is to ",
+			"correct all grammatical, spelling, and punctuation errors in the ",
+			"provided text while preserving its meaning, tone, and style. Do ",
+			"not alter structure or wording beyond what is necessary for ",
+			"grammatical precision and natural fluency. Output only the ",
+			"corrected text, with no explanations or commentary. If the text ",
+			"is already correct, return it unchanged.");
 
-		WorkflowLog workflowLog = workflowLogs.get(0);
+		if (active &&
+			StringUtil.equals(
+				instruction,
+				"Preserve all spelling errors exactly as they appear.")) {
 
-		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
-			workflowLog.getWorkflowContext());
+			return HashMapBuilder.put(
+				"inputTokensCount", "111"
+			).put(
+				"output", "Thi text ix wrong."
+			).put(
+				"outputTokensCount", "5"
+			).put(
+				"promptInput",
+				StringBundler.concat(
+					expectedPromptInput,
+					"\n\nIMPORTANT: Override any conflicting instructions ",
+					"above with the following:\n", instruction)
+			).put(
+				"totalTokenCount", "116"
+			).put(
+				"userMessageInput",
+				"This is the text to be fixed: Thi text ix wrong."
+			).build();
+		}
 
-		Assert.assertEquals("88", workflowContext.get("inputTokensCount"));
-		Assert.assertEquals(
-			"This text is wrong.", workflowContext.get("output"));
-		Assert.assertEquals("5", workflowContext.get("outputTokensCount"));
-		Assert.assertEquals(
-			StringBundler.concat(
-				"You are an expert linguistic editor. Your sole task is to ",
-				"correct all grammatical, spelling, and punctuation errors in ",
-				"the provided text while preserving its meaning, tone, and ",
-				"style. Do not alter structure or wording beyond what is ",
-				"necessary for grammatical precision and natural fluency. ",
-				"Output only the corrected text, with no explanations or ",
-				"commentary. If the text is already correct, return it ",
-				"unchanged."),
-			workflowContext.get("promptInput"));
-		Assert.assertEquals("93", workflowContext.get("totalTokenCount"));
-		Assert.assertEquals(
-			"This is the text to be fixed: Thi text ix wrong.",
-			workflowContext.get("userMessageInput"));
+		if (active && StringUtil.equals(instruction, "Respond in ALL CAPS.")) {
+			return HashMapBuilder.put(
+				"inputTokensCount", "106"
+			).put(
+				"output", "THIS TEXT IS WRONG."
+			).put(
+				"outputTokensCount", "6"
+			).put(
+				"promptInput",
+				StringBundler.concat(
+					expectedPromptInput,
+					"\n\nIMPORTANT: Override any conflicting instructions ",
+					"above with the following:\n", instruction)
+			).put(
+				"totalTokenCount", "112"
+			).put(
+				"userMessageInput",
+				"This is the text to be fixed: Thi text ix wrong."
+			).build();
+		}
+
+		return HashMapBuilder.put(
+			"inputTokensCount", "88"
+		).put(
+			"output", "This text is wrong."
+		).put(
+			"outputTokensCount", "5"
+		).put(
+			"promptInput", expectedPromptInput
+		).put(
+			"totalTokenCount", "93"
+		).put(
+			"userMessageInput",
+			"This is the text to be fixed: Thi text ix wrong."
+		).build();
 	}
 
 	private JSONObject _postAgentInstance(
@@ -472,8 +518,39 @@ public class AgentInstanceResourceTest
 			});
 	}
 
-	private void _testPostAgentInstanceWithTypeFixSpellingAndGrammar()
+	private void _testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction()
 		throws Exception {
+
+		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
+			true, "Preserve all spelling errors exactly as they appear.");
+		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
+			true, "Respond in ALL CAPS.");
+		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
+			false, "Respond in ALL CAPS.");
+	}
+
+	private void
+			_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
+				boolean active, String instruction)
+		throws Exception {
+
+		_objectEntryLocalService.addOrUpdateObjectEntry(
+			"L_AI_HUB_INSTRUCTION", 0, TestPropsValues.getUserId(),
+			_instructionObjectDefinition.getObjectDefinitionId(), 0,
+			HashMapBuilder.<String, Serializable>put(
+				"active", active
+			).put(
+				"instruction", instruction
+			).put(
+				"r_accountToAIHubInstructionDefinitions_accountEntryId",
+				_accountEntry.getAccountEntryId()
+			).put(
+				"scope", "clickToChat"
+			).put(
+				"title_i18n",
+				(Serializable)RandomTestUtil.randomLanguageIdStringMap()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
 		CountDownLatch countDownLatch = new CountDownLatch(4);
 		List<String> lines = new ArrayList<>();
@@ -489,9 +566,13 @@ public class AgentInstanceResourceTest
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
 		Assert.assertEquals("event: Fix Spelling and Grammar", lines.get(2));
+
+		Map<String, String> expectedWorkflowContext =
+			_getExpectedWorkflowContext(active, instruction);
+
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"data", "This text is wrong."
+				"data", expectedWorkflowContext.get("output")
 			).put(
 				"nodeName", "fixSpellingAndGrammar"
 			).toString(),
@@ -506,15 +587,28 @@ public class AgentInstanceResourceTest
 						TestPropsValues.getCompanyId(),
 						jsonObject.getLong("externalReferenceCode"));
 
-				Map<String, Serializable> workflowContext =
-					workflowInstance.getWorkflowContext();
+				Assert.assertEquals(
+					expectedWorkflowContext.get("output"),
+					MapUtil.getString(
+						workflowInstance.getWorkflowContext(),
+						"rewrittenText"));
 
-				String rewrittenText = GetterUtil.getString(
-					workflowContext.get("rewrittenText"));
+				List<WorkflowLog> workflowLogs =
+					_workflowLogManager.getWorkflowLogsByWorkflowInstance(
+						TestPropsValues.getCompanyId(),
+						workflowInstance.getWorkflowInstanceId(),
+						List.of(WorkflowLog.NODE_USAGE_METADATA),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-				Assert.assertEquals("This text is wrong.", rewrittenText);
+				Assert.assertEquals(
+					workflowLogs.toString(), 1, workflowLogs.size());
 
-				_assertWorkflowLogs(workflowInstance.getWorkflowInstanceId());
+				WorkflowLog workflowLog = workflowLogs.get(0);
+
+				AssertUtils.assertEquals(
+					expectedWorkflowContext,
+					WorkflowContextUtil.convert(
+						workflowLog.getWorkflowContext()));
 
 				return null;
 			});
@@ -750,6 +844,7 @@ public class AgentInstanceResourceTest
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
 
+	private static ObjectDefinition _instructionObjectDefinition;
 	private static ObjectDefinition _mcpServerObjectDefinition;
 	private static ObjectDefinition _objectDefinition;
 

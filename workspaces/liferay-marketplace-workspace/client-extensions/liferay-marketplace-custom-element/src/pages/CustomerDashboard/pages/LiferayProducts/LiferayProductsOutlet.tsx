@@ -72,10 +72,8 @@ const LiferayProductsOutlet = () => (
 							</ClayButton>
 						)}
 
-						{![OrderTypes.AI_HUB].includes(
-							props?.placedOrder
-								?.orderTypeExternalReferenceCode as OrderTypes
-						) && (
+						{props?.placedOrder?.orderTypeExternalReferenceCode !==
+							OrderTypes.AI_HUB && (
 							<ClayButton
 								displayType="primary"
 								onClick={() => {

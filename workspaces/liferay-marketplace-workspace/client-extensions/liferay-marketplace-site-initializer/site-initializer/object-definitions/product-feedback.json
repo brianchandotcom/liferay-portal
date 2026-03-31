@@ -66,6 +66,17 @@
 			"type": "Boolean"
 		},
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Order Type"
+			},
+			"name": "orderType",
+			"required": false
+		},
+		{
 			"DBType": "Integer",
 			"businessType": "Integer",
 			"indexed": true,
@@ -136,17 +147,6 @@
 			"name": "suggestionSatisfaction",
 			"required": false,
 			"type": "Clob"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Order Type"
-			},
-			"name": "orderType",
-			"required": false
 		}
 	],
 	"objectFolderExternalReferenceCode": "MARKETPLACE",

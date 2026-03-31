@@ -291,10 +291,15 @@ public class AuthenticatedSessionManagerUtil {
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
 			CookiesConstants.NAME_COMPANY_ID,
+			CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+			CookiesConstants.NAME_CONSENT_TYPE_NECESSARY,
+			CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+			CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
 			CookiesConstants.NAME_GUEST_LANGUAGE_ID, CookiesConstants.NAME_ID,
 			CookiesConstants.NAME_PASSWORD, CookiesConstants.NAME_REMEMBER_ME,
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
-			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE,
+			CookiesConstants.NAME_USER_CONSENT_CONFIGURED);
 
 		try {
 			httpSession.invalidate();

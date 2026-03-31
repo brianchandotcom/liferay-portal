@@ -618,7 +618,9 @@ export class PagesAdminPage {
 				await clickAndExpectToBeVisible({
 					target: this.page
 						.locator('.management-bar .nav-item')
-						.getByText(`${index + 1} of`),
+						.getByText(
+							new RegExp(`${index + 1} of \\d+ Items Selected`)
+						),
 					trigger: this.page.getByLabel(`Select ${pageName}`, {
 						exact: true,
 					}),

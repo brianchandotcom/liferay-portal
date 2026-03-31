@@ -98,8 +98,12 @@ function _get_terraform_apply_args {
 		exit 1
 	fi
 
+	local versions_tfvars_file_path
+
+    versions_tfvars_file_path=$(realpath "${versions_tfvars_file}")
+
 	local apply_args=(
-		"-var-file=${versions_tfvars_file}"
+		"-var-file=${versions_tfvars_file_path}"
 		"-var-file=${_SCRIPTS_DIR}/global_terraform.tfvars")
 
 	if [[ "${auto_approve}" == "true" ]]

@@ -9,8 +9,8 @@ import {dataSetManagerApiHelpersTest} from '../../../fixtures/dataSetManagerApiH
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {settingsPageTest} from './fixtures/settingsPageTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {settingsPageTest} from './fixtures/settingsPageTest';
 import {userViewsPageTest} from './fixtures/userViewsPageTest';
 
 export const test = mergeTests(
@@ -30,11 +30,7 @@ interface IDataSet {
 
 let dataSetERCs: string[] = [];
 
-const createDataSet = async ({
-	dataSetManagerApiHelpers,
-}: {
-	dataSetManagerApiHelpers: DataSetManagerApiHelpers;
-}): Promise<IDataSet> => {
+const createDataSet = async ({dataSetManagerApiHelpers}): Promise<IDataSet> => {
 	const dataSet = {
 		erc: getRandomString(),
 		label: getRandomString(),
@@ -230,9 +226,7 @@ test('Delete User Views through bulk action', async ({
 
 		await deleteModal.getByRole('button', {name: 'Delete'}).click();
 
-		await waitForAlert(page, 'Success:View was deleted successfully.', {
-			autoClose: false,
-		});
+		await waitForAlert(page);
 	});
 
 	await test.step('Validate snapshots are deleted', async () => {

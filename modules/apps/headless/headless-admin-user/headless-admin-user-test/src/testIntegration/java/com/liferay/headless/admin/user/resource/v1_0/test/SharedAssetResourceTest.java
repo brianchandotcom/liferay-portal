@@ -30,12 +30,16 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -47,6 +51,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -566,18 +571,35 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 		return new SharedAsset() {
 			{
-				actionIds = TransformUtil.transformToArray(
-					SharingEntryAction.getSharingEntryActions(
-						sharingEntry.getActionIds()),
-					SharingEntryAction::getActionId, String.class);
-				assetType = "Object Entry Folder";
-				dateCreated = sharingEntry.getCreateDate();
-				dateModified = sharingEntry.getModifiedDate();
-				externalReferenceCode = sharedAsset.getExternalReferenceCode();
-				fileTypeIcon = "folder";
-				fileTypeIconColor = "folder";
-				id = sharingEntry.getSharingEntryId();
-				title = sharedAsset.getTitle();
+				setActionIds(
+					() -> {
+						String[] actionIds = TransformUtil.transformToArray(
+							SharingEntryAction.getSharingEntryActions(
+								sharingEntry.getActionIds()),
+							SharingEntryAction::getActionId, String.class);
+
+						if (_objectEntryFolderModelResourcePermission.contains(
+								PermissionThreadLocal.getPermissionChecker(),
+								sharingEntry.getClassPK(),
+								SharingEntryAction.UPDATE.getActionId())) {
+
+							return ArrayUtil.append(
+								actionIds,
+								SharingEntryAction.UPDATE.getActionId());
+						}
+
+						return actionIds;
+					});
+
+				setAssetType("Object Entry Folder");
+				setDateCreated(sharingEntry.getCreateDate());
+				setDateModified(sharingEntry.getModifiedDate());
+				setExternalReferenceCode(
+					sharedAsset.getExternalReferenceCode());
+				setFileTypeIcon("folder");
+				setFileTypeIconColor("folder");
+				setId(sharingEntry.getSharingEntryId());
+				setTitle(sharedAsset.getTitle());
 			}
 		};
 	}
@@ -589,19 +611,35 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 		return new SharedAsset() {
 			{
-				actionIds = TransformUtil.transformToArray(
-					SharingEntryAction.getSharingEntryActions(
-						sharingEntry.getActionIds()),
-					SharingEntryAction::getActionId, String.class);
-				assetType = _objectDefinition.getLabel(LocaleUtil.US);
-				classPK = sharingEntry.getClassPK();
-				dateCreated = sharingEntry.getCreateDate();
-				dateModified = sharingEntry.getModifiedDate();
-				externalReferenceCode = sharedAsset.getExternalReferenceCode();
-				fileTypeIcon = "document-text";
-				fileTypeIconColor = "file-icon-color-6";
-				id = sharingEntry.getSharingEntryId();
-				title = objectEntry.getTitleValue();
+				setActionIds(
+					() -> {
+						String[] actionIds = TransformUtil.transformToArray(
+							SharingEntryAction.getSharingEntryActions(
+								sharingEntry.getActionIds()),
+							SharingEntryAction::getActionId, String.class);
+
+						if (_objectEntryService.hasModelResourcePermission(
+								objectEntry.getObjectDefinitionId(),
+								objectEntry.getObjectEntryId(),
+								ActionKeys.UPDATE)) {
+
+							return ArrayUtil.append(
+								actionIds, ActionKeys.UPDATE);
+						}
+
+						return actionIds;
+					});
+
+				setAssetType(_objectDefinition.getLabel(LocaleUtil.US));
+				setClassPK(sharingEntry.getClassPK());
+				setDateCreated(sharingEntry.getCreateDate());
+				setDateModified(sharingEntry.getModifiedDate());
+				setExternalReferenceCode(
+					sharedAsset.getExternalReferenceCode());
+				setFileTypeIcon("document-text");
+				setFileTypeIconColor("file-icon-color-6");
+				setId(sharingEntry.getSharingEntryId());
+				setTitle(objectEntry.getTitleValue());
 			}
 		};
 	}
@@ -642,8 +680,17 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
+	@Inject(
+		filter = "model.class.name=com.liferay.object.model.ObjectEntryFolder"
+	)
+	private ModelResourcePermission<ObjectEntryFolder>
+		_objectEntryFolderModelResourcePermission;
+
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectEntryService _objectEntryService;
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;

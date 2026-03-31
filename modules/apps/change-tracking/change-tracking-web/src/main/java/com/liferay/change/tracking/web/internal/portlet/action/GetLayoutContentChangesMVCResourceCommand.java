@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -87,6 +88,15 @@ public class GetLayoutContentChangesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-75671")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		try {
 			long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");
 
@@ -99,10 +109,6 @@ public class GetLayoutContentChangesMVCResourceCommand
 
 				return;
 			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
 
 			SearchResponse searchResponse =
 				_getLayoutContentChangesSearchResponse(

@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -97,6 +98,7 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 		_updatedFragmentEntryLink = _addFragmentEntryLinkToLayout(_layout);
 	}
 
+	@FeatureFlag("LPD-75671")
 	@Test
 	public void testServeResource() throws Exception {
 		try (SafeCloseable safeCloseable =

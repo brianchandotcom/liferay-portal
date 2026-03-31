@@ -16,6 +16,7 @@ import {
 	ANALYTICS_BATCH_SEGMENT_IDS,
 	ANALYTICS_CLIENT_VERSION,
 	FLUSH_INTERVAL,
+	HEADER_PROJECT_ID,
 	QUEUE_PRIORITY_DEFAULT,
 	QUEUE_PRIORITY_IDENTITY,
 	THREE_HOURS_IN_MILLISECONDS,
@@ -194,8 +195,22 @@ class Analytics {
 			}
 		}
 
+		const headers = {'Content-Type': 'application/json'};
+		if (this.config.projectId) {
+			Object.assign(headers, {
+				[HEADER_PROJECT_ID]: this.config.projectId,
+			});
+		}
+
 		return fetch(
-			`${this.config.faroBackendUrl}/api/1.0/segment-memberships/${this._getUserId()}/batch-segment-ids`
+			`${this.config.faroBackendUrl}/api/1.0/segment-memberships/${this._getUserId()}/batch-segment-ids`,
+			{
+				cache: 'default',
+				credentials: 'same-origin',
+				headers,
+				method: 'GET',
+				mode: 'cors',
+			}
 		)
 			.then((response) => response.json())
 			.then((data) => {

@@ -187,26 +187,27 @@ public abstract class BasePanelApp implements PanelApp {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Group group = themeDisplay.getScopeGroup();
-
-		if (!group.isControlPanel()) {
-			return null;
-		}
-
 		Portlet portlet = getPortlet();
 
-		String controlPanelEntryCategory =
-			portlet.getControlPanelEntryCategory();
+		if (portlet != null) {
+			String controlPanelEntryCategory =
+				portlet.getControlPanelEntryCategory();
 
-		if (Validator.isNull(controlPanelEntryCategory) ||
-			!controlPanelEntryCategory.startsWith(
-				PortletCategoryKeys.SITE_ADMINISTRATION) ||
-			(groupProvider == null)) {
+			if (Validator.isNotNull(controlPanelEntryCategory) &&
+				controlPanelEntryCategory.startsWith(
+					PortletCategoryKeys.SITE_ADMINISTRATION)) {
 
-			return null;
+				Group group = themeDisplay.getScopeGroup();
+
+				if (group.isControlPanel() && (groupProvider != null)) {
+					return groupProvider.getGroup(httpServletRequest);
+				}
+
+				return null;
+			}
 		}
 
-		return groupProvider.getGroup(httpServletRequest);
+		return themeDisplay.getControlPanelGroup();
 	}
 
 	protected void setUserNotificationEventLocalService(

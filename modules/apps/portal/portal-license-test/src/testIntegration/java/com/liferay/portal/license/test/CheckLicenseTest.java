@@ -48,13 +48,11 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_disableKeyValidatorSafeCloseable = disableValidateWithSafeCloseable();
 		_setVersionSafeCloseable = setVersionWithSafeCloseable("2026.Q1.0 LTS");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		_disableKeyValidatorSafeCloseable.close();
 		_setVersionSafeCloseable.close();
 	}
 
@@ -67,13 +65,15 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testCheckLicenseForCMP() throws Exception {
-		assertLicensePropertiesNotExisted(getCMPProductId());
+		try (SafeCloseable safeCloseable = disableValidateWithSafeCloseable()) {
+			assertLicensePropertiesNotExisted(getCMPProductId());
 
-		deployCMPLicense(Time.HOUR);
+			deployCMPLicense(Time.HOUR);
 
-		assertLicensePropertiesExisted(getCMPProductId());
+			assertLicensePropertiesExisted(getCMPProductId());
 
-		Assert.assertTrue(LicenseManagerUtil.isCMPEnabled());
+			Assert.assertTrue(LicenseManagerUtil.isCMPEnabled());
+		}
 	}
 
 	@Test
@@ -131,7 +131,6 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 		assertPortalLicenseRegistered();
 	}
 
-	private static SafeCloseable _disableKeyValidatorSafeCloseable;
 	private static SafeCloseable _setVersionSafeCloseable;
 
 }

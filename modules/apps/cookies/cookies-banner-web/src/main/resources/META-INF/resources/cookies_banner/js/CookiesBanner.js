@@ -11,6 +11,8 @@ import {
 	declineAllCookies,
 	deleteStoredCookies,
 	getCookie,
+	hasGuestUserConfigCookie,
+	hasPreviouslyStoredConsent,
 	removeAllCookies,
 	setCookie,
 	setUserConfigCookie,
@@ -62,6 +64,21 @@ export default function ({
 				}
 			}
 		);
+
+		if (
+			Liferay.FeatureFlags['LPD-75032'] &&
+			Liferay.ThemeDisplay.isSignedIn() &&
+			hasGuestUserConfigCookie()
+		) {
+			hasPreviouslyStoredConsent().then((hasPreviouslyStoredConsent) => {
+				if (hasPreviouslyStoredConsent) {
+					removeAllCookies(
+						optionalConsentCookieTypeNames,
+						requiredConsentCookieTypeNames
+					);
+				}
+			});
+		}
 
 		const consentManager = document.getElementById(
 			'_com_liferay_my_account_web_portlet_MyAccountPortlet_cookiesBannerConfigurationForm'

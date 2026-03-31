@@ -56,7 +56,7 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
-		String html, JSONObject configurationJSONObject) {
+		JSONObject configurationJSONObject, String html) {
 
 		return _fragmentEntryConfigurationParser.
 			getConfigurationDefaultValuesJSONObject(configurationJSONObject);
@@ -64,8 +64,9 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext,
+			String html)
 		throws PortalException {
 
 		return processFragmentEntryLinkHTML(

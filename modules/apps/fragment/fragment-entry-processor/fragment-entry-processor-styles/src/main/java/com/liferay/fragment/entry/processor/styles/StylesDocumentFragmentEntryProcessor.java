@@ -38,6 +38,16 @@ public class StylesDocumentFragmentEntryProcessor
 
 	@Override
 	public void processFragmentEntryLinkHTML(
+		Document document, FragmentEntryLink fragmentEntryLink,
+		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
+
+		processFragmentEntryLinkHTML(
+			document, fragmentEntryLink.getEditableValuesJSONObject(),
+			fragmentEntryLink, fragmentEntryProcessorContext);
+	}
+
+	@Override
+	public void processFragmentEntryLinkHTML(
 		Document document, JSONObject editableValuesJSONObject,
 		FragmentEntryLink fragmentEntryLink,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
@@ -76,16 +86,6 @@ public class StylesDocumentFragmentEntryProcessor
 			element.addClass(layoutStructureItemUniqueCssClass);
 			element.addClass(styledLayoutStructureItemCssClasses);
 		}
-	}
-
-	@Override
-	public void processFragmentEntryLinkHTML(
-		FragmentEntryLink fragmentEntryLink, Document document,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
-
-		processFragmentEntryLinkHTML(
-			document, fragmentEntryLink.getEditableValuesJSONObject(),
-			fragmentEntryLink, fragmentEntryProcessorContext);
 	}
 
 	private FragmentStyledLayoutStructureItem _getLayoutStructureItem(

@@ -53,6 +53,17 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 
 	@Override
 	public void processFragmentEntryLinkHTML(
+			Document document, FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		processFragmentEntryLinkHTML(
+			document, fragmentEntryLink.getEditableValuesJSONObject(),
+			fragmentEntryLink, fragmentEntryProcessorContext);
+	}
+
+	@Override
+	public void processFragmentEntryLinkHTML(
 			Document document, JSONObject editableValuesJSONObject,
 			FragmentEntryLink fragmentEntryLink,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
@@ -173,17 +184,6 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 					_infoItemServiceRegistry);
 			}
 		}
-	}
-
-	@Override
-	public void processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, Document document,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
-
-		processFragmentEntryLinkHTML(
-			document, fragmentEntryLink.getEditableValuesJSONObject(),
-			fragmentEntryLink, fragmentEntryProcessorContext);
 	}
 
 	private long _getGroupId(

@@ -56,6 +56,17 @@ public class DropZoneDocumentFragmentEntryProcessor
 
 	@Override
 	public void processFragmentEntryLinkHTML(
+			Document document, FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		processFragmentEntryLinkHTML(
+			document, fragmentEntryLink.getEditableValuesJSONObject(),
+			fragmentEntryLink, fragmentEntryProcessorContext);
+	}
+
+	@Override
+	public void processFragmentEntryLinkHTML(
 			Document document, JSONObject editableValuesJSONObject,
 			FragmentEntryLink fragmentEntryLink,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
@@ -254,17 +265,6 @@ public class DropZoneDocumentFragmentEntryProcessor
 					InfoDisplayWebKeys.INFO_FORM, originalInfoForm);
 			}
 		}
-	}
-
-	@Override
-	public void processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, Document document,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
-
-		processFragmentEntryLinkHTML(
-			document, fragmentEntryLink.getEditableValuesJSONObject(),
-			fragmentEntryLink, fragmentEntryProcessorContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

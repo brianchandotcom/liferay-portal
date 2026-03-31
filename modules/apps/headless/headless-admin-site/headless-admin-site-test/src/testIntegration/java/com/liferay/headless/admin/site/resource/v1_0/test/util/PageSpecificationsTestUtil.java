@@ -669,6 +669,8 @@ public class PageSpecificationsTestUtil {
 			layout.getExternalReferenceCode());
 
 		_assertProblemException(
+			"The draft page specification's external reference code does not " +
+				"match the expected value",
 			() -> unsafeFunction.apply(publishedContentPageSpecification));
 
 		Assert.assertEquals(
@@ -691,7 +693,9 @@ public class PageSpecificationsTestUtil {
 			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
 
 		_assertProblemException(
-			() -> unsafeFunction.apply(draftContentPageSpecification));
+			"The draft page specification's external reference code does not " +
+				"match the expected value",
+			() -> unsafeFunction.apply(publishedContentPageSpecification));
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
@@ -707,12 +711,14 @@ public class PageSpecificationsTestUtil {
 			PageSpecification.Status.APPROVED);
 
 		_assertProblemException(
+			"The draft page specification is not in draft status",
 			() -> unsafeFunction.apply(publishedContentPageSpecification));
 
 		publishedContentPageSpecification.setExternalReferenceCode(
 			layout.getExternalReferenceCode());
 
 		_assertProblemException(
+			"The draft page specification is not in draft status",
 			() -> unsafeFunction.apply(publishedContentPageSpecification));
 
 		draftContentPageSpecification.setExternalReferenceCode(
@@ -729,6 +735,8 @@ public class PageSpecificationsTestUtil {
 			draftLayout.getPlid());
 
 		_assertProblemException(
+			"The draft page specification's external reference code does not " +
+				"match the expected value",
 			() -> unsafeFunction.apply(draftContentPageSpecification));
 
 		draftLayout = LayoutLocalServiceUtil.updateStatus(
@@ -748,6 +756,8 @@ public class PageSpecificationsTestUtil {
 			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
 
 		_assertProblemException(
+			"The draft page specification's external reference code does not " +
+				"match the expected value",
 			() -> unsafeFunction.apply(draftContentPageSpecification));
 	}
 
@@ -820,7 +830,7 @@ public class PageSpecificationsTestUtil {
 	}
 
 	private static void _assertProblemException(
-			UnsafeRunnable<Exception> unsafeRunnable)
+			String expectedTitle, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try {
@@ -831,7 +841,7 @@ public class PageSpecificationsTestUtil {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
+			Assert.assertEquals(expectedTitle, problem.getTitle());
 		}
 	}
 

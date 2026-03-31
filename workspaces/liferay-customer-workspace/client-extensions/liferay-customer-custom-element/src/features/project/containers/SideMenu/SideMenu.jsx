@@ -95,20 +95,6 @@ const SideMenu = () => {
 		  (featureFlags.includes('LRSD-12003') ||
 			  loggedUserAccount?.isLiferayStaff);
 
-	useEffect(() => {
-		const expandedHeightProducts = isOpenedProductsMenu
-			? activationSubscriptionGroups?.length * 48
-			: 0;
-
-		if (activationMenuRef?.current) {
-			activationMenuRef.current.style.maxHeight = `${expandedHeightProducts}px`;
-		}
-	}, [
-		activationSubscriptionGroups?.length,
-		hasSomeMenuItemActive,
-		isOpenedProductsMenu,
-	]);
-
 	const accountSubscriptionGroupsMenuItem = useMemo(
 		() => {
 			const expandedGroups = activationSubscriptionGroups?.flatMap(expandGroupForSideMenu);
@@ -164,6 +150,20 @@ const SideMenu = () => {
 			);
 		}, [activationSubscriptionGroups]
 	);
+
+	useEffect(() => {
+		const expandedHeightProducts = isOpenedProductsMenu
+			? accountSubscriptionGroupsMenuItem?.length * 48
+			: 0;
+
+		if (activationMenuRef?.current) {
+			activationMenuRef.current.style.maxHeight = `${expandedHeightProducts}px`;
+		}
+	}, [
+		accountSubscriptionGroupsMenuItem?.length,
+		hasSomeMenuItemActive,
+		isOpenedProductsMenu,
+	]);
 
 	if (!activationSubscriptionGroups) {
 		return <SideMenuSkeleton />;

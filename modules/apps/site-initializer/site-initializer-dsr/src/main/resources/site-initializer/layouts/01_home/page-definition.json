@@ -1,125 +1,241 @@
 {
 	"pageElement": {
+		"id": "99270d45-6c31-bd28-c5a2-fb0cb1fbb9c0",
 		"pageElements": [
 			{
 				"definition": {
-					"cssClasses": [
-						"p-3",
-						"p-lg-4"
-					],
+					"fragmentStyle": {
+						"marginLeft": "4",
+						"marginRight": "4"
+					},
 					"indexed": true,
 					"layout": {
+						"marginLeft": 2,
+						"marginRight": 2
 					}
 				},
-				"id": "27edfb44-ab3e-5671-1b7d-3c8ace340ecc",
+				"id": "8e761eeb-d6b1-f0f9-467c-e74a4d35794c",
 				"pageElements": [
 					{
 						"definition": {
-							"indexed": true,
-							"layout": {
-							}
-						},
-						"id": "2c14a5f5-e235-1234-a146-34999055341d",
-						"pageElements": [
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"indexed": true,
-							"layout": {
-							}
-						},
-						"id": "5d512a72-a41d-405d-9876-b7b73ed33053",
-						"pageElements": [
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"gutters": true,
-							"indexed": true,
-							"modulesPerRow": 2,
-							"numberOfColumns": 2,
-							"reverseOrder": false,
-							"rowViewports": [
+							"fragment": {
+								"key": "BASIC_COMPONENT-html"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
 								{
-									"id": "landscapeMobile",
-									"rowViewportDefinition": {
-										"modulesPerRow": 1
-									}
-								},
-								{
-									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "tablet",
-									"rowViewportDefinition": {
+									"id": "element-html",
+									"value": {
+										"html": {
+											"value_i18n": {
+												"en_US": "<h2 class=\"font-weight-semi-bold mb-0 text-7 text-dark\">Home</h2>\n"
+											}
+										}
 									}
 								}
 							],
-							"verticalAlignment": "top"
+							"fragmentStyle": {
+								"marginBottom": "4",
+								"marginTop": "4"
+							},
+							"indexed": true
 						},
-						"id": "217ebad7-ef54-65e6-a123-b181b89419f7",
+						"id": "ad1749d3-ef9d-b9b6-c3a0-6470ddbc560a",
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "4",
+								"marginTop": "4"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 2,
+								"marginTop": 2
+							}
+						},
+						"id": "db3ee348-e16a-16cc-33e0-b5130c46f171",
 						"pageElements": [
 							{
 								"definition": {
-									"columnViewports": [
+									"fragmentStyle": {
+										"marginBottom": "1"
+									},
+									"gutters": false,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
 										{
-											"columnViewportDefinition": {
-												"size": 12
-											},
-											"id": "landscapeMobile"
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+											}
 										},
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
 										},
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
 										}
 									],
-									"size": 7
+									"verticalAlignment": "middle"
 								},
-								"id": "02137bb8-9814-84a1-615c-a5fdb57a5033",
+								"id": "35018655-07af-0c86-862d-7b8df4c41c3f",
 								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 10
+										},
+										"id": "b8bac88c-1c8d-7c01-d913-51559069d9db",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "\n<h2 class=\"font-weight-semi-bold m-0 text-4\">Digital Sales Rooms</h2>\n"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"id": "51965f09-19ae-5a36-eb34-55a6b83e794a",
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 2
+										},
+										"id": "9148fb8c-6e79-8537-106d-2f704c47af46",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-button"
+													},
+													"fragmentConfig": {
+														"buttonSize": "sm",
+														"buttonType": "link",
+														"type": "link"
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/rooms"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "View All"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "right"
+													},
+													"indexed": true
+												},
+												"id": "243d4961-cf2d-3a9b-7b8f-da11b5310836",
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									}
 								],
-								"type": "Column"
+								"type": "Row"
 							},
 							{
 								"definition": {
-									"columnViewports": [
-										{
-											"columnViewportDefinition": {
-												"size": 12
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
-										}
+									"fragment": {
+										"key": "com.liferay.site.dsr.site.initializer.internal.fragment.renderer.ViewRoomsJSPSectionFragmentRenderer"
+									},
+									"fragmentConfig": {
+										"isHomePage": true
+									},
+									"fragmentFields": [
 									],
-									"size": 5
+									"indexed": true
 								},
-								"id": "3e7c52b6-4a61-9160-8751-1f1e3cc21427",
-								"pageElements": [
-								],
-								"type": "Column"
+								"id": "0dd0834c-4b00-73af-450f-1fe5adf97cc5",
+								"type": "Fragment"
 							}
 						],
-						"type": "Row"
+						"type": "Section"
 					}
 				],
 				"type": "Section"
@@ -132,5 +248,5 @@
 			"key": "dsr-master"
 		}
 	},
-	"version": 1.1
+	"version": 1.2
 }

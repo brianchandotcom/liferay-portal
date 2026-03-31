@@ -4,21 +4,62 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"marginLeft": "4",
+						"marginRight": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"marginLeft": 2,
+						"marginRight": 2
+					}
+				},
+				"id": "99270d45-6c31-bd28-c5a2-fb0cb1fbb9c0",
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-html"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-html",
+									"value": {
+										"html": {
+											"value_i18n": {
+												"en_US": "<h2 class=\"font-weight-semi-bold mb-0 text-7 text-dark\">Rooms</h2>"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "4",
+								"marginTop": "4"
+							},
+							"indexed": true
+						},
+						"id": "baf0986f-c964-6745-7074-8a2836f9d18c",
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
 					"fragment": {
 						"key": "com.liferay.site.dsr.site.initializer.internal.fragment.renderer.ViewRoomsJSPSectionFragmentRenderer"
 					},
 					"fragmentConfig": {
+						"isHomePage": false
 					},
 					"fragmentFields": [
 					],
-					"fragmentStyle": {
-						"paddingBottom": "3",
-						"paddingLeft": "3",
-						"paddingRight": "3",
-						"paddingTop": "3"
-					},
 					"indexed": true
 				},
+				"id": "4288a91e-a19e-0873-e85e-755bd74b2972",
 				"type": "Fragment"
 			}
 		],

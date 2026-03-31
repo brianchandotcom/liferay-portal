@@ -25,7 +25,7 @@ export default function AutoIncrement({
 
 	return (
 		<FieldBase label={label} name={name} {...otherProps}>
-			<ClayInput readOnly value={value} />
+			<ClayInput id={name} readOnly value={value} />
 		</FieldBase>
 	);
 }

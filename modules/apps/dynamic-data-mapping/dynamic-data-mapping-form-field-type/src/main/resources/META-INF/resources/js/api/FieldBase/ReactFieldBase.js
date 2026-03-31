@@ -283,6 +283,7 @@ export default function FieldBase({
 		type === 'radio';
 	const popoverOrTooltip = !!popover || !!tooltip;
 	const showFor =
+		type === 'auto-increment' ||
 		type === 'date' ||
 		type === 'date_time' ||
 		type === 'document_library' ||

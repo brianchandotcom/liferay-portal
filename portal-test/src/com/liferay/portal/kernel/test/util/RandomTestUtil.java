@@ -109,6 +109,19 @@ public class RandomTestUtil {
 		return (int)((Math.abs(value) % range) + min);
 	}
 
+	public static Map<String, String> randomLanguageIdStringMap() {
+		return randomLanguageIdStringMap(
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+	}
+
+	public static Map<String, String> randomLanguageIdStringMap(
+		String languageId) {
+
+		return HashMapBuilder.put(
+			languageId, randomString()
+		).build();
+	}
+
 	public static Map<Locale, String> randomLocaleStringMap() {
 		return randomLocaleStringMap(LocaleUtil.getDefault());
 	}

@@ -370,6 +370,17 @@ public class MarketplaceService extends BaseService {
 		return map;
 	}
 
+	public String getProductThumbnail(Product product) throws Exception {
+		return new URL(
+			StringBundler.concat(
+				lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+				product.getThumbnail())
+		).toString(
+		).replaceAll(
+			"(?<=accounts/)-?\\d+(?=/images)", "-1"
+		);
+	}
+
 	public String getProductVersion(long skuId) {
 		String version = "1.0.0";
 

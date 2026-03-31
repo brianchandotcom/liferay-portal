@@ -10,7 +10,6 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.model.PublisherAssetLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -19,8 +18,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,8 +42,6 @@ import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @author Keven Leone
@@ -315,17 +310,6 @@ public class MarketplaceUtil {
 			).toInstant());
 	}
 
-	public static String getProductThumbnail(Product product) throws Exception {
-		return new URL(
-			StringBundler.concat(
-				_lxcDXPServerProtocol, "://", _lxcDXPMainDomain,
-				product.getThumbnail())
-		).toString(
-		).replaceAll(
-			"(?<=accounts/)-?\\d+(?=/images)", "-1"
-		);
-	}
-
 	public static String getSkuOptionValue(String key, SkuOption[] skuOptions) {
 		for (SkuOption skuOption : skuOptions) {
 			String skuOptionKey = skuOption.getKey();
@@ -412,11 +396,5 @@ public class MarketplaceUtil {
 	}
 
 	private static final Log _log = LogFactory.getLog(MarketplaceUtil.class);
-
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private static String _lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private static String _lxcDXPServerProtocol;
 
 }

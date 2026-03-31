@@ -583,7 +583,7 @@ public class DropZoneFragmentEntryProcessorTest {
 		Document document = _getDocument(html);
 
 		_dropZoneDocumentFragmentEntryProcessor.processFragmentEntryLinkHTML(
-			fragmentEntryLink, document,
+			document, fragmentEntryLink,
 			new DefaultFragmentEntryProcessorContext(
 				fragmentEntryLink.getCompanyId(),
 				_getMockHttpServletRequest(layoutStructure),

@@ -503,8 +503,9 @@ public class FragmentCollectionContributorPropagationTest {
 
 		@Override
 		public String processFragmentEntryLinkHTML(
-				FragmentEntryLink fragmentEntryLink, String html,
-				FragmentEntryProcessorContext fragmentEntryProcessorContext)
+				FragmentEntryLink fragmentEntryLink,
+				FragmentEntryProcessorContext fragmentEntryProcessorContext,
+				String html)
 			throws PortalException {
 
 			if (!Objects.equals(

@@ -28,7 +28,7 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
-		String html, JSONObject configurationJSONObject) {
+		JSONObject configurationJSONObject, String html) {
 
 		return JSONUtil.put(
 			"hasCommonStyles",

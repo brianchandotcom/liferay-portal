@@ -25,17 +25,6 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
-
-		return processFragmentEntryLinkHTML(
-			fragmentEntryLink.getEditableValuesJSONObject(), fragmentEntryLink,
-			fragmentEntryProcessorContext, html);
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
 			JSONObject editableValuesJSONObject,
 			FragmentEntryLink fragmentEntryLink,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext,
@@ -44,6 +33,17 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		return ResourcesFragmentEntryProcessorUtil.processResources(
 			fragmentEntryLink, html);
+	}
+
+	@Override
+	public String processFragmentEntryLinkHTML(
+			String html, FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink.getEditableValuesJSONObject(), fragmentEntryLink,
+			fragmentEntryProcessorContext, html);
 	}
 
 }

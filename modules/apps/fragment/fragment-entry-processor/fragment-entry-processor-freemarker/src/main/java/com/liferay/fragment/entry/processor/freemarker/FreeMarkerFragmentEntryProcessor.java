@@ -56,21 +56,10 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
-		String html, JSONObject configurationJSONObject) {
+		JSONObject configurationJSONObject, String html) {
 
 		return _fragmentEntryConfigurationParser.
 			getConfigurationDefaultValuesJSONObject(configurationJSONObject);
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
-
-		return processFragmentEntryLinkHTML(
-			fragmentEntryLink.getEditableValuesJSONObject(), fragmentEntryLink,
-			fragmentEntryProcessorContext, html);
 	}
 
 	@Override
@@ -191,6 +180,17 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		return unsyncStringWriter.toString();
+	}
+
+	@Override
+	public String processFragmentEntryLinkHTML(
+			String html, FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink.getEditableValuesJSONObject(), fragmentEntryLink,
+			fragmentEntryProcessorContext, html);
 	}
 
 	private Object _getInfoItem(

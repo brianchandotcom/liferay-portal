@@ -245,70 +245,6 @@ public class MarketplaceRestController extends BaseRestController {
 		return ResponseEntity.ok(account);
 	}
 
-	@PostMapping("product-feedback/{id}")
-	public void postProductFeedback(
-			@RequestBody String json, @PathVariable("id") long id)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST email dispatch " + json);
-		}
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		if (!jsonObject.has("modelDTOProduct")) {
-			return;
-		}
-
-		String objectActionTriggerKey = jsonObject.getString(
-			"objectActionTriggerKey");
-
-		if (!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
-			return;
-		}
-
-		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
-			"modelCPDefinition");
-
-		Product product = _marketplaceService.getProduct(
-			modelCPDefinitionJSONObject.getLong("CProductId"));
-
-		_marketplaceService.postNotificationQueueEntry(
-			null, "MARKETPLACE-PRODUCT-FEEDBACK",
-			new HashMapBuilder<String, Object>().put(
-				"[%PRODUCT_TYPE%]", product.getProductType()
-			).put(
-				"[%EMAIL_DESCRIPTION%]",
-				StringBundler.concat(
-					"p>It has been a few weeks since you started using <b>CMP </b>" +
-						"Beta via the Marketplace. We hope it’s helping you" +
-							"streamline your Liferay operations. Could you spare" +
-								"<b>5 minutes</b> to let us know how we’re doing?</p>)")
-			).put(
-				"[%ENVIROMENT%]", "liferay"
-			).put(
-				"[%CATALOG_NAME%]",
-				() -> {
-					Catalog catalog = product.getCatalog();
-
-					return catalog.getName();
-				}
-			).put(
-				"[%ORDER_ID%]", String.valueOf(product.getId())
-			).put(
-				"[%PRODUCT_NAME%]",
-				product.getName(
-				).get(
-					modelCPDefinitionJSONObject.getString("defaultLanguageId")
-				)
-			).put(
-				"[%PRODUCT_THUMBNAIL%]",
-				new URL(
-					"http://" + lxcDXPMainDomain + product.getThumbnail()
-				).toString()
-			).build());
-	}
-
 	@PostMapping("/tax-calculate/{orderId}")
 	public void postTaxCalculate(@PathVariable long orderId) throws Exception {
 		if (_log.isInfoEnabled()) {
@@ -455,6 +391,22 @@ public class MarketplaceRestController extends BaseRestController {
 		return accountRole.getId();
 	}
 
+	private String _getOrderTypeName(Order order) {
+		if (Objects.equals(
+				order.getOrderTypeExternalReferenceCode(), "AI_HUB")) {
+
+			return "AI Hub Beta";
+		}
+
+		if (Objects.equals(
+				order.getOrderTypeExternalReferenceCode(), "CMP_BETA")) {
+
+			return "CMP Beta";
+		}
+
+		return null;
+	}
+
 	private File _getPublisherAssetFile(String publisherAssetURL)
 		throws Exception {
 
@@ -517,6 +469,10 @@ public class MarketplaceRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @PathVariable long orderId)
 		throws Exception {
 
+		if (_log.isInfoEnabled()) {
+			_log.info("POST request product feedback " + orderId);
+		}
+
 		_defaultServiceAccountPermission.check(jwt);
 
 		Order order = _marketplaceService.getOrder(orderId);
@@ -525,33 +481,34 @@ public class MarketplaceRestController extends BaseRestController {
 
 		OrderItem orderItem = orderItems[0];
 
-		long skuId = orderItem.getSkuId();
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST product feedback " + skuId);
+		if (orderItem == null) {
+			return;
 		}
 
-		Product product = _marketplaceService.getProductBySkuId(skuId);
+		Product product = _marketplaceService.getProductBySkuId(
+			orderItem.getSkuId());
 
 		Map<String, String> productSpecificationsMap =
 			_marketplaceService.getProductSpecificationsMap(
 				product.getProductId());
 
 		_marketplaceService.postNotificationQueueEntry(
-			order.getCreatorEmailAddress(), "MARKETPLACE-PRODUCT-FEEDBACK",
+			order.getCreatorEmailAddress(),
+			"MARKETPLACE-REQUEST-PRODUCT-FEEDBACK",
 			HashMapBuilder.put(
 				"[%CATALOG_NAME%]",
 				product.getCatalog(
 				).getName()
 			).put(
-				"[%EMAIL_DESCRIPTION%]",
+				"[%EMAIL_BODY%]",
 				StringBundler.concat(
-					"<p>It has been a few weeks since you started using ",
-					"<b>CMP</b> Beta via the Marketplace. We hope it’s helping you ",
+					"<p>It has been a few weeks since you started using <b>",
+					_getOrderTypeName(order),
+					"</b> via the Marketplace. We hope it’s helping you ",
 					"streamline your Liferay operations. Could you spare ",
 					"<b>5 minutes</b> to let us know how we’re doing?</p>")
 			).put(
-				"[%ENVIROMENT%]",
+				"[%MARKETPLACE_HOST%]",
 				lxcDXPServerProtocol + "://" + lxcDXPMainDomain
 			).put(
 				"[%ORDER_ID%]", String.valueOf(orderId)
@@ -563,14 +520,7 @@ public class MarketplaceRestController extends BaseRestController {
 				)
 			).put(
 				"[%PRODUCT_THUMBNAIL%]",
-				new URL(
-					StringBundler.concat(
-						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-						product.getThumbnail())
-				).toString(
-				).replaceAll(
-					"(?<=accounts/)-?\\d+(?=/images)", "-1"
-				)
+				MarketplaceUtil.getProductThumbnail(product)
 			).put(
 				"[%PRODUCT_TYPE%]", productSpecificationsMap.get("app-beta")
 			).build());

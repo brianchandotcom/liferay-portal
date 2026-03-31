@@ -9,7 +9,9 @@ import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import {
 	getObjectEntryAPIDateFormat,
+	getObjectEntryAPIDateTimeFormat,
 	getObjectEntryUIDateFormat,
+	getObjectEntryUIDateTimeFormat,
 } from './dateFormat';
 
 function getRandomDate(format: 'API' | 'UI'): string {
@@ -22,6 +24,19 @@ function getRandomDate(format: 'API' | 'UI'): string {
 	}
 	else {
 		return getObjectEntryUIDateFormat(randomDate);
+	}
+}
+
+function getRandomDateTime(format: 'API' | 'UI'): string {
+	const currentDate = new Date();
+
+	const randomDate = new Date(currentDate.getTime() * Math.random());
+
+	if (format === 'API') {
+		return getObjectEntryAPIDateTimeFormat(randomDate);
+	}
+	else {
+		return getObjectEntryUIDateTimeFormat(randomDate);
 	}
 }
 
@@ -50,6 +65,8 @@ function generateObjectEntryValue({
 			return Math.random() < 0.5;
 		case 'Date':
 			return getRandomDate(objectEntryFormat);
+		case 'DateTime':
+			return getRandomDateTime(objectEntryFormat);
 		case 'Decimal':
 			return parseFloat(Math.random().toFixed(10)).toString();
 		case 'Encrypted':

@@ -1707,7 +1707,7 @@ test.describe('Unique localized object fields', () => {
 
 			await waitForAlert(
 				page,
-				'Error:The textField is already in use. Please enter a unique textField.',
+				`Error:The ${objectFieldLabel} is already in use. Please enter a unique ${objectFieldLabel}.`,
 				{type: 'danger'}
 			);
 		});

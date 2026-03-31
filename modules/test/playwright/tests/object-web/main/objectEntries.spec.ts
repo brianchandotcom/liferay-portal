@@ -1981,6 +1981,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				'Attachment',
 				'Boolean',
 				'Date',
+				'DateTime',
 				'Decimal',
 				'Integer',
 				'LongInteger',
@@ -2535,7 +2536,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 						{
 							name: 'timeStorage',
 							value: 'useInputAsEntered',
-						} as any,
+						},
 					],
 				},
 			],
@@ -2558,7 +2559,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			objectDefinition.label['en_US']
 		);
 
-		const date = new Date('2023-06-01 12:00');
+		const date = new Date(2023, 5, 1, 12, 0, 0);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldLabel: objectFields[0].label['en_US'],
@@ -2722,7 +2723,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 					objectFieldSettings: [
 						{
 							name: 'defaultValueType',
-							value: 'inputAsValue' as any,
+							value: 'inputAsValue',
 						},
 						{
 							name: 'defaultValue',
@@ -2852,7 +2853,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await waitForAlert(
 			page,
-			'Error:The textField is already in use. Please enter a unique textField.',
+			`Error:The ${objectFieldLabel} is already in use. Please enter a unique ${objectFieldLabel}.`,
 			{type: 'danger'}
 		);
 	});
@@ -2920,7 +2921,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await waitForAlert(
 			page,
-			'Error:The integerField is already in use. Please enter a unique integerField.',
+			`Error:The ${objectFieldLabel} is already in use. Please enter a unique ${objectFieldLabel}.`,
 			{type: 'danger'}
 		);
 	});
@@ -2998,60 +2999,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		).toHaveText(firstItemName);
 	});
 
-	test('can update an object entry with a date and time field', async ({
-		apiHelpers,
-		page,
-		viewObjectEntriesPage,
-	}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['DateTime'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const fieldName = objectFields[0].name;
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{[fieldName]: '2023-06-01T12:00:00.000Z'},
-			applicationName
-		);
-
-		await viewObjectEntriesPage.goto(objectDefinition.className);
-
-		await viewObjectEntriesPage.frontendDatasetItems.first().click();
-
-		const date = new Date('2024-07-02 10:00');
-
-		const objectFieldLabel = page.getByLabel(
-			objectFields[0].label['en_US']
-		);
-
-		await objectFieldLabel.clear();
-
-		await objectFieldLabel.fill(getObjectEntryUIDateTimeFormat(date));
-
-		await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-		await waitForAlert(page);
-
-		await viewObjectEntriesPage.backButton.click();
-
-		await expect(
-			page.getByRole('cell', {name: getFDSDateTimeFormat(date)})
-		).toHaveText('Jul 2, 2024, 10:00:00 AM');
-	});
-
 	test('can verify auto increment field is read only in object entries', async ({
 		apiHelpers,
 		page,
@@ -3063,9 +3010,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 				{
 					businessType: 'AutoIncrement',
 					objectFieldSettings: [
-						{name: 'prefix', value: 'HAT-'} as any,
+						{name: 'prefix', value: 'HAT-'},
 						{name: 'initialValue', value: '1'},
-						{name: 'suffix', value: ''} as any,
+						{name: 'suffix', value: ''},
 					],
 				},
 			],
@@ -3088,11 +3035,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 			objectDefinition.label['en_US']
 		);
 
-		const autoIncrementInput = page
-			.locator('[data-field-reference^="autoincrement"]')
-			.locator('input.form-control');
+		const autoIncrementFieldLabel = objectFields[1].label['en_US'];
 
-		await expect(autoIncrementInput).not.toBeVisible();
+		const autoIncrementInput = page.getByLabel(autoIncrementFieldLabel);
+
+		await expect(autoIncrementInput).toBeHidden();
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 

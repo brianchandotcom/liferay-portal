@@ -259,14 +259,12 @@ export class ObjectFieldsPage {
 
 			await this.useDefaultValueToggle.check({timeout: 1000});
 
-			if (objectFieldBusinessType === 'Boolean') {
+			if (
+				objectFieldBusinessType === 'Boolean' ||
+				objectFieldBusinessType === 'Picklist'
+			) {
 				await this.selectDefaultValue(defaultValue);
 			}
-
-			if (objectFieldBusinessType === 'Picklist') {
-				await this.selectDefaultValue(defaultValue);
-			}
-
 			if (objectFieldBusinessType === 'Date') {
 				await this.iframeLocator
 					.getByPlaceholder('__/__/____')

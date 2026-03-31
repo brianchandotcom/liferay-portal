@@ -1,0 +1,163 @@
+{
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountToAIHubChatbots_accountEntryId",
+	"className": "com.liferay.object.model.ObjectDefinition#S4K8",
+	"enableFormContainer": false,
+	"enableIndexSearch": true,
+	"externalReferenceCode": "L_AI_HUB_CHATBOT",
+	"friendlyURLSeparator": "l",
+	"label": {
+		"en_US": "Chatbot"
+	},
+	"modifiable": true,
+	"name": "AIHubChatbot",
+	"objectFields": [
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"defaultValue": true,
+			"externalReferenceCode": "ACTIVE",
+			"indexed": true,
+			"label": {
+				"en_US": "Active"
+			},
+			"name": "active",
+			"system": true,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"defaultValue": "null",
+			"externalReferenceCode": "DESCRIPTION",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"system": true,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"defaultValue": "null",
+			"externalReferenceCode": "INTRO_MESSAGE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Intro Message"
+			},
+			"localized": true,
+			"name": "introMessage",
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"system": true,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "NOTIFICATION_MESSAGE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Notification Message"
+			},
+			"localized": true,
+			"name": "notificationMessage",
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "PLACEHOLDER_MESSAGE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Placeholder Message"
+			},
+			"localized": true,
+			"name": "placeholderMessage",
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"defaultValue": true,
+			"externalReferenceCode": "SHOW_COMPANY_LOGO",
+			"indexed": true,
+			"label": {
+				"en_US": "Show Company Logo"
+			},
+			"name": "showCompanyLogo",
+			"system": true,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "TITLE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Title"
+			},
+			"localized": true,
+			"name": "title",
+			"readOnly": "false",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"defaultValue": "null",
+			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_CHATBOTS",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Account to Chatbots"
+			},
+			"name": "r_accountToAIHubChatbots_accountEntryId",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AccountEntry"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_accountToAIHubChatbots_accountEntryERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CHATBOTS",
+			"readOnly": "false",
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
+		}
+	],
+	"objectFolderExternalReferenceCode": "default",
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Chatbots"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": true,
+	"titleObjectFieldName": "title"
+}

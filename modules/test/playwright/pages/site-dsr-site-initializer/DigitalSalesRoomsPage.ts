@@ -15,6 +15,7 @@ export class DigitalSalesRoomsPage {
 	readonly digitalSalesRoomsTable: DataTablePage;
 	readonly editMenuItem: Locator;
 	readonly globalMenuPage: GlobalMenuPage;
+	readonly homeLink: Locator;
 	readonly newDigitalSalesRoomButton: Locator;
 	readonly noResultsFoundMessage: Locator;
 	readonly page: Page;
@@ -41,6 +42,10 @@ export class DigitalSalesRoomsPage {
 		);
 		this.editMenuItem = page.getByRole('menuitem', {name: 'Edit'});
 		this.globalMenuPage = new GlobalMenuPage(page);
+		this.homeLink = page.locator('css=.sidebar').getByRole('menuitem', {
+			exact: true,
+			name: 'Home',
+		});
 		this.newDigitalSalesRoomButton = page.getByText(
 			'New Digital Sales Room'
 		);
@@ -74,9 +79,15 @@ export class DigitalSalesRoomsPage {
 			.getByRole('link', {name: roomName});
 	}
 
-	async goto() {
+	async goToRoomsPage() {
 		await this.globalMenuPage.goToHome();
 		await this.globalMenuPage.goToCommerce('Digital Sales Room Management');
 		await this.roomsLink.click();
+	}
+
+	async goto() {
+		await this.globalMenuPage.goToHome();
+		await this.globalMenuPage.goToCommerce('Digital Sales Room Management');
+		await this.homeLink.click();
 	}
 }

@@ -5,14 +5,19 @@
 
 package com.liferay.fragment.web.internal.portlet.action;
 
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 
@@ -59,6 +64,15 @@ public class ExportFragmentCollectionsMVCResourceCommand
 		}
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_portletResourcePermission.check(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
 			List<FragmentCollection> fragmentCollections =
 				_fragmentCollectionLocalService.
 					getExportableFragmentCollections(
@@ -67,7 +81,13 @@ public class ExportFragmentCollectionsMVCResourceCommand
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 			for (FragmentCollection fragmentCollection : fragmentCollections) {
-				fragmentCollection.populateZipWriter(zipWriter);
+				if ((fragmentCollection.getGroupId() ==
+						themeDisplay.getCompanyGroupId()) ||
+					(fragmentCollection.getGroupId() ==
+						themeDisplay.getScopeGroupId())) {
+
+					fragmentCollection.populateZipWriter(zipWriter);
+				}
 			}
 
 			PortletResponseUtil.sendFile(
@@ -85,6 +105,11 @@ public class ExportFragmentCollectionsMVCResourceCommand
 
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Reference(
+		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private ZipWriterFactory _zipWriterFactory;

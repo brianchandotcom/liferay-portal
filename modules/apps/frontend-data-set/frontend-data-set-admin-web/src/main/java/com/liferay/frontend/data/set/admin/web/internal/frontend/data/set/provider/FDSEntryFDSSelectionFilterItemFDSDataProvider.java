@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -126,27 +125,13 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 					objectDefinition.getStorageType()));
 
 		try {
-			Page<ObjectEntry> countPage = objectEntryManager.getObjectEntries(
-				companyId, objectDefinition, null, null,
-				new DefaultDTOConverterContext(
-					false, null, null, null, null,
-					LocaleUtil.getMostRelevantLocale(), null, null),
-				null, Pagination.of(1, 1), keywords, null);
-
-			if (countPage.getTotalCount() <= 0) {
-				return;
-			}
-
 			Page<ObjectEntry> objectEntriesPage =
 				objectEntryManager.getObjectEntries(
 					companyId, objectDefinition, null, null,
 					new DefaultDTOConverterContext(
 						false, null, null, null, null,
 						LocaleUtil.getMostRelevantLocale(), null, null),
-					null,
-					Pagination.of(
-						1, Math.toIntExact(countPage.getTotalCount())),
-					keywords, null);
+					null, null, keywords, null);
 
 			for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
 				String externalReferenceCode =

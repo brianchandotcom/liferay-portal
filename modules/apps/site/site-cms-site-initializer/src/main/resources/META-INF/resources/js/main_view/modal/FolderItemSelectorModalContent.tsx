@@ -9,7 +9,7 @@ import {IFrontendDataSetProps, IView} from '@liferay/frontend-data-set-web';
 import {ItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import FolderService from '../../common/services/FolderService';
@@ -273,6 +273,26 @@ function FolderItemSelectorModalContent({
 
 	const {observer, onOpenChange, open} = useModal();
 
+	const excludedERCs = useMemo(() => {
+		if (isBulk && selectedData?.items) {
+			return selectedData.items
+				.filter(
+					(item: any) =>
+						item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
+				)
+				.map((item: any) => item.embedded.externalReferenceCode);
+		}
+
+		if (
+			itemData?.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME &&
+			itemData.embedded?.externalReferenceCode
+		) {
+			return [itemData.embedded.externalReferenceCode];
+		}
+
+		return [];
+	}, [isBulk, itemData, selectedData]);
+
 	function handleSpaceClick(space: Space) {
 		setCurrentSpace(space);
 		setSchemaKey((prev) => prev + 1);
@@ -298,6 +318,18 @@ function FolderItemSelectorModalContent({
 				},
 				onSelectChange: null,
 			};
+		}
+
+		if (selectedItemType === 'folder') {
+			const erc = item.embedded?.externalReferenceCode;
+
+			if (erc && excludedERCs.includes(erc)) {
+				return {
+					...props,
+					className: `${props.className || ''} hidden-item-selector-item`,
+					onSelectChange: null,
+				};
+			}
 		}
 
 		return {

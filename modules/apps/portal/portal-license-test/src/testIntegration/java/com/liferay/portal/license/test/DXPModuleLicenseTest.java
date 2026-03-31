@@ -6,6 +6,7 @@
 package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -16,8 +17,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.File;
 
 import java.util.Objects;
-
-import net.bytebuddy.agent.builder.ResettableClassFileTransformer;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -51,15 +50,14 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_disableKeyValidatorResettableClassFileTransformer = disableValidate();
-		_setVersionResettableClassFileTransformer = setVersion("2026.Q1.0 LTS");
+		_disableKeyValidatorSafeCloseable = disableValidateWithSafeCloseable();
+		_setVersionSafeCloseable = setVersionWithSafeCloseable("2026.Q1.0 LTS");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		resetClassFileTransformer(
-			_disableKeyValidatorResettableClassFileTransformer);
-		resetClassFileTransformer(_setVersionResettableClassFileTransformer);
+		_disableKeyValidatorSafeCloseable.close();
+		_setVersionSafeCloseable.close();
 	}
 
 	@After
@@ -185,9 +183,7 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 		return getProperty("enterprise.app.symbolic.name");
 	}
 
-	private static ResettableClassFileTransformer
-		_disableKeyValidatorResettableClassFileTransformer;
-	private static ResettableClassFileTransformer
-		_setVersionResettableClassFileTransformer;
+	private static SafeCloseable _disableKeyValidatorSafeCloseable;
+	private static SafeCloseable _setVersionSafeCloseable;
 
 }

@@ -312,8 +312,8 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		tomcatNode.syncExecute(
 			() -> {
-				disableValidate();
-				setVersion("2026.Q1.0 LTS");
+				disableValidateWithSafeCloseable();
+				setVersionWithSafeCloseable("2026.Q1.0 LTS");
 
 				ReflectionTestUtil.setFieldValue(
 					LicenseUtil.class, "LICENSE_REPOSITORY_DIR", path);

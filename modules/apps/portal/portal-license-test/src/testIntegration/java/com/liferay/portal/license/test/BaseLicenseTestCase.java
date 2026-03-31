@@ -5,6 +5,7 @@
 
 package com.liferay.portal.license.test;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -65,8 +66,13 @@ import org.osgi.framework.launch.Framework;
  */
 public abstract class BaseLicenseTestCase implements Serializable {
 
-	public static ResettableClassFileTransformer disableValidate() {
-		return _transformMethod(ReflectionsHolder._validateMethod, true);
+	public static SafeCloseable disableValidateWithSafeCloseable() {
+		ResettableClassFileTransformer resettableClassFileTransformer =
+			_transformMethod(ReflectionsHolder._validateMethod, true);
+
+		return () -> resettableClassFileTransformer.reset(
+			ReflectionsHolder._instrumentation,
+			AgentBuilder.RedefinitionStrategy.RETRANSFORMATION);
 	}
 
 	public static boolean isReleaseBundle() {
@@ -77,16 +83,13 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return false;
 	}
 
-	public static void resetClassFileTransformer(
-		ResettableClassFileTransformer resettableClassFileTransformer) {
+	public static SafeCloseable setVersionWithSafeCloseable(String version) {
+		ResettableClassFileTransformer resettableClassFileTransformer =
+			_transformMethod(ReflectionsHolder._versionMethod, version);
 
-		resettableClassFileTransformer.reset(
+		return () -> resettableClassFileTransformer.reset(
 			ReflectionsHolder._instrumentation,
 			AgentBuilder.RedefinitionStrategy.RETRANSFORMATION);
-	}
-
-	public static ResettableClassFileTransformer setVersion(String version) {
-		return _transformMethod(ReflectionsHolder._versionMethod, version);
 	}
 
 	public void assertBundlesExisted(String... bundleNames) {

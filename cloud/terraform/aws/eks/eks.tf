@@ -1,24 +1,25 @@
 module "eks" {
 	addons={
 		amazon-cloudwatch-observability={
-			configuration_values=jsonencode({
-				containerLogs={
-					enabled=true
-				},
-				dcgmExporter={
-					enabled=false
-				},
-				manager={
-					applicationSignals={
-						autoMonitor={
-							monitorAllServices=false
+			configuration_values=jsonencode(
+				{
+					containerLogs={
+						enabled=true
+					},
+					dcgmExporter={
+						enabled=false
+					},
+					manager={
+						applicationSignals={
+							autoMonitor={
+								monitorAllServices=false
+							}
 						}
+					},
+					neuronMonitor={
+						enabled=false
 					}
-				},
-				neuronMonitor={
-					enabled=false
-				}
-			})
+				})
 			most_recent=true
 		}
 		aws-ebs-csi-driver={
@@ -125,8 +126,7 @@ resource "aws_iam_role" "irsa" {
 				}
 			]
 			Version="2012-10-17"
-		}
-	)
+		})
 	force_detach_policies=true
 	name="${var.deployment_name}-irsa"
 }
@@ -152,8 +152,7 @@ resource "aws_iam_role" "s3_csi_driver" {
 				}
 			]
 			Version="2012-10-17"
-		}
-	)
+		})
 	force_detach_policies=true
 	name="${var.deployment_name}-s3_csi_driver"
 }

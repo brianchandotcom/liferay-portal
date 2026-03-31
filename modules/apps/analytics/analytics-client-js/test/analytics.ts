@@ -9,7 +9,11 @@ import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../src/analytics';
 import {Analytics as AnalyticsType} from '../src/types';
-import {getItem} from '../src/utils/storage';
+import {
+	ANALYTICS_BATCH_SEGMENT_IDS,
+	THREE_HOURS_IN_MILLISECONDS,
+} from '../src/utils/constants';
+import {getItem, setItem} from '../src/utils/storage';
 import {DXP_APPLICATION_IDS} from '../src/utils/validators';
 import {
 	INITIAL_ANALYTICS_CONFIG,
@@ -25,6 +29,7 @@ const FLUSH_INTERVAL = 100;
 const INITIAL_CONFIG = {
 	...INITIAL_ANALYTICS_CONFIG,
 	endpointUrl: 'https://ac-server.io',
+	faroBackendUrl: 'https://ac-backend-server.io',
 	flushInterval: FLUSH_INTERVAL,
 };
 
@@ -309,6 +314,107 @@ describe('Analytics', () => {
 			const events = Analytics.getEvents();
 
 			expect(events.length).toBeGreaterThanOrEqual(eventsNumber);
+		});
+	});
+
+	describe('getBatchSegmentIds()', () => {
+		it('is exposed as an Analytics method', () => {
+			expect(typeof Analytics.getBatchSegmentIds).toBe('function');
+		});
+
+		it('gets batch segment ids for the first time', async () => {
+			fetchMock.mock(/ac-backend-server/i, () =>
+				Promise.resolve([1, 2, 3])
+			);
+
+			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
+
+			let analyticsBatchSegmentIds = getItem<{
+				createDate: number;
+				segmentIds: number[];
+			}>(ANALYTICS_BATCH_SEGMENT_IDS);
+
+			expect(analyticsBatchSegmentIds).toBeNull();
+
+			const result = await Analytics.getBatchSegmentIds();
+
+			expect(result).toEqual([1, 2, 3]);
+
+			analyticsBatchSegmentIds = getItem(ANALYTICS_BATCH_SEGMENT_IDS);
+
+			expect(analyticsBatchSegmentIds?.segmentIds).toEqual([1, 2, 3]);
+
+			const date = new Date();
+
+			const createDate = analyticsBatchSegmentIds?.createDate ?? 0;
+
+			expect(date.getTime()).toBeLessThan(
+				createDate + THREE_HOURS_IN_MILLISECONDS
+			);
+		});
+
+		it('gets batch segment ids when data is expired', async () => {
+			fetchMock.mock(/ac-backend-server/i, () =>
+				Promise.resolve([1, 2, 3])
+			);
+
+			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
+
+			const date = new Date();
+
+			date.setHours(date.getHours() - 5);
+
+			setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
+				createDate: date.getTime(),
+				segmentIds: [1, 2],
+			});
+
+			const result = await Analytics.getBatchSegmentIds();
+
+			expect(result).toEqual([1, 2, 3]);
+
+			const analyticsBatchSegmentIds = getItem<{
+				createDate: number;
+				segmentIds: number[];
+			}>(ANALYTICS_BATCH_SEGMENT_IDS);
+
+			expect(analyticsBatchSegmentIds?.segmentIds).toEqual([1, 2, 3]);
+
+			const createDate = analyticsBatchSegmentIds?.createDate ?? 0;
+
+			expect(date.getTime()).toBeLessThan(createDate);
+		});
+
+		it('gets batch segment ids when data is not expired', async () => {
+			fetchMock.mock(/ac-backend-server/i, () =>
+				Promise.resolve([1, 2, 3])
+			);
+
+			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
+
+			const date = new Date();
+
+			date.setHours(date.getHours() - 1);
+
+			setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
+				createDate: date.getTime(),
+				segmentIds: [1, 2],
+			});
+
+			const result = await Analytics.getBatchSegmentIds();
+
+			expect(result).toEqual([1, 2]);
+
+			const analyticsBatchSegmentIds = getItem<{
+				createDate: number;
+				segmentIds: number[];
+			}>(ANALYTICS_BATCH_SEGMENT_IDS);
+
+			expect(analyticsBatchSegmentIds?.segmentIds).toEqual([1, 2]);
+
+			const createDate = analyticsBatchSegmentIds?.createDate ?? 0;
+
+			expect(date.getTime()).toEqual(createDate);
 		});
 	});
 

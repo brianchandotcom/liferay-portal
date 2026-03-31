@@ -466,7 +466,8 @@ public class UtilityPageResourceImpl
 			return _externalToInternalValuesMap.get(type);
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"The page type does not match the expected utility page type");
 	}
 
 	private void _validateUtilityPage(UtilityPage utilityPage) {
@@ -478,7 +479,8 @@ public class UtilityPageResourceImpl
 				utilityPage.getPageSpecifications()) {
 
 			if (pageSpecification.getCustomFields() != null) {
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"Utility pages do not support custom fields");
 			}
 		}
 	}

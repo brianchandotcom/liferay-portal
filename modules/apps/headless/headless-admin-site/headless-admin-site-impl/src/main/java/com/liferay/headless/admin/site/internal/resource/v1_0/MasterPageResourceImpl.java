@@ -168,7 +168,8 @@ public class MasterPageResourceImpl
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The external reference code does not point to a master page");
 		}
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
@@ -206,7 +207,8 @@ public class MasterPageResourceImpl
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The external reference code does not point to a master page");
 		}
 
 		return _masterPageDTOConverter.toDTO(

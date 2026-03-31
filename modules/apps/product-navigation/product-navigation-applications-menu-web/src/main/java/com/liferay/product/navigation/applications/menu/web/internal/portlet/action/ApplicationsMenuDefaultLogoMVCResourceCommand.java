@@ -36,11 +36,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"jakarta.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.PRODUCT_NAVIGATION_APPLICATIONS_MENU,
-		"mvc.command.name=/applications_menu/liferay_logo"
+		"mvc.command.name=/applications_menu/default_logo"
 	},
 	service = MVCResourceCommand.class
 )
-public class ApplicationsMenuLiferayLogoMVCResourceCommand
+public class ApplicationsMenuDefaultLogoMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Activate
@@ -53,27 +53,24 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		String applicationsMenuDefaultLiferayLogo =
-			_getApplicationsMenuDefaultLiferayLogo();
+		String applicationsMenuDefaultLogo = _getApplicationsMenuDefaultLogo();
 		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
 		InputStream inputStream = null;
 
 		try {
-			int index = applicationsMenuDefaultLiferayLogo.indexOf(
-				CharPool.SEMICOLON);
+			int index = applicationsMenuDefaultLogo.indexOf(CharPool.SEMICOLON);
 
 			if (index == -1) {
 				inputStream = classLoader.getResourceAsStream(
-					applicationsMenuDefaultLiferayLogo);
+					applicationsMenuDefaultLogo);
 			}
 			else {
-				String bundleIdString =
-					applicationsMenuDefaultLiferayLogo.substring(0, index);
+				String bundleIdString = applicationsMenuDefaultLogo.substring(
+					0, index);
 
 				int bundleId = GetterUtil.getInteger(bundleIdString, -1);
 
-				String name = applicationsMenuDefaultLiferayLogo.substring(
-					index + 1);
+				String name = applicationsMenuDefaultLogo.substring(index + 1);
 
 				if (bundleId < 0) {
 					if (_log.isDebugEnabled()) {
@@ -98,7 +95,7 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to configure the default Liferay logo: " +
+					"Unable to configure the default applications menu logo: " +
 						exception.getMessage());
 
 				return;
@@ -107,27 +104,26 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 
 		if (inputStream == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Default Liferay logo is not available");
+				_log.debug("Default applications menu logo is not available");
 			}
 
 			return;
 		}
 
 		resourceResponse.setContentType(
-			MimeTypesUtil.getExtensionContentType(
-				applicationsMenuDefaultLiferayLogo));
+			MimeTypesUtil.getExtensionContentType(applicationsMenuDefaultLogo));
 
 		PortletResponseUtil.write(resourceResponse, inputStream);
 	}
 
-	private String _getApplicationsMenuDefaultLiferayLogo() {
+	private String _getApplicationsMenuDefaultLogo() {
 		return GetterUtil.getString(
 			PropsUtil.get(PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO),
-			"com/liferay/portal/dependencies/liferay_logo.png");
+			"com/liferay/portal/dependencies/company_logo.png");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ApplicationsMenuLiferayLogoMVCResourceCommand.class);
+		ApplicationsMenuDefaultLogoMVCResourceCommand.class);
 
 	private BundleContext _bundleContext;
 

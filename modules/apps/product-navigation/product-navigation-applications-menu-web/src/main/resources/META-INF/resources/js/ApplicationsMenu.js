@@ -374,7 +374,7 @@ const AppsPanel = ({
 	categories = [],
 	cms = {},
 	handleCloseButtonClick = () => {},
-	liferayLogoURL,
+	defaultLogoURL,
 	liferayName,
 	portletNamespace,
 	selectedPortletId,
@@ -543,7 +543,7 @@ const AppsPanel = ({
 												<img
 													alt=""
 													height="32px"
-													src={liferayLogoURL}
+													src={defaultLogoURL}
 												/>
 											</ClaySticker>
 										</ClayLayout.ContentCol>
@@ -618,7 +618,7 @@ function ListItem({item, selectedPortletId}) {
 }
 
 const ApplicationsMenu = ({
-	liferayLogoURL,
+	defaultLogoURL,
 	liferayName,
 	panelAppsURL,
 	selectedPortletId,
@@ -724,8 +724,8 @@ const ApplicationsMenu = ({
 
 					<ClayModal.Body className="p-0">
 						<AppsPanel
+							defaultLogoURL={defaultLogoURL}
 							handleCloseButtonClick={onClose}
-							liferayLogoURL={liferayLogoURL}
 							liferayName={liferayName}
 							virtualInstance={virtualInstance}
 							{...appsPanelData}
@@ -761,7 +761,7 @@ const ApplicationsMenu = ({
 };
 
 ApplicationsMenu.propTypes = {
-	liferayLogoURL: PropTypes.string,
+	defaultLogoURL: PropTypes.string,
 	liferayName: PropTypes.string,
 	panelAppsURL: PropTypes.string,
 	selectedPortletId: PropTypes.string,

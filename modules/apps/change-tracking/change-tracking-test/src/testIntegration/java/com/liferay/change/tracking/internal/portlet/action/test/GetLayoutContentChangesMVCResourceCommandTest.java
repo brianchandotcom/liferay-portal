@@ -11,24 +11,35 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.diff.DiffHtml;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationStatistics;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -38,6 +49,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -102,12 +116,14 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 			_classNameLocalService.getClassNameId(Layout.class),
 			_layout.getPlid());
 
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayResourceRequest(ctEntry.getCtEntryId());
+
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
 		_mvcResourceCommand.serveResource(
-			_getMockLiferayResourceRequest(ctEntry.getCtEntryId()),
-			mockLiferayResourceResponse);
+			mockLiferayResourceRequest, mockLiferayResourceResponse);
 
 		JSONObject jsonObject = _getJSONObject(mockLiferayResourceResponse);
 
@@ -128,20 +144,71 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonArrayJSONObject = jsonArray.getJSONObject(i);
 
+			long ctEntryId = jsonArrayJSONObject.getLong("ctEntryId");
+
 			Assert.assertTrue(
-				ArrayUtil.contains(
-					fragmentEntryLinkCTEntryIds,
-					jsonArrayJSONObject.getLong("ctEntryId")));
+				ArrayUtil.contains(fragmentEntryLinkCTEntryIds, ctEntryId));
+
+			Assert.assertEquals(
+				HtmlUtil.stripHtml(
+					_getPreview(
+						ctEntryId, mockLiferayResourceRequest,
+						mockLiferayResourceResponse)),
+				HtmlUtil.stripHtml(jsonArrayJSONObject.getString("preview")));
 		}
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(Layout layout)
 		throws Exception {
 
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			"{}", layout,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"config", "{}"
+					).put(
+						"defaultValue", RandomTestUtil.randomString()
+					))
+			).put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("headingLevel", "h1")
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getExternalReferenceCode(), null,
+			fragmentEntry.getHtml(), fragmentEntry.getJs(), layout,
+			fragmentEntry.getFragmentEntryKey(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+				layout.getPlid()),
+			fragmentEntry.getType());
+	}
+
+	private String _getFragmentEntryLinkPreview(
+		FragmentEntryLink fragmentEntryLink,
+		MockLiferayResourceRequest mockLiferayResourceRequest,
+		MockLiferayResourceResponse mockLiferayResourceResponse) {
+
+		if (fragmentEntryLink == null) {
+			return StringPool.BLANK;
+		}
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(
+			LocaleUtil.getMostRelevantLocale());
+
+		return _fragmentRendererController.render(
+			defaultFragmentRendererContext,
+			_portal.getHttpServletRequest(mockLiferayResourceRequest),
+			_portal.getHttpServletResponse(mockLiferayResourceResponse));
 	}
 
 	private JSONObject _getJSONObject(
@@ -168,6 +235,11 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_ctCollection.getCompanyId()));
 
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
@@ -175,6 +247,46 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 			"ctEntryId", String.valueOf(ctEntryId));
 
 		return mockLiferayResourceRequest;
+	}
+
+	private String _getPreview(
+			long ctEntryId,
+			MockLiferayResourceRequest mockLiferayResourceRequest,
+			MockLiferayResourceResponse mockLiferayResourceResponse)
+		throws Exception {
+
+		CTEntry ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
+
+		FragmentEntryLink productionFragmentEntryLink = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			productionFragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					ctEntry.getModelClassPK());
+		}
+
+		FragmentEntryLink ctFragmentEntryLink = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			ctFragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					ctEntry.getModelClassPK());
+		}
+
+		return _diffHtml.diff(
+			new UnsyncStringReader(
+				_getFragmentEntryLinkPreview(
+					productionFragmentEntryLink, mockLiferayResourceRequest,
+					mockLiferayResourceResponse)),
+			new UnsyncStringReader(
+				_getFragmentEntryLinkPreview(
+					ctFragmentEntryLink, mockLiferayResourceRequest,
+					mockLiferayResourceResponse)));
 	}
 
 	private void _waitForReindex() throws Exception {
@@ -217,15 +329,31 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 	private FragmentEntryLink _deletedFragmentEntryLink;
 
 	@Inject
+	private DiffHtml _diffHtml;
+
+	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentRendererController _fragmentRendererController;
 
 	private Group _group;
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject(
 		filter = "mvc.command.name=/change_tracking/get_layout_content_changes"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

@@ -152,6 +152,9 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		).put(
 			"endpointUrl", analyticsConfiguration.liferayAnalyticsEndpointURL()
 		).put(
+			"faroBackendUrl",
+			analyticsConfiguration.liferayAnalyticsFaroBackendURL()
+		).put(
 			"projectId", analyticsConfiguration.liferayAnalyticsProjectId()
 		).build();
 	}

@@ -56,24 +56,23 @@ public class EditableDocumentFragmentEntryProcessor
 
 	@Override
 	public void processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, Document document,
+			Document document, JSONObject editableValuesJSONObject,
+			FragmentEntryLink fragmentEntryLink,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
-
-		if (jsonObject.length() == 0) {
-			jsonObject.put(
+		if (editableValuesJSONObject.length() == 0) {
+			editableValuesJSONObject.put(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				_getDefaultEditableValuesJSONObject(document));
 		}
 
-		JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
+		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
 			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		if (editableValuesJSONObject == null) {
+		if (jsonObject == null) {
 			return;
 		}
 
@@ -108,12 +107,11 @@ public class EditableDocumentFragmentEntryProcessor
 			String id = EditableFragmentEntryProcessorUtil.getElementId(
 				element);
 
-			if (!editableValuesJSONObject.has(id)) {
+			if (!jsonObject.has(id)) {
 				continue;
 			}
 
-			JSONObject editableValueJSONObject =
-				editableValuesJSONObject.getJSONObject(id);
+			JSONObject editableValueJSONObject = jsonObject.getJSONObject(id);
 
 			String value = null;
 
@@ -247,6 +245,17 @@ public class EditableDocumentFragmentEntryProcessor
 				previewElement.html(bodyElement.html());
 			}
 		}
+	}
+
+	@Override
+	public void processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink, Document document,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		processFragmentEntryLinkHTML(
+			document, fragmentEntryLink.getEditableValuesJSONObject(),
+			fragmentEntryLink, fragmentEntryProcessorContext);
 	}
 
 	@Activate

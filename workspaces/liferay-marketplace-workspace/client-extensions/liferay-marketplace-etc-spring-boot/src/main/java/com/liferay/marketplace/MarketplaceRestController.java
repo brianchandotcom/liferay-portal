@@ -14,7 +14,6 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CurrencyResource;
@@ -42,8 +41,6 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 
 import java.math.BigDecimal;
-
-import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -73,7 +70,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -505,8 +501,8 @@ public class MarketplaceRestController extends BaseRestController {
 					"<p>It has been a few weeks since you started using <b>",
 					_getOrderTypeName(order),
 					"</b> via the Marketplace. We hope it’s helping you ",
-					"streamline your Liferay operations. Could you spare ",
-					"<b>5 minutes</b> to let us know how we’re doing?</p>")
+					"streamline your Liferay operations. Could you spare <b>5 ",
+					"minutes</b> to let us know how we’re doing?</p>")
 			).put(
 				"[%MARKETPLACE_HOST%]",
 				lxcDXPServerProtocol + "://" + lxcDXPMainDomain

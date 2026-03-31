@@ -105,10 +105,6 @@ public class EditDetailsMVCActionCommand
 		boolean maintenanceMode = ParamUtil.getBoolean(
 			actionRequest, "maintenanceMode");
 
-		if (maintenanceMode) {
-			active = false;
-		}
-
 		UnicodeProperties typeSettingsUnicodeProperties =
 			liveGroup.getTypeSettingsProperties();
 

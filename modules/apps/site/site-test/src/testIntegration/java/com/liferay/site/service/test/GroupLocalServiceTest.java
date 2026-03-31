@@ -57,6 +57,37 @@ public class GroupLocalServiceTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
+	public void testActivatingSiteClearsMaintenanceMode() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Group updatedGroup = _groupLocalService.updateGroup(
+			group.getGroupId(), group.getParentGroupId(), group.getNameMap(),
+			group.getDescriptionMap(), group.getType(),
+			UnicodePropertiesBuilder.setProperty(
+				GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE,
+				Boolean.TRUE.toString()
+			).build(
+			).toString(),
+			group.isManualMembership(), group.getMembershipRestriction(),
+			group.getFriendlyURL(), group.isInheritContent(), false,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertFalse(updatedGroup.isActive());
+		Assert.assertTrue(updatedGroup.isMaintenanceMode());
+
+		updatedGroup = _groupLocalService.updateGroup(
+			group.getGroupId(), group.getParentGroupId(), group.getNameMap(),
+			group.getDescriptionMap(), group.getType(),
+			updatedGroup.getTypeSettings(), group.isManualMembership(),
+			group.getMembershipRestriction(), group.getFriendlyURL(),
+			group.isInheritContent(), true,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertTrue(updatedGroup.isActive());
+		Assert.assertFalse(updatedGroup.isMaintenanceMode());
+	}
+
+	@Test
 	public void testAddGroup() throws Exception {
 		String groupName = RandomTestUtil.randomString();
 
@@ -141,6 +172,28 @@ public class GroupLocalServiceTest {
 		finally {
 			_companyLocalService.deleteCompany(company);
 		}
+	}
+
+	@Test
+	public void testEnablingMaintenanceModeDeactivatesSite() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(group.isActive());
+
+		Group updatedGroup = _groupLocalService.updateGroup(
+			group.getGroupId(), group.getParentGroupId(), group.getNameMap(),
+			group.getDescriptionMap(), group.getType(),
+			UnicodePropertiesBuilder.setProperty(
+				GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE,
+				Boolean.TRUE.toString()
+			).build(
+			).toString(),
+			group.isManualMembership(), group.getMembershipRestriction(),
+			group.getFriendlyURL(), group.isInheritContent(), true,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertFalse(updatedGroup.isActive());
+		Assert.assertTrue(updatedGroup.isMaintenanceMode());
 	}
 
 	@Test

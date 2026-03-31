@@ -3931,6 +3931,37 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setFriendlyURL(friendlyURL);
 		group.setInheritContent(inheritContent);
 
+		if (Validator.isNotNull(typeSettings)) {
+			UnicodeProperties newTypeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					typeSettings
+				).build();
+
+			if (GetterUtil.getBoolean(
+					newTypeSettingsUnicodeProperties.getProperty(
+						GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE))) {
+
+				active = false;
+			}
+			else if (active) {
+				newTypeSettingsUnicodeProperties.remove(
+					GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
+
+				typeSettings = newTypeSettingsUnicodeProperties.toString();
+			}
+		}
+		else if (active && group.isMaintenanceMode()) {
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			typeSettingsUnicodeProperties.remove(
+				GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
+
+			group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+		}
+
 		if (group.isActive() != active) {
 			group.setActive(active);
 

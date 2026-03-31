@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new FragmentCollectionsDisplayContext((FragmentCollectionLocalService)request.getAttribute(FragmentCollectionLocalService.class.getName()), request, renderRequest, renderResponse);
+FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = (FragmentCollectionsDisplayContext)request.getAttribute(FragmentCollectionsDisplayContext.class.getName());
 %>
 
 <clay:management-toolbar

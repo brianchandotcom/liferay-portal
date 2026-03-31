@@ -28,18 +28,18 @@ import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Objects;
-
 /**
  * @author Eudaldo Alonso
  */
 public class FragmentCollectionsDisplayContext {
 
 	public FragmentCollectionsDisplayContext(
+		boolean exporting,
 		FragmentCollectionLocalService fragmentCollectionLocalService,
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
+		_exporting = exporting;
 		_fragmentCollectionLocalService = fragmentCollectionLocalService;
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
@@ -92,7 +92,7 @@ public class FragmentCollectionsDisplayContext {
 
 		long[] allGroupIds = _getGroupIds(themeDisplay);
 
-		if (_isExportFragmentCollectionsSelector()) {
+		if (_exporting) {
 			if (_isSearch()) {
 				searchContainer.setResultsAndTotal(
 					() ->
@@ -194,22 +194,19 @@ public class FragmentCollectionsDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
-			"/fragment/view_fragment_collections"
+			() -> {
+				if (_exporting) {
+					return "/fragment/view_exportable_fragment_collections";
+				}
+
+				return "/fragment/view_fragment_collections";
+			}
 		).setKeywords(
 			() -> {
 				String keywords = _getKeywords();
 
 				if (Validator.isNotNull(keywords)) {
 					return keywords;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"action",
-			() -> {
-				if (_isExportFragmentCollectionsSelector()) {
-					return "export";
 				}
 
 				return null;
@@ -247,11 +244,6 @@ public class FragmentCollectionsDisplayContext {
 		).buildPortletURL();
 	}
 
-	private boolean _isExportFragmentCollectionsSelector() {
-		return Objects.equals(
-			ParamUtil.getString(_httpServletRequest, "action"), "export");
-	}
-
 	private boolean _isIncludeGlobalFragmentCollections() {
 		if (_includeGlobalFragmentCollections != null) {
 			return _includeGlobalFragmentCollections;
@@ -279,6 +271,7 @@ public class FragmentCollectionsDisplayContext {
 	}
 
 	private String _eventName;
+	private final boolean _exporting;
 	private final FragmentCollectionLocalService
 		_fragmentCollectionLocalService;
 	private final HttpServletRequest _httpServletRequest;

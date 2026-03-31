@@ -456,13 +456,11 @@ public class FragmentDisplayContext {
 			() -> PortletURLBuilder.createRenderURL(
 				_renderResponse
 			).setMVCRenderCommandName(
-				"/fragment/view_fragment_collections"
-			).setParameter(
-				"action", "export"
+				"/fragment/view_exportable_fragment_collections"
 			).setParameter(
 				"includeGlobalFragmentCollections", true
 			).setParameter(
-				"includeMarketplaceFragmentCollections", true
+				"includeMarketplaceFragmentCollections", false
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()

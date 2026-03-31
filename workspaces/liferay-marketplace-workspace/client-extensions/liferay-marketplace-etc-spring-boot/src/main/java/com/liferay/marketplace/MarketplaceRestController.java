@@ -516,7 +516,7 @@ public class MarketplaceRestController extends BaseRestController {
 				)
 			).put(
 				"[%PRODUCT_THUMBNAIL%]",
-				MarketplaceUtil.getProductThumbnail(product)
+				_marketplaceService.getProductThumbnail(product)
 			).put(
 				"[%PRODUCT_TYPE%]", productSpecificationsMap.get("app-beta")
 			).build());

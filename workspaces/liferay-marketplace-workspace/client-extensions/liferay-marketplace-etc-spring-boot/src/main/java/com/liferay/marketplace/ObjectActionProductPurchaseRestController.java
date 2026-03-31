@@ -206,7 +206,7 @@ public class ObjectActionProductPurchaseRestController
 			)
 		).put(
 			"[%PRODUCT_THUMBNAIL%]",
-			MarketplaceUtil.getProductThumbnail(product)
+			_marketplaceService.getProductThumbnail(product)
 		).put(
 			"[%PRODUCT_TYPE%]",
 			productSpecificationsMap.get(
@@ -305,7 +305,7 @@ public class ObjectActionProductPurchaseRestController
 			)
 		).put(
 			"[%PRODUCT_THUMBNAIL%]",
-			MarketplaceUtil.getProductThumbnail(product)
+			_marketplaceService.getProductThumbnail(product)
 		).put(
 			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
 		).build();
@@ -366,7 +366,7 @@ public class ObjectActionProductPurchaseRestController
 			)
 		).put(
 			"[%PRODUCT_THUMBNAIL%]",
-			MarketplaceUtil.getProductThumbnail(product)
+			_marketplaceService.getProductThumbnail(product)
 		).put(
 			"[%SUBTOTAL_FORMATTED%]", order.getSubtotalFormatted()
 		).put(

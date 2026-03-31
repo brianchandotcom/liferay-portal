@@ -111,7 +111,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					testGroup.getGroupId()));
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() -> utilityPageResource.deleteSiteUtilityPage(
 				testGroup.getExternalReferenceCode(),
 				postUtilityPage.getExternalReferenceCode()));
@@ -135,7 +135,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		assertValid(getUtilityPage);
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() -> utilityPageResource.getSiteUtilityPage(
 				testGroup.getExternalReferenceCode(),
 				RandomTestUtil.randomString()));
@@ -283,7 +283,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		_testPatchSiteUtilityPageWithThumbnail();
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() -> utilityPageResource.patchSiteUtilityPage(
 				testGroup.getExternalReferenceCode(),
 				RandomTestUtil.randomString(), randomUtilityPage()));
@@ -400,7 +400,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		Assert.assertFalse(layout.isPublished());
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() -> _testPutSiteUtilityPage(
 				Boolean.TRUE,
 				_getUtilityPage(
@@ -585,7 +585,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	}
 
 	private void _assertProblemException(
-			String status, UnsafeRunnable<Exception> unsafeRunnable)
+			String expectedStatus, String expectedTitle,
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try {
@@ -596,8 +597,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals(status, problem.getStatus());
-			Assert.assertNull(problem.getTitle());
+			Assert.assertEquals(expectedStatus, problem.getStatus());
+			Assert.assertEquals(expectedTitle, problem.getTitle());
 		}
 	}
 
@@ -843,7 +844,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			PageSpecification pageSpecification = pageSpecifications[0];
 
 			_assertProblemException(
-				"BAD_REQUEST",
+				"BAD_REQUEST", "Utility pages do not support custom fields",
 				() -> utilityPageResource.patchSiteUtilityPage(
 					testGroup.getExternalReferenceCode(),
 					utilityPage.getExternalReferenceCode(),
@@ -1020,7 +1021,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					RandomTestUtil.randomString(), testGroup.getGroupId()));
 
 			_assertProblemException(
-				"BAD_REQUEST",
+				"BAD_REQUEST", "Utility pages do not support custom fields",
 				() -> utilityPageResource.postSiteUtilityPage(
 					testGroup.getExternalReferenceCode(), utilityPage));
 		}
@@ -1112,7 +1113,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					testGroup.getGroupId()));
 
 			_assertProblemException(
-				"BAD_REQUEST",
+				"BAD_REQUEST", "Utility pages do not support custom fields",
 				() -> utilityPageResource.patchSiteUtilityPage(
 					testGroup.getExternalReferenceCode(),
 					utilityPage.getExternalReferenceCode(), utilityPage));

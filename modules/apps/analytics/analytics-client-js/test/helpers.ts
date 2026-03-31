@@ -7,11 +7,13 @@ import Analytics from '../src/analytics';
 import {Analytics as AnalyticsType} from '../src/types';
 
 const ENDPOINT_URL = 'https://ac-server.io';
+const FARO_BACKEND_ENDPOINT_URL = 'https://ac-backend-server.io';
 
 export const INITIAL_ANALYTICS_CONFIG: AnalyticsType.Config = {
 	channelId: '4321',
 	dataSourceId: '1234',
 	endpointUrl: ENDPOINT_URL,
+	faroBackendUrl: FARO_BACKEND_ENDPOINT_URL,
 	flushInterval: 0,
 	identity: {
 		emailAddressHashed: '',

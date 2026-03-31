@@ -154,7 +154,7 @@ public class AnalyticsAttributesUtil {
 		element.attr(
 			"data-analytics-external-reference-code",
 			_getAnalyticsExternalReferenceCode(
-				infoDisplaysFieldValues, infoItemFieldMapped,
+				infoItemFieldValues, infoItemFieldMapped,
 				fragmentEntryProcessorContext.getLocale()));
 		element.attr(
 			"data-analytics-asset-field", infoItemFieldMapped.getFieldName());
@@ -217,7 +217,7 @@ public class AnalyticsAttributesUtil {
 		element.attr(
 			"data-analytics-asset-title",
 			_getAnalyticsTitle(
-				infoDisplaysFieldValues, infoItemFieldMapped,
+				infoItemFieldValues,
 				fragmentEntryProcessorContext.getLocale()));
 		element.attr(
 			"data-analytics-asset-type",
@@ -233,7 +233,7 @@ public class AnalyticsAttributesUtil {
 	}
 
 	private static String _getAnalyticsExternalReferenceCode(
-		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
+		InfoItemFieldValues infoItemFieldValues,
 		InfoItemFieldMapped infoItemFieldMapped, Locale locale) {
 
 		Object object = infoItemFieldMapped.getObject();
@@ -247,9 +247,6 @@ public class AnalyticsAttributesUtil {
 
 			return externalReferenceCodeModel.getExternalReferenceCode();
 		}
-
-		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
-			infoItemFieldMapped.getInfoItemReference());
 
 		if (infoItemFieldValues == null) {
 			return StringPool.BLANK;
@@ -316,11 +313,7 @@ public class AnalyticsAttributesUtil {
 	}
 
 	private static String _getAnalyticsTitle(
-		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
-		InfoItemFieldMapped infoItemFieldMapped, Locale locale) {
-
-		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
-			infoItemFieldMapped.getInfoItemReference());
+		InfoItemFieldValues infoItemFieldValues, Locale locale) {
 
 		if (infoItemFieldValues == null) {
 			return StringPool.BLANK;

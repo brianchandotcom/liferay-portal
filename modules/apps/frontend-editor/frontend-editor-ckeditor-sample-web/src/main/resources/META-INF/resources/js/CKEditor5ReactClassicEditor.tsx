@@ -5,7 +5,6 @@
 
 import {Underline} from '@ckeditor/ckeditor5-basic-styles/dist/index.js';
 import {Bookmark} from '@ckeditor/ckeditor5-bookmark/dist/index.js';
-import {Editor} from '@ckeditor/ckeditor5-core/dist/index.js';
 import {
 	CKEditor5ClassicEditor as ClassicEditor,
 	LiferayEditorConfig,
@@ -21,22 +20,7 @@ const CKEditor5ReactClassicEditor = ({
 	editorConfig: LiferayEditorConfig;
 	editorTransformerURLs?: Array<string>;
 }) => {
-	const [myEditor, setMyEditor] = useState<any>(null);
-
-	function fetchEditor(editor: Editor) {
-		setMyEditor(editor);
-	}
-
-	function toggleReadOnlyMode() {
-		if (myEditor) {
-			if (!myEditor.isReadOnly) {
-				myEditor.enableReadOnlyMode('toggle');
-			}
-			else {
-				myEditor.disableReadOnlyMode('toggle');
-			}
-		}
-	}
+	const [disabled, setDisabled] = useState(false);
 
 	const config: LiferayEditorConfig = {
 		...editorConfig,
@@ -68,15 +52,19 @@ const CKEditor5ReactClassicEditor = ({
 
 	return (
 		<div className="container-fluid">
-			<div className="row">
-				<button onClick={toggleReadOnlyMode}>
+			<div className="mb-2 row">
+				<button
+					onClick={() => {
+						setDisabled(!disabled);
+					}}
+				>
 					Toggle editor ReadOnly mode
 				</button>
 			</div>
 
 			<div className="row">
 				<div>
-					<ClassicEditor config={config} onReady={fetchEditor} />
+					<ClassicEditor config={config} disabled={disabled} />
 				</div>
 			</div>
 		</div>

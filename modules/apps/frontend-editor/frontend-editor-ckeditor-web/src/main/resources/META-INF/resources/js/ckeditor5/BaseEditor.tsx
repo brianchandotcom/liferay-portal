@@ -5,6 +5,7 @@
 
 import {EventInfo} from '@ckeditor/ckeditor5-utils/dist/index.js';
 import {useControlledState} from '@clayui/shared';
+import classNames from 'classnames';
 import {loadEditorClientExtensions} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -88,7 +89,11 @@ const BaseEditor = ({
 	return loading ? (
 		<ClayLoadingIndicator />
 	) : (
-		<div className={`lfr-ck ${className ? className : ''}`}>
+		<div
+			className={classNames('lfr-ck', className, {
+				'lfr-ck-disabled': disabled,
+			})}
+		>
 			<CKEditor
 				config={editorConfig}
 				data={data}

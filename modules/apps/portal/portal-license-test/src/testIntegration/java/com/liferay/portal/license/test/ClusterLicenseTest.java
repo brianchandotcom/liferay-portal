@@ -8,7 +8,6 @@ package com.liferay.portal.license.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
@@ -238,11 +237,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		tomcatNode7.syncExecute(
 			() -> {
-				Map<String, String> licenseProperties =
-					LicenseManagerUtil.getLicenseProperties("Portal");
-
-				Assert.assertTrue(
-					licenseProperties.toString(), licenseProperties.isEmpty());
+				assertLicensePropertiesNotExisted(getPortalProductId());
 
 				assertPortalLicenseNotRegistered();
 
@@ -341,11 +336,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 	}
 
 	private Serializable _testFreeTierLicense() throws Exception {
-		Map<String, String> licenseProperties =
-			LicenseManagerUtil.getLicenseProperties("Portal");
-
-		Assert.assertTrue(
-			licenseProperties.toString(), licenseProperties.isEmpty());
+		assertLicensePropertiesNotExisted(getPortalProductId());
 
 		assertPortalLicenseNotRegistered();
 

@@ -6,6 +6,7 @@
 import {render} from '@liferay/frontend-js-react-web';
 
 import CMSFileUploaderComponent from '../item_selector_file_uploader/CMSFileUploaderComponent';
+import DetachedCMSFilesItemSelectorModal from './DetachedCMSFilesItemSelectorModal';
 import {IItemSelectorModalProps} from './ItemSelectorModal';
 
 interface CMSFile {
@@ -182,9 +183,6 @@ export default function openCMSFileSelectorModal({
 	}
 
 	return render(
-
-		// @ts-ignore
-
 		DetachedCMSFilesItemSelectorModal,
 		{
 			...finalConfig,

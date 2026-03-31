@@ -20,9 +20,6 @@ export default function openItemSelectorModal<T>(
 	// See: https://github.com/liferay/clay/blob/master/packages/clay-shared/src/Portal.tsx
 
 	return render(
-
-		// @ts-ignore
-
 		DetachedItemSelectorModal,
 		props,
 		document.createElement('div')

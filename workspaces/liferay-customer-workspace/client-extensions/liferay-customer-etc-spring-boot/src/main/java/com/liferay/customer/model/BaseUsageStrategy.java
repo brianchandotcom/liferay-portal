@@ -39,7 +39,8 @@ public abstract class BaseUsageStrategy implements UsageStrategy {
 		String usedCountUnit = UNIT_GIB;
 
 		if (gbUsedCount.compareTo(new BigDecimal("1024")) >= 0) {
-			usedCount = gbUsedCount.divide(new BigDecimal(1024));
+			usedCount = gbUsedCount.divide(
+				new BigDecimal(1024), 2, RoundingMode.HALF_UP);
 			usedCountUnit = UNIT_TIB;
 		}
 
@@ -70,6 +71,10 @@ public abstract class BaseUsageStrategy implements UsageStrategy {
 
 	private BigDecimal _getPercentage(
 		BigDecimal usedCount, BigDecimal maxCount) {
+
+		if (maxCount.signum() <= 0) {
+			return BigDecimal.ZERO;
+		}
 
 		return usedCount.multiply(
 			new BigDecimal("100")

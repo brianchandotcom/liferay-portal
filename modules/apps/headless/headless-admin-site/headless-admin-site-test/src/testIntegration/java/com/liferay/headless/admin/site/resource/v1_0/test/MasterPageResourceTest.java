@@ -355,10 +355,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					contentPageSpecification));
 
 		_assertPostSiteMasterPagePageSpecificationProblemException(
+			"The external reference code does not point to a master page",
 			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
 				serviceContext));
 
 		_assertPostSiteMasterPagePageSpecificationProblemException(
+			"The external reference code does not point to a master page",
 			LayoutPageTemplateEntryTestUtil.
 				getDisplayPageLayoutPageTemplateEntry(serviceContext));
 	}
@@ -521,11 +523,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	private void _assertPostSiteMasterPagePageSpecificationProblemException(
+			String expectedTitle,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
 		_assertProblemException(
-			"BAD_REQUEST", null,
+			"BAD_REQUEST", expectedTitle,
 			() -> masterPageResource.postSiteMasterPagePageSpecification(
 				testGroup.getExternalReferenceCode(),
 				layoutPageTemplateEntry.getExternalReferenceCode(),

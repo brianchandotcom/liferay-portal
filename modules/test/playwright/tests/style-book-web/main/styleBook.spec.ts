@@ -45,7 +45,7 @@ test('Assert that the style books in the page editor are based on the applied th
 	await test.step('Create a style book', async () => {
 		await styleBooksPage.goto(site.friendlyUrlPath);
 
-		await styleBooksPage.create(styleBookName);
+		await styleBooksPage.create(styleBookName, 'Classic Theme');
 
 		await styleBooksPage.publish();
 	});
@@ -182,7 +182,7 @@ test.describe('Style books applied to master pages', async () => {
 
 		await styleBooksPage.goto(site.friendlyUrlPath);
 
-		await styleBooksPage.create(styleBookName);
+		await styleBooksPage.create(styleBookName, 'Classic Theme');
 
 		await styleBooksPage.publish();
 
@@ -326,7 +326,7 @@ test('Style book is incompatible with the applied theme', async ({
 	await test.step('Create a style book for Classic theme', async () => {
 		await styleBooksPage.goto(site.friendlyUrlPath);
 
-		await styleBooksPage.create(classicStyleBookName);
+		await styleBooksPage.create(classicStyleBookName, 'Classic Theme');
 
 		await styleBooksPage.publish();
 	});
@@ -410,7 +410,7 @@ stagingTest(
 			await test.step('Create style book while live site is selected and edit Brand Color 1 token', async () => {
 				await styleBooksPage.goto(site.friendlyUrlPath);
 
-				await styleBooksPage.create(styleBookName);
+				await styleBooksPage.create(styleBookName, 'Classic Theme');
 
 				await styleBooksPage.updateTokenInputColor(
 					'Brand Color 1',

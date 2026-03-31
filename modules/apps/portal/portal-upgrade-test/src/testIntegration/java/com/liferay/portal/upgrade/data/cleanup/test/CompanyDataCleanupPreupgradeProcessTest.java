@@ -104,12 +104,13 @@ public class CompanyDataCleanupPreupgradeProcessTest
 	@Test
 	public void testUpdateCompanyIdByGroupId() throws Exception {
 		long companyId = RandomTestUtil.nextLong();
-		long groupId = RandomTestUtil.nextLong();
 
 		runSQL(
 			StringBundler.concat(
 				"insert into Company (companyId, webId) values (", companyId,
 				", '", companyId, "')"));
+
+		long groupId = RandomTestUtil.nextLong();
 
 		runSQL(
 			StringBundler.concat(
@@ -128,7 +129,6 @@ public class CompanyDataCleanupPreupgradeProcessTest
 			StringBundler.concat(
 				"insert into ", tableName,
 				" (companyId, groupId, id_) values (0, ", groupId, ", 1)"));
-
 		runSQL(
 			StringBundler.concat(
 				"insert into ", tableName,

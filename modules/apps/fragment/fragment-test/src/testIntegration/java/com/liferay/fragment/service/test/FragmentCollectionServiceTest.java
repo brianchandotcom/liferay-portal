@@ -6,11 +6,16 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionExternalReferenceCodeException;
 import com.liferay.fragment.exception.NoSuchCollectionException;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.test.util.FragmentCompositionTestUtil;
+import com.liferay.fragment.test.util.FragmentEntryTestUtil;
 import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
@@ -26,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -249,6 +255,463 @@ public class FragmentCollectionServiceTest {
 		Assert.assertNotNull(
 			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsByFragmentCollectionIds()
+		throws Exception {
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentCollection fragmentCollection3 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()},
+				new long[] {
+					fragmentCollection1.getFragmentCollectionId(),
+					fragmentCollection2.getFragmentCollectionId(),
+					fragmentCollection3.getFragmentCollectionId()
+				});
+
+		Assert.assertTrue(fragmentCollections.contains(fragmentCollection1));
+		Assert.assertTrue(fragmentCollections.contains(fragmentCollection2));
+		Assert.assertEquals(
+			fragmentCollections.toString(), 2, fragmentCollections.size());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsByFragmentCollectionIdsWithNonexistentIds()
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection.getFragmentCollectionId());
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()},
+				new long[] {
+					fragmentCollection.getFragmentCollectionId(),
+					RandomTestUtil.randomLong()
+				});
+
+		Assert.assertTrue(fragmentCollections.contains(fragmentCollection));
+		Assert.assertEquals(
+			fragmentCollections.toString(), 1, fragmentCollections.size());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsByFragmentCollectionIdsWithNotExportableFragmentCollections()
+		throws Exception {
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()},
+				new long[] {
+					fragmentCollection1.getFragmentCollectionId(),
+					fragmentCollection2.getFragmentCollectionId()
+				});
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 0, fragmentCollections.size());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCount() throws Exception {
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+
+		Assert.assertEquals(
+			2,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCountWithFragmentComposition()
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			1,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCountWithMarketplaceFragmentEntry()
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection.getFragmentCollectionId());
+
+		fragmentEntry.setMarketplace(true);
+
+		_fragmentEntryLocalService.updateFragmentEntry(fragmentEntry);
+
+		Assert.assertEquals(
+			0,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCountWithNameFilter()
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString() + keyword);
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString());
+
+		FragmentTestUtil.addFragmentCollection(
+			_group.getGroupId(), keyword + RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+
+		Assert.assertEquals(
+			1,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}, keyword));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCountWithNameFilterAndNoExportableFragmentCollections()
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		FragmentTestUtil.addFragmentCollection(
+			_group.getGroupId(), keyword + RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			0,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}, keyword));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCountWithNoExportableFragmentCollections()
+		throws Exception {
+
+		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		Assert.assertEquals(
+			0,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsCountWithReactFragmentEntry()
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntryByType(
+			fragmentCollection.getFragmentCollectionId(),
+			FragmentConstants.TYPE_REACT);
+
+		Assert.assertEquals(
+			0,
+			_fragmentCollectionService.getExportableFragmentCollectionsCount(
+				new long[] {_group.getGroupId()}));
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsWithExportableFragmentCollections()
+		throws Exception {
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(fragmentCollections.contains(fragmentCollection1));
+		Assert.assertTrue(fragmentCollections.contains(fragmentCollection2));
+		Assert.assertEquals(
+			fragmentCollections.toString(), 2, fragmentCollections.size());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsWithNameFilter()
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString() + keyword);
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString());
+
+		FragmentCollection fragmentCollection3 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), keyword + RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection3.getFragmentCollectionId());
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, keyword, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(fragmentCollections.contains(fragmentCollection1));
+		Assert.assertTrue(fragmentCollections.contains(fragmentCollection3));
+		Assert.assertEquals(
+			fragmentCollections.toString(), 2, fragmentCollections.size());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsWithNameFilterAndNotExportableFragmentCollections()
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		FragmentTestUtil.addFragmentCollection(
+			_group.getGroupId(), keyword + RandomTestUtil.randomString());
+
+		FragmentCollection exportableFragmentCollection =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			exportableFragmentCollection.getFragmentCollectionId());
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, keyword, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 0, fragmentCollections.size());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsWithNameFilterAndOrderByNameComparatorAsc()
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(),
+				"AA" + keyword + RandomTestUtil.randomString());
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(),
+				"BB" + keyword + RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+
+		FragmentCollectionNameComparator fragmentCollectionNameComparator =
+			FragmentCollectionNameComparator.getInstance(true);
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, keyword, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
+
+		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
+
+		Assert.assertEquals(
+			fragmentCollection1.getName(), firstFragmentCollection.getName());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsWithNoExportableFragmentCollections()
+		throws Exception {
+
+		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 0, fragmentCollections.size());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsWithOrderByNameComparatorAsc()
+		throws Exception {
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), "AA Exportable Collection");
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), "BB Exportable Collection");
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+
+		FragmentCollectionNameComparator fragmentCollectionNameComparator =
+			FragmentCollectionNameComparator.getInstance(true);
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
+
+		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
+
+		Assert.assertEquals(
+			fragmentCollection1.getName(), firstFragmentCollection.getName());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsWithOrderByNameComparatorDesc()
+		throws Exception {
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), "AA Exportable Collection");
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(
+				_group.getGroupId(), "BB Exportable Collection");
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+
+		FragmentCollectionNameComparator fragmentCollectionNameComparator =
+			FragmentCollectionNameComparator.getInstance(false);
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
+
+		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
+
+		Assert.assertEquals(
+			fragmentCollection2.getName(), firstFragmentCollection.getName());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testGetExportableFragmentCollectionsWithPagination()
+		throws Exception {
+
+		FragmentCollection fragmentCollection1 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentCollection fragmentCollection2 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentCollection fragmentCollection3 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection3.getFragmentCollectionId());
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getExportableFragmentCollections(
+				new long[] {_group.getGroupId()}, 0, 2, null);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 2, fragmentCollections.size());
 	}
 
 	@Test
@@ -568,6 +1031,9 @@ public class FragmentCollectionServiceTest {
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

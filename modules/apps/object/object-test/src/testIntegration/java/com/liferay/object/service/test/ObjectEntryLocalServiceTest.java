@@ -4007,7 +4007,9 @@ public class ObjectEntryLocalServiceTest {
 		}
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
+	@TestInfo("LPD-83642")
 	public void testCopyObjectEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -4029,13 +4031,29 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			serviceContext);
 
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.HOUR, -1);
+
+		objectEntry.setExpirationDate(calendar.getTime());
+
+		objectEntry = _objectEntryLocalService.expireObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			serviceContext);
+
 		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
+
+		objectEntryValues.put(
+			"expirationDate", objectEntry.getExpirationDate());
+
+		serviceContext.setAttribute("status", objectEntry.getStatus());
 
 		ObjectEntry copyObjectEntry = _objectEntryLocalService.copyObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			objectEntry.getObjectEntryFolderId(), objectEntryValues,
 			serviceContext);
 
+		Assert.assertNull(copyObjectEntry.getExpirationDate());
 		Assert.assertNotEquals(
 			objectEntry.getObjectEntryId(), copyObjectEntry.getObjectEntryId());
 

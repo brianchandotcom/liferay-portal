@@ -59,8 +59,7 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 
 			testScriptCommands.add(
 				new TestScriptCommand(
-					"ant setup-profile-dxp compile install-portal-snapshots",
-					"."));
+					"ant compile install-portal-snapshots", "."));
 
 			StringBuilder sb = new StringBuilder();
 

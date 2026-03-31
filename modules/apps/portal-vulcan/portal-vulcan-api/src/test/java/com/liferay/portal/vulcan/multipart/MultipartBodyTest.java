@@ -8,6 +8,7 @@ package com.liferay.portal.vulcan.multipart;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -125,35 +126,14 @@ public class MultipartBodyTest {
 	@Test
 	public void testGetValueAsNullableInstance() throws IOException {
 
-		// Present optional
+		// Blank optional
 
 		MultipartBody multipartBody = MultipartBody.of(
 			Collections.emptyMap(), __ -> _objectMapper,
-			Collections.singletonMap(
-				"key",
-				JSONUtil.put(
-					"list", Arrays.asList(1, 2, 3)
-				).put(
-					"number", 42
-				).put(
-					"string", "Hello"
-				).toString()));
+			Collections.singletonMap("key", StringPool.BLANK));
 
 		TestClass testClass = multipartBody.getValueAsNullableInstance(
 			"key", TestClass.class);
-
-		MatcherAssert.assertThat(testClass != null, Is.is(true));
-
-		MatcherAssert.assertThat(testClass.list, Matchers.contains(1, 2, 3));
-		MatcherAssert.assertThat(testClass.number, Is.is(42L));
-		MatcherAssert.assertThat(testClass.string, Is.is("Hello"));
-		MatcherAssert.assertThat(
-			testClass.testClass, Is.is(CoreMatchers.nullValue()));
-
-		// Null optional
-
-		testClass = multipartBody.getValueAsNullableInstance(
-			"null", TestClass.class);
 
 		MatcherAssert.assertThat(testClass != null, Is.is(false));
 
@@ -183,6 +163,38 @@ public class MultipartBodyTest {
 					CoreMatchers.instanceOf(
 						UnrecognizedPropertyException.class)));
 		}
+
+		// Null optional
+
+		testClass = multipartBody.getValueAsNullableInstance(
+			"null", TestClass.class);
+
+		MatcherAssert.assertThat(testClass != null, Is.is(false));
+
+		// Present optional
+
+		multipartBody = MultipartBody.of(
+			Collections.emptyMap(), __ -> _objectMapper,
+			Collections.singletonMap(
+				"key",
+				JSONUtil.put(
+					"list", Arrays.asList(1, 2, 3)
+				).put(
+					"number", 42
+				).put(
+					"string", "Hello"
+				).toString()));
+
+		testClass = multipartBody.getValueAsNullableInstance(
+			"key", TestClass.class);
+
+		MatcherAssert.assertThat(testClass != null, Is.is(true));
+
+		MatcherAssert.assertThat(testClass.list, Matchers.contains(1, 2, 3));
+		MatcherAssert.assertThat(testClass.number, Is.is(42L));
+		MatcherAssert.assertThat(testClass.string, Is.is("Hello"));
+		MatcherAssert.assertThat(
+			testClass.testClass, Is.is(CoreMatchers.nullValue()));
 	}
 
 	@Test

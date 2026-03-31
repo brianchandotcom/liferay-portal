@@ -768,7 +768,7 @@ database.type=db2
 				<get-test-app-server-lib-portal-dir />
 
 				<antcall inheritAll="false" target="copy-optional-jars">
-					<param name="test.jdbc.drivers.url" value="http://mirrors.lax.liferay.com/files.liferay.com/private/jdbc" />
+					<param name="test.jdbc.drivers.url" value="gs://jenkins-ci-data/jdbc" />
 					<param name="todir" value="${test.app.server.lib.portal.dir}" />
 				</antcall>
 			</then>
@@ -990,7 +990,7 @@ oracle.admin.user=system
 				<get-test-app-server-lib-portal-dir />
 
 				<antcall inheritAll="false" target="copy-optional-jars">
-					<param name="test.jdbc.drivers.url" value="http://mirrors.lax.liferay.com/files.liferay.com/private/jdbc" />
+					<param name="test.jdbc.drivers.url" value="gs://jenkins-ci-data/jdbc" />
 					<param name="todir" value="${test.app.server.lib.portal.dir}" />
 				</antcall>
 			</then>
@@ -1153,7 +1153,7 @@ database.type=sqlserver
 				<get-test-app-server-lib-portal-dir />
 
 				<antcall inheritAll="false" target="copy-optional-jars">
-					<param name="test.jdbc.drivers.url" value="http://mirrors.lax.liferay.com/files.liferay.com/private/jdbc" />
+					<param name="test.jdbc.drivers.url" value="gs://jenkins-ci-data/jdbc" />
 					<param name="todir" value="${test.app.server.lib.portal.dir}" />
 				</antcall>
 			</then>

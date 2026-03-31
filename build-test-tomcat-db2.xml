@@ -15,7 +15,7 @@
 		</antcall>
 
 		<antcall inheritAll="false" target="run-selenium-tomcat">
-			<param name="test.jdbc.drivers.url" value="http://mirrors.lax.liferay.com/files.liferay.com/private/jdbc" />
+			<param name="test.jdbc.drivers.url" value="gs://jenkins-ci-data/jdbc" />
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 

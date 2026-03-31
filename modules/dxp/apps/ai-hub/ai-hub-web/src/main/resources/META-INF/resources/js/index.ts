@@ -4,3 +4,4 @@
  */
 
 export {default as AgentDefinitionForm} from './agent_definition_form/AgentDefinitionForm';
+export {default as ContentRetrieverForm} from './content_retriever_form/ContentRetrieverForm';

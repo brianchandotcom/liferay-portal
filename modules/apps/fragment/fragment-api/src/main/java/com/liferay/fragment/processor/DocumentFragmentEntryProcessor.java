@@ -16,6 +16,11 @@ import org.jsoup.nodes.Document;
  */
 public interface DocumentFragmentEntryProcessor {
 
+	public void processFragmentEntryLinkHTML(
+			Document document, FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException;
+
 	public default void processFragmentEntryLinkHTML(
 			Document document, JSONObject editableValuesJSONObject,
 			FragmentEntryLink fragmentEntryLink,
@@ -23,12 +28,7 @@ public interface DocumentFragmentEntryProcessor {
 		throws PortalException {
 
 		processFragmentEntryLinkHTML(
-			fragmentEntryLink, document, fragmentEntryProcessorContext);
+			document, fragmentEntryLink, fragmentEntryProcessorContext);
 	}
-
-	public void processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, Document document,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException;
 
 }

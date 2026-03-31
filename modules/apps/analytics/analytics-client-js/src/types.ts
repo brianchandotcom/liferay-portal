@@ -51,6 +51,7 @@ export namespace Analytics {
 		channelId: string;
 		dataSourceId: string;
 		endpointUrl: string;
+		faroBackendUrl: string;
 		flushInterval: number;
 		identity: {
 			emailAddressHashed: string;

@@ -13,10 +13,12 @@ import EventQueue from './queues/eventsQueue';
 import IdentityMessageQueue from './queues/identityMessageQueue';
 import {Analytics as AnalyticsType} from './types';
 import {
+	ANALYTICS_BATCH_SEGMENT_IDS,
 	ANALYTICS_CLIENT_VERSION,
 	FLUSH_INTERVAL,
 	QUEUE_PRIORITY_DEFAULT,
 	QUEUE_PRIORITY_IDENTITY,
+	THREE_HOURS_IN_MILLISECONDS,
 	VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH,
 } from './utils/constants';
 import {getContexts, setContexts} from './utils/contexts';
@@ -48,6 +50,7 @@ class Analytics {
 		channelId: '',
 		dataSourceId: '',
 		endpointUrl: '',
+		faroBackendUrl: '',
 		flushInterval: 0,
 		identity: {
 			emailAddressHashed: '',
@@ -74,8 +77,11 @@ class Analytics {
 
 		const endpointUrl = (config.endpointUrl || '').replace(/\/$/, '');
 
+		const faroBackendUrl = (config.faroBackendUrl || '').replace(/\/$/, '');
+
 		this.config = Object.assign(config, {
 			endpointUrl,
+			faroBackendUrl,
 			flushInterval: config.flushInterval || FLUSH_INTERVAL,
 			identityEndpoint: `${endpointUrl}/identity`,
 		});
@@ -170,6 +176,43 @@ class Analytics {
 		return this[
 			AnalyticsType.Queues.Events
 		].getItems<AnalyticsType.Event>();
+	}
+
+	getBatchSegmentIds() {
+		const analyticsBatchSegmentIds = getItem<{
+			createDate: number;
+			segmentIds: number[];
+		}>(ANALYTICS_BATCH_SEGMENT_IDS);
+
+		if (analyticsBatchSegmentIds) {
+			const date = new Date();
+
+			const createDate = analyticsBatchSegmentIds.createDate;
+
+			if (date.getTime() - createDate < THREE_HOURS_IN_MILLISECONDS) {
+				return Promise.resolve(analyticsBatchSegmentIds.segmentIds);
+			}
+		}
+
+		return fetch(
+			`${this.config.faroBackendUrl}/api/1.0/segment-memberships/${this._getUserId()}/batch-segment-ids`
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				try {
+					const date = new Date();
+
+					setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
+						createDate: date.getTime(),
+						segmentIds: data,
+					});
+
+					return data;
+				}
+				catch (error) {
+					return;
+				}
+			});
 	}
 
 	/**

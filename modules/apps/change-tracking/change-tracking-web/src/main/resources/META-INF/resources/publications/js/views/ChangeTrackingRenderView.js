@@ -1030,7 +1030,9 @@ export default function ChangeTrackingRenderView({
 				{showChangesSidePanel ? (
 					<div className="autofit-col">
 						<ClayButtonWithIcon
-							aria-label="Open Layout Changes Side Panel"
+							aria-label={Liferay.Language.get(
+								'view-content-changes'
+							)}
 							aria-pressed={isOpenSidePanel ? true : false}
 							borderless
 							className={isOpenSidePanel ? 'active' : ''}
@@ -1039,6 +1041,7 @@ export default function ChangeTrackingRenderView({
 							small
 							spritemap={spritemap}
 							symbol="columns"
+							title={Liferay.Language.get('view-content-changes')}
 						/>
 					</div>
 				) : null}

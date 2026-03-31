@@ -67,10 +67,10 @@ public class CommercePriceListLocalServiceTest {
 		try {
 			_commercePriceListLocalService.addCommercePriceList(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_commerceCatalog.getGroupId(), true,
+				_commerceCatalog.getGroupId(), 0, true,
 				_commerceCurrency.getCode(), 1, 12, 0, 1, 2026, 1, 12, 0, 1,
 				2100, RandomTestUtil.randomString(),
-				RandomTestUtil.randomBoolean(), false, 0,
+				RandomTestUtil.randomBoolean(), false,
 				RandomTestUtil.randomDouble(),
 				CommercePriceListConstants.TYPE_PRICE_LIST, _serviceContext);
 
@@ -85,10 +85,10 @@ public class CommercePriceListLocalServiceTest {
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_commerceCatalog.getGroupId(), false,
+				_commerceCatalog.getGroupId(), 0, false,
 				_commerceCurrency.getCode(), 1, 12, 0, 1, 2026, 1, 12, 0, 1,
 				2100, RandomTestUtil.randomString(),
-				RandomTestUtil.randomBoolean(), false, 0,
+				RandomTestUtil.randomBoolean(), false,
 				RandomTestUtil.randomDouble(),
 				CommercePriceListConstants.TYPE_PRICE_LIST, _serviceContext);
 
@@ -96,10 +96,10 @@ public class CommercePriceListLocalServiceTest {
 
 		commercePriceList = _commercePriceListLocalService.addCommercePriceList(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_commerceCatalog.getGroupId(), false, _commerceCurrency.getCode(),
-			1, 12, 0, 1, 2026, 1, 12, 0, 1, 2100, RandomTestUtil.randomString(),
-			RandomTestUtil.randomBoolean(), false, 0,
-			RandomTestUtil.randomDouble(),
+			_commerceCatalog.getGroupId(), 0, false,
+			_commerceCurrency.getCode(), 1, 12, 0, 1, 2026, 1, 12, 0, 1, 2100,
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
+			false, RandomTestUtil.randomDouble(),
 			CommercePriceListConstants.TYPE_PROMOTION, _serviceContext);
 
 		Assert.assertNotNull(commercePriceList.getExpirationDate());
@@ -117,11 +117,11 @@ public class CommercePriceListLocalServiceTest {
 			commercePriceList =
 				_commercePriceListLocalService.updateCommercePriceList(
 					commercePriceList.getCommercePriceListId(),
+					commercePriceList.getParentCommercePriceListId(),
 					commercePriceList.isCatalogBasePriceList(),
 					commercePriceList.getCommerceCurrencyCode(), 1, 12, 0, 1,
 					2026, 0, 0, 0, 0, 0, commercePriceList.getName(),
 					commercePriceList.isNetPrice(), false,
-					commercePriceList.getParentCommercePriceListId(),
 					commercePriceList.getPriority(),
 					commercePriceList.getType(), _serviceContext);
 
@@ -136,20 +136,20 @@ public class CommercePriceListLocalServiceTest {
 		commercePriceList =
 			_commercePriceListLocalService.updateCommercePriceList(
 				commercePriceList.getCommercePriceListId(),
+				commercePriceList.getParentCommercePriceListId(),
 				commercePriceList.isCatalogBasePriceList(),
 				commercePriceList.getCommerceCurrencyCode(), 1, 12, 0, 1, 2026,
 				0, 0, 0, 0, 0, commercePriceList.getName(),
-				commercePriceList.isNetPrice(), true,
-				commercePriceList.getParentCommercePriceListId(), 10,
+				commercePriceList.isNetPrice(), true, 10,
 				commercePriceList.getType(), _serviceContext);
 
 		Assert.assertNull(commercePriceList.getExpirationDate());
 
 		commercePriceList = _commercePriceListLocalService.addCommercePriceList(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_commerceCatalog.getGroupId(), false, _commerceCurrency.getCode(),
-			1, 12, 0, 1, 2026, 1, 12, 0, 1, 2100, RandomTestUtil.randomString(),
-			RandomTestUtil.randomBoolean(), true, 0,
+			_commerceCatalog.getGroupId(), 0, false,
+			_commerceCurrency.getCode(), 1, 12, 0, 1, 2026, 1, 12, 0, 1, 2100,
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(), true,
 			RandomTestUtil.randomDouble(),
 			CommercePriceListConstants.TYPE_PRICE_LIST, _serviceContext);
 
@@ -158,11 +158,11 @@ public class CommercePriceListLocalServiceTest {
 		commercePriceList =
 			_commercePriceListLocalService.updateCommercePriceList(
 				commercePriceList.getCommercePriceListId(),
+				commercePriceList.getParentCommercePriceListId(),
 				commercePriceList.isCatalogBasePriceList(),
 				commercePriceList.getCommerceCurrencyCode(), 1, 12, 0, 1, 2026,
-				1, 12, 0, 1, 2026, commercePriceList.getName(),
-				commercePriceList.isNetPrice(), false,
-				commercePriceList.getParentCommercePriceListId(), 10,
+				1, 12, 0, 1, 2100, commercePriceList.getName(),
+				commercePriceList.isNetPrice(), false, 10,
 				commercePriceList.getType(), _serviceContext);
 
 		Assert.assertNotNull(commercePriceList.getExpirationDate());
@@ -176,11 +176,11 @@ public class CommercePriceListLocalServiceTest {
 		commercePriceList =
 			_commercePriceListLocalService.updateCommercePriceList(
 				commercePriceList.getCommercePriceListId(),
+				commercePriceList.getParentCommercePriceListId(),
 				commercePriceList.isCatalogBasePriceList(),
 				commercePriceList.getCommerceCurrencyCode(), 1, 12, 0, 1, 2026,
-				1, 12, 0, 1, 2026, commercePriceList.getName(),
+				1, 12, 0, 1, 2100, commercePriceList.getName(),
 				commercePriceList.isNetPrice(), false,
-				commercePriceList.getParentCommercePriceListId(),
 				commercePriceList.getPriority(), commercePriceList.getType(),
 				_serviceContext);
 
@@ -188,9 +188,9 @@ public class CommercePriceListLocalServiceTest {
 
 		commercePriceList = _commercePriceListLocalService.addCommercePriceList(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_commerceCatalog.getGroupId(), false, _commerceCurrency.getCode(),
-			1, 12, 0, 1, 2026, 1, 12, 0, 1, 2100, RandomTestUtil.randomString(),
-			RandomTestUtil.randomBoolean(), true, 0,
+			_commerceCatalog.getGroupId(), 0, false,
+			_commerceCurrency.getCode(), 1, 12, 0, 1, 2026, 1, 12, 0, 1, 2100,
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(), true,
 			RandomTestUtil.randomDouble(),
 			CommercePriceListConstants.TYPE_PROMOTION, _serviceContext);
 
@@ -199,11 +199,11 @@ public class CommercePriceListLocalServiceTest {
 		commercePriceList =
 			_commercePriceListLocalService.updateCommercePriceList(
 				commercePriceList.getCommercePriceListId(),
+				commercePriceList.getParentCommercePriceListId(),
 				commercePriceList.isCatalogBasePriceList(),
 				commercePriceList.getCommerceCurrencyCode(), 1, 12, 0, 1, 2026,
-				1, 12, 0, 1, 2026, commercePriceList.getName(),
-				commercePriceList.isNetPrice(), false,
-				commercePriceList.getParentCommercePriceListId(), 10,
+				1, 12, 0, 1, 2100, commercePriceList.getName(),
+				commercePriceList.isNetPrice(), false, 10,
 				commercePriceList.getType(), _serviceContext);
 
 		Assert.assertNotNull(commercePriceList.getExpirationDate());

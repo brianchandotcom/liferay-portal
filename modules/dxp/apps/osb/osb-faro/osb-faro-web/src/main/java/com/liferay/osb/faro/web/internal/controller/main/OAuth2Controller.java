@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.annotation.security.RolesAllowed;
 
@@ -93,11 +95,22 @@ public class OAuth2Controller extends BaseFaroController {
 	public TokenDisplay newToken(
 			@PathParam("groupId") long groupId,
 			@QueryParam("expiresIn") Long expiresIn,
+			@QueryParam("type") String type,
 			@Context HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		OAuth2Application oAuth2Application = _getOrCreateOAuth2Application(
-			httpServletRequest);
+			httpServletRequest, type);
+
+		if (Validator.isNotNull(type)) {
+			List<OAuth2Authorization> oAuth2Authorizations =
+				_getApplicationOAuth2Authorizations(
+					groupId, oAuth2Application.getOAuth2ApplicationId(), type);
+
+			if (ListUtil.isNotEmpty(oAuth2Authorizations)) {
+				return _mapTokenDisplay(oAuth2Authorizations.get(0));
+			}
+		}
 
 		synchronized (this) {
 			try {
@@ -117,6 +130,10 @@ public class OAuth2Controller extends BaseFaroController {
 						jsonObject.getString("access_token"));
 
 				_setOAuth2AuthorizationGroupId(groupId, oAuth2Authorization);
+
+				if (Validator.isNotNull(type)) {
+					_setOAuth2AuthorizationType(oAuth2Authorization, type);
+				}
 
 				return _mapTokenDisplay(oAuth2Authorization);
 			}
@@ -168,13 +185,31 @@ public class OAuth2Controller extends BaseFaroController {
 		return null;
 	}
 
-	private boolean _filterOAuth2AuthorizationByGroupId(
-		long groupId, OAuth2Authorization oAuth2Authorization) {
+	private boolean _filterOAuth2Authorization(
+		long groupId, OAuth2Authorization oAuth2Authorization, String type) {
 
 		ExpandoBridge expandoBridge = oAuth2Authorization.getExpandoBridge();
 
-		return Objects.equals(
-			groupId, expandoBridge.getAttribute("groupId", false));
+		if (Validator.isNotNull(type)) {
+			if (Objects.equals(
+					groupId, expandoBridge.getAttribute("groupId", false)) &&
+				Objects.equals(
+					type, expandoBridge.getAttribute("type", false))) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		if (Objects.equals(
+				groupId, expandoBridge.getAttribute("groupId", false)) &&
+			Objects.equals(expandoBridge.getAttribute("type", false), "")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _generateApplicationName() {
@@ -209,15 +244,40 @@ public class OAuth2Controller extends BaseFaroController {
 		return sb.toString();
 	}
 
+	private List<OAuth2Authorization> _getApplicationOAuth2Authorizations(
+			long groupId, long oAuth2ApplicationId, String type)
+		throws Exception {
+
+		return TransformUtil.transform(
+			_oAuth2AuthorizationService.getApplicationOAuth2Authorizations(
+				oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null),
+			oAuth2Authorization -> {
+				if (!_filterOAuth2Authorization(
+						groupId, oAuth2Authorization, type)) {
+
+					return null;
+				}
+
+				return oAuth2Authorization;
+			});
+	}
+
 	private OAuth2Application _getOrCreateOAuth2Application(
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, String type)
 		throws Exception {
 
 		User user = getUser();
 
+		String clientId = user.getEmailAddress();
+
+		if (Validator.isNotNull(type)) {
+			clientId = type + "-" + clientId;
+		}
+
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				getCompanyId(), user.getEmailAddress());
+				getCompanyId(), clientId);
 
 		if (oAuth2Application != null) {
 			return oAuth2Application;
@@ -228,17 +288,26 @@ public class OAuth2Controller extends BaseFaroController {
 
 		ClientProfile clientProfile = ClientProfile.HEADLESS_SERVER;
 
+		List<String> scopes;
+
+		if (Validator.isNotNull(type)) {
+			scopes = Arrays.asList(
+				ApiApplication.OAuth2ScopeAliases.ACCOUNTS_WRITE);
+		}
+		else {
+			scopes = Arrays.asList(
+				ApiApplication.OAuth2ScopeAliases.RECOMMENDATIONS_EVERYTHING,
+				ApiApplication.OAuth2ScopeAliases.REPORTS_EVERYTHING);
+		}
+
 		return _oAuth2ApplicationLocalService.addOAuth2Application(
 			user.getCompanyId(), user.getUserId(), user.getFullName(),
 			Arrays.asList(GrantType.CLIENT_CREDENTIALS), StringPool.BLANK,
-			user.getUserId(), user.getEmailAddress(), clientProfile.id(),
+			user.getUserId(), clientId, clientProfile.id(),
 			_generateClientSecret(), StringPool.BLANK, Collections.emptyList(),
 			StringPool.BLANK, 0, StringPool.BLANK, _generateApplicationName(),
-			StringPool.BLANK, Collections.emptyList(), false,
-			Arrays.asList(
-				ApiApplication.OAuth2ScopeAliases.RECOMMENDATIONS_EVERYTHING,
-				ApiApplication.OAuth2ScopeAliases.REPORTS_EVERYTHING),
-			false, serviceContext);
+			StringPool.BLANK, Collections.emptyList(), false, scopes, false,
+			serviceContext);
 	}
 
 	private List<OAuth2Authorization> _getUserOAuth2AuthorizationsByGroupId(
@@ -249,8 +318,8 @@ public class OAuth2Controller extends BaseFaroController {
 			_oAuth2AuthorizationService.getUserOAuth2Authorizations(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			oAuth2Authorization -> {
-				if (!_filterOAuth2AuthorizationByGroupId(
-						groupId, oAuth2Authorization)) {
+				if (!_filterOAuth2Authorization(
+						groupId, oAuth2Authorization, null)) {
 
 					return null;
 				}
@@ -316,6 +385,14 @@ public class OAuth2Controller extends BaseFaroController {
 		ExpandoBridge expandoBridge = oAuth2Authorization.getExpandoBridge();
 
 		expandoBridge.setAttribute("groupId", groupId, false);
+	}
+
+	private void _setOAuth2AuthorizationType(
+		OAuth2Authorization oAuth2Authorization, String type) {
+
+		ExpandoBridge expandoBridge = oAuth2Authorization.getExpandoBridge();
+
+		expandoBridge.setAttribute("type", type, false);
 	}
 
 	private static final String _O_AUTH2_ENDPOINT_TEMPLATE =

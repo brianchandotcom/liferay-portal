@@ -72,12 +72,12 @@ public class CommercePriceListModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
-		{"commerceCurrencyCode", Types.VARCHAR},
 		{"parentCommercePriceListId", Types.BIGINT},
-		{"catalogBasePriceList", Types.BOOLEAN}, {"netPrice", Types.BOOLEAN},
-		{"type_", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"priority", Types.DOUBLE}, {"displayDate", Types.TIMESTAMP},
-		{"expirationDate", Types.TIMESTAMP},
+		{"catalogBasePriceList", Types.BOOLEAN},
+		{"commerceCurrencyCode", Types.VARCHAR},
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"netPrice", Types.BOOLEAN},
+		{"priority", Types.DOUBLE}, {"type_", Types.VARCHAR},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -98,15 +98,15 @@ public class CommercePriceListModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("commerceCurrencyCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parentCommercePriceListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("catalogBasePriceList", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("netPrice", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("commerceCurrencyCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("netPrice", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -115,7 +115,7 @@ public class CommercePriceListModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceList (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceListId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyCode VARCHAR(75) null,parentCommercePriceListId LONG,catalogBasePriceList BOOLEAN,netPrice BOOLEAN,type_ VARCHAR(75) null,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceListId, ctCollectionId))";
+		"create table CommercePriceList (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceListId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommercePriceListId LONG,catalogBasePriceList BOOLEAN,commerceCurrencyCode VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,netPrice BOOLEAN,priority DOUBLE,type_ VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceListId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceList";
 
@@ -342,24 +342,24 @@ public class CommercePriceListModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", CommercePriceList::getModifiedDate);
 			attributeGetterFunctions.put(
-				"commerceCurrencyCode",
-				CommercePriceList::getCommerceCurrencyCode);
-			attributeGetterFunctions.put(
 				"parentCommercePriceListId",
 				CommercePriceList::getParentCommercePriceListId);
 			attributeGetterFunctions.put(
 				"catalogBasePriceList",
 				CommercePriceList::getCatalogBasePriceList);
 			attributeGetterFunctions.put(
-				"netPrice", CommercePriceList::getNetPrice);
-			attributeGetterFunctions.put("type", CommercePriceList::getType);
-			attributeGetterFunctions.put("name", CommercePriceList::getName);
-			attributeGetterFunctions.put(
-				"priority", CommercePriceList::getPriority);
+				"commerceCurrencyCode",
+				CommercePriceList::getCommerceCurrencyCode);
 			attributeGetterFunctions.put(
 				"displayDate", CommercePriceList::getDisplayDate);
 			attributeGetterFunctions.put(
 				"expirationDate", CommercePriceList::getExpirationDate);
+			attributeGetterFunctions.put("name", CommercePriceList::getName);
+			attributeGetterFunctions.put(
+				"netPrice", CommercePriceList::getNetPrice);
+			attributeGetterFunctions.put(
+				"priority", CommercePriceList::getPriority);
+			attributeGetterFunctions.put("type", CommercePriceList::getType);
 			attributeGetterFunctions.put(
 				"lastPublishDate", CommercePriceList::getLastPublishDate);
 			attributeGetterFunctions.put(
@@ -433,10 +433,6 @@ public class CommercePriceListModelImpl
 				(BiConsumer<CommercePriceList, Date>)
 					CommercePriceList::setModifiedDate);
 			attributeSetterBiConsumers.put(
-				"commerceCurrencyCode",
-				(BiConsumer<CommercePriceList, String>)
-					CommercePriceList::setCommerceCurrencyCode);
-			attributeSetterBiConsumers.put(
 				"parentCommercePriceListId",
 				(BiConsumer<CommercePriceList, Long>)
 					CommercePriceList::setParentCommercePriceListId);
@@ -445,21 +441,9 @@ public class CommercePriceListModelImpl
 				(BiConsumer<CommercePriceList, Boolean>)
 					CommercePriceList::setCatalogBasePriceList);
 			attributeSetterBiConsumers.put(
-				"netPrice",
-				(BiConsumer<CommercePriceList, Boolean>)
-					CommercePriceList::setNetPrice);
-			attributeSetterBiConsumers.put(
-				"type",
+				"commerceCurrencyCode",
 				(BiConsumer<CommercePriceList, String>)
-					CommercePriceList::setType);
-			attributeSetterBiConsumers.put(
-				"name",
-				(BiConsumer<CommercePriceList, String>)
-					CommercePriceList::setName);
-			attributeSetterBiConsumers.put(
-				"priority",
-				(BiConsumer<CommercePriceList, Double>)
-					CommercePriceList::setPriority);
+					CommercePriceList::setCommerceCurrencyCode);
 			attributeSetterBiConsumers.put(
 				"displayDate",
 				(BiConsumer<CommercePriceList, Date>)
@@ -468,6 +452,22 @@ public class CommercePriceListModelImpl
 				"expirationDate",
 				(BiConsumer<CommercePriceList, Date>)
 					CommercePriceList::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommercePriceList, String>)
+					CommercePriceList::setName);
+			attributeSetterBiConsumers.put(
+				"netPrice",
+				(BiConsumer<CommercePriceList, Boolean>)
+					CommercePriceList::setNetPrice);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CommercePriceList, Double>)
+					CommercePriceList::setPriority);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CommercePriceList, String>)
+					CommercePriceList::setType);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<CommercePriceList, Date>)
@@ -736,35 +736,6 @@ public class CommercePriceListModelImpl
 
 	@JSON
 	@Override
-	public String getCommerceCurrencyCode() {
-		if (_commerceCurrencyCode == null) {
-			return "";
-		}
-		else {
-			return _commerceCurrencyCode;
-		}
-	}
-
-	@Override
-	public void setCommerceCurrencyCode(String commerceCurrencyCode) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_commerceCurrencyCode = commerceCurrencyCode;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalCommerceCurrencyCode() {
-		return getColumnOriginalValue("commerceCurrencyCode");
-	}
-
-	@JSON
-	@Override
 	public long getParentCommercePriceListId() {
 		return _parentCommercePriceListId;
 	}
@@ -821,43 +792,22 @@ public class CommercePriceListModelImpl
 
 	@JSON
 	@Override
-	public boolean getNetPrice() {
-		return _netPrice;
-	}
-
-	@JSON
-	@Override
-	public boolean isNetPrice() {
-		return _netPrice;
-	}
-
-	@Override
-	public void setNetPrice(boolean netPrice) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_netPrice = netPrice;
-	}
-
-	@JSON
-	@Override
-	public String getType() {
-		if (_type == null) {
+	public String getCommerceCurrencyCode() {
+		if (_commerceCurrencyCode == null) {
 			return "";
 		}
 		else {
-			return _type;
+			return _commerceCurrencyCode;
 		}
 	}
 
 	@Override
-	public void setType(String type) {
+	public void setCommerceCurrencyCode(String commerceCurrencyCode) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_type = type;
+		_commerceCurrencyCode = commerceCurrencyCode;
 	}
 
 	/**
@@ -865,43 +815,8 @@ public class CommercePriceListModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public String getOriginalType() {
-		return getColumnOriginalValue("type_");
-	}
-
-	@JSON
-	@Override
-	public String getName() {
-		if (_name == null) {
-			return "";
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_name = name;
-	}
-
-	@JSON
-	@Override
-	public double getPriority() {
-		return _priority;
-	}
-
-	@Override
-	public void setPriority(double priority) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_priority = priority;
+	public String getOriginalCommerceCurrencyCode() {
+		return getColumnOriginalValue("commerceCurrencyCode");
 	}
 
 	@JSON
@@ -941,6 +856,91 @@ public class CommercePriceListModelImpl
 		}
 
 		_expirationDate = expirationDate;
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
+	}
+
+	@JSON
+	@Override
+	public boolean getNetPrice() {
+		return _netPrice;
+	}
+
+	@JSON
+	@Override
+	public boolean isNetPrice() {
+		return _netPrice;
+	}
+
+	@Override
+	public void setNetPrice(boolean netPrice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_netPrice = netPrice;
+	}
+
+	@JSON
+	@Override
+	public double getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(double priority) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_priority = priority;
+	}
+
+	@JSON
+	@Override
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalType() {
+		return getColumnOriginalValue("type_");
 	}
 
 	@JSON
@@ -1204,17 +1204,17 @@ public class CommercePriceListModelImpl
 		commercePriceListImpl.setUserName(getUserName());
 		commercePriceListImpl.setCreateDate(getCreateDate());
 		commercePriceListImpl.setModifiedDate(getModifiedDate());
-		commercePriceListImpl.setCommerceCurrencyCode(
-			getCommerceCurrencyCode());
 		commercePriceListImpl.setParentCommercePriceListId(
 			getParentCommercePriceListId());
 		commercePriceListImpl.setCatalogBasePriceList(isCatalogBasePriceList());
-		commercePriceListImpl.setNetPrice(isNetPrice());
-		commercePriceListImpl.setType(getType());
-		commercePriceListImpl.setName(getName());
-		commercePriceListImpl.setPriority(getPriority());
+		commercePriceListImpl.setCommerceCurrencyCode(
+			getCommerceCurrencyCode());
 		commercePriceListImpl.setDisplayDate(getDisplayDate());
 		commercePriceListImpl.setExpirationDate(getExpirationDate());
+		commercePriceListImpl.setName(getName());
+		commercePriceListImpl.setNetPrice(isNetPrice());
+		commercePriceListImpl.setPriority(getPriority());
+		commercePriceListImpl.setType(getType());
 		commercePriceListImpl.setLastPublishDate(getLastPublishDate());
 		commercePriceListImpl.setStatus(getStatus());
 		commercePriceListImpl.setStatusByUserId(getStatusByUserId());
@@ -1253,24 +1253,24 @@ public class CommercePriceListModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		commercePriceListImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		commercePriceListImpl.setCommerceCurrencyCode(
-			this.<String>getColumnOriginalValue("commerceCurrencyCode"));
 		commercePriceListImpl.setParentCommercePriceListId(
 			this.<Long>getColumnOriginalValue("parentCommercePriceListId"));
 		commercePriceListImpl.setCatalogBasePriceList(
 			this.<Boolean>getColumnOriginalValue("catalogBasePriceList"));
-		commercePriceListImpl.setNetPrice(
-			this.<Boolean>getColumnOriginalValue("netPrice"));
-		commercePriceListImpl.setType(
-			this.<String>getColumnOriginalValue("type_"));
-		commercePriceListImpl.setName(
-			this.<String>getColumnOriginalValue("name"));
-		commercePriceListImpl.setPriority(
-			this.<Double>getColumnOriginalValue("priority"));
+		commercePriceListImpl.setCommerceCurrencyCode(
+			this.<String>getColumnOriginalValue("commerceCurrencyCode"));
 		commercePriceListImpl.setDisplayDate(
 			this.<Date>getColumnOriginalValue("displayDate"));
 		commercePriceListImpl.setExpirationDate(
 			this.<Date>getColumnOriginalValue("expirationDate"));
+		commercePriceListImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commercePriceListImpl.setNetPrice(
+			this.<Boolean>getColumnOriginalValue("netPrice"));
+		commercePriceListImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		commercePriceListImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
 		commercePriceListImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		commercePriceListImpl.setStatus(
@@ -1444,6 +1444,12 @@ public class CommercePriceListModelImpl
 			commercePriceListCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		commercePriceListCacheModel.parentCommercePriceListId =
+			getParentCommercePriceListId();
+
+		commercePriceListCacheModel.catalogBasePriceList =
+			isCatalogBasePriceList();
+
 		commercePriceListCacheModel.commerceCurrencyCode =
 			getCommerceCurrencyCode();
 
@@ -1455,32 +1461,6 @@ public class CommercePriceListModelImpl
 
 			commercePriceListCacheModel.commerceCurrencyCode = null;
 		}
-
-		commercePriceListCacheModel.parentCommercePriceListId =
-			getParentCommercePriceListId();
-
-		commercePriceListCacheModel.catalogBasePriceList =
-			isCatalogBasePriceList();
-
-		commercePriceListCacheModel.netPrice = isNetPrice();
-
-		commercePriceListCacheModel.type = getType();
-
-		String type = commercePriceListCacheModel.type;
-
-		if ((type != null) && (type.length() == 0)) {
-			commercePriceListCacheModel.type = null;
-		}
-
-		commercePriceListCacheModel.name = getName();
-
-		String name = commercePriceListCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			commercePriceListCacheModel.name = null;
-		}
-
-		commercePriceListCacheModel.priority = getPriority();
 
 		Date displayDate = getDisplayDate();
 
@@ -1499,6 +1479,26 @@ public class CommercePriceListModelImpl
 		}
 		else {
 			commercePriceListCacheModel.expirationDate = Long.MIN_VALUE;
+		}
+
+		commercePriceListCacheModel.name = getName();
+
+		String name = commercePriceListCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			commercePriceListCacheModel.name = null;
+		}
+
+		commercePriceListCacheModel.netPrice = isNetPrice();
+
+		commercePriceListCacheModel.priority = getPriority();
+
+		commercePriceListCacheModel.type = getType();
+
+		String type = commercePriceListCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			commercePriceListCacheModel.type = null;
 		}
 
 		Date lastPublishDate = getLastPublishDate();
@@ -1606,15 +1606,15 @@ public class CommercePriceListModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _commerceCurrencyCode;
 	private long _parentCommercePriceListId;
 	private boolean _catalogBasePriceList;
-	private boolean _netPrice;
-	private String _type;
-	private String _name;
-	private double _priority;
+	private String _commerceCurrencyCode;
 	private Date _displayDate;
 	private Date _expirationDate;
+	private String _name;
+	private boolean _netPrice;
+	private double _priority;
+	private String _type;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1664,17 +1664,17 @@ public class CommercePriceListModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put(
-			"commerceCurrencyCode", _commerceCurrencyCode);
-		_columnOriginalValues.put(
 			"parentCommercePriceListId", _parentCommercePriceListId);
 		_columnOriginalValues.put(
 			"catalogBasePriceList", _catalogBasePriceList);
-		_columnOriginalValues.put("netPrice", _netPrice);
-		_columnOriginalValues.put("type_", _type);
-		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put(
+			"commerceCurrencyCode", _commerceCurrencyCode);
 		_columnOriginalValues.put("displayDate", _displayDate);
 		_columnOriginalValues.put("expirationDate", _expirationDate);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("netPrice", _netPrice);
+		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1726,23 +1726,23 @@ public class CommercePriceListModelImpl
 
 		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("commerceCurrencyCode", 2048L);
+		columnBitmasks.put("parentCommercePriceListId", 2048L);
 
-		columnBitmasks.put("parentCommercePriceListId", 4096L);
+		columnBitmasks.put("catalogBasePriceList", 4096L);
 
-		columnBitmasks.put("catalogBasePriceList", 8192L);
+		columnBitmasks.put("commerceCurrencyCode", 8192L);
 
-		columnBitmasks.put("netPrice", 16384L);
+		columnBitmasks.put("displayDate", 16384L);
 
-		columnBitmasks.put("type_", 32768L);
+		columnBitmasks.put("expirationDate", 32768L);
 
 		columnBitmasks.put("name", 65536L);
 
-		columnBitmasks.put("priority", 131072L);
+		columnBitmasks.put("netPrice", 131072L);
 
-		columnBitmasks.put("displayDate", 262144L);
+		columnBitmasks.put("priority", 262144L);
 
-		columnBitmasks.put("expirationDate", 524288L);
+		columnBitmasks.put("type_", 524288L);
 
 		columnBitmasks.put("lastPublishDate", 1048576L);
 
@@ -1761,4 +1761,4 @@ public class CommercePriceListModelImpl
 	private CommercePriceList _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1089380605
+// LIFERAY-SERVICE-BUILDER-HASH:-1265321481

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,7 +55,20 @@ public class ViewContentRetrieversDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		return null;
+		String href =
+			getAPIURL() + "/by-external-reference-code/{externalReferenceCode}";
+
+		return List.of(
+			new FDSActionDropdownItem(
+				HttpComponentsUtil.addParameters(
+					_getContentRetrieverURL(), "externalReferenceCode",
+					"{externalReferenceCode}"),
+				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),
+				"get", null, null),
+			new FDSActionDropdownItem(
+				href, "trash", "delete",
+				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
+				"delete", "async"));
 	}
 
 	private String _getContentRetrieverURL() throws Exception {

@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationImplementation group: "jakarta.annotation", name: "jakarta.annotation-api", version: "2.1.1"
 	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:oauth-client:oauth-client-api")
+	testIntegrationImplementation project(":apps:oauth-client:oauth-client-persistence-api")
 	testIntegrationImplementation project(":apps:oauth-client:oauth-client-rest-api")
 	testIntegrationImplementation project(":apps:oauth-client:oauth-client-rest-client")
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")

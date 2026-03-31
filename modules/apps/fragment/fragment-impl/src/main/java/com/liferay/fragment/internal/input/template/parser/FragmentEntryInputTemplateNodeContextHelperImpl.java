@@ -609,7 +609,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			inputTemplateNode.addAttribute(
 				"unlocalizedFieldsMessage",
 				_language.format(
-					locale, "x-field-cannot-be-localized", inputLabel));
+					locale, "x-field-cannot-be-localized",
+					HtmlUtil.escape(inputLabel)));
 			inputTemplateNode.addAttribute(
 				"unlocalizedFieldsState", "disabled");
 

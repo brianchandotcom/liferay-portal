@@ -248,7 +248,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
 		};
 
-		String[] assetLibraryMemberActionsIds = {
+		String[] assetLibraryMemberActions = {
 			ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
 			ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
 		};
@@ -256,8 +256,8 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 		if (Validator.isNotNull(attachmentDownloadActionKey)) {
 			assetLibraryAdminActions = ArrayUtil.append(
 				assetLibraryAdminActions, attachmentDownloadActionKey);
-			assetLibraryMemberActionsIds = ArrayUtil.append(
-				assetLibraryMemberActionsIds, attachmentDownloadActionKey);
+			assetLibraryMemberActions = ArrayUtil.append(
+				assetLibraryMemberActions, attachmentDownloadActionKey);
 		}
 
 		return JSONUtil.put(
@@ -267,8 +267,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
 			assetLibraryAdminActions
 		).put(
-			DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-			assetLibraryMemberActionsIds
+			DepotRolesConstants.ASSET_LIBRARY_MEMBER, assetLibraryMemberActions
 		).put(
 			RoleConstants.CMS_ADMINISTRATOR, actionIds
 		).put(

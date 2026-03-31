@@ -178,8 +178,8 @@ public class ViewRoomsSectionDisplayContextTest {
 	public void testGetAdditionalProps() throws Exception {
 		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
 			new ViewRoomsSectionDisplayContext(
-				_getMockHttpServletRequest(), _objectDefinition,
-				Mockito.mock(ObjectEntryService.class));
+				new HashMap<>(), _getMockHttpServletRequest(),
+				_objectDefinition, Mockito.mock(ObjectEntryService.class));
 
 		_assertEquals(
 			viewRoomsSectionDisplayContext.getAdditionalProps(),
@@ -207,6 +207,25 @@ public class ViewRoomsSectionDisplayContextTest {
 	public void testGetAPIURL() throws Exception {
 		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
 			new ViewRoomsSectionDisplayContext(
+				new HashMap<>(), _getMockHttpServletRequest(),
+				_objectDefinition, Mockito.mock(ObjectEntryService.class));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"/o/search/v1.0/search?emptySearch=true&",
+				"filter=objectDefinitionId eq ",
+				_objectDefinition.getObjectDefinitionId(),
+				"&nestedFields=embedded,r_accountToDSRRooms_accountEntryId"),
+			viewRoomsSectionDisplayContext.getAPIURL());
+	}
+
+	@Test
+	public void testGetAPIURLWithConfiguration() throws Exception {
+		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
+			new ViewRoomsSectionDisplayContext(
+				HashMapBuilder.<String, Object>put(
+					"isHomePage", true
+				).build(),
 				_getMockHttpServletRequest(), _objectDefinition,
 				Mockito.mock(ObjectEntryService.class));
 
@@ -215,7 +234,8 @@ public class ViewRoomsSectionDisplayContextTest {
 				"/o/search/v1.0/search?emptySearch=true&",
 				"filter=objectDefinitionId eq ",
 				_objectDefinition.getObjectDefinitionId(),
-				"&nestedFields=embedded,r_accountToDSRRooms_accountEntryId"),
+				"&nestedFields=embedded,r_accountToDSRRooms_accountEntryId",
+				"&pageSize=5&sort=dateModified:desc"),
 			viewRoomsSectionDisplayContext.getAPIURL());
 	}
 
@@ -235,8 +255,8 @@ public class ViewRoomsSectionDisplayContextTest {
 
 		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
 			new ViewRoomsSectionDisplayContext(
-				_getMockHttpServletRequest(), _objectDefinition,
-				objectEntryService);
+				new HashMap<>(), _getMockHttpServletRequest(),
+				_objectDefinition, objectEntryService);
 
 		Assert.assertNull(viewRoomsSectionDisplayContext.getCreationMenu());
 
@@ -270,11 +290,34 @@ public class ViewRoomsSectionDisplayContextTest {
 	}
 
 	@Test
+	public void testGetCreationMenuWithConfiguration() throws Exception {
+		ObjectEntryService objectEntryService = Mockito.mock(
+			ObjectEntryService.class);
+
+		Mockito.when(
+			objectEntryService.hasPortletResourcePermission(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
+			new ViewRoomsSectionDisplayContext(
+				HashMapBuilder.<String, Object>put(
+					"isHomePage", true
+				).build(),
+				_getMockHttpServletRequest(), _objectDefinition,
+				objectEntryService);
+
+		Assert.assertNull(viewRoomsSectionDisplayContext.getCreationMenu());
+	}
+
+	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
 		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
 			new ViewRoomsSectionDisplayContext(
-				_getMockHttpServletRequest(), _objectDefinition,
-				Mockito.mock(ObjectEntryService.class));
+				new HashMap<>(), _getMockHttpServletRequest(),
+				_objectDefinition, Mockito.mock(ObjectEntryService.class));
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			viewRoomsSectionDisplayContext.getFDSActionDropdownItems();
@@ -301,6 +344,29 @@ public class ViewRoomsSectionDisplayContextTest {
 		_assertFDSActionDropdownItem(
 			"#", "trash", "delete", "Delete", "delete", "delete", null,
 			fdsActionDropdownItems.get(3));
+	}
+
+	@Test
+	public void testIsHomePage() throws Exception {
+		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
+			new ViewRoomsSectionDisplayContext(
+				new HashMap<>(), _getMockHttpServletRequest(),
+				_objectDefinition, Mockito.mock(ObjectEntryService.class));
+
+		Assert.assertFalse(viewRoomsSectionDisplayContext.isHomePage());
+	}
+
+	@Test
+	public void testIsHomePageWithConfiguration() throws Exception {
+		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
+			new ViewRoomsSectionDisplayContext(
+				HashMapBuilder.<String, Object>put(
+					"isHomePage", true
+				).build(),
+				_getMockHttpServletRequest(), _objectDefinition,
+				Mockito.mock(ObjectEntryService.class));
+
+		Assert.assertTrue(viewRoomsSectionDisplayContext.isHomePage());
 	}
 
 	private void _assertEquals(

@@ -135,6 +135,8 @@ public class ObjectDefinitionUtil {
 		_allowedModifiableSystemObjectDefinitionNames = HashMapBuilder.put(
 			"AIHubAgentDefinition", "/ai-hub/agent-definitions"
 		).put(
+			"AIHubChatbot", "/ai-hub/chatbots"
+		).put(
 			"AIHubContentRetriever", "/ai-hub/content-retrievers"
 		).put(
 			"AIHubInstructionDefinition", "/ai-hub/instruction-definitions"

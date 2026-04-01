@@ -12,7 +12,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -51,9 +50,7 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 	public static void setUpClass() throws Exception {
 		_disableKeyValidatorSafeCloseable = disableValidateWithSafeCloseable();
 
-		_ignoredVersionField = findField(
-			PortalClassLoaderUtil.getClassLoader(),
-			getProperty("ignored.version.filed"));
+		_ignoredVersionField = findField("ignored.version.filed");
 	}
 
 	@AfterClass

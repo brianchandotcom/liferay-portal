@@ -416,33 +416,33 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 	}
 
-	protected static Field findField(
-			ClassLoader classLoader, String fieldString)
-		throws Exception {
+	protected static Field findField(String propertyKey) throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		String field = getProperty(propertyKey);
 
 		return ReflectionTestUtil.getField(
 			classLoader.loadClass(
-				fieldString.substring(
-					0, fieldString.lastIndexOf(StringPool.PERIOD))),
-			fieldString.substring(
-				fieldString.lastIndexOf(StringPool.PERIOD) + 1));
+				field.substring(0, field.lastIndexOf(StringPool.PERIOD))),
+			field.substring(field.lastIndexOf(StringPool.PERIOD) + 1));
 	}
 
-	protected static Method findMethod(
-			ClassLoader classLoader, String methodString)
-		throws Exception {
+	protected static Method findMethod(String propertyKey) throws Exception {
+		String method = getProperty(propertyKey);
 
-		String methodName = methodString.substring(
-			0, methodString.indexOf(StringPool.OPEN_PARENTHESIS));
+		String methodName = method.substring(
+			0, method.indexOf(StringPool.OPEN_PARENTHESIS));
 
 		String className = methodName.substring(
 			0, methodName.lastIndexOf(StringPool.PERIOD));
 		String methodSimpleName = methodName.substring(
 			methodName.lastIndexOf(StringPool.PERIOD) + 1);
 
-		String parameterString = methodString.substring(
-			methodString.indexOf(StringPool.OPEN_PARENTHESIS) + 1,
-			methodString.length() - 1);
+		String parameterString = method.substring(
+			method.indexOf(StringPool.OPEN_PARENTHESIS) + 1,
+			method.length() - 1);
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		if (Validator.isNull(parameterString)) {
 			return ReflectionTestUtil.getMethod(
@@ -712,12 +712,9 @@ public abstract class BaseLicenseTestCase implements Serializable {
 				}
 
 				try {
-					_lifecycleActionField = findField(
-						classLoader, getProperty("lifecycle.action.field"));
-					_validateMethod = findMethod(
-						classLoader, getProperty("validate.method"));
-					_versionMethod = findMethod(
-						classLoader, getProperty("version.method"));
+					_lifecycleActionField = findField("lifecycle.action.field");
+					_validateMethod = findMethod("validate.method");
+					_versionMethod = findMethod("version.method");
 
 					ByteBuddyAgent.install();
 

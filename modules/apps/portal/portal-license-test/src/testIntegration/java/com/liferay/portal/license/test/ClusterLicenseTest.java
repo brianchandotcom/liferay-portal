@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
@@ -273,9 +272,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		long timestamp) {
 
 		return () -> {
-			Field field = findField(
-				PortalClassLoaderUtil.getClassLoader(),
-				getProperty("grace.period.end.field"));
+			Field field = findField("grace.period.end.field");
 
 			field.setAccessible(true);
 
@@ -286,9 +283,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 	}
 
 	private long _getTimeStamp() throws Exception {
-		Method method = findMethod(
-			PortalClassLoaderUtil.getClassLoader(),
-			getProperty("timestamp.method"));
+		Method method = findMethod("timestamp.method");
 
 		return (long)method.invoke(null);
 	}

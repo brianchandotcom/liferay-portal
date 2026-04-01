@@ -104,9 +104,7 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 			deployFreeTierPortalLicense(
 				domain, StringPool.BLANK, startTimeMillis, Time.HOUR);
 
-			Method method = findMethod(
-				PortalClassLoaderUtil.getClassLoader(),
-				getProperty("encrypt.method"));
+			Method method = findMethod("encrypt.method");
 
 			return (String)method.invoke(
 				null,

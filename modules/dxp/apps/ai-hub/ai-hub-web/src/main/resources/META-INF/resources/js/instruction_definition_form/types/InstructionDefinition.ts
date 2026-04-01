@@ -8,6 +8,7 @@ export type InstructionDefinition = {
 	description: string;
 	externalReferenceCode: string;
 	instruction: string;
+	occasion: string;
 	r_accountToAIHubInstructionDefinitions_accountEntryERC: string;
 	scope: string;
 	title_i18n: {

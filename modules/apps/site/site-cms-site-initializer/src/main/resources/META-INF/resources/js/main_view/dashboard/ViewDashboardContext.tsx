@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {createContext, useReducer} from 'react';
+import React, {createContext, useCallback, useReducer} from 'react';
 
 type Item = {
 	externalReferenceCode?: string;
@@ -95,19 +95,19 @@ const ViewDashboardContextProvider: React.FC<IViewDashboardContextProvider> = ({
 }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	const changeLanguage = (payload: Item) => {
+	const changeLanguage = useCallback((payload: Item) => {
 		dispatch({
 			payload,
 			type: Types.changeLanguage,
 		});
-	};
+	}, []);
 
-	const changeSpace = (payload: Item) => {
+	const changeSpace = useCallback((payload: Item) => {
 		dispatch({
 			payload,
 			type: Types.changeSpace,
 		});
-	};
+	}, []);
 
 	return (
 		<ViewDashboardContext.Provider

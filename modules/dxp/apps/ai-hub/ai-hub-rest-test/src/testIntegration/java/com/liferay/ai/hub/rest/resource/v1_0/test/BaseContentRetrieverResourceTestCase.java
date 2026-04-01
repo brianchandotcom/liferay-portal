@@ -18,6 +18,9 @@ import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.pagination.Page;
 import com.liferay.ai.hub.rest.client.resource.v1_0.ContentRetrieverResource;
 import com.liferay.ai.hub.rest.client.serdes.v1_0.ContentRetrieverSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -108,6 +111,16 @@ public abstract class BaseContentRetrieverResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -188,6 +201,29 @@ public abstract class BaseContentRetrieverResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteContentRetrieverByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentRetriever contentRetriever =
+			testDeleteContentRetrieverByExternalReferenceCode_addContentRetriever();
+
+		assertHttpResponseStatusCode(
+			204,
+			contentRetrieverResource.
+				deleteContentRetrieverByExternalReferenceCodeHttpResponse(
+					contentRetriever.getExternalReferenceCode()));
+	}
+
+	protected ContentRetriever
+			testDeleteContentRetrieverByExternalReferenceCode_addContentRetriever()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostContentRetriever() throws Exception {
 		ContentRetriever randomContentRetriever = randomContentRetriever();
 
@@ -209,7 +245,51 @@ public abstract class BaseContentRetrieverResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		Assert.assertTrue(true);
+		ContentRetriever contentRetriever1 =
+			testBatchEngineDeleteImportTask_addContentRetriever();
+
+		testBatchEngineDeleteImportTask_deleteContentRetriever(
+			200, contentRetriever1.getExternalReferenceCode());
+	}
+
+	protected ContentRetriever
+			testBatchEngineDeleteImportTask_addContentRetriever()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteContentRetriever(
+			int expectedStatusCode, String externalReferenceCode,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).parameters(
+			parameters
+		).build();
+
+		HttpResponse httpResponse =
+			importTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.ai.hub.rest.dto.v1_0.ContentRetriever", null, null,
+				null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected void assertContains(
@@ -1087,7 +1167,30 @@ public abstract class BaseContentRetrieverResourceTestCase {
 		return randomContentRetriever();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected ContentRetrieverResource contentRetrieverResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -336,7 +336,7 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		"allowedMissingCompanyIdEntityNames";
 
 	private static final String _ALLOWED_MISSING_MVCC_ENABLED_FILE_NAMES_KEY =
-		"allowedMissingMVVCEnabledFileNames";
+		"allowedMissingMVCCEnabledFileNames";
 
 	private static final String _CHECK_MVCC_ENABLED_KEY = "checkMVCCEnabled";
 

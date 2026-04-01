@@ -13,6 +13,11 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
  */
 public interface ContentRetrieverManager {
 
+	public void deleteContentRetriever(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode)
+		throws Exception;
+
 	public ContentRetriever postContentRetriever(
 			long companyId, ContentRetriever contentRetriever,
 			DTOConverterContext dtoConverterContext)

@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.rest.dto.v1_0.ContentRetriever;
 import com.liferay.ai.hub.rest.manager.v1_0.ContentRetrieverManager;
 import com.liferay.ai.hub.util.AccountEntryUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -39,6 +41,24 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ContentRetrieverManager.class)
 public class ContentRetrieverManagerImpl implements ContentRetrieverManager {
+
+	@Override
+	public void deleteContentRetriever(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			_getObjectDefinition(companyId), null);
+
+		_removeIndex(
+			GetterUtil.getString(objectEntry.getPropertyValue("indexName")));
+
+		_objectEntryManager.deleteObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			_getObjectDefinition(companyId), null);
+	}
 
 	@Override
 	public ContentRetriever postContentRetriever(
@@ -90,13 +110,7 @@ public class ContentRetrieverManagerImpl implements ContentRetrieverManager {
 	}
 
 	private void _createIndex(String indexName) throws Exception {
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(indexName);
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			_searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		if (indicesExistsIndexResponse.isExists()) {
+		if (_hasIndex(indexName)) {
 			return;
 		}
 
@@ -110,11 +124,36 @@ public class ContentRetrieverManagerImpl implements ContentRetrieverManager {
 		_searchEngineAdapter.execute(createIndexRequest);
 	}
 
+	private ObjectDefinition _getObjectDefinition(long companyId)
+		throws Exception {
+
+		return _objectDefinitionLocalService.getObjectDefinition(
+			companyId, "AIHubContentRetriever");
+	}
+
+	private boolean _hasIndex(String indexName) {
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(indexName);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			_searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
 	private String _readJSON(String fileName) throws Exception {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			StringUtil.read(getClass(), "/META-INF/search/" + fileName));
 
 		return jsonObject.toString();
+	}
+
+	private void _removeIndex(String indexName) {
+		if (!_hasIndex(indexName)) {
+			return;
+		}
+
+		_searchEngineAdapter.execute(new DeleteIndexRequest(indexName));
 	}
 
 	private ContentRetriever _toContentRetriever(ObjectEntry objectEntry) {

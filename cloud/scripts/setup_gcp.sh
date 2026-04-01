@@ -100,7 +100,7 @@ function _get_terraform_apply_args {
 
 	local versions_tfvars_file_path
 
-    versions_tfvars_file_path=$(realpath "${versions_tfvars_file}")
+	versions_tfvars_file_path=$(realpath "${versions_tfvars_file}")
 
 	local apply_args=(
 		"-var-file=${versions_tfvars_file_path}"

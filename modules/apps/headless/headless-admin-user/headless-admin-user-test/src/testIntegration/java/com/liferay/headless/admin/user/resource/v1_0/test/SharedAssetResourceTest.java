@@ -60,8 +60,6 @@ import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
-import jakarta.annotation.Nonnull;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -131,7 +129,8 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 		DepotEntry spaceDepotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
-		ObjectDefinition depotObjectDefinition = _addObjectDefinition();
+		ObjectDefinition depotObjectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
 			depotObjectDefinition.getUserId(),
@@ -139,49 +138,58 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
 			StringPool.TRUE);
 
-		long groupId = spaceDepotEntry.getGroupId();
+		try {
+			long groupId = spaceDepotEntry.getGroupId();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, _user.getUserId());
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					groupId, _user.getUserId());
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			groupId, _user.getUserId(),
-			depotObjectDefinition.getObjectDefinitionId(), 0, null,
-			HashMapBuilder.<String, Serializable>put(
-				"name", (Serializable)RandomTestUtil.randomString()
-			).build(),
-			serviceContext);
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				groupId, _user.getUserId(),
+				depotObjectDefinition.getObjectDefinitionId(), 0, null,
+				HashMapBuilder.<String, Serializable>put(
+					"name", (Serializable)RandomTestUtil.randomString()
+				).build(),
+				serviceContext);
 
-		SharedAsset sharedAsset = randomSharedAsset();
+			SharedAsset sharedAsset = randomSharedAsset();
 
-		_sharingEntryLocalService.addSharingEntry(
-			sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0,
-			TestPropsValues.getUserId(),
-			_classNameLocalService.getClassNameId(
-				depotObjectDefinition.getClassName()),
-			objectEntry.getObjectEntryId(), groupId, true,
-			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			_sharingEntryLocalService.addSharingEntry(
+				sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0,
+				TestPropsValues.getUserId(),
+				_classNameLocalService.getClassNameId(
+					depotObjectDefinition.getClassName()),
+				objectEntry.getObjectEntryId(), groupId, true,
+				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
-		Page<SharedAsset> page =
-			sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-				null, null, "(spaceDepotEntry eq true)", Pagination.of(1, 10),
-				null);
+			Page<SharedAsset> page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, "(spaceDepotEntry eq true)",
+						Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(1, page.getTotalCount());
 
-		_objectEntryLocalService.updateObjectEntry(
-			_user.getUserId(), objectEntry.getObjectEntryId(), 0,
-			HashMapBuilder.<String, Serializable>put(
-				"name", (Serializable)RandomTestUtil.randomString()
-			).build(),
-			serviceContext);
+			_objectEntryLocalService.updateObjectEntry(
+				_user.getUserId(), objectEntry.getObjectEntryId(), 0,
+				HashMapBuilder.<String, Serializable>put(
+					"name", (Serializable)RandomTestUtil.randomString()
+				).build(),
+				serviceContext);
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, "(spaceDepotEntry eq true)", Pagination.of(1, 10),
-			null);
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, "(spaceDepotEntry eq true)",
+						Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(1, page.getTotalCount());
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				depotObjectDefinition);
+		}
 	}
 
 	@Override
@@ -268,47 +276,18 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
-	private ObjectDefinition _addObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						"name"
-					).build()),
-				ObjectDefinitionConstants.SCOPE_DEPOT);
-
-		_objectDefinitions.add(objectDefinition);
-
-		return objectDefinition;
-	}
-
-	@Nonnull
 	private ObjectDefinition _addObjectDefinition(String scope)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						StringUtil.randomId()
-					).build()),
-				scope);
-
-		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-			objectDefinition.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
-			StringPool.TRUE);
-
-		_objectDefinitions.add(objectDefinition);
-
-		return objectDefinition;
+		return ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					StringUtil.randomId()
+				).build()),
+			scope);
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -385,35 +364,54 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_DEPOT);
 
-		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-			assetLibraryDepotEntry.getGroupId(), objectDefinition,
-			randomSharedAsset());
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
 
-		DepotEntry spaceDepotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
+		try {
+			_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+				assetLibraryDepotEntry.getGroupId(), objectDefinition,
+				randomSharedAsset());
 
-		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-			spaceDepotEntry.getGroupId(), objectDefinition,
-			randomSharedAsset());
-		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-			spaceDepotEntry.getGroupId(), objectDefinition,
-			randomSharedAsset());
+			DepotEntry spaceDepotEntry = _addDepotEntry(
+				DepotConstants.TYPE_SPACE);
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, null, Pagination.of(1, 10), null);
+			_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+				spaceDepotEntry.getGroupId(), objectDefinition,
+				randomSharedAsset());
+			_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+				spaceDepotEntry.getGroupId(), objectDefinition,
+				randomSharedAsset());
 
-		Assert.assertEquals(totalCount + 4, page.getTotalCount());
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, null, Pagination.of(1, 10), null);
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, "(spaceDepotEntry eq false)", Pagination.of(1, 10),
-			null);
+			Assert.assertEquals(totalCount + 4, page.getTotalCount());
 
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, "(spaceDepotEntry eq false)",
+						Pagination.of(1, 10), null);
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, "(spaceDepotEntry eq true)", Pagination.of(1, 10),
-			null);
+			Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		Assert.assertEquals(2, page.getTotalCount());
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, "(spaceDepotEntry eq true)",
+						Pagination.of(1, 10), null);
+
+			Assert.assertEquals(2, page.getTotalCount());
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	private SharedAsset
@@ -525,29 +523,41 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
 
-		SharedAsset sharedAsset =
-			_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-				testGroup.getGroupId(), objectDefinition, randomSharedAsset());
+		try {
+			SharedAsset sharedAsset =
+				_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+					testGroup.getGroupId(), objectDefinition,
+					randomSharedAsset());
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, null, Pagination.of(1, 10), null);
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-		_objectEntryLocalService.updateObjectEntry(
-			serviceContext.getUserId(), sharedAsset.getClassPK(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			HashMapBuilder.<String, Serializable>put(
-				"file", 0L
-			).put(
-				"title", StringUtil.randomString()
-			).build(),
-			serviceContext);
+			_objectEntryLocalService.updateObjectEntry(
+				serviceContext.getUserId(), sharedAsset.getClassPK(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				HashMapBuilder.<String, Serializable>put(
+					"file", 0L
+				).put(
+					"title", StringUtil.randomString()
+				).build(),
+				serviceContext);
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, null, Pagination.of(1, 10), null);
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	private SharedAsset _toObjectEntryFolderSharedAsset(
@@ -624,9 +634,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@DeleteAfterTestRun
-	private List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
 
 	@Inject
 	private ObjectDefinitionSettingLocalService

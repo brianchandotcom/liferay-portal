@@ -27,6 +27,27 @@ public class ContentRetrieverResourceImpl
 	extends BaseContentRetrieverResourceImpl {
 
 	@Override
+	public void deleteContentRetrieverByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-62272")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		_contentRetrieverManager.deleteContentRetriever(
+			contextCompany.getCompanyId(),
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest, null,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			externalReferenceCode);
+	}
+
+	@Override
 	public ContentRetriever postContentRetriever(
 			ContentRetriever contentRetriever)
 		throws Exception {

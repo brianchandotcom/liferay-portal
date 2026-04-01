@@ -17,9 +17,11 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.ai.hub.web.internal.constants.AIHubFDSNames" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.EditAgentDefinitionDisplayContext" %><%@
+page import="com.liferay.ai.hub.web.internal.display.context.EditChatbotDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.EditContentRetrieverDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.EditInstructionDefinitionDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewAgentDefinitionsDisplayContext" %><%@
+page import="com.liferay.ai.hub.web.internal.display.context.ViewChatbotsDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewContentRetrieversDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewInstructionDefinitionsDisplayContext" %><%@
 page import="com.liferay.portal.workflow.constants.WorkflowPortletKeys" %>

@@ -10,6 +10,14 @@ import {AgentDefinition} from '../types/AgentDefinition';
 const AGENT_DEFINITION_BASE_URI =
 	'/o/ai-hub/agent-definitions/by-external-reference-code/';
 
+async function getAgentDefinitions() {
+	const response = await fetch('/o/ai-hub/v1.0/agent-definitions', {
+		method: 'GET',
+	});
+
+	return response.json();
+}
+
 async function getAgentDefinition(externalReferenceCode: string) {
 	const response = await fetch(
 		`${AGENT_DEFINITION_BASE_URI}${externalReferenceCode}`,
@@ -36,4 +44,4 @@ async function putAgentDefinition(agentDefinition: AgentDefinition) {
 	return response.json();
 }
 
-export {getAgentDefinition, putAgentDefinition};
+export {getAgentDefinition, getAgentDefinitions, putAgentDefinition};

@@ -46,7 +46,7 @@ export default function ImportOptionsModal({
 	});
 
 	return (
-		<ClayModal observer={observer}>
+		<ClayModal className="modal-dialog-centered" observer={observer}>
 			<ModalContent
 				onClose={onClose}
 				onImport={onImport}

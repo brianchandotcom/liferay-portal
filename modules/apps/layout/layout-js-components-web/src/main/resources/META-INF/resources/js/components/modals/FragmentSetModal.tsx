@@ -124,7 +124,7 @@ export default function FragmentSetModal({
 	}
 
 	return (
-		<ClayModal observer={observer}>
+		<ClayModal className="modal-dialog-centered" observer={observer}>
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>

@@ -35,11 +35,13 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import org.jsoup.nodes.Element;
 
@@ -69,22 +71,26 @@ public class AnalyticsAttributesUtil {
 				configJSONObject.getString("fieldId"),
 				"FileEntry_downloadURL")) {
 
-			element.attr("data-analytics-asset-action", ACTION_DOWNLOAD);
-			element.attr(
+			ElementAttributeBuilder.of(
+				element
+			).attr(
+				"data-analytics-asset-action", ACTION_DOWNLOAD
+			).attr(
 				"data-analytics-asset-field",
-				configJSONObject.getString("fieldId"));
-			element.attr(
+				() -> configJSONObject.getString("fieldId")
+			).attr(
 				"data-analytics-asset-id",
-				configJSONObject.getString("classPK"));
-			element.attr(
+				() -> configJSONObject.getString("classPK")
+			).attr(
 				"data-analytics-asset-subtype",
-				configJSONObject.getString("itemSubtype"));
-			element.attr(
+				() -> configJSONObject.getString("itemSubtype")
+			).attr(
 				"data-analytics-asset-title",
-				configJSONObject.getString("title"));
-			element.attr(
+				() -> configJSONObject.getString("title")
+			).attr(
 				"data-analytics-asset-type",
-				_getAnalyticsAssetType(FileEntry.class.getName()));
+				() -> _getAnalyticsAssetType(FileEntry.class.getName())
+			);
 
 			return;
 		}
@@ -102,18 +108,21 @@ public class AnalyticsAttributesUtil {
 					jsonObject = editableValueJSONObject;
 				}
 
-				element.attr("data-analytics-asset-action", ACTION_IMPRESSION);
-				element.attr(
+				ElementAttributeBuilder.of(
+					element
+				).attr(
+					"data-analytics-asset-action", ACTION_IMPRESSION
+				).attr(
 					"data-analytics-asset-field",
-					jsonObject.getString("fieldId"));
-				element.attr(
-					"data-analytics-asset-id", jsonObject.getString("classPK"));
-				element.attr(
-					"data-analytics-asset-title",
-					jsonObject.getString("title"));
-				element.attr(
+					jsonObject.getString("fieldId")
+				).attr(
+					"data-analytics-asset-id", jsonObject.getString("classPK")
+				).attr(
+					"data-analytics-asset-title", jsonObject.getString("title")
+				).attr(
 					"data-analytics-asset-type",
-					_getAnalyticsAssetType(FileEntry.class.getName()));
+					() -> _getAnalyticsAssetType(FileEntry.class.getName())
+				);
 			}
 
 			return;
@@ -131,49 +140,55 @@ public class AnalyticsAttributesUtil {
 		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
 			infoItemFieldMapped.getInfoItemReference());
 
-		element.attr(
+		ElementAttributeBuilder.of(
+			element
+		).attr(
 			"data-analytics-asset-action",
-			_getAnalyticsAssetAction(infoItemFieldMapped, infoItemFieldValues));
-		element.attr(
+			() -> _getAnalyticsAssetAction(
+				infoItemFieldMapped, infoItemFieldValues)
+		).attr(
 			"data-analytics-external-reference-code",
-			_getAnalyticsExternalReferenceCode(
+			() -> _getAnalyticsExternalReferenceCode(
 				infoItemFieldMapped, infoItemFieldValues,
-				fragmentEntryProcessorContext.getLocale()));
-
-		element.attr(
+				fragmentEntryProcessorContext.getLocale())
+		).attr(
 			"data-analytics-asset-categories",
-			_getAnalyticsAssetCategories(
+			() -> _getAnalyticsAssetCategories(
 				classPKInfoItemIdentifier, infoItemFieldMapped,
-				fragmentEntryProcessorContext.getLocale()));
-		element.attr(
-			"data-analytics-asset-field", infoItemFieldMapped.getFieldName());
-		element.attr(
+				fragmentEntryProcessorContext.getLocale())
+		).attr(
+			"data-analytics-asset-field", infoItemFieldMapped.getFieldName()
+		).attr(
 			"data-analytics-asset-id",
-			String.valueOf(classPKInfoItemIdentifier.getClassPK()));
-		element.attr(
+			String.valueOf(classPKInfoItemIdentifier.getClassPK())
+		).attr(
 			"data-analytics-asset-subtype",
-			_getAnalyticsSubtype(infoItemFieldMapped, infoItemServiceRegistry));
-		element.attr(
+			() -> _getAnalyticsSubtype(
+				infoItemFieldMapped, infoItemServiceRegistry)
+		).attr(
 			"data-analytics-asset-tags",
-			_getAnalyticsAssetTags(
-				classPKInfoItemIdentifier, infoItemFieldMapped));
-		element.attr(
+			() -> _getAnalyticsAssetTags(
+				classPKInfoItemIdentifier, infoItemFieldMapped)
+		).attr(
 			"data-analytics-asset-title",
-			_getAnalyticsTitle(
-				infoItemFieldValues,
-				fragmentEntryProcessorContext.getLocale()));
-		element.attr(
+			() -> _getAnalyticsTitle(
+				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
+		).attr(
 			"data-analytics-asset-type",
-			_getAnalyticsAssetType(infoItemFieldMapped.getClassName()));
+			() -> _getAnalyticsAssetType(infoItemFieldMapped.getClassName())
+		).attr(
+			"data-analytics-object-definition-name",
+			() -> {
+				Object object = infoItemFieldMapped.getObject();
 
-		Object object = infoItemFieldMapped.getObject();
+				if (object instanceof ObjectEntry) {
+					return _getAnalyticsObjectDefinitionName(
+						infoItemServiceRegistry, (ObjectEntry)object);
+				}
 
-		if (object instanceof ObjectEntry) {
-			element.attr(
-				"data-analytics-object-definition-name",
-				_getAnalyticsObjectDefinitionName(
-					infoItemServiceRegistry, (ObjectEntry)object));
-		}
+				return StringPool.BLANK;
+			}
+		);
 	}
 
 	private static String _getAnalyticsAssetAction(
@@ -347,5 +362,39 @@ public class AnalyticsAttributesUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsAttributesUtil.class);
+
+	private static class ElementAttributeBuilder {
+
+		public static ElementAttributeBuilder of(Element element) {
+			return new ElementAttributeBuilder(element);
+		}
+
+		public ElementAttributeBuilder attr(String name, String value) {
+			if (Validator.isNotNull(value)) {
+				_element.attr(name, value);
+			}
+
+			return this;
+		}
+
+		public ElementAttributeBuilder attr(
+			String name, Supplier<String> supplier) {
+
+			String value = supplier.get();
+
+			if (Validator.isNotNull(value)) {
+				_element.attr(name, value);
+			}
+
+			return this;
+		}
+
+		private ElementAttributeBuilder(Element element) {
+			_element = element;
+		}
+
+		private final Element _element;
+
+	}
 
 }

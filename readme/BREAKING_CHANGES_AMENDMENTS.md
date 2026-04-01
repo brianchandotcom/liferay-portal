@@ -673,3 +673,79 @@ These attributes were added for more flexibility when using Clay components, ena
 
 The displayType attribute always works, since it defaults to "transparent". The size attribute is used as a replacement for the deprecated large flag. If the size attribute isn't provided, the large flag still works as a fallback. The collapse attribute is a new control and it's disabled by default. Provide collapse with true if the previous behavior is missing.
 ```
+
+----
+
+# 37cfb5472d42205e47807e06ff6a20fe096609bf
+
+The commit message is missing the required breaking change format. The correct message is:
+
+```
+LPD-59218 Semantic versioning
+
+# breaking
+
+## What portal-kernel/src/com/liferay/portal/kernel/util/Props.java
+
+The interface com.liferay.portal.kernel.util.Props has been removed. Its methods (contains, get, getArray, getProperties) are now directly available as static methods on com.liferay.portal.kernel.util.PropsUtil.
+
+## Why
+
+Props was a redundant indirection layer. PropsUtil already provided the same static API, and PropsImpl simply delegated back to PropsUtil. Removing Props eliminates the unnecessary interface and simplifies the properties access pattern.
+
+----
+
+# breaking
+
+## What portal-impl/src/com/liferay/portal/util/PropsImpl.java
+
+The class com.liferay.portal.util.PropsImpl has been removed. It was the sole implementation of com.liferay.portal.kernel.util.Props, which has also been removed.
+
+## Why
+
+PropsImpl was a pass-through that delegated every call to com.liferay.portal.util.PropsUtil. With Props and PropsUtil merged into com.liferay.portal.kernel.util.PropsUtil, this class is no longer needed.
+
+----
+
+# breaking
+
+## What portal-impl/src/com/liferay/portal/util/PropsUtil.java
+
+The class com.liferay.portal.util.PropsUtil has been removed. All of its functionality has been merged into com.liferay.portal.kernel.util.PropsUtil. Additionally, PropsUtil.getProps() and PropsUtil.setProps(Props) have been removed from the kernel PropsUtil. The properties are now initialized directly and cannot be swapped at runtime.
+
+## Why
+
+Having two PropsUtil classes (portal-impl and portal-kernel) with an intermediate Props interface created unnecessary complexity. The portal-kernel PropsUtil now loads properties directly via ConfigurationFactoryImpl, removing the need for runtime Props injection via setProps().
+
+## Alternatives
+
+Update imports from com.liferay.portal.util.PropsUtil to com.liferay.portal.kernel.util.PropsUtil. Replace PropsUtil.getProps() calls with direct PropsUtil static method calls. Remove PropsUtil.setProps() calls as they are no longer needed.
+
+----
+
+# breaking
+
+## What portal-impl/src/com/liferay/portal/util/PropsFiles.java
+
+The class com.liferay.portal.util.PropsFiles has been removed. Its constants (CAPTCHA, CONTENT_TYPES, PORTAL) have been inlined into ConfigurationFactoryImpl.
+
+## Why
+
+PropsFiles only held three string constants and was referenced in a single place. Inlining them eliminates a trivial class.
+
+----
+
+# breaking
+
+## What portal-test/src/com/liferay/portal/test/rule/InitializeKernelUtilTestRule.java
+
+InitializeKernelUtilTestRule now extends AbstractTestRule<Map<String, String>, Map<String, String>> instead of AbstractTestRule<Void, Properties>. The beforeClass method now returns Map<String, String> instead of Void, and afterClass/afterMethod accept Map<String, String> instead of Void/Properties. The rule no longer calls PropsUtil.setProps() or uses reflection to call addProperties/removeProperties.
+
+## Why
+
+With the removal of the Props interface and PropsUtil.setProps(), the test rule can no longer swap in a new PropsImpl. Instead it saves and restores individual property values via PropsUtil.set(String, String) and PropsUtil.get(String).
+
+## Alternatives
+
+Use PropsUtil.set(String, String) to set individual properties and PropsUtil.get(String) to read them back, instead of the former Props-based swapping pattern.
+```

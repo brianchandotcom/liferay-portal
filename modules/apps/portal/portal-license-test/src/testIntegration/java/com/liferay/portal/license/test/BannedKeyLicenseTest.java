@@ -54,7 +54,7 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 	public void testLicenseValidateKey() throws Exception {
 		long startTimeMillis = System.currentTimeMillis();
 
-		try (SafeCloseable safeCloseable = setVersionWithSafeCloseable(
+		try (SafeCloseable safeCloseable1 = setVersionWithSafeCloseable(
 				"2026.Q1.0 LTS")) {
 
 			String domain = RandomTestUtil.randomString();
@@ -66,12 +66,12 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 
 			assertPortalLicenseRegistered();
 
-			resetLicenseData();
-
 			try (AutoCloseable autoCloseable = _setBannedKeys(
 					SetUtil.fromArray(key));
 				LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-					getLicenseManagerClassName(), LoggerTestUtil.ERROR)) {
+					getLicenseManagerClassName(), LoggerTestUtil.ERROR);
+				SafeCloseable safeCloseable2 =
+					resetLicenseDataWithSafeCloseble()) {
 
 				deployFreeTierPortalLicense(
 					RandomTestUtil.randomString(), key, startTimeMillis,
@@ -98,7 +98,9 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 	private String _getLicenseKey(String domain, long startTimeMillis)
 		throws Exception {
 
-		try (SafeCloseable safeCloseable = disableValidateWithSafeCloseable()) {
+		try (SafeCloseable safeCloseable1 = disableValidateWithSafeCloseable();
+			SafeCloseable safeCloseable2 = resetLicenseDataWithSafeCloseble()) {
+
 			deployFreeTierPortalLicense(
 				domain, StringPool.BLANK, startTimeMillis, Time.HOUR);
 
@@ -109,9 +111,6 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 			return (String)method.invoke(
 				null,
 				LicenseManagerUtil.getLicenseProperties(getPortalProductId()));
-		}
-		finally {
-			resetLicenseData();
 		}
 	}
 

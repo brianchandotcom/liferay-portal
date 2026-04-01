@@ -15,6 +15,7 @@ import java.io.File;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,10 +38,14 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 		_setVersionSafeCloseable.close();
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		_safeCloseable = resetLicenseDataWithSafeCloseble();
+	}
+
 	@After
-	public void tearDown() throws Exception {
-		resetLicenseData();
-		resetLifecycleAction();
+	public void tearDown() {
+		_safeCloseable.close();
 	}
 
 	@Test
@@ -134,5 +139,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 	private static SafeCloseable _disableKeyValidatorSafeCloseable;
 	private static SafeCloseable _setVersionSafeCloseable;
+
+	private SafeCloseable _safeCloseable;
 
 }

@@ -24,6 +24,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -56,11 +57,14 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 		_setVersionSafeCloseable.close();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		resetLicenseData();
+	@Before
+	public void setUp() throws Exception {
+		_safeCloseable = resetLicenseDataWithSafeCloseble();
+	}
 
-		resetLifecycleAction();
+	@After
+	public void tearDown() {
+		_safeCloseable.close();
 	}
 
 	@Test
@@ -134,5 +138,7 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 	}
 
 	private static SafeCloseable _setVersionSafeCloseable;
+
+	private SafeCloseable _safeCloseable;
 
 }

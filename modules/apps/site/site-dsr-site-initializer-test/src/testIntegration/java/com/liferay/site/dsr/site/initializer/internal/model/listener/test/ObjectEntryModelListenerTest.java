@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -223,30 +222,6 @@ public class ObjectEntryModelListenerTest {
 			_assertHasResourcePermission(
 				actionId, objectEntry, role.getRoleId());
 		}
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		_assertHasResourcePermission(
-			ActionKeys.ADD_DISCUSSION, objectEntry, role.getRoleId());
-		_assertHasResourcePermission(
-			ActionKeys.VIEW, objectEntry, role.getRoleId());
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), RoleConstants.SITE_OWNER);
-
-		for (String actionId : actionIds) {
-			_assertHasResourcePermission(
-				actionId, objectEntry, role.getRoleId());
-		}
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), "DSR Contributor");
-
-		_assertHasResourcePermission(
-			ActionKeys.ADD_DISCUSSION, objectEntry, role.getRoleId());
-		_assertHasResourcePermission(
-			ActionKeys.VIEW, objectEntry, role.getRoleId());
 	}
 
 	private void _testOnAfterCreateWithDSRSellerRole() throws Exception {

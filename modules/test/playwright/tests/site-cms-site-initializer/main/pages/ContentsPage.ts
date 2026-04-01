@@ -48,7 +48,9 @@ export class ContentsPage {
 		this.page = page;
 
 		this.apiHelpers = new ApiHelpers(page);
-		this.newButton = page.getByTestId('fdsCreationActionButton').first();
+		this.newButton = page.locator(
+			'[data-testid="fdsCreationActionButton"]'
+		);
 		this.publishButton = page
 			.getByText('Publish', {exact: true})
 			.or(page.getByText('Submit for Workflow', {exact: true}));

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 import java.util.List;
 import java.util.Locale;
@@ -259,13 +258,7 @@ public class AnalyticsAttributesUtil {
 		InfoItemFieldMapped infoItemFieldMapped,
 		InfoItemFieldValues infoItemFieldValues, Locale locale) {
 
-		Object object = infoItemFieldMapped.getObject();
-
-		if (object instanceof LiferayFileEntry liferayFileEntry) {
-			object = liferayFileEntry.getDLFileEntry();
-		}
-
-		if (object instanceof
+		if (infoItemFieldMapped.getObject() instanceof
 				ExternalReferenceCodeModel externalReferenceCodeModel) {
 
 			return externalReferenceCodeModel.getExternalReferenceCode();

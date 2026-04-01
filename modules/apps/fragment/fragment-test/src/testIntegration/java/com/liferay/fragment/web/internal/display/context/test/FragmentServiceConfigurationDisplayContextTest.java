@@ -160,6 +160,10 @@ public class FragmentServiceConfigurationDisplayContextTest {
 				_company, _group, _layout);
 
 		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_REQUEST,
+			new MockLiferayPortletRenderRequest(mockHttpServletRequest));
+
+		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_CONFIG,
 			ProxyUtil.newProxyInstance(
 				LiferayPortletConfig.class.getClassLoader(),
@@ -171,9 +175,6 @@ public class FragmentServiceConfigurationDisplayContextTest {
 
 					return null;
 				}));
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAKARTA_PORTLET_REQUEST,
-			new MockLiferayPortletRenderRequest(mockHttpServletRequest));
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());

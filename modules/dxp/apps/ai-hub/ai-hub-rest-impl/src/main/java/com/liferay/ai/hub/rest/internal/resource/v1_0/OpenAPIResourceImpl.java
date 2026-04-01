@@ -91,6 +91,8 @@ public class OpenAPIResourceImpl {
 
 			add(ChatResourceImpl.class);
 
+			add(ContentRetrieverResourceImpl.class);
+
 			add(MessageResourceImpl.class);
 
 			add(SiteResourceImpl.class);

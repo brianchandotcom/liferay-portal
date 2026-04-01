@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 @Component(
-	property = "frontend.data.set.name=" + DSRSiteInitializerFDSNames.DSR_ROOM,
+	property = "frontend.data.set.name=" + DSRSiteInitializerFDSNames.ROOM,
 	service = FDSView.class
 )
 public class RoomSectionTableFDSView extends BaseTableFDSView {

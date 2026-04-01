@@ -58,7 +58,7 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					RandomTestUtil.randomLong())) {
 
-			_assertThrowsPrincipalException(
+			_assertException(
 				() -> _processAction(
 					baseModel,
 					_companyLocalService.createCompany(
@@ -69,7 +69,7 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 		Company company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
-		_assertThrowsPrincipalException(
+		_assertException(
 			() -> _processAction(
 				baseModel, company, UserTestUtil.addUser(company)));
 
@@ -90,9 +90,7 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 	protected abstract Map<String, List<String>> getRequestParameters(
 		T baseModel);
 
-	private void _assertThrowsPrincipalException(
-		UnsafeRunnable<Exception> unsafeRunnable) {
-
+	private void _assertException(UnsafeRunnable<Exception> unsafeRunnable) {
 		try {
 			unsafeRunnable.run();
 

@@ -56,7 +56,22 @@ public class PromptUtil {
 		return StringBundler.concat(
 			prompt,
 			"\n\nIMPORTANT: Override any conflicting instructions above with ",
-			"the following:\n", instructions);
+			"the following:\n\n", instructions);
+	}
+
+	private static String _formatInstruction(
+		String instruction, String occasion) {
+
+		if (Validator.isNull(occasion)) {
+			return String.format("- %s", instruction);
+		}
+
+		if (StringUtil.endsWith(occasion, StringPool.PERIOD)) {
+			occasion = StringUtil.removeLast(occasion, StringPool.PERIOD);
+		}
+
+		return String.format(
+			"- %s, %s", occasion, StringUtil.lowerCaseFirstLetter(instruction));
 	}
 
 	private static String _getInstructions(
@@ -78,8 +93,11 @@ public class PromptUtil {
 
 			List<String> instructions = TransformUtil.transform(
 				page.getItems(),
-				objectEntry -> GetterUtil.getString(
-					objectEntry.getPropertyValue("instruction")));
+				objectEntry -> _formatInstruction(
+					GetterUtil.getString(
+						objectEntry.getPropertyValue("instruction")),
+					GetterUtil.getString(
+						objectEntry.getPropertyValue("occasion"))));
 
 			if (ListUtil.isEmpty(instructions)) {
 				return StringPool.BLANK;

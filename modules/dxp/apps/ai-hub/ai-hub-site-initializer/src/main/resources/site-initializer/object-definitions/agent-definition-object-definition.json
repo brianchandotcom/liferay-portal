@@ -11,10 +11,6 @@
 	},
 	"modifiable": true,
 	"name": "AIHubAgentDefinition",
-	"objectActions": [
-	],
-	"objectDefinitionSettings": [
-	],
 	"objectFields": [
 		{
 			"DBType": "Boolean",
@@ -40,8 +36,6 @@
 				"en_US": "Description"
 			},
 			"name": "description",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"system": true,
@@ -58,8 +52,6 @@
 				"en_US": "Input Variables"
 			},
 			"name": "inputVariables",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"required": true,
 			"system": true,
@@ -76,8 +68,6 @@
 				"en_US": "Output Variable"
 			},
 			"name": "outputVariable",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"required": true,
 			"system": true,
@@ -95,8 +85,6 @@
 			},
 			"localized": true,
 			"name": "title",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"system": true,
 			"type": "String"
@@ -112,8 +100,6 @@
 				"en_US": "Workflow Definition Name"
 			},
 			"name": "workflowDefinitionName",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"required": true,
 			"system": true,
@@ -150,14 +136,6 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",
-	"objectLayouts": [
-	],
-	"objectRelationships": [
-	],
-	"objectValidationRules": [
-	],
-	"objectViews": [
-	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Agent Definitions"

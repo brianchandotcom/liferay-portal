@@ -16,10 +16,6 @@
 	},
 	"modifiable": true,
 	"name": "AIHubMCPServer",
-	"objectActions": [
-	],
-	"objectDefinitionSettings": [
-	],
 	"objectFields": [
 		{
 			"DBType": "Clob",
@@ -62,8 +58,6 @@
 			},
 			"localized": true,
 			"name": "title",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -85,8 +79,6 @@
 			},
 			"localized": false,
 			"name": "url",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -126,14 +118,6 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",
-	"objectLayouts": [
-	],
-	"objectRelationships": [
-	],
-	"objectValidationRules": [
-	],
-	"objectViews": [
-	],
 	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {

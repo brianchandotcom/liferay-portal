@@ -64,8 +64,6 @@
 				"en_US": "Description"
 			},
 			"name": "description",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"system": true,

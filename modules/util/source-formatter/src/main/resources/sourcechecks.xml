@@ -2190,12 +2190,15 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `service.xml` file." />
 			<property name="allowedIncorrectLastPublishDateEntities" value="CommerceCountry,CPDefinition,CPInstance,PollsQuestion,PollsVote" />
-			<property name="checkMVCCEnabled" value="false" />
 		</check>
 		<check name="XMLServiceFinderNameCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that the `finder name` in `service.xml`." />
 			<property name="enabled" value="false" />
+		</check>
+		<check name="XMLServiceMVCCEnabledCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that the `mvcc-enabled` attribute is always set in `service.xml`." />
 		</check>
 		<check name="XMLSolrSchemaFileCheck">
 			<category name="Styling" />

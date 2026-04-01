@@ -155,30 +155,6 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkMVCCEnabled(
-		String fileName, String absolutePath, Element element) {
-
-		if (!isAttributeValue(_CHECK_MVCC_ENABLED_KEY, absolutePath) ||
-			(element.attributeValue("mvcc-enabled") != null)) {
-
-			return;
-		}
-
-		List<String> allowedFileNames = getAttributeValues(
-			_ALLOWED_MISSING_MVCC_ENABLED_FILE_NAMES_KEY, absolutePath);
-
-		for (String allowedFileName : allowedFileNames) {
-			if (absolutePath.endsWith(allowedFileName)) {
-				return;
-			}
-		}
-
-		addMessage(
-			fileName,
-			"Attribute \"mvcc-enabled\" should always be set in service.xml. " +
-				"Preferably, set \"mvcc-enabled=\"true\"\".");
-	}
-
 	private void _checkServiceXML(
 		String fileName, String absolutePath, String content) {
 
@@ -189,8 +165,6 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		}
 
 		Element rootElement = document.getRootElement();
-
-		_checkMVCCEnabled(fileName, absolutePath, rootElement);
 
 		ServiceReferenceElementComparator serviceReferenceElementComparator =
 			new ServiceReferenceElementComparator("entity");
@@ -334,11 +308,6 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 	private static final String _ALLOWED_MISSING_COMPANY_ID_ENTITY_NAMES_KEY =
 		"allowedMissingCompanyIdEntityNames";
-
-	private static final String _ALLOWED_MISSING_MVCC_ENABLED_FILE_NAMES_KEY =
-		"allowedMissingMVCCEnabledFileNames";
-
-	private static final String _CHECK_MVCC_ENABLED_KEY = "checkMVCCEnabled";
 
 	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
 		"service.finder.column.sort.excludes";

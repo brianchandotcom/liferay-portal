@@ -98,6 +98,7 @@ export default function InstructionDefinitionForm({
 					description: '',
 					externalReferenceCode: '',
 					instruction: '',
+					occasion: '',
 					r_accountToAIHubInstructionDefinitions_accountEntryERC:
 						accountEntryExternalReferenceCode,
 					scope: '',
@@ -118,6 +119,7 @@ export default function InstructionDefinitionForm({
 					externalReferenceCode:
 						instructionDefinition.externalReferenceCode,
 					instruction: instructionDefinition.instruction,
+					occasion: instructionDefinition.occasion || '',
 					r_accountToAIHubInstructionDefinitions_accountEntryERC:
 						instructionDefinition.r_accountToAIHubInstructionDefinitions_accountEntryERC,
 					scope: instructionDefinition.scope?.key || '',
@@ -362,6 +364,33 @@ export default function InstructionDefinitionForm({
 												</Option>
 											)}
 										</Picker>
+									</ClayForm.Group>
+
+									<ClayForm.Group>
+										<label htmlFor="occasion">
+											{Liferay.Language.get(
+												'when-to-use'
+											)}
+
+											<span
+												className="ml-1"
+												data-tooltip-align="bottom"
+												title={Liferay.Language.get(
+													'specify-when-to-apply-this-instruction'
+												)}
+											>
+												<Icon symbol="question-circle-full" />
+											</span>
+										</label>
+
+										<textarea
+											className="form-control"
+											id="occasion"
+											name="occasion"
+											onChange={handleInputChange}
+											rows={2}
+											value={formData.occasion}
+										/>
 									</ClayForm.Group>
 								</ClayPanel.Body>
 							</ClayPanel>

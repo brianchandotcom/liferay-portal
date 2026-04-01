@@ -6,6 +6,13 @@
 package com.liferay.portal.cache.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -125,6 +132,52 @@ public class ClusterGeneralTest implements Serializable {
 		_tomcatNode2 = builder2.build();
 
 		_tomcatNode2.start(true);
+	}
+
+	@Test
+	public void testCanAddCategoryToDocumentOnSlaveNode() throws Exception {
+		long groupId = TestPropsValues.getGroupId();
+		long userId = TestPropsValues.getUserId();
+
+		AssetCategory assetCategory = _tomcatNode1.syncExecute(
+			() -> {
+				AssetVocabulary assetVocabulary =
+					AssetVocabularyLocalServiceUtil.addVocabulary(
+						userId, groupId, "Vocabulary Name 1",
+						ServiceContextTestUtil.getServiceContext(
+							groupId, userId));
+
+				return AssetCategoryLocalServiceUtil.addCategory(
+					userId, groupId, "Category Name 1",
+					assetVocabulary.getVocabularyId(),
+					ServiceContextTestUtil.getServiceContext(groupId, userId));
+			});
+
+		FileEntry fileEntry = _tomcatNode1.syncExecute(
+			() -> DLAppLocalServiceUtil.addFileEntry(
+				null, userId, groupId,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Document_1.docx",
+				"application/docx", TestDataConstants.TEST_BYTE_ARRAY, null,
+				null, null,
+				ServiceContextTestUtil.getServiceContext(groupId, userId)));
+
+		_tomcatNode2.syncExecute(
+			() -> {
+				AssetEntryLocalServiceUtil.updateEntry(
+					userId, groupId, DLFileEntry.class.getName(),
+					fileEntry.getFileEntryId(),
+					new long[] {assetCategory.getCategoryId()}, null);
+
+				return null;
+			});
+
+		AssetEntry assetEntry = _tomcatNode1.syncExecute(
+			() -> AssetEntryLocalServiceUtil.getEntry(
+				DLFileEntry.class.getName(), fileEntry.getFileEntryId()));
+
+		Assert.assertArrayEquals(
+			new long[] {assetCategory.getCategoryId()},
+			assetEntry.getCategoryIds());
 	}
 
 	@Test

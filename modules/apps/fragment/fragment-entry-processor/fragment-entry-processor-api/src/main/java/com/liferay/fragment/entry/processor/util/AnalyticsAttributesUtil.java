@@ -143,25 +143,15 @@ public class AnalyticsAttributesUtil {
 				fragmentEntryProcessorContext.getLocale()));
 
 		element.attr(
-			"data-analytics-asset-field", infoItemFieldMapped.getFieldName());
-		element.attr(
 			"data-analytics-asset-categories",
 			_getAnalyticsAssetCategories(
 				classPKInfoItemIdentifier, infoItemFieldMapped,
 				fragmentEntryProcessorContext.getLocale()));
 		element.attr(
+			"data-analytics-asset-field", infoItemFieldMapped.getFieldName());
+		element.attr(
 			"data-analytics-asset-id",
 			String.valueOf(classPKInfoItemIdentifier.getClassPK()));
-
-		Object object = infoItemFieldMapped.getObject();
-
-		if (object instanceof ObjectEntry) {
-			element.attr(
-				"data-analytics-object-definition-name",
-				_getAnalyticsObjectDefinitionName(
-					infoItemServiceRegistry, (ObjectEntry)object));
-		}
-
 		element.attr(
 			"data-analytics-asset-subtype",
 			_getAnalyticsSubtype(infoItemFieldMapped, infoItemServiceRegistry));
@@ -177,6 +167,15 @@ public class AnalyticsAttributesUtil {
 		element.attr(
 			"data-analytics-asset-type",
 			_getAnalyticsAssetType(infoItemFieldMapped.getClassName()));
+
+		Object object = infoItemFieldMapped.getObject();
+
+		if (object instanceof ObjectEntry) {
+			element.attr(
+				"data-analytics-object-definition-name",
+				_getAnalyticsObjectDefinitionName(
+					infoItemServiceRegistry, (ObjectEntry)object));
+		}
 	}
 
 	private static String _getAnalyticsAssetAction(

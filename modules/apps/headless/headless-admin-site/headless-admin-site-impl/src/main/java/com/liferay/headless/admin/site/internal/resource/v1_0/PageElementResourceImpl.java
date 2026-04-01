@@ -159,12 +159,18 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new NoSuchLayoutStructureItemException();
 		}
 
-		return _pageElementDTOConverter.toDTO(
+		PageElement pageElement = _pageElementDTOConverter.toDTO(
 			_getDTOConverterContext(
 				layoutPageTemplateStructure.getCompanyId(),
 				layoutStructureItem.getItemId(), layout.getPlid(),
 				layoutStructure, layoutStructureItem, groupId),
 			layoutStructureItem);
+
+		if (pageElement == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return pageElement;
 	}
 
 	@Override

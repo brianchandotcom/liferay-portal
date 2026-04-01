@@ -8,8 +8,10 @@ package com.liferay.segments.experiment.web.internal.servlet.taglib;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -24,7 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,10 +71,10 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 		StringBundler sb = StringUtil.replaceToStringBundler(
 			_TMPL_CONTENT, "${", "}",
 			_getValues(
-				segmentsExperiment,
-				_getSegmentsExperienceKey(
-					segmentsExperienceManager.getSegmentsExperienceId(
-						httpServletRequest))));
+				themeDisplay.getLocale(),
+				segmentsExperienceManager.getSegmentsExperienceId(
+					httpServletRequest),
+				segmentsExperiment));
 
 		sb.writeTo(httpServletResponse.getWriter());
 	}
@@ -83,41 +85,49 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 			"/dynamic_include/top_head.jsp#analytics");
 	}
 
-	private String _getSegmentsExperienceKey(long segmentsExperienceId) {
+	private Map<String, String> _getValues(
+		Locale locale, long segmentsExperienceId,
+		SegmentsExperiment segmentsExperiment) {
+
+		String segmentsExperienceKey = SegmentsExperienceConstants.KEY_DEFAULT;
+		String segmentsExperienceName = LanguageUtil.get(locale, "default");
+		String segmentsExperienceStatus = "ACTIVE";
+		String segmentsExperimentId = StringPool.BLANK;
+		String segmentsVariantId = StringPool.BLANK;
+
+		if (segmentsExperiment != null) {
+			segmentsExperienceId = segmentsExperiment.getSegmentsExperienceId();
+		}
+
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperienceId);
 
 		if (segmentsExperience != null) {
-			return segmentsExperience.getSegmentsExperienceKey();
+			segmentsExperienceKey =
+				segmentsExperience.getSegmentsExperienceKey();
+			segmentsExperienceName = segmentsExperience.getName(locale);
+			segmentsExperienceStatus =
+				segmentsExperience.isActive() ? "ACTIVE" : "INACTIVE";
 		}
 
-		return SegmentsExperienceConstants.KEY_DEFAULT;
-	}
-
-	private Map<String, String> _getValues(
-		SegmentsExperiment segmentsExperiment,
-		String segmentsExperimentSegmentsExperienceKey) {
-
-		Map<String, String> analyticsClientContextMap = new HashMap<>();
-
-		if (segmentsExperiment == null) {
-			analyticsClientContextMap.put(
-				"experienceId", segmentsExperimentSegmentsExperienceKey);
-			analyticsClientContextMap.put("experimentId", StringPool.BLANK);
-			analyticsClientContextMap.put("variantId", StringPool.BLANK);
-
-			return analyticsClientContextMap;
+		if (segmentsExperiment != null) {
+			segmentsExperimentId =
+				segmentsExperiment.getSegmentsExperimentKey();
+			segmentsVariantId = segmentsExperienceKey;
 		}
 
-		analyticsClientContextMap.put(
-			"experienceId", segmentsExperiment.getSegmentsExperienceKey());
-		analyticsClientContextMap.put(
-			"experimentId", segmentsExperiment.getSegmentsExperimentKey());
-		analyticsClientContextMap.put(
-			"variantId", segmentsExperimentSegmentsExperienceKey);
-
-		return analyticsClientContextMap;
+		return HashMapBuilder.put(
+			"experienceId", segmentsExperienceKey
+		).put(
+			"experienceName", segmentsExperienceName
+		).put(
+			"experienceStatus", segmentsExperienceStatus
+		).put(
+			"experimentId", segmentsExperimentId
+		).put(
+			"variantId", segmentsVariantId
+		).build();
 	}
 
 	private static final String _TMPL_CONTENT = StringUtil.read(

@@ -8,7 +8,7 @@ metadata:
     name: {{ $databaseInstanceName }}
 spec:
     forProvider:
-        databaseVersion: {{ $databaseSpec.databaseVersion | default "POSTGRES_16" }}
+        databaseVersion: {{ $databaseSpec.databaseVersion | default "POSTGRES_18" }}
         deletionProtection: {{ $databaseSpec.deletionProtection | default $deletionProtection }}
         {{- if $cmkEnabled }}
         encryptionKmsKeyName: {{ $cmkKeyName }}

@@ -55,9 +55,6 @@ public class ViewContentRetrieversDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		String href =
-			getAPIURL() + "/by-external-reference-code/{externalReferenceCode}";
-
 		return List.of(
 			new FDSActionDropdownItem(
 				HttpComponentsUtil.addParameters(
@@ -66,7 +63,9 @@ public class ViewContentRetrieversDisplayContext {
 				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				href, "trash", "delete",
+				getAPIURL() +
+					"/by-external-reference-code/{externalReferenceCode}",
+				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", "async"));
 	}

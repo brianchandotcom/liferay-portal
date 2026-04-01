@@ -74,6 +74,7 @@ public class AIHubSiteInitializerTest {
 			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES");
 
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
+		_assertObjectDefinitionExists("L_AI_HUB_CHATBOT");
 		_assertObjectDefinitionExists("L_AI_HUB_CONTENT_RETRIEVER");
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");

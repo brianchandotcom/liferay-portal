@@ -14,6 +14,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -103,6 +104,8 @@ public class DLFileEntryWorkflowHandlerTest {
 		httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
+		_serviceContext.setAttribute(DDMFormValues.class.getName(), null);
+
 		_serviceContext.setRequest(httpServletRequest);
 
 		_addLayoutPageTemplateEntry();
@@ -124,6 +127,15 @@ public class DLFileEntryWorkflowHandlerTest {
 
 		Map<String, Serializable> approvedWorkflowContext =
 			workflowInstance.getWorkflowContext();
+
+		ServiceContext serviceContext =
+			(ServiceContext)approvedWorkflowContext.get(
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+
+		Assert.assertFalse(
+			attributes.containsKey(DDMFormValues.class.getName()));
 
 		Assert.assertNotEquals(
 			StringPool.BLANK,

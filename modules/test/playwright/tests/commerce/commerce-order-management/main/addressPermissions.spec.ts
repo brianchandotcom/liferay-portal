@@ -125,7 +125,7 @@ async function setupAccountWithAddresses(apiHelpers: DataApiHelpers) {
 		await apiHelpers.headlessCommerceAdminAccount.postAddress(account.id, {
 			defaultBilling: false,
 			defaultShipping: false,
-			name: 'Liferay Shipping',
+			name: "Liferay's Shipping",
 			type: ADDRESS_TYPES.SHIPPING,
 		});
 
@@ -219,7 +219,7 @@ test(
 
 test(
 	'Buyer with VIEW_ADDRESSES sees the addresses list at checkout',
-	{tag: ['@LPD-85008']},
+	{tag: ['@LPD-79025', '@LPD-85008']},
 	async ({apiHelpers, checkoutPage, commerceMiniCartPage, page}) => {
 		const {account, billingAndShippingAddress, shippingAddress} =
 			await setupAccountWithAddresses(apiHelpers);

@@ -119,6 +119,44 @@ describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 		).not.toBeInTheDocument();
 	});
 
+	it('resets language selection if the current language is not available in the new space', async () => {
+		const spaceWithLimitedLanguages = {
+			...initialSpace,
+			externalReferenceCode: 'SPACE_ERC',
+			value: '123',
+		};
+
+		// Current selected language is Portuguese (pt_BR)
+
+		const mockedContextWithSelection = {
+			...mockedContext,
+			filters: {
+				language: {label: localizations.pt_BR, value: 'pt_BR'},
+				space: spaceWithLimitedLanguages,
+			},
+		};
+
+		// New space only supports English and Spanish
+
+		mockedSpaceService.getSpace.mockResolvedValue({
+			settings: {
+				availableLanguageIds: ['en-US', 'es-ES'],
+			},
+		} as any);
+
+		render(
+			<ViewDashboardContext.Provider value={mockedContextWithSelection}>
+				<LanguagesDropdown />
+			</ViewDashboardContext.Provider>
+		);
+
+		await waitFor(() =>
+			expect(mockedContext.changeLanguage).toHaveBeenCalledWith(
+				initialLanguage
+			)
+		);
+	});
+
 	it('shows all languages if space settings does not have availableLanguageIds', async () => {
 		const spaceWithoutSettings = {
 			...initialSpace,

@@ -1,0 +1,5 @@
+${prompt}
+
+IMPORTANT: Override any conflicting instructions above with the following:
+
+-${occasion}, ${instruction}

@@ -106,6 +106,7 @@ public class ContentRetrieverResourceTest
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	@Override
 	@Test
 	public void testPostContentRetriever() throws Exception {
 		ContentRetriever contentRetriever =

@@ -16,7 +16,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,10 +65,13 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(groupId)));
 
-		Group group = _groupLocalService.getGroup(groupId);
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			groupId);
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564")) {
+		if ((depotEntry != null) &&
+			(depotEntry.getType() == DepotConstants.TYPE_SPACE) &&
+			FeatureFlagManagerUtil.isEnabled(
+				depotEntry.getCompanyId(), "LPD-17564")) {
 
 			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 				new ArrayList<>(
@@ -185,6 +191,9 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

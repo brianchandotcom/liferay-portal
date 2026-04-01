@@ -83,16 +83,18 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 			throw new UnsupportedOperationException();
 		}
 
+		long fragmentEntryLinkId =
+			fragmentStyledLayoutStructureItem.getFragmentEntryLinkId();
+
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+				fragmentEntryLinkId);
 
 		if (fragmentEntryLink == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No fragment entry link exists with ID " +
-						fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkId());
+						fragmentEntryLinkId);
 			}
 
 			return null;

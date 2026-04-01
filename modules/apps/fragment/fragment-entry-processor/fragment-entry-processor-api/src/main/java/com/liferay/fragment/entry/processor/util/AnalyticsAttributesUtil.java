@@ -95,42 +95,11 @@ public class AnalyticsAttributesUtil {
 			return;
 		}
 
-		InfoItemFieldMapped infoItemFieldMapped =
-			fragmentEntryProcessorHelper.getInfoItemFieldMapped(
-				editableValueJSONObject, fragmentEntryProcessorContext);
-
-		if (infoItemFieldMapped == null) {
-			if (element.is("img")) {
-				JSONObject jsonObject = editableValueJSONObject.getJSONObject(
-					String.valueOf(fragmentEntryProcessorContext.getLocale()));
-
-				if (jsonObject == null) {
-					jsonObject = editableValueJSONObject;
-				}
-
-				ElementAttributeBuilder.of(
-					element
-				).attr(
-					"data-analytics-asset-action", ACTION_IMPRESSION
-				).attr(
-					"data-analytics-asset-field",
-					jsonObject.getString("fieldId")
-				).attr(
-					"data-analytics-asset-id", jsonObject.getString("classPK")
-				).attr(
-					"data-analytics-asset-title", jsonObject.getString("title")
-				).attr(
-					"data-analytics-asset-type",
-					() -> _getAnalyticsAssetType(FileEntry.class.getName())
-				);
-			}
-
-			return;
-		}
-
 		_addAnalyticsAttributes(
 			element, fragmentEntryProcessorContext, infoDisplaysFieldValues,
-			infoItemFieldMapped, infoItemServiceRegistry);
+			fragmentEntryProcessorHelper.getInfoItemFieldMapped(
+				editableValueJSONObject, fragmentEntryProcessorContext),
+			infoItemServiceRegistry);
 	}
 
 	private static void _addAnalyticsAttributes(
@@ -139,6 +108,10 @@ public class AnalyticsAttributesUtil {
 		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
 		InfoItemFieldMapped infoItemFieldMapped,
 		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		if (infoItemFieldMapped == null) {
+			return;
+		}
 
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemFieldMapped.getInfoItemIdentifier();

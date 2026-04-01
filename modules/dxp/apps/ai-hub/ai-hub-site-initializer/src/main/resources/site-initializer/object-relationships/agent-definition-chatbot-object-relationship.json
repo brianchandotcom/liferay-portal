@@ -1,8 +1,8 @@
 {
 	"deletionType": "cascade",
-	"externalReferenceCode": "L_AGENT_DEFINITION_TO_L_AI_HUB_CHATBOT",
+	"externalReferenceCode": "L_AGENT_DEFINITIONS_TO_L_AI_HUB_CHATBOTS",
 	"label": {
-		"en_US": "Agent Definition to Chatbot"
+		"en_US": "Agent Definitions to Chatbots"
 	},
 	"name": "agentDefinitionsToChatbots",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AIHubAgentDefinition$]",

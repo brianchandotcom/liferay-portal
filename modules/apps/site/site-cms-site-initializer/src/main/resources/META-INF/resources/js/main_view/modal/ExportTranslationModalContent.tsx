@@ -15,7 +15,7 @@ import {IBulkActionFDSData} from '../../common/types/BulkActionTask';
 import {downloadBlob} from '../../common/utils/downloadBlob';
 import {getFolderIdAndGroupIdsFromFilter} from '../../common/utils/odataFilterUtil';
 import {displayErrorToast} from '../../common/utils/toastUtil';
-import {exportTranslationBulkAction} from '../props_transformer/actions/exportTranslationBulkAction';
+import {exportTranslationBulkActionRequest} from '../props_transformer/actions/exportTranslationBulkActionRequest';
 
 type FileFormat = {
 	displayName: string;
@@ -176,7 +176,7 @@ export default function ExportTranslationModalContent({
 				url.searchParams.get('filter') || ''
 			);
 
-			return exportTranslationBulkAction({
+			return exportTranslationBulkActionRequest({
 				apiURL,
 				folderId,
 				groupIds,

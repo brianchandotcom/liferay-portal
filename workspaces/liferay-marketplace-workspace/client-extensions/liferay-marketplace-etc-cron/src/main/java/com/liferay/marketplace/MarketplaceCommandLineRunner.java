@@ -963,7 +963,7 @@ public class MarketplaceCommandLineRunner
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Error processing request product feedback for order " +
+					"Unable to process request product feedback for order " +
 						order.getId(),
 					exception);
 			}

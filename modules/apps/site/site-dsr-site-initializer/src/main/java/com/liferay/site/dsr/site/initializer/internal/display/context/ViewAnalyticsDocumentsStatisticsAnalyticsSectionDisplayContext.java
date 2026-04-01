@@ -33,7 +33,7 @@ public class ViewAnalyticsDocumentsStatisticsAnalyticsSectionDisplayContext
 		return HashMapBuilder.<String, Object>putAll(
 			super.getProps()
 		).put(
-			"namespace", DSRSiteInitializerFDSNames.DSR_DOCUMENTS_STATISTICS
+			"namespace", DSRSiteInitializerFDSNames.DOCUMENTS_STATISTICS
 		).build();
 	}
 

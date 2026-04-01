@@ -19,7 +19,7 @@ ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext = (ViewRoomsSectio
 			creationMenu="<%= viewRoomsSectionDisplayContext.getCreationMenu() %>"
 			fdsActionDropdownItems="<%= viewRoomsSectionDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= DSRSiteInitializerFDSNames.DSR_ROOM %>"
+			id="<%= DSRSiteInitializerFDSNames.ROOM %>"
 			propsTransformer="{RoomsFDSPropsTransformer} from site-dsr-site-initializer"
 			selectedItemsKey="embedded.id"
 		/>

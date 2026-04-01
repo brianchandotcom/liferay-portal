@@ -55,6 +55,7 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	const [languages, setLanguages] = useState(initialLanguages);
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [searchValue, setSearchValue] = useState('');
 
 	useEffect(() => {
 		if (space.value === 'all') {
@@ -112,6 +113,18 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 		space.externalReferenceCode,
 	]);
 
+	useEffect(() => {
+		if (!dropdownActive) {
+			setSearchValue('');
+		}
+	}, [dropdownActive]);
+
+	const filteredLanguages = searchValue
+		? languages.filter(({label}) =>
+				label.toLowerCase().includes(searchValue.toLowerCase())
+			)
+		: languages;
+
 	return (
 		<FilterDropdown
 			active={dropdownActive}
@@ -119,20 +132,10 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 			className={className}
 			filterByValue="languages"
 			icon="automatic-translate"
-			items={languages}
+			items={filteredLanguages}
 			loading={loading}
 			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
-			onSearch={(value) => {
-				setLanguages(
-					value
-						? languages.filter(({label}) =>
-								label
-									.toLowerCase()
-									.includes(value.toLowerCase())
-							)
-						: languages
-				);
-			}}
+			onSearch={setSearchValue}
 			onSelectItem={(item) => {
 				changeLanguage(item);
 

@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -48,6 +49,13 @@ public class UpdateIdentityProviderConnectionMVCActionCommandTest
 	}
 
 	@Override
+	protected void assertProcessAction(
+		SamlSpIdpConnection samlSpIdpConnection) {
+
+		Assert.assertEquals(_name, samlSpIdpConnection.getName());
+	}
+
+	@Override
 	protected SamlSpIdpConnection fetchBaseModel(long primaryKey) {
 		return _samlSpIdpConnectionLocalService.fetchSamlSpIdpConnection(
 			primaryKey);
@@ -59,16 +67,14 @@ public class UpdateIdentityProviderConnectionMVCActionCommandTest
 	}
 
 	@Override
-	protected String getName(SamlSpIdpConnection samlSpIdpConnection) {
-		return samlSpIdpConnection.getName();
-	}
-
-	@Override
-	protected Map<String, List<String>> getRegularParameters(
+	protected Map<String, List<String>> getRequestParameters(
 		SamlSpIdpConnection samlSpIdpConnection) {
 
+		_name = RandomTestUtil.randomString();
+
 		return Map.of(
-			"samlIdpEntityId", Collections.singletonList("TEST_IDP_ENTITY_ID"),
+			"name", Collections.singletonList(_name), "samlIdpEntityId",
+			Collections.singletonList("TEST_IDP_ENTITY_ID"),
 			"samlSpIdpConnectionId",
 			Collections.singletonList(
 				String.valueOf(
@@ -80,6 +86,8 @@ public class UpdateIdentityProviderConnectionMVCActionCommandTest
 		type = MVCActionCommand.class
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	private String _name;
 
 	@Inject
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;

@@ -72,7 +72,7 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"businessType": "LongText",
 			"externalReferenceCode": "INSTRUCTION",
 			"indexed": true,
@@ -83,7 +83,7 @@
 			"name": "instruction",
 			"required": true,
 			"system": true,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",

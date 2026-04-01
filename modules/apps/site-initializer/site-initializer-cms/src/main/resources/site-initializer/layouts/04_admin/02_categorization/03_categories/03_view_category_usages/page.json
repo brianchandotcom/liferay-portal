@@ -1,6 +1,7 @@
 {
 	"friendlyURL": "/categorization/view-category-usages",
 	"hidden": false,
+	"name": "Category Usages",
 	"name_i18n": {
 		"en_US": "Category Usages"
 	},

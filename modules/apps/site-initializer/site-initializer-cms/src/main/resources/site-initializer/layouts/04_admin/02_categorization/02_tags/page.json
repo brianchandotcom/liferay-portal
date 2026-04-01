@@ -1,6 +1,7 @@
 {
 	"friendlyURL": "/categorization/view-tags",
 	"hidden": false,
+	"name": "Tags",
 	"name_i18n": {
 		"en_US": "Tags"
 	},

@@ -300,15 +300,48 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 	}
 
-	public void resetLicenseData() throws Exception {
+	public SafeCloseable resetLicenseDataWithSafeCloseble() throws Exception {
 		File dir = new File(LicenseUtil.LICENSE_REPOSITORY_DIR);
 
+		File tmpDir = FileUtil.createTempFolder();
+
 		if (dir.exists()) {
+			FileUtil.copyDirectory(dir, tmpDir);
+
 			FileUtil.deltree(dir);
 		}
 
 		LicenseManagerUtil.checkLicense(getPortalProductId());
 		LicenseManagerUtil.checkLicense(getCMPProductId());
+
+		resetLifecycleAction();
+
+		return () -> {
+			if (dir.exists()) {
+				FileUtil.deltree(dir);
+			}
+
+			if (tmpDir.exists()) {
+				try {
+					FileUtil.copyDirectory(tmpDir, dir);
+				}
+				catch (Exception exception) {
+					throw new IllegalStateException(exception);
+				}
+
+				FileUtil.deltree(tmpDir);
+			}
+
+			LicenseManagerUtil.checkLicense(getPortalProductId());
+			LicenseManagerUtil.checkLicense(getCMPProductId());
+
+			try {
+				resetLifecycleAction();
+			}
+			catch (Exception exception) {
+				throw new IllegalStateException(exception);
+			}
+		};
 	}
 
 	public void resetLifecycleAction() throws Exception {
@@ -557,7 +590,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 			});
 
-		try {
+		try (SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
 			assertPortalLicenseNotRegistered();
 
 			deployFreeTierPortalLicense(Time.HOUR);
@@ -568,9 +601,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 		finally {
 			PortalClassLoaderUtil.setClassLoader(classLoader);
-
-			resetLicenseData();
-			resetLifecycleAction();
 		}
 	}
 

@@ -35,6 +35,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -73,10 +74,14 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 		_setVersionSafeCloseable.close();
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		_safeCloseable = resetLicenseDataWithSafeCloseble();
+	}
+
 	@After
 	public void tearDown() throws Exception {
-		resetLicenseData();
-		resetLifecycleAction();
+		_safeCloseable.close();
 
 		ConfigurationTestUtil.deleteConfiguration(_CKEDITOR_CONFIG_ID);
 
@@ -286,5 +291,7 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
+
+	private SafeCloseable _safeCloseable;
 
 }

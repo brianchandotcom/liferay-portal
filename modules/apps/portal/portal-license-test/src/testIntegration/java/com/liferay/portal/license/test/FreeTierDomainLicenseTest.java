@@ -153,7 +153,8 @@ public class FreeTierDomainLicenseTest extends BaseLicenseTestCase {
 
 	private void _assertDomainIsInvalid(String domain) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getLicenseManagerClassName(), LoggerTestUtil.ERROR)) {
+				getLicenseManagerClassName(), LoggerTestUtil.ERROR);
+			SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
 
 			deployFreeTierPortalLicense(domain, Time.HOUR);
 
@@ -162,21 +163,16 @@ public class FreeTierDomainLicenseTest extends BaseLicenseTestCase {
 				"Current domain is not allowed, allowed domains are: " +
 					StringUtil.merge(new String[] {domain, "localhost"}));
 		}
-		finally {
-			resetLicenseData();
-		}
 	}
 
 	private void _assertDomainIsValid(String domain) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getLicenseManagerClassName(), LoggerTestUtil.ERROR)) {
+				getLicenseManagerClassName(), LoggerTestUtil.ERROR);
+			SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
 
 			deployFreeTierPortalLicense(domain, Time.HOUR);
 
 			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
-		}
-		finally {
-			resetLicenseData();
 		}
 	}
 

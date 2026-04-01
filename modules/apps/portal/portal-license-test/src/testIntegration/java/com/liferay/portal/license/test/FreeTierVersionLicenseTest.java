@@ -136,8 +136,8 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				getLicenseManagerClassName(), LoggerTestUtil.ERROR);
-			SafeCloseable safeCloseable = setVersionWithSafeCloseable(
-				version)) {
+			SafeCloseable safeCloseable1 = setVersionWithSafeCloseable(version);
+			SafeCloseable safeCloseable2 = resetLicenseDataWithSafeCloseble()) {
 
 			deployFreeTierPortalLicense(Time.HOUR);
 
@@ -154,11 +154,6 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 
 				assertPortalLicenseRegistered();
 			}
-		}
-		finally {
-			resetLicenseData();
-
-			resetLifecycleAction();
 		}
 	}
 

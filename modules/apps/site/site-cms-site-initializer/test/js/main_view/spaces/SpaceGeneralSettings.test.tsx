@@ -172,10 +172,14 @@ describe('SpaceGeneralSettings', () => {
 		});
 	});
 
-	it('shows an error toast when the request fails', async () => {
-		SpaceService.updateSpace = jest
-			.fn()
-			.mockResolvedValue({error: 'Error'});
+	it.each([
+		'Please enter a unique name',
+		'This external reference code is already in use.',
+	])('shows API error message: %s', async (errorMessage) => {
+		jest.spyOn(SpaceService, 'updateSpace').mockResolvedValue({
+			data: null,
+			error: errorMessage,
+		});
 
 		renderComponent();
 
@@ -183,16 +187,10 @@ describe('SpaceGeneralSettings', () => {
 
 		await waitFor(() => {
 			expect(SpaceService.updateSpace).toBeCalled();
-
 			expect(
 				screen.queryByText('My Space-was-saved-successfully')
 			).not.toBeInTheDocument();
-
-			expect(
-				screen.getByText(
-					'an-unexpected-error-occurred-while-saving-the-space'
-				)
-			).toBeInTheDocument();
+			expect(screen.getByText(errorMessage)).toBeInTheDocument();
 		});
 
 		await closeToast();

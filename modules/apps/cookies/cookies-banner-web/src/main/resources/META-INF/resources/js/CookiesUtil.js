@@ -24,13 +24,15 @@ export function acceptAllCookies(
 	consentRenewalPeriod,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
-	storeConsent
+	storeConsent,
+	timeUnit
 ) {
 	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
 		setCookie(
 			consentRenewalPeriod,
 			optionalConsentCookieTypeName,
 			storeConsent,
+			timeUnit,
 			'true'
 		);
 	});
@@ -40,6 +42,7 @@ export function acceptAllCookies(
 			consentRenewalPeriod,
 			requiredConsentCookieTypeName,
 			storeConsent,
+			timeUnit,
 			'true'
 		);
 	});
@@ -49,13 +52,15 @@ export function declineAllCookies(
 	consentRenewalPeriod,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
-	storeConsent
+	storeConsent,
+	timeUnit
 ) {
 	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
 		setCookie(
 			consentRenewalPeriod,
 			optionalConsentCookieTypeName,
 			storeConsent,
+			timeUnit,
 			'false'
 		);
 	});
@@ -65,6 +70,7 @@ export function declineAllCookies(
 			consentRenewalPeriod,
 			requiredConsentCookieTypeName,
 			storeConsent,
+			timeUnit,
 			'true'
 		);
 	});
@@ -203,13 +209,26 @@ export function setCookie(
 	consentRenewalPeriod,
 	name,
 	storeConsent = false,
+	timeUnit,
 	value
 ) {
-	const expirationInSeconds =
-		60 * 60 * 24 * 365 * (consentRenewalPeriod / 12);
+	const secondsInDay = 60 * 60 * 24;
+	let maxAge = 0;
+
+	const timeUnitLowerCase = (timeUnit || 'months').toLowerCase();
+
+	if (timeUnitLowerCase === 'days') {
+		maxAge = secondsInDay * consentRenewalPeriod;
+	}
+	else if (timeUnitLowerCase === 'weeks') {
+		maxAge = secondsInDay * 7 * consentRenewalPeriod;
+	}
+	else {
+		maxAge = secondsInDay * 365 * (consentRenewalPeriod / 12);
+	}
 
 	setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
-		'max-age': expirationInSeconds,
+		'max-age': Math.floor(maxAge),
 		'path': themeDisplay.getPathContext() || '/',
 	});
 
@@ -220,7 +239,7 @@ export function setCookie(
 	) {
 		const expirationDate = new Date();
 		expirationDate.setSeconds(
-			expirationDate.getSeconds() + expirationInSeconds
+			expirationDate.getSeconds() + Math.floor(maxAge)
 		);
 
 		const data = {
@@ -239,7 +258,11 @@ export function setCookie(
 	}
 }
 
-export function setUserConfigCookie(consentRenewalPeriod, storeConsent) {
+export function setUserConfigCookie(
+	consentRenewalPeriod,
+	storeConsent,
+	timeUnit
+) {
 	if (
 		Liferay.FeatureFlags['LPD-75032'] &&
 		!Liferay.ThemeDisplay.isSignedIn()
@@ -248,16 +271,24 @@ export function setUserConfigCookie(consentRenewalPeriod, storeConsent) {
 			consentRenewalPeriod,
 			guestUserConfigCookieName,
 			false,
+			timeUnit,
 			'true'
 		);
 	}
 
-	setCookie(consentRenewalPeriod, userConfigCookieName, storeConsent, 'true');
+	setCookie(
+		consentRenewalPeriod,
+		userConfigCookieName,
+		storeConsent,
+		timeUnit,
+		'true'
+	);
 
 	setCookie(
 		consentRenewalPeriod,
 		userConfigDateCookieName,
 		storeConsent,
+		timeUnit,
 		new Date().getTime()
 	);
 

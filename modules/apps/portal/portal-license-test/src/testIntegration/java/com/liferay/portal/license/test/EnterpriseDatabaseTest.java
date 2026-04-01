@@ -84,6 +84,8 @@ public class EnterpriseDatabaseTest extends BaseLicenseTestCase {
 	public void testFreeTierLicenseSetupWizard() throws Exception {
 		Assume.assumeTrue(PropsValues.SETUP_WIZARD_ENABLED);
 
+		assertPortalLicenseNotRegistered();
+
 		deployFreeTierPortalLicense(Time.HOUR);
 
 		assertPortalLicenseRegistered();

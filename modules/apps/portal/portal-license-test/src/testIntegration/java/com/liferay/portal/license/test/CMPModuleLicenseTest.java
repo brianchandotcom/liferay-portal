@@ -50,7 +50,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testBrokenCMPFile() throws Exception {
-		assertPortalInvalidatedWithBrokenFile(getProperty("cmp.file.path"));
+		assertPortalInvalidatedWithBrokenFile("cmp.file.path");
 	}
 
 	@Test

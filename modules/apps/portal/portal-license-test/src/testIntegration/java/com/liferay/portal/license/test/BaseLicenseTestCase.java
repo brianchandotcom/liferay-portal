@@ -492,8 +492,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		Assert.assertEquals(message, throwable.getMessage());
 	}
 
-	protected void assertPortalInvalidatedWithBrokenFile(String filePath)
+	protected void assertPortalInvalidatedWithBrokenFile(String propertyKey)
 		throws Exception {
+
+		String filePath = getProperty(propertyKey);
 
 		_assertPortalInvalidatedWithBrokenFile(filePath, null);
 

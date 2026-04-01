@@ -73,7 +73,7 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testBrokenBundlesFile() throws Exception {
-		assertPortalInvalidatedWithBrokenFile(getProperty("bundles.file.path"));
+		assertPortalInvalidatedWithBrokenFile("bundles.file.path");
 	}
 
 	@Test

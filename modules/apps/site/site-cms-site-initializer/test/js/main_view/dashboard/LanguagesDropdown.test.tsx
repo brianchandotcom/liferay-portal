@@ -65,6 +65,76 @@ describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 		});
 	});
 
+	it('filters languages when searching and restores them when backspacing or reopening', async () => {
+		render(
+			<ViewDashboardContext.Provider value={mockedContext}>
+				<LanguagesDropdown />
+			</ViewDashboardContext.Provider>
+		);
+
+		const button = screen.getByRole('button', {name: 'all-languages'});
+
+		fireEvent.click(button);
+
+		const searchInput = screen.getByPlaceholderText('search');
+
+		// Search for English
+
+		fireEvent.change(searchInput, {target: {value: localizations.en_US}});
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('menuitem', {name: localizations.en_US})
+			).toBeInTheDocument();
+
+			expect(
+				screen.queryByRole('menuitem', {name: localizations.es_ES})
+			).not.toBeInTheDocument();
+		});
+
+		// Search for something that doesn't exist
+
+		fireEvent.change(searchInput, {target: {value: 'NonExistentLanguage'}});
+
+		await waitFor(() => {
+			expect(
+				screen.queryByRole('menuitem', {name: localizations.en_US})
+			).not.toBeInTheDocument();
+		});
+
+		// Backspace (simulated by searching for a prefix)
+
+		fireEvent.change(searchInput, {
+			target: {value: localizations.en_US.substring(0, 3)},
+		});
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('menuitem', {name: localizations.en_US})
+			).toBeInTheDocument();
+		});
+
+		// Close the dropdown
+
+		fireEvent.click(button);
+
+		// Reopen the dropdown
+
+		fireEvent.click(button);
+
+		// Should show all languages again
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('menuitem', {name: localizations.en_US})
+			).toBeInTheDocument();
+
+			expect(
+				screen.getByRole('menuitem', {name: localizations.es_ES})
+			).toBeInTheDocument();
+		});
+	});
+
 	it('filters languages when a specific space is selected', async () => {
 		const spaceWithLimitedLanguages = {
 			...initialSpace,

@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletRequest;
@@ -114,7 +116,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 			).setMVCPath(
 				"/edit_workflow_task.jsp"
 			).setBackURL(
-				themeDisplay.getURLCurrent()
+				_getBackURL(httpServletRequest, themeDisplay.getURLCurrent())
 			).setParameter(
 				"workflowTaskId", String.valueOf(workflowTaskId)
 			).setWindowState(
@@ -297,6 +299,24 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		WorkflowInstanceLinkLocalServiceUtil.startWorkflowInstance(
 			companyId, groupId, userId, getClassName(), classPK,
 			workflowContext);
+	}
+
+	private String _getBackURL(
+		HttpServletRequest httpServletRequest, String defaultValue) {
+
+		String backURL = ParamUtil.getString(httpServletRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
+		}
+
+		backURL = ParamUtil.getString(httpServletRequest, "redirect");
+
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
+		}
+
+		return defaultValue;
 	}
 
 	private static final boolean _ASSET_TYPE_SEARCHABLE = true;

@@ -81,41 +81,44 @@ public class PageElementDTOConverter
 			throw new UnsupportedOperationException();
 		}
 
-		return new PageElement() {
-			{
-				setExternalReferenceCode(layoutStructureItem::getItemId);
-				setPageElementDefinition(
-					() -> _getPageElementDefinition(
-						dtoConverterContext, layoutStructureItem));
-				setPageElements(
-					() -> _getPageElements(
-						dtoConverterContext, layoutStructure,
-						layoutStructureItem));
-				setParentExternalReferenceCode(
-					() -> {
-						if (Objects.equals(
-								layoutStructure.getMainItemId(),
-								layoutStructureItem.getParentItemId())) {
+		PageElementDefinition pageElementDefinition = _getPageElementDefinition(
+			dtoConverterContext, layoutStructureItem);
 
-							return StringPool.BLANK;
-						}
+		if (pageElementDefinition == null) {
+			return null;
+		}
 
-						return layoutStructureItem.getParentItemId();
-					});
-				setPosition(
-					() -> {
-						LayoutStructureItem parentLayoutStructureItem =
-							layoutStructure.getLayoutStructureItem(
-								layoutStructureItem.getParentItemId());
+		PageElement pageElement = new PageElement();
 
-						List<String> childrenItemIds =
-							parentLayoutStructureItem.getChildrenItemIds();
+		pageElement.setExternalReferenceCode(layoutStructureItem::getItemId);
+		pageElement.setPageElementDefinition(() -> pageElementDefinition);
+		pageElement.setPageElements(
+			() -> _getPageElements(
+				dtoConverterContext, layoutStructure, layoutStructureItem));
+		pageElement.setParentExternalReferenceCode(
+			() -> {
+				if (Objects.equals(
+						layoutStructure.getMainItemId(),
+						layoutStructureItem.getParentItemId())) {
 
-						return childrenItemIds.indexOf(
-							layoutStructureItem.getItemId());
-					});
-			}
-		};
+					return StringPool.BLANK;
+				}
+
+				return layoutStructureItem.getParentItemId();
+			});
+		pageElement.setPosition(
+			() -> {
+				LayoutStructureItem parentLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						layoutStructureItem.getParentItemId());
+
+				List<String> childrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
+
+				return childrenItemIds.indexOf(layoutStructureItem.getItemId());
+			});
+
+		return pageElement;
 	}
 
 	private PageElementDefinition _getPageElementDefinition(

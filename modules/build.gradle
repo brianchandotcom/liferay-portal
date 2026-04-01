@@ -583,8 +583,9 @@ gradle.beforeProject {
 			if (!project.name.endsWith("-demo")) {
 				configure([compileJSP, generateJSPJava]) {
 					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
-						mustRunAfter "${it.dependencyProject.path}:deploy"
-						mustRunAfter "${it.dependencyProject.path}:deployDependencies"
+						mustRunAfter it.dependencyProject.tasks.matching {
+							name.equals("deploy") || name.equals("deployDependencies")
+						}
 					}
 
 					if (!implicitDependencyProjects.contains(project)) {

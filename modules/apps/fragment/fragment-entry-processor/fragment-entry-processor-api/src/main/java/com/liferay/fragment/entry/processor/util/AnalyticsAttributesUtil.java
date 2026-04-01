@@ -128,6 +128,18 @@ public class AnalyticsAttributesUtil {
 			return;
 		}
 
+		_addAnalyticsAttributes(
+			element, fragmentEntryProcessorContext, infoDisplaysFieldValues,
+			infoItemFieldMapped, infoItemServiceRegistry);
+	}
+
+	private static void _addAnalyticsAttributes(
+		Element element,
+		FragmentEntryProcessorContext fragmentEntryProcessorContext,
+		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
+		InfoItemFieldMapped infoItemFieldMapped,
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemFieldMapped.getInfoItemIdentifier();
 

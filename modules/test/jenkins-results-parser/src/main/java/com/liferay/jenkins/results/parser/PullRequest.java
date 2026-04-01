@@ -123,9 +123,11 @@ public class PullRequest {
 		List<GitHubRemoteGitRepository.Label> newLabels = new ArrayList<>();
 
 		for (GitHubRemoteGitRepository.Label label : labels) {
-			if (!hasLabel(label.getName())) {
-				newLabels.add(label);
+			if ((label == null) || hasLabel(label.getName())) {
+				continue;
 			}
+
+			newLabels.add(label);
 		}
 
 		if (newLabels.isEmpty()) {

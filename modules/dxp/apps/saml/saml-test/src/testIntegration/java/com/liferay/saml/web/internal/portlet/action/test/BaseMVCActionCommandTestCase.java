@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -37,7 +36,6 @@ import com.liferay.saml.constants.SamlPortletKeys;
 
 import jakarta.portlet.PortletException;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,11 +60,11 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 
 			Assert.assertThrows(
 				PortletException.class,
-				() -> processAction(
+				() -> _processAction(
 					baseModel,
 					_companyLocalService.createCompany(
 						CompanyThreadLocal.getCompanyId()),
-					RandomTestUtil.randomString(), TestPropsValues.getUser()));
+					TestPropsValues.getUser()));
 		}
 
 		Company company = _companyLocalService.getCompanyById(
@@ -74,32 +72,54 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 
 		Assert.assertThrows(
 			PortletException.class,
-			() -> processAction(
-				baseModel, company, RandomTestUtil.randomString(),
-				UserTestUtil.addUser(company)));
+			() -> _processAction(
+				baseModel, company, UserTestUtil.addUser(company)));
 
-		processAction(
-			baseModel, company, RandomTestUtil.randomString(),
-			TestPropsValues.getUser());
+		_processAction(baseModel, company, TestPropsValues.getUser());
+
+		assertProcessAction(
+			fetchBaseModel(GetterUtil.getLong(baseModel.getPrimaryKeyObj())));
 	}
 
 	protected abstract T addBaseModel();
+
+	protected abstract void assertProcessAction(T baseModel) throws Exception;
 
 	protected abstract T fetchBaseModel(long primaryKey);
 
 	protected abstract MVCActionCommand getMVCActionCommand();
 
-	protected abstract String getName(T baseModel);
-
-	protected abstract Map<String, List<String>> getRegularParameters(
+	protected abstract Map<String, List<String>> getRequestParameters(
 		T baseModel);
 
-	protected void processAction(
-			T baseModel, Company company, String name, User user)
+	private UploadPortletRequest _createUploadPortletRequest(
+		T baseModel, LiferayPortletRequest liferayPortletRequest) {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
+		return UploadTestUtil.createUploadPortletRequest(
+			UploadTestUtil.createUploadServletRequest(
+				mockMultipartHttpServletRequest, null,
+				getRequestParameters(baseModel)),
+			liferayPortletRequest,
+			_portal.getPortletNamespace(SamlPortletKeys.SAML_ADMIN));
+	}
+
+	private void _processAction(T baseModel, Company company, User user)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
+
+		Map<String, List<String>> parameters = getRequestParameters(baseModel);
+
+		parameters.forEach(
+			(key, values) -> mockLiferayPortletActionRequest.setParameter(
+				key, values.toArray(new String[0])));
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.COMPANY_ID, company.getCompanyId());
@@ -137,8 +157,7 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 									"getUploadPortletRequest")) {
 
 								return _createUploadPortletRequest(
-									baseModel, mockLiferayPortletActionRequest,
-									name);
+									baseModel, mockLiferayPortletActionRequest);
 							}
 
 							return method.invoke(_portal, args);
@@ -152,37 +171,11 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 			mvcActionCommand.processAction(
 				mockLiferayPortletActionRequest,
 				new MockLiferayPortletActionResponse());
-
-			T updatedBaseModel = fetchBaseModel(
-				GetterUtil.getLong(baseModel.getPrimaryKeyObj()));
-
-			Assert.assertEquals(name, getName(updatedBaseModel));
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 		}
-	}
-
-	private UploadPortletRequest _createUploadPortletRequest(
-		T baseModel, LiferayPortletRequest liferayPortletRequest, String name) {
-
-		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
-			new MockMultipartHttpServletRequest();
-
-		mockMultipartHttpServletRequest.setContentType(
-			"multipart/form-data;boundary=" + System.currentTimeMillis());
-
-		return UploadTestUtil.createUploadPortletRequest(
-			UploadTestUtil.createUploadServletRequest(
-				mockMultipartHttpServletRequest, null,
-				HashMapBuilder.putAll(
-					getRegularParameters(baseModel)
-				).put(
-					"name", Collections.singletonList(name)
-				).build()),
-			liferayPortletRequest,
-			_portal.getPortletNamespace(SamlPortletKeys.SAML_ADMIN));
 	}
 
 	@Inject

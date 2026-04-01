@@ -11,19 +11,19 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 
@@ -44,49 +44,40 @@ public class DeleteSamlSpIdpConnectionMVCActionCommandTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testProcessAction() throws Exception {
 		SamlSpIdpConnection samlSpIdpConnection =
-			_samlSpIdpConnectionLocalService.createSamlSpIdpConnection(0);
-
-		_samlSpIdpConnectionLocalService.updateSamlSpIdpConnection(
-			samlSpIdpConnection);
-
-		Company company = CompanyTestUtil.addCompany();
+			_samlSpIdpConnectionLocalService.updateSamlSpIdpConnection(
+				_samlSpIdpConnectionLocalService.createSamlSpIdpConnection(0));
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
-
-			User user = UserTestUtil.addCompanyAdminUser(
-				_companyLocalService.getCompanyById(company.getCompanyId()));
+					RandomTestUtil.randomLong())) {
 
 			Assert.assertThrows(
 				PortletException.class,
 				() -> _processAction(
-					company, samlSpIdpConnection.getSamlSpIdpConnectionId(),
-					user));
-		}
-		finally {
-			_companyLocalService.deleteCompany(company);
+					CompanyThreadLocal.getCompanyId(),
+					samlSpIdpConnection.getSamlSpIdpConnectionId(),
+					TestPropsValues.getUser()));
 		}
 
-		User user = UserTestUtil.addCompanyAdminUser(
-			_companyLocalService.getCompanyById(
-				TestPropsValues.getCompanyId()));
+		Company company = _companyLocalService.getCompanyById(
+			TestPropsValues.getCompanyId());
 
-		Assert.assertEquals(
-			samlSpIdpConnection,
-			_samlSpIdpConnectionLocalService.fetchSamlSpIdpConnection(
-				samlSpIdpConnection.getSamlSpIdpConnectionId()));
+		Assert.assertThrows(
+			PortletException.class,
+			() -> _processAction(
+				TestPropsValues.getCompanyId(),
+				samlSpIdpConnection.getSamlSpIdpConnectionId(),
+				UserTestUtil.addUser(company)));
 
 		_processAction(
-			_companyLocalService.getCompanyById(TestPropsValues.getCompanyId()),
-			samlSpIdpConnection.getSamlSpIdpConnectionId(), user);
+			TestPropsValues.getCompanyId(),
+			samlSpIdpConnection.getSamlSpIdpConnectionId(),
+			UserTestUtil.addCompanyAdminUser(company));
 
 		Assert.assertNull(
 			_samlSpIdpConnectionLocalService.fetchSamlSpIdpConnection(
@@ -94,7 +85,7 @@ public class DeleteSamlSpIdpConnectionMVCActionCommandTest {
 	}
 
 	private void _processAction(
-			Company company, long samlSpIdpConnectionId, User user)
+			long companyId, long samlSpIdpConnectionId, User user)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -103,19 +94,24 @@ public class DeleteSamlSpIdpConnectionMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"samlSpIdpConnectionId", String.valueOf(samlSpIdpConnectionId));
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(company);
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-		themeDisplay.setUser(user);
-
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+			WebKeys.COMPANY_ID, companyId);
 
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			_mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	@Inject

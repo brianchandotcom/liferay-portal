@@ -96,9 +96,179 @@ exports[`List rendering should match the snapshot 1`] = `
           <div
             data-testid="fds-component"
             id="assetTable"
-          />
+          >
+            <button
+              data-testid="trigger-info-panel"
+            >
+              Open Info Panel
+            </button>
+            <button
+              data-testid="trigger-info-panel-no-mime"
+            >
+              Open Info Panel No Mime
+            </button>
+            <button
+              data-testid="trigger-info-panel-no-title"
+            >
+              Open Info Panel No Title
+            </button>
+            <button
+              data-testid="trigger-info-panel-with-items"
+            >
+              Open Info Panel With Items
+            </button>
+          </div>
         </div>
       </span>
+    </div>
+    <div
+      class="c-slideout c-slideout-absolute c-slideout-push c-slideout-end"
+    >
+      <div
+        aria-labelledby="clay-id-16"
+        class="sidebar frontend-data-set-side-panel sidebar-light"
+        id="infoPanel"
+        inert=""
+        style="width: 472px;"
+        tabindex="-1"
+      >
+        <div
+          class="c-focus-trap"
+        >
+          <div
+            class="sidebar-header"
+          >
+            <div
+              class="autofit-row"
+            >
+              <div
+                class="autofit-col autofit-col-expand"
+              >
+                <span
+                  class="component-title"
+                  id="clay-id-16"
+                >
+                  <h4
+                    class="text-7 font-weight-semi-bold"
+                  />
+                </span>
+              </div>
+              <div
+                class="autofit-col"
+              >
+                <button
+                  aria-label="Close the side panel."
+                  class="close"
+                  type="button"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-times"
+                    role="presentation"
+                  >
+                    <use
+                      href="#times"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <ul
+            class="nav nav-tabs"
+            role="tablist"
+          >
+            <li
+              class="nav-item"
+              role="none"
+            >
+              <button
+                aria-controls="tabpanel-1"
+                aria-selected="true"
+                class="nav-link active btn btn-unstyled"
+                data-testid="tabItem"
+                role="tab"
+                tabindex="0"
+                type="button"
+              >
+                Categorization
+              </button>
+            </li>
+          </ul>
+          <div
+            class="tab-content"
+          >
+            <div
+              aria-labelledby="tab-1"
+              class="tab-pane active fade show"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div
+                class="panel panel-unstyled"
+              >
+                <div
+                  class="panel-header border-bottom"
+                >
+                  <div
+                    class="panel-title text-secondary"
+                  >
+                    Categories
+                  </div>
+                </div>
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="mb-2"
+                  >
+                    <span
+                      class="text-4 font-weight-semi-bold"
+                    >
+                      No Categories were found for this asset.
+                    </span>
+                  </div>
+                  <span
+                    class="text-3 text-secondary"
+                  >
+                    Go to your content management system to manage Categories.
+                  </span>
+                </div>
+              </div>
+              <div
+                class="panel panel-unstyled"
+              >
+                <div
+                  class="panel-header border-bottom"
+                >
+                  <div
+                    class="panel-title text-secondary"
+                  >
+                    Assets
+                  </div>
+                </div>
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="mb-2"
+                  >
+                    <span
+                      class="text-4 font-weight-semi-bold"
+                    >
+                      No Assets were found for this asset.
+                    </span>
+                  </div>
+                  <span
+                    class="text-3 text-secondary"
+                  >
+                    Go to your content management system to manage Assets.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

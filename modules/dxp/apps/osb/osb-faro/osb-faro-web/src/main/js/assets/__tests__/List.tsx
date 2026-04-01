@@ -13,8 +13,83 @@ jest.unmock('react-dom');
 
 jest.mock('shared/hooks/useFrontendDataSet', () => ({
 	useFrontendDataSet: () => {
-		const FakeDataSet = ({id}: {id: string}) => (
-			<div data-testid='fds-component' id={id} />
+		const FakeDataSet = ({
+			id,
+			itemsActions
+		}: {
+			id: string;
+			itemsActions?: Array<{onClick?: (item: any) => void}>;
+		}) => (
+			<div data-testid='fds-component' id={id}>
+				<button
+					data-testid='trigger-info-panel'
+					onClick={() =>
+						itemsActions?.[0]?.onClick?.({
+							itemData: {
+								assetCategories: [],
+								assetTags: [],
+								assetTitle: 'Test Asset Title',
+								id: 'asset-id-1',
+								mimeType: 'blog'
+							}
+						})
+					}
+				>
+					{'Open Info Panel'}
+				</button>
+
+				<button
+					data-testid='trigger-info-panel-no-mime'
+					onClick={() =>
+						itemsActions?.[0]?.onClick?.({
+							itemData: {
+								assetCategories: [],
+								assetTags: [],
+								assetTitle: 'Asset Without Mime',
+								id: 'asset-id-2'
+							}
+						})
+					}
+				>
+					{'Open Info Panel No Mime'}
+				</button>
+
+				<button
+					data-testid='trigger-info-panel-no-title'
+					onClick={() =>
+						itemsActions?.[0]?.onClick?.({
+							itemData: {
+								assetCategories: [],
+								assetTags: [],
+								id: 'fallback-id-3',
+								mimeType: 'folder'
+							}
+						})
+					}
+				>
+					{'Open Info Panel No Title'}
+				</button>
+
+				<button
+					data-testid='trigger-info-panel-with-items'
+					onClick={() =>
+						itemsActions?.[0]?.onClick?.({
+							itemData: {
+								assetCategories: [
+									{id: 'cat-1', name: 'Category One'},
+									{id: 'cat-2', name: 'Category Two'}
+								],
+								assetTags: [{id: 'tag-1', name: 'Tag One'}],
+								assetTitle: 'Rich Asset',
+								id: 'asset-id-4',
+								mimeType: 'basic-web-content'
+							}
+						})
+					}
+				>
+					{'Open Info Panel With Items'}
+				</button>
+			</div>
 		);
 
 		return FakeDataSet;
@@ -136,7 +211,9 @@ describe('List', () => {
 		it('should render the page title "Assets"', () => {
 			renderList();
 
-			expect(screen.getByText('Assets')).toBeInTheDocument();
+			expect(
+				screen.getByRole('heading', {level: 1, name: 'Assets'})
+			).toBeInTheDocument();
 		});
 
 		it('should render the FrontendDataSet component', () => {
@@ -342,6 +419,149 @@ describe('List', () => {
 			expect(screen.getByTestId('current-range-key')).toHaveTextContent(
 				RangeKeyTimeRanges.Last7Days
 			);
+		});
+	});
+
+	describe('info panel', () => {
+		it('should display the asset title in the panel header when opened', () => {
+			renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			expect(screen.getByText('Test Asset Title')).toBeInTheDocument();
+		});
+
+		it('should fall back to asset id when assetTitle is absent', () => {
+			renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel-no-title'));
+
+			expect(screen.getByText('fallback-id-3')).toBeInTheDocument();
+		});
+
+		it('should render AssetIcon when mimeType is present', () => {
+			const {container} = renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			// AssetIcon renders a ClaySticker; verify a sticker is present
+			// inside the side panel header area.
+
+			expect(container.querySelector('.sticker')).toBeInTheDocument();
+		});
+
+		it('should not render AssetIcon when mimeType is absent', () => {
+			const {container} = renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel-no-mime'));
+
+			expect(container.querySelector('.sticker')).toBeNull();
+		});
+
+		it('should add the info-panel-opened class to the page when the panel is open', () => {
+			const {container} = renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			expect(
+				container.querySelector('.info-panel-opened')
+			).toBeInTheDocument();
+		});
+
+		it('should not have the info-panel-opened class before the panel is opened', () => {
+			const {container} = renderList();
+
+			expect(container.querySelector('.info-panel-opened')).toBeNull();
+		});
+
+		it('should remove the info-panel-opened class after the panel is closed via onOpenChange', () => {
+			const {container} = renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			expect(
+				container.querySelector('.info-panel-opened')
+			).toBeInTheDocument();
+
+			// ClayCore's SidePanel calls onOpenChange when closed; trigger it
+			// via the close button rendered inside the panel.
+
+			const closeButton = container.querySelector(
+				'.side-panel .btn-unstyled'
+			);
+
+			if (closeButton) {
+				fireEvent.click(closeButton);
+
+				expect(
+					container.querySelector('.info-panel-opened')
+				).toBeNull();
+			}
+		});
+
+		it('should render the Categorization tab', () => {
+			renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			expect(screen.getByText('Categorization')).toBeInTheDocument();
+		});
+	});
+
+	describe('InfoPanelItemContent', () => {
+		it('should display the empty state message when categories list is empty', () => {
+			renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			expect(
+				screen.getByText(/No Categories were found for this asset/i)
+			).toBeInTheDocument();
+		});
+
+		it('should display the empty state message when tags list is empty', () => {
+			renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			// Tags section uses the 'assets' language key as the title.
+
+			expect(
+				screen.getByText(/No Assets were found for this asset/i)
+			).toBeInTheDocument();
+		});
+
+		it('should render a label for each category when categories are present', () => {
+			renderList();
+
+			fireEvent.click(
+				screen.getByTestId('trigger-info-panel-with-items')
+			);
+
+			expect(screen.getByText('Category One')).toBeInTheDocument();
+			expect(screen.getByText('Category Two')).toBeInTheDocument();
+		});
+
+		it('should render a label for each tag when tags are present', () => {
+			renderList();
+
+			fireEvent.click(
+				screen.getByTestId('trigger-info-panel-with-items')
+			);
+
+			expect(screen.getByText('Tag One')).toBeInTheDocument();
+		});
+
+		it('should not render empty state when categories are present', () => {
+			renderList();
+
+			fireEvent.click(
+				screen.getByTestId('trigger-info-panel-with-items')
+			);
+
+			expect(
+				screen.queryByText(/No Categories were found for this asset/i)
+			).toBeNull();
 		});
 	});
 });

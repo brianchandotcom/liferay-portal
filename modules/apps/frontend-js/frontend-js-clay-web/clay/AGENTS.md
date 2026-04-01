@@ -189,6 +189,11 @@ Release notes:
 - Prefer explicit, behavior-focused assertions for specific cases.
 - Avoid snapshot testing for new coverage unless there is a clear reason and strong review value.
 - Update stories when component behavior, props, or visuals change.
+- **Running tests**: Run tests from the `frontend-js-clay-web` directory.
+    - Running `yarn test` with no arguments will run tests for all packages.
+    - To run tests for a specific package, specify it as the first positional argument. Use the `-t` flag to isolate specific tests.
+    - Example: `yarn test clay/clay-drop-down`
+    - Example (filtered): `yarn test clay/clay-drop-down -t "navigates forwards when clicking through menus"`
 - Run relevant package tests before submitting changes; run broader root tests for cross-cutting changes.
 
 ## Test Coverage Strategy

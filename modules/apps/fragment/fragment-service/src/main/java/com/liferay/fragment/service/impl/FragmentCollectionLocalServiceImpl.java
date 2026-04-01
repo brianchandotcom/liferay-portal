@@ -5,20 +5,34 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.document.library.kernel.model.DLFileVersionTable;
+import com.liferay.document.library.kernel.model.DLFolderTable;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentCollectionTable;
 import com.liferay.fragment.model.FragmentComposition;
+import com.liferay.fragment.model.FragmentCompositionTable;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryTable;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCompositionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -29,10 +43,12 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -226,6 +242,82 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
+	public List<FragmentCollection> getExportableFragmentCollections(
+		long[] fragmentCollectionIds) {
+
+		return fragmentCollectionPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				FragmentCollectionTable.INSTANCE
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getPredicate(fragmentCollectionIds, null, null)
+			));
+	}
+
+	@Override
+	public List<FragmentCollection> getExportableFragmentCollections(
+		long[] groupIds, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				FragmentCollectionTable.INSTANCE
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getPredicate(null, groupIds, null)
+			).orderBy(
+				FragmentCollectionTable.INSTANCE, orderByComparator
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public List<FragmentCollection> getExportableFragmentCollections(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				FragmentCollectionTable.INSTANCE
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getPredicate(null, groupIds, name)
+			).orderBy(
+				FragmentCollectionTable.INSTANCE, orderByComparator
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCount(long[] groupIds) {
+		return fragmentCollectionPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getPredicate(null, groupIds, null)
+			));
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCount(
+		long[] groupIds, String name) {
+
+		return fragmentCollectionPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getPredicate(null, groupIds, name)
+			));
+	}
+
+	@Override
 	public List<FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end) {
 
@@ -318,6 +410,118 @@ public class FragmentCollectionLocalServiceImpl
 		return StringPool.BLANK;
 	}
 
+	private Predicate _getFragmentCompositionsPredicate() {
+		return FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
+			DSLQueryFactoryUtil.selectDistinct(
+				FragmentCompositionTable.INSTANCE.fragmentCollectionId
+			).from(
+				FragmentCompositionTable.INSTANCE
+			).where(
+				FragmentCompositionTable.INSTANCE.marketplace.eq(false)
+			));
+	}
+
+	private Predicate _getFragmentEntriesPredicate() {
+		return FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
+			DSLQueryFactoryUtil.selectDistinct(
+				FragmentEntryTable.INSTANCE.fragmentCollectionId
+			).from(
+				FragmentEntryTable.INSTANCE
+			).where(
+				FragmentEntryTable.INSTANCE.marketplace.eq(
+					false
+				).and(
+					FragmentEntryTable.INSTANCE.type.neq(
+						FragmentConstants.TYPE_REACT)
+				).and(
+					FragmentEntryTable.INSTANCE.head.eq(true)
+				)
+			));
+	}
+
+	private Predicate _getPredicate(
+		long[] fragmentCollectionIds, long[] groupIds, String name) {
+
+		return _getFragmentCompositionsPredicate(
+		).or(
+			_getFragmentEntriesPredicate()
+		).or(
+			_getResourcesPredicate()
+		).withParentheses(
+		).and(
+			() -> {
+				if (ArrayUtil.isEmpty(groupIds)) {
+					return null;
+				}
+
+				return FragmentCollectionTable.INSTANCE.groupId.in(
+					ArrayUtil.toLongArray(groupIds));
+			}
+		).and(
+			() -> {
+				if (ArrayUtil.isEmpty(fragmentCollectionIds)) {
+					return null;
+				}
+
+				return FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
+					ArrayUtil.toLongArray(fragmentCollectionIds));
+			}
+		).and(
+			() -> {
+				if (Validator.isNull(name)) {
+					return null;
+				}
+
+				return FragmentCollectionTable.INSTANCE.name.like(
+					_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+			}
+		);
+	}
+
+	private Predicate _getResourcesPredicate() {
+		DLFileVersionTable dlFileVersionTable = DLFileVersionTable.INSTANCE.as(
+			"dlFileVersionTable");
+		RepositoryTable repositoryTable = RepositoryTable.INSTANCE.as(
+			"repositoryTable");
+		DLFolderTable rootDLFolderTable = DLFolderTable.INSTANCE.as(
+			"rootDLFolderTable");
+
+		return FragmentCollectionTable.INSTANCE.fragmentCollectionKey.in(
+			DSLQueryFactoryUtil.selectDistinct(
+				rootDLFolderTable.name
+			).from(
+				repositoryTable
+			).innerJoinON(
+				rootDLFolderTable,
+				repositoryTable.repositoryId.eq(rootDLFolderTable.repositoryId)
+			).where(
+				repositoryTable.groupId.eq(
+					FragmentCollectionTable.INSTANCE.groupId
+				).and(
+					repositoryTable.portletId.eq(FragmentPortletKeys.FRAGMENT)
+				).and(
+					rootDLFolderTable.parentFolderId.eq(
+						repositoryTable.dlFolderId)
+				).and(
+					rootDLFolderTable.folderId.in(
+						DSLQueryFactoryUtil.selectDistinct(
+							rootDLFolderTable.folderId
+						).from(
+							dlFileVersionTable
+						).where(
+							dlFileVersionTable.treePath.like(
+								DSLFunctionFactoryUtil.concat(
+									rootDLFolderTable.treePath,
+									new Scalar<>("%"))
+							).and(
+								dlFileVersionTable.status.eq(
+									WorkflowConstants.STATUS_APPROVED)
+								)
+						))
+				)
+			));
+	}
+
 	private void _validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new FragmentCollectionNameException("Name must not be null");
@@ -347,6 +551,9 @@ public class FragmentCollectionLocalServiceImpl
 				fragmentCollectionKey);
 		}
 	}
+
+	@Reference
+	private CustomSQL _customSQL;
 
 	@Reference
 	private FragmentCompositionLocalService _fragmentCompositionLocalService;

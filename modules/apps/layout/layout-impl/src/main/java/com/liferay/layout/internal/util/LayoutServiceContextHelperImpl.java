@@ -541,10 +541,6 @@ public class LayoutServiceContextHelperImpl
 						return StringPool.BLANK;
 					}
 
-					public String[] getValueNames() {
-						return new String[0];
-					}
-
 					public boolean isNew() {
 						return true;
 					}

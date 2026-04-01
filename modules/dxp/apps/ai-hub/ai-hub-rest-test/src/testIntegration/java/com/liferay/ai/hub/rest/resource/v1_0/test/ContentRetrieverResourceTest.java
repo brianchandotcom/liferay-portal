@@ -11,13 +11,16 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.ai.hub.rest.client.dto.v1_0.ContentRetriever;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -104,6 +107,42 @@ public class ContentRetrieverResourceTest
 		PrincipalThreadLocal.setName(_originalName);
 
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Override
+	@Test
+	public void testDeleteContentRetrieverByExternalReferenceCode()
+		throws Exception {
+
+		ContentRetriever contentRetriever =
+			contentRetrieverResource.postContentRetriever(
+				randomContentRetriever());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "AIHubContentRetriever");
+
+		contentRetrieverResource.deleteContentRetrieverByExternalReferenceCode(
+			contentRetriever.getExternalReferenceCode());
+
+		AssertUtils.assertFailure(
+			Exception.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {externalReferenceCode=",
+				contentRetriever.getExternalReferenceCode(),
+				", groupId=0, companyId=", TestPropsValues.getCompanyId(),
+				", objectDefinitionId=",
+				objectDefinition.getObjectDefinitionId(), "}"),
+			() -> _objectEntryManager.getObjectEntry(
+				TestPropsValues.getCompanyId(), _dtoConverterContext,
+				contentRetriever.getExternalReferenceCode(), objectDefinition,
+				null));
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			_searchEngineAdapter.execute(
+				new IndicesExistsIndexRequest(contentRetriever.getIndexName()));
+
+		Assert.assertFalse(indicesExistsIndexResponse.isExists());
 	}
 
 	@Override

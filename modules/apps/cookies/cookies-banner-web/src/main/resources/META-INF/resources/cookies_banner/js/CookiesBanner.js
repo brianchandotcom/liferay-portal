@@ -30,7 +30,9 @@ export default function ({
 	configurationNamespace,
 	configurationURL,
 	consentRenewalPeriod = 12,
+	consentRenewalPeriodTimeUnit = 'months',
 	dissentRenewalPeriod = 12,
+	dissentRenewalPeriodTimeUnit = 'months',
 	includeDeclineAllButton,
 	modifiedDate = 0,
 	namespace,
@@ -137,12 +139,14 @@ export default function ({
 				consentRenewalPeriod,
 				optionalConsentCookieTypeNames,
 				requiredConsentCookieTypeNames,
-				storeConsentCheckbox?.checked
+				storeConsentCheckbox?.checked,
+				consentRenewalPeriodTimeUnit
 			);
 
 			setUserConfigCookie(
 				consentRenewalPeriod,
-				storeConsentCheckbox?.checked
+				storeConsentCheckbox?.checked,
+				consentRenewalPeriodTimeUnit
 			);
 		});
 
@@ -175,17 +179,23 @@ export default function ({
 								dissentRenewalPeriod === 0
 									? consentRenewalPeriod
 									: dissentRenewalPeriod;
+							const timeUnit =
+								dissentRenewalPeriod === 0
+									? consentRenewalPeriodTimeUnit
+									: dissentRenewalPeriodTimeUnit;
 
 							declineAllCookies(
 								renewalPeriod,
 								optionalConsentCookieTypeNames,
 								requiredConsentCookieTypeNames,
-								storeConsentCheckbox?.checked
+								storeConsentCheckbox?.checked,
+								timeUnit
 							);
 
 							setUserConfigCookie(
 								renewalPeriod,
-								storeConsentCheckbox?.checked
+								storeConsentCheckbox?.checked,
+								timeUnit
 							);
 
 							setBannerVisibility(cookieBanner);
@@ -199,10 +209,26 @@ export default function ({
 						onClick() {
 							Object.entries(cookiePreferences).forEach(
 								([key, value]) => {
+									let renewalPeriod = consentRenewalPeriod;
+									let timeUnit = consentRenewalPeriodTimeUnit;
+
+									if (value !== 'true') {
+										renewalPeriod =
+											dissentRenewalPeriod === 0
+												? consentRenewalPeriod
+												: dissentRenewalPeriod;
+
+										timeUnit =
+											dissentRenewalPeriod === 0
+												? consentRenewalPeriodTimeUnit
+												: dissentRenewalPeriodTimeUnit;
+									}
+
 									setCookie(
-										consentRenewalPeriod,
+										renewalPeriod,
 										key,
 										storeConsentCheckbox?.checked,
+										timeUnit,
 										value
 									);
 								}
@@ -214,6 +240,7 @@ export default function ({
 										consentRenewalPeriod,
 										requiredConsentCookieTypeName,
 										storeConsentCheckbox?.checked,
+										consentRenewalPeriodTimeUnit,
 										'true'
 									);
 								}
@@ -221,7 +248,8 @@ export default function ({
 
 							setUserConfigCookie(
 								consentRenewalPeriod,
-								storeConsentCheckbox?.checked
+								storeConsentCheckbox?.checked,
+								consentRenewalPeriodTimeUnit
 							);
 
 							setBannerVisibility(cookieBanner);
@@ -237,12 +265,14 @@ export default function ({
 								consentRenewalPeriod,
 								optionalConsentCookieTypeNames,
 								requiredConsentCookieTypeNames,
-								storeConsentCheckbox?.checked
+								storeConsentCheckbox?.checked,
+								consentRenewalPeriodTimeUnit
 							);
 
 							setUserConfigCookie(
 								consentRenewalPeriod,
-								storeConsentCheckbox?.checked
+								storeConsentCheckbox?.checked,
+								consentRenewalPeriodTimeUnit
 							);
 
 							setBannerVisibility(cookieBanner);
@@ -274,6 +304,10 @@ export default function ({
 					dissentRenewalPeriod === 0
 						? consentRenewalPeriod
 						: dissentRenewalPeriod;
+				const timeUnit =
+					dissentRenewalPeriod === 0
+						? consentRenewalPeriodTimeUnit
+						: dissentRenewalPeriodTimeUnit;
 
 				storeConsentCheckbox = document.getElementById(
 					`${namespace}storeConsent`
@@ -283,12 +317,14 @@ export default function ({
 					renewalPeriod,
 					optionalConsentCookieTypeNames,
 					requiredConsentCookieTypeNames,
-					storeConsentCheckbox?.checked
+					storeConsentCheckbox?.checked,
+					timeUnit
 				);
 
 				setUserConfigCookie(
 					renewalPeriod,
-					storeConsentCheckbox?.checked
+					storeConsentCheckbox?.checked,
+					timeUnit
 				);
 			});
 		}

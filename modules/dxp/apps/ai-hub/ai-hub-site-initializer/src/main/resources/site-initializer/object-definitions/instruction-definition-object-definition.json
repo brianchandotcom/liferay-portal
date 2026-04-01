@@ -54,8 +54,9 @@
 			"type": "Boolean"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"businessType": "LongText",
+			"defaultValue": "null",
 			"externalReferenceCode": "DESCRIPTION",
 			"indexed": true,
 			"indexedLanguageId": "en_US",
@@ -63,8 +64,12 @@
 				"en_US": "Description"
 			},
 			"name": "description",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
 			"system": true,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",

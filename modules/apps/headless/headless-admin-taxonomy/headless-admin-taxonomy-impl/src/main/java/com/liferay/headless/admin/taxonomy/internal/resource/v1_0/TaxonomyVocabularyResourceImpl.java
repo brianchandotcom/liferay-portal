@@ -73,7 +73,6 @@ import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import jakarta.ws.rs.BadRequestException;
-import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
@@ -646,7 +645,12 @@ public class TaxonomyVocabularyResourceImpl
 							}
 						}
 
-						throw new InternalServerErrorException();
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Unable to get class type for " + classTypePK);
+						}
+
+						return null;
 					});
 				setType(
 					() -> {

@@ -68,9 +68,14 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker,
-			_objectEntryLocalService.getObjectEntry(primaryKey), actionId);
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			primaryKey);
+
+		if (objectEntry == null) {
+			return false;
+		}
+
+		return contains(permissionChecker, objectEntry, actionId);
 	}
 
 	@Override
@@ -84,11 +89,11 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 		if (permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(),
 				objectDefinition.getClassName(),
-				objectEntry.getHeadObjectEntryId(), objectEntry.getUserId(),
+				objectEntry.getObjectEntryId(), objectEntry.getUserId(),
 				actionId) ||
 			permissionChecker.hasPermission(
 				objectEntry.getGroupId(), objectDefinition.getClassName(),
-				objectEntry.getHeadObjectEntryId(), actionId)) {
+				objectEntry.getObjectEntryId(), actionId)) {
 
 			return true;
 		}

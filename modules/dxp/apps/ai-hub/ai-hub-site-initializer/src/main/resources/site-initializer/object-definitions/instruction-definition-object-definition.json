@@ -82,6 +82,19 @@
 		},
 		{
 			"DBType": "String",
+			"businessType": "LongText",
+			"externalReferenceCode": "OCCASION",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Occasion"
+			},
+			"name": "occasion",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
 			"businessType": "Picklist",
 			"externalReferenceCode": "SCOPE",
 			"indexed": true,

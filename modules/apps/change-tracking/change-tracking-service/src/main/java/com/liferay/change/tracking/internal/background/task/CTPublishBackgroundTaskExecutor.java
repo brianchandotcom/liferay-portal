@@ -198,6 +198,9 @@ public class CTPublishBackgroundTaskExecutor
 				ctCollectionId, _multiVMPool.getPortalCacheManager());
 		}
 
+		ctCollection = _ctCollectionLocalService.getCTCollection(
+			ctCollectionId);
+
 		Date modifiedDate = new Date();
 
 		ctCollection.setModifiedDate(modifiedDate);

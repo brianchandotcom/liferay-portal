@@ -1,6 +1,7 @@
 {
 	"friendlyURL": "/structure-builder",
 	"hidden": true,
+	"name": "Structure Builder",
 	"name_i18n": {
 		"en_US": "Structure Builder"
 	},

@@ -126,6 +126,12 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			licenseProperties.toString(), licenseProperties.isEmpty());
 	}
 
+	public void assertPortalLicenseExpired() throws Exception {
+		String response = hitHomePage("localhost", getLocalPort());
+
+		Assert.assertTrue(response.contains(_EXPIRED_LICENSE_KEY));
+	}
+
 	public void assertPortalLicenseInvalid() throws Exception {
 		String response = hitHomePage("localhost", getLocalPort());
 
@@ -617,6 +623,9 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	private static final String _ENTERPRISE_LICENSE_TYPE = "enterprise";
 
 	private static final String _ENTERPRISE_PRODUCT_NAME = "DXP Enterprise";
+
+	private static final String _EXPIRED_LICENSE_KEY =
+		"This instance is expired.";
 
 	private static final String _FREE_TIER_ACCOUNT_NAME = "Free Account";
 

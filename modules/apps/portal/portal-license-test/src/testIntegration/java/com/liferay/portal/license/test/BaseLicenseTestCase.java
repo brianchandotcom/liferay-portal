@@ -79,6 +79,17 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			AgentBuilder.RedefinitionStrategy.RETRANSFORMATION);
 	}
 
+	public static String encryptLicenseProperties(
+			Map<String, String> licenseProperties)
+		throws Exception {
+
+		Method method = findMethod(
+			PortalClassLoaderUtil.getClassLoader(),
+			_licenseTestProperties.getProperty("encrypt.method"));
+
+		return (String)method.invoke(null, licenseProperties);
+	}
+
 	public static boolean isReleaseBundle() {
 		if (ReflectionsHolder._licenseManagerHelperClass != null) {
 			return true;
@@ -229,13 +240,24 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	public File deployFreeTierPortalLicense(long validityPeriod)
 		throws Exception {
 
-		return deployFreeTierPortalLicense(validityPeriod, _FREE_TIER_DOMAIN);
+		return deployFreeTierPortalLicense(
+			_FREE_TIER_DOMAIN, StringPool.BLANK, System.currentTimeMillis(),
+			validityPeriod);
 	}
 
-	public File deployFreeTierPortalLicense(long validityPeriod, String domain)
+	public File deployFreeTierPortalLicense(String domain, long validityPeriod)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(19);
+		return deployFreeTierPortalLicense(
+			domain, StringPool.BLANK, System.currentTimeMillis(),
+			validityPeriod);
+	}
+
+	public File deployFreeTierPortalLicense(
+			String domain, String key, long startTime, long validityPeriod)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(20);
 
 		sb.append("<?xml version=\"1.0\"?><license><account-name>");
 		sb.append(_FREE_TIER_ACCOUNT_NAME);
@@ -248,19 +270,15 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		sb.append(_FREE_TIER_LICENSE_TYPE);
 		sb.append("</license-type><license-version>6</license-version>");
 		sb.append("<start-date>");
-
-		long currentTimeMillis = System.currentTimeMillis();
-
-		sb.append(_DATE_FORMAT.format(new Date(currentTimeMillis)));
-
+		sb.append(_DATE_FORMAT.format(new Date(startTime)));
 		sb.append("</start-date><expiration-date>");
-		sb.append(
-			_DATE_FORMAT.format(new Date(currentTimeMillis + validityPeriod)));
+		sb.append(_DATE_FORMAT.format(new Date(startTime + validityPeriod)));
 		sb.append("</expiration-date>");
 		sb.append("<max-cluster-nodes>3</max-cluster-nodes><domains><domain>");
 		sb.append(domain);
-		sb.append("</domain><domain>localhost</domain></domains><key></key>");
-		sb.append("</license>");
+		sb.append("</domain><domain>localhost</domain></domains><key>");
+		sb.append(key);
+		sb.append("</key></license>");
 
 		LicenseManagerUtil.registerLicense(
 			JSONUtil.put("licenseXML", sb.toString()));

@@ -155,7 +155,7 @@ public class FreeTierDomainLicenseTest extends BaseLicenseTestCase {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				getLicenseManagerClassName(), LoggerTestUtil.ERROR)) {
 
-			deployFreeTierPortalLicense(Time.HOUR, domain);
+			deployFreeTierPortalLicense(domain, Time.HOUR);
 
 			assertLicenseValidationFailedLog(
 				logCapture,
@@ -171,7 +171,7 @@ public class FreeTierDomainLicenseTest extends BaseLicenseTestCase {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				getLicenseManagerClassName(), LoggerTestUtil.ERROR)) {
 
-			deployFreeTierPortalLicense(Time.HOUR, domain);
+			deployFreeTierPortalLicense(domain, Time.HOUR);
 
 			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
 		}

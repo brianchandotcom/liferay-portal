@@ -66,9 +66,6 @@ spec:
                                             default: false
                                             type: boolean
                                         githubRepo:
-                                            description:
-                                                "The GitHub repository authorized to push customizations (e.g.,
-                                                'org/repo')."
                                             type: string
                                         region:
                                             type: string

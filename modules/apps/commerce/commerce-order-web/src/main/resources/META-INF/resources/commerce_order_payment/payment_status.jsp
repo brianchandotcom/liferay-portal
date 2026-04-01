@@ -17,9 +17,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 
 <aui:form action="<%= editCommerceOrderPaymentStatusActionURL %>" cssClass="p-4" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="paymentStatus" />
-	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="requestProcessed" type="hidden" value='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>' />
+	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
 	<aui:select name="paymentStatus">
 

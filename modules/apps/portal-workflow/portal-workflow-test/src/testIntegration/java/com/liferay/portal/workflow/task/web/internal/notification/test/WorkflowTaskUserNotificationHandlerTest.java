@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,23 +73,29 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test
-	public void testGetLink() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		_setBackURL(null, _CURRENT_URL, null);
 
 		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
 			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			group.getGroupId(), BlogsEntry.class.getName(), 0, 0,
+			_group.getGroupId(), BlogsEntry.class.getName(), 0, 0,
 			"Single Approver", 1);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		_blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			new Date(System.currentTimeMillis() - Time.SECOND), serviceContext);
+			new Date(System.currentTimeMillis() - Time.SECOND),
+			_serviceContext);
+	}
 
+	@Test
+	public void testGetLink() throws Exception {
 		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
@@ -102,37 +109,71 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			_getUserNotificationEvent();
 
 		_assertLink(
-			controlPanelLayout.getPlid(), group, controlPanelLayout,
-			serviceContext, userNotificationEvent);
+			_CURRENT_URL, controlPanelLayout.getPlid(), controlPanelLayout,
+			userNotificationEvent);
 
 		Layout layout =
 			PersonalApplicationURLUtil.
 				getOrAddEmbeddedPersonalApplicationLayout(
-					TestPropsValues.getUser(), group, false);
+					TestPropsValues.getUser(), _group, false);
 
 		_assertLink(
-			layout.getPlid(), group, LayoutTestUtil.addTypeContentLayout(group),
-			serviceContext, userNotificationEvent);
+			_CURRENT_URL, layout.getPlid(),
+			LayoutTestUtil.addTypeContentLayout(_group), userNotificationEvent);
+	}
+
+	@Test
+	public void testGetLinkBackURL() throws Exception {
+		UserNotificationEvent userNotificationEvent =
+			_getUserNotificationEvent();
+
+		Layout layout =
+			PersonalApplicationURLUtil.
+				getOrAddEmbeddedPersonalApplicationLayout(
+					TestPropsValues.getUser(), _group, false);
+
+		_setBackURL(_BACK_URL, _CURRENT_URL, _REDIRECT);
+
+		_assertLink(
+			_BACK_URL, layout.getPlid(),
+			LayoutTestUtil.addTypeContentLayout(_group), userNotificationEvent);
+
+		_setBackURL(null, _CURRENT_URL, _REDIRECT);
+
+		_assertLink(
+			_REDIRECT, layout.getPlid(),
+			LayoutTestUtil.addTypeContentLayout(_group), userNotificationEvent);
+
+		_setBackURL(null, _CURRENT_URL, null);
+
+		_assertLink(
+			_CURRENT_URL, layout.getPlid(),
+			LayoutTestUtil.addTypeContentLayout(_group), userNotificationEvent);
+
+		_setBackURL(null, null, null);
+
+		_assertLink(
+			null, layout.getPlid(), LayoutTestUtil.addTypeContentLayout(_group),
+			userNotificationEvent);
 	}
 
 	private void _assertLink(
-			long expectedPlid, Group group, Layout layout,
-			ServiceContext serviceContext,
+			String backURL, long expectedPlid, Layout layout,
 			UserNotificationEvent userNotificationEvent)
 		throws Exception {
 
 		UserNotificationFeedEntry userNotificationFeedEntry = _interpret(
-			group, layout, serviceContext, userNotificationEvent);
+			layout, userNotificationEvent);
 
 		Assert.assertEquals(
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
-					serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
+					_serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
 					expectedPlid, PortletRequest.RENDER_PHASE)
 			).setMVCPath(
 				"/edit_workflow_task.jsp"
 			).setBackURL(
-				_CURRENT_URL
+				backURL
 			).setParameter(
 				"workflowTaskId",
 				() -> {
@@ -147,7 +188,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			userNotificationFeedEntry.getLink());
 	}
 
-	private ThemeDisplay _getThemeDisplay(Group group, Layout layout)
+	private ThemeDisplay _getThemeDisplay(String currentURL, Layout layout)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -157,8 +198,8 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		themeDisplay.setLayout(layout);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setSiteGroupId(group.getGroupId());
-		themeDisplay.setURLCurrent(_CURRENT_URL);
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setURLCurrent(currentURL);
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
@@ -186,22 +227,37 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	private UserNotificationFeedEntry _interpret(
-			Group group, Layout layout, ServiceContext serviceContext,
-			UserNotificationEvent userNotificationEvent)
+			Layout layout, UserNotificationEvent userNotificationEvent)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = _serviceContext.getRequest();
 
 		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(group, layout));
-
-		serviceContext.setRequest(httpServletRequest);
+			WebKeys.THEME_DISPLAY,
+			_getThemeDisplay(_serviceContext.getCurrentURL(), layout));
 
 		return _userNotificationHandler.interpret(
-			userNotificationEvent, serviceContext);
+			userNotificationEvent, _serviceContext);
 	}
 
-	private static final String _CURRENT_URL = RandomTestUtil.randomString();
+	private void _setBackURL(
+		String backURL, String currentURL, String redirect) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("backURL", backURL);
+		mockHttpServletRequest.setParameter("redirect", redirect);
+
+		_serviceContext.setCurrentURL(currentURL);
+		_serviceContext.setRequest(mockHttpServletRequest);
+	}
+
+	private static final String _BACK_URL = "TestBackURL";
+
+	private static final String _CURRENT_URL = "TestCurrentURL";
+
+	private static final String _REDIRECT = "TestRedirect";
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
@@ -209,8 +265,13 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@DeleteAfterTestRun
+	private Group _group;
+
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	private ServiceContext _serviceContext;
 
 	@Inject
 	private UserNotificationEventLocalService

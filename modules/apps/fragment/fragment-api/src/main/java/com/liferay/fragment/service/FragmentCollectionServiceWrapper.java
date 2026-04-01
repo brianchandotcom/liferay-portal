@@ -88,6 +88,48 @@ public class FragmentCollectionServiceWrapper
 	}
 
 	@Override
+	public java.util.List<FragmentCollection> getExportableFragmentCollections(
+		long[] fragmentCollectionIds) {
+
+		return _fragmentCollectionService.getExportableFragmentCollections(
+			fragmentCollectionIds);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getExportableFragmentCollections(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator) {
+
+		return _fragmentCollectionService.getExportableFragmentCollections(
+			groupIds, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getExportableFragmentCollections(
+		long[] groupIds, String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator) {
+
+		return _fragmentCollectionService.getExportableFragmentCollections(
+			groupIds, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCount(long[] groupIds) {
+		return _fragmentCollectionService.getExportableFragmentCollectionsCount(
+			groupIds);
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCount(
+		long[] groupIds, String name) {
+
+		return _fragmentCollectionService.getExportableFragmentCollectionsCount(
+			groupIds, name);
+	}
+
+	@Override
 	public FragmentCollection getFragmentCollectionByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -311,4 +353,4 @@ public class FragmentCollectionServiceWrapper
 	private FragmentCollectionService _fragmentCollectionService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1832812272
+// LIFERAY-SERVICE-BUILDER-HASH:1232241093

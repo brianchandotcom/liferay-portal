@@ -32,6 +32,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -318,6 +319,29 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
+	public List<FragmentCollection> getFragmentCollections(long groupId) {
+		return getFragmentCollections(groupId, false);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long groupId, boolean includeSystem) {
+
+		return fragmentCollectionPersistence.findByGroupId(
+			_getGroupIds(groupId, includeSystem));
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long groupId, boolean includeSystem, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByGroupId(
+			_getGroupIds(groupId, includeSystem), start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public List<FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end) {
 
@@ -335,6 +359,17 @@ public class FragmentCollectionLocalServiceImpl
 
 	@Override
 	public List<FragmentCollection> getFragmentCollections(
+		long groupId, String name, boolean includeSystem, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByG_LikeN(
+			_getGroupIds(groupId, includeSystem),
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
 		long groupId, String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
@@ -345,6 +380,102 @@ public class FragmentCollectionLocalServiceImpl
 
 		return fragmentCollectionPersistence.findByG_LikeN(
 			groupId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(long[] groupIds) {
+		return fragmentCollectionPersistence.findByGroupId(groupIds);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByG_M(
+			groupIds, marketplace, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByGroupId(
+			groupIds, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByG_LikeN_M(
+			groupIds,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			marketplace, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByG_LikeN(
+			groupIds,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long groupId) {
+		return getFragmentCollectionsCount(groupId, false);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long groupId, boolean includeSystem) {
+
+		return fragmentCollectionPersistence.countByGroupId(
+			_getGroupIds(groupId, includeSystem));
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long groupId, String name, boolean includeSystem) {
+
+		return fragmentCollectionPersistence.countByG_LikeN(
+			_getGroupIds(groupId, includeSystem),
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long[] groupIds) {
+		return fragmentCollectionPersistence.countByGroupId(groupIds);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long[] groupIds, boolean marketplace) {
+
+		return fragmentCollectionPersistence.countByG_M(groupIds, marketplace);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long[] groupIds, String name) {
+		return fragmentCollectionPersistence.countByG_LikeN(
+			groupIds,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long[] groupIds, String name, boolean marketplace) {
+
+		return fragmentCollectionPersistence.countByG_LikeN_M(
+			groupIds,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			marketplace);
 	}
 
 	@Override
@@ -439,6 +570,16 @@ public class FragmentCollectionLocalServiceImpl
 			));
 	}
 
+	private long[] _getGroupIds(long groupId, boolean includeSystem) {
+		long[] groupIds = {groupId};
+
+		if (includeSystem) {
+			groupIds = ArrayUtil.append(groupIds, CompanyConstants.SYSTEM);
+		}
+
+		return groupIds;
+	}
+
 	private Predicate _getPredicate(
 		long[] fragmentCollectionIds, long[] groupIds, String name) {
 
@@ -516,7 +657,7 @@ public class FragmentCollectionLocalServiceImpl
 							).and(
 								dlFileVersionTable.status.eq(
 									WorkflowConstants.STATUS_APPROVED)
-								)
+							)
 						))
 				)
 			));

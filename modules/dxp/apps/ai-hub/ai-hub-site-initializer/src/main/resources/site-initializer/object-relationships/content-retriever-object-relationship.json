@@ -9,5 +9,5 @@
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubContentRetriever$]",
 	"objectDefinitionName2": "AIHubContentRetriever",
 	"system": true,
-	"type": "manyToMany"
+	"type": "oneToMany"
 }

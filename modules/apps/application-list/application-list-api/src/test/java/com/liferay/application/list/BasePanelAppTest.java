@@ -57,6 +57,14 @@ public class BasePanelAppTest {
 	private void _testGetGroupWithNonsiteAdministrationPortlet()
 		throws Exception {
 
+		Group controlPanelGroup = Mockito.mock(Group.class);
+
+		Mockito.when(
+			_themeDisplay.getControlPanelGroup()
+		).thenReturn(
+			controlPanelGroup
+		);
+
 		Portlet portlet = Mockito.mock(Portlet.class);
 
 		Mockito.when(
@@ -66,14 +74,6 @@ public class BasePanelAppTest {
 		);
 
 		TestPanelApp testPanelApp = new TestPanelApp(portlet);
-
-		Group controlPanelGroup = Mockito.mock(Group.class);
-
-		Mockito.when(
-			_themeDisplay.getControlPanelGroup()
-		).thenReturn(
-			controlPanelGroup
-		);
 
 		Assert.assertEquals(
 			controlPanelGroup, testPanelApp.getGroup(_httpServletRequest));
@@ -108,8 +108,6 @@ public class BasePanelAppTest {
 	}
 
 	private void _testGetGroupWithNullPortlet() throws Exception {
-		TestPanelApp testPanelApp = new TestPanelApp(null);
-
 		Group controlPanelGroup = Mockito.mock(Group.class);
 
 		Mockito.when(
@@ -117,6 +115,8 @@ public class BasePanelAppTest {
 		).thenReturn(
 			controlPanelGroup
 		);
+
+		TestPanelApp testPanelApp = new TestPanelApp(null);
 
 		Assert.assertEquals(
 			controlPanelGroup, testPanelApp.getGroup(_httpServletRequest));

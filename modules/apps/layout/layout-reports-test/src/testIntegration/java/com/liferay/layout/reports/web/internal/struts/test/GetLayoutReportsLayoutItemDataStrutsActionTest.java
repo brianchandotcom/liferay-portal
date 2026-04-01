@@ -133,8 +133,7 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 		UserLocalServiceUtil.addGroupUser(
 			_group.getGroupId(), user.getUserId());
 
-		Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
 

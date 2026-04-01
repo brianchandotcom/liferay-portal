@@ -207,6 +207,24 @@ export enum LanguageIds {
 	Spanish = 'es_ES'
 }
 
+/**
+ * - Loading (1) The status is set to `loading` only when the first
+ *   requisition occurs.
+ * - Refetch (2) The status is set to `refetch` when a change in the variables API
+ *   or refetch method is called.
+ * - Polling (3) The status is set to `polling` when pollInterval is set above 0.
+ * - Unused (4) When no request is happening the status will be `unused`.
+ * - Error (5) When any timeout or request `error` occurs, the status will be set
+ *   to error.
+ */
+export enum NetworkState {
+	Error = 5,
+	Loading = 1,
+	Polling = 3,
+	Refetch = 2,
+	Unused = 4
+}
+
 export enum OrderByDirections {
 	Ascending = 'ASC',
 	Descending = 'DESC'

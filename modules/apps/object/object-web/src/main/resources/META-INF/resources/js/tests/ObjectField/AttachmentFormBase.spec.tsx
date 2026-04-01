@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
+import {renderHook} from '@testing-library/react-hooks';
+import userEvent from '@testing-library/user-event';
 
 // @ts-ignore
 
@@ -11,9 +13,12 @@ import fetchMock from 'fetch-mock';
 import React from 'react';
 
 import {AttachmentFormBase} from '../../components/ObjectField/AttachmentFormBase';
+import {useObjectFieldForm} from '../../components/ObjectField/useObjectFieldForm';
 
 const SPACE_LIBRARIES_URL =
 	/\/o\/headless-asset-library\/v1.0\/asset-libraries\?.*type eq 'Space'.*/;
+
+const mockSetValues = jest.fn();
 
 jest.mock('@liferay/object-js-components-web', () => ({
 	SingleSelect: ({items, onSelectionChange, selectedKey}: any) => (
@@ -41,6 +46,7 @@ jest.mock('@liferay/object-js-components-web', () => ({
 			{label}
 		</label>
 	),
+	useForm: () => ({setValues: mockSetValues}),
 }));
 
 jest.mock('../../utils/fieldSettings', () => ({
@@ -58,7 +64,7 @@ const renderComponent = ({
 	objectDefinitionName = 'MyObject',
 	setValues = jest.fn(),
 	onSubmit = jest.fn(),
-}: any = {}) =>
+}: any = {}) => {
 	render(
 		<AttachmentFormBase
 			hasDepotEntry={hasDepotEntry}
@@ -69,6 +75,34 @@ const renderComponent = ({
 			values={{}}
 		/>
 	);
+};
+
+const renderComponentWithHook = ({
+	hasDepotEntry = true,
+	objectFieldSettings = [],
+	objectDefinitionName = 'MyObject',
+	onSubmit = jest.fn(),
+}: any = {}) => {
+	const {result} = renderHook(useObjectFieldForm, {
+		initialProps: {
+			initialValues: {objectFieldSettings},
+			onSubmit,
+		},
+	});
+
+	render(
+		<AttachmentFormBase
+			hasDepotEntry={hasDepotEntry}
+			objectDefinitionName={objectDefinitionName}
+			objectFieldSettings={objectFieldSettings}
+			onSubmit={onSubmit}
+			setValues={result.current.setValues}
+			values={result.current.values}
+		/>
+	);
+
+	return result;
+};
 
 describe('The AttachmentFormBase component', () => {
 	afterEach(() => {
@@ -131,5 +165,59 @@ describe('The AttachmentFormBase component', () => {
 		expect(
 			screen.getByLabelText('show-uploaded-files-in-library')
 		).toBeInTheDocument();
+	});
+
+	it('sets default values for the storageDLFolderPath and storageDepotGroup', async () => {
+		fetchMock.restore();
+
+		fetchMock.get(SPACE_LIBRARIES_URL, {
+			items: [{externalReferenceCode: 'MySpaceERC'}],
+			totalCount: 1,
+		});
+
+		renderComponentWithHook({
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToCMSBasicDocument'},
+				{name: 'showFilesInLibrary', value: false},
+			],
+		});
+
+		await waitFor(() => {
+			expect(fetchMock.called(SPACE_LIBRARIES_URL)).toBe(true);
+		});
+
+		await userEvent.click(
+			screen.getByLabelText('show-uploaded-files-in-library')
+		);
+
+		expect(mockSetValues).toHaveBeenCalledWith({
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToCMSBasicDocument'},
+				{name: 'showFilesInLibrary', value: true},
+				{name: 'storageDLFolderPath', value: '/MyObject'},
+				{name: 'storageDepotGroup', value: 'MySpaceERC'},
+			],
+		});
+	});
+
+	it('sets default values for the storageDLFolderPath when fileSource is userComputerToDocumentsAndMedia', async () => {
+		renderComponentWithHook({
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+				{name: 'showFilesInLibrary', value: false},
+			],
+		});
+
+		await userEvent.click(
+			screen.getByLabelText('show-uploaded-files-in-library')
+		);
+
+		expect(mockSetValues).toHaveBeenCalledWith({
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+				{name: 'showFilesInLibrary', value: true},
+				{name: 'storageDLFolderPath', value: '/MyObject'},
+			],
+		});
 	});
 });

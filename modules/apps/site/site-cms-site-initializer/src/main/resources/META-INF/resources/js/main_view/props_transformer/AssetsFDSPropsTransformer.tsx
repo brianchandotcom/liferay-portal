@@ -37,6 +37,7 @@ import deleteAssetEntriesBulkAction, {
 import deleteItemAction from './actions/deleteItemAction';
 import executeResetPermissionObjectBulkSelectionAction from './actions/executeResetPermissionObjectBulkSelectionAction';
 import expireEntriesBulkAction from './actions/expireEntriesBulkAction';
+import exportTranslationBulkAction from './actions/exportTranslationBulkAction';
 import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
 import {triggerAssetDownloadBulkAction} from './actions/triggerAssetDownloadBulkAction';
@@ -565,25 +566,10 @@ export default function AssetsFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'export-for-translation') {
-				openCMSModal({
-					contentComponent: ({
-						closeModal,
-					}: {
-						closeModal: () => void;
-					}) =>
-						ExportTranslationModalContent({
-							apiURL: otherProps.apiURL,
-							availableExportFileFormats:
-								additionalProps.availableExportFileFormats,
-							availableSourceLocales:
-								additionalProps.availableLocales,
-							availableTargetLocales:
-								additionalProps.availableLocales,
-							closeModal,
-							defaultSourceLanguageId:
-								Liferay.ThemeDisplay.getLanguageId(),
-							selectedData,
-						}),
+				exportTranslationBulkAction({
+					additionalProps,
+					apiURL: otherProps.apiURL,
+					selectedData,
 				});
 			}
 			else if (

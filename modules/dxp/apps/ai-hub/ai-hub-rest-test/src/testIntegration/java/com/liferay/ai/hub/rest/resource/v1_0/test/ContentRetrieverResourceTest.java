@@ -108,6 +108,21 @@ public class ContentRetrieverResourceTest
 
 	@Override
 	@Test
+	public void testDeleteContentRetrieverByExternalReferenceCode()
+		throws Exception {
+
+		super.testDeleteContentRetrieverByExternalReferenceCode();
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			_searchEngineAdapter.execute(
+				new IndicesExistsIndexRequest(
+					_contentRetriever.getIndexName()));
+
+		Assert.assertFalse(indicesExistsIndexResponse.isExists());
+	}
+
+	@Override
+	@Test
 	public void testPostContentRetriever() throws Exception {
 		ContentRetriever contentRetriever =
 			contentRetrieverResource.postContentRetriever(
@@ -128,6 +143,17 @@ public class ContentRetrieverResourceTest
 		Assert.assertTrue(indicesExistsIndexResponse.isExists());
 	}
 
+	@Override
+	protected ContentRetriever
+			testDeleteContentRetrieverByExternalReferenceCode_addContentRetriever()
+		throws Exception {
+
+		_contentRetriever = contentRetrieverResource.postContentRetriever(
+			randomContentRetriever());
+
+		return _contentRetriever;
+	}
+
 	@Inject
 	private static AccountEntryLocalService _accountEntryLocalService;
 
@@ -145,6 +171,8 @@ public class ContentRetrieverResourceTest
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;
+
+	private ContentRetriever _contentRetriever;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -33,6 +33,7 @@
 		"@clayui/popover": "^3.148.0",
 		"@clayui/sticker": "^3.147.0",
 		"@clayui/table": "^3.144.1",
+		"@clayui/tabs": "^3.160.0",
 		"@clayui/toolbar": "^3.148.0",
 		"@clayui/tooltip": "^3.148.0",
 		"@liferay/jest-junit-reporter": "^1.2.0",

@@ -5,6 +5,7 @@
 
 package com.liferay.saml.web.internal.portlet.action.test;
 
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -33,8 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upload.test.util.UploadTestUtil;
 import com.liferay.saml.constants.SamlPortletKeys;
-
-import jakarta.portlet.PortletException;
 
 import java.util.List;
 import java.util.Map;
@@ -58,8 +58,7 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					RandomTestUtil.randomLong())) {
 
-			Assert.assertThrows(
-				PortletException.class,
+			_assertThrowsPrincipalException(
 				() -> _processAction(
 					baseModel,
 					_companyLocalService.createCompany(
@@ -70,8 +69,7 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 		Company company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
-		Assert.assertThrows(
-			PortletException.class,
+		_assertThrowsPrincipalException(
 			() -> _processAction(
 				baseModel, company, UserTestUtil.addUser(company)));
 
@@ -92,12 +90,31 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 	protected abstract Map<String, List<String>> getRequestParameters(
 		T baseModel);
 
+	private void _assertThrowsPrincipalException(
+		UnsafeRunnable<Exception> unsafeRunnable) {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Throwable throwable = exception.getCause();
+
+			Assert.assertTrue(
+				throwable.toString(), throwable instanceof PrincipalException);
+		}
+	}
+
 	private UploadPortletRequest _createUploadPortletRequest(
-		T baseModel, LiferayPortletRequest liferayPortletRequest) {
+		T baseModel, LiferayPortletRequest liferayPortletRequest,
+		ThemeDisplay themeDisplay) {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
 
+		mockMultipartHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 		mockMultipartHttpServletRequest.setContentType(
 			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
@@ -114,12 +131,6 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
-
-		Map<String, List<String>> parameters = getRequestParameters(baseModel);
-
-		parameters.forEach(
-			(key, values) -> mockLiferayPortletActionRequest.setParameter(
-				key, values.toArray(new String[0])));
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.COMPANY_ID, company.getCompanyId());
@@ -157,7 +168,8 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 									"getUploadPortletRequest")) {
 
 								return _createUploadPortletRequest(
-									baseModel, mockLiferayPortletActionRequest);
+									baseModel, mockLiferayPortletActionRequest,
+									themeDisplay);
 							}
 
 							return method.invoke(_portal, args);

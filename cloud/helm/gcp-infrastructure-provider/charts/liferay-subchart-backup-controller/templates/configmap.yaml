@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+{{- range $key, $value := .Values.env }}
+    {{ $key }}: {{ $value | quote }}
+{{- end }}
+kind: ConfigMap
+metadata:
+    name: backup-controller-configmap
+    namespace: {{ .Release.Namespace }}

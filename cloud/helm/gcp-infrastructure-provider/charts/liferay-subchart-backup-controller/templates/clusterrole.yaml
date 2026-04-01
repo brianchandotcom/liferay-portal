@@ -1,0 +1,74 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    name: backup-controller-clusterrole
+rules:
+    -   apiGroups:
+            -   ""
+        resources:
+            -   configmaps
+        verbs:
+            -   get
+            -   list
+            -   watch
+            -   create
+            -   update
+            -   patch
+            -   delete
+    -   apiGroups:
+            -   ""
+        resources:
+            -   events
+        verbs:
+            -   create
+            -   patch
+    -   apiGroups:
+            -   backup.liferay.cloud
+        resources:
+            -   liferaybackups
+            -   liferaydatabasesnapshotoperations
+            -   liferaydatabasesnapshots
+            -   liferaydocumentlibrarybackups
+            -   stsjoboperations
+        verbs:
+            -   create
+            -   delete
+            -   get
+            -   list
+            -   patch
+            -   update
+            -   watch
+    -   apiGroups:
+            -   backup.liferay.cloud
+        resources:
+            -   liferaybackups/finalizers
+            -   liferaydatabasesnapshotoperations/finalizers
+            -   liferaydatabasesnapshots/finalizers
+            -   liferaydocumentlibrarybackups/finalizers
+            -   stsjoboperations/finalizers
+        verbs:
+            -   update
+    -   apiGroups:
+            -   backup.liferay.cloud
+        resources:
+            -   liferaybackups/status
+            -   liferaydatabasesnapshotoperations/status
+            -   liferaydatabasesnapshots/status
+            -   liferaydocumentlibrarybackups/status
+            -   stsjoboperations/status
+        verbs:
+            -   get
+            -   patch
+            -   update
+    -   apiGroups:
+            -   coordination.k8s.io
+        resources:
+            -   leases
+        verbs:
+            -   get
+            -   list
+            -   watch
+            -   create
+            -   update
+            -   patch
+            -   delete

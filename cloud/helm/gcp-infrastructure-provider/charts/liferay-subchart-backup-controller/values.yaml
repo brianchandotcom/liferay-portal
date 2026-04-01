@@ -1,0 +1,10 @@
+cpuLimit: "1"
+cpuRequest: "1"
+env:
+    GOMEMLIMIT: 819MiB
+    LCP_ENABLE_DATABASE_DUMPS: false
+    LCP_ENABLE_DEPLOYMENT_MUTATION: false
+imageTag: master
+memoryLimit: 1Gi
+memoryRequest: 1Gi
+replicas: 3

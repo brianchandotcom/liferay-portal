@@ -17,3 +17,5 @@ gateway:
 gcp:
     projectId: ""
     projectNumber: ""
+liferay-subchart-backup-controller:
+    enabled: true

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: backup-controller
+    namespace: {{ .Release.Namespace }}
+spec:
+    replicas: {{ .Values.replicas }}
+    selector:
+        matchLabels:
+            app.kubernetes.io/name: backup-controller
+    template:
+        metadata:
+            annotations:
+                checksum/configs: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
+            labels:
+                app.kubernetes.io/name: backup-controller
+        spec:
+            containers:
+                -   args:
+                        -   --leader-elect
+                        -   --health-probe-bind-address=:8081
+                    command:
+                        -   /manager
+                    envFrom:
+                        -   configMapRef:
+                                name: backup-controller-configmap
+                                optional: false
+                    image: {{ printf "liferaycloud/backup-controller:%s" .Values.imageTag | quote }}
+                    livenessProbe:
+                        httpGet:
+                            path: /healthz
+                            port: 8081
+                        initialDelaySeconds: 15
+                        periodSeconds: 20
+                    name: backup-controller
+                    readinessProbe:
+                        httpGet:
+                            path: /readyz
+                            port: 8081
+                        initialDelaySeconds: 5
+                        periodSeconds: 10
+                    resources:
+                        limits:
+                            cpu: {{ .Values.cpuLimit | quote }}
+                            memory: {{ .Values.memoryLimit | quote }}
+                        requests:
+                            cpu: {{ .Values.cpuRequest | quote }}
+                            memory: {{ .Values.memoryRequest | quote }}
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        privileged: false
+            securityContext:
+                fsGroup: 1000
+                runAsGroup: 10000
+                runAsNonRoot: true
+                runAsUser: 10000
+                seccompProfile:
+                    type: RuntimeDefault
+            serviceAccountName: backup-controller
+            terminationGracePeriodSeconds: 60

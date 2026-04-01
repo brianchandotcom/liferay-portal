@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    name: backup-controller-deny-all-ingress
+    namespace: {{ .Release.Namespace }}
+spec:
+    ingress: []
+    podSelector:
+        matchLabels:
+            app.kubernetes.io/name: backup-controller
+    policyTypes:
+        -   Ingress

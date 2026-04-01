@@ -64,10 +64,15 @@ const getThumbnailProps = (item: any) => {
 	}
 
 	if (item.embedded.file) {
-		const {thumbnailURL} = item.embedded.file;
+		const {alternativeText, name, thumbnailURL} = item.embedded.file;
 
 		if (thumbnailURL) {
-			return {imgProps: thumbnailURL};
+			return {
+				imgProps: {
+					alt: alternativeText || name,
+					src: thumbnailURL,
+				},
+			};
 		}
 		else {
 			return {symbol: 'documents-and-media'};
@@ -78,7 +83,12 @@ const getThumbnailProps = (item: any) => {
 		const videoId = getYouTubeVideoId(item.embedded.videoURL);
 
 		if (videoId) {
-			return {imgProps: `https://img.youtube.com/vi/${videoId}/0.jpg`};
+			return {
+				imgProps: {
+					alt: item.embedded.title || item.title,
+					src: `https://img.youtube.com/vi/${videoId}/0.jpg`,
+				},
+			};
 		}
 
 		return {symbol: 'video'};

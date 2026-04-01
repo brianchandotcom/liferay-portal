@@ -82,72 +82,25 @@ export class EditObjectViewPage {
 	}
 
 	async addDefaultSort(columnName: string, sortOrder: string) {
-		const newDefaultSortButton = this.sidePanel.getByRole('button', {
-			name: 'New Default Sort',
+		const newDefaultSortButton = this.sidePanel
+			.getByRole('button', {
+				name: 'New Default Sort',
+			})
+			.or(this.sidePanel.getByRole('button', {name: 'Add'}));
+
+		await newDefaultSortButton.click();
+
+		const columnsCombobox = this.sidePanel.getByRole('combobox', {
+			name: 'Columns Mandatory',
 		});
 
-		const addSortButton = this.sidePanel
-			.locator(
-				'button.lfr-object__object-builder-screen-management-bar-button'
-			)
-			.last();
-
 		const defaultSortModal = this.sidePanel.getByLabel('New Default Sort');
-
-		const columnsCombobox = defaultSortModal.getByLabel('Columns');
-
-		// Keep trying until the New Default Sort modal opens
-
-		for (let attempt = 0; attempt < 3; attempt++) {
-
-			// Wait for Default Sort tab content to load
-
-			await this.sidePanel
-				.getByText('Default Sort', {exact: true})
-				.first()
-				.waitFor({state: 'visible'});
-
-			// Click the appropriate trigger button
-
-			if (await newDefaultSortButton.isVisible().catch(() => false)) {
-				await newDefaultSortButton.click();
-			}
-			else {
-				await addSortButton.dispatchEvent('click');
-			}
-
-			// Dismiss Add Columns modal if it appears
-
-			const addColumnsAppeared = await this.addColumnsModal
-				.waitFor({state: 'visible', timeout: 3000})
-				.then(() => true)
-				.catch(() => false);
-
-			if (addColumnsAppeared) {
-				await this.addColumnsModal
-					.getByRole('button', {name: 'Save'})
-					.click();
-
-				await this.addColumnsModal.waitFor({state: 'hidden'});
-			}
-
-			// Check if the New Default Sort modal opened
-
-			const modalOpened = await columnsCombobox
-				.waitFor({state: 'visible', timeout: 3000})
-				.then(() => true)
-				.catch(() => false);
-
-			if (modalOpened) {
-				break;
-			}
-		}
 
 		await columnsCombobox.click();
 
 		await this.sidePanel.getByRole('option', {name: columnName}).click();
 
-		const sortingCombobox = defaultSortModal.getByRole('combobox').last();
+		const sortingCombobox = this.sidePanel.getByRole('combobox').last();
 
 		await sortingCombobox.click();
 

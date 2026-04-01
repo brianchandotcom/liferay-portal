@@ -359,6 +359,10 @@ test(
 
 		await defaultSortTab.click();
 
+		await expect(
+			sidePanel.getByRole('heading', {name: 'Default Sort'})
+		).toBeVisible({timeout: 3000});
+
 		for (const columnName of metadataColumns) {
 			await editObjectViewPage.addDefaultSort(columnName, 'Ascending');
 		}
@@ -423,6 +427,10 @@ test(
 		});
 
 		await defaultSortTab.click();
+
+		await expect(
+			sidePanel.getByRole('heading', {name: 'Default Sort'})
+		).toBeVisible({timeout: 3000});
 
 		await editObjectViewPage.addDefaultSort('Custom Field', 'Ascending');
 
@@ -616,6 +624,10 @@ test(
 		});
 
 		await defaultSortTab.click();
+
+		await expect(
+			sidePanel.getByRole('heading', {name: 'Default Sort'})
+		).toBeVisible({timeout: 3000});
 
 		await editObjectViewPage.addDefaultSort('Author', 'Ascending');
 
@@ -2363,6 +2375,10 @@ test(
 		});
 
 		await defaultSortTab.click();
+
+		await expect(
+			sidePanel.getByRole('heading', {name: 'Default Sort'})
+		).toBeVisible({timeout: 3000});
 
 		for (const columnName of metadataColumns) {
 			await editObjectViewPage.addDefaultSort(columnName, 'Ascending');

@@ -44,6 +44,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ContentRetrieverResource {
 
+	public void deleteContentRetrieverByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public ContentRetriever postContentRetriever(
 			ContentRetriever contentRetriever)
 		throws Exception;

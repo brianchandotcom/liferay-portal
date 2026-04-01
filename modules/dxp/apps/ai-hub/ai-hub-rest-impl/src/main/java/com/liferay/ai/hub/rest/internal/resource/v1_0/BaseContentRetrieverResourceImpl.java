@@ -72,6 +72,38 @@ public abstract class BaseContentRetrieverResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/ai-hub/v1.0/content-retrievers/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ContentRetriever")
+		}
+	)
+	@jakarta.ws.rs.DELETE
+	@jakarta.ws.rs.Path(
+		"/content-retrievers/by-external-reference-code/{externalReferenceCode}"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteContentRetrieverByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/content-retrievers' -d $'{"crawlDate": ___, "description_i18n": ___, "externalReferenceCode": ___, "indexName": ___, "title_i18n": ___, "type": ___, "url": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
@@ -182,8 +214,32 @@ public abstract class BaseContentRetrieverResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<ContentRetriever, ContentRetriever, Exception>
+			contentRetrieverUnsafeFunction = contentRetriever -> {
+				if (contentRetriever.getExternalReferenceCode() != null) {
+					deleteContentRetrieverByExternalReferenceCode(
+						contentRetriever.getExternalReferenceCode());
+
+					return contentRetriever;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				contentRetrievers, contentRetrieverUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				contentRetrievers, contentRetrieverUnsafeFunction::apply);
+		}
+		else {
+			for (ContentRetriever contentRetriever : contentRetrievers) {
+				contentRetrieverUnsafeFunction.apply(contentRetriever);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

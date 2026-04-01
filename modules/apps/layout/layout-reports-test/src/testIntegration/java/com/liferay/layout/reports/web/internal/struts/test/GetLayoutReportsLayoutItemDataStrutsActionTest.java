@@ -118,6 +118,8 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
+		User user = UserTestUtil.addUser();
+
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setUser(user);
@@ -127,8 +129,6 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 
 		mockHttpServletRequest.setParameter(
 			"p_l_id", String.valueOf(_layout.getPlid()));
-
-		User user = UserTestUtil.addUser();
 
 		UserLocalServiceUtil.addGroupUser(
 			_group.getGroupId(), user.getUserId());

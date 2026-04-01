@@ -148,6 +148,7 @@
 			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS",
 			"readOnly": "false",
 			"relationshipType": "oneToMany",
+			"required": true,
 			"system": true,
 			"type": "Long"
 		}

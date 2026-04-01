@@ -1,4 +1,10 @@
 {
+	"chat-provider-account-id-aihub": {
+		"en_US": {
+			"message": "Get my account token for AI Hub.",
+			"url": "https://learn.liferay.com/w/dxp/personalization/experiences/enabling-automated-live-chat-systems#getting-the-chat-provider-account-id-or-token"
+		}
+	},
 	"chat-provider-account-id-chatwoot": {
 		"en_US": {
 			"message": "Get my account token for Chatwoot.",

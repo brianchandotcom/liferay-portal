@@ -11,10 +11,6 @@
 	},
 	"modifiable": true,
 	"name": "AIHubContentRetriever",
-	"objectActions": [
-	],
-	"objectDefinitionSettings": [
-	],
 	"objectFields": [
 		{
 			"DBType": "DateTime",
@@ -47,8 +43,6 @@
 			},
 			"localized": true,
 			"name": "description",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"system": true,
@@ -65,8 +59,6 @@
 				"en_US": "Index Name"
 			},
 			"name": "indexName",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"system": true,
 			"type": "String"
@@ -83,8 +75,6 @@
 			},
 			"localized": true,
 			"name": "title",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"system": true,
 			"type": "String"
@@ -100,8 +90,6 @@
 				"en_US": "Type"
 			},
 			"name": "type",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"system": true,
 			"type": "String"
@@ -117,8 +105,6 @@
 				"en_US": "URL"
 			},
 			"name": "url",
-			"objectFieldSettings": [
-			],
 			"readOnly": "false",
 			"system": true,
 			"type": "String"
@@ -154,14 +140,6 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",
-	"objectLayouts": [
-	],
-	"objectRelationships": [
-	],
-	"objectValidationRules": [
-	],
-	"objectViews": [
-	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Content Retrievers"

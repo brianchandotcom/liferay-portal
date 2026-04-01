@@ -82,6 +82,13 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 					);
 
 					setLanguages([initialLanguage, ...filteredLanguages]);
+
+					if (
+						language.value !== 'all' &&
+						!availableLanguageIds.includes(language.value)
+					) {
+						changeLanguage(initialLanguage);
+					}
 				}
 				else {
 					setLanguages(initialLanguages);
@@ -98,7 +105,12 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 		};
 
 		fetchSpaceLanguages();
-	}, [space.value, space.externalReferenceCode]);
+	}, [
+		changeLanguage,
+		language.value,
+		space.value,
+		space.externalReferenceCode,
+	]);
 
 	return (
 		<FilterDropdown

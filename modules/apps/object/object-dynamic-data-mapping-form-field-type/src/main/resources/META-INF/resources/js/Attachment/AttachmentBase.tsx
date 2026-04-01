@@ -212,9 +212,7 @@ export default function AttachmentBase({
 			return {objectEntryFolderExternalReferenceCode: DEFAULT_FOLDER_ERC};
 		}
 
-		let parentObjectEntryFolderExternalReferenceCode = isVisible
-			? 'L_FILES'
-			: DEFAULT_FOLDER_ERC;
+		let parentObjectEntryFolderExternalReferenceCode = DEFAULT_FOLDER_ERC;
 
 		let parentObjectEntryFolderId: number | undefined;
 

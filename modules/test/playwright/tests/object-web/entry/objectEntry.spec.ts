@@ -661,54 +661,27 @@ cmsTest.describe('Manage attachment ObjectField storage locations', () => {
 			await test.step('Verify nested folders were created in CMS Files', async () => {
 				await spaceSummaryPage.goto(space.name);
 
-				const filesSection = page.locator('div').filter({
-					has: page.getByText('View All Files', {exact: true}),
+				const parentFolder = page.getByRole('link', {
+					exact: true,
+					name: parentFolderName,
 				});
 
-				const folderCard = filesSection.locator('.card').first();
-
-				await expect(folderCard).toBeVisible();
-
-				await folderCard.getByRole('button').click();
-
-				await Promise.all([
-					page.waitForURL(/\/web\/cms\/e\/view-folder\//),
-					page
-						.getByRole('menuitem', {
-							exact: true,
-							name: 'View Folder',
-						})
-						.click(),
-				]);
+				await expect(parentFolder).toBeVisible();
 
 				await expect(
-					page.getByText(`${parentFolderName}/${childFolderName}`, {
-						exact: true,
-					})
+					page.getByText(`${parentFolderName}/${childFolderName}`)
 				).toHaveCount(0);
 
-				const childFolderCard = page.locator('.card').first();
+				await parentFolder.click();
 
-				await expect(childFolderCard).toBeVisible();
+				const childFolder = page.getByRole('link', {
+					exact: true,
+					name: childFolderName,
+				});
 
-				const currentURL = page.url();
+				await expect(childFolder).toBeVisible();
 
-				await childFolderCard.getByRole('button').click();
-
-				await Promise.all([
-					page.waitForURL(
-						(url) =>
-							/\/web\/cms\/e\/view-folder\//.test(
-								url.toString()
-							) && url.toString() !== currentURL
-					),
-					page
-						.getByRole('menuitem', {
-							exact: true,
-							name: 'View Folder',
-						})
-						.click(),
-				]);
+				await childFolder.click();
 
 				await expect(
 					page.getByText('astronaut.png', {exact: false}).first()

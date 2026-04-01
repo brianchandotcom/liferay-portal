@@ -9,7 +9,9 @@
 
 <%
 String patcherFixName = ParamUtil.getString(request, "patcherFixName");
+
 long patcherProjectVersionId = ParamUtil.getLong(request, "patcherProjectVersionId");
+
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 

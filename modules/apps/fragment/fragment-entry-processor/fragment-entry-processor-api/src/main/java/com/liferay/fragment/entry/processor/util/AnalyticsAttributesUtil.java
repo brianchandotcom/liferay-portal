@@ -43,7 +43,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.jsoup.nodes.Element;
-import org.jsoup.parser.Tag;
 
 /**
  * @author Eudaldo Alonso
@@ -96,7 +95,7 @@ public class AnalyticsAttributesUtil {
 				editableValueJSONObject, fragmentEntryProcessorContext);
 
 		if (infoItemFieldMapped == null) {
-			if (_isImageTag(element)) {
+			if (element.is("img")) {
 				JSONObject jsonObject = editableValueJSONObject.getJSONObject(
 					String.valueOf(fragmentEntryProcessorContext.getLocale()));
 
@@ -351,12 +350,6 @@ public class AnalyticsAttributesUtil {
 		}
 
 		return String.valueOf(infoFieldValue.getValue(locale));
-	}
-
-	private static boolean _isImageTag(Element element) {
-		Tag tag = element.tag();
-
-		return StringUtil.equals(tag.getName(), "img");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

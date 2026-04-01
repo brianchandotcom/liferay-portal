@@ -221,10 +221,10 @@ public class CIForwardProcessor {
 			ioException.printStackTrace();
 		}
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(forwardedPullRequestURL)) {
-			_pullRequest.addComment(
-				_getSuccessCommentBody(forwardedPullRequestURL));
-		}
+		_pullRequest.addComment(
+			_getSuccessCommentBody(forwardedPullRequestURL));
+		_pullRequest.copyLabelsToPullRequest(forwardedPullRequest);
+		_pullRequest.copyStatusesToPullRequest(forwardedPullRequest);
 	}
 
 	private PullRequest.Comment _findMostRecentTestResultComment(

@@ -7,23 +7,18 @@ package com.liferay.oauth.client.rest.internal.resource.v1_0;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
-import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.oauth.client.constants.OAuthClientAdminPortletKeys;
-import com.liferay.oauth.client.persistence.exception.NoSuchOAuthClientASLocalMetadataException;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
 import com.liferay.oauth.client.rest.dto.v1_0.OAuthClientASLocalMetadata;
+import com.liferay.oauth.client.rest.internal.dto.v1_0.util.OAuthClientASLocalMetadataUtil;
 import com.liferay.oauth.client.rest.resource.v1_0.OAuthClientASLocalMetadataResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,16 +52,9 @@ public class OAuthClientASLocalMetadataResourceImpl
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			oAuthClientASLocalMetadata =
 				_oAuthClientASLocalMetadataService.
-					fetchOAuthClientASLocalMetadataByExternalReferenceCode(
+					getOAuthClientASLocalMetadataByExternalReferenceCode(
 						oAuthClientASLocalMetadataExternalReferenceCode,
 						contextCompany.getCompanyId());
-
-		if (oAuthClientASLocalMetadata == null) {
-			throw new NoSuchOAuthClientASLocalMetadataException(
-				"Unable to find OAuthClientASLocalMetadata with external " +
-					"reference code " +
-						oAuthClientASLocalMetadataExternalReferenceCode);
-		}
 
 		_oAuthClientASLocalMetadataService.deleteOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId());
@@ -147,8 +135,10 @@ public class OAuthClientASLocalMetadataResourceImpl
 						oAuthClientASLocalMetadataExternalReferenceCode,
 						contextCompany.getCompanyId());
 
-		return _toOAuthClientASLocalMetadata(
-			serviceBuilderOAuthClientASLocalMetadata);
+		return OAuthClientASLocalMetadataUtil.toOAuthClientASLocalMetadata(
+			_portal, serviceBuilderOAuthClientASLocalMetadata,
+			_userLocalService.fetchUser(
+				serviceBuilderOAuthClientASLocalMetadata.getUserId()));
 	}
 
 	@Override
@@ -161,24 +151,17 @@ public class OAuthClientASLocalMetadataResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		List<OAuthClientASLocalMetadata> oAuthClientASLocalMetadatas =
-			new ArrayList<>();
-
-		List
-			<com.liferay.oauth.client.persistence.model.
-				OAuthClientASLocalMetadata>
-					serviceBuilderOAuthClientASLocalMetadatas =
-						_oAuthClientASLocalMetadataService.
-							getCompanyOAuthClientASLocalMetadata(
-								contextCompany.getCompanyId());
-
-		serviceBuilderOAuthClientASLocalMetadatas.forEach(
-			serviceBuilderOAuthClientASLocalMetadata ->
-				oAuthClientASLocalMetadatas.add(
-					_toOAuthClientASLocalMetadata(
-						serviceBuilderOAuthClientASLocalMetadata)));
-
-		return Page.of(oAuthClientASLocalMetadatas);
+		return Page.of(
+			transform(
+				_oAuthClientASLocalMetadataService.
+					getCompanyOAuthClientASLocalMetadata(
+						contextCompany.getCompanyId()),
+				serviceBuilderOAuthClientASLocalMetadata ->
+					OAuthClientASLocalMetadataUtil.toOAuthClientASLocalMetadata(
+						_portal, serviceBuilderOAuthClientASLocalMetadata,
+						_userLocalService.fetchUser(
+							serviceBuilderOAuthClientASLocalMetadata.
+								getUserId()))));
 	}
 
 	@Override
@@ -192,42 +175,16 @@ public class OAuthClientASLocalMetadataResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		JSONObject metadataJSONObject = _jsonFactory.createJSONObject(
-			oAuthClientASLocalMetadata.getMetadataJSON());
-
-		String authorizationEndpoint = metadataJSONObject.getString(
-			"authorization_endpoint");
-		String jwksURI = metadataJSONObject.getString("jwks_uri");
-		String[] supportedGrantTypes = _getStringArray(
-			metadataJSONObject.getJSONArray("grant_types_supported"));
-		String[] supportedScopes = _getStringArray(
-			metadataJSONObject.getJSONArray("scopes_supported"));
-		String[] supportedSubjectTypes = _getStringArray(
-			metadataJSONObject.getJSONArray("subject_types_supported"));
-		String tokenEndpoint = metadataJSONObject.getString("token_endpoint");
-		String userInfoEndpoint = metadataJSONObject.getString(
-			"userinfo_endpoint");
-
-		JSONObject oAuthASMetadataJSONObject = _jsonFactory.createJSONObject(
-			oAuthClientASLocalMetadata.getOAuthASMetadataJSON());
-
-		String registrationEndpoint = oAuthASMetadataJSONObject.getString(
-			"registration_endpoint");
-
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			serviceBuilderOAuthClientASLocalMetadata =
-				_oAuthClientASLocalMetadataService.
-					addOAuthClientASLocalMetadata(
-						oAuthClientASLocalMetadata.getExternalReferenceCode(),
-						authorizationEndpoint,
-						oAuthClientASLocalMetadata.getIssuer(), jwksURI,
-						oAuthClientASLocalMetadata.getLocalWellKnownEnabled(),
-						registrationEndpoint, supportedGrantTypes,
-						supportedScopes, supportedSubjectTypes, tokenEndpoint,
-						userInfoEndpoint);
+				OAuthClientASLocalMetadataUtil.addAuthClientASLocalMetadata(
+					oAuthClientASLocalMetadata,
+					_oAuthClientASLocalMetadataService);
 
-		return _toOAuthClientASLocalMetadata(
-			serviceBuilderOAuthClientASLocalMetadata);
+		return OAuthClientASLocalMetadataUtil.toOAuthClientASLocalMetadata(
+			_portal, serviceBuilderOAuthClientASLocalMetadata,
+			_userLocalService.fetchUser(
+				serviceBuilderOAuthClientASLocalMetadata.getUserId()));
 	}
 
 	@Override
@@ -256,91 +213,40 @@ public class OAuthClientASLocalMetadataResourceImpl
 		if (serviceBuilderOAuthClientASLocalMetadata != null) {
 			JSONObject metadataJSONObject = _jsonFactory.createJSONObject(
 				oAuthClientASLocalMetadata.getMetadataJSON());
-
-			String authorizationEndpoint = metadataJSONObject.getString(
-				"authorization_endpoint");
-			String jwksURI = metadataJSONObject.getString("jwks_uri");
-			String[] supportedGrantTypes = _getStringArray(
-				metadataJSONObject.getJSONArray("grant_types_supported"));
-			String[] supportedScopes = _getStringArray(
-				metadataJSONObject.getJSONArray("scopes_supported"));
-			String[] supportedSubjectTypes = _getStringArray(
-				metadataJSONObject.getJSONArray("subject_types_supported"));
-			String tokenEndpoint = metadataJSONObject.getString(
-				"token_endpoint");
-			String userInfoEndpoint = metadataJSONObject.getString(
-				"userinfo_endpoint");
-
 			JSONObject oAuthASMetadataJSONObject =
 				_jsonFactory.createJSONObject(
 					oAuthClientASLocalMetadata.getOAuthASMetadataJSON());
-
-			String registrationEndpoint = oAuthASMetadataJSONObject.getString(
-				"registration_endpoint");
 
 			serviceBuilderOAuthClientASLocalMetadata =
 				_oAuthClientASLocalMetadataService.
 					updateOAuthClientASLocalMetadata(
 						serviceBuilderOAuthClientASLocalMetadata.
 							getOAuthClientASLocalMetadataId(),
-						authorizationEndpoint,
-						oAuthClientASLocalMetadata.getIssuer(), jwksURI,
+						metadataJSONObject.getString("authorization_endpoint"),
+						oAuthClientASLocalMetadata.getIssuer(),
+						metadataJSONObject.getString("jwks_uri"),
 						oAuthClientASLocalMetadata.getLocalWellKnownEnabled(),
-						registrationEndpoint, supportedGrantTypes,
-						supportedScopes, supportedSubjectTypes, tokenEndpoint,
-						userInfoEndpoint);
+						oAuthASMetadataJSONObject.getString(
+							"registration_endpoint"),
+						JSONUtil.toStringArray(
+							metadataJSONObject.getJSONArray(
+								"grant_types_supported")),
+						JSONUtil.toStringArray(
+							metadataJSONObject.getJSONArray(
+								"scopes_supported")),
+						JSONUtil.toStringArray(
+							metadataJSONObject.getJSONArray(
+								"subject_types_supported")),
+						metadataJSONObject.getString("token_endpoint"),
+						metadataJSONObject.getString("userinfo_endpoint"));
 
-			return _toOAuthClientASLocalMetadata(
-				serviceBuilderOAuthClientASLocalMetadata);
+			return OAuthClientASLocalMetadataUtil.toOAuthClientASLocalMetadata(
+				_portal, serviceBuilderOAuthClientASLocalMetadata,
+				_userLocalService.fetchUser(
+					serviceBuilderOAuthClientASLocalMetadata.getUserId()));
 		}
 
 		return postOAuthClientASLocalMetadata(oAuthClientASLocalMetadata);
-	}
-
-	private String[] _getStringArray(JSONArray jsonArray) {
-		if (jsonArray == null) {
-			return new String[0];
-		}
-
-		return ArrayUtil.toStringArray(jsonArray);
-	}
-
-	private OAuthClientASLocalMetadata _toOAuthClientASLocalMetadata(
-		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			serviceBuilderOAuthClientASLocalMetadata) {
-
-		return new OAuthClientASLocalMetadata() {
-			{
-				setCreator(
-					() -> CreatorUtil.toCreator(
-						null, _portal,
-						_userLocalService.fetchUser(
-							serviceBuilderOAuthClientASLocalMetadata.
-								getUserId())));
-				setDateCreated(
-					serviceBuilderOAuthClientASLocalMetadata::getCreateDate);
-				setDateModified(
-					serviceBuilderOAuthClientASLocalMetadata::getModifiedDate);
-				setExternalReferenceCode(
-					serviceBuilderOAuthClientASLocalMetadata::
-						getExternalReferenceCode);
-				setIssuer(serviceBuilderOAuthClientASLocalMetadata::getIssuer);
-				setLocalWellKnownEnabled(
-					serviceBuilderOAuthClientASLocalMetadata::
-						getLocalWellKnownEnabled);
-				setLocalWellKnownURI(
-					serviceBuilderOAuthClientASLocalMetadata::
-						getLocalWellKnownURI);
-				setMetadataJSON(
-					serviceBuilderOAuthClientASLocalMetadata::getMetadataJSON);
-				setOAuthASLocalWellKnownURI(
-					serviceBuilderOAuthClientASLocalMetadata::
-						getOAuthASLocalWellKnownURI);
-				setOAuthASMetadataJSON(
-					serviceBuilderOAuthClientASLocalMetadata::
-						getOAuthASMetadataJSON);
-			}
-		};
 	}
 
 	@Reference

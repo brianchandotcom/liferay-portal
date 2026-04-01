@@ -226,11 +226,16 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			_ENTERPRISE_PRODUCT_NAME, _ENTERPRISE_LICENSE_TYPE);
 	}
 
-	public File deployFreeTierPortalLicense(
-			long validityPeriod, String... domains)
+	public File deployFreeTierPortalLicense(long validityPeriod)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(20);
+		return deployFreeTierPortalLicense(validityPeriod, _FREE_TIER_DOMAIN);
+	}
+
+	public File deployFreeTierPortalLicense(long validityPeriod, String domain)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<?xml version=\"1.0\"?><license><account-name>");
 		sb.append(_FREE_TIER_ACCOUNT_NAME);
@@ -252,19 +257,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		sb.append(
 			_DATE_FORMAT.format(new Date(currentTimeMillis + validityPeriod)));
 		sb.append("</expiration-date>");
-		sb.append("<max-cluster-nodes>3</max-cluster-nodes><domains>");
-
-		if (domains == null) {
-			domains = new String[] {_FREE_TIER_DOMAIN};
-		}
-
-		for (String domain : domains) {
-			sb.append("<domain>");
-			sb.append(domain);
-			sb.append("</domain>");
-		}
-
-		sb.append("</domains><key></key></license>");
+		sb.append("<max-cluster-nodes>3</max-cluster-nodes><domains><domain>");
+		sb.append(domain);
+		sb.append("</domain><domain>localhost</domain></domains><key></key>");
+		sb.append("</license>");
 
 		LicenseManagerUtil.registerLicense(
 			JSONUtil.put("licenseXML", sb.toString()));

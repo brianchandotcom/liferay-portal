@@ -8,7 +8,6 @@ package com.liferay.marketplace.model;
 import com.liferay.headless.admin.address.client.dto.v1_0.Country;
 import com.liferay.headless.admin.address.client.dto.v1_0.Region;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
@@ -33,14 +32,12 @@ import org.json.JSONObject;
 public class SalesforceOpportunity {
 
 	public SalesforceOpportunity(
-		Country country, String licenseType, Order order, OrderItem orderItem,
-		Product product, UserAccount userAccount) {
+		Country country, String licenseType, Order order,
+		UserAccount userAccount) {
 
 		_country = country;
 		_licenseType = licenseType;
 		_order = order;
-		_orderItem = orderItem;
-		_product = product;
 		_userAccount = userAccount;
 	}
 
@@ -114,35 +111,18 @@ public class SalesforceOpportunity {
 	private JSONObject _getBillingAddressJSONObject() {
 		BillingAddress billingAddress = _order.getBillingAddress();
 
-		Map<String, String> countryTitles = _country.getTitle_i18n();
-
-		String enUsCountryTitle = countryTitles.get("en_US");
-
-		String enUsRegionTitle = null;
-
-		for (Region region : _country.getRegions()) {
-			if (Objects.equals(
-					region.getRegionCode(),
-					_order.getBillingAddress(
-					).getRegionISOCode())) {
-
-				Map<String, String> regionTitles = region.getTitle_i18n();
-
-				enUsRegionTitle = regionTitles.get("en_US");
-			}
-		}
-
 		return new JSONObject(
 		).put(
 			"addressName", billingAddress.getName()
 		).put(
 			"city", billingAddress.getCity()
 		).put(
-			"country", enUsCountryTitle
+			"country",
+			MarketplaceUtil.getDefaultLocale(_country.getTitle_i18n())
 		).put(
 			"postalCode", billingAddress.getZip()
 		).put(
-			"state", enUsRegionTitle
+			"state", _getState()
 		).put(
 			"street",
 			billingAddress.getStreet1() + " " + billingAddress.getStreet2()
@@ -244,11 +224,24 @@ public class SalesforceOpportunity {
 		);
 	}
 
+	private String _getState() {
+		BillingAddress billingAddress = _order.getBillingAddress();
+
+		for (Region region : _country.getRegions()) {
+			if (Objects.equals(
+					billingAddress.getRegionISOCode(),
+					region.getRegionCode())) {
+
+				return MarketplaceUtil.getDefaultLocale(region.getTitle_i18n());
+			}
+		}
+
+		return null;
+	}
+
 	private final Country _country;
 	private final String _licenseType;
 	private final Order _order;
-	private final OrderItem _orderItem;
-	private final Product _product;
 	private final UserAccount _userAccount;
 
 }

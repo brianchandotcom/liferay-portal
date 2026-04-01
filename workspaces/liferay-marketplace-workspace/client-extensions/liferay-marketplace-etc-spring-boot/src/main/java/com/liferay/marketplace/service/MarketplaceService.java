@@ -245,20 +245,9 @@ public class MarketplaceService extends BaseService {
 	}
 
 	public Country getCountryByA2(String a2) throws Exception {
-		CountryResource countryResource = getCountryResource();
+		CountryResource countryResource = _getCountryResource();
 
 		return countryResource.getCountryByA2(a2);
-	}
-
-	public CountryResource getCountryResource() throws Exception {
-		return CountryResource.builder(
-		).header(
-			HttpHeaders.AUTHORIZATION,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oahs")
-		).endpoint(
-			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
-		).build();
 	}
 
 	public CurrencyResource getCurrencyResource() throws Exception {
@@ -813,6 +802,17 @@ public class MarketplaceService extends BaseService {
 		}
 
 		return new JSONObject();
+	}
+
+	private CountryResource _getCountryResource() throws Exception {
+		return CountryResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
 	}
 
 	private ProductSpecificationResource _getProductSpecificationResource()

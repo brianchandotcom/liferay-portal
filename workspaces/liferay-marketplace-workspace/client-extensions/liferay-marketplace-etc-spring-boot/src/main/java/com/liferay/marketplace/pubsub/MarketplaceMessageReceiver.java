@@ -35,6 +35,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -92,7 +93,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 									"account"
 								).toString());
 
-				_processKoroneikiAccount(ackReplyConsumer, koroneikiAccount);
+				_processKoroneikiAccount(koroneikiAccount);
 			}
 			else if (Objects.equals(
 						_topicName,
@@ -171,6 +172,20 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		};
 	}
 
+	private String _getExternalLinkValue(
+		ExternalLink[] externalLinks, String domain, String entityName) {
+
+		for (ExternalLink externalLink : externalLinks) {
+			if (Objects.equals(externalLink.getDomain(), domain) &&
+				Objects.equals(externalLink.getEntityName(), entityName)) {
+
+				return externalLink.getEntityId();
+			}
+		}
+
+		return null;
+	}
+
 	private PostalAddress _getPostalAddress(
 		Account account, String streetAddressLine1) {
 
@@ -224,78 +239,225 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		return null;
 	}
 
-	private boolean _isOKStatusCode(int stausCode) {
-	    return (stausCode / 200) == 2;
-    }
+	private boolean _isOKStatusCode(int statusCode) {
+		if ((statusCode / 100) == 2) {
+			return true;
+		}
+
+		return false;
+	}
 
 	private void _processKoroneikiAccount(
-			AckReplyConsumer ackReplyConsumer,
 			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
 				koroneikiAccount)
 		throws Exception {
 
-		for (ExternalLink externalLink : koroneikiAccount.getExternalLinks()) {
-			if (Objects.equals(externalLink.getDomain(), "salesforce") &&
-				Objects.equals(externalLink.getEntityName(), "project")) {
+		String project = _getExternalLinkValue(
+			koroneikiAccount.getExternalLinks(), "salesforce", "project");
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skipping over account " + koroneikiAccount.getKey() +
-							" because it is a project");
-				}
-
-				ackReplyConsumer.ack();
-
-				return;
+		if (project != null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skipping over account " + koroneikiAccount.getKey() +
+						" because it is a project");
 			}
+
+			return;
 		}
 
 		Account account = _getAccount(koroneikiAccount.getKey());
 
+		if (account == null) {
+			account = _syncAccount(koroneikiAccount);
+		}
+
+		_syncAccountAddresses(account, koroneikiAccount);
+		_syncAccountContacts(account, koroneikiAccount);
+
 		AccountResource accountResource =
 			_marketplaceService.getAccountResource();
 
-		if (account == null) {
-			HttpInvoker.HttpResponse httpResponse =
-				accountResource.postAccountHttpResponse(
-					new Account() {
-						{
-							setCustomFields(
-								() -> _getCustomFields(koroneikiAccount));
-							setDescription(koroneikiAccount::getDescription);
-							setExternalReferenceCode(koroneikiAccount::getKey);
-							setName(koroneikiAccount::getName);
-						}
-					});
-
-			int statusCode = httpResponse.getStatusCode();
-
-			if (_isOKStatusCode(statusCode)) {
-				account = Account.toDTO(httpResponse.getContent());
-			}
-			else if ((statusCode == HttpStatus.CONFLICT.value()) ||
-					 (statusCode == HttpStatus.BAD_REQUEST.value())) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Race condition detected for account ",
-							koroneikiAccount.getKey(),
-							" with HTTP status code ", statusCode));
+		accountResource.patchAccount(
+			account.getId(),
+			new Account() {
+				{
+					setCustomFields(() -> _getCustomFields(koroneikiAccount));
+					setDescription(koroneikiAccount::getDescription);
+					setName(koroneikiAccount::getName);
 				}
+			});
 
-				ackReplyConsumer.nack();
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Account \"" + koroneikiAccount.getKey() +
+					"\" updated in Marketplace");
+		}
+	}
 
-				return;
+	private void _processKoroneikiProductPurchaseCreate(
+			ProductPurchase productPurchase)
+		throws Exception {
+
+		if (!_productKeys.contains(productPurchase.getProductKey())) {
+			return;
+		}
+
+		String opportunityId = _getExternalLinkValue(
+			productPurchase.getExternalLinks(), "salesforce", "opportunity");
+
+		if (opportunityId == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Opportunity ID not found to process product purchase");
 			}
-			else {
-				throw new Exception(
-					StringBundler.concat(
-						"Failed to process account for ",
-						koroneikiAccount.getKey(), "with HTTP status code ",
-						statusCode, " - ", httpResponse.getContent()));
+
+			return;
+		}
+
+		if (_channelId == null) {
+			synchronized (this) {
+				if (_channelId == null) {
+					ChannelResource channelResource =
+						_marketplaceService.getChannelResource();
+
+					Channel channel =
+						channelResource.getChannelByExternalReferenceCode(
+							_MARKETPLACE_CHANNEL);
+
+					_channelId = channel.getId();
+				}
 			}
 		}
+
+		String accountKey = productPurchase.getAccountKey();
+
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account account =
+			_koroneikiService.getKoroneikiAccount(accountKey);
+
+		if (Validator.isNotNull(
+				_getExternalLinkValue(
+					account.getExternalLinks(), "salesforce", "project"))) {
+
+			accountKey = account.getParentAccountKey();
+		}
+
+		OrderResource orderResource = _marketplaceService.getOrderResource();
+
+		Order order;
+
+		try {
+			order = orderResource.getOrderByExternalReferenceCode(
+				opportunityId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			String finalAccountKey = accountKey;
+
+			order = orderResource.postOrder(
+				new Order() {
+					{
+						setAccountExternalReferenceCode(() -> finalAccountKey);
+						setChannelId(() -> _channelId);
+						setCurrencyCode(() -> "USD");
+						setExternalReferenceCode(() -> opportunityId);
+						setOrderItems(
+							() -> new OrderItem[] {
+								new OrderItem() {
+									{
+										setQuantity(
+											() -> new BigDecimal(
+												productPurchase.getQuantity()));
+										setSkuExternalReferenceCode(
+											() -> _getSkuExternalReferenceCode(
+												productPurchase.getProduct()));
+									}
+								}
+							});
+						setOrderTypeExternalReferenceCode(() -> "ADDONS");
+					}
+				});
+		}
+
+		_provisioningHubService.provision(order, productPurchase);
+
+		_marketplaceService.updateOrder(
+			null, order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
+	}
+
+	private Account _syncAccount(
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+				koroneikiAccount)
+		throws Exception {
+
+		AccountResource accountResource =
+			_marketplaceService.getAccountResource();
+
+		HttpInvoker.HttpResponse httpResponse =
+			accountResource.postAccountHttpResponse(
+				new Account() {
+					{
+						setCustomFields(
+							() -> _getCustomFields(koroneikiAccount));
+						setDescription(koroneikiAccount::getDescription);
+						setExternalReferenceCode(koroneikiAccount::getKey);
+						setName(koroneikiAccount::getName);
+					}
+				});
+
+		int statusCode = httpResponse.getStatusCode();
+
+		if (_isOKStatusCode(statusCode)) {
+			return Account.toDTO(httpResponse.getContent());
+		}
+		else if ((statusCode == HttpStatus.BAD_REQUEST.value()) ||
+				 (statusCode == HttpStatus.CONFLICT.value())) {
+
+			throw new Exception(
+				StringBundler.concat(
+					"Race condition detected for account ",
+					koroneikiAccount.getKey(), " with HTTP status code ",
+					statusCode));
+		}
+
+		throw new Exception(
+			StringBundler.concat(
+				"Failed to process account for ", koroneikiAccount.getKey(),
+				"with HTTP status code ", statusCode, " - ",
+				httpResponse.getContent()));
+	}
+
+	private void _syncAccountAddresses(
+			Account account,
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+				koroneikiAccount)
+		throws Exception {
+
+		PostalAddressResource postalAddressResource =
+			_marketplaceService.getPostalAddressResource();
+
+		for (PostalAddress postalAddress :
+				_getPostalAddresses(koroneikiAccount)) {
+
+			PostalAddress existingPostalAddress = _getPostalAddress(
+				account, postalAddress.getStreetAddressLine1());
+
+			if (existingPostalAddress != null) {
+				continue;
+			}
+
+			postalAddressResource.postAccountPostalAddress(
+				account.getId(), postalAddress);
+		}
+	}
+
+	private void _syncAccountContacts(
+			Account account,
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+				koroneikiAccount)
+		throws Exception {
 
 		com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page<Contact>
 			contactsPage = _koroneikiService.getContactsPage(
@@ -352,148 +514,9 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					account.getId(), emailAddress);
 			}
 		}
-
-		PostalAddressResource postalAddressResource =
-			_marketplaceService.getPostalAddressResource();
-
-		for (PostalAddress postalAddress :
-				_getPostalAddresses(koroneikiAccount)) {
-
-			PostalAddress existingPostalAddress = _getPostalAddress(
-				account, postalAddress.getStreetAddressLine1());
-
-			if (existingPostalAddress != null) {
-				continue;
-			}
-
-			postalAddressResource.postAccountPostalAddress(
-				account.getId(), postalAddress);
-		}
-
-		accountResource.patchAccount(
-			account.getId(),
-			new Account() {
-				{
-					setCustomFields(() -> _getCustomFields(koroneikiAccount));
-					setDescription(koroneikiAccount::getDescription);
-					setName(koroneikiAccount::getName);
-				}
-			});
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Account \"" + koroneikiAccount.getKey() +
-					"\" updated in Marketplace");
-		}
 	}
-
-	private void _processKoroneikiProductPurchaseCreate(
-			ProductPurchase productPurchase)
-		throws Exception {
-
-		if (!_productKeys.contains(productPurchase.getProductKey())) {
-			return;
-		}
-
-		if (_channelId == null) {
-			synchronized (this) {
-				if (_channelId == null) {
-					ChannelResource channelResource =
-						_marketplaceService.getChannelResource();
-
-					Channel channel =
-						channelResource.getChannelByExternalReferenceCode(
-							_MARKETPLACE_CHANNEL);
-
-					_channelId = channel.getId();
-				}
-			}
-		}
-
-		String opportunityId = null;
-
-		for (ExternalLink externalLink : productPurchase.getExternalLinks()) {
-			if (Objects.equals(externalLink.getEntityName(), _OPPORTUNITY)) {
-				opportunityId = externalLink.getEntityId();
-
-				break;
-			}
-		}
-
-		if (opportunityId == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Skipping product purchase: missing opportunity ID");
-			}
-
-			return;
-		}
-
-		String accountKey = productPurchase.getAccountKey();
-
-		if (Objects.equals(
-				productPurchase.getProduct(
-				).getName(),
-				_LIFERAY_DATA_PLATFORM)) {
-
-			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
-				account = _koroneikiService.getKoroneikiAccount(accountKey);
-
-			accountKey = account.getParentAccountKey();
-		}
-
-		OrderResource orderResource = _marketplaceService.getOrderResource();
-
-		Order order;
-
-		try {
-			order = orderResource.getOrderByExternalReferenceCode(
-				opportunityId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			String finalAccountKey = accountKey;
-			String finalOpportunityId = opportunityId;
-
-			order = orderResource.postOrder(
-				new Order() {
-					{
-						setAccountExternalReferenceCode(() -> finalAccountKey);
-						setChannelId(() -> _channelId);
-						setCurrencyCode(() -> "USD");
-						setExternalReferenceCode(() -> finalOpportunityId);
-						setOrderItems(
-							() -> new OrderItem[] {
-								new OrderItem() {
-									{
-										setQuantity(
-											() -> new BigDecimal(
-												productPurchase.getQuantity()));
-										setSkuExternalReferenceCode(
-											() -> _getSkuExternalReferenceCode(
-												productPurchase.getProduct()));
-									}
-								}
-							});
-						setOrderTypeExternalReferenceCode(() -> "ADDONS");
-					}
-				});
-		}
-
-		_provisioningHubService.provision(order, productPurchase);
-
-		_marketplaceService.updateOrder(
-			null, order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
-	}
-
-	private static final String _LIFERAY_DATA_PLATFORM =
-		"Liferay Data Platform";
 
 	private static final String _MARKETPLACE_CHANNEL = "MARKETPLACE-CHANNEL";
-
-	private static final String _OPPORTUNITY = "opportunity";
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceMessageReceiver.class);

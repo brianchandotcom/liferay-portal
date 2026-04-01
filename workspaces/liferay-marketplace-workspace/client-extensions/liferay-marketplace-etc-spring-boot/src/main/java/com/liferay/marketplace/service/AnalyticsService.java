@@ -7,7 +7,6 @@ package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
-import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.model.AnalyticsForm;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -90,7 +89,7 @@ public class AnalyticsService extends BaseService {
 					"analyticsProject", new JSONObject(response)
 				).toString()
 			).build(),
-			orderId, MarketplaceConstants.ORDER_STATUS_COMPLETED);
+			orderId, order.getOrderStatus());
 	}
 
 	private static final Log _log = LogFactory.getLog(AnalyticsService.class);

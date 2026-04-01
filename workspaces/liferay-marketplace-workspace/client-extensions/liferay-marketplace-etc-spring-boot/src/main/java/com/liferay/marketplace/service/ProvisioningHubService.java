@@ -30,21 +30,22 @@ public class ProvisioningHubService extends BaseService {
 		Product product = productPurchase.getProduct();
 
 		if (Objects.equals(product.getName(), "Liferay Data Platform")) {
-			Account account = _koroneikiService.getKoroneikiAccount(
+			Account koroneikiAccount = _koroneikiService.getKoroneikiAccount(
 				productPurchase.getAccountKey());
 
-			Map<String, String> accountProperties = account.getProperties();
+			Map<String, String> propertiesMap =
+				koroneikiAccount.getProperties();
 
 			AnalyticsForm analyticsForm = new AnalyticsForm(
-				account.getName(), account.getKey(),
-				accountProperties.get(
+				koroneikiAccount.getName(), koroneikiAccount.getKey(),
+				propertiesMap.get(
 					"securityContactEmailAddress"
 				).split(
 					","
 				),
-				accountProperties.get("ldpWorkspaceName"),
-				_getServerLocation(accountProperties.get("dataCenterLocation")),
-				accountProperties.get("securityContactEmailAddress"));
+				propertiesMap.get("ldpWorkspaceName"),
+				_getServerLocation(propertiesMap.get("dataCenterLocation")),
+				propertiesMap.get("securityContactEmailAddress"));
 
 			_analyticsService.provision(analyticsForm, order.getId());
 		}

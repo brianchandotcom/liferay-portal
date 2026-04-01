@@ -6,6 +6,7 @@
 import React, {createContext, useReducer} from 'react';
 
 type Item = {
+	externalReferenceCode?: string;
 	label: string;
 	value: string;
 };

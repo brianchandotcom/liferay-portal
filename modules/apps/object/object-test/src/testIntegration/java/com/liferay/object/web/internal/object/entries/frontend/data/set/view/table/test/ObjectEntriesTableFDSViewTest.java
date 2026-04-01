@@ -146,9 +146,9 @@ public class ObjectEntriesTableFDSViewTest {
 		_assertFDSTableSchemaField(
 			"Modified Date", true, fdsTableSchemaFieldsMap, "dateModified");
 		_assertTimeZone(
-			fdsTableSchemaFieldsMap, "dateCreated", _user.getTimeZoneId());
+			fdsTableSchemaFieldsMap, _user.getTimeZoneId(), "dateCreated");
 		_assertTimeZone(
-			fdsTableSchemaFieldsMap, "dateModified", _user.getTimeZoneId());
+			fdsTableSchemaFieldsMap, _user.getTimeZoneId(), "dateModified");
 	}
 
 	private void _assertFDSTableSchemaField(
@@ -159,16 +159,19 @@ public class ObjectEntriesTableFDSViewTest {
 		FDSTableSchemaField fdsTableSchemaField = fdsTableSchemaFieldsMap.get(
 			fieldName);
 
+		Assert.assertNotNull(fdsTableSchemaField);
 		Assert.assertEquals(expectedLabel, fdsTableSchemaField.getLabel());
 		Assert.assertEquals(expectedSortable, fdsTableSchemaField.isSortable());
 	}
 
 	private void _assertTimeZone(
 		Map<String, FDSTableSchemaField> fdsTableSchemaFieldsMap,
-		String fieldName, String expectedTimeZoneId) {
+		String expectedTimeZoneId, String fieldName) {
 
 		FDSTableSchemaField fdsTableSchemaField = fdsTableSchemaFieldsMap.get(
 			fieldName);
+
+		Assert.assertNotNull(fdsTableSchemaField);
 
 		JSONObject jsonObject = fdsTableSchemaField.toJSONObject();
 

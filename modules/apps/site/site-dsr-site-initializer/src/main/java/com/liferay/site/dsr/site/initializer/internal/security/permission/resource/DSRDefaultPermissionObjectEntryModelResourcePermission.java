@@ -88,9 +88,8 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 
 		if (permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(),
-				objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId(), objectEntry.getUserId(),
-				actionId) ||
+				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+				objectEntry.getUserId(), actionId) ||
 			permissionChecker.hasPermission(
 				objectEntry.getGroupId(), objectDefinition.getClassName(),
 				objectEntry.getObjectEntryId(), actionId)) {
@@ -98,7 +97,9 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 			return true;
 		}
 
-		if (actionId.equals(ActionKeys.ADD_DISCUSSION)) {
+		if (actionId.equals(ActionKeys.ADD_DISCUSSION) ||
+			actionId.equals(ActionKeys.VIEW)) {
+
 			Group group = _groupLocalService.fetchGroup(
 				objectEntry.getCompanyId(),
 				_classNameLocalService.getClassNameId(

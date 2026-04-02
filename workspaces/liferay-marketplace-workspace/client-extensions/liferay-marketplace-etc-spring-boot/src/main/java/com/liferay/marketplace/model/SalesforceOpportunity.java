@@ -170,7 +170,7 @@ public class SalesforceOpportunity {
 				).put(
 					"startDate", _format(_order.getCreateDate())
 				).put(
-					"unitPrice", _order.getTotalAmount()
+					"unitPrice", orderItem.getUnitPrice()
 				));
 		}
 

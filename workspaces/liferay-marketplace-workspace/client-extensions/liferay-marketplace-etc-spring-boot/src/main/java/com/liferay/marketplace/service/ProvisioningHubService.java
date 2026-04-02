@@ -36,16 +36,15 @@ public class ProvisioningHubService extends BaseService {
 			Map<String, String> propertiesMap =
 				koroneikiAccount.getProperties();
 
+			String securityContactEmailAddress = propertiesMap.get(
+				"securityContactEmailAddress");
+
 			AnalyticsForm analyticsForm = new AnalyticsForm(
 				koroneikiAccount.getName(), koroneikiAccount.getKey(),
-				propertiesMap.get(
-					"securityContactEmailAddress"
-				).split(
-					","
-				),
+				securityContactEmailAddress.split(","),
 				propertiesMap.get("ldpWorkspaceName"),
 				_getServerLocation(propertiesMap.get("dataCenterLocation")),
-				propertiesMap.get("securityContactEmailAddress"));
+				order.getCreatorEmailAddress());
 
 			_analyticsService.provision(analyticsForm, order.getId());
 		}

@@ -156,4 +156,7 @@ const DetachedCMSFilesItemSelectorModal = forwardRef(
 	}
 );
 
+DetachedCMSFilesItemSelectorModal.displayName =
+	'DetachedCMSFilesItemSelectorModal';
+
 export default DetachedCMSFilesItemSelectorModal;

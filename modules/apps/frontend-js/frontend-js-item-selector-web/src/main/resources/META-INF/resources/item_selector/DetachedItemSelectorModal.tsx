@@ -32,4 +32,6 @@ const DetachedItemSelectorModal = forwardRef(
 	}
 );
 
+DetachedItemSelectorModal.displayName = 'DetachedItemSelectorModal';
+
 export default DetachedItemSelectorModal;

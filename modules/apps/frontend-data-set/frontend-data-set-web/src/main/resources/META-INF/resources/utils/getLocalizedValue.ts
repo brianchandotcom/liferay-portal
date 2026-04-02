@@ -12,7 +12,7 @@ import {
 import {getItemField} from './getItemField';
 export interface ILocalizedItemDetails {
 	rootPropertyName: string;
-	value: string;
+	value: any;
 	valuePath: Array<string>;
 }
 

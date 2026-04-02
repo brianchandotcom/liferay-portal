@@ -8,6 +8,8 @@ package com.liferay.analytics.settings.internal.configuration;
 import com.liferay.analytics.batch.exportimport.AnalyticsDXPEntityBatchExporter;
 import com.liferay.analytics.batch.exportimport.constants.AnalyticsDXPEntityBatchExporterConstants;
 import com.liferay.analytics.machine.learning.constants.AnalyticsMachineLearningConstants;
+import com.liferay.analytics.message.storage.service.AnalyticsAssociationLocalService;
+import com.liferay.analytics.message.storage.service.AnalyticsDeleteMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
@@ -291,6 +293,13 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 	}
 
+	private void _deleteAnalyticsData(long companyId) throws Exception {
+		_analyticsAssociationLocalService.deleteAnalyticsAssociations(
+			companyId);
+		_analyticsDeleteMessageLocalService.deleteAnalyticsDeleteMessages(
+			companyId);
+	}
+
 	private void _deleteSAPEntry(long companyId) throws Exception {
 		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
 			companyId, AnalyticsSecurityConstants.SERVICE_ACCESS_POLICY_NAME);
@@ -323,6 +332,8 @@ public class AnalyticsConfigurationRegistryImpl
 				_executorService.execute(
 					() -> {
 						try {
+							_deleteAnalyticsData(companyId);
+
 							_deleteAnalyticsAdmin(companyId);
 							_deleteSAPEntry(companyId);
 						}
@@ -925,6 +936,8 @@ public class AnalyticsConfigurationRegistryImpl
 				unscheduleDispatchTriggerNames.add(
 					AnalyticsDXPEntityBatchExporterConstants.
 						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
+
+				_deleteAnalyticsData(companyId);
 			}
 
 			if (!unscheduleDispatchTriggerNames.isEmpty()) {
@@ -1014,11 +1027,19 @@ public class AnalyticsConfigurationRegistryImpl
 	private final Map<Long, Boolean> _activatedCompanyIds =
 		new ConcurrentHashMap<>();
 	private boolean _active;
+
+	@Reference
+	private AnalyticsAssociationLocalService _analyticsAssociationLocalService;
+
 	private final AnalyticsConfigurationManagedServiceFactory
 		_analyticsConfigurationManagedServiceFactory =
 			new AnalyticsConfigurationManagedServiceFactory();
 	private final Map<Long, AnalyticsConfiguration> _analyticsConfigurations =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private AnalyticsDeleteMessageLocalService
+		_analyticsDeleteMessageLocalService;
 
 	@Reference
 	private AnalyticsDXPEntityBatchExporter _analyticsDXPEntityBatchExporter;

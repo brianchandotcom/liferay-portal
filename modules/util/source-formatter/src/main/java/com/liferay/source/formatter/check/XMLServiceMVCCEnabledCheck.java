@@ -21,7 +21,10 @@ public class XMLServiceMVCCEnabledCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith("/service.xml")) {
+		if (!fileName.endsWith("/service.xml") ||
+			absolutePath.contains("/gradleTest/") ||
+			absolutePath.contains("-test-")) {
+
 			return content;
 		}
 

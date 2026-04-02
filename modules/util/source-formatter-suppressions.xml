@@ -25,30 +25,9 @@
 		<suppress checks="StringMethodsCheck" files="sass-compiler-dart/.*" />
 		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/mail/service\.xml" />
 		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/portlet/trash/service\.xml" />
-		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder-test-compat700-service/service\.xml" />
-		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder-test-compat710-service/service\.xml" />
-		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder-test-compat720-service/service\.xml" />
-		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder-test-compat730-service/service\.xml" />
-		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder-test-compat740-service/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/mail/service\.xml" />
-		<suppress checks="XMLServiceMissingCompanyIdCheck" files="portal-tools-service-builder-test-compat700-service/service\.xml" />
-		<suppress checks="XMLServiceMissingCompanyIdCheck" files="portal-tools-service-builder-test-compat710-service/service\.xml" />
-		<suppress checks="XMLServiceMissingCompanyIdCheck" files="portal-tools-service-builder-test-compat720-service/service\.xml" />
-		<suppress checks="XMLServiceMissingCompanyIdCheck" files="portal-tools-service-builder-test-compat730-service/service\.xml" />
-		<suppress checks="XMLServiceMissingCompanyIdCheck" files="portal-tools-service-builder-test-compat740-service/service\.xml" />
-		<suppress checks="XMLServiceMissingCompanyIdCheck" files="portal-tools-service-builder-test-service/service\.xml" />
 		<suppress checks="XMLServiceMVCCEnabledCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/mail/service\.xml" />
 		<suppress checks="XMLServiceMVCCEnabledCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/portlet/trash/service\.xml" />
-		<suppress checks="XMLServiceMVCCEnabledCheck" files="portal-tools-service-builder-test-compat700-service/service\.xml" />
-		<suppress checks="XMLServiceMVCCEnabledCheck" files="portal-tools-service-builder-test-compat710-service/service\.xml" />
-		<suppress checks="XMLServiceMVCCEnabledCheck" files="portal-tools-service-builder-test-compat720-service/service\.xml" />
-		<suppress checks="XMLServiceMVCCEnabledCheck" files="portal-tools-service-builder-test-compat730-service/service\.xml" />
-		<suppress checks="XMLServiceMVCCEnabledCheck" files="portal-tools-service-builder-test-compat740-service/service\.xml" />
 		<suppress checks="XMLServiceReferenceCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/portlet/trash/service\.xml" />
-		<suppress checks="XMLServiceReferenceCheck" files="portal-tools-service-builder-test-compat700-service/service\.xml" />
-		<suppress checks="XMLServiceReferenceCheck" files="portal-tools-service-builder-test-compat710-service/service\.xml" />
-		<suppress checks="XMLServiceReferenceCheck" files="portal-tools-service-builder-test-compat720-service/service\.xml" />
-		<suppress checks="XMLServiceReferenceCheck" files="portal-tools-service-builder-test-compat730-service/service\.xml" />
-		<suppress checks="XMLServiceReferenceCheck" files="portal-tools-service-builder-test-compat740-service/service\.xml" />
 	</source-check>
 </suppressions>

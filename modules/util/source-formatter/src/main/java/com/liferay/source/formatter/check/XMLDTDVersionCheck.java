@@ -54,6 +54,12 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		if (absolutePath.contains("/gradleTest/") ||
+			absolutePath.contains("-test-")) {
+
+			return content;
+		}
+
 		_readReleaseProperties();
 
 		if ((_releaseProperties == null) || !fileName.endsWith(".xml")) {

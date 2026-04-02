@@ -42,7 +42,7 @@ public class XMLServiceReferenceCheck extends BaseFileCheck {
 		if (!fileName.endsWith("/service.xml") ||
 			absolutePath.contains("/gradleTest/") ||
 			absolutePath.contains("/samples/") ||
-			absolutePath.contains("-test-service")) {
+			absolutePath.contains("-test-")) {
 
 			return content;
 		}

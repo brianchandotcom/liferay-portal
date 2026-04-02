@@ -1023,6 +1023,26 @@ public abstract class BaseWorkspaceGitRepository
 		}
 	}
 
+	private String _getJobName() {
+		String jobName = System.getenv("JOB_NAME");
+
+		if (jobName != null) {
+			return jobName;
+		}
+
+		return "";
+	}
+
+	private String _getJobVariant() {
+		String jobVariant = System.getenv("JOB_VARIANT");
+
+		if (jobVariant != null) {
+			return jobVariant;
+		}
+
+		return "";
+	}
+
 	private String _getSenderBranchHeadSHA() {
 		return getString("sender_branch_head_sha");
 	}
@@ -1061,13 +1081,10 @@ public abstract class BaseWorkspaceGitRepository
 	private boolean _isDotGitDirArchiveRequired() {
 		String directoryName = getDirectoryName();
 
-		String jobVariant = System.getenv("JOB_VARIANT");
+		String jobVariant = _getJobVariant();
 
 		if (directoryName.contains("liferay-plugins")) {
-			if (!_snapshot ||
-				(!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-				 jobVariant.startsWith("plugins-compile"))) {
-
+			if (!_snapshot || jobVariant.startsWith("plugins-compile")) {
 				return true;
 			}
 
@@ -1079,9 +1096,10 @@ public abstract class BaseWorkspaceGitRepository
 				return true;
 			}
 
-			String jobName = System.getenv("JOB_NAME");
+			String jobName = _getJobName();
 
-			if (jobName.equals("app-server-bundle-builder") ||
+			if (JenkinsResultsParserUtil.isTopLevelJobName(jobName) ||
+				jobName.equals("app-server-bundle-builder") ||
 				jobName.equals("forward-pullrequest") ||
 				jobName.equals("publish-testray-report") ||
 				jobName.equals("test-portal-source-format") ||
@@ -1130,7 +1148,7 @@ public abstract class BaseWorkspaceGitRepository
 			return false;
 		}
 
-		String jobName = System.getenv("JOB_NAME");
+		String jobName = _getJobName();
 
 		if ((this instanceof PortalWorkspaceGitRepository) &&
 			jobName.contains("root-cause-analysis-tool")) {
@@ -1224,7 +1242,7 @@ public abstract class BaseWorkspaceGitRepository
 			return;
 		}
 
-		String jobName = System.getenv("JOB_NAME");
+		String jobName = _getJobName();
 
 		if (!jobName.contains("-batch") && !jobName.contains("-downstream")) {
 			GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();

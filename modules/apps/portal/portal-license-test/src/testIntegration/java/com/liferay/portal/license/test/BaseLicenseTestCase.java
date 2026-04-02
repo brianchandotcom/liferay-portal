@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -44,6 +43,7 @@ import java.lang.reflect.Modifier;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -188,8 +188,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 		sb.append("</mac-addresses><key></key></license>");
 
-		LicenseManagerUtil.registerLicense(
-			JSONUtil.put("licenseXML", sb.toString()));
+		_registerLicense(sb.toString());
 
 		return _buildBinaryFile(
 			getCMPProductId(), StringPool.BLANK, _CMP_PRODUCT_NAME,
@@ -224,8 +223,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		sb.append("</domain><domain>localhost</domain></domains>");
 		sb.append("<key></key></license>");
 
-		LicenseManagerUtil.registerLicense(
-			JSONUtil.put("licenseXML", sb.toString()));
+		_registerLicense(sb.toString());
 
 		return _buildBinaryFile(
 			getPortalProductId(), _ENTERPRISE_ACCOUNT_NAME,
@@ -275,8 +273,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		sb.append(key);
 		sb.append("</key></license>");
 
-		LicenseManagerUtil.registerLicense(
-			JSONUtil.put("licenseXML", sb.toString()));
+		_registerLicense(sb.toString());
 
 		return _buildBinaryFile(
 			getPortalProductId(), _FREE_TIER_ACCOUNT_NAME,
@@ -311,8 +308,8 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			FileUtil.deltree(dir);
 		}
 
-		LicenseManagerUtil.checkLicense(getPortalProductId());
-		LicenseManagerUtil.checkLicense(getCMPProductId());
+		checkLicense(getPortalProductId());
+		checkLicense(getCMPProductId());
 
 		resetLifecycleAction();
 
@@ -332,10 +329,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 				FileUtil.deltree(tmpDir);
 			}
 
-			LicenseManagerUtil.checkLicense(getPortalProductId());
-			LicenseManagerUtil.checkLicense(getCMPProductId());
-
 			try {
+				checkLicense(getPortalProductId());
+				checkLicense(getCMPProductId());
+
 				resetLifecycleAction();
 			}
 			catch (Exception exception) {
@@ -345,14 +342,9 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	}
 
 	public void resetLifecycleAction() throws Exception {
-		String originalPriority = Log4JUtil.getPriority(
-			_BUNDLE_START_STOP_LOGGER);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BUNDLE_START_STOP_LOGGER, LoggerTestUtil.ALL)) {
 
-		if (!Objects.equals(originalPriority, "OFF")) {
-			Log4JUtil.setLevel(_BUNDLE_START_STOP_LOGGER, "OFF", false);
-		}
-
-		try {
 			Object lifecycleAction =
 				ReflectionsHolder._lifecycleActionField.get(null);
 
@@ -404,15 +396,8 @@ public abstract class BaseLicenseTestCase implements Serializable {
 					}
 				}
 			}
-		}
-		finally {
-			if (!Objects.equals(
-					originalPriority,
-					Log4JUtil.getPriority(_BUNDLE_START_STOP_LOGGER))) {
 
-				Log4JUtil.setLevel(
-					_BUNDLE_START_STOP_LOGGER, originalPriority, false);
-			}
+			_throwLogEntriesException(logCapture, LoggerTestUtil.ERROR);
 		}
 	}
 
@@ -473,25 +458,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return value;
 	}
 
-	protected void assertLicenseValidationFailedLog(
-		LogCapture logCapture, String message) {
-
-		List<LogEntry> logEntries = logCapture.getLogEntries();
-
-		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-		LogEntry logEntry = logEntries.get(0);
-
-		Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
-
-		Assert.assertEquals(
-			"DXP Production license validation failed", logEntry.getMessage());
-
-		Throwable throwable = logEntry.getThrowable();
-
-		Assert.assertEquals(message, throwable.getMessage());
-	}
-
 	protected void assertPortalInvalidatedWithBrokenFile(String propertyKey)
 		throws Exception {
 
@@ -503,6 +469,17 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			filePath, InputStream.nullInputStream());
 	}
 
+	protected void checkLicense(String productId) throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				getProperty("license.manager.class.name"),
+				LoggerTestUtil.ALL)) {
+
+			LicenseManagerUtil.checkLicense(productId);
+
+			_throwLogEntriesException(logCapture, LoggerTestUtil.ERROR);
+		}
+	}
+
 	protected String getCMPProductId() {
 		return getProperty("product.id.cmp");
 	}
@@ -511,10 +488,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		Method versionMethod = ReflectionsHolder._versionMethod;
 
 		return (String)versionMethod.invoke(null);
-	}
-
-	protected String getLicenseManagerClassName() {
-		return getProperty("license.manager.class.name");
 	}
 
 	protected int getLocalPort() {
@@ -635,6 +608,35 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 
 		return bundleSymbolicNames;
+	}
+
+	private void _registerLicense(String licenseXML) throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				getProperty("license.manager.class.name"),
+				LoggerTestUtil.ALL)) {
+
+			LicenseManagerUtil.registerLicense(
+				JSONUtil.put("licenseXML", licenseXML));
+
+			_throwLogEntriesException(logCapture, LoggerTestUtil.ERROR);
+		}
+	}
+
+	private void _throwLogEntriesException(
+			LogCapture logCapture, String priority)
+		throws LogEntriesException {
+
+		List<LogEntry> logEntries = new ArrayList<>();
+
+		for (LogEntry logEntry : logCapture.getLogEntries()) {
+			if (Objects.equals(priority, logEntry.getPriority())) {
+				logEntries.add(logEntry);
+			}
+		}
+
+		if (!logEntries.isEmpty()) {
+			throw new LogEntriesException(logEntries);
+		}
 	}
 
 	private static final String _BUNDLE_START_STOP_LOGGER =

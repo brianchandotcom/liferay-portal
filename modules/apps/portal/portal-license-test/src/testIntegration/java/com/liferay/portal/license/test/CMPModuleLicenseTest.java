@@ -8,7 +8,6 @@ package com.liferay.portal.license.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.io.File;
@@ -81,7 +80,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		binaryFile.delete();
 
-		LicenseManagerUtil.checkLicense(getCMPProductId());
+		checkLicense(getCMPProductId());
 
 		assertLicensePropertiesNotExisted(getCMPProductId());
 
@@ -120,7 +119,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		binaryFile.delete();
 
-		LicenseManagerUtil.checkLicense(getCMPProductId());
+		checkLicense(getCMPProductId());
 
 		assertLicensePropertiesNotExisted(getCMPProductId());
 

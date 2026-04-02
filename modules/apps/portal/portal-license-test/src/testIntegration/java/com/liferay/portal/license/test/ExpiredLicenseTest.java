@@ -112,7 +112,7 @@ public class ExpiredLicenseTest extends BaseLicenseTestCase {
 
 		resetLifecycleAction();
 
-		LicenseManagerUtil.checkLicense(getPortalProductId());
+		checkLicense(getPortalProductId());
 
 		assertLicensePropertiesExisted(getPortalProductId());
 

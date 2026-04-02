@@ -13,14 +13,14 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.net.InetAddress;
+
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -152,27 +152,44 @@ public class FreeTierDomainLicenseTest extends BaseLicenseTestCase {
 	}
 
 	private void _assertDomainIsInvalid(String domain) throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getLicenseManagerClassName(), LoggerTestUtil.ERROR);
-			SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
-
+		try (SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
 			deployFreeTierPortalLicense(domain, Time.HOUR);
 
-			assertLicenseValidationFailedLog(
-				logCapture,
+			Assert.fail(
+				"Unalbe to see error message \'Current domain is not " +
+					"allowed\'");
+		}
+		catch (LogEntriesException logEntriesException) {
+			List<LogEntry> logEntries = logEntriesException.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertEquals(
+				throwable.getMessage(),
 				"Current domain is not allowed, allowed domains are: " +
 					StringUtil.merge(new String[] {domain, "localhost"}));
 		}
 	}
 
 	private void _assertDomainIsValid(String domain) throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getLicenseManagerClassName(), LoggerTestUtil.ERROR);
-			SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
-
+		try (SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
 			deployFreeTierPortalLicense(domain, Time.HOUR);
+		}
+		catch (LogEntriesException logEntriesException) {
+			List<LogEntry> logEntries = logEntriesException.getLogEntries();
 
-			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
+			StringBundler sb = new StringBundler();
+
+			for (LogEntry logEntry : logEntries) {
+				sb.append(logEntry);
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			Assert.assertTrue(sb.toString(), logEntries.isEmpty());
 		}
 	}
 

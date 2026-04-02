@@ -7,7 +7,6 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
@@ -99,7 +98,7 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 		binaryFile.delete();
 
-		LicenseManagerUtil.checkLicense(getPortalProductId());
+		checkLicense(getPortalProductId());
 
 		assertLicensePropertiesNotExisted(getPortalProductId());
 

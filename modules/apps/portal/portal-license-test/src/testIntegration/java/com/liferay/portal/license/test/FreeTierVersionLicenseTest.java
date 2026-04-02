@@ -13,12 +13,12 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Field;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.junit.AfterClass;
@@ -131,26 +131,36 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseNotRegistered();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getLicenseManagerClassName(), LoggerTestUtil.ERROR);
-			SafeCloseable safeCloseable1 = setVersionWithSafeCloseable(version);
+		try (SafeCloseable safeCloseable1 = setVersionWithSafeCloseable(
+				version);
 			SafeCloseable safeCloseable2 = resetLicenseDataWithSafeCloseble()) {
 
 			deployFreeTierPortalLicense(Time.HOUR);
 
-			if (patch && !ignored) {
-				assertLicenseValidationFailedLog(
-					logCapture, "License is not suppported in " + version);
-
-				assertLicensePropertiesExisted(getPortalProductId());
-
-				assertPortalLicenseInvalid();
-			}
-			else {
+			if (!patch || ignored) {
 				assertLicensePropertiesExisted(getPortalProductId());
 
 				assertPortalLicenseRegistered();
 			}
+			else {
+				Assert.fail(
+					StringBundler.concat(
+						"Unalbe to see error message \'License is not ",
+						"suppported in ", version, "\'"));
+			}
+		}
+		catch (LogEntriesException logEntriesException) {
+			List<LogEntry> logEntries = logEntriesException.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertEquals(
+				throwable.getMessage(),
+				"License is not suppported in " + version);
 		}
 	}
 

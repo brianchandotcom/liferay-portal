@@ -16,7 +16,8 @@ liferay-marketplace-custom-element:
         contactSupportURL: https://www.liferay.com/contact-us
         endUserLicenseAgreement: end_user_license_agreement
         eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
-        marketoFormId: 3738
+        marketoFormIdDefault: 3738
+        marketoFormIdLiferayProduct: 6253
         publisherLicenseAgreement: liferay_publisher_license_argeement
         useSiteTaxonomyVocabularyQuery: false
     type: customElement

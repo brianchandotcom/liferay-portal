@@ -85,7 +85,7 @@ test.describe('Fragment Style Configuration and Token Detachment', () => {
 			await test.step('Change the background color and type a 3 digits color reference', async () => {
 				await pageEditorPage.goToConfigurationTab('Styles');
 
-				await getBackgroundColorInputLocator(page).fill('#03C');
+				await getBackgroundColorInputLocator(page).fill('03C');
 			});
 
 			await test.step('Check if the color reference is autocompleted after trigger auto save', async () => {
@@ -94,7 +94,7 @@ test.describe('Fragment Style Configuration and Token Detachment', () => {
 				await pageEditorPage.waitForChangesSaved();
 
 				await expect(getBackgroundColorInputLocator(page)).toHaveValue(
-					'#0033CC'
+					'0033CC'
 				);
 			});
 
@@ -323,7 +323,7 @@ test.describe('Style Book Token Validation and Publication Workflow', () => {
 
 				await styleBooksPage.updateTokenInput(
 					'Success',
-					'#34f787',
+					'34f787',
 					'Theme Colors'
 				);
 

@@ -200,15 +200,15 @@ public class OAuthClientASLocalMetadataResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		oAuthClientASLocalMetadata.setExternalReferenceCode(
+			() -> oAuthClientASLocalMetadataExternalReferenceCode);
+
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			serviceBuilderOAuthClientASLocalMetadata =
 				_oAuthClientASLocalMetadataService.
 					fetchOAuthClientASLocalMetadataByExternalReferenceCode(
 						oAuthClientASLocalMetadataExternalReferenceCode,
 						contextCompany.getCompanyId());
-
-		oAuthClientASLocalMetadata.setExternalReferenceCode(
-			() -> oAuthClientASLocalMetadataExternalReferenceCode);
 
 		if (serviceBuilderOAuthClientASLocalMetadata != null) {
 			JSONObject metadataJSONObject = _jsonFactory.createJSONObject(

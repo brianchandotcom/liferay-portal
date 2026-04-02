@@ -205,15 +205,15 @@ public class OAuthClientEntryResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		oAuthClientEntry.setExternalReferenceCode(
+			() -> oauthClientEntryExternalReferenceCode);
+
 		com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			serviceBuilderOAuthClientEntry =
 				_oAuthClientEntryService.
 					fetchOAuthClientEntryByExternalReferenceCode(
 						oauthClientEntryExternalReferenceCode,
 						contextCompany.getCompanyId());
-
-		oAuthClientEntry.setExternalReferenceCode(
-			() -> oauthClientEntryExternalReferenceCode);
 
 		if (serviceBuilderOAuthClientEntry != null) {
 			return _toOAuthClientEntry(

@@ -5,7 +5,9 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
@@ -98,7 +100,7 @@ public class StatsClusterRequestExecutor {
 
 						if ((nodeIds != null) && (nodeIds.length > 0)) {
 							return "/_cluster/stats/nodes/" +
-								String.join(",", nodeIds);
+								StringUtil.merge(nodeIds, StringPool.COMMA);
 						}
 
 						return "/_cluster/stats";

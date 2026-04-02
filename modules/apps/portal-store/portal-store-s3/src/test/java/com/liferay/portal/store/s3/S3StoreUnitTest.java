@@ -15,8 +15,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import io.netty.handler.codec.http.HttpRequest;
 
-import jakarta.annotation.Generated;
-
 import java.net.InetSocketAddress;
 
 import java.util.Collections;
@@ -43,8 +41,7 @@ import org.mockito.Mockito;
 /**
  * @author Kevin Lee
  */
-@Generated("")
-public class IBMS3StoreTest {
+public class S3StoreUnitTest {
 
 	@ClassRule
 	@Rule
@@ -234,12 +231,12 @@ public class IBMS3StoreTest {
 		HttpProxyServer httpProxyServer = httpProxyServerBootstrap.start();
 
 		try {
-			IBMS3Store ibmS3Store = new IBMS3Store();
+			S3Store s3Store = new S3Store();
 
-			ibmS3Store.activate(Collections.emptyMap());
+			s3Store.activate(Collections.emptyMap());
 
 			try {
-				ibmS3Store.hasFile(
+				s3Store.hasFile(
 					RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 					RandomTestUtil.randomString(), Store.VERSION_DEFAULT);
 
@@ -256,7 +253,7 @@ public class IBMS3StoreTest {
 				Assert.assertEquals(expectedProxy, proxy.get());
 			}
 			finally {
-				ibmS3Store.deactivate();
+				s3Store.deactivate();
 			}
 		}
 		finally {

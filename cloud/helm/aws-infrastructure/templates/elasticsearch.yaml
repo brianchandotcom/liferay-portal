@@ -1,5 +1,4 @@
 {{- $search := .Values.search.elasticsearch -}}
-{{- $elasticsearchNamespace := printf "%s-elasticsearch" .Release.Namespace -}}
 {{- if $search.enabled }}
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
@@ -7,7 +6,7 @@ metadata:
     annotations:
         {{- $search.annotations | toYaml | nindent 8 }}
     name: {{ include "elasticsearch.name" . }}
-    namespace: {{ $elasticsearchNamespace }}
+    namespace: {{ .Release.Namespace }}
 spec:
     http:
         tls:
@@ -74,14 +73,6 @@ spec:
     version: {{ $search.version }}
 ---
 apiVersion: v1
-kind: Namespace
-metadata:
-    labels:
-        name: {{ $elasticsearchNamespace }}
-        pod-security.kubernetes.io/enforce: restricted
-    name: {{ $elasticsearchNamespace }}
----
-apiVersion: v1
 kind: Secret
 metadata:
     name: elasticsearch-connection-details
@@ -89,6 +80,6 @@ metadata:
 stringData:
     ELASTICSEARCH_DEFAULT_PASSWORD_SECRET_NAME: "{{ include "elasticsearch.name" . }}-es-elastic-user"
     ELASTICSEARCH_DEFAULT_USERNAME: elastic
-    ELASTICSEARCH_URL: http://{{ include "elasticsearch.name" . }}-es-http.{{ $elasticsearchNamespace }}.svc:9200
+    ELASTICSEARCH_URL: http://{{ include "elasticsearch.name" . }}-es-http.{{ .Release.Namespace }}.svc:9200
 type: Opaque
 {{- end -}}

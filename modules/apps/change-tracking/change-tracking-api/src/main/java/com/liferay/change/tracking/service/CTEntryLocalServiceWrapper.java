@@ -470,7 +470,8 @@ public class CTEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTEntry updateChangeType(
-		long ctEntryId, int changeType) {
+			long ctEntryId, int changeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctEntryLocalService.updateChangeType(ctEntryId, changeType);
 	}
@@ -494,7 +495,8 @@ public class CTEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTEntry updateModelMvccVersion(
-		long ctEntryId, long modelMvccVersion) {
+			long ctEntryId, long modelMvccVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctEntryLocalService.updateModelMvccVersion(
 			ctEntryId, modelMvccVersion);
@@ -502,7 +504,8 @@ public class CTEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTEntry updateUserId(
-		long ctEntryId, long userId) {
+			long ctEntryId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctEntryLocalService.updateUserId(ctEntryId, userId);
 	}
@@ -525,4 +528,4 @@ public class CTEntryLocalServiceWrapper
 	private CTEntryLocalService _ctEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1428692022
+// LIFERAY-SERVICE-BUILDER-HASH:-684761976

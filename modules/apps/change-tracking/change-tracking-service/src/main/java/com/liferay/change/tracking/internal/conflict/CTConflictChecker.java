@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -1105,6 +1106,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 						ctEntry.getCtEntryId(), resultSet.getLong(2));
 				}
 			}
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 		catch (SQLException sqlException) {
 			throw new ORMException(sqlException);

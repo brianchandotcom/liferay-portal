@@ -17,9 +17,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Method;
@@ -61,25 +59,18 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 
 			String key = _getLicenseKey(domain, startTimeMillis);
 
-			deployFreeTierPortalLicense(
-				domain, key, startTimeMillis, Time.HOUR);
-
-			assertPortalLicenseRegistered();
-
 			try (AutoCloseable autoCloseable = _setBannedKeys(
-					SetUtil.fromArray(key));
-				LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-					getLicenseManagerClassName(), LoggerTestUtil.ERROR);
-				SafeCloseable safeCloseable2 =
-					resetLicenseDataWithSafeCloseble()) {
+					SetUtil.fromArray(key))) {
 
 				deployFreeTierPortalLicense(
-					RandomTestUtil.randomString(), key, startTimeMillis,
-					Time.HOUR);
+					domain, key, startTimeMillis, Time.HOUR);
 
-				assertPortalLicenseNotRegistered();
-
-				List<LogEntry> logEntries = logCapture.getLogEntries();
+				Assert.fail(
+					"Unable to see error message \'Corrupt license file. " +
+						"License was not registered\'");
+			}
+			catch (LogEntriesException logEntriesException) {
+				List<LogEntry> logEntries = logEntriesException.getLogEntries();
 
 				Assert.assertEquals(
 					logEntries.toString(), 1, logEntries.size());
@@ -89,8 +80,18 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 				String message = logEntry.getMessage();
 
 				Assert.assertTrue(
-					message.contains(
+					message,
+					message.startsWith(
 						"Corrupt license file. License was not registered"));
+			}
+
+			try (SafeCloseable safeCloseable =
+					resetLicenseDataWithSafeCloseble()) {
+
+				deployFreeTierPortalLicense(
+					domain, key, startTimeMillis, Time.HOUR);
+
+				assertPortalLicenseRegistered();
 			}
 		}
 	}

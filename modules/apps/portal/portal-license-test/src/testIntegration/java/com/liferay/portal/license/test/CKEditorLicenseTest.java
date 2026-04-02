@@ -8,7 +8,6 @@ package com.liferay.portal.license.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -212,7 +211,7 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 		binaryFile.delete();
 
-		LicenseManagerUtil.checkLicense(getPortalProductId());
+		checkLicense(getPortalProductId());
 
 		assertLicensePropertiesNotExisted(getPortalProductId());
 

@@ -130,7 +130,7 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 
 		assertLicensePropertiesNotExisted(getPortalProductId());
 
-		LicenseManagerUtil.checkLicense(getPortalProductId());
+		checkLicense(getPortalProductId());
 
 		assertLicensePropertiesExisted(getPortalProductId());
 

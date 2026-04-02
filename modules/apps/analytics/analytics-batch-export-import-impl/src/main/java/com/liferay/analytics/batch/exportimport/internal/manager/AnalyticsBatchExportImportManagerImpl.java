@@ -606,14 +606,18 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		Http.Response response = options.getResponse();
 
-		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new Exception("Unable to update analytics data source");
+		if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+			_analyticsSettingsManager.updateCompanyConfiguration(
+				companyId,
+				Collections.singletonMap(
+					"liferayAnalyticsCredentialType",
+					"OAuth 2 Authentication"));
 		}
-
-		_analyticsSettingsManager.updateCompanyConfiguration(
-			companyId,
-			Collections.singletonMap(
-				"liferayAnalyticsCredentialType", "OAuth 2 Authentication"));
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to update analytics data source");
+			}
+		}
 	}
 
 	private File _download(

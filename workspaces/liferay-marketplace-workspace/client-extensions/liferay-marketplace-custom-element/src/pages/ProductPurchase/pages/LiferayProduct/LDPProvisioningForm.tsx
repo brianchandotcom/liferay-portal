@@ -21,6 +21,9 @@ import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
+import {productPurchaseStore} from '../../store';
+import {useSelector} from '@xstate/store/react';
+import {Navigate} from 'react-router-dom';
 
 type MultiSelectValue = {
 	key: string;
@@ -31,6 +34,11 @@ type MultiSelectValue = {
 const LDPProvisioning = () => {
 	const [incidentReportContactsText, setIncidentReportContactsText] =
 		useState('');
+
+	const salesforceProject = useSelector(
+		productPurchaseStore,
+		({context}) => context.salesforceProject
+	);
 
 	const {
 		actions: {nextStep, previousStep},
@@ -72,6 +80,10 @@ const LDPProvisioning = () => {
 		productPurchaseCart.addCart(Number(product.id), product.skus[0].id);
 		nextStep();
 	};
+
+	if (!salesforceProject) {
+		return <Navigate to="/" />;
+	}
 
 	if (isLoading || !accountKey) {
 		return <Loading />;

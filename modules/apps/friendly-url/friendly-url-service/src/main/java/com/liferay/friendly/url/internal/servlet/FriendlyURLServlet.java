@@ -566,8 +566,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
-		if ((layout != null) &&
-			Objects.equals(layout.getType(), LayoutConstants.TYPE_URL) &&
+		if ((layout != null) && layout.isTypeURL() &&
 			MapUtil.isNotEmpty(params)) {
 
 			for (Map.Entry<String, String[]> entry : params.entrySet()) {

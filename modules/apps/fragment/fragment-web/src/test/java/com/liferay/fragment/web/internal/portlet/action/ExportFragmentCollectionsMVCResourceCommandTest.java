@@ -162,10 +162,10 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 			_GROUP_ID
 		);
 
-		mockLiferayResourceRequest.setParameter(
-			"fragmentCollectionId", String.valueOf(_FRAGMENT_COLLECTION_ID));
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+		mockLiferayResourceRequest.setParameter(
+			"fragmentCollectionId", String.valueOf(_FRAGMENT_COLLECTION_ID));
 
 		return mockLiferayResourceRequest;
 	}

@@ -53,6 +53,8 @@ public class ModulesRelevantRule extends RelevantRule {
 				sb.append(getTestScriptModuleGradleTaskName());
 			}
 
+			sb.append(" --parallel");
+
 			testScriptCommands.add(
 				new TestScriptCommand(sb.toString(), "modules"));
 

@@ -335,21 +335,17 @@
 
 		<column name="lvEntryId" primary="true" type="long" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Group instance -->
 
 		<column name="groupId" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="uniqueGroupKey" type="String" />
-
-		<!-- Relationships -->
-
-		<column entity="BigDecimalEntry" mapping-table="BigDecimalEntries_LVEntries" name="bigDecimalEntries" type="Collection" />
 
 		<!-- Localized entity -->
 
@@ -357,6 +353,10 @@
 			<localized-column name="title" />
 			<localized-column name="content" />
 		</localized-entity>
+
+		<!-- Relationships -->
+
+		<column entity="BigDecimalEntry" mapping-table="BigDecimalEntries_LVEntries" name="bigDecimalEntries" type="Collection" />
 
 		<!-- Finder methods -->
 

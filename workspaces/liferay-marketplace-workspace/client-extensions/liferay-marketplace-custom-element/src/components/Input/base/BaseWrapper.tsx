@@ -41,20 +41,19 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 	>
 		{label && (
 			<label
-				className={classNames(
-					'font-weight-normal mb-1 mx-0 text-paragraph',
-					{
-						disabled,
-						'font-weight-bold': boldLabel,
-						required,
-					}
-				)}
+				className={classNames('mb-1 mx-0 text-paragraph', {
+					disabled,
+					'font-weight-bold': boldLabel,
+					required,
+				})}
 				htmlFor={id}
 			>
 				{label}
 			</label>
 		)}
+
 		{children}
+
 		{description && (
 			<small className="form-text text-muted" id="Help">
 				{description}

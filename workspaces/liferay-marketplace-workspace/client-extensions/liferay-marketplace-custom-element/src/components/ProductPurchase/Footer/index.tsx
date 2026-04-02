@@ -30,7 +30,7 @@ const ProductPurchaseFooter: React.FC<ProductPurchaseFooterProps> = ({
 		<div className="d-flex flex-column mt-3 w-100">
 			<div className="align-items-center d-flex justify-content-between mt-3 w-100">
 				<ClayButton
-					className="font-weight-bold"
+					className="font-weight-semibold"
 					displayType="unstyled"
 					onClick={() => {
 						if (productPurchaseCart.cart.id) {

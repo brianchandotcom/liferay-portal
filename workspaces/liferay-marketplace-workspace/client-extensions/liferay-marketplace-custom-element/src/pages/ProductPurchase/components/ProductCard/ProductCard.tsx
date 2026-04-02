@@ -49,7 +49,7 @@ const ProductCardRevamp = ({
 					/>
 
 					<div className="align-items-center ml-4">
-						<HeadingComponent className="product-banner-title text-weight-bold">
+						<HeadingComponent className="product-banner-title">
 							{title}
 						</HeadingComponent>
 
@@ -84,9 +84,7 @@ const ProductCard = ({
 				/>
 
 				<div className="align-items-center ml-4">
-					<h1 className="product-banner-title text-weight-bold">
-						{product?.name}
-					</h1>
+					<h1 className="product-banner-title">{product?.name}</h1>
 
 					<div className="sub-text">
 						{getValueFromDeliverySpecifications(

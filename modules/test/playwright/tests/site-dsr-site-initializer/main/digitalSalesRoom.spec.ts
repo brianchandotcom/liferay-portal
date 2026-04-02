@@ -109,20 +109,10 @@ test(
 
 		await digitalSalesRoomsPage.goToRoomsPage();
 
-		await expect(async () => {
-			await (
-				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
-					roomName,
-					0,
-					false
-				)
-			).click();
-			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
-				timeout: 200,
-			});
-		}).toPass({timeout: 1000});
-
-		await digitalSalesRoomsPage.viewMenuItem.click();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.viewMenuItem
+		);
 
 		await expect(page.locator('.page-editor__sidebar')).not.toBeVisible();
 	}
@@ -158,20 +148,10 @@ test(
 
 		await digitalSalesRoomsPage.goToRoomsPage();
 
-		await expect(async () => {
-			await (
-				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
-					roomName,
-					0,
-					false
-				)
-			).click();
-			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
-				timeout: 200,
-			});
-		}).toPass({timeout: 1000});
-
-		await digitalSalesRoomsPage.editMenuItem.click();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.editMenuItem
+		);
 
 		await expect(page.locator('.page-editor__sidebar')).toBeVisible();
 	}
@@ -207,20 +187,10 @@ test(
 
 		await digitalSalesRoomsPage.goToRoomsPage();
 
-		await expect(async () => {
-			await (
-				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
-					roomName,
-					0,
-					false
-				)
-			).click();
-			await expect(digitalSalesRoomsPage.deleteMenuItem).toBeVisible({
-				timeout: 200,
-			});
-		}).toPass({timeout: 1000});
-
-		await digitalSalesRoomsPage.deleteMenuItem.click();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.deleteMenuItem
+		);
 
 		await expect(
 			digitalSalesRoomsPage.deleteConfirmationModal
@@ -272,21 +242,10 @@ test(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName, false)
 		).toBeVisible();
 
-		await expect(async () => {
-			await (
-				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
-					roomName,
-					0,
-					false
-				)
-			).click();
-
-			await expect(digitalSalesRoomsPage.shareMenuItem).toBeVisible({
-				timeout: 200,
-			});
-		}).toPass({timeout: 1000});
-
-		await digitalSalesRoomsPage.shareMenuItem.click();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.shareMenuItem
+		);
 
 		await expect(
 			digitalSalesRoomUsersPage.userEmailAddressesInput
@@ -389,20 +348,10 @@ test(
 
 		await digitalSalesRoomsPage.goToRoomsPage();
 
-		await expect(async () => {
-			await (
-				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
-					roomName,
-					0,
-					false
-				)
-			).click();
-			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
-				timeout: 200,
-			});
-		}).toPass({timeout: 1000});
-
-		await digitalSalesRoomsPage.viewMenuItem.click();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.viewMenuItem
+		);
 
 		await expect(page.locator('.page-editor__sidebar')).not.toBeVisible();
 
@@ -446,20 +395,10 @@ test(
 
 		await digitalSalesRoomsPage.goToRoomsPage();
 
-		await expect(async () => {
-			await (
-				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
-					roomName,
-					0,
-					false
-				)
-			).click();
-			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
-				timeout: 200,
-			});
-		}).toPass({timeout: 1000});
-
-		await digitalSalesRoomsPage.viewMenuItem.click();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.viewMenuItem
+		);
 
 		const comment = getRandomString();
 
@@ -508,20 +447,10 @@ test(
 
 		await digitalSalesRoomsPage.goToRoomsPage();
 
-		await expect(async () => {
-			await (
-				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
-					roomName,
-					0,
-					false
-				)
-			).click();
-			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
-				timeout: 200,
-			});
-		}).toPass({timeout: 1000});
-
-		await digitalSalesRoomsPage.viewMenuItem.click();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.viewMenuItem
+		);
 
 		const comment = getRandomString();
 
@@ -572,20 +501,10 @@ test(
 
 		await digitalSalesRoomsPage.goToRoomsPage();
 
-		await expect(async () => {
-			await (
-				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
-					roomName,
-					0,
-					false
-				)
-			).click();
-			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
-				timeout: 200,
-			});
-		}).toPass({timeout: 1000});
-
-		await digitalSalesRoomsPage.viewMenuItem.click();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.viewMenuItem
+		);
 
 		const comment = getRandomString();
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
@@ -71,6 +71,16 @@ export class DigitalSalesRoomsPage {
 			name: 'Templates',
 		});
 		this.viewMenuItem = page.getByRole('menuitem', {name: 'View'});
+	}
+
+	async clickRowActionsMenuItem(roomName: string, menuItem: Locator) {
+		await expect(async () => {
+			await (
+				await this.digitalSalesRoomsTable.rowActions(roomName, 0, false)
+			).click();
+
+			await menuItem.click({timeout: 1000});
+		}).toPass({timeout: 10000});
 	}
 
 	roomLink(roomName: string): Locator {

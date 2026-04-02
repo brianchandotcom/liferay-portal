@@ -485,8 +485,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 	protected void checkLicense(String productId) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getProperty("license.manager.class.name"),
-				LoggerTestUtil.ALL)) {
+				_licensePackageName, LoggerTestUtil.ALL)) {
 
 			LicenseManagerUtil.checkLicense(productId);
 
@@ -633,8 +632,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 	private void _registerLicense(String licenseXML) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getProperty("license.manager.class.name"),
-				LoggerTestUtil.ALL)) {
+				_licensePackageName, LoggerTestUtil.ALL)) {
 
 			LicenseManagerUtil.registerLicense(
 				JSONUtil.put("licenseXML", licenseXML));

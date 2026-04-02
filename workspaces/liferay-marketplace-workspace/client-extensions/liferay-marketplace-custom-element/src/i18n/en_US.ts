@@ -277,6 +277,7 @@ export default {
 	'enter-your-job-title': 'Enter your job title',
 	'enter-your-solution-details-this-information-will-be-used-for-submission-presentation-customer-support-and-search-capabilities':
 		'Enter your solution details. This information will be used for submission, presentation, customer support, and search capabilities.',
+	'enter-your-vat-id': 'Enter your VAT ID',
 	'entity-type': 'Entity Type',
 	'environment': 'Environment',
 	'environment-selection': 'Environment Selection',
@@ -377,6 +378,7 @@ export default {
 	'input-one-domain-name-per-instance': 'Input one domain name per instance',
 	'insert-text-here': 'Insert text here',
 	'install': 'Install',
+	'information': 'Information',
 	'installation': 'Installation',
 	'installation-failed': 'Installation Failed',
 	'installation-in-progress': 'Installation in Progress',
@@ -531,6 +533,7 @@ export default {
 	'pending': 'Pending',
 	'personal': 'Personal',
 	'personal-account': 'Personal Account',
+	'personal-information': 'Personal Information',
 	'personal-information-purpose': 'Personal Information & Purpose',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',
@@ -719,7 +722,7 @@ export default {
 	'tags-help-to-describe-your-solution-in-the-marketplace-select-the-tags-most-relevant-to-your-solution-they-can-be-changed-if-needed':
 		'Tags help to describe your solution in the Marketplace. Select the tags most relevant to your solution. They can be changed if needed.',
 	'tax-id': 'Tax ID',
-	'tax-vat': 'Tax/VAT',
+	'tax-vat-id': 'Tax/VAT ID',
 	'tax-vat-number': 'Tax/VAT Number',
 	'terms-of-service': 'Terms of Service',
 	'terms-privacy-returns-or-contact-support-all-costs-are-in-us-dollars':

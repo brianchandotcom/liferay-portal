@@ -63,9 +63,7 @@ const ProductPurchaseAccountSelection: React.FC<
 					userAccount={myUserAccount}
 				/>
 			)}
-
 			<CreateNewAccount accounts={accounts} />
-
 			{children}
 		</ProductPurchase.Shell>
 	);

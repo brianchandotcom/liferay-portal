@@ -162,7 +162,7 @@ const App = () => {
 								value: placedOrder.couponCode || '-',
 							},
 							{
-								title: i18n.translate('tax-vat'),
+								title: i18n.translate('tax-vat-id'),
 								value: placedOrder.summary.taxValueFormatted,
 							},
 							{

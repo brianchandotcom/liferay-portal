@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -53,7 +54,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -534,11 +534,9 @@ public class AnalyticsBatchExportImportManagerImpl
 				responseJSONObject.getString("liferayAnalyticsFaroBackendURL");
 
 			if (liferayAnalyticsEndpointURL.equals(
-					PrefsPropsUtil.getString(
-						companyId, "liferayAnalyticsEndpointURL")) &&
+					analyticsConfiguration.liferayAnalyticsEndpointURL()) &&
 				liferayAnalyticsFaroBackendURL.equals(
-					PrefsPropsUtil.getString(
-						companyId, "liferayAnalyticsFaroBackendURL"))) {
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL())) {
 
 				return;
 			}
@@ -654,7 +652,7 @@ public class AnalyticsBatchExportImportManagerImpl
 					"DISCONNECTED");
 
 				_processInvalidTokenMessage(
-					companyId, disconnected,
+					analyticsConfiguration, companyId, disconnected,
 					responseJSONObject.getString("message"));
 			}
 			else if (response.getResponseCode() >=
@@ -704,7 +702,7 @@ public class AnalyticsBatchExportImportManagerImpl
 			}
 
 			_processInvalidTokenMessage(
-				companyId, disconnected,
+				analyticsConfiguration, companyId, disconnected,
 				responseJSONObject.getString("message"));
 
 			return closeableHttpResponse;
@@ -826,7 +824,8 @@ public class AnalyticsBatchExportImportManagerImpl
 	}
 
 	private void _processInvalidTokenMessage(
-		long companyId, boolean disconnected, String message) {
+		AnalyticsConfiguration analyticsConfiguration, long companyId,
+		boolean disconnected, String message) {
 
 		if (!Objects.equals(message, "INVALID_TOKEN") && !disconnected) {
 			return;
@@ -840,26 +839,27 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 
 		try {
-			for (String groupId :
-					PrefsPropsUtil.getStringArray(
-						companyId, "liferayAnalyticsGroupIds",
-						StringPool.COMMA)) {
+			String[] groupIds = analyticsConfiguration.syncedGroupIds();
 
-				Group group = _groupLocalService.fetchGroup(
-					GetterUtil.getLong(groupId));
+			if (ArrayUtil.isNotEmpty(groupIds)) {
+				for (String groupId : groupIds) {
+					Group group = _groupLocalService.fetchGroup(
+						GetterUtil.getLong(groupId));
 
-				if (group == null) {
-					continue;
+					if (group == null) {
+						continue;
+					}
+
+					UnicodeProperties typeSettingsUnicodeProperties =
+						group.getTypeSettingsProperties();
+
+					typeSettingsUnicodeProperties.remove("analyticsChannelId");
+
+					group.setTypeSettingsProperties(
+						typeSettingsUnicodeProperties);
+
+					_groupLocalService.updateGroup(group);
 				}
-
-				UnicodeProperties typeSettingsUnicodeProperties =
-					group.getTypeSettingsProperties();
-
-				typeSettingsUnicodeProperties.remove("analyticsChannelId");
-
-				group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
-
-				_groupLocalService.updateGroup(group);
 			}
 
 			_companyLocalService.updatePreferences(
@@ -958,7 +958,7 @@ public class AnalyticsBatchExportImportManagerImpl
 					"DISCONNECTED");
 
 				_processInvalidTokenMessage(
-					companyId, disconnected,
+					analyticsConfiguration, companyId, disconnected,
 					responseJSONObject.getString("message"));
 			}
 

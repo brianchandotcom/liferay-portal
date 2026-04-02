@@ -1355,6 +1355,9 @@
 				}
 			],
 			"properties": {
+				"accountEntryCode": {
+					"type": "keyword"
+				},
 				"ancestorOrganizationIds": {
 					"type": "keyword"
 				},

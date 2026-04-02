@@ -7,10 +7,14 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.io.File;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,6 +22,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Kevin Lee
@@ -40,6 +47,20 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 	@Before
 	public void setUp() throws Exception {
 		_safeCloseable = resetLicenseDataWithSafeCloseble();
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		List<String> symbolicNames = new ArrayList<>();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String symbolicName = bundle.getSymbolicName();
+
+			if (symbolicName.contains(".cmp.")) {
+				symbolicNames.add(symbolicName);
+			}
+		}
+
+		_cmpSymbolicNames = ArrayUtil.toStringArray(symbolicNames);
 	}
 
 	@After
@@ -57,11 +78,11 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 	public void testEnterpriseLicense() throws Exception {
 		assertLicensePropertiesNotExisted(getCMPProductId());
 
-		assertBundlesExisted(_getCMPSymbolicNames());
+		assertBundlesExisted(_cmpSymbolicNames);
 
 		assertPortalLicenseNotRegistered();
 
-		assertBundlesExisted(_getCMPSymbolicNames());
+		assertBundlesExisted(_cmpSymbolicNames);
 
 		deployEnterprisePortalLicense(Time.HOUR);
 
@@ -69,7 +90,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCMPSymbolicNames());
+		assertBundlesNotExisted(_cmpSymbolicNames);
 
 		File binaryFile = deployCMPLicense(Time.HOUR);
 
@@ -77,7 +98,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesExisted(_getCMPSymbolicNames());
+		assertBundlesExisted(_cmpSymbolicNames);
 
 		binaryFile.delete();
 
@@ -89,18 +110,18 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCMPSymbolicNames());
+		assertBundlesNotExisted(_cmpSymbolicNames);
 	}
 
 	@Test
 	public void testFreeTierLicense() throws Exception {
 		assertLicensePropertiesNotExisted(getCMPProductId());
 
-		assertBundlesExisted(_getCMPSymbolicNames());
+		assertBundlesExisted(_cmpSymbolicNames);
 
 		assertPortalLicenseNotRegistered();
 
-		assertBundlesExisted(_getCMPSymbolicNames());
+		assertBundlesExisted(_cmpSymbolicNames);
 
 		deployFreeTierPortalLicense(Time.HOUR);
 
@@ -108,7 +129,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCMPSymbolicNames());
+		assertBundlesNotExisted(_cmpSymbolicNames);
 
 		File binaryFile = deployCMPLicense(Time.HOUR);
 
@@ -116,7 +137,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCMPSymbolicNames());
+		assertBundlesNotExisted(_cmpSymbolicNames);
 
 		binaryFile.delete();
 
@@ -128,15 +149,10 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCMPSymbolicNames());
+		assertBundlesNotExisted(_cmpSymbolicNames);
 	}
 
-	private String[] _getCMPSymbolicNames() {
-		String property = getProperty("cmp.symbolic.names");
-
-		return property.split(StringPool.COMMA);
-	}
-
+	private static String[] _cmpSymbolicNames;
 	private static SafeCloseable _disableKeyValidatorSafeCloseable;
 	private static SafeCloseable _setVersionSafeCloseable;
 

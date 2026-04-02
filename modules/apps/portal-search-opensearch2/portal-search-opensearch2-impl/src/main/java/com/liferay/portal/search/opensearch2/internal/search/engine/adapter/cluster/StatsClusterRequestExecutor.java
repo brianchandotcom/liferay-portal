@@ -6,22 +6,21 @@
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
+
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue;
 
 import java.io.IOException;
 
-import java.util.Arrays;
+import java.util.Collections;
 
+import org.opensearch.client.json.JsonpDeserializer;
 import org.opensearch.client.opensearch.OpenSearchClient;
-import org.opensearch.client.opensearch.cluster.ClusterStatsRequest;
-import org.opensearch.client.opensearch.cluster.ClusterStatsResponse;
-import org.opensearch.client.opensearch.cluster.OpenSearchClusterClient;
-import org.opensearch.client.opensearch.cluster.stats.ClusterFileSystem;
-import org.opensearch.client.opensearch.cluster.stats.ClusterNodes;
+import org.opensearch.client.transport.OpenSearchTransport;
+import org.opensearch.client.transport.endpoints.SimpleEndpoint;
 
 /**
  * @author Dylan Rebelak
@@ -38,44 +37,32 @@ public class StatsClusterRequestExecutor {
 		StatsClusterRequest statsClusterRequest) {
 
 		try {
-			ClusterStatsResponse clusterStatsResponse =
-				_getClusterStatsResponse(
-					_createClusterStatsRequest(statsClusterRequest),
-					statsClusterRequest);
+			JsonObject jsonObject = _getClusterStatsJsonObject(
+				statsClusterRequest);
 
-			ClusterNodes clusterNodes = clusterStatsResponse.nodes();
+			JsonObject nodesJsonObject = jsonObject.getJsonObject("nodes");
 
-			ClusterFileSystem clusterFileSystem = clusterNodes.fs();
+			JsonObject fsJsonObject = nodesJsonObject.getJsonObject("fs");
 
-			long availableInBytes = clusterFileSystem.availableInBytes();
-			long totalInBytes = clusterFileSystem.totalInBytes();
+			long availableInBytes = fsJsonObject.getJsonNumber(
+				"available_in_bytes"
+			).longValue();
+			long totalInBytes = fsJsonObject.getJsonNumber(
+				"total_in_bytes"
+			).longValue();
 
 			return new StatsClusterResponse(
 				availableInBytes,
 				ClusterHealthStatusTranslatorUtil.translate(
-					clusterStatsResponse.status()),
-				JsonpUtil.toString(clusterStatsResponse),
-				totalInBytes - availableInBytes);
+					jsonObject.getString("status")),
+				jsonObject.toString(), totalInBytes - availableInBytes);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
 		}
 	}
 
-	private ClusterStatsRequest _createClusterStatsRequest(
-		StatsClusterRequest statsClusterRequest) {
-
-		ClusterStatsRequest.Builder builder = new ClusterStatsRequest.Builder();
-
-		if (ArrayUtil.isNotEmpty(statsClusterRequest.getNodeIds())) {
-			builder.nodeId(Arrays.asList(statsClusterRequest.getNodeIds()));
-		}
-
-		return builder.build();
-	}
-
-	private ClusterStatsResponse _getClusterStatsResponse(
-		ClusterStatsRequest clusterStatsRequest,
+	private JsonObject _getClusterStatsJsonObject(
 		StatsClusterRequest statsClusterRequest) {
 
 		OpenSearchClient openSearchClient =
@@ -83,11 +70,19 @@ public class StatsClusterRequestExecutor {
 				statsClusterRequest.getConnectionId(),
 				statsClusterRequest.isPreferLocalCluster());
 
-		OpenSearchClusterClient openSearchClusterClient =
-			openSearchClient.cluster();
+		OpenSearchTransport openSearchTransport = openSearchClient._transport();
 
 		try {
-			return openSearchClusterClient.stats(clusterStatsRequest);
+			JsonValue jsonValue = openSearchTransport.performRequest(
+				null,
+				new SimpleEndpoint<>(
+					request -> "GET", request -> "/_cluster/stats",
+					request -> Collections.emptyMap(),
+					request -> Collections.emptyMap(), false,
+					JsonpDeserializer.jsonValueDeserializer()),
+				null);
+
+			return jsonValue.asJsonObject();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

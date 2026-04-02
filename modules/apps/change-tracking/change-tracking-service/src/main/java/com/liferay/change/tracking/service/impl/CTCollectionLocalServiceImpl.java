@@ -1035,16 +1035,6 @@ public class CTCollectionLocalServiceImpl
 			null, undoCTCollection.getCompanyId(), userId,
 			undoCTCollection.getCtRemoteId(), name, description);
 
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.getCTPreferences(
-				undoCTCollection.getCompanyId(), userId);
-
-		ctPreferences.setCtCollectionId(newCTCollection.getCtCollectionId());
-		ctPreferences.setPreviousCtCollectionId(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-		_ctPreferencesPersistence.update(ctPreferences);
-
 		List<CTEntry> publishedCTEntries =
 			_ctEntryPersistence.findByCtCollectionId(
 				undoCTCollection.getCtCollectionId());
@@ -1140,6 +1130,16 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		_ctServiceRegistry.onAfterCopy(undoCTCollection, newCTCollection);
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				undoCTCollection.getCompanyId(), userId);
+
+		ctPreferences.setCtCollectionId(newCTCollection.getCtCollectionId());
+		ctPreferences.setPreviousCtCollectionId(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION);
+
+		_ctPreferencesPersistence.update(ctPreferences);
 
 		return newCTCollection;
 	}

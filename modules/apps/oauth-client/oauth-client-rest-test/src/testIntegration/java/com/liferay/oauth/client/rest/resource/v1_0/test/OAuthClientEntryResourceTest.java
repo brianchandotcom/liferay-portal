@@ -33,13 +33,13 @@ public class OAuthClientEntryResourceTest
 			).toString());
 		oAuthClientEntry.setAuthServerWellKnownURI(
 			"https://accounts.google.com/.well-known/openid-configuration");
-
-		String clientId = RandomTestUtil.randomString();
-
-		oAuthClientEntry.setClientId(clientId);
+		oAuthClientEntry.setCustomClaims(
+			JSONUtil.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
+			).toString());
 		oAuthClientEntry.setInfoJSON(
 			JSONUtil.put(
-				"client_id", clientId
+				"client_id", oAuthClientEntry.getClientId()
 			).put(
 				"client_name", "example_client"
 			).put(
@@ -48,11 +48,6 @@ public class OAuthClientEntryResourceTest
 				"scope", "openid email profile"
 			).put(
 				"subject_type", "public"
-			).toString());
-
-		oAuthClientEntry.setCustomClaims(
-			JSONUtil.put(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).toString());
 		oAuthClientEntry.setMatcherField("email");
 		oAuthClientEntry.setOidcUserInfoMapperJSON(

@@ -90,6 +90,11 @@ export default function ({
 			`${namespace}useNecessaryCookiesOnlyButton`
 		);
 
+		if (dissentRenewalPeriod === 0) {
+			dissentRenewalPeriod = consentRenewalPeriod;
+			dissentRenewalPeriodTimeUnit = consentRenewalPeriodTimeUnit;
+		}
+
 		acceptAllButton.addEventListener('click', () => {
 			acceptAllCookies(
 				consentRenewalPeriod,
@@ -114,15 +119,8 @@ export default function ({
 				let timeUnit = consentRenewalPeriodTimeUnit;
 
 				if (!toggleSwitch.checked) {
-					renewalPeriod =
-						dissentRenewalPeriod === 0
-							? consentRenewalPeriod
-							: dissentRenewalPeriod;
-
-					timeUnit =
-						dissentRenewalPeriod === 0
-							? consentRenewalPeriodTimeUnit
-							: dissentRenewalPeriodTimeUnit;
+					renewalPeriod = dissentRenewalPeriod;
+					timeUnit = dissentRenewalPeriodTimeUnit;
 				}
 
 				setCookie(
@@ -156,21 +154,12 @@ export default function ({
 		});
 
 		useNecessaryCookiesOnlyButton.addEventListener('click', () => {
-			const renewalPeriod =
-				dissentRenewalPeriod === 0
-					? consentRenewalPeriod
-					: dissentRenewalPeriod;
-			const timeUnit =
-				dissentRenewalPeriod === 0
-					? consentRenewalPeriodTimeUnit
-					: dissentRenewalPeriodTimeUnit;
-
 			declineAllCookies(
-				renewalPeriod,
+				dissentRenewalPeriod,
 				optionalConsentCookieTypeNames,
 				requiredConsentCookieTypeNames,
 				storeConsentCheckbox?.checked,
-				timeUnit
+				dissentRenewalPeriodTimeUnit
 			);
 
 			setUserConfigCookie(

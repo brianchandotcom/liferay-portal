@@ -25,7 +25,7 @@ public interface CookiesPreferenceHandlingConfiguration {
 
 	@Meta.AD(
 		deflt = "12", description = "cookie-consent-renewal-period-help",
-		max = "12", min = "1", name = "cookie-consent-renewal-period",
+		max = "365", min = "1", name = "cookie-consent-renewal-period",
 		required = false
 	)
 	public int consentRenewalPeriod();
@@ -43,7 +43,7 @@ public interface CookiesPreferenceHandlingConfiguration {
 
 	@Meta.AD(
 		deflt = "12", description = "cookie-dissent-renewal-period-help",
-		max = "12", min = "0", name = "cookie-dissent-renewal-period",
+		max = "365", min = "0", name = "cookie-dissent-renewal-period",
 		required = false
 	)
 	public int dissentRenewalPeriod();

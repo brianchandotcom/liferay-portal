@@ -46,7 +46,9 @@ spec:
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customEnv }}
+                        {{- if and $v (gt (len $v) 0) }}
                         {{- toYaml $v | nindent 22 }}
+                        {{- end }}
                         {{- end }}
                     {{- end }}
                     {{- if or .statefulset.envFrom .statefulset.customEnvFrom }}
@@ -55,7 +57,9 @@ spec:
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customEnvFrom }}
+                        {{- if and $v (gt (len $v) 0) }}
                         {{- toYaml $v | nindent 22 }}
+                        {{- end }}
                         {{- end }}
                     {{- end }}
                     image: {{ printf "%s:%s" .statefulset.image.repository (.statefulset.image.tag | toString) }}
@@ -96,7 +100,9 @@ spec:
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customVolumeMounts }}
+                        {{- if and $v (gt (len $v) 0) }}
                         {{- toYaml $v | nindent 22 }}
+                        {{- end }}
                         {{- end }}
                     {{- end }}
             {{- if or .statefulset.pullSecrets .statefulset.customPullSecrets}}

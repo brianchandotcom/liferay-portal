@@ -198,18 +198,18 @@ public class CTPublishBackgroundTaskExecutor
 				ctCollectionId, _multiVMPool.getPortalCacheManager());
 		}
 
-		ctCollection = _ctCollectionLocalService.getCTCollection(
-			ctCollectionId);
+		CTCollection latestCTCollection =
+			_ctCollectionLocalService.getCTCollection(ctCollectionId);
 
 		Date modifiedDate = new Date();
 
-		ctCollection.setModifiedDate(modifiedDate);
+		latestCTCollection.setModifiedDate(modifiedDate);
 
-		ctCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
-		ctCollection.setStatusByUserId(backgroundTask.getUserId());
-		ctCollection.setStatusDate(modifiedDate);
+		latestCTCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
+		latestCTCollection.setStatusByUserId(backgroundTask.getUserId());
+		latestCTCollection.setStatusDate(modifiedDate);
 
-		_ctCollectionLocalService.updateCTCollection(ctCollection);
+		_ctCollectionLocalService.updateCTCollection(latestCTCollection);
 
 		_ctServiceRegistry.onAfterPublish(ctCollectionId);
 

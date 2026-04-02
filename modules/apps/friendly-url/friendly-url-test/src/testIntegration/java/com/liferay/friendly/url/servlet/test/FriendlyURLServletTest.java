@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -882,89 +881,22 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
-	public void testServiceLinkToURLRedirectWithExistingQueryParams()
-		throws Throwable {
+	public void testServiceLinkToURLRedirect() throws Throwable {
+		_testServiceLinkToURLRedirect(
+			"?param=true",
+			HashMapBuilder.put(
+				"param", "true"
+			).build(),
+			_layout.getFriendlyURL());
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		String targetURL = _layout.getFriendlyURL() + "?tenantId=123";
 
-		Layout redirectLayout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		redirectLayout.setType(LayoutConstants.TYPE_URL);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			_group.getTypeSettingsProperties();
-
-		String targetURL = "https://example.com/page?tenantId=123";
-
-		typeSettingsUnicodeProperties.put("url", targetURL);
-
-		redirectLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
-
-		redirectLayout = _layoutLocalService.updateLayout(redirectLayout);
-
-		mockHttpServletRequest.setParameter(
-			"p_l_back_url", "http://localhost:8080/");
-		mockHttpServletRequest.setParameter("p_l_back_url_title", "Home");
-
-		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
-
-		String requestURI =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				getPath(_group, redirectLayout);
-
-		mockHttpServletRequest.setRequestURI(requestURI);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
-
-		String redirectedURL = mockHttpServletResponse.getRedirectedUrl();
-
-		Assert.assertTrue(
-			redirectedURL.contains(
-				StringBundler.concat(
-					targetURL, "&p_l_back_url=",
-					URLCodec.encodeURL("http://localhost:8080/"),
-					"&p_l_back_url_title=Home")));
-	}
-
-	@Test
-	public void testServiceLinkToURLRedirectWithQueryParams() throws Throwable {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		Layout redirectLayout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		redirectLayout.setType(LayoutConstants.TYPE_URL);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			_group.getTypeSettingsProperties();
-
-		typeSettingsUnicodeProperties.put("url", _layout.getFriendlyURL());
-
-		redirectLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
-
-		redirectLayout = _layoutLocalService.updateLayout(redirectLayout);
-
-		mockHttpServletRequest.setParameter("param", "true");
-		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
-
-		String requestURI =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				getPath(_group, redirectLayout);
-
-		mockHttpServletRequest.setRequestURI(requestURI);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
-
-		String redirectedURL = mockHttpServletResponse.getRedirectedUrl();
-
-		Assert.assertTrue(redirectedURL.contains("?param=true"));
+		_testServiceLinkToURLRedirect(
+			targetURL + "&param=true",
+			HashMapBuilder.put(
+				"param", "true"
+			).build(),
+			targetURL);
 	}
 
 	@Test
@@ -1410,6 +1342,51 @@ public class FriendlyURLServletTest {
 
 		Assert.assertEquals(
 			expectedStatus, mockHttpServletResponse.getStatus());
+	}
+
+	private void _testServiceLinkToURLRedirect(
+			String expectedURL, Map<String, String> params, String targetURL)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		Layout redirectLayout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		redirectLayout.setType(LayoutConstants.TYPE_URL);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put("url", targetURL);
+
+		redirectLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+		redirectLayout = _layoutLocalService.updateLayout(redirectLayout);
+
+		if (params != null) {
+			for (Map.Entry<String, String> entry : params.entrySet()) {
+				mockHttpServletRequest.setParameter(
+					entry.getKey(), entry.getValue());
+			}
+		}
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		String requestURI =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				getPath(_group, redirectLayout);
+
+		mockHttpServletRequest.setRequestURI(requestURI);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		String redirectedURL = mockHttpServletResponse.getRedirectedUrl();
+
+		Assert.assertTrue(redirectedURL.contains(expectedURL));
 	}
 
 	private void _testServiceRedirectWithRedirectEntry(

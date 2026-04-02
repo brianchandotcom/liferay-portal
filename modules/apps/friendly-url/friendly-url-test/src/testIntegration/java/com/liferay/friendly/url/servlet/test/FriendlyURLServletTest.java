@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -878,6 +879,55 @@ public class FriendlyURLServletTest {
 			_redirectConstructor1.newInstance(getURL(_layout)));
 
 		Assert.assertEquals(404, mockHttpServletResponse.getStatus());
+	}
+
+	@Test
+	public void testServiceLinkToURLRedirectWithExistingQueryParams()
+		throws Throwable {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		Layout redirectLayout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		redirectLayout.setType(LayoutConstants.TYPE_URL);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_group.getTypeSettingsProperties();
+
+		String targetURL = "https://example.com/page?tenantId=123";
+
+		typeSettingsUnicodeProperties.put("url", targetURL);
+
+		redirectLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+		redirectLayout = _layoutLocalService.updateLayout(redirectLayout);
+
+		mockHttpServletRequest.setParameter(
+			"p_l_back_url", "http://localhost:8080/");
+		mockHttpServletRequest.setParameter("p_l_back_url_title", "Home");
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		String requestURI =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				getPath(_group, redirectLayout);
+
+		mockHttpServletRequest.setRequestURI(requestURI);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		String redirectedURL = mockHttpServletResponse.getRedirectedUrl();
+
+		Assert.assertTrue(
+			redirectedURL.contains(
+				StringBundler.concat(
+					targetURL, "&p_l_back_url=",
+					URLCodec.encodeURL("http://localhost:8080/"),
+					"&p_l_back_url_title=Home")));
 	}
 
 	@Test

@@ -44,6 +44,7 @@ page import="com.liferay.portal.kernel.exception.NoSuchLayoutSetException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchRoleException" %><%@
 page import="com.liferay.portal.kernel.exception.PendingBackgroundTaskException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredGroupException" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

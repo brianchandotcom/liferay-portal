@@ -2605,7 +2605,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	@Transactional(enabled = false)
 	public boolean isMaintenanceMode(Group group) {
-		if (group == null) {
+		if ((group == null) ||
+			!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-82969")) {
+
 			return false;
 		}
 
@@ -3931,35 +3934,40 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setFriendlyURL(friendlyURL);
 		group.setInheritContent(inheritContent);
 
-		if (Validator.isNotNull(typeSettings)) {
-			UnicodeProperties newTypeSettingsUnicodeProperties =
-				UnicodePropertiesBuilder.create(
-					true
-				).fastLoad(
-					typeSettings
-				).build();
+		if (FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-82969")) {
 
-			if (GetterUtil.getBoolean(
-					newTypeSettingsUnicodeProperties.getProperty(
-						GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE))) {
+			if (Validator.isNotNull(typeSettings)) {
+				UnicodeProperties newTypeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.create(
+						true
+					).fastLoad(
+						typeSettings
+					).build();
 
-				active = false;
+				if (GetterUtil.getBoolean(
+						newTypeSettingsUnicodeProperties.getProperty(
+							GroupConstants.
+								TYPE_SETTINGS_KEY_MAINTENANCE_MODE))) {
+
+					active = false;
+				}
+				else if (active) {
+					newTypeSettingsUnicodeProperties.remove(
+						GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
+
+					typeSettings = newTypeSettingsUnicodeProperties.toString();
+				}
 			}
-			else if (active) {
-				newTypeSettingsUnicodeProperties.remove(
+			else if (active && group.isMaintenanceMode()) {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					group.getTypeSettingsProperties();
+
+				typeSettingsUnicodeProperties.remove(
 					GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
 
-				typeSettings = newTypeSettingsUnicodeProperties.toString();
+				group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 			}
-		}
-		else if (active && group.isMaintenanceMode()) {
-			UnicodeProperties typeSettingsUnicodeProperties =
-				group.getTypeSettingsProperties();
-
-			typeSettingsUnicodeProperties.remove(
-				GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
-
-			group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 		}
 
 		if (group.isActive() != active) {

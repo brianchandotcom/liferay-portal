@@ -8,6 +8,7 @@ package com.liferay.site.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupNameException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.MembershipRequest;
@@ -102,20 +103,24 @@ public class EditDetailsMVCActionCommand
 		boolean active = ParamUtil.getBoolean(
 			actionRequest, "active", liveGroup.isActive());
 
-		boolean maintenanceMode = ParamUtil.getBoolean(
-			actionRequest, "maintenanceMode");
-
 		UnicodeProperties typeSettingsUnicodeProperties =
 			liveGroup.getTypeSettingsProperties();
 
-		if (maintenanceMode) {
-			typeSettingsUnicodeProperties.setProperty(
-				GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE,
-				Boolean.TRUE.toString());
-		}
-		else {
-			typeSettingsUnicodeProperties.remove(
-				GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
+		if (FeatureFlagManagerUtil.isEnabled(
+				liveGroup.getCompanyId(), "LPD-82969")) {
+
+			boolean maintenanceMode = ParamUtil.getBoolean(
+				actionRequest, "maintenanceMode");
+
+			if (maintenanceMode) {
+				typeSettingsUnicodeProperties.setProperty(
+					GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE,
+					Boolean.TRUE.toString());
+			}
+			else {
+				typeSettingsUnicodeProperties.remove(
+					GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
+			}
 		}
 
 		if (!liveGroup.isGuest() && !liveGroup.isOrganization()) {

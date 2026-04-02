@@ -82,31 +82,33 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 <c:if test="<%= !siteGroup.isCompany() && !siteGroup.isGuest() %>">
 	<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" value="<%= liveGroup.isActive() %>" />
 
-	<aui:input disabled="<%= liveGroup.isActive() %>" helpMessage='<%= liveGroup.isActive() ? LanguageUtil.get(request, "the-site-must-be-deactivated-before-enabling-maintenance-mode") : LanguageUtil.get(request, "when-enabled-nonadmin-users-will-see-a-maintenance-page-instead-of-the-site-content") %>' inlineLabel="right" label="maintenance-mode" labelCssClass="simple-toggle-switch" name="maintenanceMode" type="toggle-switch" value="<%= liveGroup.isMaintenanceMode() %>" />
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-82969") %>'>
+		<aui:input disabled="<%= liveGroup.isActive() %>" helpMessage='<%= liveGroup.isActive() ? LanguageUtil.get(request, "the-site-must-be-deactivated-before-enabling-maintenance-mode") : LanguageUtil.get(request, "when-enabled-nonadmin-users-will-see-a-maintenance-page-instead-of-the-site-content") %>' inlineLabel="right" label="maintenance-mode" labelCssClass="simple-toggle-switch" name="maintenanceMode" type="toggle-switch" value="<%= liveGroup.isMaintenanceMode() %>" />
 
-	<aui:script>
-		var activeCheckbox = document.getElementById('<portlet:namespace />active');
-		var maintenanceModeCheckbox = document.getElementById(
-			'<portlet:namespace />maintenanceMode'
-		);
-		var maintenanceModeLabel = document.querySelector(
-			'label[for="<portlet:namespace />maintenanceMode"]'
-		);
+		<aui:script>
+			var activeCheckbox = document.getElementById('<portlet:namespace />active');
+			var maintenanceModeCheckbox = document.getElementById(
+				'<portlet:namespace />maintenanceMode'
+			);
+			var maintenanceModeLabel = document.querySelector(
+				'label[for="<portlet:namespace />maintenanceMode"]'
+			);
 
-		if (activeCheckbox && maintenanceModeCheckbox && maintenanceModeLabel) {
-			activeCheckbox.addEventListener('change', function () {
-				if (activeCheckbox.checked) {
-					maintenanceModeCheckbox.checked = false;
-					maintenanceModeCheckbox.disabled = true;
-					maintenanceModeLabel.classList.add('disabled');
-				}
-				else {
-					maintenanceModeCheckbox.disabled = false;
-					maintenanceModeLabel.classList.remove('disabled');
-				}
-			});
-		}
-	</aui:script>
+			if (activeCheckbox && maintenanceModeCheckbox && maintenanceModeLabel) {
+				activeCheckbox.addEventListener('change', function () {
+					if (activeCheckbox.checked) {
+						maintenanceModeCheckbox.checked = false;
+						maintenanceModeCheckbox.disabled = true;
+						maintenanceModeLabel.classList.add('disabled');
+					}
+					else {
+						maintenanceModeCheckbox.disabled = false;
+						maintenanceModeLabel.classList.remove('disabled');
+					}
+				});
+			}
+		</aui:script>
+	</c:if>
 </c:if>
 
 <c:if test="<%= (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE %>">

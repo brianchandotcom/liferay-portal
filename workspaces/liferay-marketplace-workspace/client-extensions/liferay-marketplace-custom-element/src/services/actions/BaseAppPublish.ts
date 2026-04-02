@@ -52,15 +52,14 @@ export default class BaseAppPublish {
 				},
 			};
 
-			await HeadlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+			await HeadlessCommerceAdminCatalogImpl.addOrUpdateProductImageByExternalReferenceCode(
 				product?.externalReferenceCode,
-				imageMetadata,
-				(progress) => {
-					image.changed = false;
-					image.progress = progress;
-					image.uploaded = progress === 100;
-				}
+				imageMetadata
 			);
+
+			image.changed = false;
+			image.progress = 100;
+			image.uploaded = true;
 		}
 	};
 

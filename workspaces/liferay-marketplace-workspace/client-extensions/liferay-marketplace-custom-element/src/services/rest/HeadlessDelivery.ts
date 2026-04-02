@@ -4,7 +4,6 @@
  */
 
 import {Liferay} from '../../liferay/liferay';
-import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
 export default class HeadlessDelivery {
@@ -29,12 +28,10 @@ export default class HeadlessDelivery {
 		documentFolderId: string | number,
 		body: any
 	) {
-		const response = await axios.post(
+		return fetcher.post(
 			`o/headless-delivery/v1.0/document-folders/${documentFolderId}/documents`,
 			body
 		);
-
-		return response.data;
 	}
 
 	static async deleteDocument(documentId: number | string) {

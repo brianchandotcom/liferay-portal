@@ -211,7 +211,7 @@ export default class AppPublish extends BaseAppPublish {
 
 		if (_product) {
 			if (file && (!file?.uploaded || file?.changed)) {
-				await HeadlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+				await HeadlessCommerceAdminCatalogImpl.addOrUpdateProductImageByExternalReferenceCode(
 					_product.externalReferenceCode,
 					{
 						attachment: base64ToText(
@@ -257,7 +257,7 @@ export default class AppPublish extends BaseAppPublish {
 		);
 
 		if (file.file) {
-			await HeadlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+			await HeadlessCommerceAdminCatalogImpl.addOrUpdateProductImageByExternalReferenceCode(
 				product.externalReferenceCode,
 				{
 					attachment: base64ToText(

@@ -99,9 +99,8 @@ export default class PublisherAsset {
 		appFolderId: number
 	): Promise<number> {
 		const formData = new FormData();
-		const blob = new Blob([file.file]);
+		formData.append('file', file.file, file.fileName);
 
-		formData.append('file', blob, file.fileName);
 		const sourceDocument =
 			await HeadlessDelivery.createDocumentFolderDocument(
 				appFolderId,

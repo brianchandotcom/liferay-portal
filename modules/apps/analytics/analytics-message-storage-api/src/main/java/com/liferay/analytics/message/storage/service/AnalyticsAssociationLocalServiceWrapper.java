@@ -126,6 +126,20 @@ public class AnalyticsAssociationLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteAnalyticsAssociations(long companyId) {
+		_analyticsAssociationLocalService.deleteAnalyticsAssociations(
+			companyId);
+	}
+
+	@Override
+	public void deleteAnalyticsAssociations(
+		long companyId, java.util.Date modifiedDate) {
+
+		_analyticsAssociationLocalService.deleteAnalyticsAssociations(
+			companyId, modifiedDate);
+	}
+
+	@Override
 	public void deleteAnalyticsAssociations(
 		long companyId, String associationClassName, long associationClassPK) {
 
@@ -432,4 +446,4 @@ public class AnalyticsAssociationLocalServiceWrapper
 	private AnalyticsAssociationLocalService _analyticsAssociationLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1395767237
+// LIFERAY-SERVICE-BUILDER-HASH:377848089

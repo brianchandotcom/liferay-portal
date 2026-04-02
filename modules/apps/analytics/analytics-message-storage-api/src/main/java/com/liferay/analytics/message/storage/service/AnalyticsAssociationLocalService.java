@@ -125,6 +125,10 @@ public interface AnalyticsAssociationLocalService
 			long analyticsAssociationId)
 		throws PortalException;
 
+	public void deleteAnalyticsAssociations(long companyId);
+
+	public void deleteAnalyticsAssociations(long companyId, Date modifiedDate);
+
 	public void deleteAnalyticsAssociations(
 		long companyId, String associationClassName, long associationClassPK);
 
@@ -314,4 +318,4 @@ public interface AnalyticsAssociationLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1738223534
+// LIFERAY-SERVICE-BUILDER-HASH:1955402038

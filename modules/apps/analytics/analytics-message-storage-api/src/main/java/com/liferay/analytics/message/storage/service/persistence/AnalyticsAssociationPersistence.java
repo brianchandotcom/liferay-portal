@@ -37,6 +37,108 @@ public interface AnalyticsAssociationPersistence
 	 */
 
 	/**
+	 * Returns all the analytics associations where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching analytics associations
+	 */
+	public java.util.List<AnalyticsAssociation> findByCompanyId(long companyId);
+
+	/**
+	 * Returns a range of all the analytics associations where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @return the range of matching analytics associations
+	 */
+	public java.util.List<AnalyticsAssociation> findByCompanyId(
+		long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the analytics associations where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching analytics associations
+	 */
+	public java.util.List<AnalyticsAssociation> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the analytics associations where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching analytics associations
+	 */
+	public java.util.List<AnalyticsAssociation> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first analytics association in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics association
+	 * @throws NoSuchAssociationException if a matching analytics association could not be found
+	 */
+	public AnalyticsAssociation findByCompanyId_First(
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AnalyticsAssociation> orderByComparator)
+		throws NoSuchAssociationException;
+
+	/**
+	 * Returns the first analytics association in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics association, or <code>null</code> if a matching analytics association could not be found
+	 */
+	public AnalyticsAssociation fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
+			orderByComparator);
+
+	/**
+	 * Removes all the analytics associations where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	public void removeByCompanyId(long companyId);
+
+	/**
+	 * Returns the number of analytics associations where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching analytics associations
+	 */
+	public int countByCompanyId(long companyId);
+
+	/**
 	 * Returns all the analytics associations where companyId = &#63; and associationClassName = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -270,6 +372,117 @@ public interface AnalyticsAssociationPersistence
 	 */
 	public int countByC_GtM_A(
 		long companyId, Date modifiedDate, String associationClassName);
+
+	/**
+	 * Returns all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @return the matching analytics associations
+	 */
+	public java.util.List<AnalyticsAssociation> findByC_LtM(
+		long companyId, Date modifiedDate);
+
+	/**
+	 * Returns a range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @return the range of matching analytics associations
+	 */
+	public java.util.List<AnalyticsAssociation> findByC_LtM(
+		long companyId, Date modifiedDate, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching analytics associations
+	 */
+	public java.util.List<AnalyticsAssociation> findByC_LtM(
+		long companyId, Date modifiedDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching analytics associations
+	 */
+	public java.util.List<AnalyticsAssociation> findByC_LtM(
+		long companyId, Date modifiedDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first analytics association in the ordered set where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics association
+	 * @throws NoSuchAssociationException if a matching analytics association could not be found
+	 */
+	public AnalyticsAssociation findByC_LtM_First(
+			long companyId, Date modifiedDate,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AnalyticsAssociation> orderByComparator)
+		throws NoSuchAssociationException;
+
+	/**
+	 * Returns the first analytics association in the ordered set where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics association, or <code>null</code> if a matching analytics association could not be found
+	 */
+	public AnalyticsAssociation fetchByC_LtM_First(
+		long companyId, Date modifiedDate,
+		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
+			orderByComparator);
+
+	/**
+	 * Removes all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 */
+	public void removeByC_LtM(long companyId, Date modifiedDate);
+
+	/**
+	 * Returns the number of analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @return the number of matching analytics associations
+	 */
+	public int countByC_LtM(long companyId, Date modifiedDate);
 
 	/**
 	 * Returns all the analytics associations where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
@@ -519,4 +732,4 @@ public interface AnalyticsAssociationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:616006239
+// LIFERAY-SERVICE-BUILDER-HASH:1186330657

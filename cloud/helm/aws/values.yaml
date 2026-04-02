@@ -36,16 +36,17 @@ liferay-default:
                 value: jdbc:postgresql://${env.DATABASE_ENDPOINT}:${env.DATABASE_PORT}/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
             -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME
                 value: ${env.DATABASE_USERNAME}
+            -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PORT_PERIOD_ENABLED
+                value: "true"
+            -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PROTOCOL_PERIOD_ENABLED
+                value: "true"
+        x-liferay-aws-opensearch:
             -   name: LIFERAY_NETWORK_HOST_ADDRESSES
                 value: https://$(OPENSEARCH_ENDPOINT):443
             -   name: LIFERAY_OPENSEARCH_ENABLED
                 value: "true"
             -   name: LIFERAY_OPENSEARCH_PASSWORD
                 value: $(OPENSEARCH_PASSWORD)
-            -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PORT_PERIOD_ENABLED
-                value: "true"
-            -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PROTOCOL_PERIOD_ENABLED
-                value: "true"
     customEnvFrom:
         x-liferay-aws-database:
             -   secretRef:
@@ -147,16 +148,17 @@ liferay-default:
     customLabels:
         origin: liferay-aws
     customVolumeMounts:
-        x-liferay-aws:
+        x-liferay-aws-doclib:
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+                name: liferay-configmap
+                subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+        x-liferay-aws-opensearch:
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
-            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
-                name: liferay-configmap
-                subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
     network:
         enabled: true
         timeouts:

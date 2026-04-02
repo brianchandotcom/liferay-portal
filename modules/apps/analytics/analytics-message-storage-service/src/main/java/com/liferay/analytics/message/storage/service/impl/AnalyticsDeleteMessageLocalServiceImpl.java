@@ -44,6 +44,19 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAnalyticsDeleteMessages(long companyId) {
+		analyticsDeleteMessagePersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
+	public void deleteAnalyticsDeleteMessages(
+		long companyId, Date modifiedDate) {
+
+		analyticsDeleteMessagePersistence.removeByC_LtM(
+			companyId, modifiedDate);
+	}
+
+	@Override
 	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
 		long companyId, Date modifiedDate, int start, int end) {
 

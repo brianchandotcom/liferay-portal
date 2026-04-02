@@ -10,6 +10,7 @@ import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
+import jakarta.json.JsonNumber;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonValue;
 
@@ -40,16 +41,31 @@ public class StatsClusterRequestExecutor {
 			JsonObject jsonObject = _getClusterStatsJsonObject(
 				statsClusterRequest);
 
+			long availableInBytes = 0;
+			long totalInBytes = 0;
+
 			JsonObject nodesJsonObject = jsonObject.getJsonObject("nodes");
 
-			JsonObject fsJsonObject = nodesJsonObject.getJsonObject("fs");
+			if (nodesJsonObject != null) {
+				JsonObject fsJsonObject = nodesJsonObject.getJsonObject("fs");
 
-			long availableInBytes = fsJsonObject.getJsonNumber(
-				"available_in_bytes"
-			).longValue();
-			long totalInBytes = fsJsonObject.getJsonNumber(
-				"total_in_bytes"
-			).longValue();
+				if (fsJsonObject != null) {
+					JsonNumber availableInBytesJsonNumber =
+						fsJsonObject.getJsonNumber("available_in_bytes");
+
+					if (availableInBytesJsonNumber != null) {
+						availableInBytes =
+							availableInBytesJsonNumber.longValue();
+					}
+
+					JsonNumber totalInBytesJsonNumber =
+						fsJsonObject.getJsonNumber("total_in_bytes");
+
+					if (totalInBytesJsonNumber != null) {
+						totalInBytes = totalInBytesJsonNumber.longValue();
+					}
+				}
+			}
 
 			return new StatsClusterResponse(
 				availableInBytes,

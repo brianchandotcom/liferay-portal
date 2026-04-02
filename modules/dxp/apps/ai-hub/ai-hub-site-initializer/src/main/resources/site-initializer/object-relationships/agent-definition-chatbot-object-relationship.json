@@ -1,6 +1,6 @@
 {
 	"deletionType": "cascade",
-	"externalReferenceCode": "L_AGENT_DEFINITIONS_TO_L_AI_HUB_CHATBOTS",
+	"externalReferenceCode": "L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CHATBOTS",
 	"label": {
 		"en_US": "Agent Definitions to Chatbots"
 	},

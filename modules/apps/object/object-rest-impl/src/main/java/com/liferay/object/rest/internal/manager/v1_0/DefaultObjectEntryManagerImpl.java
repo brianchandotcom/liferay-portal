@@ -3017,6 +3017,13 @@ public class DefaultObjectEntryManagerImpl
 			}
 		}
 
+		if (((fileEntry.getFileBase64() != null) ||
+			 (fileEntry.getFileURL() != null)) &&
+			ArrayUtil.isEmpty(fileContent)) {
+
+			throw new IllegalArgumentException("File content cannot be empty");
+		}
+
 		com.liferay.portal.kernel.repository.model.FileEntry
 			serviceBuilderFileEntry = null;
 

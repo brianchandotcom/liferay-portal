@@ -154,10 +154,6 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
-		mockLiferayResourceRequest.setParameter(
-			"fragmentCollectionId",
-			String.valueOf(_fragmentCollection.getFragmentCollectionId()));
-
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(company);
@@ -168,6 +164,10 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayResourceRequest.setParameter(
+			"fragmentCollectionId",
+			String.valueOf(_fragmentCollection.getFragmentCollectionId()));
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
@@ -219,9 +219,6 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
-		mockLiferayResourceRequest.setParameter(
-			"fragmentCollectionId", String.valueOf(fragmentCollectionId));
-
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(company);
@@ -232,6 +229,9 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayResourceRequest.setParameter(
+			"fragmentCollectionId", String.valueOf(fragmentCollectionId));
 
 		return mockLiferayResourceRequest;
 	}

@@ -223,7 +223,11 @@ export class ObjectLayoutsPage {
 	}
 
 	async openObjectLayoutConfiguration(objectLayoutName: string) {
-		await this.page.getByRole('link', {name: objectLayoutName}).click();
+		const popupIframe = this.page.locator('iframe');
+
+		if (!(await popupIframe.isVisible())) {
+			await this.page.getByRole('link', {name: objectLayoutName}).click();
+		}
 
 		await this.layoutTab.click();
 	}

@@ -71,6 +71,12 @@ public class S3StoreTest {
 		);
 
 		Mockito.when(
+			_s3StoreConfiguration.corePoolSize()
+		).thenReturn(
+			1
+		);
+
+		Mockito.when(
 			_s3StoreConfiguration.httpClientMaxConnections()
 		).thenReturn(
 			1

@@ -24,7 +24,7 @@ const cookieKeys = [
 	'CONSENT_TYPE_PERSONALIZATION',
 	'USER_CONSENT_CONFIGURED',
 	'USER_CONSENT_CONFIGURED_DATE',
-]; //
+];
 
 export const test = mergeTests(
 	consentManagerConfigurationPageTest,
@@ -250,7 +250,7 @@ test(
 );
 
 test(
-	'Verify Consent Renewal Period for Dissent correctly sets cookie expiration after 1 Week',
+	'Verify Consent Renewal Period for Dissent correctly sets cookie expiration after 1 day',
 	{tag: '@LPD-84142'},
 	async ({consentManagerConfigurationPage}) => {
 		await validateConsentRenewalPeriodCookieExpiration(
@@ -314,7 +314,7 @@ async function validateConsentRenewalPeriodCookieExpiration(
 ) {
 	const dateBeforeCookiesSet = new Date().getTime();
 
-	await test.step('Set Consent Renewal Period to 1 month', async () => {
+	await test.step(`Set Consent Renewal Period to ${newValue} ${unit}`, async () => {
 		consentManagerConfigurationPage.page.once(
 			'dialog',
 			async (dialogWindow) => {
@@ -354,18 +354,16 @@ async function validateConsentRenewalPeriodCookieExpiration(
 	});
 
 	await test.step(`Verify Consent Cookies expire in ${newValue} ${unit}`, async () => {
-		const secondsInDay = 60 * 60 * 24;
-		let expirationOffsetInSeconds = 0;
 		const period = Number(newValue);
+		const secondsInDay = 60 * 60 * 24;
+
+		let expirationOffsetInSeconds = secondsInDay * 365 * (period / 12);
 
 		if (unit === 'days') {
 			expirationOffsetInSeconds = secondsInDay * period;
 		}
 		else if (unit === 'weeks') {
 			expirationOffsetInSeconds = secondsInDay * 7 * period;
-		}
-		else {
-			expirationOffsetInSeconds = secondsInDay * 365 * (period / 12);
 		}
 
 		const expectedExpiration = Math.floor(

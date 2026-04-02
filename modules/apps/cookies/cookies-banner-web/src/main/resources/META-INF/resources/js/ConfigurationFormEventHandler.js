@@ -14,9 +14,11 @@ export default function ({namespace}) {
 			const consentRenewalPeriod = document.getElementById(
 				`${namespace}consentRenewalPeriod`
 			);
+
 			const consentRenewalPeriodLabel = document.getElementById(
 				`${namespace}consentRenewalPeriodLabel`
 			);
+
 			const consentRenewalPeriodTimeUnit = document.getElementById(
 				`${namespace}consentRenewalPeriodTimeUnit`
 			);
@@ -24,9 +26,11 @@ export default function ({namespace}) {
 			const dissentRenewalPeriod = document.getElementById(
 				`${namespace}dissentRenewalPeriod`
 			);
+
 			const dissentRenewalPeriodLabel = document.getElementById(
 				`${namespace}dissentRenewalPeriodLabel`
 			);
+
 			const dissentRenewalPeriodTimeUnit = document.getElementById(
 				`${namespace}dissentRenewalPeriodTimeUnit`
 			);

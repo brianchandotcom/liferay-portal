@@ -213,8 +213,8 @@ export function setCookie(
 	value
 ) {
 	const secondsInDay = 60 * 60 * 24;
-	let maxAge = 0;
 
+	let maxAge = secondsInDay * 365 * (consentRenewalPeriod / 12);
 	const timeUnitLowerCase = (timeUnit || 'months').toLowerCase();
 
 	if (timeUnitLowerCase === 'days') {
@@ -222,9 +222,6 @@ export function setCookie(
 	}
 	else if (timeUnitLowerCase === 'weeks') {
 		maxAge = secondsInDay * 7 * consentRenewalPeriod;
-	}
-	else {
-		maxAge = secondsInDay * 365 * (consentRenewalPeriod / 12);
 	}
 
 	setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {

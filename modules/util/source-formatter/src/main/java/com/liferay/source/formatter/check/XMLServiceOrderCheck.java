@@ -24,7 +24,7 @@ import org.dom4j.tree.DefaultComment;
 /**
  * @author Hugo Huijser
  */
-public class XMLServiceFileCheck extends BaseFileCheck {
+public class XMLServiceOrderCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

@@ -52,7 +52,7 @@ export default class ProductPurchaseDXPTypeFree extends ProductPurchase {
 			assetReceiptLicenseUuid: order.id,
 			domains: this.form.domain,
 			owner:
-				this.form.businessEmail ||
+				this.form.businessEmailAddress ||
 				Liferay.ThemeDisplay.getUserEmailAddress(),
 		});
 

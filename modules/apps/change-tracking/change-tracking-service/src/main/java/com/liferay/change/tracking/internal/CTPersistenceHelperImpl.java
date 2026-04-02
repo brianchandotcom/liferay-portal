@@ -66,8 +66,7 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 				return true;
 			}
 
-			_ctEntryLocalService.updateUserId(
-				ctEntry.getCtEntryId(), userId);
+			_ctEntryLocalService.updateUserId(ctEntry.getCtEntryId(), userId);
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);

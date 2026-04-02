@@ -28,7 +28,7 @@ function main {
 
 	extracted_dir=$(_download_and_extract_files "${provider}" "${version}")
 
-	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${config_file}"
+	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${config_file}" "${extracted_dir}/cloud/scripts/versions_${provider}.tfvars"
 }
 
 function _check_utils {

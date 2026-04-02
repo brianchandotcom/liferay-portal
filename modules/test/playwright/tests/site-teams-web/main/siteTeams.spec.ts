@@ -1154,7 +1154,9 @@ test(
 
 		await usersPage.usersTable.selectAllItemsCheckbox.check();
 
-		await expect(page.getByText('Items Selected')).toContainText('1 of 2');
+		await expect(
+			page.getByText('1 of 2 Items Selected', {exact: true})
+		).toBeVisible();
 
 		await expect(async () => {
 			await expect(usersPage.deleteButton).toBeVisible({timeout: 200});

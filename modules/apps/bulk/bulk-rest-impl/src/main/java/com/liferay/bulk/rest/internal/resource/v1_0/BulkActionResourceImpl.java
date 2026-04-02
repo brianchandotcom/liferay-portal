@@ -445,11 +445,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return _copyObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.MOVE_OBJECT_BULK_SELECTION_ACTION.equals(
-					type)) {
-
-			return _moveObjectBulkSelectionAction;
-		}
 		else if (BulkAction.Type.
 					DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
 						type)) {
@@ -477,15 +472,25 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return _dueDateObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.EXPIRE_OBJECT_BULK_SELECTION_ACTION.equals(
-					type)) {
+		else if (BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION.
+					equals(type)) {
 
-			return _expireObjectBulkSelectionAction;
+			return _editObjectCategoriesBulkSelectionAction;
 		}
 		else if (BulkAction.Type.EDIT_OBJECT_TAGS_BULK_SELECTION_ACTION.equals(
 					type)) {
 
 			return _editObjectTagsBulkSelectionAction;
+		}
+		else if (BulkAction.Type.EXPIRE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			return _expireObjectBulkSelectionAction;
+		}
+		else if (BulkAction.Type.MOVE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			return _moveObjectBulkSelectionAction;
 		}
 		else if (BulkAction.Type.PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
 					type)) {
@@ -501,11 +506,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					type)) {
 
 			return _statusObjectBulkSelectionAction;
-		}
-		else if (BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION.
-					equals(type)) {
-
-			return _editObjectCategoriesBulkSelectionAction;
 		}
 		else if (BulkAction.Type.UPDATE_OBJECT_VALUES_BULK_SELECTION_ACTION.
 					equals(type)) {
@@ -572,16 +572,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"objectEntryFolderId", copyBulkAction.getObjectEntryFolderId()
 			).build();
 		}
-		else if (BulkAction.Type.MOVE_OBJECT_BULK_SELECTION_ACTION.equals(
-					type)) {
-
-			MoveObjectBulkSelectionAction moveBulkAction =
-				(MoveObjectBulkSelectionAction)bulkAction;
-
-			return hashMapWrapper.put(
-				"objectEntryFolderId", moveBulkAction.getObjectEntryFolderId()
-			).build();
-		}
 		else if (BulkAction.Type.
 					DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
 						type)) {
@@ -633,10 +623,22 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"dueDate", dueDateBulkAction.getDueDate()
 			).build();
 		}
-		else if (BulkAction.Type.EXPIRE_OBJECT_BULK_SELECTION_ACTION.equals(
-					type)) {
+		else if (BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION.
+					equals(type)) {
 
-			return hashMapWrapper.build();
+			EditObjectCategoriesBulkSelectionAction taxonomyCategoryBulkAction =
+				(EditObjectCategoriesBulkSelectionAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"append",
+				GetterUtil.getBoolean(taxonomyCategoryBulkAction.getAppend())
+			).put(
+				"toAddCategoryIds",
+				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToAdd()
+			).put(
+				"toRemoveCategoryIds",
+				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToRemove()
+			).build();
 		}
 		else if (BulkAction.Type.EDIT_OBJECT_TAGS_BULK_SELECTION_ACTION.equals(
 					type)) {
@@ -650,6 +652,21 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"toAddTagNames", keywordBulkAction.getKeywordsToAdd()
 			).put(
 				"toRemoveTagNames", keywordBulkAction.getKeywordsToRemove()
+			).build();
+		}
+		else if (BulkAction.Type.EXPIRE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			return hashMapWrapper.build();
+		}
+		else if (BulkAction.Type.MOVE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			MoveObjectBulkSelectionAction moveBulkAction =
+				(MoveObjectBulkSelectionAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"objectEntryFolderId", moveBulkAction.getObjectEntryFolderId()
 			).build();
 		}
 		else if (BulkAction.Type.PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
@@ -682,23 +699,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return hashMapWrapper.put(
 				"status", statusBulkAction.getStatus()
-			).build();
-		}
-		else if (BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION.
-					equals(type)) {
-
-			EditObjectCategoriesBulkSelectionAction taxonomyCategoryBulkAction =
-				(EditObjectCategoriesBulkSelectionAction)bulkAction;
-
-			return hashMapWrapper.put(
-				"append",
-				GetterUtil.getBoolean(taxonomyCategoryBulkAction.getAppend())
-			).put(
-				"toAddCategoryIds",
-				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToAdd()
-			).put(
-				"toRemoveCategoryIds",
-				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToRemove()
 			).build();
 		}
 		else if (BulkAction.Type.UPDATE_OBJECT_VALUES_BULK_SELECTION_ACTION.

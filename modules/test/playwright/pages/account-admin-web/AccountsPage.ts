@@ -93,9 +93,15 @@ export class AccountsPage {
 		this.filterStatus = (status: string) => {
 			return page.getByText('Status: ' + status);
 		};
-		this.manageUsersButton = page.getByRole('menuitem', {
-			name: 'Manage Users',
-		});
+		this.manageUsersButton = page
+			.getByRole('menuitem', {
+				name: 'Manage Users',
+			})
+			.or(
+				page.getByRole('menuitem', {
+					name: 'View Users',
+				})
+			);
 		this.noAccountsMessage = page.getByText('No accounts were found.');
 		this.organizationsTab = page.getByRole('link', {
 			name: 'Organizations',

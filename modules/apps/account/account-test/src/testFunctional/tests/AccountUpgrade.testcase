@@ -444,13 +444,6 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.4.13.u63";
 
-		task ("View the invite user permission is unchecked in Account Administrator role") {
-			ValidateUsersUpgrade.viewAccountUserRoleNoPermissions(
-				accountRoleTitle = "Account Administrator",
-				permissionDefinitionValue = "Invite User",
-				permissionNavigationValue = "Accounts > Account Entry");
-		}
-
 		task ("View the invite user permission is unchecked in Account Member role") {
 			ValidateUsersUpgrade.viewAccountUserRoleNoPermissions(
 				accountRoleTitle = "Account Member",

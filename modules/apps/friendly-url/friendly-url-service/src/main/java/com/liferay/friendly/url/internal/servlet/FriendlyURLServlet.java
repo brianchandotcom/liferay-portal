@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -566,11 +567,18 @@ public class FriendlyURLServlet extends HttpServlet {
 		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
 		if ((layout != null) &&
-			Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
+			Objects.equals(layout.getType(), LayoutConstants.TYPE_URL) &&
+			MapUtil.isNotEmpty(params)) {
 
-			actualURL = actualURL.concat(
-				HttpComponentsUtil.parameterMapToString(
-					params, !actualURL.contains(StringPool.QUESTION)));
+			for (Map.Entry<String, String[]> entry : params.entrySet()) {
+				String name = entry.getKey();
+				String[] values = entry.getValue();
+
+				for (String value : values) {
+					actualURL = HttpComponentsUtil.addParameter(
+						actualURL, name, value);
+				}
+			}
 		}
 
 		return new Redirect(

@@ -8,9 +8,10 @@ import FaroConstants from 'shared/util/constants';
 import getCN from 'classnames';
 import React, {useMemo, useRef, useState} from 'react';
 import {AssetIcon} from './components/AssetsIcon';
+import {ClayButtonWithIcon} from '@clayui/button';
 import {columns, pagination} from 'shared/util/frontend-data-set';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
-import {Heading, SidePanel, Text} from '@clayui/core';
+import {Heading, Text} from '@clayui/core';
 import {pickBy} from 'lodash';
 import {RangeSelectors} from 'shared/types';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
@@ -235,54 +236,83 @@ const List = () => {
 				</Card>
 			</BasePage.Body>
 
-			<SidePanel
-				className='frontend-data-set-side-panel'
-				containerRef={sidePanelRef}
+			<div
+				className={getCN(
+					'frontend-data-set-side-panel  c-slideout c-slideout-absolute c-slideout-push c-slideout-end',
+					{
+						'c-slideout-shown': !!infoPanel
+					}
+				)}
 				id='infoPanel'
-				onOpenChange={() => setInfoPanel(null)}
-				open={!!infoPanel}
-				panelWidth={472}
+				ref={sidePanelRef}
 			>
-				<SidePanel.Header>
-					<SidePanel.Title className='align-items-center d-flex'>
-						{infoPanel?.itemData?.mimeType && (
-							<AssetIcon
-								className='mb-1 mr-2'
-								mimeType={infoPanel?.itemData?.mimeType}
+				<div
+					className={getCN('sidebar sidebar-light', {
+						'c-slideout-show': !!infoPanel
+					})}
+					style={{width: 472}}
+				>
+					<div className='sidebar-header'>
+						<div className='autofit-row'>
+							<div className='autofit-col autofit-col-expand'>
+								<span
+									className='component-title'
+									id='clay-id-2'
+								>
+									<div className='align-items-center d-flex panel-title'>
+										{infoPanel?.itemData?.mimeType && (
+											<AssetIcon
+												className='mb-1 mr-2'
+												mimeType={
+													infoPanel?.itemData
+														?.mimeType
+												}
+											/>
+										)}
+
+										<Heading level={4} weight='semi-bold'>
+											{infoPanel?.itemData?.assetTitle ??
+												infoPanel?.itemData?.id}
+										</Heading>
+									</div>
+								</span>
+							</div>
+							<div className='autofit-col'>
+								<ClayButtonWithIcon
+									className='close'
+									displayType='unstyled'
+									onClick={() => setInfoPanel(null)}
+									symbol='times'
+								/>
+							</div>
+						</div>
+					</div>
+
+					<ClayTabs>
+						<ClayTabs.Item
+							innerProps={{
+								'aria-controls': 'tabpanel-1'
+							}}
+						>
+							{Liferay.Language.get('categorization')}
+						</ClayTabs.Item>
+					</ClayTabs>
+
+					<ClayTabs.Content fade>
+						<ClayTabs.TabPane aria-labelledby='tab-1'>
+							<InfoPanelItemContent
+								items={infoPanel?.itemData?.assetCategories}
+								title={Liferay.Language.get('categories')}
 							/>
-						)}
 
-						<Heading level={4} weight='semi-bold'>
-							{infoPanel?.itemData.assetTitle ??
-								infoPanel?.itemData.id}
-						</Heading>
-					</SidePanel.Title>
-				</SidePanel.Header>
-
-				<ClayTabs>
-					<ClayTabs.Item
-						innerProps={{
-							'aria-controls': 'tabpanel-1'
-						}}
-					>
-						{Liferay.Language.get('categorization')}
-					</ClayTabs.Item>
-				</ClayTabs>
-
-				<ClayTabs.Content fade>
-					<ClayTabs.TabPane aria-labelledby='tab-1'>
-						<InfoPanelItemContent
-							items={infoPanel?.itemData?.assetCategories}
-							title={Liferay.Language.get('categories')}
-						/>
-
-						<InfoPanelItemContent
-							items={infoPanel?.itemData?.assetTags}
-							title={Liferay.Language.get('assets')}
-						/>
-					</ClayTabs.TabPane>
-				</ClayTabs.Content>
-			</SidePanel>
+							<InfoPanelItemContent
+								items={infoPanel?.itemData?.assetTags}
+								title={Liferay.Language.get('assets')}
+							/>
+						</ClayTabs.TabPane>
+					</ClayTabs.Content>
+				</div>
+			</div>
 		</BasePage>
 	);
 };

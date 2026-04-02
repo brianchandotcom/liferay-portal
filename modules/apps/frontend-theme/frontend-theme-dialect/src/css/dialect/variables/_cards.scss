@@ -2,8 +2,8 @@ $card-border-radius: var(--card-border-radius);
 $card-border-width: var(--card-border-width, var(--card-elevated-border-width));
 
 $card-type-template-aspect-ratio-item: (
-	color: $clay-unset,
-	width: $clay-unset,
+	color: clay-unset,
+	width: clay-unset,
 );
 
 $card-body-padding-bottom: var(--card-body-padding-bottom);

@@ -2196,6 +2196,10 @@
 			<description name="Checks that the `finder name` in `service.xml`." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="XMLServiceMissingCompanyIdCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds missing `companyId` column in `service.xml`." />
+		</check>
 		<check name="XMLServiceMVCCEnabledCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that the `mvcc-enabled` attribute is always set in `service.xml`." />

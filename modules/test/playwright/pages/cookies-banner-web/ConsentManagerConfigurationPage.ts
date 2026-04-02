@@ -8,8 +8,8 @@ import {Locator, Page} from '@playwright/test';
 import {SystemSettingsPage} from '../configuration-admin-web/SystemSettingsPage';
 
 export class ConsentManagerConfigurationPage {
-	readonly consentRenewalPeriodInput: Locator;
 	readonly consentRenewalPeriodForDissentInput: Locator;
+	readonly consentRenewalPeriodInput: Locator;
 	readonly consentRenewalPeriodUnitSelect: Locator;
 	readonly dissentRenewalPeriodUnitSelect: Locator;
 	readonly enabledCheckbox: Locator;

@@ -21,7 +21,7 @@ public class OAuthClientASLocalMetadataUtil {
 
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-				addAuthClientASLocalMetadata(
+				addOAuthClientASLocalMetadata(
 					OAuthClientASLocalMetadata oAuthClientASLocalMetadata,
 					OAuthClientASLocalMetadataService
 						oAuthClientASLocalMetadataService)

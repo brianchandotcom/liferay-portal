@@ -138,6 +138,8 @@ function _set_up_gcp_gke {
 
 	_terraform_init_and_apply "." "${1}"
 
+	gcloud auth login
+
 	gcloud \
 		container \
 		fleet \

@@ -37,6 +37,7 @@ import LDPProvisioning from './pages/LiferayProduct/LDPProvisioningForm';
 import ProjectSelection from './pages/LiferayProduct/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
+import LDPInformation from './pages/LiferayProduct/LDPInformation';
 
 export const productTypeRoutes = {
 	[ProductTypeVocabulary.APP]: {
@@ -140,11 +141,15 @@ export const productTypeRoutes = {
 						path: 'project',
 						title: i18n.translate('project'),
 					},
-
 					{
 						element: LDPProvisioning,
 						path: 'provisioning',
 						title: i18n.translate('provisioning'),
+					},
+					{
+						element: LDPInformation,
+						path: 'information',
+						title: i18n.translate('information'),
 					},
 					{
 						element: LDPOrderSummary,

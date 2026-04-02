@@ -120,6 +120,16 @@ public class AnalyticsDeleteMessageLocalServiceUtil {
 			analyticsDeleteMessageId);
 	}
 
+	public static void deleteAnalyticsDeleteMessages(long companyId) {
+		getService().deleteAnalyticsDeleteMessages(companyId);
+	}
+
+	public static void deleteAnalyticsDeleteMessages(
+		long companyId, java.util.Date modifiedDate) {
+
+		getService().deleteAnalyticsDeleteMessages(companyId, modifiedDate);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -344,4 +354,4 @@ public class AnalyticsDeleteMessageLocalServiceUtil {
 			AnalyticsDeleteMessageLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1681007861
+// LIFERAY-SERVICE-BUILDER-HASH:216927485

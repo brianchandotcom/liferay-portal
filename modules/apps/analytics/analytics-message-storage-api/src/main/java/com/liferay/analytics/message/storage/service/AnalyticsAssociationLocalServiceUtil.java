@@ -119,6 +119,16 @@ public class AnalyticsAssociationLocalServiceUtil {
 		return getService().deleteAnalyticsAssociation(analyticsAssociationId);
 	}
 
+	public static void deleteAnalyticsAssociations(long companyId) {
+		getService().deleteAnalyticsAssociations(companyId);
+	}
+
+	public static void deleteAnalyticsAssociations(
+		long companyId, java.util.Date modifiedDate) {
+
+		getService().deleteAnalyticsAssociations(companyId, modifiedDate);
+	}
+
 	public static void deleteAnalyticsAssociations(
 		long companyId, String associationClassName, long associationClassPK) {
 
@@ -354,4 +364,4 @@ public class AnalyticsAssociationLocalServiceUtil {
 			AnalyticsAssociationLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1542509382
+// LIFERAY-SERVICE-BUILDER-HASH:-405078940

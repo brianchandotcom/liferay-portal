@@ -25,6 +25,13 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_LtM" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="&lt;" name="modifiedDate" />
+		</finder>
 		<finder name="C_A" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="associationClassName" />
@@ -66,6 +73,10 @@
 		<finder name="C_GtM" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column comparator="&gt;" name="modifiedDate" />
+		</finder>
+		<finder name="C_LtM" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="&lt;" name="modifiedDate" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="AnalyticsMessage" remote-service="false">

@@ -1,11 +1,3 @@
-.cursor-pointer {
-	cursor: pointer;
-}
-
-.image-fit {
-	object-fit: contain;
-}
-
 html.dev body {
 	align-items: center;
 	display: flex;
@@ -20,19 +12,8 @@ html.dev body {
 	}
 }
 
-.section-disabled {
-	opacity: 0.7;
-	pointer-events: none;
-}
-
-.loading-container {
-	text-align: center;
-	z-index: 100;
-}
-
-.dropdown-menu {
-	border-radius: 8px !important;
-	padding: 8px !important;
+.cursor-pointer {
+	cursor: pointer;
 }
 
 .dropdown-item {
@@ -41,6 +22,20 @@ html.dev body {
 
 .dropdown-item:hover {
 	border-radius: 4px;
+}
+
+.dropdown-menu {
+	border-radius: 8px !important;
+	padding: 8px !important;
+}
+
+.image-fit {
+	object-fit: contain;
+}
+
+.loading-container {
+	text-align: center;
+	z-index: 100;
 }
 
 .loading-overlay {
@@ -141,4 +136,9 @@ html.dev body {
 
 .secondary-text {
 	color: #54555f;
+}
+
+.section-disabled {
+	opacity: 0.7;
+	pointer-events: none;
 }

@@ -5,6 +5,11 @@
 		max-width: none !important;
 	}
 
+	.radio-card-title-text {
+		color: black;
+		font-size: 16px;
+	}
+
 	&-card-addresses {
 		.radio-card-container {
 			margin-bottom: 17px;
@@ -12,10 +17,10 @@
 	}
 
 	&-card-new-address {
-		background-color: #fbfcfe;
-		border: 1px solid #e7efff;
+		background-color: white;
+		border: 1px solid #0b5fff;
 		color: #0b5fff;
-		font-size: 13px;
+		font-size: 14px;
 		font-weight: 600;
 		height: 48px;
 		text-align: center;
@@ -42,19 +47,6 @@
 		border-radius: 0.625rem 0.625rem 0 0;
 		height: 3.5rem;
 		padding: 1.25rem 1rem;
-
-		button {
-			background: #fff;
-			border: 1px solid #0b5fff;
-			border-radius: 6px;
-			color: #0b5fff;
-			font-size: 14px;
-
-			&:hover {
-				background-color: #0b5fff;
-				color: #fff;
-			}
-		}
 
 		&-left-content {
 			color: #54555f;

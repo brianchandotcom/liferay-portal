@@ -245,9 +245,57 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 		floatingIcon.addEventListener('change', toggleLogoSelector);
 	});
 
+	function toggleRenewalPeriodMaxAttribute(dissent, timeUnit) {
+		var renewalPeriod = document.getElementById(
+			'<portlet:namespace />consentRenewalPeriod'
+		);
+
+		if (dissent) {
+			renewalPeriod = document.getElementById(
+				'<portlet:namespace />dissentRenewalPeriod'
+			);
+		}
+
+		if (timeUnit === 'days') {
+			renewalPeriod.setAttribute('max', '365');
+		}
+		else if (timeUnit === 'months') {
+			renewalPeriod.setAttribute('max', '12');
+		}
+		else {
+			renewalPeriod.setAttribute('max', '52');
+		}
+	}
+
+	toggleRenewalPeriodMaxAttribute(
+		false,
+		'<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriodTimeUnit() %>'
+	);
+
+	toggleRenewalPeriodMaxAttribute(
+		true,
+		'<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriodTimeUnit() %>'
+	);
+
 	var form = document.<portlet:namespace />fm;
 
 	if (form) {
+		var consentRenewalPeriodTimeUnit = document.getElementById(
+			'<portlet:namespace />consentRenewalPeriodTimeUnit'
+		);
+
+		consentRenewalPeriodTimeUnit.addEventListener('change', (event) => {
+			toggleRenewalPeriodMaxAttribute(false, event.target.value);
+		});
+
+		var dissentRenewalPeriodTimeUnit = document.getElementById(
+			'<portlet:namespace />dissentRenewalPeriodTimeUnit'
+		);
+
+		dissentRenewalPeriodTimeUnit.addEventListener('change', (event) => {
+			toggleRenewalPeriodMaxAttribute(true, event.target.value);
+		});
+
 		form.addEventListener('submit', (event) => {
 			var consentRenewalPeriod = document.getElementById(
 				'<portlet:namespace />consentRenewalPeriod'
@@ -268,14 +316,6 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 				event.stopImmediatePropagation();
 				return;
 			}
-
-			var consentRenewalPeriodTimeUnit = document.getElementById(
-				'<portlet:namespace />consentRenewalPeriodTimeUnit'
-			);
-
-			var dissentRenewalPeriodTimeUnit = document.getElementById(
-				'<portlet:namespace />dissentRenewalPeriodTimeUnit'
-			);
 
 			var enabled = document.getElementById('<portlet:namespace />enabled');
 

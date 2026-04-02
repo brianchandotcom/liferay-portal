@@ -17,6 +17,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {ObjectRelationshipFormPage} from '../../../pages/object-web/object-relationship/ObjectRelationshipFormPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -1462,10 +1463,13 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 		objectRelationshipsPage,
 		page,
 	}) => {
+		const objectDefinitionERCPrefix = `ERC${getRandomString().replace(/-/g, '').slice(0, 17)}`;
+
 		for (let i = 1; i <= 21; i++) {
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectDefinitionExternalReferenceCode: `ObjectDefinition${i}`,
+					objectDefinitionExternalReferenceCode:
+						objectDefinitionERCPrefix + i,
 					status: {code: 0},
 				});
 
@@ -1494,21 +1498,25 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 			name: 'Many Records Of',
 		});
 
-		await manyRecordsInput.fill('ObjectDefinition');
+		await manyRecordsInput.fill(objectDefinitionERCPrefix);
 
 		const options = page.getByRole('option');
 
 		await expect(options).toHaveCount(20);
 
 		await expect(
-			page.getByRole('option', {name: 'ObjectDefinition21'})
+			page.getByRole('option', {name: objectDefinitionERCPrefix + '21'})
 		).toHaveCount(0);
 
-		await manyRecordsInput.fill('ObjectDefinition21');
+		await manyRecordsInput.fill(objectDefinitionERCPrefix + '21');
 
-		await page.getByRole('option', {name: 'ObjectDefinition21'}).click();
+		await page
+			.getByRole('option', {name: objectDefinitionERCPrefix + '21'})
+			.click();
 
-		await expect(manyRecordsInput).toHaveValue('ObjectDefinition21');
+		await expect(manyRecordsInput).toHaveValue(
+			objectDefinitionERCPrefix + '21'
+		);
 
 		await objectRelationshipFormPage.reverseOrderButton.click();
 

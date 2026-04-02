@@ -386,7 +386,18 @@ public abstract class BaseWorkspaceGitRepository
 		System.out.println(toString());
 
 		if (!_snapshot) {
-			_prepareGitWorkingDirectory();
+			if (_isGitArchiveAvailable()) {
+				_setSnapshot(true);
+
+				BuildDatabase buildDatabase =
+					BuildDatabaseUtil.getBuildDatabase();
+
+				buildDatabase.putWorkspaceGitRepository(
+					getDirectoryName(), this);
+			}
+			else {
+				_prepareGitWorkingDirectory();
+			}
 		}
 
 		try {
@@ -987,22 +998,29 @@ public abstract class BaseWorkspaceGitRepository
 		return getDirectoryName() + "-git.zip";
 	}
 
+	private String _getDotGitArchiveS3BucketPath() {
+		return _getGitArchiveS3BucketPath(_getDotGitArchiveName());
+	}
+
 	private String _getGitArchiveName() {
 		return getDirectoryName() + ".zip";
 	}
 
-	private String _getGitArchiveS3BucketPath() throws IOException {
+	private String _getGitArchiveS3BucketPath() {
 		return _getGitArchiveS3BucketPath(_getGitArchiveName());
 	}
 
-	private String _getGitArchiveS3BucketPath(String archiveName)
-		throws IOException {
-
-		return JenkinsResultsParserUtil.combine(
-			JenkinsResultsParserUtil.getBuildProperty(
-				"cloud.ci.s3.bucket.dist.path"),
-			"/git-archives/", getDirectoryName(), "/", getBaseBranchSHA(), "/",
-			getSenderBranchSHA(), "/", archiveName);
+	private String _getGitArchiveS3BucketPath(String archiveName) {
+		try {
+			return JenkinsResultsParserUtil.combine(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"cloud.ci.s3.bucket.dist.path"),
+				"/git-archives/", getDirectoryName(), "/", getBaseBranchSHA(),
+				"/", getSenderBranchSHA(), "/", archiveName);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private String _getSenderBranchHeadSHA() {
@@ -1107,6 +1125,48 @@ public abstract class BaseWorkspaceGitRepository
 		return workingDirectoryName.contains("ee-6.2.x");
 	}
 
+	private boolean _isGitArchiveAvailable() {
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return false;
+		}
+
+		String jobName = System.getenv("JOB_NAME");
+
+		if ((this instanceof PortalWorkspaceGitRepository) &&
+			jobName.contains("root-cause-analysis-tool")) {
+
+			return false;
+		}
+
+		String gitArchiveS3BucketPath = _getGitArchiveS3BucketPath();
+
+		if (!CloudBucketUtil.isS3ObjectPathAvailable(gitArchiveS3BucketPath)) {
+			return false;
+		}
+
+		String dotGitArchiveS3BucketPath = _getDotGitArchiveS3BucketPath();
+
+		if (_isDotGitDirArchiveRequired() &&
+			!CloudBucketUtil.isS3ObjectPathAvailable(
+				dotGitArchiveS3BucketPath)) {
+
+			return false;
+		}
+
+		try {
+			CloudBucketUtil.touchS3File(gitArchiveS3BucketPath);
+
+			if (_isDotGitDirArchiveRequired()) {
+				CloudBucketUtil.touchS3File(dotGitArchiveS3BucketPath);
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return true;
+	}
+
 	private boolean _isPullRequest() {
 		return PullRequest.isValidGitHubPullRequestURL(getGitHubURL());
 	}
@@ -1142,8 +1202,7 @@ public abstract class BaseWorkspaceGitRepository
 					baseRepositoryDir, _getDotGitArchiveName());
 
 				CloudBucketUtil.downloadS3File(
-					dotGitArchiveFile,
-					_getGitArchiveS3BucketPath(_getDotGitArchiveName()));
+					dotGitArchiveFile, _getDotGitArchiveS3BucketPath());
 
 				JenkinsResultsParserUtil.unzip(dotGitArchiveFile, directory);
 
@@ -1287,6 +1346,8 @@ public abstract class BaseWorkspaceGitRepository
 
 	private void _setSnapshot(boolean snapshot) {
 		put("snapshot", snapshot);
+
+		_snapshot = snapshot;
 	}
 
 	private static final int _MAX_BASE_BRANCH_SHA_LENGTH = 7;

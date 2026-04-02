@@ -3438,7 +3438,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			.getByRole('link', {name: objectEntryB.id.toString()})
 			.click();
 
-		await page.getByPlaceholder('Search').click();
+		await page.getByRole('textbox', {name: 'Search'}).click();
 
 		await page.getByRole('menuitem', {name: 'Entry A'}).click();
 
@@ -3494,9 +3494,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 			.getByRole('link', {name: objectEntryB.id.toString()})
 			.click();
 
-		await expect(page.getByPlaceholder('Search')).not.toContainText(
-			'Entry A'
-		);
+		await expect(
+			page.getByRole('textbox', {name: 'Search'})
+		).not.toContainText('Entry A');
 	});
 
 	test('can edit object entry relationship', async ({

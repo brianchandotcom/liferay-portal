@@ -132,10 +132,27 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		Assert.assertTrue(response.contains(_EXPIRED_LICENSE_KEY));
 	}
 
-	public void assertPortalLicenseInvalid() throws Exception {
-		String response = hitHomePage("localhost", getLocalPort());
+	public void assertPortalLicenseInvalid(String failMessage)
+		throws Exception {
 
-		Assert.assertTrue(response.contains(_INVALID_LICENSE_KEY));
+		try {
+			hitHomePage("localhost", getLocalPort());
+
+			Assert.fail("Unable to see LogEntriesException");
+		}
+		catch (LogEntriesException logEntriesException) {
+			List<LogEntry> logEntries = logEntriesException.getLogEntries();
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertEquals(failMessage, throwable.getMessage());
+
+			String payload = logEntriesException.getPayload();
+
+			Assert.assertTrue(payload.contains(_INVALID_LICENSE_KEY));
+		}
 	}
 
 	public void assertPortalLicenseNotRegistered() throws Exception {
@@ -281,18 +298,13 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	}
 
 	public void resetCheckInterval() throws Exception {
-		Object lifecycleAction = ReflectionsHolder._lifecycleActionField.get(
-			null);
-
-		Class<?> lifecycleActionClass = lifecycleAction.getClass();
-
-		for (Field field : lifecycleActionClass.getDeclaredFields()) {
+		for (Field field : _lifecycleActionClass.getDeclaredFields()) {
 			if (!Modifier.isFinal(field.getModifiers()) &&
 				Objects.equals(field.getType(), long.class)) {
 
 				field.setAccessible(true);
 
-				field.set(lifecycleAction, 0L);
+				field.set(_lifecycleAction, 0L);
 			}
 		}
 	}
@@ -345,12 +357,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_BUNDLE_START_STOP_LOGGER, LoggerTestUtil.ALL)) {
 
-			Object lifecycleAction =
-				ReflectionsHolder._lifecycleActionField.get(null);
-
-			Class<?> lifecycleActionClass = lifecycleAction.getClass();
-
-			for (Method method : lifecycleActionClass.getDeclaredMethods()) {
+			for (Method method : _lifecycleActionClass.getDeclaredMethods()) {
 				if (Arrays.equals(
 						method.getParameterTypes(),
 						new Class<?>[] {
@@ -360,16 +367,16 @@ public abstract class BaseLicenseTestCase implements Serializable {
 					method.setAccessible(true);
 
 					for (Field field :
-							lifecycleActionClass.getDeclaredFields()) {
+							_lifecycleActionClass.getDeclaredFields()) {
 
 						if (Map.class.isAssignableFrom(field.getType())) {
 							field.setAccessible(true);
 
-							Object bundleData = field.get(lifecycleAction);
+							Object bundleData = field.get(_lifecycleAction);
 
 							if (bundleData != null) {
 								method.invoke(
-									lifecycleAction,
+									_lifecycleAction,
 									SystemBundleUtil.getBundleContext(),
 									bundleData,
 									ModuleFrameworkUtil.getFramework());
@@ -381,23 +388,23 @@ public abstract class BaseLicenseTestCase implements Serializable {
 				}
 			}
 
-			for (Field field : lifecycleActionClass.getDeclaredFields()) {
+			for (Field field : _lifecycleActionClass.getDeclaredFields()) {
 				if (!Modifier.isFinal(field.getModifiers())) {
 					field.setAccessible(true);
 
 					if (Objects.equals(field.getType(), long.class)) {
-						field.set(lifecycleAction, 0L);
+						field.set(_lifecycleAction, 0L);
 					}
 					else if (Objects.equals(field.getType(), boolean.class)) {
-						field.set(lifecycleAction, false);
+						field.set(_lifecycleAction, false);
 					}
 					else {
-						field.set(lifecycleAction, null);
+						field.set(_lifecycleAction, null);
 					}
 				}
 			}
 
-			_throwLogEntriesException(logCapture, LoggerTestUtil.ERROR);
+			_throwLogEntriesException(logCapture, null, LoggerTestUtil.ERROR);
 		}
 	}
 
@@ -458,15 +465,18 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return value;
 	}
 
-	protected void assertPortalInvalidatedWithBrokenFile(String propertyKey)
+	protected void assertPortalInvalidatedWithBrokenFile(
+			String propertyKey, String failMessage)
 		throws Exception {
 
 		String filePath = getProperty(propertyKey);
 
-		_assertPortalInvalidatedWithBrokenFile(filePath, null);
+		_assertPortalInvalidatedWithBrokenFile(
+			filePath, null,
+			"java.lang.IllegalArgumentException: Null input buffer");
 
 		_assertPortalInvalidatedWithBrokenFile(
-			filePath, InputStream.nullInputStream());
+			filePath, InputStream.nullInputStream(), failMessage);
 	}
 
 	protected void checkLicense(String productId) throws Exception {
@@ -476,7 +486,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 			LicenseManagerUtil.checkLicense(productId);
 
-			_throwLogEntriesException(logCapture, LoggerTestUtil.ERROR);
+			_throwLogEntriesException(logCapture, null, LoggerTestUtil.ERROR);
 		}
 	}
 
@@ -505,13 +515,22 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	}
 
 	protected String hitHomePage(String host, int port) throws Exception {
-		Http.Options options = new Http.Options();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_lifecycleActionClass.getName(), LoggerTestUtil.ALL)) {
 
-		options.setCookieSpec(Http.CookieSpec.IGNORE_COOKIES);
-		options.setLocation(String.format("http://%s:%d/", host, port));
-		options.setMethod(Http.Method.GET);
+			Http.Options options = new Http.Options();
 
-		return HttpUtil.URLtoString(options);
+			options.setCookieSpec(Http.CookieSpec.IGNORE_COOKIES);
+			options.setLocation(String.format("http://%s:%d/", host, port));
+			options.setMethod(Http.Method.GET);
+
+			String response = HttpUtil.URLtoString(options);
+
+			_throwLogEntriesException(
+				logCapture, response, LoggerTestUtil.DEBUG);
+
+			return response;
+		}
 	}
 
 	private static ResettableClassFileTransformer _transformMethod(
@@ -536,7 +555,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	}
 
 	private void _assertPortalInvalidatedWithBrokenFile(
-			String filePath, InputStream inputStream)
+			String filePath, InputStream inputStream, String failMessage)
 		throws Exception {
 
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -570,9 +589,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 			deployFreeTierPortalLicense(Time.HOUR);
 
-			assertLicensePropertiesExisted(getPortalProductId());
-
-			assertPortalLicenseInvalid();
+			assertPortalLicenseInvalid(failMessage);
 		}
 		finally {
 			PortalClassLoaderUtil.setClassLoader(classLoader);
@@ -618,12 +635,12 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			LicenseManagerUtil.registerLicense(
 				JSONUtil.put("licenseXML", licenseXML));
 
-			_throwLogEntriesException(logCapture, LoggerTestUtil.ERROR);
+			_throwLogEntriesException(logCapture, null, LoggerTestUtil.ERROR);
 		}
 	}
 
 	private void _throwLogEntriesException(
-			LogCapture logCapture, String priority)
+			LogCapture logCapture, String payload, String priority)
 		throws LogEntriesException {
 
 		List<LogEntry> logEntries = new ArrayList<>();
@@ -635,7 +652,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 
 		if (!logEntries.isEmpty()) {
-			throw new LogEntriesException(logEntries);
+			throw new LogEntriesException(logEntries, payload);
 		}
 	}
 
@@ -681,6 +698,8 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	private static final String _PROPERTY_PREFIX = "license.test.";
 
 	private static Properties _licenseTestProperties;
+	private static Object _lifecycleAction;
+	private static Class<?> _lifecycleActionClass;
 
 	private static class ReflectionsHolder {
 
@@ -689,7 +708,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 		private static Instrumentation _instrumentation;
 		private static Class<?> _licenseManagerHelperClass;
-		private static Field _lifecycleActionField;
 		private static Method _validateMethod;
 		private static Method _versionMethod;
 
@@ -716,9 +734,14 @@ public abstract class BaseLicenseTestCase implements Serializable {
 				}
 
 				try {
-					_lifecycleActionField = findField("lifecycle.action.field");
 					_validateMethod = findMethod("validate.method");
 					_versionMethod = findMethod("version.method");
+
+					Field field = findField("lifecycle.action.field");
+
+					_lifecycleAction = field.get(null);
+
+					_lifecycleActionClass = _lifecycleAction.getClass();
 
 					ByteBuddyAgent.install();
 

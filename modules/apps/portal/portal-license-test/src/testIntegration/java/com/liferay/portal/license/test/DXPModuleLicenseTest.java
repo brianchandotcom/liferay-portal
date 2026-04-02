@@ -72,7 +72,8 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testBrokenBundlesFile() throws Exception {
-		assertPortalInvalidatedWithBrokenFile("bundles.file.path");
+		assertPortalInvalidatedWithBrokenFile(
+			"bundles.file.path", "Bundle list is corrupted");
 	}
 
 	@Test
@@ -164,17 +165,31 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 		try {
 			dxpOnlyBundle.start();
-			enterpriseAppBundle.start();
 
 			Assert.assertEquals(Bundle.ACTIVE, dxpOnlyBundle.getState());
+
+			resetCheckInterval();
+
+			assertPortalLicenseInvalid(
+				"Bundle " + _getDxpOnlyModuleSymbolicName() +
+					" is not allowed");
+		}
+		finally {
+			dxpOnlyBundle.uninstall();
+		}
+
+		try {
+			enterpriseAppBundle.start();
+
 			Assert.assertEquals(Bundle.ACTIVE, enterpriseAppBundle.getState());
 
 			resetCheckInterval();
 
-			assertPortalLicenseInvalid();
+			assertPortalLicenseInvalid(
+				"Bundle " + _getEnterpriseAppSymbolicName() +
+					" is not allowed");
 		}
 		finally {
-			dxpOnlyBundle.uninstall();
 			enterpriseAppBundle.uninstall();
 		}
 	}

@@ -14,14 +14,20 @@ import java.util.List;
  */
 public class LogEntriesException extends Exception {
 
-	public LogEntriesException(List<LogEntry> logEntries) {
+	public LogEntriesException(List<LogEntry> logEntries, String payload) {
 		_logEntries = logEntries;
+		_payload = payload;
 	}
 
 	public List<LogEntry> getLogEntries() {
 		return _logEntries;
 	}
 
+	public String getPayload() {
+		return _payload;
+	}
+
 	private final List<LogEntry> _logEntries;
+	private final String _payload;
 
 }

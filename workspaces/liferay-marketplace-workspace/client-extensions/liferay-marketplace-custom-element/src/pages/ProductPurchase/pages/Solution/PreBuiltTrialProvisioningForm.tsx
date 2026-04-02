@@ -128,7 +128,7 @@ const AccountForm = () => {
 						backButton
 					);
 				}}
-				formId={properties.marketoFormId}
+				formId={properties.marketoFormIdDefault}
 				onSubmit={onSubmit}
 				submitText={i18n.translate('start-trial')}
 			/>

@@ -165,11 +165,6 @@ const zodSchema = {
 		domain: z.string().min(3, 'Domain is required'),
 		notifyMeAboutProducts: z.boolean(),
 		purpose: z.string().min(3, 'Purpose is required'),
-		purposeDescription: z
-			.string()
-			.min(3, 'Purpose is required')
-			.optional()
-			.or(z.literal('')),
 		termsAndConditions: z.boolean().refine((value) => value === true),
 		userAgreement: z.boolean().refine((value) => value === true),
 	}),
@@ -180,11 +175,6 @@ const zodSchema = {
 			.email('Please fill in valid email'),
 		aiHubAccountName: z.string().min(3, 'AI Hub Account Name is required'),
 		purpose: z.string().min(3, 'Purpose is required'),
-		purposeDescription: z
-			.string()
-			.min(3, 'Purpose is required')
-			.optional()
-			.or(z.literal('')),
 		termsAndConditions: z.boolean().refine((value) => value === true),
 		userAgreement: z.boolean().refine((value) => value === true),
 	}),

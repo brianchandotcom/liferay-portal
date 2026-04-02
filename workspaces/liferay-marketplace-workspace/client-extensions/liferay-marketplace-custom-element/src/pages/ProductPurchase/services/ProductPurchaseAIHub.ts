@@ -31,9 +31,7 @@ export class ProductPurchaseAIHub extends ProductPurchase {
 			customFields: {
 				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
-					aiHubForm: {
-						...this.form,
-					},
+					aiHubForm: this.form,
 				}),
 			},
 		} as Cart;

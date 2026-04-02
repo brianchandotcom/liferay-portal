@@ -23,380 +23,355 @@ const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-test(
-	'can anonymize object entries',
-	async ({
-		apiHelpers,
-		page,
-		personalDataErasurePage,
-		usersAndOrganizationsPage,
-		viewObjectEntriesPage,
-	}) => {
+test('can anonymize object entries', async ({
+	apiHelpers,
+	page,
+	personalDataErasurePage,
+	usersAndOrganizationsPage,
+	viewObjectEntriesPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
 
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
 		});
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+	const textFieldName = objectFields[0].name;
 
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const textFieldName = objectFields[0].name;
+	await apiHelpers.objectEntry.postObjectEntry(
+		{[textFieldName]: 'Entry A'},
+		applicationName
+	);
 
+	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	apiHelpers.data.push({id: userAccount.id, type: 'userAccount'});
+
+	userData[userAccount.alternateName] = {
+		name: userAccount.givenName,
+		password: 'test',
+		surname: userAccount.familyName,
+	};
+
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+	await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+		role.externalReferenceCode,
+		userAccount.id
+	);
+
+	await performUserSwitch(page, userAccount.alternateName);
+
+	for (const entryName of ['Entry B', 'Entry C', 'Entry D', 'Entry E']) {
 		await apiHelpers.objectEntry.postObjectEntry(
-			{[textFieldName]: 'Entry A'},
+			{[textFieldName]: entryName},
 			applicationName
 		);
-
-		const userAccount =
-			await apiHelpers.headlessAdminUser.postUserAccount();
-
-		apiHelpers.data.push({id: userAccount.id, type: 'userAccount'});
-
-		userData[userAccount.alternateName] = {
-			name: userAccount.givenName,
-			password: 'test',
-			surname: userAccount.familyName,
-		};
-
-		const role =
-			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
-
-		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
-			role.externalReferenceCode,
-			userAccount.id
-		);
-
-		await performUserSwitch(page, userAccount.alternateName);
-
-		for (const entryName of ['Entry B', 'Entry C', 'Entry D', 'Entry E']) {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{[textFieldName]: entryName},
-				applicationName
-			);
-		}
-
-		await performUserSwitch(page, 'test');
-
-		await usersAndOrganizationsPage.goToUsers(false);
-
-		page.on('dialog', (dialog) => {
-			dialog.accept().catch(() => {});
-		});
-
-		await expect(async () => {
-			await (
-				await usersAndOrganizationsPage.usersTableRowActions(
-					userAccount.alternateName
-				)
-			).click();
-
-			await expect(
-				usersAndOrganizationsPage.deletePersonalDataMenuItem
-			).toBeVisible({timeout: 500});
-		}).toPass({timeout: 5000});
-
-		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
-
-		await personalDataErasurePage.selectAllItemsOnPageCheckbox.check();
-		await personalDataErasurePage.allSelectedButton.click();
-
-		await personalDataErasurePage.anonymizeMenuItem.click();
-
-		await personalDataErasurePage.anonymizeButton.click();
-
-		await usersAndOrganizationsPage.goToUsers();
-
-		await usersAndOrganizationsPage.filterUsers('inactive');
-
-		await usersAndOrganizationsPage.activateUsers([userAccount.name]);
-
-		await viewObjectEntriesPage.goto(objectDefinition.className);
-
-		for (let i = 0; i < 4; i++) {
-			await expect(
-				page.getByRole('cell', {name: 'Anonymous Anonymous'}).nth(i)
-			).toBeVisible();
-		}
 	}
-);
 
-test(
-	'can delete object entries via personal data management',
-	async ({
-		apiHelpers,
-		page,
-		personalDataErasurePage,
-		usersAndOrganizationsPage,
-		viewObjectEntriesPage,
-	}) => {
+	await performUserSwitch(page, 'test');
 
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: [
-				{
-					businessType: 'Text',
-					label: {en_US: 'Custom Field'},
-					name: 'customField',
-				},
-			],
-		});
+	await usersAndOrganizationsPage.goToUsers(false);
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-				titleObjectFieldName: 'customField',
-			});
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipAPI
-		);
-
-		const objectRelationshipName = 'relationship' + getRandomInt();
-
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			objectDefinition.externalReferenceCode,
-			{
-				label: {en_US: 'Relationship'},
-				name: objectRelationshipName,
-				objectDefinitionExternalReferenceCode1:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId1: objectDefinition.id,
-				objectDefinitionId2: objectDefinition.id,
-				objectDefinitionName2: objectDefinition.name,
-				type: 'manyToMany',
-			}
-		);
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-
-		const entryA = await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry A'},
-			applicationName
-		);
-
-		const userAccount =
-			await apiHelpers.headlessAdminUser.postUserAccount();
-
-		apiHelpers.data.push({id: userAccount.id, type: 'userAccount'});
-
-		userData[userAccount.alternateName] = {
-			name: userAccount.givenName,
-			password: 'test',
-			surname: userAccount.familyName,
-		};
-
-		const role =
-			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
-
-		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
-			role.externalReferenceCode,
-			userAccount.id
-		);
-
-		await performUserSwitch(page, userAccount.alternateName);
-
-		const entryB = await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry B'},
-			applicationName
-		);
-
-		const entryC = await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry C'},
-			applicationName
-		);
-
-		const entryD = await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry D'},
-			applicationName
-		);
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry E'},
-			applicationName
-		);
-
-		await performUserSwitch(page, 'test');
-
-		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
-			{
-				applicationName,
-				currentExternalReferenceCode: entryA.externalReferenceCode,
-				objectRelationshipName,
-				relatedExternalReferenceCode: entryB.externalReferenceCode,
-			}
-		);
-
-		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
-			{
-				applicationName,
-				currentExternalReferenceCode: entryC.externalReferenceCode,
-				objectRelationshipName,
-				relatedExternalReferenceCode: entryD.externalReferenceCode,
-			}
-		);
-
-		await usersAndOrganizationsPage.goToUsers(false);
-
-		page.on('dialog', (dialog) => {
-			dialog.accept().catch(() => {});
-		});
-
-		await expect(async () => {
-			await (
-				await usersAndOrganizationsPage.usersTableRowActions(
-					userAccount.alternateName
-				)
-			).click();
-
-			await expect(
-				usersAndOrganizationsPage.deletePersonalDataMenuItem
-			).toBeVisible({timeout: 500});
-		}).toPass({timeout: 5000});
-
-		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
-
-		await personalDataErasurePage.selectAllItemsOnPageCheckbox.check();
-		await personalDataErasurePage.allSelectedButton.click();
-
-		await personalDataErasurePage.deleteMenuItem.click();
-
-		await usersAndOrganizationsPage.goToUsers();
-
-		await usersAndOrganizationsPage.filterUsers('inactive');
-
-		await usersAndOrganizationsPage.activateUsers([userAccount.name]);
-
-		await viewObjectEntriesPage.goto(objectDefinition.className);
-
-		for (const entryName of [
-			'Entry B',
-			'Entry C',
-			'Entry D',
-			'Entry E',
-		]) {
-			await expect(
-				page.locator('table').getByRole('cell', {name: entryName})
-			).not.toBeVisible();
-		}
+	await expect(async () => {
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
 
 		await expect(
-			page.locator('table').getByRole('cell', {name: 'Entry A'})
+			usersAndOrganizationsPage.deletePersonalDataMenuItem
+		).toBeVisible({timeout: 500});
+	}).toPass({timeout: 5000});
+
+	await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+	await personalDataErasurePage.selectAllItemsOnPageCheckbox.check();
+	await personalDataErasurePage.allSelectedButton.click();
+
+	await personalDataErasurePage.anonymizeMenuItem.click();
+
+	await personalDataErasurePage.anonymizeButton.click();
+
+	await usersAndOrganizationsPage.goToUsers();
+
+	await usersAndOrganizationsPage.filterUsers('inactive');
+
+	await usersAndOrganizationsPage.activateUsers([userAccount.name]);
+
+	await viewObjectEntriesPage.goto(objectDefinition.className);
+
+	for (let i = 0; i < 4; i++) {
+		await expect(
+			page.getByRole('cell', {name: 'Anonymous Anonymous'}).nth(i)
 		).toBeVisible();
 	}
-);
+});
 
-test(
-	'can export object entries via personal data management',
-	async ({
-		apiHelpers,
-		exportUserDataPage,
-		page,
-		usersAndOrganizationsPage,
-	}) => {
+test('can delete object entries via personal data management', async ({
+	apiHelpers,
+	page,
+	personalDataErasurePage,
+	usersAndOrganizationsPage,
+	viewObjectEntriesPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: [
+			{
+				businessType: 'Text',
+				label: {en_US: 'Custom Field'},
+				name: 'customField',
+			},
+		],
+	});
 
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
+			titleObjectFieldName: 'customField',
 		});
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+	const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+		ObjectRelationshipAPI
+	);
 
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const textFieldName = objectFields[0].name;
+	const objectRelationshipName = 'relationship' + getRandomInt();
 
-		const userAccount =
-			await apiHelpers.headlessAdminUser.postUserAccount();
-
-		apiHelpers.data.push({id: userAccount.id, type: 'userAccount'});
-
-		userData[userAccount.alternateName] = {
-			name: userAccount.givenName,
-			password: 'test',
-			surname: userAccount.familyName,
-		};
-
-		const role =
-			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
-
-		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
-			role.externalReferenceCode,
-			userAccount.id
-		);
-
-		await performUserSwitch(page, userAccount.alternateName);
-
-		for (const entryNumber of ['1', '2', '3']) {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{[textFieldName]: `Entry ${entryNumber}`},
-				applicationName
-			);
+	await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		objectDefinition.externalReferenceCode,
+		{
+			label: {en_US: 'Relationship'},
+			name: objectRelationshipName,
+			objectDefinitionExternalReferenceCode1:
+				objectDefinition.externalReferenceCode,
+			objectDefinitionExternalReferenceCode2:
+				objectDefinition.externalReferenceCode,
+			objectDefinitionId1: objectDefinition.id,
+			objectDefinitionId2: objectDefinition.id,
+			objectDefinitionName2: objectDefinition.name,
+			type: 'manyToMany',
 		}
+	);
 
-		await performUserSwitch(page, 'test');
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
 
-		await usersAndOrganizationsPage.goToUsers(false);
+	const entryA = await apiHelpers.objectEntry.postObjectEntry(
+		{customField: 'Entry A'},
+		applicationName
+	);
 
-		await expect(async () => {
-			await (
-				await usersAndOrganizationsPage.usersTableRowActions(
-					userAccount.alternateName
-				)
-			).click();
+	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
 
-			await expect(
-				usersAndOrganizationsPage.exportPersonalDataItem
-			).toBeVisible({timeout: 500});
-		}).toPass({timeout: 5000});
+	apiHelpers.data.push({id: userAccount.id, type: 'userAccount'});
 
-		await usersAndOrganizationsPage.exportPersonalDataItem.click();
+	userData[userAccount.alternateName] = {
+		name: userAccount.givenName,
+		password: 'test',
+		surname: userAccount.familyName,
+	};
 
-		await exportUserDataPage.addExportProcessesButton.click();
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
 
-		await page.getByLabel('Objects').check();
+	await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+		role.externalReferenceCode,
+		userAccount.id
+	);
 
-		await exportUserDataPage.exportButton.click();
+	await performUserSwitch(page, userAccount.alternateName);
+
+	const entryB = await apiHelpers.objectEntry.postObjectEntry(
+		{customField: 'Entry B'},
+		applicationName
+	);
+
+	const entryC = await apiHelpers.objectEntry.postObjectEntry(
+		{customField: 'Entry C'},
+		applicationName
+	);
+
+	const entryD = await apiHelpers.objectEntry.postObjectEntry(
+		{customField: 'Entry D'},
+		applicationName
+	);
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{customField: 'Entry E'},
+		applicationName
+	);
+
+	await performUserSwitch(page, 'test');
+
+	await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+		{
+			applicationName,
+			currentExternalReferenceCode: entryA.externalReferenceCode,
+			objectRelationshipName,
+			relatedExternalReferenceCode: entryB.externalReferenceCode,
+		}
+	);
+
+	await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+		{
+			applicationName,
+			currentExternalReferenceCode: entryC.externalReferenceCode,
+			objectRelationshipName,
+			relatedExternalReferenceCode: entryD.externalReferenceCode,
+		}
+	);
+
+	await usersAndOrganizationsPage.goToUsers(false);
+
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
+
+	await expect(async () => {
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
 
 		await expect(
-			exportUserDataPage.statusText('Successful').first()
-		).toBeVisible();
+			usersAndOrganizationsPage.deletePersonalDataMenuItem
+		).toBeVisible({timeout: 500});
+	}).toPass({timeout: 5000});
 
-		const downloadPromise = page.waitForEvent('download');
+	await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
-		await exportUserDataPage.actionsButton.click();
+	await personalDataErasurePage.selectAllItemsOnPageCheckbox.check();
+	await personalDataErasurePage.allSelectedButton.click();
 
-		await page.getByRole('menuitem', {name: /Download/}).click();
+	await personalDataErasurePage.deleteMenuItem.click();
 
-		const download = await downloadPromise;
+	await usersAndOrganizationsPage.goToUsers();
 
-		expect(download.suggestedFilename()).toMatch(
-			/UAD_.*com\.liferay\.object/
+	await usersAndOrganizationsPage.filterUsers('inactive');
+
+	await usersAndOrganizationsPage.activateUsers([userAccount.name]);
+
+	await viewObjectEntriesPage.goto(objectDefinition.className);
+
+	for (const entryName of ['Entry B', 'Entry C', 'Entry D', 'Entry E']) {
+		await expect(
+			page.locator('table').getByRole('cell', {name: entryName})
+		).not.toBeVisible();
+	}
+
+	await expect(
+		page.locator('table').getByRole('cell', {name: 'Entry A'})
+	).toBeVisible();
+});
+
+test('can export object entries via personal data management', async ({
+	apiHelpers,
+	exportUserDataPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+	const textFieldName = objectFields[0].name;
+
+	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	apiHelpers.data.push({id: userAccount.id, type: 'userAccount'});
+
+	userData[userAccount.alternateName] = {
+		name: userAccount.givenName,
+		password: 'test',
+		surname: userAccount.familyName,
+	};
+
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+	await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+		role.externalReferenceCode,
+		userAccount.id
+	);
+
+	await performUserSwitch(page, userAccount.alternateName);
+
+	for (const entryNumber of ['1', '2', '3']) {
+		await apiHelpers.objectEntry.postObjectEntry(
+			{[textFieldName]: `Entry ${entryNumber}`},
+			applicationName
 		);
 	}
-);
+
+	await performUserSwitch(page, 'test');
+
+	await usersAndOrganizationsPage.goToUsers(false);
+
+	await expect(async () => {
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+
+		await expect(
+			usersAndOrganizationsPage.exportPersonalDataItem
+		).toBeVisible({timeout: 500});
+	}).toPass({timeout: 5000});
+
+	await usersAndOrganizationsPage.exportPersonalDataItem.click();
+
+	await exportUserDataPage.addExportProcessesButton.click();
+
+	await page.getByLabel('Objects').check();
+
+	await exportUserDataPage.exportButton.click();
+
+	await expect(
+		exportUserDataPage.statusText('Successful').first()
+	).toBeVisible();
+
+	const downloadPromise = page.waitForEvent('download');
+
+	await exportUserDataPage.actionsButton.click();
+
+	await page.getByRole('menuitem', {name: /Download/}).click();
+
+	const download = await downloadPromise;
+
+	expect(download.suggestedFilename()).toMatch(/UAD_.*com\.liferay\.object/);
+});

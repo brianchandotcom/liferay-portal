@@ -242,6 +242,9 @@ public class ObjectDefinitionDeployerImplTest {
 				modelResourcePermission.contains(
 					permissionChecker, _objectEntry,
 					ActionKeys.ADD_DISCUSSION));
+			Assert.assertTrue(
+				modelResourcePermission.contains(
+					permissionChecker, _objectEntry, ActionKeys.VIEW));
 		}
 	}
 

@@ -120,9 +120,9 @@ public class LVEntryVersionPersistenceTest {
 
 		newLVEntryVersion.setLvEntryId(RandomTestUtil.nextLong());
 
-		newLVEntryVersion.setCompanyId(RandomTestUtil.nextLong());
-
 		newLVEntryVersion.setGroupId(RandomTestUtil.nextLong());
+
+		newLVEntryVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		newLVEntryVersion.setUniqueGroupKey(RandomTestUtil.randomString());
 
@@ -146,11 +146,11 @@ public class LVEntryVersionPersistenceTest {
 			existingLVEntryVersion.getLvEntryId(),
 			newLVEntryVersion.getLvEntryId());
 		Assert.assertEquals(
-			existingLVEntryVersion.getCompanyId(),
-			newLVEntryVersion.getCompanyId());
-		Assert.assertEquals(
 			existingLVEntryVersion.getGroupId(),
 			newLVEntryVersion.getGroupId());
+		Assert.assertEquals(
+			existingLVEntryVersion.getCompanyId(),
+			newLVEntryVersion.getCompanyId());
 		Assert.assertEquals(
 			existingLVEntryVersion.getUniqueGroupKey(),
 			newLVEntryVersion.getUniqueGroupKey());
@@ -287,8 +287,8 @@ public class LVEntryVersionPersistenceTest {
 	protected OrderByComparator<LVEntryVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"LVEntryVersion", "lvEntryVersionId", true, "version", true, "uuid",
-			true, "defaultLanguageId", true, "lvEntryId", true, "companyId",
-			true, "groupId", true, "uniqueGroupKey", true);
+			true, "defaultLanguageId", true, "lvEntryId", true, "groupId", true,
+			"companyId", true, "uniqueGroupKey", true);
 	}
 
 	@Test
@@ -589,9 +589,9 @@ public class LVEntryVersionPersistenceTest {
 
 		lvEntryVersion.setLvEntryId(RandomTestUtil.nextLong());
 
-		lvEntryVersion.setCompanyId(RandomTestUtil.nextLong());
-
 		lvEntryVersion.setGroupId(RandomTestUtil.nextLong());
+
+		lvEntryVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		lvEntryVersion.setUniqueGroupKey(RandomTestUtil.randomString());
 
@@ -606,4 +606,4 @@ public class LVEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1713095507
+// LIFERAY-SERVICE-BUILDER-HASH:-344446385

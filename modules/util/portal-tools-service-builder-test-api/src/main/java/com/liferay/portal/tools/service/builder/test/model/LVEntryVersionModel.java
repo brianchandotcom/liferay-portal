@@ -124,6 +124,20 @@ public interface LVEntryVersionModel
 	public void setLvEntryId(long lvEntryId);
 
 	/**
+	 * Returns the group ID of this lv entry version.
+	 *
+	 * @return the group ID of this lv entry version
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this lv entry version.
+	 *
+	 * @param groupId the group ID of this lv entry version
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this lv entry version.
 	 *
 	 * @return the company ID of this lv entry version
@@ -138,20 +152,6 @@ public interface LVEntryVersionModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
-
-	/**
-	 * Returns the group ID of this lv entry version.
-	 *
-	 * @return the group ID of this lv entry version
-	 */
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this lv entry version.
-	 *
-	 * @param groupId the group ID of this lv entry version
-	 */
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the unique group key of this lv entry version.
@@ -176,4 +176,4 @@ public interface LVEntryVersionModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2029241764
+// LIFERAY-SERVICE-BUILDER-HASH:-1829040568

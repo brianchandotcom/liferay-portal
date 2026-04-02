@@ -37,8 +37,8 @@ public class LVEntryVersionWrapper
 		attributes.put("uuid", getUuid());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("lvEntryId", getLvEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uniqueGroupKey", getUniqueGroupKey());
 
 		return attributes;
@@ -76,16 +76,16 @@ public class LVEntryVersionWrapper
 			setLvEntryId(lvEntryId);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		String uniqueGroupKey = (String)attributes.get("uniqueGroupKey");
@@ -311,4 +311,4 @@ public class LVEntryVersionWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1609153361
+// LIFERAY-SERVICE-BUILDER-HASH:-1416466931

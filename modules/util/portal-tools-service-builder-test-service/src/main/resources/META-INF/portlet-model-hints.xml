@@ -131,8 +131,8 @@
 		<field name="headId" type="long" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="lvEntryId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="uniqueGroupKey" type="String" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization">
@@ -161,8 +161,8 @@
 		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="lvEntryId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="uniqueGroupKey" type="String" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.ManyColumnsEntry">

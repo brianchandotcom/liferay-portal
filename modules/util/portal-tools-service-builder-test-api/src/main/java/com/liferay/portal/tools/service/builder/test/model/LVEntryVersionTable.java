@@ -35,10 +35,10 @@ public class LVEntryVersionTable extends BaseTable<LVEntryVersionTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<LVEntryVersionTable, Long> lvEntryId = createColumn(
 		"lvEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<LVEntryVersionTable, Long> companyId = createColumn(
-		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<LVEntryVersionTable, Long> groupId = createColumn(
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<LVEntryVersionTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<LVEntryVersionTable, String> uniqueGroupKey =
 		createColumn(
 			"uniqueGroupKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
@@ -48,4 +48,4 @@ public class LVEntryVersionTable extends BaseTable<LVEntryVersionTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1481906823
+// LIFERAY-SERVICE-BUILDER-HASH:-1103404415

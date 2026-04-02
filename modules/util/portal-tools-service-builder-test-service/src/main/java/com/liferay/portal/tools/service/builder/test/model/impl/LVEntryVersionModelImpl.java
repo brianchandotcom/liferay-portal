@@ -60,8 +60,8 @@ public class LVEntryVersionModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"lvEntryVersionId", Types.BIGINT}, {"version", Types.INTEGER},
 		{"uuid_", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
-		{"lvEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"uniqueGroupKey", Types.VARCHAR}
+		{"lvEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"uniqueGroupKey", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -73,13 +73,13 @@ public class LVEntryVersionModelImpl
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lvEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uniqueGroupKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LVEntryVersion (lvEntryVersionId LONG not null primary key,version INTEGER,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,lvEntryId LONG,companyId LONG,groupId LONG,uniqueGroupKey VARCHAR(75) null)";
+		"create table LVEntryVersion (lvEntryVersionId LONG not null primary key,version INTEGER,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,lvEntryId LONG,groupId LONG,companyId LONG,uniqueGroupKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LVEntryVersion";
 
@@ -278,9 +278,9 @@ public class LVEntryVersionModelImpl
 				"defaultLanguageId", LVEntryVersion::getDefaultLanguageId);
 			attributeGetterFunctions.put(
 				"lvEntryId", LVEntryVersion::getLvEntryId);
+			attributeGetterFunctions.put("groupId", LVEntryVersion::getGroupId);
 			attributeGetterFunctions.put(
 				"companyId", LVEntryVersion::getCompanyId);
-			attributeGetterFunctions.put("groupId", LVEntryVersion::getGroupId);
 			attributeGetterFunctions.put(
 				"uniqueGroupKey", LVEntryVersion::getUniqueGroupKey);
 
@@ -319,11 +319,11 @@ public class LVEntryVersionModelImpl
 				"lvEntryId",
 				(BiConsumer<LVEntryVersion, Long>)LVEntryVersion::setLvEntryId);
 			attributeSetterBiConsumers.put(
-				"companyId",
-				(BiConsumer<LVEntryVersion, Long>)LVEntryVersion::setCompanyId);
-			attributeSetterBiConsumers.put(
 				"groupId",
 				(BiConsumer<LVEntryVersion, Long>)LVEntryVersion::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<LVEntryVersion, Long>)LVEntryVersion::setCompanyId);
 			attributeSetterBiConsumers.put(
 				"uniqueGroupKey",
 				(BiConsumer<LVEntryVersion, String>)
@@ -344,8 +344,8 @@ public class LVEntryVersionModelImpl
 	public void populateVersionedModel(LVEntry lvEntry) {
 		lvEntry.setUuid(getUuid());
 		lvEntry.setDefaultLanguageId(getDefaultLanguageId());
-		lvEntry.setCompanyId(getCompanyId());
 		lvEntry.setGroupId(getGroupId());
+		lvEntry.setCompanyId(getCompanyId());
 		lvEntry.setUniqueGroupKey(getUniqueGroupKey());
 	}
 
@@ -476,6 +476,29 @@ public class LVEntryVersionModelImpl
 	}
 
 	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_groupId = groupId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -497,29 +520,6 @@ public class LVEntryVersionModelImpl
 	public long getOriginalCompanyId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("companyId"));
-	}
-
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_groupId = groupId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalGroupId() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -611,8 +611,8 @@ public class LVEntryVersionModelImpl
 		lvEntryVersionImpl.setUuid(getUuid());
 		lvEntryVersionImpl.setDefaultLanguageId(getDefaultLanguageId());
 		lvEntryVersionImpl.setLvEntryId(getLvEntryId());
-		lvEntryVersionImpl.setCompanyId(getCompanyId());
 		lvEntryVersionImpl.setGroupId(getGroupId());
+		lvEntryVersionImpl.setCompanyId(getCompanyId());
 		lvEntryVersionImpl.setUniqueGroupKey(getUniqueGroupKey());
 
 		lvEntryVersionImpl.resetOriginalValues();
@@ -634,10 +634,10 @@ public class LVEntryVersionModelImpl
 			this.<String>getColumnOriginalValue("defaultLanguageId"));
 		lvEntryVersionImpl.setLvEntryId(
 			this.<Long>getColumnOriginalValue("lvEntryId"));
-		lvEntryVersionImpl.setCompanyId(
-			this.<Long>getColumnOriginalValue("companyId"));
 		lvEntryVersionImpl.setGroupId(
 			this.<Long>getColumnOriginalValue("groupId"));
+		lvEntryVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
 		lvEntryVersionImpl.setUniqueGroupKey(
 			this.<String>getColumnOriginalValue("uniqueGroupKey"));
 
@@ -746,9 +746,9 @@ public class LVEntryVersionModelImpl
 
 		lvEntryVersionCacheModel.lvEntryId = getLvEntryId();
 
-		lvEntryVersionCacheModel.companyId = getCompanyId();
-
 		lvEntryVersionCacheModel.groupId = getGroupId();
+
+		lvEntryVersionCacheModel.companyId = getCompanyId();
 
 		lvEntryVersionCacheModel.uniqueGroupKey = getUniqueGroupKey();
 
@@ -824,8 +824,8 @@ public class LVEntryVersionModelImpl
 	private String _uuid;
 	private String _defaultLanguageId;
 	private long _lvEntryId;
-	private long _companyId;
 	private long _groupId;
+	private long _companyId;
 	private String _uniqueGroupKey;
 
 	public <T> T getColumnValue(String columnName) {
@@ -863,8 +863,8 @@ public class LVEntryVersionModelImpl
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("defaultLanguageId", _defaultLanguageId);
 		_columnOriginalValues.put("lvEntryId", _lvEntryId);
-		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("uniqueGroupKey", _uniqueGroupKey);
 	}
 
@@ -899,9 +899,9 @@ public class LVEntryVersionModelImpl
 
 		columnBitmasks.put("lvEntryId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("groupId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
 		columnBitmasks.put("uniqueGroupKey", 128L);
 
@@ -912,4 +912,4 @@ public class LVEntryVersionModelImpl
 	private LVEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1404861633
+// LIFERAY-SERVICE-BUILDER-HASH:-211012217

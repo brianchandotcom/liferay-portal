@@ -123,9 +123,9 @@ public class LVEntryPersistenceTest {
 
 		newLVEntry.setDefaultLanguageId(RandomTestUtil.randomString());
 
-		newLVEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newLVEntry.setGroupId(RandomTestUtil.nextLong());
+
+		newLVEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newLVEntry.setUniqueGroupKey(RandomTestUtil.randomString());
 
@@ -145,9 +145,9 @@ public class LVEntryPersistenceTest {
 		Assert.assertEquals(
 			existingLVEntry.getLvEntryId(), newLVEntry.getLvEntryId());
 		Assert.assertEquals(
-			existingLVEntry.getCompanyId(), newLVEntry.getCompanyId());
-		Assert.assertEquals(
 			existingLVEntry.getGroupId(), newLVEntry.getGroupId());
+		Assert.assertEquals(
+			existingLVEntry.getCompanyId(), newLVEntry.getCompanyId());
 		Assert.assertEquals(
 			existingLVEntry.getUniqueGroupKey(),
 			newLVEntry.getUniqueGroupKey());
@@ -295,8 +295,8 @@ public class LVEntryPersistenceTest {
 	protected OrderByComparator<LVEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"LVEntry", "mvccVersion", true, "uuid", true, "headId", true,
-			"defaultLanguageId", true, "lvEntryId", true, "companyId", true,
-			"groupId", true, "uniqueGroupKey", true);
+			"defaultLanguageId", true, "lvEntryId", true, "groupId", true,
+			"companyId", true, "uniqueGroupKey", true);
 	}
 
 	@Test
@@ -593,9 +593,9 @@ public class LVEntryPersistenceTest {
 
 		lvEntry.setDefaultLanguageId(RandomTestUtil.randomString());
 
-		lvEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		lvEntry.setGroupId(RandomTestUtil.nextLong());
+
+		lvEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		lvEntry.setUniqueGroupKey(RandomTestUtil.randomString());
 
@@ -609,4 +609,4 @@ public class LVEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1498495915
+// LIFERAY-SERVICE-BUILDER-HASH:-1705135023

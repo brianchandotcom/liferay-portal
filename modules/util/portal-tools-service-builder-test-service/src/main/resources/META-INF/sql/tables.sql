@@ -141,8 +141,8 @@ create table LVEntry (
 	head BOOLEAN,
 	defaultLanguageId VARCHAR(75) null,
 	lvEntryId LONG not null primary key,
-	companyId LONG,
 	groupId LONG,
+	companyId LONG,
 	uniqueGroupKey VARCHAR(75) null
 );
 
@@ -175,8 +175,8 @@ create table LVEntryVersion (
 	uuid_ VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
 	lvEntryId LONG,
-	companyId LONG,
 	groupId LONG,
+	companyId LONG,
 	uniqueGroupKey VARCHAR(75) null
 );
 

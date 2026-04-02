@@ -63,10 +63,10 @@ public class LVEntryVersionCacheModel
 		sb.append(defaultLanguageId);
 		sb.append(", lvEntryId=");
 		sb.append(lvEntryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", uniqueGroupKey=");
 		sb.append(uniqueGroupKey);
 		sb.append("}");
@@ -96,8 +96,8 @@ public class LVEntryVersionCacheModel
 		}
 
 		lvEntryVersionImpl.setLvEntryId(lvEntryId);
-		lvEntryVersionImpl.setCompanyId(companyId);
 		lvEntryVersionImpl.setGroupId(groupId);
+		lvEntryVersionImpl.setCompanyId(companyId);
 
 		if (uniqueGroupKey == null) {
 			lvEntryVersionImpl.setUniqueGroupKey("");
@@ -121,9 +121,9 @@ public class LVEntryVersionCacheModel
 
 		lvEntryId = objectInput.readLong();
 
-		companyId = objectInput.readLong();
-
 		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
 		uniqueGroupKey = objectInput.readUTF();
 	}
 
@@ -149,9 +149,9 @@ public class LVEntryVersionCacheModel
 
 		objectOutput.writeLong(lvEntryId);
 
-		objectOutput.writeLong(companyId);
-
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
 
 		if (uniqueGroupKey == null) {
 			objectOutput.writeUTF("");
@@ -166,9 +166,9 @@ public class LVEntryVersionCacheModel
 	public String uuid;
 	public String defaultLanguageId;
 	public long lvEntryId;
-	public long companyId;
 	public long groupId;
+	public long companyId;
 	public String uniqueGroupKey;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:969440418
+// LIFERAY-SERVICE-BUILDER-HASH:1034984350

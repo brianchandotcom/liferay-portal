@@ -17,19 +17,6 @@
 			border-right: none;
 		}
 
-		.dnd-th-resizer {
-			background-color: $color-theme-dark;
-			transition: opacity 0.1s ease-in;
-
-			&.is-active {
-				background-color: $color-mood-bad;
-
-				&.is-allowed {
-					background-color: $color-theme;
-				}
-			}
-		}
-
 		tr {
 			background-color: $color-bg;
 			border-bottom: none;

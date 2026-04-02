@@ -74,9 +74,19 @@ public class StatsClusterRequestExecutor {
 
 		try {
 			JsonValue jsonValue = openSearchTransport.performRequest(
-				null,
+				statsClusterRequest,
 				new SimpleEndpoint<>(
-					request -> "GET", request -> "/_cluster/stats",
+					request -> "GET",
+					request -> {
+						String[] nodeIds = request.getNodeIds();
+
+						if ((nodeIds != null) && (nodeIds.length > 0)) {
+							return "/_cluster/stats/nodes/" +
+								String.join(",", nodeIds);
+						}
+
+						return "/_cluster/stats";
+					},
 					request -> Collections.emptyMap(),
 					request -> Collections.emptyMap(), false,
 					JsonpDeserializer.jsonValueDeserializer()),

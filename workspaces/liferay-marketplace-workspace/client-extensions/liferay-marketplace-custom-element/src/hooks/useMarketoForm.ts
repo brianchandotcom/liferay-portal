@@ -12,6 +12,7 @@ type MktoForms2 = {
 		formId: string,
 		callback: (form: any) => void
 	) => void;
+	whenReady: (fn: (form: any) => void) => void;
 	whenRendered: (fn: (form: any) => void) => void;
 };
 
@@ -24,9 +25,9 @@ declare global {
 }
 
 export type useMarketoProps = {
-	footerElement: (element: any) => void;
+	footerElement?: (element: any) => void;
 	formId: string;
-	onSubmit: () => void;
+	onSubmit?: () => void;
 	submitText: string;
 };
 
@@ -41,9 +42,22 @@ const useMarketo = ({
 	onSubmit,
 	submitText,
 }: useMarketoProps) => {
+	const [form, setForm] = useState<any>();
 	const [started, setStarted] = useState(false);
 	const [formLoaded, setFormLoaded] = useState(false);
 	const [MktoForms2, setMktoForms2] = useState(defaultMktoForms2);
+
+	function triggerSubmit(values: unknown) {
+		if (!form || !started) {
+			console.info('Marketo form is not available');
+
+			return;
+		}
+
+		form.vals(values);
+
+		form.submit();
+	}
 
 	useEffect(() => {
 		if (!MktoForms2) {
@@ -58,8 +72,10 @@ const useMarketo = ({
 
 		if (!formLoaded) {
 			MktoForms2.loadForm(baseURL, MUNCHKIN_ID, formId, (form: any) => {
-				const formEl = form.getFormElem()[0];
+				setForm(form);
+
 				const arrayify = getSelection.call.bind([].slice) as any;
+				const formEl = form.getFormElem()[0];
 
 				const styledElements = arrayify(
 					formEl.querySelectorAll('[style]')
@@ -77,10 +93,10 @@ const useMarketo = ({
 				const mktoForms2ThemeStyle = window.mktoForms2ThemeStyle;
 				const styleSheets = arrayify(document.styleSheets);
 
-				styleSheets.forEach((stylesheet: any) => {
+				styleSheets.forEach((stylesheet: StyleSheet) => {
 					if (
 						[mktoForms2BaseStyle, mktoForms2ThemeStyle].indexOf(
-							stylesheet.ownerNode
+							(stylesheet as any).ownerNode
 						) !== -1 ||
 						formEl.contains(stylesheet.ownerNode)
 					) {
@@ -88,18 +104,22 @@ const useMarketo = ({
 					}
 				});
 
-				const buttonElem = form.getFormElem().find('button.mktoButton');
+				if (footerElement) {
+					const buttonElem = form
+						.getFormElem()
+						.find('button.mktoButton');
 
-				buttonElem.html(submitText);
+					buttonElem.html(submitText);
 
-				footerElement(buttonElem[0]);
+					footerElement(buttonElem[0]);
+				}
 
 				form.onSuccess(() => {
 
 					// eslint-disable-next-line no-console
 					console.info('Submitting Marketo form', formId);
 
-					onSubmit();
+					onSubmit?.();
 
 					return false;
 				});
@@ -112,9 +132,11 @@ const useMarketo = ({
 	}, [MktoForms2, footerElement, formId, formLoaded, onSubmit, submitText]);
 
 	return {
-		MktoForms2,
+		form,
 		formLoaded,
+		MktoForms2,
 		started,
+		triggerSubmit,
 	};
 };
 

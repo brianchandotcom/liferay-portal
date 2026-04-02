@@ -5,13 +5,21 @@
 
 package com.liferay.portal.security.audit.event.generators.user.management.internal.model.listener;
 
+import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.util.Attribute;
 import com.liferay.portal.security.audit.event.generators.util.AttributesBuilder;
@@ -44,6 +52,13 @@ public class UserModelListener extends BaseModelListener<User> {
 		try {
 			List<Attribute> attributes = getModifiedAttributes(
 				originalUser, user);
+
+			if (attributes.removeIf(
+					attribute -> Objects.equals(
+						attribute.getName(), "agreedToTermsOfUse"))) {
+
+				_auditOnAgreedToTermsOfUse(user);
+			}
 
 			if (!attributes.isEmpty()) {
 				AuditMessage auditMessage =
@@ -118,7 +133,79 @@ public class UserModelListener extends BaseModelListener<User> {
 		return attributes;
 	}
 
+	private void _auditOnAgreedToTermsOfUse(User user)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				EventTypes.AGGREED_TO_TERMS_OF_USE, User.class.getName(),
+				user.getUserId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			try {
+				JournalServiceConfiguration journalServiceConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						JournalServiceConfiguration.class, user.getCompanyId());
+
+				Settings settings = FallbackKeysSettingsUtil.getSettings(
+					new CompanyServiceSettingsLocator(
+						user.getCompanyId(),
+						JournalServiceConfiguration.class.getName()));
+
+				additionalInfoJSONObject.put(
+					"termsOfUseJournalArticleGroupId",
+					_getTermsOfUseJournalArticleGroupId(
+						journalServiceConfiguration, settings)
+				).put(
+					"termsOfUseJournalArticleId",
+					_getTermsOfUseJournalArticleId(
+						journalServiceConfiguration, settings)
+				);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to get terms of use article configuration",
+					exception);
+			}
+
+			_auditRouter.route(auditMessage);
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	private long _getTermsOfUseJournalArticleGroupId(
+		JournalServiceConfiguration journalServiceConfiguration,
+		Settings settings) {
+
+		return GetterUtil.getLong(
+			settings.getValue(
+				"terms.of.use.journal.article.group.id",
+				String.valueOf(
+					journalServiceConfiguration.
+						termsOfUseJournalArticleGroupId())));
+	}
+
+	private String _getTermsOfUseJournalArticleId(
+		JournalServiceConfiguration journalServiceConfiguration,
+		Settings settings) {
+
+		return settings.getValue(
+			"terms.of.use.journal.article.id",
+			String.valueOf(
+				journalServiceConfiguration.termsOfUseJournalArticleId()));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserModelListener.class);
+
 	@Reference
 	private AuditRouter _auditRouter;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -133,17 +134,18 @@ public class SearchEngineInitializer implements Runnable {
 		String originalRefreshInterval = GetterUtil.getString(
 			indexSettingsJSONObject.get("refresh_interval"), "1s");
 
-		_updateIndexSettings(
-			indexName,
-			"{\"index\":{\"number_of_replicas\":\"0\"," +
-				"\"refresh_interval\":\"-1\"}}");
+		_updateIndexSettings(indexName, _INDEX_SETTINGS_BULK_LOAD);
 
 		return () -> _updateIndexSettings(
 			indexName,
-			StringBundler.concat(
-				"{\"index\":{\"number_of_replicas\":\"",
-				originalNumberOfReplicas, "\",\"refresh_interval\":\"",
-				originalRefreshInterval, "\"}}"));
+			JSONUtil.put(
+				"index",
+				JSONUtil.put(
+					"number_of_replicas", originalNumberOfReplicas
+				).put(
+					"refresh_interval", originalRefreshInterval
+				)
+			).toString());
 	}
 
 	private boolean _isExecuteConcurrentReindex() {
@@ -336,6 +338,15 @@ public class SearchEngineInitializer implements Runnable {
 			_log.error(exception);
 		}
 	}
+
+	private static final String _INDEX_SETTINGS_BULK_LOAD = JSONUtil.put(
+		"index",
+		JSONUtil.put(
+			"number_of_replicas", "0"
+		).put(
+			"refresh_interval", "-1"
+		)
+	).toString();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineInitializer.class);

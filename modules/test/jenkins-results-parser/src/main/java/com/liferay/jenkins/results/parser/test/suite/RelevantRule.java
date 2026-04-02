@@ -27,6 +27,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -317,37 +318,55 @@ public class RelevantRule implements Comparable<RelevantRule> {
 			true, null, null, rootDirectory);
 	}
 
-	protected List<File> getModifiedFilesList() {
-		return _gitWorkingDirectory.getModifiedFilesList(true);
+	protected List<File> getModifiedModuleProjectDirsList() throws IOException {
+		if (_modifiedModuleProjectDirsList != null) {
+			return _modifiedModuleProjectDirsList;
+		}
+
+		_modifiedModuleProjectDirsList = getModifiedModuleProjectDirsList(
+			getModifiedFilesExcludesPathMatchers(),
+			getModifiedFilesIncludesPathMatchers());
+
+		return _modifiedModuleProjectDirsList;
 	}
 
-	protected List<File> getModifiedModuleProjectDirsList() throws IOException {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
+	protected List<File> getModifiedModuleProjectDirsList(
+			List<PathMatcher> excludesPathMatchers,
+			List<PathMatcher> includesPathMatchers)
+		throws IOException {
 
 		List<File> modifiedFiles = new ArrayList<>();
 
-		for (File modifiedFile :
-				portalGitWorkingDirectory.getModifiedFilesList()) {
-
+		for (File modifiedFile : _getModifiedFilesList()) {
 			if (JenkinsResultsParserUtil.isFileIncluded(
-					getModifiedFilesExcludesPathMatchers(),
-					getModifiedFilesIncludesPathMatchers(), modifiedFile)) {
+					excludesPathMatchers, includesPathMatchers, modifiedFile)) {
 
 				modifiedFiles.add(modifiedFile);
 			}
 		}
 
-		List<File> modifiedModuleDirs =
-			JenkinsResultsParserUtil.getDirectoriesContainingFiles(
-				portalGitWorkingDirectory.getModuleDirsList(), modifiedFiles);
+		Set<String> moduleDirPaths = _getModuleDirPaths();
 
-		return _getModifiedModuleProjectDirsList(
-			modifiedFiles, modifiedModuleDirs);
-	}
+		Set<File> modifiedModuleProjectDirs = new LinkedHashSet<>();
 
-	protected PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
-		return (PortalGitWorkingDirectory)_gitWorkingDirectory;
+		for (File modifiedFile : modifiedFiles) {
+			File parentDir = modifiedFile.getParentFile();
+
+			while (parentDir != null) {
+				String parentFilePath =
+					JenkinsResultsParserUtil.getCanonicalPath(parentDir);
+
+				if (moduleDirPaths.contains(parentFilePath)) {
+					modifiedModuleProjectDirs.add(parentDir);
+
+					break;
+				}
+
+				parentDir = parentDir.getParentFile();
+			}
+		}
+
+		return new ArrayList<>(modifiedModuleProjectDirs);
 	}
 
 	private String _getBaseDirPath() {
@@ -374,39 +393,28 @@ public class RelevantRule implements Comparable<RelevantRule> {
 			propertyName, getTestSuiteName());
 	}
 
-	private List<File> _getModifiedModuleProjectDirsList(
-		List<File> modifiedFilesList, List<File> modifiedModuleDirsList) {
-
-		List<File> modifiedModuleProjectDirsList = new ArrayList<>();
-
-		for (File modifiedModuleDir : modifiedModuleDirsList) {
-			List<File> moduleProjectDirs = _getModuleProjectDirs(
-				modifiedModuleDir);
-
-			List<File> modifiedModuleProjectDirs =
-				JenkinsResultsParserUtil.getDirectoriesContainingFiles(
-					moduleProjectDirs, modifiedFilesList);
-
-			if (!modifiedModuleProjectDirs.isEmpty()) {
-				modifiedModuleProjectDirsList.addAll(modifiedModuleProjectDirs);
-			}
-			else if (!moduleProjectDirs.isEmpty()) {
-				modifiedModuleProjectDirsList.addAll(moduleProjectDirs);
-			}
-			else {
-				modifiedModuleProjectDirsList.add(modifiedModuleDir);
-			}
-		}
-
-		return modifiedModuleProjectDirsList;
+	private List<File> _getModifiedFilesList() {
+		return _gitWorkingDirectory.getModifiedFilesList(true);
 	}
 
-	private List<File> _getModuleProjectDirs(File moduleDir) {
-		final List<File> moduleProjectDirs = new ArrayList<>();
+	private Set<String> _getModuleDirPaths() throws IOException {
+		synchronized (_moduleDirPaths) {
+			if (!_moduleDirPaths.isEmpty()) {
+				return _moduleDirPaths;
+			}
 
-		try {
+			PortalGitWorkingDirectory portalGitWorkingDirectory =
+				_getPortalGitWorkingDirectory();
+
+			File modulesDir = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+			if (!modulesDir.exists()) {
+				return _moduleDirPaths;
+			}
+
 			Files.walkFileTree(
-				moduleDir.toPath(),
+				modulesDir.toPath(),
 				new SimpleFileVisitor<Path>() {
 
 					@Override
@@ -414,66 +422,23 @@ public class RelevantRule implements Comparable<RelevantRule> {
 						Path filePath,
 						BasicFileAttributes basicFileAttributes) {
 
-						File currentDirectory = filePath.toFile();
+						PortalGitWorkingDirectory.Module module =
+							PortalGitWorkingDirectory.Module.getModule(
+								filePath);
 
-						File bndBndFile = new File(currentDirectory, "bnd.bnd");
-
-						File buildGradleFile = new File(
-							currentDirectory, "build.gradle");
-
-						String directoryName = currentDirectory.getName();
-
-						if (buildGradleFile.exists() && bndBndFile.exists()) {
-							moduleProjectDirs.add(currentDirectory);
-
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
-						if (directoryName.startsWith("frontend-theme")) {
-							File gulpFile = new File(
-								currentDirectory, "gulpfile.js");
-
-							if (buildGradleFile.exists() && gulpFile.exists()) {
-								moduleProjectDirs.add(currentDirectory);
-
-								return FileVisitResult.SKIP_SUBTREE;
-							}
-						}
-
-						buildGradleFile = new File(
-							currentDirectory, "build.xml");
-
-						if (directoryName.endsWith("-hook") &&
-							buildGradleFile.exists()) {
-
-							moduleProjectDirs.add(currentDirectory);
-
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
-						if (directoryName.endsWith("-portlet")) {
-							File ivyFile = new File(
-								currentDirectory, "ivy.xml");
-
-							if (buildGradleFile.exists() && ivyFile.exists()) {
-								moduleProjectDirs.add(currentDirectory);
-
-								return FileVisitResult.SKIP_SUBTREE;
-							}
+						if (module != null) {
+							_moduleDirPaths.add(
+								JenkinsResultsParserUtil.getCanonicalPath(
+									module.getFile()));
 						}
 
 						return FileVisitResult.CONTINUE;
 					}
 
 				});
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get module marker files from " + moduleDir,
-				ioException);
-		}
 
-		return moduleProjectDirs;
+			return _moduleDirPaths;
+		}
 	}
 
 	private String _getParentFilePath() {
@@ -482,11 +447,18 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		return JenkinsResultsParserUtil.getCanonicalPath(file.getParentFile());
 	}
 
+	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
+		return (PortalGitWorkingDirectory)_gitWorkingDirectory;
+	}
+
+	private static final Set<String> _moduleDirPaths = new HashSet<>();
+
 	private final String _filePath;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Job _job;
 	private List<PathMatcher> _modifiedFilesExcludesPathMatchers;
 	private List<PathMatcher> _modifiedFilesIncludesPathMatchers;
+	private List<File> _modifiedModuleProjectDirsList;
 	private final String _name;
 	private final Properties _properties;
 	private List<TestBatch> _testBatches;

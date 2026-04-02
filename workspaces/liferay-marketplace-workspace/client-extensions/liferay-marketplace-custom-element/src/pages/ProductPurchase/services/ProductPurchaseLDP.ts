@@ -12,10 +12,10 @@ import ProductPurchase from './ProductPurchase';
 type LDPProvisioningForm = z.infer<typeof zodSchema.ldpProvisioning>;
 
 export default class ProductPurchaseLDP extends ProductPurchase {
-	private form?: LDPProvisioningForm;
+	private form?: LDPProvisioningForm & {salesforceProject: string};
 	protected orderTypeExternalReferenceCode = OrderTypes.ADDONS;
 
-	setForm(form: LDPProvisioningForm) {
+	setForm(form: LDPProvisioningForm & {salesforceProject: string}) {
 		this.form = form;
 	}
 
@@ -50,6 +50,7 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 						ownerEmailAddress: this.form?.workspaceOwnerEmail,
 						workspaceName: this.form?.workspaceName,
 					},
+					salesforceProject: this.form?.salesforceProject,
 				}),
 			},
 		} as Cart;
@@ -59,13 +60,11 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 		return `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
 	}
 
-	public async createOrder() {
+	public async createOrder(cart: Cart) {
 		if (!this.form) {
 			throw new Error('Form is missing.');
 		}
 
-		const order = await super.createOrder();
-
-		return order;
+		return super.createOrder({...cart, ...this.getCart()});
 	}
 }

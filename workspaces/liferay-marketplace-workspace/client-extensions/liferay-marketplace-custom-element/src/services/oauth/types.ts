@@ -124,37 +124,6 @@ export type Properties2 = {
 	version: string;
 };
 
-export type KoroneikiChildAccounts = {
-	assignedTeams: null;
-	code: string;
-	contactEmailAddress: string;
-	contacts: null;
-	customerContacts: null;
-	dataRegion: string;
-	dateCreated: string;
-	dateModified: string;
-	description: string;
-	entitlements: Entitlement[];
-	externalLinks: ExternalLink[];
-	faxNumber: string;
-	internal: boolean;
-	key: string;
-	language: string;
-	logoId: number;
-	name: string;
-	parentAccountKey: string;
-	phoneNumber: string;
-	postalAddresses: PostalAddress[];
-	productPurchases: null;
-	profileEmailAddress: string;
-	properties: AccountProperties;
-	region: string;
-	status: string;
-	tier: string;
-	website: string;
-	workerContacts: null;
-};
-
 export type Entitlement = {
 	entitlementDefinitionKey: string;
 	name: string;

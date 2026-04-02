@@ -5,10 +5,7 @@
 
 import {createStore} from '@xstate/store';
 
-import {
-	ConsoleUserProject,
-	KoroneikiChildAccounts,
-} from '../../../services/oauth/types';
+import {ConsoleUserProject} from '../../../services/oauth/types';
 import {PaymentMethodType} from '../types';
 
 export type LicenseType = 'TRIAL' | 'PAID';
@@ -23,7 +20,6 @@ export const productPurchaseStore = createStore({
 		account: {
 			taxId: '',
 		},
-		koroneikiProject: null as KoroneikiChildAccounts | null,
 		licenseType: null as unknown as LicenseType,
 		payment: {
 			billingAddress: {
@@ -46,6 +42,7 @@ export const productPurchaseStore = createStore({
 			type: PaymentMethodType.PAY_NOW,
 		},
 		project: null as unknown as ConsoleUserProject,
+		salesforceProject: null as SalesforceProject | null,
 	},
 	on: {
 		setAccountTaxId: {
@@ -71,11 +68,11 @@ export const productPurchaseStore = createStore({
 			}),
 		},
 
-		setKoroneikiProject: {
-			koroneikiProject: (
+		setSalesforceProject: {
+			salesforceProject: (
 				_,
-				event: {koroneikiProject: KoroneikiChildAccounts}
-			) => event.koroneikiProject,
+				event: {salesforceProject: SalesforceProject}
+			) => event.salesforceProject,
 		},
 
 		setLicenseType: {

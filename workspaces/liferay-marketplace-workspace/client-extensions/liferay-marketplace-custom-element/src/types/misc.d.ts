@@ -97,6 +97,16 @@ type PublisherSalesSummaryEntry = {
 	scopeId: number;
 };
 
+type SalesforceProject = {
+	externalReferenceCode: string;
+	id: number;
+	koroneikiAccountKey: string;
+	name: string;
+	r_salesforceProjectToAccounts_accountEntryERC: string;
+	r_salesforceProjectToAccounts_accountEntryId: number;
+	salesforceProjectToAccountsERC: string;
+};
+
 type RadioOption<T> = {
 	index: number;
 	value: T;

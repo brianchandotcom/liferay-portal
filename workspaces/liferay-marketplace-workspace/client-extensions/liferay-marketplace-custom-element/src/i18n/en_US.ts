@@ -660,6 +660,7 @@ export default {
 	'select-category': 'Select Category',
 	'select-compatible-versions': 'Select Compatible Versions',
 	'select-licensing-terms': 'Select Licensing Terms',
+	'select-purpose': 'Select Purpose',
 	'select-tags': 'Select Tags',
 	'select-the-offering-of-liferay-your-app-is-compatible-with-the-compatibility-selections-will-determine-on-what-platforms-your-app-is-tested':
 		'Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested.',

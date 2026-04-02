@@ -29,8 +29,4 @@ export const PURPOSE_OPTIONS = [
 		title: 'Small Business Production Use',
 		value: 'small-business-production',
 	},
-	{
-		title: 'Other (Please Specify)',
-		value: 'other',
-	},
 ];

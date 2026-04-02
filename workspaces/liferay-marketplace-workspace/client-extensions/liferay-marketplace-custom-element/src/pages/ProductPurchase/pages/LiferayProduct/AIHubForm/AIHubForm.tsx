@@ -9,13 +9,14 @@ import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {zodResolver} from '@hookform/resolvers/zod';
-import classNames from 'classnames';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import {RequiredMask} from '../../../../../components/FieldBase';
 import {Input} from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
+import useCommerceRegions from '../../../../../hooks/useCommerceRegions';
+import useMarketo from '../../../../../hooks/useMarketoForm';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import zodSchema, {z} from '../../../../../schema/zod';
@@ -25,8 +26,11 @@ import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {ProductPurchaseAIHub} from '../../../services/ProductPurchaseAIHub';
 import {PURPOSE_OPTIONS} from '../ActivationKeyForm/constants';
 
-import './AIHubForm.scss';
+import classNames from 'classnames';
+import Select from '../../../../../components/Select/Select';
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 
+import './AIHubForm.scss';
 import '../index.scss';
 
 const setValuesOptions = {
@@ -35,11 +39,7 @@ const setValuesOptions = {
 };
 
 const AIHubForm = () => {
-	const [active, setActive] = useState(false);
-	const [loading, setLoading] = useState(false);
-
-	const {handlePurchase, product, selectedAccount} =
-		useProductPurchaseOutletContext();
+	const {properties} = useMarketplaceContext();
 
 	const {
 		formState: {errors, isValid},
@@ -56,12 +56,11 @@ const AIHubForm = () => {
 			companyName: '',
 			country: '',
 			extension: '',
-			fullName: '',
+			fullName: Liferay.ThemeDisplay.getUserName(),
 			intlCode: {code: '+1', flag: 'en-us'},
 			jobTitle: '',
 			phoneNumber: '',
 			purpose: '',
-			purposeDescription: '',
 			termsAndConditions: false,
 			userAgreement: false,
 		},
@@ -70,21 +69,65 @@ const AIHubForm = () => {
 		resolver: zodResolver(zodSchema.aiHubForm),
 	});
 
-	const {intlCode, purpose, termsAndConditions, userAgreement} = watch();
+	const watchedValues = watch();
 
+	const {intlCode, purpose, termsAndConditions, userAgreement} =
+		watchedValues;
+
+	const [active, setActive] = useState(false);
 	const [currentPhonesFlags, setCurrentPhonesFlags] = useState(intlCode);
+	const [loading, setLoading] = useState(false);
+	const {data: regionsResponse} = useCommerceRegions();
+	const {handlePurchase, product, selectedAccount} =
+		useProductPurchaseOutletContext();
 
-	const onSubmit = async (data: z.infer<typeof zodSchema.aiHubForm>) => {
+	const countries = regionsResponse?.items ?? [];
+
+	const {triggerSubmit} = useMarketo({
+		formId: properties.marketoFormIdLiferayProduct,
+		submitText: i18n.translate('submit'),
+	});
+
+	const submitMarketoForm = async (
+		data: z.infer<typeof zodSchema.aiHubForm>
+	) => {
+		const [firstName, ...lastName] = data.fullName.split(' ');
+
+		triggerSubmit({
+			Company: data.companyName,
+			Country: data.country,
+			Email: data.businessEmailAddress,
+			FirstName: firstName,
+			Industry__c: 'Software',
+			LastName: lastName.join(' '),
+			Phone: `${data.intlCode.code} ${data.phoneNumber} ${data.extension}`,
+			Purpose_of_Download__c: PURPOSE_OPTIONS.find(
+				(item) => item.value === data.purpose
+			)?.title,
+			Share_with_Partners__c: data.termsAndConditions,
+			Title: data.jobTitle,
+			temp_boolean_02: data.userAgreement,
+		});
+	};
+
+	const onSubmit = async (form: z.infer<typeof zodSchema.aiHubForm>) => {
 		setLoading(true);
 
-		const productPurchase = new ProductPurchaseAIHub(
-			selectedAccount,
-			product
-		);
+		try {
+			await submitMarketoForm(form);
 
-		productPurchase.setForm(data);
+			const productPurchase = new ProductPurchaseAIHub(
+				selectedAccount,
+				product
+			);
 
-		await handlePurchase(productPurchase);
+			productPurchase.setForm(form);
+
+			await handlePurchase(productPurchase);
+		}
+		catch (error) {
+			console.error(error);
+		}
 
 		setLoading(false);
 	};
@@ -94,6 +137,12 @@ const AIHubForm = () => {
 			className="liferay-ai-hub-form"
 			title={i18n.translate('request-access-to-ai-hub-private-beta')}
 		>
+			<form
+				aria-hidden="true"
+				className="d-block"
+				id={`mktoForm_${properties.marketoFormIdLiferayProduct}`}
+			/>
+
 			<p className="mb-6 text-black-50">
 				{i18n.translate(
 					'submit-your-request-to-join-the-beta-program-all-submissions-will-be-reviewed-and-youll-receive-an-email-with-the-outcome'
@@ -129,14 +178,15 @@ const AIHubForm = () => {
 					</ClayInput.GroupItem>
 
 					<ClayInput.GroupItem>
-						<Input
+						<Select
 							{...register('country')}
-							className="w-100"
-							errorMessage={errors.country?.message}
-							id="country"
 							label={i18n.translate('country')}
-							placeholder={i18n.translate('enter-your-country')}
+							name="country"
 							required
+							options={countries.map((country) => ({
+								key: country.title_i18n?.en_US,
+								name: country.title_i18n?.en_US,
+							}))}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
@@ -302,13 +352,6 @@ const AIHubForm = () => {
 						))}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
-
-				<textarea
-					className="custom-input mt-5 rounded-lg w-100"
-					placeholder="Please describe why you would like to test AI Hub in this private beta"
-					rows={5}
-					{...register('purposeDescription')}
-				/>
 
 				<p className="h4 mt-6">
 					{i18n.translate('ai-hub-information')}

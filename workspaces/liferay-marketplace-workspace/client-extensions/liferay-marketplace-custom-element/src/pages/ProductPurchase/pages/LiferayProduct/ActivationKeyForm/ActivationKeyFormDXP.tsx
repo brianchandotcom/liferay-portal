@@ -16,6 +16,9 @@ import {useForm} from 'react-hook-form';
 import {RequiredMask} from '../../../../../components/FieldBase';
 import {Input} from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
+import useCommerceRegions from '../../../../../hooks/useCommerceRegions';
+import useMarketo from '../../../../../hooks/useMarketoForm';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import zodSchema, {z} from '../../../../../schema/zod';
@@ -24,6 +27,7 @@ import {phones} from '../../../../../utils/phones';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import ProductPurchaseDXPTypeFree from '../../../services/ProductPurchaseDXPTypeFree';
 import {PURPOSE_OPTIONS} from './constants';
+import Select from '../../../../../components/Select/Select';
 
 import './ActivationKeyForm.scss';
 
@@ -33,11 +37,14 @@ const setValuesOptions = {
 };
 
 const ActivationKeyFormDXP = () => {
+	const {properties} = useMarketplaceContext();
 	const [active, setActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	const {handlePurchase, product, selectedAccount} =
 		useProductPurchaseOutletContext();
+
+	const {data: regionsResponse} = useCommerceRegions();
 
 	const {
 		formState: {errors, isValid},
@@ -58,13 +65,19 @@ const ActivationKeyFormDXP = () => {
 			notifyMeAboutProducts: false,
 			phoneNumber: '',
 			purpose: '',
-			purposeDescription: '',
 			termsAndConditions: false,
 			userAgreement: false,
 		},
 		mode: 'all',
 		reValidateMode: 'onChange',
 		resolver: zodResolver(zodSchema.activationKey),
+	});
+
+	const countries = regionsResponse?.items ?? [];
+
+	const {triggerSubmit} = useMarketo({
+		formId: properties.marketoFormIdLiferayProduct,
+		submitText: i18n.translate('submit'),
 	});
 
 	const {
@@ -77,17 +90,46 @@ const ActivationKeyFormDXP = () => {
 
 	const [currentPhonesFlags, setCurrentPhonesFlags] = useState(intlCode);
 
-	const onSubmit = async (data: z.infer<typeof zodSchema.activationKey>) => {
+	const submitMarketoForm = async (
+		form: z.infer<typeof zodSchema.activationKey>
+	) => {
+		const [firstName, ...lastName] = form.fullName.split(' ');
+
+		triggerSubmit({
+			Company: form.companyName,
+			Country: form.country,
+			Email: form.businessEmailAddress,
+			FirstName: firstName,
+			Industry__c: 'Software',
+			LastName: lastName.join(' '),
+			Phone: `${form.intlCode.code} ${form.phoneNumber} ${form.extension}`,
+			Purpose_of_Download__c: PURPOSE_OPTIONS.find(
+				(item) => item.value === form.purpose
+			)?.title,
+			Share_with_Partners__c: form.termsAndConditions,
+			Title: form.jobTitle,
+			temp_boolean_02: form.userAgreement,
+		});
+	};
+
+	const onSubmit = async (form: z.infer<typeof zodSchema.activationKey>) => {
 		setLoading(true);
 
-		const productPurchase = new ProductPurchaseDXPTypeFree(
-			selectedAccount,
-			product
-		);
+		try {
+			submitMarketoForm(form);
 
-		productPurchase.setForm(data);
+			const productPurchase = new ProductPurchaseDXPTypeFree(
+				selectedAccount,
+				product
+			);
 
-		await handlePurchase(productPurchase);
+			productPurchase.setForm(form);
+
+			await handlePurchase(productPurchase);
+		}
+		catch (error) {
+			console.error(error);
+		}
 
 		setLoading(false);
 	};
@@ -97,6 +139,12 @@ const ActivationKeyFormDXP = () => {
 			className="activation-key-form"
 			title={i18n.translate('activation-key-creation')}
 		>
+			<form
+				aria-hidden="true"
+				className="d-block"
+				id={`mktoForm_${properties.marketoFormIdLiferayProduct}`}
+			/>
+
 			<p className="mb-6 text-black-50">
 				{i18n.translate(
 					'to-generate-your-unique-activation-key-file-and-access-the-download-please-complete-your-profile-details-below-tell-us-a-bit-about-your-intended-use-to-help-us-support-your-experience'
@@ -132,14 +180,15 @@ const ActivationKeyFormDXP = () => {
 					</ClayInput.GroupItem>
 
 					<ClayInput.GroupItem>
-						<Input
+						<Select
 							{...register('country')}
-							className="w-100"
-							errorMessage={errors.country?.message}
-							id="country"
 							label={i18n.translate('country')}
-							placeholder={i18n.translate('enter-your-country')}
+							name="country"
 							required
+							options={countries.map((country) => ({
+								key: country.title_i18n?.en_US,
+								name: country.title_i18n?.en_US,
+							}))}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
@@ -300,13 +349,6 @@ const ActivationKeyFormDXP = () => {
 						))}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
-
-				{purpose === 'other' && (
-					<textarea
-						className="activation-key-form-textarea custom-input mt-5 rounded-lg w-100"
-						{...register('purposeDescription')}
-					/>
-				)}
 
 				<div className="align-items-center d-flex mt-2">
 					<ClayCheckbox

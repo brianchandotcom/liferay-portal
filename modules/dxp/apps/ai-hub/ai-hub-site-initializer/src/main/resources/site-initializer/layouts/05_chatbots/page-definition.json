@@ -64,14 +64,51 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewChatbotsFragmentRenderer"
+								"key": "BASIC_COMPONENT-tabs"
 							},
 							"fragmentConfig": {
+								"numberOfTabs": 1,
+								"persistSelectedTab": true
 							},
 							"fragmentFields": [
+								{
+									"id": "title1",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Chatbots"
+											}
+										}
+									}
+								}
 							],
 							"indexed": true
 						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentDropZoneId": "1"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewChatbotsFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
 						"type": "Fragment"
 					}
 				],

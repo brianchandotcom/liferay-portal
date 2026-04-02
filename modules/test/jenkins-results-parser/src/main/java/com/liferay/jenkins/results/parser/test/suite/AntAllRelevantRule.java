@@ -33,10 +33,14 @@ public class AntAllRelevantRule extends RelevantRule {
 			return false;
 		}
 
-		String modifiedFilePath = JenkinsResultsParserUtil.getCanonicalPath(
-			modifiedFile);
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		if (!modifiedFilePath.contains("/modules/")) {
+		File modulesDir = new File(
+			gitWorkingDirectory.getWorkingDirectory(), "modules");
+
+		if (!JenkinsResultsParserUtil.isFileInDirectory(
+				modulesDir, modifiedFile)) {
+
 			return true;
 		}
 

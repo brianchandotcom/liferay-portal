@@ -32,6 +32,7 @@ const test = mergeTests(
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	fragmentsPagesTest,
@@ -456,7 +457,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 				).toBeVisible();
 			});
 
-			const searchInput = page.getByPlaceholder('Search');
+			const searchInput = page.getByRole('textbox', {name: 'Search'});
 
 			await test.step('Search for the first object definition and verify the other is hidden', async () => {
 				await searchInput.fill(objectDefinition1.label['en_US']);

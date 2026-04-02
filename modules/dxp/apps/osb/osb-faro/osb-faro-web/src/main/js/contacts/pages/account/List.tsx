@@ -154,7 +154,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 			<BasePage.Body>
 				{dataSourceConnected ? (
 					<>
-						<TotalAccounts />
+						<TotalAccounts groupId={groupId} />
 
 						{FrontendDataSet && (
 							<Card>

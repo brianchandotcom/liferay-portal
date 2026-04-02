@@ -80,7 +80,7 @@ variable "infrastructure_helm_chart_config" {
 	type=object(
 		{
 			chart_name=optional(string, "liferay-gcp-infrastructure")
-			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-gcp-infrastructure")
+			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-gcp-infrastructure")
 			path=optional(string, null)
 			version=optional(string, null)
 		})
@@ -93,7 +93,7 @@ variable "infrastructure_provider_helm_chart_config" {
 	type=object(
 		{
 			chart_name=optional(string, "liferay-gcp-infrastructure-provider")
-			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-gcp-infrastructure-provider")
+			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-gcp-infrastructure-provider")
 			path=optional(string, null)
 			version=optional(string, null)
 		})

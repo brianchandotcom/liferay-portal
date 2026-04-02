@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[contains(@aria-label,'Search')] | //input[contains(@name,'Keywords') or contains(@name,'keywords')]</td>
+	<td>//form[@role='search']//input[contains(@aria-label,'Search')] | //input[contains(@name,'Keywords') or contains(@name,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -619,7 +619,7 @@ definition {
 		}
 
 		task ("Then the search bar is removed from the data-sets") {
-			AssertElementNotPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
+			AssertElementNotPresent(locator1 = "CommerceNavigation#SEARCH_FIELD");
 		}
 	}
 

@@ -145,7 +145,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		long groupId = layoutSetPrototype.getGroupId();
+		Group group = layoutSetPrototype.getGroup();
 
 		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
 			"L_DSR_CONTRIBUTOR", companyId);
@@ -178,18 +178,27 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			companyId, objectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 			role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		if (group.getDefaultPrivatePlid() > 0) {
+			_resourcePermissionLocalService.setResourcePermissions(
+				companyId, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(group.getDefaultPrivatePlid()), role.getRoleId(),
+				new String[] {ActionKeys.VIEW});
+		}
+
 		_resourcePermissionLocalService.setResourcePermissions(
 			companyId, LayoutSetPrototype.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()),
 			role.getRoleId(), new String[] {ActionKeys.VIEW});
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+		Group dsrGroup = _groupLocalService.getGroupByExternalReferenceCode(
 			"L_" + GroupConstants.DSR, companyId);
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			companyId, Layout.class.getName(), ResourceConstants.SCOPE_GROUP,
-			String.valueOf(group.getGroupId()), role.getRoleId(),
+			String.valueOf(dsrGroup.getGroupId()), role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 
 		Map<String, String[]> permissionsMap = HashMapBuilder.put(
@@ -230,8 +239,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 			_resourcePermissionLocalService.setResourcePermissions(
 				companyId, "com.liferay.document.library",
-				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(groupId),
-				currentRole.getRoleId(), actionIds);
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(group.getGroupId()), currentRole.getRoleId(),
+				actionIds);
 		}
 	}
 

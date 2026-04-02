@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetTagGroupRelTable;
 import com.liferay.asset.kernel.model.AssetTagTable;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRelTable;
 import com.liferay.asset.kernel.model.AssetVocabularyTable;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersionTable;
@@ -298,8 +299,12 @@ public class InventoryAnalysisResourceImpl
 		Long vocabularyId) {
 
 		Predicate predicate =
-			ObjectFolderTable.INSTANCE.externalReferenceCode.eq(
-				"L_CMS_CONTENT_STRUCTURES");
+			ObjectFolderTable.INSTANCE.externalReferenceCode.in(
+				new String[] {
+					ObjectFolderConstants.
+						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+				});
 
 		predicate = predicate.and(
 			ObjectEntryTable.INSTANCE.status.neq(

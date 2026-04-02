@@ -50,7 +50,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 	@Test
 	public void testBrokenCMPFile() throws Exception {
 		assertPortalInvalidatedWithBrokenFile(
-			"cmp.file.path", "CMP bundle list is corrupted");
+			"CMP", "CMP bundle list is corrupted");
 	}
 
 	@Test

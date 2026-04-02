@@ -6,6 +6,7 @@
 package com.liferay.portal.license.test;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -466,10 +467,13 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	}
 
 	protected void assertPortalInvalidatedWithBrokenFile(
-			String propertyKey, String failMessage)
+			String fileName, String failMessage)
 		throws Exception {
 
-		String filePath = getProperty(propertyKey);
+		String filePath = StringBundler.concat(
+			StringUtil.replace(
+				_licensePackageName, CharPool.PERIOD, CharPool.SLASH),
+			CharPool.SLASH, fileName);
 
 		_assertPortalInvalidatedWithBrokenFile(
 			filePath, null,
@@ -697,6 +701,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 	private static final String _PROPERTY_PREFIX = "license.test.";
 
+	private static String _licensePackageName;
 	private static Properties _licenseTestProperties;
 	private static Object _lifecycleAction;
 	private static Class<?> _lifecycleActionClass;
@@ -742,6 +747,9 @@ public abstract class BaseLicenseTestCase implements Serializable {
 					_lifecycleAction = field.get(null);
 
 					_lifecycleActionClass = _lifecycleAction.getClass();
+
+					_licensePackageName =
+						_lifecycleActionClass.getPackageName();
 
 					ByteBuddyAgent.install();
 

@@ -92,7 +92,7 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 	@Test
 	public void testBrokenCKEditorFile() throws Exception {
 		assertPortalInvalidatedWithBrokenFile(
-			"ckeditor.file.path", "CKEditor key is corrupted");
+			"CKEditor", "CKEditor key is corrupted");
 	}
 
 	@Test

@@ -157,17 +157,15 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 							apiURL={`/o/contacts/${groupId}/account/search`}
 							configInURLBehavior='off'
 							customDataRenderers={{
-								accountLifecycleStageRenderer: ({value}) => {
+								accountLifecycleStageRenderer: ({value}) =>
 									value &&
-										frontendDataSetColumns.cmsLabel({
-											displayType:
-												lifecycleStagesLabelMap[value]
-													.displayType,
-											label:
-												lifecycleStagesLabelMap[value]
-													.label
-										});
-								},
+									frontendDataSetColumns.cmsLabel({
+										displayType:
+											lifecycleStagesLabelMap[value]
+												.displayType,
+										label:
+											lifecycleStagesLabelMap[value].label
+									}),
 								accountNameRenderer: ({itemData, value}) => {
 									const itemTitle = value || itemData.id;
 

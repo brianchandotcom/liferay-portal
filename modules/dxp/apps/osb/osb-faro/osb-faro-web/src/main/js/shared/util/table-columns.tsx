@@ -590,7 +590,7 @@ export const eventListColumns = {
 export const frontendDataSetColumns = {
 	cmsLabel: ({displayType, label}) => (
 		<ClayLabel
-			className='font-weight-semi-bold rounded'
+			className='fds-label font-weight-semi-bold rounded'
 			displayType={displayType}
 		>
 			{label}

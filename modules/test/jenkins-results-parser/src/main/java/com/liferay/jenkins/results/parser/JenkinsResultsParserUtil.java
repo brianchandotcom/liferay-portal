@@ -4211,6 +4211,53 @@ public class JenkinsResultsParserUtil {
 		return matcher.matches();
 	}
 
+	public static synchronized boolean isTopLevelJobName(String jobName) {
+		if (isNullOrEmpty(jobName)) {
+			return false;
+		}
+
+		if (_topLevelJobNames != null) {
+			return _topLevelJobNames.contains(jobName);
+		}
+
+		_topLevelJobNames = new ArrayList<>();
+
+		String masterHostname = System.getenv("MASTER_HOSTNAME");
+
+		if (isNullOrEmpty(masterHostname)) {
+			return false;
+		}
+
+		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(masterHostname);
+
+		try {
+			JSONObject topLevelBuildsJSONObject = toJSONObject(
+				jenkinsMaster.getRemoteURL() +
+					"/view/Top%20Level/api/json?tree=jobs[name]");
+
+			JSONArray jobsJSONArray = topLevelBuildsJSONObject.optJSONArray(
+				"jobs");
+
+			if (jobsJSONArray == null) {
+				return false;
+			}
+
+			for (int i = 0; i < jobsJSONArray.length(); i++) {
+				JSONObject jobJSONObject = jobsJSONArray.optJSONObject(i);
+
+				if (jobJSONObject == null) {
+					continue;
+				}
+
+				_topLevelJobNames.add(jobJSONObject.getString("name"));
+			}
+		}
+		catch (IOException ioException) {
+		}
+
+		return _topLevelJobNames.contains(jobName);
+	}
+
 	public static boolean isURL(String urlString) {
 		if (isNullOrEmpty(urlString) || !urlString.matches("https?://.+")) {
 			return false;
@@ -7473,6 +7520,7 @@ public class JenkinsResultsParserUtil {
 		"(?<baseURL>https://webserver-testray2(-(?<lxcEnvironment>.+))?" +
 			"\\.lfr\\.cloud|https://testray\\.liferay\\.com).*");
 	private static final Set<String> _timeStamps = new HashSet<>();
+	private static List<String> _topLevelJobNames;
 	private static final List<HttpRequestMethod> _updatingHttpRequestMethods =
 		Arrays.asList(
 			HttpRequestMethod.POST, HttpRequestMethod.PATCH,

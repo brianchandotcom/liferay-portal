@@ -173,7 +173,7 @@ public class OAuthClientEntryResourceImpl
 								oAuthClientASLocalMetadata.getIssuer());
 
 			if (serviceBuilderOAuthClientASLocalMetadata == null) {
-				OAuthClientASLocalMetadataUtil.addAuthClientASLocalMetadata(
+				OAuthClientASLocalMetadataUtil.addOAuthClientASLocalMetadata(
 					oAuthClientASLocalMetadata,
 					_oAuthClientASLocalMetadataService);
 			}

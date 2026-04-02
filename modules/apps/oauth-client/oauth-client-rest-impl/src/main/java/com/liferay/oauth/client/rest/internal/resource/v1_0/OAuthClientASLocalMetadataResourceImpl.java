@@ -177,7 +177,7 @@ public class OAuthClientASLocalMetadataResourceImpl
 
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			serviceBuilderOAuthClientASLocalMetadata =
-				OAuthClientASLocalMetadataUtil.addAuthClientASLocalMetadata(
+				OAuthClientASLocalMetadataUtil.addOAuthClientASLocalMetadata(
 					oAuthClientASLocalMetadata,
 					_oAuthClientASLocalMetadataService);
 

@@ -14,7 +14,14 @@ import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-const test = mergeTests(dataApiHelpersTest, loginTest(), userGroupsPageTest);
+const test = mergeTests(
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	loginTest(),
+	userGroupsPageTest
+);
 
 const testWithPersonalSite = mergeTests(
 	dataApiHelpersTest,

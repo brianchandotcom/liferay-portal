@@ -40,6 +40,7 @@ import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,10 +67,10 @@ public class DLFileEntryWorkflowHandler
 
 		Map<String, Serializable> attributes = serviceContext.getAttributes();
 
-		attributes.keySet(
-		).removeIf(
-			key -> StringUtil.startsWith(key, DDMFormValues.class.getName())
-		);
+		Set<String> keys = attributes.keySet();
+
+		keys.removeIf(
+			key -> StringUtil.startsWith(key, DDMFormValues.class.getName()));
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 

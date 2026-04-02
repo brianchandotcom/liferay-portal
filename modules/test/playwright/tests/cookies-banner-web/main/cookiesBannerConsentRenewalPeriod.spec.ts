@@ -263,6 +263,19 @@ test(
 );
 
 test(
+	'Verify Consent Renewal Period for Dissent correctly sets cookie expiration after 1 week',
+	{tag: '@LPD-84142'},
+	async ({consentManagerConfigurationPage}) => {
+		await validateConsentRenewalPeriodCookieExpiration(
+			consentManagerConfigurationPage,
+			true,
+			'1',
+			'weeks'
+		);
+	}
+);
+
+test(
 	'Verify updating Consent Renewal Period removes consent cookies',
 	{tag: '@LPD-68505'},
 	async ({page}) => {

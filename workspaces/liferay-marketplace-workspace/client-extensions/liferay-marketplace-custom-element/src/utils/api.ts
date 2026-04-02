@@ -5,7 +5,6 @@
 
 import {Liferay} from '../liferay/liferay';
 import fetcher from '../services/fetcher';
-import {axios} from './axios';
 
 const headers = {
 	'Content-Type': 'application/json',
@@ -107,54 +106,15 @@ export async function createContactSales(formData: ContactSales) {
 
 export async function createProductVirtualEntry({
 	body,
-	callback,
 	virtualSettingId,
 }: {
 	body: Object;
-	callback: (progress: number) => void;
 	virtualSettingId: string;
 }) {
-	const response = await axios.post(
+	return fetcher.post(
 		`/o/headless-commerce-admin-catalog/v1.0/product-virtual-settings/${virtualSettingId}/product-virtual-settings-file-entries`,
-		body,
-		{
-			onUploadProgress: (event) => {
-				const progress = Math.round(
-					(event.loaded * 100) / Number(event.total || 1)
-				);
-
-				callback(progress);
-			},
-		}
+		body
 	);
-
-	return response.data;
-}
-
-export async function createImageAxios({
-	body,
-	callback,
-	externalReferenceCode,
-}: {
-	body: Object;
-	callback: (progress: number) => void;
-	externalReferenceCode: string;
-}) {
-	const response = await axios.post(
-		`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
-		body,
-		{
-			onUploadProgress: (event: any) => {
-				const progress = Math.round(
-					(event.loaded * 100) / Number(event.total)
-				);
-
-				callback(progress);
-			},
-		}
-	);
-
-	return response.data;
 }
 
 export function deleteAttachment(attachmentId: string) {

@@ -65,15 +65,14 @@ const addOrUpdateImages = async (
 			},
 		};
 
-		await HeadlessCommerceAdminCatalog.createProductImageByExternalReferenceCodeAxios(
+		await HeadlessCommerceAdminCatalog.addOrUpdateProductImageByExternalReferenceCode(
 			product?.externalReferenceCode,
-			imageMetadata,
-			(progress) => {
-				image.changed = false;
-				image.progress = progress;
-				image.uploaded = progress === 100;
-			}
+			imageMetadata
 		);
+
+		image.changed = false;
+		image.progress = 100;
+		image.uploaded = true;
 	}
 };
 
@@ -157,7 +156,7 @@ const usePublishSolutionSubmission = (
 
 		if (_product) {
 			if (file && (!file?.uploaded || file?.changed)) {
-				await HeadlessCommerceAdminCatalog.createProductImageByExternalReferenceCodeAxios(
+				await HeadlessCommerceAdminCatalog.addOrUpdateProductImageByExternalReferenceCode(
 					_product.externalReferenceCode,
 					{
 						attachment: base64ToText(
@@ -202,7 +201,7 @@ const usePublishSolutionSubmission = (
 		product.productSpecifications = [];
 
 		if (file.file) {
-			await HeadlessCommerceAdminCatalog.createProductImageByExternalReferenceCodeAxios(
+			await HeadlessCommerceAdminCatalog.addOrUpdateProductImageByExternalReferenceCode(
 				product.externalReferenceCode,
 				{
 					attachment: base64ToText(

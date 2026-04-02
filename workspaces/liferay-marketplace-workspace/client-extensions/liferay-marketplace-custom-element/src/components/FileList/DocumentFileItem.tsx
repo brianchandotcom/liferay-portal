@@ -8,7 +8,6 @@ import {UploadedFile} from './FileList';
 import './DocumentFileItem.scss';
 
 import ClayIcon from '@clayui/icon';
-import {AxiosError} from 'axios';
 
 import CircularProgress from '../CircularProgress';
 
@@ -27,7 +26,7 @@ export function DocumentFileItem({
 	uploadedFile,
 	versionName,
 }: DocumentFileItemProps) {
-	const uploadedError = (uploadedFile.error as AxiosError)?.message;
+	const uploadedError = (uploadedFile.error as {message: string})?.message;
 
 	const showProgress =
 		isProcessing && !uploadedFile.uploaded && uploadedFile.progress > 0;

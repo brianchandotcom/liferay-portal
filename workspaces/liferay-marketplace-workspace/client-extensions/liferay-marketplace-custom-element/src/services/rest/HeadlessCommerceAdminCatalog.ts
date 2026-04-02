@@ -3,37 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {UploadedImage} from '../../components/FileList/FileList';
 import {MarketplaceProduct} from '../../entity/MarketplaceProduct';
-import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 import GraphQL from './HeadlessGraphQL';
 
 export default class HeadlessCommerceAdminCatalog {
 	static async addOrUpdateProductImageByExternalReferenceCode(
 		externalReferenceCode: string,
-		image: UploadedImage
+		body: unknown
 	) {
 		return fetcher.post(
 			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
-			image
-		);
-	}
-
-	static async createProductImageByExternalReferenceCodeAxios(
-		externalReferenceCode: string,
-		body: unknown,
-		onUploadProgressCallback: (progress: number) => void = () => null
-	) {
-		return axios.post(
-			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
-			body,
-			{
-				onUploadProgress: (event) =>
-					onUploadProgressCallback(
-						Math.round((event.loaded * 100) / Number(event.total))
-					),
-			}
+			body
 		);
 	}
 

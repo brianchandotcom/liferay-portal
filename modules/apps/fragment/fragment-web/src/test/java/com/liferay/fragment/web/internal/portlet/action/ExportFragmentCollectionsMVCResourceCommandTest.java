@@ -134,6 +134,14 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getCompanyGroupId()
+		).thenReturn(
+			_COMPANY_GROUP_ID
+		);
+
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
@@ -142,18 +150,10 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 			false
 		);
 
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
 		Mockito.when(
 			themeDisplay.getScopeGroup()
 		).thenReturn(
 			group
-		);
-
-		Mockito.when(
-			themeDisplay.getCompanyGroupId()
-		).thenReturn(
-			_COMPANY_GROUP_ID
 		);
 
 		Mockito.when(

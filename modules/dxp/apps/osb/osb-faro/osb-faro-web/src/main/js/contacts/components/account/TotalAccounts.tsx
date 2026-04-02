@@ -3,51 +3,49 @@ import classNames from 'classnames';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
+import {Metric} from '../../pages/account/utils/types';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {toRounded} from 'shared/util/numbers';
+import {TrendClassification} from 'segment/types';
 
-export type Metric = {
-	trend: Trend;
-	value: number;
-};
-
-export type Trend = {
-	percentage: number;
-	trendClassification: TrendClassification;
-};
-
-export enum TrendClassification {
-	Negative = 'NEGATIVE',
-	Neutral = 'NEUTRAL',
-	Positive = 'POSITIVE'
+interface IAccountCardProps {
+	className?: string;
+	description: string;
+	metrics: Metric;
+	title: string;
 }
 
-const mockData: Metric[] = [
-	{
+const mockData = {
+	activeCount: {
 		trend: {
-			percentage: 50,
-			trendClassification: TrendClassification.Positive
+			percentage: 0,
+			trendClassification: TrendClassification.Neutral
 		},
-		value: 15
+		value: 1
 	},
-	{
+	newCount: {
 		trend: {
 			percentage: -30,
 			trendClassification: TrendClassification.Negative
 		},
 		value: 10
 	},
-	{
+	totalCount: {
 		trend: {
-			percentage: 0,
-			trendClassification: TrendClassification.Neutral
+			percentage: 50,
+			trendClassification: TrendClassification.Positive
 		},
-		value: 1
+		value: 15
 	}
-];
+};
 
-const AccountCard = ({className, description, metrics, title}) => {
+const AccountCard: React.FC<IAccountCardProps> = ({
+	className,
+	description,
+	metrics,
+	title
+}) => {
 	const {
 		trend: {
 			percentage = 0,
@@ -119,33 +117,44 @@ const AccountCard = ({className, description, metrics, title}) => {
 	);
 };
 
-const TotalAccounts = () => (
-	<div className='d-flex w-100'>
-		<AccountCard
-			className='mr-4'
-			description={Liferay.Language.get(
-				'displays-all-accounts-included-in-this-property'
+const TotalAccounts = () => {
+	const {activeCount, newCount, totalCount} = mockData;
+
+	return (
+		<div className='d-flex w-100'>
+			{totalCount && (
+				<AccountCard
+					className='mr-4'
+					description={Liferay.Language.get(
+						'displays-all-accounts-included-in-this-property'
+					)}
+					metrics={totalCount}
+					title={Liferay.Language.get('total-accounts')}
+				/>
 			)}
-			metrics={mockData[0]}
-			title={Liferay.Language.get('total-accounts')}
-		/>
-		<AccountCard
-			className='mr-4'
-			description={Liferay.Language.get(
-				'displays-all-new-accounts-included-in-this-property'
+
+			{newCount && (
+				<AccountCard
+					className='mr-4'
+					description={Liferay.Language.get(
+						'displays-all-new-accounts-included-in-this-property'
+					)}
+					metrics={newCount}
+					title={Liferay.Language.get('new-accounts')}
+				/>
 			)}
-			metrics={mockData[1]}
-			title={Liferay.Language.get('new-accounts')}
-		/>
-		<AccountCard
-			className=''
-			description={Liferay.Language.get(
-				'displays-all-active-accounts-included-in-this-property'
+
+			{activeCount && (
+				<AccountCard
+					description={Liferay.Language.get(
+						'displays-all-active-accounts-included-in-this-property'
+					)}
+					metrics={activeCount}
+					title={Liferay.Language.get('active-accounts')}
+				/>
 			)}
-			metrics={mockData[2]}
-			title={Liferay.Language.get('active-accounts')}
-		/>
-	</div>
-);
+		</div>
+	);
+};
 
 export default TotalAccounts;

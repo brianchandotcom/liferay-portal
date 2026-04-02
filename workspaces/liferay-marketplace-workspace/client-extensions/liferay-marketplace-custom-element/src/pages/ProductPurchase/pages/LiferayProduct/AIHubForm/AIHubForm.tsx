@@ -9,12 +9,15 @@ import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useEffect, useState} from 'react';
+import classNames from 'classnames';
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import {RequiredMask} from '../../../../../components/FieldBase';
 import {Input} from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
+import Select from '../../../../../components/Select/Select';
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import useCommerceRegions from '../../../../../hooks/useCommerceRegions';
 import useMarketo from '../../../../../hooks/useMarketoForm';
 import i18n from '../../../../../i18n';
@@ -26,11 +29,8 @@ import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {ProductPurchaseAIHub} from '../../../services/ProductPurchaseAIHub';
 import {PURPOSE_OPTIONS} from '../ActivationKeyForm/constants';
 
-import classNames from 'classnames';
-import Select from '../../../../../components/Select/Select';
-import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
-
 import './AIHubForm.scss';
+
 import '../index.scss';
 
 const setValuesOptions = {
@@ -139,7 +139,7 @@ const AIHubForm = () => {
 		>
 			<form
 				aria-hidden="true"
-				className="d-block"
+				className="d-none"
 				id={`mktoForm_${properties.marketoFormIdLiferayProduct}`}
 			/>
 
@@ -182,11 +182,11 @@ const AIHubForm = () => {
 							{...register('country')}
 							label={i18n.translate('country')}
 							name="country"
-							required
 							options={countries.map((country) => ({
 								key: country.title_i18n?.en_US,
 								name: country.title_i18n?.en_US,
 							}))}
+							required
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

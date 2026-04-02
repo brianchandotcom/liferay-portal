@@ -32,12 +32,12 @@ import PaymentMethod from './pages/App/PaymentMethod';
 import OrderSummary from './pages/App/PaymentMethod/OrderSummary/OrderSummary';
 import AIHubForm from './pages/LiferayProduct/AIHubForm/AIHubForm';
 import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm';
+import LDPInformation from './pages/LiferayProduct/LDPInformation';
 import LDPOrderSummary from './pages/LiferayProduct/LDPOrderSummary';
 import LDPProvisioning from './pages/LiferayProduct/LDPProvisioningForm';
 import ProjectSelection from './pages/LiferayProduct/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
-import LDPInformation from './pages/LiferayProduct/LDPInformation';
 
 export const productTypeRoutes = {
 	[ProductTypeVocabulary.APP]: {

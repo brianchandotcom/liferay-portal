@@ -5,17 +5,15 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {zodResolver} from '@hookform/resolvers/zod';
 import React from 'react';
+import {useForm} from 'react-hook-form';
 
+import FormInput from '../../../../../../components/Input/formInput';
 import Select from '../../../../../../components/Select/Select';
 import useCommerceRegions from '../../../../../../hooks/useCommerceRegions';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
-
-import {zodResolver} from '@hookform/resolvers/zod';
-import {useForm} from 'react-hook-form';
-
-import FormInput from '../../../../../../components/Input/formInput';
 import zodSchema from '../../../../../../schema/zod';
 
 import './BillingAddress.scss';
@@ -119,13 +117,13 @@ const BillingAddressForm: React.FC<BillingAddressProps> = ({
 
 				<ClayButton
 					displayType="secondary"
-					size="sm"
 					onClick={() => {
 						setShowNewAddressButton(true);
 						setSelectedAddress('');
 
 						setBillingAddress(defaultBillingAddress);
 					}}
+					size="sm"
 				>
 					{i18n.translate('cancel')}
 				</ClayButton>

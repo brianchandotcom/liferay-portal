@@ -16,6 +16,7 @@ import {useForm} from 'react-hook-form';
 import {RequiredMask} from '../../../../../components/FieldBase';
 import {Input} from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
+import Select from '../../../../../components/Select/Select';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import useCommerceRegions from '../../../../../hooks/useCommerceRegions';
 import useMarketo from '../../../../../hooks/useMarketoForm';
@@ -27,7 +28,6 @@ import {phones} from '../../../../../utils/phones';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import ProductPurchaseDXPTypeFree from '../../../services/ProductPurchaseDXPTypeFree';
 import {PURPOSE_OPTIONS} from './constants';
-import Select from '../../../../../components/Select/Select';
 
 import './ActivationKeyForm.scss';
 
@@ -141,7 +141,7 @@ const ActivationKeyFormDXP = () => {
 		>
 			<form
 				aria-hidden="true"
-				className="d-block"
+				className="d-none"
 				id={`mktoForm_${properties.marketoFormIdLiferayProduct}`}
 			/>
 
@@ -184,11 +184,11 @@ const ActivationKeyFormDXP = () => {
 							{...register('country')}
 							label={i18n.translate('country')}
 							name="country"
-							required
 							options={countries.map((country) => ({
 								key: country.title_i18n?.en_US,
 								name: country.title_i18n?.en_US,
 							}))}
+							required
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

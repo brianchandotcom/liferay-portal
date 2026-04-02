@@ -22,7 +22,6 @@ const TaxId = () => {
 	return (
 		<Section label={i18n.translate('tax-vat-id')}>
 			<Input
-				placeholder={i18n.translate('enter-your-vat-id')}
 				defaultValue={selectedAccount.taxId}
 				disabled={!!selectedAccount?.taxId}
 				onChange={({target: {value}}) => {
@@ -31,6 +30,7 @@ const TaxId = () => {
 						type: 'setAccountTaxId',
 					});
 				}}
+				placeholder={i18n.translate('enter-your-vat-id')}
 				required
 				value={taxId}
 			/>

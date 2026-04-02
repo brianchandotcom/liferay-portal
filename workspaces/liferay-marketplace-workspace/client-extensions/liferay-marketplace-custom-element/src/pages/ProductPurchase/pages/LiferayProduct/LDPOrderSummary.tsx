@@ -4,6 +4,7 @@
  */
 
 import {useSelector} from '@xstate/store/react';
+import {Navigate} from 'react-router-dom';
 
 import ProductPurchase from '../../../../components/ProductPurchase';
 import {Section} from '../../../../components/Section/Section';
@@ -15,7 +16,6 @@ import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import ProductPurchaseLDP from '../../services/ProductPurchaseLDP';
 import {productPurchaseStore} from '../../store';
 import LicenseTermsCheckbox from '../App/License/LicenseTermsCheckbox';
-import {Navigate} from 'react-router-dom';
 
 const LDPOrderSummary = () => {
 	const {

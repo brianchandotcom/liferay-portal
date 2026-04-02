@@ -49,7 +49,7 @@ const useMarketo = ({
 
 	function triggerSubmit(values: unknown) {
 		if (!form || !started) {
-			console.info('Marketo form is not available');
+			console.error('Marketo form is not available');
 
 			return;
 		}
@@ -132,9 +132,9 @@ const useMarketo = ({
 	}, [MktoForms2, footerElement, formId, formLoaded, onSubmit, submitText]);
 
 	return {
+		MktoForms2,
 		form,
 		formLoaded,
-		MktoForms2,
 		started,
 		triggerSubmit,
 	};

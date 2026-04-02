@@ -6,9 +6,11 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {useSelector} from '@xstate/store/react';
 import classNames from 'classnames';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
+import {Navigate} from 'react-router-dom';
 import {z} from 'zod';
 
 import HelpPopover from '../../../../components/HelpPopover';
@@ -22,8 +24,6 @@ import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import {productPurchaseStore} from '../../store';
-import {useSelector} from '@xstate/store/react';
-import {Navigate} from 'react-router-dom';
 
 type MultiSelectValue = {
 	key: string;

@@ -13,10 +13,10 @@ import RadioCardList from '../../../../../components/RadioCardList/RadioCardList
 import {MarketplaceContext} from '../../../../../context/MarketplaceContext';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
+import HeadlessSalesforceProject from '../../../../../services/rest/HeadlessSalesforceProject';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';
 import NoProjectAvailable from './NoProjectAvailable';
-import HeadlessSalesforceProject from '../../../../../services/rest/HeadlessSalesforceProject';
 
 const ProjectSelection = () => {
 	const {properties} = useContext(MarketplaceContext);

@@ -68,13 +68,6 @@ export const productPurchaseStore = createStore({
 			}),
 		},
 
-		setSalesforceProject: {
-			salesforceProject: (
-				_,
-				event: {salesforceProject: SalesforceProject}
-			) => event.salesforceProject,
-		},
-
 		setLicenseType: {
 			licenseType: (context, event: {licenseType: LicenseType}) => {
 				if (event.licenseType === 'PAID') {
@@ -97,6 +90,13 @@ export const productPurchaseStore = createStore({
 
 		setProject: {
 			project: (_, event: {project: ConsoleUserProject}) => event.project,
+		},
+
+		setSalesforceProject: {
+			salesforceProject: (
+				_,
+				event: {salesforceProject: SalesforceProject}
+			) => event.salesforceProject,
 		},
 
 		toggleEulaAgreement: {

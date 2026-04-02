@@ -8,7 +8,9 @@ import React, {useState} from 'react';
 
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
+import useAccountAddresses from '../../../../../../hooks/useAccountAddresses';
 import useCommerceRegions from '../../../../../../hooks/useCommerceRegions';
+import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 import HeadlessAdminUser from '../../../../../../services/rest/HeadlessAdminUser';
 import {Region} from '../../../../../../services/rest/HeadlessCommerceAdminAddress';
@@ -16,8 +18,6 @@ import {useProductPurchaseOutletContext} from '../../../../ProductPurchaseOutlet
 import {productPurchaseStore} from '../../../../store';
 import BillingAddressForm from './BillingAddressForm';
 import getPostalAddressDescription from './getPostalAddressDescription';
-import useAccountAddresses from '../../../../../../hooks/useAccountAddresses';
-import i18n from '../../../../../../i18n';
 
 type BillingAddressProps = {
 	sectionName?: string;

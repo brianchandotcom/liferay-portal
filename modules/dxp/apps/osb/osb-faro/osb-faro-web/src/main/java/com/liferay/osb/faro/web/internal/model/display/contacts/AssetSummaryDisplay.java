@@ -10,13 +10,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.osb.faro.engine.client.model.AssetSummary;
 import com.liferay.osb.faro.engine.client.model.Metric;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Marcos Martins
  */
 public class AssetSummaryDisplay {
 
 	public AssetSummaryDisplay(AssetSummary assetSummary) {
+		_assetCategories = assetSummary.getAssetCategories();
 		_assetId = assetSummary.getAssetId();
+		_assetTags = assetSummary.getAssetTags();
 		_assetTitle = assetSummary.getAssetTitle();
 		_assetType = assetSummary.getAssetType();
 		_downloadsMetric = assetSummary.getDownloadsMetric();
@@ -24,9 +29,12 @@ public class AssetSummaryDisplay {
 		_viewsMetric = assetSummary.getViewsMetric();
 	}
 
+	private final List<Map<String, Object>> _assetCategories;
+
 	@JsonProperty("id")
 	private final String _assetId;
 
+	private final List<Map<String, Object>> _assetTags;
 	private final String _assetTitle;
 	private final String _assetType;
 	private final Metric _downloadsMetric;

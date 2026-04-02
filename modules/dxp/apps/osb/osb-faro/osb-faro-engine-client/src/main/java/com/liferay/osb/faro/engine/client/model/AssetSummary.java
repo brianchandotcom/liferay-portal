@@ -8,6 +8,7 @@ package com.liferay.osb.faro.engine.client.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,8 +16,16 @@ import java.util.Map;
  */
 public class AssetSummary {
 
+	public List<Map<String, Object>> getAssetCategories() {
+		return _assetCategories;
+	}
+
 	public String getAssetId() {
 		return _assetId;
+	}
+
+	public List<Map<String, Object>> getAssetTags() {
+		return _assetTags;
 	}
 
 	public String getAssetTitle() {
@@ -48,8 +57,16 @@ public class AssetSummary {
 		return _viewsMetric;
 	}
 
+	public void setAssetCategories(List<Map<String, Object>> assetCategories) {
+		_assetCategories = assetCategories;
+	}
+
 	public void setAssetId(String assetId) {
 		_assetId = assetId;
+	}
+
+	public void setAssetTags(List<Map<String, Object>> assetTags) {
+		_assetTags = assetTags;
 	}
 
 	public void setAssetTitle(String assetTitle) {
@@ -80,7 +97,9 @@ public class AssetSummary {
 		_viewsMetric = viewsMetric;
 	}
 
+	private List<Map<String, Object>> _assetCategories;
 	private String _assetId;
+	private List<Map<String, Object>> _assetTags;
 	private String _assetTitle;
 	private String _assetType;
 	private Metric _downloadsMetric;

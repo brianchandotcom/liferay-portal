@@ -9,7 +9,6 @@ import {useEffect, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
-import useAccountAddresses from '../../../../../hooks/useAccountAddresses';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
 import marketplaceOAuth2 from '../../../../../services/oauth/Marketplace';
@@ -89,11 +88,6 @@ export default function PaymentMethod() {
 		}
 	}, [licenseType, navigate]);
 
-	const {
-		data: addressResponse = {items: []},
-		mutate: mutateUserAccoutAddress,
-	} = useAccountAddresses(selectedAccount?.id);
-
 	const {actionMessage} =
 		PaymentMethodFlows[
 			paymentStore.type as keyof typeof PaymentMethodFlows
@@ -162,16 +156,7 @@ export default function PaymentMethod() {
 			}}
 			title={i18n.translate('payment-method')}
 		>
-			<BillingAddress
-				addresses={addressResponse.items}
-				mutateUserAccoutAddress={mutateUserAccoutAddress}
-				setBillingAddress={(billingAddress) =>
-					productPurchaseStore.send({
-						billingAddress,
-						type: 'setBillingAddress',
-					})
-				}
-			/>
+			<BillingAddress />
 
 			{paymentMethodType === PaymentMethodType.TRIAL ? (
 				<TrialMethod />

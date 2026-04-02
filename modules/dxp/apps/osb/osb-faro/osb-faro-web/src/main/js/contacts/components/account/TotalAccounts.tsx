@@ -1,58 +1,42 @@
+import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayIcon from '@clayui/icon';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
+import {isNil} from 'lodash/fp';
 import {Metric} from '../../pages/account/utils/types';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {toRounded} from 'shared/util/numbers';
 import {TrendClassification} from 'segment/types';
+import {useRequest} from 'shared/hooks/useRequest';
 
 interface IAccountCardProps {
 	className?: string;
 	description: string;
+	loading?: boolean;
 	metrics: Metric;
 	title: string;
 }
 
-const mockData = {
-	activeCount: {
-		trend: {
-			percentage: 0,
-			trendClassification: TrendClassification.Neutral
-		},
-		value: 1
-	},
-	newCount: {
-		trend: {
-			percentage: -30,
-			trendClassification: TrendClassification.Negative
-		},
-		value: 10
-	},
-	totalCount: {
-		trend: {
-			percentage: 50,
-			trendClassification: TrendClassification.Positive
-		},
-		value: 15
-	}
-};
-
 const AccountCard: React.FC<IAccountCardProps> = ({
 	className,
 	description,
+	loading = false,
 	metrics,
 	title
 }) => {
-	const {
-		trend: {
-			percentage = 0,
-			trendClassification = TrendClassification.Neutral
-		},
-		value = 0
-	} = metrics;
+	if (loading) {
+		return (
+			<Card className={classNames(className, 'flex-fill p-3 w-100')}>
+				<Card.Body>
+					<Loading />
+				</Card.Body>
+			</Card>
+		);
+	}
 
 	return (
 		<Card className={classNames(className, 'flex-fill p-3 w-100')}>
@@ -62,52 +46,54 @@ const AccountCard: React.FC<IAccountCardProps> = ({
 				</div>
 			</Card.Title>
 			<Card.Body noPadding>
-				<span className='mt-1'>
+				<div className='mt-1'>
 					<Text color='secondary' size={3}>
 						{description}
 					</Text>
-				</span>
+				</div>
 
 				<span className='mt-3 text-lowercase text-weight-semi-bold'>
 					<Text size={7}>
 						{sub(
-							value === 1
+							metrics?.value === 1
 								? Liferay.Language.get('x-account')
 								: Liferay.Language.get('x-accounts'),
-							[value]
+							[metrics?.value ?? 0]
 						)}
 					</Text>
 				</span>
 
 				<span className='text-secondary'>
-					{trendClassification !== TrendClassification.Neutral && (
-						<ClayIcon
-							style={{
-								color: getStatsColor(trendClassification)
-							}}
-							symbol={getIcon(percentage)}
-						/>
-					)}
+					{!isNil(metrics?.trend?.trendClassification) &&
+						metrics?.trend?.trendClassification !==
+							TrendClassification.Neutral && (
+							<ClayIcon
+								style={{
+									color: getStatsColor(
+										metrics?.trend?.trendClassification
+									)
+								}}
+								symbol={getIcon(metrics?.trend?.percentage)}
+							/>
+						)}
 					{sub(
 						Liferay.Language.get('x-vs-previous-90-days'),
 						[
-							<>
-								<span
-									className='mr-1'
-									key='percentage'
-									style={{
-										color:
-											getStatsColor(
-												trendClassification
-											) || TrendClassification.Neutral
-									}}
-								>
-									{`${toRounded(
-										Math.abs(percentage) ?? 0,
-										2
-									)}%`}
-								</span>
-							</>
+							<span
+								className='mr-1'
+								key='percentage'
+								style={{
+									color:
+										getStatsColor(
+											metrics?.trend?.trendClassification
+										) || TrendClassification.Neutral
+								}}
+							>
+								{`${toRounded(
+									Math.abs(metrics?.trend?.percentage ?? 0),
+									2
+								)}%`}
+							</span>
 						],
 						false
 					)}
@@ -117,42 +103,46 @@ const AccountCard: React.FC<IAccountCardProps> = ({
 	);
 };
 
-const TotalAccounts = () => {
-	const {activeCount, newCount, totalCount} = mockData;
+const TotalAccounts = ({groupId}) => {
+	const {data, loading} = useRequest({
+		dataSourceFn: API.accounts.fetchMetrics,
+		variables: {
+			groupId
+		}
+	});
+
+	const {activeCount, newCount, totalCount} = data || {};
 
 	return (
 		<div className='d-flex w-100'>
-			{totalCount && (
-				<AccountCard
-					className='mr-4'
-					description={Liferay.Language.get(
-						'displays-all-accounts-included-in-this-property'
-					)}
-					metrics={totalCount}
-					title={Liferay.Language.get('total-accounts')}
-				/>
-			)}
+			<AccountCard
+				className='mr-4'
+				description={Liferay.Language.get(
+					'displays-all-accounts-included-in-this-property'
+				)}
+				loading={loading}
+				metrics={totalCount || {}}
+				title={Liferay.Language.get('total-accounts')}
+			/>
 
-			{newCount && (
-				<AccountCard
-					className='mr-4'
-					description={Liferay.Language.get(
-						'displays-all-new-accounts-included-in-this-property'
-					)}
-					metrics={newCount}
-					title={Liferay.Language.get('new-accounts')}
-				/>
-			)}
+			<AccountCard
+				className='mr-4'
+				description={Liferay.Language.get(
+					'displays-all-new-accounts-included-in-this-property'
+				)}
+				loading={loading}
+				metrics={newCount || {}}
+				title={Liferay.Language.get('new-accounts')}
+			/>
 
-			{activeCount && (
-				<AccountCard
-					description={Liferay.Language.get(
-						'displays-all-active-accounts-included-in-this-property'
-					)}
-					metrics={activeCount}
-					title={Liferay.Language.get('active-accounts')}
-				/>
-			)}
+			<AccountCard
+				description={Liferay.Language.get(
+					'displays-all-active-accounts-included-in-this-property'
+				)}
+				loading={loading}
+				metrics={activeCount || {}}
+				title={Liferay.Language.get('active-accounts')}
+			/>
 		</div>
 	);
 };

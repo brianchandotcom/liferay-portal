@@ -40,6 +40,13 @@ export function fetchFieldValues({
 	});
 }
 
+export function fetchMetrics({groupId}) {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/account/metrics`
+	});
+}
+
 export function search({
 	channelId = '',
 	delta = DEFAULT_DELTA,

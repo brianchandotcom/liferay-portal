@@ -337,7 +337,7 @@ async function validateConsentRenewalPeriodCookieExpiration(
 		await validateConsentRenewalPeriodValue(
 			consentManagerConfigurationPage,
 			dissent,
-			'1',
+			newValue,
 			true,
 			unit
 		);

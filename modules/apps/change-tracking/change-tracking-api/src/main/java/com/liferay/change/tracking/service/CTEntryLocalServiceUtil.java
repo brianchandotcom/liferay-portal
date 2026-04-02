@@ -403,7 +403,9 @@ public class CTEntryLocalServiceUtil {
 			modelClassNameId, modelClassPK, changeType);
 	}
 
-	public static CTEntry updateChangeType(long ctEntryId, int changeType) {
+	public static CTEntry updateChangeType(long ctEntryId, int changeType)
+		throws PortalException {
+
 		return getService().updateChangeType(ctEntryId, changeType);
 	}
 
@@ -422,12 +424,15 @@ public class CTEntryLocalServiceUtil {
 	}
 
 	public static CTEntry updateModelMvccVersion(
-		long ctEntryId, long modelMvccVersion) {
+			long ctEntryId, long modelMvccVersion)
+		throws PortalException {
 
 		return getService().updateModelMvccVersion(ctEntryId, modelMvccVersion);
 	}
 
-	public static CTEntry updateUserId(long ctEntryId, long userId) {
+	public static CTEntry updateUserId(long ctEntryId, long userId)
+		throws PortalException {
+
 		return getService().updateUserId(ctEntryId, userId);
 	}
 
@@ -440,4 +445,4 @@ public class CTEntryLocalServiceUtil {
 			CTEntryLocalServiceUtil.class, CTEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1850296377
+// LIFERAY-SERVICE-BUILDER-HASH:-968130037

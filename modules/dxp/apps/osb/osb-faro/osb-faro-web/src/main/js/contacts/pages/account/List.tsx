@@ -6,6 +6,7 @@ import Link from '@clayui/link';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
+import TotalAccounts from 'contacts/components/account/TotalAccounts';
 import URLConstants from 'shared/util/url-constants';
 import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
 import {frontendDataSetColumns} from 'shared/util/table-columns';
@@ -151,175 +152,206 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 				</BasePage.Row>
 			</BasePage.Header>
 			<BasePage.Body>
-				{dataSourceConnected && FrontendDataSet ? (
-					<Card>
-						<FrontendDataSet
-							apiURL={`/o/contacts/${groupId}/account/search`}
-							configInURLBehavior='off'
-							customDataRenderers={{
-								accountLifecycleStageRenderer: ({value}) =>
-									value &&
-									frontendDataSetColumns.cmsLabel({
-										displayType:
-											lifecycleStagesLabelMap[value]
-												.displayType,
-										label:
-											lifecycleStagesLabelMap[value].label
-									}),
-								accountNameRenderer: ({itemData, value}) => {
-									const itemTitle = value || itemData.id;
+				{dataSourceConnected ? (
+					<>
+						<TotalAccounts />
 
-									return (
-										<Link
-											className='font-weight-semi-bold text-dark'
-											href={toRoute(
-												Routes.CONTACTS_ACCOUNT,
-												{
-													groupId,
-													id: itemData.id
-												}
-											)}
-										>
-											{itemTitle}
-										</Link>
-									);
-								},
-								annualRevenueRenderer: ({value}) => (
-									<div>{toThousands(value)}</div>
-								),
-								dateRenderer: ({value}) => (
-									<div>
-										{value &&
-											formatUTCDate(
-												value,
-												CUSTOM_DATE_FORMAT
-											)}
-									</div>
-								)
-							}}
-							emptyState={{
-								description: Liferay.Language.get(
-									'no-accounts-were-synced-from-the-connected-data-sources'
-								),
-								image: '/states/satellite.svg',
-								title: Liferay.Language.get('no-accounts-found')
-							}}
-							filters={[
-								{
-									id: 'lifecycleStatus',
-									items: lifecycleStageFilter.items,
-									label: Liferay.Language.get('status'),
-									name: 'status',
-									type: 'selection'
-								},
-								{
-									apiURL: `/o/contacts/${groupId}/account/industries`,
-									entityFieldType: 'string',
-									id: 'industry',
-									itemKey: 'industry',
-									itemLabel: 'name',
-									label: Liferay.Language.get('industry'),
-									multiple: true,
-									type: 'selection'
-								},
-								{
-									apiURL: `/o/contacts/${groupId}/account/countries`,
-									entityFieldType: 'string',
-									id: 'country',
-									itemKey: 'country',
-									itemLabel: 'name',
-									label: Liferay.Language.get('country'),
-									multiple: true,
-									type: 'selection'
-								}
-							]}
-							id='accounts-list-dataset'
-							loading={dataSourceLoading}
-							pagination={pagination}
-							showPagination
-							snapshotsEnabled
-							sort={[
-								{
-									active: true,
-									direction: 'asc',
-									key: 'accountName',
-									label: Liferay.Language.get('account')
-								}
-							]}
-							views={[
-								{
-									contentRenderer: 'table',
-									default: false,
-									label: 'table',
-									name: 'table',
-									schema: {
-										fields: [
-											{
-												contentRenderer:
-													'accountNameRenderer',
-												fieldName: 'accountName',
-												label: Liferay.Language.get(
-													'account'
-												),
-												sortable: true,
-												truncate: true
+						{FrontendDataSet && (
+							<Card>
+								<FrontendDataSet
+									apiURL={`/o/contacts/${groupId}/account/search`}
+									configInURLBehavior='off'
+									customDataRenderers={{
+										accountLifecycleStageRenderer: ({
+											value
+										}) =>
+											value &&
+											frontendDataSetColumns.cmsLabel({
+												displayType:
+													lifecycleStagesLabelMap[
+														value
+													].displayType,
+												label:
+													lifecycleStagesLabelMap[
+														value
+													].label
+											}),
+										accountNameRenderer: ({
+											itemData,
+											value
+										}) => {
+											const itemTitle =
+												value || itemData.id;
+
+											return (
+												<Link
+													className='font-weight-semi-bold text-dark'
+													href={toRoute(
+														Routes.CONTACTS_ACCOUNT,
+														{
+															groupId,
+															id: itemData.id
+														}
+													)}
+												>
+													{itemTitle}
+												</Link>
+											);
+										},
+										annualRevenueRenderer: ({value}) => (
+											<div>{toThousands(value)}</div>
+										),
+										dateRenderer: ({value}) => (
+											<div>
+												{value &&
+													formatUTCDate(
+														value,
+														CUSTOM_DATE_FORMAT
+													)}
+											</div>
+										)
+									}}
+									emptyState={{
+										description: Liferay.Language.get(
+											'no-accounts-were-synced-from-the-connected-data-sources'
+										),
+										image: '/states/satellite.svg',
+										title: Liferay.Language.get(
+											'no-accounts-found'
+										)
+									}}
+									filters={[
+										{
+											id: 'lifecycleStatus',
+											items: lifecycleStageFilter.items,
+											label: Liferay.Language.get(
+												'status'
+											),
+											name: 'status',
+											type: 'selection'
+										},
+										{
+											apiURL: `/o/contacts/${groupId}/account/industries`,
+											entityFieldType: 'string',
+											id: 'industry',
+											itemKey: 'industry',
+											itemLabel: 'name',
+											label: Liferay.Language.get(
+												'industry'
+											),
+											multiple: true,
+											type: 'selection'
+										},
+										{
+											apiURL: `/o/contacts/${groupId}/account/countries`,
+											entityFieldType: 'string',
+											id: 'country',
+											itemKey: 'country',
+											itemLabel: 'name',
+											label: Liferay.Language.get(
+												'country'
+											),
+											multiple: true,
+											type: 'selection'
+										}
+									]}
+									id='accounts-list-dataset'
+									loading={dataSourceLoading}
+									pagination={pagination}
+									showPagination
+									snapshotsEnabled
+									sort={[
+										{
+											active: true,
+											direction: 'asc',
+											key: 'accountName',
+											label: Liferay.Language.get(
+												'account'
+											)
+										}
+									]}
+									views={[
+										{
+											contentRenderer: 'table',
+											default: false,
+											label: 'table',
+											name: 'table',
+											schema: {
+												fields: [
+													{
+														contentRenderer:
+															'accountNameRenderer',
+														fieldName:
+															'accountName',
+														label: Liferay.Language.get(
+															'account'
+														),
+														sortable: true,
+														truncate: true
+													},
+													{
+														fieldName: 'industry',
+														label: Liferay.Language.get(
+															'industry'
+														),
+														sortable: true
+													},
+													{
+														contentRenderer:
+															'accountLifecycleStageRenderer',
+														fieldName:
+															'lifecycleStage',
+														label: Liferay.Language.get(
+															'lifecycle-stage'
+														),
+														sortable: true
+													},
+													{
+														contentRenderer:
+															'annualRevenueRenderer',
+														fieldName:
+															'annualRevenue',
+														label: Liferay.Language.get(
+															'annual-revenue'
+														),
+														sortable: true
+													},
+													{
+														fieldName: 'country',
+														label: Liferay.Language.get(
+															'country'
+														),
+														sortable: true
+													},
+													{
+														contentRenderer:
+															'dateRenderer',
+														fieldName: 'lastActive',
+														label: Liferay.Language.get(
+															'last-active'
+														),
+														sortable: true
+													},
+													{
+														contentRenderer:
+															'dateRenderer',
+														fieldName:
+															'lastEnriched',
+														label: Liferay.Language.get(
+															'last-enriched'
+														),
+														sortable: true,
+														visible: false
+													}
+												]
 											},
-											{
-												fieldName: 'industry',
-												label: Liferay.Language.get(
-													'industry'
-												),
-												sortable: true
-											},
-											{
-												contentRenderer:
-													'accountLifecycleStageRenderer',
-												fieldName: 'lifecycleStage',
-												label: Liferay.Language.get(
-													'lifecycle-stage'
-												),
-												sortable: true
-											},
-											{
-												contentRenderer:
-													'annualRevenueRenderer',
-												fieldName: 'annualRevenue',
-												label: Liferay.Language.get(
-													'annual-revenue'
-												),
-												sortable: true
-											},
-											{
-												fieldName: 'country',
-												label: Liferay.Language.get(
-													'country'
-												),
-												sortable: true
-											},
-											{
-												contentRenderer: 'dateRenderer',
-												fieldName: 'lastActive',
-												label: Liferay.Language.get(
-													'last-active'
-												),
-												sortable: true
-											},
-											{
-												contentRenderer: 'dateRenderer',
-												fieldName: 'lastEnriched',
-												label: Liferay.Language.get(
-													'last-enriched'
-												),
-												sortable: true,
-												visible: false
-											}
-										]
-									},
-									thumbnail: 'table'
-								}
-							]}
-						/>
-					</Card>
+											thumbnail: 'table'
+										}
+									]}
+								/>
+							</Card>
+						)}
+					</>
 				) : (
 					<NoDataSourcesConnected />
 				)}

@@ -60,7 +60,7 @@ public class TestScriptGenerator {
 
 		_gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				"master", gitRepositoryDirPath);
+				"master", gitRepositoryDirPath, "liferay-portal");
 
 		_outputDir = new File(outputDirPath);
 	}

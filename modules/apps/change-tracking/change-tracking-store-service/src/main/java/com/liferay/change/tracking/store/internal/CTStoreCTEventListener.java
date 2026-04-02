@@ -114,6 +114,10 @@ public class CTStoreCTEventListener implements CTEventListener {
 						ctsContent.getPath(), ctsContent.getVersion(),
 						_ctsContentLocalService.openDataInputStream(
 							ctsContent.getCtsContentId()));
+
+					_ctEntryLocalService.deleteCTEntry(ctEntry, true);
+
+					_ctsContentLocalService.deleteCTSContent(ctsContent);
 				}
 			}
 			catch (PortalException portalException) {

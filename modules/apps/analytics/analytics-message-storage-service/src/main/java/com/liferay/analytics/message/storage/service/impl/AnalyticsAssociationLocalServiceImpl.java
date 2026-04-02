@@ -47,6 +47,16 @@ public class AnalyticsAssociationLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAnalyticsAssociations(long companyId) {
+		analyticsAssociationPersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
+	public void deleteAnalyticsAssociations(long companyId, Date modifiedDate) {
+		analyticsAssociationPersistence.removeByC_LtM(companyId, modifiedDate);
+	}
+
+	@Override
 	public void deleteAnalyticsAssociations(
 		long companyId, String associationClassName, long associationClassPK) {
 

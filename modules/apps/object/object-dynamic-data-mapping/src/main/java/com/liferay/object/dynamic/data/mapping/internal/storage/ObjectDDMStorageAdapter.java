@@ -5,7 +5,7 @@
 
 package com.liferay.object.dynamic.data.mapping.internal.storage;
 
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -203,7 +203,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					objectDefinition));
 
 			for (Long fileEntryId : fileEntryIds) {
-				_dlAppService.deleteFileEntry(fileEntryId);
+				_dlAppLocalService.deleteFileEntry(fileEntryId);
 			}
 
 			return DDMStorageAdapterSaveResponse.Builder.newBuilder(
@@ -526,7 +526,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		ObjectDDMStorageAdapter.class);
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

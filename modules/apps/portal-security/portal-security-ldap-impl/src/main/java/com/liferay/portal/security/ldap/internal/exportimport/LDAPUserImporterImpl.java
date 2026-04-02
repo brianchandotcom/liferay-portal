@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -1822,14 +1823,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			passwordReset = user.isPasswordReset();
 		}
 
-		ServiceContext serviceContext = ldapUser.getServiceContext();
 		boolean updatedCustomMappings = false;
 
 		if (Validator.isNotNull(ldapServerConfiguration.modifiedDate())) {
 			Date serverConfigurationModifiedDate = DateUtil.parseDate(
 				"EEE MMM d HH:mm:ss zzz yyyy",
-				ldapServerConfiguration.modifiedDate(),
-				serviceContext.getLocale());
+				ldapServerConfiguration.modifiedDate(), LocaleUtil.US);
 
 			updatedCustomMappings = serverConfigurationModifiedDate.after(
 				new Date(_lastImportTime));
@@ -1932,6 +1931,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
+
+		ServiceContext serviceContext = ldapUser.getServiceContext();
 
 		if (modifiedDate != null) {
 			serviceContext.setModifiedDate(modifiedDate);

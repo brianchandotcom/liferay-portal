@@ -5,7 +5,6 @@
 
 import {useSelector} from '@xstate/store/react';
 import React, {useState} from 'react';
-import {KeyedMutator} from 'swr';
 
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
@@ -15,20 +14,25 @@ import HeadlessAdminUser from '../../../../../../services/rest/HeadlessAdminUser
 import {Region} from '../../../../../../services/rest/HeadlessCommerceAdminAddress';
 import {useProductPurchaseOutletContext} from '../../../../ProductPurchaseOutlet';
 import {productPurchaseStore} from '../../../../store';
-import BillingAddressForm from './BillinAddressForm';
+import BillingAddressForm from './BillingAddressForm';
 import getPostalAddressDescription from './getPostalAddressDescription';
+import useAccountAddresses from '../../../../../../hooks/useAccountAddresses';
+import i18n from '../../../../../../i18n';
 
 type BillingAddressProps = {
-	addresses: BillingAddress[];
-	mutateUserAccoutAddress: KeyedMutator<{items: BillingAddress[]}>;
-	setBillingAddress: React.Dispatch<BillingAddress>;
+	sectionName?: string;
 };
 
 const BillingAddress: React.FC<BillingAddressProps> = ({
-	addresses,
-	mutateUserAccoutAddress,
-	setBillingAddress,
+	sectionName = i18n.translate('billing-address'),
 }) => {
+	const {selectedAccount} = useProductPurchaseOutletContext();
+
+	const {data: addressResponse, mutate: mutateUserAccoutAddress} =
+		useAccountAddresses(selectedAccount?.id);
+
+	const addresses = addressResponse?.items ?? [];
+
 	const {billingAddress} = useSelector(
 		productPurchaseStore,
 		(state) => state.context.payment
@@ -36,7 +40,6 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 
 	const billingAdressName = billingAddress.name || '';
 
-	const {selectedAccount} = useProductPurchaseOutletContext();
 	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 	const {data: regionsResponse} = useCommerceRegions();
 	const [selectedAddress, setSelectedAddress] =
@@ -69,7 +72,10 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 			zip: postalAddress?.zip,
 		};
 
-		setBillingAddress(billingAddress);
+		productPurchaseStore.send({
+			billingAddress,
+			type: 'setBillingAddress',
+		});
 
 		if (!showNewAddressButton) {
 			setShowNewAddressButton(true);
@@ -135,7 +141,10 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 
 		setSelectedAddress(billingAddress.name as string);
 
-		setBillingAddress(billingAddress);
+		productPurchaseStore.send({
+			billingAddress,
+			type: 'setBillingAddress',
+		});
 
 		if (!showNewAddressButton) {
 			setShowNewAddressButton(true);
@@ -145,7 +154,7 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 	return (
 		<Section
 			className="billing-address-section"
-			label="Billing Address"
+			label={sectionName}
 			required
 		>
 			{addresses?.map((address, index) => {
@@ -166,7 +175,12 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 
 			<BillingAddressForm
 				saveAddress={saveAddress}
-				setBillingAddress={setBillingAddress}
+				setBillingAddress={() =>
+					productPurchaseStore.send({
+						billingAddress,
+						type: 'setBillingAddress',
+					})
+				}
 				setSelectedAddress={setSelectedAddress}
 				setShowNewAddressButton={setShowNewAddressButton}
 				showNewAddressButton={showNewAddressButton}

@@ -12,13 +12,13 @@ import useCommerceRegions from '../../../../../../hooks/useCommerceRegions';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 
-import './BillingAddress.scss';
-
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 
 import FormInput from '../../../../../../components/Input/formInput';
 import zodSchema from '../../../../../../schema/zod';
+
+import './BillingAddress.scss';
 
 type BillingAddressProps = {
 	saveAddress: (address: BillingAddress) => void;
@@ -118,6 +118,8 @@ const BillingAddressForm: React.FC<BillingAddressProps> = ({
 				</small>
 
 				<ClayButton
+					displayType="secondary"
+					size="sm"
 					onClick={() => {
 						setShowNewAddressButton(true);
 						setSelectedAddress('');

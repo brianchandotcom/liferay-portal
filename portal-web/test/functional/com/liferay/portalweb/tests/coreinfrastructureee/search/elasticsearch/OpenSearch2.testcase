@@ -23,6 +23,7 @@ definition {
 	@priority = 5
 	test SSLSmokeTest {
 		property opensearch.security.enabled = "true";
+		property portal.acceptance = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

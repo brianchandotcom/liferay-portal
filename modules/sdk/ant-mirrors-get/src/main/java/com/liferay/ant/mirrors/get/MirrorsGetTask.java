@@ -474,21 +474,6 @@ public class MirrorsGetTask extends Task {
 		}
 
 		if (!mirrorsCacheFile.exists()) {
-			_downloadGCPFile(mirrorsCacheTempFile);
-
-			if (mirrorsCacheTempFile.exists()) {
-				_moveFile(mirrorsCacheTempFile, mirrorsCacheFile);
-
-				if (_dest.exists() && _dest.isDirectory()) {
-					_copyFile(mirrorsCacheFile, new File(_dest, _fileName));
-				}
-				else {
-					_copyFile(mirrorsCacheFile, _dest);
-				}
-
-				return;
-			}
-
 			List<URL> urls = new ArrayList<>();
 
 			if (_tryLocalNetwork) {
@@ -507,12 +492,6 @@ public class MirrorsGetTask extends Task {
 
 			urls.add(localURL);
 
-			URL remoteURL = _getRemoteURL();
-
-			if (!Objects.equals(localURL, remoteURL)) {
-				urls.add(remoteURL);
-			}
-
 			urls.removeAll(Collections.singleton(null));
 
 			for (int i = 0; i < urls.size(); i++) {
@@ -522,21 +501,30 @@ public class MirrorsGetTask extends Task {
 					_downloadFile(url, mirrorsCacheTempFile, _retries);
 				}
 				catch (IOException ioException) {
-					if (i >= (urls.size() - 1)) {
-						_deleteFile(mirrorsCacheTempFile);
-
-						throw ioException;
-					}
-
 					if (_verbose) {
-						System.out.println(
-							"Unable to connect to " + url + ", defaulting to " +
-								urls.get(i + 1) + ".");
+						System.out.println("Unable to connect to " + url + ".");
 					}
 				}
 
 				if (mirrorsCacheTempFile.exists()) {
 					break;
+				}
+			}
+
+			if (!mirrorsCacheTempFile.exists()) {
+				_downloadGCPFile(mirrorsCacheTempFile);
+			}
+
+			if (!mirrorsCacheTempFile.exists()) {
+				URL remoteURL = _getRemoteURL();
+
+				try {
+					_downloadFile(remoteURL, mirrorsCacheTempFile, _retries);
+				}
+				catch (IOException ioException) {
+					_deleteFile(mirrorsCacheTempFile);
+
+					throw ioException;
 				}
 			}
 

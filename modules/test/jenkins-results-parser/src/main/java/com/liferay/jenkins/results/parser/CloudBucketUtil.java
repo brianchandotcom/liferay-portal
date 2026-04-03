@@ -441,17 +441,15 @@ public class CloudBucketUtil {
 	public static void touchS3File(String s3Path) throws IOException {
 		s3Path = _replaceS3ObjectPath(s3Path);
 
-		String tempS3Path = s3Path + System.currentTimeMillis() + ".temp";
-
 		long start = System.currentTimeMillis();
 
 		_executeAWSCommands(
 			_getFileTransferCommand(
-				"aws s3 cp --no-progress", tempS3Path, s3Path));
-
-		_executeAWSCommands(
-			_getFileTransferCommand(
-				"aws s3 mv --no-progress", s3Path, tempS3Path));
+				JenkinsResultsParserUtil.combine(
+					"aws s3 cp --metadata timestamp=",
+					JenkinsResultsParserUtil.getDistinctTimeStamp(),
+					" --no-progress"),
+				s3Path, s3Path));
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(

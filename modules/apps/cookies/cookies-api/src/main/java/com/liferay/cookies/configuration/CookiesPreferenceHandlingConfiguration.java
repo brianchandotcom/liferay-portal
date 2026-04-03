@@ -31,7 +31,8 @@ public interface CookiesPreferenceHandlingConfiguration {
 	public int consentRenewalPeriod();
 
 	@Meta.AD(
-		deflt = "months", optionLabels = {"days", "weeks", "months"},
+		deflt = "months", name = "cookie-consent-renewal-period-time-unit",
+		optionLabels = {"days", "weeks", "months"},
 		optionValues = {"days", "weeks", "months"}, required = false
 	)
 	public String consentRenewalPeriodTimeUnit();
@@ -49,7 +50,8 @@ public interface CookiesPreferenceHandlingConfiguration {
 	public int dissentRenewalPeriod();
 
 	@Meta.AD(
-		deflt = "months", optionLabels = {"days", "weeks", "months"},
+		deflt = "months", name = "cookie-dissent-renewal-period-time-unit",
+		optionLabels = {"days", "weeks", "months"},
 		optionValues = {"days", "weeks", "months"}, required = false
 	)
 	public String dissentRenewalPeriodTimeUnit();

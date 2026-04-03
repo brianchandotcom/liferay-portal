@@ -384,7 +384,12 @@ public abstract class BaseWorkspaceGitRepository
 		System.out.println(toString());
 
 		try {
-			_checkAvailableGitArchive();
+			if (JenkinsResultsParserUtil.isBuildCachingEnabled(
+					System.getenv("JOB_NAME"),
+					System.getenv("CI_TEST_SUITE"))) {
+
+				_checkAvailableGitArchive();
+			}
 
 			if (!_snapshot) {
 				_prepareGitWorkingDirectory();

@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
@@ -48,7 +47,6 @@ import jakarta.servlet.http.HttpSessionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -89,8 +87,7 @@ public class RecentGroupManagerImpl implements RecentGroupManager {
 		Group liveGroup = _groupLocalService.fetchGroup(liveGroupId);
 
 		if (liveGroup.isCMS() || liveGroup.isLayoutPrototype() ||
-			liveGroup.isLayoutSetPrototype() ||
-			Objects.equals(GroupConstants.DSR, liveGroup.getGroupKey())) {
+			liveGroup.isLayoutSetPrototype() || liveGroup.isSystemSite()) {
 
 			return;
 		}

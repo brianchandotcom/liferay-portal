@@ -127,7 +127,7 @@ public class SetUpYarnTask extends DefaultTask {
 		String packageJSON = JsonOutput.prettyPrint(
 			JsonOutput.toJson(packageJsonMap));
 
-		packageJSON = packageJSON.replaceAll(" {4}", "\t");
+		packageJSON = packageJSON.replaceAll(" {4}", "\t") + "\n";
 
 		Files.write(path, packageJSON.getBytes(StandardCharsets.UTF_8));
 	}

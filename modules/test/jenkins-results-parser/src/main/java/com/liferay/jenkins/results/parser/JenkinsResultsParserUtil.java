@@ -4220,40 +4220,58 @@ public class JenkinsResultsParserUtil {
 			return _topLevelJobNames.contains(jobName);
 		}
 
-		_topLevelJobNames = new ArrayList<>();
-
 		String masterHostname = System.getenv("MASTER_HOSTNAME");
 
 		if (isNullOrEmpty(masterHostname)) {
 			return false;
 		}
 
-		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(masterHostname);
+		final JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
+			masterHostname);
 
-		try {
-			JSONObject topLevelBuildsJSONObject = toJSONObject(
-				jenkinsMaster.getRemoteURL() +
-					"/view/Top%20Level/api/json?tree=jobs[name]");
+		Retryable<Set<String>> retryable = new Retryable<Set<String>>(
+			true, 3, 5, false) {
 
-			JSONArray jobsJSONArray = topLevelBuildsJSONObject.optJSONArray(
-				"jobs");
+			@Override
+			public Set<String> execute() {
+				JSONObject topLevelBuildsJSONObject;
 
-			if (jobsJSONArray == null) {
-				return false;
-			}
-
-			for (int i = 0; i < jobsJSONArray.length(); i++) {
-				JSONObject jobJSONObject = jobsJSONArray.optJSONObject(i);
-
-				if (jobJSONObject == null) {
-					continue;
+				try {
+					topLevelBuildsJSONObject = toJSONObject(
+						jenkinsMaster.getRemoteURL() +
+							"/view/Top%20Level/api/json?tree=jobs[name]");
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
 				}
 
-				_topLevelJobNames.add(jobJSONObject.getString("name"));
+				JSONArray jobsJSONArray = topLevelBuildsJSONObject.optJSONArray(
+					"jobs");
+
+				Set<String> topLevelJobNames = new HashSet<>();
+
+				if ((jobsJSONArray == null) || jobsJSONArray.isEmpty()) {
+					return topLevelJobNames;
+				}
+
+				for (int i = 0; i < jobsJSONArray.length(); i++) {
+					JSONObject jobJSONObject = jobsJSONArray.optJSONObject(i);
+
+					if (jobJSONObject == null) {
+						continue;
+					}
+
+					String topLevelJobName = jobJSONObject.getString("name");
+
+					topLevelJobNames.add(topLevelJobName);
+				}
+
+				return topLevelJobNames;
 			}
-		}
-		catch (IOException ioException) {
-		}
+
+		};
+
+		_topLevelJobNames = retryable.executeWithRetries();
 
 		return _topLevelJobNames.contains(jobName);
 	}
@@ -4951,7 +4969,7 @@ public class JenkinsResultsParserUtil {
 		}
 
 		Retryable<Process> retryable = new Retryable<Process>(
-			true, 3, 3000, false) {
+			true, 3, 3, false) {
 
 			@Override
 			public Process execute() {
@@ -7520,7 +7538,7 @@ public class JenkinsResultsParserUtil {
 		"(?<baseURL>https://webserver-testray2(-(?<lxcEnvironment>.+))?" +
 			"\\.lfr\\.cloud|https://testray\\.liferay\\.com).*");
 	private static final Set<String> _timeStamps = new HashSet<>();
-	private static List<String> _topLevelJobNames;
+	private static Set<String> _topLevelJobNames;
 	private static final List<HttpRequestMethod> _updatingHttpRequestMethods =
 		Arrays.asList(
 			HttpRequestMethod.POST, HttpRequestMethod.PATCH,

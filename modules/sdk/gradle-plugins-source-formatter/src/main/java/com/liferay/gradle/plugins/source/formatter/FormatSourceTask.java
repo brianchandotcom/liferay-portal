@@ -318,7 +318,7 @@ public class FormatSourceTask extends JavaExec {
 			"source.file.extensions=" + String.join(",", getFileExtensions()));
 		args.add(
 			"source.formatter.properties=" +
-				String.join(",", getSourceFormatterProperties()));
+				String.join("\\n", getSourceFormatterProperties()));
 		args.add("source.print.errors=" + isPrintErrors());
 		args.add("validate.commit.messages=" + isValidateCommitMessages());
 

@@ -13,6 +13,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:headless:headless-asset-library:headless-asset-library-api")
 	testIntegrationImplementation project(":apps:info:info-api")
 	testIntegrationImplementation project(":apps:layout:layout-api")
+	testIntegrationImplementation project(":apps:layout:layout-display-page-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")

@@ -97,7 +97,8 @@ public class StatsClusterRequestExecutor {
 				new SimpleEndpoint<>(
 					statsClusterEndpointRequest -> "GET",
 					statsClusterEndpointRequest -> {
-						String[] nodeIds = statsClusterEndpointRequest.getNodeIds();
+						String[] nodeIds =
+							statsClusterEndpointRequest.getNodeIds();
 
 						if ((nodeIds != null) && (nodeIds.length > 0)) {
 							return "/_cluster/stats/nodes/" +
@@ -107,8 +108,8 @@ public class StatsClusterRequestExecutor {
 						return "/_cluster/stats";
 					},
 					statsClusterEndpointRequest -> Collections.emptyMap(),
-					statsClusterEndpointRequest -> Collections.emptyMap(), false,
-					JsonpDeserializer.jsonValueDeserializer()),
+					statsClusterEndpointRequest -> Collections.emptyMap(),
+					false, JsonpDeserializer.jsonValueDeserializer()),
 				null);
 
 			return jsonValue.asJsonObject();

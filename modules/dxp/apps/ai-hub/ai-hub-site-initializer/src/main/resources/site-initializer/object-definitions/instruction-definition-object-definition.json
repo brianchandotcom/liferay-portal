@@ -84,7 +84,7 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"businessType": "LongText",
 			"externalReferenceCode": "OCCASION",
 			"indexed": true,
@@ -94,7 +94,7 @@
 			},
 			"name": "occasion",
 			"system": true,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",

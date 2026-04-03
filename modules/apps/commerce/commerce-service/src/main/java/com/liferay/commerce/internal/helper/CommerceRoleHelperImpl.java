@@ -19,6 +19,7 @@ import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.helper.CommerceRoleHelper;
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
 import com.liferay.commerce.payment.constants.CommercePaymentEntryActionKeys;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
@@ -403,6 +404,8 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 				CommerceInventoryWarehouse.class.getName(),
 				new String[] {ActionKeys.VIEW});
 			companyResourceActionIds.put(
+				CommerceOrder.class.getName(), new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
 				CommercePortletKeys.COMMERCE_ORDER,
 				new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
 			companyResourceActionIds.put(
@@ -426,7 +429,8 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 					CommerceOrderActionKeys.
 						MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES,
 					CommerceOrderActionKeys.
-						MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS
+						MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS
 				});
 			companyResourceActionIds.put(
 				"com.liferay.commerce.product",

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.webserver.WebServerServlet;
@@ -101,6 +102,7 @@ public class WebServerServletTest {
 		}
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeCompanyAdminCanAccessDocument()
 		throws Exception {
@@ -117,6 +119,7 @@ public class WebServerServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeGuestUserGets503ForDocument()
 		throws Exception {
@@ -133,6 +136,7 @@ public class WebServerServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeRegularUserGets503ForDocument()
 		throws Exception {
@@ -151,6 +155,7 @@ public class WebServerServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeSiteAdminCanAccessDocument()
 		throws Exception {

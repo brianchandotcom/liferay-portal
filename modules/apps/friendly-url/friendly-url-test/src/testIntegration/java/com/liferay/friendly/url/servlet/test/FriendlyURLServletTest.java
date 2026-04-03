@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.I18nServlet;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -677,6 +678,7 @@ public class FriendlyURLServletTest {
 				layout.getName(LocaleUtil.US), true, false));
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeCompanyAdminBypass() throws Exception {
 		_enableMaintenanceMode(_group);
@@ -689,6 +691,7 @@ public class FriendlyURLServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeGuestUserGets503() throws Exception {
 		_enableMaintenanceMode(_group);
@@ -701,6 +704,7 @@ public class FriendlyURLServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeGuestUserGets503WithUtilityPage()
 		throws Exception {
@@ -735,6 +739,7 @@ public class FriendlyURLServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeRegularUserGets503() throws Exception {
 		_enableMaintenanceMode(_group);
@@ -749,6 +754,7 @@ public class FriendlyURLServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testMaintenanceModeSiteAdminBypass() throws Exception {
 		_enableMaintenanceMode(_group);

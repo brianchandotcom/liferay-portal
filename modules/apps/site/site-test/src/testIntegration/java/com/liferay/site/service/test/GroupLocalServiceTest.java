@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -56,6 +57,7 @@ public class GroupLocalServiceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testActivatingSiteClearsMaintenanceMode() throws Exception {
 		Group group = GroupTestUtil.addGroup();
@@ -174,6 +176,7 @@ public class GroupLocalServiceTest {
 		}
 	}
 
+	@FeatureFlag("LPD-82969")
 	@Test
 	public void testEnablingMaintenanceModeDeactivatesSite() throws Exception {
 		Group group = GroupTestUtil.addGroup();

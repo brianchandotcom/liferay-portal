@@ -702,6 +702,17 @@ public abstract class BaseWorkspaceGitRepository
 
 			sb.setLength(0);
 
+			sb.append("git -C ");
+			sb.append(clonedWorkingDirectory);
+			sb.append(" update-ref refs/heads/");
+			sb.append(getUpstreamBranchName());
+			sb.append(" ");
+			sb.append(getBaseBranchSHA());
+
+			commands.add(sb.toString());
+
+			sb.setLength(0);
+
 			sb.append("cd ");
 			sb.append(clonedWorkingDirectory);
 		}
@@ -1379,6 +1390,15 @@ public abstract class BaseWorkspaceGitRepository
 					JenkinsResultsParserUtil.combine(
 						"Unable to reset Git directory: " + directory,
 						executionResult.getStandardError()));
+			}
+
+			GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+			String upstreamBranchName = getUpstreamBranchName();
+
+			if (!gitWorkingDirectory.localGitBranchExists(upstreamBranchName)) {
+				gitWorkingDirectory.createLocalGitBranch(
+					upstreamBranchName, true, getBaseBranchSHA());
 			}
 		}
 	}

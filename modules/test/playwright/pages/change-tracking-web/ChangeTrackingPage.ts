@@ -40,9 +40,7 @@ export class ChangeTrackingPage {
 			name: 'Review Changes',
 		});
 		this.tabsContainer = page.locator('nav.navbar');
-		this.sandboxOnlyCheckbox = page.getByRole('checkbox', {
-			name: 'Enable Sandbox Only Mode',
-		});
+		this.sandboxOnlyCheckbox = page.getByTitle('Enable Sandbox Only Mode');
 	}
 
 	async addComment(comment?: string) {

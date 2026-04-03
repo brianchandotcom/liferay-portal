@@ -204,6 +204,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean isStagingGroup();
 
+	public boolean isSystemSite();
+
 	public boolean isUser();
 
 	public boolean isUserGroup();
@@ -215,4 +217,4 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 			typeSettingsUnicodeProperties);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-71914651
+// LIFERAY-SERVICE-BUILDER-HASH:932190768

@@ -369,57 +369,50 @@ public class MirrorsGetTask extends Task {
 
 		File gcpCredentialsFile = _getGCPCredentialsFile();
 
-		if (gcpCredentialsFile == null) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Unable to download from ");
-			sb.append(gsURL);
-			sb.append(" because \"mirrors.gcp.credentials.file[");
-			sb.append(_getGCPBucketName());
-			sb.append("]\" is not set.");
-
-			System.out.println(sb.toString());
-
-			return;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Downloading ");
-		sb.append(gsURL);
-		sb.append(" to ");
-		sb.append(targetFile.getPath());
-		sb.append(".");
-
-		System.out.println(sb.toString());
-
 		try {
-			Process process = _executeCommands(
-				new String[] {
-					"gcloud", "auth", "activate-service-account", "--key-file",
-					gcpCredentialsFile.toString()
-				});
+			if (gcpCredentialsFile != null) {
+				System.out.println(
+					"Activating service account with: " + gcpCredentialsFile);
 
-			if (process.exitValue() != 0) {
-				System.out.println("Unable to activate service account.");
+				Process process = _executeCommands(
+					new String[] {
+						"gcloud", "auth", "activate-service-account",
+						"--key-file", gcpCredentialsFile.toString()
+					});
 
-				return;
+				if (process.exitValue() != 0) {
+					System.out.println("Unable to activate service account.");
+				}
 			}
 
-			process = _executeCommands(
+			System.out.println("Downloading " + gsURL + " to " + targetFile);
+
+			Process process = _executeCommands(
 				new String[] {
 					"gcloud", "storage", "cp", gsURL, targetFile.toString()
 				});
 
+			if (process.exitValue() == 0) {
+				return;
+			}
+
+			System.out.println(
+				"Unable to download file from " + gsURL + " using gcloud storage cp.");
+
+			process = _executeCommands(
+				new String[] {"gsutil", "cp", gsURL, targetFile.toString()});
+
 			if (process.exitValue() != 0) {
 				System.out.println(
-					"Unable to download file from " + gsURL + ".");
+					"Unable to download file from " + gsURL + " using gsutil cp.");
 
 				_deleteFile(targetFile);
 			}
 		}
-		catch (Exception exception) {
-			System.out.println("Unable to run GCP commands to download file.");
+		catch (IOException | InterruptedException | RuntimeException exception) {
+			System.out.println(
+				"Unable to run GCP commands to download file: " +
+					exception.getMessage());
 		}
 	}
 
@@ -621,11 +614,9 @@ public class MirrorsGetTask extends Task {
 
 		File gcpCredentialsFile = new File(gcpCredentialsFileName);
 
-		if (!gcpCredentialsFile.exists()) {
-			return null;
+		if (gcpCredentialsFile.exists()) {
+			_gcpCredentialsFile = gcpCredentialsFile;
 		}
-
-		_gcpCredentialsFile = gcpCredentialsFile;
 
 		return _gcpCredentialsFile;
 	}

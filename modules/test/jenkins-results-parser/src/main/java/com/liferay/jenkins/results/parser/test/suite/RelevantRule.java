@@ -31,6 +31,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Kenji Heigel
@@ -453,7 +454,8 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		return (PortalGitWorkingDirectory)_gitWorkingDirectory;
 	}
 
-	private static final Set<String> _moduleDirPaths = new HashSet<>();
+	private static final Set<String> _moduleDirPaths =
+		ConcurrentHashMap.newKeySet();
 
 	private final String _filePath;
 	private final GitWorkingDirectory _gitWorkingDirectory;

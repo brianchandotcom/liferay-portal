@@ -50,17 +50,19 @@ export function acceptAllCookies(
 
 export function declineAllCookies(
 	consentRenewalPeriod,
+	consentRenewalPeriodTimeUnit,
+	dissentRenewalPeriod,
+	dissentRenewalPeriodTimeUnit,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
-	storeConsent,
-	timeUnit
+	storeConsent
 ) {
 	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
 		setCookie(
-			consentRenewalPeriod,
+			dissentRenewalPeriod,
 			optionalConsentCookieTypeName,
 			storeConsent,
-			timeUnit,
+			dissentRenewalPeriodTimeUnit,
 			'false'
 		);
 	});
@@ -70,7 +72,7 @@ export function declineAllCookies(
 			consentRenewalPeriod,
 			requiredConsentCookieTypeName,
 			storeConsent,
-			timeUnit,
+			consentRenewalPeriodTimeUnit,
 			'true'
 		);
 	});

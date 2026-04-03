@@ -683,7 +683,16 @@ public class MirrorsGetTask extends Task {
 		sb.append(File.separator);
 		sb.append(_hostName);
 		sb.append(File.separator);
-		sb.append(_getPlatformIndependentPath(_path));
+
+		String path = _path;
+
+		if (Objects.equals(_hostName, "storage.googleapis.com") &&
+			!path.startsWith(_gcpBucketName + "/")) {
+
+			path = _gcpBucketName + "/" + path;
+		}
+
+		sb.append(_getPlatformIndependentPath(path));
 
 		return new File(sb.toString(), _fileName);
 	}
@@ -718,8 +727,20 @@ public class MirrorsGetTask extends Task {
 		sb.append("/");
 		sb.append(_hostName);
 		sb.append("/");
-		sb.append(_path);
-		sb.append("/");
+
+		String path = _path;
+
+		if (Objects.equals(_hostName, "storage.googleapis.com") &&
+			!path.startsWith(_gcpBucketName + "/")) {
+
+			path = _gcpBucketName + "/" + path;
+		}
+
+		if (!path.isEmpty()) {
+			sb.append(path);
+			sb.append("/");
+		}
+
 		sb.append(_fileName);
 
 		try {
@@ -818,8 +839,16 @@ public class MirrorsGetTask extends Task {
 		sb.append(_hostName);
 		sb.append("/");
 
-		if (!_path.isEmpty()) {
-			sb.append(_path);
+		String path = _path;
+
+		if (Objects.equals(_hostName, "storage.googleapis.com") &&
+			!path.startsWith(_gcpBucketName + "/")) {
+
+			path = _gcpBucketName + "/" + path;
+		}
+
+		if (!path.isEmpty()) {
+			sb.append(path);
 			sb.append("/");
 		}
 

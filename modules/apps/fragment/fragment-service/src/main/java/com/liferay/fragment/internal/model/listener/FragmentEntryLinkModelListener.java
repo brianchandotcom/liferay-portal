@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -101,6 +102,8 @@ public class FragmentEntryLinkModelListener
 				FragmentEntryLink.class.getName(),
 				fragmentEntryLink.getFragmentEntryLinkId(),
 				ContentTypes.TEXT_HTML, value);
+
+			value = StringUtil.trim(value);
 		}
 
 		return value;

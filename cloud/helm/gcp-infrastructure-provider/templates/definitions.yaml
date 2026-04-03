@@ -22,6 +22,17 @@ spec:
                     properties:
                         spec:
                             properties:
+                                backup:
+                                    properties:
+                                        enabled:
+                                            type: boolean
+                                        region:
+                                            type: string
+                                        retentionDays:
+                                            type: integer
+                                        storageClass:
+                                            type: string
+                                    type: object
                                 cmk:
                                     default:
                                         enabled: false

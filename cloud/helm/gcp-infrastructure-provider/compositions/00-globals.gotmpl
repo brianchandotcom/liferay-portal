@@ -1,6 +1,7 @@
 {{- $env := index .context "apiextensions.crossplane.io/environment" -}}
 {{- $xr := .observed.composite.resource -}}
 
+{{- $backup := $xr.spec.backup | default dict -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled | default false -}}
 {{- $commonTags := $xr.spec.commonTags | default dict -}}
 {{- $databaseInstanceName := printf "%s-db-instance" $xr.metadata.name -}}

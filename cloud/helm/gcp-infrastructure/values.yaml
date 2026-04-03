@@ -1,3 +1,8 @@
+backup:
+    enabled: false
+    region: ""
+    retentionDays: 30
+    storageClass: NEARLINE
 cmk:
     enabled: false
 database:

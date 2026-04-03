@@ -8,6 +8,7 @@ metadata:
     name: {{ .Release.Name }}
     namespace: {{ .Release.Namespace }}
 spec:
+    backup: {{ .Values.backup | toYaml | nindent 8 }}
     cmk: {{ .Values.cmk | toYaml | nindent 8 }}
     commonTags:
         environment_id: {{ .Values.environmentId }}

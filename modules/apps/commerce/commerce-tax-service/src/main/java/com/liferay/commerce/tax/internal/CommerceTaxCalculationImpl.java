@@ -6,7 +6,6 @@
 package com.liferay.commerce.tax.internal;
 
 import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
@@ -65,7 +64,9 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 				commerceOrder.getGroupId(), commerceOrderItem.getCPInstanceId(),
 				commerceOrder.getBillingAddressId(),
 				commerceOrder.getShippingAddressId(),
-				commerceOrderItem.getFinalPrice(), false);
+				commerceOrderItem.getFinalPrice(),
+				commerceOrder.getCommerceCurrencyCode(),
+				false);
 
 			for (CommerceTaxValue commerceTaxValue : commerceTaxValues) {
 				CommerceTaxValue aggregatedCommerceTaxValue = null;
@@ -91,23 +92,11 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		return new ArrayList<>(taxValueMap.values());
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public List<CommerceTaxValue> getCommerceTaxValues(
-			CommerceOrder commerceOrder, CommerceContext commerceContext)
-		throws PortalException {
-
-		return getCommerceTaxValues(commerceOrder);
-	}
-
 	@Override
 	public List<CommerceTaxValue> getCommerceTaxValues(
 			long groupId, long cpInstanceId, long commerceBillingAddressId,
 			long commerceShippingAddressId, BigDecimal amount,
-			boolean includeTax)
+			String commerceCurrencyCode, boolean includeTax)
 		throws PortalException {
 
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
@@ -127,23 +116,8 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 
 		return _getCommerceTaxValues(
 			groupId, commerceBillingAddressId, commerceShippingAddressId,
-			amount, includeTax, false, cpDefinition.getCPTaxCategoryId());
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public List<CommerceTaxValue> getCommerceTaxValues(
-			long groupId, long cpInstanceId, long commerceBillingAddressId,
-			long commerceShippingAddressId, BigDecimal amount,
-			CommerceContext commerceContext)
-		throws PortalException {
-
-		return getCommerceTaxValues(
-			groupId, cpInstanceId, commerceBillingAddressId,
-			commerceShippingAddressId, amount, false);
+			amount, commerceCurrencyCode, includeTax, false,
+			cpDefinition.getCPTaxCategoryId());
 	}
 
 	@Override
@@ -161,7 +135,8 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		List<CommerceTaxValue> commerceTaxValues = _getCommerceTaxValues(
 			commerceOrder.getGroupId(), commerceOrder.getBillingAddressId(),
 			commerceOrder.getShippingAddressId(),
-			commerceOrder.getShippingAmount(), false, true,
+			commerceOrder.getShippingAmount(),
+			commerceOrder.getCommerceCurrencyCode(), false, true,
 			commerceShippingTaxConfiguration.taxCategoryId());
 
 		BigDecimal taxAmount = BigDecimal.ZERO;
@@ -173,19 +148,6 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		}
 
 		return _commerceMoneyFactory.create(commerceCurrency, taxAmount);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CommerceMoney getTaxAmount(
-			CommerceOrder commerceOrder, CommerceContext commerceContext)
-		throws PortalException {
-
-		return getTaxAmount(
-			commerceOrder, commerceContext.getCommerceCurrency());
 	}
 
 	@Override
@@ -207,14 +169,17 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 
 	private List<CommerceTaxValue> _getCommerceTaxValues(
 		long groupId, long commerceBillingAddressId,
-		long commerceShippingAddressId, BigDecimal amount, boolean includeTax,
-		boolean shipping, long taxCategoryId) {
+		long commerceShippingAddressId, BigDecimal amount,
+		String commerceCurrencyCode, boolean includeTax, boolean shipping,
+		long taxCategoryId) {
 
 		CommerceTaxCalculateRequest commerceTaxCalculateRequest =
 			new CommerceTaxCalculateRequest();
 
 		commerceTaxCalculateRequest.setCommerceBillingAddressId(
 			commerceBillingAddressId);
+		commerceTaxCalculateRequest.setCommerceCurrencyCode(
+			commerceCurrencyCode);
 		commerceTaxCalculateRequest.setCommerceChannelGroupId(groupId);
 		commerceTaxCalculateRequest.setCommerceShippingAddressId(
 			commerceShippingAddressId);

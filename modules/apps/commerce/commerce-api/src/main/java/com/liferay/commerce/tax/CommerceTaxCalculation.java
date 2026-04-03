@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.tax;
 
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
@@ -24,40 +23,14 @@ public interface CommerceTaxCalculation {
 			CommerceOrder commerceOrder)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public List<CommerceTaxValue> getCommerceTaxValues(
-			CommerceOrder commerceOrder, CommerceContext commerceContext)
-		throws PortalException;
-
 	public List<CommerceTaxValue> getCommerceTaxValues(
 			long groupId, long cpInstanceId, long commerceBillingAddressId,
 			long commerceShippingAddressId, BigDecimal amount,
-			boolean includeTax)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public List<CommerceTaxValue> getCommerceTaxValues(
-			long groupId, long cpInstanceId, long commerceBillingAddressId,
-			long commerceShippingAddressId, BigDecimal amount,
-			CommerceContext commerceContext)
+			String commerceCurrencyCode, boolean includeTax)
 		throws PortalException;
 
 	public CommerceMoney getShippingTaxValue(
 			CommerceOrder commerceOrder, CommerceCurrency commerceCurrency)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public CommerceMoney getTaxAmount(
-			CommerceOrder commerceOrder, CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getTaxAmount(

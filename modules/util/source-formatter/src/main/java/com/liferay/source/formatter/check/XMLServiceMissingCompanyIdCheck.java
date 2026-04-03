@@ -39,6 +39,9 @@ public class XMLServiceMissingCompanyIdCheck extends BaseFileCheck {
 
 		Element rootElement = document.getRootElement();
 
+		List<String> allowedEntityNames = getAttributeValues(
+			_ALLOWED_MISSING_COMPANY_ID_ENTITY_NAMES_KEY, absolutePath);
+
 		for (Element entityElement :
 				(List<Element>)rootElement.elements("entity")) {
 
@@ -50,6 +53,10 @@ public class XMLServiceMissingCompanyIdCheck extends BaseFileCheck {
 
 			String entityName = entityElement.attributeValue("name");
 
+			if (allowedEntityNames.contains(entityName)) {
+				continue;
+			}
+
 			List<String> columnNames = new ArrayList<>();
 
 			for (Element columnElement :
@@ -59,15 +66,6 @@ public class XMLServiceMissingCompanyIdCheck extends BaseFileCheck {
 			}
 
 			if (columnNames.isEmpty() || columnNames.contains("companyId")) {
-				continue;
-			}
-
-			List<String> allowedEntityNames = getAttributeValues(
-				_ALLOWED_MISSING_COMPANY_ID_ENTITY_NAMES_KEY, absolutePath);
-
-			if (allowedEntityNames.isEmpty() ||
-				allowedEntityNames.contains(entityName)) {
-
 				continue;
 			}
 

@@ -183,6 +183,21 @@ public class MirrorsGetTask extends Task {
 
 		_path = matcher.group("path");
 
+		if (Objects.equals(_hostName, "storage.googleapis.com")) {
+			int index = _path.indexOf("/");
+
+			if (index != -1) {
+				_gcpBucketName = _path.substring(0, index);
+
+				_path = _path.substring(index + 1);
+			}
+			else {
+				_gcpBucketName = _path;
+
+				_path = "";
+			}
+		}
+
 		while (_path.endsWith("/")) {
 			_path = _path.substring(0, _path.length() - 1);
 		}
@@ -558,23 +573,6 @@ public class MirrorsGetTask extends Task {
 			return null;
 		}
 
-		if (Objects.equals(_hostName, "storage.googleapis.com")) {
-			int index = _path.indexOf("/");
-
-			if (index != -1) {
-				_gcpBucketName = _path.substring(0, index);
-
-				_path = _path.substring(index + 1);
-			}
-			else {
-				_gcpBucketName = _path;
-
-				_path = "";
-			}
-
-			return _gcpBucketName;
-		}
-
 		Map<String, Object> properties = project.getProperties();
 
 		for (String propertyName : properties.keySet()) {
@@ -631,7 +629,13 @@ public class MirrorsGetTask extends Task {
 			return null;
 		}
 
-		return "gs://" + gcpBucketName + "/" + _path + "/" + _fileName;
+		String path = _path;
+
+		if (!path.isEmpty()) {
+			path = "/" + path;
+		}
+
+		return "gs://" + gcpBucketName + path + "/" + _fileName;
 	}
 
 	private URL _getLocalURL() {
@@ -814,15 +818,11 @@ public class MirrorsGetTask extends Task {
 		sb.append(_hostName);
 		sb.append("/");
 
-		if (Objects.equals(_hostName, "storage.googleapis.com") &&
-			!_path.startsWith(_gcpBucketName + "/")) {
-
-			sb.append(_gcpBucketName);
+		if (!_path.isEmpty()) {
+			sb.append(_path);
 			sb.append("/");
 		}
 
-		sb.append(_path);
-		sb.append("/");
 		sb.append(_fileName);
 
 		try {

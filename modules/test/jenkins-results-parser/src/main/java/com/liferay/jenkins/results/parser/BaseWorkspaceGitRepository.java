@@ -387,6 +387,18 @@ public abstract class BaseWorkspaceGitRepository
 
 		if (!_snapshot) {
 			if (_isGitArchiveAvailable()) {
+				try {
+					CloudBucketUtil.touchS3File(_getGitArchiveS3BucketPath());
+
+					if (_isDotGitArchiveAvailable()) {
+						CloudBucketUtil.touchS3File(
+							_getDotGitArchiveS3BucketPath());
+					}
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+
 				_setSnapshot(true);
 
 				BuildDatabase buildDatabase =
@@ -1078,6 +1090,26 @@ public abstract class BaseWorkspaceGitRepository
 		return _upstreamRemoteGitRef;
 	}
 
+	private boolean _isDotGitArchiveAvailable() {
+		if (!JenkinsResultsParserUtil.isCloudCINode() ||
+			_isDotGitDirArchiveRequired()) {
+
+			return false;
+		}
+
+		String jobName = _getJobName();
+
+		if (((this instanceof PortalWorkspaceGitRepository) &&
+			 jobName.contains("root-cause-analysis-tool")) ||
+			!CloudBucketUtil.isS3ObjectPathAvailable(
+				_getDotGitArchiveS3BucketPath())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private boolean _isDotGitDirArchiveRequired() {
 		String directoryName = getDirectoryName();
 
@@ -1150,36 +1182,12 @@ public abstract class BaseWorkspaceGitRepository
 
 		String jobName = _getJobName();
 
-		if ((this instanceof PortalWorkspaceGitRepository) &&
-			jobName.contains("root-cause-analysis-tool")) {
-
-			return false;
-		}
-
-		String gitArchiveS3BucketPath = _getGitArchiveS3BucketPath();
-
-		if (!CloudBucketUtil.isS3ObjectPathAvailable(gitArchiveS3BucketPath)) {
-			return false;
-		}
-
-		String dotGitArchiveS3BucketPath = _getDotGitArchiveS3BucketPath();
-
-		if (_isDotGitDirArchiveRequired() &&
+		if (((this instanceof PortalWorkspaceGitRepository) &&
+			 jobName.contains("root-cause-analysis-tool")) ||
 			!CloudBucketUtil.isS3ObjectPathAvailable(
-				dotGitArchiveS3BucketPath)) {
+				_getGitArchiveS3BucketPath())) {
 
 			return false;
-		}
-
-		try {
-			CloudBucketUtil.touchS3File(gitArchiveS3BucketPath);
-
-			if (_isDotGitDirArchiveRequired()) {
-				CloudBucketUtil.touchS3File(dotGitArchiveS3BucketPath);
-			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
 		}
 
 		return true;

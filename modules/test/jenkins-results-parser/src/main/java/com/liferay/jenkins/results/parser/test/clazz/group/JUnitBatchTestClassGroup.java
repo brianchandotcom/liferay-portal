@@ -456,19 +456,15 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			String testClassGlob = matcher.group("testClassGlob");
-			String testClassMethodName = matcher.group("testClassMethodName");
 
 			List<String> testClassMethodNames =
-				_globTestClassMethodNamesMap.get(testClassGlob);
+				_globTestClassMethodNamesMap.getOrDefault(
+					testClassGlob, new ArrayList<>());
 
-			if (testClassMethodNames == null) {
-				testClassMethodNames = new ArrayList<>();
+			testClassMethodNames.add(matcher.group("testClassMethodName"));
 
-				_globTestClassMethodNamesMap.put(
-					testClassGlob, testClassMethodNames);
-			}
-
-			testClassMethodNames.add(testClassMethodName);
+			_globTestClassMethodNamesMap.put(
+				testClassGlob, testClassMethodNames);
 
 			Collections.addAll(
 				includeGlobs,

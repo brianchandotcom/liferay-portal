@@ -678,7 +678,7 @@ public class FriendlyURLServletTest {
 				layout.getName(LocaleUtil.US), true, false));
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeCompanyAdminBypass() throws Exception {
 		_enableMaintenanceMode(_group);
@@ -691,7 +691,7 @@ public class FriendlyURLServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeGuestUserGets503() throws Exception {
 		_enableMaintenanceMode(_group);
@@ -704,7 +704,7 @@ public class FriendlyURLServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeGuestUserGets503WithUtilityPage()
 		throws Exception {
@@ -739,7 +739,7 @@ public class FriendlyURLServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeRegularUserGets503() throws Exception {
 		_enableMaintenanceMode(_group);
@@ -754,7 +754,7 @@ public class FriendlyURLServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeSiteAdminBypass() throws Exception {
 		_enableMaintenanceMode(_group);

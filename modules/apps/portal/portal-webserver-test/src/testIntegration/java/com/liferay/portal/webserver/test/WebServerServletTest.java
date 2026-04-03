@@ -102,7 +102,7 @@ public class WebServerServletTest {
 		}
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeCompanyAdminCanAccessDocument()
 		throws Exception {
@@ -119,7 +119,7 @@ public class WebServerServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeGuestUserGets503ForDocument()
 		throws Exception {
@@ -136,7 +136,7 @@ public class WebServerServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeRegularUserGets503ForDocument()
 		throws Exception {
@@ -155,7 +155,7 @@ public class WebServerServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testMaintenanceModeSiteAdminCanAccessDocument()
 		throws Exception {

@@ -57,7 +57,7 @@ public class GroupLocalServiceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testActivatingSiteClearsMaintenanceMode() throws Exception {
 		Group group = GroupTestUtil.addGroup();
@@ -176,7 +176,7 @@ public class GroupLocalServiceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-82969")
+	@FeatureFlag("LPD-82960")
 	@Test
 	public void testEnablingMaintenanceModeDeactivatesSite() throws Exception {
 		Group group = GroupTestUtil.addGroup();

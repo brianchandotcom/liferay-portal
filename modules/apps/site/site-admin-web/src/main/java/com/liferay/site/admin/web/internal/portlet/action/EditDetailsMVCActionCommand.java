@@ -107,7 +107,7 @@ public class EditDetailsMVCActionCommand
 			liveGroup.getTypeSettingsProperties();
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				liveGroup.getCompanyId(), "LPD-82969")) {
+				liveGroup.getCompanyId(), "LPD-82960")) {
 
 			boolean maintenanceMode = ParamUtil.getBoolean(
 				actionRequest, "maintenanceMode");

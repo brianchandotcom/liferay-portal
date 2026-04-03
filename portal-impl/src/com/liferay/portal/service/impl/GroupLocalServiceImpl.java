@@ -2607,7 +2607,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public boolean isMaintenanceMode(Group group) {
 		if ((group == null) ||
 			!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-82969")) {
+				group.getCompanyId(), "LPD-82960")) {
 
 			return false;
 		}
@@ -3935,7 +3935,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setInheritContent(inheritContent);
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-82969")) {
+				group.getCompanyId(), "LPD-82960")) {
 
 			if (Validator.isNotNull(typeSettings)) {
 				UnicodeProperties newTypeSettingsUnicodeProperties =

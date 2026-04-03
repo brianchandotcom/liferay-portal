@@ -19,6 +19,7 @@ import com.liferay.commerce.internal.upgrade.v13_0_3.CPConfigurationUpgradeProce
 import com.liferay.commerce.internal.upgrade.v13_0_5.CommerceReturnReasonConfigurationUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v13_0_7.CPDefinitionInventoryUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v14_0_0.ObjectDefinitionUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v15_0_3.OrderAdministratorRoleUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v1_2_0.CommerceSubscriptionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_0_0.CommercePaymentMethodUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_1_0.CPDAvailabilityEstimateUpgradeProcess;
@@ -870,6 +871,12 @@ public class CommerceServiceUpgradeStepRegistrator
 				CommercePermissionUpgradeProcess(
 					_resourceActionLocalService,
 					_resourcePermissionLocalService));
+
+		registry.register(
+			"15.0.2", "15.0.3",
+			new OrderAdministratorRoleUpgradeProcess(
+				_companyLocalService, _resourcePermissionLocalService,
+				_roleLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

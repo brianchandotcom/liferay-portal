@@ -1658,7 +1658,8 @@ public class CommerceOrderItemLocalServiceImpl
 		return CommercePriceConverterUtil.getConvertedPrice(
 			commerceOrder.getGroupId(), cpInstanceId,
 			commerceOrder.getBillingAddressId(),
-			commerceOrder.getShippingAddressId(), price, false,
+			commerceOrder.getShippingAddressId(),
+			commerceOrder.getCommerceCurrencyCode(), price, false,
 			_commerceTaxCalculation);
 	}
 

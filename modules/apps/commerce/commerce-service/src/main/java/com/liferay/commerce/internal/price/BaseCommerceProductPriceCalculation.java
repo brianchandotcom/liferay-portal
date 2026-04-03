@@ -165,6 +165,7 @@ public abstract class BaseCommerceProductPriceCalculation
 			commerceContext.getCommerceChannelGroupId();
 		long commerceBillingAddressId = 0;
 		long commerceShippingAddressId = 0;
+		String commerceCurrencyCode = null;
 
 		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
@@ -172,6 +173,7 @@ public abstract class BaseCommerceProductPriceCalculation
 			commerceChannelGroupId = commerceOrder.getGroupId();
 			commerceBillingAddressId = commerceOrder.getBillingAddressId();
 			commerceShippingAddressId = commerceOrder.getShippingAddressId();
+			commerceCurrencyCode = commerceOrder.getCommerceCurrencyCode();
 		}
 		else {
 			AccountEntry accountEntry = commerceContext.getAccountEntry();
@@ -211,7 +213,7 @@ public abstract class BaseCommerceProductPriceCalculation
 
 		return CommercePriceConverterUtil.getConvertedPrice(
 			commerceChannelGroupId, cpInstanceId, commerceBillingAddressId,
-			commerceShippingAddressId, price, includeTax,
+			commerceShippingAddressId, commerceCurrencyCode, price, includeTax,
 			commerceTaxCalculation);
 	}
 

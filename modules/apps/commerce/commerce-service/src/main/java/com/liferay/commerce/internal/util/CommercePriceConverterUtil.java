@@ -62,7 +62,7 @@ public class CommercePriceConverterUtil {
 	public static BigDecimal getConvertedPrice(
 			long commerceChannelGroupId, long cpInstanceId,
 			long commerceBillingAddressId, long commerceShippingAddressId,
-			BigDecimal price, boolean includeTax,
+			String commerceCurrencyCode, BigDecimal price, boolean includeTax,
 			CommerceTaxCalculation commerceTaxCalculation)
 		throws PortalException {
 
@@ -73,7 +73,8 @@ public class CommercePriceConverterUtil {
 		List<CommerceTaxValue> commerceTaxValues =
 			commerceTaxCalculation.getCommerceTaxValues(
 				commerceChannelGroupId, cpInstanceId, commerceBillingAddressId,
-				commerceShippingAddressId, price, includeTax);
+				commerceShippingAddressId, price, commerceCurrencyCode,
+				includeTax);
 
 		if (commerceTaxValues.isEmpty()) {
 			return price;

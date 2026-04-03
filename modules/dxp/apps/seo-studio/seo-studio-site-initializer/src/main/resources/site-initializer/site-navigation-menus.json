@@ -1,0 +1,15 @@
+[
+	{
+		"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION",
+		"menuItems": [
+			{
+				"displayIcon": "plus-squares",
+				"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION1",
+				"friendlyURL": "/overview",
+				"privateLayout": false,
+				"type": "layout"
+			}
+		],
+		"name": "SEO Studio Primary Navigation"
+	}
+]

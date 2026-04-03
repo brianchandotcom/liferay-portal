@@ -181,11 +181,13 @@ export default function ({
 						),
 						onClick() {
 							declineAllCookies(
+								consentRenewalPeriod,
+								consentRenewalPeriodTimeUnit,
 								dissentRenewalPeriod,
+								dissentRenewalPeriodTimeUnit,
 								optionalConsentCookieTypeNames,
 								requiredConsentCookieTypeNames,
-								storeConsentCheckbox?.checked,
-								dissentRenewalPeriodTimeUnit
+								storeConsentCheckbox?.checked
 							);
 
 							setUserConfigCookie(
@@ -294,11 +296,13 @@ export default function ({
 				);
 
 				declineAllCookies(
+					consentRenewalPeriod,
+					consentRenewalPeriodTimeUnit,
 					dissentRenewalPeriod,
+					dissentRenewalPeriodTimeUnit,
 					optionalConsentCookieTypeNames,
 					requiredConsentCookieTypeNames,
-					storeConsentCheckbox?.checked,
-					dissentRenewalPeriodTimeUnit
+					storeConsentCheckbox?.checked
 				);
 
 				setUserConfigCookie(

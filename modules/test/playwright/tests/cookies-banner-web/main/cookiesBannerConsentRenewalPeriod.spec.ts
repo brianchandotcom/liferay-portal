@@ -17,14 +17,19 @@ import {
 	updateConsentManagerConfiguration,
 } from './utils/consentManagerConfigurationHelper';
 
-const cookieKeys = [
+const optionalCookieKeys = [
 	'CONSENT_TYPE_FUNCTIONAL',
-	'CONSENT_TYPE_NECESSARY',
 	'CONSENT_TYPE_PERFORMANCE',
 	'CONSENT_TYPE_PERSONALIZATION',
+];
+
+const requiredCookieKeys = [
+	'CONSENT_TYPE_NECESSARY',
 	'USER_CONSENT_CONFIGURED',
 	'USER_CONSENT_CONFIGURED_DATE',
 ];
+
+const allCookieKeys = [...optionalCookieKeys, ...requiredCookieKeys];
 
 export const test = mergeTests(
 	consentManagerConfigurationPageTest,
@@ -282,7 +287,7 @@ test(
 		await test.step('Verify all consent cookies are set', async () => {
 			const cookies = await page.context().cookies();
 
-			for (const cookieKey of cookieKeys) {
+			for (const cookieKey of allCookieKeys) {
 				const cookie = cookies.find(
 					(cookie) => cookie.name === cookieKey
 				);
@@ -308,7 +313,7 @@ test(
 
 			const cookies = await page.context().cookies();
 
-			for (const cookieKey of cookieKeys) {
+			for (const cookieKey of allCookieKeys) {
 				const cookie = cookies.find(
 					(cookie) => cookie.name === cookieKey
 				);
@@ -379,26 +384,32 @@ async function validateConsentRenewalPeriodCookieExpiration(
 			expirationOffsetInSeconds = secondsInDay * 7 * period;
 		}
 
-		const expectedExpiration = Math.floor(
+		let expectedExpiration = Math.floor(
 			userConsentConfiguredDate / 1000 + expirationOffsetInSeconds
 		);
 
-		for (const cookieKey of cookieKeys) {
-			const cookie = cookies.find((cookie) => cookie.name === cookieKey);
-
-			expect(cookie).toBeDefined();
-
-			// Normalize cookie.expires by removing millis
-
-			const cookieExpiration = Number(cookie.expires.toFixed());
-
-			// Expect expiration within +/- 1 second
-
-			expect(cookieExpiration).toBeGreaterThanOrEqual(
-				expectedExpiration - 1
+		if (dissent) {
+			await validateCookiesExpiration(
+				cookies,
+				optionalCookieKeys,
+				expectedExpiration
 			);
-			expect(cookieExpiration).toBeLessThanOrEqual(
-				expectedExpiration + 1
+
+			expectedExpiration = Math.floor(
+				userConsentConfiguredDate / 1000 + secondsInDay * 365
+			);
+
+			await validateCookiesExpiration(
+				cookies,
+				requiredCookieKeys,
+				expectedExpiration
+			);
+		}
+		else {
+			await validateCookiesExpiration(
+				cookies,
+				allCookieKeys,
+				expectedExpiration
 			);
 		}
 	});
@@ -456,4 +467,25 @@ async function validateConsentRenewalPeriodValue(
 	}
 
 	await expect(consentRenewalPeriodField).toHaveValue(expectedValue);
+}
+
+async function validateCookiesExpiration(
+	cookies,
+	cookieKeys,
+	expectedExpiration
+) {
+	for (const cookieKey of cookieKeys) {
+		const cookie = cookies.find((cookie) => cookie.name === cookieKey);
+
+		expect(cookie).toBeDefined();
+
+		// Normalize cookie.expires by removing millis
+
+		const cookieExpiration = Number(cookie.expires.toFixed());
+
+		// Expect expiration within +/- 1 second
+
+		expect(cookieExpiration).toBeGreaterThanOrEqual(expectedExpiration - 1);
+		expect(cookieExpiration).toBeLessThanOrEqual(expectedExpiration + 1);
+	}
 }

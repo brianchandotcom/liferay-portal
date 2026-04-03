@@ -155,11 +155,13 @@ export default function ({
 
 		useNecessaryCookiesOnlyButton.addEventListener('click', () => {
 			declineAllCookies(
+				consentRenewalPeriod,
+				consentRenewalPeriodTimeUnit,
 				dissentRenewalPeriod,
+				dissentRenewalPeriodTimeUnit,
 				optionalConsentCookieTypeNames,
 				requiredConsentCookieTypeNames,
-				storeConsentCheckbox?.checked,
-				dissentRenewalPeriodTimeUnit
+				storeConsentCheckbox?.checked
 			);
 
 			setUserConfigCookie(

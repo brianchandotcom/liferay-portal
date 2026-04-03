@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -191,10 +192,17 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 				_jsonFactory.looseSerializeDeep(
 					billingAddressrDTOConverter.toDTO(dtoConverterContext)));
 
+		String commerceCurrencyCode =
+			commerceTaxCalculateRequest.getCommerceCurrencyCode();
+
+		if (Validator.isNull(commerceCurrencyCode)) {
+			commerceCurrencyCode = commerceChannel.getCommerceCurrencyCode();
+		}
+
 		commerceTaxCalculateRequestJSONObject.put(
 			"billingAddress", commerceBillingAddressJSONObject
 		).put(
-			"currencyCode", commerceChannel.getCommerceCurrencyCode()
+			"currencyCode", commerceCurrencyCode
 		).put(
 			"price", commerceTaxCalculateRequest.getPrice()
 		);

@@ -147,9 +147,7 @@ public class MirrorsGetTask extends Task {
 			}
 
 			if (_hostName == null) {
-				throw new RuntimeException(
-					"The property \"mirrors.gcp.bucket.hostname[" +
-						_gcpBucketName + "]\" is not set");
+				_hostName = "storage.googleapis.com";
 			}
 
 			_path = matcher.group("path");
@@ -560,6 +558,23 @@ public class MirrorsGetTask extends Task {
 			return null;
 		}
 
+		if (Objects.equals(_hostName, "storage.googleapis.com")) {
+			int index = _path.indexOf("/");
+
+			if (index != -1) {
+				_gcpBucketName = _path.substring(0, index);
+
+				_path = _path.substring(index + 1);
+			}
+			else {
+				_gcpBucketName = _path;
+
+				_path = "";
+			}
+
+			return _gcpBucketName;
+		}
+
 		Map<String, Object> properties = project.getProperties();
 
 		for (String propertyName : properties.keySet()) {
@@ -786,7 +801,10 @@ public class MirrorsGetTask extends Task {
 	private URL _getRemoteURL() {
 		StringBuilder sb = new StringBuilder();
 
-		if (_hostName.contains(".liferay.com") || _src.startsWith("https://")) {
+		if (_hostName.contains(".liferay.com") ||
+			_hostName.contains("storage.googleapis.com") ||
+			_src.startsWith("https://")) {
+
 			sb.append("https://");
 		}
 		else {
@@ -795,6 +813,14 @@ public class MirrorsGetTask extends Task {
 
 		sb.append(_hostName);
 		sb.append("/");
+
+		if (Objects.equals(_hostName, "storage.googleapis.com") &&
+			!_path.startsWith(_gcpBucketName + "/")) {
+
+			sb.append(_gcpBucketName);
+			sb.append("/");
+		}
+
 		sb.append(_path);
 		sb.append("/");
 		sb.append(_fileName);

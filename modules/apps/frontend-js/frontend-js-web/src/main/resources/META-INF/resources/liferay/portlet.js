@@ -562,6 +562,7 @@
 
 			const canEditTitle = options.canEditTitle;
 			const columnPos = options.columnPos;
+			const isAjaxable = options.isAjaxable;
 			const isStatic =
 				options.isStatic === 'no' ? null : options.isStatic;
 			const namespacedId = options.namespacedId;
@@ -579,6 +580,7 @@
 				portlet.portletProcessed = true;
 				portlet.portletId = portletId;
 				portlet.columnPos = columnPos;
+				portlet.isAjaxable = isAjaxable;
 				portlet.isStatic = isStatic;
 				portlet.refreshURL = refreshURL;
 				portlet.refreshURLData = refreshURLData;
@@ -790,15 +792,6 @@
 					data = data || portlet.refreshURLData || {};
 				}
 
-				if (
-					!Object.prototype.hasOwnProperty.call(
-						data,
-						'portletAjaxable'
-					)
-				) {
-					data.portletAjaxable = true;
-				}
-
 				const id = portlet.attr('portlet');
 
 				let url = portlet.refreshURL;
@@ -807,7 +800,7 @@
 					'<div class="loading-animation" id="p_p_id' + id + '" />'
 				);
 
-				if (data.portletAjaxable && url) {
+				if (portlet.isAjaxable && url) {
 					portlet.placeBefore(placeHolder);
 
 					portlet.remove(true);

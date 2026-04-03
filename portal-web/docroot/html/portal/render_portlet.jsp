@@ -964,6 +964,7 @@ else {
 		{
 			canEditTitle: <%= canEditTitle %>,
 			columnPos: <%= columnPos %>,
+			isAjaxable: <%= portlet.isAjaxable() %>,
 			isStatic: '<%= staticVar %>',
 			namespacedId: 'p_p_id<%= HtmlUtil.escapeJS((PortalUtil.getLiferayPortletResponse(liferayRenderResponse)).getNamespace()) %>',
 			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',

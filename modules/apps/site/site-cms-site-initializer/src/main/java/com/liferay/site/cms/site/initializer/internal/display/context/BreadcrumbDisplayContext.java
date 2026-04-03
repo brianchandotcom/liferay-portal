@@ -109,6 +109,12 @@ public class BreadcrumbDisplayContext {
 								).put(
 									"redirect", _themeDisplay.getURLCurrent()
 								).put(
+									"successMessage",
+									LanguageUtil.get(
+										_httpServletRequest,
+										"the-space-has-been-successfully-" +
+											"pinned-to-the-product-menu")
+								).put(
 									"symbolLeft", "pin"
 								).put(
 									"target", "asyncPut"
@@ -130,6 +136,12 @@ public class BreadcrumbDisplayContext {
 										"unpin-from-product-menu")
 								).put(
 									"redirect", _themeDisplay.getURLCurrent()
+								).put(
+									"successMessage",
+									LanguageUtil.get(
+										_httpServletRequest,
+										"the-space-has-been-successfully-" +
+											"unpinned-from-the-product-menu")
 								).put(
 									"symbolLeft", "unpin"
 								).put(

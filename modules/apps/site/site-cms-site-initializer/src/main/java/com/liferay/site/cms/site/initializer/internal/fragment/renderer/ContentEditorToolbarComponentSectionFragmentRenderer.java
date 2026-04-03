@@ -159,10 +159,11 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 						themeDisplay.getLocale(), "translate-x", title);
 				}
 
-				String cmd = ParamUtil.getString(
-					httpServletRequest, Constants.CMD);
+				if (Objects.equals(
+						Constants.ADD,
+						ParamUtil.getString(
+							httpServletRequest, Constants.CMD))) {
 
-				if (cmd.equals(Constants.ADD)) {
 					return language.format(
 						themeDisplay.getLocale(), "new-x", title);
 				}

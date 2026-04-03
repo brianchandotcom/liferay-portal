@@ -9,7 +9,7 @@ import {CustomDataSetsPage} from '../CustomDataSetsPage';
 
 export class DataSetPage {
 	readonly page: Page;
-	private readonly pageContainer: Locator;
+	readonly pageContainer: Locator;
 	private readonly tabsContainer: Locator;
 	private readonly customDataSetsPage: CustomDataSetsPage;
 

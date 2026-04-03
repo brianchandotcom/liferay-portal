@@ -112,6 +112,7 @@ export class ContentsPage {
 		await this.page
 			.locator('.cms-control-menu')
 			.getByText('Edit')
+			.or(this.page.locator('.cms-control-menu').getByText('New'))
 			.waitFor();
 
 		await this.page

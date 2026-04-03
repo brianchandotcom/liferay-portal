@@ -12,6 +12,7 @@ export class SortingPage {
 	private readonly addSortingButton: Locator;
 	private readonly dataSetPage: DataSetPage;
 	readonly inactiveToggle: Locator;
+	readonly searchInput: Locator;
 	readonly sortingTable: Locator;
 	private readonly addSortingDialog: {
 		cancelButton: Locator;
@@ -23,13 +24,11 @@ export class SortingPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.dataSetPage = new DataSetPage(page);
+		this.page = page;
+
 		this.activeToggle = page.getByLabel('Active', {exact: true});
 		this.addSortingButton = page.getByLabel('New Sort');
-		this.dataSetPage = new DataSetPage(page);
-		this.inactiveToggle = page.getByLabel('Inactive', {
-			exact: true,
-		});
-		this.sortingTable = page.locator('.table-responsive');
 		this.addSortingDialog = {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
 			defaultCheckbox: page.getByLabel('Use as Default Sorting'),
@@ -37,7 +36,12 @@ export class SortingPage {
 			saveButton: page.getByRole('button', {name: 'Save'}),
 			sortByInput: page.getByLabel('Sort By'),
 		};
-		this.page = page;
+		this.inactiveToggle = page.getByLabel('Inactive', {
+			exact: true,
+		});
+		this.searchInput =
+			this.dataSetPage.pageContainer.getByPlaceholder('Search');
+		this.sortingTable = page.locator('.table-responsive');
 	}
 
 	async assertTableCellContent({page, rowIndex = 0, sortData}) {

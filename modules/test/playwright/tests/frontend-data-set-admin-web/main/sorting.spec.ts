@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataSetManagerApiHelpersTest} from '../../../fixtures/dataSetManagerApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -22,6 +23,7 @@ export const test = mergeTests(
 		'LPS-164563': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	sortingPageTest,
 	loginTest()
 );
@@ -300,53 +302,53 @@ test('Sorting options can be reordered and changes are persisted @LPD-9468', asy
 	});
 });
 
-test('The search bar filters the results @LPD-9468', async ({
-	dataSetManagerApiHelpers,
-	page,
-	sortingPage,
-}) => {
-	await test.step('Create sorting options', async () => {
-		await dataSetManagerApiHelpers.createDataSetSort({
-			dataSetERC,
-			defaultValue: true,
-			fieldName: 'id',
-			label_i18n: {en_US: 'ID'},
-			orderType: 'asc',
+test(
+	'The search bar filters the results',
+	{tag: '@LPD-9468'},
+	async ({dataSetManagerApiHelpers, page, sortingPage}) => {
+		await test.step('Create sorting options', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: false,
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
+			});
 		});
 
-		await dataSetManagerApiHelpers.createDataSetSort({
-			dataSetERC,
-			defaultValue: false,
-			fieldName: 'fieldName',
-			label_i18n: {en_US: 'Field Name'},
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
 		});
-	});
 
-	await test.step('Navigate to Sorting section', async () => {
-		await sortingPage.goto({
-			dataSetLabel,
+		await test.step('Enter in a search term that does not exist', async () => {
+			await sortingPage.searchInput.fill('nothing');
 		});
-	});
 
-	await test.step('Enter in a search term that does not exist', async () => {
-		await page.getByPlaceholder('Search').fill('nothing');
-	});
+		await test.step('Check that "No Results Found" is displayed', async () => {
+			await expect(page.getByText('No Results Found')).toBeVisible();
+		});
 
-	await test.step('Check that "No Results Found" is displayed', async () => {
-		await expect(page.getByText('No Results Found')).toBeVisible();
-	});
+		await test.step('Enter in a search term to only show ID', async () => {
+			await sortingPage.searchInput.fill('ID');
+		});
 
-	await test.step('Enter in a search term to only show ID', async () => {
-		await page.getByPlaceholder('Search').fill('ID');
-	});
+		await test.step('Check that only "ID" appears in the table', async () => {
+			const tableLabelCellTexts =
+				await sortingPage.getTableColumnInnerTexts(2);
 
-	await test.step('Check that only "ID" appears in the table', async () => {
-		const tableLabelCellTexts =
-			await sortingPage.getTableColumnInnerTexts(2);
-
-		expect(tableLabelCellTexts).toEqual(['ID']);
-	});
-});
+			expect(tableLabelCellTexts).toEqual(['ID']);
+		});
+	}
+);
 
 test('In the New Sort modal, the Label and Sort By fields are required', async ({
 	page,
@@ -640,6 +642,7 @@ test('Unmark default sorting when a new one is marked and saved @LPD-25392', asy
 });
 
 test('Sorting label in the table is not blank after changing default site language @LPD-25464', async ({
+	globalMenuPage,
 	page,
 	sortingPage,
 }) => {
@@ -647,13 +650,7 @@ test('Sorting label in the table is not blank after changing default site langua
 
 	try {
 		await test.step('Navigate to Instance Settings Localization', async () => {
-			await page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
-
-			await page.getByRole('tab', {name: 'Control Panel'}).click();
-
-			await page
-				.getByRole('menuitem', {name: 'Instance Settings'})
-				.click();
+			await globalMenuPage.goToControlPanel('Instance Settings');
 
 			await page.getByRole('link', {name: 'Localization'}).click();
 		});
@@ -702,15 +699,7 @@ test('Sorting label in the table is not blank after changing default site langua
 	finally {
 		if (spanishLanguage) {
 			await test.step('Navigate to Instance Settings Localization', async () => {
-				await page
-					.getByLabel('Open Applications MenuCtrl+Alt+A')
-					.click();
-
-				await page.getByRole('tab', {name: 'Control Panel'}).click();
-
-				await page
-					.getByRole('menuitem', {name: 'Instance Settings'})
-					.click();
+				await globalMenuPage.goToControlPanel('Instance Settings');
 
 				await page.getByRole('link', {name: 'Localization'}).click();
 			});

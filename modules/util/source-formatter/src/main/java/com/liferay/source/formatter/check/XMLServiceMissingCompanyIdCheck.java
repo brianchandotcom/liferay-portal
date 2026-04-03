@@ -75,8 +75,8 @@ public class XMLServiceMissingCompanyIdCheck extends BaseFileCheck {
 				fileName,
 				StringBundler.concat(
 					"Entity \"", entityName,
-					"\" should have a column named \"companyId\", see ",
-					"LPS-107076"));
+					"\" should have a column named \"companyId\". See ",
+					"LPS-107076."));
 		}
 
 		return content;

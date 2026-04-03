@@ -348,9 +348,7 @@ public abstract class BaseWorkspaceGitRepository
 
 		validateKeys(_REQUIRED_KEYS);
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
-
-		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
+		_updateBuildDatabase();
 	}
 
 	@Override
@@ -385,35 +383,20 @@ public abstract class BaseWorkspaceGitRepository
 
 		System.out.println(toString());
 
-		if (!_snapshot) {
-			if (_isGitArchiveAvailable()) {
-				try {
-					CloudBucketUtil.touchS3File(_getGitArchiveS3BucketPath());
-
-					if (_isDotGitArchiveAvailable()) {
-						CloudBucketUtil.touchS3File(
-							_getDotGitArchiveS3BucketPath());
-					}
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-
-				_setSnapshot(true);
-
-				BuildDatabase buildDatabase =
-					BuildDatabaseUtil.getBuildDatabase();
-
-				buildDatabase.putWorkspaceGitRepository(
-					getDirectoryName(), this);
-			}
-			else {
-				_prepareGitWorkingDirectory();
-			}
-		}
-
 		try {
-			_prepareGitArchive();
+			_checkAvailableGitArchive();
+
+			if (!_snapshot) {
+				_prepareGitWorkingDirectory();
+
+				_prepareGitArchive();
+
+				_setUp = true;
+			}
+
+			if (!_setUp && _snapshot) {
+				_useGitArchive();
+			}
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -750,6 +733,34 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		return archiveFile;
+	}
+
+	private void _checkAvailableGitArchive() throws IOException {
+		if (_snapshot) {
+			return;
+		}
+
+		boolean useSnapshot = false;
+
+		if (_isDotGitDirArchiveRequired()) {
+			if (_isGitArchiveAvailable() && _isDotGitArchiveAvailable()) {
+				CloudBucketUtil.touchS3File(_getGitArchiveS3BucketPath());
+				CloudBucketUtil.touchS3File(_getDotGitArchiveS3BucketPath());
+
+				useSnapshot = true;
+			}
+		}
+		else if (_isGitArchiveAvailable()) {
+			CloudBucketUtil.touchS3File(_getGitArchiveS3BucketPath());
+
+			useSnapshot = true;
+		}
+
+		if (useSnapshot) {
+			_setSnapshot(true);
+
+			_updateBuildDatabase();
+		}
 	}
 
 	private LocalGitBranch _createPullRequestLocalGitBranch() {
@@ -1090,10 +1101,8 @@ public abstract class BaseWorkspaceGitRepository
 		return _upstreamRemoteGitRef;
 	}
 
-	private boolean _isDotGitArchiveAvailable() {
-		if (!JenkinsResultsParserUtil.isCloudCINode() ||
-			_isDotGitDirArchiveRequired()) {
-
+	private boolean _isArchiveAvailable(String s3Path) {
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
 			return false;
 		}
 
@@ -1101,13 +1110,16 @@ public abstract class BaseWorkspaceGitRepository
 
 		if (((this instanceof PortalWorkspaceGitRepository) &&
 			 jobName.contains("root-cause-analysis-tool")) ||
-			!CloudBucketUtil.isS3ObjectPathAvailable(
-				_getDotGitArchiveS3BucketPath())) {
+			!CloudBucketUtil.isS3ObjectPathAvailable(s3Path)) {
 
 			return false;
 		}
 
 		return true;
+	}
+
+	private boolean _isDotGitArchiveAvailable() {
+		return _isArchiveAvailable(_getDotGitArchiveS3BucketPath());
 	}
 
 	private boolean _isDotGitDirArchiveRequired() {
@@ -1176,21 +1188,7 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private boolean _isGitArchiveAvailable() {
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return false;
-		}
-
-		String jobName = _getJobName();
-
-		if (((this instanceof PortalWorkspaceGitRepository) &&
-			 jobName.contains("root-cause-analysis-tool")) ||
-			!CloudBucketUtil.isS3ObjectPathAvailable(
-				_getGitArchiveS3BucketPath())) {
-
-			return false;
-		}
-
-		return true;
+		return _isArchiveAvailable(_getGitArchiveS3BucketPath());
 	}
 
 	private boolean _isPullRequest() {
@@ -1199,54 +1197,6 @@ public abstract class BaseWorkspaceGitRepository
 
 	private void _prepareGitArchive() throws IOException {
 		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return;
-		}
-
-		if (_snapshot) {
-			String baseRepositoryDir =
-				JenkinsResultsParserUtil.getBuildProperty(
-					"base.repository.dir");
-
-			File gitArchiveFile = new File(
-				baseRepositoryDir, _getGitArchiveName());
-
-			CloudBucketUtil.downloadS3File(
-				gitArchiveFile, _getGitArchiveS3BucketPath());
-
-			File directory = getDirectory();
-
-			if (directory.exists()) {
-				_deleteGitRepository();
-			}
-
-			JenkinsResultsParserUtil.unzip(gitArchiveFile, directory);
-
-			JenkinsResultsParserUtil.delete(gitArchiveFile);
-
-			if (_isDotGitDirArchiveRequired()) {
-				File dotGitArchiveFile = new File(
-					baseRepositoryDir, _getDotGitArchiveName());
-
-				CloudBucketUtil.downloadS3File(
-					dotGitArchiveFile, _getDotGitArchiveS3BucketPath());
-
-				JenkinsResultsParserUtil.unzip(dotGitArchiveFile, directory);
-
-				JenkinsResultsParserUtil.delete(dotGitArchiveFile);
-
-				GitUtil.ExecutionResult executionResult =
-					GitUtil.executeBashCommands(
-						GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-						GitUtil.MILLIS_TIMEOUT, directory, "git reset");
-
-				if (executionResult.getExitValue() != 0) {
-					throw new RuntimeException(
-						JenkinsResultsParserUtil.combine(
-							"Unable to reset Git directory: " + directory,
-							executionResult.getStandardError()));
-				}
-			}
-
 			return;
 		}
 
@@ -1278,9 +1228,7 @@ public abstract class BaseWorkspaceGitRepository
 			_setSnapshot(true);
 		}
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
-
-		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
+		_updateBuildDatabase();
 	}
 
 	private void _prepareGitWorkingDirectory() {
@@ -1374,6 +1322,60 @@ public abstract class BaseWorkspaceGitRepository
 		put("snapshot", snapshot);
 
 		_snapshot = snapshot;
+	}
+
+	private void _updateBuildDatabase() {
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
+	}
+
+	private void _useGitArchive() throws IOException {
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return;
+		}
+
+		String baseRepositoryDir = JenkinsResultsParserUtil.getBuildProperty(
+			"base.repository.dir");
+
+		File gitArchiveFile = new File(baseRepositoryDir, _getGitArchiveName());
+
+		CloudBucketUtil.downloadS3File(
+			gitArchiveFile, _getGitArchiveS3BucketPath());
+
+		File directory = getDirectory();
+
+		if (directory.exists()) {
+			_deleteGitRepository();
+		}
+
+		JenkinsResultsParserUtil.unzip(gitArchiveFile, directory);
+
+		JenkinsResultsParserUtil.delete(gitArchiveFile);
+
+		if (_isDotGitDirArchiveRequired()) {
+			File dotGitArchiveFile = new File(
+				baseRepositoryDir, _getDotGitArchiveName());
+
+			CloudBucketUtil.downloadS3File(
+				dotGitArchiveFile, _getDotGitArchiveS3BucketPath());
+
+			JenkinsResultsParserUtil.unzip(dotGitArchiveFile, directory);
+
+			JenkinsResultsParserUtil.delete(dotGitArchiveFile);
+
+			GitUtil.ExecutionResult executionResult =
+				GitUtil.executeBashCommands(
+					GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+					GitUtil.MILLIS_TIMEOUT, directory, "git reset");
+
+			if (executionResult.getExitValue() != 0) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to reset Git directory: " + directory,
+						executionResult.getStandardError()));
+			}
+		}
 	}
 
 	private static final int _MAX_BASE_BRANCH_SHA_LENGTH = 7;

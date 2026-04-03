@@ -517,6 +517,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return getProperty("product.id.portal");
 	}
 
+	protected Class<?> getValidateClass() {
+		return ReflectionsHolder._validateClass;
+	}
+
 	protected String hitHomePage(String host, int port) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_lifecycleActionClass.getName(), LoggerTestUtil.ALL)) {
@@ -711,6 +715,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 		private static Instrumentation _instrumentation;
 		private static Class<?> _licenseManagerHelperClass;
+		private static Class<?> _validateClass;
 		private static Method _validateMethod;
 		private static Method _versionMethod;
 
@@ -737,7 +742,17 @@ public abstract class BaseLicenseTestCase implements Serializable {
 				}
 
 				try {
-					_validateMethod = findMethod("validate.method");
+					_validateClass = classLoader.loadClass(
+						getProperty("validate.class"));
+
+					for (Method method : _validateClass.getDeclaredMethods()) {
+						if (method.getReturnType() == boolean.class) {
+							_validateMethod = method;
+
+							break;
+						}
+					}
+
 					_versionMethod = findMethod("version.method");
 
 					Field field = findField("lifecycle.action.field");

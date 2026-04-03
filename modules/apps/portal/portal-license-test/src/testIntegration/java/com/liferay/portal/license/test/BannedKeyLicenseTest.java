@@ -7,22 +7,22 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -105,27 +105,45 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 			deployFreeTierPortalLicense(
 				domain, StringPool.BLANK, startTimeMillis, Time.HOUR);
 
-			Method method = findMethod("encrypt.method");
+			Class<?> clazz = getValidateClass();
 
-			return (String)method.invoke(
+			Method encryptMethod = null;
+
+			for (Method method : clazz.getDeclaredMethods()) {
+				Class<?>[] parameterTypes = method.getParameterTypes();
+
+				if ((parameterTypes.length == 1) &&
+					Map.class.isAssignableFrom(parameterTypes[0])) {
+
+					method.setAccessible(true);
+
+					encryptMethod = method;
+
+					break;
+				}
+			}
+
+			return (String)encryptMethod.invoke(
 				null,
 				LicenseManagerUtil.getLicenseProperties(getPortalProductId()));
 		}
 	}
 
-	private AutoCloseable _setBannedKeys(Set<String> keys) throws Exception {
-		String bannedKeysFieldString = getProperty("banned.keys.field");
+	private AutoCloseable _setBannedKeys(Set<String> keys) {
+		Class<?> clazz = getValidateClass();
 
-		String bannedFieldClassName = bannedKeysFieldString.substring(
-			0, bannedKeysFieldString.lastIndexOf(CharPool.PERIOD));
-		String bannedFieldFieldName = bannedKeysFieldString.substring(
-			bannedKeysFieldString.lastIndexOf(CharPool.PERIOD) + 1);
+		String bannedKeysFieldName = null;
 
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+		for (Field field : clazz.getDeclaredFields()) {
+			if (Set.class.isAssignableFrom(field.getType())) {
+				bannedKeysFieldName = field.getName();
+
+				break;
+			}
+		}
 
 		return ReflectionTestUtil.setFieldValueWithAutoCloseable(
-			classLoader.loadClass(bannedFieldClassName), bannedFieldFieldName,
-			keys);
+			clazz, bannedKeysFieldName, keys);
 	}
 
 }

@@ -72,6 +72,9 @@ public class CommentsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-site-dsr-site-initializer:comments:roomId", 0L);
+
 		if (_groupId == 0) {
 			return;
 		}

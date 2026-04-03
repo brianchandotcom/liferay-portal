@@ -4,34 +4,32 @@
  */
 
 import {useModal} from '@clayui/modal';
-import React, {forwardRef, useEffect} from 'react';
+import React, {useEffect} from 'react';
 
 import ItemSelectorModal from './ItemSelectorModal';
 import {TDetachedItemSelectorModal} from './types';
 
-const DetachedItemSelectorModal = forwardRef(
-	<T extends Record<string, any>>(props: TDetachedItemSelectorModal<T>) => {
-		const {observer, onOpenChange, open} = useModal();
+const DetachedItemSelectorModal = <T extends Record<string, any>>(
+	props: TDetachedItemSelectorModal<T>
+) => {
+	const {observer, onOpenChange, open} = useModal();
 
-		useEffect(() => {
-			onOpenChange(true);
-		}, [onOpenChange]);
+	useEffect(() => {
+		onOpenChange(true);
+	}, [onOpenChange]);
 
-		return (
-			<>
-				{open && (
-					<ItemSelectorModal<T>
-						{...props}
-						observer={observer}
-						onOpenChange={onOpenChange}
-						open={open}
-					/>
-				)}
-			</>
-		);
-	}
-);
-
-DetachedItemSelectorModal.displayName = 'DetachedItemSelectorModal';
+	return (
+		<>
+			{open && (
+				<ItemSelectorModal<T>
+					{...props}
+					observer={observer}
+					onOpenChange={onOpenChange}
+					open={open}
+				/>
+			)}
+		</>
+	);
+};
 
 export default DetachedItemSelectorModal;

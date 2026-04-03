@@ -145,8 +145,8 @@ public class FreeTierVersionLicenseTest extends BaseLicenseTestCase {
 			else {
 				Assert.fail(
 					StringBundler.concat(
-						"Unalbe to see error message \'License is not ",
-						"suppported in ", version, "\'"));
+						"Unable to see error message \"License is not ",
+						"suppported in ", version, "\""));
 			}
 		}
 		catch (LogEntriesException logEntriesException) {

@@ -156,8 +156,8 @@ public class FreeTierDomainLicenseTest extends BaseLicenseTestCase {
 			deployFreeTierPortalLicense(domain, Time.HOUR);
 
 			Assert.fail(
-				"Unalbe to see error message \'Current domain is not " +
-					"allowed\'");
+				"Unable to see error message \"Current domain is not " +
+					"allowed\"");
 		}
 		catch (LogEntriesException logEntriesException) {
 			List<LogEntry> logEntries = logEntriesException.getLogEntries();

@@ -505,7 +505,7 @@ test('Apply style book layout', async ({
 
 	await styleBooksPage.goto();
 
-	await styleBooksPage.create(styleBookName);
+	await styleBooksPage.create(styleBookName, 'Classic Theme');
 
 	await styleBooksPage.selectTokenCategory('Typography');
 

@@ -6,9 +6,12 @@
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -45,20 +48,27 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -182,6 +192,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.testGetOrdersPage();
 
 		_testGetOrdersPageWithFilter();
+		_testGetOrdersPageWithOrderAdministratorRole();
 		_testGetOrdersPageWithSearch();
 	}
 
@@ -458,6 +469,26 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		return orderResource.postOrder(randomOrder());
 	}
 
+	private void _assertEquals(int expected, User user) throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
+
+			OrderResource orderResource = OrderResource.builder(
+			).authentication(
+				user.getEmailAddress(), "test"
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+			Page<Order> page = orderResource.getOrdersPage(
+				null, null, Pagination.of(1, 10), null);
+
+			Assert.assertEquals(expected, page.getTotalCount());
+		}
+	}
+
 	private OrderItem _randomOrderItem(boolean useUnitOfMeasure)
 		throws Exception {
 
@@ -559,6 +590,109 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		Assert.assertEquals(1, page.getTotalCount());
 
 		assertContains(order, (List<Order>)page.getItems());
+
+		orderResource.deleteOrder(order.getId());
+
+		_commerceOrderTypeLocalService.deleteCommerceOrderType(
+			commerceOrderType);
+	}
+
+	private void _testGetOrdersPageWithOrderAdministratorRole()
+		throws Exception {
+
+		Order randomOrder1 = randomOrder();
+
+		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, _user.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, _serviceContext);
+
+		randomOrder1.setAccountExternalReferenceCode(
+			accountEntry1.getExternalReferenceCode());
+		randomOrder1.setAccountId(accountEntry1.getAccountEntryId());
+
+		testGetOrdersPage_addOrder(randomOrder1);
+
+		Order randomOrder2 = randomOrder();
+
+		AccountEntry accountEntry2 = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, _user.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, _serviceContext);
+
+		randomOrder2.setAccountExternalReferenceCode(
+			accountEntry2.getExternalReferenceCode());
+		randomOrder2.setAccountId(accountEntry2.getAccountEntryId());
+
+		testGetOrdersPage_addOrder(randomOrder2);
+
+		Page<Order> page = orderResource.getOrdersPage(
+			null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		User user = UserTestUtil.addUser(
+			testCompany.getCompanyId(), testCompany.getUserId(), "test",
+			"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com",
+			StringPool.BLANK, LocaleUtil.getDefault(), "UserServiceTest",
+			"UserServiceTest", null, null);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), user.getUserId());
+
+		Role role1 = _roleLocalService.getRole(
+			testCompany.getCompanyId(),
+			AccountRoleConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER);
+
+		UserGroupRole userGroupRole =
+			_userGroupRoleLocalService.addUserGroupRole(
+				user.getUserId(), accountEntry1.getAccountEntryGroupId(),
+				role1.getRoleId());
+
+		_assertEquals(0, user);
+
+		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+
+		Role role2 = _roleLocalService.getRole(
+			testCompany.getCompanyId(),
+			AccountRoleConstants.ROLE_NAME_ORDER_ADMINISTRATOR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role2.getRoleId());
+
+		_assertEquals(2, user);
+
+		try {
+			_resourcePermissionLocalService.removeResourcePermission(
+				testCompany.getCompanyId(),
+				CommerceOrderConstants.RESOURCE_NAME,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				role2.getRoleId(),
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+			_resourcePermissionLocalService.removeResourcePermission(
+				testCompany.getCompanyId(), CommerceOrder.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(testCompany.getCompanyId()), role2.getRoleId(),
+				ActionKeys.VIEW);
+
+			_assertEquals(0, user);
+		}
+		finally {
+			_resourcePermissionLocalService.addResourcePermission(
+				testCompany.getCompanyId(),
+				CommerceOrderConstants.RESOURCE_NAME,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				role2.getRoleId(),
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+			_resourcePermissionLocalService.addResourcePermission(
+				testCompany.getCompanyId(), CommerceOrder.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(testCompany.getCompanyId()), role2.getRoleId(),
+				ActionKeys.VIEW);
+		}
 	}
 
 	private void _testGetOrdersPageWithSearch() throws Exception {
@@ -851,6 +985,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Inject
 	private AddressLocalService _addressLocalService;
 
 	@Inject
@@ -901,10 +1038,16 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	private RegionLocalService _regionLocalService;
 
 	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
 	private RoleLocalService _roleLocalService;
 
 	private ServiceContext _serviceContext;
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

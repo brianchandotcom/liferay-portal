@@ -557,6 +557,8 @@ public class MirrorsGetTask extends Task {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
+		processBuilder.inheritIO();
+
 		Process process = processBuilder.start();
 
 		process.waitFor();
@@ -824,6 +826,10 @@ public class MirrorsGetTask extends Task {
 	}
 
 	private URL _getRemoteURL() {
+		if (_hostName == null) {
+			return null;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		if (_hostName.contains(".liferay.com") ||

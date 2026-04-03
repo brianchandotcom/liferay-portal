@@ -1,40 +1,38 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.permission.SimplePermissionChecker;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -43,6 +41,10 @@ import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -71,83 +73,162 @@ public class ContentEditorToolbarComponentSectionFragmentRendererTest {
 	@Before
 	public void setUp() throws Exception {
 		CMSTestUtil.getOrAddGroup(
-			BreadcrumbComponentSectionFragmentRendererTest.class);
+			ContentEditorToolbarComponentSectionFragmentRendererTest.class);
 
-		_company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
+		_group = GroupTestUtil.addGroup();
 
-		_cmsAdministratorUser = UserTestUtil.addUser(
-			_company, RoleConstants.CMS_ADMINISTRATOR);
+		_layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_SPACE,
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		_objectEntry = _objectEntryLocalService.addObjectEntry(
+			0L, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), 0, null,
+			new HashMap<String, Serializable>(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test
 	public void testGetProps() throws Exception {
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM, _depotEntry);
+		Map<String, Object> props = _getProps(mockHttpServletRequest);
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		String headerTitle = (String)props.get("headerTitle");
 
-		themeDisplay.setCompany(_company);
-		themeDisplay.setPermissionChecker(
-			new SimplePermissionChecker() {
+		Assert.assertTrue(headerTitle.startsWith("Edit "));
+
+		mockHttpServletRequest.setParameter(Constants.CMD, Constants.ADD);
+
+		props = _getProps(mockHttpServletRequest);
+
+		headerTitle = (String)props.get("headerTitle");
+
+		Assert.assertTrue(headerTitle.startsWith("New "));
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			new LayoutDisplayPageObjectProvider<ObjectEntry>() {
 
 				@Override
-				public boolean hasPermission(
-					Group group, String name, String primKey, String actionId) {
+				public long getClassNameId() {
+					return _portal.getClassNameId(ObjectEntry.class.getName());
+				}
 
-					return allowedActionId.equals(actionId);
+				@Override
+				public long getClassPK() {
+					return _objectEntry.getObjectEntryId();
+				}
+
+				@Override
+				public long getClassTypeId() {
+					return _objectDefinition.getObjectDefinitionId();
+				}
+
+				@Override
+				public String getDescription(Locale locale) {
+					return null;
+				}
+
+				@Override
+				public ObjectEntry getDisplayObject() {
+					return _objectEntry;
+				}
+
+				@Override
+				public long getGroupId() {
+					return _group.getGroupId();
+				}
+
+				@Override
+				public String getKeywords(Locale locale) {
+					return null;
+				}
+
+				@Override
+				public String getTitle(Locale locale) {
+					return null;
+				}
+
+				@Override
+				public String getURLTitle(Locale locale) {
+					return null;
 				}
 
 			});
-		themeDisplay.setSiteGroupId(_depotEntry.getGroupId());
-		themeDisplay.setUser(_cmsAdministratorUser);
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Map<String, Object> props = ReflectionTestUtil.invoke(
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLayout(
+			_layoutLocalService.getLayout(_layoutPageTemplateEntry.getPlid()));
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
+	private Map<String, Object> _getProps(
+		HttpServletRequest httpServletRequest) {
+
+		return ReflectionTestUtil.invoke(
 			_fragmentRenderer, "getProps",
 			new Class<?>[] {
 				FragmentRendererContext.class, HttpServletRequest.class
 			},
 			null, httpServletRequest);
-
-		unsafeConsumer.accept((JSONArray)props.get("actionItems"));
-
 	}
-
-	private User _cmsAdministratorUser;
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@DeleteAfterTestRun
-	private DepotEntry _depotEntry;
-
-	@Inject
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Inject
-	private DepotEntryPinLocalService _depotEntryPinLocalService;
-
 	@Inject(
-		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.BreadcrumbComponentSectionFragmentRenderer"
+		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ContentEditorToolbarComponentSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
 
+	private Group _group;
+
 	@Inject
-	private UserLocalService _userLocalService;
+	private LayoutLocalService _layoutLocalService;
+
+	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	private ObjectDefinition _objectDefinition;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private ObjectEntry _objectEntry;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

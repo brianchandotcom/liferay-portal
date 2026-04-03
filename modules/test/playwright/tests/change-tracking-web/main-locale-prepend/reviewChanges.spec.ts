@@ -7,12 +7,16 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
+	featureFlagsTest({
+		'LPD-84028': {enabled: true},
+	}),
 	pagesAdminPagesTest,
 	pageEditorPagesTest
 );

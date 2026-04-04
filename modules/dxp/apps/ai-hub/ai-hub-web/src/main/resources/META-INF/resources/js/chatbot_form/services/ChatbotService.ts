@@ -35,6 +35,10 @@ async function postChatbot(chatbot: Chatbot) {
 		method: 'POST',
 	});
 
+	if (!response.ok) {
+		throw new Error();
+	}
+
 	return response.json();
 }
 
@@ -49,6 +53,10 @@ async function putChatbot(chatbot: Chatbot) {
 			method: 'PUT',
 		}
 	);
+
+	if (!response.ok) {
+		throw new Error();
+	}
 
 	return response.json();
 }

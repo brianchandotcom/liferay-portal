@@ -553,9 +553,10 @@ public class ConfigurationPersistenceManager
 			return new HashMapDictionary<>();
 		}
 
-		Dictionary<Object, Object> dictionary = ConfigurationHandler.read(
-			new UnsyncByteArrayInputStream(
-				dictionaryString.getBytes(StringPool.UTF8)));
+		Dictionary<Object, Object> dictionary = new HashMapDictionary<>(
+			(Map<Object, Object>)ConfigurationHandler.read(
+				new UnsyncByteArrayInputStream(
+					dictionaryString.getBytes(StringPool.UTF8))));
 
 		String felixFileInstallFileName = (String)dictionary.get(
 			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);

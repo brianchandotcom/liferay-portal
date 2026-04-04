@@ -6,7 +6,6 @@
 package com.liferay.ai.hub.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,11 +35,9 @@ import java.util.Map;
 public class EditAgentDefinitionDisplayContext {
 
 	public EditAgentDefinitionDisplayContext(
-		AccountEntryLocalService accountEntryLocalService,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Portal portal) {
 
-		_accountEntryLocalService = accountEntryLocalService;
 		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 		_portal = portal;
@@ -144,7 +141,6 @@ public class EditAgentDefinitionDisplayContext {
 			url, namespace + "name", workflowDefinitionName);
 	}
 
-	private final AccountEntryLocalService _accountEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;

@@ -84,11 +84,11 @@ export async function postAgentInstance(
 		`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/agent-instances`,
 		{
 			body: JSON.stringify({
+				agentDefinitionExternalReferenceCode: type,
 				context: {
 					text: content,
 				},
 				sseEventSinkKey: eventSourceReference,
-				type,
 			}),
 			headers: new Headers({
 				'Accept': 'application/json',

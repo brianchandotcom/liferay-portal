@@ -4,13 +4,13 @@
  */
 
 export enum EActionType {
-	CHANGE_TONE = 'Change Tone',
-	FIX_SPELLING_AND_GRAMMAR = 'Fix Spelling and Grammar',
-	GENERATE_BASED_ON_TITLE = 'Generate Based On Title',
-	IMPROVE_WRITING = 'Improve Writing',
-	MAKE_LONGER = 'Make Longer',
-	MAKE_SHORTER = 'Make Shorter',
-	TRANSLATE_TO = 'Translate To',
+	CHANGE_TONE = 'L_CHANGE_TONE',
+	FIX_SPELLING_AND_GRAMMAR = 'L_FIX_SPELLING_AND_GRAMMAR',
+	GENERATE_BASED_ON_TITLE = 'L_GENERATE_BASED_ON_TITLE',
+	IMPROVE_WRITING = 'L_IMPROVE_WRITING',
+	MAKE_LONGER = 'L_MAKE_LONGER',
+	MAKE_SHORTER = 'L_MAKE_SHORTER',
+	TRANSLATE_TO = 'L_TRANSLATE_TO',
 }
 
 export interface IAction {

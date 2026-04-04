@@ -9,20 +9,24 @@ import com.liferay.ai.hub.web.internal.constants.AIHubFDSNames;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author José Abelenda
  */
 @Component(
-	property = "frontend.data.set.name=" + AIHubFDSNames.CHATBOTS,
+	property = {
+		"frontend.data.set.name=" + AIHubFDSNames.AGENT_DEFINITIONS,
+		"frontend.data.set.name=" + AIHubFDSNames.CHATBOTS,
+		"frontend.data.set.name=" + AIHubFDSNames.INSTRUCTION_DEFINITIONS
+	},
 	service = FDSFilter.class
 )
-public class ChatbotStatusSelectionFDSFilter
-	extends BaseSelectionFDSFilter {
+public class StatusSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getId() {

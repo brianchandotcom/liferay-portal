@@ -17,5 +17,6 @@ ViewChatbotsDisplayContext viewChatbotsDisplayContext = (ViewChatbotsDisplayCont
 	fdsActionDropdownItems="<%= viewChatbotsDisplayContext.getFDSActionDropdownItems() %>"
 	id="<%= AIHubFDSNames.CHATBOTS %>"
 	itemsPerPage="<%= 20 %>"
+	propsTransformer="{ChatbotItemTitlePropsTransformer} from ai-hub-web"
 	style="fluid"
 />

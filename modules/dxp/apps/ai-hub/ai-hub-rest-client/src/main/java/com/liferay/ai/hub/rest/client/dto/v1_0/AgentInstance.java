@@ -26,6 +26,32 @@ public class AgentInstance implements Cloneable, Serializable {
 		return AgentInstanceSerDes.toDTO(json);
 	}
 
+	public String getAgentDefinitionExternalReferenceCode() {
+		return agentDefinitionExternalReferenceCode;
+	}
+
+	public void setAgentDefinitionExternalReferenceCode(
+		String agentDefinitionExternalReferenceCode) {
+
+		this.agentDefinitionExternalReferenceCode =
+			agentDefinitionExternalReferenceCode;
+	}
+
+	public void setAgentDefinitionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			agentDefinitionExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			agentDefinitionExternalReferenceCode =
+				agentDefinitionExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String agentDefinitionExternalReferenceCode;
+
 	public Map<String, ?> getContext() {
 		return context;
 	}
@@ -88,25 +114,6 @@ public class AgentInstance implements Cloneable, Serializable {
 	}
 
 	protected String sseEventSinkKey;
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String type;
 
 	@Override
 	public AgentInstance clone() throws CloneNotSupportedException {

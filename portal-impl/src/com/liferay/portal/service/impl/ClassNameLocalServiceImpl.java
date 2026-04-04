@@ -239,13 +239,8 @@ public class ClassNameLocalServiceImpl
 		}
 
 		public static void invalidate() {
-			for (Map<String, Long> map : _classNameIdsMap.values()) {
-				map.clear();
-			}
-
-			for (Map<Long, ClassName> map : _classNamesMap.values()) {
-				map.clear();
-			}
+			_classNameIdsMap.clear();
+			_classNamesMap.clear();
 		}
 
 		public static void invalidate(long companyId) {

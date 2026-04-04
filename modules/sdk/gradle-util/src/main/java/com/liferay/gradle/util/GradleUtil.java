@@ -49,7 +49,7 @@ import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
 import org.gradle.util.GUtil;
-import org.gradle.util.NameMatcher;
+import org.gradle.util.internal.NameMatcher;
 
 /**
  * @author Andrea Di Giorgi

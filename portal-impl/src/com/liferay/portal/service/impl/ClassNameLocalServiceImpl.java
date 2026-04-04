@@ -157,13 +157,28 @@ public class ClassNameLocalServiceImpl
 
 	@Override
 	public Supplier<long[]> getClassNameIdsSupplier(String[] classNames) {
-		Map<Long, long[]> classNameIds = new ConcurrentHashMap<>();
+		Map<Long, long[]> classNameIdsMap = new ConcurrentHashMap<>();
 
-		return () -> classNameIds.computeIfAbsent(
-			_getCompanyId(),
-			key -> TransformUtil.transformToLongArray(
-				ListUtil.fromArray(classNames),
-				className -> getClassNameId(className)));
+		return () -> {
+			Long companyId = _getCompanyId();
+
+			long[] classNameIds = classNameIdsMap.get(companyId);
+
+			if (classNameIds == null) {
+				classNameIds = TransformUtil.transformToLongArray(
+					ListUtil.fromArray(classNames),
+					className -> getClassNameId(className));
+
+				long[] previousClassNameIds = classNameIdsMap.putIfAbsent(
+					companyId, classNameIds);
+
+				if (previousClassNameIds != null) {
+					classNameIds = previousClassNameIds;
+				}
+			}
+
+			return classNameIds;
+		};
 	}
 
 	@Override
@@ -249,26 +264,37 @@ public class ClassNameLocalServiceImpl
 		}
 
 		public static void remove(ClassName className) {
-			_classNameIdsMap.computeIfPresent(
-				_getCompanyId(),
-				(key, classNameIds) -> {
-					classNameIds.remove(className.getValue());
+			Long companyId = _getCompanyId();
 
-					return classNameIds;
-				});
+			Map<String, Long> classNameIds = _classNameIdsMap.get(companyId);
 
-			_classNamesMap.computeIfPresent(
-				_getCompanyId(),
-				(key, classNames) -> {
-					classNames.remove(className.getClassNameId());
+			if (classNameIds != null) {
+				classNameIds.remove(className.getValue());
+			}
 
-					return classNames;
-				});
+			Map<Long, ClassName> classNames = _classNamesMap.get(companyId);
+
+			if (classNames != null) {
+				classNames.remove(className.getClassNameId());
+			}
 		}
 
 		private static <S, T> Map<S, T> _getMap(Map<Long, Map<S, T>> map) {
-			return map.computeIfAbsent(
-				_getCompanyId(), companyId -> new ConcurrentHashMap<>());
+			Long companyId = _getCompanyId();
+
+			Map<S, T> submap = map.get(companyId);
+
+			if (submap == null) {
+				submap = new ConcurrentHashMap<>();
+
+				Map<S, T> previousSubmap = map.putIfAbsent(companyId, submap);
+
+				if (previousSubmap != null) {
+					submap = previousSubmap;
+				}
+			}
+
+			return submap;
 		}
 
 		private static final Map<Long, Map<String, Long>> _classNameIdsMap =

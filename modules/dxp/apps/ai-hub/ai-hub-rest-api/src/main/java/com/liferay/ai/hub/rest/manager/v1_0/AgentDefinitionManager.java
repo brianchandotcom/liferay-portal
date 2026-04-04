@@ -22,6 +22,11 @@ public interface AgentDefinitionManager {
 			String externalReferenceCode)
 		throws Exception;
 
+	public AgentDefinition getAgentDefinition(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<AgentDefinition> getAgentDefinitionsPage(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String filter, Pagination pagination, String search, Sort[] sorts)

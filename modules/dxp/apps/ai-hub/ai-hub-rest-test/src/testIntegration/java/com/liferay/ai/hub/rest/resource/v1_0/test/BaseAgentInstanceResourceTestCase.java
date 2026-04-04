@@ -165,9 +165,9 @@ public abstract class BaseAgentInstanceResourceTestCase {
 
 		AgentInstance agentInstance = randomAgentInstance();
 
+		agentInstance.setAgentDefinitionExternalReferenceCode(regex);
 		agentInstance.setExternalReferenceCode(regex);
 		agentInstance.setSseEventSinkKey(regex);
-		agentInstance.setType(regex);
 
 		String json = AgentInstanceSerDes.toJSON(agentInstance);
 
@@ -175,9 +175,10 @@ public abstract class BaseAgentInstanceResourceTestCase {
 
 		agentInstance = AgentInstanceSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, agentInstance.getAgentDefinitionExternalReferenceCode());
 		Assert.assertEquals(regex, agentInstance.getExternalReferenceCode());
 		Assert.assertEquals(regex, agentInstance.getSseEventSinkKey());
-		Assert.assertEquals(regex, agentInstance.getType());
 	}
 
 	@Test
@@ -302,6 +303,19 @@ public abstract class BaseAgentInstanceResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"agentDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (agentInstance.getAgentDefinitionExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("context", additionalAssertFieldName)) {
 				if (agentInstance.getContext() == null) {
 					valid = false;
@@ -322,14 +336,6 @@ public abstract class BaseAgentInstanceResourceTestCase {
 
 			if (Objects.equals("sseEventSinkKey", additionalAssertFieldName)) {
 				if (agentInstance.getSseEventSinkKey() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (agentInstance.getType() == null) {
 					valid = false;
 				}
 
@@ -456,6 +462,22 @@ public abstract class BaseAgentInstanceResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"agentDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						agentInstance1.
+							getAgentDefinitionExternalReferenceCode(),
+						agentInstance2.
+							getAgentDefinitionExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("context", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)agentInstance1.getContext(),
@@ -484,16 +506,6 @@ public abstract class BaseAgentInstanceResourceTestCase {
 				if (!Objects.deepEquals(
 						agentInstance1.getSseEventSinkKey(),
 						agentInstance2.getSseEventSinkKey())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						agentInstance1.getType(), agentInstance2.getType())) {
 
 					return false;
 				}
@@ -608,6 +620,53 @@ public abstract class BaseAgentInstanceResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("agentDefinitionExternalReferenceCode")) {
+			Object object =
+				agentInstance.getAgentDefinitionExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("context")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -705,52 +764,6 @@ public abstract class BaseAgentInstanceResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("type")) {
-			Object object = agentInstance.getType();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -796,11 +809,12 @@ public abstract class BaseAgentInstanceResourceTestCase {
 	protected AgentInstance randomAgentInstance() throws Exception {
 		return new AgentInstance() {
 			{
+				agentDefinitionExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				sseEventSinkKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

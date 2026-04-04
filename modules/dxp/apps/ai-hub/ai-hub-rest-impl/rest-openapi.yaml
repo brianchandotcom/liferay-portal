@@ -39,6 +39,8 @@ components:
             type: object
         AgentInstance:
             properties:
+                agentDefinitionExternalReferenceCode:
+                    type: string
                 context:
                     additionalProperties: true
                     type: object
@@ -47,8 +49,6 @@ components:
                     readOnly: true
                     type: string
                 sseEventSinkKey:
-                    type: string
-                type:
                     type: string
             type: object
         Chat:

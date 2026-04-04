@@ -152,8 +152,6 @@ public class MirrorsGetTask extends Task {
 
 			_path = matcher.group("path");
 
-
-
 			return;
 		}
 
@@ -404,19 +402,23 @@ public class MirrorsGetTask extends Task {
 			}
 
 			System.out.println(
-				"Unable to download file from " + gsURL + " using gcloud storage cp.");
+				"Unable to download file from " + gsURL +
+					" using gcloud storage cp.");
 
 			process = _executeCommands(
 				new String[] {"gsutil", "cp", gsURL, targetFile.toString()});
 
 			if (process.exitValue() != 0) {
 				System.out.println(
-					"Unable to download file from " + gsURL + " using gsutil cp.");
+					"Unable to download file from " + gsURL +
+						" using gsutil cp.");
 
 				_deleteFile(targetFile);
 			}
 		}
-		catch (IOException | InterruptedException | RuntimeException exception) {
+		catch (InterruptedException | IOException | RuntimeException
+					exception) {
+
 			System.out.println(
 				"Unable to run GCP commands to download file: " +
 					exception.getMessage());
@@ -448,8 +450,6 @@ public class MirrorsGetTask extends Task {
 					hostname + ".");
 
 			_path = _path.substring(hostname.length());
-
-
 		}
 
 		File mirrorsCacheFile = _getMirrorsCacheFile();
@@ -493,15 +493,11 @@ public class MirrorsGetTask extends Task {
 				}
 			}
 
-			URL localURL = _getLocalURL();
-
-			urls.add(localURL);
+			urls.add(_getLocalURL());
 
 			urls.removeAll(Collections.singleton(null));
 
-			for (int i = 0; i < urls.size(); i++) {
-				URL url = urls.get(i);
-
+			for (URL url : urls) {
 				try {
 					_downloadFile(url, mirrorsCacheTempFile, _retries);
 				}
@@ -518,18 +514,19 @@ public class MirrorsGetTask extends Task {
 
 			if (!mirrorsCacheTempFile.exists()) {
 				_downloadGCPFile(mirrorsCacheTempFile);
-			}
 
-			if (!mirrorsCacheTempFile.exists()) {
-				URL remoteURL = _getRemoteURL();
+				if (!mirrorsCacheTempFile.exists()) {
+					URL remoteURL = _getRemoteURL();
 
-				try {
-					_downloadFile(remoteURL, mirrorsCacheTempFile, _retries);
-				}
-				catch (IOException ioException) {
-					_deleteFile(mirrorsCacheTempFile);
+					try {
+						_downloadFile(
+							remoteURL, mirrorsCacheTempFile, _retries);
+					}
+					catch (IOException ioException) {
+						_deleteFile(mirrorsCacheTempFile);
 
-					throw ioException;
+						throw ioException;
+					}
 				}
 			}
 
@@ -683,10 +680,7 @@ public class MirrorsGetTask extends Task {
 		sb.append(File.separator);
 		sb.append(_hostName);
 		sb.append(File.separator);
-
-		String path = _getPath();
-
-		sb.append(_getPlatformIndependentPath(path));
+		sb.append(_getPlatformIndependentPath(_getPath()));
 
 		return new File(sb.toString(), _fileName);
 	}
@@ -776,18 +770,6 @@ public class MirrorsGetTask extends Task {
 		return _password;
 	}
 
-	private String _getPlatformIndependentPath(String path) {
-		String[] separators = {"/", "\\"};
-
-		for (String separator : separators) {
-			if (!separator.equals(File.separator)) {
-				path = path.replace(separator, File.separator);
-			}
-		}
-
-		return path;
-	}
-
 	private String _getPath() {
 		String path = _normalizePath(_path);
 
@@ -803,6 +785,18 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return _gcpBucketName + "/" + path;
+	}
+
+	private String _getPlatformIndependentPath(String path) {
+		String[] separators = {"/", "\\"};
+
+		for (String separator : separators) {
+			if (!separator.equals(File.separator)) {
+				path = path.replace(separator, File.separator);
+			}
+		}
+
+		return path;
 	}
 
 	private String _getProcessOutput(Process process) {
@@ -1101,6 +1095,20 @@ public class MirrorsGetTask extends Task {
 		return false;
 	}
 
+	private void _moveFile(File sourceFile, File destFile) throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Moving ");
+		sb.append(sourceFile.getPath());
+		sb.append(" to ");
+		sb.append(destFile.getPath());
+		sb.append(".");
+
+		System.out.println(sb.toString());
+
+		sourceFile.renameTo(destFile);
+	}
+
 	private String _normalizePath(String path) {
 		if (path == null) {
 			return "";
@@ -1117,20 +1125,6 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return path;
-	}
-
-	private void _moveFile(File sourceFile, File destFile) throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Moving ");
-		sb.append(sourceFile.getPath());
-		sb.append(" to ");
-		sb.append(destFile.getPath());
-		sb.append(".");
-
-		System.out.println(sb.toString());
-
-		sourceFile.renameTo(destFile);
 	}
 
 	private URLConnection _openConnection(URL url) throws IOException {

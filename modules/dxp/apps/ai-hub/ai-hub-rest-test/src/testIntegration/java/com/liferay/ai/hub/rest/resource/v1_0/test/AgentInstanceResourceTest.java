@@ -158,6 +158,11 @@ public class AgentInstanceResourceTest
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			aiHubAccountEntry.getAccountEntryId(), TestPropsValues.getUserId());
 
+		_agentDefinitionObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_AGENT_DEFINITION",
+					TestPropsValues.getCompanyId());
 		_instructionObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -210,41 +215,25 @@ public class AgentInstanceResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				GroupTestUtil.addGroup(), TestPropsValues.getUserId()));
 
-		_workflowDefinitionManager.deployWorkflowDefinition(
-			_getContentBytes("ai-decision-node-workflow-definition.json"),
-			TestPropsValues.getCompanyId(), null,
-			_accountEntry.getAccountEntryGroupId(),
-			"AI Decision Node Workflow Definition",
-			WorkflowDefinitionConstants.SCOPE_AI, StringUtil.randomId(),
-			TestPropsValues.getUserId());
-		_workflowDefinitionManager.deployWorkflowDefinition(
-			_getContentBytes(
-				"ai-decision-node-with-tool-workflow-definition.json"),
-			TestPropsValues.getCompanyId(), null,
-			_accountEntry.getAccountEntryGroupId(),
-			"AI Decision Node With Tool Workflow Definition",
-			WorkflowDefinitionConstants.SCOPE_AI, StringUtil.randomId(),
-			TestPropsValues.getUserId());
-		_workflowDefinitionManager.deployWorkflowDefinition(
-			_getContentBytes("llm-node-with-rag-workflow-definition.json"),
-			TestPropsValues.getCompanyId(), null,
-			_accountEntry.getAccountEntryGroupId(),
-			"LLM Node With RAG Workflow Definition",
-			WorkflowDefinitionConstants.SCOPE_AI, StringUtil.randomId(),
-			TestPropsValues.getUserId());
-		_workflowDefinitionManager.deployWorkflowDefinition(
-			_getContentBytes("llm-node-with-tool-workflow-definition.json"),
-			TestPropsValues.getCompanyId(), null,
-			_accountEntry.getAccountEntryGroupId(),
-			"LLM Node With Tool Workflow Definition",
-			WorkflowDefinitionConstants.SCOPE_AI, StringUtil.randomId(),
-			TestPropsValues.getUserId());
-		_workflowDefinitionManager.deployWorkflowDefinition(
-			_getContentBytes("workflow-definition.json"),
-			TestPropsValues.getCompanyId(), null,
-			_accountEntry.getAccountEntryGroupId(), "Workflow Definition",
-			WorkflowDefinitionConstants.SCOPE_AI, StringUtil.randomId(),
-			TestPropsValues.getUserId());
+		_addAgentDefinitionObjectEntry(
+			"L_AI_DECISION_NODE_WORKFLOW_DEFINITION", "content",
+			"ai-decision-node-workflow-definition.json",
+			"AI Decision Node Workflow Definition");
+		_addAgentDefinitionObjectEntry(
+			"L_AI_DECISION_NODE_WITH_TOOL_WORKFLOW_DEFINITION", "question",
+			"ai-decision-node-with-tool-workflow-definition.json",
+			"AI Decision Node With Tool Workflow Definition");
+		_addAgentDefinitionObjectEntry(
+			"L_LLM_NODE_WITH_RAG_WORKFLOW_DEFINITION", "userMessage",
+			"llm-node-with-rag-workflow-definition.json",
+			"LLM Node With RAG Workflow Definition");
+		_addAgentDefinitionObjectEntry(
+			"L_LLM_NODE_WITH_TOOL_WORKFLOW_DEFINITION", "userMessage",
+			"llm-node-with-tool-workflow-definition.json",
+			"LLM Node With Tool Workflow Definition");
+		_addAgentDefinitionObjectEntry(
+			"L_WORKFLOW_DEFINITION", "text", "workflow-definition.json",
+			"Workflow Definition");
 	}
 
 	@AfterClass
@@ -287,6 +276,46 @@ public class AgentInstanceResourceTest
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostAgentInstanceWithTypeLLMNodeWithToolWorkflowDefinition();
 		_testPostAgentInstanceWithTypeMakeShorter();
+	}
+
+	private static void _addAgentDefinitionObjectEntry(
+			String externalReferenceCode, String inputVariables,
+			String workflowDefinitionFileName, String workflowDefinitionName)
+		throws Exception {
+
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			_getContentBytes(workflowDefinitionFileName),
+			TestPropsValues.getCompanyId(), null,
+			_accountEntry.getAccountEntryGroupId(), workflowDefinitionName,
+			WorkflowDefinitionConstants.SCOPE_AI, StringUtil.randomId(),
+			TestPropsValues.getUserId());
+
+		_objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_agentDefinitionObjectDefinition.getObjectDefinitionId(), 0,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			HashMapBuilder.<String, Serializable>put(
+				"active", true
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"inputVariables", inputVariables
+			).put(
+				"outputVariable", "output"
+			).put(
+				"r_accountToAIHubAgentDefinitions_accountEntryId",
+				_accountEntry.getAccountEntryId()
+			).put(
+				"title_i18n",
+				(Serializable)HashMapBuilder.put(
+					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					workflowDefinitionName
+				).build()
+			).put(
+				"workflowDefinitionName", workflowDefinitionName
+			).build(),
+			ServiceContextTestUtil.getServiceContext(
+				GroupTestUtil.addGroup(), TestPropsValues.getUserId()));
 	}
 
 	private static byte[] _getContentBytes(String fileName) throws Exception {
@@ -336,19 +365,20 @@ public class AgentInstanceResourceTest
 	}
 
 	private JSONObject _postAgentInstance(
-			String inputText, String inputVariable, String sseEventSinkKey,
-			String type)
+			String agentDefinitionExternalReferenceCode, String inputText,
+			String inputVariable, String sseEventSinkKey)
 		throws Exception {
 
 		JSONObject tokenJSONObject = TokenTestUtil.postToken();
 
 		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
+				"agentDefinitionExternalReferenceCode",
+				agentDefinitionExternalReferenceCode
+			).put(
 				"context", JSONUtil.put(inputVariable, inputText)
 			).put(
 				"sseEventSinkKey", sseEventSinkKey
-			).put(
-				"type", type
 			).toString(),
 			"ai-hub/v1.0/agent-instances",
 			HashMapBuilder.put(
@@ -364,11 +394,11 @@ public class AgentInstanceResourceTest
 	private void _testPostAgentInstance() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
+				"agentDefinitionExternalReferenceCode", "L_WORKFLOW_DEFINITION"
+			).put(
 				"context", JSONUtil.put("text", RandomTestUtil.randomString())
 			).put(
 				"sseEventSinkKey", RandomTestUtil.randomString()
-			).put(
-				"type", "Workflow Definition"
 			).toString(),
 			"ai-hub/v1.0/agent-instances", Http.Method.POST);
 
@@ -392,11 +422,11 @@ public class AgentInstanceResourceTest
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
+				"agentDefinitionExternalReferenceCode", "L_WORKFLOW_DEFINITION"
+			).put(
 				"context", JSONUtil.put("text", RandomTestUtil.randomString())
 			).put(
 				"sseEventSinkKey", RandomTestUtil.randomString()
-			).put(
-				"type", "Workflow Definition"
 			).toString(),
 			"ai-hub/v1.0/agent-instances", Http.Method.POST);
 
@@ -414,9 +444,9 @@ public class AgentInstanceResourceTest
 			PermissionThreadLocal.getPermissionChecker();
 
 		JSONObject jsonObject = _postAgentInstance(
+			"L_AI_DECISION_NODE_WITH_TOOL_WORKFLOW_DEFINITION",
 			"Is the \"get_openapis\" tool available?", "question",
-			RandomTestUtil.randomString(),
-			"AI Decision Node With Tool Workflow Definition");
+			RandomTestUtil.randomString());
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -459,8 +489,8 @@ public class AgentInstanceResourceTest
 		throws Exception {
 
 		JSONObject jsonObject = _postAgentInstance(
-			content, "content", RandomTestUtil.randomString(),
-			"AI Decision Node Workflow Definition");
+			"L_AI_DECISION_NODE_WORKFLOW_DEFINITION", content, "content",
+			RandomTestUtil.randomString());
 
 		IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -537,13 +567,12 @@ public class AgentInstanceResourceTest
 			List.of(countDownLatch), lines, "agent-instances/subscribe");
 
 		JSONObject jsonObject = _postAgentInstance(
-			input, "text", sseEventSinkKey,
-			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR);
+			"L_FIX_SPELLING_AND_GRAMMAR", input, "text", sseEventSinkKey);
 
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
-		Assert.assertEquals("event: Fix Spelling and Grammar", lines.get(2));
+		Assert.assertEquals("event: L_FIX_SPELLING_AND_GRAMMAR", lines.get(2));
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"data", expectedOutput
@@ -626,8 +655,8 @@ public class AgentInstanceResourceTest
 			"agent-instances/subscribe");
 
 		_postAgentInstance(
-			"What is Feliphe's favorite food?", "userMessage", sseEventSinkKey,
-			"LLM Node With RAG Workflow Definition");
+			"L_LLM_NODE_WITH_RAG_WORKFLOW_DEFINITION",
+			"What is Feliphe's favorite food?", "userMessage", sseEventSinkKey);
 
 		Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
 
@@ -650,8 +679,8 @@ public class AgentInstanceResourceTest
 			ServiceContextTestUtil.getServiceContext());
 
 		_postAgentInstance(
-			"What is Feliphe's favorite food?", "userMessage", sseEventSinkKey,
-			"LLM Node With RAG Workflow Definition");
+			"L_LLM_NODE_WITH_RAG_WORKFLOW_DEFINITION",
+			"What is Feliphe's favorite food?", "userMessage", sseEventSinkKey);
 
 		Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
 
@@ -708,8 +737,9 @@ public class AgentInstanceResourceTest
 		).apply(
 			() -> {
 				_postAgentInstance(
+					"L_LLM_NODE_WITH_RAG_WORKFLOW_DEFINITION",
 					"What is Feliphe's favorite food?", "userMessage",
-					sseEventSinkKey, "LLM Node With RAG Workflow Definition");
+					sseEventSinkKey);
 
 				Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
 
@@ -734,8 +764,9 @@ public class AgentInstanceResourceTest
 				_userLocalService.addRoleUser(role.getRoleId(), userId);
 
 				_postAgentInstance(
+					"L_LLM_NODE_WITH_RAG_WORKFLOW_DEFINITION",
 					"What is Feliphe's favorite food?", "userMessage",
-					sseEventSinkKey, "LLM Node With RAG Workflow Definition");
+					sseEventSinkKey);
 
 				Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
 
@@ -763,8 +794,9 @@ public class AgentInstanceResourceTest
 			List.of(countDownLatch), lines, "agent-instances/subscribe");
 
 		_postAgentInstance(
+			"L_LLM_NODE_WITH_TOOL_WORKFLOW_DEFINITION",
 			"Is the \"get_openapi\" tool available?", "userMessage",
-			sseEventSinkKey, "LLM Node With Tool Workflow Definition");
+			sseEventSinkKey);
 
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 
@@ -790,13 +822,12 @@ public class AgentInstanceResourceTest
 				"by the AI model for testing purposes.";
 
 		JSONObject jsonObject = _postAgentInstance(
-			inputText, "text", sseEventSinkKey,
-			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
+			"L_MAKE_SHORTER", inputText, "text", sseEventSinkKey);
 
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
-		Assert.assertEquals("event: Make Shorter", lines.get(2));
+		Assert.assertEquals("event: L_MAKE_SHORTER", lines.get(2));
 
 		JSONObject outputJSONObject = _jsonFactory.createJSONObject(
 			StringUtil.removeSubstring(lines.get(3), "data: "));
@@ -838,6 +869,8 @@ public class AgentInstanceResourceTest
 	@Inject
 	private static AccountEntryUserRelLocalService
 		_accountEntryUserRelLocalService;
+
+	private static ObjectDefinition _agentDefinitionObjectDefinition;
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;

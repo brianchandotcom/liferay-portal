@@ -1,8 +1,13 @@
+$border-color: #e7e8eb;
+$surface-hover: #f5f5f8;
+$border-radius-sm: 0.25rem;
+$font-size-sm: 0.875rem;
+
 .chatbot-form {
 	padding: 24px 0;
 
 	.chatbot-details {
-		border: 1px solid #e7e8eb;
+		border: 1px solid $border-color;
 		border-radius: 1rem;
 		margin-bottom: 16px;
 	}
@@ -18,7 +23,7 @@
 	.chatbot-assigned-agents {
 		align-items: center;
 		border: 1px solid #ced4da;
-		border-radius: 0.25rem;
+		border-radius: $border-radius-sm;
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px;
@@ -28,10 +33,10 @@
 		.chatbot-agent-tag {
 			align-items: center;
 			background: #e9ecef;
-			border-radius: 0.25rem;
+			border-radius: $border-radius-sm;
 			color: #272833;
 			display: inline-flex;
-			font-size: 0.875rem;
+			font-size: $font-size-sm;
 			font-weight: 600;
 			gap: 6px;
 			padding: 3px 8px;
@@ -65,7 +70,7 @@
 			.chatbot-agent-search {
 				background: transparent;
 				border: none;
-				font-size: 0.875rem;
+				font-size: $font-size-sm;
 				outline: none;
 				padding: 0;
 				width: 100%;
@@ -73,8 +78,8 @@
 
 			.chatbot-agent-picker {
 				background: #fff;
-				border: 1px solid #e7e8eb;
-				border-radius: 0.25rem;
+				border: 1px solid $border-color;
+				border-radius: $border-radius-sm;
 				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 				left: 0;
 				max-height: 200px;
@@ -94,7 +99,7 @@
 					width: 100%;
 
 					&:hover {
-						background: #f5f5f8;
+						background: $surface-hover;
 					}
 				}
 			}
@@ -111,7 +116,7 @@
 
 	.chatbot-code-card {
 		background: #fff;
-		border: 1px solid #e7e8eb;
+		border: 1px solid $border-color;
 		border-radius: 0.5rem;
 		padding: 1.25rem 1.5rem;
 
@@ -121,22 +126,17 @@
 			gap: 6px;
 			margin-bottom: 16px;
 
-			.chatbot-code-title {
-				font-size: 1rem;
-				font-weight: 600;
-			}
-
 			.chatbot-code-copy {
 				background: none;
-				border: 1px solid #e7e8eb;
-				border-radius: 0.25rem;
+				border: 1px solid $border-color;
+				border-radius: $border-radius-sm;
 				cursor: pointer;
 				display: inline-flex;
 				margin-left: auto;
 				padding: 6px 8px;
 
 				&:hover {
-					background: #f5f5f8;
+					background: $surface-hover;
 				}
 
 				svg {
@@ -147,7 +147,7 @@
 		}
 
 		.chatbot-code-textarea {
-			background: #f5f5f8;
+			background: $surface-hover;
 			font-family: monospace;
 			font-size: 0.8rem;
 			height: auto;

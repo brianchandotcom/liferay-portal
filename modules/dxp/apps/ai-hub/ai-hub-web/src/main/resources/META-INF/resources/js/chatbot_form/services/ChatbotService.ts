@@ -42,9 +42,12 @@ async function postChatbot(chatbot: Chatbot) {
 	return response.json();
 }
 
-async function putChatbot(chatbot: Chatbot) {
+async function putChatbot(
+	existingExternalReferenceCode: string,
+	chatbot: Chatbot
+) {
 	const response = await fetch(
-		`${CHATBOT_BY_ERC_URI}${chatbot.externalReferenceCode}`,
+		`${CHATBOT_BY_ERC_URI}${existingExternalReferenceCode}`,
 		{
 			body: JSON.stringify(chatbot),
 			headers: {

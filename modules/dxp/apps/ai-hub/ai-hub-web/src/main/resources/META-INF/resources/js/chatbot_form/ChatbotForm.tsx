@@ -58,7 +58,10 @@ export default function ChatbotForm({
 	externalReferenceCode: string;
 }) {
 	const [formData, setFormData] = useState<Chatbot>({} as Chatbot);
-	const [savedERC, setSavedERC] = useState(externalReferenceCode);
+	const [
+		existingChatbotExternalReferenceCode,
+		setExistingChatbotExternalReferenceCode,
+	] = useState(externalReferenceCode);
 	const [availableAgentDefinitions, setAvailableAgentDefinitions] = useState<
 		AgentDefinitionOption[]
 	>([]);
@@ -130,28 +133,31 @@ export default function ChatbotForm({
 					'',
 			};
 
-			let chatbotERC = savedERC;
+			let chatbotExternalReferenceCode =
+				existingChatbotExternalReferenceCode;
 
-			if (savedERC) {
-				await putChatbot(payload);
+			if (existingChatbotExternalReferenceCode) {
+				await putChatbot(existingChatbotExternalReferenceCode, payload);
 			}
 			else {
 				const created = await postChatbot(payload);
 
-				chatbotERC = created.externalReferenceCode;
+				chatbotExternalReferenceCode = created.externalReferenceCode;
 
-				setSavedERC(chatbotERC);
+				setExistingChatbotExternalReferenceCode(
+					chatbotExternalReferenceCode
+				);
 
 				setFormData((prev) => ({
 					...prev,
-					externalReferenceCode: chatbotERC,
+					externalReferenceCode: chatbotExternalReferenceCode,
 				}));
 			}
 
 			await Promise.all(
 				selectedAgentDefinitions.map((agent) =>
 					putChatbotAgentDefinitionRelationship(
-						chatbotERC,
+						chatbotExternalReferenceCode,
 						agent.externalReferenceCode
 					)
 				)
@@ -161,7 +167,7 @@ export default function ChatbotForm({
 				Array.from(removedAgentDefinitionERCsRef.current).map(
 					(agentERC) =>
 						deleteChatbotAgentDefinitionRelationship(
-							chatbotERC,
+							chatbotExternalReferenceCode,
 							agentERC
 						)
 				)
@@ -640,9 +646,9 @@ export default function ChatbotForm({
 
 							<div className="chatbot-code-card">
 								<div className="chatbot-code-header">
-									<span className="chatbot-code-title">
+									<strong>
 										{Liferay.Language.get('chatbot-code')}
-									</span>
+									</strong>
 
 									<Provider
 										spritemap={Liferay.Icons.spritemap}

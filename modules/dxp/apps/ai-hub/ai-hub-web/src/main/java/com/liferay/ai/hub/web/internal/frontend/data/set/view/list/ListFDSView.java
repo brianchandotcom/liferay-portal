@@ -12,13 +12,18 @@ import com.liferay.frontend.data.set.view.list.BaseListFDSView;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Carolina Barbosa
+ * @author José Abelenda
  */
 @Component(
-	property = "frontend.data.set.name=" + AIHubFDSNames.INSTRUCTION_DEFINITIONS,
+	property = {
+		"frontend.data.set.name=" + AIHubFDSNames.AGENT_DEFINITIONS,
+		"frontend.data.set.name=" + AIHubFDSNames.CHATBOTS,
+		"frontend.data.set.name=" + AIHubFDSNames.CONTENT_RETRIEVERS,
+		"frontend.data.set.name=" + AIHubFDSNames.INSTRUCTION_DEFINITIONS
+	},
 	service = FDSView.class
 )
-public class InstructionDefinitionListFDSView extends BaseListFDSView {
+public class ListFDSView extends BaseListFDSView {
 
 	@Override
 	public String getDescription() {

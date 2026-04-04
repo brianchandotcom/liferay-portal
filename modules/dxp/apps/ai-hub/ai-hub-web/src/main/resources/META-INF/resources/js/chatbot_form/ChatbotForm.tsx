@@ -33,18 +33,17 @@ type AgentDefinitionOption = {
 
 function generateEmbedCode(externalReferenceCode: string) {
 	return `<script id="${externalReferenceCode}_pid">
-  var Task_AIHub_APIS, Task_LoadStartView (data);
   (function() {
-    var script1 = document.createElement("script"),
+    var scriptElement1 = document.createElement("script");
 
-    script1.async = true;
-    script1.src = "/o/ai-hub/chatbots/${externalReferenceCode}";
-    script1.charset = "UTF-8";
-    script1.setAttribute("crossorigin", "*");
+    scriptElement1.async = true;
+    scriptElement1.charset = "UTF-8";
+    scriptElement1.setAttribute("crossorigin", "*");
+    scriptElement1.src = "/o/ai-hub/chatbots/${externalReferenceCode}";
 
-    var script2 = document.getElementsByTagName("script")[0];
+    var scriptElement2 = document.getElementsByTagName("script")[0];
 
-    script2.parentNode.insertBefore(script1, script2);
+    scriptElement2.parentNode.insertBefore(scriptElement1, scriptElement2);
   })();
 </script>`;
 }
@@ -72,6 +71,7 @@ export default function ChatbotForm({
 		useState('');
 
 	const agentDefinitionPickerRef = useRef<HTMLDivElement>(null);
+	const removedAgentDefinitionERCsRef = useRef<Set<string>>(new Set());
 
 	const handleInputChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -83,7 +83,6 @@ export default function ChatbotForm({
 			[name]: value,
 		}));
 	};
-	const removedAgentDefinitionERCsRef = useRef<Set<string>>(new Set());
 
 	const handleRemoveAgentDefinition = (erc: string) => {
 		removedAgentDefinitionERCsRef.current.add(erc);

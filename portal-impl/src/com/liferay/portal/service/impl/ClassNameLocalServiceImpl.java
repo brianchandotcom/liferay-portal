@@ -276,9 +276,9 @@ public class ClassNameLocalServiceImpl
 				_getCompanyId(), companyId -> new ConcurrentHashMap<>());
 		}
 
-		private static Map<Long, Map<String, Long>> _classNameIdsMap =
+		private static final Map<Long, Map<String, Long>> _classNameIdsMap =
 			new ConcurrentHashMap<>();
-		private static Map<Long, Map<Long, ClassName>> _classNamesMap =
+		private static final Map<Long, Map<Long, ClassName>> _classNamesMap =
 			new ConcurrentHashMap<>();
 
 	}

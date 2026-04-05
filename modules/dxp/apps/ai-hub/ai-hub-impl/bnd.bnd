@@ -4,6 +4,8 @@ Bundle-Version: 1.0.6
 Import-Package:\
 	!com.fasterxml.jackson.datatype.*,\
 	\
+	!javax.annotation,\
+	\
 	!org.bouncycastle.jsse.*,\
 	\
 	!org.conscrypt.*,\

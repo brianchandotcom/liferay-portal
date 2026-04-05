@@ -124,6 +124,14 @@ public class ContentRetrieverManagerImpl implements ContentRetrieverManager {
 		_searchEngineAdapter.execute(createIndexRequest);
 	}
 
+	private void _deleteIndex(String indexName) {
+		if (!_hasIndex(indexName)) {
+			return;
+		}
+
+		_searchEngineAdapter.execute(new DeleteIndexRequest(indexName));
+	}
+
 	private ObjectDefinition _getObjectDefinition(long companyId)
 		throws Exception {
 
@@ -146,14 +154,6 @@ public class ContentRetrieverManagerImpl implements ContentRetrieverManager {
 			StringUtil.read(getClass(), "/META-INF/search/" + fileName));
 
 		return jsonObject.toString();
-	}
-
-	private void _deleteIndex(String indexName) {
-		if (!_hasIndex(indexName)) {
-			return;
-		}
-
-		_searchEngineAdapter.execute(new DeleteIndexRequest(indexName));
 	}
 
 	private ContentRetriever _toContentRetriever(ObjectEntry objectEntry) {

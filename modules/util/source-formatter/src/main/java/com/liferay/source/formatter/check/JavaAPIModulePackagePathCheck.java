@@ -21,7 +21,9 @@ public class JavaAPIModulePackagePathCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!absolutePath.contains("-api/src/")) {
+		if (!absolutePath.contains("-api/src/") ||
+			absolutePath.contains("/gradleTest/")) {
+
 			return content;
 		}
 

@@ -9,11 +9,13 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -42,16 +44,19 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 
 	public LiferayWebSearchEngine(
 		String accessToken, String blueprintExternalReferenceCode,
-		String userToken) {
+		long companyId, String userToken) {
 
 		_accessToken = accessToken;
 		_blueprintExternalReferenceCode = blueprintExternalReferenceCode;
+		_companyId = companyId;
 		_userToken = userToken;
 	}
 
 	@Override
 	public WebSearchResults search(WebSearchRequest webSearchRequest) {
-		try {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(_companyId)) {
+
 			return _search(webSearchRequest);
 		}
 		catch (Exception exception) {
@@ -141,6 +146,7 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 
 	private final String _accessToken;
 	private final String _blueprintExternalReferenceCode;
+	private final long _companyId;
 	private final String _userToken;
 
 }

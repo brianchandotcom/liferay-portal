@@ -5,6 +5,5 @@
 		<suppress checks="BNDDirectoryNameCheck" files=".*" />
 		<suppress checks="JavaClassNameCheck" files=".*" />
 		<suppress checks="JavaInternalPackageCheck" files=".*" />
-		<suppress checks="JavaPackagePathCheck" files=".*" />
 	</source-check>
 </suppressions>

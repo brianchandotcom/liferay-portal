@@ -7,6 +7,9 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Alan Huang
  */
@@ -27,13 +30,10 @@ public class JavaAPIModulePackagePathCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String packageName = JavaSourceUtil.getPackageName(content);
+		Matcher matcher = _packageNamePattern.matcher(
+			JavaSourceUtil.getPackageName(content));
 
-		if (packageName.contains(".api.") || packageName.contains(".impl.") ||
-			packageName.contains(".internal.") ||
-			packageName.endsWith(".api") || packageName.endsWith(".impl") ||
-			packageName.endsWith(".internal")) {
-
+		if (matcher.find()) {
 			addMessage(
 				fileName,
 				"Do not use \"api\", \"impl\", or \"internal\" in package " +
@@ -42,5 +42,8 @@ public class JavaAPIModulePackagePathCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final Pattern _packageNamePattern = Pattern.compile(
+		"\\.(api|impl|internal)(\\.|\\Z)");
 
 }

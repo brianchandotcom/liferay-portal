@@ -320,24 +320,6 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			}
 		}
 
-		if (absolutePath.contains("-api/src/")) {
-			Matcher matcher = _internalPackagePattern.matcher(packageName);
-
-			if (matcher.find()) {
-				addMessage(
-					fileName,
-					"Do not use \"" + matcher.group(1) +
-						"\" package in API module");
-			}
-
-			if (packageName.contains(".api.") || packageName.endsWith(".api")) {
-				addMessage(
-					fileName,
-					"Do not use \"api\" in the package for classes in the " +
-						"API module");
-			}
-		}
-
 		if (className.matches(".*(?<!Display)Context") &&
 			packageName.endsWith(".display.context")) {
 
@@ -411,7 +393,5 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 	private static final Pattern _apiOrServiceBundleSymbolicNamePattern =
 		Pattern.compile("\\.(api|service)$");
-	private static final Pattern _internalPackagePattern = Pattern.compile(
-		"\\.(impl|internal)(\\.|\\Z)");
 
 }

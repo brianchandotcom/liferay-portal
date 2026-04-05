@@ -1067,6 +1067,10 @@
 
 		<!-- Module Source Checks -->
 
+		<check name="JavaAPIModulePackagePathCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases of incorrect package names in API modules." />
+		</check>
 		<check name="JavaConfigurationCategoryCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that the value of `category` in `@ExtendedObjectClassDefinition` matches the `categoryKey` of the corresponding class that implements `ConfigurationCategory`." />

@@ -220,10 +220,17 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 		DTOConverterContext dtoConverterContext, String methodName,
 		WorkflowDefinition workflowDefinition) {
 
-		if (!Objects.equals(
-				methodName, "postAgentDefinitionByExternalReferenceCodeCopy") &&
-			workflowDefinition.isSystem()) {
+		if (Objects.equals(
+				methodName, "postAgentDefinitionByExternalReferenceCodeCopy")) {
 
+			return ActionUtil.addAction(
+				ActionKeys.VIEW, AgentDefinitionResourceImpl.class,
+				workflowDefinition.getWorkflowDefinitionId(), methodName,
+				_kaleoDefinitionModelResourcePermission, (Long)null,
+				dtoConverterContext.getUriInfo());
+		}
+
+		if (workflowDefinition.isSystem()) {
 			return null;
 		}
 

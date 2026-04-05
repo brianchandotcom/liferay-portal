@@ -36,7 +36,7 @@ public class JavaAPIModulePackagePathCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"Do not use \"api\", \"impl\" or \"internal\" in package " +
+				"Do not use \"api\", \"impl\", or \"internal\" in package " +
 					"names for classes within API modules");
 		}
 

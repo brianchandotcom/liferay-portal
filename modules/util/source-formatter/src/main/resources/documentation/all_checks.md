@@ -216,6 +216,7 @@ JakartaTransformTLDCheck | [JakartaTransform](jakarta_transform_checks.md#jakart
 JakartaTransformTSCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .ts or .tsx | Performs replacements for use of Jakarta. |
 JakartaTransformXMLCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .xml | Performs replacements for use of Jakarta. |
 Java2HTMLCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Finds incorrect use of `.java.html` in `.jsp` files. |
+[JavaAPIModulePackagePathCheck](check/java_api_module_package_path_check.md#javaapimodulepackagepathcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases of incorrect package names in API modules. |
 JavaAbstractMethodCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds incorrect `abstract` methods in `interface`. |
 JavaAggregateTestRuleParameterOrderCheck | [Styling](styling_checks.md#styling-checks) | .java | Checks the order of parameters in `new AggregateTestRule` calls. |
 JavaAnnotationDefaultAttributeCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds cases where the default value is passed to annotations in package `*.bnd.annotations` or `*.bind.annotations`. |

@@ -89,6 +89,7 @@ JSPLogFileNameCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Validates the val
 JSPSessionKeysCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that messages send to `SessionsErrors` or `SessionMessages` follow naming conventions. |
 JSPTagAttributesCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Performs several checks on tag attributes. |
 JSPTaglibMissingAttributesCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks for missing taglib attributes. |
+[JavaAPIModulePackagePathCheck](check/java_api_module_package_path_check.md#javaapimodulepackagepathcheck) | .java | Finds cases of incorrect package names in API modules. |
 JavaAbstractMethodCheck | .java | Finds incorrect `abstract` methods in `interface`. |
 JavaAnnotationsCheck | .java | Performs several checks on annotations. |
 [JavaAnonymousInnerClassCheck](check/java_anonymous_inner_class_check.md#javaanonymousinnerclasscheck) | .java | Performs several checks on anonymous classes. |

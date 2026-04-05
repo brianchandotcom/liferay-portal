@@ -8,7 +8,7 @@ package com.liferay.ai.hub.internal.assistant.handler;
 import dev.langchain4j.invocation.InvocationParameters;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
-import dev.langchain4j.rag.content.retriever.ContentRetriever;
+import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.service.tool.ToolProvider;
 
 import java.util.function.Consumer;
@@ -24,21 +24,17 @@ public class AssistantHandlerContext {
 	}
 
 	public AssistantHandlerContext(AssistantHandlerContext.Builder builder) {
-		_contentRetriever = builder._contentRetriever;
 		_invocationParameters = builder._invocationParameters;
 		_memoryId = builder._memoryId;
 		_onCompleteResponseConsumer = builder._onCompleteResponseConsumer;
 		_onErrorConsumer = builder._onErrorConsumer;
+		_retrievalAugmentor = builder._retrievalAugmentor;
 		_systemMessageProviderFunction = builder._systemMessageProviderFunction;
 		_tools = builder._tools;
 		_toolProvider = builder._toolProvider;
 		_userMessage = builder._userMessage;
 		_vertexAiGeminiStreamingChatModel =
 			builder._vertexAiGeminiStreamingChatModel;
-	}
-
-	public ContentRetriever getContentRetriever() {
-		return _contentRetriever;
 	}
 
 	public InvocationParameters getInvocationParameters() {
@@ -55,6 +51,10 @@ public class AssistantHandlerContext {
 
 	public Consumer<Throwable> getOnErrorConsumer() {
 		return _onErrorConsumer;
+	}
+
+	public RetrievalAugmentor getRetrievalAugmentor() {
+		return _retrievalAugmentor;
 	}
 
 	public Function<Object, String> getSystemMessageProviderFunction() {
@@ -85,12 +85,6 @@ public class AssistantHandlerContext {
 			return new AssistantHandlerContext(this);
 		}
 
-		public Builder contentRetriever(ContentRetriever contentRetriever) {
-			_contentRetriever = contentRetriever;
-
-			return this;
-		}
-
 		public Builder invocationParameters(
 			InvocationParameters invocationParameters) {
 
@@ -115,6 +109,14 @@ public class AssistantHandlerContext {
 
 		public Builder onErrorConsumer(Consumer<Throwable> onErrorConsumer) {
 			_onErrorConsumer = onErrorConsumer;
+
+			return this;
+		}
+
+		public Builder retrievalAugmentor(
+			RetrievalAugmentor retrievalAugmentor) {
+
+			_retrievalAugmentor = retrievalAugmentor;
 
 			return this;
 		}
@@ -156,11 +158,11 @@ public class AssistantHandlerContext {
 			return this;
 		}
 
-		private ContentRetriever _contentRetriever;
 		private InvocationParameters _invocationParameters;
 		private String _memoryId;
 		private Consumer<ChatResponse> _onCompleteResponseConsumer;
 		private Consumer<Throwable> _onErrorConsumer;
+		private RetrievalAugmentor _retrievalAugmentor;
 		private Function<Object, String> _systemMessageProviderFunction;
 		private ToolProvider _toolProvider;
 		private Object[] _tools = new Object[0];
@@ -170,11 +172,11 @@ public class AssistantHandlerContext {
 
 	}
 
-	private final ContentRetriever _contentRetriever;
 	private final InvocationParameters _invocationParameters;
 	private final String _memoryId;
 	private final Consumer<ChatResponse> _onCompleteResponseConsumer;
 	private final Consumer<Throwable> _onErrorConsumer;
+	private final RetrievalAugmentor _retrievalAugmentor;
 	private final Function<Object, String> _systemMessageProviderFunction;
 	private final ToolProvider _toolProvider;
 	private final Object[] _tools;

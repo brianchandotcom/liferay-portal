@@ -13,8 +13,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -60,8 +58,6 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 			return _search(webSearchRequest);
 		}
 		catch (Exception exception) {
-			_log.error(exception);
-
 			return ReflectionUtil.throwException(exception);
 		}
 	}
@@ -140,9 +136,6 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 			WebSearchInformationResult.from(jsonObject.getLong("totalCount")),
 			webSearchOrganicResults);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LiferayWebSearchEngine.class);
 
 	private final String _accessToken;
 	private final String _blueprintExternalReferenceCode;

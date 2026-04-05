@@ -86,6 +86,9 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 			"accessToken",
 			contextHttpServletRequest.getHeader("Authorization"));
 		workflowContext.put(
+			"agentDefinitionExternalReferenceCode",
+			agentDefinition.getExternalReferenceCode());
+		workflowContext.put(
 			"outBoundEventName", agentDefinition.getExternalReferenceCode());
 		workflowContext.put(
 			"userToken",

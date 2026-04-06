@@ -6,6 +6,7 @@
 export const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
 
 export enum TableCellContentType {
+	AUTHOR = 'author',
 	DESIGN_LIBRARY_LINK = 'designLibraryLink',
 	FROM_NOW_DATE_TIME = 'fromNowDateTime',
 	RESOURCE_TYPE = 'resourceType',

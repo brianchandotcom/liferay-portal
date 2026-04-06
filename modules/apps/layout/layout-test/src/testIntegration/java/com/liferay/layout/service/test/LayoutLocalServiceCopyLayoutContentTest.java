@@ -268,6 +268,60 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	}
 
 	@Test
+	public void testCopyContentLayoutStructureAfterUpdateSegmentsExperiencesName()
+		throws Exception {
+
+		Layout targetLayout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout sourceLayout = targetLayout.fetchDraftLayout();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), sourceLayout.getPlid());
+
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), sourceLayout.getPlid());
+
+		_layoutPageTemplateStructureRelLocalService.
+			addLayoutPageTemplateStructureRel(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+				segmentsExperience1.getSegmentsExperienceId(),
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), sourceLayout.getPlid());
+
+		_layoutPageTemplateStructureRelLocalService.
+			addLayoutPageTemplateStructureRel(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+				segmentsExperience2.getSegmentsExperienceId(),
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
+
+		_assertSegmentsExperiences(sourceLayout, targetLayout, 3);
+
+		segmentsExperience2.setName(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault());
+
+		_segmentsExperienceLocalService.updateSegmentsExperience(
+			segmentsExperience2);
+
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
+
+		_assertSegmentsExperiences(sourceLayout, targetLayout, 3);
+	}
+
+	@Test
 	public void testCopyContentLayoutStructureWithSegmentsExperiences()
 		throws Exception {
 

@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.entry.processor.helper.InfoItemFieldMapped;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -23,9 +24,11 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
+import com.liferay.info.type.WebImage;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -96,7 +99,8 @@ public class AnalyticsAttributesUtil {
 		}
 
 		_addAnalyticsAttributes(
-			element, fragmentEntryProcessorContext, infoDisplaysFieldValues,
+			element, fragmentEntryProcessorContext,
+			fragmentEntryProcessorHelper, infoDisplaysFieldValues,
 			fragmentEntryProcessorHelper.getInfoItemFieldMapped(
 				editableValueJSONObject, fragmentEntryProcessorContext),
 			infoItemServiceRegistry);
@@ -105,6 +109,7 @@ public class AnalyticsAttributesUtil {
 	private static void _addAnalyticsAttributes(
 		Element element,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext,
+		FragmentEntryProcessorHelper fragmentEntryProcessorHelper,
 		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
 		InfoItemFieldMapped infoItemFieldMapped,
 		InfoItemServiceRegistry infoItemServiceRegistry) {
@@ -146,6 +151,11 @@ public class AnalyticsAttributesUtil {
 		).attr(
 			"data-analytics-asset-id",
 			String.valueOf(classPKInfoItemIdentifier.getClassPK())
+		).attr(
+			"data-analytics-asset-mime-type",
+			() -> _getAnalyticsAssetMimeType(
+				fragmentEntryProcessorHelper, infoItemFieldMapped,
+				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
 		).attr(
 			"data-analytics-asset-subtype",
 			() -> _getAnalyticsSubtype(
@@ -217,6 +227,37 @@ public class AnalyticsAttributesUtil {
 				_log);
 
 			return jsonArray.toString();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private static String _getAnalyticsAssetMimeType(
+		FragmentEntryProcessorHelper fragmentEntryProcessorHelper,
+		InfoItemFieldMapped infoItemFieldMapped,
+		InfoItemFieldValues infoItemFieldValues, Locale locale) {
+
+		InfoFieldValue<?> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(
+				infoItemFieldMapped.getFieldName());
+
+		Object value = infoFieldValue.getValue(locale);
+
+		if (value instanceof WebImage webImage) {
+			long fileEntryId = fragmentEntryProcessorHelper.getFileEntryId(
+				webImage);
+
+			try {
+				FileEntry fileEntry = DLAppLocalServiceUtil.fetchFileEntry(
+					fileEntryId);
+
+				return fileEntry.getMimeType();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
 		}
 
 		return StringPool.BLANK;

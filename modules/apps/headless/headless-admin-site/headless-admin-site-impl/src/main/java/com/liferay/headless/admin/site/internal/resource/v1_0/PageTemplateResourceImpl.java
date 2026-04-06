@@ -192,7 +192,8 @@ public class PageTemplateResourceImpl
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				layoutPageTemplateCollection.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page template set must be of type basic");
 		}
 
 		return Page.of(
@@ -226,7 +227,8 @@ public class PageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.BASIC,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page template must be of type basic");
 		}
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
@@ -265,7 +267,8 @@ public class PageTemplateResourceImpl
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				layoutPageTemplateCollection.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page template set must be of type basic");
 		}
 
 		return _addPageTemplate(
@@ -297,7 +300,8 @@ public class PageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page template must be of type basic or widget");
 		}
 
 		return _toPageTemplate(layoutPageTemplateEntry);
@@ -385,7 +389,8 @@ public class PageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) &&
 			 !(pageTemplate instanceof WidgetPageTemplate))) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page template must be of type basic or widget");
 		}
 
 		long layoutPageTemplateCollectionId =
@@ -499,7 +504,8 @@ public class PageTemplateResourceImpl
 		if (!(existingPageTemplate instanceof WidgetPageTemplate) ||
 			!(pageTemplate instanceof WidgetPageTemplate)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The existing page template must be a widget template");
 		}
 
 		_preparePatch(
@@ -594,7 +600,9 @@ public class PageTemplateResourceImpl
 					widgetPageTemplate.getExternalReferenceCode(),
 					widgetPageSpecification.getExternalReferenceCode())) {
 
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"The provided external reference code does not point to " +
+						"a widget page specification");
 			}
 
 			ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
@@ -720,7 +728,9 @@ public class PageTemplateResourceImpl
 
 		if (layoutPageTemplateCollection == null) {
 			if (!LazyReferencingThreadLocal.isEnabled()) {
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"The provided external reference code does not point to " +
+						"a display page template folder");
 			}
 
 			layoutPageTemplateCollection =
@@ -731,7 +741,8 @@ public class PageTemplateResourceImpl
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					layoutPageTemplateCollection.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The display page template folder must be of type basic");
 		}
 
 		return layoutPageTemplateCollection;
@@ -777,7 +788,8 @@ public class PageTemplateResourceImpl
 		if (!(pageTemplateSettings instanceof
 				WidgetPageTemplateSettings widgetPageTemplateSettings)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page template settings must be of type widget");
 		}
 
 		unicodeProperties.setProperty(

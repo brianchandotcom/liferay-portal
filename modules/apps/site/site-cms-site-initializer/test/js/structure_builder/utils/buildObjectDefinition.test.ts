@@ -4,7 +4,9 @@
  */
 
 import {
+	ReferencedStructure,
 	RelatedContent,
+	RepeatableGroup,
 	StructureChild,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
 import {Uuid} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Uuid';
@@ -302,6 +304,99 @@ describe('buildObjectDefinition', () => {
 				objectDefinitionExternalReferenceCode1: 'structureERC',
 				objectDefinitionExternalReferenceCode2: 'related-structure-erc',
 				type: 'manyToMany',
+			},
+		]);
+	});
+
+	it('builds objectDefinition with edge relationships for referenced structures', () => {
+		const referencedStructure: ReferencedStructure = {
+			children: new Map(),
+			editURL: '',
+			erc: 'ref-structure-erc',
+			label: {en_US: 'Referenced Structure'},
+			name: 'refStructure',
+			parent: getUuid(),
+			relationshipERC: 'ref-rel-erc',
+			relationshipName: 'refRelationship',
+			spaces: [],
+			type: 'referenced-structure',
+			uuid: getUuid(),
+			workflows: {},
+		};
+
+		const children: Map<Uuid, StructureChild> = new Map<
+			Uuid,
+			StructureChild
+		>([
+			[referencedStructure.uuid, referencedStructure],
+			[TEXT_FIELD.uuid, TEXT_FIELD],
+		]);
+
+		const result = buildObjectDefinition({
+			children,
+			erc: 'structureERC',
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			spaces: [],
+			status: 'draft',
+		});
+
+		expect(result.objectRelationships).toEqual([
+			{
+				deletionType: 'cascade',
+				edge: true,
+				externalReferenceCode: 'ref-rel-erc',
+				label: {en_US: 'refStructure'},
+				name: 'refRelationship',
+				objectDefinitionExternalReferenceCode1: 'structureERC',
+				objectDefinitionExternalReferenceCode2: 'ref-structure-erc',
+				type: 'oneToMany',
+			},
+		]);
+	});
+
+	it('builds objectDefinition with edge relationships for repeatable groups', () => {
+		const groupUuid = getUuid();
+
+		const repeatableGroup: RepeatableGroup = {
+			children: new Map(),
+			erc: 'group-erc',
+			label: {en_US: 'Repeatable Group'},
+			name: 'repeatableGroup',
+			parent: getUuid(),
+			relationshipERC: 'group-rel-erc',
+			relationshipName: 'groupRelationship',
+			type: 'repeatable-group',
+			uuid: groupUuid,
+		};
+
+		const children: Map<Uuid, StructureChild> = new Map<
+			Uuid,
+			StructureChild
+		>([
+			[repeatableGroup.uuid, repeatableGroup],
+			[TEXT_FIELD.uuid, TEXT_FIELD],
+		]);
+
+		const result = buildObjectDefinition({
+			children,
+			erc: 'structureERC',
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			spaces: [],
+			status: 'draft',
+		});
+
+		expect(result.objectRelationships).toEqual([
+			{
+				deletionType: 'cascade',
+				edge: true,
+				externalReferenceCode: 'group-rel-erc',
+				label: {en_US: 'Repeatable Group'},
+				name: 'groupRelationship',
+				objectDefinitionExternalReferenceCode1: 'structureERC',
+				objectDefinitionExternalReferenceCode2: 'group-erc',
+				type: 'oneToMany',
 			},
 		]);
 	});

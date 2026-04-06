@@ -14,6 +14,15 @@ import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.TokenTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -28,11 +37,16 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +70,7 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
@@ -67,7 +81,7 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext());
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), TestPropsValues.getUserId());
+			_accountEntry.getAccountEntryId(), TestPropsValues.getUserId());
 
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -162,14 +176,144 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 		Assert.assertTrue(firstMessageSent, firstMessageSent.contains(text));
 	}
 
+	@Test
+	public void testPostChatByExternalReferenceCodeMessageWithUnassociatedAgentDefinition()
+		throws Exception {
+
+		ObjectDefinition chatbotObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_CHATBOT", TestPropsValues.getCompanyId());
+
+		String chatbotExternalReferenceCode = RandomTestUtil.randomString();
+
+		ObjectEntry chatbotObjectEntry =
+			_objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				chatbotObjectDefinition.getObjectDefinitionId(), 0,
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+				HashMapBuilder.<String, Serializable>put(
+					"externalReferenceCode", chatbotExternalReferenceCode
+				).put(
+					"r_accountToAIHubChatbots_accountEntryId",
+					_accountEntry.getAccountEntryId()
+				).put(
+					"title_i18n",
+					(Serializable)HashMapBuilder.put(
+						LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+						RandomTestUtil.randomString()
+					).build()
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		ObjectDefinition agentDefinitionObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_AGENT_DEFINITION",
+					TestPropsValues.getCompanyId());
+
+		ObjectEntry agentDefinitionObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				"L_MAKE_SHORTER", 0L,
+				agentDefinitionObjectDefinition.getObjectDefinitionId());
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			agentDefinitionObjectEntry.getObjectEntryId(),
+			chatbotObjectEntry.getObjectEntryId(),
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByExternalReferenceCode(
+					"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CHATBOTS",
+					agentDefinitionObjectDefinition.getObjectDefinitionId()),
+			TestPropsValues.getUserId());
+
+		CountDownLatch countDownLatch1 = new CountDownLatch(4);
+		CountDownLatch countDownLatch2 = new CountDownLatch(6);
+		List<String> lines = new ArrayList<>();
+
+		String sseEventSinkKey = SseEventSourceTestUtil.open(
+			List.of(countDownLatch1, countDownLatch2), lines,
+			"chats/subscribe");
+
+		_postChatByExternalReferenceCodeMessage(
+			chatbotExternalReferenceCode,
+			"This is a long and detailed sentence that should be shortened " +
+				"by the AI model for testing purposes.",
+			sseEventSinkKey);
+
+		Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+		Assert.assertEquals("event: Chat Message Sent", lines.get(2));
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				List.of(
+					new LongTextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"description"
+					).indexed(
+						true
+					).build(),
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"name"
+					).indexed(
+						true
+					).indexedAsKeyword(
+						true
+					).build()));
+
+		_objectEntryLocalService.addObjectEntry(
+			0L, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			HashMapBuilder.<String, Serializable>put(
+				"description", "His favorite food is Brazilian barbecue."
+			).put(
+				"name", "Feliphe"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_postChatByExternalReferenceCodeMessage(
+			chatbotExternalReferenceCode, "What is Feliphe's favorite food?",
+			sseEventSinkKey);
+
+		Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 6, lines.size());
+		Assert.assertEquals("event: Chat Message Sent", lines.get(4));
+
+		String response = StringUtil.toLowerCase(lines.get(5));
+
+		Assert.assertFalse(response, response.contains("brazilian barbecue"));
+
+		SseUtil.closeAll();
+	}
+
 	private JSONObject _postChatByExternalReferenceCodeMessage(
 			String inputText, String sseEventSinkKey)
+		throws Exception {
+
+		return _postChatByExternalReferenceCodeMessage(
+			null, inputText, sseEventSinkKey);
+	}
+
+	private JSONObject _postChatByExternalReferenceCodeMessage(
+			String chatbotExternalReferenceCode, String inputText,
+			String sseEventSinkKey)
 		throws Exception {
 
 		JSONObject tokenJSONObject = TokenTestUtil.postToken();
 
 		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
+				"chatbotExternalReferenceCode", chatbotExternalReferenceCode
+			).put(
 				"text", inputText
 			).toString(),
 			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
@@ -184,6 +328,8 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 			Http.Method.POST);
 	}
 
+	private static AccountEntry _accountEntry;
+
 	@Inject
 	private static AccountEntryLocalService _accountEntryLocalService;
 
@@ -196,5 +342,17 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

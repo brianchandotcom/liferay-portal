@@ -119,9 +119,26 @@ public abstract class BaseWorkspaceGitRepository
 			return _branchName;
 		}
 
-		_branchName = JenkinsResultsParserUtil.combine(
-			getUpstreamBranchName(), "-temp-",
-			String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()));
+		String branchName = System.getenv("TOP_LEVEL_BRANCH_NAME");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+			Properties startProperties = buildDatabase.getProperties(
+				"start.properties");
+
+			branchName = JenkinsResultsParserUtil.getProperty(
+				startProperties, "TOP_LEVEL_BRANCH_NAME");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+			branchName = JenkinsResultsParserUtil.combine(
+				getUpstreamBranchName(), "-temp-",
+				String.valueOf(
+					JenkinsResultsParserUtil.getCurrentTimeMillis()));
+		}
+
+		_branchName = branchName;
 
 		return _branchName;
 	}
@@ -1399,6 +1416,14 @@ public abstract class BaseWorkspaceGitRepository
 			if (!gitWorkingDirectory.localGitBranchExists(upstreamBranchName)) {
 				gitWorkingDirectory.createLocalGitBranch(
 					upstreamBranchName, true, getBaseBranchSHA());
+			}
+
+			String branchName = getBranchName();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+				gitWorkingDirectory.checkoutLocalGitBranch(
+					gitWorkingDirectory.createLocalGitBranch(
+						branchName, true, "HEAD"));
 			}
 		}
 	}

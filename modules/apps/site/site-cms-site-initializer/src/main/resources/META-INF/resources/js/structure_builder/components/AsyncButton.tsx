@@ -21,7 +21,7 @@ type Props = {
 };
 
 export default function AsyncButton({
-	className,
+	className = 'd-flex',
 	disabled,
 	displayType = 'primary',
 	label,
@@ -31,10 +31,7 @@ export default function AsyncButton({
 }: Props) {
 	return (
 		<ClayButton
-			className={classNames(
-				'align-items-center c-gap-2 d-flex',
-				className
-			)}
+			className={classNames('align-items-center c-gap-2', className)}
 			disabled={disabled || status === 'loading'}
 			displayType={displayType}
 			onClick={onClick}

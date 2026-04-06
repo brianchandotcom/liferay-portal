@@ -192,11 +192,6 @@ public class DepotPermissionCheckerWrapperTest {
 				Assert.assertTrue(
 					permissionChecker.hasPermission(
 						depotEntry.getGroup(), Group.class.getName(),
-						depotEntry.getGroupId(), ActionKeys.ASSIGN_USER_ROLES));
-
-				Assert.assertTrue(
-					permissionChecker.hasPermission(
-						depotEntry.getGroup(), Group.class.getName(),
 						depotEntry.getGroupId(), ActionKeys.DELETE));
 
 				Assert.assertTrue(

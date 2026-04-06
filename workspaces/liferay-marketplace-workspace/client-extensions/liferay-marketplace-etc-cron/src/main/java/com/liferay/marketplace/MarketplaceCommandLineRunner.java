@@ -76,8 +76,6 @@ public class MarketplaceCommandLineRunner
 
 		_invoke(this::_processOnHoldTrials, "On Hold Trials");
 
-		_invoke(this::_processOrdersTotalAmount, "Orders Total Amount");
-
 		_invoke(this::_processPendingOrders, "Pending Orders");
 
 		_invoke(
@@ -107,6 +105,12 @@ public class MarketplaceCommandLineRunner
 
 		userAccountResource.postAccountUserAccountByEmailAddress(
 			account.getId(), userAccount.getEmailAddress());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				account.getName() + " account assigned to user " +
+					userAccount.getName());
+		}
 	}
 
 	private void _assignRoleToUserAccount(Role role, UserAccount userAccount)
@@ -122,6 +126,12 @@ public class MarketplaceCommandLineRunner
 
 		roleResource.postRoleUserAccountAssociation(
 			role.getId(), userAccount.getId());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				role.getName() + " role assigned to user " +
+					userAccount.getName());
+		}
 	}
 
 	private JSONObject _createPublisherSalesSummary(
@@ -444,6 +454,10 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _invoke(UnsafeRunnable<?> task, String name) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Started processing \"" + name + "\"");
+		}
+
 		try {
 			task.run();
 		}
@@ -543,10 +557,6 @@ public class MarketplaceCommandLineRunner
 			-1, -1);
 
 		if (page.getTotalCount() == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info("There are no in progress trials");
-			}
-
 			return;
 		}
 
@@ -601,6 +611,10 @@ public class MarketplaceCommandLineRunner
 			"SSA-ACCOUNT");
 
 		if (account == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("SSA Account not found");
+			}
+
 			return;
 		}
 
@@ -615,6 +629,10 @@ public class MarketplaceCommandLineRunner
 		Role role = rolesPage.fetchFirstItem();
 
 		if (role == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Liferay Staff role not found");
+			}
+
 			return;
 		}
 
@@ -633,10 +651,6 @@ public class MarketplaceCommandLineRunner
 			-1, -1);
 
 		if (page.getTotalCount() == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info("There are no on hold trials");
-			}
-
 			return;
 		}
 
@@ -680,38 +694,6 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
-	private void _processOrdersTotalAmount() throws Exception {
-		_forEachOrder(
-			StringBundler.concat(
-				"orderStatus/any(x:(x eq ", _ORDER_STATUS_COMPLETED,
-				")) and orderTypeExternalReferenceCode eq 'DXP_APP'"),
-			order -> {
-				String currencyCode = order.getCurrencyCode();
-
-				if (!_totalAmount.containsKey(currencyCode)) {
-					_totalAmount.put(currencyCode, 0D);
-				}
-
-				_totalAmount.put(
-					currencyCode,
-					_totalAmount.get(currencyCode) + order.getTotalAmount());
-			});
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Orders total amount " + _totalAmount);
-		}
-
-		_patchReport(
-			new JSONObject(
-			).put(
-				"value",
-				new JSONObject(
-					_totalAmount
-				).toString()
-			).toString(),
-			"TOTAL-AMOUNT");
-	}
-
 	private void _processPendingOrders() throws Exception {
 		Page<Order> page = _getOrdersPage(
 			"orderStatus/any(x:(x eq " + _ORDER_STATUS_PENDING +
@@ -719,10 +701,6 @@ public class MarketplaceCommandLineRunner
 			-1, -1);
 
 		if (page.getTotalCount() == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info("There are no pending orders");
-			}
-
 			return;
 		}
 
@@ -1011,7 +989,5 @@ public class MarketplaceCommandLineRunner
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
-
-	private final Map<String, Double> _totalAmount = new HashMap<>();
 
 }

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -68,18 +69,22 @@ public class UpgradeImportsCheck extends BaseTableClayDataSetDisplayView {
 		return clayTableSchemaBuilder.build();
 	}
 
-	public method(){
+	public void method() {
+		_groupPermission.check(null, null, null);
 		_testGroupPermission.check(null, null, null);
-		groupPermission.check(null, null, null);
+		_html.stipHtml(null);
 	}
-
-	@Reference
-	private GroupPermission _testGroupPermission;
 
 	@Reference
 	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
 
 	@Reference
-	private GroupPermission groupPermission;
+	private GroupPermission _groupPermission;
+
+	@Reference
+	private GroupPermission _testGroupPermission;
+
+	@Reference
+	private Html _html;
 
 }

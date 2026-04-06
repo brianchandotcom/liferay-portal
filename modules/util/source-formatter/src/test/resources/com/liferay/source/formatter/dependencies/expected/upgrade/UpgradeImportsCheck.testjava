@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -70,9 +71,10 @@ public class UpgradeImportsCheck extends BaseTableFDSView {
 		return fDSTableSchemaBuilder.build();
 	}
 
-	public method(){
+	public void method() {
 		GroupPermissionUtil.check(null, null, null);
 		GroupPermissionUtil.check(null, null, null);
+		HtmlUtil.stipHtml(null);
 	}
 
 	@Reference

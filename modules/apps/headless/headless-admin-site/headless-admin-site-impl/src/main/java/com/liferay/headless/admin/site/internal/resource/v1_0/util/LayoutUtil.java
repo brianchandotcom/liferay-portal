@@ -80,7 +80,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
-import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -1181,7 +1180,7 @@ public class LayoutUtil {
 				new HashMap<>();
 
 			for (SegmentsExperience segmentsExperience :
-					SegmentsExperienceServiceUtil.getSegmentsExperiences(
+					SegmentsExperienceLocalServiceUtil.getSegmentsExperiences(
 						layout.getGroupId(), layout.getPlid(), true)) {
 
 				originalSegmentsExperiencesMap.put(
@@ -1239,7 +1238,7 @@ public class LayoutUtil {
 					actualSegmentsExperiencesMap.get(
 						pageExperience.getExternalReferenceCode());
 
-				SegmentsExperienceServiceUtil.updateSegmentsExperiencePriority(
+				SegmentsExperienceLocalServiceUtil.updateSegmentsExperiencePriority(
 					actualSegmentsExperience.getSegmentsExperienceId(),
 					SegmentsExperienceUtil.getPriority(
 						pageExperience.getKey(), layout,

@@ -30,7 +30,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
-import com.liferay.segments.service.SegmentsExperienceServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.Objects;
 
@@ -57,8 +57,9 @@ public class SegmentsExperienceUtil {
 				layout.getGroupId());
 
 		SegmentsExperience segmentsExperience =
-			SegmentsExperienceServiceUtil.addSegmentsExperience(
-				pageExperience.getExternalReferenceCode(), layout.getGroupId(),
+			SegmentsExperienceLocalServiceUtil.addSegmentsExperience(
+				pageExperience.getExternalReferenceCode(),
+				serviceContext.getUserId(),	layout.getGroupId(),
 				segmentsEntryReference.getExternalReferenceCode(),
 				segmentsEntryReference.getScopeExternalReferenceCode(),
 				pageExperience.getKey(), layout.getPlid(),
@@ -118,7 +119,7 @@ public class SegmentsExperienceUtil {
 
 		if (segmentsExperiencePriority != segmentsExperience.getPriority()) {
 			segmentsExperience =
-				SegmentsExperienceServiceUtil.updateSegmentsExperiencePriority(
+				SegmentsExperienceLocalServiceUtil.updateSegmentsExperiencePriority(
 					segmentsExperience.getSegmentsExperienceId(),
 					segmentsExperiencePriority);
 		}
@@ -129,7 +130,7 @@ public class SegmentsExperienceUtil {
 				pageExperience.getSegmentItemExternalReference(),
 				layout.getGroupId());
 
-		return SegmentsExperienceServiceUtil.updateSegmentsExperience(
+		return SegmentsExperienceLocalServiceUtil.updateSegmentsExperience(
 			segmentsExperience.getSegmentsExperienceId(),
 			segmentsEntryReference.getExternalReferenceCode(),
 			segmentsEntryReference.getScopeExternalReferenceCode(),

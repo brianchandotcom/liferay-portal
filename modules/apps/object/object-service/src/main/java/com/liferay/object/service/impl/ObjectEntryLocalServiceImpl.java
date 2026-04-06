@@ -2605,6 +2605,16 @@ public class ObjectEntryLocalServiceImpl
 		if (Objects.equals(
 				dlFileEntryFolder.getFolderId(), dlFolder.getFolderId())) {
 
+			if (Validator.isNull(dlFileEntry.getClassName()) ||
+				(dlFileEntry.getClassPK() <= 0)) {
+
+				dlFileEntry.setClassName(objectDefinition.getClassName());
+				dlFileEntry.setClassPK(objectEntryId);
+
+				dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(
+					dlFileEntry);
+			}
+
 			return;
 		}
 

@@ -49,7 +49,58 @@ import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems
 import transformViewsItemsProps from './utils/transformViewsItemProps';
 import GalleryView from './views/GalleryView';
 
+/**
+ * Transforms additionalAPIURLParameters to remove cmsRoot filter when searching.
+ * Hoisted outside component to avoid recreation
+ */
+const additionalAPIURLParametersTransformer = (loadDataArgs: {
+	additionalAPIURLParameters: string;
+	searchParam: string;
+}): string | undefined => {
+	const {additionalAPIURLParameters, searchParam} = loadDataArgs;
+
+	if (!additionalAPIURLParameters) {
+		return additionalAPIURLParameters;
+	}
+
+	if (!searchParam || !searchParam.trim().length) {
+		return additionalAPIURLParameters;
+	}
+
+	const filterPrefix = 'filter=';
+	const startIndex = additionalAPIURLParameters.indexOf(filterPrefix);
+
+	if (startIndex === -1) {
+		return additionalAPIURLParameters;
+	}
+
+	const prefixPart = additionalAPIURLParameters.substring(
+		0,
+		startIndex + filterPrefix.length
+	);
+	const filterContent = additionalAPIURLParameters.substring(
+		startIndex + filterPrefix.length
+	);
+
+	const cleanedFilters = filterContent
+		.split(/\s+and\s+/i)
+		.map((part) => part.trim())
+		.filter((part) => part !== 'cmsRoot eq true' && part !== '');
+
+	if (!cleanedFilters.length) {
+		const beforeFilter = additionalAPIURLParameters.substring(
+			0,
+			startIndex
+		);
+
+		return beforeFilter.replace(/&$/, '').trim() || undefined;
+	}
+
+	return `${prefixPart}${cleanedFilters.join(' and ')}`.trim();
+};
+
 export type AdditionalProps = {
+	additionalAPIURLParameters: string | undefined;
 	assetLibraries: AssetLibrary[];
 	autocompleteURL: string;
 	availableExportFileFormats: any[];
@@ -116,8 +167,14 @@ export default function AssetsFDSPropsTransformer({
 		mergedViews = [...nonDefaultViews, galleryViewRenderer];
 	}
 
+	const {additionalAPIURLParameters, ...remainingAdditionalProps} =
+		additionalProps || {};
+
 	return {
 		...otherProps,
+		additionalAPIURLParameters,
+		additionalAPIURLParametersTransformer,
+		additionalProps: remainingAdditionalProps,
 		creationMenu: {
 			...creationMenu,
 			primaryItems: addOnClickToCreationMenuItems(

@@ -68,7 +68,6 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 
 /**
  * @author Lourdes Fernández Besada
@@ -87,33 +86,7 @@ public class EditAssetListDisplayContextTest {
 
 	@Before
 	public void setUp() {
-		_assetVocabularyGroupRelLocalService = Mockito.mock(
-			AssetVocabularyGroupRelLocalService.class);
-
-		_assetVocabularyService = Mockito.mock(AssetVocabularyService.class);
-
-		_depotEntryService = Mockito.mock(DepotEntryService.class);
-
-		_groupService = Mockito.mock(GroupService.class);
-
-		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
-
-		_themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			_themeDisplay.getLocale()
-		).thenReturn(
-			LocaleUtil.US
-		);
-
-		Mockito.when(
-			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			_themeDisplay
-		);
-
-		_portletRequest = Mockito.mock(PortletRequest.class);
-
+		_setUpHttpServletRequest();
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
 	}
@@ -211,13 +184,13 @@ public class EditAssetListDisplayContextTest {
 	public void testGetActionDropdownItemsWithNoAvailableSelectedSubtype()
 		throws Exception {
 
-		String className = RandomTestUtil.randomString();
-		long classNameId = RandomTestUtil.randomLong();
-		String expectedLabel = RandomTestUtil.randomString();
-
 		ClassTypeReader classTypeReader = _getClassTypeReader(
 			ListUtil.fromArray(
 				_getClassType(), _getClassType(), _getClassType()));
+
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+		String expectedLabel = RandomTestUtil.randomString();
 
 		_setUpAssetRendererFactoryRegistryUtil(
 			className, classNameId, classTypeReader, true, expectedLabel);
@@ -255,9 +228,6 @@ public class EditAssetListDisplayContextTest {
 	public void testGetActionDropdownItemsWithSelectedSubtype()
 		throws Exception {
 
-		String className = RandomTestUtil.randomString();
-		long classNameId = RandomTestUtil.randomLong();
-
 		long classTypeId = RandomTestUtil.randomLong();
 		String expectedLabel = RandomTestUtil.randomString();
 
@@ -265,6 +235,9 @@ public class EditAssetListDisplayContextTest {
 			ListUtil.fromArray(
 				_getClassType(), _getClassType(classTypeId, expectedLabel),
 				_getClassType()));
+
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
 
 		_setUpAssetRendererFactoryRegistryUtil(
 			className, classNameId, classTypeReader, true, expectedLabel);
@@ -349,37 +322,40 @@ public class EditAssetListDisplayContextTest {
 		throws Exception {
 
 		long connectedDepotGroupId = RandomTestUtil.randomLong();
+
 		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
 
-		Mockito.when(
-			depotEntry.getGroupId()
-		).thenReturn(
+		Mockito.doReturn(
 			connectedDepotGroupId
-		);
+		).when(
+			depotEntry
+		).getGroupId();
 
-		Mockito.when(
-			_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
-				Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.anyInt())
-		).thenReturn(
+		Mockito.doReturn(
 			Collections.singletonList(depotEntry)
+		).when(
+			_depotEntryService
+		).getCurrentAndGroupConnectedDepotEntries(
+			Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt(),
+			Mockito.anyInt()
 		);
 
 		long scopeGroupId = RandomTestUtil.randomLong();
 
 		Group scopeGroup = _setUpGroup(scopeGroupId);
 
-		Mockito.when(
-			_themeDisplay.getScopeGroup()
-		).thenReturn(
+		Mockito.doReturn(
 			scopeGroup
-		);
+		).when(
+			_themeDisplay
+		).getScopeGroup();
 
-		Mockito.when(
-			_portal.getCurrentAndAncestorSiteGroupIds(
-				Mockito.any(long[].class), Mockito.anyBoolean())
-		).thenReturn(
+		Mockito.doReturn(
 			new long[] {scopeGroupId}
+		).when(
+			_portal
+		).getCurrentAndAncestorSiteGroupIds(
+			Mockito.any(long[].class), Mockito.anyBoolean()
 		);
 
 		EditAssetListDisplayContext displayContext =
@@ -400,25 +376,27 @@ public class EditAssetListDisplayContextTest {
 
 		Group scopeGroup = _setUpGroup(scopeGroupId);
 
-		Mockito.when(
-			_themeDisplay.getScopeGroup()
-		).thenReturn(
+		Mockito.doReturn(
 			scopeGroup
-		);
+		).when(
+			_themeDisplay
+		).getScopeGroup();
 
-		Mockito.when(
-			_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
-				Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.anyInt())
-		).thenReturn(
+		Mockito.doReturn(
 			Collections.emptyList()
+		).when(
+			_depotEntryService
+		).getCurrentAndGroupConnectedDepotEntries(
+			Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt(),
+			Mockito.anyInt()
 		);
 
-		Mockito.when(
-			_portal.getCurrentAndAncestorSiteGroupIds(
-				Mockito.any(long[].class), Mockito.anyBoolean())
-		).thenReturn(
+		Mockito.doReturn(
 			new long[] {scopeGroupId}
+		).when(
+			_portal
+		).getCurrentAndAncestorSiteGroupIds(
+			Mockito.any(long[].class), Mockito.anyBoolean()
 		);
 
 		EditAssetListDisplayContext displayContext =
@@ -435,10 +413,12 @@ public class EditAssetListDisplayContextTest {
 
 		Group siteGroup = _setUpGroup(siteGroupId, false, "");
 
-		Mockito.when(
-			_groupService.getGroup(siteGroupId)
-		).thenReturn(
+		Mockito.doReturn(
 			siteGroup
+		).when(
+			_groupService
+		).getGroup(
+			siteGroupId
 		);
 
 		EditAssetListDisplayContext displayContext = Mockito.spy(
@@ -450,11 +430,12 @@ public class EditAssetListDisplayContextTest {
 			displayContext
 		).getReferencedModelsGroupIds();
 
-		Mockito.when(
-			_groupService.getGroup(
-				Mockito.anyLong(), Mockito.eq(GroupConstants.CMS))
-		).thenThrow(
+		Mockito.doThrow(
 			new NoSuchGroupException()
+		).when(
+			_groupService
+		).getGroup(
+			Mockito.anyLong(), Mockito.eq(GroupConstants.CMS)
 		);
 
 		long[] resolvedGroupIds =
@@ -471,31 +452,36 @@ public class EditAssetListDisplayContextTest {
 
 		Group cmsGroup = _setUpGroup(cmsGroupId);
 
-		Mockito.when(
-			_groupService.getGroup(
-				Mockito.anyLong(), Mockito.eq(GroupConstants.CMS))
-		).thenReturn(
+		Mockito.doReturn(
 			cmsGroup
+		).when(
+			_groupService
+		).getGroup(
+			Mockito.anyLong(), Mockito.eq(GroupConstants.CMS)
 		);
 
 		long siteGroupId = RandomTestUtil.randomLong();
 
 		Group siteGroup = _setUpGroup(siteGroupId, false, "");
 
-		Mockito.when(
-			_groupService.getGroup(siteGroupId)
-		).thenReturn(
+		Mockito.doReturn(
 			siteGroup
+		).when(
+			_groupService
+		).getGroup(
+			siteGroupId
 		);
 
 		long spaceGroupId = RandomTestUtil.randomLong();
 
 		Group spaceGroup = _setUpGroup(spaceGroupId, true, "1");
 
-		Mockito.when(
-			_groupService.getGroup(spaceGroupId)
-		).thenReturn(
+		Mockito.doReturn(
 			spaceGroup
+		).when(
+			_groupService
+		).getGroup(
+			spaceGroupId
 		);
 
 		EditAssetListDisplayContext displayContext = Mockito.spy(
@@ -523,53 +509,60 @@ public class EditAssetListDisplayContextTest {
 
 		long missingClassNameId = RandomTestUtil.randomLong();
 
-		Mockito.when(
-			assetVocabulary.getSelectedClassNameIds()
-		).thenReturn(
+		Mockito.doReturn(
 			new long[] {missingClassNameId}
-		);
+		).when(
+			assetVocabulary
+		).getSelectedClassNameIds();
 
-		Mockito.when(
-			_portal.getClassName(missingClassNameId)
-		).thenThrow(
+		Mockito.doThrow(
 			new RuntimeException()
+		).when(
+			_portal
+		).getClassName(
+			missingClassNameId
 		);
 
 		long groupId = RandomTestUtil.randomLong();
 
 		long[] groupIds = {groupId};
 
-		Mockito.when(
-			_portal.getCurrentAndAncestorSiteGroupIds(Mockito.any(long[].class))
-		).thenReturn(
+		Mockito.doReturn(
 			groupIds
+		).when(
+			_portal
+		).getCurrentAndAncestorSiteGroupIds(
+			Mockito.any(long[].class)
 		);
 
-		Mockito.when(
-			_portal.getCurrentAndAncestorSiteGroupIds(
-				Mockito.any(long[].class), Mockito.eq(true))
-		).thenReturn(
+		Mockito.doReturn(
 			groupIds
+		).when(
+			_portal
+		).getCurrentAndAncestorSiteGroupIds(
+			Mockito.any(long[].class), Mockito.eq(true)
 		);
 
 		Group group = Mockito.mock(Group.class);
 
-		Mockito.when(
-			group.getGroupId()
-		).thenReturn(
+		Mockito.doReturn(
 			groupId
-		);
-
-		Mockito.when(
-			_themeDisplay.getScopeGroup()
-		).thenReturn(
+		).when(
 			group
-		);
+		).getGroupId();
 
-		Mockito.when(
-			_groupService.getGroup(groupId)
-		).thenReturn(
+		Mockito.doReturn(
 			group
+		).when(
+			_themeDisplay
+		).getScopeGroup();
+
+		Mockito.doReturn(
+			group
+		).when(
+			_groupService
+		).getGroup(
+			groupId
 		);
 
 		try (MockedStatic<AssetVocabularyServiceUtil>
@@ -597,11 +590,11 @@ public class EditAssetListDisplayContextTest {
 
 		Group spaceGroup = _setUpGroup(spaceGroupId);
 
-		Mockito.when(
-			_themeDisplay.getScopeGroup()
-		).thenReturn(
+		Mockito.doReturn(
 			spaceGroup
-		);
+		).when(
+			_themeDisplay
+		).getScopeGroup();
 
 		try (MockedStatic<GroupLocalServiceUtil>
 				groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
@@ -613,18 +606,20 @@ public class EditAssetListDisplayContextTest {
 				Collections.singletonList(spaceGroup)
 			);
 
-			Mockito.when(
-				_portal.getCurrentAndAncestorSiteGroupIds(
-					Mockito.any(long[].class))
-			).thenReturn(
+			Mockito.doReturn(
 				new long[] {spaceGroupId}
+			).when(
+				_portal
+			).getCurrentAndAncestorSiteGroupIds(
+				Mockito.any(long[].class)
 			);
 
-			Mockito.when(
-				_portal.getCurrentAndAncestorSiteGroupIds(
-					Mockito.any(long[].class), Mockito.anyBoolean())
-			).thenReturn(
+			Mockito.doReturn(
 				new long[] {spaceGroupId}
+			).when(
+				_portal
+			).getCurrentAndAncestorSiteGroupIds(
+				Mockito.any(long[].class), Mockito.anyBoolean()
 			);
 
 			AssetVocabularyGroupRel assetVocabularyGroupRel = Mockito.mock(
@@ -632,29 +627,34 @@ public class EditAssetListDisplayContextTest {
 
 			long vocabularyId = RandomTestUtil.randomLong();
 
-			Mockito.when(
-				assetVocabularyGroupRel.getVocabularyId()
-			).thenReturn(
+			Mockito.doReturn(
+				vocabularyId
+			).when(
+				assetVocabularyGroupRel
+			).getVocabularyId();
+
+			Mockito.doReturn(
+				Collections.singletonList(assetVocabularyGroupRel)
+			).when(
+				_assetVocabularyGroupRelLocalService
+			).getAssetVocabularyGroupRelsByGroupId(
+				Mockito.anyLong()
+			);
+
+			Mockito.doReturn(
+				null
+			).when(
+				_assetVocabularyService
+			).fetchVocabulary(
 				vocabularyId
 			);
 
-			Mockito.when(
-				_assetVocabularyGroupRelLocalService.
-					getAssetVocabularyGroupRelsByGroupId(Mockito.anyLong())
-			).thenReturn(
-				Collections.singletonList(assetVocabularyGroupRel)
-			);
-
-			Mockito.when(
-				_assetVocabularyService.fetchVocabulary(vocabularyId)
-			).thenReturn(
-				null
-			);
-
-			Mockito.when(
-				_groupService.getGroup(spaceGroupId)
-			).thenReturn(
+			Mockito.doReturn(
 				spaceGroup
+			).when(
+				_groupService
+			).getGroup(
+				spaceGroupId
 			);
 
 			EditAssetListDisplayContext displayContext =
@@ -672,11 +672,11 @@ public class EditAssetListDisplayContextTest {
 
 		Group spaceGroup = _setUpGroup(spaceGroupId);
 
-		Mockito.when(
-			_themeDisplay.getScopeGroup()
-		).thenReturn(
+		Mockito.doReturn(
 			spaceGroup
-		);
+		).when(
+			_themeDisplay
+		).getScopeGroup();
 
 		try (MockedStatic<GroupLocalServiceUtil>
 				groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
@@ -688,18 +688,20 @@ public class EditAssetListDisplayContextTest {
 				Collections.singletonList(spaceGroup)
 			);
 
-			Mockito.when(
-				_portal.getCurrentAndAncestorSiteGroupIds(
-					Mockito.any(long[].class))
-			).thenReturn(
+			Mockito.doReturn(
 				new long[] {spaceGroupId}
+			).when(
+				_portal
+			).getCurrentAndAncestorSiteGroupIds(
+				Mockito.any(long[].class)
 			);
 
-			Mockito.when(
-				_portal.getCurrentAndAncestorSiteGroupIds(
-					Mockito.any(long[].class), Mockito.anyBoolean())
-			).thenReturn(
+			Mockito.doReturn(
 				new long[] {spaceGroupId}
+			).when(
+				_portal
+			).getCurrentAndAncestorSiteGroupIds(
+				Mockito.any(long[].class), Mockito.anyBoolean()
 			);
 
 			AssetVocabularyGroupRel assetVocabularyGroupRel = Mockito.mock(
@@ -709,41 +711,46 @@ public class EditAssetListDisplayContextTest {
 
 			long vocabularyId = RandomTestUtil.randomLong();
 
-			Mockito.when(
-				assetVocabularyGroupRel.getVocabularyId()
-			).thenReturn(
+			Mockito.doReturn(
 				vocabularyId
-			);
+			).when(
+				assetVocabularyGroupRel
+			).getVocabularyId();
 
-			Mockito.when(
-				_assetVocabularyGroupRelLocalService.
-					getAssetVocabularyGroupRelsByGroupId(Mockito.anyLong())
-			).thenReturn(
+			Mockito.doReturn(
 				Collections.singletonList(assetVocabularyGroupRel)
+			).when(
+				_assetVocabularyGroupRelLocalService
+			).getAssetVocabularyGroupRelsByGroupId(
+				Mockito.anyLong()
 			);
 
-			Mockito.when(
-				vocabulary.getVocabularyId()
-			).thenReturn(
+			Mockito.doReturn(
+				vocabularyId
+			).when(
+				vocabulary
+			).getVocabularyId();
+
+			Mockito.doReturn(
+				new long[] {0}
+			).when(
+				vocabulary
+			).getSelectedClassNameIds();
+
+			Mockito.doReturn(
+				vocabulary
+			).when(
+				_assetVocabularyService
+			).fetchVocabulary(
 				vocabularyId
 			);
 
-			Mockito.when(
-				vocabulary.getSelectedClassNameIds()
-			).thenReturn(
-				new long[] {0}
-			);
-
-			Mockito.when(
-				_assetVocabularyService.fetchVocabulary(vocabularyId)
-			).thenReturn(
-				vocabulary
-			);
-
-			Mockito.when(
-				_groupService.getGroup(spaceGroupId)
-			).thenReturn(
+			Mockito.doReturn(
 				spaceGroup
+			).when(
+				_groupService
+			).getGroup(
+				spaceGroupId
 			);
 
 			EditAssetListDisplayContext displayContext =
@@ -763,17 +770,17 @@ public class EditAssetListDisplayContextTest {
 	private ClassType _getClassType(long classTypeId, String classTypeName) {
 		ClassType classType = Mockito.mock(ClassType.class);
 
-		Mockito.when(
-			classType.getClassTypeId()
-		).thenReturn(
+		Mockito.doReturn(
 			classTypeId
-		);
+		).when(
+			classType
+		).getClassTypeId();
 
-		Mockito.when(
-			classType.getName()
-		).thenReturn(
+		Mockito.doReturn(
 			classTypeName
-		);
+		).when(
+			classType
+		).getName();
 
 		return classType;
 	}
@@ -783,11 +790,8 @@ public class EditAssetListDisplayContextTest {
 
 		ClassTypeReader classTypeReader = Mockito.mock(ClassTypeReader.class);
 
-		Mockito.when(
-			classTypeReader.getClassType(
-				Mockito.anyLong(), Mockito.eq(LocaleUtil.US))
-		).thenAnswer(
-			(Answer<ClassType>)invocationOnMock -> {
+		Mockito.doAnswer(
+			invocationOnMock -> {
 				Long curClassTypeId = invocationOnMock.getArgument(
 					0, Long.class);
 
@@ -799,12 +803,18 @@ public class EditAssetListDisplayContextTest {
 
 				throw new PortalException();
 			}
+		).when(
+			classTypeReader
+		).getClassType(
+			Mockito.anyLong(), Mockito.eq(LocaleUtil.US)
 		);
 
-		Mockito.when(
-			classTypeReader.getAvailableClassTypes(null, LocaleUtil.US)
-		).thenReturn(
+		Mockito.doReturn(
 			classTypes
+		).when(
+			classTypeReader
+		).getAvailableClassTypes(
+			null, LocaleUtil.US
 		);
 
 		return classTypeReader;
@@ -813,26 +823,20 @@ public class EditAssetListDisplayContextTest {
 	private EditAssetListDisplayContext _getEditAssetListDisplayContext(
 		UnicodeProperties unicodeProperties) {
 
-		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider =
-			Mockito.mock(AssetRendererFactoryClassProvider.class);
-
-		Mockito.when(
-			assetRendererFactoryClassProvider.getClass(
-				Mockito.any(AssetRendererFactory.class))
-		).thenAnswer(
-			(Answer<Class<? extends AssetRendererFactory<?>>>)
-				invocationOnMock -> TestAssetRendererFactory.class
+		Mockito.doAnswer(
+			invocationOnMock -> TestAssetRendererFactory.class
+		).when(
+			_assetRendererFactoryClassProvider
+		).getClass(
+			Mockito.any(AssetRendererFactory.class)
 		);
 
 		return new EditAssetListDisplayContext(
-			assetRendererFactoryClassProvider,
+			_assetRendererFactoryClassProvider,
 			_assetVocabularyGroupRelLocalService, _assetVocabularyService,
-			_depotEntryService, _groupService,
-			Mockito.mock(InfoSearchClassMapperRegistry.class),
-			Mockito.mock(ItemSelector.class),
-			Mockito.mock(ObjectDefinitionLocalService.class), _portletRequest,
-			Mockito.mock(PortletResponse.class),
-			Mockito.mock(SegmentsConfigurationProvider.class),
+			_depotEntryService, _groupService, _infoSearchClassMapperRegistry,
+			_itemSelector, _objectDefinitionLocalService, _portletRequest,
+			_portletResponse, _segmentsConfigurationProvider,
 			unicodeProperties);
 	}
 
@@ -841,31 +845,35 @@ public class EditAssetListDisplayContextTest {
 
 		AssetListEntry assetListEntry = Mockito.mock(AssetListEntry.class);
 
-		Mockito.when(
-			assetListEntry.getAssetEntrySubtype()
-		).thenReturn(
+		Mockito.doReturn(
 			assetEntrySubtype
-		);
+		).when(
+			assetListEntry
+		).getAssetEntrySubtype();
 
-		Mockito.when(
-			assetListEntry.getAssetEntryType()
-		).thenReturn(
+		Mockito.doReturn(
 			assetEntryType
-		);
+		).when(
+			assetListEntry
+		).getAssetEntryType();
 
-		Mockito.when(
-			assetListEntry.getTypeSettings(Mockito.anyLong())
-		).thenReturn(
+		Mockito.doReturn(
 			typeSettings
+		).when(
+			assetListEntry
+		).getTypeSettings(
+			Mockito.anyLong()
 		);
 
 		AssetListEntryLocalService assetListEntryLocalService = Mockito.mock(
 			AssetListEntryLocalService.class);
 
-		Mockito.when(
-			assetListEntryLocalService.fetchAssetListEntry(Mockito.anyLong())
-		).thenReturn(
+		Mockito.doReturn(
 			assetListEntry
+		).when(
+			assetListEntryLocalService
+		).fetchAssetListEntry(
+			Mockito.anyLong()
 		);
 
 		ReflectionTestUtil.setFieldValue(
@@ -891,47 +899,51 @@ public class EditAssetListDisplayContextTest {
 		if (className != null) {
 			assetRendererFactory = Mockito.mock(AssetRendererFactory.class);
 
-			Mockito.when(
-				assetRendererFactory.isActive(Mockito.anyLong())
-			).thenReturn(
+			Mockito.doReturn(
 				true
+			).when(
+				assetRendererFactory
+			).isActive(
+				Mockito.anyLong()
 			);
 
-			Mockito.when(
-				assetRendererFactory.getClassName()
-			).thenReturn(
+			Mockito.doReturn(
 				className
-			);
+			).when(
+				assetRendererFactory
+			).getClassName();
 
-			Mockito.when(
-				assetRendererFactory.getClassNameId()
-			).thenReturn(
+			Mockito.doReturn(
 				classNameId
-			);
+			).when(
+				assetRendererFactory
+			).getClassNameId();
 
-			Mockito.when(
-				assetRendererFactory.getClassTypeReader()
-			).thenReturn(
+			Mockito.doReturn(
 				classTypeReader
-			);
+			).when(
+				assetRendererFactory
+			).getClassTypeReader();
 
-			Mockito.when(
-				assetRendererFactory.getTypeName(LocaleUtil.US)
-			).thenReturn(
+			Mockito.doReturn(
 				typeName
+			).when(
+				assetRendererFactory
+			).getTypeName(
+				LocaleUtil.US
 			);
 
-			Mockito.when(
-				assetRendererFactory.isSelectable()
-			).thenReturn(
+			Mockito.doReturn(
 				true
-			);
+			).when(
+				assetRendererFactory
+			).isSelectable();
 
-			Mockito.when(
-				assetRendererFactory.isSupportsClassTypes()
-			).thenReturn(
+			Mockito.doReturn(
 				supportsClassTypes
-			);
+			).when(
+				assetRendererFactory
+			).isSupportsClassTypes();
 		}
 
 		_assetRendererFactoryRegistryUtilMockedStatic.when(
@@ -971,25 +983,43 @@ public class EditAssetListDisplayContextTest {
 
 		Group scopeGroup = Mockito.mock(Group.class);
 
-		Mockito.when(
-			scopeGroup.getGroupId()
-		).thenReturn(
+		Mockito.doReturn(
 			scopeGroupId
-		);
+		).when(
+			scopeGroup
+		).getGroupId();
 
-		Mockito.when(
-			scopeGroup.isDepot()
-		).thenReturn(
+		Mockito.doReturn(
 			depot
-		);
+		).when(
+			scopeGroup
+		).isDepot();
 
-		Mockito.when(
-			scopeGroup.getTypeSettingsProperty("depotEntryType")
-		).thenReturn(
+		Mockito.doReturn(
 			depotEntryType
+		).when(
+			scopeGroup
+		).getTypeSettingsProperty(
+			"depotEntryType"
 		);
 
 		return scopeGroup;
+	}
+
+	private void _setUpHttpServletRequest() {
+		Mockito.doReturn(
+			LocaleUtil.US
+		).when(
+			_themeDisplay
+		).getLocale();
+
+		Mockito.doReturn(
+			_themeDisplay
+		).when(
+			_httpServletRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
 	}
 
 	private void _setUpLanguageUtil() {
@@ -1001,12 +1031,12 @@ public class EditAssetListDisplayContextTest {
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		_portal = Mockito.mock(Portal.class);
-
-		Mockito.when(
-			_portal.getHttpServletRequest(_portletRequest)
-		).thenReturn(
+		Mockito.doReturn(
 			_httpServletRequest
+		).when(
+			_portal
+		).getHttpServletRequest(
+			_portletRequest
 		);
 
 		portalUtil.setPortal(_portal);
@@ -1016,14 +1046,31 @@ public class EditAssetListDisplayContextTest {
 		_assetRendererFactoryRegistryUtilMockedStatic = Mockito.mockStatic(
 			AssetRendererFactoryRegistryUtil.class);
 
-	private AssetVocabularyGroupRelLocalService
-		_assetVocabularyGroupRelLocalService;
-	private AssetVocabularyService _assetVocabularyService;
-	private DepotEntryService _depotEntryService;
-	private GroupService _groupService;
-	private HttpServletRequest _httpServletRequest;
-	private Portal _portal;
-	private PortletRequest _portletRequest;
-	private ThemeDisplay _themeDisplay;
+	private final AssetRendererFactoryClassProvider
+		_assetRendererFactoryClassProvider = Mockito.mock(
+			AssetRendererFactoryClassProvider.class);
+	private final AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService = Mockito.mock(
+			AssetVocabularyGroupRelLocalService.class);
+	private final AssetVocabularyService _assetVocabularyService = Mockito.mock(
+		AssetVocabularyService.class);
+	private final DepotEntryService _depotEntryService = Mockito.mock(
+		DepotEntryService.class);
+	private final GroupService _groupService = Mockito.mock(GroupService.class);
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry =
+		Mockito.mock(InfoSearchClassMapperRegistry.class);
+	private final ItemSelector _itemSelector = Mockito.mock(ItemSelector.class);
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
+		Mockito.mock(ObjectDefinitionLocalService.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
+	private final PortletRequest _portletRequest = Mockito.mock(
+		PortletRequest.class);
+	private final PortletResponse _portletResponse = Mockito.mock(
+		PortletResponse.class);
+	private final SegmentsConfigurationProvider _segmentsConfigurationProvider =
+		Mockito.mock(SegmentsConfigurationProvider.class);
+	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

@@ -35,6 +35,10 @@ html#{$cadmin-selector} {
 				width: $previewSelectorWidth;
 			}
 
+			&__preview-selector-container {
+				min-width: 200px;
+			}
+
 			&__sidebar {
 				background-color: $cadmin-white;
 				border-left: 1px solid $cadmin-gray-300;

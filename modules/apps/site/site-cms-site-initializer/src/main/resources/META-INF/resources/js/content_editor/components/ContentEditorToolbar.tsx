@@ -145,7 +145,7 @@ export default function ContentEditorToolbar({
 			{Liferay.FeatureFlags['LPD-44507'] ? (
 				<Toolbar.Item className="nav-divider-end">
 					<ClayButton
-						className="c-mr-3"
+						className="c-mr-3 d-lg-block d-none"
 						displayType="secondary"
 						size="sm"
 					>
@@ -156,6 +156,15 @@ export default function ContentEditorToolbar({
 
 						{Liferay.Language.get('preview')}
 					</ClayButton>
+
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('preview')}
+						className="c-mr-3 d-lg-none"
+						displayType="secondary"
+						size="sm"
+						symbol="view"
+						title={Liferay.Language.get('preview')}
+					/>
 				</Toolbar.Item>
 			) : null}
 
@@ -164,6 +173,7 @@ export default function ContentEditorToolbar({
 					aria-label={Liferay.Language.get('cancel')}
 					borderless
 					button
+					className="d-none d-sm-flex"
 					displayType="secondary"
 					href={backURL}
 					small
@@ -174,6 +184,7 @@ export default function ContentEditorToolbar({
 
 			<Toolbar.Item>
 				<ClayButton
+					className="d-md-flex d-none"
 					displayType="secondary"
 					form={formId}
 					name="status"
@@ -184,6 +195,15 @@ export default function ContentEditorToolbar({
 				>
 					{Liferay.Language.get('save-as-draft')}
 				</ClayButton>
+
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('save-as-draft')}
+					className="d-md-none"
+					displayType="secondary"
+					size="sm"
+					symbol="disk"
+					title={Liferay.Language.get('save-as-draft')}
+				/>
 			</Toolbar.Item>
 
 			<Toolbar.Item>

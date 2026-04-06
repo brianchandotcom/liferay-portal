@@ -87,6 +87,7 @@ export async function postChatByExternalReferenceCodeMessage(
 					content,
 					title,
 				},
+				instructionDefinitionScope: 'cms',
 				text: message,
 			}),
 			headers: new Headers({

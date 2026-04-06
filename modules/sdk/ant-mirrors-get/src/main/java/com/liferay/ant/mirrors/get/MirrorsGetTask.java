@@ -177,7 +177,7 @@ public class MirrorsGetTask extends Task {
 			_hostName += ".liferay.com";
 		}
 
-		_path = matcher.group("path");
+		_path = _normalizePath(matcher.group("path"));
 
 		if (Objects.equals(_hostName, "storage.googleapis.com")) {
 			int index = _path.indexOf("/");

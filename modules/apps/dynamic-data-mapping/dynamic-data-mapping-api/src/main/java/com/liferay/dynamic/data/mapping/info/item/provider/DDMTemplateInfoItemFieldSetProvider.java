@@ -17,7 +17,7 @@ import com.liferay.info.field.InfoFieldSet;
 @ProviderType
 public interface DDMTemplateInfoItemFieldSetProvider {
 
-	public InfoFieldSet getInfoItemFieldSet(long ddmStructureId)
+	public InfoFieldSet getInfoItemFieldSet(long ddmStructureId, long groupId)
 		throws NoSuchStructureException;
 
 }

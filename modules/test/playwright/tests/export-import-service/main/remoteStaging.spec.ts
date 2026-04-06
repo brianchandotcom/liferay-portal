@@ -75,13 +75,19 @@ test(
 				name: `site-${getRandomString()}`,
 			});
 
-			apiHelpers.data.push({id: site.id, type: 'site'});
+			apiHelpers.data.push({
+				id: site.externalReferenceCode,
+				type: 'site',
+			});
 
 			remoteSite = await remoteApiHelpers.headlessSite.createSite({
 				name: site.name,
 			});
 
-			remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
+			remoteApiHelpers.data.push({
+				id: remoteSite.externalReferenceCode,
+				type: 'site',
+			});
 
 			await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 				groupId: site.id,

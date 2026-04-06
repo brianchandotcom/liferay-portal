@@ -25,6 +25,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -67,6 +68,7 @@ import com.liferay.object.exception.ObjectEntryGroupIdException;
 import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
+import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
@@ -1520,6 +1522,26 @@ public class ObjectEntryLocalServiceTest {
 		_assertDLFileEntry(
 			persistedFileEntryId, _objectDefinition.getClassName(),
 			objectEntry.getObjectEntryId());
+
+		DLFolder dlFolder = _attachmentManager.getDLFolder(
+			_objectDefinition.getCompanyId(), TestPropsValues.getGroupId(),
+			_objectDefinition.getPortletId(),
+			ServiceContextTestUtil.getServiceContext(),
+			TestPropsValues.getUserId());
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
+			dlFolder.getFolderId(), "test.txt", ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK,
+			new ByteArrayInputStream(DLTestUtil.randomTextFileBytes()), 0, null,
+			null, null, ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _addObjectEntry(fileEntry.getFileEntryId(), "upload");
+
+		_assertDLFileEntry(
+			MapUtil.getLong(objectEntry.getValues(), "upload"),
+			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		ObjectEntry cmsBasicDocumentObjectEntry =
 			_addCMSBasicDocumentObjectEntry();
@@ -9687,6 +9709,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private AttachmentManager _attachmentManager;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

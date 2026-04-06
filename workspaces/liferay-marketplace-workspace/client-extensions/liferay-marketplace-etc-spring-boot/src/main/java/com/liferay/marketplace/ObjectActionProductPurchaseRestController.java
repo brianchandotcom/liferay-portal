@@ -6,13 +6,13 @@
 package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.model.SalesforceOpportunity;
 import com.liferay.marketplace.service.KoroneikiService;
@@ -90,10 +90,6 @@ public class ObjectActionProductPurchaseRestController
 
 		if (Objects.equals(orderTypeExternalReferenceCode, "ADDONS")) {
 			_setUpAddOns(jwt, order, productSpecificationsMap);
-
-			_marketplaceService.updateOrder(
-				null, order.getId(),
-				MarketplaceConstants.ORDER_STATUS_COMPLETED);
 		}
 
 		if (Objects.equals(orderTypeExternalReferenceCode, "CLOUD_APP") ||
@@ -502,22 +498,41 @@ public class ObjectActionProductPurchaseRestController
 	private void _setUpCustomAddOn(String licenseType, Order order)
 		throws Exception {
 
-		OrderItem[] orderItems = order.getOrderItems();
+		BillingAddress billingAddress = order.getBillingAddress();
 
-		OrderItem orderItem = orderItems[0];
+		JSONObject jsonObject = _salesforceService.postSalesforceOpportunity(
+			new SalesforceOpportunity(
+				_marketplaceService.getCountryByA2(
+					billingAddress.getCountryISOCode()),
+				licenseType, order,
+				_marketplaceService.getUserAccount(
+					order.getCreatorEmailAddress())));
 
-		if (orderItem == null) {
+		if (!jsonObject.optBoolean("success")) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to create Salesforce opportunity for order ",
+					order.getId(), " message: ",
+					jsonObject.optString("message"), " error: ",
+					jsonObject.optString("error")));
+
 			return;
 		}
 
-		Product product = _marketplaceService.getProductBySkuId(
-			orderItem.getSkuId());
-		UserAccount userAccount = _marketplaceService.getUserAccount(
-			order.getCreatorEmailAddress());
+		OrderResource orderResource = _marketplaceService.getOrderResource();
 
-		_salesforceService.postSalesforceOpportunity(
-			new SalesforceOpportunity(
-				licenseType, order, orderItem, product, userAccount));
+		orderResource.patchOrder(
+			order.getId(),
+			new Order() {
+				{
+					setExternalReferenceCode(
+						() -> jsonObject.getJSONObject(
+							"data"
+						).getString(
+							"opportunityId"
+						));
+				}
+			});
 	}
 
 	private static final Log _log = LogFactory.getLog(

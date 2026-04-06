@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -129,6 +130,16 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
+
+		Map<String, List<String>> requestParameters = getRequestParameters(
+			baseModel);
+
+		for (Map.Entry<String, List<String>> entry :
+				requestParameters.entrySet()) {
+
+			mockLiferayPortletActionRequest.addParameter(
+				entry.getKey(), ArrayUtil.toStringArray(entry.getValue()));
+		}
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.COMPANY_ID, company.getCompanyId());

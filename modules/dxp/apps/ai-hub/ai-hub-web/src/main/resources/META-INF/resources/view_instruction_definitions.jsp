@@ -17,5 +17,6 @@ ViewInstructionDefinitionsDisplayContext viewInstructionDefinitionsDisplayContex
 	fdsActionDropdownItems="<%= viewInstructionDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
 	id="<%= AIHubFDSNames.INSTRUCTION_DEFINITIONS %>"
 	itemsPerPage="<%= 20 %>"
+	propsTransformer="{InstructionDefinitionItemTitlePropsTransformer} from ai-hub-web"
 	style="fluid"
 />

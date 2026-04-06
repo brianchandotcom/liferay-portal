@@ -17,7 +17,10 @@ import {remotePageTest} from '../../../fixtures/remotePageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {createLayoutHierarchy} from '../../../utils/createLayoutHierarchy';
+import {
+	JournalContentPage,
+	createLayoutHierarchy,
+} from '../../../utils/createLayoutHierarchy';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -66,7 +69,7 @@ test(
 	}) => {
 		test.slow();
 
-		let layouts: Array<Layout & {title: string}> = [];
+		let layouts: Array<JournalContentPage> = [];
 		let remoteSite: Site;
 		let site: Site;
 
@@ -110,47 +113,47 @@ test(
 							{
 								children: [
 									{
-										title: 'Page 111',
+										pageNumber: '111',
 										widgets,
 									},
 								],
-								title: 'Page 11',
+								pageNumber: '11',
 								widgets,
 							},
 							{
-								title: 'Page 12',
+								pageNumber: '12',
 								widgets,
 							},
 						],
-						title: 'Page 1',
+						pageNumber: '1',
 						widgets,
 					},
 					{
 						children: [
 							{
-								title: 'Page 21',
+								pageNumber: '21',
 								widgets,
 							},
 							{
-								title: 'Page 22',
+								pageNumber: '22',
 								widgets,
 							},
 						],
-						title: 'Page 2',
+						pageNumber: '2',
 						widgets,
 					},
 					{
 						children: [
 							{
-								title: 'Page 31',
+								pageNumber: '31',
 								widgets,
 							},
 							{
-								title: 'Page 32',
+								pageNumber: '32',
 								widgets,
 							},
 						],
-						title: 'Page 3',
+						pageNumber: '3',
 						widgets,
 					},
 				],
@@ -159,16 +162,15 @@ test(
 		});
 
 		const webContentTitle = getRandomString();
-		const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
 
 		let structure: any;
 		let templateKey: string;
 
 		await test.step('Create a data structure and template for page links', async () => {
 			const structureName = getRandomString();
-			const fields: Array<any> = pageNumbers.flatMap((num) => [
-				{name: `Openpage${num}`, repeatable: false},
-				{name: `URL${num}`, repeatable: false},
+			const fields: Array<any> = layouts.flatMap((layout) => [
+				{name: `Openpage${layout.pageNumber}`, repeatable: false},
+				{name: `URL${layout.pageNumber}`, repeatable: false},
 			]);
 
 			const dataDefinition = getDataStructureDefinition({
@@ -182,9 +184,9 @@ test(
 				dataDefinition
 			);
 
-			const templateScript = pageNumbers
-				.map((number) => {
-					return `<p><a href="\${URL${number}.getData()}">\${Openpage${number}.getData()}</a></p>`;
+			const templateScript = layouts
+				.map((layout) => {
+					return `<p><a href="\${URL${layout.pageNumber}.getData()}">\${Openpage${layout.pageNumber}.getData()}</a></p>`;
 				})
 				.join('\n');
 			const templateName = 'template1';
@@ -203,16 +205,14 @@ test(
 
 		await test.step('Create a web content article with page links', async () => {
 			const contentFields: Array<{name: string; value: string}> =
-				layouts.flatMap((layout, index) => {
-					const pageNum = pageNumbers[index];
-
+				layouts.flatMap((layout) => {
 					return [
 						{
-							name: `Openpage${pageNum}`,
+							name: `Openpage${layout.pageNumber}`,
 							value: layout.title,
 						},
 						{
-							name: `URL${pageNum}`,
+							name: `URL${layout.pageNumber}`,
 							value: `/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`,
 						},
 					];
@@ -266,24 +266,24 @@ test(
 		await test.step('Create individual web content articles for each page', async () => {
 			await webContentDisplayPage.gotoWebContentAdmin(site.name);
 
-			for (const num of pageNumbers) {
+			for (const layout of layouts) {
 				await apiHelpers.jsonWebServicesJournal.addWebContent({
 					contentFields: [
-						{name: `Content1`, value: `Title-${num}`},
+						{name: `Content1`, value: layout.contentTitle},
 						{
 							name: `Content2`,
-							value: `Text Content-${num}`,
+							value: `Text Content for ${layout.contentTitle}`,
 						},
 					],
 					ddmStructureId: structure2.id,
 					ddmTemplateKey: templateKey2,
 					groupId: site.id,
-					titleMap: {en_US: `Title-${num}`},
+					titleMap: {en_US: layout.contentTitle},
 				});
 
 				await reloadUntilVisible({
 					myLocator: page.getByRole('link', {
-						name: `Title-${num}`,
+						name: layout.contentTitle,
 					}),
 					page,
 				});
@@ -291,7 +291,7 @@ test(
 		});
 
 		await test.step('Add web content articles to the display portlets on each page of the local site', async () => {
-			for (const [i, layout] of layouts.entries()) {
+			for (const layout of layouts) {
 				await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 				await webContentDisplayPage.addWebContentWithDisplay({
@@ -301,7 +301,7 @@ test(
 
 				await webContentDisplayPage.addWebContentWithDisplay({
 					pageType: 'content',
-					webContentName: `Title-${pageNumbers[i]}`,
+					webContentName: layout.contentTitle,
 				});
 
 				await pageEditorPage.publishPage();
@@ -317,19 +317,23 @@ test(
 				`/web${remoteSite.friendlyUrlPath}${layouts[0].friendlyUrlPath}`
 			);
 
-			for (const num of [111, 21, 3]) {
+			for (const contentTitle of ['Title-111', 'Title-21', 'Title-3']) {
+				const layout = layouts.find(
+					(l) => l.contentTitle === contentTitle
+				);
+
 				await clickAndExpectToBeVisible({
 					target: remotePage.locator('h1', {
-						hasText: `Title-${num}`,
+						hasText: layout.contentTitle,
 					}),
 					trigger: remotePage.getByRole('link', {
 						exact: true,
-						name: `Page ${num}`,
+						name: layout.title,
 					}),
 				});
 
 				await expect(remotePage).toHaveURL(
-					new RegExp(`/web/${site.name}/page-${num}`)
+					new RegExp(`/web/${site.name}${layout.friendlyUrlPath}`)
 				);
 			}
 		});

@@ -151,6 +151,20 @@ public abstract class BaseMVCActionCommandTestCase<T extends BaseModel<?>> {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		Map<String, List<String>> requestParameters = getRequestParameters(
+			baseModel);
+
+		for (Map.Entry<String, List<String>> entry :
+				requestParameters.entrySet()) {
+
+			mockLiferayPortletActionRequest.addParameter(
+				entry.getKey(),
+				entry.getValue(
+				).toArray(
+					new String[0]
+				));
+		}
+
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

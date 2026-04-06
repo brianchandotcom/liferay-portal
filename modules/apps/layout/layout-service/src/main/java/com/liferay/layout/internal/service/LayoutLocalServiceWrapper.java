@@ -823,6 +823,8 @@ public class LayoutLocalServiceWrapper
 						sourceSegmentsExperience.getSegmentsEntryERC());
 					targetSegmentsExperience.setSegmentsEntryScopeERC(
 						sourceSegmentsExperience.getSegmentsEntryScopeERC());
+					targetSegmentsExperience.setNameMap(
+						sourceSegmentsExperience.getNameMap());
 					targetSegmentsExperience.setPriority(minPriority++);
 
 					_segmentsExperienceLocalService.updateSegmentsExperience(

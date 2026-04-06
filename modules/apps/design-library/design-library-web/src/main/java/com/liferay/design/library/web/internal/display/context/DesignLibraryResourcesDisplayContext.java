@@ -7,10 +7,12 @@ package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -43,11 +45,13 @@ public class DesignLibraryResourcesDisplayContext {
 	public Map<String, Object> getBreadcrumbProps(long designLibraryEntryId)
 		throws PortalException {
 
+		Group group = _getGroup(designLibraryEntryId);
+
 		return HashMapBuilder.<String, Object>put(
-			"actionItems", _getActionItemsJSONArray(designLibraryEntryId)
+			"actionItems", _getActionItemsJSONArray(group)
 		).put(
 			"breadcrumbItems",
-			_getBreadcrumbItemsJSONArray(designLibraryEntryId)
+			_getBreadcrumbItemsJSONArray(group)
 		).build();
 	}
 
@@ -77,7 +81,7 @@ public class DesignLibraryResourcesDisplayContext {
 				"link"));
 	}
 
-	private JSONArray _getActionItemsJSONArray(long designLibraryEntryId) {
+	private JSONArray _getActionItemsJSONArray(Group group) throws PortalException {
 		return JSONUtil.putAll(
 			JSONUtil.put(
 				"href", "#settings"
@@ -87,11 +91,7 @@ public class DesignLibraryResourcesDisplayContext {
 				"symbolLeft", "cog"
 			),
 			JSONUtil.put(
-				"externalReferenceCode",
-				() -> DepotEntryLocalServiceUtil.fetchDepotEntry(
-					designLibraryEntryId
-				).getGroup(
-				).getExternalReferenceCode()
+				"externalReferenceCode", group.getExternalReferenceCode()
 			).put(
 				"href", "#connected-sites"
 			).put(
@@ -124,15 +124,28 @@ public class DesignLibraryResourcesDisplayContext {
 				"symbolLeft", "export"
 			),
 			JSONUtil.put(
-				"href", "#delete"
+				"href",
+				StringBundler.concat(
+					"/o/headless-asset-library/v1.0",
+					"/asset-libraries/",
+					group.getExternalReferenceCode())
+			).put(
+				"descriptiveName", group.getDescriptiveName()
+			).put(
+				"redirect",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).buildString()
 			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "delete")
 			).put(
 				"symbolLeft", "trash"
+			).put(
+				"target", "delete"
 			));
 	}
 
-	private JSONArray _getBreadcrumbItemsJSONArray(long designLibraryEntryId) {
+	private JSONArray _getBreadcrumbItemsJSONArray(Group group) {
 		return JSONUtil.putAll(
 			JSONUtil.put(
 				"active", false
@@ -151,13 +164,16 @@ public class DesignLibraryResourcesDisplayContext {
 				"href", "#top"
 			).put(
 				"label",
-				() -> DepotEntryLocalServiceUtil.fetchDepotEntry(
-					designLibraryEntryId
-				).getGroup(
-				).getName(
+				group.getName(
 					_httpServletRequest.getLocale()
 				)
 			));
+	}
+
+	private Group _getGroup(long designLibraryEntryId) throws PortalException {
+		return DepotEntryLocalServiceUtil.fetchDepotEntry(
+					designLibraryEntryId
+				).getGroup();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

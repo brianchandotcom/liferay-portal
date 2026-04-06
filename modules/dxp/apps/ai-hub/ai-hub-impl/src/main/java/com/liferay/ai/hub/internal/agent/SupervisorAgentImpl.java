@@ -20,8 +20,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.vulcan.fields.NestedFieldsContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
@@ -31,6 +35,8 @@ import dev.langchain4j.agentic.internal.InternalAgent;
 import dev.langchain4j.agentic.supervisor.SupervisorContextStrategy;
 import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -104,12 +110,59 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 	private InternalAgent[] _createInternalAgents(AgentContext agentContext) {
 		try {
+			String filterString = "(active eq true)";
+
+			String chatbotExternalReferenceCode =
+				agentContext.getChatbotExternalReferenceCode();
+
+			if (Validator.isNotNull(chatbotExternalReferenceCode)) {
+				NestedFieldsContext nestedFieldsContext =
+					NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
+						new NestedFieldsContext(
+							1, List.of("agentDefinitionsToChatbots")));
+
+				try {
+					ObjectEntry chatbotObjectEntry =
+						_objectEntryManager.getObjectEntry(
+							agentContext.getCompanyId(),
+							agentContext.getDTOConverterContext(),
+							chatbotExternalReferenceCode,
+							_objectDefinitionLocalService.
+								fetchObjectDefinitionByExternalReferenceCode(
+									"L_AI_HUB_CHATBOT",
+									agentContext.getCompanyId()),
+							null);
+
+					ObjectEntry[] agentDefinitionObjectEntries =
+						(ObjectEntry[])chatbotObjectEntry.getPropertyValue(
+							"agentDefinitionsToChatbots");
+
+					if (ArrayUtil.isEmpty(agentDefinitionObjectEntries)) {
+						return new InternalAgent[0];
+					}
+
+					String agentDefinitionIds = String.join(
+						",",
+						TransformUtil.transform(
+							List.of(agentDefinitionObjectEntries),
+							objectEntry -> "'" + objectEntry.getId() + "'"));
+
+					filterString =
+						"(active eq true) and (id in (" + agentDefinitionIds +
+							"))";
+				}
+				finally {
+					NestedFieldsContextThreadLocal.setNestedFieldsContext(
+						nestedFieldsContext);
+				}
+			}
+
 			Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 				agentContext.getCompanyId(),
 				_objectDefinitionLocalService.getObjectDefinition(
 					agentContext.getCompanyId(), "AIHubAgentDefinition"),
-				null, null, agentContext.getDTOConverterContext(),
-				"(active eq true)", Pagination.of(1, 20), null, null);
+				null, null, agentContext.getDTOConverterContext(), filterString,
+				Pagination.of(1, 20), null, null);
 
 			InternalAgentFactory internalAgentFactory =
 				new InternalAgentFactory(

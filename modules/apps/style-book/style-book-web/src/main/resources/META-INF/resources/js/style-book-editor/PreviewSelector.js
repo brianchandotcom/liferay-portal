@@ -10,7 +10,7 @@ import {useIsMobileDevice} from '@clayui/shared';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
@@ -192,19 +192,16 @@ export function LayoutSelector({className = 'ml-3', layoutType}) {
 	const setLoading = useSetLoading();
 	const setPreviewLayout = useSetPreviewLayout();
 
-	const previewData = config.previewOptions.find(
-		(option) => option.type === layoutType
-	).data;
-
-	const [recentLayouts, setRecentLayouts] = useState(
-		previewData.recentLayouts
+	const {
+		itemSelectorURL,
+		recentLayouts: initialRecentLayouts,
+		totalLayouts,
+	} = useMemo(
+		() => config.previewOptions.find((opt) => opt.type === layoutType).data,
+		[layoutType]
 	);
 
-	const {itemSelectorURL, totalLayouts} = previewData;
-
-	useEffect(() => {
-		setRecentLayouts(previewData.recentLayouts);
-	}, [previewData]);
+	const [recentLayouts, setRecentLayouts] = useState(initialRecentLayouts);
 
 	const selectPreviewLayout = (layout) => {
 		if (

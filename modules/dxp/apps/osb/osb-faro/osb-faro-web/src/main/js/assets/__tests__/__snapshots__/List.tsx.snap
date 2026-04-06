@@ -122,148 +122,143 @@ exports[`List rendering should match the snapshot 1`] = `
       </span>
     </div>
     <div
-      class="c-slideout c-slideout-absolute c-slideout-push c-slideout-end"
+      class="frontend-data-set-side-panel  c-slideout c-slideout-absolute c-slideout-push c-slideout-end"
+      id="infoPanel"
     >
       <div
-        aria-labelledby="clay-id-16"
-        class="sidebar frontend-data-set-side-panel sidebar-light"
-        id="infoPanel"
-        inert=""
+        class="sidebar sidebar-light"
         style="width: 472px;"
-        tabindex="-1"
       >
         <div
-          class="c-focus-trap"
+          class="sidebar-header"
         >
           <div
-            class="sidebar-header"
+            class="autofit-row"
           >
             <div
-              class="autofit-row"
+              class="autofit-col autofit-col-expand"
             >
-              <div
-                class="autofit-col autofit-col-expand"
+              <span
+                class="component-title"
               >
-                <span
-                  class="component-title"
-                  id="clay-id-16"
+                <div
+                  class="align-items-center d-flex"
                 >
                   <h4
                     class="text-7 font-weight-semi-bold"
                   />
-                </span>
-              </div>
-              <div
-                class="autofit-col"
-              >
-                <button
-                  aria-label="Close the side panel."
-                  class="close"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-times"
-                    role="presentation"
-                  >
-                    <use
-                      href="#times"
-                    />
-                  </svg>
-                </button>
-              </div>
+                </div>
+              </span>
             </div>
-          </div>
-          <ul
-            class="nav nav-tabs"
-            role="tablist"
-          >
-            <li
-              class="nav-item"
-              role="none"
+            <div
+              class="autofit-col"
             >
               <button
-                aria-controls="tabpanel-1"
-                aria-selected="true"
-                class="nav-link active btn btn-unstyled"
-                data-testid="tabItem"
-                role="tab"
-                tabindex="0"
+                class="close btn btn-monospaced btn-unstyled"
                 type="button"
               >
-                Categorization
+                <svg
+                  class="lexicon-icon lexicon-icon-times"
+                  role="presentation"
+                >
+                  <use
+                    href="#times"
+                  />
+                </svg>
               </button>
-            </li>
-          </ul>
+            </div>
+          </div>
+        </div>
+        <ul
+          class="nav nav-tabs"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="none"
+          >
+            <button
+              aria-controls="tabpanel-1"
+              aria-selected="true"
+              class="nav-link active btn btn-unstyled"
+              data-testid="tabItem"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              Categorization
+            </button>
+          </li>
+        </ul>
+        <div
+          class="tab-content"
+        >
           <div
-            class="tab-content"
+            aria-labelledby="tab-1"
+            class="tab-pane active fade show"
+            role="tabpanel"
+            tabindex="0"
           >
             <div
-              aria-labelledby="tab-1"
-              class="tab-pane active fade show"
-              role="tabpanel"
-              tabindex="0"
+              class="panel panel-unstyled"
             >
               <div
-                class="panel panel-unstyled"
+                class="panel-header border-bottom"
               >
                 <div
-                  class="panel-header border-bottom"
+                  class="panel-title text-secondary"
                 >
-                  <div
-                    class="panel-title text-secondary"
-                  >
-                    Categories
-                  </div>
-                </div>
-                <div
-                  class="panel-body"
-                >
-                  <div
-                    class="mb-2"
-                  >
-                    <span
-                      class="text-4 font-weight-semi-bold"
-                    >
-                      No Categories were found for this asset.
-                    </span>
-                  </div>
-                  <span
-                    class="text-3 text-secondary"
-                  >
-                    Go to your content management system to manage Categories.
-                  </span>
+                  Categories
                 </div>
               </div>
               <div
-                class="panel panel-unstyled"
+                class="panel-body"
               >
                 <div
-                  class="panel-header border-bottom"
+                  class="mb-2"
                 >
-                  <div
-                    class="panel-title text-secondary"
-                  >
-                    Assets
-                  </div>
-                </div>
-                <div
-                  class="panel-body"
-                >
-                  <div
-                    class="mb-2"
-                  >
-                    <span
-                      class="text-4 font-weight-semi-bold"
-                    >
-                      No Assets were found for this asset.
-                    </span>
-                  </div>
                   <span
-                    class="text-3 text-secondary"
+                    class="text-4 font-weight-semi-bold"
                   >
-                    Go to your content management system to manage Assets.
+                    No Categories were found for this asset.
                   </span>
                 </div>
+                <span
+                  class="text-3 text-secondary"
+                >
+                  Go to your content management system to manage Categories.
+                </span>
+              </div>
+            </div>
+            <div
+              class="panel panel-unstyled"
+            >
+              <div
+                class="panel-header border-bottom"
+              >
+                <div
+                  class="panel-title text-secondary"
+                >
+                  Tags
+                </div>
+              </div>
+              <div
+                class="panel-body"
+              >
+                <div
+                  class="mb-2"
+                >
+                  <span
+                    class="text-4 font-weight-semi-bold"
+                  >
+                    No Tags were found for this asset.
+                  </span>
+                </div>
+                <span
+                  class="text-3 text-secondary"
+                >
+                  Go to your content management system to manage Tags.
+                </span>
               </div>
             </div>
           </div>

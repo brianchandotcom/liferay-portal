@@ -158,7 +158,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageExperience.getPageSpecificationExternalReferenceCode(),
 			groupId);
 
@@ -185,7 +185,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageExperience.getPageSpecificationExternalReferenceCode(),
 			groupId);
 
@@ -235,13 +235,9 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			long groupId, PageExperience pageExperience)
 		throws Exception {
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageExperience.getPageSpecificationExternalReferenceCode(),
 			groupId);
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		if(!_layoutPermission.containsLayoutRestrictedUpdatePermission(
 			PermissionThreadLocal.getPermissionChecker(), layout)) {

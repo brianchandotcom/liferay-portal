@@ -193,7 +193,9 @@ public class DisplayPageTemplateResourceImpl
 				LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 				layoutPageTemplateCollection.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The display page template folder type does not match the " +
+					"display page type");
 		}
 
 		return Page.of(
@@ -236,7 +238,9 @@ public class DisplayPageTemplateResourceImpl
 				LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 				layoutPageTemplateCollection.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The display page template folder type does not match the " +
+					"display page type");
 		}
 
 		return _addDisplayPageTemplate(
@@ -266,7 +270,9 @@ public class DisplayPageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The display page template type does not match the display " +
+					"page type");
 		}
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
@@ -304,7 +310,9 @@ public class DisplayPageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The display page template type does not match the display " +
+					"page type");
 		}
 
 		return _displayPageTemplateDTOConverter.toDTO(
@@ -395,7 +403,9 @@ public class DisplayPageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The display page template type does not match the display " +
+					"page type");
 		}
 
 		long layoutPageTemplateCollectionId =
@@ -417,7 +427,8 @@ public class DisplayPageTemplateResourceImpl
 		if ((contentTypeClassSubtypeReference == null) ||
 			Validator.isNull(contentTypeClassSubtypeReference.getClassName())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The content type reference and class name cannot be empty");
 		}
 
 		long classNameId = _getClassNameId(
@@ -567,7 +578,8 @@ public class DisplayPageTemplateResourceImpl
 		if ((contentTypeClassSubtypeReference == null) ||
 			Validator.isNull(contentTypeClassSubtypeReference.getClassName())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The content type reference and class name cannot be empty");
 		}
 
 		Map<Locale, String> nameMap = Collections.singletonMap(
@@ -663,7 +675,9 @@ public class DisplayPageTemplateResourceImpl
 
 		if (layoutPageTemplateCollection == null) {
 			if (!LazyReferencingThreadLocal.isEnabled()) {
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"The provided external reference code does not point to " +
+						"a display page template folder");
 			}
 
 			layoutPageTemplateCollection =
@@ -675,7 +689,9 @@ public class DisplayPageTemplateResourceImpl
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 					layoutPageTemplateCollection.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The display page template folder type does not match the " +
+					"display page type");
 		}
 
 		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();

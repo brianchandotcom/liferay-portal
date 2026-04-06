@@ -411,6 +411,33 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		Assert.assertEquals(expectedValue, fileNameInfoFieldValue.getValue());
 	}
 
+	private void _assertWebImage(
+			FileEntry fileEntry, InfoFieldValue<?> infoFieldValue,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Assert.assertTrue(infoFieldValue.getValue() instanceof WebImage);
+
+		WebImage webImage = (WebImage)infoFieldValue.getValue();
+
+		InfoItemReference infoItemReference = webImage.getInfoItemReference();
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(), classPKInfoItemIdentifier.getClassPK());
+
+		Assert.assertEquals(
+			HttpComponentsUtil.removeParameter(
+				_dlURLHelper.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), themeDisplay,
+					StringPool.BLANK),
+				"t"),
+			HttpComponentsUtil.removeParameter(webImage.getURL(), "t"));
+	}
+
 	private ObjectFieldSetting _createObjectFieldSetting(
 		String name, String value) {
 
@@ -518,43 +545,16 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 						"doAsUserId", false));
 			}
 
-			InfoFieldValue<Object> fileURLInfoFieldValue =
+			_assertWebImage(
+				fileEntry,
 				infoItemFieldValues.getInfoFieldValue(
-					objectField.getObjectFieldId() + "#fileURL");
-
-			Assert.assertTrue(
-				fileURLInfoFieldValue.getValue() instanceof WebImage);
-
-			WebImage webImage = (WebImage)fileURLInfoFieldValue.getValue();
-
-			InfoItemReference infoItemReference =
-				webImage.getInfoItemReference();
-
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
-			Assert.assertEquals(
-				fileEntry.getFileEntryId(),
-				classPKInfoItemIdentifier.getClassPK());
-
-			Assert.assertEquals(
-				HttpComponentsUtil.removeParameter(
-					_dlURLHelper.getPreviewURL(
-						fileEntry, fileEntry.getFileVersion(), themeDisplay,
-						StringPool.BLANK),
-					"t"),
-				HttpComponentsUtil.removeParameter(webImage.getURL(), "t"));
-
-			InfoFieldValue<Object> previewURLInfoFieldValue =
+					objectField.getObjectFieldId() + "#fileURL"),
+				themeDisplay);
+			_assertWebImage(
+				fileEntry,
 				infoItemFieldValues.getInfoFieldValue(
-					objectField.getObjectFieldId() + "#previewURL");
-
-			Assert.assertEquals(
-				_dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), themeDisplay,
-					StringPool.BLANK),
-				previewURLInfoFieldValue.getValue());
+					objectField.getObjectFieldId() + "#previewURL"),
+				themeDisplay);
 
 			_assertInfoFieldValue(
 				"#fileName", infoItemFieldValues, objectField,

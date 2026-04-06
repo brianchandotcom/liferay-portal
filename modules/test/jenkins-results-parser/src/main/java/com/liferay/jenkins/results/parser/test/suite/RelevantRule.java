@@ -431,8 +431,6 @@ public class RelevantRule implements Comparable<RelevantRule> {
 							_moduleDirPaths.add(
 								JenkinsResultsParserUtil.getCanonicalPath(
 									module.getFile()));
-
-							return FileVisitResult.SKIP_SUBTREE;
 						}
 
 						return FileVisitResult.CONTINUE;

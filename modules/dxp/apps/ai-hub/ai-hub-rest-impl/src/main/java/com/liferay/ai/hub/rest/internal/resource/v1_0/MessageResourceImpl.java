@@ -45,6 +45,8 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 			AgentContext.builder(
 			).accessToken(
 				contextHttpServletRequest.getHeader("Authorization")
+			).chatbotExternalReferenceCode(
+				message.getChatbotExternalReferenceCode()
 			).companyId(
 				contextCompany.getCompanyId()
 			).dtoConverterContext(

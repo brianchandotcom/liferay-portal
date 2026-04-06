@@ -245,15 +245,14 @@ public class KoroneikiRestController extends BaseRestController {
 			String licenseUsageType = MarketplaceUtil.getSkuOptionValue(
 				"license-usage-type", sku.getSkuOptions());
 
+			String skuExternalReferenceCode = sku.getExternalReferenceCode();
+
 			if ((licenseUsageType == null) ||
-				sku.getExternalReferenceCode(
-				).startsWith(
-					"KOR-"
-				)) {
+				skuExternalReferenceCode.startsWith("KOR-") ||
+				skuExternalReferenceCode.startsWith("SF-")) {
 
 				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skipping POST product for sku " + sku.toString());
+					_log.info("Skipping POST product for sku " + sku);
 				}
 
 				continue;

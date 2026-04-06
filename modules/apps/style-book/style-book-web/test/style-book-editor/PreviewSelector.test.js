@@ -1,18 +1,25 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import '@testing-library/jest-dom';
+import {useIsMobileDevice} from '@clayui/shared';
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {
+import PreviewSelector, {
 	LayoutSelector,
 	LayoutTypeSelector,
 } from '../../src/main/resources/META-INF/resources/js/style-book-editor/PreviewSelector';
 import {LAYOUT_TYPES} from '../../src/main/resources/META-INF/resources/js/style-book-editor/constants/layoutTypes';
+import {LayoutContextProvider} from '../../src/main/resources/META-INF/resources/js/style-book-editor/contexts/LayoutContext';
 import openItemSelector from '../../src/main/resources/META-INF/resources/js/style-book-editor/openItemSelector';
+
+jest.mock('@clayui/shared', () => ({
+	...jest.requireActual('@clayui/shared'),
+	useIsMobileDevice: jest.fn(),
+}));
 
 jest.mock(
 	'../../src/main/resources/META-INF/resources/js/style-book-editor/openItemSelector',
@@ -121,8 +128,54 @@ const renderPreviewSelector = (layoutType = LAYOUT_TYPES.page) => {
 };
 
 describe('PreviewSelector', () => {
+	beforeEach(() => {
+		useIsMobileDevice.mockReturnValue(false);
+	});
+
 	afterEach(() => {
 		openItemSelector.mockClear();
+	});
+
+	it('renders an icon dropdown on small screens', () => {
+		useIsMobileDevice.mockReturnValue(true);
+
+		const {getByRole} = render(
+			<LayoutContextProvider
+				initialState={{
+					previewLayout: {
+						name: 'Page 1',
+						url: 'page-1-url',
+					},
+					previewLayoutType: LAYOUT_TYPES.page,
+				}}
+			>
+				<PreviewSelector />
+			</LayoutContextProvider>
+		);
+
+		expect(getByRole('button', {name: /preview/i})).toBeInTheDocument();
+	});
+
+	it('renders inline dropdowns on large screens', () => {
+		useIsMobileDevice.mockReturnValue(false);
+
+		const {queryByRole} = render(
+			<LayoutContextProvider
+				initialState={{
+					previewLayout: {
+						name: 'Page 1',
+						url: 'page-1-url',
+					},
+					previewLayoutType: LAYOUT_TYPES.page,
+				}}
+			>
+				<PreviewSelector />
+			</LayoutContextProvider>
+		);
+
+		expect(
+			queryByRole('button', {name: /preview/i})
+		).not.toBeInTheDocument();
 	});
 
 	it('does not show layout type if it does not have at least one item', () => {

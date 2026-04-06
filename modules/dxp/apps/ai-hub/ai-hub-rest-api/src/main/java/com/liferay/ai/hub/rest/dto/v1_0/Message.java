@@ -5,9 +5,12 @@
 
 package com.liferay.ai.hub.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -131,6 +134,66 @@ public class Message implements Serializable {
 	private Supplier<Map<String, ?>> _contextSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("instructionDefinitionScope")
+	@Valid
+	public InstructionDefinitionScope getInstructionDefinitionScope() {
+		if (_instructionDefinitionScopeSupplier != null) {
+			instructionDefinitionScope =
+				_instructionDefinitionScopeSupplier.get();
+
+			_instructionDefinitionScopeSupplier = null;
+		}
+
+		return instructionDefinitionScope;
+	}
+
+	@JsonIgnore
+	public String getInstructionDefinitionScopeAsString() {
+		InstructionDefinitionScope instructionDefinitionScope =
+			getInstructionDefinitionScope();
+
+		if (instructionDefinitionScope == null) {
+			return null;
+		}
+
+		return instructionDefinitionScope.toString();
+	}
+
+	public void setInstructionDefinitionScope(
+		InstructionDefinitionScope instructionDefinitionScope) {
+
+		this.instructionDefinitionScope = instructionDefinitionScope;
+
+		_instructionDefinitionScopeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setInstructionDefinitionScope(
+		UnsafeSupplier<InstructionDefinitionScope, Exception>
+			instructionDefinitionScopeUnsafeSupplier) {
+
+		_instructionDefinitionScopeSupplier = () -> {
+			try {
+				return instructionDefinitionScopeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected InstructionDefinitionScope instructionDefinitionScope;
+
+	@JsonIgnore
+	private Supplier<InstructionDefinitionScope>
+		_instructionDefinitionScopeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getText() {
 		if (_textSupplier != null) {
 			text = _textSupplier.get();
@@ -220,6 +283,21 @@ public class Message implements Serializable {
 			sb.append(_toJSON(context));
 		}
 
+		InstructionDefinitionScope instructionDefinitionScope =
+			getInstructionDefinitionScope();
+
+		if (instructionDefinitionScope != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"instructionDefinitionScope\": ");
+
+			sb.append("\"");
+			sb.append(instructionDefinitionScope);
+			sb.append("\"");
+		}
+
 		String text = getText();
 
 		if (text != null) {
@@ -247,6 +325,48 @@ public class Message implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("InstructionDefinitionScope")
+	public static enum InstructionDefinitionScope {
+
+		CLICK_TO_CHAT("clickToChat"), CMS("cms"), EVERYWHERE("everywhere");
+
+		@JsonCreator
+		public static InstructionDefinitionScope create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (InstructionDefinitionScope instructionDefinitionScope :
+					values()) {
+
+				if (Objects.equals(
+						instructionDefinitionScope.getValue(), value)) {
+
+					return instructionDefinitionScope;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private InstructionDefinitionScope(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

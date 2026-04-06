@@ -44,7 +44,7 @@ public abstract class BaseMessageResourceImpl implements MessageResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/chats/by-external-reference-code/{externalReferenceCode}/messages' -d $'{"context": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/chats/by-external-reference-code/{externalReferenceCode}/messages' -d $'{"context": ___, "instructionDefinitionScope": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

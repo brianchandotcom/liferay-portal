@@ -1701,6 +1701,9 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 					targetLayout.getPlid());
 
 			Assert.assertEquals(
+				targetSegmentsExperience.getName(LocaleUtil.getDefault()),
+				sourceSegmentsExperience.getName(LocaleUtil.getDefault()));
+			Assert.assertEquals(
 				targetSegmentsExperience.getPriority(),
 				sourceSegmentsExperience.getPriority());
 		}

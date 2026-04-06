@@ -68,21 +68,13 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.
-				fetchSegmentsExperienceByExternalReferenceCode(
+				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
-
-		if (segmentsExperience == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -127,21 +119,13 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.
-				fetchSegmentsExperienceByExternalReferenceCode(
+				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
-
-		if (segmentsExperience == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -186,21 +170,13 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.
-				fetchSegmentsExperienceByExternalReferenceCode(
+				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
-
-		if (segmentsExperience == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -245,21 +221,13 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.
-				fetchSegmentsExperienceByExternalReferenceCode(
+				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
-
-		if (segmentsExperience == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -299,21 +267,13 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.
-				fetchSegmentsExperienceByExternalReferenceCode(
+				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
-
-		if (segmentsExperience == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -354,21 +314,13 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.
-				fetchSegmentsExperienceByExternalReferenceCode(
+				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
-
-		if (segmentsExperience == null) {
-			throw new UnsupportedOperationException();
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.

@@ -10,5 +10,11 @@
 		"prettier": "3.2.5",
 		"typescript": "4.4.2"
 	},
-	"private": true
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"client-extensions/liferay-testray-custom-element",
+			"client-extensions/liferay-testray-etc-jira"
+		]
+	}
 }

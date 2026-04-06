@@ -10,7 +10,7 @@ import {useIsMobileDevice} from '@clayui/shared';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
@@ -50,18 +50,7 @@ const LAYOUT_TYPES_OPTIONS = [
 
 export default function PreviewSelector() {
 	const isMobile = useIsMobileDevice();
-	const previewLayoutType = usePreviewLayoutType();
 	const [active, setActive] = useState(false);
-
-	const previewLabel = (
-		<span
-			className={classNames('font-weight-bold', {
-				'd-block mb-3': isMobile,
-			})}
-		>
-			{Liferay.Language.get('preview')}
-		</span>
-	);
 
 	if (isMobile) {
 		return (
@@ -86,32 +75,49 @@ export default function PreviewSelector() {
 				}
 			>
 				<div className="p-3 style-book-editor__preview-selector-container">
-					{previewLabel}
-
-					<LayoutTypeSelector
-						className="w-100"
-						layoutType={previewLayoutType}
-					/>
-
-					<LayoutSelector
-						className="mt-3 w-100"
-						layoutType={previewLayoutType}
-					/>
+					<PreviewSelectorContent isMobile />
 				</div>
 			</ClayDropDown>
 		);
 	}
 
 	return (
+		<div className="d-flex flex-row">
+			<PreviewSelectorContent />
+		</div>
+	);
+}
+
+function PreviewSelectorContent({isMobile}) {
+	const previewLayoutType = usePreviewLayoutType();
+
+	return (
 		<>
-			{previewLabel}
+			<span
+				className={classNames('font-weight-bold', {
+					'd-block mb-3': isMobile,
+				})}
+			>
+				{Liferay.Language.get('preview')}
+			</span>
 
-			<LayoutTypeSelector layoutType={previewLayoutType} />
+			<LayoutTypeSelector
+				className={isMobile ? 'w-100' : undefined}
+				layoutType={previewLayoutType}
+			/>
 
-			<LayoutSelector layoutType={previewLayoutType} />
+			<LayoutSelector
+				className={isMobile ? 'mt-3 w-100' : undefined}
+				key={previewLayoutType}
+				layoutType={previewLayoutType}
+			/>
 		</>
 	);
 }
+
+PreviewSelectorContent.propTypes = {
+	isMobile: PropTypes.bool,
+};
 
 export function LayoutTypeSelector({className = 'ml-3', layoutType}) {
 	const [active, setActive] = useState(false);

@@ -166,7 +166,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _addPageExperience(groupId, pageExperience);
+		return _addPageExperience(layout, groupId, pageExperience);
 	}
 
 	@Override
@@ -199,7 +199,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 					pageExperienceExternalReferenceCode, groupId);
 
 		if (segmentsExperience == null) {
-			return _addPageExperience(groupId, pageExperience);
+			return _addPageExperience(layout, groupId, pageExperience);
 		}
 
 		_segmentsExperienceResourcePermission.check(
@@ -232,19 +232,14 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 	}
 
 	private PageExperience _addPageExperience(
-			long groupId, PageExperience pageExperience)
+			Layout layout, long groupId, PageExperience pageExperience)
 		throws Exception {
 
-		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
-			pageExperience.getPageSpecificationExternalReferenceCode(),
-			groupId);
-
-		if(!_layoutPermission.containsLayoutRestrictedUpdatePermission(
-			PermissionThreadLocal.getPermissionChecker(), layout)) {
+		if (!_layoutPermission.containsLayoutRestrictedUpdatePermission(
+				PermissionThreadLocal.getPermissionChecker(), layout)) {
 
 			_portletResourcePermission.check(
-				PermissionThreadLocal.getPermissionChecker(),
-				groupId,
+				PermissionThreadLocal.getPermissionChecker(), groupId,
 				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 		}
 

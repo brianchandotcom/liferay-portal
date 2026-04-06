@@ -21,11 +21,18 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.segments.constants.SegmentsActionKeys;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.NoSuchExperienceException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
@@ -195,6 +202,10 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			return _addPageExperience(groupId, pageExperience);
 		}
 
+		_segmentsExperienceResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), segmentsExperience,
+			ActionKeys.UPDATE);
+
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout, contextUser)) {
@@ -230,6 +241,15 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		if (layout == null) {
 			throw new UnsupportedOperationException();
+		}
+
+		if(!_layoutPermission.containsLayoutRestrictedUpdatePermission(
+			PermissionThreadLocal.getPermissionChecker(), layout)) {
+
+			_portletResourcePermission.check(
+				PermissionThreadLocal.getPermissionChecker(),
+				groupId,
+				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 		}
 
 		try (AutoCloseable autoCloseable =
@@ -304,6 +324,9 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		_layoutPageTemplateStructureRelLocalService;
 
 	@Reference
+	private LayoutPermission _layoutPermission;
+
+	@Reference
 	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference(
@@ -311,6 +334,17 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 	)
 	private DTOConverter<LayoutPageTemplateStructureRel, PageExperience>
 		_pageExperienceDTOConverter;
+
+	@Reference(
+		target = "(resource.name=" + SegmentsConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.segments.model.SegmentsExperience)"
+	)
+	private ModelResourcePermission<SegmentsExperience>
+		_segmentsExperienceResourcePermission;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

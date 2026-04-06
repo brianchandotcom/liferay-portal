@@ -7,15 +7,18 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import {openModal} from 'frontend-js-components-web';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
 import DesignLibraryConnectedSitesModal from './modal/DesignLibraryConnectedSitesModal';
+import confirmAndDeleteEntryAction from './props_transformer/actions/confirmAndDeleteEntryAction';
 
 export interface ActionDropdownItemProps {
+	descriptiveName?: string;
 	externalReferenceCode?: string;
 	href?: string;
 	label?: string;
+	redirect?: string;
 	target?: 'connected-sites' | string;
 }
 interface DesignLibraryBreadcrumbProps {
@@ -25,9 +28,11 @@ interface DesignLibraryBreadcrumbProps {
 }
 
 function ActionDropdownItem({
+	descriptiveName = '',
 	externalReferenceCode = '',
 	href = '',
 	label,
+	redirect,
 	target,
 	...props
 }: ActionDropdownItemProps) {
@@ -39,6 +44,28 @@ function ActionDropdownItem({
 						externalReferenceCode,
 					}),
 				size: 'md',
+			});
+		}
+		else if (target === 'delete') {
+			confirmAndDeleteEntryAction({
+				bodyHTML: Liferay.Language.get(
+					'delete-design-library-confirmation-body'
+				),
+				deleteAction: {
+					href,
+					method: 'DELETE',
+				},
+				redirect,
+				successMessage: sub(
+					Liferay.Language.get('x-was-successfully-deleted'),
+					`<strong>${Liferay.Util.escapeHTML(descriptiveName)}</strong>`
+				),
+				title: sub(
+					Liferay.Language.get(
+						'delete-design-library-confirmation-title'
+					),
+					descriptiveName
+				),
 			});
 		}
 		else {

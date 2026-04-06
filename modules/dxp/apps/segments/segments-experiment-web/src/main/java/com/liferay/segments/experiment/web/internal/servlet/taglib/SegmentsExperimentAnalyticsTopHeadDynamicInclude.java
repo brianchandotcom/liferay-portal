@@ -97,6 +97,9 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 
 		if (segmentsExperiment != null) {
 			segmentsExperienceId = segmentsExperiment.getSegmentsExperienceId();
+			segmentsExperimentId =
+				segmentsExperiment.getSegmentsExperimentKey();
+			segmentsVariantId = segmentsExperienceKey;
 		}
 
 		SegmentsExperience segmentsExperience =
@@ -109,12 +112,6 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 			segmentsExperienceName = segmentsExperience.getName(locale);
 			segmentsExperienceStatus =
 				segmentsExperience.isActive() ? "ACTIVE" : "INACTIVE";
-		}
-
-		if (segmentsExperiment != null) {
-			segmentsExperimentId =
-				segmentsExperiment.getSegmentsExperimentKey();
-			segmentsVariantId = segmentsExperienceKey;
 		}
 
 		return HashMapBuilder.put(

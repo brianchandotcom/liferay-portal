@@ -194,6 +194,10 @@ public class AnalyticsAttributesUtil {
 			infoItemFieldValues.getInfoFieldValue(
 				infoItemFieldMapped.getFieldName());
 
+		if (infoFieldValue == null) {
+			return ACTION_IMPRESSION;
+		}
+
 		InfoField<?> infoField = infoFieldValue.getInfoField();
 
 		if (Objects.equals(
@@ -240,6 +244,10 @@ public class AnalyticsAttributesUtil {
 		InfoFieldValue<?> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue(
 				infoItemFieldMapped.getFieldName());
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
 
 		Object value = infoFieldValue.getValue(locale);
 

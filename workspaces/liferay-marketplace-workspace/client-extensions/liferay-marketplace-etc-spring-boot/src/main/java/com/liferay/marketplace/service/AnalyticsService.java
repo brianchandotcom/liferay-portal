@@ -16,6 +16,7 @@ import java.util.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -59,7 +61,26 @@ public class AnalyticsService extends BaseService {
 		).contentType(
 			MediaType.APPLICATION_FORM_URLENCODED
 		).body(
-			analyticsForm.toFormData()
+			BodyInserters.fromFormData(
+				"corpProjectName", analyticsForm.getCorpProjectName()
+			).with(
+				"corpProjectUuid", analyticsForm.getCorpProjectUuid()
+			).with(
+				"incidentReportEmailAddresses",
+				new JSONArray(
+					analyticsForm.getIncidentReportEmailAddresses()
+				).toString()
+			).with(
+				"name", analyticsForm.getName()
+			).with(
+				"serverLocation", analyticsForm.getServerLocation()
+			).with(
+				"sharedCluster", analyticsForm.getSharedCluster()
+			).with(
+				"trial", analyticsForm.getTrial()
+			).with(
+				"ownerEmailAddress", analyticsForm.getOwnerEmailAddress()
+			)
 		).retrieve(
 		).bodyToMono(
 			String.class

@@ -7,39 +7,10 @@ package com.liferay.marketplace.model;
 
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import org.springframework.http.client.reactive.ClientHttpRequest;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.BodyInserter;
-import org.springframework.web.reactive.function.BodyInserters;
-
 /**
  * @author Caleb Hall
  */
 public class AnalyticsForm {
-
-	public static AnalyticsForm fromJSONObject(JSONObject jsonObject) {
-		JSONArray jsonArray = jsonObject.getJSONArray(
-			"incidentReportEmailAddresses");
-
-		List<String> emailAddresses = new ArrayList<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			emailAddresses.add(jsonArray.getString(i));
-		}
-
-		return new AnalyticsForm(
-			jsonObject.getString("corpProjectName"),
-			jsonObject.getString("corpProjectUuid"),
-			emailAddresses.toArray(new String[0]), jsonObject.getString("name"),
-			jsonObject.optString("serverLocation"),
-			jsonObject.getString("ownerEmailAddress"));
-	}
 
 	public AnalyticsForm(
 		String corpProjectName, String corpProjectUuid,
@@ -88,31 +59,6 @@ public class AnalyticsForm {
 
 	public String getTrial() {
 		return _TRIAL;
-	}
-
-	public BodyInserter<MultiValueMap<String, String>, ClientHttpRequest>
-		toFormData() {
-
-		return BodyInserters.fromFormData(
-			"corpProjectName", getCorpProjectName()
-		).with(
-			"corpProjectUuid", getCorpProjectUuid()
-		).with(
-			"incidentReportEmailAddresses",
-			new JSONArray(
-				getIncidentReportEmailAddresses()
-			).toString()
-		).with(
-			"name", getName()
-		).with(
-			"serverLocation", getServerLocation()
-		).with(
-			"sharedCluster", getSharedCluster()
-		).with(
-			"trial", getTrial()
-		).with(
-			"ownerEmailAddress", getOwnerEmailAddress()
-		);
 	}
 
 	private static final String _SERVER_LOCATION = "us-west1-ac-uat-c1";

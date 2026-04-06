@@ -1,10 +1,10 @@
 {{- if $backup.enabled }}
-{{- $backupVaultLabels := merge $labels (dict "liferay.com/is-backup-vault" "true") }}
+{{- $backupVaultLabels := merge (dict) $labels (dict "liferay.com/is-backup-vault" "true") }}
 apiVersion: storage.gcp.m.upbound.io/v1beta1
 kind: Bucket
 metadata:
     annotations:
-        gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-vault-bucket
+        gotemplating.fn.crossplane.io/composition-resource-name: {{ $baseName }}-vault
     labels:
         {{- $backupVaultLabels | toYaml | nindent 8 }}
     name: {{ $baseName }}-vault
@@ -12,35 +12,18 @@ spec:
     forProvider:
         {{- if $cmkEnabled }}
         encryption:
-            defaultKmsKeyName: {{ $cmkKeyName }}
+            defaultKmsKeyName: {{ $cmkKeyName | quote }}
         {{- end }}
         forceDestroy: {{ $forceDestroy }}
         labels:
-            {{- $labels | toYaml | nindent 12 }}
+            {{- $backupVaultLabels | toYaml | nindent 12 }}
         lifecycleRule:
             -   action:
                     type: Delete
                 condition:
                     age: {{ add $backup.retentionDays 2 }}
         location: {{ $backup.region | default $region }}
-        storageClass: {{ $backup.storageClass }}
+        storageClass: {{ $backup.storageClass | quote }}
         uniformBucketLevelAccess: true
-        versioning:
-            enabled: true
-    managementPolicies: {{ $managementPolicies }}
----
-apiVersion: storage.gcp.m.upbound.io/v1beta1
-kind: BucketIAMMember
-metadata:
-    annotations:
-        gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-vault-iam
-    labels:
-        {{- $backupVaultLabels | toYaml | nindent 8 }}
-spec:
-    forProvider:
-        bucketRef:
-            name: {{ $baseName }}-vault
-        member: serviceAccount:{{ $gsaEmail }}
-        role: roles/storage.objectCreator
     managementPolicies: {{ $managementPolicies }}
 {{- end }}

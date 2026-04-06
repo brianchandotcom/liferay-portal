@@ -397,24 +397,22 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 
 					mimeTypeInfoFieldValue = mimeType;
 
+					WebImage fileURLWebImage = new WebImage(
+						dlURLHelper.getPreviewURL(
+							fileEntry, fileEntry.getFileVersion(), themeDisplay,
+							StringPool.BLANK),
+						new InfoItemReference(
+							FileEntry.class.getName(),
+							new ClassPKInfoItemIdentifier(
+								fileEntry.getFileEntryId())));
+
+					fileURLWebImage.setAlt(fileEntry.getDescription());
+
 					if (mimeType.startsWith("image")) {
-						WebImage fileURLWebImage = new WebImage(
-							dlURLHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(),
-								themeDisplay, StringPool.BLANK),
-							new InfoItemReference(
-								FileEntry.class.getName(),
-								new ClassPKInfoItemIdentifier(
-									fileEntry.getFileEntryId())));
-
-						fileURLWebImage.setAlt(fileEntry.getDescription());
-
 						fileURLInfoFieldValue = fileURLWebImage;
 					}
 
-					previewURLInfoFieldValue = dlURLHelper.getPreviewURL(
-						fileEntry, fileEntry.getFileVersion(), themeDisplay,
-						StringPool.BLANK);
+					previewURLInfoFieldValue = fileURLWebImage;
 					sizeInfoFieldValue = fileEntry.getSize();
 				}
 				else if (infoFieldValue instanceof InfoLocalizedValue) {
@@ -463,18 +461,18 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 
 						String mimeType = fileEntry.getMimeType();
 
+						WebImage fileURLWebImage = new WebImage(
+							dlURLHelper.getPreviewURL(
+								fileEntry, fileEntry.getFileVersion(),
+								themeDisplay, StringPool.BLANK),
+							new InfoItemReference(
+								FileEntry.class.getName(),
+								new ClassPKInfoItemIdentifier(
+									fileEntry.getFileEntryId())));
+
+						fileURLWebImage.setAlt(fileEntry.getDescription());
+
 						if (mimeType.startsWith("image")) {
-							WebImage fileURLWebImage = new WebImage(
-								dlURLHelper.getPreviewURL(
-									fileEntry, fileEntry.getFileVersion(),
-									themeDisplay, StringPool.BLANK),
-								new InfoItemReference(
-									FileEntry.class.getName(),
-									new ClassPKInfoItemIdentifier(
-										fileEntry.getFileEntryId())));
-
-							fileURLWebImage.setAlt(fileEntry.getDescription());
-
 							fileURLInfoFieldValueBuilder.value(
 								entry.getKey(), fileURLWebImage);
 
@@ -482,10 +480,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 						}
 
 						previewURLInfoFieldValueBuilder.value(
-							entry.getKey(),
-							dlURLHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(),
-								themeDisplay, StringPool.BLANK));
+							entry.getKey(), fileURLWebImage);
 						sizeInfoFieldValueBuilder.value(
 							entry.getKey(), fileEntry.getSize());
 					}

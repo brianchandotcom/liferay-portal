@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {JournalTemplatesPage} from './JournalTemplatesPage';
 
@@ -13,8 +14,11 @@ export class JournalEditTemplatePage {
 
 	readonly basicInformation: Locator;
 	readonly elementsButton: Locator;
-	readonly selectorWindow: FrameLocator;
 	readonly journalTemplatesPage: JournalTemplatesPage;
+	readonly nameInput: Locator;
+	readonly saveButton: Locator;
+	readonly selectStructureButton: Locator;
+	readonly selectorWindow: FrameLocator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -23,10 +27,15 @@ export class JournalEditTemplatePage {
 			name: 'Basic Information',
 		});
 		this.elementsButton = page.getByTitle('Elements', {exact: true});
+		this.journalTemplatesPage = new JournalTemplatesPage(page);
+		this.nameInput = page.getByRole('textbox', {name: 'Name'});
+		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.selectStructureButton = page.getByRole('button', {
+			name: 'Select Structure',
+		});
 		this.selectorWindow = page.frameLocator(
 			'iframe[title="Select Structure"]'
 		);
-		this.journalTemplatesPage = new JournalTemplatesPage(page);
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -52,34 +61,25 @@ export class JournalEditTemplatePage {
 		await this.page.getByRole('link', {name: title}).click();
 	}
 
-	async editTemplate(title?: string, script?: string) {
-		if (script) {
-			await this.page.locator('.CodeMirror-lines').dblclick();
-			await this.page.keyboard.press('ControlOrMeta+A');
-			await this.page.keyboard.press('Backspace');
+	async editTemplate(title: string, script: string) {
+		await fillAndClickOutside(this.page, this.nameInput, title);
 
-			await this.page.keyboard.type(script);
-		}
-
-		if (title) {
-			await this.page.getByPlaceholder('Untitled Template').fill(title);
-			await this.page.getByPlaceholder('Untitled Template').click();
-		}
-		await this.page.waitForTimeout(500);
+		await this.page
+			.locator('.ddm_template_editor__CodeMirrorEditor')
+			.dblclick();
+		await this.page.keyboard.press('ControlOrMeta+A');
+		await this.page.keyboard.press('Backspace');
+		await this.page.keyboard.type(script);
 	}
 
-	async getDDMTemplateKey(): Promise<string> {
+	async getDDMTemplateKey() {
 		await this.page.getByLabel('Properties').click();
 
 		return this.page.getByLabel('DDM Template Key').inputValue();
 	}
 
 	async selectStructure(title: string) {
-		await this.page
-			.locator(
-				'[id="_com_liferay_journal_web_portlet_JournalPortlet_selectDDMStructure"]'
-			)
-			.click();
+		await this.selectStructureButton.click();
 
 		await this.selectorWindow
 			.getByText(title, {
@@ -89,9 +89,7 @@ export class JournalEditTemplatePage {
 	}
 
 	async saveTemplate() {
-		await this.page
-			.getByRole('button', {exact: true, name: 'Save'})
-			.click();
+		await this.saveButton.click();
 
 		await waitForAlert(this.page);
 	}

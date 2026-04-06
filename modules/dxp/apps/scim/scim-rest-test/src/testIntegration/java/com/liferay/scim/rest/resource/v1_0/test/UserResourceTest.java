@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -645,6 +646,17 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		User user = testDeleteV2User_addUser();
 
+		com.liferay.portal.kernel.model.User portalUser =
+			_userLocalService.getUserByExternalReferenceCode(
+				user.getExternalId(), TestPropsValues.getCompanyId());
+
+		portalUser = _userLocalService.updatePortrait(
+			portalUser.getUserId(),
+			FileUtil.getBytes(
+				UserResourceTest.class, "dependencies/liferay.png"));
+
+		long portraitId = portalUser.getPortraitId();
+
 		PatchOp patchOp = new PatchOp();
 
 		patchOp.setOperations(
@@ -673,6 +685,10 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		assertValid(patchUser);
 		unsafeConsumer.accept(patchUser);
+
+		portalUser = _userLocalService.getUser(portalUser.getUserId());
+
+		Assert.assertEquals(portraitId, portalUser.getPortraitId());
 	}
 
 	private static final String _PREFIX = StringUtil.toLowerCase(

@@ -696,7 +696,7 @@ public class AgentInstanceResourceTest
 					_agentDefinitionObjectDefinition.getObjectDefinitionId()),
 			TestPropsValues.getUserId());
 
-		String text = "Feliphe's favorite food is hamburger.";
+		String text = "Marinho is Feliphe's last name.";
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			contentRetriever.getIndexName(),
@@ -730,7 +730,7 @@ public class AgentInstanceResourceTest
 
 		String response = StringUtil.toLowerCase(lines.get(3));
 
-		Assert.assertTrue(response, response.contains("hamburger"));
+		Assert.assertTrue(response, response.contains("Marinho"));
 
 		_searchEngineAdapter.execute(
 			new DeleteIndexRequest(contentRetriever.getIndexName()));

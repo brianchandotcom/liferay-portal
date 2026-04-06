@@ -15,6 +15,7 @@ import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.StringWriter;
 
 import java.util.Map;
@@ -54,9 +55,16 @@ public class FreeMarker {
 
 		String content = String.valueOf(stringWriter.getBuffer());
 
-		if ((copyrightFile != null) && copyrightFile.exists()) {
-			String copyright = FileUtil.read(copyrightFile);
+		String copyright = null;
 
+		if ((copyrightFile != null) && copyrightFile.exists()) {
+			copyright = FileUtil.read(copyrightFile);
+		}
+		else if (copyrightYear != null) {
+			copyright = _DEFAULT_COPYRIGHT;
+		}
+
+		if (copyright != null) {
 			copyright = copyright.replaceFirst(
 				Pattern.quote("{$year}"), copyrightYear);
 
@@ -66,7 +74,20 @@ public class FreeMarker {
 		return StringUtil.replace(content, "\r\n", "\n");
 	}
 
+	private static final String _DEFAULT_COPYRIGHT;
+
 	private static final Configuration _configuration = new Configuration(
 		Configuration.VERSION_2_3_33);
+
+	static {
+		try (InputStream inputStream = FreeMarker.class.getResourceAsStream(
+				"dependencies/copyright.txt")) {
+
+			_DEFAULT_COPYRIGHT = new String(inputStream.readAllBytes());
+		}
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
+	}
 
 }

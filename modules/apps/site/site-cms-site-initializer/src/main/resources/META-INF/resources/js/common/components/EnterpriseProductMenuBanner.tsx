@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {ENTERPRISE_URL} from '../utils/constants';
@@ -28,10 +30,20 @@ export default function EnterpriseProductMenuBanner() {
 						</p>
 
 						<ClayLink
+							aria-label={sub(
+								Liferay.Language.get('x-opens-new-window'),
+								Liferay.Language.get('get-enterprise-details')
+							)}
 							className="btn btn-primary btn-sm w-100"
 							href={ENTERPRISE_URL}
+							rel="noopener noreferrer"
+							target="_blank"
 						>
-							{Liferay.Language.get('get-enterprise-details')}
+							<span className="d-md-inline d-none">
+								{Liferay.Language.get('get-enterprise-details')}
+
+								<ClayIcon className="ml-2" symbol="shortcut" />
+							</span>
 						</ClayLink>
 					</div>
 				</div>

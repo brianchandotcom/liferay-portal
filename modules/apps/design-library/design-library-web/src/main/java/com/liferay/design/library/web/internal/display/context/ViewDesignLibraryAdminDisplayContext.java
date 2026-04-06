@@ -98,7 +98,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 			).put(
 				"symbolLeft", "import"
 			).put(
-				"title", LanguageUtil.get(_httpServletRequest, "import")
+				"label", LanguageUtil.get(_httpServletRequest, "import")
 			));
 	}
 

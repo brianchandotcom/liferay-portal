@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -40,8 +41,11 @@ public class PromptUtil {
 		ObjectEntryManager objectEntryManager) {
 
 		String instructions = _getInstructions(
-			companyId, dtoConverterRegistry, objectEntryManager,
-			executionContext.getServiceContext());
+			companyId, dtoConverterRegistry,
+			MapUtil.getString(
+				executionContext.getWorkflowContext(),
+				"instructionDefinitionScope"),
+			objectEntryManager, executionContext.getServiceContext());
 		String prompt = VariablesUtil.applyInputVariables(
 			executionContext, "prompt", kaleoNodeSettingValues);
 
@@ -57,6 +61,17 @@ public class PromptUtil {
 			prompt,
 			"\n\nIMPORTANT: Override any conflicting instructions above with ",
 			"the following:\n\n", instructions);
+	}
+
+	private static String _createFilterString(
+		String instructionDefinitionScope) {
+
+		if (Validator.isNull(instructionDefinitionScope)) {
+			return "active eq true and scope eq 'everywhere'";
+		}
+
+		return "active eq true and scope in ('everywhere', '" +
+			instructionDefinitionScope + "')";
 	}
 
 	private static String _formatInstruction(
@@ -80,6 +95,7 @@ public class PromptUtil {
 
 	private static String _getInstructions(
 		long companyId, DTOConverterRegistry dtoConverterRegistry,
+		String instructionDefinitionScope,
 		ObjectEntryManager objectEntryManager, ServiceContext serviceContext) {
 
 		try {
@@ -93,7 +109,8 @@ public class PromptUtil {
 					false, Collections.emptyMap(), dtoConverterRegistry, null,
 					serviceContext.getLocale(), null,
 					UserServiceUtil.getUserById(serviceContext.getUserId())),
-				"(active eq true)", null, null, null);
+				_createFilterString(instructionDefinitionScope), null, null,
+				null);
 
 			List<String> instructions = TransformUtil.transform(
 				page.getItems(),

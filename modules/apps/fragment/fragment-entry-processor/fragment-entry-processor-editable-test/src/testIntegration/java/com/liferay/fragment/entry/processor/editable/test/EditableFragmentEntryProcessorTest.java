@@ -1088,6 +1088,9 @@ public class EditableFragmentEntryProcessorTest {
 			String.valueOf(journalArticle.getResourcePrimKey()),
 			element.attr("data-analytics-asset-id"));
 		Assert.assertEquals(
+			String.valueOf(fileEntry.getMimeType()),
+			element.attr("data-analytics-asset-mime-type"));
+		Assert.assertEquals(
 			String.valueOf(journalArticle.getDDMStructureId()),
 			element.attr("data-analytics-asset-subtype"));
 		Assert.assertEquals(

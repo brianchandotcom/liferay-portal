@@ -89,6 +89,8 @@ components:
                 chat:
                     $ref: "#/components/schemas/Chat"
                     readOnly: true
+                chatbotExternalReferenceCode:
+                    type: string
                 context:
                     additionalProperties: true
                     type: object

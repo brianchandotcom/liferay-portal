@@ -25,8 +25,13 @@ spec:
                             properties:
                                 databaseInstanceId:
                                     type: string
-                            required:
-                                -   databaseInstanceId
+                                databaseInstanceLookup:
+                                    properties:
+                                        matchLabels:
+                                            additionalProperties:
+                                                type: string
+                                            type: object
+                                    type: object
                             type: object
                         status:
                             properties:

@@ -39,10 +39,15 @@ spec:
                                                     properties:
                                                         bucket:
                                                             type: string
+                                                        bucketLookup:
+                                                            properties:
+                                                                matchLabels:
+                                                                    additionalProperties:
+                                                                        type: string
+                                                                    type: object
+                                                            type: object
                                                         path:
                                                             type: string
-                                                    required:
-                                                        -   bucket
                                                     type: object
                                                 type:
                                                     enum:
@@ -59,8 +64,13 @@ spec:
                                     properties:
                                         databaseInstanceId:
                                             type: string
-                                    required:
-                                        -   databaseInstanceId
+                                        databaseInstanceLookup:
+                                            properties:
+                                                matchLabels:
+                                                    additionalProperties:
+                                                        type: string
+                                                    type: object
+                                            type: object
                                     type: object
                                 documentLibrary:
                                     properties:
@@ -70,10 +80,15 @@ spec:
                                                     properties:
                                                         bucket:
                                                             type: string
+                                                        bucketLookup:
+                                                            properties:
+                                                                matchLabels:
+                                                                    additionalProperties:
+                                                                        type: string
+                                                                    type: object
+                                                            type: object
                                                         path:
                                                             type: string
-                                                    required:
-                                                        -   bucket
                                                     type: object
                                                 type:
                                                     enum:
@@ -90,10 +105,15 @@ spec:
                                                     properties:
                                                         bucket:
                                                             type: string
+                                                        bucketLookup:
+                                                            properties:
+                                                                matchLabels:
+                                                                    additionalProperties:
+                                                                        type: string
+                                                                    type: object
+                                                            type: object
                                                         path:
                                                             type: string
-                                                    required:
-                                                        -   bucket
                                                     type: object
                                                 type:
                                                     enum:

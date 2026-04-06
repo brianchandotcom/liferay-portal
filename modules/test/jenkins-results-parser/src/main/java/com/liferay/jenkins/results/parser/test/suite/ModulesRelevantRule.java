@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -51,6 +52,10 @@ public class ModulesRelevantRule extends RelevantRule {
 				sb.append(getGradlePackageName(modifiedModuleProjectDir));
 				sb.append(":");
 				sb.append(getTestScriptModuleGradleTaskName());
+			}
+
+			if (Objects.equals(getTestScriptModuleGradleTaskName(), "test")) {
+				sb.append(" --continue -Dtest.ignore.failures=false");
 			}
 
 			sb.append(" --parallel");

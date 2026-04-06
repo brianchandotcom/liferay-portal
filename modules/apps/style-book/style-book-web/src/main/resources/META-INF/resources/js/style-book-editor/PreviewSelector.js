@@ -1,11 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {useIsMobileDevice} from '@clayui/shared';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -47,10 +49,63 @@ const LAYOUT_TYPES_OPTIONS = [
 ];
 
 export default function PreviewSelector() {
+	const isMobile = useIsMobileDevice();
 	const previewLayoutType = usePreviewLayoutType();
+	const [active, setActive] = useState(false);
+
+	const previewLabel = (
+		<span
+			className={classNames('font-weight-bold', {
+				'd-block mb-3': isMobile,
+			})}
+		>
+			{Liferay.Language.get('preview')}
+		</span>
+	);
+
+	if (isMobile) {
+		return (
+			<ClayDropDown
+				active={active}
+				alignmentPosition={Align.BottomLeft}
+				closeOnClick={false}
+				menuElementAttrs={{
+					containerProps: {
+						className: 'cadmin',
+					},
+				}}
+				onActiveChange={setActive}
+				trigger={
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('preview')}
+						displayType="secondary"
+						size="sm"
+						symbol="simulation-menu"
+						title={Liferay.Language.get('preview')}
+					/>
+				}
+			>
+				<div className="p-3 style-book-editor__preview-selector-container">
+					{previewLabel}
+
+					<LayoutTypeSelector
+						className="w-100"
+						layoutType={previewLayoutType}
+					/>
+
+					<LayoutSelector
+						className="mt-3 w-100"
+						layoutType={previewLayoutType}
+					/>
+				</div>
+			</ClayDropDown>
+		);
+	}
 
 	return (
 		<>
+			{previewLabel}
+
 			<LayoutTypeSelector layoutType={previewLayoutType} />
 
 			<LayoutSelector layoutType={previewLayoutType} />
@@ -58,7 +113,7 @@ export default function PreviewSelector() {
 	);
 }
 
-export function LayoutTypeSelector({layoutType}) {
+export function LayoutTypeSelector({className = 'ml-3', layoutType}) {
 	const [active, setActive] = useState(false);
 	const setPreviewLayoutType = useSetPreviewLayoutType();
 
@@ -74,7 +129,10 @@ export function LayoutTypeSelector({layoutType}) {
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
-					className="form-control-select ml-3 style-book-editor__preview-selector text-left"
+					className={classNames(
+						'form-control-select style-book-editor__preview-selector text-left',
+						className
+					)}
 					displayType="secondary"
 					size="sm"
 					type="button"
@@ -115,10 +173,11 @@ export function LayoutTypeSelector({layoutType}) {
 }
 
 LayoutTypeSelector.propTypes = {
+	className: PropTypes.string,
 	layoutType: PropTypes.string.isRequired,
 };
 
-export function LayoutSelector({layoutType}) {
+export function LayoutSelector({className = 'ml-3', layoutType}) {
 	const [active, setActive] = useState(false);
 	const previewLayout = usePreviewLayout();
 	const setLoading = useSetLoading();
@@ -183,7 +242,10 @@ export function LayoutSelector({layoutType}) {
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
-					className="form-control-select ml-3 style-book-editor__preview-selector text-left"
+					className={classNames(
+						'form-control-select style-book-editor__preview-selector text-left',
+						className
+					)}
 					displayType="secondary"
 					size="sm"
 					type="button"
@@ -262,6 +324,7 @@ export function LayoutSelector({layoutType}) {
 }
 
 LayoutSelector.propTypes = {
+	className: PropTypes.string,
 	layoutType: PropTypes.string.isRequired,
 };
 

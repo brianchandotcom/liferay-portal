@@ -60,7 +60,8 @@ public class JournalArticleInfoItemFormProvider
 					JournalArticle.class.getName()),
 				displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName(), StringPool.BLANK,
-					JournalArticle.class.getSimpleName(), 0));
+					JournalArticle.class.getSimpleName(), 0),
+				0);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -83,7 +84,8 @@ public class JournalArticleInfoItemFormProvider
 				displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName(),
 					String.valueOf(ddmStructureId),
-					JournalArticle.class.getSimpleName(), 0));
+					JournalArticle.class.getSimpleName(), 0),
+				0);
 		}
 		catch (NoSuchClassTypeException noSuchClassTypeException) {
 			throw new RuntimeException(
@@ -110,7 +112,8 @@ public class JournalArticleInfoItemFormProvider
 				GetterUtil.getLong(formVariationKey), groupId),
 			displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 				JournalArticle.class.getName(), formVariationKey,
-				JournalArticle.class.getSimpleName(), groupId));
+				JournalArticle.class.getSimpleName(), groupId),
+			groupId);
 	}
 
 	@Reference
@@ -184,7 +187,7 @@ public class JournalArticleInfoItemFormProvider
 
 	private InfoForm _getInfoForm(
 			String formVariationKey, InfoFieldSet assetEntryInfoFieldSet,
-			InfoFieldSet displayPageInfoFieldSet)
+			InfoFieldSet displayPageInfoFieldSet, long groupId)
 		throws NoSuchFormVariationException {
 
 		try {
@@ -205,7 +208,7 @@ public class JournalArticleInfoItemFormProvider
 
 						unsafeConsumer.accept(
 							ddmTemplateInfoItemFieldSetProvider.
-								getInfoItemFieldSet(ddmStructureId));
+								getInfoItemFieldSet(ddmStructureId, groupId));
 					}
 				}
 			).infoFieldSetEntry(

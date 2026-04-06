@@ -35,22 +35,27 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 }) => {
 	const context = useContext(BasePage.Context);
 
-	const {filters, router} = context;
+	const {filters, rangeSelectors: contextRangeSelectors, router} = context;
 
 	const [interval, setInterval] = useState(INTERVAL_KEY_MAP.day);
 
 	const initialRangeSelectors = useQueryRangeSelectors();
 
-	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
-		initialRangeSelectors
-	);
+	const [
+		localRangeSelectors,
+		setLocalRangeSelectors
+	] = useState<RangeSelectors>(initialRangeSelectors);
+
+	const currentRangeSelectors = contextRangeSelectors || localRangeSelectors;
+
+	const isGlobal = !!contextRangeSelectors;
 
 	const otherProps = {
 		filters,
 		interval,
 		onChangeInterval: setInterval,
-		onRangeSelectorsChange: setRangeSelectors,
-		rangeSelectors,
+		onRangeSelectorsChange: isGlobal ? undefined : setLocalRangeSelectors,
+		rangeSelectors: currentRangeSelectors,
 		router
 	};
 
@@ -63,11 +68,14 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 		>
 			<Header
 				{...otherProps}
+				{...headerProps}
 				description={description}
 				label={label}
 				legacy={legacyDropdownRangeKey}
 				showInterval={showInterval}
-				{...headerProps}
+				showRangeKey={
+					isGlobal ? false : headerProps.showRangeKey ?? true
+				}
 			/>
 
 			{children({...otherProps})}

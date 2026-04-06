@@ -116,6 +116,12 @@ function TouchpointRoutes({className, router}) {
 			{matchedRoute === Routes.SITES_TOUCHPOINTS_OVERVIEW && (
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
+						<DropdownRangeKey
+							legacy={false}
+							onRangeSelectorChange={setPathRangeSelectors}
+							rangeSelectors={pathRangeSelectors}
+						/>
+
 						<DownloadPDFReport
 							disabled={dataSourceStates.empty}
 							subtitle={`${
@@ -145,6 +151,7 @@ function TouchpointRoutes({className, router}) {
 			<BasePage.Context.Provider
 				value={{
 					filters: {},
+					rangeSelectors: pathRangeSelectors,
 					router
 				}}
 			>

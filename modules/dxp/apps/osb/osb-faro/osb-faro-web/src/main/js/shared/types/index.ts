@@ -50,8 +50,9 @@ export interface ICompositionBag {
 }
 
 export interface IBasePageContext {
-	filters: object;
-	router: Router;
+	filters: any;
+	router: any;
+	rangeSelectors?: RangeSelectors;
 }
 
 export interface IPagination {

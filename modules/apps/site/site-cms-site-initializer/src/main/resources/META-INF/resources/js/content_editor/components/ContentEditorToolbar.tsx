@@ -11,6 +11,7 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
+import classNames from 'classnames';
 import {sessionStorage, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useState} from 'react';
 
@@ -18,6 +19,8 @@ import Toolbar from '../../common/components/Toolbar';
 import AIAssistantChat from './AIAssistantChat/AIAssistantChat';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
+
+export const EVENT_HANDLE_PREVIEW = 'contentEditor:handlePreview';
 
 export const EVENT_VALIDATE_FORM = 'contentEditor:validateForm';
 
@@ -39,6 +42,7 @@ export default function ContentEditorToolbar({
 	const [displayDate, setDisplayDate] = useState<string>('');
 	const [formId, setFormId] = useState<string | undefined>();
 	const [showModal, setShowModal] = useState<boolean>(false);
+	const [showPreview, setShowPreview] = useState<boolean>(false);
 
 	const optionsTitle = hasWorkflow
 		? Liferay.Language.get('submit-for-workflow-options')
@@ -145,8 +149,26 @@ export default function ContentEditorToolbar({
 			{Liferay.FeatureFlags['LPD-44507'] ? (
 				<Toolbar.Item className="nav-divider-end">
 					<ClayButton
-						className="c-mr-3 d-lg-block d-none"
+						aria-label={
+							showPreview
+								? Liferay.Language.get('close-preview')
+								: Liferay.Language.get('open-preview')
+						}
+						aria-pressed={showPreview}
+						borderless={showPreview}
+						className={classNames('c-mr-3 d-lg-block d-none', {
+							active: showPreview,
+						})}
 						displayType="secondary"
+						onClick={() => {
+							const nextShowPreview = !showPreview;
+
+							setShowPreview(nextShowPreview);
+
+							Liferay.fire(EVENT_HANDLE_PREVIEW, {
+								showPreview: nextShowPreview,
+							});
+						}}
 						size="sm"
 					>
 						<ClayIcon

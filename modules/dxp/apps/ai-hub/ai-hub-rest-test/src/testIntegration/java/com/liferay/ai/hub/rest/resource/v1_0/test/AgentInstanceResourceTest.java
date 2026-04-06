@@ -351,10 +351,11 @@ public class AgentInstanceResourceTest
 		return StringUtil.read(inputStream);
 	}
 
-	private String _getExpectedPromptInput(String instruction, String occasion)
+	private String _getExpectedPromptInput(
+			boolean active, String instruction, String occasion, String scope)
 		throws Exception {
 
-		String promptInput = StringBundler.concat(
+		String prompt = StringBundler.concat(
 			"You are an expert linguistic editor. Your sole task is to ",
 			"correct all grammatical, spelling, and punctuation errors in the ",
 			"provided text while preserving its meaning, tone, and style. Do ",
@@ -363,15 +364,15 @@ public class AgentInstanceResourceTest
 			"corrected text, with no explanations or commentary. If the text ",
 			"is already correct, return it unchanged.");
 
-		if (Validator.isNull(instruction)) {
-			return promptInput;
+		if (!active || !StringUtil.equals(scope, "everywhere")) {
+			return prompt;
 		}
 
 		if (Validator.isNull(occasion)) {
 			return StringUtil.replace(
 				_read("expected-prompt-input-with-instruction.txt"),
 				new String[] {"${instruction}", "${prompt}"},
-				new String[] {instruction, promptInput});
+				new String[] {instruction, prompt});
 		}
 
 		return StringUtil.replace(
@@ -379,7 +380,7 @@ public class AgentInstanceResourceTest
 			new String[] {"${instruction}", "${occasion}", "${prompt}"},
 			new String[] {
 				StringUtil.lowerCaseFirstLetter(instruction),
-				StringUtil.removeLast(occasion, StringPool.PERIOD), promptInput
+				StringUtil.removeLast(occasion, StringPool.PERIOD), prompt
 			});
 	}
 
@@ -537,26 +538,30 @@ public class AgentInstanceResourceTest
 			true, "Song she sang to me, song she brang to me.",
 			"Song she sang to me, song she brang to me.",
 			"Preserve all grammar errors exactly as they appear.",
-			"When the text is a poem or song lyrics.");
+			"When the text is a poem or song lyrics.", "everywhere");
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
 			true, "This text is wrong.", "Thi text ix wrong.",
 			"Preserve all grammar errors exactly as they appear.",
-			"When the text is a poem or song lyrics.");
+			"When the text is a poem or song lyrics.", "everywhere");
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
 			true, "Thi text ix wrong.", "Thi text ix wrong.",
-			"Preserve all grammar errors exactly as they appear.", null);
+			"Preserve all grammar errors exactly as they appear.",
+			StringPool.BLANK, "everywhere");
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
 			true, "THIS TEXT IS WRONG.", "Thi text ix wrong.",
-			"Respond in ALL CAPS.", null);
+			"Respond in ALL CAPS.", null, "everywhere");
+		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
+			true, "This text is wrong.", "Thi text ix wrong.",
+			"Respond in ALL CAPS.", null, "clickToChat");
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
 			false, "This text is wrong.", "Thi text ix wrong.",
-			"Respond in ALL CAPS.", null);
+			"Respond in ALL CAPS.", null, "everywhere");
 	}
 
 	private void
 			_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
 				boolean active, String expectedOutput, String input,
-				String instruction, String occasion)
+				String instruction, String occasion, String scope)
 		throws Exception {
 
 		_objectEntryLocalService.addOrUpdateObjectEntry(
@@ -572,7 +577,7 @@ public class AgentInstanceResourceTest
 				"r_accountToAIHubInstructionDefinitions_accountEntryId",
 				_accountEntry.getAccountEntryId()
 			).put(
-				"scope", "clickToChat"
+				"scope", scope
 			).put(
 				"title_i18n",
 				(Serializable)RandomTestUtil.randomLanguageIdStringMap()
@@ -646,7 +651,7 @@ public class AgentInstanceResourceTest
 
 				Assert.assertEquals(
 					_getExpectedPromptInput(
-						active ? instruction : null, occasion),
+						active, instruction, occasion, scope),
 					workflowContext.get("promptInput"));
 				Assert.assertEquals(
 					inputTokensCount + outputTokensCount,

@@ -12,6 +12,7 @@ import {TableCellContentType} from '../constants';
 import CreateDesignLibraryModal from '../modal/CreateDesignLibraryModal';
 import confirmAndDeleteEntryAction from './actions/confirmAndDeleteEntryAction';
 import {
+	AuthorRenderer,
 	FromNowDateTimeRenderer,
 	LinkRenderer,
 	createSetItemComponentProps,
@@ -64,6 +65,11 @@ export default function DesignLibraryAdminFDSPropsTransformer({
 						/>
 					),
 					name: TableCellContentType.DESIGN_LIBRARY_LINK,
+					type: 'internal',
+				},
+				{
+					component: AuthorRenderer,
+					name: TableCellContentType.AUTHOR,
 					type: 'internal',
 				},
 				{
@@ -135,7 +141,8 @@ export default function DesignLibraryAdminFDSPropsTransformer({
 							sortable: true,
 						},
 						{
-							fieldName: 'creatorUserId',
+							contentRenderer: TableCellContentType.AUTHOR,
+							fieldName: 'creator.name',
 							label: Liferay.Language.get('author'),
 							localizeLabel: true,
 							truncate: true,

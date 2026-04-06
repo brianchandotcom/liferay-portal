@@ -9,6 +9,8 @@ import React, {useEffect, useState} from 'react';
 
 import {EVENT_HANDLE_PREVIEW} from './ContentEditorToolbar';
 
+import '../../../css/content_editor/ContentEditorPreview.scss';
+
 export default function ContentEditorPreview({title}: {title: string}) {
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -22,9 +24,23 @@ export default function ContentEditorPreview({title}: {title: string}) {
 		return () => Liferay.detach(EVENT_HANDLE_PREVIEW, handlePreview);
 	}, []);
 
+	if (!Liferay.FeatureFlags['LPD-44507']) {
+		return null;
+	}
+
 	return (
-		<div className={classNames({'d-none': !isVisible})}>
-			{sub(Liferay.Language.get('x-preview'), title)}
+		<div
+			className={classNames('content-editor__preview', {
+				visible: isVisible,
+			})}
+		>
+			{isVisible ? (
+				<div className="border-bottom d-flex justify-content-between p-3">
+					<span className="font-weight-bold text-6">
+						{sub(Liferay.Language.get('x-preview'), title)}
+					</span>
+				</div>
+			) : null}
 		</div>
 	);
 }

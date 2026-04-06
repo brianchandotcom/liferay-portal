@@ -524,10 +524,10 @@ describe('List', () => {
 
 			fireEvent.click(screen.getByTestId('trigger-info-panel'));
 
-			// Tags section uses the 'assets' language key as the title.
+			// Tags section uses the 'tags' language key as the title.
 
 			expect(
-				screen.getByText(/No Assets were found for this asset/i)
+				screen.getByText(/No tags were found for this asset/i)
 			).toBeInTheDocument();
 		});
 

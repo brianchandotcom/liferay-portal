@@ -17,7 +17,9 @@ export class PasswordPoliciesAdminPage {
 	readonly expireable: Locator;
 	readonly historyToggle: Locator;
 	readonly lockout: Locator;
+	readonly lockoutDuration: Locator;
 	readonly minAlphanumeric: Locator;
+	readonly minimumAge: Locator;
 	readonly minLength: Locator;
 	readonly minLowerCase: Locator;
 	readonly minNumbers: Locator;
@@ -30,6 +32,7 @@ export class PasswordPoliciesAdminPage {
 	readonly resetTicketMaxAge: Locator;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
+	readonly updateButton: Locator;
 
 	constructor(page: Page) {
 		this.allowDictionaryWordsToggle = page.getByLabel(
@@ -60,10 +63,12 @@ export class PasswordPoliciesAdminPage {
 			'Enable Lockout If this is checked, a user can attempt to log in a certain number of times before their account is locked.',
 			{exact: true}
 		);
+		this.lockoutDuration = page.getByLabel('Lockout Duration');
 		this.minAlphanumeric = page.getByLabel(
 			"Minimum Alpha Numeric This determines the minimum number of alpha numeric letters in the user's password.",
 			{exact: true}
 		);
+		this.minimumAge = page.getByLabel('Minimum Age');
 		this.minLength = page.getByLabel(
 			"Minimum Length This determines the minimum length of the user's password.",
 			{exact: true}
@@ -97,6 +102,7 @@ export class PasswordPoliciesAdminPage {
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);
+		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
 	async createPasswordPolicy(passwordPolicy: TPasswordPolicy) {

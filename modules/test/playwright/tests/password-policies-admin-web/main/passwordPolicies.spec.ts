@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {passwordPoliciesAdminPageTest} from '../../../fixtures/passwordPoliciesAdminConfigPageTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {TPasswordPolicy} from '../../../helpers/PasswordPolicyApiHelper';
+import {liferayConfig} from '../../../liferay.config';
+import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {PasswordPoliciesAdminPage} from '../../../pages/password-policies-admin-web/PasswordPoliciesAdminPage';
 import getRandomString from '../../../utils/getRandomString';
 import performLoginViaApi from '../../../utils/performLogin';
@@ -20,7 +23,8 @@ export const test = mergeTests(
 		'LPD-36105': {enabled: true},
 	}),
 	loginTest(),
-	passwordPoliciesAdminPageTest
+	passwordPoliciesAdminPageTest,
+	systemSettingsPageTest
 );
 
 test.afterEach(
@@ -196,6 +200,104 @@ test(
 		);
 	}
 );
+
+test(
+	`Verify display 'Eternal' option is visible and 0 weeks is not when Ticket Max Age is set to 0`,
+	{tag: '@LPD-85143'},
+	async ({page, passwordPoliciesAdminConfigPage, systemSettingsPage}) => {
+		await testDefaultMessageCanBeSaved(
+			'Eternal',
+			page,
+			passwordPoliciesAdminConfigPage,
+			systemSettingsPage,
+			passwordPoliciesAdminConfigPage.resetTicketMaxAge
+		);
+	}
+);
+
+test(
+	`Verify display 'None' option is visible and 0 weeks is not when Minimum Age is set to 0`,
+	{tag: '@LPD-85143'},
+	async ({page, passwordPoliciesAdminConfigPage, systemSettingsPage}) => {
+		await testDefaultMessageCanBeSaved(
+			'None',
+			page,
+			passwordPoliciesAdminConfigPage,
+			systemSettingsPage,
+			passwordPoliciesAdminConfigPage.minimumAge
+		);
+	}
+);
+
+test(
+	`Verify display 'Until unlocked' by an administrator option is visible and 0 weeks is not when Lockout Duration is set to 0`,
+	{tag: '@LPD-85143'},
+	async ({page, passwordPoliciesAdminConfigPage, systemSettingsPage}) => {
+		await testDefaultMessageCanBeSaved(
+			'Until unlocked by an administrator',
+			page,
+			passwordPoliciesAdminConfigPage,
+			systemSettingsPage,
+			passwordPoliciesAdminConfigPage.lockoutDuration
+		);
+	}
+);
+
+async function testDefaultMessageCanBeSaved(
+	defaultMessage: string,
+	page: Page,
+	passwordPoliciesAdminConfigPage: PasswordPoliciesAdminPage,
+	systemSettingsPage: SystemSettingsPage,
+	targetLocator: Locator
+) {
+	await systemSettingsPage.goToSystemSetting('Users', 'Password Policies');
+
+	await expect(targetLocator.first()).toBeVisible();
+
+	await targetLocator
+		.locator('xpath=./ancestor::div[contains(@class, "form-group")]')
+		.locator('button[title="Duplicate"]')
+		.first()
+		.click();
+
+	if (await passwordPoliciesAdminConfigPage.updateButton.isVisible()) {
+		await passwordPoliciesAdminConfigPage.updateButton.click();
+	}
+	else {
+		await passwordPoliciesAdminConfigPage.saveButton.click();
+	}
+
+	await expect(passwordPoliciesAdminConfigPage.successMessage).toBeVisible();
+
+	await page.goto(liferayConfig.environment.baseUrl);
+
+	await passwordPoliciesAdminConfigPage.goTo();
+
+	await passwordPoliciesAdminConfigPage.editDefaultPasswordPolicy({
+		checkSyntaxToggle: true,
+		minNumbers: 1,
+	});
+
+	await expect(targetLocator.last()).toContainText(defaultMessage);
+	await expect(targetLocator.last()).not.toContainText('0 weeks');
+
+	await targetLocator
+		.last()
+		.selectOption({label: defaultMessage}, {force: true});
+
+	if (await passwordPoliciesAdminConfigPage.updateButton.isVisible()) {
+		await passwordPoliciesAdminConfigPage.updateButton.click();
+	}
+	else {
+		await passwordPoliciesAdminConfigPage.saveButton.click();
+	}
+
+	await expect(passwordPoliciesAdminConfigPage.successMessage).toBeVisible();
+
+	await expect(targetLocator.last().locator('option:checked')).toHaveText(
+		defaultMessage
+	);
+}
 
 async function testPasswordPolicySyntaxCheck(
 	browser,

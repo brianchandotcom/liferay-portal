@@ -466,10 +466,14 @@ public class DisplayPageTemplateResourceTest
 						contentPageSpecification));
 
 		_assertPostSiteDisplayPageTemplatePageSpecificationProblemException(
+			"The display page template type does not match the display page " +
+				"type",
 			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
 				serviceContext));
 
 		_assertPostSiteDisplayPageTemplatePageSpecificationProblemException(
+			"The display page template type does not match the display page " +
+				"type",
 			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
 				serviceContext, WorkflowConstants.STATUS_DRAFT));
 	}
@@ -651,11 +655,12 @@ public class DisplayPageTemplateResourceTest
 
 	private void
 			_assertPostSiteDisplayPageTemplatePageSpecificationProblemException(
+				String expectedTitle,
 				LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
 		_assertProblemException(
-			"BAD_REQUEST", null,
+			"BAD_REQUEST", expectedTitle,
 			() ->
 				displayPageTemplateResource.
 					postSiteDisplayPageTemplatePageSpecification(
@@ -669,7 +674,7 @@ public class DisplayPageTemplateResourceTest
 	}
 
 	private void _assertProblemException(
-			String status, String title,
+			String expectedStatus, String expectedTitle,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -681,8 +686,8 @@ public class DisplayPageTemplateResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals(status, problem.getStatus());
-			Assert.assertEquals(title, problem.getTitle());
+			Assert.assertEquals(expectedStatus, problem.getStatus());
+			Assert.assertEquals(expectedTitle, problem.getTitle());
 		}
 	}
 
@@ -1066,8 +1071,7 @@ public class DisplayPageTemplateResourceTest
 
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals(
-				"UnsupportedOperationException", problem.getType());
+			Assert.assertEquals("IllegalArgumentException", problem.getType());
 		}
 
 		Assert.assertNull(

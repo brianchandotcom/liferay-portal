@@ -152,7 +152,7 @@ public class FragmentCollectionsDisplayContext {
 
 		if (_isIncludeGlobalFragmentCollections()) {
 			groupIds = new long[] {
-				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyGroupId()
+				themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()
 			};
 		}
 

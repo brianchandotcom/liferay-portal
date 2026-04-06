@@ -237,9 +237,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 			_publishToLive(stagingLayout);
 
-			String expectedLivePortletId = _addAssetPublisherPortletToLayout(
-				_publicLayout, "manual", assetEntryXml);
-
 			_assertAssetPublisherPortletPreferencesCount(
 				_group.getCompanyId(), 1, _group.getGroupId(), false);
 			_assertAssetPublisherPortletPreferencesCount(
@@ -273,7 +270,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_journalArticle.getResourcePrimKey());
 
 			_assertLayoutClassedModelUsage(
-				expectedLivePortletId, portletClassNameId, _publicLayout,
+				expectedPortletId, portletClassNameId, _publicLayout,
 				_journalArticle.getResourcePrimKey());
 
 			_publishToLive(stagingLayout);

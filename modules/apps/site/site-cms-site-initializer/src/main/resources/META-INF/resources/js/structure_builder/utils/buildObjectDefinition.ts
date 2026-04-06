@@ -184,6 +184,7 @@ function buildRelationships({
 	for (const referencedStructure of referencedStructures) {
 		relationships.push({
 			deletionType: 'cascade',
+			edge: true,
 			externalReferenceCode: referencedStructure.relationshipERC,
 			label: {
 				en_US: referencedStructure.name,
@@ -198,6 +199,7 @@ function buildRelationships({
 	for (const repeatableGroup of repeatableGroups) {
 		relationships.push({
 			deletionType: 'cascade',
+			edge: true,
 			externalReferenceCode: repeatableGroup.relationshipERC,
 			label: repeatableGroup.label,
 			name: repeatableGroup.relationshipName,

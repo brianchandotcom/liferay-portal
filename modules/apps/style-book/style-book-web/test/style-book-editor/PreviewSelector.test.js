@@ -8,10 +8,9 @@ import {useIsMobileDevice} from '@clayui/shared';
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import PreviewSelector, {
-	LayoutSelector,
-	LayoutTypeSelector,
-} from '../../src/main/resources/META-INF/resources/js/style-book-editor/PreviewSelector';
+import {LayoutSelector} from '../../src/main/resources/META-INF/resources/js/style-book-editor/LayoutSelector';
+import {LayoutTypeSelector} from '../../src/main/resources/META-INF/resources/js/style-book-editor/LayoutTypeSelector';
+import PreviewSelector from '../../src/main/resources/META-INF/resources/js/style-book-editor/PreviewSelector';
 import {LAYOUT_TYPES} from '../../src/main/resources/META-INF/resources/js/style-book-editor/constants/layoutTypes';
 import {LayoutContextProvider} from '../../src/main/resources/META-INF/resources/js/style-book-editor/contexts/LayoutContext';
 import openItemSelector from '../../src/main/resources/META-INF/resources/js/style-book-editor/openItemSelector';

@@ -64,7 +64,7 @@ describe('EnterpriseOnlyPlaceholder', () => {
 		);
 
 		const detailsLink = screen.getByRole('link', {
-			name: 'get-enterprise-details',
+			name: 'x-opens-new-window',
 		});
 		expect(detailsLink).toBeInTheDocument();
 		expect(detailsLink).toHaveAttribute(

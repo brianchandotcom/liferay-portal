@@ -26,7 +26,7 @@ describe('EnterpriseProductMenuBanner', () => {
 		).toBeInTheDocument();
 
 		const detailsLink = screen.getByRole('link', {
-			name: 'get-enterprise-details',
+			name: 'x-opens-new-window',
 		});
 
 		expect(detailsLink).toBeInTheDocument();

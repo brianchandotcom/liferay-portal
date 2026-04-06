@@ -12,7 +12,6 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 
@@ -222,13 +221,13 @@ test('Use the view more button to select a display page template from the select
 
 		await styleBooksPage.create(styleBookName);
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('button', {name: 'More'}),
-			trigger: page.getByRole('button', {
+		await page
+			.getByRole('button', {
 				name: displayPageTemplateNameCategory,
-			}),
-		});
+			})
+			.click();
+
+		await page.getByRole('button', {name: 'More'}).click();
 
 		await page
 			.frameLocator('iframe[title="Select"]')

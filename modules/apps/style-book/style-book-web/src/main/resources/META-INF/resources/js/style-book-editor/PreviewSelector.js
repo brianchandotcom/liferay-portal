@@ -115,6 +115,8 @@ export default function PreviewSelector() {
 
 export function LayoutTypeSelector({className = 'ml-3', layoutType}) {
 	const [active, setActive] = useState(false);
+	const setLoading = useSetLoading();
+	const setPreviewLayout = useSetPreviewLayout();
 	const setPreviewLayoutType = useSetPreviewLayoutType();
 
 	return (
@@ -149,17 +151,24 @@ export function LayoutTypeSelector({className = 'ml-3', layoutType}) {
 		>
 			<ClayDropDown.ItemList>
 				{LAYOUT_TYPES_OPTIONS.map(({label, type}) => {
-					const previewData = config.previewOptions.find(
+					const previewOption = config.previewOptions.find(
 						(option) => option.type === type
-					).data;
+					);
 
-					const {totalLayouts} = previewData;
+					const {totalLayouts} = previewOption.data;
 
 					return totalLayouts ? (
 						<ClayDropDown.Item
 							key={type}
 							onClick={() => {
 								setActive(false);
+
+								setLoading(true);
+
+								setPreviewLayout(
+									previewOption.data.recentLayouts[0]
+								);
+
 								setPreviewLayoutType(type);
 							}}
 						>
@@ -194,10 +203,8 @@ export function LayoutSelector({className = 'ml-3', layoutType}) {
 	const {itemSelectorURL, totalLayouts} = previewData;
 
 	useEffect(() => {
-		setLoading(true);
-		setPreviewLayout(previewData.recentLayouts[0]);
 		setRecentLayouts(previewData.recentLayouts);
-	}, [previewData, setLoading, setPreviewLayout]);
+	}, [previewData]);
 
 	const selectPreviewLayout = (layout) => {
 		if (

@@ -76,7 +76,9 @@ public class FriendlyUrlHistoryResourceImpl
 		if (layoutPageTemplateEntry.getType() !=
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The display page template type does not match the display " +
+					"page type");
 		}
 
 		return _toFriendlyUrlHistory(
@@ -102,7 +104,8 @@ public class FriendlyUrlHistoryResourceImpl
 		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
 			layout.isTypeUtility()) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"This page type cannot be modified through this endpoint");
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -110,7 +113,9 @@ public class FriendlyUrlHistoryResourceImpl
 				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 
 		if (layoutPageTemplateEntry != null) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The provided page external reference code belongs to a page " +
+					"template and cannot be used");
 		}
 
 		return _toFriendlyUrlHistory(layout);

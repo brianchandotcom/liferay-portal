@@ -92,6 +92,12 @@ components:
                 context:
                     additionalProperties: true
                     type: object
+                instructionDefinitionScope:
+                    enum:
+                        -   clickToChat
+                        -   cms
+                        -   everywhere
+                    type: string
                 text:
                     type: string
             type: object

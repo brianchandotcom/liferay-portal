@@ -58,6 +58,8 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 					contextUser.getUserId())
 			).input(
 				Map.of("message", message.getText())
+			).instructionDefinitionScope(
+				message.getInstructionDefinitionScopeAsString()
 			).serviceContext(
 				ServiceContextFactory.getInstance(contextHttpServletRequest)
 			).sseEventSinkKey(

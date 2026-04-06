@@ -546,8 +546,6 @@ public class MirrorsGetTask extends Task {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
-		processBuilder.inheritIO();
-
 		Process process = processBuilder.start();
 
 		process.waitFor();

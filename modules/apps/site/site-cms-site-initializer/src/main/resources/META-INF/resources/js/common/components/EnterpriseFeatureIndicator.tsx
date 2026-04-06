@@ -100,7 +100,11 @@ export default function EnterpriseFeatureIndicator({
 						rel="noopener noreferrer"
 						target="_blank"
 					>
-						{Liferay.Language.get('get-enterprise-details')}
+						<span className="d-md-inline d-none">
+							{Liferay.Language.get('get-enterprise-details')}
+
+							<ClayIcon className="ml-2" symbol="shortcut" />
+						</span>
 					</ClayLink>
 				</p>
 			</div>

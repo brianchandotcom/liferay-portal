@@ -103,9 +103,13 @@ public class FriendlyUrlHistoryResourceTest
 			friendlyURLs);
 
 		_assertProblemException(
+			"The display page template type does not match the display page " +
+				"type",
 			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
 				serviceContext));
 		_assertProblemException(
+			"The display page template type does not match the display page " +
+				"type",
 			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
 				serviceContext, WorkflowConstants.STATUS_DRAFT));
 	}
@@ -122,22 +126,30 @@ public class FriendlyUrlHistoryResourceTest
 
 		_testGetSiteSitePageFriendlyUrlHistory(layout);
 
-		_assertProblemException(layout.fetchDraftLayout());
+		_assertProblemException(
+			"This page type cannot be modified through this endpoint",
+			layout.fetchDraftLayout());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		_assertProblemException(
+			"The provided page external reference code belongs to a page " +
+				"template and cannot be used",
 			LayoutPageTemplateEntryTestUtil.
 				getBasicLayoutPageTemplateEntryLayout(serviceContext));
 		_assertProblemException(
-			LayoutPageTemplateEntryTestUtil.
-				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext));
-		_assertProblemException(
+			"The provided page external reference code belongs to a page " +
+				"template and cannot be used",
 			LayoutPageTemplateEntryTestUtil.
 				getMasterLayoutPageTemplateEntryLayout(serviceContext));
 		_assertProblemException(
+			"This page type cannot be modified through this endpoint",
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext));
+		_assertProblemException(
+			"This page type cannot be modified through this endpoint",
 			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
 				serviceContext));
 	}
@@ -200,7 +212,9 @@ public class FriendlyUrlHistoryResourceTest
 		}
 	}
 
-	private void _assertProblemException(Layout layout) throws Exception {
+	private void _assertProblemException(String expectedTitle, Layout layout)
+		throws Exception {
+
 		try {
 			friendlyUrlHistoryResource.getSiteSitePageFriendlyUrlHistory(
 				testGroup.getExternalReferenceCode(),
@@ -212,11 +226,12 @@ public class FriendlyUrlHistoryResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
+			Assert.assertEquals(expectedTitle, problem.getTitle());
 		}
 	}
 
 	private void _assertProblemException(
+			String expectedTitle,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
@@ -232,7 +247,7 @@ public class FriendlyUrlHistoryResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
+			Assert.assertEquals(expectedTitle, problem.getTitle());
 		}
 	}
 

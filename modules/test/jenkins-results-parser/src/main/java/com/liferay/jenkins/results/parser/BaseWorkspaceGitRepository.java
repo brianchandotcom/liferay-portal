@@ -773,6 +773,12 @@ public abstract class BaseWorkspaceGitRepository
 			return;
 		}
 
+		String jobName = System.getenv("JOB_NAME");
+
+		if ((jobName != null) && jobName.equals("test-portal-source-format")) {
+			return;
+		}
+
 		boolean useSnapshot = false;
 
 		if (_isDotGitDirArchiveRequired()) {

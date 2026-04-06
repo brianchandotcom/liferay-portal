@@ -255,11 +255,8 @@ const List = () => {
 					<div className='sidebar-header'>
 						<div className='autofit-row'>
 							<div className='autofit-col autofit-col-expand'>
-								<span
-									className='component-title'
-									id='clay-id-2'
-								>
-									<div className='align-items-center d-flex panel-title'>
+								<span className='component-title'>
+									<div className='align-items-center d-flex'>
 										{infoPanel?.itemData?.mimeType && (
 											<AssetIcon
 												className='mb-1 mr-2'
@@ -307,7 +304,7 @@ const List = () => {
 
 							<InfoPanelItemContent
 								items={infoPanel?.itemData?.assetTags}
-								title={Liferay.Language.get('assets')}
+								title={Liferay.Language.get('tags')}
 							/>
 						</ClayTabs.TabPane>
 					</ClayTabs.Content>

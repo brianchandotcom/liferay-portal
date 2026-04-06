@@ -8,44 +8,49 @@ import getPageDefinition from '../tests/layout-content-page-editor-web/main/util
 import getWidgetDefinition from '../tests/layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import getRandomString from './getRandomString';
 
-export type PageNode = {
-	children?: Array<PageNode>;
+export type PageNode<T = {}> = {
+	children?: Array<PageNode<T>>;
 	contentTitle?: string;
 	pageNumber: string;
 	title?: string;
 	widgets?: Array<string>;
-};
+} & T;
 
-export interface JournalContentPage {
+export type JournalContentPage<T = {}> = {
 	contentTitle: string;
 	friendlyUrlPath: string;
 	pageNumber: string;
 	title: string;
-}
+} & T;
 
-export async function createLayoutHierarchy({
-	apiHelpers,
-	pageNodes,
-	parentSitePage,
-	siteId,
-}: {
+export async function createLayoutHierarchy<T = {}>(options: {
 	apiHelpers: ApiHelpers;
-	pageNodes: Array<PageNode>;
+	pageNodes: Array<PageNode<T>>;
 	parentSitePage?: {friendlyUrlPath: string};
 	siteId: string;
-}): Promise<Array<JournalContentPage>> {
-	const layouts: Array<JournalContentPage> = [];
+}): Promise<Array<JournalContentPage<T>>> {
+	const {apiHelpers, pageNodes, parentSitePage, siteId} = options;
+	const layouts: Array<JournalContentPage<T>> = [];
 
 	for (const node of pageNodes) {
-		const widgetDefinitions = (node.widgets || []).map((widgetName) =>
+		const {
+			children,
+			contentTitle: nodeContentTitle,
+			pageNumber,
+			title: nodeTitle,
+			widgets: nodeWidgets,
+			...extraProps
+		} = node;
+
+		const widgetDefinitions = (nodeWidgets || []).map((widgetName) =>
 			getWidgetDefinition({
 				id: getRandomString(),
 				widgetName,
 			})
 		);
 
-		const title = node.title || `Page ${node.pageNumber}`;
-		const contentTitle = node.contentTitle || `Title-${node.pageNumber}`;
+		const title = nodeTitle || `Page ${pageNumber}`;
+		const contentTitle = nodeContentTitle || `Title-${pageNumber}`;
 
 		const layout = (await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: widgetDefinitions.length
@@ -56,19 +61,20 @@ export async function createLayoutHierarchy({
 			title,
 		})) as Layout & {title: string};
 
-		const journalContentPage: JournalContentPage = {
+		const journalContentPage = {
+			...(extraProps as unknown as T),
 			contentTitle,
 			friendlyUrlPath: layout.friendlyUrlPath,
-			pageNumber: node.pageNumber,
+			pageNumber,
 			title: layout.title,
-		};
+		} as JournalContentPage<T>;
 
 		layouts.push(journalContentPage);
 
-		if (node.children) {
-			const childLayouts = await createLayoutHierarchy({
+		if (children) {
+			const childLayouts = await createLayoutHierarchy<T>({
 				apiHelpers,
-				pageNodes: node.children,
+				pageNodes: children,
 				parentSitePage: {friendlyUrlPath: layout.friendlyUrlPath},
 				siteId,
 			});

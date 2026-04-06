@@ -1532,13 +1532,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			String colorSchemeId, String css)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		LayoutPermissionUtil.checkLayoutUpdatePermission(
-			getPermissionChecker(),
+			permissionChecker,
 			layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		if (Validator.isNotNull(themeId)) {
 			_pluginSettingLocalService.checkPermission(
-				getUserId(), themeId, Plugin.TYPE_THEME);
+				permissionChecker.getUserId(), themeId, Plugin.TYPE_THEME);
 		}
 
 		return layoutLocalService.updateLookAndFeel(

@@ -33,6 +33,7 @@ export {
 	displayNameInUseErrorToast,
 } from './common/utils/toastUtil';
 
+export {default as ContentEditorPreview} from './content_editor/components/ContentEditorPreview';
 export {default as ContentEditorSidePanel} from './content_editor/components/ContentEditorSidePanel';
 
 // Content Editor

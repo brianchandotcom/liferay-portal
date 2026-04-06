@@ -93,7 +93,7 @@ public class PageSpecificationResourceImpl
 				 layout.getTypeSettingsProperty(
 					 LayoutTypeSettingsConstants.KEY_PUBLISHED)))) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException("The page status is not valid");
 		}
 
 		_discardDraftLayout(layout);
@@ -124,7 +124,8 @@ public class PageSpecificationResourceImpl
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page must be a display page");
 		}
 
 		return Page.of(
@@ -155,7 +156,8 @@ public class PageSpecificationResourceImpl
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page must be a master page");
 		}
 
 		return Page.of(
@@ -181,7 +183,8 @@ public class PageSpecificationResourceImpl
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
 			!layout.isTypePortlet()) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"Only content, portlet, or asset display pages are supported");
 		}
 
 		return _pageSpecificationDTOConverter.toDTO(
@@ -217,7 +220,8 @@ public class PageSpecificationResourceImpl
 				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 				layoutPageTemplateEntry.getType())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page template type must be either basic or widget");
 		}
 
 		return Page.of(
@@ -245,7 +249,8 @@ public class PageSpecificationResourceImpl
 		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
 			layout.isTypeUtility()) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"This page type cannot be modified through this endpoint");
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -253,7 +258,9 @@ public class PageSpecificationResourceImpl
 				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 
 		if (layoutPageTemplateEntry != null) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The provided page external reference code belongs to a page " +
+					"template and cannot be used");
 		}
 
 		return Page.of(_toPageSpecifications(layout));
@@ -314,7 +321,9 @@ public class PageSpecificationResourceImpl
 					PageSpecification.Type.WIDGET_PAGE_SPECIFICATION,
 					pageSpecification.getType())) {
 
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"The page specification must be widget and be in " +
+						"approved status");
 			}
 
 			return _pageSpecificationDTOConverter.toDTO(
@@ -339,7 +348,9 @@ public class PageSpecificationResourceImpl
 				pageSpecification.getStatus(),
 				PageSpecification.Status.DRAFT)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page specification must be in draft status for content " +
+					"pages");
 		}
 
 		return _pageSpecificationDTOConverter.toDTO(
@@ -416,7 +427,8 @@ public class PageSpecificationResourceImpl
 			if (!(exception instanceof LockedLayoutException) &&
 				!(exception.getCause() instanceof LockedLayoutException)) {
 
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"The page status is not valid");
 			}
 		}
 	}
@@ -466,7 +478,8 @@ public class PageSpecificationResourceImpl
 				!Objects.equals(layout.getType(), LayoutConstants.TYPE_NODE) &&
 				!Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
 
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"Content pages must have a draft layout");
 			}
 
 			return ListUtil.fromArray(

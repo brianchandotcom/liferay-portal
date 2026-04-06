@@ -25,6 +25,7 @@ public class AgentContext {
 		_dtoConverterContext = builder._dtoConverterContext;
 		_groupId = builder._groupId;
 		_input = builder._input;
+		_instructionDefinitionScope = builder._instructionDefinitionScope;
 		_serviceContext = builder._serviceContext;
 		_sseEventSinkKey = builder._sseEventSinkKey;
 		_userId = builder._userId;
@@ -49,6 +50,10 @@ public class AgentContext {
 
 	public Map<String, Object> getInput() {
 		return _input;
+	}
+
+	public String getInstructionDefinitionScope() {
+		return _instructionDefinitionScope;
 	}
 
 	public ServiceContext getServiceContext() {
@@ -105,6 +110,14 @@ public class AgentContext {
 			return this;
 		}
 
+		public Builder instructionDefinitionScope(
+			String instructionDefinitionScope) {
+
+			_instructionDefinitionScope = instructionDefinitionScope;
+
+			return this;
+		}
+
 		public Builder serviceContext(ServiceContext serviceContext) {
 			_serviceContext = serviceContext;
 
@@ -134,6 +147,7 @@ public class AgentContext {
 		private DTOConverterContext _dtoConverterContext;
 		private long _groupId;
 		private Map<String, Object> _input;
+		private String _instructionDefinitionScope;
 		private ServiceContext _serviceContext;
 		private String _sseEventSinkKey;
 		private long _userId;
@@ -146,6 +160,7 @@ public class AgentContext {
 	private final DTOConverterContext _dtoConverterContext;
 	private final long _groupId;
 	private final Map<String, Object> _input;
+	private final String _instructionDefinitionScope;
 	private final ServiceContext _serviceContext;
 	private final String _sseEventSinkKey;
 	private final long _userId;

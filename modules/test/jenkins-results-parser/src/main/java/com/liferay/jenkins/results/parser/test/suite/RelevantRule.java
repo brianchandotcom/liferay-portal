@@ -423,6 +423,21 @@ public class RelevantRule implements Comparable<RelevantRule> {
 						Path filePath,
 						BasicFileAttributes basicFileAttributes) {
 
+						File dir = filePath.toFile();
+
+						String dirName = dir.getName();
+
+						if (dirName.equals("build") ||
+							dirName.equals("classes") ||
+							dirName.equals("node_modules") ||
+							dirName.equals("node_modules_cache") ||
+							dirName.equals("test-coverage") ||
+							dirName.equals("test-results") ||
+							dirName.startsWith(".")) {
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
 						PortalGitWorkingDirectory.Module module =
 							PortalGitWorkingDirectory.Module.getModule(
 								filePath);

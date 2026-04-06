@@ -93,6 +93,9 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 				).put(
 					"agentDefinitionExternalReferenceCode", _name
 				).put(
+					"instructionDefinitionScope",
+					_agentContext.getInstructionDefinitionScope()
+				).put(
 					"memoryId", _agentContext.getSseEventSinkKey()
 				).put(
 					"userToken", _agentContext.getUserToken()

@@ -30,7 +30,6 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.Objects;
 
@@ -59,7 +58,7 @@ public class SegmentsExperienceUtil {
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceLocalServiceUtil.addSegmentsExperience(
 				pageExperience.getExternalReferenceCode(),
-				serviceContext.getUserId(),	layout.getGroupId(),
+				serviceContext.getUserId(), layout.getGroupId(),
 				segmentsEntryReference.getExternalReferenceCode(),
 				segmentsEntryReference.getScopeExternalReferenceCode(),
 				pageExperience.getKey(), layout.getPlid(),

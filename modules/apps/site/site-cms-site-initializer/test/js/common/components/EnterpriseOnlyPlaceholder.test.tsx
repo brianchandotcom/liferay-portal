@@ -69,7 +69,7 @@ describe('EnterpriseOnlyPlaceholder', () => {
 		expect(detailsLink).toBeInTheDocument();
 		expect(detailsLink).toHaveAttribute(
 			'href',
-			'https://www.liferay.com/en/contact-sales'
+			'https://www.liferay.com/web/lr/cms-upgrade'
 		);
 	});
 });

@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -1003,9 +1004,48 @@ public class EditableFragmentEntryProcessorTest {
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_image.html");
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.getSiteDefault(), "Test Article"
+		).build();
+
+		StringBundler sb = new StringBundler(16);
+
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
+
+		sb.append("<?xml version=\"1.0\"?>  ");
+		sb.append("<root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"> \t");
+		sb.append("<dynamic-element name=\"smallImage\" ");
+		sb.append("type=\"image\" index-type=\"keyword\" ");
+		sb.append("instance-id=\"lvsi\"> \t\t");
+		sb.append("<dynamic-content language-id=\"en_US\">");
+		sb.append("<![CDATA[{\"classPK\":\"");
+		sb.append(fileEntry.getFileEntryId());
+		sb.append("\",\"groupId\":\"");
+		sb.append(fileEntry.getGroupId());
+		sb.append("\",\"title\":\"");
+		sb.append(fileEntry.getTitle());
+		sb.append("\",\"type\":\"document\",\"uuid\":\"");
+		sb.append(fileEntry.getUuid());
+		sb.append("\"}]]></dynamic-content> \t</dynamic-element> </root>");
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			"smallImage", "string", "text", true,
+			DDMFormFieldTypeConstants.IMAGE,
+			new Locale[] {LocaleUtil.getSiteDefault()},
+			LocaleUtil.getSiteDefault());
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+			LocaleUtil.getSiteDefault(),
+			ServiceContextTestUtil.getServiceContext());
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			null, _serviceContext.getUserId(),
+			_serviceContext.getScopeGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, titleMap, null,
+			sb.toString(), ddmStructure.getStructureId(), null,
+			_serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(

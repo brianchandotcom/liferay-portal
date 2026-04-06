@@ -65,6 +65,9 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 
 							<%
 							for (long duration : _sort(passwordPoliciesConfiguration.minimumAgeDurations())) {
+								if (duration == 0) {
+									continue;
+								}
 							%>
 
 								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
@@ -81,6 +84,9 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 
 						<%
 						for (long duration : _sort(passwordPoliciesConfiguration.resetTicketMaxAgeDurations())) {
+							if (duration == 0) {
+								continue;
+							}
 						%>
 
 							<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
@@ -220,6 +226,9 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 
 							<%
 							for (long duration : _sort(passwordPoliciesConfiguration.lockoutDurations())) {
+								if (duration == 0) {
+									continue;
+								}
 							%>
 
 								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />

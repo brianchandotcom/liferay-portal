@@ -204,7 +204,7 @@ test(
 				.getByRole('navigation', {name: 'Applications Menu'})
 				.locator('img')
 				.first()
-		).toHaveAttribute('src', /liferay_instance_logo/);
+		).toHaveAttribute('src', /liferay_logo/);
 
 		await expect(
 			page.getByRole('dialog').getByText('Liferay DXP', {exact: true})
@@ -215,6 +215,6 @@ test(
 				.getByRole('navigation', {name: 'Applications Menu'})
 				.locator('img')
 				.last()
-		).toHaveAttribute('src', /liferay_logo/);
+		).toHaveAttribute('src', /default_logo/);
 	}
 );

@@ -93,7 +93,7 @@ function EnterpriseModal() {
 				},
 				{
 					displayType: 'primary',
-					href: 'https://www.liferay.com/en/contact-sales',
+					href: 'https://www.liferay.com/web/lr/cms-upgrade',
 					icon: 'shortcut',
 					label: Liferay.Language.get('contact-sales'),
 				},

@@ -51,7 +51,7 @@ describe('EnterpriseFeatureIndicator', () => {
 		expect(detailsLink).toBeInTheDocument();
 		expect(detailsLink).toHaveAttribute(
 			'href',
-			'https://www.liferay.com/en/contact-sales'
+			'https://www.liferay.com/web/lr/cms-upgrade'
 		);
 
 		await userEvent.unhover(screen.getByText('enterprise'), {delay: null});

@@ -23,6 +23,7 @@ import com.google.pubsub.v1.TopicName;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.service.ProvisioningHubService;
 
 import java.io.ByteArrayInputStream;
 
@@ -131,12 +132,12 @@ public class MarketplaceTopicSubscriber {
 					).setMaximumBackoff(
 						Duration.newBuilder(
 						).setSeconds(
-							1800
+							600
 						).build()
 					).setMinimumBackoff(
 						Duration.newBuilder(
 						).setSeconds(
-							600
+							60
 						).build()
 					).build()
 				).setTopic(
@@ -148,7 +149,8 @@ public class MarketplaceTopicSubscriber {
 		Subscriber subscriber = Subscriber.newBuilder(
 			subscriptionName,
 			new MarketplaceMessageReceiver(
-				_koroneikiService, _marketplaceService, _productKeys, topicName)
+				_koroneikiService, _marketplaceService, _productKeys,
+				_provisioningHubService, topicName)
 		).setCredentialsProvider(
 			credentialsProvider
 		).build();
@@ -182,6 +184,9 @@ public class MarketplaceTopicSubscriber {
 
 	@Value("${liferay.marketplace.pubsub.gcp.project.id}")
 	private String _projectId;
+
+	@Autowired
+	private ProvisioningHubService _provisioningHubService;
 
 	@Value("${liferay.marketplace.pubsub.gcp.service.account.key}")
 	private String _serviceAccountKey;

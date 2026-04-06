@@ -24,11 +24,14 @@ import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.client.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.service.ProvisioningHubService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -55,11 +58,12 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	public MarketplaceMessageReceiver(
 		KoroneikiService koroneikiService,
 		MarketplaceService marketplaceService, List<String> productKeys,
-		String topicName) {
+		ProvisioningHubService provisioningHubService, String topicName) {
 
 		_koroneikiService = koroneikiService;
 		_marketplaceService = marketplaceService;
 		_productKeys = productKeys;
+		_provisioningHubService = provisioningHubService;
 		_topicName = topicName;
 	}
 
@@ -298,8 +302,90 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			return;
 		}
 
-		ChannelResource channelResource =
-			_marketplaceService.getChannelResource();
+		String opportunityId = _getExternalLinkValue(
+			productPurchase.getExternalLinks(), "salesforce", "opportunity");
+
+		if (opportunityId == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Opportunity ID not found to process product purchase");
+			}
+
+			return;
+		}
+
+		if (_channelId == null) {
+			synchronized (this) {
+				if (_channelId == null) {
+					ChannelResource channelResource =
+						_marketplaceService.getChannelResource();
+
+					Channel channel =
+						channelResource.getChannelByExternalReferenceCode(
+							_MARKETPLACE_CHANNEL);
+
+					_channelId = channel.getId();
+				}
+			}
+		}
+
+		String accountKey = productPurchase.getAccountKey();
+
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account account =
+			_koroneikiService.getKoroneikiAccount(accountKey);
+
+		if (Validator.isNotNull(
+				_getExternalLinkValue(
+					account.getExternalLinks(), "salesforce", "project"))) {
+
+			accountKey = account.getParentAccountKey();
+		}
+
+		OrderResource orderResource = _marketplaceService.getOrderResource();
+
+		Order order;
+
+		try {
+			order = orderResource.getOrderByExternalReferenceCode(
+				opportunityId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			String finalAccountKey = accountKey;
+
+			order = orderResource.postOrder(
+				new Order() {
+					{
+						setAccountExternalReferenceCode(() -> finalAccountKey);
+						setChannelId(() -> _channelId);
+						setCurrencyCode(() -> "USD");
+						setExternalReferenceCode(() -> opportunityId);
+						setOrderItems(
+							() -> new OrderItem[] {
+								new OrderItem() {
+									{
+										setQuantity(
+											() -> new BigDecimal(
+												productPurchase.getQuantity()));
+										setSkuExternalReferenceCode(
+											() -> _getSkuExternalReferenceCode(
+												productPurchase.getProduct()));
+									}
+								}
+							});
+						setOrderTypeExternalReferenceCode(() -> "ADDONS");
+					}
+				});
+		}
+
+		_provisioningHubService.provision(order, productPurchase);
+
+		_marketplaceService.updateOrder(
+			null, order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
+	}
 
 	private Account _syncAccount(
 			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
@@ -439,6 +525,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	private final KoroneikiService _koroneikiService;
 	private final MarketplaceService _marketplaceService;
 	private final List<String> _productKeys;
+	private final ProvisioningHubService _provisioningHubService;
 	private final String _topicName;
 
 }

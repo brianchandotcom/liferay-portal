@@ -118,9 +118,10 @@ public class SegmentsExperienceUtil {
 
 		if (segmentsExperiencePriority != segmentsExperience.getPriority()) {
 			segmentsExperience =
-				SegmentsExperienceLocalServiceUtil.updateSegmentsExperiencePriority(
-					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperiencePriority);
+				SegmentsExperienceLocalServiceUtil.
+					updateSegmentsExperiencePriority(
+						segmentsExperience.getSegmentsExperienceId(),
+						segmentsExperiencePriority);
 		}
 
 		SegmentsEntryReference segmentsEntryReference =

@@ -24,6 +24,7 @@ dependencies {
 	implementation group: "com.google.auth", name: "google-auth-library-oauth2-http", version: "1.31.0"
 	implementation group: "com.google.cloud", name: "google-cloud-pubsub", version: "1.137.0"
 	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot3", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.headless.admin.address.client", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.headless.admin.user.client", version: "4.0.76"
 	implementation group: "com.liferay", name: "com.liferay.headless.portal.instances.client", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.notification.rest.client", version: "latest.release"

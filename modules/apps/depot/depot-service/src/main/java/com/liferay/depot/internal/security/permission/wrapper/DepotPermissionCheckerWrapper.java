@@ -364,20 +364,28 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true);
 	}
 
+	private boolean _isDepotGroupAdmin(Group group) throws PortalException {
+		if ((group != null) && group.isDepot() &&
+			isGroupAdmin(group.getGroupId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isDepotGroupAdmin(long groupId) throws PortalException {
 		if (groupId != 0) {
-			return isGroupAdmin(groupId);
+			return _isDepotGroupAdmin(_groupLocalService.fetchGroup(groupId));
 		}
 
 		List<UserGroupRole> userGroupRoles =
 			_userGroupRoleLocalService.getUserGroupRoles(getUserId());
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			Group group = _groupLocalService.fetchGroup(
-				userGroupRole.getGroupId());
-
-			if ((group != null) && group.isDepot() &&
-				isGroupAdmin(group.getGroupId())) {
+			if (_isDepotGroupAdmin(
+					_groupLocalService.fetchGroup(
+						userGroupRole.getGroupId()))) {
 
 				return true;
 			}

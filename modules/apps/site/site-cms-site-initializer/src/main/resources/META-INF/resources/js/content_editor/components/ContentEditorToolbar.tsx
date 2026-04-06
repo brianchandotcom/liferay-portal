@@ -8,6 +8,7 @@ import '../../../css/content_editor/ContentEditorToolbar.scss';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import {sessionStorage, sub} from 'frontend-js-web';
@@ -141,7 +142,24 @@ export default function ContentEditorToolbar({
 				</>
 			)}
 
-			<Toolbar.Item>
+			{Liferay.FeatureFlags['LPD-44507'] ? (
+				<Toolbar.Item className="nav-divider-end">
+					<ClayButton
+						className="c-mr-3"
+						displayType="secondary"
+						size="sm"
+					>
+						<ClayIcon
+							className="inline-item inline-item-before"
+							symbol="view"
+						/>
+
+						{Liferay.Language.get('preview')}
+					</ClayButton>
+				</Toolbar.Item>
+			) : null}
+
+			<Toolbar.Item className="c-pl-0">
 				<ClayLink
 					aria-label={Liferay.Language.get('cancel')}
 					borderless

@@ -307,7 +307,4 @@ public class AnalyticsRestController extends BaseRestController {
 	@Autowired
 	private KoroneikiService _koroneikiService;
 
-	@Autowired
-	private MarketplaceService _marketplaceService;
-
 }

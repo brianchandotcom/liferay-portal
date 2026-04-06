@@ -4,6 +4,7 @@
  */
 
 import {openModal, openToast} from 'frontend-js-components-web';
+import {navigate} from 'frontend-js-web';
 
 import {FDS_EVENT_UPDATE_DISPLAY} from '../../constants';
 import DesignLibraryService from '../../services/DesignLibraryService';
@@ -13,13 +14,15 @@ export default function confirmAndDeleteEntryAction({
 	dataSetId,
 	deleteAction,
 	loadData,
+	redirect,
 	successMessage,
 	title,
 }: {
 	bodyHTML: string;
 	dataSetId?: string;
 	deleteAction: {href: string; method: string};
-	loadData: () => void;
+	loadData?: () => void;
+	redirect?: string;
 	successMessage: string;
 	title: string;
 }) {
@@ -50,12 +53,16 @@ export default function confirmAndDeleteEntryAction({
 							type: 'success',
 						});
 
-						loadData();
+						loadData?.();
 
 						if (dataSetId) {
 							Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
 								id: dataSetId,
 							});
+						}
+
+						if (redirect) {
+							navigate(redirect);
 						}
 					}
 					catch (error: any) {

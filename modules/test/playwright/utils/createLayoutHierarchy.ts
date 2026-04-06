@@ -10,9 +10,18 @@ import getRandomString from './getRandomString';
 
 export type PageNode = {
 	children?: Array<PageNode>;
-	title: string;
+	contentTitle?: string;
+	pageNumber: string;
+	title?: string;
 	widgets?: Array<string>;
 };
+
+export interface JournalContentPage {
+	contentTitle: string;
+	friendlyUrlPath: string;
+	pageNumber: string;
+	title: string;
+}
 
 export async function createLayoutHierarchy({
 	apiHelpers,
@@ -24,8 +33,8 @@ export async function createLayoutHierarchy({
 	pageNodes: Array<PageNode>;
 	parentSitePage?: {friendlyUrlPath: string};
 	siteId: string;
-}): Promise<Array<any>> {
-	const layouts: Array<any> = [];
+}): Promise<Array<JournalContentPage>> {
+	const layouts: Array<JournalContentPage> = [];
 
 	for (const node of pageNodes) {
 		const widgetDefinitions = (node.widgets || []).map((widgetName) =>
@@ -35,16 +44,26 @@ export async function createLayoutHierarchy({
 			})
 		);
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
+		const title = node.title || `Page ${node.pageNumber}`;
+		const contentTitle = node.contentTitle || `Title-${node.pageNumber}`;
+
+		const layout = (await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: widgetDefinitions.length
 				? getPageDefinition(widgetDefinitions)
 				: undefined,
 			parentSitePage,
 			siteId,
-			title: node.title,
-		});
+			title,
+		})) as Layout & {title: string};
 
-		layouts.push(layout);
+		const journalContentPage: JournalContentPage = {
+			contentTitle,
+			friendlyUrlPath: layout.friendlyUrlPath,
+			pageNumber: node.pageNumber,
+			title: layout.title,
+		};
+
+		layouts.push(journalContentPage);
 
 		if (node.children) {
 			const childLayouts = await createLayoutHierarchy({

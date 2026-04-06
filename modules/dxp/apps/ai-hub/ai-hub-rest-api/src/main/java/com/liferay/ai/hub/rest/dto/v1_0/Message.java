@@ -89,6 +89,51 @@ public class Message implements Serializable {
 	private Supplier<Chat> _chatSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getChatbotExternalReferenceCode() {
+		if (_chatbotExternalReferenceCodeSupplier != null) {
+			chatbotExternalReferenceCode =
+				_chatbotExternalReferenceCodeSupplier.get();
+
+			_chatbotExternalReferenceCodeSupplier = null;
+		}
+
+		return chatbotExternalReferenceCode;
+	}
+
+	public void setChatbotExternalReferenceCode(
+		String chatbotExternalReferenceCode) {
+
+		this.chatbotExternalReferenceCode = chatbotExternalReferenceCode;
+
+		_chatbotExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setChatbotExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			chatbotExternalReferenceCodeUnsafeSupplier) {
+
+		_chatbotExternalReferenceCodeSupplier = () -> {
+			try {
+				return chatbotExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String chatbotExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _chatbotExternalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getContext() {
 		if (_contextSupplier != null) {
@@ -206,6 +251,22 @@ public class Message implements Serializable {
 			sb.append("\"chat\": ");
 
 			sb.append(String.valueOf(chat));
+		}
+
+		String chatbotExternalReferenceCode = getChatbotExternalReferenceCode();
+
+		if (chatbotExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"chatbotExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(chatbotExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Map<String, ?> context = getContext();

@@ -54,6 +54,20 @@ public class MessageSerDes {
 			sb.append(String.valueOf(message.getChat()));
 		}
 
+		if (message.getChatbotExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"chatbotExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(message.getChatbotExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (message.getContext() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -103,6 +117,15 @@ public class MessageSerDes {
 			map.put("chat", String.valueOf(message.getChat()));
 		}
 
+		if (message.getChatbotExternalReferenceCode() == null) {
+			map.put("chatbotExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"chatbotExternalReferenceCode",
+				String.valueOf(message.getChatbotExternalReferenceCode()));
+		}
+
 		if (message.getContext() == null) {
 			map.put("context", null);
 		}
@@ -137,6 +160,11 @@ public class MessageSerDes {
 			if (Objects.equals(jsonParserFieldName, "chat")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "chatbotExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "context")) {
 				return true;
 			}
@@ -156,6 +184,14 @@ public class MessageSerDes {
 				if (jsonParserFieldValue != null) {
 					message.setChat(
 						ChatSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "chatbotExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					message.setChatbotExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "context")) {

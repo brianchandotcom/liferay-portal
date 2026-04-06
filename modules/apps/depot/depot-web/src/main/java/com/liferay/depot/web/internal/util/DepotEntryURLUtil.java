@@ -8,6 +8,7 @@ package com.liferay.depot.web.internal.util;
 import com.liferay.depot.constants.DepotPortletKeys;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -81,12 +82,14 @@ public class DepotEntryURLUtil {
 	}
 
 	public static PortletURL getEditDepotEntryPortletURL(
-		DepotEntry depotEntry, String redirect,
-		LiferayPortletRequest liferayPortletRequest) {
+			DepotEntry depotEntry, String redirect,
+			LiferayPortletRequest liferayPortletRequest)
+		throws PortalException {
 
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, DepotPortletKeys.DEPOT_ADMIN,
+				liferayPortletRequest.getHttpServletRequest(),
+				depotEntry.getGroup(), DepotPortletKeys.DEPOT_ADMIN, 0, 0,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/depot/edit_depot_entry"

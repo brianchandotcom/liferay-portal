@@ -656,15 +656,6 @@
 								<property name="skip.node.task" value="true" />
 							</then>
 						</if>
-
-						<if>
-							<not>
-								<matches pattern="modules/test/playwright" string="${baseline.current.branch.file.names}" />
-							</not>
-							<then>
-								<property name="skip.playwright.task" value="true" />
-							</then>
-						</if>
 					</then>
 					<else>
 						<if>
@@ -777,15 +768,6 @@
 							</and>
 							<then>
 								<gradle-execute dir="${project.dir}/modules" task=":portalYarnCheckFormat" />
-
-								<if>
-									<not>
-										<isset property="skip.playwright.task" />
-									</not>
-									<then>
-										<gradle-execute dir="${project.dir}/modules/test/playwright" task="packageRunCheckFormat" />
-									</then>
-								</if>
 							</then>
 							<else>
 								<if>
@@ -802,15 +784,6 @@
 									<else>
 										<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat" />
 									</else>
-								</if>
-
-								<if>
-									<not>
-										<isset property="skip.playwright.task" />
-									</not>
-									<then>
-										<gradle-execute dir="${project.dir}/modules/test/playwright" task="packageRunFormat" />
-									</then>
 								</if>
 							</else>
 						</if>

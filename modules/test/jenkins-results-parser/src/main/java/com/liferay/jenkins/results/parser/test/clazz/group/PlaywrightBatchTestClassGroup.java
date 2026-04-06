@@ -773,8 +773,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			try {
-				_callNPMCommand(playwrightBaseDir, "npm install");
-
 				String result = _callNPMCommand(
 					playwrightBaseDir,
 					"npm run playwright test -- --list --reporter=json");

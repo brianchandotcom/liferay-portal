@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.info.item.provider.DDMTemplateInfoItemFi
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -18,6 +19,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,19 +34,18 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 	implements DDMTemplateInfoItemFieldSetProvider {
 
 	@Override
-	public InfoFieldSet getInfoItemFieldSet(long ddmStructureId)
+	public InfoFieldSet getInfoItemFieldSet(long ddmStructureId, long groupId)
 		throws NoSuchStructureException {
 
 		try {
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
+			List<DDMTemplate> ddmTemplates = _getTemplates(
+				_ddmStructureLocalService.getDDMStructure(ddmStructureId),
+				groupId);
 
 			return InfoFieldSet.builder(
 			).infoFieldSetEntry(
 				unsafeConsumer -> {
-					for (DDMTemplate ddmTemplate :
-							ddmStructure.getTemplates()) {
-
+					for (DDMTemplate ddmTemplate : ddmTemplates) {
 						unsafeConsumer.accept(
 							InfoField.builder(
 							).infoFieldType(
@@ -83,7 +85,22 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 			templateKey.replaceAll("\\W", "_");
 	}
 
+	private List<DDMTemplate> _getTemplates(
+		DDMStructure ddmStructure, long groupId) {
+
+		if (groupId == 0) {
+			return ddmStructure.getTemplates();
+		}
+
+		return _ddmTemplateLocalService.getTemplatesByClassPK(
+			new long[] {ddmStructure.getGroupId(), groupId},
+			ddmStructure.getStructureId());
+	}
+
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

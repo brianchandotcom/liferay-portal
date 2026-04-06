@@ -7,6 +7,8 @@ package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.headless.admin.address.client.dto.v1_0.Country;
+import com.liferay.headless.admin.address.client.resource.v1_0.CountryResource;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
@@ -240,6 +242,12 @@ public class MarketplaceService extends BaseService {
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
+	}
+
+	public Country getCountryByA2(String a2) throws Exception {
+		CountryResource countryResource = _getCountryResource();
+
+		return countryResource.getCountryByA2(a2);
 	}
 
 	public CurrencyResource getCurrencyResource() throws Exception {
@@ -794,6 +802,17 @@ public class MarketplaceService extends BaseService {
 		}
 
 		return new JSONObject();
+	}
+
+	private CountryResource _getCountryResource() throws Exception {
+		return CountryResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
 	}
 
 	private ProductSpecificationResource _getProductSpecificationResource()

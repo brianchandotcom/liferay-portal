@@ -1181,7 +1181,7 @@ public class LayoutUtil {
 
 			for (SegmentsExperience segmentsExperience :
 					SegmentsExperienceLocalServiceUtil.getSegmentsExperiences(
-						layout.getGroupId(), layout.getPlid(), true)) {
+						layout.getGroupId(), layout.getPlid())) {
 
 				originalSegmentsExperiencesMap.put(
 					segmentsExperience.getExternalReferenceCode(),

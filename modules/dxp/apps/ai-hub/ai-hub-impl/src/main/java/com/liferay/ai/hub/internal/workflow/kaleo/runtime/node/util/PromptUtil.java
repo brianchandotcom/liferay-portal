@@ -79,7 +79,7 @@ public class PromptUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(StringPool.DASH);
+		sb.append("- ");
 
 		if (Validator.isNotNull(occasion)) {
 			sb.append(StringUtil.removeLast(occasion, StringPool.PERIOD));

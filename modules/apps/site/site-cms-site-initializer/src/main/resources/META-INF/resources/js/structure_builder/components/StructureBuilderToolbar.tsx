@@ -252,7 +252,6 @@ function PublishButton() {
 
 	return (
 		<AsyncButton
-			className="d-flex"
 			displayType="primary"
 			label={Liferay.Language.get('publish')}
 			onClick={onPublish}

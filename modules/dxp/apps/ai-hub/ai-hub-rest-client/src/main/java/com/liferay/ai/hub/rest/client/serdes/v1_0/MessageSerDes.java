@@ -64,6 +64,18 @@ public class MessageSerDes {
 			sb.append(_toJSON(message.getContext()));
 		}
 
+		if (message.getInstructionDefinitionScope() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"instructionDefinitionScope\": ");
+
+			sb.append("\"");
+			sb.append(message.getInstructionDefinitionScope());
+			sb.append("\"");
+		}
+
 		if (message.getText() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -110,6 +122,15 @@ public class MessageSerDes {
 			map.put("context", String.valueOf(message.getContext()));
 		}
 
+		if (message.getInstructionDefinitionScope() == null) {
+			map.put("instructionDefinitionScope", null);
+		}
+		else {
+			map.put(
+				"instructionDefinitionScope",
+				String.valueOf(message.getInstructionDefinitionScope()));
+		}
+
 		if (message.getText() == null) {
 			map.put("text", null);
 		}
@@ -140,6 +161,11 @@ public class MessageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "context")) {
 				return true;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "instructionDefinitionScope")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "text")) {
 				return false;
 			}
@@ -161,6 +187,15 @@ public class MessageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "context")) {
 				if (jsonParserFieldValue != null) {
 					message.setContext((Map<String, ?>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "instructionDefinitionScope")) {
+
+				if (jsonParserFieldValue != null) {
+					message.setInstructionDefinitionScope(
+						Message.InstructionDefinitionScope.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "text")) {

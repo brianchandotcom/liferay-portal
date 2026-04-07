@@ -41,6 +41,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.AbstractMap;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
@@ -51,7 +52,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -162,10 +162,10 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		Map<Node, Collection<Edge>> edgeMap = new LinkedHashMap<>();
 
-		Queue<Map.Entry<Long, List<Long>>> queue = new LinkedList<>(
+		ArrayDeque<Map.Entry<Long, List<Long>>> queue = new ArrayDeque<>(
 			map.entrySet());
 
-		while (queue.size() > 0) {
+		while (!queue.isEmpty()) {
 			Map.Entry<Long, List<Long>> queueEntry = queue.poll();
 
 			long childClassNameId = queueEntry.getKey();
@@ -475,7 +475,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		for (Edge edge : resolvedEdges) {
 			Collection<Node> children = nodeMap.computeIfAbsent(
-				edge.getFromNode(), node -> new LinkedHashSet<>());
+				edge.getFromNode(), node -> new ArrayList<>());
 
 			Node toNode = edge.getToNode();
 

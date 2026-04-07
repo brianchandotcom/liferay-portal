@@ -17,9 +17,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -29,7 +32,9 @@ import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.NoSuchWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -38,11 +43,16 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
+
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Map;
@@ -201,74 +211,180 @@ public class AgentDefinitionResourceTest
 	public void testPostAgentDefinitionByExternalReferenceCodeCopy()
 		throws Exception {
 
-		ObjectEntry objectEntry1 = _objectEntryManager.getObjectEntry(
-			TestPropsValues.getCompanyId(), _dtoConverterContext,
-			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
-			_getObjectDefinition(), null);
-		WorkflowDefinition workflowDefinition1 =
-			_workflowDefinitionManager.getLatestWorkflowDefinition(
-				TestPropsValues.getCompanyId(),
-				WorkflowDefinitionConstants.NAME_CHANGE_TONE);
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)_objectEntryManager;
 
-		AgentDefinition agentDefinition =
-			agentDefinitionResource.
-				postAgentDefinitionByExternalReferenceCodeCopy(
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
+				new NestedFieldsContext(
+					1, List.of("agentDefinitionsToContentRetrievers")));
+
+		try {
+			ObjectEntry objectEntry1 =
+				defaultObjectEntryManager.partialUpdateObjectEntry(
+					TestPropsValues.getCompanyId(), _dtoConverterContext,
 					WorkflowDefinitionConstants.
-						EXTERNAL_REFERENCE_CODE_CHANGE_TONE);
+						EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
+					_getObjectDefinition(),
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"agentDefinitionsToContentRetrievers",
+								List.of(
+									HashMapBuilder.<String, Object>put(
+										"crawlDate",
+										() -> {
+											OffsetDateTime offsetDateTime =
+												OffsetDateTime.now(
+												).withNano(
+													0
+												);
 
-		ObjectEntry objectEntry2 = _objectEntryManager.getObjectEntry(
-			TestPropsValues.getCompanyId(), _dtoConverterContext,
-			agentDefinition.getExternalReferenceCode(), _getObjectDefinition(),
-			null);
+											return offsetDateTime.format(
+												DateTimeFormatter.
+													ISO_OFFSET_DATE_TIME);
+										}
+									).put(
+										"description_i18n",
+										JSONUtil.put(
+											"en_US",
+											StringUtil.toLowerCase(
+												RandomTestUtil.randomString()))
+									).put(
+										"externalReferenceCode",
+										StringUtil.toLowerCase(
+											RandomTestUtil.randomString())
+									).put(
+										"indexName",
+										StringUtil.toLowerCase(
+											RandomTestUtil.randomString())
+									).put(
+										"r_accountToAIHubContentRetrievers_" +
+											"accountEntryId",
+										_accountEntry.getAccountEntryId()
+									).put(
+										"title_i18n",
+										JSONUtil.put(
+											"en_US",
+											StringUtil.toLowerCase(
+												RandomTestUtil.randomString()))
+									).put(
+										"type",
+										StringUtil.toLowerCase(
+											RandomTestUtil.randomString())
+									).put(
+										"url",
+										StringUtil.toLowerCase(
+											RandomTestUtil.randomString())
+									).build())
+							).build();
+						}
+					},
+					null);
 
-		Assert.assertEquals(
-			objectEntry1.getPropertyValue("active"),
-			objectEntry2.getPropertyValue("active"));
-		Assert.assertEquals(
-			objectEntry1.getPropertyValue("description"),
-			objectEntry2.getPropertyValue("description"));
-		Assert.assertNotEquals(
-			objectEntry1.getPropertyValue("externalReferenceCode"),
-			objectEntry2.getPropertyValue("externalReferenceCode"));
-		Assert.assertEquals(
-			objectEntry1.getPropertyValue("inputVariables"),
-			objectEntry2.getPropertyValue("inputVariables"));
-		Assert.assertEquals(
-			objectEntry1.getPropertyValue("outputVariable"),
-			objectEntry2.getPropertyValue("outputVariable"));
-		Assert.assertEquals(
-			_accountEntry.getAccountEntryId(),
-			objectEntry2.getPropertyValue(
-				"r_accountToAIHubAgentDefinitions_accountEntryId"));
-		Assert.assertNotEquals(
-			objectEntry1.getPropertyValue("title_i18n"),
-			objectEntry2.getPropertyValue("title_i18n"));
-		Assert.assertNotEquals(
-			objectEntry1.getPropertyValue("workflowDefinitionName"),
-			objectEntry2.getPropertyValue("workflowDefinitionName"));
+			AgentDefinition agentDefinition =
+				agentDefinitionResource.
+					postAgentDefinitionByExternalReferenceCodeCopy(
+						WorkflowDefinitionConstants.
+							EXTERNAL_REFERENCE_CODE_CHANGE_TONE);
 
-		WorkflowDefinition workflowDefinition2 =
-			_workflowDefinitionManager.getWorkflowDefinition(
-				TestPropsValues.getCompanyId(),
-				agentDefinition.getWorkflowDefinitionName(), 1);
+			ObjectEntry objectEntry2 = _objectEntryManager.getObjectEntry(
+				TestPropsValues.getCompanyId(), _dtoConverterContext,
+				agentDefinition.getExternalReferenceCode(),
+				_getObjectDefinition(), null);
 
-		Assert.assertEquals(
-			workflowDefinition1.getContentAsXML(),
-			workflowDefinition2.getContentAsXML());
-		Assert.assertEquals(
-			workflowDefinition1.getDescription(),
-			workflowDefinition2.getDescription());
-		Assert.assertNotEquals(
-			workflowDefinition1.getExternalReferenceCode(),
-			workflowDefinition2.getExternalReferenceCode());
-		Assert.assertEquals(
-			_accountEntry.getAccountEntryGroupId(),
-			workflowDefinition2.getGroupId());
-		Assert.assertNotEquals(
-			workflowDefinition1.getName(), workflowDefinition2.getName());
-		Assert.assertNotEquals(
-			workflowDefinition1.getWorkflowDefinitionId(),
-			workflowDefinition2.getWorkflowDefinitionId());
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("active"),
+				objectEntry2.getPropertyValue("active"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("description"),
+				objectEntry2.getPropertyValue("description"));
+			Assert.assertNotEquals(
+				objectEntry1.getPropertyValue("externalReferenceCode"),
+				objectEntry2.getPropertyValue("externalReferenceCode"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("inputVariables"),
+				objectEntry2.getPropertyValue("inputVariables"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("outputVariable"),
+				objectEntry2.getPropertyValue("outputVariable"));
+			Assert.assertEquals(
+				_accountEntry.getAccountEntryId(),
+				objectEntry2.getPropertyValue(
+					"r_accountToAIHubAgentDefinitions_accountEntryId"));
+			Assert.assertNotEquals(
+				objectEntry1.getPropertyValue("title_i18n"),
+				objectEntry2.getPropertyValue("title_i18n"));
+			Assert.assertNotEquals(
+				objectEntry1.getPropertyValue("workflowDefinitionName"),
+				objectEntry2.getPropertyValue("workflowDefinitionName"));
+
+			ObjectEntry[] objectEntries1 =
+				(ObjectEntry[])objectEntry1.getPropertyValue(
+					"agentDefinitionsToContentRetrievers");
+
+			objectEntry1 = objectEntries1[0];
+
+			ObjectEntry[] objectEntries2 =
+				(ObjectEntry[])objectEntry2.getPropertyValue(
+					"agentDefinitionsToContentRetrievers");
+
+			objectEntry2 = objectEntries2[0];
+
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("crawlDate"),
+				objectEntry2.getPropertyValue("crawlDate"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("description_i18n"),
+				objectEntry2.getPropertyValue("description_i18n"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("externalReferenceCode"),
+				objectEntry2.getPropertyValue("externalReferenceCode"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("indexName"),
+				objectEntry2.getPropertyValue("indexName"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("title_i18n"),
+				objectEntry2.getPropertyValue("title_i18n"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("type"),
+				objectEntry2.getPropertyValue("type"));
+			Assert.assertEquals(
+				objectEntry1.getPropertyValue("url"),
+				objectEntry2.getPropertyValue("url"));
+
+			WorkflowDefinition workflowDefinition1 =
+				_workflowDefinitionManager.getLatestWorkflowDefinition(
+					TestPropsValues.getCompanyId(),
+					WorkflowDefinitionConstants.NAME_CHANGE_TONE);
+
+			WorkflowDefinition workflowDefinition2 =
+				_workflowDefinitionManager.getWorkflowDefinition(
+					TestPropsValues.getCompanyId(),
+					agentDefinition.getWorkflowDefinitionName(), 1);
+
+			Assert.assertEquals(
+				workflowDefinition1.getContentAsXML(),
+				workflowDefinition2.getContentAsXML());
+			Assert.assertEquals(
+				workflowDefinition1.getDescription(),
+				workflowDefinition2.getDescription());
+			Assert.assertNotEquals(
+				workflowDefinition1.getExternalReferenceCode(),
+				workflowDefinition2.getExternalReferenceCode());
+			Assert.assertEquals(
+				_accountEntry.getAccountEntryGroupId(),
+				workflowDefinition2.getGroupId());
+			Assert.assertNotEquals(
+				workflowDefinition1.getName(), workflowDefinition2.getName());
+			Assert.assertNotEquals(
+				workflowDefinition1.getWorkflowDefinitionId(),
+				workflowDefinition2.getWorkflowDefinitionId());
+		}
+		finally {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				nestedFieldsContext);
+		}
 	}
 
 	@Override
@@ -527,6 +643,9 @@ public class AgentDefinitionResourceTest
 
 	@Inject(filter = "object.entry.manager.storage.type=default")
 	private ObjectEntryManager _objectEntryManager;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

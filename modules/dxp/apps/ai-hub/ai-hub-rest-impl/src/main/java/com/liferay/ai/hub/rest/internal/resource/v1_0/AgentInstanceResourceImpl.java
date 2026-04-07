@@ -7,12 +7,15 @@ package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.dto.v1_0.AgentInstance;
-import com.liferay.ai.hub.rest.internal.resource.v1_0.util.WorkflowContextUtil;
 import com.liferay.ai.hub.rest.manager.v1_0.AgentDefinitionManager;
 import com.liferay.ai.hub.rest.resource.v1_0.AgentInstanceResource;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
@@ -78,22 +81,37 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 				agentDefinition.getWorkflowDefinitionName());
 
 		Map<String, Serializable> workflowContext =
-			WorkflowContextUtil.toWorkflowContext(
-				agentInstance.getContext(), contextHttpServletRequest,
-				agentInstance.getSseEventSinkKey());
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
+				ServiceContextFactory.getInstance(contextHttpServletRequest)
+			).put(
+				"accessToken",
+				contextHttpServletRequest.getHeader("Authorization")
+			).put(
+				"agentDefinitionExternalReferenceCode",
+				agentDefinition.getExternalReferenceCode()
+			).put(
+				"instructionDefinitionScope",
+				agentInstance.getInstructionDefinitionScopeAsString()
+			).put(
+				"outBoundEventName", agentDefinition.getExternalReferenceCode()
+			).put(
+				"sseEventSinkKey", agentInstance.getSseEventSinkKey()
+			).put(
+				"userToken",
+				contextHttpServletRequest.getHeader(
+					"Liferay-AI-Hub-Cell-On-Behalf-Of")
+			).build();
 
-		workflowContext.put(
-			"accessToken",
-			contextHttpServletRequest.getHeader("Authorization"));
-		workflowContext.put(
-			"agentDefinitionExternalReferenceCode",
-			agentDefinition.getExternalReferenceCode());
-		workflowContext.put(
-			"outBoundEventName", agentDefinition.getExternalReferenceCode());
-		workflowContext.put(
-			"userToken",
-			contextHttpServletRequest.getHeader(
-				"Liferay-AI-Hub-Cell-On-Behalf-Of"));
+		MapUtil.isNotEmptyForEach(
+			agentInstance.getContext(),
+			(key, value) -> {
+				if ((value instanceof Serializable serializableValue) &&
+					!workflowContext.containsKey(key)) {
+
+					workflowContext.put(key, serializableValue);
+				}
+			});
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.startWorkflowInstance(

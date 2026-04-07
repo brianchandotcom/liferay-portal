@@ -7,7 +7,6 @@ package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -45,13 +44,14 @@ public class DesignLibraryResourcesDisplayContext {
 	public Map<String, Object> getBreadcrumbProps(long designLibraryEntryId)
 		throws PortalException {
 
-		Group group = _getGroup(designLibraryEntryId);
+		Group group = DepotEntryLocalServiceUtil.fetchDepotEntry(
+			designLibraryEntryId
+		).getGroup();
 
 		return HashMapBuilder.<String, Object>put(
 			"actionItems", _getActionItemsJSONArray(group)
 		).put(
-			"breadcrumbItems",
-			_getBreadcrumbItemsJSONArray(group)
+			"breadcrumbItems", _getBreadcrumbItemsJSONArray(group)
 		).build();
 	}
 
@@ -81,7 +81,9 @@ public class DesignLibraryResourcesDisplayContext {
 				"link"));
 	}
 
-	private JSONArray _getActionItemsJSONArray(Group group) throws PortalException {
+	private JSONArray _getActionItemsJSONArray(Group group)
+		throws PortalException {
+
 		return JSONUtil.putAll(
 			JSONUtil.put(
 				"href", "#settings"
@@ -124,20 +126,18 @@ public class DesignLibraryResourcesDisplayContext {
 				"symbolLeft", "export"
 			),
 			JSONUtil.put(
-				"href",
-				StringBundler.concat(
-					"/o/headless-asset-library/v1.0",
-					"/asset-libraries/",
-					group.getExternalReferenceCode())
-			).put(
 				"descriptiveName", group.getDescriptiveName()
+			).put(
+				"href",
+				"/o/headless-asset-library/v1.0/asset-libraries/" +
+					group.getExternalReferenceCode()
+			).put(
+				"label", LanguageUtil.get(_httpServletRequest, "delete")
 			).put(
 				"redirect",
 				PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).buildString()
-			).put(
-				"label", LanguageUtil.get(_httpServletRequest, "delete")
 			).put(
 				"symbolLeft", "trash"
 			).put(
@@ -163,17 +163,8 @@ public class DesignLibraryResourcesDisplayContext {
 			).put(
 				"href", "#top"
 			).put(
-				"label",
-				group.getName(
-					_httpServletRequest.getLocale()
-				)
+				"label", group.getName(_httpServletRequest.getLocale())
 			));
-	}
-
-	private Group _getGroup(long designLibraryEntryId) throws PortalException {
-		return DepotEntryLocalServiceUtil.fetchDepotEntry(
-					designLibraryEntryId
-				).getGroup();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

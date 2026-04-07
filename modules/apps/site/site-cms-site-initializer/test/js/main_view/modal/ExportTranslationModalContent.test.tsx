@@ -12,7 +12,7 @@ import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import ExportTranslationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/ExportTranslationModalContent';
-import {exportTranslationBulkAction} from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkAction';
+import exportTranslationBulkAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkAction';
 
 const mockCloseModal = jest.fn();
 
@@ -23,7 +23,8 @@ jest.mock('frontend-js-components-web', () => ({
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkAction',
 	() => ({
-		exportTranslationBulkAction: jest.fn(() => Promise.resolve()),
+		__esModule: true,
+		default: jest.fn(() => Promise.resolve()),
 	})
 );
 

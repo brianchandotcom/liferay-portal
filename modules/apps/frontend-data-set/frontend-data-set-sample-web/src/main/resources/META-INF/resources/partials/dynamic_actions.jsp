@@ -17,16 +17,19 @@ MyUserTasksFDSDisplayContext myUserTasksFDSDisplayContext = new MyUserTasksFDSDi
 		<div class="p-2">
 			<h2>My Role Tasks</h2>
 		</div>
+
 		<frontend-data-set:headless-display
 			apiURL="<%= myRoleTasksFDSDisplayContext.getAPIURL() %>"
 			id="<%= FDSSampleFDSNames.MY_ROLE_TASKS %>"
 			style="fluid"
 		/>
 	</div>
+
 	<div class="col-md-6 fds-user-tasks">
 		<div class="p-2">
 			<h2>My User Tasks</h2>
 		</div>
+
 		<frontend-data-set:headless-display
 			apiURL="<%= myUserTasksFDSDisplayContext.getAPIURL() %>"
 			id="<%= FDSSampleFDSNames.MY_USER_TASKS %>"

@@ -79,6 +79,10 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
 
+		if (layout.getPlid() != segmentsExperience.getPlid()) {
+			throw new UnsupportedOperationException();
+		}
+
 		_segmentsExperienceResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), segmentsExperience,
 			ActionKeys.UPDATE);
@@ -134,6 +138,10 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
 
+		if (layout.getPlid() != segmentsExperience.getPlid()) {
+			throw new UnsupportedOperationException();
+		}
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -184,6 +192,10 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			_segmentsExperienceService.
 				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
+
+		if (layout.getPlid() != segmentsExperience.getPlid()) {
+			throw new UnsupportedOperationException();
+		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -236,6 +248,10 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
 
+		if (layout.getPlid() != segmentsExperience.getPlid()) {
+			throw new UnsupportedOperationException();
+		}
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -281,6 +297,10 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			_segmentsExperienceService.
 				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
+
+		if (layout.getPlid() != segmentsExperience.getPlid()) {
+			throw new UnsupportedOperationException();
+		}
 
 		_segmentsExperienceResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), segmentsExperience,
@@ -332,6 +352,10 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			_segmentsExperienceService.
 				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode, groupId);
+
+		if (layout.getPlid() != segmentsExperience.getPlid()) {
+			throw new UnsupportedOperationException();
+		}
 
 		_segmentsExperienceResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), segmentsExperience,

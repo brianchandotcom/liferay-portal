@@ -19,14 +19,30 @@ function getCustomAssetPayload({dataset}: AnalyticsType.HTMLElement) {
 		assetId: dataset.analyticsAssetId.trim(),
 	};
 
-	if (dataset.analyticsAssetTitle) {
-		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
-	}
-
 	if (dataset.analyticsAssetCategory) {
 		Object.assign(payload, {
 			category: dataset.analyticsAssetCategory.trim(),
 		});
+	}
+
+	if (dataset.analyticsAssetCategories) {
+		Object.assign(payload, {
+			assetCategories: dataset.analyticsAssetCategories.trim(),
+		});
+	}
+
+	if (dataset.analyticsAssetMimeType) {
+		Object.assign(payload, {
+			mimeType: dataset.analyticsAssetMimeType.trim(),
+		});
+	}
+
+	if (dataset.analyticsAssetTags) {
+		Object.assign(payload, {assetTags: dataset.analyticsAssetTags.trim()});
+	}
+
+	if (dataset.analyticsAssetTitle) {
+		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
 	}
 
 	return payload;

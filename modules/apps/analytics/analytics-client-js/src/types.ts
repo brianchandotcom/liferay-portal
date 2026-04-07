@@ -82,9 +82,12 @@ export namespace Analytics {
 		dataset: {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]?: Analytics.ElementAction;
+			[Analytics.DataSetList.AnalyticsAssetCategories]?: string;
 			[Analytics.DataSetList.AnalyticsAssetCategory]?: string;
 			[Analytics.DataSetList.AnalyticsAssetId]: string;
+			[Analytics.DataSetList.AnalyticsAssetMimeType]?: string;
 			[Analytics.DataSetList.AnalyticsAssetSubtype]?: string;
+			[Analytics.DataSetList.AnalyticsAssetTags]?: string;
 			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
 			[Analytics.DataSetList.AnalyticsAssetType]?: Analytics.ElementType;
 			[Analytics.DataSetList.AnalyticsAssetVersion]?: string;

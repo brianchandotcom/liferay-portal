@@ -42,6 +42,24 @@ function getFormPayload(form: AnalyticsType.HTMLElement) {
 		formId: getFormKey(form).trim(),
 	};
 
+	if (form.dataset.analyticsAssetCategories) {
+		Object.assign(payload, {
+			assetCategories: form.dataset.analyticsAssetCategories.trim(),
+		});
+	}
+
+	if (form.dataset.analyticsAssetMimeType) {
+		Object.assign(payload, {
+			mimeType: form.dataset.analyticsAssetMimeType.trim(),
+		});
+	}
+
+	if (form.dataset.analyticsAssetTags) {
+		Object.assign(payload, {
+			assetTags: form.dataset.analyticsAssetTags.trim(),
+		});
+	}
+
 	if (form.dataset.analyticsAssetTitle) {
 		Object.assign(payload, {
 			title: form.dataset.analyticsAssetTitle.trim(),

@@ -16,8 +16,24 @@ function getDocumentPayload({dataset}: AnalyticsType.HTMLElement) {
 		fileEntryId: dataset.analyticsAssetId.trim(),
 	};
 
+	if (dataset.analyticsAssetCategories) {
+		Object.assign(payload, {
+			assetCategories: dataset.analyticsAssetCategories.trim(),
+		});
+	}
+
+	if (dataset.analyticsAssetMimeType) {
+		Object.assign(payload, {
+			mimeType: dataset.analyticsAssetMimeType.trim(),
+		});
+	}
+
 	if (dataset.analyticsAssetSubtype) {
 		Object.assign(payload, {subtype: dataset.analyticsAssetSubtype.trim()});
+	}
+
+	if (dataset.analyticsAssetTags) {
+		Object.assign(payload, {assetTags: dataset.analyticsAssetTags.trim()});
 	}
 
 	if (dataset.analyticsAssetTitle) {

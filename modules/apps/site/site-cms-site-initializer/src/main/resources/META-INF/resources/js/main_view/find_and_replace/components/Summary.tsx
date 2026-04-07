@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
@@ -25,6 +24,7 @@ import {
 	useOpenDiscard,
 } from '../contexts/FindAndReplaceContext';
 import FindAndReplaceService from '../services/FindAndReplaceService';
+import {filterItemsBySearch} from '../utils/filterItemBySearch';
 import {filterItemsByLocale} from '../utils/filterItemsByLocale';
 import {getItemChanges} from '../utils/getItemChanges';
 
@@ -55,13 +55,15 @@ export function Summary() {
 	}, [allItems, localeId]);
 
 	function applyChanges() {
-		if (!items.length) {
+		const filteredItems = filterItemsBySearch(items, search);
+
+		if (!filteredItems.length) {
 			return;
 		}
 
 		FindAndReplaceService.performBulkReplace({
 			dataSetId,
-			items,
+			items: filteredItems,
 			localeId,
 			replacement,
 			search,
@@ -92,22 +94,6 @@ export function Summary() {
 					{Liferay.Language.get('review-changes')}
 				</div>
 			</ClayModal.Header>
-
-			<ClayAlert
-				containerClassName="m-0"
-				displayType="info"
-				title={Liferay.Language.get('info')}
-				variant="stripe"
-			>
-				{sub(
-					Liferay.Language.get(
-						'replacing-x-with-x-across-x-previously-selected-assets'
-					),
-					search,
-					replacement,
-					String(items.length)
-				)}
-			</ClayAlert>
 
 			<ClayModal.Body>
 				<FrontendDataSet
@@ -263,31 +249,47 @@ function ListItem({item}: {item: ReplaceItem}) {
 				</ClayList.ItemText>
 			</ClayList.ItemField>
 
-			<ClayList.ItemField>
-				<AsyncButton
-					disabled={status !== 'idle'}
-					displayType="secondary"
-					label={Liferay.Language.get('apply-changes')}
-					onClick={applyChanges}
-					status={status === 'applying' ? 'loading' : 'idle'}
-				/>
-			</ClayList.ItemField>
+			{changes === 0 ? (
+				<ClayList.ItemField>
+					<p className="m-0 text-info">
+						<ClayIcon className="mr-2" symbol="info-panel-open" />
 
-			<ClayList.ItemField>
-				<ClayButtonWithIcon
-					aria-label={sub(
-						Liferay.Language.get('discard-changes-to-x'),
-						item.title
-					)}
-					borderless
-					disabled={status !== 'idle'}
-					displayType="secondary"
-					monospaced
-					onClick={() => discard(item.id)}
-					size="sm"
-					symbol="times-circle"
-				/>
-			</ClayList.ItemField>
+						<span>
+							{Liferay.Language.get(
+								'no-exact-matches-were-found'
+							)}
+						</span>
+					</p>
+				</ClayList.ItemField>
+			) : (
+				<>
+					<ClayList.ItemField>
+						<AsyncButton
+							disabled={status !== 'idle'}
+							displayType="secondary"
+							label={Liferay.Language.get('apply-changes')}
+							onClick={applyChanges}
+							status={status === 'applying' ? 'loading' : 'idle'}
+						/>
+					</ClayList.ItemField>
+
+					<ClayList.ItemField>
+						<ClayButtonWithIcon
+							aria-label={sub(
+								Liferay.Language.get('discard-changes-to-x'),
+								item.title
+							)}
+							borderless
+							disabled={status !== 'idle'}
+							displayType="secondary"
+							monospaced
+							onClick={() => discard(item.id)}
+							size="sm"
+							symbol="times-circle"
+						/>
+					</ClayList.ItemField>
+				</>
+			)}
 		</ClayList.Item>
 	);
 }

@@ -12,6 +12,7 @@ import {sub} from 'frontend-js-web';
 import React, {Key, useContext, useState} from 'react';
 
 import {FindAndReplaceContext} from '../contexts/FindAndReplaceContext';
+import {filterItemsBySearch} from '../utils/filterItemBySearch';
 
 export function Setup() {
 	const {
@@ -23,25 +24,34 @@ export function Setup() {
 		search,
 		setLocaleId,
 		setReplacement,
+		setSearch,
 		setView,
 	} = useContext(FindAndReplaceContext);
 
-	const [hasError, setHasError] = useState(false);
+	const [hasSearchError, setHasSearchError] = useState(false);
+	const [hasReplacementError, setHasReplacementError] = useState(false);
 
-	const inputId = useId();
+	const searchInputId = useId();
+	const replacementInputId = useId();
 
 	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (!replacement) {
-			setHasError(true);
+		setHasSearchError(!search);
+		setHasReplacementError(!replacement);
 
+		if (!search || !replacement) {
 			return;
 		}
 
-		setHasError(false);
+		const filteredItems = filterItemsBySearch(items, search);
 
-		setView('summary');
+		if (!filteredItems.length) {
+			setView('no-matches');
+		}
+		else {
+			setView('summary');
+		}
 	};
 
 	return (
@@ -63,25 +73,52 @@ export function Setup() {
 						)}
 					</p>
 
-					<ClayForm.Group className={hasError ? 'has-error' : ''}>
-						<span className="font-weight-semi-bold text-3">
+					<ClayForm.Group
+						className={hasSearchError ? 'has-error' : ''}
+					>
+						<label htmlFor={searchInputId}>
 							{Liferay.Language.get('find')}
-						</span>
+						</label>
 
-						<p>{search}</p>
+						<ClayInput
+							id={searchInputId}
+							onChange={(event) => {
+								const nextValue = event.target.value;
 
-						<label htmlFor={inputId}>
+								setSearch(nextValue);
+
+								setHasSearchError(!nextValue);
+							}}
+							placeholder={Liferay.Language.get(
+								'enter-text-to-find'
+							)}
+							value={search}
+						/>
+
+						{hasSearchError ? (
+							<FieldFeedback
+								errorMessage={Liferay.Language.get(
+									'this-field-is-required'
+								)}
+							/>
+						) : null}
+					</ClayForm.Group>
+
+					<ClayForm.Group
+						className={hasReplacementError ? 'has-error' : ''}
+					>
+						<label htmlFor={replacementInputId}>
 							{Liferay.Language.get('replace-with-field-label')}
 						</label>
 
 						<ClayInput
-							id={inputId}
+							id={replacementInputId}
 							onChange={(event) => {
 								const nextValue = event.target.value;
 
 								setReplacement(nextValue);
 
-								setHasError(!nextValue);
+								setHasReplacementError(!nextValue);
 							}}
 							placeholder={Liferay.Language.get(
 								'enter-replacement-text'
@@ -89,7 +126,7 @@ export function Setup() {
 							value={replacement}
 						/>
 
-						{hasError ? (
+						{hasReplacementError ? (
 							<FieldFeedback
 								errorMessage={Liferay.Language.get(
 									'this-field-is-required'

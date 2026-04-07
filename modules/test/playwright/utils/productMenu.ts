@@ -39,7 +39,7 @@ export async function closeProductMenu(page: Page) {
 	const isClosed = async () =>
 		await productMenu.evaluate(
 			(element) =>
-				element.classList.contains('closed') ||
+				!element.classList.contains('open') &&
 				!element.classList.contains('c-slideout-show')
 		);
 
@@ -52,6 +52,8 @@ export async function closeProductMenu(page: Page) {
 			await button.click();
 
 			expect(await isClosed()).toBeTruthy();
-		}).toPass();
+		}).toPass({
+			timeout: 5000,
+		});
 	}
 }

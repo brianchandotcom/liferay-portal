@@ -150,7 +150,13 @@ const selectPickerOption = async (pickerLabel: string, optionValue: string) => {
 };
 
 describe('RulesSidebar', () => {
+	afterEach(() => {
+		Liferay.FeatureFlags['LPS-169837'] = false;
+	});
+
 	beforeEach(() => {
+		Liferay.FeatureFlags['LPS-169837'] = true;
+
 		disposeCache();
 		initializeCache();
 

@@ -86,6 +86,18 @@ public class AgentInstanceSerDes {
 			sb.append("\"");
 		}
 
+		if (agentInstance.getInstructionDefinitionScope() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"instructionDefinitionScope\": ");
+
+			sb.append("\"");
+			sb.append(agentInstance.getInstructionDefinitionScope());
+			sb.append("\"");
+		}
+
 		if (agentInstance.getSseEventSinkKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -145,6 +157,15 @@ public class AgentInstanceSerDes {
 				String.valueOf(agentInstance.getExternalReferenceCode()));
 		}
 
+		if (agentInstance.getInstructionDefinitionScope() == null) {
+			map.put("instructionDefinitionScope", null);
+		}
+		else {
+			map.put(
+				"instructionDefinitionScope",
+				String.valueOf(agentInstance.getInstructionDefinitionScope()));
+		}
+
 		if (agentInstance.getSseEventSinkKey() == null) {
 			map.put("sseEventSinkKey", null);
 		}
@@ -186,6 +207,11 @@ public class AgentInstanceSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "instructionDefinitionScope")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "sseEventSinkKey")) {
 				return false;
 			}
@@ -219,6 +245,15 @@ public class AgentInstanceSerDes {
 				if (jsonParserFieldValue != null) {
 					agentInstance.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "instructionDefinitionScope")) {
+
+				if (jsonParserFieldValue != null) {
+					agentInstance.setInstructionDefinitionScope(
+						AgentInstance.InstructionDefinitionScope.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sseEventSinkKey")) {

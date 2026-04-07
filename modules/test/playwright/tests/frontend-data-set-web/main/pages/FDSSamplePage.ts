@@ -315,7 +315,13 @@ export class FDSSamplePage {
 			.click();
 	}
 
-	async fillAndSaveWorkflowModal({comment, name}: {comment: string, name: string}) {
+	async fillAndSaveWorkflowModal({
+		comment,
+		name,
+	}: {
+		comment: string;
+		name: string;
+	}) {
 		const workflowModal = this.page.getByRole('dialog', {name});
 
 		await workflowModal.isVisible();
@@ -415,11 +421,11 @@ export class FDSSamplePage {
 	async setupFDSSampleWidget({
 		fragmentKeys = [],
 		locale = 'en',
-		site
+		site,
 	}: {
-		fragmentKeys?: Array<string>,
-		locale?: string,
-		site: Site
+		fragmentKeys?: Array<string>;
+		locale?: string;
+		site: Site;
 	}) {
 		const layout = await this.apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([

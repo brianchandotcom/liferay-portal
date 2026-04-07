@@ -6,9 +6,25 @@
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 
 export class FDSSampleApiHelpers extends ApiHelpers {
-	async createFDSSampleItem({color, date, description, externalReferenceCode, imageURL, size, title}) {
+	async createFDSSampleItem({
+		color,
+		date,
+		description,
+		externalReferenceCode,
+		imageURL,
+		size,
+		title,
+	}) {
 		const url = '/o/c/fdssamples';
-		const data = {color, date, description, externalReferenceCode, imageURL, size, title};
+		const data = {
+			color,
+			date,
+			description,
+			externalReferenceCode,
+			imageURL,
+			size,
+			title,
+		};
 
 		return this.post(url, {data});
 	}

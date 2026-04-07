@@ -50,14 +50,18 @@ import transformViewsItemsProps from './utils/transformViewsItemProps';
 import GalleryView from './views/GalleryView';
 
 /**
- * Transforms additionalAPIURLParameters to remove cmsRoot filter when searching.
+ * Transforms additionalAPIURLParameters to remove folderId filter when searching at root folder.
  * Hoisted outside component to avoid recreation
  */
-const additionalAPIURLParametersTransformer = (loadDataArgs: {
+export interface AdditionalAPIURLParametersTransformerArgs {
 	additionalAPIURLParameters: string;
+	rootFolder?: boolean;
 	searchParam: string;
-}): string | undefined => {
-	const {additionalAPIURLParameters, searchParam} = loadDataArgs;
+}
+const additionalAPIURLParametersTransformer = (
+	args: AdditionalAPIURLParametersTransformerArgs
+): string | undefined => {
+	const {additionalAPIURLParameters, rootFolder, searchParam} = args;
 
 	if (!additionalAPIURLParameters) {
 		return additionalAPIURLParameters;
@@ -85,7 +89,17 @@ const additionalAPIURLParametersTransformer = (loadDataArgs: {
 	const cleanedFilters = filterContent
 		.split(/\s+and\s+/i)
 		.map((part) => part.trim())
-		.filter((part) => part !== 'cmsRoot eq true' && part !== '');
+		.filter((part) => {
+			if (part === 'cmsRoot eq true') {
+				return false;
+			}
+
+			if (rootFolder && part.startsWith('folderId eq')) {
+				return false;
+			}
+
+			return part !== '';
+		});
 
 	if (!cleanedFilters.length) {
 		const beforeFilter = additionalAPIURLParameters.substring(
@@ -120,6 +134,7 @@ export type AdditionalProps = {
 	objectEntryFolderExternalReferenceCode: string;
 	parentObjectEntryFolderExternalReferenceCode: string;
 	redirect: string;
+	rootFolder?: boolean;
 	rootObjectEntryFolderExternalReferenceCode: string;
 	showAdditionalItemInfo?: boolean;
 };
@@ -167,13 +182,22 @@ export default function AssetsFDSPropsTransformer({
 		mergedViews = [...nonDefaultViews, galleryViewRenderer];
 	}
 
-	const {additionalAPIURLParameters, ...remainingAdditionalProps} =
-		additionalProps || {};
+	const {
+		additionalAPIURLParameters,
+		rootFolder,
+		...remainingAdditionalProps
+	} = additionalProps || {};
 
 	return {
 		...otherProps,
 		additionalAPIURLParameters,
-		additionalAPIURLParametersTransformer,
+		additionalAPIURLParametersTransformer: (
+			args: AdditionalAPIURLParametersTransformerArgs
+		) =>
+			additionalAPIURLParametersTransformer({
+				...args,
+				rootFolder,
+			}),
 		additionalProps: remainingAdditionalProps,
 		creationMenu: {
 			...creationMenu,

@@ -17,12 +17,12 @@ function changeResource(resource: RequestInfo) {
 }
 
 function getHeaders(options?: RequestInit): Record<string, string> {
-	const inputHeaders = options?.headers;
+	const defaultHeaders = options?.headers;
 
-	const normalizedHeaders = inputHeaders
-		? inputHeaders instanceof Headers || Array.isArray(inputHeaders)
-			? Object.fromEntries(inputHeaders as any)
-			: (inputHeaders as Record<string, string>)
+	const normalizedHeaders = defaultHeaders
+		? defaultHeaders instanceof Headers || Array.isArray(defaultHeaders)
+			? Object.fromEntries(defaultHeaders as any)
+			: (defaultHeaders as Record<string, string>)
 		: {};
 
 	const hasContentType = Object.keys(normalizedHeaders).some(
@@ -96,21 +96,22 @@ fetcher.post = <T = any>(
 	data?: unknown,
 	options?: RequestInit & {shouldStringify?: boolean}
 ): Promise<T> => {
-	const isFormData = data instanceof FormData;
+	const shouldStringify = options?.shouldStringify ?? true;
 
-	const body = isFormData
-		? data
-		: options?.shouldStringify ?? true
-			? data
-				? JSON.stringify(data)
-				: null
-			: (data as BodyInit);
+	let body: BodyInit | null = null;
+
+	if (data instanceof FormData) {
+		body = data;
+	}
+	else if (data !== null) {
+		body = shouldStringify ? JSON.stringify(data) : (data as BodyInit);
+	}
 
 	return fetcher<T>(resource, {
 		...options,
 		body,
 		method: 'POST',
-	}) as Promise<T>;
+	});
 };
 
 fetcher.put = (resource: RequestInfo, data: unknown, options?: RequestInit) =>

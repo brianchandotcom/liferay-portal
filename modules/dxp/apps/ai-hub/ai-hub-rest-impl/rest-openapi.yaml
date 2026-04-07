@@ -48,6 +48,12 @@ components:
                 externalReferenceCode:
                     readOnly: true
                     type: string
+                instructionDefinitionScope:
+                    enum:
+                        -   clickToChat
+                        -   cms
+                        -   everywhere
+                    type: string
                 sseEventSinkKey:
                     type: string
             type: object

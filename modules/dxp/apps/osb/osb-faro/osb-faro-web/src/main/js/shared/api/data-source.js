@@ -505,28 +505,3 @@ export async function fetchDemandbaseAccountsCount({groupId, id}) {
 		path: `contacts/${groupId}/demandbase/accounts_count?dataSourceId=${id}`
 	});
 }
-
-export function updateDemandbase({
-	credentials,
-	fieldMappingMaps,
-	groupId,
-	id,
-	name
-}) {
-	const data = pickBy(
-		{
-			credentials,
-			fieldMappingMaps
-		},
-		Boolean
-	);
-
-	return sendRequest({
-		data: {
-			...data,
-			name
-		},
-		method: 'PATCH',
-		path: `contacts/${groupId}/data_source/${id}/demandbase`
-	});
-}

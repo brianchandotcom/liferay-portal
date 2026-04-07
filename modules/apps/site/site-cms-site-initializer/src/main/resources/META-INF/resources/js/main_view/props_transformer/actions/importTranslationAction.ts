@@ -15,7 +15,6 @@ export default function importTranslationAction(
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			ImportTranslationModalContent({
 				actionLink,
-				groupId: data.embedded.scopeId,
 				itemId: data.embedded.id,
 				itemName: data.embedded.title,
 				loadData,

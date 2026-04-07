@@ -6,28 +6,34 @@
 package com.liferay.site.cms.site.initializer.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -41,9 +47,9 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
+ * @author Víctor Galán
  * @author Yuri Monteiro
  */
-@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class UpdateStructureStrutsActionTest {
 
@@ -54,13 +60,95 @@ public class UpdateStructureStrutsActionTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@FeatureFlag("LPD-34594")
+	@Test
+	@TestInfo("LPD-77022")
+	public void testExecute() throws Exception {
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition1 =
+				ObjectDefinitionTestUtil.publishObjectDefinition();
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition2 =
+				ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		com.liferay.object.model.ObjectRelationship
+			serviceBuilderObjectRelationship =
+				_objectRelationshipLocalService.addObjectRelationship(
+					null, TestPropsValues.getUserId(),
+					serviceBuilderObjectDefinition1.getObjectDefinitionId(),
+					serviceBuilderObjectDefinition2.getObjectDefinitionId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					StringUtil.randomId(), false,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		Assert.assertTrue(serviceBuilderObjectRelationship.isEdge());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.US);
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setParameter(
+			"deletedObjectRelationships",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"objectDefinitionERC",
+					serviceBuilderObjectDefinition1.getExternalReferenceCode()
+				).put(
+					"objectRelationshipERC",
+					serviceBuilderObjectRelationship.getExternalReferenceCode()
+				)
+			).toString());
+
+		ObjectDefinition dtoObjectDefinition = _getObjectDefinition(
+			serviceBuilderObjectDefinition1.getExternalReferenceCode());
+
+		mockHttpServletRequest.setParameter(
+			"objectDefinition", dtoObjectDefinition.toString());
+
+		mockHttpServletRequest.setParameter("objectRelationships", "[]");
+		mockHttpServletRequest.setParameter(
+			"repeatableGroupObjectDefinitions", "[]");
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_updateStructureStrutsAction.execute(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			mockHttpServletResponse.getContentAsString());
+
+		Assert.assertEquals(jsonObject.toString(), 0, jsonObject.length());
+
+		Assert.assertNull(
+			_objectRelationshipLocalService.fetchObjectRelationship(
+				serviceBuilderObjectRelationship.getObjectRelationshipId()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			serviceBuilderObjectDefinition1.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			serviceBuilderObjectDefinition2.getObjectDefinitionId());
+	}
+
+	@FeatureFlag("LPD-17564")
 	@Test
 	@TestInfo("LPD-92696")
-	public void testExecute() throws Exception {
+	public void testExecuteDoesNotDeleteObjectRelationships() throws Exception {
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition();
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		ObjectRelationship objectRelationship =
+		com.liferay.object.model.ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				_objectRelationshipLocalService, _objectDefinition1,
 				_objectDefinition2);
@@ -72,7 +160,7 @@ public class UpdateStructureStrutsActionTest {
 			_getMockHttpServletRequest(_objectDefinition1),
 			mockHttpServletResponse);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			mockHttpServletResponse.getContentAsString());
 
 		Assert.assertEquals(jsonObject.toString(), 0, jsonObject.length());
@@ -86,7 +174,7 @@ public class UpdateStructureStrutsActionTest {
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest(
-			ObjectDefinition objectDefinition)
+			com.liferay.object.model.ObjectDefinition objectDefinition)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -109,6 +197,25 @@ public class UpdateStructureStrutsActionTest {
 		return mockHttpServletRequest;
 	}
 
+	private ObjectDefinition _getObjectDefinition(String externalReferenceCode)
+		throws Exception {
+
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource = builder.user(
+			TestPropsValues.getUser()
+		).build();
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		objectDefinition.setObjectRelationships((ObjectRelationship[])null);
+
+		return objectDefinition;
+	}
+
 	private String _getObjectDefinitionJSON(long objectDefinitionId)
 		throws Exception {
 
@@ -118,13 +225,12 @@ public class UpdateStructureStrutsActionTest {
 				TestPropsValues.getUser()
 			).build();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			String.valueOf(
 				objectDefinitionResource.getObjectDefinition(
 					objectDefinitionId)));
 
-		jsonObject.put(
-			"objectRelationships", JSONFactoryUtil.createJSONArray());
+		jsonObject.put("objectRelationships", _jsonFactory.createJSONArray());
 
 		return jsonObject.toString();
 	}
@@ -132,11 +238,17 @@ public class UpdateStructureStrutsActionTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition1;
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition2;
+	private com.liferay.object.model.ObjectDefinition _objectDefinition1;
+
+	@DeleteAfterTestRun
+	private com.liferay.object.model.ObjectDefinition _objectDefinition2;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;

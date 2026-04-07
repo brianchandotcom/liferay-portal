@@ -35,6 +35,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -430,6 +431,128 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testObjectEntryInfoItemFieldValuesProviderWithObjectRelationship()
+		throws Exception {
+
+		ObjectDefinition parentObjectDefinition = _addObjectDefinition(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"parentTitle"
+			).build());
+
+		parentObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId());
+
+		ObjectDefinition childObjectDefinition = _addObjectDefinition(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"childTitle"
+			).build());
+
+		childObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				childObjectDefinition.getObjectDefinitionId());
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId(),
+				childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"edgeRelationship", false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			parentObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"parentTitle", "Parent Title Value"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		String childTitleValue = RandomTestUtil.randomString();
+
+		ObjectEntry childObjectEntry = _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"childTitle", childTitleValue
+			).put(
+				"r_edgeRelationship_" +
+					parentObjectDefinition.getPKObjectFieldName(),
+				parentObjectEntry.getObjectEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(StringPool.BLANK, "UTC"));
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			InfoItemFieldValuesProvider<ObjectEntry>
+				infoItemFieldValuesProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemFieldValuesProvider.class,
+						childObjectDefinition.getClassName());
+
+			InfoItemFieldValues infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(
+					childObjectEntry);
+
+			InfoFieldValue<Object> childTitleInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue("childTitle");
+
+			Assert.assertNotNull(
+				"Edge child entry field values should not be empty",
+				childTitleInfoFieldValue);
+
+			Assert.assertEquals(
+				childTitleValue, childTitleInfoFieldValue.getValue());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
+			objectRelationship =
+				_objectRelationshipLocalService.updateObjectRelationship(
+					objectRelationship.getExternalReferenceCode(),
+					objectRelationship.getObjectRelationshipId(),
+					objectRelationship.getParameterObjectFieldId(),
+					objectRelationship.getDeletionType(), false,
+					objectRelationship.getLabelMap(), null);
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				childObjectDefinition);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				parentObjectDefinition);
 		}
 	}
 

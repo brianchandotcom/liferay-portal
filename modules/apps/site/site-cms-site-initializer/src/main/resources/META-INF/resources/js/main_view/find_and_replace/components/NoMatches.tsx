@@ -11,14 +11,14 @@ import React, {useContext} from 'react';
 import {FindAndReplaceContext} from '../contexts/FindAndReplaceContext';
 
 export function NoMatches() {
-	const {closeModal, search} = useContext(FindAndReplaceContext);
+	const {closeModal, search, setView} = useContext(FindAndReplaceContext);
 
 	return (
 		<>
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
-				{Liferay.Language.get('find-and-replace')}
+				{Liferay.Language.get('no-exact-matches')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -32,9 +32,21 @@ export function NoMatches() {
 
 			<ClayModal.Footer
 				last={
-					<ClayButton displayType="danger" onClick={closeModal}>
-						{Liferay.Language.get('ok')}
-					</ClayButton>
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={closeModal}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="warning"
+							onClick={() => setView('setup')}
+						>
+							{Liferay.Language.get('try-again')}
+						</ClayButton>
+					</ClayButton.Group>
 				}
 			/>
 		</>

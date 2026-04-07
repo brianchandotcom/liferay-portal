@@ -128,7 +128,11 @@ function getSize(view: View) {
 }
 
 function getStatus(view: View) {
-	if (view === 'no-matches' || view === 'discard') {
+	if (view === 'no-matches') {
+		return 'warning';
+	}
+
+	if (view === 'discard') {
 		return 'danger';
 	}
 

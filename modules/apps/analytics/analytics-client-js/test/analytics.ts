@@ -11,6 +11,7 @@ import AnalyticsClient from '../src/analytics';
 import {Analytics as AnalyticsType} from '../src/types';
 import {
 	ANALYTICS_BATCH_SEGMENT_IDS,
+	ANALYTICS_REAL_TIME_SEGMENT_IDS,
 	THREE_HOURS_IN_MILLISECONDS,
 } from '../src/utils/constants';
 import {getItem, setItem} from '../src/utils/storage';
@@ -415,6 +416,36 @@ describe('Analytics', () => {
 			const createDate = analyticsBatchSegmentIds?.createDate ?? 0;
 
 			expect(date.getTime()).toEqual(createDate);
+		});
+	});
+
+	describe('getRealTimeSegmentIds()', () => {
+		it('is exposed as an Analytics method', () => {
+			expect(typeof Analytics.getRealTimeSegmentIds).toBe('function');
+		});
+
+		it('gets real time segment ids for the first time', async () => {
+			fetchMock.mock(/ac-backend-server/i, () =>
+				Promise.resolve([1, 2, 3])
+			);
+
+			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
+
+			let analyticsRealTimeSegmentIds = getItem<{
+				segmentIds: number[];
+			}>(ANALYTICS_REAL_TIME_SEGMENT_IDS);
+
+			expect(analyticsRealTimeSegmentIds).toBeNull();
+
+			const result = await Analytics.getRealTimeSegmentIds();
+
+			expect(result).toEqual([1, 2, 3]);
+
+			analyticsRealTimeSegmentIds = getItem(
+				ANALYTICS_REAL_TIME_SEGMENT_IDS
+			);
+
+			expect(analyticsRealTimeSegmentIds?.segmentIds).toEqual([1, 2, 3]);
 		});
 	});
 

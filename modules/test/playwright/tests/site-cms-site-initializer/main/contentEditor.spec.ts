@@ -867,7 +867,7 @@ test.describe('Categorization Panel', () => {
 			const categoryName = getRandomString();
 			const vocabularyName = getRandomString();
 
-			const site = await apiHelpers.headlessSite.getSiteByERC('L_CMS');
+			const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
 
 			await createCategories({
 				apiHelpers,

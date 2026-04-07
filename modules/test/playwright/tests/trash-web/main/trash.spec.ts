@@ -29,7 +29,7 @@ test(
 		let user;
 
 		await test.step('Create a new Site', async () => {
-			siteOne = await apiHelpers.headlessSite.createSite({
+			siteOne = await apiHelpers.headlessAdminSite.postSite({
 				name: siteOneName,
 			});
 		});
@@ -65,7 +65,7 @@ test(
 		});
 
 		await test.step('Create a new second Site', async () => {
-			siteTwo = await apiHelpers.headlessSite.createSite({
+			siteTwo = await apiHelpers.headlessAdminSite.postSite({
 				name: siteTwoName,
 			});
 		});
@@ -107,11 +107,19 @@ test(
 			const promises = [];
 
 			if (siteOne?.id) {
-				promises.push(apiHelpers.headlessSite.deleteSite(siteOne.id));
+				promises.push(
+					apiHelpers.headlessAdminSite.deleteSite(
+						siteOne.externalReferenceCode
+					)
+				);
 			}
 
 			if (siteTwo?.id) {
-				promises.push(apiHelpers.headlessSite.deleteSite(siteTwo.id));
+				promises.push(
+					apiHelpers.headlessAdminSite.deleteSite(
+						siteTwo.externalReferenceCode
+					)
+				);
 			}
 
 			if (user?.id) {

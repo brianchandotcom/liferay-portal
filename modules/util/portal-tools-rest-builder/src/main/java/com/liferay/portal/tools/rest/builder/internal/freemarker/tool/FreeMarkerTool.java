@@ -49,8 +49,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -583,7 +583,7 @@ public class FreeMarkerTool {
 		Map<String, Schema> schemas = getSchemas(openAPIYAML);
 
 		Map<String, JavaMethodSignature> javaMethodSignatureMap =
-			new HashMap<>();
+			new LinkedHashMap<>();
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			List<JavaMethodParameter> javaMethodParameters =
@@ -964,7 +964,7 @@ public class FreeMarkerTool {
 		Components components = openAPIYAML.getComponents();
 
 		if (components == null) {
-			return new HashMap<>();
+			return Collections.emptyMap();
 		}
 
 		return new TreeMap<>(components.getSchemas());

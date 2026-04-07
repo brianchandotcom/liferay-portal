@@ -67,6 +67,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * @author Peter Shin
@@ -275,16 +276,13 @@ public class RESTBuilder {
 			_createExternalSchemaFiles(
 				allExternalSchemas, context, escapedVersion);
 
-			Set<Map.Entry<String, Schema>> set = new HashSet<>(
-				allSchemas.entrySet());
-
-			for (Map.Entry<String, Schema> entry : set) {
+			for (Map.Entry<String, Schema> entry : allSchemas.entrySet()) {
 				Schema schema = entry.getValue();
 				String schemaName = entry.getKey();
 
 				_putSchema(
 					context, escapedVersion, javaDataTypeMap, schema,
-					schemaName, new HashSet<>());
+					schemaName, Collections.emptySet());
 
 				_createDTOFile(context, escapedVersion, schemaName);
 
@@ -300,7 +298,7 @@ public class RESTBuilder {
 
 				_putSchema(
 					context, escapedVersion, javaDataTypeMap, entry.getValue(),
-					entry.getKey(), new HashSet<>());
+					entry.getKey(), Collections.emptySet());
 
 				_createEnumFile(context, escapedVersion, entry.getKey());
 
@@ -878,7 +876,7 @@ public class RESTBuilder {
 			_putSchema(
 				context, escapedVersion,
 				Collections.singletonMap(schemaName, schemaName),
-				entry.getValue(), schemaName, new HashSet<>());
+				entry.getValue(), schemaName, Collections.emptySet());
 
 			if (Validator.isNotNull(_configYAML.getClientDir())) {
 				_createClientDTOFile(context, escapedVersion, schemaName);
@@ -1772,7 +1770,7 @@ public class RESTBuilder {
 		Map<String, Schema> schemas,
 		List<JavaMethodSignature> javaMethodSignatures) {
 
-		Set<String> relatedSchemaNames = new HashSet<>();
+		Set<String> relatedSchemaNames = new TreeSet<>();
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			String returnType = javaMethodSignature.getReturnType();

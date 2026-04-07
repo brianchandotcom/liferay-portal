@@ -40,12 +40,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -62,7 +65,7 @@ public class OpenAPIParserUtil {
 			return schema.getPropertySchemas();
 		}
 
-		Map<String, Schema> propertySchemas = new HashMap<>();
+		Map<String, Schema> propertySchemas = new LinkedHashMap<>();
 
 		for (Schema allOfSchema : allOfSchemas) {
 			if (allOfSchema.getReference() != null) {
@@ -164,11 +167,11 @@ public class OpenAPIParserUtil {
 	}
 
 	public static List<String> getExternalReferences(OpenAPIYAML openAPIYAML) {
-		Set<String> externalReferences = new HashSet<>();
+		Set<String> externalReferences = new LinkedHashSet<>();
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
-		Map<String, Schema> schemas = new HashMap<>();
+		Map<String, Schema> schemas = new LinkedHashMap<>();
 
 		Components components = openAPIYAML.getComponents();
 
@@ -224,7 +227,7 @@ public class OpenAPIParserUtil {
 			ConfigYAML configYAML, OpenAPIYAML openAPIYAML)
 		throws Exception {
 
-		Map<String, Schema> externalReferencesMap = new HashMap<>();
+		Map<String, Schema> externalReferencesMap = new TreeMap<>();
 
 		String externalReference = null;
 		Set<String> visitedPaths = new HashSet<>();
@@ -314,7 +317,7 @@ public class OpenAPIParserUtil {
 	public static Map<String, String> getJavaDataTypeMap(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML) {
 
-		Map<String, String> javaDataTypeMap = new HashMap<>();
+		Map<String, String> javaDataTypeMap = new TreeMap<>();
 
 		Set<String> visitedPaths = new HashSet<>();
 

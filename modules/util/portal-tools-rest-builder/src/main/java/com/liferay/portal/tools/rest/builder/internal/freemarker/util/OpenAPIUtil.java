@@ -16,7 +16,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,7 +84,7 @@ public class OpenAPIUtil {
 			ConfigYAML configYAML, OpenAPIYAML openAPIYAML)
 		throws Exception {
 
-		Map<String, Schema> allExternalSchemas = new HashMap<>();
+		Map<String, Schema> allExternalSchemas = new TreeMap<>();
 
 		Map<String, Schema> externalSchemas =
 			OpenAPIParserUtil.getExternalSchemas(configYAML, openAPIYAML);
@@ -323,7 +322,7 @@ public class OpenAPIUtil {
 		Components components = openAPIYAML.getComponents();
 
 		if (components == null) {
-			return new HashMap<>();
+			return Collections.emptyMap();
 		}
 
 		return getEnumSchemas(configYAML, components.getSchemas());

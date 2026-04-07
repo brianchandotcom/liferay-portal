@@ -12,6 +12,13 @@
 		margin-top: $contentEditorToolbarHeight;
 	}
 
+	&:has(.content-editor__preview.resizing) {
+		#content,
+		.content-editor__side-panel {
+			transition-duration: 0s;
+		}
+	}
+
 	.content-editor__preview {
 		@include media-breakpoint-down(md) {
 			display: none;

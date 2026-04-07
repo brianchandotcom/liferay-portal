@@ -165,6 +165,34 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	}
 
 	@Test
+	public void testConversionWithEmptyPredefinedValueInNondefaultLocale()
+		throws Exception {
+
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.US);
+
+		DDMFormField ddmFormField = createTextDDMFormField("Text");
+
+		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.BRAZIL);
+
+		predefinedValue.addString(LocaleUtil.BRAZIL, StringPool.BLANK);
+
+		ddmFormField.setPredefinedValue(predefinedValue);
+
+		addDDMFormFields(ddmForm, ddmFormField);
+
+		Fields fields = _ddmFormValuesToFieldsConverter.convert(
+			createStructure(RandomTestUtil.randomString(), ddmForm),
+			DDMFormValuesTestUtil.createDDMFormValues(ddmForm));
+
+		testField(
+			fields.get("Text"), createValuesList(StringPool.BLANK),
+			createValuesList(StringPool.BLANK),
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+	}
+
+	@Test
 	public void testConversionWithNestedFields() throws Exception {
 		DDMForm ddmForm = createDDMForm();
 

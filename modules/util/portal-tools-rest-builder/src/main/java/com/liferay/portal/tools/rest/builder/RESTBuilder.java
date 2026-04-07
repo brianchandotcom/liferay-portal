@@ -72,6 +72,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author Peter Shin
@@ -536,8 +540,6 @@ public class RESTBuilder {
 	private static List<String> _processRESTConfigFiles(String baseDirName)
 		throws Exception {
 
-		List<String> baselineTasks = new ArrayList<>();
-
 		Path baseDirPath = Paths.get(baseDirName);
 
 		List<Path> restConfigYamlPaths = new ArrayList<>();
@@ -584,13 +586,57 @@ public class RESTBuilder {
 
 			});
 
-		for (Path restConfigYamlPath : restConfigYamlPaths) {
-			String baselineTask = _processRESTConfigFile(
-				baseDirPath, restConfigYamlPath);
+		if (restConfigYamlPaths.isEmpty()) {
+			return Collections.emptyList();
+		}
 
-			if (baselineTask != null) {
-				baselineTasks.add(baselineTask);
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			Runtime.getRuntime(
+			).availableProcessors());
+
+		List<Future<String>> futures = new ArrayList<>();
+
+		for (Path restConfigYamlPath : restConfigYamlPaths) {
+			futures.add(
+				executorService.submit(
+					() -> _processRESTConfigFile(
+						baseDirPath, restConfigYamlPath)));
+		}
+
+		executorService.shutdown();
+
+		List<String> baselineTasks = new ArrayList<>();
+		List<Exception> exceptions = new ArrayList<>();
+
+		for (Future<String> future : futures) {
+			try {
+				String baselineTask = future.get();
+
+				if (baselineTask != null) {
+					baselineTasks.add(baselineTask);
+				}
 			}
+			catch (ExecutionException executionException) {
+				Throwable throwable = executionException.getCause();
+
+				if (throwable instanceof Exception) {
+					exceptions.add((Exception)throwable);
+				}
+				else {
+					exceptions.add(executionException);
+				}
+			}
+		}
+
+		if (!exceptions.isEmpty()) {
+			RuntimeException runtimeException = new RuntimeException(
+				"Error processing REST config files");
+
+			for (Exception exception : exceptions) {
+				runtimeException.addSuppressed(exception);
+			}
+
+			throw runtimeException;
 		}
 
 		return baselineTasks;

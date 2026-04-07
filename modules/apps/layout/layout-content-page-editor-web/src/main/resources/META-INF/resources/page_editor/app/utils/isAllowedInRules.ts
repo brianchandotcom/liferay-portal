@@ -9,6 +9,7 @@ import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
 
 export function isAllowedInRules(item: LayoutDataItem, layoutData: LayoutData) {
 	return (
+		Liferay.FeatureFlags['LPS-169837'] &&
 		item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
 		item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
 		item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&

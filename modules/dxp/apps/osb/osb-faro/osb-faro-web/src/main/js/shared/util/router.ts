@@ -37,6 +37,7 @@ export const CONTACTS = 'contacts';
 export const CSV = 'csv';
 export const GROWTH = 'growth';
 export const INDIVIDUALS = 'individuals';
+export const LIFECYCLE = 'lifecycle';
 export const LIFERAY = 'liferay';
 export const PAGES = 'pages';
 export const SEGMENTS = 'segments';
@@ -227,6 +228,10 @@ export const Routes = buildRoutes({
 									EVENT_ANALYSIS_CREATE: '/create',
 									EVENT_ANALYSIS_EDIT: '/:id'
 								}
+							},
+							LIFECYCLE: {
+								path: '/lifecycles',
+								routes: {}
 							},
 							SITES: {
 								path: '/sites',

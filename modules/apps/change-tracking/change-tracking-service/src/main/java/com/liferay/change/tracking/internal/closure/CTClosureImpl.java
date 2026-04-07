@@ -10,17 +10,16 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.AbstractMap;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
 
 /**
  * @author Preston Crary
@@ -32,24 +31,32 @@ public class CTClosureImpl implements CTClosure {
 
 		_ctCollectionId = ctCollectionId;
 
-		Map<Node, Node> nodesMap = new HashMap<>();
-
 		for (Map.Entry<Node, Collection<Node>> entry : closureMap.entrySet()) {
 			Node node = entry.getKey();
 
-			nodesMap.putIfAbsent(node, node);
+			_nodeMap.putIfAbsent(node, node);
 
 			for (Node childNode : entry.getValue()) {
-				nodesMap.putIfAbsent(childNode, childNode);
+				_nodeMap.putIfAbsent(childNode, childNode);
 			}
 		}
 
+		int index = 0;
+
+		for (Node node : _nodeMap.values()) {
+			node.setIndex(index++);
+		}
+
+		int nodeCount = _nodeMap.size();
+
+		ArrayDeque<Node> queue = new ArrayDeque<>();
+
 		for (Map.Entry<Node, Collection<Node>> entry : closureMap.entrySet()) {
-			Node node = nodesMap.get(entry.getKey());
+			Node node = _nodeMap.get(entry.getKey());
 
 			if (node.equals(Node.ROOT_NODE)) {
 				for (Node childNode : entry.getValue()) {
-					_rootNodes.add(nodesMap.get(childNode));
+					_rootNodes.add(_nodeMap.get(childNode));
 				}
 
 				continue;
@@ -57,16 +64,22 @@ public class CTClosureImpl implements CTClosure {
 
 			Collection<Node> childNodes = entry.getValue();
 
-			Set<Node> excludedNodes = new HashSet<>();
+			BitSet bitSet = new BitSet(nodeCount);
 
-			Queue<Node> queue = new LinkedList<>(childNodes);
+			queue.addAll(childNodes);
 
 			while (!queue.isEmpty()) {
 				Collection<Node> grandchildNodes = closureMap.get(queue.poll());
 
 				if (grandchildNodes != null) {
 					for (Node grandchildNode : grandchildNodes) {
-						if (excludedNodes.add(grandchildNode)) {
+						grandchildNode = _nodeMap.get(grandchildNode);
+
+						int grandchildIndex = grandchildNode.getIndex();
+
+						if (!bitSet.get(grandchildIndex)) {
+							bitSet.set(grandchildIndex);
+
 							queue.add(grandchildNode);
 						}
 					}
@@ -74,11 +87,11 @@ public class CTClosureImpl implements CTClosure {
 			}
 
 			for (Node childNode : childNodes) {
-				if (excludedNodes.contains(childNode)) {
+				childNode = _nodeMap.get(childNode);
+
+				if (bitSet.get(childNode.getIndex())) {
 					continue;
 				}
-
-				childNode = nodesMap.get(childNode);
 
 				childNode.addParentNode(node);
 
@@ -86,11 +99,7 @@ public class CTClosureImpl implements CTClosure {
 			}
 		}
 
-		for (Node node : nodesMap.values()) {
-			if (!node.equals(Node.ROOT_NODE)) {
-				_nodeMap.put(node, node);
-			}
-		}
+		_nodeMap.remove(Node.ROOT_NODE);
 	}
 
 	@Override

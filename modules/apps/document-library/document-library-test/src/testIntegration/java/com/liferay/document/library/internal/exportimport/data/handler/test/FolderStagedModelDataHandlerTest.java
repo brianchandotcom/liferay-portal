@@ -64,6 +64,57 @@ public class FolderStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testImportChildFolderWithMissingParentMapping()
+		throws Exception {
+
+		initExport();
+
+		Folder parentFolder = DLAppServiceUtil.addFolder(
+			null, stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		Folder childFolder = DLAppServiceUtil.addFolder(
+			null, stagingGroup.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, childFolder);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			Folder exportedChildFolder = (Folder)readExportedStagedModel(
+				childFolder);
+
+			Assert.assertNotNull(exportedChildFolder);
+
+			// Clear the parent folder mapping so the parent is "missing"
+
+			Map<Long, Long> folderIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Folder.class);
+
+			folderIds.remove(parentFolder.getFolderId());
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedChildFolder);
+
+			DLFolder importedDLFolder =
+				DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
+					childFolder.getUuid(), liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				"When parent folder mapping is missing, the imported child " +
+					"folder should be placed at root level",
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				importedDLFolder.getParentFolderId());
+		}
+	}
+
+	@Test
 	public void testCompanyScopeDependencies() throws Exception {
 		initExport();
 

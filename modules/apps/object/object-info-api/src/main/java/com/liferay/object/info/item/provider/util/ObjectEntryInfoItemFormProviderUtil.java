@@ -379,15 +379,7 @@ public class ObjectEntryInfoItemFormProviderUtil {
 						ObjectRelationshipLocalServiceUtil.
 							getObjectRelationships(
 								objectDefinition.getObjectDefinitionId(),
-								ObjectRelationshipConstants.
-									DELETION_TYPE_DISASSOCIATE,
-								false)) {
-
-					if (!objectRelationship.compareType(
-							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
-
-						continue;
-					}
+								true)) {
 
 					unsafeConsumer.accept(
 						objectFieldInfoFieldConverter.
@@ -428,8 +420,9 @@ public class ObjectEntryInfoItemFormProviderUtil {
 						Objects.equals(
 							objectDefinition.getObjectDefinitionId(),
 							objectRelationship.getObjectDefinitionId2()) ||
-						FeatureFlagManagerUtil.isEnabled(
-							objectDefinition.getCompanyId(), "LPD-60546")) {
+						(!objectRelationship.isEdge() &&
+						 FeatureFlagManagerUtil.isEnabled(
+							 objectDefinition.getCompanyId(), "LPD-60546"))) {
 
 						continue;
 					}

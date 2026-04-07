@@ -8,10 +8,10 @@
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../src/analytics';
+import {SegmentCachedData} from '../src/segment';
 import {Analytics as AnalyticsType} from '../src/types';
 import {
 	ANALYTICS_BATCH_SEGMENT_IDS,
-	ANALYTICS_REAL_TIME_SEGMENT_IDS,
 	THREE_HOURS_IN_MILLISECONDS,
 } from '../src/utils/constants';
 import {getItem, setItem} from '../src/utils/storage';
@@ -330,10 +330,9 @@ describe('Analytics', () => {
 
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			let analyticsBatchSegmentIds = getItem<{
-				createDate: number;
-				segmentIds: number[];
-			}>(ANALYTICS_BATCH_SEGMENT_IDS);
+			let analyticsBatchSegmentIds = getItem<SegmentCachedData>(
+				ANALYTICS_BATCH_SEGMENT_IDS
+			);
 
 			expect(analyticsBatchSegmentIds).toBeNull();
 
@@ -343,11 +342,16 @@ describe('Analytics', () => {
 
 			analyticsBatchSegmentIds = getItem(ANALYTICS_BATCH_SEGMENT_IDS);
 
-			expect(analyticsBatchSegmentIds?.segmentIds).toEqual([1, 2, 3]);
+			const individualId = (Analytics as any)._getUserId();
+
+			expect(
+				analyticsBatchSegmentIds?.[individualId]?.segmentIds
+			).toEqual([1, 2, 3]);
 
 			const date = new Date();
 
-			const createDate = analyticsBatchSegmentIds?.createDate ?? 0;
+			const createDate =
+				analyticsBatchSegmentIds?.[individualId]?.createDate ?? 0;
 
 			expect(date.getTime()).toBeLessThan(
 				createDate + THREE_HOURS_IN_MILLISECONDS
@@ -361,27 +365,33 @@ describe('Analytics', () => {
 
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
+			const individualId = (Analytics as any)._getUserId();
+
 			const date = new Date();
 
 			date.setHours(date.getHours() - 5);
 
 			setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
-				createDate: date.getTime(),
-				segmentIds: [1, 2],
+				[individualId]: {
+					createDate: date.getTime(),
+					segmentIds: [1, 2],
+				},
 			});
 
 			const result = await Analytics.getBatchSegmentIds();
 
 			expect(result).toEqual([1, 2, 3]);
 
-			const analyticsBatchSegmentIds = getItem<{
-				createDate: number;
-				segmentIds: number[];
-			}>(ANALYTICS_BATCH_SEGMENT_IDS);
+			const analyticsBatchSegmentIds = getItem<SegmentCachedData>(
+				ANALYTICS_BATCH_SEGMENT_IDS
+			);
 
-			expect(analyticsBatchSegmentIds?.segmentIds).toEqual([1, 2, 3]);
+			expect(
+				analyticsBatchSegmentIds?.[individualId]?.segmentIds
+			).toEqual([1, 2, 3]);
 
-			const createDate = analyticsBatchSegmentIds?.createDate ?? 0;
+			const createDate =
+				analyticsBatchSegmentIds?.[individualId]?.createDate ?? 0;
 
 			expect(date.getTime()).toBeLessThan(createDate);
 		});
@@ -393,27 +403,33 @@ describe('Analytics', () => {
 
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
+			const individualId = (Analytics as any)._getUserId();
+
 			const date = new Date();
 
 			date.setHours(date.getHours() - 1);
 
 			setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
-				createDate: date.getTime(),
-				segmentIds: [1, 2],
+				[individualId]: {
+					createDate: date.getTime(),
+					segmentIds: [1, 2],
+				},
 			});
 
 			const result = await Analytics.getBatchSegmentIds();
 
 			expect(result).toEqual([1, 2]);
 
-			const analyticsBatchSegmentIds = getItem<{
-				createDate: number;
-				segmentIds: number[];
-			}>(ANALYTICS_BATCH_SEGMENT_IDS);
+			const analyticsBatchSegmentIds = getItem<SegmentCachedData>(
+				ANALYTICS_BATCH_SEGMENT_IDS
+			);
 
-			expect(analyticsBatchSegmentIds?.segmentIds).toEqual([1, 2]);
+			expect(
+				analyticsBatchSegmentIds?.[individualId]?.segmentIds
+			).toEqual([1, 2]);
 
-			const createDate = analyticsBatchSegmentIds?.createDate ?? 0;
+			const createDate =
+				analyticsBatchSegmentIds?.[individualId]?.createDate ?? 0;
 
 			expect(date.getTime()).toEqual(createDate);
 		});
@@ -424,28 +440,26 @@ describe('Analytics', () => {
 			expect(typeof Analytics.getRealTimeSegmentIds).toBe('function');
 		});
 
-		it('gets real time segment ids for the first time', async () => {
+		it('gets real time segment ids and never caches data', async () => {
 			fetchMock.mock(/ac-backend-server/i, () =>
 				Promise.resolve([1, 2, 3])
 			);
 
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			let analyticsRealTimeSegmentIds = getItem<{
-				segmentIds: number[];
-			}>(ANALYTICS_REAL_TIME_SEGMENT_IDS);
+			const result1 = await Analytics.getRealTimeSegmentIds();
 
-			expect(analyticsRealTimeSegmentIds).toBeNull();
+			expect(result1).toEqual([1, 2, 3]);
 
-			const result = await Analytics.getRealTimeSegmentIds();
+			fetchMock.restore();
 
-			expect(result).toEqual([1, 2, 3]);
-
-			analyticsRealTimeSegmentIds = getItem(
-				ANALYTICS_REAL_TIME_SEGMENT_IDS
+			fetchMock.mock(/ac-backend-server/i, () =>
+				Promise.resolve([4, 5, 6])
 			);
 
-			expect(analyticsRealTimeSegmentIds?.segmentIds).toEqual([1, 2, 3]);
+			const result2 = await Analytics.getRealTimeSegmentIds();
+
+			expect(result2).toEqual([4, 5, 6]);
 		});
 	});
 

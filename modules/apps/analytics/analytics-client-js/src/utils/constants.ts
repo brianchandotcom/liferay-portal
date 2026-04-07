@@ -9,8 +9,6 @@ export const ANALYTICS_CLIENT_VERSION = '1.3.2';
 
 export const ANALYTICS_BATCH_SEGMENT_IDS = 'analyticsBatchSegmentIds';
 
-export const ANALYTICS_REAL_TIME_SEGMENT_IDS = 'analyticsRealTimeSegmentIds';
-
 // Default Config
 
 export const DEBOUNCE = 1500;

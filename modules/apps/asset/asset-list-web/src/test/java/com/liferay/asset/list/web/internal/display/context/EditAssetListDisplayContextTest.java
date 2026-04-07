@@ -184,12 +184,11 @@ public class EditAssetListDisplayContextTest {
 	public void testGetActionDropdownItemsWithNoAvailableSelectedSubtype()
 		throws Exception {
 
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
 		ClassTypeReader classTypeReader = _getClassTypeReader(
 			ListUtil.fromArray(
 				_getClassType(), _getClassType(), _getClassType()));
-
-		String className = RandomTestUtil.randomString();
-		long classNameId = RandomTestUtil.randomLong();
 		String expectedLabel = RandomTestUtil.randomString();
 
 		_setUpAssetRendererFactoryRegistryUtil(
@@ -228,6 +227,9 @@ public class EditAssetListDisplayContextTest {
 	public void testGetActionDropdownItemsWithSelectedSubtype()
 		throws Exception {
 
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+
 		long classTypeId = RandomTestUtil.randomLong();
 		String expectedLabel = RandomTestUtil.randomString();
 
@@ -235,9 +237,6 @@ public class EditAssetListDisplayContextTest {
 			ListUtil.fromArray(
 				_getClassType(), _getClassType(classTypeId, expectedLabel),
 				_getClassType()));
-
-		String className = RandomTestUtil.randomString();
-		long classNameId = RandomTestUtil.randomLong();
 
 		_setUpAssetRendererFactoryRegistryUtil(
 			className, classNameId, classTypeReader, true, expectedLabel);

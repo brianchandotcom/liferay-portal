@@ -1,5 +1,5 @@
 ext {
-	gitHash = "2.3.21.LIFERAY-PATCHED-3"
+	gitHash = "3bf3e0f35965269affb100ca9e40b6b375b3ad6b"
 	gitHubOwner = "liferay"
 	gitHubRepository = "mojarra"
 	mvnArgument = "package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true"

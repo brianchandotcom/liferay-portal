@@ -177,6 +177,44 @@ describe('Custom Asset Plugin', () => {
 
 			document.body.removeChild(customAssetElement);
 		});
+
+		it('includes assetCategories, mimeType and assetTags in the payload', async () => {
+			const customAssetElement = createCustomAssetElement(
+				'assetId',
+				'Custom Asset Title'
+			);
+			customAssetElement.dataset.analyticsAssetCategories =
+				'[{"id":"cat1","name":"Category 1"},{"id":"cat2","name":"Category 2"}]';
+			customAssetElement.dataset.analyticsAssetMimeType = 'text/html';
+			customAssetElement.dataset.analyticsAssetTags =
+				'[{"id":"tag1","name":"Tag 1"},{"id":"tag2","name":"Tag 2"}]';
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			await document.dispatchEvent(domContentLoaded);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'assetViewed'
+			);
+
+			expect(events[0]).toEqual(
+				expect.objectContaining({
+					applicationId,
+					eventId: 'assetViewed',
+					properties: expect.objectContaining({
+						assetCategories:
+							'[{"id":"cat1","name":"Category 1"},{"id":"cat2","name":"Category 2"}]',
+						assetId: 'assetId',
+						assetTags:
+							'[{"id":"tag1","name":"Tag 1"},{"id":"tag2","name":"Tag 2"}]',
+						mimeType: 'text/html',
+						title: 'Custom Asset Title',
+					}),
+				})
+			);
+
+			document.body.removeChild(customAssetElement);
+		});
 	});
 
 	describe('assetClicked event', () => {

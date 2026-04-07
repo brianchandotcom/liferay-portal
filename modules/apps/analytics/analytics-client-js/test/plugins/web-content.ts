@@ -123,6 +123,61 @@ describe('WebContent Plugin', () => {
 			document.body.removeChild(webContentElement);
 		});
 
+		it('includes assetCategories, mimeType and assetTags in the payload', async () => {
+			const webContentElement = createWebContentElement(
+				'assetId',
+				'Web Content Title'
+			);
+			webContentElement.dataset.analyticsAssetCategories =
+				'[{"id":"cat1","name":"Category 1"},{"id":"cat2","name":"Category 2"}]';
+			webContentElement.dataset.analyticsAssetMimeType = 'text/html';
+			webContentElement.dataset.analyticsAssetTags =
+				'[{"id":"tag1","name":"Tag 1"},{"id":"tag2","name":"Tag 2"}]';
+
+			jest.spyOn(
+				webContentElement,
+				'getBoundingClientRect'
+			).mockImplementation(
+				() =>
+					({
+						bottom: 500,
+						height: 500,
+						left: 0,
+						right: 500,
+						top: 0,
+						width: 500,
+					}) as DOMRect
+			);
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			await document.dispatchEvent(domContentLoaded);
+
+			await wait(250);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'webContentViewed'
+			);
+
+			expect(events[0]).toEqual(
+				expect.objectContaining({
+					applicationId,
+					eventId: 'webContentViewed',
+					properties: expect.objectContaining({
+						articleId: 'assetId',
+						assetCategories:
+							'[{"id":"cat1","name":"Category 1"},{"id":"cat2","name":"Category 2"}]',
+						assetTags:
+							'[{"id":"tag1","name":"Tag 1"},{"id":"tag2","name":"Tag 2"}]',
+						mimeType: 'text/html',
+						title: 'Web Content Title',
+					}),
+				})
+			);
+
+			document.body.removeChild(webContentElement);
+		});
+
 		it('is not fired when web-content is not in viewport', async () => {
 			const webContentElement = createWebContentElement();
 

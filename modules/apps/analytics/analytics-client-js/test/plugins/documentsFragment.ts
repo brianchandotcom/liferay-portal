@@ -152,6 +152,41 @@ describe('Documents Plugin', () => {
 
 			document.body.removeChild(documentsElement);
 		});
+
+		it('includes assetCategories, mimeType and assetTags in the payload', async () => {
+			const documentsElement = createElementTitle();
+			documentsElement.dataset.analyticsAssetCategories =
+				'[{"id":"cat1","name":"Category 1"},{"id":"cat2","name":"Category 2"}]';
+			documentsElement.dataset.analyticsAssetMimeType = 'application/pdf';
+			documentsElement.dataset.analyticsAssetTags =
+				'[{"id":"tag1","name":"Tag 1"},{"id":"tag2","name":"Tag 2"}]';
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			await document.dispatchEvent(domContentLoaded);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'documentImpressionMade'
+			);
+
+			expect(events[0]).toEqual(
+				expect.objectContaining({
+					applicationId: 'Document',
+					eventId: 'documentImpressionMade',
+					properties: expect.objectContaining({
+						assetCategories:
+							'[{"id":"cat1","name":"Category 1"},{"id":"cat2","name":"Category 2"}]',
+						assetTags:
+							'[{"id":"tag1","name":"Tag 1"},{"id":"tag2","name":"Tag 2"}]',
+						fileEntryId: 'myDocumentId',
+						mimeType: 'application/pdf',
+						title: 'my document title',
+					}),
+				})
+			);
+
+			document.body.removeChild(documentsElement);
+		});
 	});
 
 	describe('documentDownloaded event', () => {

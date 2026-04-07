@@ -133,6 +133,41 @@ describe('Blogs Plugin', () => {
 
 			document.body.removeChild(blogElement);
 		});
+
+		it('includes assetCategories, mimeType and assetTags in the payload', async () => {
+			const blogElement = createBlogElement('assetId', 'Blog Title');
+			blogElement.dataset.analyticsAssetCategories =
+				'[{"id":"cat1","name":"Category 1"},{"id":"cat2","name":"Category 2"}]';
+			blogElement.dataset.analyticsAssetMimeType = 'text/html';
+			blogElement.dataset.analyticsAssetTags =
+				'[{"id":"tag1","name":"Tag 1"},{"id":"tag2","name":"Tag 2"}]';
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			await document.dispatchEvent(domContentLoaded);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'blogViewed'
+			);
+
+			expect(events[0]).toEqual(
+				expect.objectContaining({
+					applicationId,
+					eventId: 'blogViewed',
+					properties: expect.objectContaining({
+						assetCategories:
+							'[{"id":"cat1","name":"Category 1"},{"id":"cat2","name":"Category 2"}]',
+						assetTags:
+							'[{"id":"tag1","name":"Tag 1"},{"id":"tag2","name":"Tag 2"}]',
+						entryId: 'assetId',
+						mimeType: 'text/html',
+						title: 'Blog Title',
+					}),
+				})
+			);
+
+			document.body.removeChild(blogElement);
+		});
 	});
 
 	describe('blogClicked event', () => {

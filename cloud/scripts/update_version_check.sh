@@ -61,6 +61,12 @@ function _bump_bootstrap_version {
 	sed \
 		--in-place \
 		--regexp-extended \
+		"s/\"version\": \".*\"/\"version\": \"${new_version}\"/" \
+		"${_ROOT_CLOUD_DIR}/scripts/config.json.example_${bootstrap_name}"
+
+	sed \
+		--in-place \
+		--regexp-extended \
 		"${git_blame_line}s/\"liferay-${bootstrap_name}-bootstrap\": \"[0-9]+\.[0-9]+\.[0-9]+\"/\"liferay-${1}-bootstrap\": \"${new_version}\"/" \
 		"${_VERSIONS_JSON_FILE}"
 }

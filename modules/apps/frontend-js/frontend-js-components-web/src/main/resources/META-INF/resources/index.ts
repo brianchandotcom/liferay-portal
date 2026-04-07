@@ -47,6 +47,7 @@ export {ModalStatus} from './modal/components/Modal';
 export {default as MultipleFileUploader} from './multiple_file_uploader/MultipleFileUploader';
 export {
 	type FileData,
+	type UploadMessages,
 	type UploadRequestCallback,
 } from './multiple_file_uploader/types';
 

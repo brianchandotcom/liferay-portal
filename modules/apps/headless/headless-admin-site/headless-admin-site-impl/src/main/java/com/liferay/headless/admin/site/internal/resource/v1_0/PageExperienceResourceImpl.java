@@ -202,6 +202,10 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			return _addPageExperience(layout, groupId, pageExperience);
 		}
 
+		if (layout.getPlid() != segmentsExperience.getPlid()) {
+			throw new UnsupportedOperationException();
+		}
+
 		_segmentsExperienceResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), segmentsExperience,
 			ActionKeys.UPDATE);

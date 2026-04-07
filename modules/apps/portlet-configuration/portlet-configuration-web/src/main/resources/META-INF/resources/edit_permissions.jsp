@@ -171,8 +171,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 									<label>
 										<input
 											<%= (checked || indeterminate) ? "checked" : StringPool.BLANK %>
-											data-disabled="<%= disabled %>"
-											disabled
+											<%= disabled ? "disabled" : StringPool.BLANK %>
 											<%= indeterminate ? "value=\"indeterminate\"" : StringPool.BLANK %>
 											class="custom-control-input <%= Validator.isNotNull(preselectedMsg) ? "lfr-portal-tooltip" : StringPool.BLANK %>"
 											id="<%= inputId %>"
@@ -225,7 +224,6 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 
 	<aui:button-row>
 		<clay:button
-			disabled="<%= true %>"
 			id='<%= liferayPortletResponse.getNamespace() + "saveButton" %>'
 			label="save"
 			type="submit"
@@ -243,29 +241,6 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 	var <portlet:namespace />saveButton = document.getElementById(
 		'<portlet:namespace />saveButton'
 	);
-
-	document.onreadystatechange = () => {
-		if (document.readyState === 'complete') {
-			if (<portlet:namespace />saveButton) {
-				<portlet:namespace />saveButton.classList.remove('disabled');
-				<portlet:namespace />saveButton.disabled = false;
-			}
-
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			if (form) {
-				var checkboxes = form.querySelectorAll(
-					'input[type="checkbox"].custom-control-input'
-				);
-
-				checkboxes.forEach((checkbox) => {
-					if (checkbox.dataset.disabled !== 'true') {
-						checkbox.disabled = false;
-					}
-				});
-			}
-		}
-	};
 
 	if (<portlet:namespace />saveButton) {
 		<portlet:namespace />saveButton.addEventListener('click', (event) => {

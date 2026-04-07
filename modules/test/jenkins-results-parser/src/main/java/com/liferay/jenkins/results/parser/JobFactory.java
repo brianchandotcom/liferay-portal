@@ -395,6 +395,16 @@ public class JobFactory {
 				}
 			}
 
+			if (jobName.equals("test-jenkins-acceptance-pullrequest")) {
+				if (jsonObject != null) {
+					job = new JenkinsGitRepositoryJob(jsonObject);
+				}
+				else {
+					job = new JenkinsGitRepositoryJob(
+						buildProfile, jobName, testSuiteName);
+				}
+			}
+
 			if (jobName.startsWith("test-plugins-acceptance-pullrequest(")) {
 				if (jsonObject != null) {
 					job = new PluginsAcceptancePullRequestJob(jsonObject);

@@ -3188,6 +3188,8 @@ public class ServiceBuilder {
 				"extends " + entity.getName() + "BaseImpl");
 
 			ToolsUtil.writeFileRaw(modelFile, content, _modifiedFileNames);
+
+			_pendingContents.put(_normalize(modelFile.toString()), content);
 		}
 		else {
 			_write(modelFile, content, _modifiedFileNames);
@@ -3250,6 +3252,9 @@ public class ServiceBuilder {
 				entity.getName() + "FinderBaseImpl");
 
 			ToolsUtil.writeFileRaw(finderImplFile, content, _modifiedFileNames);
+
+			_pendingContents.put(
+				_normalize(finderImplFile.toString()), content);
 		}
 
 		JavaClass javaClass = _getJavaClass(finderImplFile.getPath());
@@ -5901,6 +5906,28 @@ public class ServiceBuilder {
 			fileName.substring(pos, fileName.length() - 5), CharPool.SLASH,
 			CharPool.PERIOD);
 
+		String javaClassContent = _pendingContents.remove(fileName);
+
+		if (javaClassContent != null) {
+			ClassLibraryBuilder classLibraryBuilder =
+				new SortedClassLibraryBuilder();
+
+			classLibraryBuilder.appendClassLoader(_negativeCachingClassLoader);
+
+			JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder(
+				classLibraryBuilder);
+
+			javaProjectBuilder.addSource(
+				new UnsyncStringReader(javaClassContent));
+
+			JavaClass javaClass = javaProjectBuilder.getClassByName(
+				fullyQualifiedClassName);
+
+			_javaClasses.put(fullyQualifiedClassName, javaClass);
+
+			return javaClass;
+		}
+
 		JavaClass javaClass = _javaClasses.get(fullyQualifiedClassName);
 
 		if (javaClass == null) {
@@ -5915,12 +5942,13 @@ public class ServiceBuilder {
 
 			classLibraryBuilder.appendClassLoader(_negativeCachingClassLoader);
 
-			JavaProjectBuilder builder = new JavaProjectBuilder(
+			JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder(
 				classLibraryBuilder);
 
-			builder.addSource(file);
+			javaProjectBuilder.addSource(file);
 
-			javaClass = builder.getClassByName(fullyQualifiedClassName);
+			javaClass = javaProjectBuilder.getClassByName(
+				fullyQualifiedClassName);
 
 			_javaClasses.put(fullyQualifiedClassName, javaClass);
 		}
@@ -8043,6 +8071,7 @@ public class ServiceBuilder {
 			}
 		}
 
+		_pendingContents.clear();
 		_pendingWrites.clear();
 	}
 
@@ -8082,6 +8111,13 @@ public class ServiceBuilder {
 	}
 
 	private String _read(File file) throws IOException {
+		String pendingContent = _pendingContents.get(
+			_normalize(file.toString()));
+
+		if (pendingContent != null) {
+			return pendingContent;
+		}
+
 		String s = new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 
@@ -8574,6 +8610,8 @@ public class ServiceBuilder {
 
 		_pendingWrites.add(
 			new Object[] {file, packagePath, content, modifiedFileNames});
+
+		_pendingContents.put(fileName, content);
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
@@ -8753,6 +8791,7 @@ public class ServiceBuilder {
 	private boolean _osgiModule;
 	private String _outputPath;
 	private String _packagePath;
+	private final Map<String, String> _pendingContents = new HashMap<>();
 	private final List<Object[]> _pendingWrites = new ArrayList<>();
 	private String _pluginName;
 	private String _portletShortName = StringPool.BLANK;

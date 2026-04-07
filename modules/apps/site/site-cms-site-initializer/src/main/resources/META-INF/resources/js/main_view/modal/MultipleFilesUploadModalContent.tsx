@@ -8,6 +8,7 @@ import {
 	FieldBase,
 	FileData,
 	MultipleFileUploader,
+	UploadRequestCallback,
 	openToast,
 } from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -65,13 +66,15 @@ export default function MultipleFilesUploadModalContent({
 		return `<a href="${baseAssetLibraryViewURL}${assetLibrary.groupId}" class="alert-link lead"><strong>${assetLibrary.name}</strong></a>`;
 	};
 
-	const uploadRequest = async ({
+	const uploadRequest: UploadRequestCallback = async ({
 		fileData,
-		groupId,
 	}: {
 		fileData: FileData;
-		groupId: string;
 	}) => {
+		if (!groupId) {
+			throw new Error('no space selected');
+		}
+
 		const fileBase64 = await getBase64(fileData.file);
 
 		return await ApiHelper.post(

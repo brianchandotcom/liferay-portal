@@ -102,7 +102,7 @@ generateBranchValidationScript {
 	args repoRootDir, outputDir
 
 	classpath = configurations.generateBranchValidationScriptConfiguration
-	mainClass = "com.liferay.jenkins.results.parser.test.suite.TestScriptGenerator"
+	mainClass = "com.liferay.jenkins.results.parser.test.suite.BranchValidator"
 
 	outputs.file provider {
 		file "${outputDir}/validate_branch.sh"

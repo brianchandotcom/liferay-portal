@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * @author Kenji Heigel
  */
-public class TestScriptGenerator {
+public class BranchValidator {
 
 	public static void main(String[] args) throws IOException {
 		String gitRepositoryDirPath = null;
@@ -44,15 +44,13 @@ public class TestScriptGenerator {
 				"Output directory is null or empty");
 		}
 
-		TestScriptGenerator testScriptGenerator = new TestScriptGenerator(
+		BranchValidator branchValidator = new BranchValidator(
 			gitRepositoryDirPath, outputDirPath);
 
-		testScriptGenerator.generate();
+		branchValidator.generate();
 	}
 
-	public TestScriptGenerator(
-		String gitRepositoryDirPath, String outputDirPath) {
-
+	public BranchValidator(String gitRepositoryDirPath, String outputDirPath) {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryDirPath)) {
 			throw new IllegalArgumentException(
 				"Git repository directory is not set");

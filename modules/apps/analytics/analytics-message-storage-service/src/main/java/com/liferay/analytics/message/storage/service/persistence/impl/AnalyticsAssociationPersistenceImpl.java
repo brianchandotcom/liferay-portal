@@ -396,6 +396,354 @@ public class AnalyticsAssociationPersistenceImpl
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"analyticsAssociation.companyId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_LtM;
+	private FinderPath _finderPathWithPaginationCountByC_LtM;
+
+	/**
+	 * Returns all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @return the matching analytics associations
+	 */
+	@Override
+	public List<AnalyticsAssociation> findByC_LtM(
+		long companyId, Date modifiedDate) {
+
+		return findByC_LtM(
+			companyId, modifiedDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @return the range of matching analytics associations
+	 */
+	@Override
+	public List<AnalyticsAssociation> findByC_LtM(
+		long companyId, Date modifiedDate, int start, int end) {
+
+		return findByC_LtM(companyId, modifiedDate, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching analytics associations
+	 */
+	@Override
+	public List<AnalyticsAssociation> findByC_LtM(
+		long companyId, Date modifiedDate, int start, int end,
+		OrderByComparator<AnalyticsAssociation> orderByComparator) {
+
+		return findByC_LtM(
+			companyId, modifiedDate, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param start the lower bound of the range of analytics associations
+	 * @param end the upper bound of the range of analytics associations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching analytics associations
+	 */
+	@Override
+	public List<AnalyticsAssociation> findByC_LtM(
+		long companyId, Date modifiedDate, int start, int end,
+		OrderByComparator<AnalyticsAssociation> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			finderPath = _finderPathWithPaginationFindByC_LtM;
+			finderArgs = new Object[] {
+				companyId, _getTime(modifiedDate), start, end, orderByComparator
+			};
+
+			List<AnalyticsAssociation> list = null;
+
+			if (useFinderCache) {
+				list = (List<AnalyticsAssociation>)finderCache.getResult(
+					finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (AnalyticsAssociation analyticsAssociation : list) {
+						if ((companyId !=
+								analyticsAssociation.getCompanyId()) ||
+							(modifiedDate.getTime() <=
+								analyticsAssociation.getModifiedDate(
+								).getTime())) {
+
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
+
+				sb.append(_SQL_SELECT_ANALYTICSASSOCIATION_WHERE);
+
+				sb.append(_FINDER_COLUMN_C_LTM_COMPANYID_2);
+
+				boolean bindModifiedDate = false;
+
+				if (modifiedDate == null) {
+					sb.append(_FINDER_COLUMN_C_LTM_MODIFIEDDATE_1);
+				}
+				else {
+					bindModifiedDate = true;
+
+					sb.append(_FINDER_COLUMN_C_LTM_MODIFIEDDATE_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindModifiedDate) {
+						queryPos.add(new Timestamp(modifiedDate.getTime()));
+					}
+
+					list = (List<AnalyticsAssociation>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first analytics association in the ordered set where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics association
+	 * @throws NoSuchAssociationException if a matching analytics association could not be found
+	 */
+	@Override
+	public AnalyticsAssociation findByC_LtM_First(
+			long companyId, Date modifiedDate,
+			OrderByComparator<AnalyticsAssociation> orderByComparator)
+		throws NoSuchAssociationException {
+
+		AnalyticsAssociation analyticsAssociation = fetchByC_LtM_First(
+			companyId, modifiedDate, orderByComparator);
+
+		if (analyticsAssociation != null) {
+			return analyticsAssociation;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", modifiedDate<");
+		sb.append(modifiedDate);
+
+		sb.append("}");
+
+		throw new NoSuchAssociationException(sb.toString());
+	}
+
+	/**
+	 * Returns the first analytics association in the ordered set where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics association, or <code>null</code> if a matching analytics association could not be found
+	 */
+	@Override
+	public AnalyticsAssociation fetchByC_LtM_First(
+		long companyId, Date modifiedDate,
+		OrderByComparator<AnalyticsAssociation> orderByComparator) {
+
+		List<AnalyticsAssociation> list = findByC_LtM(
+			companyId, modifiedDate, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 */
+	@Override
+	public void removeByC_LtM(long companyId, Date modifiedDate) {
+		for (AnalyticsAssociation analyticsAssociation :
+				findByC_LtM(
+					companyId, modifiedDate, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(analyticsAssociation);
+		}
+	}
+
+	/**
+	 * Returns the number of analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @return the number of matching analytics associations
+	 */
+	@Override
+	public int countByC_LtM(long companyId, Date modifiedDate) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
+
+			FinderPath finderPath = _finderPathWithPaginationCountByC_LtM;
+
+			Object[] finderArgs = new Object[] {
+				companyId, _getTime(modifiedDate)
+			};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_ANALYTICSASSOCIATION_WHERE);
+
+				sb.append(_FINDER_COLUMN_C_LTM_COMPANYID_2);
+
+				boolean bindModifiedDate = false;
+
+				if (modifiedDate == null) {
+					sb.append(_FINDER_COLUMN_C_LTM_MODIFIEDDATE_1);
+				}
+				else {
+					bindModifiedDate = true;
+
+					sb.append(_FINDER_COLUMN_C_LTM_MODIFIEDDATE_2);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindModifiedDate) {
+						queryPos.add(new Timestamp(modifiedDate.getTime()));
+					}
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_LTM_COMPANYID_2 =
+		"analyticsAssociation.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_LTM_MODIFIEDDATE_1 =
+		"analyticsAssociation.modifiedDate IS NULL";
+
+	private static final String _FINDER_COLUMN_C_LTM_MODIFIEDDATE_2 =
+		"analyticsAssociation.modifiedDate < ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
 	private FinderPath _finderPathCountByC_A;
@@ -1173,354 +1521,6 @@ public class AnalyticsAssociationPersistenceImpl
 
 	private static final String _FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_3 =
 		"(analyticsAssociation.associationClassName IS NULL OR analyticsAssociation.associationClassName = '')";
-
-	private FinderPath _finderPathWithPaginationFindByC_LtM;
-	private FinderPath _finderPathWithPaginationCountByC_LtM;
-
-	/**
-	 * Returns all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @return the matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_LtM(
-		long companyId, Date modifiedDate) {
-
-		return findByC_LtM(
-			companyId, modifiedDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @return the range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_LtM(
-		long companyId, Date modifiedDate, int start, int end) {
-
-		return findByC_LtM(companyId, modifiedDate, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_LtM(
-		long companyId, Date modifiedDate, int start, int end,
-		OrderByComparator<AnalyticsAssociation> orderByComparator) {
-
-		return findByC_LtM(
-			companyId, modifiedDate, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_LtM(
-		long companyId, Date modifiedDate, int start, int end,
-		OrderByComparator<AnalyticsAssociation> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			finderPath = _finderPathWithPaginationFindByC_LtM;
-			finderArgs = new Object[] {
-				companyId, _getTime(modifiedDate), start, end, orderByComparator
-			};
-
-			List<AnalyticsAssociation> list = null;
-
-			if (useFinderCache) {
-				list = (List<AnalyticsAssociation>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (AnalyticsAssociation analyticsAssociation : list) {
-						if ((companyId !=
-								analyticsAssociation.getCompanyId()) ||
-							(modifiedDate.getTime() <=
-								analyticsAssociation.getModifiedDate(
-								).getTime())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_ANALYTICSASSOCIATION_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_LTM_COMPANYID_2);
-
-				boolean bindModifiedDate = false;
-
-				if (modifiedDate == null) {
-					sb.append(_FINDER_COLUMN_C_LTM_MODIFIEDDATE_1);
-				}
-				else {
-					bindModifiedDate = true;
-
-					sb.append(_FINDER_COLUMN_C_LTM_MODIFIEDDATE_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					if (bindModifiedDate) {
-						queryPos.add(new Timestamp(modifiedDate.getTime()));
-					}
-
-					list = (List<AnalyticsAssociation>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Returns the first analytics association in the ordered set where companyId = &#63; and modifiedDate &lt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching analytics association
-	 * @throws NoSuchAssociationException if a matching analytics association could not be found
-	 */
-	@Override
-	public AnalyticsAssociation findByC_LtM_First(
-			long companyId, Date modifiedDate,
-			OrderByComparator<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException {
-
-		AnalyticsAssociation analyticsAssociation = fetchByC_LtM_First(
-			companyId, modifiedDate, orderByComparator);
-
-		if (analyticsAssociation != null) {
-			return analyticsAssociation;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", modifiedDate<");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
-	}
-
-	/**
-	 * Returns the first analytics association in the ordered set where companyId = &#63; and modifiedDate &lt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching analytics association, or <code>null</code> if a matching analytics association could not be found
-	 */
-	@Override
-	public AnalyticsAssociation fetchByC_LtM_First(
-		long companyId, Date modifiedDate,
-		OrderByComparator<AnalyticsAssociation> orderByComparator) {
-
-		List<AnalyticsAssociation> list = findByC_LtM(
-			companyId, modifiedDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Removes all the analytics associations where companyId = &#63; and modifiedDate &lt; &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 */
-	@Override
-	public void removeByC_LtM(long companyId, Date modifiedDate) {
-		for (AnalyticsAssociation analyticsAssociation :
-				findByC_LtM(
-					companyId, modifiedDate, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsAssociation);
-		}
-	}
-
-	/**
-	 * Returns the number of analytics associations where companyId = &#63; and modifiedDate &lt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @return the number of matching analytics associations
-	 */
-	@Override
-	public int countByC_LtM(long companyId, Date modifiedDate) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			FinderPath finderPath = _finderPathWithPaginationCountByC_LtM;
-
-			Object[] finderArgs = new Object[] {
-				companyId, _getTime(modifiedDate)
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_ANALYTICSASSOCIATION_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_LTM_COMPANYID_2);
-
-				boolean bindModifiedDate = false;
-
-				if (modifiedDate == null) {
-					sb.append(_FINDER_COLUMN_C_LTM_MODIFIEDDATE_1);
-				}
-				else {
-					bindModifiedDate = true;
-
-					sb.append(_FINDER_COLUMN_C_LTM_MODIFIEDDATE_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					if (bindModifiedDate) {
-						queryPos.add(new Timestamp(modifiedDate.getTime()));
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
-	private static final String _FINDER_COLUMN_C_LTM_COMPANYID_2 =
-		"analyticsAssociation.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_LTM_MODIFIEDDATE_1 =
-		"analyticsAssociation.modifiedDate IS NULL";
-
-	private static final String _FINDER_COLUMN_C_LTM_MODIFIEDDATE_2 =
-		"analyticsAssociation.modifiedDate < ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_A_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_A;
@@ -2772,6 +2772,20 @@ public class AnalyticsAssociationPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
+		_finderPathWithPaginationFindByC_LtM = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtM",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "modifiedDate"}, true);
+
+		_finderPathWithPaginationCountByC_LtM = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtM",
+			new String[] {Long.class.getName(), Date.class.getName()},
+			new String[] {"companyId", "modifiedDate"}, false);
+
 		_finderPathWithPaginationFindByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
 			new String[] {
@@ -2809,20 +2823,6 @@ public class AnalyticsAssociationPersistenceImpl
 			},
 			new String[] {"companyId", "modifiedDate", "associationClassName"},
 			false);
-
-		_finderPathWithPaginationFindByC_LtM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtM",
-			new String[] {
-				Long.class.getName(), Date.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "modifiedDate"}, true);
-
-		_finderPathWithPaginationCountByC_LtM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtM",
-			new String[] {Long.class.getName(), Date.class.getName()},
-			new String[] {"companyId", "modifiedDate"}, false);
 
 		_finderPathWithPaginationFindByC_A_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_A",
@@ -2941,4 +2941,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:593583286
+// LIFERAY-SERVICE-BUILDER-HASH:598124172

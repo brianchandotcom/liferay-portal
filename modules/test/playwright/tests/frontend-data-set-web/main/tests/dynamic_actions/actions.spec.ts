@@ -58,8 +58,10 @@ test('Dynamic Actions', async ({
 	});
 
 	await test.step('Assign "Single Approver" workflow to FDSSample', async () => {
-		const processBuilderWorkflowsUrl = '/group/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet';
-		const processBuilderConfigurationUrl = '_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_tab=configuration';
+		const processBuilderWorkflowsUrl =
+			'/group/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet';
+		const processBuilderConfigurationUrl =
+			'_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_tab=configuration';
 
 		await page.goto(
 			`${liferayConfig.environment.baseUrl}${processBuilderWorkflowsUrl}&${processBuilderConfigurationUrl}`
@@ -67,10 +69,22 @@ test('Dynamic Actions', async ({
 
 		await page.waitForLoadState('networkidle');
 
-	    await configurationTabPage.assignWorkflowToAssetType(
-	        'Single Approver',
-	        'Frontend Data Set Sample'
-	    );
+		await page
+			.getByRole('searchbox', {
+				name: 'Search for:',
+			})
+			.fill('Frontend Data Set Sample');
+
+		await page.keyboard.press('Enter');
+
+		await page
+			.locator('.lfr-search-container-wrapper table')
+			.waitFor({state: 'visible'});
+
+		await configurationTabPage.assignWorkflowToAssetType(
+			'Single Approver',
+			'Frontend Data Set Sample'
+		);
 	});
 
 	await test.step('Create a new FDS Sample item', async () => {
@@ -147,11 +161,10 @@ test('Dynamic Actions', async ({
 		});
 
 		expect(
-			await page
-			.locator('.fds-user-tasks table tbody tr').count()
+			await page.locator('.fds-user-tasks table tbody tr').count()
 		).toEqual(1);
 
-		await expect(page.getByRole('cell', { name: fdsItemERC })).toBeVisible();
+		await expect(page.getByRole('cell', {name: fdsItemERC})).toBeVisible();
 	});
 
 	await test.step('Check that the pending task has workflow actions', async () => {
@@ -164,24 +177,28 @@ test('Dynamic Actions', async ({
 			tableItemActionButton
 		);
 
-		await expect(dropdownMenu.getByRole('menuitem')).toHaveCount(
-			2
-		);
+		await expect(dropdownMenu.getByRole('menuitem')).toHaveCount(2);
 
-		await expect(dropdownMenu.getByRole('menuitem')).toHaveText(['Approve', 'Reject']);
+		await expect(dropdownMenu.getByRole('menuitem')).toHaveText([
+			'Approve',
+			'Reject',
+		]);
 	});
 
-	await test.step('Can Reject the pending task with a comment', async() => {
-		await fdsSamplePage.clickItemAction(
-			'Reject'
-		);
+	await test.step('Can Reject the pending task with a comment', async () => {
+		await fdsSamplePage.clickItemAction('Reject');
 
-		await fdsSamplePage.fillAndSaveWorkflowModal({comment: 'Rejected', name: 'Reject'});
+		await fdsSamplePage.fillAndSaveWorkflowModal({
+			comment: 'Rejected',
+			name: 'Reject',
+		});
 
-		await expect(fdsSamplePage.table.itemActionButtons).not.toBeInViewport();
+		await expect(
+			fdsSamplePage.table.itemActionButtons
+		).not.toBeInViewport();
 	});
 
-	await test.step('Can resend the task for approval', async() => {
+	await test.step('Can resend the task for approval', async () => {
 		await page.reload();
 
 		await waitForFDS({
@@ -191,13 +208,15 @@ test('Dynamic Actions', async ({
 		});
 
 		expect(
-			await page
-			.locator('.fds-user-tasks table tbody tr').count()
+			await page.locator('.fds-user-tasks table tbody tr').count()
 		).toEqual(2);
 
 		await fdsSamplePage.resubmitButton.click();
 
-		await fdsSamplePage.fillAndSaveWorkflowModal({comment: 'Resend for approval', name: 'Resubmit'});
+		await fdsSamplePage.fillAndSaveWorkflowModal({
+			comment: 'Resend for approval',
+			name: 'Resubmit',
+		});
 	});
 
 	await test.step('Assign the pending task to the current user', async () => {
@@ -222,17 +241,19 @@ test('Dynamic Actions', async ({
 		});
 
 		expect(
-			await page
-			.locator('.fds-user-tasks table tbody tr').count()
+			await page.locator('.fds-user-tasks table tbody tr').count()
 		).toEqual(3);
 
-		await fdsSamplePage.clickItemAction(
-			'Approve'
-		);
+		await fdsSamplePage.clickItemAction('Approve');
 
-		await fdsSamplePage.fillAndSaveWorkflowModal({comment: 'Seal of Approval', name: 'Approve'});
+		await fdsSamplePage.fillAndSaveWorkflowModal({
+			comment: 'Seal of Approval',
+			name: 'Approve',
+		});
 
-		await expect(fdsSamplePage.table.itemActionButtons).not.toBeInViewport();
+		await expect(
+			fdsSamplePage.table.itemActionButtons
+		).not.toBeInViewport();
 	});
 
 	await test.step('Go to Advanced tab and check that the new FDS Sample item appears and has status "APPROVED"', async () => {

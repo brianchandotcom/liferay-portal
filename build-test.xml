@@ -12429,7 +12429,7 @@ send_user $expect_out(buffer)]]></echo>
 			replace="&lt;system-err&gt;&lt;\/system-err&gt;"
 		/>
 
-		<echo>A report with all the test results can be found at test-results/html/index.html.</echo>
+		<echo>A report with all the test results can be found at ${project.dir}/test-results/html/index.html.</echo>
 	</target>
 
 	<target name="move-file">

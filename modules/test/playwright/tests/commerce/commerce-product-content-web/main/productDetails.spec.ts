@@ -1362,3 +1362,128 @@ test(
 		}
 	}
 );
+
+test(
+	'User cannot see expired SKUs',
+	{tag: '@LPD-85260'},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsSkusPage,
+		commerceAdminProductPage,
+		page,
+		productDetailsPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			siteGroupId: site.id,
+		});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'Catalog',
+			});
+		const option = await apiHelpers.headlessCommerceAdminCatalog.postOption(
+			'select',
+			'color',
+			'Color',
+			1
+		);
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: getRandomString()},
+				productOptions: [
+					{
+						fieldType: 'select',
+						key: 'color',
+						name: {
+							en_US: 'Color',
+						},
+						optionId: option.id,
+						priority: 1,
+						productOptionValues: [
+							{
+								key: 'black',
+								name: {
+									en_US: 'Black',
+								},
+								priority: 0,
+							},
+							{
+								key: 'white',
+								name: {
+									en_US: 'White',
+								},
+								priority: 1,
+							},
+						],
+						skuContributor: true,
+					},
+				],
+			});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Product Details');
+
+		await page.goto(`/web/${site.name}/p/${product.name['en_US']}`, {
+			waitUntil: 'networkidle',
+		});
+
+		await expect(
+			await productDetailsPage.optionSelector('Color')
+		).toBeVisible();
+
+		await productDetailsPage.optionSelector('Color').click();
+
+		let optionSelectorOptionValues = await productDetailsPage
+			.optionSelector('Color')
+			.locator('option')
+			.allTextContents();
+
+		expect(optionSelectorOptionValues).toEqual([
+			'Choose an Option',
+			'Black',
+			'White',
+		]);
+
+		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+
+		await commerceAdminProductPage.generateSkus();
+
+		await expect(
+			page.getByText('Showing 1 to 3 of 3 entries.')
+		).toBeVisible();
+
+		await commerceAdminProductDetailsSkusPage
+			.skusTableRowLink('BLACK')
+			.click();
+
+		await commerceAdminProductDetailsSkusPage.neverExpireCheckbox.uncheck();
+		await commerceAdminProductDetailsSkusPage.sidePanelSaveAsDraftButton.click();
+
+		await page.goto(`/web/${site.name}/p/${product.name['en_US']}`, {
+			waitUntil: 'networkidle',
+		});
+
+		await expect(
+			await productDetailsPage.optionSelector('Color')
+		).toBeVisible();
+
+		optionSelectorOptionValues = await productDetailsPage
+			.optionSelector('Color')
+			.locator('option')
+			.allTextContents();
+
+		expect(optionSelectorOptionValues).toEqual([
+			'Choose an Option',
+			'White',
+		]);
+	}
+);

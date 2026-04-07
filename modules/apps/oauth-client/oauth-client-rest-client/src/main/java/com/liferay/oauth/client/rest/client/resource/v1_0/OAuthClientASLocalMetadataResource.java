@@ -976,3 +976,4 @@ public interface OAuthClientASLocalMetadataResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:889446237

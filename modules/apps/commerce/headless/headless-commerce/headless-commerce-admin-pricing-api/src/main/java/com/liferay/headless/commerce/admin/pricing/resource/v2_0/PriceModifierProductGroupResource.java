@@ -178,3 +178,4 @@ public interface PriceModifierProductGroupResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:843932944

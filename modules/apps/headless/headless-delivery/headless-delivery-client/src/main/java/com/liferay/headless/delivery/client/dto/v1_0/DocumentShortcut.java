@@ -330,3 +330,4 @@ public class DocumentShortcut implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:902490204

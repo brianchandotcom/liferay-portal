@@ -1110,32 +1110,49 @@ public class Query {
 					id, Pagination.of(page, pageSize))));
 	}
 
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountChannelShippingOptionPageTypeExtension {
+	@GraphQLTypeExtension(AccountAddress.class)
+	public class GetAccountByExternalReferenceCodeTypeExtension {
 
-		public GetAccountByExternalReferenceCodeAccountChannelShippingOptionPageTypeExtension(
+		public GetAccountByExternalReferenceCodeTypeExtension(
+			AccountAddress accountAddress) {
+
+			_accountAddress = accountAddress;
+		}
+
+		@GraphQLField
+		public Account accountByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_accountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountResource ->
+					accountResource.getAccountByExternalReferenceCode(
+						_accountAddress.getExternalReferenceCode()));
+		}
+
+		private AccountAddress _accountAddress;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountAddressByExternalReferenceCodeTypeExtension {
+
+		public GetAccountAddressByExternalReferenceCodeTypeExtension(
 			Account account) {
 
 			_account = account;
 		}
 
 		@GraphQLField
-		public AccountChannelShippingOptionPage
-				byExternalReferenceCodeAccountChannelShippingOption(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
+		public AccountAddress addressByExternalReferenceCode()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_accountChannelShippingOptionResourceComponentServiceObjects,
+				_accountAddressResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				accountChannelShippingOptionResource ->
-					new AccountChannelShippingOptionPage(
-						accountChannelShippingOptionResource.
-							getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-								_account.getExternalReferenceCode(),
-								Pagination.of(page, pageSize))));
+				accountAddressResource ->
+					accountAddressResource.
+						getAccountAddressByExternalReferenceCode(
+							_account.getExternalReferenceCode()));
 		}
 
 		private Account _account;
@@ -1143,60 +1160,25 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountChannelPaymentTermsPageTypeExtension {
+	public class GetAccountGroupByExternalReferenceCodeTypeExtension {
 
-		public GetAccountByExternalReferenceCodeAccountChannelPaymentTermsPageTypeExtension(
+		public GetAccountGroupByExternalReferenceCodeTypeExtension(
 			Account account) {
 
 			_account = account;
 		}
 
 		@GraphQLField
-		public AccountChannelEntryPage
-				byExternalReferenceCodeAccountChannelPaymentTerms(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
+		public AdminAccountGroup groupByExternalReferenceCode()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_accountChannelEntryResourceComponentServiceObjects,
+				_adminAccountGroupResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				accountChannelEntryResource -> new AccountChannelEntryPage(
-					accountChannelEntryResource.
-						getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountMembersPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountMembersPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountMemberPage byExternalReferenceCodeAccountMembers(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountMemberResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountMemberResource -> new AccountMemberPage(
-					accountMemberResource.
-						getAccountByExternalReferenceCodeAccountMembersPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
+				adminAccountGroupResource ->
+					adminAccountGroupResource.
+						getAccountGroupByExternalReferenceCode(
+							_account.getExternalReferenceCode()));
 		}
 
 		private Account _account;
@@ -1227,86 +1209,6 @@ public class Query {
 						getAccountByExternalReferenceCodeAccountAddressesPage(
 							_account.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(AccountAddress.class)
-	public class GetAccountByExternalReferenceCodeTypeExtension {
-
-		public GetAccountByExternalReferenceCodeTypeExtension(
-			AccountAddress accountAddress) {
-
-			_accountAddress = accountAddress;
-		}
-
-		@GraphQLField
-		public Account accountByExternalReferenceCode() throws Exception {
-			return _applyComponentServiceObjects(
-				_accountResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountResource ->
-					accountResource.getAccountByExternalReferenceCode(
-						_accountAddress.getExternalReferenceCode()));
-		}
-
-		private AccountAddress _accountAddress;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountChannelShippingAddressesPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountChannelShippingAddressesPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountChannelEntryPage
-				byExternalReferenceCodeAccountChannelShippingAddresses(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountChannelEntryResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountChannelEntryResource -> new AccountChannelEntryPage(
-					accountChannelEntryResource.
-						getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class GetAccountGroupByExternalReferenceCodeTypeExtension {
-
-		public GetAccountGroupByExternalReferenceCodeTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AdminAccountGroup groupByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_adminAccountGroupResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				adminAccountGroupResource ->
-					adminAccountGroupResource.
-						getAccountGroupByExternalReferenceCode(
-							_account.getExternalReferenceCode()));
 		}
 
 		private Account _account;
@@ -1346,6 +1248,223 @@ public class Query {
 
 	@GraphQLTypeExtension(Account.class)
 	public class
+		GetAccountByExternalReferenceCodeAccountChannelCurrenciesPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountChannelCurrenciesPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountChannelEntryPage
+				byExternalReferenceCodeAccountChannelCurrencies(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountChannelEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountChannelEntryResource -> new AccountChannelEntryPage(
+					accountChannelEntryResource.
+						getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountChannelEntryPage
+				byExternalReferenceCodeAccountChannelDeliveryTerms(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountChannelEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountChannelEntryResource -> new AccountChannelEntryPage(
+					accountChannelEntryResource.
+						getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountChannelDiscountsPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountChannelDiscountsPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountChannelEntryPage
+				byExternalReferenceCodeAccountChannelDiscounts(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountChannelEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountChannelEntryResource -> new AccountChannelEntryPage(
+					accountChannelEntryResource.
+						getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountChannelEntryPage
+				byExternalReferenceCodeAccountChannelPaymentMethods(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountChannelEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountChannelEntryResource -> new AccountChannelEntryPage(
+					accountChannelEntryResource.
+						getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountChannelPaymentTermsPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountChannelPaymentTermsPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountChannelEntryPage
+				byExternalReferenceCodeAccountChannelPaymentTerms(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountChannelEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountChannelEntryResource -> new AccountChannelEntryPage(
+					accountChannelEntryResource.
+						getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountChannelPriceListsPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountChannelPriceListsPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountChannelEntryPage
+				byExternalReferenceCodeAccountChannelPriceLists(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountChannelEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountChannelEntryResource -> new AccountChannelEntryPage(
+					accountChannelEntryResource.
+						getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountChannelShippingAddressesPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountChannelShippingAddressesPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountChannelEntryPage
+				byExternalReferenceCodeAccountChannelShippingAddresses(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountChannelEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountChannelEntryResource -> new AccountChannelEntryPage(
+					accountChannelEntryResource.
+						getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
 		GetAccountByExternalReferenceCodeAccountChannelUsersPageTypeExtension {
 
 		public GetAccountByExternalReferenceCodeAccountChannelUsersPageTypeExtension(
@@ -1367,6 +1486,129 @@ public class Query {
 				accountChannelEntryResource -> new AccountChannelEntryPage(
 					accountChannelEntryResource.
 						getAccountByExternalReferenceCodeAccountChannelUsersPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountChannelShippingOptionPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountChannelShippingOptionPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountChannelShippingOptionPage
+				byExternalReferenceCodeAccountChannelShippingOption(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountChannelShippingOptionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountChannelShippingOptionResource ->
+					new AccountChannelShippingOptionPage(
+						accountChannelShippingOptionResource.
+							getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
+								_account.getExternalReferenceCode(),
+								Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountMembersPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountMembersPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountMemberPage byExternalReferenceCodeAccountMembers(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountMemberResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountMemberResource -> new AccountMemberPage(
+					accountMemberResource.
+						getAccountByExternalReferenceCodeAccountMembersPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountOrganizationsPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountOrganizationsPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AccountOrganizationPage
+				byExternalReferenceCodeAccountOrganizations(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountOrganizationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountOrganizationResource -> new AccountOrganizationPage(
+					accountOrganizationResource.
+						getAccountByExternalReferenceCodeAccountOrganizationsPage(
+							_account.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeAccountGroupsPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeAccountGroupsPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public AdminAccountGroupPage byExternalReferenceCodeAccountGroups(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_adminAccountGroupResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				adminAccountGroupResource -> new AdminAccountGroupPage(
+					adminAccountGroupResource.
+						getAccountByExternalReferenceCodeAccountGroupsPage(
 							_account.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
@@ -1425,248 +1667,6 @@ public class Query {
 						getAccountByExternalReferenceCodeAccountOrganization(
 							_account.getExternalReferenceCode(),
 							organizationId));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountChannelPriceListsPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountChannelPriceListsPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountChannelEntryPage
-				byExternalReferenceCodeAccountChannelPriceLists(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountChannelEntryResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountChannelEntryResource -> new AccountChannelEntryPage(
-					accountChannelEntryResource.
-						getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountChannelCurrenciesPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountChannelCurrenciesPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountChannelEntryPage
-				byExternalReferenceCodeAccountChannelCurrencies(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountChannelEntryResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountChannelEntryResource -> new AccountChannelEntryPage(
-					accountChannelEntryResource.
-						getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountGroupsPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountGroupsPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AdminAccountGroupPage byExternalReferenceCodeAccountGroups(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_adminAccountGroupResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				adminAccountGroupResource -> new AdminAccountGroupPage(
-					adminAccountGroupResource.
-						getAccountByExternalReferenceCodeAccountGroupsPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountChannelEntryPage
-				byExternalReferenceCodeAccountChannelPaymentMethods(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountChannelEntryResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountChannelEntryResource -> new AccountChannelEntryPage(
-					accountChannelEntryResource.
-						getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountOrganizationsPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountOrganizationsPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountOrganizationPage
-				byExternalReferenceCodeAccountOrganizations(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountOrganizationResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountOrganizationResource -> new AccountOrganizationPage(
-					accountOrganizationResource.
-						getAccountByExternalReferenceCodeAccountOrganizationsPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountChannelDiscountsPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountChannelDiscountsPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountChannelEntryPage
-				byExternalReferenceCodeAccountChannelDiscounts(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountChannelEntryResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountChannelEntryResource -> new AccountChannelEntryPage(
-					accountChannelEntryResource.
-						getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class
-		GetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPageTypeExtension {
-
-		public GetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountChannelEntryPage
-				byExternalReferenceCodeAccountChannelDeliveryTerms(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountChannelEntryResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountChannelEntryResource -> new AccountChannelEntryPage(
-					accountChannelEntryResource.
-						getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
-							_account.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Account _account;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class GetAccountAddressByExternalReferenceCodeTypeExtension {
-
-		public GetAccountAddressByExternalReferenceCodeTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField
-		public AccountAddress addressByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountAddressResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountAddressResource ->
-					accountAddressResource.
-						getAccountAddressByExternalReferenceCode(
-							_account.getExternalReferenceCode()));
 		}
 
 		private Account _account;
@@ -2097,3 +2097,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1739754971

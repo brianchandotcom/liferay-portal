@@ -138,3 +138,4 @@ public class ObjectDefinitionSetting implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1460953037

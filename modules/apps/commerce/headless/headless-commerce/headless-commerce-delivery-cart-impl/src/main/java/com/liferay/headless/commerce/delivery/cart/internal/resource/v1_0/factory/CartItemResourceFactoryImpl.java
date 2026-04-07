@@ -326,3 +326,4 @@ public class CartItemResourceFactoryImpl implements CartItemResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:252973233

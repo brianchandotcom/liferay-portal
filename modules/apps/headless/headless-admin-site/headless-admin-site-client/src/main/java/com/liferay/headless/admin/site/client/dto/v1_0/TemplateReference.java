@@ -99,3 +99,4 @@ public class TemplateReference implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:607818732

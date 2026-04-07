@@ -632,3 +632,4 @@ public class DispatchTriggerSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1548528630

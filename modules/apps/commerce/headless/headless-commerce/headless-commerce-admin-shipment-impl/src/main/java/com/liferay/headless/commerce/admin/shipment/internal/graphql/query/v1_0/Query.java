@@ -237,6 +237,51 @@ public class Query {
 				shippingAddressResource.getShipmentShippingAddress(shipmentId));
 	}
 
+	@GraphQLTypeExtension(ShipmentItem.class)
+	public class GetShipmentTypeExtension {
+
+		public GetShipmentTypeExtension(ShipmentItem shipmentItem) {
+			_shipmentItem = shipmentItem;
+		}
+
+		@GraphQLField
+		public Shipment shipment() throws Exception {
+			return _applyComponentServiceObjects(
+				_shipmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				shipmentResource -> shipmentResource.getShipment(
+					_shipmentItem.getShipmentId()));
+		}
+
+		private ShipmentItem _shipmentItem;
+
+	}
+
+	@GraphQLTypeExtension(ShipmentItem.class)
+	public class GetShipmentByExternalReferenceCodeTypeExtension {
+
+		public GetShipmentByExternalReferenceCodeTypeExtension(
+			ShipmentItem shipmentItem) {
+
+			_shipmentItem = shipmentItem;
+		}
+
+		@GraphQLField(
+			description = "Retrive information of the given Shipment."
+		)
+		public Shipment shipmentByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_shipmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				shipmentResource ->
+					shipmentResource.getShipmentByExternalReferenceCode(
+						_shipmentItem.getExternalReferenceCode()));
+		}
+
+		private ShipmentItem _shipmentItem;
+
+	}
+
 	@GraphQLTypeExtension(Shipment.class)
 	public class GetShipmentByExternalReferenceCodeItemTypeExtension {
 
@@ -254,6 +299,31 @@ public class Query {
 				shipmentItemResource ->
 					shipmentItemResource.getShipmentByExternalReferenceCodeItem(
 						_shipment.getExternalReferenceCode()));
+		}
+
+		private Shipment _shipment;
+
+	}
+
+	@GraphQLTypeExtension(Shipment.class)
+	public class GetShipmentItemsPageTypeExtension {
+
+		public GetShipmentItemsPageTypeExtension(Shipment shipment) {
+			_shipment = shipment;
+		}
+
+		@GraphQLField
+		public ShipmentItemPage items(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_shipmentItemResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				shipmentItemResource -> new ShipmentItemPage(
+					shipmentItemResource.getShipmentItemsPage(
+						_shipment.getId(), Pagination.of(page, pageSize))));
 		}
 
 		private Shipment _shipment;
@@ -310,76 +380,6 @@ public class Query {
 					shippingAddressResource.
 						getShipmentByExternalReferenceCodeShippingAddress(
 							_shipment.getExternalReferenceCode()));
-		}
-
-		private Shipment _shipment;
-
-	}
-
-	@GraphQLTypeExtension(ShipmentItem.class)
-	public class GetShipmentTypeExtension {
-
-		public GetShipmentTypeExtension(ShipmentItem shipmentItem) {
-			_shipmentItem = shipmentItem;
-		}
-
-		@GraphQLField
-		public Shipment shipment() throws Exception {
-			return _applyComponentServiceObjects(
-				_shipmentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				shipmentResource -> shipmentResource.getShipment(
-					_shipmentItem.getShipmentId()));
-		}
-
-		private ShipmentItem _shipmentItem;
-
-	}
-
-	@GraphQLTypeExtension(ShipmentItem.class)
-	public class GetShipmentByExternalReferenceCodeTypeExtension {
-
-		public GetShipmentByExternalReferenceCodeTypeExtension(
-			ShipmentItem shipmentItem) {
-
-			_shipmentItem = shipmentItem;
-		}
-
-		@GraphQLField(
-			description = "Retrive information of the given Shipment."
-		)
-		public Shipment shipmentByExternalReferenceCode() throws Exception {
-			return _applyComponentServiceObjects(
-				_shipmentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				shipmentResource ->
-					shipmentResource.getShipmentByExternalReferenceCode(
-						_shipmentItem.getExternalReferenceCode()));
-		}
-
-		private ShipmentItem _shipmentItem;
-
-	}
-
-	@GraphQLTypeExtension(Shipment.class)
-	public class GetShipmentItemsPageTypeExtension {
-
-		public GetShipmentItemsPageTypeExtension(Shipment shipment) {
-			_shipment = shipment;
-		}
-
-		@GraphQLField
-		public ShipmentItemPage items(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_shipmentItemResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				shipmentItemResource -> new ShipmentItemPage(
-					shipmentItemResource.getShipmentItemsPage(
-						_shipment.getId(), Pagination.of(page, pageSize))));
 		}
 
 		private Shipment _shipment;
@@ -584,3 +584,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:878711797

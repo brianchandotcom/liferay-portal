@@ -329,3 +329,4 @@ public class SXPElementResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1818830999

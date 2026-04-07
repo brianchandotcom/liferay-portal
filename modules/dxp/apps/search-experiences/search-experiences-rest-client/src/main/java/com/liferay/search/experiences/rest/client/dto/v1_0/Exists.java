@@ -78,3 +78,4 @@ public class Exists implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-683475499

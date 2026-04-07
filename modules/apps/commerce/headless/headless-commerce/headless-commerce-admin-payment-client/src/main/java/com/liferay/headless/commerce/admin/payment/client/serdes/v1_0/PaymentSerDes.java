@@ -1067,3 +1067,4 @@ public class PaymentSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-303785039

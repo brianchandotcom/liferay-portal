@@ -444,3 +444,4 @@ public class ObjectFolderSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1247151725

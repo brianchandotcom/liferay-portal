@@ -274,3 +274,4 @@ public interface FieldResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2144746352

@@ -381,3 +381,4 @@ public class ChannelAccountSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1946377665

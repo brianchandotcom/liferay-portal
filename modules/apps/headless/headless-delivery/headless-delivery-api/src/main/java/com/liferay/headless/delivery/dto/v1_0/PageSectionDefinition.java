@@ -1029,3 +1029,4 @@ public class PageSectionDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:601314855

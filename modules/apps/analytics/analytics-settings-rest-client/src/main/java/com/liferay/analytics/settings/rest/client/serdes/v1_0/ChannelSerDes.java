@@ -346,3 +346,4 @@ public class ChannelSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-702292489

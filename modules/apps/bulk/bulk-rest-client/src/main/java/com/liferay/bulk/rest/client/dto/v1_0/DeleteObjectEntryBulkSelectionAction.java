@@ -62,3 +62,4 @@ public class DeleteObjectEntryBulkSelectionAction
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:523871510

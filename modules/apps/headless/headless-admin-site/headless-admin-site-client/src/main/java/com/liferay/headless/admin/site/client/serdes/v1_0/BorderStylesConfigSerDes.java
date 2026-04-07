@@ -280,3 +280,4 @@ public class BorderStylesConfigSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1464420685

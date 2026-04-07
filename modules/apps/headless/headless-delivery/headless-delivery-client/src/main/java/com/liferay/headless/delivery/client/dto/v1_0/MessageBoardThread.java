@@ -772,3 +772,4 @@ public class MessageBoardThread implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:581616941

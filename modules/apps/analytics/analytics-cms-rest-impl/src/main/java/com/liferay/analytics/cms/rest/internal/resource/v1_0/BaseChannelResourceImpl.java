@@ -517,3 +517,4 @@ public abstract class BaseChannelResourceImpl implements ChannelResource {
 		LogFactoryUtil.getLog(BaseChannelResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:884628407

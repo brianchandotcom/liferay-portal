@@ -324,3 +324,4 @@ public class RegionResourceFactoryImpl implements RegionResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:792961993

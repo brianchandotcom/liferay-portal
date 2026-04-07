@@ -329,3 +329,4 @@ public class UtilityPageResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1178817473

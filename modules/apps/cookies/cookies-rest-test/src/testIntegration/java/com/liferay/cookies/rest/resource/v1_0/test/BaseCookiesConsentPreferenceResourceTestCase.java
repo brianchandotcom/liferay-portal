@@ -1425,3 +1425,4 @@ public abstract class BaseCookiesConsentPreferenceResourceTestCase {
 			_cookiesConsentPreferenceResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1486599478

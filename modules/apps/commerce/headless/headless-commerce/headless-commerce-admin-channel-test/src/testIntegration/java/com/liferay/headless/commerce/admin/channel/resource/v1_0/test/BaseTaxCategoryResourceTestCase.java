@@ -1310,3 +1310,4 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1078328559

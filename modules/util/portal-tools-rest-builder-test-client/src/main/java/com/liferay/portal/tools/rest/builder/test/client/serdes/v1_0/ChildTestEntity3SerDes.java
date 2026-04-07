@@ -586,3 +586,4 @@ public class ChildTestEntity3SerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1080431968

@@ -451,3 +451,4 @@ public class RatingsTypesSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1565361743

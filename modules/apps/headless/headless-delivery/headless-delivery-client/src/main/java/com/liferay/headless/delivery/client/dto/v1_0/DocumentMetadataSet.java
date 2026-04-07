@@ -355,3 +355,4 @@ public class DocumentMetadataSet implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1002993700

@@ -454,35 +454,30 @@ public class ServletDataImpl implements ServletData {
 							"getSiteDataRecordCollectionByDataRecordCollectionKey"));
 
 					put(
-						"query#DataDefinition.dataRecordCollections",
+						"query#DataRecordCollection.dataDefinition",
 						new ObjectValuePair<>(
-							DataRecordCollectionResourceImpl.class,
-							"getDataDefinitionDataRecordCollectionsPage"));
-					put(
-						"query#DataDefinition.dataDefinitionFieldLinks",
-						new ObjectValuePair<>(
-							DataDefinitionFieldLinkResourceImpl.class,
-							"getDataDefinitionDataDefinitionFieldLinksPage"));
-					put(
-						"query#DataDefinition.dataRecordCollection",
-						new ObjectValuePair<>(
-							DataRecordCollectionResourceImpl.class,
-							"getDataDefinitionDataRecordCollection"));
+							DataDefinitionResourceImpl.class,
+							"getDataDefinition"));
 					put(
 						"query#DataRecord.collection",
 						new ObjectValuePair<>(
 							DataRecordCollectionResourceImpl.class,
 							"getDataRecordCollection"));
 					put(
-						"query#DataRecordCollection.dataRecordExport",
-						new ObjectValuePair<>(
-							DataRecordResourceImpl.class,
-							"getDataRecordCollectionDataRecordExport"));
-					put(
-						"query#DataRecordCollection.dataDefinition",
+						"query#DataDefinition.permissions",
 						new ObjectValuePair<>(
 							DataDefinitionResourceImpl.class,
-							"getDataDefinition"));
+							"getDataDefinitionPermissionsPage"));
+					put(
+						"query#DataDefinition.dataDefinitionFieldLinks",
+						new ObjectValuePair<>(
+							DataDefinitionFieldLinkResourceImpl.class,
+							"getDataDefinitionDataDefinitionFieldLinksPage"));
+					put(
+						"query#DataDefinition.dataLayouts",
+						new ObjectValuePair<>(
+							DataLayoutResourceImpl.class,
+							"getDataDefinitionDataLayoutsPage"));
 					put(
 						"query#DataDefinition.dataListViews",
 						new ObjectValuePair<>(
@@ -494,30 +489,35 @@ public class ServletDataImpl implements ServletData {
 							DataRecordResourceImpl.class,
 							"getDataDefinitionDataRecordsPage"));
 					put(
-						"query#DataRecordCollection.permissionByCurrentUser",
-						new ObjectValuePair<>(
-							DataRecordCollectionResourceImpl.class,
-							"getDataRecordCollectionPermissionByCurrentUser"));
-					put(
-						"query#DataDefinition.dataLayouts",
-						new ObjectValuePair<>(
-							DataLayoutResourceImpl.class,
-							"getDataDefinitionDataLayoutsPage"));
-					put(
 						"query#DataRecordCollection.dataRecords",
 						new ObjectValuePair<>(
 							DataRecordResourceImpl.class,
 							"getDataRecordCollectionDataRecordsPage"));
+					put(
+						"query#DataDefinition.dataRecordCollection",
+						new ObjectValuePair<>(
+							DataRecordCollectionResourceImpl.class,
+							"getDataDefinitionDataRecordCollection"));
+					put(
+						"query#DataDefinition.dataRecordCollections",
+						new ObjectValuePair<>(
+							DataRecordCollectionResourceImpl.class,
+							"getDataDefinitionDataRecordCollectionsPage"));
 					put(
 						"query#DataRecordCollection.permissions",
 						new ObjectValuePair<>(
 							DataRecordCollectionResourceImpl.class,
 							"getDataRecordCollectionPermissionsPage"));
 					put(
-						"query#DataDefinition.permissions",
+						"query#DataRecordCollection.dataRecordExport",
 						new ObjectValuePair<>(
-							DataDefinitionResourceImpl.class,
-							"getDataDefinitionPermissionsPage"));
+							DataRecordResourceImpl.class,
+							"getDataRecordCollectionDataRecordExport"));
+					put(
+						"query#DataRecordCollection.permissionByCurrentUser",
+						new ObjectValuePair<>(
+							DataRecordCollectionResourceImpl.class,
+							"getDataRecordCollectionPermissionByCurrentUser"));
 				}
 			};
 
@@ -546,3 +546,4 @@ public class ServletDataImpl implements ServletData {
 		_dataRecordCollectionResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:666256904

@@ -141,3 +141,4 @@ public class Validation implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1573788542

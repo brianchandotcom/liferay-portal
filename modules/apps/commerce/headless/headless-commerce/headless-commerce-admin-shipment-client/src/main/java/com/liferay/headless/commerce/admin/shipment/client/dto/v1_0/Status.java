@@ -118,3 +118,4 @@ public class Status implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:412583027

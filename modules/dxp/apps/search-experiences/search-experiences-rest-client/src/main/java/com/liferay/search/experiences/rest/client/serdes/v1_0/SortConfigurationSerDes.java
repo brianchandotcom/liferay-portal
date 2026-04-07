@@ -207,3 +207,4 @@ public class SortConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1130587760

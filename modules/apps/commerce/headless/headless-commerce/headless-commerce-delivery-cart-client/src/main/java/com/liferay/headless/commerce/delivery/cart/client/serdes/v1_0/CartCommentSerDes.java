@@ -444,3 +444,4 @@ public class CartCommentSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1743897037

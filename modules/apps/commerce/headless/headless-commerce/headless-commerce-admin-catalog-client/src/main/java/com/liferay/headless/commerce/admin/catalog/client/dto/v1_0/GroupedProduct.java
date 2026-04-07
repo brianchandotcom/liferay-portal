@@ -256,3 +256,4 @@ public class GroupedProduct implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1405542649

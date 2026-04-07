@@ -181,3 +181,4 @@ public class UserGroup implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:220211185

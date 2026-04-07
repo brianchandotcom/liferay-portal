@@ -138,3 +138,4 @@ public interface SkuSubscriptionConfigurationResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:537498582

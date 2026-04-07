@@ -160,3 +160,4 @@ public class Pin implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1242854782

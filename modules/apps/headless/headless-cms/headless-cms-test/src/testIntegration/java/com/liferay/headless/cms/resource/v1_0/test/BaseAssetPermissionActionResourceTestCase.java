@@ -948,3 +948,4 @@ public abstract class BaseAssetPermissionActionResourceTestCase {
 		_assetPermissionActionResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:973581913

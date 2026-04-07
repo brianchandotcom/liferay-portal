@@ -390,3 +390,4 @@ public class ProductGroupSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:611640973

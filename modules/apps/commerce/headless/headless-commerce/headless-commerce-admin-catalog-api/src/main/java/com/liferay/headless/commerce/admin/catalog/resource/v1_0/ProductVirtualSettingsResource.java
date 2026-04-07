@@ -137,3 +137,4 @@ public interface ProductVirtualSettingsResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-594535882

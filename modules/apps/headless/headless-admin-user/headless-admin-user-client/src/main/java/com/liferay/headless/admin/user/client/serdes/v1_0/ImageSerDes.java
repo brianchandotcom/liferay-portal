@@ -198,3 +198,4 @@ public class ImageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1340573037

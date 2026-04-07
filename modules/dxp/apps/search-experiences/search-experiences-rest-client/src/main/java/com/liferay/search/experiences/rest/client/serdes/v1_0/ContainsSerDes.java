@@ -231,3 +231,4 @@ public class ContainsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:809245789

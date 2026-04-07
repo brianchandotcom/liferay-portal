@@ -281,3 +281,4 @@ public class ErrorSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-741009852

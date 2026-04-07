@@ -107,3 +107,4 @@ public class NotificationActionInteraction
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:994700568

@@ -200,3 +200,4 @@ public interface CollaboratorResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:102590381

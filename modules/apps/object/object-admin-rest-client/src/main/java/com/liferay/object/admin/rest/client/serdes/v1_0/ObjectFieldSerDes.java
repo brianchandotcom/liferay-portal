@@ -952,3 +952,4 @@ public class ObjectFieldSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2056895138

@@ -414,3 +414,4 @@ public class ERCSiteTestEntitySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-685853057

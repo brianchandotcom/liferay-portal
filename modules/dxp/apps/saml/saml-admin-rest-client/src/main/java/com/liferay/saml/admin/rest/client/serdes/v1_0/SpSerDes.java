@@ -347,3 +347,4 @@ public class SpSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:88909384

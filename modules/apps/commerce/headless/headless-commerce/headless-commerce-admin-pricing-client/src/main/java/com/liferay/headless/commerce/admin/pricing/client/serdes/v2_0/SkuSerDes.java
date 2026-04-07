@@ -345,3 +345,4 @@ public class SkuSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1169173119

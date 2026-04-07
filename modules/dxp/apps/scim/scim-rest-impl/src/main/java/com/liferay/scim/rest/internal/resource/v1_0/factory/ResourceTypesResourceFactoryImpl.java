@@ -330,3 +330,4 @@ public class ResourceTypesResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-903177169

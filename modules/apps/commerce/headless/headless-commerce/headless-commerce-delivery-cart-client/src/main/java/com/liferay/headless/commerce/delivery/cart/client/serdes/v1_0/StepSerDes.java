@@ -256,3 +256,4 @@ public class StepSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1713064699

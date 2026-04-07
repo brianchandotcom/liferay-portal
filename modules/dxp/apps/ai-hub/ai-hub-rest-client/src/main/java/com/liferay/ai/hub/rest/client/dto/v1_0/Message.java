@@ -117,3 +117,4 @@ public class Message implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-204796868

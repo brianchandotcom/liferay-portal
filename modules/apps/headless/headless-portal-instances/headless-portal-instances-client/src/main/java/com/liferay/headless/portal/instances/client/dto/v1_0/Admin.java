@@ -120,3 +120,4 @@ public class Admin implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-503398131

@@ -198,3 +198,4 @@ public class SchemaSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1938208213

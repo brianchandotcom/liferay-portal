@@ -214,3 +214,4 @@ public class DiscountCategory implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1418443803

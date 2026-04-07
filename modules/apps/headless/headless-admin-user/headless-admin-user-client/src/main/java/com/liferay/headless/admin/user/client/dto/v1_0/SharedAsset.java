@@ -415,3 +415,4 @@ public class SharedAsset implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1843426458

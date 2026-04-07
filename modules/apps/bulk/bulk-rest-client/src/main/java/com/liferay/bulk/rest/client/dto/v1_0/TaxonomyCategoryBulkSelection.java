@@ -133,3 +133,4 @@ public class TaxonomyCategoryBulkSelection implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-879988998

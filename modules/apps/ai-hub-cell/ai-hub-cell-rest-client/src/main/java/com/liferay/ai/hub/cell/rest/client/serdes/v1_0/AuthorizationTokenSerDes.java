@@ -299,3 +299,4 @@ public class AuthorizationTokenSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1055753509

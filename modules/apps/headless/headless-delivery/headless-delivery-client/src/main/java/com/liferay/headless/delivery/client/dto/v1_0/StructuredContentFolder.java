@@ -455,3 +455,4 @@ public class StructuredContentFolder implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-921833289

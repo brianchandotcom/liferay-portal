@@ -1106,3 +1106,4 @@ public abstract class BaseMessageResourceImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-562393878

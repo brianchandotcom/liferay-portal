@@ -227,3 +227,4 @@ public class ItemValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-410428910

@@ -524,3 +524,4 @@ public abstract class BaseUserAccountFullNameDefinitionResourceImpl
 			BaseUserAccountFullNameDefinitionResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1954357642

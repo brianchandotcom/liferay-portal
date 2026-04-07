@@ -206,3 +206,4 @@ public class OrderNote implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:499237588

@@ -944,3 +944,4 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-17132519

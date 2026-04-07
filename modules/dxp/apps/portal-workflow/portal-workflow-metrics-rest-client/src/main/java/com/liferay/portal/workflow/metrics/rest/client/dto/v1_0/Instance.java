@@ -541,3 +541,4 @@ public class Instance implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:381556981

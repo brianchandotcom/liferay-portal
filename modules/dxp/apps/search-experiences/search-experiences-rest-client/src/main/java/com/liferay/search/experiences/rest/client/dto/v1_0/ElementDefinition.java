@@ -140,3 +140,4 @@ public class ElementDefinition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1456918095

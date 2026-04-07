@@ -618,3 +618,4 @@ public class AttachmentUrlSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:161718444

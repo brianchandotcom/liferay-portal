@@ -99,3 +99,4 @@ public class QueryConfiguration implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:499237629

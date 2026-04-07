@@ -202,3 +202,4 @@ public class DataSourceTokenSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1365142596

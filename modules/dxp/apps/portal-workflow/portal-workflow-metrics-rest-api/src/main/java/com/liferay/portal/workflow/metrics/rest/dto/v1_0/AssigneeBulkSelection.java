@@ -242,3 +242,4 @@ public class AssigneeBulkSelection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1377810282

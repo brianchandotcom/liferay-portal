@@ -378,3 +378,4 @@ public interface UserAccountResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-872229162

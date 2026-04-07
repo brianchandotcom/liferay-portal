@@ -251,3 +251,4 @@ public class ObjectEntryTopPagesSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1427126597

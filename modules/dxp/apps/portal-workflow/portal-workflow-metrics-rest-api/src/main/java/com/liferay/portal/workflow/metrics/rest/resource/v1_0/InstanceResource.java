@@ -178,3 +178,4 @@ public interface InstanceResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1591849532

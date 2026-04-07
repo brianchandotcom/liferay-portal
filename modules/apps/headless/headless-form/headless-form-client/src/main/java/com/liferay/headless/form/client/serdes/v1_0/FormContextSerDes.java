@@ -356,3 +356,4 @@ public class FormContextSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1531464909

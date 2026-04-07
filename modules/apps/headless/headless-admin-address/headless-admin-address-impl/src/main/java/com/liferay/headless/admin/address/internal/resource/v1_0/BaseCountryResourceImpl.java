@@ -1399,3 +1399,4 @@ public abstract class BaseCountryResourceImpl
 		LogFactoryUtil.getLog(BaseCountryResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:578588563

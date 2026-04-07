@@ -344,3 +344,4 @@ public class DisplayPageFormContainerSubmissionResultSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-18843770

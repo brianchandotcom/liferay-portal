@@ -141,3 +141,4 @@ public class FieldSummary implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:577274834

@@ -349,3 +349,4 @@ public class ProductConfigurationListAccountGroupResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-5313042

@@ -198,3 +198,4 @@ public class ChangePasswordSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1082413871

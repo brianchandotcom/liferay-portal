@@ -62,3 +62,4 @@ public class ResetPermissionObjectBulkSelectionAction
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-309972876

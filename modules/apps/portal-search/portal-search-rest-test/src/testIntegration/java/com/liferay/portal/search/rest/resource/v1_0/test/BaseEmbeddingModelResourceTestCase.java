@@ -963,3 +963,4 @@ public abstract class BaseEmbeddingModelResourceTestCase {
 		_embeddingModelResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:12886495

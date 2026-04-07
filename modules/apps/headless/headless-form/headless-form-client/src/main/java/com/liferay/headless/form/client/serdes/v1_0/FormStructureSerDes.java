@@ -557,3 +557,4 @@ public class FormStructureSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-238935071

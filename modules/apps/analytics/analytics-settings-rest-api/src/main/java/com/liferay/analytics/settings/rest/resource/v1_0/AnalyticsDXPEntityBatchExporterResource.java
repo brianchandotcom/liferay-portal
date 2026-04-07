@@ -130,3 +130,4 @@ public interface AnalyticsDXPEntityBatchExporterResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:861917601

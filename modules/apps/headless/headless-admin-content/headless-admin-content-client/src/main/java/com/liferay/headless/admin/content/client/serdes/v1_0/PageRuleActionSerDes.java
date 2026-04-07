@@ -260,3 +260,4 @@ public class PageRuleActionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1333511757

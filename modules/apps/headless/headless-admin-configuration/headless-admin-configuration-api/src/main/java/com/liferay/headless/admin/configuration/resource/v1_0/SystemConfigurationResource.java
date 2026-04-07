@@ -169,3 +169,4 @@ public interface SystemConfigurationResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1998388453

@@ -141,3 +141,4 @@ public class Trend implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1948291917

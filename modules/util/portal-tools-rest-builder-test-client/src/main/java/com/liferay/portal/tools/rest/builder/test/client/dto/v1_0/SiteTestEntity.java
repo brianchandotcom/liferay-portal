@@ -214,3 +214,4 @@ public class SiteTestEntity implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:305754853

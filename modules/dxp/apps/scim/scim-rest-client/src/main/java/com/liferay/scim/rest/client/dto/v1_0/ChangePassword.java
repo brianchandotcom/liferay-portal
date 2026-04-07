@@ -78,3 +78,4 @@ public class ChangePassword implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2012622049

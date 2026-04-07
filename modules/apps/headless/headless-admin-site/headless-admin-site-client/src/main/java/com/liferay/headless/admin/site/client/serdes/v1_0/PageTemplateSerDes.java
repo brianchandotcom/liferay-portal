@@ -556,3 +556,4 @@ public class PageTemplateSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1088329834

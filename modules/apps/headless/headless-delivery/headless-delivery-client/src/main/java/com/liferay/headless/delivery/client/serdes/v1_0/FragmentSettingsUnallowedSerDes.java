@@ -239,3 +239,4 @@ public class FragmentSettingsUnallowedSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:36562020

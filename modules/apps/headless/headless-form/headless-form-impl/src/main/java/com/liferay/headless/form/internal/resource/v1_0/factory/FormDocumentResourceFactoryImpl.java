@@ -329,3 +329,4 @@ public class FormDocumentResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1935060897

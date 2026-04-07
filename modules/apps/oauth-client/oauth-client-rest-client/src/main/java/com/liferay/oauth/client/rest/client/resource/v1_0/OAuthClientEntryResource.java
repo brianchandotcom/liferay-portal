@@ -955,3 +955,4 @@ public interface OAuthClientEntryResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-445501267

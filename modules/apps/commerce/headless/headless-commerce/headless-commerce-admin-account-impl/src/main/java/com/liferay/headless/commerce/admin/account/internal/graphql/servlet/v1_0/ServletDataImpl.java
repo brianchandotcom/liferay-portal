@@ -770,50 +770,90 @@ public class ServletDataImpl implements ServletData {
 							"getAccountIdAccountGroupsPage"));
 
 					put(
-						"query#Account.byExternalReferenceCodeAccountChannelShippingOption",
-						new ObjectValuePair<>(
-							AccountChannelShippingOptionResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountChannelShippingOptionPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountChannelPaymentTerms",
-						new ObjectValuePair<>(
-							AccountChannelEntryResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountMembers",
-						new ObjectValuePair<>(
-							AccountMemberResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountMembersPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountAddresses",
-						new ObjectValuePair<>(
-							AccountAddressResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountAddressesPage"));
-					put(
 						"query#AccountAddress.accountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class,
 							"getAccountByExternalReferenceCode"));
 					put(
-						"query#Account.byExternalReferenceCodeAccountChannelShippingAddresses",
+						"query#Account.addressByExternalReferenceCode",
 						new ObjectValuePair<>(
-							AccountChannelEntryResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage"));
+							AccountAddressResourceImpl.class,
+							"getAccountAddressByExternalReferenceCode"));
 					put(
 						"query#Account.groupByExternalReferenceCode",
 						new ObjectValuePair<>(
 							AdminAccountGroupResourceImpl.class,
 							"getAccountGroupByExternalReferenceCode"));
 					put(
+						"query#Account.byExternalReferenceCodeAccountAddresses",
+						new ObjectValuePair<>(
+							AccountAddressResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountAddressesPage"));
+					put(
 						"query#Account.byExternalReferenceCodeAccountChannelBillingAddresses",
 						new ObjectValuePair<>(
 							AccountChannelEntryResourceImpl.class,
 							"getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage"));
 					put(
+						"query#Account.byExternalReferenceCodeAccountChannelCurrencies",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelCurrenciesPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountChannelDeliveryTerms",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountChannelDiscounts",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelDiscountsPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountChannelPaymentMethods",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountChannelPaymentTerms",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountChannelPriceLists",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelPriceListsPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountChannelShippingAddresses",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage"));
+					put(
 						"query#Account.byExternalReferenceCodeAccountChannelUsers",
 						new ObjectValuePair<>(
 							AccountChannelEntryResourceImpl.class,
 							"getAccountByExternalReferenceCodeAccountChannelUsersPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountChannelShippingOption",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelShippingOptionPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountMembers",
+						new ObjectValuePair<>(
+							AccountMemberResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountMembersPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountOrganizations",
+						new ObjectValuePair<>(
+							AccountOrganizationResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountOrganizationsPage"));
+					put(
+						"query#Account.byExternalReferenceCodeAccountGroups",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountGroupsPage"));
 					put(
 						"query#Account.byExternalReferenceCodeAccountMember",
 						new ObjectValuePair<>(
@@ -824,46 +864,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountOrganizationResourceImpl.class,
 							"getAccountByExternalReferenceCodeAccountOrganization"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountChannelPriceLists",
-						new ObjectValuePair<>(
-							AccountChannelEntryResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountChannelPriceListsPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountChannelCurrencies",
-						new ObjectValuePair<>(
-							AccountChannelEntryResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountChannelCurrenciesPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountGroups",
-						new ObjectValuePair<>(
-							AdminAccountGroupResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountGroupsPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountChannelPaymentMethods",
-						new ObjectValuePair<>(
-							AccountChannelEntryResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountOrganizations",
-						new ObjectValuePair<>(
-							AccountOrganizationResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountOrganizationsPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountChannelDiscounts",
-						new ObjectValuePair<>(
-							AccountChannelEntryResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountChannelDiscountsPage"));
-					put(
-						"query#Account.byExternalReferenceCodeAccountChannelDeliveryTerms",
-						new ObjectValuePair<>(
-							AccountChannelEntryResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage"));
-					put(
-						"query#Account.addressByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountAddressResourceImpl.class,
-							"getAccountAddressByExternalReferenceCode"));
 				}
 			};
 
@@ -900,3 +900,4 @@ public class ServletDataImpl implements ServletData {
 		_userResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:983473729

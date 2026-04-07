@@ -312,3 +312,4 @@ public class AggregateRatingSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1189047787

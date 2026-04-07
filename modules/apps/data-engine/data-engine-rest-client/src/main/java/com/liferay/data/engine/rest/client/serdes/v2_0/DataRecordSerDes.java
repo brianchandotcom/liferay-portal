@@ -278,3 +278,4 @@ public class DataRecordSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1737135727

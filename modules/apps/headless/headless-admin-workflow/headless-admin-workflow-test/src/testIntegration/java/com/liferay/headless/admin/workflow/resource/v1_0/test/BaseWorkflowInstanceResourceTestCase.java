@@ -1985,3 +1985,4 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:391508630

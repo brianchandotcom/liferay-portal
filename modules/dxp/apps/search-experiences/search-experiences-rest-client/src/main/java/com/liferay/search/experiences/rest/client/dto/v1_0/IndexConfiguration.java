@@ -99,3 +99,4 @@ public class IndexConfiguration implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1107423386

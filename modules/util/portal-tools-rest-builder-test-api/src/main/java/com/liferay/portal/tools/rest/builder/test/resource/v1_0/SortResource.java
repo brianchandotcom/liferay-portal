@@ -150,3 +150,4 @@ public interface SortResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:903615955

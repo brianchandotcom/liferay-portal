@@ -26,3 +26,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class CookiesRESTApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:210552580

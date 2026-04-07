@@ -222,3 +222,4 @@ public class ObjectLayoutBox implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:271927345

@@ -332,3 +332,4 @@ public class PriceListChannelResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-179949220

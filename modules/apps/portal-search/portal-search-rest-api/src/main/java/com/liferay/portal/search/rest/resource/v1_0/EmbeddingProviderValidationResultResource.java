@@ -137,3 +137,4 @@ public interface EmbeddingProviderValidationResultResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:305453561

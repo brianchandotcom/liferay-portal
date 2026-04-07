@@ -313,3 +313,4 @@ public class TemplateListStyleSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1034791768

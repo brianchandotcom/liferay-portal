@@ -665,3 +665,4 @@ public class MessageBoardSectionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:503276878

@@ -342,3 +342,4 @@ public class FieldMapping implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-837841743

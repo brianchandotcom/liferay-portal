@@ -3972,3 +3972,4 @@ public interface KnowledgeBaseArticleResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1118964532

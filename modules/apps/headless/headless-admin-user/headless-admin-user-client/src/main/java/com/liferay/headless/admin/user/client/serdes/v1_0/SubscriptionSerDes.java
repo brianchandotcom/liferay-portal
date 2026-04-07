@@ -391,3 +391,4 @@ public class SubscriptionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-342092333

@@ -118,3 +118,4 @@ public class Grid implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-404844202

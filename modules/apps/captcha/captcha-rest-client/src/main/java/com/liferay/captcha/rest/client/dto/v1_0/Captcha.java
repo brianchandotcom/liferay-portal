@@ -120,3 +120,4 @@ public class Captcha implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:412833003

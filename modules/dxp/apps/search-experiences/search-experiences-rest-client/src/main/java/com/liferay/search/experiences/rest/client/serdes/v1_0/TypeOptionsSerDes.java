@@ -478,3 +478,4 @@ public class TypeOptionsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1998158765

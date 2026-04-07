@@ -271,3 +271,4 @@ public class Comment implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:255437753

@@ -260,3 +260,4 @@ public class HoursAvailableSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:509834235

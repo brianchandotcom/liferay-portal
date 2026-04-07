@@ -904,3 +904,4 @@ public class CollectionDisplayPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1618830343

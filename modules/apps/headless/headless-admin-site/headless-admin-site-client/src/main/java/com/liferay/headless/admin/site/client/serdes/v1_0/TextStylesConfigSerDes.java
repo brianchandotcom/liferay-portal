@@ -466,3 +466,4 @@ public class TextStylesConfigSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1772443656

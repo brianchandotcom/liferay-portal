@@ -183,3 +183,4 @@ public class ShippingOption implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1850111953

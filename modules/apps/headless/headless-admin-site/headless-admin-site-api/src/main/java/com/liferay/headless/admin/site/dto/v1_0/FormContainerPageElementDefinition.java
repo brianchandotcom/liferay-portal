@@ -626,3 +626,4 @@ public class FormContainerPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1353043497

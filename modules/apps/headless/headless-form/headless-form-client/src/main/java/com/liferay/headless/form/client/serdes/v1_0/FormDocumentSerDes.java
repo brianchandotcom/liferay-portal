@@ -429,3 +429,4 @@ public class FormDocumentSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:393439723

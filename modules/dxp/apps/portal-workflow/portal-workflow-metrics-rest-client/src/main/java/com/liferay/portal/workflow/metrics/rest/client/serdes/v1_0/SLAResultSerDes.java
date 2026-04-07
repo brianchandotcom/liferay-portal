@@ -378,3 +378,4 @@ public class SLAResultSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:805504211

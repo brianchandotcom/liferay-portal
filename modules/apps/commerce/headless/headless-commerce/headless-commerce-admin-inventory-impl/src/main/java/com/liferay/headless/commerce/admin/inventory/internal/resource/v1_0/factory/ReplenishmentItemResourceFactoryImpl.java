@@ -333,3 +333,4 @@ public class ReplenishmentItemResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1120544798

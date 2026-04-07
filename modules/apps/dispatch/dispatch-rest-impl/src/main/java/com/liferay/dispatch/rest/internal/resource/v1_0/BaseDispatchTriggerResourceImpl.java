@@ -935,3 +935,4 @@ public abstract class BaseDispatchTriggerResourceImpl
 		LogFactoryUtil.getLog(BaseDispatchTriggerResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:888276171

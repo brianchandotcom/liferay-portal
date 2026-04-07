@@ -198,3 +198,4 @@ public class ExistsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2025150831

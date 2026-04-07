@@ -281,3 +281,4 @@ public class SiteSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1196463110

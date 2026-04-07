@@ -93,3 +93,4 @@ public abstract class BaseTaxonomyVocabularyDTOActionMetadataProvider {
 	private final Map<String, ActionInfo> _actionInfos = new HashMap<>();
 
 }
+// LIFERAY-REST-BUILDER-HASH:488084465

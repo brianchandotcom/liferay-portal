@@ -252,3 +252,4 @@ public class WorkflowDefinitionLinkSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:383664257

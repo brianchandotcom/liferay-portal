@@ -459,3 +459,4 @@ public class WebUrl implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-534763690

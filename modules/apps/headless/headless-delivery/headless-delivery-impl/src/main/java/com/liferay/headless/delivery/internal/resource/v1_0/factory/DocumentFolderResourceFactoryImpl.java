@@ -330,3 +330,4 @@ public class DocumentFolderResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-421537223

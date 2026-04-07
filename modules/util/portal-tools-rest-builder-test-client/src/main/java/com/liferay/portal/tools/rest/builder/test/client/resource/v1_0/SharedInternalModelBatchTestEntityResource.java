@@ -993,3 +993,4 @@ public interface SharedInternalModelBatchTestEntityResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1598066686

@@ -817,3 +817,4 @@ public class ObjectField implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:155818984

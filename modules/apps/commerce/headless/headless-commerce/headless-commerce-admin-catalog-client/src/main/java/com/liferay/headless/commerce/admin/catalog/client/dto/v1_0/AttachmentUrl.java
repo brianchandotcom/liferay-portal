@@ -356,3 +356,4 @@ public class AttachmentUrl implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1191450955

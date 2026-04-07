@@ -511,3 +511,4 @@ public interface ShippingMethodResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:210051548

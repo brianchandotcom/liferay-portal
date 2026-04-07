@@ -675,3 +675,4 @@ public class KnowledgeBaseArticle implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:143330745

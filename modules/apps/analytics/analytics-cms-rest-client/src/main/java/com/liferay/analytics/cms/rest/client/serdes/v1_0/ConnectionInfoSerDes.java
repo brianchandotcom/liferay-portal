@@ -290,3 +290,4 @@ public class ConnectionInfoSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2028789015

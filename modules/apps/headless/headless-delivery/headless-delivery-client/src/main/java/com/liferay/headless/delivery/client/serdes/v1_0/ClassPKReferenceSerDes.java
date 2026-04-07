@@ -229,3 +229,4 @@ public class ClassPKReferenceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2007876192

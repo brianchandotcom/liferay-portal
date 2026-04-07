@@ -184,3 +184,4 @@ public class DocumentType implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1831521524

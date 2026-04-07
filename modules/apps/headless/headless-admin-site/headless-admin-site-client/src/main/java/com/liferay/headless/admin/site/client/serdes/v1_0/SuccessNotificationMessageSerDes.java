@@ -238,3 +238,4 @@ public class SuccessNotificationMessageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:732008301

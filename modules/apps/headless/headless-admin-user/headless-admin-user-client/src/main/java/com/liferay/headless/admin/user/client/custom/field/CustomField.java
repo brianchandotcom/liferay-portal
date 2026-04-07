@@ -320,3 +320,4 @@ public class CustomField {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1441283863

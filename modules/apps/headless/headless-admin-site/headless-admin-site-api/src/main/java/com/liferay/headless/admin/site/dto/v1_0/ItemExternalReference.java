@@ -356,3 +356,4 @@ public class ItemExternalReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1804805433

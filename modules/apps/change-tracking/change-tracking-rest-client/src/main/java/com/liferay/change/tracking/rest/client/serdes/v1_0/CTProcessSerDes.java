@@ -403,3 +403,4 @@ public class CTProcessSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1988106583

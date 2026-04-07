@@ -205,3 +205,4 @@ public class SiteBrief implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-452684722

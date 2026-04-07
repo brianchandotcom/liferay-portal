@@ -215,3 +215,4 @@ public class AssigneeBulkSelectionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:733928951

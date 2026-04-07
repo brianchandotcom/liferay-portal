@@ -731,3 +731,4 @@ public class TierPriceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1286513540

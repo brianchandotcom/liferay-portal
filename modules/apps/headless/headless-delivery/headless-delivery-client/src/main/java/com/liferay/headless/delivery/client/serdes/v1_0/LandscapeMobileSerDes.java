@@ -261,3 +261,4 @@ public class LandscapeMobileSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-6078283

@@ -345,3 +345,4 @@ public class SearchHits implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1327476016

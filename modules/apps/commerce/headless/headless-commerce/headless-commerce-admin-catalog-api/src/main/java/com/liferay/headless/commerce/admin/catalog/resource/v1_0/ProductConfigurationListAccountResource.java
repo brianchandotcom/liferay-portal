@@ -180,3 +180,4 @@ public interface ProductConfigurationListAccountResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1237257760

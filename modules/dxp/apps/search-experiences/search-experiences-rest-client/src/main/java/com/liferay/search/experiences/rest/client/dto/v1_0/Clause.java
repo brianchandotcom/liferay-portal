@@ -282,3 +282,4 @@ public class Clause implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-883957481

@@ -332,3 +332,4 @@ public class BatchTestEntityResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:236593801

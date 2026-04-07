@@ -257,3 +257,4 @@ public class AssetUsageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-125057020

@@ -180,3 +180,4 @@ public class NestedTestEntity implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1109754034

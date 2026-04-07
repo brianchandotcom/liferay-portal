@@ -91,3 +91,4 @@ public abstract class BaseKeywordDTOActionMetadataProvider {
 	private final Map<String, ActionInfo> _actionInfos = new HashMap<>();
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1402610263

@@ -771,3 +771,4 @@ public class Sku implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:579597921

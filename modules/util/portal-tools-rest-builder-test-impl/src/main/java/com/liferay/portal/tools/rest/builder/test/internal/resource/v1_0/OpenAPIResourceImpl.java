@@ -124,3 +124,4 @@ public class OpenAPIResourceImpl {
 	};
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1347375589

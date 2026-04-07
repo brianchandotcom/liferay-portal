@@ -141,3 +141,4 @@ public class Image implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1422441526

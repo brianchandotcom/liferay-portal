@@ -264,3 +264,4 @@ public class ColorPaletteValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-141743314

@@ -252,3 +252,4 @@ public class PatchOpSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-671458619

@@ -518,3 +518,4 @@ public abstract class BaseStrategyResourceImpl implements StrategyResource {
 		LogFactoryUtil.getLog(BaseStrategyResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:915749948

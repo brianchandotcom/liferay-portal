@@ -353,3 +353,4 @@ public class DSRecipientSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:538483664

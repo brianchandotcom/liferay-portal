@@ -228,3 +228,4 @@ public class LowStockActionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1004149321

@@ -212,3 +212,4 @@ public class ModelPrefilterContributorSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:519171731

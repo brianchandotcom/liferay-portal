@@ -99,3 +99,4 @@ public class DataLayoutColumn implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:850757414

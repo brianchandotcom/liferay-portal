@@ -822,3 +822,4 @@ public abstract class BaseAuthorizationTokenResourceImpl
 		LogFactoryUtil.getLog(BaseAuthorizationTokenResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:246510993

@@ -2085,3 +2085,4 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		ERCSiteTestEntityResource _ercSiteTestEntityResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:202518394

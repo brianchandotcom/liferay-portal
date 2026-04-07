@@ -199,3 +199,4 @@ public class ServletDataImpl implements ServletData {
 		_notificationTemplateResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-563128846

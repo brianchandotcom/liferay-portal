@@ -1039,3 +1039,4 @@ public abstract class BaseAgentInstanceResourceTestCase {
 		_agentInstanceResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:169228060

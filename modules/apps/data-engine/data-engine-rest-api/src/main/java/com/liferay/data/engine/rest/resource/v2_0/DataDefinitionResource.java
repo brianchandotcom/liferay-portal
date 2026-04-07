@@ -217,3 +217,4 @@ public interface DataDefinitionResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-610555047

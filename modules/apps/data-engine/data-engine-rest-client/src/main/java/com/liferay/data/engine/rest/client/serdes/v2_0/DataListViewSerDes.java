@@ -473,3 +473,4 @@ public class DataListViewSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-208065756

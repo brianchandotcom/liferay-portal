@@ -324,3 +324,4 @@ public class SegmentResourceFactoryImpl implements SegmentResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1278626596

@@ -906,3 +906,4 @@ public class AssetLibrarySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:458573723

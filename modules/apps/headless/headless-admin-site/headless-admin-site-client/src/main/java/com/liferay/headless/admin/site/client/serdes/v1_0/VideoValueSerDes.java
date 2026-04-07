@@ -228,3 +228,4 @@ public class VideoValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1557945336

@@ -333,3 +333,4 @@ public class AdminAccountGroupResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:155452344

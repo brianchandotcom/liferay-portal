@@ -335,3 +335,4 @@ public class ObjectValidationRuleResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1827471626

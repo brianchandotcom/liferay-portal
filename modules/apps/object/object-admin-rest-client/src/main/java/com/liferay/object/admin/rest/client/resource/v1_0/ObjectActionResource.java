@@ -1580,3 +1580,4 @@ public interface ObjectActionResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:844120711

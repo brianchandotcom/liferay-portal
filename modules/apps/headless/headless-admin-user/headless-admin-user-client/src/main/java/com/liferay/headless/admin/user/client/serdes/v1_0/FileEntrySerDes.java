@@ -340,3 +340,4 @@ public class FileEntrySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1980730300

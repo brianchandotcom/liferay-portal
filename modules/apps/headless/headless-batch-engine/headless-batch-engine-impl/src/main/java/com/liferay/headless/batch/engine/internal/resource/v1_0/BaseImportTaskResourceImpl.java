@@ -1200,3 +1200,4 @@ public abstract class BaseImportTaskResourceImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1375805246

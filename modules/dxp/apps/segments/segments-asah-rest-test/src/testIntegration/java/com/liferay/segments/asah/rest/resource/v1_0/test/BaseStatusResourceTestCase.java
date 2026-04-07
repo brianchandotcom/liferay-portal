@@ -1068,3 +1068,4 @@ public abstract class BaseStatusResourceTestCase {
 		_statusResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:646357261

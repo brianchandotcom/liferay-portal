@@ -120,3 +120,4 @@ public class HtmlProperties implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-898141455

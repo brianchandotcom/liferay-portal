@@ -791,3 +791,4 @@ public abstract class BaseSortResourceTestCase {
 			_sortResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1296917757

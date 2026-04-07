@@ -513,3 +513,4 @@ public abstract class BasePunchOutSessionResourceImpl
 		LogFactoryUtil.getLog(BasePunchOutSessionResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:713172951

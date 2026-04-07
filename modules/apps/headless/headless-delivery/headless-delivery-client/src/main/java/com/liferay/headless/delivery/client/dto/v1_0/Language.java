@@ -182,3 +182,4 @@ public class Language implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:841233434

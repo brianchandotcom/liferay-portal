@@ -293,3 +293,4 @@ public class UserSchemaExtension implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:857139980

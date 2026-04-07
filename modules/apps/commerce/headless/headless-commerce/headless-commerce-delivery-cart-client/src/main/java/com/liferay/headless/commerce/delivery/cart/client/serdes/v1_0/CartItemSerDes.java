@@ -1085,3 +1085,4 @@ public class CartItemSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-741589018

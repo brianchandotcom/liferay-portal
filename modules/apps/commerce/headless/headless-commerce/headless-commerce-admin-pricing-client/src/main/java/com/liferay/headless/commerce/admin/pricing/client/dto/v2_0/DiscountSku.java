@@ -272,3 +272,4 @@ public class DiscountSku implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1476859946

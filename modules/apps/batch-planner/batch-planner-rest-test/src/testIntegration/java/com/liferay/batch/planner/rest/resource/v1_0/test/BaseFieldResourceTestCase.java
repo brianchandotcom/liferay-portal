@@ -1129,3 +1129,4 @@ public abstract class BaseFieldResourceTestCase {
 		_fieldResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1460334252

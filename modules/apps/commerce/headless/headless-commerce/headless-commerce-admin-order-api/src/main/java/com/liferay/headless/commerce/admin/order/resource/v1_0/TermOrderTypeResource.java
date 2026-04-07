@@ -167,3 +167,4 @@ public interface TermOrderTypeResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:777713222

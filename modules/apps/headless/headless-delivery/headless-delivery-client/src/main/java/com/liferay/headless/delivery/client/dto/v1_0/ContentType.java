@@ -78,3 +78,4 @@ public class ContentType implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-148805024

@@ -26,3 +26,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class AIHubRESTApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:-349557721

@@ -100,3 +100,4 @@ public class ClassFieldsReference implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-345030208

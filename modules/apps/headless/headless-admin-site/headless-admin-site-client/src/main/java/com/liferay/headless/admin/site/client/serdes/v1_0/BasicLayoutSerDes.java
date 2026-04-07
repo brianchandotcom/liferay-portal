@@ -259,3 +259,4 @@ public class BasicLayoutSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:469150055

@@ -236,3 +236,4 @@ public class FragmentInlineValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-584841971

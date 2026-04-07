@@ -79,3 +79,4 @@ public class ModelPrefilterContributor implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:604859732

@@ -235,3 +235,4 @@ public class ObjectEntryHistogramMetricSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1084350506

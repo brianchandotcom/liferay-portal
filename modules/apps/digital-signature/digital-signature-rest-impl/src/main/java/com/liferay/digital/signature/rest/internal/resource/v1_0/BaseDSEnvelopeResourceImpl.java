@@ -1058,3 +1058,4 @@ public abstract class BaseDSEnvelopeResourceImpl
 		LogFactoryUtil.getLog(BaseDSEnvelopeResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-235194474

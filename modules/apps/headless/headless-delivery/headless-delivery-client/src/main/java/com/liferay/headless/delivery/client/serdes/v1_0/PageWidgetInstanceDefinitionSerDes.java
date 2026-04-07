@@ -476,3 +476,4 @@ public class PageWidgetInstanceDefinitionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:476178537

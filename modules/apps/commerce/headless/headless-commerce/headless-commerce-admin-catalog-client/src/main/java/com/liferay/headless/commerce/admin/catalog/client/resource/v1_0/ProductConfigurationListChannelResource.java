@@ -1024,3 +1024,4 @@ public interface ProductConfigurationListChannelResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1215437343

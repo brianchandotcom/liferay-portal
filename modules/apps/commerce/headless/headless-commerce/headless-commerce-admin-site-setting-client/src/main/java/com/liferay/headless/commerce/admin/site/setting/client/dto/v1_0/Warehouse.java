@@ -389,3 +389,4 @@ public class Warehouse implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1064242322

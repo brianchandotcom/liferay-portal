@@ -226,3 +226,4 @@ public class DataLayoutRowSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:861828449

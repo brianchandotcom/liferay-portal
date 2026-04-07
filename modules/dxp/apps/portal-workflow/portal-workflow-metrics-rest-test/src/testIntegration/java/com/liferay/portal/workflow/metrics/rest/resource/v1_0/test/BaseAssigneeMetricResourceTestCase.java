@@ -878,3 +878,4 @@ public abstract class BaseAssigneeMetricResourceTestCase {
 		AssigneeMetricResource _assigneeMetricResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:862072296

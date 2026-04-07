@@ -199,3 +199,4 @@ public interface AccountResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:951307151

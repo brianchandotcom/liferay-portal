@@ -262,3 +262,4 @@ public class ServiceProviderConfig implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-687974295

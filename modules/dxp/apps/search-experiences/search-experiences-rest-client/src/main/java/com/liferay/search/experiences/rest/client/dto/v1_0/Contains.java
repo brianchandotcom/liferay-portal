@@ -99,3 +99,4 @@ public class Contains implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-708302813

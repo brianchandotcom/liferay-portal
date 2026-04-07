@@ -188,3 +188,4 @@ public class RenderedContent implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-917237769

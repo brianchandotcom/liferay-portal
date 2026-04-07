@@ -249,3 +249,4 @@ public class MessageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1142490994

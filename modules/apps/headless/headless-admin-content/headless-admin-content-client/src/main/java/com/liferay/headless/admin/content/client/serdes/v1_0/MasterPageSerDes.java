@@ -228,3 +228,4 @@ public class MasterPageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-804210223

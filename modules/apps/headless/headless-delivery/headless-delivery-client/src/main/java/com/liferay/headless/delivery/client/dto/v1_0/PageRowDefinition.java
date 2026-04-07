@@ -352,3 +352,4 @@ public class PageRowDefinition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-936888439

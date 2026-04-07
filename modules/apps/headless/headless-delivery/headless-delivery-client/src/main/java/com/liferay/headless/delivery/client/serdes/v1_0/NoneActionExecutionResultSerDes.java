@@ -208,3 +208,4 @@ public class NoneActionExecutionResultSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1399289176

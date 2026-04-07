@@ -229,3 +229,4 @@ public class InSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1892456111

@@ -594,3 +594,4 @@ public class ObjectViewSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:369565720

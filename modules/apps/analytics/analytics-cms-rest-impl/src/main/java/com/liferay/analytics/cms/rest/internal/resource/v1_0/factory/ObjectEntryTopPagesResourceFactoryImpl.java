@@ -335,3 +335,4 @@ public class ObjectEntryTopPagesResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-489417867

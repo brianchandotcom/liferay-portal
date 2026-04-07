@@ -375,3 +375,4 @@ public class OrderNoteSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:710760282

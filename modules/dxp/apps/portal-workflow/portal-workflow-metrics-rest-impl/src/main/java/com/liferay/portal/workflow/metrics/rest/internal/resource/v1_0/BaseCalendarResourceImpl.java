@@ -800,3 +800,4 @@ public abstract class BaseCalendarResourceImpl
 		LogFactoryUtil.getLog(BaseCalendarResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1518019937

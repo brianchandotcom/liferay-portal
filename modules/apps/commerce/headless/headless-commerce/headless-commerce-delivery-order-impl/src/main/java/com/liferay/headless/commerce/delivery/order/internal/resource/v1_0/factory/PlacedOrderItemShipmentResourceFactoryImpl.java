@@ -340,3 +340,4 @@ public class PlacedOrderItemShipmentResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1466526102

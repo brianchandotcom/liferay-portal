@@ -201,3 +201,4 @@ public class ERCAssetLibraryTestEntity implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-958430755

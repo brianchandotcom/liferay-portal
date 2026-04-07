@@ -355,3 +355,4 @@ public class Grid implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:166009663

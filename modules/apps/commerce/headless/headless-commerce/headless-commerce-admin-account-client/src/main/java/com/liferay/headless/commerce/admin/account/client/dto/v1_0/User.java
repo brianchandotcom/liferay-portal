@@ -242,3 +242,4 @@ public class User implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-24667739

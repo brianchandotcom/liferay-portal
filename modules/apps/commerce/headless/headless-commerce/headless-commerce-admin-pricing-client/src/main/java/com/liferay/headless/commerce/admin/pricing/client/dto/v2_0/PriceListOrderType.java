@@ -235,3 +235,4 @@ public class PriceListOrderType implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-257400188

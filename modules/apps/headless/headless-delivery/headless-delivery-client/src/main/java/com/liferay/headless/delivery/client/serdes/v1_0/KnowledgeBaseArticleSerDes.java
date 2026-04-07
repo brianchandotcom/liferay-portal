@@ -1107,3 +1107,4 @@ public class KnowledgeBaseArticleSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2014881968

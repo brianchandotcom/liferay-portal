@@ -160,3 +160,4 @@ public class HistogramMetric implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1994026451

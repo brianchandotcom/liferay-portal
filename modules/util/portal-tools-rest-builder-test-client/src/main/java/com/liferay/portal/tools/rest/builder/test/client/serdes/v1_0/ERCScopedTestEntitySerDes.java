@@ -485,3 +485,4 @@ public class ERCScopedTestEntitySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1183708069

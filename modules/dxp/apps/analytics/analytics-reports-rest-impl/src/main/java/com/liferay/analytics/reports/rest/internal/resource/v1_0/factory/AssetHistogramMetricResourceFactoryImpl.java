@@ -335,3 +335,4 @@ public class AssetHistogramMetricResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-189869410

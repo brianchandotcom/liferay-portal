@@ -82,3 +82,4 @@ public class DataSourceLiferayAnalyticsURL implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:582837146

@@ -1172,3 +1172,4 @@ public class Product implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1607691458

@@ -1979,3 +1979,4 @@ public interface MeasurementUnitResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:226198842

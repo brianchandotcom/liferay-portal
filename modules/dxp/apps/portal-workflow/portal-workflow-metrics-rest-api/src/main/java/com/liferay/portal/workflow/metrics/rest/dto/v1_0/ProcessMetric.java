@@ -445,3 +445,4 @@ public class ProcessMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-190291250

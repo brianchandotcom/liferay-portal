@@ -165,3 +165,4 @@ public class ContactConfiguration implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:89419466

@@ -340,3 +340,4 @@ public class WorkflowTaskTransitionsResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1635381441

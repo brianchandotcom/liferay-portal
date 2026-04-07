@@ -77,3 +77,4 @@ public class URLImageValue
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-938578640

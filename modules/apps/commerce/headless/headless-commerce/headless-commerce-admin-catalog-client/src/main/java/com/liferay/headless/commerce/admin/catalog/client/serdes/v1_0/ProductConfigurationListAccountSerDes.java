@@ -443,3 +443,4 @@ public class ProductConfigurationListAccountSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:196782901

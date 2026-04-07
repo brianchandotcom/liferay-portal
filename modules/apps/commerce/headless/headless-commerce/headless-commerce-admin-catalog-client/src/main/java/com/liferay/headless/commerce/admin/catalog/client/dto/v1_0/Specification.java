@@ -287,3 +287,4 @@ public class Specification implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:192956155

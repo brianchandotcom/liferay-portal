@@ -57,3 +57,4 @@ public class ChildTestEntity3
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1267862768

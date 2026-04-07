@@ -142,3 +142,4 @@ public class AdvancedConfiguration implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-839232422

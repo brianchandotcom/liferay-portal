@@ -130,3 +130,4 @@ public class SitePageFormSubmissionResult implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1989690691

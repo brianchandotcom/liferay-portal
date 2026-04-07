@@ -286,3 +286,4 @@ public class IdpSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:738569787

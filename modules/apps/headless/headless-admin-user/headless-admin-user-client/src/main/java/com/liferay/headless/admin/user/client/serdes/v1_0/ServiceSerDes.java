@@ -246,3 +246,4 @@ public class ServiceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-379569809

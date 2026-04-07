@@ -283,3 +283,4 @@ public interface ContactOrganizationResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1814536962

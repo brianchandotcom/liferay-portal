@@ -592,3 +592,4 @@ public interface IndexResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:704272487

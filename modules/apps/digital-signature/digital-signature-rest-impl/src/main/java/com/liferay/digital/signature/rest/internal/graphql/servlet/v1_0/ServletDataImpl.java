@@ -126,3 +126,4 @@ public class ServletDataImpl implements ServletData {
 		_dsRecipientViewDefinitionResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2030562215

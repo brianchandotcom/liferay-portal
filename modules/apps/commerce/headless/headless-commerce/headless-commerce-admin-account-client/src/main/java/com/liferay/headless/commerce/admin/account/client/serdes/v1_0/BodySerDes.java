@@ -198,3 +198,4 @@ public class BodySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1102867035

@@ -400,3 +400,4 @@ public class ProductVirtualSettings implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:833146698

@@ -58,3 +58,4 @@ public class PageSetPageSpecification
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:267571800

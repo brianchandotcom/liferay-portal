@@ -2144,3 +2144,4 @@ public interface DocumentShortcutResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1959821711

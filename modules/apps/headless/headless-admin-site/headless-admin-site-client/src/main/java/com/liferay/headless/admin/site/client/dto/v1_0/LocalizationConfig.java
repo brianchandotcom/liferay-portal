@@ -150,3 +150,4 @@ public class LocalizationConfig implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2012103719

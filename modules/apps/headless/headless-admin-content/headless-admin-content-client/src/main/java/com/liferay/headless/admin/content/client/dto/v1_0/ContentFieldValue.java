@@ -201,3 +201,4 @@ public class ContentFieldValue implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1058715432

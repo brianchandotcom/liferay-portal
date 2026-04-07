@@ -123,3 +123,4 @@ public class AssignToObjectBulkSelectionAction
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-941991072

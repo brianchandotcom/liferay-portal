@@ -235,3 +235,4 @@ public class NavigationSettingsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1789997670

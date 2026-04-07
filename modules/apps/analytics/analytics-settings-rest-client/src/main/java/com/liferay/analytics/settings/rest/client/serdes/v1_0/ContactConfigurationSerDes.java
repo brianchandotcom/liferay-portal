@@ -380,3 +380,4 @@ public class ContactConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:282595978

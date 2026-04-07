@@ -323,3 +323,4 @@ public class UserResourceFactoryImpl implements UserResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-867571014

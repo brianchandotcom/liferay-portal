@@ -431,3 +431,4 @@ public class ERCAssetLibraryTestEntitySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1431300963

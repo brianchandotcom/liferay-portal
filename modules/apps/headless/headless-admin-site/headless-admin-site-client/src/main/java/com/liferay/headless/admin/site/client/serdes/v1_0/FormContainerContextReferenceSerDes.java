@@ -243,3 +243,4 @@ public class FormContainerContextReferenceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-65940917

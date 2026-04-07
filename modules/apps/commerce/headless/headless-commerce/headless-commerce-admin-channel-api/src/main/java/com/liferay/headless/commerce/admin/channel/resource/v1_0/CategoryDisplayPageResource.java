@@ -179,3 +179,4 @@ public interface CategoryDisplayPageResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-771370218

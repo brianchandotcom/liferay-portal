@@ -1173,3 +1173,4 @@ public interface StyleBookResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1922730210

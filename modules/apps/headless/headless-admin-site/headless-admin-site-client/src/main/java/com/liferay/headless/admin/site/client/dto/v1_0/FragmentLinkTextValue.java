@@ -110,3 +110,4 @@ public class FragmentLinkTextValue implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2107547209

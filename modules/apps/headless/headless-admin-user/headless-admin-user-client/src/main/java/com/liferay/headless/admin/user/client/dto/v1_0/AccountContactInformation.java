@@ -266,3 +266,4 @@ public class AccountContactInformation implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:200198101

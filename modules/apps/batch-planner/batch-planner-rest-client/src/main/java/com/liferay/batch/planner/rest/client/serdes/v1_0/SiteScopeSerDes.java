@@ -224,3 +224,4 @@ public class SiteScopeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1089147076

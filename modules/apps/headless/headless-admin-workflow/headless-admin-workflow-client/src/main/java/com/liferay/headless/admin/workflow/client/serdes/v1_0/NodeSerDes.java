@@ -255,3 +255,4 @@ public class NodeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-212028252

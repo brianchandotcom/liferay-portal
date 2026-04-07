@@ -818,3 +818,4 @@ public interface UserGroupResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1612540418

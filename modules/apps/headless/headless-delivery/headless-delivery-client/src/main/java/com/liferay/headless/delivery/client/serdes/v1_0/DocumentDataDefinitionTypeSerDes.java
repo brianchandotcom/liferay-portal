@@ -786,3 +786,4 @@ public class DocumentDataDefinitionTypeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:575793585

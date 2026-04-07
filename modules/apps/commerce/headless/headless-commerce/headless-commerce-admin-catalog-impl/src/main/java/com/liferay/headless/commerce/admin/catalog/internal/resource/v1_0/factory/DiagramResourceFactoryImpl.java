@@ -324,3 +324,4 @@ public class DiagramResourceFactoryImpl implements DiagramResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-206420084

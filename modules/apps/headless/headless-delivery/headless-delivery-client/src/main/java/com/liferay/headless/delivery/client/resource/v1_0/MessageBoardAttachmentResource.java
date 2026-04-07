@@ -1774,3 +1774,4 @@ public interface MessageBoardAttachmentResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-8951841

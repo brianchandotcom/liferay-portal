@@ -342,3 +342,4 @@ public class QueryPrefilterContributorResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1378427762

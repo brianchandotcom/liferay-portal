@@ -579,3 +579,4 @@ public class BatchTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:2141770516

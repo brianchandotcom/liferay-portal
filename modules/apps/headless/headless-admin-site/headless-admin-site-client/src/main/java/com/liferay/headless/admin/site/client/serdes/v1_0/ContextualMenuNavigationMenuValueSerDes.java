@@ -250,3 +250,4 @@ public class ContextualMenuNavigationMenuValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1829966803

@@ -283,3 +283,4 @@ public interface ContactUserGroupResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:793299054

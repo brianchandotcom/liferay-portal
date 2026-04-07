@@ -297,3 +297,4 @@ public class HistogramSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2083843315

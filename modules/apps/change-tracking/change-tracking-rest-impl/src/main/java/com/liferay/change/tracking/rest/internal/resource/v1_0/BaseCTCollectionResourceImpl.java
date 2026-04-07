@@ -1592,3 +1592,4 @@ public abstract class BaseCTCollectionResourceImpl
 		LogFactoryUtil.getLog(BaseCTCollectionResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:1583845303

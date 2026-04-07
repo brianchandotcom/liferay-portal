@@ -402,3 +402,4 @@ public class AccountRole implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1734183349

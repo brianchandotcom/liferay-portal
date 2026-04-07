@@ -366,3 +366,4 @@ public class CookiesConsentPreferenceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:901704090

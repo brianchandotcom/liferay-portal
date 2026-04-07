@@ -339,3 +339,4 @@ public class AppearsOnHistogramSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-902663257

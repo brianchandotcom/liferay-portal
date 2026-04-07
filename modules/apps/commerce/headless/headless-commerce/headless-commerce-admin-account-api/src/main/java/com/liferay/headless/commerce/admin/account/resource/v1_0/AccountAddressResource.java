@@ -194,3 +194,4 @@ public interface AccountAddressResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1786443712

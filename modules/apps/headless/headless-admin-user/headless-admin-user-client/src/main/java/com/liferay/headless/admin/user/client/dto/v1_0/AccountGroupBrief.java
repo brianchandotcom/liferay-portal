@@ -116,3 +116,4 @@ public class AccountGroupBrief implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1534229645

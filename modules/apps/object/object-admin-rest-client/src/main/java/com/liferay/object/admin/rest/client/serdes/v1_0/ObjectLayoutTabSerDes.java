@@ -383,3 +383,4 @@ public class ObjectLayoutTabSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-520429335

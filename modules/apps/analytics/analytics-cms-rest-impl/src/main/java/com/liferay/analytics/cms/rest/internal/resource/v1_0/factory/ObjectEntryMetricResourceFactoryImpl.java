@@ -333,3 +333,4 @@ public class ObjectEntryMetricResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2101321834

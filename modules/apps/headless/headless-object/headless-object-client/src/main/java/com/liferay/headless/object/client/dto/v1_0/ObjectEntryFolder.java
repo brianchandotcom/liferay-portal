@@ -610,3 +610,4 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1702833916

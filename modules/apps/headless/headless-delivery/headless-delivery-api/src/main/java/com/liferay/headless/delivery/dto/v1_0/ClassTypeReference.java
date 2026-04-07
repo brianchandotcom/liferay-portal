@@ -288,3 +288,4 @@ public class ClassTypeReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1895108239

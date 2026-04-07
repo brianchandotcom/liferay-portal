@@ -1290,3 +1290,4 @@ public class DocumentDataDefinitionType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-228414376

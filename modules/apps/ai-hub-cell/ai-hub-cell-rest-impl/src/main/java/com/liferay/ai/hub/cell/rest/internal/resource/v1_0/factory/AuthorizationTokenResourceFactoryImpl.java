@@ -333,3 +333,4 @@ public class AuthorizationTokenResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1725897640

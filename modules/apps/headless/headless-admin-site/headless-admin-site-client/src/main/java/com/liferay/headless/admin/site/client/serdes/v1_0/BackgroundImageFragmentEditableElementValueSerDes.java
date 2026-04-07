@@ -267,3 +267,4 @@ public class BackgroundImageFragmentEditableElementValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1010855418

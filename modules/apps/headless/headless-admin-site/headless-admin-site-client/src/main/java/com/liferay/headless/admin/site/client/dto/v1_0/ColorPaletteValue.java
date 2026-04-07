@@ -120,3 +120,4 @@ public class ColorPaletteValue implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-436306554

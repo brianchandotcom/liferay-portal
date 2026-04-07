@@ -310,3 +310,4 @@ public class FragmentMappedValueItemContextReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:271035428

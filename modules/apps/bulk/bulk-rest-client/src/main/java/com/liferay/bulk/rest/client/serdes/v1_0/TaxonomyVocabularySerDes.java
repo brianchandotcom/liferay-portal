@@ -352,3 +352,4 @@ public class TaxonomyVocabularySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1114087630

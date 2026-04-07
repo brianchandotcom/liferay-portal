@@ -196,3 +196,4 @@ public interface SXPBlueprintResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1907650287

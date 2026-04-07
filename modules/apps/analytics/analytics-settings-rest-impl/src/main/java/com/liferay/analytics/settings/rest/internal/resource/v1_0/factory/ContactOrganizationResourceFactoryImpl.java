@@ -335,3 +335,4 @@ public class ContactOrganizationResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:273160472

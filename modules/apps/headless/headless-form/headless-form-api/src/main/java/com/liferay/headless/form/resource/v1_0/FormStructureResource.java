@@ -154,3 +154,4 @@ public interface FormStructureResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1315131411

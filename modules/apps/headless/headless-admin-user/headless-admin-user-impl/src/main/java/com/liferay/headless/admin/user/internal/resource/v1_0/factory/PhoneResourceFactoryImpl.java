@@ -324,3 +324,4 @@ public class PhoneResourceFactoryImpl implements PhoneResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1492820101

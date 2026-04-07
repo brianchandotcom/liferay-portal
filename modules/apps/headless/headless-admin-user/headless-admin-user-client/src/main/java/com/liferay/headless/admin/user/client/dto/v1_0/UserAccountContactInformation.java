@@ -269,3 +269,4 @@ public class UserAccountContactInformation implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:890512221

@@ -2574,3 +2574,4 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 		PlacedOrderAddressResource _placedOrderAddressResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:875611184

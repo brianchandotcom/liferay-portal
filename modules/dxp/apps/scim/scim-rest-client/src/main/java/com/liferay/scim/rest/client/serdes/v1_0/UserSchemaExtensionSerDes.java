@@ -244,3 +244,4 @@ public class UserSchemaExtensionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:31957489

@@ -335,3 +335,4 @@ public class CategoryDisplayPageResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1840664731

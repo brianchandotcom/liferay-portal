@@ -169,3 +169,4 @@ public class ObjectFolderItem implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-534523309

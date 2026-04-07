@@ -653,3 +653,4 @@ public class DocumentMetadataSetSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1655335993

@@ -330,3 +330,4 @@ public class ConnectedSiteResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1420891237

@@ -26,3 +26,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class ObjectAdminRESTApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:100108645

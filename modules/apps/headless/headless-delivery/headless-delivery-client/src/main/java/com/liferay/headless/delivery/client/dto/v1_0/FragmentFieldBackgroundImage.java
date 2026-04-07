@@ -108,3 +108,4 @@ public class FragmentFieldBackgroundImage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-212650972

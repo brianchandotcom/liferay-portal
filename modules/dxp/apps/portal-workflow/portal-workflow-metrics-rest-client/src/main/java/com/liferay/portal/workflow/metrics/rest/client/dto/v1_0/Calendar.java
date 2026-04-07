@@ -118,3 +118,4 @@ public class Calendar implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1044583230

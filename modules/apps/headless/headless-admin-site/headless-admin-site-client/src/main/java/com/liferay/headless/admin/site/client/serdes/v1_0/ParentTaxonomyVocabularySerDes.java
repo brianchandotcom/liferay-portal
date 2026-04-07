@@ -211,3 +211,4 @@ public class ParentTaxonomyVocabularySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-89713349

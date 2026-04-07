@@ -423,3 +423,4 @@ public class MeasurementUnitSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1661077797

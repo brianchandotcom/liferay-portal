@@ -53,3 +53,4 @@ public enum StringTestEntity {
 	private final String _value;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1828939257

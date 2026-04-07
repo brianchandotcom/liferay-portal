@@ -1303,3 +1303,4 @@ public abstract class BaseAccountCategoryForecastResourceTestCase {
 		AccountCategoryForecastResource _accountCategoryForecastResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1274981365

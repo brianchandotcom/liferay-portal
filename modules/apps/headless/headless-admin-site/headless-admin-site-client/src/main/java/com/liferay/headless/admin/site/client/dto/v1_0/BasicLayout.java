@@ -243,3 +243,4 @@ public class BasicLayout implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1578189029

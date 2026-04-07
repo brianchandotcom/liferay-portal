@@ -407,3 +407,4 @@ public class WarehouseAccountGroupSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:149967136

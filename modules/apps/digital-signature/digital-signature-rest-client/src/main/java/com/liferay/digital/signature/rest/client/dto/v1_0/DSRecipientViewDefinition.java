@@ -163,3 +163,4 @@ public class DSRecipientViewDefinition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:453497546

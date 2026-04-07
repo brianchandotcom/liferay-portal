@@ -288,3 +288,4 @@ public class ObjectStateSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1679691445

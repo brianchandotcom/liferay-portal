@@ -214,3 +214,4 @@ public class DiscountAccount implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-807230531

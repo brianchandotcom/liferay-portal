@@ -342,3 +342,4 @@ public class SearchableAssetNameDisplayResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:578295759

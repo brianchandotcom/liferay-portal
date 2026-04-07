@@ -329,3 +329,4 @@ public class AssetUsageResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:297133081

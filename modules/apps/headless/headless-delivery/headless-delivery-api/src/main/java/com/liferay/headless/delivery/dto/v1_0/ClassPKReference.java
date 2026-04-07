@@ -292,3 +292,4 @@ public class ClassPKReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-285069336

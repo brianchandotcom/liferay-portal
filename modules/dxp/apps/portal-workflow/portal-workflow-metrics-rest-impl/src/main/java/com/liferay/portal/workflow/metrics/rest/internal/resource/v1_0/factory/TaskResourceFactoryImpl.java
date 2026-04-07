@@ -323,3 +323,4 @@ public class TaskResourceFactoryImpl implements TaskResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-839637183

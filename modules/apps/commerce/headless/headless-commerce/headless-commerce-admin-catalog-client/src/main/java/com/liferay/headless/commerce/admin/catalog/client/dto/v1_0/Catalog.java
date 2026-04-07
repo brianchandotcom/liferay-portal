@@ -269,3 +269,4 @@ public class Catalog implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-117303941

@@ -235,3 +235,4 @@ public class FragmentFieldTextSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2028502464

@@ -97,3 +97,4 @@ public class SearchIndex implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:35457972

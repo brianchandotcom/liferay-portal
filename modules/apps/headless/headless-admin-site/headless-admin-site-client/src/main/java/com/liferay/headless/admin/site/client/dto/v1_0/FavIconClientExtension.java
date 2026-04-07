@@ -105,3 +105,4 @@ public class FavIconClientExtension
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1369496083

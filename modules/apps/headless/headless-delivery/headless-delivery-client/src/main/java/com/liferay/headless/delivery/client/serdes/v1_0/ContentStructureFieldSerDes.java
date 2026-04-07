@@ -680,3 +680,4 @@ public class ContentStructureFieldSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2082641133

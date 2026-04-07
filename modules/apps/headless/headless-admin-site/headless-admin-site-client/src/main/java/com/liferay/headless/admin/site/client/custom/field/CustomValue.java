@@ -290,3 +290,4 @@ public class CustomValue {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-879634712

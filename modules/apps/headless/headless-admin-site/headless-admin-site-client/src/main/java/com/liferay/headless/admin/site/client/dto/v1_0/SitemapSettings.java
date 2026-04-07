@@ -185,3 +185,4 @@ public class SitemapSettings implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1856881352

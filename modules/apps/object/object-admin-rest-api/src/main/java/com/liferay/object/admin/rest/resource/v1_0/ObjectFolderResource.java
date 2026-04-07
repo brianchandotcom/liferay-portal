@@ -183,3 +183,4 @@ public interface ObjectFolderResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:986625555

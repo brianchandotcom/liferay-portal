@@ -449,3 +449,4 @@ public class BlogPostingImageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2053181737

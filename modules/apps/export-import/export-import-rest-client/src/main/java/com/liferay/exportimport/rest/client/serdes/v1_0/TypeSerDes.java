@@ -223,3 +223,4 @@ public class TypeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-396786718

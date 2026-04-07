@@ -332,3 +332,4 @@ public class ScopedTestEntityResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:436545065

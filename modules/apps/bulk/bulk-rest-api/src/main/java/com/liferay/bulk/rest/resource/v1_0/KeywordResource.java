@@ -144,3 +144,4 @@ public interface KeywordResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:700979348

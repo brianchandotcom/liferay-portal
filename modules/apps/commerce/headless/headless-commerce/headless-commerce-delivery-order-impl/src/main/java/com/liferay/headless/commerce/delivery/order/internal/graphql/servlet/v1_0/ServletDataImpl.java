@@ -345,99 +345,99 @@ public class ServletDataImpl implements ServletData {
 							"getPlacedOrderPaymentTerm"));
 
 					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderBillingAddress",
-						new ObjectValuePair<>(
-							PlacedOrderAddressResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePaymentTerm",
-						new ObjectValuePair<>(
-							TermResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePaymentTerm"));
-					put(
-						"query#PlacedOrder.paymentURL",
-						new ObjectValuePair<>(
-							PlacedOrderResourceImpl.class,
-							"getPlacedOrderPaymentURL"));
-					put(
-						"query#PlacedOrder.deliveryTerm",
-						new ObjectValuePair<>(
-							TermResourceImpl.class,
-							"getPlacedOrderDeliveryTerm"));
-					put(
-						"query#PlacedOrder.channelByExternalReferenceCodePlacedOrders",
-						new ObjectValuePair<>(
-							PlacedOrderResourceImpl.class,
-							"getChannelByExternalReferenceCodePlacedOrdersPage"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderItems",
-						new ObjectValuePair<>(
-							PlacedOrderItemResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage"));
-					put(
-						"query#PlacedOrder.paymentTerm",
-						new ObjectValuePair<>(
-							TermResourceImpl.class,
-							"getPlacedOrderPaymentTerm"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePlacedOrderComments",
-						new ObjectValuePair<>(
-							PlacedOrderCommentResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage"));
-					put(
 						"query#OrderTransition.placedOrder",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class, "getPlacedOrder"));
-					put(
-						"query#PlacedOrder.commentByExternalReferenceCode",
-						new ObjectValuePair<>(
-							PlacedOrderCommentResourceImpl.class,
-							"getPlacedOrderCommentByExternalReferenceCode"));
-					put(
-						"query#PlacedOrder.byExternalReferenceCodePaymentURL",
-						new ObjectValuePair<>(
-							PlacedOrderResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodePaymentURL"));
-					put(
-						"query#PlacedOrder.itemByExternalReferenceCodePlacedOrderItemShipments",
-						new ObjectValuePair<>(
-							PlacedOrderItemShipmentResourceImpl.class,
-							"getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage"));
 					put(
 						"query#PlacedOrder.orderTransitions",
 						new ObjectValuePair<>(
 							OrderTransitionResourceImpl.class,
 							"getPlacedOrderOrderTransitionsPage"));
 					put(
-						"query#PlacedOrder.itemByExternalReferenceCode",
-						new ObjectValuePair<>(
-							PlacedOrderItemResourceImpl.class,
-							"getPlacedOrderItemByExternalReferenceCode"));
-					put(
 						"query#PlacedOrderComment.placedOrderByExternalReferenceCode",
 						new ObjectValuePair<>(
 							PlacedOrderResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCode"));
 					put(
-						"query#PlacedOrder.byExternalReferenceCodeDeliveryTerm",
+						"query#PlacedOrder.paymentURL",
+						new ObjectValuePair<>(
+							PlacedOrderResourceImpl.class,
+							"getPlacedOrderPaymentURL"));
+					put(
+						"query#PlacedOrder.commentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PlacedOrderCommentResourceImpl.class,
+							"getPlacedOrderCommentByExternalReferenceCode"));
+					put(
+						"query#PlacedOrder.itemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PlacedOrderItemResourceImpl.class,
+							"getPlacedOrderItemByExternalReferenceCode"));
+					put(
+						"query#PlacedOrder.deliveryTerm",
 						new ObjectValuePair<>(
 							TermResourceImpl.class,
-							"getPlacedOrderByExternalReferenceCodeDeliveryTerm"));
+							"getPlacedOrderDeliveryTerm"));
+					put(
+						"query#PlacedOrder.paymentTerm",
+						new ObjectValuePair<>(
+							TermResourceImpl.class,
+							"getPlacedOrderPaymentTerm"));
 					put(
 						"query#PlacedOrder.byExternalReferenceCodeAttachments",
 						new ObjectValuePair<>(
 							AttachmentResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCodeAttachmentsPage"));
 					put(
+						"query#PlacedOrder.channelByExternalReferenceCodePlacedOrders",
+						new ObjectValuePair<>(
+							PlacedOrderResourceImpl.class,
+							"getChannelByExternalReferenceCodePlacedOrdersPage"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePaymentURL",
+						new ObjectValuePair<>(
+							PlacedOrderResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePaymentURL"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderBillingAddress",
+						new ObjectValuePair<>(
+							PlacedOrderAddressResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress"));
+					put(
 						"query#PlacedOrder.byExternalReferenceCodePlacedOrderShippingAddress",
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress"));
 					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderComments",
+						new ObjectValuePair<>(
+							PlacedOrderCommentResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePlacedOrderItems",
+						new ObjectValuePair<>(
+							PlacedOrderItemResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage"));
+					put(
+						"query#PlacedOrder.itemByExternalReferenceCodePlacedOrderItemShipments",
+						new ObjectValuePair<>(
+							PlacedOrderItemShipmentResourceImpl.class,
+							"getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage"));
+					put(
 						"query#PlacedOrder.byExternalReferenceCodeShipments",
 						new ObjectValuePair<>(
 							ShipmentResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCodeShipmentsPage"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodeDeliveryTerm",
+						new ObjectValuePair<>(
+							TermResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodeDeliveryTerm"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodePaymentTerm",
+						new ObjectValuePair<>(
+							TermResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodePaymentTerm"));
 				}
 			};
 
@@ -478,3 +478,4 @@ public class ServletDataImpl implements ServletData {
 		_termResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:2119462292

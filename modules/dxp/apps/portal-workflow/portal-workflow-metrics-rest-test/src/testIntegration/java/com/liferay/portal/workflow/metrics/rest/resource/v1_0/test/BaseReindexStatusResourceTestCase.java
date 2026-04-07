@@ -886,3 +886,4 @@ public abstract class BaseReindexStatusResourceTestCase {
 			ReindexStatusResource _reindexStatusResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1629488269

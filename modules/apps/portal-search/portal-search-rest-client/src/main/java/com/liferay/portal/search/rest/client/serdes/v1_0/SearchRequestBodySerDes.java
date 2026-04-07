@@ -264,3 +264,4 @@ public class SearchRequestBodySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-206874893

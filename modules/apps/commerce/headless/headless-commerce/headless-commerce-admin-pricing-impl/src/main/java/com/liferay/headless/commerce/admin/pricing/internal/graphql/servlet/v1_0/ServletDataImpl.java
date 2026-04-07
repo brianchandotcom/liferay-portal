@@ -531,36 +531,6 @@ public class ServletDataImpl implements ServletData {
 							"getTierPriceByExternalReferenceCode"));
 
 					put(
-						"query#Discount.byExternalReferenceCodeDiscountAccountGroups",
-						new ObjectValuePair<>(
-							DiscountAccountGroupResourceImpl.class,
-							"getDiscountByExternalReferenceCodeDiscountAccountGroupsPage"));
-					put(
-						"query#Discount.byExternalReferenceCodeDiscountCategories",
-						new ObjectValuePair<>(
-							DiscountCategoryResourceImpl.class,
-							"getDiscountByExternalReferenceCodeDiscountCategoriesPage"));
-					put(
-						"query#Discount.priceEntryByExternalReferenceCodeTierPrices",
-						new ObjectValuePair<>(
-							TierPriceResourceImpl.class,
-							"getPriceEntryByExternalReferenceCodeTierPricesPage"));
-					put(
-						"query#Discount.byExternalReferenceCodeDiscountProducts",
-						new ObjectValuePair<>(
-							DiscountProductResourceImpl.class,
-							"getDiscountByExternalReferenceCodeDiscountProductsPage"));
-					put(
-						"query#Discount.tierPriceByExternalReferenceCode",
-						new ObjectValuePair<>(
-							TierPriceResourceImpl.class,
-							"getTierPriceByExternalReferenceCode"));
-					put(
-						"query#Discount.priceListByExternalReferenceCodePriceListAccountGroup",
-						new ObjectValuePair<>(
-							PriceListAccountGroupResourceImpl.class,
-							"getPriceListByExternalReferenceCodePriceListAccountGroupPage"));
-					put(
 						"query#PriceEntry.discountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							DiscountResourceImpl.class,
@@ -571,20 +541,50 @@ public class ServletDataImpl implements ServletData {
 							PriceEntryResourceImpl.class,
 							"getPriceEntryByExternalReferenceCode"));
 					put(
-						"query#Discount.priceListByExternalReferenceCodePriceEntries",
-						new ObjectValuePair<>(
-							PriceEntryResourceImpl.class,
-							"getPriceListByExternalReferenceCodePriceEntriesPage"));
-					put(
 						"query#Discount.priceListByExternalReferenceCode",
 						new ObjectValuePair<>(
 							PriceListResourceImpl.class,
 							"getPriceListByExternalReferenceCode"));
 					put(
+						"query#Discount.tierPriceByExternalReferenceCode",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class,
+							"getTierPriceByExternalReferenceCode"));
+					put(
+						"query#Discount.byExternalReferenceCodeDiscountAccountGroups",
+						new ObjectValuePair<>(
+							DiscountAccountGroupResourceImpl.class,
+							"getDiscountByExternalReferenceCodeDiscountAccountGroupsPage"));
+					put(
+						"query#Discount.byExternalReferenceCodeDiscountCategories",
+						new ObjectValuePair<>(
+							DiscountCategoryResourceImpl.class,
+							"getDiscountByExternalReferenceCodeDiscountCategoriesPage"));
+					put(
+						"query#Discount.byExternalReferenceCodeDiscountProducts",
+						new ObjectValuePair<>(
+							DiscountProductResourceImpl.class,
+							"getDiscountByExternalReferenceCodeDiscountProductsPage"));
+					put(
 						"query#Discount.byExternalReferenceCodeDiscountRules",
 						new ObjectValuePair<>(
 							DiscountRuleResourceImpl.class,
 							"getDiscountByExternalReferenceCodeDiscountRulesPage"));
+					put(
+						"query#Discount.priceListByExternalReferenceCodePriceEntries",
+						new ObjectValuePair<>(
+							PriceEntryResourceImpl.class,
+							"getPriceListByExternalReferenceCodePriceEntriesPage"));
+					put(
+						"query#Discount.priceListByExternalReferenceCodePriceListAccountGroup",
+						new ObjectValuePair<>(
+							PriceListAccountGroupResourceImpl.class,
+							"getPriceListByExternalReferenceCodePriceListAccountGroupPage"));
+					put(
+						"query#Discount.priceEntryByExternalReferenceCodeTierPrices",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class,
+							"getPriceEntryByExternalReferenceCodeTierPricesPage"));
 				}
 			};
 
@@ -625,3 +625,4 @@ public class ServletDataImpl implements ServletData {
 		_tierPriceResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-809444142

@@ -1332,3 +1332,4 @@ public abstract class BaseObjectLayoutResourceImpl
 		LogFactoryUtil.getLog(BaseObjectLayoutResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:1307600445

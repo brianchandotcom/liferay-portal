@@ -2005,3 +2005,4 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		DiscountOrderTypeResource _discountOrderTypeResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-963218343

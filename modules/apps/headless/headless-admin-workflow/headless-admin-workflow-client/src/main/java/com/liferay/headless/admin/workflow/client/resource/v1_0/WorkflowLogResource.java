@@ -789,3 +789,4 @@ public interface WorkflowLogResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1252220737

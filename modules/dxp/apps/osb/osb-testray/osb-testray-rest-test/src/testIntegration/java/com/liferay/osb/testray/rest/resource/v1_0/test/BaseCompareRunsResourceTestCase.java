@@ -800,3 +800,4 @@ public abstract class BaseCompareRunsResourceTestCase {
 		_compareRunsResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:692007265

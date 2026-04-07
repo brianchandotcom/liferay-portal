@@ -61,3 +61,4 @@ public class ExpireObjectBulkSelectionAction
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:241641894

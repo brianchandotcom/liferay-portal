@@ -261,3 +261,4 @@ public class PortraitMobileSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:805929221

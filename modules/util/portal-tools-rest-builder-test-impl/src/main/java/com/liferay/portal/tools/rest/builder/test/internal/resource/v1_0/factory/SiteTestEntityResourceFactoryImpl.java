@@ -330,3 +330,4 @@ public class SiteTestEntityResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2080659862

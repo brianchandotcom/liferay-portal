@@ -194,3 +194,4 @@ public class EtagSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1954479447

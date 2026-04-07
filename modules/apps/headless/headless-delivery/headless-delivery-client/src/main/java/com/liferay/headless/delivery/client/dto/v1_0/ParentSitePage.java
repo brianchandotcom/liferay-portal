@@ -78,3 +78,4 @@ public class ParentSitePage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1163246084

@@ -1508,3 +1508,4 @@ public interface OptionValueResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-686702605

@@ -141,3 +141,4 @@ public class TaskStatistics implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:646784093

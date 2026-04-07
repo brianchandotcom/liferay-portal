@@ -242,3 +242,4 @@ public class FragmentEditableElementSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-607428536

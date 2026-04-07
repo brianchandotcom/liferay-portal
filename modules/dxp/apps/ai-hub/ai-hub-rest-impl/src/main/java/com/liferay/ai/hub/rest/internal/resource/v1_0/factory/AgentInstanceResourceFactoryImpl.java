@@ -330,3 +330,4 @@ public class AgentInstanceResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1001960849

@@ -118,3 +118,4 @@ public class ExpiredAsset implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-973947604

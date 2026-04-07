@@ -456,3 +456,4 @@ public class FragmentInstance implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1654459327

@@ -331,3 +331,4 @@ public class RenderedPageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:368490871

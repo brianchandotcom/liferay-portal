@@ -612,3 +612,4 @@ public class ProductSpecificationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:928021683

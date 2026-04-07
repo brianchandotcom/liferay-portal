@@ -821,95 +821,95 @@ public class ServletDataImpl implements ServletData {
 							"getTermIdTermOrderTypesPage"));
 
 					put(
-						"query#Order.itemByExternalReferenceCode",
-						new ObjectValuePair<>(
-							OrderItemResourceImpl.class,
-							"getOrderItemByExternalReferenceCode"));
-					put(
-						"query#Order.byExternalReferenceCodeChannel",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class,
-							"getOrderByExternalReferenceCodeChannel"));
-					put(
-						"query#Order.ruleByExternalReferenceCode",
-						new ObjectValuePair<>(
-							OrderRuleResourceImpl.class,
-							"getOrderRuleByExternalReferenceCode"));
-					put(
-						"query#Order.byExternalReferenceCodeAccount",
-						new ObjectValuePair<>(
-							AccountResourceImpl.class,
-							"getOrderByExternalReferenceCodeAccount"));
-					put(
 						"query#OrderItem.orderByExternalReferenceCode",
 						new ObjectValuePair<>(
 							OrderResourceImpl.class,
 							"getOrderByExternalReferenceCode"));
 					put(
-						"query#Order.ruleByExternalReferenceCodeOrderRuleAccountGroups",
+						"query#Order.itemByExternalReferenceCode",
 						new ObjectValuePair<>(
-							OrderRuleAccountGroupResourceImpl.class,
-							"getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage"));
+							OrderItemResourceImpl.class,
+							"getOrderItemByExternalReferenceCode"));
 					put(
 						"query#Order.noteByExternalReferenceCode",
 						new ObjectValuePair<>(
 							OrderNoteResourceImpl.class,
 							"getOrderNoteByExternalReferenceCode"));
 					put(
-						"query#Order.byExternalReferenceCodeBillingAddress",
+						"query#Order.ruleByExternalReferenceCode",
 						new ObjectValuePair<>(
-							BillingAddressResourceImpl.class,
-							"getOrderByExternalReferenceCodeBillingAddress"));
+							OrderRuleResourceImpl.class,
+							"getOrderRuleByExternalReferenceCode"));
 					put(
 						"query#Order.typeByExternalReferenceCode",
 						new ObjectValuePair<>(
 							OrderTypeResourceImpl.class,
 							"getOrderTypeByExternalReferenceCode"));
 					put(
-						"query#Order.ruleByExternalReferenceCodeOrderRuleChannels",
+						"query#Order.termByExternalReferenceCode",
 						new ObjectValuePair<>(
-							OrderRuleChannelResourceImpl.class,
-							"getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage"));
+							TermResourceImpl.class,
+							"getTermByExternalReferenceCode"));
+					put(
+						"query#Order.byExternalReferenceCodeAccount",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getOrderByExternalReferenceCodeAccount"));
+					put(
+						"query#Order.byExternalReferenceCodeBillingAddress",
+						new ObjectValuePair<>(
+							BillingAddressResourceImpl.class,
+							"getOrderByExternalReferenceCodeBillingAddress"));
+					put(
+						"query#Order.byExternalReferenceCodeChannel",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class,
+							"getOrderByExternalReferenceCodeChannel"));
+					put(
+						"query#Order.byExternalReferenceCodeOrderItems",
+						new ObjectValuePair<>(
+							OrderItemResourceImpl.class,
+							"getOrderByExternalReferenceCodeOrderItemsPage"));
 					put(
 						"query#Order.byExternalReferenceCodeOrderNotes",
 						new ObjectValuePair<>(
 							OrderNoteResourceImpl.class,
 							"getOrderByExternalReferenceCodeOrderNotesPage"));
 					put(
-						"query#Order.byExternalReferenceCodeShippingAddress",
-						new ObjectValuePair<>(
-							ShippingAddressResourceImpl.class,
-							"getOrderByExternalReferenceCodeShippingAddress"));
-					put(
 						"query#Order.ruleByExternalReferenceCodeOrderRuleAccounts",
 						new ObjectValuePair<>(
 							OrderRuleAccountResourceImpl.class,
 							"getOrderRuleByExternalReferenceCodeOrderRuleAccountsPage"));
 					put(
-						"query#Order.termByExternalReferenceCode",
+						"query#Order.ruleByExternalReferenceCodeOrderRuleAccountGroups",
 						new ObjectValuePair<>(
-							TermResourceImpl.class,
-							"getTermByExternalReferenceCode"));
+							OrderRuleAccountGroupResourceImpl.class,
+							"getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage"));
 					put(
-						"query#Order.termByExternalReferenceCodeTermOrderTypes",
+						"query#Order.ruleByExternalReferenceCodeOrderRuleChannels",
 						new ObjectValuePair<>(
-							TermOrderTypeResourceImpl.class,
-							"getTermByExternalReferenceCodeTermOrderTypesPage"));
-					put(
-						"query#Order.typeByExternalReferenceCodeOrderTypeChannels",
-						new ObjectValuePair<>(
-							OrderTypeChannelResourceImpl.class,
-							"getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage"));
+							OrderRuleChannelResourceImpl.class,
+							"getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage"));
 					put(
 						"query#Order.ruleByExternalReferenceCodeOrderRuleOrderTypes",
 						new ObjectValuePair<>(
 							OrderRuleOrderTypeResourceImpl.class,
 							"getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage"));
 					put(
-						"query#Order.byExternalReferenceCodeOrderItems",
+						"query#Order.typeByExternalReferenceCodeOrderTypeChannels",
 						new ObjectValuePair<>(
-							OrderItemResourceImpl.class,
-							"getOrderByExternalReferenceCodeOrderItemsPage"));
+							OrderTypeChannelResourceImpl.class,
+							"getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage"));
+					put(
+						"query#Order.byExternalReferenceCodeShippingAddress",
+						new ObjectValuePair<>(
+							ShippingAddressResourceImpl.class,
+							"getOrderByExternalReferenceCodeShippingAddress"));
+					put(
+						"query#Order.termByExternalReferenceCodeTermOrderTypes",
+						new ObjectValuePair<>(
+							TermOrderTypeResourceImpl.class,
+							"getTermByExternalReferenceCodeTermOrderTypesPage"));
 				}
 			};
 
@@ -982,3 +982,4 @@ public class ServletDataImpl implements ServletData {
 		_orderAccountGroupResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-634419310

@@ -355,3 +355,4 @@ public class RegionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1446970673

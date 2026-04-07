@@ -227,3 +227,4 @@ public class AssetDeviceMetricSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1425819185

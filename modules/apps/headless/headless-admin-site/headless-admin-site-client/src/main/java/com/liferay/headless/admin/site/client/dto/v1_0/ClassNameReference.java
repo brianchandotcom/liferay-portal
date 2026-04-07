@@ -79,3 +79,4 @@ public class ClassNameReference
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:927094932

@@ -289,3 +289,4 @@ public class SettingsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2085764007

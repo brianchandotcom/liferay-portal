@@ -190,3 +190,4 @@ public interface CartItemResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1233811785

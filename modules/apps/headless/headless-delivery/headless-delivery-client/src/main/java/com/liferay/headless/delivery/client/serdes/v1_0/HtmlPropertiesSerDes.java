@@ -202,3 +202,4 @@ public class HtmlPropertiesSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-187631779

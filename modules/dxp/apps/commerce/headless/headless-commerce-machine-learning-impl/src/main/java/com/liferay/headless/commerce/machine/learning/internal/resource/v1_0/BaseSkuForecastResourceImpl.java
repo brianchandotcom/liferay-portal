@@ -788,3 +788,4 @@ public abstract class BaseSkuForecastResourceImpl
 		LogFactoryUtil.getLog(BaseSkuForecastResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:1956024822

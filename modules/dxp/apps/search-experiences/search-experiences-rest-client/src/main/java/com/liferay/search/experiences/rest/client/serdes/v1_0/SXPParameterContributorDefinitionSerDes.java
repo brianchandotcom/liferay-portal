@@ -283,3 +283,4 @@ public class SXPParameterContributorDefinitionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1430703789

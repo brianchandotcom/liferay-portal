@@ -162,3 +162,4 @@ public class AssigneeMetric implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1707069224

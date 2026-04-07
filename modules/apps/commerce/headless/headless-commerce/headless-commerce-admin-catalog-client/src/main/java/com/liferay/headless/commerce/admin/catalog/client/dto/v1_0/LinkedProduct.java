@@ -122,3 +122,4 @@ public class LinkedProduct implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1016464331

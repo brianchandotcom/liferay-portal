@@ -246,3 +246,4 @@ public class WikiPageAttachment implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:976749762

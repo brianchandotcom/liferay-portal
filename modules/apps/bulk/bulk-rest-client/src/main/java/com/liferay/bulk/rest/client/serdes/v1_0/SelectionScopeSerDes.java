@@ -252,3 +252,4 @@ public class SelectionScopeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:643256817

@@ -490,3 +490,4 @@ public interface ContentRetrieverResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1542215366

@@ -329,3 +329,4 @@ public class DSEnvelopeResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:931530923

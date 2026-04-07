@@ -549,28 +549,6 @@ public class Query {
 				timeRangeResource.getTimeRangesPage()));
 	}
 
-	@GraphQLTypeExtension(Process.class)
-	public class GetProcessInstanceTypeExtension {
-
-		public GetProcessInstanceTypeExtension(Process process) {
-			_process = process;
-		}
-
-		@GraphQLField
-		public Instance instance(@GraphQLName("instanceId") Long instanceId)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_instanceResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				instanceResource -> instanceResource.getProcessInstance(
-					_process.getId(), instanceId));
-		}
-
-		private Process _process;
-
-	}
-
 	@GraphQLTypeExtension(TaskBulkSelection.class)
 	public class GetProcessTypeExtension {
 
@@ -588,6 +566,43 @@ public class Query {
 		}
 
 		private TaskBulkSelection _taskBulkSelection;
+
+	}
+
+	@GraphQLTypeExtension(Process.class)
+	public class GetProcessInstancesPageTypeExtension {
+
+		public GetProcessInstancesPageTypeExtension(Process process) {
+			_process = process;
+		}
+
+		@GraphQLField
+		public InstancePage instances(
+				@GraphQLName("assigneeIds") Long[] assigneeIds,
+				@GraphQLName("classPKs") Long[] classPKs,
+				@GraphQLName("dateEnd") Date dateEnd,
+				@GraphQLName("dateStart") Date dateStart,
+				@GraphQLName("slaStatuses") String[] slaStatuses,
+				@GraphQLName("statuses") String[] statuses,
+				@GraphQLName("taskNames") String[] taskNames,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_instanceResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				instanceResource -> new InstancePage(
+					instanceResource.getProcessInstancesPage(
+						_process.getId(), assigneeIds, classPKs, dateEnd,
+						dateStart, slaStatuses, statuses, taskNames,
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							instanceResource, sortsString))));
+		}
+
+		private Process _process;
 
 	}
 
@@ -612,45 +627,24 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Process.class)
-	public class GetProcessLastSLAResultTypeExtension {
+	public class GetProcessMetricTypeExtension {
 
-		public GetProcessLastSLAResultTypeExtension(Process process) {
+		public GetProcessMetricTypeExtension(Process process) {
 			_process = process;
 		}
 
 		@GraphQLField
-		public SLAResult lastSLAResult() throws Exception {
-			return _applyComponentServiceObjects(
-				_slaResultResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				slaResultResource -> slaResultResource.getProcessLastSLAResult(
-					_process.getId()));
-		}
-
-		private Process _process;
-
-	}
-
-	@GraphQLTypeExtension(Process.class)
-	public class GetProcessHistogramMetricTypeExtension {
-
-		public GetProcessHistogramMetricTypeExtension(Process process) {
-			_process = process;
-		}
-
-		@GraphQLField
-		public HistogramMetric histogramMetric(
+		public ProcessMetric metric(
+				@GraphQLName("completed") Boolean completed,
 				@GraphQLName("dateEnd") Date dateEnd,
-				@GraphQLName("dateStart") Date dateStart,
-				@GraphQLName("unit") String unit)
+				@GraphQLName("dateStart") Date dateStart)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_histogramMetricResourceComponentServiceObjects,
+				_processMetricResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				histogramMetricResource ->
-					histogramMetricResource.getProcessHistogramMetric(
-						_process.getId(), dateEnd, dateStart, unit));
+				processMetricResource -> processMetricResource.getProcessMetric(
+					_process.getId(), completed, dateEnd, dateStart));
 		}
 
 		private Process _process;
@@ -658,19 +652,43 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Process.class)
-	public class GetProcessTasksPageTypeExtension {
+	public class GetProcessProcessVersionsPageTypeExtension {
 
-		public GetProcessTasksPageTypeExtension(Process process) {
+		public GetProcessProcessVersionsPageTypeExtension(Process process) {
 			_process = process;
 		}
 
 		@GraphQLField
-		public TaskPage tasks() throws Exception {
+		public ProcessVersionPage processVersions() throws Exception {
 			return _applyComponentServiceObjects(
-				_taskResourceComponentServiceObjects,
+				_processVersionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				taskResource -> new TaskPage(
-					taskResource.getProcessTasksPage(_process.getId())));
+				processVersionResource -> new ProcessVersionPage(
+					processVersionResource.getProcessProcessVersionsPage(
+						_process.getId())));
+		}
+
+		private Process _process;
+
+	}
+
+	@GraphQLTypeExtension(Process.class)
+	public class GetProcessRolesPageTypeExtension {
+
+		public GetProcessRolesPageTypeExtension(Process process) {
+			_process = process;
+		}
+
+		@GraphQLField
+		public RolePage roles(@GraphQLName("completed") Boolean completed)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_roleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				roleResource -> new RolePage(
+					roleResource.getProcessRolesPage(
+						_process.getId(), completed)));
 		}
 
 		private Process _process;
@@ -705,22 +723,19 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Process.class)
-	public class GetProcessRolesPageTypeExtension {
+	public class GetProcessLastSLAResultTypeExtension {
 
-		public GetProcessRolesPageTypeExtension(Process process) {
+		public GetProcessLastSLAResultTypeExtension(Process process) {
 			_process = process;
 		}
 
 		@GraphQLField
-		public RolePage roles(@GraphQLName("completed") Boolean completed)
-			throws Exception {
-
+		public SLAResult lastSLAResult() throws Exception {
 			return _applyComponentServiceObjects(
-				_roleResourceComponentServiceObjects,
+				_slaResultResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				roleResource -> new RolePage(
-					roleResource.getProcessRolesPage(
-						_process.getId(), completed)));
+				slaResultResource -> slaResultResource.getProcessLastSLAResult(
+					_process.getId()));
 		}
 
 		private Process _process;
@@ -728,44 +743,19 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Process.class)
-	public class GetProcessMetricTypeExtension {
+	public class GetProcessTasksPageTypeExtension {
 
-		public GetProcessMetricTypeExtension(Process process) {
+		public GetProcessTasksPageTypeExtension(Process process) {
 			_process = process;
 		}
 
 		@GraphQLField
-		public ProcessMetric metric(
-				@GraphQLName("completed") Boolean completed,
-				@GraphQLName("dateEnd") Date dateEnd,
-				@GraphQLName("dateStart") Date dateStart)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_processMetricResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				processMetricResource -> processMetricResource.getProcessMetric(
-					_process.getId(), completed, dateEnd, dateStart));
-		}
-
-		private Process _process;
-
-	}
-
-	@GraphQLTypeExtension(Process.class)
-	public class GetProcessTaskTypeExtension {
-
-		public GetProcessTaskTypeExtension(Process process) {
-			_process = process;
-		}
-
-		@GraphQLField
-		public Task task(@GraphQLName("taskId") Long taskId) throws Exception {
+		public TaskPage tasks() throws Exception {
 			return _applyComponentServiceObjects(
 				_taskResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				taskResource -> taskResource.getProcessTask(
-					_process.getId(), taskId));
+				taskResource -> new TaskPage(
+					taskResource.getProcessTasksPage(_process.getId())));
 		}
 
 		private Process _process;
@@ -773,20 +763,47 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Process.class)
-	public class GetProcessProcessVersionsPageTypeExtension {
+	public class GetProcessHistogramMetricTypeExtension {
 
-		public GetProcessProcessVersionsPageTypeExtension(Process process) {
+		public GetProcessHistogramMetricTypeExtension(Process process) {
 			_process = process;
 		}
 
 		@GraphQLField
-		public ProcessVersionPage processVersions() throws Exception {
+		public HistogramMetric histogramMetric(
+				@GraphQLName("dateEnd") Date dateEnd,
+				@GraphQLName("dateStart") Date dateStart,
+				@GraphQLName("unit") String unit)
+			throws Exception {
+
 			return _applyComponentServiceObjects(
-				_processVersionResourceComponentServiceObjects,
+				_histogramMetricResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				processVersionResource -> new ProcessVersionPage(
-					processVersionResource.getProcessProcessVersionsPage(
-						_process.getId())));
+				histogramMetricResource ->
+					histogramMetricResource.getProcessHistogramMetric(
+						_process.getId(), dateEnd, dateStart, unit));
+		}
+
+		private Process _process;
+
+	}
+
+	@GraphQLTypeExtension(Process.class)
+	public class GetProcessInstanceTypeExtension {
+
+		public GetProcessInstanceTypeExtension(Process process) {
+			_process = process;
+		}
+
+		@GraphQLField
+		public Instance instance(@GraphQLName("instanceId") Long instanceId)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_instanceResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				instanceResource -> instanceResource.getProcessInstance(
+					_process.getId(), instanceId));
 		}
 
 		private Process _process;
@@ -828,36 +845,19 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Process.class)
-	public class GetProcessInstancesPageTypeExtension {
+	public class GetProcessTaskTypeExtension {
 
-		public GetProcessInstancesPageTypeExtension(Process process) {
+		public GetProcessTaskTypeExtension(Process process) {
 			_process = process;
 		}
 
 		@GraphQLField
-		public InstancePage instances(
-				@GraphQLName("assigneeIds") Long[] assigneeIds,
-				@GraphQLName("classPKs") Long[] classPKs,
-				@GraphQLName("dateEnd") Date dateEnd,
-				@GraphQLName("dateStart") Date dateStart,
-				@GraphQLName("slaStatuses") String[] slaStatuses,
-				@GraphQLName("statuses") String[] statuses,
-				@GraphQLName("taskNames") String[] taskNames,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
+		public Task task(@GraphQLName("taskId") Long taskId) throws Exception {
 			return _applyComponentServiceObjects(
-				_instanceResourceComponentServiceObjects,
+				_taskResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				instanceResource -> new InstancePage(
-					instanceResource.getProcessInstancesPage(
-						_process.getId(), assigneeIds, classPKs, dateEnd,
-						dateStart, slaStatuses, statuses, taskNames,
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							instanceResource, sortsString))));
+				taskResource -> taskResource.getProcessTask(
+					_process.getId(), taskId));
 		}
 
 		private Process _process;
@@ -1687,3 +1687,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1919214482

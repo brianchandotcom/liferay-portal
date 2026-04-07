@@ -99,3 +99,4 @@ public class CompareRuns implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1627983297

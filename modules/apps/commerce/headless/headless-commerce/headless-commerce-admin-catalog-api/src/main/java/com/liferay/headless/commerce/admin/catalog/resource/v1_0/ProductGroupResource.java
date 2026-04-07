@@ -188,3 +188,4 @@ public interface ProductGroupResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1380314777

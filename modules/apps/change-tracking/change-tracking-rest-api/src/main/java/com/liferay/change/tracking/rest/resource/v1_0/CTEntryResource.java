@@ -162,3 +162,4 @@ public interface CTEntryResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1281569238

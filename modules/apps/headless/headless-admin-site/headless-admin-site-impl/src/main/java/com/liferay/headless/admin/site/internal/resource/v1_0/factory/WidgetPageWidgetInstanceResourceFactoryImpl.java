@@ -340,3 +340,4 @@ public class WidgetPageWidgetInstanceResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2051351886

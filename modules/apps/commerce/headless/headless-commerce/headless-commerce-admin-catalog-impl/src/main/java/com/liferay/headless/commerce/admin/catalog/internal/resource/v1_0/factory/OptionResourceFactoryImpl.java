@@ -324,3 +324,4 @@ public class OptionResourceFactoryImpl implements OptionResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1689434234

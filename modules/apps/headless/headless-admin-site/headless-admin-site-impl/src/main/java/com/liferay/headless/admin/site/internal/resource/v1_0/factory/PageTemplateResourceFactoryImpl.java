@@ -329,3 +329,4 @@ public class PageTemplateResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1359568927

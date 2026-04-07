@@ -94,3 +94,4 @@ public class KeywordDTOActionProvider implements DTOActionProvider {
 	private ScopeChecker _scopeChecker;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1303572043

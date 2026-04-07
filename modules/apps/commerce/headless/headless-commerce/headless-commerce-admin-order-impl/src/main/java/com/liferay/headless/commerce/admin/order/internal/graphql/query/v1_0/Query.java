@@ -1128,6 +1128,28 @@ public class Query {
 					id, search, Pagination.of(page, pageSize))));
 	}
 
+	@GraphQLTypeExtension(OrderItem.class)
+	public class GetOrderByExternalReferenceCodeTypeExtension {
+
+		public GetOrderByExternalReferenceCodeTypeExtension(
+			OrderItem orderItem) {
+
+			_orderItem = orderItem;
+		}
+
+		@GraphQLField
+		public Order orderByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_orderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				orderResource -> orderResource.getOrderByExternalReferenceCode(
+					_orderItem.getExternalReferenceCode()));
+		}
+
+		private OrderItem _orderItem;
+
+	}
+
 	@GraphQLTypeExtension(Order.class)
 	public class GetOrderItemByExternalReferenceCodeTypeExtension {
 
@@ -1150,21 +1172,19 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Order.class)
-	public class GetOrderByExternalReferenceCodeChannelTypeExtension {
+	public class GetOrderNoteByExternalReferenceCodeTypeExtension {
 
-		public GetOrderByExternalReferenceCodeChannelTypeExtension(
-			Order order) {
-
+		public GetOrderNoteByExternalReferenceCodeTypeExtension(Order order) {
 			_order = order;
 		}
 
 		@GraphQLField
-		public Channel byExternalReferenceCodeChannel() throws Exception {
+		public OrderNote noteByExternalReferenceCode() throws Exception {
 			return _applyComponentServiceObjects(
-				_channelResourceComponentServiceObjects,
+				_orderNoteResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				channelResource ->
-					channelResource.getOrderByExternalReferenceCodeChannel(
+				orderNoteResource ->
+					orderNoteResource.getOrderNoteByExternalReferenceCode(
 						_order.getExternalReferenceCode()));
 		}
 
@@ -1194,6 +1214,47 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Order.class)
+	public class GetOrderTypeByExternalReferenceCodeTypeExtension {
+
+		public GetOrderTypeByExternalReferenceCodeTypeExtension(Order order) {
+			_order = order;
+		}
+
+		@GraphQLField
+		public OrderType typeByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_orderTypeResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				orderTypeResource ->
+					orderTypeResource.getOrderTypeByExternalReferenceCode(
+						_order.getExternalReferenceCode()));
+		}
+
+		private Order _order;
+
+	}
+
+	@GraphQLTypeExtension(Order.class)
+	public class GetTermByExternalReferenceCodeTypeExtension {
+
+		public GetTermByExternalReferenceCodeTypeExtension(Order order) {
+			_order = order;
+		}
+
+		@GraphQLField
+		public Term termByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_termResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				termResource -> termResource.getTermByExternalReferenceCode(
+					_order.getExternalReferenceCode()));
+		}
+
+		private Order _order;
+
+	}
+
+	@GraphQLTypeExtension(Order.class)
 	public class GetOrderByExternalReferenceCodeAccountTypeExtension {
 
 		public GetOrderByExternalReferenceCodeAccountTypeExtension(
@@ -1209,80 +1270,6 @@ public class Query {
 				Query.this::_populateResourceContext,
 				accountResource ->
 					accountResource.getOrderByExternalReferenceCodeAccount(
-						_order.getExternalReferenceCode()));
-		}
-
-		private Order _order;
-
-	}
-
-	@GraphQLTypeExtension(OrderItem.class)
-	public class GetOrderByExternalReferenceCodeTypeExtension {
-
-		public GetOrderByExternalReferenceCodeTypeExtension(
-			OrderItem orderItem) {
-
-			_orderItem = orderItem;
-		}
-
-		@GraphQLField
-		public Order orderByExternalReferenceCode() throws Exception {
-			return _applyComponentServiceObjects(
-				_orderResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				orderResource -> orderResource.getOrderByExternalReferenceCode(
-					_orderItem.getExternalReferenceCode()));
-		}
-
-		private OrderItem _orderItem;
-
-	}
-
-	@GraphQLTypeExtension(Order.class)
-	public class
-		GetOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPageTypeExtension {
-
-		public GetOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPageTypeExtension(
-			Order order) {
-
-			_order = order;
-		}
-
-		@GraphQLField
-		public OrderRuleAccountGroupPage
-				ruleByExternalReferenceCodeOrderRuleAccountGroups(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_orderRuleAccountGroupResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				orderRuleAccountGroupResource -> new OrderRuleAccountGroupPage(
-					orderRuleAccountGroupResource.
-						getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
-							_order.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Order _order;
-
-	}
-
-	@GraphQLTypeExtension(Order.class)
-	public class GetOrderNoteByExternalReferenceCodeTypeExtension {
-
-		public GetOrderNoteByExternalReferenceCodeTypeExtension(Order order) {
-			_order = order;
-		}
-
-		@GraphQLField
-		public OrderNote noteByExternalReferenceCode() throws Exception {
-			return _applyComponentServiceObjects(
-				_orderNoteResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				orderNoteResource ->
-					orderNoteResource.getOrderNoteByExternalReferenceCode(
 						_order.getExternalReferenceCode()));
 		}
 
@@ -1317,19 +1304,21 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Order.class)
-	public class GetOrderTypeByExternalReferenceCodeTypeExtension {
+	public class GetOrderByExternalReferenceCodeChannelTypeExtension {
 
-		public GetOrderTypeByExternalReferenceCodeTypeExtension(Order order) {
+		public GetOrderByExternalReferenceCodeChannelTypeExtension(
+			Order order) {
+
 			_order = order;
 		}
 
 		@GraphQLField
-		public OrderType typeByExternalReferenceCode() throws Exception {
+		public Channel byExternalReferenceCodeChannel() throws Exception {
 			return _applyComponentServiceObjects(
-				_orderTypeResourceComponentServiceObjects,
+				_channelResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				orderTypeResource ->
-					orderTypeResource.getOrderTypeByExternalReferenceCode(
+				channelResource ->
+					channelResource.getOrderByExternalReferenceCodeChannel(
 						_order.getExternalReferenceCode()));
 		}
 
@@ -1338,28 +1327,26 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Order.class)
-	public class
-		GetOrderRuleByExternalReferenceCodeOrderRuleChannelsPageTypeExtension {
+	public class GetOrderByExternalReferenceCodeOrderItemsPageTypeExtension {
 
-		public GetOrderRuleByExternalReferenceCodeOrderRuleChannelsPageTypeExtension(
+		public GetOrderByExternalReferenceCodeOrderItemsPageTypeExtension(
 			Order order) {
 
 			_order = order;
 		}
 
 		@GraphQLField
-		public OrderRuleChannelPage
-				ruleByExternalReferenceCodeOrderRuleChannels(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
+		public OrderItemPage byExternalReferenceCodeOrderItems(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_orderRuleChannelResourceComponentServiceObjects,
+				_orderItemResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				orderRuleChannelResource -> new OrderRuleChannelPage(
-					orderRuleChannelResource.
-						getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
+				orderItemResource -> new OrderItemPage(
+					orderItemResource.
+						getOrderByExternalReferenceCodeOrderItemsPage(
 							_order.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
@@ -1398,32 +1385,6 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Order.class)
-	public class GetOrderByExternalReferenceCodeShippingAddressTypeExtension {
-
-		public GetOrderByExternalReferenceCodeShippingAddressTypeExtension(
-			Order order) {
-
-			_order = order;
-		}
-
-		@GraphQLField
-		public ShippingAddress byExternalReferenceCodeShippingAddress()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_shippingAddressResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				shippingAddressResource ->
-					shippingAddressResource.
-						getOrderByExternalReferenceCodeShippingAddress(
-							_order.getExternalReferenceCode()));
-		}
-
-		private Order _order;
-
-	}
-
-	@GraphQLTypeExtension(Order.class)
 	public class
 		GetOrderRuleByExternalReferenceCodeOrderRuleAccountsPageTypeExtension {
 
@@ -1455,46 +1416,28 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Order.class)
-	public class GetTermByExternalReferenceCodeTypeExtension {
+	public class
+		GetOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPageTypeExtension {
 
-		public GetTermByExternalReferenceCodeTypeExtension(Order order) {
-			_order = order;
-		}
-
-		@GraphQLField
-		public Term termByExternalReferenceCode() throws Exception {
-			return _applyComponentServiceObjects(
-				_termResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				termResource -> termResource.getTermByExternalReferenceCode(
-					_order.getExternalReferenceCode()));
-		}
-
-		private Order _order;
-
-	}
-
-	@GraphQLTypeExtension(Order.class)
-	public class GetTermByExternalReferenceCodeTermOrderTypesPageTypeExtension {
-
-		public GetTermByExternalReferenceCodeTermOrderTypesPageTypeExtension(
+		public GetOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPageTypeExtension(
 			Order order) {
 
 			_order = order;
 		}
 
 		@GraphQLField
-		public TermOrderTypePage termByExternalReferenceCodeTermOrderTypes(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+		public OrderRuleAccountGroupPage
+				ruleByExternalReferenceCodeOrderRuleAccountGroups(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_termOrderTypeResourceComponentServiceObjects,
+				_orderRuleAccountGroupResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				termOrderTypeResource -> new TermOrderTypePage(
-					termOrderTypeResource.
-						getTermByExternalReferenceCodeTermOrderTypesPage(
+				orderRuleAccountGroupResource -> new OrderRuleAccountGroupPage(
+					orderRuleAccountGroupResource.
+						getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
 							_order.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
@@ -1505,27 +1448,27 @@ public class Query {
 
 	@GraphQLTypeExtension(Order.class)
 	public class
-		GetOrderTypeByExternalReferenceCodeOrderTypeChannelsPageTypeExtension {
+		GetOrderRuleByExternalReferenceCodeOrderRuleChannelsPageTypeExtension {
 
-		public GetOrderTypeByExternalReferenceCodeOrderTypeChannelsPageTypeExtension(
+		public GetOrderRuleByExternalReferenceCodeOrderRuleChannelsPageTypeExtension(
 			Order order) {
 
 			_order = order;
 		}
 
 		@GraphQLField
-		public OrderTypeChannelPage
-				typeByExternalReferenceCodeOrderTypeChannels(
+		public OrderRuleChannelPage
+				ruleByExternalReferenceCodeOrderRuleChannels(
 					@GraphQLName("pageSize") int pageSize,
 					@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_orderTypeChannelResourceComponentServiceObjects,
+				_orderRuleChannelResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				orderTypeChannelResource -> new OrderTypeChannelPage(
-					orderTypeChannelResource.
-						getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+				orderRuleChannelResource -> new OrderRuleChannelPage(
+					orderRuleChannelResource.
+						getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
 							_order.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
@@ -1566,26 +1509,83 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Order.class)
-	public class GetOrderByExternalReferenceCodeOrderItemsPageTypeExtension {
+	public class
+		GetOrderTypeByExternalReferenceCodeOrderTypeChannelsPageTypeExtension {
 
-		public GetOrderByExternalReferenceCodeOrderItemsPageTypeExtension(
+		public GetOrderTypeByExternalReferenceCodeOrderTypeChannelsPageTypeExtension(
 			Order order) {
 
 			_order = order;
 		}
 
 		@GraphQLField
-		public OrderItemPage byExternalReferenceCodeOrderItems(
+		public OrderTypeChannelPage
+				typeByExternalReferenceCodeOrderTypeChannels(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_orderTypeChannelResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				orderTypeChannelResource -> new OrderTypeChannelPage(
+					orderTypeChannelResource.
+						getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+							_order.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Order _order;
+
+	}
+
+	@GraphQLTypeExtension(Order.class)
+	public class GetOrderByExternalReferenceCodeShippingAddressTypeExtension {
+
+		public GetOrderByExternalReferenceCodeShippingAddressTypeExtension(
+			Order order) {
+
+			_order = order;
+		}
+
+		@GraphQLField
+		public ShippingAddress byExternalReferenceCodeShippingAddress()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_shippingAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				shippingAddressResource ->
+					shippingAddressResource.
+						getOrderByExternalReferenceCodeShippingAddress(
+							_order.getExternalReferenceCode()));
+		}
+
+		private Order _order;
+
+	}
+
+	@GraphQLTypeExtension(Order.class)
+	public class GetTermByExternalReferenceCodeTermOrderTypesPageTypeExtension {
+
+		public GetTermByExternalReferenceCodeTermOrderTypesPageTypeExtension(
+			Order order) {
+
+			_order = order;
+		}
+
+		@GraphQLField
+		public TermOrderTypePage termByExternalReferenceCodeTermOrderTypes(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_orderItemResourceComponentServiceObjects,
+				_termOrderTypeResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				orderItemResource -> new OrderItemPage(
-					orderItemResource.
-						getOrderByExternalReferenceCodeOrderItemsPage(
+				termOrderTypeResource -> new TermOrderTypePage(
+					termOrderTypeResource.
+						getTermByExternalReferenceCodeTermOrderTypesPage(
 							_order.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
@@ -2540,3 +2540,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1993276845

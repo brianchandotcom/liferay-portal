@@ -734,3 +734,4 @@ public class DocumentFolderSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1275125265

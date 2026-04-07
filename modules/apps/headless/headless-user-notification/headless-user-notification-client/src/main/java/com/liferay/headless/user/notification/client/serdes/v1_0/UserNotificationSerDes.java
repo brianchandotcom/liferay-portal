@@ -349,3 +349,4 @@ public class UserNotificationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1792849815

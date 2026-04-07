@@ -330,3 +330,4 @@ public class ShippingMethodResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2005992933

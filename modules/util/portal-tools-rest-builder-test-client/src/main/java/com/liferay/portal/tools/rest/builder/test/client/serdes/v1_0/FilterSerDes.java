@@ -220,3 +220,4 @@ public class FilterSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:202204873

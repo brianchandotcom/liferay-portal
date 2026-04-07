@@ -532,3 +532,4 @@ public abstract class BaseRecommendationConfigurationResourceImpl
 			BaseRecommendationConfigurationResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:2124841579

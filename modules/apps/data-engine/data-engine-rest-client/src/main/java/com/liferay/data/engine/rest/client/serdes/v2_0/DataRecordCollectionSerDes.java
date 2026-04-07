@@ -347,3 +347,4 @@ public class DataRecordCollectionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1506032704

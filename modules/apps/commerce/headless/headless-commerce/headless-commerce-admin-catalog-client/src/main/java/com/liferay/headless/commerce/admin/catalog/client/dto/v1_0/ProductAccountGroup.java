@@ -137,3 +137,4 @@ public class ProductAccountGroup implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:413888640

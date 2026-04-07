@@ -215,3 +215,4 @@ public class DataSourceLiferayAnalyticsURLSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1522950083

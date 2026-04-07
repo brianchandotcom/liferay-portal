@@ -2051,3 +2051,4 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 		PriceModifierCategoryResource _priceModifierCategoryResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:784991522

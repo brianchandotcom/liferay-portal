@@ -216,3 +216,4 @@ public class FieldSetSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-895085640

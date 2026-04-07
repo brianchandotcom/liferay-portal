@@ -1111,3 +1111,4 @@ public interface WishListResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1870823488

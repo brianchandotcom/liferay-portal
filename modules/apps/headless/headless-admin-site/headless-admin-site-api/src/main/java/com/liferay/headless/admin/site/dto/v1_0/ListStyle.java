@@ -360,3 +360,4 @@ public class ListStyle
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1956640216

@@ -224,3 +224,4 @@ public class CTProcess implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1387104596

@@ -405,3 +405,4 @@ public class SkuSubscriptionConfiguration implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1569015705

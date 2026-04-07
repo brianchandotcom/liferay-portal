@@ -1544,3 +1544,4 @@ public interface DataLayoutResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1866595686

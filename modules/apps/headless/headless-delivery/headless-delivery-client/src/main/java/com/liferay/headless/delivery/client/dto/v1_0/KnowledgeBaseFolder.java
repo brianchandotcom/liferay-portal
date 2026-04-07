@@ -436,3 +436,4 @@ public class KnowledgeBaseFolder implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1475527966

@@ -845,3 +845,4 @@ public abstract class BaseSharedAssetResourceImpl
 		LogFactoryUtil.getLog(BaseSharedAssetResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-603648595

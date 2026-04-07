@@ -270,3 +270,4 @@ public class RecommendationConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-804740005

@@ -395,3 +395,4 @@ public class SamlProviderSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-736748786

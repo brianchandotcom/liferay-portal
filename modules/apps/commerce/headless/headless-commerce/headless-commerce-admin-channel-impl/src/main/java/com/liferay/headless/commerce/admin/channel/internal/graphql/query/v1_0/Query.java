@@ -881,34 +881,23 @@ public class Query {
 				shippingFixedOptionTermId));
 	}
 
-	@GraphQLTypeExtension(Channel.class)
-	public class
-		GetAccountAddressByExternalReferenceCodeAccountAddressChannelsPageTypeExtension {
+	@GraphQLTypeExtension(ChannelAccount.class)
+	public class GetChannelTypeExtension {
 
-		public GetAccountAddressByExternalReferenceCodeAccountAddressChannelsPageTypeExtension(
-			Channel channel) {
-
-			_channel = channel;
+		public GetChannelTypeExtension(ChannelAccount channelAccount) {
+			_channelAccount = channelAccount;
 		}
 
-		@GraphQLField
-		public AccountAddressChannelPage
-				accountAddressByExternalReferenceCodeAccountAddressChannels(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
+		@GraphQLField(description = "Retrive information of the given Channel.")
+		public Channel channel() throws Exception {
 			return _applyComponentServiceObjects(
-				_accountAddressChannelResourceComponentServiceObjects,
+				_channelResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				accountAddressChannelResource -> new AccountAddressChannelPage(
-					accountAddressChannelResource.
-						getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage(
-							_channel.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
+				channelResource -> channelResource.getChannel(
+					_channelAccount.getChannelId()));
 		}
 
-		private Channel _channel;
+		private ChannelAccount _channelAccount;
 
 	}
 
@@ -937,116 +926,31 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(ChannelAccount.class)
-	public class GetChannelTypeExtension {
-
-		public GetChannelTypeExtension(ChannelAccount channelAccount) {
-			_channelAccount = channelAccount;
-		}
-
-		@GraphQLField(description = "Retrive information of the given Channel.")
-		public Channel channel() throws Exception {
-			return _applyComponentServiceObjects(
-				_channelResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				channelResource -> channelResource.getChannel(
-					_channelAccount.getChannelId()));
-		}
-
-		private ChannelAccount _channelAccount;
-
-	}
-
 	@GraphQLTypeExtension(Channel.class)
 	public class
-		GetChannelByExternalReferenceCodeChannelAccountsPageTypeExtension {
+		GetAccountAddressByExternalReferenceCodeAccountAddressChannelsPageTypeExtension {
 
-		public GetChannelByExternalReferenceCodeChannelAccountsPageTypeExtension(
+		public GetAccountAddressByExternalReferenceCodeAccountAddressChannelsPageTypeExtension(
 			Channel channel) {
 
 			_channel = channel;
 		}
 
 		@GraphQLField
-		public ChannelAccountPage byExternalReferenceCodeChannelAccounts(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+		public AccountAddressChannelPage
+				accountAddressByExternalReferenceCodeAccountAddressChannels(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_channelAccountResourceComponentServiceObjects,
+				_accountAddressChannelResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				channelAccountResource -> new ChannelAccountPage(
-					channelAccountResource.
-						getChannelByExternalReferenceCodeChannelAccountsPage(
+				accountAddressChannelResource -> new AccountAddressChannelPage(
+					accountAddressChannelResource.
+						getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage(
 							_channel.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
-		}
-
-		private Channel _channel;
-
-	}
-
-	@GraphQLTypeExtension(Channel.class)
-	public class
-		GetChannelByExternalReferenceCodeProductDisplayPagesPageTypeExtension {
-
-		public GetChannelByExternalReferenceCodeProductDisplayPagesPageTypeExtension(
-			Channel channel) {
-
-			_channel = channel;
-		}
-
-		@GraphQLField
-		public ProductDisplayPagePage
-				byExternalReferenceCodeProductDisplayPages(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productDisplayPageResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productDisplayPageResource -> new ProductDisplayPagePage(
-					productDisplayPageResource.
-						getChannelByExternalReferenceCodeProductDisplayPagesPage(
-							_channel.getExternalReferenceCode(), search,
-							_filterBiFunction.apply(
-								productDisplayPageResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								productDisplayPageResource, sortsString))));
-		}
-
-		private Channel _channel;
-
-	}
-
-	@GraphQLTypeExtension(Channel.class)
-	public class
-		GetChannelByExternalReferenceCodeDefaultCategoryDisplayPageTypeExtension {
-
-		public GetChannelByExternalReferenceCodeDefaultCategoryDisplayPageTypeExtension(
-			Channel channel) {
-
-			_channel = channel;
-		}
-
-		@GraphQLField
-		public DefaultCategoryDisplayPage
-				byExternalReferenceCodeDefaultCategoryDisplayPage()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_defaultCategoryDisplayPageResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				defaultCategoryDisplayPageResource ->
-					defaultCategoryDisplayPageResource.
-						getChannelByExternalReferenceCodeDefaultCategoryDisplayPage(
-							_channel.getExternalReferenceCode()));
 		}
 
 		private Channel _channel;
@@ -1093,6 +997,64 @@ public class Query {
 
 	@GraphQLTypeExtension(Channel.class)
 	public class
+		GetChannelByExternalReferenceCodeChannelAccountsPageTypeExtension {
+
+		public GetChannelByExternalReferenceCodeChannelAccountsPageTypeExtension(
+			Channel channel) {
+
+			_channel = channel;
+		}
+
+		@GraphQLField
+		public ChannelAccountPage byExternalReferenceCodeChannelAccounts(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_channelAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				channelAccountResource -> new ChannelAccountPage(
+					channelAccountResource.
+						getChannelByExternalReferenceCodeChannelAccountsPage(
+							_channel.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Channel _channel;
+
+	}
+
+	@GraphQLTypeExtension(Channel.class)
+	public class
+		GetChannelByExternalReferenceCodeDefaultCategoryDisplayPageTypeExtension {
+
+		public GetChannelByExternalReferenceCodeDefaultCategoryDisplayPageTypeExtension(
+			Channel channel) {
+
+			_channel = channel;
+		}
+
+		@GraphQLField
+		public DefaultCategoryDisplayPage
+				byExternalReferenceCodeDefaultCategoryDisplayPage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_defaultCategoryDisplayPageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				defaultCategoryDisplayPageResource ->
+					defaultCategoryDisplayPageResource.
+						getChannelByExternalReferenceCodeDefaultCategoryDisplayPage(
+							_channel.getExternalReferenceCode()));
+		}
+
+		private Channel _channel;
+
+	}
+
+	@GraphQLTypeExtension(Channel.class)
+	public class
 		GetChannelByExternalReferenceCodeDefaultProductDisplayPageTypeExtension {
 
 		public GetChannelByExternalReferenceCodeDefaultProductDisplayPageTypeExtension(
@@ -1113,6 +1075,44 @@ public class Query {
 					defaultProductDisplayPageResource.
 						getChannelByExternalReferenceCodeDefaultProductDisplayPage(
 							_channel.getExternalReferenceCode()));
+		}
+
+		private Channel _channel;
+
+	}
+
+	@GraphQLTypeExtension(Channel.class)
+	public class
+		GetChannelByExternalReferenceCodeProductDisplayPagesPageTypeExtension {
+
+		public GetChannelByExternalReferenceCodeProductDisplayPagesPageTypeExtension(
+			Channel channel) {
+
+			_channel = channel;
+		}
+
+		@GraphQLField
+		public ProductDisplayPagePage
+				byExternalReferenceCodeProductDisplayPages(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productDisplayPageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productDisplayPageResource -> new ProductDisplayPagePage(
+					productDisplayPageResource.
+						getChannelByExternalReferenceCodeProductDisplayPagesPage(
+							_channel.getExternalReferenceCode(), search,
+							_filterBiFunction.apply(
+								productDisplayPageResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								productDisplayPageResource, sortsString))));
 		}
 
 		private Channel _channel;
@@ -2052,3 +2052,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1191397783

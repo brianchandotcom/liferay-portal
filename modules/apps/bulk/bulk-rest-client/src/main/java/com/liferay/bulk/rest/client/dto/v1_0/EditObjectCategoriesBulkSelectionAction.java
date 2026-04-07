@@ -132,3 +132,4 @@ public class EditObjectCategoriesBulkSelectionAction
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-496558472

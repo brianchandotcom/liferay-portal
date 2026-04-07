@@ -337,3 +337,4 @@ public class WorkflowInstanceSubmitSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1383679663

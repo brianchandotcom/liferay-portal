@@ -868,3 +868,4 @@ public class NotificationTemplateSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1183389500

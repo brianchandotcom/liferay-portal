@@ -540,3 +540,4 @@ public class RenderedContent implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:790659235

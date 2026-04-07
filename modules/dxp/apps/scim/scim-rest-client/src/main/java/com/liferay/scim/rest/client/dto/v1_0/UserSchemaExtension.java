@@ -98,3 +98,4 @@ public class UserSchemaExtension implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-884849767

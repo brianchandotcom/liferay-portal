@@ -594,3 +594,4 @@ public class ObjectRelationship implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1136409968

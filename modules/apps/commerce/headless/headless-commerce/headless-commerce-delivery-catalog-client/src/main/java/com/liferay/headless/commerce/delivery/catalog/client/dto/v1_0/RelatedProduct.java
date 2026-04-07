@@ -162,3 +162,4 @@ public class RelatedProduct implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:430667

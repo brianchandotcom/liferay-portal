@@ -344,3 +344,4 @@ public class SegmentUser implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-618957193

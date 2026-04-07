@@ -513,3 +513,4 @@ public class Shipment implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2103269540

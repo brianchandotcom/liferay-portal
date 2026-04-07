@@ -3808,3 +3808,4 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:703091686

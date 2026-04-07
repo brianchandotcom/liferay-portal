@@ -329,3 +329,4 @@ public class BlogPostingResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-443682808

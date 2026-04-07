@@ -155,3 +155,4 @@ public interface DispatchTriggerResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-870848772

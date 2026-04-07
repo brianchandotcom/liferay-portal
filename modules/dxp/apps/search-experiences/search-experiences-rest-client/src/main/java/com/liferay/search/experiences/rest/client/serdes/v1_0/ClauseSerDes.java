@@ -480,3 +480,4 @@ public class ClauseSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-642420477

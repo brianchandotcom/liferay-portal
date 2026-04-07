@@ -178,3 +178,4 @@ public interface DataListViewResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2117030146

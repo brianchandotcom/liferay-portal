@@ -118,3 +118,4 @@ public class SearchHits implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1667100535

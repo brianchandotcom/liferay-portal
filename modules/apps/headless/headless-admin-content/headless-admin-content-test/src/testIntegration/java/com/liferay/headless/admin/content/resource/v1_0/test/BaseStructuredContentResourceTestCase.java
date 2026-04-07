@@ -2907,3 +2907,4 @@ public abstract class BaseStructuredContentResourceTestCase {
 			StructuredContentResource _structuredContentResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1759759770

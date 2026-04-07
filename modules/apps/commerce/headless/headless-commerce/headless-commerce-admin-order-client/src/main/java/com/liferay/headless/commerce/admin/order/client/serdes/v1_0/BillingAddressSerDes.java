@@ -643,3 +643,4 @@ public class BillingAddressSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-72889671

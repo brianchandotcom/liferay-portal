@@ -329,3 +329,4 @@ public class NodeMetricResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:578365824

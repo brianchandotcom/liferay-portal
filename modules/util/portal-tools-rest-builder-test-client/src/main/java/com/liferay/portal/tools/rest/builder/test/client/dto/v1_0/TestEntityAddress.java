@@ -201,3 +201,4 @@ public class TestEntityAddress implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-240193887

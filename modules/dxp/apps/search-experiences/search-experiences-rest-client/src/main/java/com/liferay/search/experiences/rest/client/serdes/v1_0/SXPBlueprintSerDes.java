@@ -692,3 +692,4 @@ public class SXPBlueprintSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:676880328

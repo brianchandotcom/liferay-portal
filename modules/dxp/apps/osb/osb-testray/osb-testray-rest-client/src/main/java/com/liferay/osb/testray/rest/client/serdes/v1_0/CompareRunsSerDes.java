@@ -242,3 +242,4 @@ public class CompareRunsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1739759291

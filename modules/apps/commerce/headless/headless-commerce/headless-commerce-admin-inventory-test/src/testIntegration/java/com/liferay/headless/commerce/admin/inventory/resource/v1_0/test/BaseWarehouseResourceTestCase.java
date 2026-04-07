@@ -2700,3 +2700,4 @@ public abstract class BaseWarehouseResourceTestCase {
 		WarehouseResource _warehouseResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1672660288

@@ -203,3 +203,4 @@ public class ModuleViewportDefinitionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:887949523

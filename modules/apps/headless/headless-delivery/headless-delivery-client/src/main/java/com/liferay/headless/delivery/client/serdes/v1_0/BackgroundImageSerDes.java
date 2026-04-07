@@ -272,3 +272,4 @@ public class BackgroundImageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:70793854

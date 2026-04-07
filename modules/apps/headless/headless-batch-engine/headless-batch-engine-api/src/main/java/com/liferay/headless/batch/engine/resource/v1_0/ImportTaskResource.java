@@ -189,3 +189,4 @@ public interface ImportTaskResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2107484010

@@ -766,3 +766,4 @@ public class PlacedOrderAddressSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-799845220

@@ -323,3 +323,4 @@ public class NodeResourceFactoryImpl implements NodeResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:549553232

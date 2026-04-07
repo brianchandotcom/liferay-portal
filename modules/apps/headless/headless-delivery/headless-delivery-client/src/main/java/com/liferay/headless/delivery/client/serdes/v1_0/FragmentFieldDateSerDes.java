@@ -242,3 +242,4 @@ public class FragmentFieldDateSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-599166340

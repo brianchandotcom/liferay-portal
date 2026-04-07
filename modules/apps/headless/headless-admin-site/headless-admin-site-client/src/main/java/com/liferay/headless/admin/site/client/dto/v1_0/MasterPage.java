@@ -361,3 +361,4 @@ public class MasterPage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1817348529

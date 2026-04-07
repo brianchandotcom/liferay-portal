@@ -299,3 +299,4 @@ public class JSONMapAttributeTestEntitySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-314070073

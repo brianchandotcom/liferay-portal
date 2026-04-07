@@ -473,3 +473,4 @@ public class Attribute implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:930243416

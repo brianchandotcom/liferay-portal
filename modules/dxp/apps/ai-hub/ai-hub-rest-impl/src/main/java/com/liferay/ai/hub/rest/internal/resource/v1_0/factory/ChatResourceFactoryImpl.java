@@ -323,3 +323,4 @@ public class ChatResourceFactoryImpl implements ChatResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1957955628

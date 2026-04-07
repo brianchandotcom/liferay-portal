@@ -834,3 +834,4 @@ public class InstanceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1738951674

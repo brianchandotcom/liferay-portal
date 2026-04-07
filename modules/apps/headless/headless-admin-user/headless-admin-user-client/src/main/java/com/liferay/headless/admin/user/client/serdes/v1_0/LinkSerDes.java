@@ -227,3 +227,4 @@ public class LinkSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-192605338

@@ -1004,3 +1004,4 @@ public abstract class BaseInvitedMemberResourceTestCase {
 		_invitedMemberResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1632527515

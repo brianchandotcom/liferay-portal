@@ -523,3 +523,4 @@ public class WikiNodeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:311697020

@@ -149,3 +149,4 @@ public interface SXPParameterContributorDefinitionResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:254586771

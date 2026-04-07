@@ -190,3 +190,4 @@ public interface RegionResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:876725963

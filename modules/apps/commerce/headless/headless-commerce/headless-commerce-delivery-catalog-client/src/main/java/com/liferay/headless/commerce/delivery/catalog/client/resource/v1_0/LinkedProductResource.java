@@ -288,3 +288,4 @@ public interface LinkedProductResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1470412898

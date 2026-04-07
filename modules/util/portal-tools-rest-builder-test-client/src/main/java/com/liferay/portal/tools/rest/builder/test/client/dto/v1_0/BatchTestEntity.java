@@ -215,3 +215,4 @@ public class BatchTestEntity implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-631608325

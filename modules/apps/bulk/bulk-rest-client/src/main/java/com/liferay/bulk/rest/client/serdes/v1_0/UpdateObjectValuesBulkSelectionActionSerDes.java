@@ -345,3 +345,4 @@ public class UpdateObjectValuesBulkSelectionActionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-82286424

@@ -186,3 +186,4 @@ public interface OptionCategoryResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:176555321

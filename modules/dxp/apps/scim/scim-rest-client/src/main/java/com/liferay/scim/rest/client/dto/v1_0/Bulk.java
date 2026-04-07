@@ -120,3 +120,4 @@ public class Bulk implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:971849034

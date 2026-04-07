@@ -559,3 +559,4 @@ public abstract class BaseInvitedMemberResourceImpl
 		LogFactoryUtil.getLog(BaseInvitedMemberResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:883913580

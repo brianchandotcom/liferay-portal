@@ -91,7 +91,6 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 
 		String segmentsExperienceKey = SegmentsExperienceConstants.KEY_DEFAULT;
 		String segmentsExperienceName = LanguageUtil.get(locale, "default");
-		String segmentsExperienceStatus = "ACTIVE";
 		String segmentsExperimentId = StringPool.BLANK;
 		String segmentsVariantId = StringPool.BLANK;
 
@@ -110,16 +109,12 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 			segmentsExperienceKey =
 				segmentsExperience.getSegmentsExperienceKey();
 			segmentsExperienceName = segmentsExperience.getName(locale);
-			segmentsExperienceStatus =
-				segmentsExperience.isActive() ? "ACTIVE" : "INACTIVE";
 		}
 
 		return HashMapBuilder.put(
 			"experienceId", segmentsExperienceKey
 		).put(
 			"experienceName", segmentsExperienceName
-		).put(
-			"experienceStatus", segmentsExperienceStatus
 		).put(
 			"experimentId", segmentsExperimentId
 		).put(

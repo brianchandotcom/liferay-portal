@@ -38,24 +38,25 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YAMLUtil {
 
-	public static ConfigYAML loadConfigYAML(String baseDir, File file)
-		throws IOException {
-
+	public static ConfigYAML loadConfigYAML(String baseDir, File file) {
 		String filePath = file.getPath();
 
-		ConfigYAML configYAML = _configYAMLs.get(filePath);
-
-		if (configYAML == null) {
-			try {
-				configYAML = _YAML_CONFIG.loadAs(
-					FileUtil.read(file), ConfigYAML.class);
-
-				_configYAMLs.put(filePath, configYAML);
-			}
-			catch (MarkedYAMLException markedYAMLException) {
-				throw new InvalidYAMLException(markedYAMLException);
-			}
-		}
+		ConfigYAML configYAML = _configYAMLs.computeIfAbsent(
+			filePath,
+			key -> {
+				try {
+					synchronized (_YAML_CONFIG) {
+						return _YAML_CONFIG.loadAs(
+							FileUtil.read(file), ConfigYAML.class);
+					}
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+				catch (MarkedYAMLException markedYAMLException) {
+					throw new InvalidYAMLException(markedYAMLException);
+				}
+			});
 
 		ConfigYAML clonedConfigYAML = configYAML.clone();
 
@@ -64,37 +65,44 @@ public class YAMLUtil {
 		return clonedConfigYAML;
 	}
 
-	public static OpenAPIYAML loadOpenAPIYAML(File file) throws IOException {
-		String filePath = file.getPath();
-
-		OpenAPIYAML openAPIYAML = _openAPIYAMLs.get(filePath);
-
-		if (openAPIYAML != null) {
-			return openAPIYAML;
-		}
-
-		openAPIYAML = loadOpenAPIYAML(FileUtil.read(file));
-
-		if (openAPIYAML != null) {
-			_openAPIYAMLs.put(filePath, openAPIYAML);
-		}
-
-		return openAPIYAML;
+	public static OpenAPIYAML loadOpenAPIYAML(File file) {
+		return _openAPIYAMLs.computeIfAbsent(
+			file.getPath(),
+			key -> {
+				try {
+					synchronized (_YAML_OPEN_API) {
+						return _YAML_OPEN_API.loadAs(
+							FileUtil.read(file), OpenAPIYAML.class);
+					}
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+				catch (MarkedYAMLException markedYAMLException) {
+					throw new InvalidYAMLException(markedYAMLException);
+				}
+			});
 	}
 
 	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
-		try {
-			return _YAML_OPEN_API.loadAs(yamlString, OpenAPIYAML.class);
-		}
-		catch (MarkedYAMLException markedYAMLException) {
-			throw new InvalidYAMLException(markedYAMLException);
-		}
+		return _openAPIYAMLs.computeIfAbsent(
+			yamlString,
+			key -> {
+				try {
+					synchronized (_YAML_OPEN_API) {
+						return _YAML_OPEN_API.loadAs(key, OpenAPIYAML.class);
+					}
+				}
+				catch (MarkedYAMLException markedYAMLException) {
+					throw new InvalidYAMLException(markedYAMLException);
+				}
+			});
 	}
 
 	public static void validateOpenAPIYAML(String fileName, String yamlString)
 		throws OpenAPIValidatorException {
 
-		OpenAPIValidator.validate(fileName, yamlString, _YAML_OPEN_API);
+		OpenAPIValidator.validate(fileName, loadOpenAPIYAML(yamlString));
 	}
 
 	private static final Yaml _YAML_CONFIG;

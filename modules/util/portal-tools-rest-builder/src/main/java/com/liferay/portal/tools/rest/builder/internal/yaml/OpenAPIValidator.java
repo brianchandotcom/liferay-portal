@@ -9,19 +9,13 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.exception.OpenAPIVali
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Info;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 
-import org.yaml.snakeyaml.Yaml;
-
 /**
  * @author Javier de Arcos
  */
 public class OpenAPIValidator {
 
-	public static void validate(
-			String fileName, String openAPIYAMLString, Yaml yaml)
+	public static void validate(String fileName, OpenAPIYAML openAPIYAML)
 		throws OpenAPIValidatorException {
-
-		OpenAPIYAML openAPIYAML = yaml.loadAs(
-			openAPIYAMLString, OpenAPIYAML.class);
 
 		Info info = openAPIYAML.getInfo();
 

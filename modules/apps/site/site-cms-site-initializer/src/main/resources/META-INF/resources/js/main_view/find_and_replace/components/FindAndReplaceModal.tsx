@@ -55,18 +55,14 @@ export default function Wrapper({
 		onClose: () => {
 			setVisible(false);
 
-			const {hasApplied, hasAppliedAll, hasDiscarded, itemsCount} =
-				historyRef.current;
+			const {hasApplied, hasAppliedAll} = historyRef.current;
 
 			if (!hasApplied || hasAppliedAll) {
 				return;
 			}
 
-			const resetSearch = !(hasDiscarded || itemsCount > 0);
-
 			Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
 				id: dataSetId,
-				resetSearch,
 			});
 		},
 	});

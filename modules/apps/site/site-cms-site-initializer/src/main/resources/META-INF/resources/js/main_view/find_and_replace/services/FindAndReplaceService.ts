@@ -90,7 +90,6 @@ function performBulkReplace({
 		keyValues: {
 			values,
 		},
-		resetSearch: true,
 		selectedData: {
 			items: items as unknown as ISearchAssetObjectEntry[],
 			selectAll: false,

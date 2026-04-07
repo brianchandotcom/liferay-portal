@@ -5,15 +5,18 @@
 
 import ClayModal from '@clayui/modal';
 import {
+	FieldBase,
 	FileData,
 	MultipleFileUploader,
 	openToast,
 } from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useId, useState} from 'react';
 
+import SpaceSelector from '../../common/components/SpaceSelector';
 import ApiHelper from '../../common/services/ApiHelper';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
+import {Space} from '../../common/types/Space';
 
 const getBase64 = (file: File): Promise<string> => {
 	return new Promise((resolve, reject) => {
@@ -48,6 +51,16 @@ export default function MultipleFilesUploadModalContent({
 	onModalClose: () => void;
 	parentObjectEntryFolderExternalReferenceCode: string;
 }) {
+	const [groupId, setGroupId] = useState<number>(
+		assetLibraries?.length === 1 ? assetLibraries?.[0].groupId : 0
+	);
+
+	const [groupIdError, setGroupIdError] = useState(false);
+
+	const groupIdInputId = useId();
+
+	const [space, setSpace] = useState<Space>();
+
 	const getAssetLibraryLink = (assetLibrary: AssetLibrary) => {
 		return `<a href="${baseAssetLibraryViewURL}${assetLibrary.groupId}" class="alert-link lead"><strong>${assetLibrary.name}</strong></a>`;
 	};
@@ -135,10 +148,40 @@ export default function MultipleFilesUploadModalContent({
 			</ClayModal.Header>
 
 			<MultipleFileUploader
-				assetLibraries={assetLibraries}
 				filesToUpload={filesToUpload}
 				onModalClose={onModalClose}
 				onUploadComplete={onUploadComplete}
+				scopeSelectorElement={
+					assetLibraries && assetLibraries.length > 1 ? (
+						<div className="mt-4">
+							<FieldBase
+								errorMessage={
+									groupIdError
+										? Liferay.Language.get(
+												'this-field-is-required'
+											)
+										: undefined
+								}
+								helpMessage={Liferay.Language.get(
+									'select-the-space-to-upload-the-file'
+								)}
+								id={groupIdInputId}
+								label={Liferay.Language.get('space')}
+								required
+							>
+								<SpaceSelector
+									id={groupIdInputId}
+									onSpaceChange={(space) => {
+										setGroupIdError(false);
+										setGroupId(space ? space.siteId : 0);
+										setSpace(space);
+									}}
+									space={space}
+								/>
+							</FieldBase>
+						</div>
+					) : undefined
+				}
 				uploadRequest={uploadRequest}
 			/>
 		</>

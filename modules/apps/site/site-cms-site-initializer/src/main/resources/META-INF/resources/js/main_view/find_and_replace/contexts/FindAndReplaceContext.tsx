@@ -77,6 +77,7 @@ export const FindAndReplaceContext = createContext<{
 	setPreviewId: Dispatch<SetStateAction<string | null>>;
 	setPreviousView: Dispatch<SetStateAction<View | null>>;
 	setReplacement: Dispatch<SetStateAction<string>>;
+	setSearch: Dispatch<SetStateAction<string>>;
 	setView: Dispatch<SetStateAction<View>>;
 	view: View;
 }>({
@@ -97,6 +98,7 @@ export const FindAndReplaceContext = createContext<{
 	setPreviewId: () => {},
 	setPreviousView: () => {},
 	setReplacement: () => {},
+	setSearch: () => {},
 	setView: () => {},
 	view: 'loading',
 });
@@ -107,7 +109,6 @@ type Props = {
 	closeModal: () => void;
 	dataSetId: string;
 	fdsItems: ISearchAssetObjectEntry[];
-	search: string;
 	setHistory: (history: Partial<History>) => void;
 	stickerConfig: StickerConfig;
 };
@@ -118,7 +119,6 @@ export function FindAndReplaceContextProvider({
 	closeModal,
 	dataSetId,
 	fdsItems,
-	search,
 	setHistory,
 	stickerConfig,
 }: Props) {
@@ -129,6 +129,8 @@ export function FindAndReplaceContextProvider({
 	const [localeId, setLocaleId] = useState<Locale['id'] | 'all'>('all');
 
 	const [replacement, setReplacement] = useState('');
+
+	const [search, setSearch] = useState('');
 
 	const [view, setView] = useState<View>('loading');
 
@@ -198,12 +200,12 @@ export function FindAndReplaceContextProvider({
 				return;
 			}
 
-			const filteredItems = filterItems(response.data ?? [], search);
+			const items = response.data ?? [];
 
-			setItems(filteredItems);
-			setHistory({itemsCount: filteredItems.length});
-			setLocales(filterLocales(filteredItems, availableLocales));
-			setView(filteredItems.length ? 'setup' : 'no-matches');
+			setItems(items);
+			setHistory({itemsCount: items.length});
+			setLocales(filterLocales(items, availableLocales));
+			setView('setup');
 		}
 
 		if (items || loadingRef.current) {
@@ -243,6 +245,7 @@ export function FindAndReplaceContextProvider({
 				setPreviewId,
 				setPreviousView,
 				setReplacement,
+				setSearch,
 				setView,
 				view,
 			}}
@@ -274,24 +277,6 @@ export function useCancelDiscard() {
 
 		setPreviousView(null);
 	}, [previousView, setPreviousView, setView]);
-}
-
-function filterItems(items: ReplaceItem[], search: string) {
-	return items.filter(({fields}) =>
-		fields.some(({value, value_i18n}) => {
-			if (value?.includes(search)) {
-				return true;
-			}
-
-			if (!value_i18n) {
-				return false;
-			}
-
-			return Object.values(value_i18n).some((translation) =>
-				translation?.includes(search)
-			);
-		})
-	);
 }
 
 function filterLocales(items: ReplaceItem[], availableLocales: Locale[]) {

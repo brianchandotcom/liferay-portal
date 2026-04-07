@@ -13,7 +13,6 @@ type Props = {
 	availableLocales: Locale[];
 	dataSetId: string;
 	fdsItems: ISearchAssetObjectEntry[];
-	search: string;
 	stickerConfig: StickerConfig;
 };
 

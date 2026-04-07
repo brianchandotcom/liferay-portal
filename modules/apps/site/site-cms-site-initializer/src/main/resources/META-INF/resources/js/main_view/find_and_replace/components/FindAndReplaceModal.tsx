@@ -36,7 +36,6 @@ export default function Wrapper({
 	availableLocales,
 	dataSetId,
 	fdsItems,
-	search,
 	stickerConfig,
 }: Props) {
 	const [visible, setVisible] = useState(true);
@@ -82,7 +81,6 @@ export default function Wrapper({
 			closeModal={closeModal}
 			dataSetId={dataSetId}
 			fdsItems={fdsItems}
-			search={search}
 			setHistory={setHistory}
 			stickerConfig={stickerConfig}
 		>

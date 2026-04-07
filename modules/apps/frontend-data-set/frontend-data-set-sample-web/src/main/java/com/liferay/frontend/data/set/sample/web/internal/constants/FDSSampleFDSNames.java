@@ -33,7 +33,7 @@ public class FDSSampleFDSNames {
 
 	public static final String MY_ROLE_TASKS =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-myRoleTasks";
-	
+
 	public static final String MY_USER_TASKS =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-myUserTasks";
 

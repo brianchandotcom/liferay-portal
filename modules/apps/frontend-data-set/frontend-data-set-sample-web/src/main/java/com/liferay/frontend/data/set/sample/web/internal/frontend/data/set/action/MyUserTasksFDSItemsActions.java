@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,7 +10,6 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -19,7 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juanjo Fernández
@@ -67,8 +65,5 @@ public class MyUserTasksFDSItemsActions implements FDSItemsActions {
 				"assignToMeWorkflowTask"
 			));
 	}
-
-	@Reference
-	private Language _language;
 
 }

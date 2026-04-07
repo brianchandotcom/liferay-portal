@@ -3535,6 +3535,117 @@ public class DefaultObjectEntryManagerImplTest
 
 	@FeatureFlag("LPD-17564")
 	@Test
+	public void testAddRelatedObjectEntryWithoutObjectEntryFolder()
+		throws Exception {
+
+		CMSTestUtil.getOrAddGroup(DefaultObjectEntryManagerImplTest.class);
+
+		DepotEntry depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
+
+		ObjectDefinition parentObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"title"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			parentObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
+		ObjectDefinition childObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"title"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId(),
+				childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		String scopeKey = String.valueOf(depotEntry.getGroupId());
+
+		ObjectEntry parentObjectEntry =
+			_defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, parentObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"title", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				scopeKey);
+
+		com.liferay.object.model.ObjectEntry parentServiceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(parentObjectEntry.getId());
+
+		Assert.assertNotEquals(
+			0, parentServiceBuilderObjectEntry.getObjectEntryFolderId());
+
+		ObjectEntry childObjectEntry =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				parentObjectEntry.getExternalReferenceCode(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"title", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				objectRelationship, scopeKey);
+
+		com.liferay.object.model.ObjectEntry childServiceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(childObjectEntry.getId());
+
+		Assert.assertEquals(
+			0, childServiceBuilderObjectEntry.getObjectEntryFolderId());
+
+		objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionType(), false,
+				objectRelationship.getLabelMap(), null);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		objectDefinitionLocalService.deleteObjectDefinition(
+			childObjectDefinition);
+		objectDefinitionLocalService.deleteObjectDefinition(
+			parentObjectDefinition);
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
 	public void testCopyObjectEntry() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry();
 

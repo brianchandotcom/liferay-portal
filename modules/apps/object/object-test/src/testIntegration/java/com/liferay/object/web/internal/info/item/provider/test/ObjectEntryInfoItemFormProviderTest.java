@@ -27,6 +27,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -256,6 +257,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 	@Test
 	public void testGetInfoForm() throws Exception {
 		_testGetInfoFormWithAttachmentObjectField();
+		_testGetInfoFormWithEdgeObjectRelationship();
 		_testGetInfoFormWithEnableObjectEntrySchedule();
 		_testGetInfoFormWithObjectAction();
 		_testGetInfoFormWithObjectRelationship();
@@ -388,6 +390,77 @@ public class ObjectEntryInfoItemFormProviderTest {
 			objectField.getObjectFieldId() + "#mimeType", _childInfoForm);
 		_assertInfoField(
 			objectField.getObjectFieldId() + "#size", _childInfoForm);
+	}
+
+	private void _testGetInfoFormWithEdgeObjectRelationship() throws Exception {
+		ObjectDefinition parentObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"parentTitle"
+					).build()));
+
+		ObjectDefinition childObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"childTitle"
+					).build()));
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId(),
+				childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"a" + RandomTestUtil.randomString(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		try {
+			InfoForm parentInfoForm = _getInfoForm(parentObjectDefinition);
+
+			InfoFieldSet infoFieldSet =
+				(InfoFieldSet)parentInfoForm.getInfoFieldSetEntry(
+					parentObjectDefinition.getName());
+
+			InfoFieldSet relationshipInfoFieldSet =
+				(InfoFieldSet)infoFieldSet.getInfoFieldSetEntry(
+					objectRelationship.getName());
+
+			Assert.assertNotNull(
+				"Child fields should appear in parent InfoForm for edge " +
+					"relationships",
+				relationshipInfoFieldSet);
+
+			Assert.assertNotNull(
+				relationshipInfoFieldSet.getInfoFieldSetEntry("childTitle"));
+		}
+		finally {
+			objectRelationship =
+				_objectRelationshipLocalService.updateObjectRelationship(
+					objectRelationship.getExternalReferenceCode(),
+					objectRelationship.getObjectRelationshipId(),
+					objectRelationship.getParameterObjectFieldId(),
+					objectRelationship.getDeletionType(), false,
+					objectRelationship.getLabelMap(), null);
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				childObjectDefinition);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				parentObjectDefinition);
+		}
 	}
 
 	private void _testGetInfoFormWithEnableObjectEntrySchedule()

@@ -16,9 +16,11 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,7 +39,10 @@ import com.liferay.template.web.internal.security.permissions.resource.TemplateE
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.text.Collator;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -232,12 +238,48 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			}
 		}
 
-		return itemTypesJSONArray;
+		return _sortJSONArray(itemTypesJSONArray, new ItemTypesComparator());
+	}
+
+	private JSONArray _sortJSONArray(
+		JSONArray jsonArray, Comparator<Object> comparator) {
+
+		List<Object> objects = JSONUtil.toObjectList(jsonArray);
+
+		Collections.sort(objects, comparator);
+
+		jsonArray = new JSONArrayImpl();
+
+		for (Object object : objects) {
+			jsonArray.put(object);
+		}
+
+		return jsonArray;
 	}
 
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final InformationTemplatesTemplateDisplayContext
 		_informationTemplatesTemplateDisplayContext;
 	private final ThemeDisplay _themeDisplay;
+
+	private class ItemTypesComparator implements Comparator<Object> {
+
+		@Override
+		public int compare(Object object1, Object object2) {
+			JSONObject jsonObject1 = (JSONObject)object1;
+
+			String itemTypeLabel1 = jsonObject1.getString("label");
+
+			JSONObject jsonObject2 = (JSONObject)object2;
+
+			String itemTypeLabel2 = jsonObject2.getString("label");
+
+			Collator collator = CollatorUtil.getInstance(
+				_themeDisplay.getLocale());
+
+			return collator.compare(itemTypeLabel1, itemTypeLabel2);
+		}
+
+	}
 
 }

@@ -15,6 +15,7 @@ import {Analytics as AnalyticsType} from './types';
 import {
 	ANALYTICS_BATCH_SEGMENT_IDS,
 	ANALYTICS_CLIENT_VERSION,
+	ANALYTICS_REAL_TIME_SEGMENT_IDS,
 	FLUSH_INTERVAL,
 	HEADER_PROJECT_ID,
 	QUEUE_PRIORITY_DEFAULT,
@@ -219,6 +220,39 @@ class Analytics {
 
 					setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
 						createDate: date.getTime(),
+						segmentIds: data,
+					});
+
+					return data;
+				}
+				catch (error) {
+					return;
+				}
+			});
+	}
+
+	getRealTimeSegmentIds() {
+		const headers = {'Content-Type': 'application/json'};
+		if (this.config.projectId) {
+			Object.assign(headers, {
+				[HEADER_PROJECT_ID]: this.config.projectId,
+			});
+		}
+
+		return fetch(
+			`${this.config.faroBackendUrl}/api/1.0/segment-memberships/${this._getUserId()}/real-time-segment-ids`,
+			{
+				cache: 'default',
+				credentials: 'same-origin',
+				headers,
+				method: 'GET',
+				mode: 'cors',
+			}
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				try {
+					setItem(ANALYTICS_REAL_TIME_SEGMENT_IDS, {
 						segmentIds: data,
 					});
 

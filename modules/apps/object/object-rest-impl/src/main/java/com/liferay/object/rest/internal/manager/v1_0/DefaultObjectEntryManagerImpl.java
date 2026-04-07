@@ -3021,7 +3021,7 @@ public class DefaultObjectEntryManagerImpl
 			 (fileEntry.getFileURL() != null)) &&
 			ArrayUtil.isEmpty(fileContent)) {
 
-			throw new IllegalArgumentException("File content cannot be empty");
+			throw new IllegalArgumentException("File content is empty");
 		}
 
 		com.liferay.portal.kernel.repository.model.FileEntry

@@ -579,7 +579,11 @@ test(
 
 		await dialog.getByLabel('Overwrite Existing Items').check();
 
-		await dialog.getByRole('button', {name: 'Import'}).click();
+		await dialog.getByRole('button', {name: 'Save'}).click();
+
+		await expect(dialog).not.toBeVisible();
+
+		await page.getByRole('button', {name: 'Import'}).click();
 
 		await expect(
 			page.getByRole('button', {name: '1 item was imported.'})

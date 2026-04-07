@@ -639,8 +639,8 @@ export const getMyUserAccount = gql`
 	}
 `;
 
-export const getNotificationTemplateByExternalRefenceCode = gql`
-	query getNotificationTemplateByExternalRefenceCode(
+export const getNotificationTemplateByExternalReferenceCode = gql`
+	query getNotificationTemplateByExternalReferenceCode(
 		$externalReferenceCode: String!
 	) {
 		notificationTemplateByExternalReferenceCode(

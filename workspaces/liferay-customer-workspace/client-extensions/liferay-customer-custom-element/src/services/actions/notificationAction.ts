@@ -8,7 +8,7 @@
 import {ApolloClient} from '@apollo/client';
 
 import {
-	getNotificationTemplateByExternalRefenceCode,
+	getNotificationTemplateByExternalReferenceCode,
 	notificationQueueEntry,
 } from '../liferay/graphql/queries';
 
@@ -49,7 +49,7 @@ export default class NotificationQueueService {
 		const {
 			data: {notificationTemplateByExternalReferenceCode},
 		} = await this.client.query({
-			query: getNotificationTemplateByExternalRefenceCode,
+			query: getNotificationTemplateByExternalReferenceCode,
 			variables: {
 				externalReferenceCode,
 			},

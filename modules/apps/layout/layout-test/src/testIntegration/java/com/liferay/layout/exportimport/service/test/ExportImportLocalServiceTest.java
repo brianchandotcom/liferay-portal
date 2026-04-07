@@ -6,6 +6,7 @@
 package com.liferay.layout.exportimport.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -26,18 +27,27 @@ import com.liferay.layout.test.constants.LayoutPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -176,6 +186,68 @@ public class ExportImportLocalServiceTest {
 		}
 	}
 
+	@Test
+	@TestInfo("LPD-85259")
+	public void testExportImportParentContentLayoutWithNonpermissionCreatorUser()
+		throws Exception {
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group1);
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		User user = UserTestUtil.addUser(company);
+
+		Role role = _roleLocalService.getRole(
+			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user);
+
+		Layout parentLayout = LayoutTestUtil.addTypeContentLayout(
+			user.getUserId(), group1);
+
+		_userLocalService.deleteRoleUser(role.getRoleId(), user);
+
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
+			group1, parentLayout.getPlid());
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		_exportImportLayouts(
+			group1.getGroupId(), group2.getGroupId(), childLayout.getLayoutId(),
+			layout.getLayoutId(), parentLayout.getLayoutId());
+
+		Layout importedLayout =
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				layout.getExternalReferenceCode(), group2.getGroupId());
+
+		Assert.assertEquals(0, importedLayout.getParentPlid());
+		Assert.assertEquals(0, importedLayout.getPriority());
+		Assert.assertTrue(importedLayout.isTypePortlet());
+
+		Layout importedParentLayout =
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				parentLayout.getExternalReferenceCode(), group2.getGroupId());
+
+		Assert.assertEquals(0, importedParentLayout.getParentPlid());
+		Assert.assertEquals(1, importedParentLayout.getPriority());
+		Assert.assertTrue(
+			importedParentLayout.getType(),
+			importedParentLayout.isTypeContent());
+
+		Layout importedChildLayout =
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				childLayout.getExternalReferenceCode(), group2.getGroupId());
+
+		Assert.assertEquals(
+			importedParentLayout.getPlid(),
+			importedChildLayout.getParentPlid());
+		Assert.assertEquals(0, importedChildLayout.getPriority());
+		Assert.assertTrue(importedChildLayout.isTypePortlet());
+	}
+
 	private Layout _addLayoutFromLayoutPrototypeAndChangeFriendlyURL(
 			Group group, String name, ServiceContext serviceContext)
 		throws Exception {
@@ -225,6 +297,46 @@ public class ExportImportLocalServiceTest {
 			friendlyURLEntries.toString(), 1, friendlyURLEntries.size());
 
 		return layout;
+	}
+
+	private void _exportImportLayouts(
+			long exportGroupId, long importGroupId, long... layoutIds)
+		throws Exception {
+
+		Map<String, String[]> parameterMap =
+			_exportImportConfigurationParameterMapFactory.buildParameterMap();
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			_exportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUser(), exportGroupId, false, layoutIds,
+					parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration1 =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(), "export-group",
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
+
+		File file = _exportImportLocalService.exportLayoutsAsFile(
+			exportImportConfiguration1);
+
+		Map<String, Serializable> importLayoutSettingsMap =
+			_exportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					TestPropsValues.getUser(), importGroupId, false, layoutIds,
+					parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration2 =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(), "import-group",
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap);
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration2, file);
 	}
 
 	private Map<String, String[]> _getExportParameterMap() throws Exception {
@@ -296,11 +408,18 @@ public class ExportImportLocalServiceTest {
 	@Inject
 	private static FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private ExportImportConfiguration _exportImportConfiguration;
 
 	@Inject
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Inject
+	private ExportImportConfigurationParameterMapFactory
+		_exportImportConfigurationParameterMapFactory;
 
 	@Inject
 	private ExportImportConfigurationSettingsMapFactory
@@ -330,6 +449,12 @@ public class ExportImportLocalServiceTest {
 	private Portal _portal;
 
 	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
 	private Sites _sites;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

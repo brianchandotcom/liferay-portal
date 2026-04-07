@@ -9,11 +9,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,9 +47,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
 
@@ -294,7 +290,31 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 
 	@Override
 	protected void doReindexCompany(long companyId) throws Exception {
-		_reindexNodes(companyId);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			this::safeGetDocument);
+
+		indexableActionableDynamicQuery.performActions();
+	}
+
+	@Override
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_wikiPageLocalService.getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property headProperty = PropertyFactoryUtil.forName("head");
+
+				dynamicQuery.add(headProperty.eq(true));
+			});
+
+		return indexableActionableDynamicQuery;
 	}
 
 	@Reference
@@ -346,40 +366,6 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 		}
 	}
 
-	private void _reindexNodes(long companyId) throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_wikiNodeLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
-			(WikiNode node) -> _reindexPages(companyId, node.getNodeId()));
-
-		actionableDynamicQuery.performActions();
-	}
-
-	private void _reindexPages(long companyId, long nodeId)
-		throws PortalException {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_wikiPageLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property nodeIdProperty = PropertyFactoryUtil.forName("nodeId");
-
-				dynamicQuery.add(nodeIdProperty.eq(nodeId));
-
-				Property headProperty = PropertyFactoryUtil.forName("head");
-
-				dynamicQuery.add(headProperty.eq(true));
-			});
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageIndexer.class);
 
@@ -394,9 +380,6 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 
 	private ServiceTrackerList<ModelDocumentContributor<WikiPage>>
 		_serviceTrackerList;
-
-	@Reference
-	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Reference
 	private WikiNodeService _wikiNodeService;

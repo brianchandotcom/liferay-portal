@@ -227,7 +227,8 @@ public class FolderStagedModelDataHandler
 				Folder.class);
 
 		long parentFolderId = MapUtil.getLong(
-			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
+			folderIds, folder.getParentFolderId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			folder, DLFolder.class);

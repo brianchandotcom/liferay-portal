@@ -99,6 +99,13 @@ const IndividualsDashboardCDP = lazy(() =>
 	)
 );
 
+/* Lifecycle */
+const LifecycleDashboard = lazy(() =>
+	import(
+		/* webpackChunkname: "LifecycleDashboard" */ '../../lifecycle/pages/BaseLifecycle'
+	)
+);
+
 /* Sites */
 
 const SitesDashboard = lazy(() =>
@@ -281,6 +288,11 @@ const ROUTES = [
 		data: SitesDashboard,
 		destructured: false,
 		path: Routes.CHANNEL
+	},
+	{
+		data: LifecycleDashboard,
+		destructured: false,
+		path: Routes.LIFECYCLE
 	},
 	DEVELOPER_MODE && {
 		data: CommerceDashboard,

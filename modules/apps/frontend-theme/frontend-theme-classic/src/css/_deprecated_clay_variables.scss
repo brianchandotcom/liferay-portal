@@ -1,20 +1,260 @@
+// Declare variables in global scope so values inside @if statement apply
+// globally
+
+$clay-unset: clay-unset !default;
+
+$c-unset: $clay-unset !default;
+
+$clay-unset-placeholder: clay-unset-placeholder !default;
+
+$enable-c-inner: true !default;
+$enable-lexicon-flat-colors: true !default;
+$enable-scaling-components: true !default;
+$scaling-breakpoint-down: sm !default;
+
+$enable-caret: false !default;
+$enable-deprecation-messages: true !default;
+$enable-gradients: false !default;
+$enable-grid-classes: true !default;
+$enable-pointer-cursor-for-buttons: true !default;
+$enable-prefers-reduced-motion-media-query: true !default;
+$enable-print-styles: true !default;
+$enable-responsive-font-sizes: false !default;
+$enable-rounded: true !default;
+$enable-shadows: true !default;
+$enable-transitions: true !default;
+$enable-validation-icons: true !default;
+
+$enable-hover-media-query: false !default;
+
+$bg-theme-colors: null !default;
+$black: null !default;
+$blockquote-font-size: null !default;
+$blockquote-small-color: null !default;
+$blockquote-small-font-size: null !default;
+$blue: null !default;
+$body-bg: null !default;
+$body-color: null !default;
+$body-moz-osx-font-smoothing: null !default;
+$body-text-align: null !default;
+$body-webkit-font-smoothing: null !default;
+$border-color: null !default;
+$border-radius-lg: null !default;
+$border-radius-sm: null !default;
+$border-radius: null !default;
+$border-theme-colors: null !default;
+$border-width: null !default;
+$box-shadow-lg: null !default;
+$box-shadow-sm: null !default;
+$box-shadow: null !default;
+$btn-link-disabled-color: null !default;
+$btn-link: null !default;
+$btn-outline-primary: null !default;
+$btn-outline-secondary: null !default;
+$btn-primary: null !default;
+$btn-secondary: null !default;
+$btn-sizes: null !default;
+$c-body: null !default;
+$c-button-base: null !default;
+$code-color: null !default;
+$code-font-size: null !default;
+$component-active-bg: null !default;
+$component-active-color: null !default;
+$component-focus-box-shadow: null !default;
+$component-focus-inset-box-shadow: null !default;
+$container-form-lg: null !default;
+$container-max-widths: null !default;
+$container-view: null !default;
+$custom-checkbox-indicator-border-radius: null !default;
+$cyan: null !default;
+$danger-d1: null !default;
+$danger-d2: null !default;
+$danger-l1: null !default;
+$danger-l2: null !default;
+$danger: null !default;
+$dark-d1: null !default;
+$dark-d2: null !default;
+$dark-l1: null !default;
+$dark-l2: null !default;
+$dark: null !default;
+$disabled-cursor: null !default;
+$display-line-height: null !default;
+$display1-size: null !default;
+$display1-weight: null !default;
+$display2-size: null !default;
+$display2-weight: null !default;
+$display3-size: null !default;
+$display3-weight: null !default;
+$display4-size: null !default;
+$display4-weight: null !default;
+$dt-font-weight: null !default;
+$embed-responsive-aspect-ratios: null !default;
+$emphasized-link-hover-darken-percentage: null !default;
+$font-family-base: null !default;
+$font-family-monospace: null !default;
+$font-family-sans-serif: null !default;
+$font-family-serif: null !default;
+$font-import-url: null !default;
+$font-size-base-mobile: null !default;
+$font-size-base: null !default;
+$font-size-lg-mobile: null !default;
+$font-size-lg: null !default;
+$font-size-sm: null !default;
+$font-weight-base: null !default;
+$font-weight-bold: null !default;
+$font-weight-bolder: null !default;
+$font-weight-light: null !default;
+$font-weight-lighter: null !default;
+$font-weight-normal: null !default;
+$font-weight-semi-bold: null !default;
+$gray-100: null !default;
+$gray-200: null !default;
+$gray-300: null !default;
+$gray-400: null !default;
+$gray-500: null !default;
+$gray-600: null !default;
+$gray-700: null !default;
+$gray-800: null !default;
+$gray-900: null !default;
+$green: null !default;
+$grid-breakpoints: null !default;
+$grid-columns: null !default;
+$grid-gutter-width: null !default;
+$grid-row-columns: null !default;
+$h1-font-size-mobile: null !default;
+$h1-font-size: null !default;
+$h2-font-size-mobile: null !default;
+$h2-font-size: null !default;
+$h3-font-size-mobile: null !default;
+$h3-font-size: null !default;
+$h4-font-size-mobile: null !default;
+$h4-font-size: null !default;
+$h5-font-size-mobile: null !default;
+$h5-font-size: null !default;
+$h6-font-size-mobile: null !default;
+$h6-font-size: null !default;
+$headings-color: null !default;
+$headings-font-family: null !default;
+$headings-font-weight: null !default;
+$headings-line-height: null !default;
+$headings-margin-bottom: null !default;
+$hr-border-color: null !default;
+$hr-border-width: null !default;
+$hr-margin-y: null !default;
+$indigo: null !default;
+$info-d1: null !default;
+$info-d2: null !default;
+$info-l1: null !default;
+$info-l2: null !default;
+$info: null !default;
+$input-btn-border-width: null !default;
+$input-btn-focus-box-shadow: null !default;
+$input-btn-focus-color: null !default;
+$input-btn-focus-width: null !default;
+$input-btn-font-family: null !default;
+$input-btn-font-size-lg: null !default;
+$input-btn-font-size-sm: null !default;
+$input-btn-font-size: null !default;
+$input-btn-line-height-lg: null !default;
+$input-btn-line-height-sm: null !default;
+$input-btn-line-height: null !default;
+$input-btn-padding-x-lg: null !default;
+$input-btn-padding-x-sm: null !default;
+$input-btn-padding-x: null !default;
+$input-btn-padding-y-lg: null !default;
+$input-btn-padding-y-sm: null !default;
+$input-btn-padding-y: null !default;
+$kbd-bg: null !default;
+$kbd-box-shadow: null !default;
+$kbd-color: null !default;
+$kbd-font-size: null !default;
+$kbd-padding-x: null !default;
+$kbd-padding-y: null !default;
+$label-border-radius: null !default;
+$label-font-size: null !default;
+$label-lg: null !default;
+$label-margin-bottom: null !default;
+$label-text-transform: null !default;
+$lead-font-size: null !default;
+$lead-font-weight: null !default;
+$light-d1: null !default;
+$light-d2: null !default;
+$light-l1: null !default;
+$light-l2: null !default;
+$light: null !default;
+$line-height-base: null !default;
+$line-height-lg: null !default;
+$line-height-sm: null !default;
+$link-color: null !default;
+$link-cursor: null !default;
+$link-decoration: null !default;
+$link-hover-color: null !default;
+$link-hover-decoration: null !default;
+$list-inline-padding: null !default;
+$mark-bg: null !default;
+$mark-padding: null !default;
+$moz-osx-font-smoothing: null !default;
+$nav-divider-color: null !default;
+$nested-kbd-font-weight: null !default;
+$orange: null !default;
+$paragraph-margin-bottom: null !default;
+$pink: null !default;
+$pre-color: null !default;
+$pre-scrollable-max-height: null !default;
+$primary-d1: null !default;
+$primary-d2: null !default;
+$primary-l1: null !default;
+$primary-l2: null !default;
+$primary-l3: null !default;
+$primary: null !default;
+$print-body-min-width: null !default;
+$print-page-size: null !default;
+$purple: null !default;
+$red: null !default;
+$rounded-0-border-radius: null !default;
+$rounded-border-radius: null !default;
+$rounded-circle-border-radius: null !default;
+$rounded-pill: null !default;
+$secondary-d1: null !default;
+$secondary-d2: null !default;
+$secondary-l1: null !default;
+$secondary-l2: null !default;
+$secondary-l3: null !default;
+$secondary: null !default;
+$sizes: null !default;
+$small-font-size: null !default;
+$spacer: null !default;
+$spacers: null !default;
+$sticker-sizes: null !default;
+$sticker-sm-border-radius: null !default;
+$sticker-sm: null !default;
+$success-d1: null !default;
+$success-d2: null !default;
+$success-l1: null !default;
+$success-l2: null !default;
+$success: null !default;
+$teal: null !default;
+$text-muted: null !default;
+$text-theme-colors: null !default;
+$theme-color-interval: null !default;
+$theme-colors: null !default;
+$transition-base: null !default;
+$transition-collapse: null !default;
+$transition-fade: null !default;
+$warning-d1: null !default;
+$warning-d2: null !default;
+$warning-l1: null !default;
+$warning-l2: null !default;
+$warning: null !default;
+$webkit-font-smoothing: null !default;
+$white: null !default;
+$yellow: null !default;
+$yiq-contrasted-threshold: null !default;
+$yiq-text-dark: null !default;
+$yiq-text-light: null !default;
+
 @if not($enable-atlas-custom-properties) {
-	// Global Variables
-
-	$clay-unset: clay-unset !default;
-
-	// An alias for `$clay-unset`
-
-	$c-unset: $clay-unset !default;
-
-	$clay-unset-placeholder: clay-unset-placeholder !default;
-
 	$custom-checkbox-indicator-border-radius: 0.25rem;
-
-	$enable-c-inner: true !default;
-	$enable-lexicon-flat-colors: true !default;
-	$enable-scaling-components: true !default;
-	$scaling-breakpoint-down: sm !default;
 
 	$sticker-sm-border-radius: 0.25rem;
 
@@ -35,23 +275,6 @@
 		),
 		$sticker-sm
 	);
-
-	$enable-caret: false !default;
-	$enable-deprecation-messages: true !default;
-	$enable-gradients: false !default;
-	$enable-grid-classes: true !default;
-	$enable-pointer-cursor-for-buttons: true !default;
-	$enable-prefers-reduced-motion-media-query: true !default;
-	$enable-print-styles: true !default;
-	$enable-responsive-font-sizes: false !default;
-	$enable-rounded: true !default;
-	$enable-shadows: true !default;
-	$enable-transitions: true !default;
-	$enable-validation-icons: true !default;
-
-	// Deprecated, no longer affects any compiled CSS
-
-	$enable-hover-media-query: false !default;
 
 	// Theme Base Colors
 
@@ -153,7 +376,7 @@
 	$dark-l2: lighten(desaturate($dark, 0.36), 8.04) !default;
 
 	$theme-colors: () !default;
-	$theme-colors: map-merge(
+	$theme-colors: map-deep-merge(
 		(
 			'danger': $danger,
 			'dark': $dark,
@@ -182,7 +405,7 @@
 
 	$spacer: 1rem !default;
 	$spacers: () !default;
-	$spacers: map-deep-merge(
+	$spacers: map-merge(
 		(
 			0: var(--spacer-0, 0),
 			1: var(--spacer-1, $spacer * 0.25),
@@ -204,10 +427,14 @@
 	$sizes: () !default;
 	$sizes: map-merge(
 		(
-			100: 100%,
 			25: 25%,
+
 			50: 50%,
+
 			75: 75%,
+
+			100: 100%,
+
 			auto: auto,
 		),
 		$sizes
@@ -260,36 +487,24 @@
 	$component-active-bg: #0b5fff !default;
 	$component-active-color: $white !default;
 
-	$component-focus-box-shadow: 0
-		0
-		0
-		0.125rem
-		$white#{','}
-		0
-		0
-		0
-		0.25rem
-		$primary-l1 !default;
-	$component-focus-inset-box-shadow: inset
-		0
-		0
-		0
-		0.125rem
-		$primary-l1#{','}
-		inset
-		0
-		0
-		0
-		0.25rem
-		$white !default;
+	$component-focus-box-shadow:
+		0 0 0 0.125rem $white,
+		0 0 0 0.25rem $primary-l1 !default;
+	$component-focus-inset-box-shadow:
+		inset 0 0 0 0.125rem $primary-l1,
+		inset 0 0 0 0.25rem $white !default;
 
 	// Grid
 
 	$grid-breakpoints: (
 		xs: 0,
+
 		sm: 576px,
+
 		md: 768px,
+
 		lg: 992px,
+
 		xl: 1280px,
 	) !default;
 
@@ -709,7 +924,7 @@
 	$btn-link: map-deep-merge(
 		(
 			active: (
-				box-shadow: clay-enable-shadows([none]),
+				box-shadow: clay-enable-shadows(none),
 			),
 			border-radius: 1px,
 			box-shadow: $c-unset,

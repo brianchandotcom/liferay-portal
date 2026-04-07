@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -166,10 +167,7 @@ public class DDMFormValuesToFieldsConverterImpl
 		if (MapUtil.isEmpty(value.getValues())) {
 			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-			Map<Locale, String> predefinedValuesMap =
-				predefinedValue.getValues();
-
-			if (predefinedValuesMap.isEmpty()) {
+			if (_isEmpty(predefinedValue.getValues())) {
 				LocalizedValue localizedValue = new LocalizedValue(
 					defaultLocale);
 
@@ -251,6 +249,20 @@ public class DDMFormValuesToFieldsConverterImpl
 		}
 
 		return availableLocales;
+	}
+
+	private boolean _isEmpty(Map<Locale, String> valuesMap) {
+		if (MapUtil.isEmpty(valuesMap)) {
+			return true;
+		}
+
+		for (String value : valuesMap.values()) {
+			if (Validator.isNotNull(value)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }

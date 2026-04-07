@@ -254,7 +254,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			<ProductPurchase.Body className="mt-4">
 				{showSteps && tinyStepsDisplay && (
 					<ProductPurchase.CircleSteps
-						className="my-5"
+						className="my-6"
 						steps={steps}
 					/>
 				)}

@@ -297,9 +297,6 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 					nonConflictingNewAccountRoleItem.length &&
 					!nonConflictingCurrentAccountRoles.length
 				) {
-					const firstName = userAccount?.name.split(' ')[0];
-					const lastName = userAccount?.name.split(' ')[1];
-
 					nonConflictingNewAccountRoleItem?.map(
 						async (accountRole) => {
 							const context = {
@@ -315,12 +312,12 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 
 							await addContactRoleNameByEmailByProject(
 								project.accountKey,
+								oldAccountRoleRaysourceName,
 								encodeURI(userAccount.emailAddress),
-								firstName,
-								lastName,
+								userAccount?.name.split(' ')[0],
+								userAccount?.name.split(' ').slice(1).join(' '),
 								oAuthToken,
-								provisioningServerAPI,
-								oldAccountRoleRaysourceName
+								provisioningServerAPI
 							);
 
 							await assignUserAccountWithAccountRole({

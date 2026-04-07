@@ -11,11 +11,8 @@ import {
 } from '~/features/project/utils/constants';
 import {
 	addContactRoleLiferay,
-	addContactRoleRaysource,
 	removeContactRoleLiferay,
-	removeContactRoleRaysource,
 	updateLiferayContact,
-	updateRaysourceContact,
 } from '~/features/project/utils/getHighPriorityContacts';
 import SearchBuilder from '~/lib/SearchBuilder';
 import NotificationQueueService from '~/services/actions/notificationAction';
@@ -25,6 +22,10 @@ import {
 	useCreateLiferayExperienceCloudEnvironment,
 } from '~/services/liferay/graphql/liferay-experience-cloud-environments';
 import {getLiferayExperienceCloudEnvironments} from '~/services/liferay/graphql/queries';
+import {
+	addContactRoleNameByEmailByProject,
+	deleteContactRoleNameByEmailByProject,
+} from '~/services/liferay/rest/raysource/TeamMembers';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
 
 export default function useSubmitLXCEnvironment(
@@ -183,13 +184,40 @@ export default function useSubmitLXCEnvironment(
 			const oAuthToken = await getOrRequestToken();
 
 			try {
-				await updateRaysourceContact(
-					addContactRoleRaysource,
-					addHighPriorityContactList,
-					oAuthToken,
-					project,
-					provisioningServerAPI
-				);
+				const groupedContacts = new Map();
+
+				addHighPriorityContactList?.forEach((contact) => {
+					const email = contact.email;
+
+					if (!groupedContacts.has(email)) {
+						groupedContacts.set(email, {
+							email,
+							firstName:
+								contact.firstName ||
+								contact.label.split(' ')[0],
+							lastName:
+								contact.lastName ||
+								contact.label.split(' ').slice(1).join(' '),
+							roles: new Set(),
+						});
+					}
+
+					groupedContacts
+						.get(email)
+						.roles.add(contact.category?.role || contact.filter);
+				});
+
+				for (const [email, data] of groupedContacts) {
+					await addContactRoleNameByEmailByProject(
+						project.accountKey,
+						Array.from(data.roles),
+						encodeURI(email),
+						data.firstName,
+						data.lastName,
+						oAuthToken,
+						provisioningServerAPI
+					);
+				}
 
 				await updateLiferayContact(
 					addHighPriorityContactList,
@@ -212,13 +240,32 @@ export default function useSubmitLXCEnvironment(
 				}
 			}
 
-			await updateRaysourceContact(
-				removeContactRoleRaysource,
-				removeHighPriorityContactList,
-				oAuthToken,
-				project,
-				provisioningServerAPI
-			);
+			const groupedContactsToRemove = new Map();
+
+			removeHighPriorityContactList?.forEach((contact) => {
+				const email = contact.email;
+
+				if (!groupedContactsToRemove.has(email)) {
+					groupedContactsToRemove.set(email, {
+						email,
+						roles: new Set(),
+					});
+				}
+
+				groupedContactsToRemove
+					.get(email)
+					.roles.add(contact.category?.role || contact.filter);
+			});
+
+			for (const [email, data] of groupedContactsToRemove) {
+				await deleteContactRoleNameByEmailByProject(
+					project.accountKey,
+					Array.from(data.roles),
+					encodeURI(email),
+					oAuthToken,
+					provisioningServerAPI
+				);
+			}
 
 			await updateLiferayContact(
 				removeHighPriorityContactList,

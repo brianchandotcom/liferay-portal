@@ -21,7 +21,9 @@ interface IContact {
 	email: string;
 	filter?: string[];
 	filterId?: string;
+	firstName?: string;
 	label: string;
+	lastName?: string;
 }
 
 const addContactRoleLiferay = async (
@@ -50,12 +52,12 @@ const addContactRoleRaysource = (
 ): Promise<Response> => {
 	return addContactRoleNameByEmailByProject(
 		project.accountKey as string,
+		item.category.role,
 		encodeURI(item.email),
-		item.label,
-		item.label,
+		item.firstName || item.label.split(' ')[0],
+		item.lastName || item.label.split(' ').slice(1).join(' '),
 		oAuthToken,
-		provisioningServerAPI,
-		item.category.role
+		provisioningServerAPI
 	);
 };
 
@@ -124,10 +126,10 @@ const removeContactRoleRaysource = async (
 ): Promise<Response> => {
 	return await deleteContactRoleNameByEmailByProject(
 		project.accountKey as string,
+		item.filter as string[],
 		encodeURI(item.email),
 		oAuthToken,
-		provisioningServerAPI,
-		item.filter?.toString() as string
+		provisioningServerAPI
 	);
 };
 

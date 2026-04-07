@@ -72,40 +72,6 @@ class ProvisioningLicenseKeys {
 		);
 	}
 
-	public async addContactRoleNameByEmailByProject({
-		accountKey,
-		emailURI,
-		firstName,
-		lastName,
-		roleName,
-	}: {
-		accountKey: string;
-		emailURI: string;
-		firstName: string;
-		lastName: string;
-		roleName: string;
-	}) {
-		return this.fetcher(
-			`/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}&firstName=${firstName}&lastName=${lastName}`,
-			{
-				method: 'PUT',
-			}
-		);
-	}
-
-	public async deleteContactRoleNameByEmailByProject(
-		accountKey: string,
-		emailURI: string,
-		rolesToDelete: string
-	) {
-		return this.fetcher(
-			`/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?${rolesToDelete}`,
-			{
-				method: 'DELETE',
-			}
-		);
-	}
-
 	public async getUserInOkta(contactEmailAddress: string) {
 		return this.fetcher(`/contacts/${contactEmailAddress}/validate`);
 	}

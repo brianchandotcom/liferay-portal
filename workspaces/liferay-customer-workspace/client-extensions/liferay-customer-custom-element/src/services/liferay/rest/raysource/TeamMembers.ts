@@ -5,17 +5,24 @@
 
 export async function addContactRoleNameByEmailByProject(
 	accountKey: string,
+	contactRoleNames: string | string[],
 	emailURI: string,
 	firstName: string,
 	lastName: string,
 	oAuthToken: string,
-	provisioningServerAPI: string,
-	roleName: string
+	provisioningServerAPI: string
 ) {
+	const params = new URLSearchParams();
+
+	const roles = Array.isArray(contactRoleNames)
+		? contactRoleNames
+		: contactRoleNames.split(',');
+
+	roles.forEach((role) => params.append('contactRoleNames', role));
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}&firstName=${firstName}&lastName=${lastName}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?${params.toString()}&firstName=${firstName}&lastName=${lastName}`,
 		{
 			headers: {
 				'OAuth-Token': oAuthToken,
@@ -33,15 +40,22 @@ export async function addContactRoleNameByEmailByProject(
 
 export async function deleteContactRoleNameByEmailByProject(
 	accountKey: string,
+	contactRoleNames: string | string[],
 	emailURI: string,
 	oAuthToken: string,
-	provisioningServerAPI: string,
-	rolesToDelete: string
+	provisioningServerAPI: string
 ) {
+	const params = new URLSearchParams();
+
+	const roles = Array.isArray(contactRoleNames)
+		? contactRoleNames
+		: contactRoleNames.split(',');
+
+	roles.forEach((role) => params.append('contactRoleNames', role));
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${rolesToDelete}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?${params.toString()}`,
 		{
 			headers: {
 				'OAuth-Token': oAuthToken,

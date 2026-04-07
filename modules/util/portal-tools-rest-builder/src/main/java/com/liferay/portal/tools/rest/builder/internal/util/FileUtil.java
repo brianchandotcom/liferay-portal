@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.util;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.java.parser.JavaParser;
 
@@ -157,19 +158,47 @@ public class FileUtil {
 
 		String oldContent = read(file);
 
-		Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
-
-		if (!oldContent.equals(_format(file))) {
-			System.out.println("Writing " + file.getCanonicalPath());
-		}
-	}
-
-	private static String _format(File file) throws Exception {
 		if (StringUtil.endsWith(file.getName(), ".java")) {
-			JavaParser.parse(file, 80);
-		}
+			int contentHash = content.hashCode();
 
-		return read(file);
+			int index = oldContent.lastIndexOf(
+				_LIFERAY_REST_BUILDER_HASH_PREFIX);
+
+			if (index != -1) {
+				String hashLine = oldContent.substring(
+					index + _LIFERAY_REST_BUILDER_HASH_PREFIX.length());
+
+				if (GetterUtil.getInteger(hashLine) == contentHash) {
+					return;
+				}
+			}
+
+			Files.write(
+				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+
+			JavaParser.parse(file, 80);
+
+			String parsedContent =
+				read(file) + _LIFERAY_REST_BUILDER_HASH_PREFIX + contentHash;
+
+			Files.write(
+				file.toPath(), parsedContent.getBytes(StandardCharsets.UTF_8));
+
+			if (!oldContent.equals(parsedContent)) {
+				System.out.println("Writing " + file.getCanonicalPath());
+			}
+		}
+		else {
+			Files.write(
+				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+
+			if (!oldContent.equals(content)) {
+				System.out.println("Writing " + file.getCanonicalPath());
+			}
+		}
 	}
+
+	private static final String _LIFERAY_REST_BUILDER_HASH_PREFIX =
+		"\n// LIFERAY-REST-BUILDER-HASH:";
 
 }

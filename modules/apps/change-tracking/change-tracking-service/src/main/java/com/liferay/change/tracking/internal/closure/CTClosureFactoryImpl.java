@@ -29,6 +29,9 @@ import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -123,6 +126,19 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 	protected void activate() {
 		_ctClosuresPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.SINGLE_VM, _CT_CLOSURES_PORTAL_CACHE_NAME);
+
+		DB db = DBManagerUtil.getDB();
+
+		DBType dbType = db.getDBType();
+
+		if (dbType == DBType.SQLSERVER) {
+			_sqlParameterLimit = _SQL_SERVER_PARAMETER_LIMIT;
+		}
+		else {
+			_sqlParameterLimit = _SQL_PLACEHOLDER_LIMIT;
+		}
+
+		_oracleDB = dbType == DBType.ORACLE;
 	}
 
 	private Map<Node, Collection<Node>> _buildClosureMap(
@@ -216,7 +232,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				int i = 0;
 
 				while (i < childPrimaryKeysArray.length) {
-					int batchSize = _SQL_PLACEHOLDER_LIMIT;
+					int batchSize = _sqlParameterLimit;
 
 					if ((i + batchSize) > childPrimaryKeysArray.length) {
 						batchSize = childPrimaryKeysArray.length - i;
@@ -259,7 +275,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		int i = 0;
 
 		while (i < childPrimaryKeys.length) {
-			int batchSize = _SQL_SERVER_PARAMETER_LIMIT;
+			int batchSize = _sqlParameterLimit;
 
 			if ((i + batchSize) > childPrimaryKeys.length) {
 				batchSize = childPrimaryKeys.length - i;
@@ -358,6 +374,10 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	private Predicate _getChildPKColumnPredicate(
 		Column<?, Long> childPKColumn, Long[] childPrimaryKeysArray) {
+
+		if (!_oracleDB) {
+			return childPKColumn.in(childPrimaryKeysArray);
+		}
 
 		Predicate predicate = null;
 
@@ -527,6 +547,9 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	private boolean _oracleDB;
+	private int _sqlParameterLimit;
 
 	@Reference
 	private TableReferenceDefinitionManager _tableReferenceDefinitionManager;

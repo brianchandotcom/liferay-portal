@@ -7,8 +7,13 @@ package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.convert
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
@@ -78,10 +83,38 @@ public class ProductOptionDTOConverter
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			new ArrayList<>();
 		List<ProductOptionValue> productOptionValues = new ArrayList<>();
 
+		if (cpDefinitionOptionRel.isSkuContributor()) {
+			List<CPInstanceOptionValueRel> cpInstanceOptionValueRels =
+				_cpInstanceOptionValueRelLocalService.
+					getCPDefinitionOptionRelCPInstanceOptionValueRels(
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+			for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
+					cpInstanceOptionValueRels) {
+
+				CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+					cpInstanceOptionValueRel.getCPInstanceId());
+
+				if (cpInstance.isApproved()) {
+					cpDefinitionOptionValueRels.add(
+						_cpDefinitionOptionValueRelLocalService.
+							getCPDefinitionOptionValueRel(
+								cpInstanceOptionValueRel.
+									getCPDefinitionOptionValueRelId()));
+				}
+			}
+		}
+		else {
+			cpDefinitionOptionValueRels =
+				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
+		}
+
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionRel.getCPDefinitionOptionValueRels()) {
+				cpDefinitionOptionValueRels) {
 
 			if (cpDefinitionOptionValueRel.getCPDefinitionOptionRelId() == 0) {
 				cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
@@ -114,6 +147,17 @@ public class ProductOptionDTOConverter
 	@Reference
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
+
+	@Reference
+	private CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceOptionValueRelLocalService
+		_cpInstanceOptionValueRelLocalService;
 
 	@Reference
 	private Language _language;

@@ -16,7 +16,6 @@ import java.util.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +66,8 @@ public class AnalyticsService extends BaseService {
 				"corpProjectUuid", jsonObject.getString("corpProjectUuid")
 			).with(
 				"incidentReportEmailAddresses",
-				new JSONArray(
-					jsonObject.getString("incidentReportEmailAddresses")
+				jsonObject.getJSONArray(
+					"incidentReportEmailAddresses"
 				).toString()
 			).with(
 				"name", jsonObject.getString("name")

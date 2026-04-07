@@ -412,9 +412,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		if (_isOKStatusCode(statusCode)) {
 			return Account.toDTO(httpResponse.getContent());
 		}
-		else if ((statusCode == HttpStatus.BAD_REQUEST.value()) ||
-				 (statusCode == HttpStatus.CONFLICT.value())) {
-
+		else if (statusCode == HttpStatus.CONFLICT.value()) {
 			throw new Exception(
 				StringBundler.concat(
 					"Race condition detected for account ",
@@ -492,9 +490,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					_marketplaceService.postAccountUserAccountByEmailAddress(
 						account.getId(), emailAddress);
 				}
-				else if ((statusCode == HttpStatus.CONFLICT.value()) ||
-						 (statusCode == HttpStatus.BAD_REQUEST.value())) {
-
+				else if (statusCode == HttpStatus.CONFLICT.value()) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							"Another thread is processing user " +

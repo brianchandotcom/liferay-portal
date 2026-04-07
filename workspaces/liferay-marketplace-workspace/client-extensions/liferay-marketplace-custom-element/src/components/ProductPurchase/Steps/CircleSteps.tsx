@@ -39,13 +39,13 @@ const CircleSteps: React.FC<CircleStepsProps> = ({className, steps}) => {
 	return (
 		<div
 			className={classNames(
-				'd-flex justify-content-around step-wizard text-nowrap',
+				'd-flex justify-content-center step-wizard text-nowrap',
 				className
 			)}
 		>
 			{steps.map((step, index) => (
 				<div
-					className={classNames('step mx-1', {
+					className={classNames('step p-2', {
 						done: index < activeStepIndex,
 						selected: step.active,
 					})}

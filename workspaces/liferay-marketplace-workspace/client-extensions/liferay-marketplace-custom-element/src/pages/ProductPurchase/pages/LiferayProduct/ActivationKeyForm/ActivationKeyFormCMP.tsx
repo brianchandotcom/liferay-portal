@@ -111,9 +111,12 @@ const ActivationKeyFormCMP = () => {
 				/>
 
 				<label
-					className={classNames('font-weight-normal px-1', {
-						'text-red': isValid && !termsAndConditions,
-					})}
+					className={classNames(
+						'activation-key-form-terms-and-conditions-text ml-2 pt-1',
+						{
+							'text-red': isValid && !termsAndConditions,
+						}
+					)}
 					htmlFor="terms-and-conditions"
 				>
 					{i18n.translate(

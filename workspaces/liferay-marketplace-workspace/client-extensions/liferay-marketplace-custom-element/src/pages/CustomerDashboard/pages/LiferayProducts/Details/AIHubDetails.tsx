@@ -57,7 +57,7 @@ const AIHubDetails = () => {
 						},
 						{
 							title: i18n.translate('ai-administration-email'),
-							value: orderAdditionalInformation.businessEmail,
+							value: orderAdditionalInformation.businessEmailAddress,
 						},
 					]}
 					orientation={Orientation.VERTICAL}

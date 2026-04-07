@@ -49,7 +49,7 @@ const ProductCardRevamp = ({
 					/>
 
 					<div className="align-items-center ml-4">
-						<HeadingComponent className="product-banner-title">
+						<HeadingComponent className="font-weight-semi-bold product-banner-title">
 							{title}
 						</HeadingComponent>
 
@@ -73,7 +73,7 @@ const ProductCard = ({
 	showExtendBanner = false,
 }: ProductCardProps) => (
 	<div className="pb-5 product-banner pt-5 px-5">
-		<div className="d-flex flex-row justify-content-between">
+		<div className="d-flex flex-row justify-content-between mb-4">
 			<div className="d-flex flex-row">
 				<img
 					alt="App Icon"

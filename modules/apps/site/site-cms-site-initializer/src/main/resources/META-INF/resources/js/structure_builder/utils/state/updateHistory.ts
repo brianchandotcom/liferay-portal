@@ -37,14 +37,33 @@ export default function updateHistory({
 				deletedChildren: [...nextHistory.deletedChildren, child],
 			};
 
-			if (child.type === 'related-content' && !child.multiselection) {
+			if (
+				child.type === 'repeatable-group' ||
+				child.type === 'related-content' ||
+				child.type === 'referenced-structure'
+			) {
+				let parentERC =
+					child.parent === structure.uuid
+						? structure.erc
+						: findChild({
+								root: structure,
+								uuid: child.parent,
+							})?.erc || '';
+
+				if (child.type === 'related-content' && !child.multiselection) {
+					parentERC = child.relatedStructureERC;
+				}
+
 				nextHistory = {
 					...nextHistory,
 					deletedRelationships: [
 						...nextHistory.deletedRelationships,
 						{
-							relationshipERC: child.erc,
-							structureERC: child.relatedStructureERC,
+							relationshipERC:
+								child.type === 'related-content'
+									? child.erc
+									: child.relationshipERC,
+							structureERC: parentERC,
 						},
 					],
 				};

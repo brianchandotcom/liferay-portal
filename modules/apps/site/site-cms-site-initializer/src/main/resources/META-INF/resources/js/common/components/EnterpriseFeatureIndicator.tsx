@@ -5,12 +5,10 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import ClayPopover from '@clayui/popover';
-import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import {ENTERPRISE_URL} from '../utils/constants';
+import EnterpriseLink from './EnterpriseLink';
 
 type EnterpriseFeatureIndicatorProps = {
 	alignPosition?: 'bottom' | 'bottom-left';
@@ -90,22 +88,7 @@ export default function EnterpriseFeatureIndicator({
 						'this-feature-is-only-available-on-the-enterprise-subscription'
 					)}
 
-					<ClayLink
-						aria-label={sub(
-							Liferay.Language.get('x-opens-new-window'),
-							Liferay.Language.get('get-enterprise-details')
-						)}
-						className="ml-1 text-decoration-underline"
-						href={ENTERPRISE_URL}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						<span className="d-inline">
-							{Liferay.Language.get('get-enterprise-details')}
-
-							<ClayIcon className="ml-2" symbol="shortcut" />
-						</span>
-					</ClayLink>
+					<EnterpriseLink className="ml-1 text-decoration-underline" />
 				</p>
 			</div>
 		</ClayPopover>

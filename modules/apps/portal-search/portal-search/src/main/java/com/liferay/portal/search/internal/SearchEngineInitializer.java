@@ -41,6 +41,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -159,28 +160,43 @@ public class SearchEngineInitializer implements Runnable {
 	}
 
 	public Map<Indexer<?>, Long> getReindexEntryCounts() {
+		Map<Indexer<?>, Future<Long>> futures = new HashMap<>();
+
+		for (Indexer<?> indexer : _indexers) {
+			futures.put(
+				indexer,
+				_executorService.submit(
+					() -> {
+						try (SafeCloseable safeCloseable1 =
+								CompanyThreadLocal.
+									setCompanyIdWithSafeCloseable(_companyId);
+							SafeCloseable safeCloseable2 =
+								ReindexCacheThreadLocal.openReindexMode(
+									_fullMode, _sharedReindexCacheMap)) {
+
+							return indexer.getReindexEntryCount(_companyId);
+						}
+					}));
+		}
+
 		Map<Indexer<?>, Long> reindexEntryCounts = new HashMap<>();
 
-		try (SafeCloseable safeCloseable1 =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(_companyId);
-			SafeCloseable safeCloseable2 =
-				ReindexCacheThreadLocal.openReindexMode(
-					_fullMode, _sharedReindexCacheMap)) {
+		for (Map.Entry<Indexer<?>, Future<Long>> entry : futures.entrySet()) {
+			Indexer<?> indexer = entry.getKey();
+			Future<Long> future = entry.getValue();
 
-			for (Indexer<?> indexer : _indexers) {
-				try {
-					long count = indexer.getReindexEntryCount(_companyId);
+			try {
+				long count = future.get();
 
-					if (count != 0) {
-						reindexEntryCounts.put(indexer, count);
-					}
+				if (count != 0) {
+					reindexEntryCounts.put(indexer, count);
 				}
-				catch (Exception exception) {
-					_log.error(
-						"Unable to get reindex entry count for " +
-							indexer.getClassName(),
-						exception);
-				}
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to get reindex entry count for " +
+						indexer.getClassName(),
+					exception);
 			}
 		}
 

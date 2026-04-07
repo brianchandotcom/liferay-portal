@@ -106,7 +106,13 @@ public class FileUtil {
 	public static File get(Project project, String url, File destinationFile)
 		throws IOException {
 
-		return get(project, url, destinationFile, false, true);
+		boolean tryLocalNetwork = false;
+
+		if (System.getenv("JENKINS_HOME") != null) {
+			tryLocalNetwork = true;
+		}
+
+		return get(project, url, destinationFile, false, tryLocalNetwork);
 	}
 
 	public static File get(

@@ -19,6 +19,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.search.Sort;
@@ -68,8 +69,10 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 
 		_checkPermissions(themeDisplay);
 
-		List<Map.Entry<String, String>> fdsEntries = _getFDSEntries(
-			themeDisplay.getCompanyId(), fdsKeywords.getKeywords());
+		List<Map.Entry<String, String>> fdsEntries = new ArrayList<>(
+			_getFDSEntries(
+				themeDisplay.getCompanyId(), fdsKeywords.getKeywords()
+			).entrySet());
 
 		int start = Math.max(fdsPagination.getStartPosition(), 0);
 		int end = Math.min(fdsPagination.getEndPosition(), fdsEntries.size());
@@ -78,15 +81,15 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 			return Collections.emptyList();
 		}
 
-		List<FDSSelectionFilterItem> fdsSelectionFilterItems =
-			new ArrayList<>();
+		ListUtil.sort(
+			fdsEntries,
+			Comparator.comparing(
+				Map.Entry::getValue, String::compareToIgnoreCase));
 
-		for (Map.Entry<String, String> entry : fdsEntries.subList(start, end)) {
-			fdsSelectionFilterItems.add(
-				new FDSSelectionFilterItem(entry.getKey(), entry.getValue()));
-		}
-
-		return fdsSelectionFilterItems;
+		return TransformUtil.transform(
+			fdsEntries.subList(start, end),
+			(Map.Entry<String, String> entry) -> new FDSSelectionFilterItem(
+				entry.getKey(), entry.getValue()));
 	}
 
 	@Override
@@ -105,9 +108,37 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 		).size();
 	}
 
-	private void _addCustomFDSEntries(
-			Map<String, String> fdsEntries, long companyId, String keywords)
+	private void _checkPermissions(ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), _portlet)) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getPermissionChecker(), _portlet.getPortletClass(),
+				_portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
+		}
+	}
+
+	private Map<String, String> _getFDSEntries(long companyId, String keywords)
+		throws PortalException {
+
+		Map<String, String> fdsEntries = new LinkedHashMap<>();
+
+		List<SystemFDSEntry> systemFDSEntries =
+			FDSDataProviderUtil.getSystemFDSEntries(
+				keywords, _systemFDSEntryRegistry);
+
+		for (SystemFDSEntry systemFDSEntry : systemFDSEntries) {
+			String label = systemFDSEntry.getTitle();
+
+			if (Validator.isNull(label)) {
+				label = systemFDSEntry.getName();
+			}
+
+			fdsEntries.put(systemFDSEntry.getName(), label);
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
@@ -115,7 +146,7 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 					"L_DATA_SET", companyId);
 
 		if (objectDefinition == null) {
-			return;
+			return fdsEntries;
 		}
 
 		ObjectEntryManager objectEntryManager =
@@ -157,61 +188,8 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}
-	}
 
-	private void _addSystemFDSEntries(
-		Map<String, String> fdsEntries, String keywords) {
-
-		List<SystemFDSEntry> systemFDSEntries =
-			FDSDataProviderUtil.getSystemFDSEntries(
-				keywords, _systemFDSEntryRegistry);
-
-		if (ListUtil.isEmpty(systemFDSEntries)) {
-			return;
-		}
-
-		for (SystemFDSEntry systemFDSEntry : systemFDSEntries) {
-			String label = systemFDSEntry.getTitle();
-
-			if (Validator.isNull(label)) {
-				label = systemFDSEntry.getName();
-			}
-
-			fdsEntries.put(systemFDSEntry.getName(), label);
-		}
-	}
-
-	private void _checkPermissions(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), _portlet)) {
-
-			throw new PrincipalException.MustHavePermission(
-				themeDisplay.getPermissionChecker(), _portlet.getPortletClass(),
-				_portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
-		}
-	}
-
-	private List<Map.Entry<String, String>> _getFDSEntries(
-			long companyId, String keywords)
-		throws PortalException {
-
-		Map<String, String> fdsEntries = new LinkedHashMap<>();
-
-		_addSystemFDSEntries(fdsEntries, keywords);
-		_addCustomFDSEntries(fdsEntries, companyId, keywords);
-
-		List<Map.Entry<String, String>> sortedFDSEntries = new ArrayList<>(
-			fdsEntries.entrySet());
-
-		Collections.sort(
-			sortedFDSEntries,
-			Comparator.comparing(
-				Map.Entry::getValue, String::compareToIgnoreCase));
-
-		return sortedFDSEntries;
+		return fdsEntries;
 	}
 
 	@Reference

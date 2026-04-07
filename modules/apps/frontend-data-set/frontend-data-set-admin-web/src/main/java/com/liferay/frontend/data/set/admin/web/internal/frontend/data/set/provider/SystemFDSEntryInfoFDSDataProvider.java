@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Portlet;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -61,8 +61,19 @@ public class SystemFDSEntryInfoFDSDataProvider
 
 		_checkPermissions(themeDisplay);
 
-		List<SystemFDSEntry> systemFDSEntries = _getSystemFDSEntries(
-			fdsKeywords.getKeywords());
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET", themeDisplay.getCompanyId());
+
+		if (objectDefinition == null) {
+			return Collections.emptyList();
+		}
+
+		List<SystemFDSEntry> systemFDSEntries =
+			FDSDataProviderUtil.getSystemFDSEntries(
+				fdsKeywords.getKeywords(), _systemFDSEntryRegistry);
+
 		int start = Math.max(fdsPagination.getStartPosition(), 0);
 		int end = Math.min(
 			fdsPagination.getEndPosition(), systemFDSEntries.size());
@@ -71,22 +82,24 @@ public class SystemFDSEntryInfoFDSDataProvider
 			return Collections.emptyList();
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_DATA_SET", themeDisplay.getCompanyId());
+		ListUtil.sort(
+			systemFDSEntries,
+			Comparator.comparing(
+				systemFDSEntry -> {
+					String title = systemFDSEntry.getTitle();
 
-		List<SystemFDSEntryInfo> systemFDSEntryInfos = new ArrayList<>();
+					if (title != null) {
+						return title;
+					}
 
-		for (SystemFDSEntry systemFDSEntry :
-				systemFDSEntries.subList(start, end)) {
+					return StringPool.BLANK;
+				},
+				String::compareToIgnoreCase));
 
-			systemFDSEntryInfos.add(
-				_toSystemFDSEntryInfo(
-					httpServletRequest, objectDefinition, systemFDSEntry));
-		}
-
-		return systemFDSEntryInfos;
+		return TransformUtil.transform(
+			systemFDSEntries.subList(start, end),
+			(SystemFDSEntry systemFDSEntry) -> _toSystemFDSEntryInfo(
+				httpServletRequest, objectDefinition, systemFDSEntry));
 	}
 
 	@Override
@@ -100,8 +113,8 @@ public class SystemFDSEntryInfoFDSDataProvider
 
 		_checkPermissions(themeDisplay);
 
-		return _getSystemFDSEntries(
-			fdsKeywords.getKeywords()
+		return FDSDataProviderUtil.getSystemFDSEntries(
+			fdsKeywords.getKeywords(), _systemFDSEntryRegistry
 		).size();
 	}
 
@@ -116,32 +129,6 @@ public class SystemFDSEntryInfoFDSDataProvider
 				themeDisplay.getPermissionChecker(), _portlet.getPortletClass(),
 				_portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
 		}
-	}
-
-	private List<SystemFDSEntry> _getSystemFDSEntries(String keywords) {
-		List<SystemFDSEntry> systemFDSEntries =
-			FDSDataProviderUtil.getSystemFDSEntries(
-				keywords, _systemFDSEntryRegistry);
-
-		if (ListUtil.isEmpty(systemFDSEntries)) {
-			return Collections.emptyList();
-		}
-
-		Collections.sort(
-			systemFDSEntries,
-			Comparator.comparing(
-				systemFDSEntry -> {
-					String title = systemFDSEntry.getTitle();
-
-					if (title != null) {
-						return title;
-					}
-
-					return StringPool.BLANK;
-				},
-				String::compareToIgnoreCase));
-
-		return systemFDSEntries;
 	}
 
 	private SystemFDSEntryInfo _toSystemFDSEntryInfo(

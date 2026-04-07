@@ -11,16 +11,13 @@ import QueueFlushService from './queueFlushService';
 import EventMessageQueue from './queues/eventMessageQueue';
 import EventQueue from './queues/eventsQueue';
 import IdentityMessageQueue from './queues/identityMessageQueue';
+import {Segment} from './segment';
 import {Analytics as AnalyticsType} from './types';
 import {
-	ANALYTICS_BATCH_SEGMENT_IDS,
 	ANALYTICS_CLIENT_VERSION,
-	ANALYTICS_REAL_TIME_SEGMENT_IDS,
 	FLUSH_INTERVAL,
-	HEADER_PROJECT_ID,
 	QUEUE_PRIORITY_DEFAULT,
 	QUEUE_PRIORITY_IDENTITY,
-	THREE_HOURS_IN_MILLISECONDS,
 	VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH,
 } from './utils/constants';
 import {getContexts, setContexts} from './utils/contexts';
@@ -62,6 +59,7 @@ class Analytics {
 		userId: '',
 	};
 	middlewares: AnalyticsType.Middleware[] = [];
+	segment!: Segment;
 	version: string = '';
 
 	/**
@@ -101,6 +99,8 @@ class Analytics {
 		this._initializeEventQueue();
 		this._initializeEventMessageQueue();
 		this._initializeIdentityMessageQueue();
+
+		this.segment = new Segment(this);
 
 		// Upgrade storage
 
@@ -181,87 +181,11 @@ class Analytics {
 	}
 
 	getBatchSegmentIds() {
-		const analyticsBatchSegmentIds = getItem<{
-			createDate: number;
-			segmentIds: number[];
-		}>(ANALYTICS_BATCH_SEGMENT_IDS);
-
-		if (analyticsBatchSegmentIds) {
-			const date = new Date();
-
-			const createDate = analyticsBatchSegmentIds.createDate;
-
-			if (date.getTime() - createDate < THREE_HOURS_IN_MILLISECONDS) {
-				return Promise.resolve(analyticsBatchSegmentIds.segmentIds);
-			}
-		}
-
-		const headers = {'Content-Type': 'application/json'};
-		if (this.config.projectId) {
-			Object.assign(headers, {
-				[HEADER_PROJECT_ID]: this.config.projectId,
-			});
-		}
-
-		return fetch(
-			`${this.config.faroBackendUrl}/api/1.0/segment-memberships/${this._getUserId()}/batch-segment-ids`,
-			{
-				cache: 'default',
-				credentials: 'same-origin',
-				headers,
-				method: 'GET',
-				mode: 'cors',
-			}
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				try {
-					const date = new Date();
-
-					setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
-						createDate: date.getTime(),
-						segmentIds: data,
-					});
-
-					return data;
-				}
-				catch (error) {
-					return;
-				}
-			});
+		return this.segment.getBatchSegmentIds();
 	}
 
 	getRealTimeSegmentIds() {
-		const headers = {'Content-Type': 'application/json'};
-		if (this.config.projectId) {
-			Object.assign(headers, {
-				[HEADER_PROJECT_ID]: this.config.projectId,
-			});
-		}
-
-		return fetch(
-			`${this.config.faroBackendUrl}/api/1.0/segment-memberships/${this._getUserId()}/real-time-segment-ids`,
-			{
-				cache: 'default',
-				credentials: 'same-origin',
-				headers,
-				method: 'GET',
-				mode: 'cors',
-			}
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				try {
-					setItem(ANALYTICS_REAL_TIME_SEGMENT_IDS, {
-						segmentIds: data,
-					});
-
-					return data;
-				}
-				catch (error) {
-					return;
-				}
-			});
+		return this.segment.getRealTimeSegmentIds();
 	}
 
 	/**

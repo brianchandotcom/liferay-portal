@@ -324,13 +324,13 @@ export class FDSSamplePage {
 	}) {
 		const workflowModal = this.page.getByRole('dialog', {name});
 
-		await workflowModal.isVisible();
+		await workflowModal.waitFor({state: 'visible'});
 
 		await this.page.getByRole('textbox', {name: 'Comment'}).fill(comment);
 
 		await workflowModal.getByRole('button', {name: 'Save'}).click();
 
-		await workflowModal.isHidden();
+		await workflowModal.waitFor({state: 'hidden'});
 	}
 
 	async getDropdownId(itemActionButton: Locator) {

@@ -160,9 +160,9 @@ test('Dynamic Actions', async ({
 			visualizationMode: EFDSVisualizationMode.TABLE,
 		});
 
-		expect(
-			await page.locator('.fds-user-tasks table tbody tr').count()
-		).toEqual(1);
+		await expect(
+			page.locator('.fds-user-tasks table tbody tr')
+		).toHaveCount(1);
 
 		await expect(page.getByRole('cell', {name: fdsItemERC})).toBeVisible();
 	});
@@ -207,9 +207,9 @@ test('Dynamic Actions', async ({
 			visualizationMode: EFDSVisualizationMode.TABLE,
 		});
 
-		expect(
-			await page.locator('.fds-user-tasks table tbody tr').count()
-		).toEqual(2);
+		await expect(
+			page.locator('.fds-user-tasks table tbody tr')
+		).toHaveCount(2);
 
 		await fdsSamplePage.resubmitButton.click();
 
@@ -240,9 +240,9 @@ test('Dynamic Actions', async ({
 			visualizationMode: EFDSVisualizationMode.TABLE,
 		});
 
-		expect(
-			await page.locator('.fds-user-tasks table tbody tr').count()
-		).toEqual(3);
+		await expect(
+			page.locator('.fds-user-tasks table tbody tr')
+		).toHaveCount(3);
 
 		await fdsSamplePage.clickItemAction('Approve');
 

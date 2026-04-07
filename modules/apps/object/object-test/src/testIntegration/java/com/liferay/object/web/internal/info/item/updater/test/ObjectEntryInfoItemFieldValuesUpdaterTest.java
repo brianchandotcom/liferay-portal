@@ -12,6 +12,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.RelatedInfoFieldValue;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -22,20 +23,24 @@ import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
+import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.web.internal.info.item.BaseObjectEntryInfoItemTestCase;
 import com.liferay.petra.string.CharPool;
@@ -164,6 +169,158 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 		Assert.assertEquals(ptValue, localizedValues.get("pt_BR"));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testUpdateFromInfoItemFieldValuesWithObjectRelationship()
+		throws Exception {
+
+		ObjectDefinition parentObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).localized(
+						true
+					).name(
+						"text"
+					).build()));
+
+		ObjectDefinition childObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"text"
+					).build()));
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId(),
+				childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		String enValue = RandomTestUtil.randomString();
+
+		ObjectEntry parentObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			0, parentObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"text_i18n",
+				HashMapBuilder.put(
+					"en_US", enValue
+				).build()
+			).build());
+
+		String ptValue = RandomTestUtil.randomString();
+		String childTextValue = RandomTestUtil.randomString();
+
+		String externalReferenceCode = StringUtil.randomId();
+
+		String namespace = ObjectEntryInfoItemUtil.getInfoFieldNamespace(
+			childObjectDefinition, objectRelationship);
+
+		try {
+			_updateFromInfoItemFieldValues(
+				InfoItemFieldValues.builder(
+				).infoFieldValue(
+					new InfoFieldValue<>(
+						InfoField.builder(
+						).infoFieldType(
+							TextInfoFieldType.INSTANCE
+						).namespace(
+							ObjectField.class.getSimpleName()
+						).name(
+							"text"
+						).localizable(
+							true
+						).build(),
+						InfoLocalizedValue.builder(
+						).value(
+							LocaleUtil.BRAZIL, ptValue
+						).value(
+							LocaleUtil.US, enValue
+						).build())
+				).infoFieldValue(
+					new InfoFieldValue<>(
+						InfoField.builder(
+						).infoFieldType(
+							TextInfoFieldType.INSTANCE
+						).namespace(
+							namespace
+						).name(
+							"text"
+						).build(),
+						new RelatedInfoFieldValue<>(
+							HashMapBuilder.
+								<RelatedInfoFieldValue.
+									RelatedInfoFieldValueIdentifier,
+								 InfoFieldValue<Object>>put(
+									new RelatedInfoFieldValue.
+										RelatedInfoFieldValueIdentifier(
+											externalReferenceCode,
+											parentObjectEntry.
+												getExternalReferenceCode()),
+									new InfoFieldValue<>(
+										InfoField.builder(
+										).infoFieldType(
+											TextInfoFieldType.INSTANCE
+										).namespace(
+											namespace
+										).name(
+											"text"
+										).build(),
+										childTextValue)
+								).build()))
+				).build(),
+				parentObjectDefinition, parentObjectEntry);
+
+			Map<String, Serializable> values =
+				objectEntryLocalService.getValues(
+					parentObjectEntry.getObjectEntryId());
+
+			Map<String, Object> localizedValues =
+				(Map<String, Object>)values.get("text_i18n");
+
+			Assert.assertEquals(enValue, localizedValues.get("en_US"));
+			Assert.assertEquals(ptValue, localizedValues.get("pt_BR"));
+
+			List<ObjectEntry> objectEntries =
+				objectEntryLocalService.getObjectEntries(
+					0, childObjectDefinition.getObjectDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			Assert.assertEquals(
+				objectEntries.toString(), 1, objectEntries.size());
+
+			ObjectEntry childObjectEntry = objectEntries.get(0);
+
+			Assert.assertEquals(
+				childTextValue,
+				MapUtil.getString(childObjectEntry.getValues(), "text"));
+		}
+		finally {
+			objectRelationship =
+				_objectRelationshipLocalService.updateObjectRelationship(
+					objectRelationship.getExternalReferenceCode(),
+					objectRelationship.getObjectRelationshipId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+					objectRelationship.getLabelMap(), null);
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				childObjectDefinition);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				parentObjectDefinition);
+		}
 	}
 
 	private ObjectDefinition _addCMSObjectDefinition(
@@ -536,5 +693,8 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 
 	@Inject
 	private ObjectFolderLocalService _objectFolderLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

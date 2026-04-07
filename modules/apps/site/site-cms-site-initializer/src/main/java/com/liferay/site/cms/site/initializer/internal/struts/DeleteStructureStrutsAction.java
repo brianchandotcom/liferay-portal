@@ -5,22 +5,26 @@
 
 package com.liferay.site.cms.site.initializer.internal.struts;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectRelationshipService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +32,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -54,6 +57,14 @@ public class DeleteStructureStrutsAction implements StrutsAction {
 		try {
 			long objectDefinitionId = ParamUtil.getLong(
 				httpServletRequest, "objectDefinitionId");
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_objectDefinitionModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), objectDefinitionId,
+				ActionKeys.DELETE);
 
 			_deleteStructures(objectDefinitionId);
 		}
@@ -107,19 +118,20 @@ public class DeleteStructureStrutsAction implements StrutsAction {
 		visitedObjectDefinitionIds.add(objectDefinitionId);
 
 		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipService.getObjectRelationships(
-				objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			_objectRelationshipLocalService.getObjectRelationships(
+				objectDefinitionId, true);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
-			if (!Objects.equals(
-					objectRelationship.getDeletionType(), "cascade")) {
-
-				continue;
-			}
-
 			_getObjectDefinitionIds(
 				objectRelationship.getObjectDefinitionId2(),
 				objectDefinitionIds, visitedObjectDefinitionIds);
+
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionType(), false,
+				objectRelationship.getLabelMap(), null);
 		}
 
 		objectDefinitionIds.add(objectDefinitionId);
@@ -138,11 +150,17 @@ public class DeleteStructureStrutsAction implements StrutsAction {
 	@Reference
 	private Language _language;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
+
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
-	private ObjectRelationshipService _objectRelationshipService;
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	private class DeleteStructuresCallable implements Callable<Void> {
 

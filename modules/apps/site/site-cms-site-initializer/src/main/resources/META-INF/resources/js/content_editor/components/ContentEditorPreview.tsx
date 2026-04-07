@@ -22,12 +22,19 @@ export default function ContentEditorPreview({title}: {title: string}) {
 	);
 	const [resizing, setResizing] = useState<boolean>(false);
 
+	const contentRef = useRef<HTMLElement | null>(null);
 	const previewRef = useRef<HTMLDivElement>(null);
+	const sidePanelBarRef = useRef<HTMLElement | null>(null);
 
 	const previewWidthMax = useObservedMaxWidth(previewRef);
 	const previewWidth = Math.min(previewWidthMax, resizeWidth);
 
 	useEffect(() => {
+		contentRef.current = document.querySelector('#content');
+		sidePanelBarRef.current = document.querySelector(
+			'.content-editor__side-panel'
+		);
+
 		const handlePreview = ({showPreview}: {showPreview: boolean}) => {
 			setIsVisible(showPreview);
 		};
@@ -37,7 +44,23 @@ export default function ContentEditorPreview({title}: {title: string}) {
 		return () => Liferay.detach(EVENT_HANDLE_PREVIEW, handlePreview);
 	}, []);
 
-	useEventListener('mouseup', () => setResizing(false), true, document);
+	useEffect(() => {
+		if (!isVisible) {
+			sidePanelBarRef.current?.style.removeProperty('right');
+			contentRef.current?.style.removeProperty('padding-right');
+		}
+		else {
+			if (contentRef.current) {
+				contentRef.current.style.paddingRight = `${previewWidth}px`;
+			}
+
+			if (sidePanelBarRef.current) {
+				sidePanelBarRef.current.style.right = `${previewWidth}px`;
+			}
+		}
+	}, [isVisible, previewWidth]);
+
+	useEventListener('mouseup', () => setResizing(false), true, window);
 
 	if (!Liferay.FeatureFlags['LPD-44507']) {
 		return null;

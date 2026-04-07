@@ -5,7 +5,7 @@
 
 // AC Version
 
-export const ANALYTICS_CLIENT_VERSION = '1.3.2';
+export const ANALYTICS_CLIENT_VERSION = '1.3.3';
 
 export const ANALYTICS_BATCH_SEGMENT_IDS = 'analyticsBatchSegmentIds';
 

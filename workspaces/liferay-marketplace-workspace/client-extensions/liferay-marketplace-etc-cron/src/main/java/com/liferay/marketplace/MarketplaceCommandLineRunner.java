@@ -108,8 +108,9 @@ public class MarketplaceCommandLineRunner
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				account.getName() + " account assigned to user " +
-					userAccount.getName());
+				StringBundler.concat(
+					"Assigned account ", account.getName(), " to user ",
+					userAccount.getName()));
 		}
 	}
 
@@ -129,8 +130,9 @@ public class MarketplaceCommandLineRunner
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				role.getName() + " role assigned to user " +
-					userAccount.getName());
+				StringBundler.concat(
+					"Assigned role ", role.getName(), " to user ",
+					userAccount.getName()));
 		}
 	}
 
@@ -455,7 +457,7 @@ public class MarketplaceCommandLineRunner
 
 	private void _invoke(UnsafeRunnable<?> task, String name) {
 		if (_log.isInfoEnabled()) {
-			_log.info("Started processing \"" + name + "\"");
+			_log.info("Processing \"" + name + "\"");
 		}
 
 		try {
@@ -612,7 +614,7 @@ public class MarketplaceCommandLineRunner
 
 		if (account == null) {
 			if (_log.isInfoEnabled()) {
-				_log.info("SSA Account not found");
+				_log.info("Account is null");
 			}
 
 			return;
@@ -630,7 +632,7 @@ public class MarketplaceCommandLineRunner
 
 		if (role == null) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Liferay Staff role not found");
+				_log.info("Role is null");
 			}
 
 			return;

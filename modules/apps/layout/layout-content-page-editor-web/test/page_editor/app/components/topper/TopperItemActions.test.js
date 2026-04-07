@@ -107,6 +107,14 @@ const renderTopperItemActions = ({
 };
 
 describe('TopperItemActions', () => {
+	afterEach(() => {
+		Liferay.FeatureFlags['LPS-169837'] = false;
+	});
+
+	beforeEach(() => {
+		Liferay.FeatureFlags['LPS-169837'] = true;
+	});
+
 	it('does not open TopperItemActions if disabled', async () => {
 		const {baseElement} = renderTopperItemActions({isDisabled: true});
 

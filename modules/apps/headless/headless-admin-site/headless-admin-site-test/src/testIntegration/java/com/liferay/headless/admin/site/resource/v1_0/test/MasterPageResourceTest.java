@@ -54,6 +54,9 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -67,6 +70,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -763,19 +767,17 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	private void _testGetSiteMasterPageWithNestedFieldsAndMissingFragmentEntryLink()
 		throws Exception {
 
-		MasterPageResource masterPageResource = _getMasterPageResource();
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
 				ServiceContextTestUtil.getServiceContext(
 					testGroup, TestPropsValues.getUserId()),
 				WorkflowConstants.STATUS_APPROVED);
 
-		MasterPage getMasterPage = masterPageResource.getSiteMasterPage(
-			testGroup.getExternalReferenceCode(),
-			layoutPageTemplateEntry.getExternalReferenceCode());
+		MasterPageResource masterPageResource = _getMasterPageResource();
 
-		_assertPageSpecifications(1, 1, getMasterPage.getPageSpecifications());
+		_testGetSiteMasterPageWithNestedFieldsAndMissingFragmentEntryLink(
+			1, 1, layoutPageTemplateEntry.getExternalReferenceCode(),
+			masterPageResource, testGroup.getExternalReferenceCode());
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -788,20 +790,57 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
 
-		getMasterPage = masterPageResource.getSiteMasterPage(
-			testGroup.getExternalReferenceCode(),
-			layoutPageTemplateEntry.getExternalReferenceCode());
-
-		_assertPageSpecifications(2, 1, getMasterPage.getPageSpecifications());
+		_testGetSiteMasterPageWithNestedFieldsAndMissingFragmentEntryLink(
+			2, 1, layoutPageTemplateEntry.getExternalReferenceCode(),
+			masterPageResource, testGroup.getExternalReferenceCode());
 
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLink);
 
-		getMasterPage = masterPageResource.getSiteMasterPage(
-			testGroup.getExternalReferenceCode(),
-			layoutPageTemplateEntry.getExternalReferenceCode());
+		_testGetSiteMasterPageWithNestedFieldsAndMissingFragmentEntryLink(
+			1, 1, layoutPageTemplateEntry.getExternalReferenceCode(),
+			masterPageResource, testGroup.getExternalReferenceCode(),
+			fragmentEntryLink.getFragmentEntryLinkId());
+	}
 
-		_assertPageSpecifications(1, 1, getMasterPage.getPageSpecifications());
+	private void
+			_testGetSiteMasterPageWithNestedFieldsAndMissingFragmentEntryLink(
+				int expectedDraftLayoutPageElementsCount,
+				int expectedPublishedLayoutPageElementsCount,
+				String masterPageExternalReferenceCode,
+				MasterPageResource masterPageResource,
+				String siteExternalReferenceCode,
+				long... missingFragmentEntryLinkIds)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.headless.admin.site.internal.dto.v1_0.converter." +
+					"FragmentInstancePageElementDefinitionDTOConverter",
+				LoggerTestUtil.WARN)) {
+
+			MasterPage masterPage = masterPageResource.getSiteMasterPage(
+				siteExternalReferenceCode, masterPageExternalReferenceCode);
+
+			_assertPageSpecifications(
+				expectedDraftLayoutPageElementsCount,
+				expectedPublishedLayoutPageElementsCount,
+				masterPage.getPageSpecifications());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(
+				logEntries.toString(), missingFragmentEntryLinkIds.length,
+				logEntries.size());
+
+			for (int i = 0; i < missingFragmentEntryLinkIds.length; i++) {
+				LogEntry logEntry = logEntries.get(i);
+
+				Assert.assertEquals(
+					"No fragment entry link exists with ID " +
+						missingFragmentEntryLinkIds[i],
+					logEntry.getMessage());
+			}
+		}
 	}
 
 	private void _testPatchSiteMasterPage(

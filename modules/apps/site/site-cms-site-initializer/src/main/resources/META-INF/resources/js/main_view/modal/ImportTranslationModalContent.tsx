@@ -14,7 +14,6 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import ApiHelper from '../../common/services/ApiHelper';
-import {AssetLibrary} from '../../common/types/AssetLibrary';
 
 const VALID_EXTENSIONS = '.xliff,.xlf,.zip';
 
@@ -41,14 +40,12 @@ interface ImportTranslationResultData {
 
 export default function ImportTranslationModalContent({
 	actionLink,
-	groupId,
 	itemId,
 	itemName,
 	loadData,
 	onModalClose,
 }: {
 	actionLink: string;
-	groupId: number;
 	itemId: number;
 	itemName: string;
 	loadData?: () => void;

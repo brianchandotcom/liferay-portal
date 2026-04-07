@@ -90,7 +90,7 @@ test(
 					name: 'Role' + getRandomString(),
 				});
 
-				const site1 = await apiHelpers.headlessSite.createSite({
+				const site1 = await apiHelpers.headlessAdminSite.postSite({
 					name: 'Site' + getRandomString(),
 				});
 

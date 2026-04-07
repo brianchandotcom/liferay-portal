@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
@@ -110,59 +111,13 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 	private InternalAgent[] _createInternalAgents(AgentContext agentContext) {
 		try {
-			String filterString = "(active eq true)";
-
-			String chatbotExternalReferenceCode =
-				agentContext.getChatbotExternalReferenceCode();
-
-			if (Validator.isNotNull(chatbotExternalReferenceCode)) {
-				NestedFieldsContext nestedFieldsContext =
-					NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
-						new NestedFieldsContext(
-							1, List.of("agentDefinitionsToChatbots")));
-
-				try {
-					ObjectEntry chatbotObjectEntry =
-						_objectEntryManager.getObjectEntry(
-							agentContext.getCompanyId(),
-							agentContext.getDTOConverterContext(),
-							chatbotExternalReferenceCode,
-							_objectDefinitionLocalService.
-								fetchObjectDefinitionByExternalReferenceCode(
-									"L_AI_HUB_CHATBOT",
-									agentContext.getCompanyId()),
-							null);
-
-					ObjectEntry[] agentDefinitionObjectEntries =
-						(ObjectEntry[])chatbotObjectEntry.getPropertyValue(
-							"agentDefinitionsToChatbots");
-
-					if (ArrayUtil.isEmpty(agentDefinitionObjectEntries)) {
-						return new InternalAgent[0];
-					}
-
-					String agentDefinitionIds = String.join(
-						",",
-						TransformUtil.transform(
-							List.of(agentDefinitionObjectEntries),
-							objectEntry -> "'" + objectEntry.getId() + "'"));
-
-					filterString =
-						"(active eq true) and (id in (" + agentDefinitionIds +
-							"))";
-				}
-				finally {
-					NestedFieldsContextThreadLocal.setNestedFieldsContext(
-						nestedFieldsContext);
-				}
-			}
-
 			Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 				agentContext.getCompanyId(),
 				_objectDefinitionLocalService.getObjectDefinition(
 					agentContext.getCompanyId(), "AIHubAgentDefinition"),
-				null, null, agentContext.getDTOConverterContext(), filterString,
-				Pagination.of(1, 20), null, null);
+				null, null, agentContext.getDTOConverterContext(),
+				_getFilterString(agentContext), Pagination.of(1, 20), null,
+				null);
 
 			InternalAgentFactory internalAgentFactory =
 				new InternalAgentFactory(
@@ -178,6 +133,51 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		}
 
 		return new InternalAgent[0];
+	}
+
+	private String _getFilterString(AgentContext agentContext)
+		throws Exception {
+
+		if (Validator.isNull(agentContext.getChatbotExternalReferenceCode())) {
+			return "(active eq true)";
+		}
+
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
+				new NestedFieldsContext(
+					1, List.of("agentDefinitionsToChatbots")));
+
+		try {
+			ObjectEntry chatbotObjectEntry = _objectEntryManager.getObjectEntry(
+				agentContext.getCompanyId(),
+				agentContext.getDTOConverterContext(),
+				agentContext.getChatbotExternalReferenceCode(),
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						"L_AI_HUB_CHATBOT", agentContext.getCompanyId()),
+				null);
+
+			ObjectEntry[] agentDefinitionObjectEntries =
+				(ObjectEntry[])chatbotObjectEntry.getPropertyValue(
+					"agentDefinitionsToChatbots");
+
+			if (ArrayUtil.isEmpty(agentDefinitionObjectEntries)) {
+				return "(active eq true)";
+			}
+
+			String agentDefinitionIds = StringUtil.merge(
+				TransformUtil.transformToArray(
+					List.of(agentDefinitionObjectEntries),
+					objectEntry -> "'" + objectEntry.getId() + "'",
+					String.class),
+				",");
+
+			return "(active eq true) and (id in (" + agentDefinitionIds + "))";
+		}
+		finally {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				nestedFieldsContext);
+		}
 	}
 
 	private void _invoke(

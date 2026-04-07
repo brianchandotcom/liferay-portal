@@ -457,10 +457,10 @@ export class PageEditorPage {
 		if (unit) {
 			await this.page
 				.locator('.page-editor__spacing-selector__dropdown')
-				.getByRole('button', {name: 'Select a unit'})
+				.getByRole('combobox', {name: 'Select a unit'})
 				.click();
 
-			await this.page.getByRole('menuitem', {name: unit}).click();
+			await this.page.getByRole('option', {name: unit}).click();
 
 			const input = this.page.getByRole(
 				unit === 'custom' ? 'textbox' : 'spinbutton',
@@ -1400,7 +1400,12 @@ export class PageEditorPage {
 		await this.selectFragment(fragmentId);
 		await this.goToConfigurationTab('Styles');
 
-		await this.page.getByLabel(spacingType, {exact: true}).click();
+		await clickAndExpectToBeVisible({
+			target: this.page
+				.locator('.dropdown-menu')
+				.getByText('Existing tokens'),
+			trigger: this.page.getByLabel(spacingType, {exact: true}),
+		});
 	}
 
 	async pasteFragment(fragmentId: string) {

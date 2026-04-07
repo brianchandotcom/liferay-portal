@@ -165,12 +165,12 @@ test(
 
 		const webContentTitle = getRandomString();
 
-		let structure: any;
-		let templateKey: string;
+		let structure;
+		let templateKey;
 
 		await test.step('Create a data structure and template for page links', async () => {
 			const structureName = getRandomString();
-			const fields: Array<any> = layouts.flatMap(({pageNumber}) => [
+			const fields = layouts.flatMap(({pageNumber}) => [
 				{name: `Openpage${pageNumber}`, repeatable: false},
 				{name: `URL${pageNumber}`, repeatable: false},
 			]);
@@ -229,8 +229,8 @@ test(
 			});
 		});
 
-		let structure2: any;
-		let templateKey2: string;
+		let structure2;
+		let templateKey2;
 
 		await test.step('Create a data structure and template for individual page content', async () => {
 			const structureName2 = getRandomString();
@@ -331,7 +331,7 @@ test(
 				});
 
 				await expect(remotePage).toHaveURL(
-					new RegExp(`/web/${site.name}${layout.friendlyUrlPath}`)
+					`/web/${site.name}${layout.friendlyUrlPath}`
 				);
 			}
 		});

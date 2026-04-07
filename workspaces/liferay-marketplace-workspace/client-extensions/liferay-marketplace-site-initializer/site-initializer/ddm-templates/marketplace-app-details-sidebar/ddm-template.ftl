@@ -222,7 +222,7 @@
 	showLine = false
 	title = languageUtil.get(locale, "share-link")
 >
-	<a class="align-items-center d-flex font-weight-bold ml-1 support-link text-primary" href="#copy-share-link" onclick="copyToClipboard(Liferay.ThemeDisplay.getCanonicalURL())">
+	<a class="align-items-center d-flex font-weight-semi-bold ml-1 support-link text-primary" href="#copy-share-link" onclick="copyToClipboard(Liferay.ThemeDisplay.getCanonicalURL())">
 		<span class="link-icon mr-1">
 			<@clay["icon"] symbol="link" />
 		</span>

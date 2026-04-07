@@ -14,7 +14,7 @@
 			<div class="d-flex flex-row justify-content-between w-100">
 				<h1 class="mb-1">${configuration.sectionTitle}</h1>
 
-				<a class="btn btn-link font-weight-bold" href="/web/marketplace/applications?our-selection=${configuration.specificationFilterValue}" target="_self">
+				<a class="btn btn-link font-weight-semi-bold" href="/web/marketplace/applications?our-selection=${configuration.specificationFilterValue}" target="_self">
 					<span class="language-caret-icon">
 						<span>${languageUtil.get(locale, "view-more")}</span>
 
@@ -70,7 +70,7 @@
 													[#else]
 														[#assign badgeType = productType.name?lower_case?replace(" ", "-", "r")?replace("/", "-", "r")]
 
-														<div class="app-type-badge ${badgeType} font-weight-bold">
+														<div class="app-type-badge ${badgeType} font-weight-semi-bold">
 															${productType.name}
 														</div>
 													[/#if]
@@ -78,7 +78,7 @@
 											[/#if]
 										[/#if]
 
-										<div class="app-name font-weight-bold mb-1">
+										<div class="app-name font-weight-semi-bold mb-1">
 											${product.name}
 										</div>
 

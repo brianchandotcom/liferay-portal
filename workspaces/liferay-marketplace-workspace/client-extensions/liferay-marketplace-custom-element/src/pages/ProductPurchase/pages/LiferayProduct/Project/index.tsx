@@ -85,7 +85,7 @@ const ProjectSelection = () => {
 							_salesforceProject.externalReferenceCode ===
 							salesforceProject?.externalReferenceCode,
 						title: (
-							<span className="font-weight-semibold">
+							<span className="font-weight-semi-bold">
 								{_salesforceProject.name}
 							</span>
 						),
@@ -105,7 +105,7 @@ const ProjectSelection = () => {
 				{i18n.translate('not-seeing-a-specific-project')}
 
 				<a
-					className="font-weight-semibold ml-1"
+					className="font-weight-semi-bold ml-1"
 					href={properties.contactSupportURL}
 					target="_blank"
 				>

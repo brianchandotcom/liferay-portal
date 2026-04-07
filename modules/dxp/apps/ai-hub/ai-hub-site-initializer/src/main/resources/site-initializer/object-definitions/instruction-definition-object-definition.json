@@ -107,6 +107,7 @@
 			},
 			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES",
 			"name": "scope",
+			"required": true,
 			"system": true,
 			"type": "String"
 		},

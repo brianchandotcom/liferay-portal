@@ -433,7 +433,7 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	@Test
-	public void testExportObjectEntriesHitsClearSessionPersistenceContextPath()
+	public void testExportObjectEntriesHitsClearSessionPersistenceContext()
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _addPublishedTestObjectDefinition(
@@ -467,7 +467,7 @@ public class BatchEngineExportTaskExecutorTest
 
 			Assert.assertTrue(
 				"Expected _clearSessionPersistenceContext path to be hit",
-				countingLastSessionRecorderHelper.getInvocationCount() > 0);
+				countingLastSessionRecorderHelper.getCount() > 0);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -906,7 +906,7 @@ public class BatchEngineExportTaskExecutorTest
 	private static class CountingLastSessionRecorderHelper
 		implements LastSessionRecorderHelper {
 
-		public int getInvocationCount() {
+		public int getCount() {
 			return _count.get();
 		}
 

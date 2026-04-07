@@ -62,8 +62,12 @@ export default function MultipleFilesUploadModalContent({
 
 	const [space, setSpace] = useState<Space>();
 
-	const getAssetLibraryLink = (assetLibrary: AssetLibrary) => {
-		return `<a href="${baseAssetLibraryViewURL}${assetLibrary.groupId}" class="alert-link lead"><strong>${assetLibrary.name}</strong></a>`;
+	const getAssetLibraryLink = () => {
+		const assetLibrary = assetLibraries?.find(
+			(assetLibrary) => Number(assetLibrary.groupId) === groupId
+		);
+
+		return `<a href="${baseAssetLibraryViewURL}${assetLibrary?.groupId}" class="alert-link lead"><strong>${assetLibrary?.name}</strong></a>`;
 	};
 
 	const uploadRequest: UploadRequestCallback = async ({
@@ -93,11 +97,9 @@ export default function MultipleFilesUploadModalContent({
 	};
 
 	const onUploadComplete = ({
-		assetLibrary,
 		failedFiles,
 		successFiles,
 	}: {
-		assetLibrary: AssetLibrary | null;
 		failedFiles: string[];
 		successFiles: string[];
 	}) => {
@@ -106,26 +108,21 @@ export default function MultipleFilesUploadModalContent({
 
 			let toastMessage;
 
-			if (assetLibrary) {
-				if (successFiles.length === 1) {
-					toastMessage = sub(
-						Liferay.Language.get(
-							'x-file-was-successfully-uploaded-to-x-space'
-						),
-						['1', getAssetLibraryLink(assetLibrary)]
-					);
-				}
-				else {
-					toastMessage = sub(
-						Liferay.Language.get(
-							'x-files-were-successfully-uploaded-to-x-space'
-						),
-						[
-							String(successFiles.length),
-							getAssetLibraryLink(assetLibrary),
-						]
-					);
-				}
+			if (successFiles.length === 1) {
+				toastMessage = sub(
+					Liferay.Language.get(
+						'x-file-was-successfully-uploaded-to-x-space'
+					),
+					['1', getAssetLibraryLink()]
+				);
+			}
+			else {
+				toastMessage = sub(
+					Liferay.Language.get(
+						'x-files-were-successfully-uploaded-to-x-space'
+					),
+					[String(successFiles.length), getAssetLibraryLink()]
+				);
 			}
 
 			openToast({

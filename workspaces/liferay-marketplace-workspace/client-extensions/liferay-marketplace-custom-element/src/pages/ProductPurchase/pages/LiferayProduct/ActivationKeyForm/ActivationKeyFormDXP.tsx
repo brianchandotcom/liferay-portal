@@ -179,8 +179,11 @@ const ActivationKeyFormDXP = () => {
 						/>
 					</ClayInput.GroupItem>
 
-					<ClayInput.GroupItem>
+					<ClayInput.GroupItem
+						style={{position: 'relative', top: '-2px'}}
+					>
 						<Select
+							className="custom-input"
 							{...register('country')}
 							label={i18n.translate('country')}
 							name="country"

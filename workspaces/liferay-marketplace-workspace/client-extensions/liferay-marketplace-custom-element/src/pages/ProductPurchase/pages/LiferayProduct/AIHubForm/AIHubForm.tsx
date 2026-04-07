@@ -17,9 +17,7 @@ import {RequiredMask} from '../../../../../components/FieldBase';
 import {Input} from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import Select from '../../../../../components/Select/Select';
-import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import useCommerceRegions from '../../../../../hooks/useCommerceRegions';
-import useMarketo from '../../../../../hooks/useMarketoForm';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import zodSchema, {z} from '../../../../../schema/zod';
@@ -39,8 +37,6 @@ const setValuesOptions = {
 };
 
 const AIHubForm = () => {
-	const {properties} = useMarketplaceContext();
-
 	const {
 		formState: {errors, isValid},
 		handleSubmit,
@@ -83,39 +79,10 @@ const AIHubForm = () => {
 
 	const countries = regionsResponse?.items ?? [];
 
-	const {triggerSubmit} = useMarketo({
-		formId: properties.marketoFormIdLiferayProduct,
-		submitText: i18n.translate('submit'),
-	});
-
-	const submitMarketoForm = async (
-		data: z.infer<typeof zodSchema.aiHubForm>
-	) => {
-		const [firstName, ...lastName] = data.fullName.split(' ');
-
-		triggerSubmit({
-			Company: data.companyName,
-			Country: data.country,
-			Email: data.businessEmailAddress,
-			FirstName: firstName,
-			Industry__c: 'Software',
-			LastName: lastName.join(' '),
-			Phone: `${data.intlCode.code} ${data.phoneNumber} ${data.extension}`,
-			Purpose_of_Download__c: PURPOSE_OPTIONS.find(
-				(item) => item.value === data.purpose
-			)?.title,
-			Share_with_Partners__c: data.termsAndConditions,
-			Title: data.jobTitle,
-			temp_boolean_02: data.userAgreement,
-		});
-	};
-
 	const onSubmit = async (form: z.infer<typeof zodSchema.aiHubForm>) => {
 		setLoading(true);
 
 		try {
-			await submitMarketoForm(form);
-
 			const productPurchase = new ProductPurchaseAIHub(
 				selectedAccount,
 				product
@@ -137,12 +104,6 @@ const AIHubForm = () => {
 			className="liferay-ai-hub-form"
 			title={i18n.translate('request-access-to-ai-hub-private-beta')}
 		>
-			<form
-				aria-hidden="true"
-				className="d-none"
-				id={`mktoForm_${properties.marketoFormIdLiferayProduct}`}
-			/>
-
 			<p className="mb-6 text-black-50">
 				{i18n.translate(
 					'submit-your-request-to-join-the-beta-program-all-submissions-will-be-reviewed-and-youll-receive-an-email-with-the-outcome'
@@ -177,8 +138,11 @@ const AIHubForm = () => {
 						/>
 					</ClayInput.GroupItem>
 
-					<ClayInput.GroupItem>
+					<ClayInput.GroupItem
+						style={{position: 'relative', top: '-2px'}}
+					>
 						<Select
+							className="custom-input"
 							{...register('country')}
 							label={i18n.translate('country')}
 							name="country"

@@ -126,17 +126,6 @@
 			"name": "purpose",
 			"required": true,
 			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Purpose Description"
-			},
-			"name": "purposeDescription",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"objectFolderExternalReferenceCode": "MARKETPLACE",

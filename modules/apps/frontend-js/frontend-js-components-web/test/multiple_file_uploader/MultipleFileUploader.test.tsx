@@ -272,7 +272,7 @@ describe('MultipleFileUploader', () => {
 
 		const mockUploadRequestFail = jest
 			.fn()
-			.mockResolvedValue({error: true});
+			.mockResolvedValue({error: 'failed to upload'});
 
 		const {container, getByText} = render(
 			<MultipleFileUploader

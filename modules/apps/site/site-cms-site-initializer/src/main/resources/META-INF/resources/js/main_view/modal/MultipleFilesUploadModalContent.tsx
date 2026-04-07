@@ -60,7 +60,14 @@ export default function MultipleFilesUploadModalContent({
 		fileData: FileData;
 	}) => {
 		if (!groupId) {
-			throw new Error('no space selected');
+			setGroupIdError(true);
+
+			throw new Error(
+				sub(
+					Liferay.Language.get('no-x-selected'),
+					Liferay.Language.get('space')
+				)
+			);
 		}
 
 		const fileBase64 = await getFileAsBase64(fileData.file);

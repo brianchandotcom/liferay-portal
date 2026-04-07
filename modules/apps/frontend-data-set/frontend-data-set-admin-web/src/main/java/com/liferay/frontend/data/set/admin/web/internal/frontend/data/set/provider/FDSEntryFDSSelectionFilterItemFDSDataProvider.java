@@ -19,7 +19,6 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.search.Sort;
@@ -40,9 +39,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,27 +68,28 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 
 		_checkPermissions(themeDisplay);
 
-		List<Map.Entry<String, String>> fdsEntries = new ArrayList<>(
-			_getFDSEntries(
-				themeDisplay.getCompanyId(), fdsKeywords.getKeywords()
-			).entrySet());
+		List<FDSSelectionFilterItem> fdsEntryFDSSelectionFilterItems =
+			_getFDSEntryFDSSelectionFilterItems(
+				themeDisplay.getCompanyId(), fdsKeywords);
 
 		int start = Math.max(fdsPagination.getStartPosition(), 0);
-		int end = Math.min(fdsPagination.getEndPosition(), fdsEntries.size());
+		int end = Math.min(
+			fdsPagination.getEndPosition(),
+			fdsEntryFDSSelectionFilterItems.size());
 
-		if ((start >= fdsEntries.size()) || (start >= end)) {
+		if ((start >= fdsEntryFDSSelectionFilterItems.size()) ||
+			(start >= end)) {
+
 			return Collections.emptyList();
 		}
 
 		ListUtil.sort(
-			fdsEntries,
+			fdsEntryFDSSelectionFilterItems,
 			Comparator.comparing(
-				Map.Entry::getValue, String::compareToIgnoreCase));
+				FDSSelectionFilterItem::getItemLabel,
+				String::compareToIgnoreCase));
 
-		return TransformUtil.transform(
-			fdsEntries.subList(start, end),
-			(Map.Entry<String, String> entry) -> new FDSSelectionFilterItem(
-				entry.getKey(), entry.getValue()));
+		return fdsEntryFDSSelectionFilterItems.subList(start, end);
 	}
 
 	@Override
@@ -103,8 +103,8 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 
 		_checkPermissions(themeDisplay);
 
-		return _getFDSEntries(
-			themeDisplay.getCompanyId(), fdsKeywords.getKeywords()
+		return _getFDSEntryFDSSelectionFilterItems(
+			themeDisplay.getCompanyId(), fdsKeywords
 		).size();
 	}
 
@@ -121,14 +121,29 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 		}
 	}
 
-	private Map<String, String> _getFDSEntries(long companyId, String keywords)
+	private boolean _contains(
+		String externalReferenceCode, List<SystemFDSEntry> systemFDSEntries) {
+
+		for (SystemFDSEntry systemFDSEntry : systemFDSEntries) {
+			if (Objects.equals(
+					systemFDSEntry.getName(), externalReferenceCode)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private List<FDSSelectionFilterItem> _getFDSEntryFDSSelectionFilterItems(
+			long companyId, FDSKeywords fdsKeywords)
 		throws PortalException {
 
-		Map<String, String> fdsEntries = new LinkedHashMap<>();
+		List<FDSSelectionFilterItem> fdsEntries = new ArrayList<>();
 
 		List<SystemFDSEntry> systemFDSEntries =
 			FDSDataProviderUtil.getSystemFDSEntries(
-				keywords, _systemFDSEntryRegistry);
+				fdsKeywords.getKeywords(), _systemFDSEntryRegistry);
 
 		for (SystemFDSEntry systemFDSEntry : systemFDSEntries) {
 			String label = systemFDSEntry.getTitle();
@@ -137,7 +152,8 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 				label = systemFDSEntry.getName();
 			}
 
-			fdsEntries.put(systemFDSEntry.getName(), label);
+			fdsEntries.add(
+				new FDSSelectionFilterItem(systemFDSEntry.getName(), label));
 		}
 
 		ObjectDefinition objectDefinition =
@@ -162,14 +178,14 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 					new DefaultDTOConverterContext(
 						false, null, null, null, null,
 						LocaleUtil.getMostRelevantLocale(), null, null),
-					null, null, keywords, null);
+					null, null, fdsKeywords.getKeywords(), null);
 
 			for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
 				String externalReferenceCode =
 					objectEntry.getExternalReferenceCode();
 
 				if (Validator.isNull(externalReferenceCode) ||
-					fdsEntries.containsKey(externalReferenceCode)) {
+					_contains(externalReferenceCode, systemFDSEntries)) {
 
 					continue;
 				}
@@ -182,7 +198,8 @@ public class FDSEntryFDSSelectionFilterItemFDSDataProvider
 					label = externalReferenceCode;
 				}
 
-				fdsEntries.put(externalReferenceCode, label);
+				fdsEntries.add(
+					new FDSSelectionFilterItem(externalReferenceCode, label));
 			}
 		}
 		catch (Exception exception) {

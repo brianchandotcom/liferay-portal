@@ -7,13 +7,14 @@ package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
-import com.liferay.marketplace.model.AnalyticsForm;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 
 import java.util.Map;
 import java.util.Objects;
+
+import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,20 +34,29 @@ public class ProvisioningHubService extends BaseService {
 			Account koroneikiAccount = _koroneikiService.getKoroneikiAccount(
 				productPurchase.getAccountKey());
 
-			Map<String, String> propertiesMap =
-				koroneikiAccount.getProperties();
+			Map<String, String> properties = koroneikiAccount.getProperties();
 
-			String securityContactEmailAddress = propertiesMap.get(
+			String securityContactEmailAddress = properties.get(
 				"securityContactEmailAddress");
 
-			AnalyticsForm analyticsForm = new AnalyticsForm(
-				koroneikiAccount.getName(), koroneikiAccount.getKey(),
-				securityContactEmailAddress.split(","),
-				propertiesMap.get("ldpWorkspaceName"),
-				_getServerLocation(propertiesMap.get("dataCenterLocation")),
-				order.getCreatorEmailAddress());
+			JSONObject jsonObject = new JSONObject(
+			).put(
+				"corpProjectName", koroneikiAccount.getName()
+			).put(
+				"corpProjectUuid", koroneikiAccount.getKey()
+			).put(
+				"incidentReportEmailAddresses",
+				securityContactEmailAddress.split(",")
+			).put(
+				"name", properties.get("ldpWorkspaceName")
+			).put(
+				"ownerEmailAddress", order.getCreatorEmailAddress()
+			).put(
+				"serverLocation",
+				_getServerLocation(properties.get("dataCenterLocation"))
+			);
 
-			_analyticsService.provision(analyticsForm, order.getId());
+			_analyticsService.provision(jsonObject, order.getId());
 		}
 	}
 

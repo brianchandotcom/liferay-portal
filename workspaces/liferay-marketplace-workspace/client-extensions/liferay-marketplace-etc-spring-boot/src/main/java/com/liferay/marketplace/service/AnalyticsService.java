@@ -7,9 +7,9 @@ package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
-import com.liferay.marketplace.model.AnalyticsForm;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Base64;
 
@@ -42,7 +42,7 @@ public class AnalyticsService extends BaseService {
 		return "Basic " + encoder.encodeToString(authorization.getBytes());
 	}
 
-	public void provision(AnalyticsForm analyticsForm, long orderId)
+	public void provision(JSONObject jsonObject, long orderId)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -62,24 +62,25 @@ public class AnalyticsService extends BaseService {
 			MediaType.APPLICATION_FORM_URLENCODED
 		).body(
 			BodyInserters.fromFormData(
-				"corpProjectName", analyticsForm.getCorpProjectName()
+				"corpProjectName", jsonObject.getString("corpProjectName")
 			).with(
-				"corpProjectUuid", analyticsForm.getCorpProjectUuid()
+				"corpProjectUuid", jsonObject.getString("corpProjectUuid")
 			).with(
 				"incidentReportEmailAddresses",
 				new JSONArray(
-					analyticsForm.getIncidentReportEmailAddresses()
+					jsonObject.getString("incidentReportEmailAddresses")
 				).toString()
 			).with(
-				"name", analyticsForm.getName()
+				"name", jsonObject.getString("name")
 			).with(
-				"serverLocation", analyticsForm.getServerLocation()
+				"serverLocation",
+				_getServerLocation(jsonObject.getString("serverLocation"))
 			).with(
-				"sharedCluster", analyticsForm.getSharedCluster()
+				"sharedCluster", "false"
 			).with(
-				"trial", analyticsForm.getTrial()
+				"trial", "true"
 			).with(
-				"ownerEmailAddress", analyticsForm.getOwnerEmailAddress()
+				"ownerEmailAddress", jsonObject.getString("ownerEmailAddress")
 			)
 		).retrieve(
 		).bodyToMono(
@@ -112,6 +113,16 @@ public class AnalyticsService extends BaseService {
 			).build(),
 			orderId, order.getOrderStatus());
 	}
+
+	private String _getServerLocation(String serverLocation) {
+		if (Validator.isBlank(serverLocation)) {
+			return _SERVER_LOCATION;
+		}
+
+		return serverLocation;
+	}
+
+	private static final String _SERVER_LOCATION = "us-west1-ac-uat-c1";
 
 	private static final Log _log = LogFactory.getLog(AnalyticsService.class);
 

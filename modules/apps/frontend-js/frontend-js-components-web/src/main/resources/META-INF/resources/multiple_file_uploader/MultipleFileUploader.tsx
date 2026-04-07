@@ -89,7 +89,7 @@ export default function MultipleFileUploader({
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 				),
-				[formatStorage(maxFileSize)]
+				[formatStorage(maxFileSize ?? 0)]
 			),
 		}),
 		[maxFileSize, validExtensions]

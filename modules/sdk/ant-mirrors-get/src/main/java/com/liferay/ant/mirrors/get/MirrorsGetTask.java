@@ -377,7 +377,8 @@ public class MirrorsGetTask extends Task {
 		try {
 			if (gcpCredentialsFile != null) {
 				System.out.println(
-					"Activating service account with: " + gcpCredentialsFile);
+					"Activating service account with " + gcpCredentialsFile +
+						".");
 
 				Process process = _executeCommands(
 					new String[] {
@@ -390,7 +391,8 @@ public class MirrorsGetTask extends Task {
 				}
 			}
 
-			System.out.println("Downloading " + gsURL + " to " + targetFile);
+			System.out.println(
+				"Downloading " + gsURL + " to " + targetFile + ".");
 
 			Process process = _executeCommands(
 				new String[] {
@@ -401,17 +403,12 @@ public class MirrorsGetTask extends Task {
 				return;
 			}
 
-			System.out.println(
-				"Unable to download file from " + gsURL +
-					" using gcloud storage cp.");
-
 			process = _executeCommands(
 				new String[] {"gsutil", "cp", gsURL, targetFile.toString()});
 
 			if (process.exitValue() != 0) {
 				System.out.println(
-					"Unable to download file from " + gsURL +
-						" using gsutil cp.");
+					"Unable to download file from " + gsURL + ".");
 
 				_deleteFile(targetFile);
 			}
@@ -420,8 +417,8 @@ public class MirrorsGetTask extends Task {
 					exception) {
 
 			System.out.println(
-				"Unable to run GCP commands to download file: " +
-					exception.getMessage());
+				"Unable to run GCP commands to download file " +
+					exception.getMessage() + ".");
 		}
 	}
 

@@ -26,6 +26,7 @@ public class AssetSummaryDisplay {
 		_assetType = assetSummary.getAssetType();
 		_downloadsMetric = assetSummary.getDownloadsMetric();
 		_impressionsMetric = assetSummary.getImpressionsMetric();
+		_mimeType = assetSummary.getMimeType();
 		_viewsMetric = assetSummary.getViewsMetric();
 	}
 
@@ -39,6 +40,7 @@ public class AssetSummaryDisplay {
 	private final String _assetType;
 	private final Metric _downloadsMetric;
 	private final Metric _impressionsMetric;
+	private final String _mimeType;
 	private final Metric _viewsMetric;
 
 }

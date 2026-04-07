@@ -49,6 +49,10 @@ public class AssetSummary {
 		return _impressionsMetric;
 	}
 
+	public String getMimeType() {
+		return _mimeType;
+	}
+
 	public Metric getReadsMetric() {
 		return _readsMetric;
 	}
@@ -89,6 +93,10 @@ public class AssetSummary {
 		_impressionsMetric = impressionsMetric;
 	}
 
+	public void setMimeType(String mimeType) {
+		_mimeType = mimeType;
+	}
+
 	public void setReadsMetric(Metric readsMetric) {
 		_readsMetric = readsMetric;
 	}
@@ -105,6 +113,7 @@ public class AssetSummary {
 	private Metric _downloadsMetric;
 	private Map<String, Object> _embeddedResources = new HashMap<>();
 	private Metric _impressionsMetric;
+	private String _mimeType;
 	private Metric _readsMetric;
 	private Metric _viewsMetric;
 

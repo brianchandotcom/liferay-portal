@@ -237,3 +237,4 @@ public class DataLayoutColumnSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2075984978

@@ -99,3 +99,4 @@ public class PagePermission implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:401942605

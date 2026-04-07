@@ -61,3 +61,4 @@ public class BasicWidgetPageWidgetInstance
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:366102052

@@ -1328,3 +1328,4 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1732765053

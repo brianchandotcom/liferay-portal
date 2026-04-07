@@ -320,3 +320,4 @@ public class ColorPaletteFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1758398875

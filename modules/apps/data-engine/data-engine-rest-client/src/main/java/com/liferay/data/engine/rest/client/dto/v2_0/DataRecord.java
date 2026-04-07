@@ -141,3 +141,4 @@ public class DataRecord implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1132815173

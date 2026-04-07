@@ -416,3 +416,4 @@ public class PriceListChannelSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1404639047

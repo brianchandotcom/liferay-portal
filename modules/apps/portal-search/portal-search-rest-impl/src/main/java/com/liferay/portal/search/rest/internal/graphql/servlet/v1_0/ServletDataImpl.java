@@ -132,3 +132,4 @@ public class ServletDataImpl implements ServletData {
 		_embeddingModelResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:457906926

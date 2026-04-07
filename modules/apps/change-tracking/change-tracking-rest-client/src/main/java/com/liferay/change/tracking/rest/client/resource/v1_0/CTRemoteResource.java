@@ -1277,3 +1277,4 @@ public interface CTRemoteResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-448619531

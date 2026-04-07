@@ -547,3 +547,4 @@ public class DSEnvelopeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1059282005

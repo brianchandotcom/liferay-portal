@@ -26,3 +26,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class CaptchaRESTApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:-1896124943

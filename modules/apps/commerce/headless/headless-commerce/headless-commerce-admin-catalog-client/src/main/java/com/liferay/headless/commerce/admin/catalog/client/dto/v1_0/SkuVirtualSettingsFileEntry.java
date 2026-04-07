@@ -183,3 +183,4 @@ public class SkuVirtualSettingsFileEntry implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-392365085

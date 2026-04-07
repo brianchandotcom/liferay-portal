@@ -682,3 +682,4 @@ public class BulkActionTask implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1075960558

@@ -27,3 +27,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class AnalyticsReportsRESTApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:532389149

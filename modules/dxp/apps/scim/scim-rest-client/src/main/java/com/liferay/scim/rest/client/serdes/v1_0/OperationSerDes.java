@@ -259,3 +259,4 @@ public class OperationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:885215301

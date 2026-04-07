@@ -597,114 +597,26 @@ public class Query {
 					creatorId, Pagination.of(page, pageSize))));
 	}
 
-	@GraphQLTypeExtension(WorkflowInstance.class)
-	public class GetWorkflowInstanceWorkflowTasksPageTypeExtension {
+	@GraphQLTypeExtension(WorkflowTasksBulkSelection.class)
+	public class GetWorkflowDefinitionTypeExtension {
 
-		public GetWorkflowInstanceWorkflowTasksPageTypeExtension(
-			WorkflowInstance workflowInstance) {
+		public GetWorkflowDefinitionTypeExtension(
+			WorkflowTasksBulkSelection workflowTasksBulkSelection) {
 
-			_workflowInstance = workflowInstance;
+			_workflowTasksBulkSelection = workflowTasksBulkSelection;
 		}
 
 		@GraphQLField
-		public WorkflowTaskPage workflowTasks(
-				@GraphQLName("completed") Boolean completed,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
+		public WorkflowDefinition workflowDefinition() throws Exception {
 			return _applyComponentServiceObjects(
-				_workflowTaskResourceComponentServiceObjects,
+				_workflowDefinitionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				workflowTaskResource -> new WorkflowTaskPage(
-					workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-						_workflowInstance.getId(), completed,
-						Pagination.of(page, pageSize))));
+				workflowDefinitionResource ->
+					workflowDefinitionResource.getWorkflowDefinition(
+						_workflowTasksBulkSelection.getWorkflowDefinitionId()));
 		}
 
-		private WorkflowInstance _workflowInstance;
-
-	}
-
-	@GraphQLTypeExtension(WorkflowInstance.class)
-	public class GetWorkflowInstanceWorkflowLogsPageTypeExtension {
-
-		public GetWorkflowInstanceWorkflowLogsPageTypeExtension(
-			WorkflowInstance workflowInstance) {
-
-			_workflowInstance = workflowInstance;
-		}
-
-		@GraphQLField
-		public WorkflowLogPage workflowLogs(
-				@GraphQLName("types") String[] types,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_workflowLogResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				workflowLogResource -> new WorkflowLogPage(
-					workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
-						_workflowInstance.getId(), types,
-						Pagination.of(page, pageSize))));
-		}
-
-		private WorkflowInstance _workflowInstance;
-
-	}
-
-	@GraphQLTypeExtension(WorkflowTask.class)
-	public class GetWorkflowTaskHasAssignableUsersTypeExtension {
-
-		public GetWorkflowTaskHasAssignableUsersTypeExtension(
-			WorkflowTask workflowTask) {
-
-			_workflowTask = workflowTask;
-		}
-
-		@GraphQLField
-		public Boolean hasAssignableUsers() throws Exception {
-			return _applyComponentServiceObjects(
-				_workflowTaskResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				workflowTaskResource ->
-					workflowTaskResource.getWorkflowTaskHasAssignableUsers(
-						_workflowTask.getId()));
-		}
-
-		private WorkflowTask _workflowTask;
-
-	}
-
-	@GraphQLTypeExtension(WorkflowInstance.class)
-	public class GetWorkflowInstanceWorkflowTasksAssignedToMePageTypeExtension {
-
-		public GetWorkflowInstanceWorkflowTasksAssignedToMePageTypeExtension(
-			WorkflowInstance workflowInstance) {
-
-			_workflowInstance = workflowInstance;
-		}
-
-		@GraphQLField
-		public WorkflowTaskPage workflowTasksAssignedToMe(
-				@GraphQLName("completed") Boolean completed,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_workflowTaskResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				workflowTaskResource -> new WorkflowTaskPage(
-					workflowTaskResource.
-						getWorkflowInstanceWorkflowTasksAssignedToMePage(
-							_workflowInstance.getId(), completed,
-							Pagination.of(page, pageSize))));
-		}
-
-		private WorkflowInstance _workflowInstance;
+		private WorkflowTasksBulkSelection _workflowTasksBulkSelection;
 
 	}
 
@@ -726,29 +638,6 @@ public class Query {
 		}
 
 		private WorkflowTask _workflowTask;
-
-	}
-
-	@GraphQLTypeExtension(WorkflowTasksBulkSelection.class)
-	public class GetWorkflowDefinitionTypeExtension {
-
-		public GetWorkflowDefinitionTypeExtension(
-			WorkflowTasksBulkSelection workflowTasksBulkSelection) {
-
-			_workflowTasksBulkSelection = workflowTasksBulkSelection;
-		}
-
-		@GraphQLField
-		public WorkflowDefinition workflowDefinition() throws Exception {
-			return _applyComponentServiceObjects(
-				_workflowDefinitionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				workflowDefinitionResource ->
-					workflowDefinitionResource.getWorkflowDefinition(
-						_workflowTasksBulkSelection.getWorkflowDefinitionId()));
-		}
-
-		private WorkflowTasksBulkSelection _workflowTasksBulkSelection;
 
 	}
 
@@ -798,6 +687,34 @@ public class Query {
 		}
 
 		private WorkflowTask _workflowTask;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowInstance.class)
+	public class GetWorkflowInstanceNextTransitionsPageTypeExtension {
+
+		public GetWorkflowInstanceNextTransitionsPageTypeExtension(
+			WorkflowInstance workflowInstance) {
+
+			_workflowInstance = workflowInstance;
+		}
+
+		@GraphQLField
+		public TransitionPage nextTransitions(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_transitionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				transitionResource -> new TransitionPage(
+					transitionResource.getWorkflowInstanceNextTransitionsPage(
+						_workflowInstance.getId(),
+						Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowInstance _workflowInstance;
 
 	}
 
@@ -859,6 +776,117 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(WorkflowInstance.class)
+	public class GetWorkflowInstanceWorkflowLogsPageTypeExtension {
+
+		public GetWorkflowInstanceWorkflowLogsPageTypeExtension(
+			WorkflowInstance workflowInstance) {
+
+			_workflowInstance = workflowInstance;
+		}
+
+		@GraphQLField
+		public WorkflowLogPage workflowLogs(
+				@GraphQLName("types") String[] types,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_workflowLogResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowLogResource -> new WorkflowLogPage(
+					workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+						_workflowInstance.getId(), types,
+						Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowInstance _workflowInstance;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowInstance.class)
+	public class GetWorkflowInstanceWorkflowTasksPageTypeExtension {
+
+		public GetWorkflowInstanceWorkflowTasksPageTypeExtension(
+			WorkflowInstance workflowInstance) {
+
+			_workflowInstance = workflowInstance;
+		}
+
+		@GraphQLField
+		public WorkflowTaskPage workflowTasks(
+				@GraphQLName("completed") Boolean completed,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_workflowTaskResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowTaskResource -> new WorkflowTaskPage(
+					workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
+						_workflowInstance.getId(), completed,
+						Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowInstance _workflowInstance;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowTask.class)
+	public class GetWorkflowTaskHasAssignableUsersTypeExtension {
+
+		public GetWorkflowTaskHasAssignableUsersTypeExtension(
+			WorkflowTask workflowTask) {
+
+			_workflowTask = workflowTask;
+		}
+
+		@GraphQLField
+		public Boolean hasAssignableUsers() throws Exception {
+			return _applyComponentServiceObjects(
+				_workflowTaskResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowTaskResource ->
+					workflowTaskResource.getWorkflowTaskHasAssignableUsers(
+						_workflowTask.getId()));
+		}
+
+		private WorkflowTask _workflowTask;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowInstance.class)
+	public class GetWorkflowInstanceWorkflowTasksAssignedToMePageTypeExtension {
+
+		public GetWorkflowInstanceWorkflowTasksAssignedToMePageTypeExtension(
+			WorkflowInstance workflowInstance) {
+
+			_workflowInstance = workflowInstance;
+		}
+
+		@GraphQLField
+		public WorkflowTaskPage workflowTasksAssignedToMe(
+				@GraphQLName("completed") Boolean completed,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_workflowTaskResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowTaskResource -> new WorkflowTaskPage(
+					workflowTaskResource.
+						getWorkflowInstanceWorkflowTasksAssignedToMePage(
+							_workflowInstance.getId(), completed,
+							Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowInstance _workflowInstance;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowInstance.class)
 	public class
 		GetWorkflowInstanceWorkflowTasksAssignedToUserPageTypeExtension {
 
@@ -884,34 +912,6 @@ public class Query {
 						getWorkflowInstanceWorkflowTasksAssignedToUserPage(
 							_workflowInstance.getId(), assigneeId, completed,
 							Pagination.of(page, pageSize))));
-		}
-
-		private WorkflowInstance _workflowInstance;
-
-	}
-
-	@GraphQLTypeExtension(WorkflowInstance.class)
-	public class GetWorkflowInstanceNextTransitionsPageTypeExtension {
-
-		public GetWorkflowInstanceNextTransitionsPageTypeExtension(
-			WorkflowInstance workflowInstance) {
-
-			_workflowInstance = workflowInstance;
-		}
-
-		@GraphQLField
-		public TransitionPage nextTransitions(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_transitionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				transitionResource -> new TransitionPage(
-					transitionResource.getWorkflowInstanceNextTransitionsPage(
-						_workflowInstance.getId(),
-						Pagination.of(page, pageSize))));
 		}
 
 		private WorkflowInstance _workflowInstance;
@@ -1332,3 +1332,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-986443509

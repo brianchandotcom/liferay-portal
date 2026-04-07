@@ -385,3 +385,4 @@ public class BillingAddress implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-469062724

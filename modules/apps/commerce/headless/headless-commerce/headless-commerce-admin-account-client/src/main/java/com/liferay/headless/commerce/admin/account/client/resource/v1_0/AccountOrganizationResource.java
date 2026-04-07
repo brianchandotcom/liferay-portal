@@ -1211,3 +1211,4 @@ public interface AccountOrganizationResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1717839211

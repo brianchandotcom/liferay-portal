@@ -514,3 +514,4 @@ public abstract class BaseAssetPermissionActionResourceImpl
 		LogFactoryUtil.getLog(BaseAssetPermissionActionResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-111416667

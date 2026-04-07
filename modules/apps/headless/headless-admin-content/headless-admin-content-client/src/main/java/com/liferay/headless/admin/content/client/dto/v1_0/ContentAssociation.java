@@ -99,3 +99,4 @@ public class ContentAssociation implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1579753913

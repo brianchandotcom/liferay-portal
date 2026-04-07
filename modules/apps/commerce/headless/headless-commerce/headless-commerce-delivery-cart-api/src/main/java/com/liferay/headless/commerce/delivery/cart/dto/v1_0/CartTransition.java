@@ -553,3 +553,4 @@ public class CartTransition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:366130175

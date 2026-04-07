@@ -710,3 +710,4 @@ public abstract class BaseExportTaskResourceImpl
 		LogFactoryUtil.getLog(BaseExportTaskResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:143066454

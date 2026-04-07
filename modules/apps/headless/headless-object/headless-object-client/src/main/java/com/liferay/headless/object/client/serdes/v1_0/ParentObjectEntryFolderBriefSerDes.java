@@ -333,3 +333,4 @@ public class ParentObjectEntryFolderBriefSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:713474662

@@ -1117,3 +1117,4 @@ public interface WorkflowInstanceResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1191401643

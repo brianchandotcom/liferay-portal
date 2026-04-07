@@ -1339,3 +1339,4 @@ public interface MappedProductResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2006789699

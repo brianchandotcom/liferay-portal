@@ -330,3 +330,4 @@ public class NavigationMenuResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:242784723

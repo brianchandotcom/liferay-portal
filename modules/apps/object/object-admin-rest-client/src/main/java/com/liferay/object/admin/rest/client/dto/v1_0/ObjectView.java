@@ -302,3 +302,4 @@ public class ObjectView implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:636974345

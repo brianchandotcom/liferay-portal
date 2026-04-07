@@ -231,3 +231,4 @@ public class Schema implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1351366167

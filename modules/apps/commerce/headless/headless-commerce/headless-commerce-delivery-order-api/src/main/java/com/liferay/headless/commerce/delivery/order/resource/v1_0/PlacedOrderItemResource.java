@@ -168,3 +168,4 @@ public interface PlacedOrderItemResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1340253596

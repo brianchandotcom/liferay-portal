@@ -232,3 +232,4 @@ public class ExperimentVariantSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-262089481

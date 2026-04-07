@@ -132,3 +132,4 @@ public abstract class CollectionDisplayListStyle
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1805949896

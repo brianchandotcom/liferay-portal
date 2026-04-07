@@ -359,3 +359,4 @@ public class FacetConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1452690074

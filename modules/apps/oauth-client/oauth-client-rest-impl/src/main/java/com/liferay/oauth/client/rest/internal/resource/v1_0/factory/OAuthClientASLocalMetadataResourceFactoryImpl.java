@@ -342,3 +342,4 @@ public class OAuthClientASLocalMetadataResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1294228655

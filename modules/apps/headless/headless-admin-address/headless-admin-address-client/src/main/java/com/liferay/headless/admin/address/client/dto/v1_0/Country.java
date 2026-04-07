@@ -364,3 +364,4 @@ public class Country implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-483355433

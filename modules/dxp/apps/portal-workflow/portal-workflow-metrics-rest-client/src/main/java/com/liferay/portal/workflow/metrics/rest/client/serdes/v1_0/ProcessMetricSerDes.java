@@ -323,3 +323,4 @@ public class ProcessMetricSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2057654551

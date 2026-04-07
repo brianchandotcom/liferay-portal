@@ -907,3 +907,4 @@ public abstract class BaseKeywordQueryContributorResourceTestCase {
 		KeywordQueryContributorResource _keywordQueryContributorResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1900392315

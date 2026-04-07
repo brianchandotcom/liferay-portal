@@ -516,3 +516,4 @@ public class CTCollectionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-990648442

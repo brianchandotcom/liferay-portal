@@ -324,3 +324,4 @@ public class WebUrlResourceFactoryImpl implements WebUrlResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1120712110

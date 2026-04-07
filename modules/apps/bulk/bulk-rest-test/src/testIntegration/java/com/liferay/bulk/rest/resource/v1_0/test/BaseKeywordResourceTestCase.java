@@ -805,3 +805,4 @@ public abstract class BaseKeywordResourceTestCase {
 		_keywordResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-826122125

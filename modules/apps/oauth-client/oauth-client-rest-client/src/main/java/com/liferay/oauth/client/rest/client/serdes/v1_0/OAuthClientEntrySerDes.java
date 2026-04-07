@@ -647,3 +647,4 @@ public class OAuthClientEntrySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1726185886

@@ -288,3 +288,4 @@ public interface ObjectEntryAcquisitionChannelResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2050453046

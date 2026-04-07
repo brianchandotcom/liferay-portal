@@ -592,3 +592,4 @@ public class CountrySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-959447688

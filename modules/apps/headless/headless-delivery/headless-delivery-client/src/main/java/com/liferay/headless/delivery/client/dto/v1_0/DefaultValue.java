@@ -101,3 +101,4 @@ public class DefaultValue implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1566166049

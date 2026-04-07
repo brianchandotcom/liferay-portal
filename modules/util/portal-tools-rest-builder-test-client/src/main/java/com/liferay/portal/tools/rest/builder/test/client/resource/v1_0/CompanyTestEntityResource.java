@@ -1660,3 +1660,4 @@ public interface CompanyTestEntityResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1601711611

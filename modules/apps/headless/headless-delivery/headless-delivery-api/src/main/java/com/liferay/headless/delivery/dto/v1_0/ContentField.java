@@ -779,3 +779,4 @@ public class ContentField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1565539174

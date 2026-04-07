@@ -418,3 +418,4 @@ public interface AttachmentResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1845672631

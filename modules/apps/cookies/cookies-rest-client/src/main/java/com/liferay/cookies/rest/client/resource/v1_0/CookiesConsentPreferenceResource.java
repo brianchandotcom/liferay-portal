@@ -713,3 +713,4 @@ public interface CookiesConsentPreferenceResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1577574750

@@ -330,3 +330,4 @@ public class InvitedMemberResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:718267592

@@ -354,3 +354,4 @@ public class Collapse implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:123548453

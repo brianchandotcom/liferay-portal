@@ -479,6 +479,11 @@ public class ServletDataImpl implements ServletData {
 							"getWarehouseIdWarehouseOrderTypesPage"));
 
 					put(
+						"query#Warehouse.replenishmentItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ReplenishmentItemResourceImpl.class,
+							"getReplenishmentItemByExternalReferenceCode"));
+					put(
 						"query#ReplenishmentItem.warehouseByExternalReferenceCode",
 						new ObjectValuePair<>(
 							WarehouseResourceImpl.class,
@@ -489,35 +494,30 @@ public class ServletDataImpl implements ServletData {
 							WarehouseItemResourceImpl.class,
 							"getWarehouseItemByExternalReferenceCode"));
 					put(
-						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseAccountGroups",
-						new ObjectValuePair<>(
-							WarehouseAccountGroupResourceImpl.class,
-							"getWarehouseByExternalReferenceCodeWarehouseAccountGroupsPage"));
-					put(
-						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseOrderTypes",
-						new ObjectValuePair<>(
-							WarehouseOrderTypeResourceImpl.class,
-							"getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage"));
-					put(
 						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseAccounts",
 						new ObjectValuePair<>(
 							WarehouseAccountResourceImpl.class,
 							"getWarehouseByExternalReferenceCodeWarehouseAccountsPage"));
 					put(
-						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseItems",
+						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseAccountGroups",
 						new ObjectValuePair<>(
-							WarehouseItemResourceImpl.class,
-							"getWarehouseByExternalReferenceCodeWarehouseItemsPage"));
+							WarehouseAccountGroupResourceImpl.class,
+							"getWarehouseByExternalReferenceCodeWarehouseAccountGroupsPage"));
 					put(
 						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseChannels",
 						new ObjectValuePair<>(
 							WarehouseChannelResourceImpl.class,
 							"getWarehouseByExternalReferenceCodeWarehouseChannelsPage"));
 					put(
-						"query#Warehouse.replenishmentItemByExternalReferenceCode",
+						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseItems",
 						new ObjectValuePair<>(
-							ReplenishmentItemResourceImpl.class,
-							"getReplenishmentItemByExternalReferenceCode"));
+							WarehouseItemResourceImpl.class,
+							"getWarehouseByExternalReferenceCodeWarehouseItemsPage"));
+					put(
+						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseOrderTypes",
+						new ObjectValuePair<>(
+							WarehouseOrderTypeResourceImpl.class,
+							"getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage"));
 				}
 			};
 
@@ -566,3 +566,4 @@ public class ServletDataImpl implements ServletData {
 		_orderTypeResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1178469843

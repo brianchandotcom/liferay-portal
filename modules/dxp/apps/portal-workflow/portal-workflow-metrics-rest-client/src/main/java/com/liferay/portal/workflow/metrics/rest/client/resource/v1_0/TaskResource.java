@@ -1189,3 +1189,4 @@ public interface TaskResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-807547637

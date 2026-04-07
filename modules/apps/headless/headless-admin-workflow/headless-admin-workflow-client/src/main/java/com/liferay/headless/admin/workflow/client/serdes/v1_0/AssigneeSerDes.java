@@ -223,3 +223,4 @@ public class AssigneeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-245344751

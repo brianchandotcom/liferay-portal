@@ -149,3 +149,4 @@ public interface SiteResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1735902740

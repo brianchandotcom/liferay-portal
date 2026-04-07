@@ -161,3 +161,4 @@ public class TaxonomyVocabulary implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1762905189

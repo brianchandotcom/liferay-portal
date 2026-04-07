@@ -1841,3 +1841,4 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		_dsEnvelopeResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-374638999

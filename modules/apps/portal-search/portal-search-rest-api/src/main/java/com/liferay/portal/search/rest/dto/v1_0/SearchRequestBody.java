@@ -298,3 +298,4 @@ public class SearchRequestBody implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-808178220

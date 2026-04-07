@@ -235,3 +235,4 @@ public class WarehouseOrderType implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2116703654

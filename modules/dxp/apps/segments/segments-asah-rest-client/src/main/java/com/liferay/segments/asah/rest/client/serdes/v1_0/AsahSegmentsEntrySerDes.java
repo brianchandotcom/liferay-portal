@@ -310,3 +310,4 @@ public class AsahSegmentsEntrySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1251871210

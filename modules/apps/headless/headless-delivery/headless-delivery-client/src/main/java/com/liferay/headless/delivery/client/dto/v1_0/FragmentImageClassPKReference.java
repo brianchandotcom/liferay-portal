@@ -111,3 +111,4 @@ public class FragmentImageClassPKReference implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1493620138

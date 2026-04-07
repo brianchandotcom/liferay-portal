@@ -619,3 +619,4 @@ public interface CartTransitionResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:743126178

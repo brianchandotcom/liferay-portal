@@ -1024,3 +1024,4 @@ public class PlacedOrder implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-664762108

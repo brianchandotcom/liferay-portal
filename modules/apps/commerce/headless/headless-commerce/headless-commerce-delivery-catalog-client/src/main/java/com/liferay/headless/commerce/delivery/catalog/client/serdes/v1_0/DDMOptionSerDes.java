@@ -259,3 +259,4 @@ public class DDMOptionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:437051751

@@ -181,3 +181,4 @@ public class OrderTransition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:898466557

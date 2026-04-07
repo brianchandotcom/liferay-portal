@@ -97,3 +97,4 @@ public class ObjectStateFlow implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:950332246

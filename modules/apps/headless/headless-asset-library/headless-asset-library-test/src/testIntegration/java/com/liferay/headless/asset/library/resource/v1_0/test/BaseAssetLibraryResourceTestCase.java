@@ -2511,3 +2511,4 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			_assetLibraryResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1512872972

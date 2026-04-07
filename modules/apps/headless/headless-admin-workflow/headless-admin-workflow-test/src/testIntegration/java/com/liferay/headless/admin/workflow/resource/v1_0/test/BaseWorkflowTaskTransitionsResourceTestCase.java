@@ -837,3 +837,4 @@ public abstract class BaseWorkflowTaskTransitionsResourceTestCase {
 		WorkflowTaskTransitionsResource _workflowTaskTransitionsResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-34594847

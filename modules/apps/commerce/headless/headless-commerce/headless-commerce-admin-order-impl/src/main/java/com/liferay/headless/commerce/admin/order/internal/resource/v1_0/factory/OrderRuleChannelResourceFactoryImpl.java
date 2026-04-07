@@ -332,3 +332,4 @@ public class OrderRuleChannelResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:764466418

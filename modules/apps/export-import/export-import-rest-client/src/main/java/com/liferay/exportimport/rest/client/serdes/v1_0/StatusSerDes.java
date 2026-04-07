@@ -224,3 +224,4 @@ public class StatusSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-94141238

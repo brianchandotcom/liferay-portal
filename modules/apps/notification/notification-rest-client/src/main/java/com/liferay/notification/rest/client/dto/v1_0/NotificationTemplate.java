@@ -529,3 +529,4 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-854236257

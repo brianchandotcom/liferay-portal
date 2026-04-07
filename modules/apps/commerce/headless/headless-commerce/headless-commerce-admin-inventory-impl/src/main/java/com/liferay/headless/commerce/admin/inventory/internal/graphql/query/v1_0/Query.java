@@ -648,6 +648,32 @@ public class Query {
 							warehouseOrderTypeResource, sortsString))));
 	}
 
+	@GraphQLTypeExtension(Warehouse.class)
+	public class GetReplenishmentItemByExternalReferenceCodeTypeExtension {
+
+		public GetReplenishmentItemByExternalReferenceCodeTypeExtension(
+			Warehouse warehouse) {
+
+			_warehouse = warehouse;
+		}
+
+		@GraphQLField
+		public ReplenishmentItem replenishmentItemByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_replenishmentItemResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				replenishmentItemResource ->
+					replenishmentItemResource.
+						getReplenishmentItemByExternalReferenceCode(
+							_warehouse.getExternalReferenceCode()));
+		}
+
+		private Warehouse _warehouse;
+
+	}
+
 	@GraphQLTypeExtension(ReplenishmentItem.class)
 	public class GetWarehouseByExternalReferenceCodeTypeExtension {
 
@@ -699,6 +725,37 @@ public class Query {
 
 	@GraphQLTypeExtension(ReplenishmentItem.class)
 	public class
+		GetWarehouseByExternalReferenceCodeWarehouseAccountsPageTypeExtension {
+
+		public GetWarehouseByExternalReferenceCodeWarehouseAccountsPageTypeExtension(
+			ReplenishmentItem replenishmentItem) {
+
+			_replenishmentItem = replenishmentItem;
+		}
+
+		@GraphQLField
+		public WarehouseAccountPage
+				warehouseByExternalReferenceCodeWarehouseAccounts(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_warehouseAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				warehouseAccountResource -> new WarehouseAccountPage(
+					warehouseAccountResource.
+						getWarehouseByExternalReferenceCodeWarehouseAccountsPage(
+							_replenishmentItem.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private ReplenishmentItem _replenishmentItem;
+
+	}
+
+	@GraphQLTypeExtension(ReplenishmentItem.class)
+	public class
 		GetWarehouseByExternalReferenceCodeWarehouseAccountGroupsPageTypeExtension {
 
 		public GetWarehouseByExternalReferenceCodeWarehouseAccountGroupsPageTypeExtension(
@@ -730,58 +787,27 @@ public class Query {
 
 	@GraphQLTypeExtension(ReplenishmentItem.class)
 	public class
-		GetWarehouseByExternalReferenceCodeWarehouseOrderTypesPageTypeExtension {
+		GetWarehouseByExternalReferenceCodeWarehouseChannelsPageTypeExtension {
 
-		public GetWarehouseByExternalReferenceCodeWarehouseOrderTypesPageTypeExtension(
+		public GetWarehouseByExternalReferenceCodeWarehouseChannelsPageTypeExtension(
 			ReplenishmentItem replenishmentItem) {
 
 			_replenishmentItem = replenishmentItem;
 		}
 
 		@GraphQLField
-		public WarehouseOrderTypePage
-				warehouseByExternalReferenceCodeWarehouseOrderTypes(
+		public WarehouseChannelPage
+				warehouseByExternalReferenceCodeWarehouseChannels(
 					@GraphQLName("pageSize") int pageSize,
 					@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_warehouseOrderTypeResourceComponentServiceObjects,
+				_warehouseChannelResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				warehouseOrderTypeResource -> new WarehouseOrderTypePage(
-					warehouseOrderTypeResource.
-						getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
-							_replenishmentItem.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private ReplenishmentItem _replenishmentItem;
-
-	}
-
-	@GraphQLTypeExtension(ReplenishmentItem.class)
-	public class
-		GetWarehouseByExternalReferenceCodeWarehouseAccountsPageTypeExtension {
-
-		public GetWarehouseByExternalReferenceCodeWarehouseAccountsPageTypeExtension(
-			ReplenishmentItem replenishmentItem) {
-
-			_replenishmentItem = replenishmentItem;
-		}
-
-		@GraphQLField
-		public WarehouseAccountPage
-				warehouseByExternalReferenceCodeWarehouseAccounts(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_warehouseAccountResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				warehouseAccountResource -> new WarehouseAccountPage(
-					warehouseAccountResource.
-						getWarehouseByExternalReferenceCodeWarehouseAccountsPage(
+				warehouseChannelResource -> new WarehouseChannelPage(
+					warehouseChannelResource.
+						getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
 							_replenishmentItem.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
@@ -822,58 +848,32 @@ public class Query {
 
 	@GraphQLTypeExtension(ReplenishmentItem.class)
 	public class
-		GetWarehouseByExternalReferenceCodeWarehouseChannelsPageTypeExtension {
+		GetWarehouseByExternalReferenceCodeWarehouseOrderTypesPageTypeExtension {
 
-		public GetWarehouseByExternalReferenceCodeWarehouseChannelsPageTypeExtension(
+		public GetWarehouseByExternalReferenceCodeWarehouseOrderTypesPageTypeExtension(
 			ReplenishmentItem replenishmentItem) {
 
 			_replenishmentItem = replenishmentItem;
 		}
 
 		@GraphQLField
-		public WarehouseChannelPage
-				warehouseByExternalReferenceCodeWarehouseChannels(
+		public WarehouseOrderTypePage
+				warehouseByExternalReferenceCodeWarehouseOrderTypes(
 					@GraphQLName("pageSize") int pageSize,
 					@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_warehouseChannelResourceComponentServiceObjects,
+				_warehouseOrderTypeResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				warehouseChannelResource -> new WarehouseChannelPage(
-					warehouseChannelResource.
-						getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
+				warehouseOrderTypeResource -> new WarehouseOrderTypePage(
+					warehouseOrderTypeResource.
+						getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
 							_replenishmentItem.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
 		private ReplenishmentItem _replenishmentItem;
-
-	}
-
-	@GraphQLTypeExtension(Warehouse.class)
-	public class GetReplenishmentItemByExternalReferenceCodeTypeExtension {
-
-		public GetReplenishmentItemByExternalReferenceCodeTypeExtension(
-			Warehouse warehouse) {
-
-			_warehouse = warehouse;
-		}
-
-		@GraphQLField
-		public ReplenishmentItem replenishmentItemByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_replenishmentItemResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				replenishmentItemResource ->
-					replenishmentItemResource.
-						getReplenishmentItemByExternalReferenceCode(
-							_warehouse.getExternalReferenceCode()));
-		}
-
-		private Warehouse _warehouse;
 
 	}
 
@@ -1505,3 +1505,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1861299059

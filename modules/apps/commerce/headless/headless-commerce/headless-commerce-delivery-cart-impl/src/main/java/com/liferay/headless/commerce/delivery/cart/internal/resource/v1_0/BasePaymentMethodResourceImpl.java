@@ -885,3 +885,4 @@ public abstract class BasePaymentMethodResourceImpl
 		LogFactoryUtil.getLog(BasePaymentMethodResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1837284558

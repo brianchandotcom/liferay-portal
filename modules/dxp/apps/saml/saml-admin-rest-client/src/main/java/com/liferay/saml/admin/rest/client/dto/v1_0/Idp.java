@@ -147,3 +147,4 @@ public class Idp implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:730298982

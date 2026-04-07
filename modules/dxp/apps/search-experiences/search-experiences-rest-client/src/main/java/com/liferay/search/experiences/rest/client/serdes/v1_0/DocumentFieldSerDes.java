@@ -208,3 +208,4 @@ public class DocumentFieldSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-621911264

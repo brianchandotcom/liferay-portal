@@ -116,3 +116,4 @@ public class ContactOrganization implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:167765475

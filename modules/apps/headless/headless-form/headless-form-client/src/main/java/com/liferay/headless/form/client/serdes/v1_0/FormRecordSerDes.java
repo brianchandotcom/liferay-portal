@@ -430,3 +430,4 @@ public class FormRecordSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:920880510

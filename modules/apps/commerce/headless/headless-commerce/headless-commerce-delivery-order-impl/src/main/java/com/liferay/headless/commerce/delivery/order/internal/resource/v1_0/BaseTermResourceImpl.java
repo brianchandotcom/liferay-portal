@@ -622,3 +622,4 @@ public abstract class BaseTermResourceImpl implements TermResource {
 		LogFactoryUtil.getLog(BaseTermResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1537021723

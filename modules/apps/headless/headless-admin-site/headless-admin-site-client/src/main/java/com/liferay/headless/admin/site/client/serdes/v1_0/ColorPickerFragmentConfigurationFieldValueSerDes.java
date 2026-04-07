@@ -295,3 +295,4 @@ public class ColorPickerFragmentConfigurationFieldValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1366640016

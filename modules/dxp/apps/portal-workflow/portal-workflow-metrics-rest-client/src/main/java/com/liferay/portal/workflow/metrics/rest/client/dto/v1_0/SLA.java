@@ -285,3 +285,4 @@ public class SLA implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:673176390

@@ -120,3 +120,4 @@ public class ChangeTransition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1203566603

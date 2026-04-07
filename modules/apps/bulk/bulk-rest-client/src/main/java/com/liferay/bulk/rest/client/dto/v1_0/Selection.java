@@ -76,3 +76,4 @@ public class Selection implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1151155515

@@ -225,3 +225,4 @@ public class TrendSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-857964234

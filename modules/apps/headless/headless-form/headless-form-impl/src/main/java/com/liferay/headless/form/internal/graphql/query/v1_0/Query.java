@@ -220,6 +220,25 @@ public class Query {
 					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
 	}
 
+	@GraphQLTypeExtension(FormRecord.class)
+	public class GetFormTypeExtension {
+
+		public GetFormTypeExtension(FormRecord formRecord) {
+			_formRecord = formRecord;
+		}
+
+		@GraphQLField
+		public Form form() throws Exception {
+			return _applyComponentServiceObjects(
+				_formResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				formResource -> formResource.getForm(_formRecord.getFormId()));
+		}
+
+		private FormRecord _formRecord;
+
+	}
+
 	@GraphQLTypeExtension(Form.class)
 	public class GetFormFormRecordByLatestDraftTypeExtension {
 
@@ -238,25 +257,6 @@ public class Query {
 		}
 
 		private Form _form;
-
-	}
-
-	@GraphQLTypeExtension(FormRecord.class)
-	public class GetFormTypeExtension {
-
-		public GetFormTypeExtension(FormRecord formRecord) {
-			_formRecord = formRecord;
-		}
-
-		@GraphQLField
-		public Form form() throws Exception {
-			return _applyComponentServiceObjects(
-				_formResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				formResource -> formResource.getForm(_formRecord.getFormId()));
-		}
-
-		private FormRecord _formRecord;
 
 	}
 
@@ -508,3 +508,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-846966773

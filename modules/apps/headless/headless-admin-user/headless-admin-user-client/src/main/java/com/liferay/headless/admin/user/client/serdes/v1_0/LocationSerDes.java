@@ -353,3 +353,4 @@ public class LocationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:357037576

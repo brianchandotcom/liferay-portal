@@ -78,3 +78,4 @@ public class FieldSet implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1536871638

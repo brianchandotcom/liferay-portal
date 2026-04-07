@@ -520,3 +520,4 @@ public abstract class BaseTestEntityAddressResourceImpl
 		LogFactoryUtil.getLog(BaseTestEntityAddressResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-979747254

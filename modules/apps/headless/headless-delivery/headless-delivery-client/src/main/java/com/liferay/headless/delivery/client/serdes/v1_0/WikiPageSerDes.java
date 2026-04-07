@@ -934,3 +934,4 @@ public class WikiPageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:847597984

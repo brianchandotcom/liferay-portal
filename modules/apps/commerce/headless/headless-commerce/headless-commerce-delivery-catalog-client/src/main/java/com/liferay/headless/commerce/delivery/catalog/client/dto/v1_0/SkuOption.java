@@ -324,3 +324,4 @@ public class SkuOption implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1572516210

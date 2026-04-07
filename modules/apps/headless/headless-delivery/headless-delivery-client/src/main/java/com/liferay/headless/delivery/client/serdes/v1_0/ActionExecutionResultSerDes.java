@@ -237,3 +237,4 @@ public class ActionExecutionResultSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:384431919

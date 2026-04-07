@@ -149,3 +149,4 @@ public class SEOSettingsMapping implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:834856249

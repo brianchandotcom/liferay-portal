@@ -311,3 +311,4 @@ public class CreatorStatisticsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2073102580

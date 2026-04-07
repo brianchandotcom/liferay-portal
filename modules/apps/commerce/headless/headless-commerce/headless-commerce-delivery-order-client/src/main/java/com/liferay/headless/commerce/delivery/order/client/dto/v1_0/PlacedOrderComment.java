@@ -181,3 +181,4 @@ public class PlacedOrderComment implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-930364615

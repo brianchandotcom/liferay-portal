@@ -231,3 +231,4 @@ public class UtilityPageSEOSettingsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1471286218

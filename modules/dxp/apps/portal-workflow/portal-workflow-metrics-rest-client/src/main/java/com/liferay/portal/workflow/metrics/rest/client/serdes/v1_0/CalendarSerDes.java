@@ -254,3 +254,4 @@ public class CalendarSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1655890754

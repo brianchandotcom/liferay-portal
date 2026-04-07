@@ -4403,3 +4403,4 @@ public abstract class BaseKeywordResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-729113626

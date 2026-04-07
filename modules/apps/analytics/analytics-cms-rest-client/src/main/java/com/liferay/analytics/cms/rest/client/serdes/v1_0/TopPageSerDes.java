@@ -283,3 +283,4 @@ public class TopPageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-834980538

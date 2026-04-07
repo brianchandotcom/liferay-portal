@@ -287,3 +287,4 @@ public class CTCollection implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:658550117

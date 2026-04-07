@@ -484,3 +484,4 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1778537811

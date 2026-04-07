@@ -369,3 +369,4 @@ public class SkuUnitOfMeasureSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1463947836

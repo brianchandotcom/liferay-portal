@@ -649,3 +649,4 @@ public class FragmentStyle implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1361781791

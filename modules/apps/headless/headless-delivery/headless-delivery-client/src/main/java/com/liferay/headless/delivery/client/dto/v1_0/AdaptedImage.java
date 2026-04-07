@@ -183,3 +183,4 @@ public class AdaptedImage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1287180255

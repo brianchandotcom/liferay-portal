@@ -1387,3 +1387,4 @@ public abstract class BaseListTypeEntryResourceImpl
 		LogFactoryUtil.getLog(BaseListTypeEntryResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-592580871

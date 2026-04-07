@@ -415,3 +415,4 @@ public class AssignToObjectBulkSelectionActionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1478172355

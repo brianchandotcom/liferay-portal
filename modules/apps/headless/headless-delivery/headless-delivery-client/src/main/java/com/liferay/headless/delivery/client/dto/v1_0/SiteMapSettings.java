@@ -185,3 +185,4 @@ public class SiteMapSettings implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1085348981

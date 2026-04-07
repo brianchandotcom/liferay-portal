@@ -590,3 +590,4 @@ public class ImportTaskSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2011305445

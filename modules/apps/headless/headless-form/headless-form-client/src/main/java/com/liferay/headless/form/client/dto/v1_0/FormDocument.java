@@ -244,3 +244,4 @@ public class FormDocument implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1638703121

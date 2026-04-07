@@ -344,3 +344,4 @@ public class WorkflowTaskAssignableUsersResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1412288684

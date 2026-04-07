@@ -335,3 +335,4 @@ public class MessageBoardMessageResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:518370432

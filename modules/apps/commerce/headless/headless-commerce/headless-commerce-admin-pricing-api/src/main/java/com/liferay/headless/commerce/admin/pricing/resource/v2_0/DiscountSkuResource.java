@@ -170,3 +170,4 @@ public interface DiscountSkuResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-667202267

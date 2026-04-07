@@ -162,3 +162,4 @@ public class ProcessMetric implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:434778942

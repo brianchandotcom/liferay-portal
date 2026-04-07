@@ -102,3 +102,4 @@ public class InstanceConfiguration implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:595403568

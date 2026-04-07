@@ -324,3 +324,4 @@ public class FilterResourceFactoryImpl implements FilterResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1194584854

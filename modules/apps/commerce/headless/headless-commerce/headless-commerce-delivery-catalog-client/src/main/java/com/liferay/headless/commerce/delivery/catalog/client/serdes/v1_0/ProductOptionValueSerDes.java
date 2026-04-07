@@ -645,3 +645,4 @@ public class ProductOptionValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1184797999

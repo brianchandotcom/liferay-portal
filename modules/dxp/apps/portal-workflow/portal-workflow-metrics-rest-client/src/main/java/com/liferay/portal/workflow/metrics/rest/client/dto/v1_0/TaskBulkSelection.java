@@ -162,3 +162,4 @@ public class TaskBulkSelection implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1979751837

@@ -99,3 +99,4 @@ public class PatchOp implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1116035042

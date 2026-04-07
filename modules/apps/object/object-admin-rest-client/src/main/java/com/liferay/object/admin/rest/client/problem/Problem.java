@@ -194,3 +194,4 @@ public class Problem {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-754230278

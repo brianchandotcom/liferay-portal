@@ -180,3 +180,4 @@ public class AuthenticationScheme implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-375150046

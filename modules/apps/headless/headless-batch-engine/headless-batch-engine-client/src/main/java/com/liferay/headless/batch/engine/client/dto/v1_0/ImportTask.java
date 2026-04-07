@@ -454,3 +454,4 @@ public class ImportTask implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-318281525

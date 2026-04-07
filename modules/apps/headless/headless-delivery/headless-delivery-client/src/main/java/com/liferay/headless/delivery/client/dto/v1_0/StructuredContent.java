@@ -859,3 +859,4 @@ public class StructuredContent implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:61985232

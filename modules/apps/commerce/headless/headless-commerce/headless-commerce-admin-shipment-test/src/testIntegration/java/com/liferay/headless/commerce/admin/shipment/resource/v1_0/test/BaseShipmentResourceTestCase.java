@@ -3362,3 +3362,4 @@ public abstract class BaseShipmentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:604378999

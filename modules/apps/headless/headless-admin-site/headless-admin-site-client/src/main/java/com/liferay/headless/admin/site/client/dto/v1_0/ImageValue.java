@@ -117,3 +117,4 @@ public abstract class ImageValue implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1108233997

@@ -181,3 +181,4 @@ public class UtilityPageTemplate implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1802663663

@@ -704,3 +704,4 @@ public class SXPElementSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-400154019

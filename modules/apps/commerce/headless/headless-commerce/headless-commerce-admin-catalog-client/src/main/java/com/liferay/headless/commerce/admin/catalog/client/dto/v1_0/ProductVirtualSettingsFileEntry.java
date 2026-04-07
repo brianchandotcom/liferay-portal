@@ -184,3 +184,4 @@ public class ProductVirtualSettingsFileEntry
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2112492699

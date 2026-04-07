@@ -819,3 +819,4 @@ public abstract class BaseFilterResourceTestCase {
 			_filterResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1304093008

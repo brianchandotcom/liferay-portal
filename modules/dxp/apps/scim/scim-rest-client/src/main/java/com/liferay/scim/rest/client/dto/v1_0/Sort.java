@@ -78,3 +78,4 @@ public class Sort implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1374570261

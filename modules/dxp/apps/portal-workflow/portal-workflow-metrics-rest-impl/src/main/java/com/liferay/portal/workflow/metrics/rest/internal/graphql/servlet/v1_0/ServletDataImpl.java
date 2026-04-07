@@ -432,63 +432,63 @@ public class ServletDataImpl implements ServletData {
 							TimeRangeResourceImpl.class, "getTimeRangesPage"));
 
 					put(
-						"query#Process.instance",
-						new ObjectValuePair<>(
-							InstanceResourceImpl.class, "getProcessInstance"));
-					put(
 						"query#TaskBulkSelection.process",
 						new ObjectValuePair<>(
 							ProcessResourceImpl.class, "getProcess"));
 					put(
+						"query#Process.instances",
+						new ObjectValuePair<>(
+							InstanceResourceImpl.class,
+							"getProcessInstancesPage"));
+					put(
 						"query#Process.nodes",
 						new ObjectValuePair<>(
 							NodeResourceImpl.class, "getProcessNodesPage"));
-					put(
-						"query#Process.lastSLAResult",
-						new ObjectValuePair<>(
-							SLAResultResourceImpl.class,
-							"getProcessLastSLAResult"));
-					put(
-						"query#Process.histogramMetric",
-						new ObjectValuePair<>(
-							HistogramMetricResourceImpl.class,
-							"getProcessHistogramMetric"));
-					put(
-						"query#Process.tasks",
-						new ObjectValuePair<>(
-							TaskResourceImpl.class, "getProcessTasksPage"));
-					put(
-						"query#Process.sLAs",
-						new ObjectValuePair<>(
-							SLAResourceImpl.class, "getProcessSLAsPage"));
-					put(
-						"query#Process.roles",
-						new ObjectValuePair<>(
-							RoleResourceImpl.class, "getProcessRolesPage"));
 					put(
 						"query#Process.metric",
 						new ObjectValuePair<>(
 							ProcessMetricResourceImpl.class,
 							"getProcessMetric"));
 					put(
-						"query#Process.task",
-						new ObjectValuePair<>(
-							TaskResourceImpl.class, "getProcessTask"));
-					put(
 						"query#Process.processVersions",
 						new ObjectValuePair<>(
 							ProcessVersionResourceImpl.class,
 							"getProcessProcessVersionsPage"));
+					put(
+						"query#Process.roles",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "getProcessRolesPage"));
+					put(
+						"query#Process.sLAs",
+						new ObjectValuePair<>(
+							SLAResourceImpl.class, "getProcessSLAsPage"));
+					put(
+						"query#Process.lastSLAResult",
+						new ObjectValuePair<>(
+							SLAResultResourceImpl.class,
+							"getProcessLastSLAResult"));
+					put(
+						"query#Process.tasks",
+						new ObjectValuePair<>(
+							TaskResourceImpl.class, "getProcessTasksPage"));
+					put(
+						"query#Process.histogramMetric",
+						new ObjectValuePair<>(
+							HistogramMetricResourceImpl.class,
+							"getProcessHistogramMetric"));
+					put(
+						"query#Process.instance",
+						new ObjectValuePair<>(
+							InstanceResourceImpl.class, "getProcessInstance"));
 					put(
 						"query#Process.nodeMetrics",
 						new ObjectValuePair<>(
 							NodeMetricResourceImpl.class,
 							"getProcessNodeMetricsPage"));
 					put(
-						"query#Process.instances",
+						"query#Process.task",
 						new ObjectValuePair<>(
-							InstanceResourceImpl.class,
-							"getProcessInstancesPage"));
+							TaskResourceImpl.class, "getProcessTask"));
 				}
 			};
 
@@ -561,3 +561,4 @@ public class ServletDataImpl implements ServletData {
 		_slaResultResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:339408184

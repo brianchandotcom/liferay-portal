@@ -272,3 +272,4 @@ public class WorkflowInstance implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1756589128

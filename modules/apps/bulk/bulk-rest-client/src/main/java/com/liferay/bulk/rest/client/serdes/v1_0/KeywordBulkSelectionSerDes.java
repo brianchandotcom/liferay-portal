@@ -290,3 +290,4 @@ public class KeywordBulkSelectionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:997011875

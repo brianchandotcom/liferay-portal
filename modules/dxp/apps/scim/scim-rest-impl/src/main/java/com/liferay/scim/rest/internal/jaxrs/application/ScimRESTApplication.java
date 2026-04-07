@@ -26,3 +26,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class ScimRESTApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:-732831259

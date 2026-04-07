@@ -329,3 +329,4 @@ public class OrganizationResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2130689802

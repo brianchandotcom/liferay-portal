@@ -329,3 +329,4 @@ public class DataRecordResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1120195462

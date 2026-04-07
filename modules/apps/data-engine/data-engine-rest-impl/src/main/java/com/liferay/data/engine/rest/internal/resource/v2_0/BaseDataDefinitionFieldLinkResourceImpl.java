@@ -872,3 +872,4 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 		LogFactoryUtil.getLog(BaseDataDefinitionFieldLinkResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:1879610251

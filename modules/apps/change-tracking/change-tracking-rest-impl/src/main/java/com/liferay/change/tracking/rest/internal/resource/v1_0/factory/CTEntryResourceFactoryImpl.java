@@ -324,3 +324,4 @@ public class CTEntryResourceFactoryImpl implements CTEntryResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2123332867

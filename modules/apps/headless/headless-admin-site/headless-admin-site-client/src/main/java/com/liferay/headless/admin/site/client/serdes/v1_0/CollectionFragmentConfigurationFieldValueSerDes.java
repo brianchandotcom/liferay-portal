@@ -286,3 +286,4 @@ public class CollectionFragmentConfigurationFieldValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1556005061

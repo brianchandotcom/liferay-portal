@@ -229,3 +229,4 @@ public class MimeTypeLimitSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:677068214

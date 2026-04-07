@@ -249,3 +249,4 @@ public class AccountSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1447873473

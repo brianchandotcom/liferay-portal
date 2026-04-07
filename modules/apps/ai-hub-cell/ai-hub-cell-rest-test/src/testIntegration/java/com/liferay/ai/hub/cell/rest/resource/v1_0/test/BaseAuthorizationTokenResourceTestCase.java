@@ -1069,3 +1069,4 @@ public abstract class BaseAuthorizationTokenResourceTestCase {
 			_authorizationTokenResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1766825838

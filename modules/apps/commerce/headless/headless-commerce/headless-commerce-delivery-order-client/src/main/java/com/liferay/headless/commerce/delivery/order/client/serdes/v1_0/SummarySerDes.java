@@ -898,3 +898,4 @@ public class SummarySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:519032338

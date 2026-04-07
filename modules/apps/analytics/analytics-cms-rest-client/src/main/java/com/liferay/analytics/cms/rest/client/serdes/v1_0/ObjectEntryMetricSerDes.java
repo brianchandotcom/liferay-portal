@@ -323,3 +323,4 @@ public class ObjectEntryMetricSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1547534060

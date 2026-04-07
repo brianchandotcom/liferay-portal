@@ -342,3 +342,4 @@ public class PaymentMethodGroupRelTermResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2066968667

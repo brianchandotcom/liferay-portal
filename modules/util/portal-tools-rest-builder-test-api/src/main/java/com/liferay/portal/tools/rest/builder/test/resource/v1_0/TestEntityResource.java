@@ -195,3 +195,4 @@ public interface TestEntityResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:953012982

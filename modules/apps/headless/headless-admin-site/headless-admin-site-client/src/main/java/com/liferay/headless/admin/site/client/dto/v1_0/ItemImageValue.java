@@ -82,3 +82,4 @@ public class ItemImageValue
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1096389560

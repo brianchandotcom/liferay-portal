@@ -246,3 +246,4 @@ public class StopNodeKeysSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-248989860

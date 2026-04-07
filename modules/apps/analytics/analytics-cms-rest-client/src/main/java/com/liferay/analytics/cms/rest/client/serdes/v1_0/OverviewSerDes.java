@@ -303,3 +303,4 @@ public class OverviewSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1740294865

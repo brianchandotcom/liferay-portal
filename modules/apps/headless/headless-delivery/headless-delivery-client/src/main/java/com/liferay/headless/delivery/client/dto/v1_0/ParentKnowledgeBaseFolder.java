@@ -100,3 +100,4 @@ public class ParentKnowledgeBaseFolder implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-166862978

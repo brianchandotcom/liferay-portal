@@ -256,3 +256,4 @@ public class AdminSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:50891124

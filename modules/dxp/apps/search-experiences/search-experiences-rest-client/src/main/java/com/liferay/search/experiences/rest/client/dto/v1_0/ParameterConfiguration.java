@@ -81,3 +81,4 @@ public class ParameterConfiguration implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:883801555

@@ -479,3 +479,4 @@ public interface FormDocumentResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:433787154

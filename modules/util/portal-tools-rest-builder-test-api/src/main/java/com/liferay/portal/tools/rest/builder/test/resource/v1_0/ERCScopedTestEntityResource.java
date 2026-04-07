@@ -271,3 +271,4 @@ public interface ERCScopedTestEntityResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1922778193

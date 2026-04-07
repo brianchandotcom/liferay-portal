@@ -99,3 +99,4 @@ public class TaxonomyCategoryDTOActionProvider implements DTOActionProvider {
 	private ScopeChecker _scopeChecker;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-195099305

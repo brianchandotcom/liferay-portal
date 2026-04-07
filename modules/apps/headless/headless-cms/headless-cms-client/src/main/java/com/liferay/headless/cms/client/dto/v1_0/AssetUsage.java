@@ -114,3 +114,4 @@ public class AssetUsage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1999147094

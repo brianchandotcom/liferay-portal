@@ -197,3 +197,4 @@ public class ERCSiteTestEntity implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:990230055

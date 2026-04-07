@@ -1471,3 +1471,4 @@ public abstract class BaseWebUrlResourceImpl
 		LogFactoryUtil.getLog(BaseWebUrlResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:1240875963

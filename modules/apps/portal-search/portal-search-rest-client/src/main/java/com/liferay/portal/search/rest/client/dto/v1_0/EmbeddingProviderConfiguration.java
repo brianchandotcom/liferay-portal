@@ -170,3 +170,4 @@ public class EmbeddingProviderConfiguration implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:632705577

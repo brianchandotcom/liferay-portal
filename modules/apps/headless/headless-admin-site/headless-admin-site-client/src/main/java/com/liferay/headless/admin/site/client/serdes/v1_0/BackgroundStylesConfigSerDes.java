@@ -207,3 +207,4 @@ public class BackgroundStylesConfigSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-610403080

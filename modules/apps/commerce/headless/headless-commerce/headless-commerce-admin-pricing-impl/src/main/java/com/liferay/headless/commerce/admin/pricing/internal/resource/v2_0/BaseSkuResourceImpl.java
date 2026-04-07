@@ -546,3 +546,4 @@ public abstract class BaseSkuResourceImpl implements SkuResource {
 		LogFactoryUtil.getLog(BaseSkuResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-120331193

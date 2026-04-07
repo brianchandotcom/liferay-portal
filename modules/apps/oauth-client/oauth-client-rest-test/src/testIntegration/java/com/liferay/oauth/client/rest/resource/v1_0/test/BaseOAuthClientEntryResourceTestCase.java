@@ -1843,3 +1843,4 @@ public abstract class BaseOAuthClientEntryResourceTestCase {
 		_oAuthClientEntryResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:972159964

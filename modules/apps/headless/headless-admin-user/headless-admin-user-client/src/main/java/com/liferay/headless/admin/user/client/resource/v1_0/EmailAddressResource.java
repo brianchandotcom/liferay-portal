@@ -2025,3 +2025,4 @@ public interface EmailAddressResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1750839839

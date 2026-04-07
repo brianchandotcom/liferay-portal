@@ -335,3 +335,4 @@ public class DocumentMetadataSetResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:789712526

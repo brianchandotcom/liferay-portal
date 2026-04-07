@@ -355,3 +355,4 @@ public class RangeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1025477562

@@ -1343,3 +1343,4 @@ public abstract class BaseDataLayoutResourceImpl
 		LogFactoryUtil.getLog(BaseDataLayoutResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-874576314

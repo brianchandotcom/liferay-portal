@@ -141,3 +141,4 @@ public class TaxCategory implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:385367611

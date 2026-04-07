@@ -324,3 +324,4 @@ public class OrderResourceFactoryImpl implements OrderResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-71755667

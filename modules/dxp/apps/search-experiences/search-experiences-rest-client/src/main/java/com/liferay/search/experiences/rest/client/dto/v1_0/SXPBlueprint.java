@@ -405,3 +405,4 @@ public class SXPBlueprint implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:346330487

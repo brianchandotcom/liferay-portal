@@ -57,3 +57,4 @@ public class PageSetPageSettings
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2002205068

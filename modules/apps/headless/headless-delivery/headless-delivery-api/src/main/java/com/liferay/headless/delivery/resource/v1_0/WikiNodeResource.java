@@ -215,3 +215,4 @@ public interface WikiNodeResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:420821010

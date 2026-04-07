@@ -1180,3 +1180,4 @@ public class PlacedOrderItemSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1016351189

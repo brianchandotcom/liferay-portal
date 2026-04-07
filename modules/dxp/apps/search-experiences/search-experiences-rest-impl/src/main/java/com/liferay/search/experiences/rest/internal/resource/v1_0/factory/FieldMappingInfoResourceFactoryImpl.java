@@ -332,3 +332,4 @@ public class FieldMappingInfoResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-455739296

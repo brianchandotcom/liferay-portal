@@ -595,3 +595,4 @@ public class WikiPage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:194941956

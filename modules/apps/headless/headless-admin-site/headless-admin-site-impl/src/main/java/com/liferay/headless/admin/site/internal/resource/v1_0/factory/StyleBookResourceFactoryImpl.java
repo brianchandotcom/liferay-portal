@@ -326,3 +326,4 @@ public class StyleBookResourceFactoryImpl implements StyleBookResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:631698797

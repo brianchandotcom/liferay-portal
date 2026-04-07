@@ -421,3 +421,4 @@ public class SiteTestEntitySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:398129205

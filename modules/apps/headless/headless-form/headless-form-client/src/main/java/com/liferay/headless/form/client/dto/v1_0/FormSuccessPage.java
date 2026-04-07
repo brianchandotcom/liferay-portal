@@ -163,3 +163,4 @@ public class FormSuccessPage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1054105328

@@ -283,3 +283,4 @@ public class ValidationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1565361456

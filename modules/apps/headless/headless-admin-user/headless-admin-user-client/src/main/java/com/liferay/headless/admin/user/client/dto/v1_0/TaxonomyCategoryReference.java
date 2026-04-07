@@ -100,3 +100,4 @@ public class TaxonomyCategoryReference implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1596564234

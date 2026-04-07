@@ -1727,3 +1727,4 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:270240600

@@ -306,3 +306,4 @@ public class Scope implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1261685686

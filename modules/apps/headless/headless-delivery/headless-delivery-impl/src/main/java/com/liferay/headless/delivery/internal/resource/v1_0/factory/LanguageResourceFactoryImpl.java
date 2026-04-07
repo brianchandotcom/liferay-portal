@@ -326,3 +326,4 @@ public class LanguageResourceFactoryImpl implements LanguageResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1677492016

@@ -175,3 +175,4 @@ public interface WarehouseAccountGroupResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-239491185

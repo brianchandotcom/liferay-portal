@@ -681,3 +681,4 @@ public class NestedApplicationsWidgetPageWidgetInstanceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1499231957

@@ -232,3 +232,4 @@ public class ItemImageValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1017670715

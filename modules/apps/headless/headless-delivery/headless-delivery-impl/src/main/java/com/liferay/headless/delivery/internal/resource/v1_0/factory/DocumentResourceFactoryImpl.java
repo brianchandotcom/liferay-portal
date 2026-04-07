@@ -326,3 +326,4 @@ public class DocumentResourceFactoryImpl implements DocumentResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1043397723

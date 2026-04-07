@@ -336,3 +336,4 @@ public class RoleBriefSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1432284960

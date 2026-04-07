@@ -26,3 +26,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class DispatchRESTApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:-758793101

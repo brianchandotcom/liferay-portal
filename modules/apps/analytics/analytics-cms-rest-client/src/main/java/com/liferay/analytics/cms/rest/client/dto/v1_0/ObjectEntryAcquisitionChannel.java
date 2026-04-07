@@ -122,3 +122,4 @@ public class ObjectEntryAcquisitionChannel implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1370186599

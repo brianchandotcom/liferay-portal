@@ -202,3 +202,4 @@ public class GenericErrorSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-319238155

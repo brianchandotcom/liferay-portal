@@ -305,3 +305,4 @@ public class ListTypeEntry implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-81502423

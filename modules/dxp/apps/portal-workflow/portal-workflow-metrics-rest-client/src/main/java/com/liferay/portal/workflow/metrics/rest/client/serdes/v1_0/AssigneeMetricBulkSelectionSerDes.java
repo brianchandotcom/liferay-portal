@@ -444,3 +444,4 @@ public class AssigneeMetricBulkSelectionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:491217965

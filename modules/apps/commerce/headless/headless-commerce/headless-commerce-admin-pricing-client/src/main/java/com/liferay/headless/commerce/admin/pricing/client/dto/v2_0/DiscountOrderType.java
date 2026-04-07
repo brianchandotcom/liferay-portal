@@ -235,3 +235,4 @@ public class DiscountOrderType implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2051892374

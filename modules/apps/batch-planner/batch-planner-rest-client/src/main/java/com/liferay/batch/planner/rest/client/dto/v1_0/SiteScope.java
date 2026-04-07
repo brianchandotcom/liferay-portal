@@ -97,3 +97,4 @@ public class SiteScope implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1304538357

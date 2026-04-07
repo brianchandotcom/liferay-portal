@@ -613,3 +613,4 @@ public class ReportEntrySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-508293610

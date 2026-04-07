@@ -279,3 +279,4 @@ public class AccountChannelShippingOption implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-204101973

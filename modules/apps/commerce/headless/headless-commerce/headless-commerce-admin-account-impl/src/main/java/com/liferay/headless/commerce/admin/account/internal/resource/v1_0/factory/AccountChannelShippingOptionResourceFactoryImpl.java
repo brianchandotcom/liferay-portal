@@ -347,3 +347,4 @@ public class AccountChannelShippingOptionResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:832072532

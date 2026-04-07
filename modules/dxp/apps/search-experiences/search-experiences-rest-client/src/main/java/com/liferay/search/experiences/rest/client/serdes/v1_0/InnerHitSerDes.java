@@ -287,3 +287,4 @@ public class InnerHitSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-460660699

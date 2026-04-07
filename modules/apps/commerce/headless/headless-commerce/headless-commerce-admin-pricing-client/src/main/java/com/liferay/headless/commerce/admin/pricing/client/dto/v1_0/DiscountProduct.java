@@ -168,3 +168,4 @@ public class DiscountProduct implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1887289939

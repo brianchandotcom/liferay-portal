@@ -165,3 +165,4 @@ public class AccountOrganization implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-551455246

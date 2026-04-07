@@ -897,3 +897,4 @@ public interface GroupResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:268490330

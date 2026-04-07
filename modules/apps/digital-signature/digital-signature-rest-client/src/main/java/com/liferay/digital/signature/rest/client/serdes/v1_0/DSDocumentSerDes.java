@@ -422,3 +422,4 @@ public class DSDocumentSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1348729030

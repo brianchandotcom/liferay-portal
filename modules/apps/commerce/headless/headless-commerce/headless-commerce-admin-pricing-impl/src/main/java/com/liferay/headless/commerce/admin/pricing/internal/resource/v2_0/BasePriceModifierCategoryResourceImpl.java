@@ -1108,3 +1108,4 @@ public abstract class BasePriceModifierCategoryResourceImpl
 		LogFactoryUtil.getLog(BasePriceModifierCategoryResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1845590395

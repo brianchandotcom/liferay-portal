@@ -247,3 +247,4 @@ public class MessageBoardAttachment implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1683977538

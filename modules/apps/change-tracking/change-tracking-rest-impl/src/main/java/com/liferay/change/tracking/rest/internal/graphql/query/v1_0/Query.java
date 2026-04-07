@@ -345,6 +345,26 @@ public class Query {
 					_sortsBiFunction.apply(ctRemoteResource, sortsString))));
 	}
 
+	@GraphQLTypeExtension(CTProcess.class)
+	public class GetCTCollectionTypeExtension {
+
+		public GetCTCollectionTypeExtension(CTProcess cTProcess) {
+			_cTProcess = cTProcess;
+		}
+
+		@GraphQLField
+		public CTCollection cTCollection() throws Exception {
+			return _applyComponentServiceObjects(
+				_ctCollectionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				ctCollectionResource -> ctCollectionResource.getCTCollection(
+					_cTProcess.getCtCollectionId()));
+		}
+
+		private CTProcess _cTProcess;
+
+	}
+
 	@GraphQLTypeExtension(CTCollection.class)
 	public class GetCTCollectionShareLinkTypeExtension {
 
@@ -365,50 +385,6 @@ public class Query {
 		}
 
 		private CTCollection _cTCollection;
-
-	}
-
-	@GraphQLTypeExtension(CTCollection.class)
-	public class GetCTCollectionByExternalReferenceCodeShareLinkTypeExtension {
-
-		public GetCTCollectionByExternalReferenceCodeShareLinkTypeExtension(
-			CTCollection cTCollection) {
-
-			_cTCollection = cTCollection;
-		}
-
-		@GraphQLField
-		public String byExternalReferenceCodeShareLink() throws Exception {
-			return _applyComponentServiceObjects(
-				_ctCollectionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				ctCollectionResource ->
-					ctCollectionResource.
-						getCTCollectionByExternalReferenceCodeShareLink(
-							_cTCollection.getExternalReferenceCode()));
-		}
-
-		private CTCollection _cTCollection;
-
-	}
-
-	@GraphQLTypeExtension(CTProcess.class)
-	public class GetCTCollectionTypeExtension {
-
-		public GetCTCollectionTypeExtension(CTProcess cTProcess) {
-			_cTProcess = cTProcess;
-		}
-
-		@GraphQLField
-		public CTCollection cTCollection() throws Exception {
-			return _applyComponentServiceObjects(
-				_ctCollectionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				ctCollectionResource -> ctCollectionResource.getCTCollection(
-					_cTProcess.getCtCollectionId()));
-		}
-
-		private CTProcess _cTProcess;
 
 	}
 
@@ -440,6 +416,30 @@ public class Query {
 						_filterBiFunction.apply(ctEntryResource, filterString),
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(ctEntryResource, sortsString))));
+		}
+
+		private CTCollection _cTCollection;
+
+	}
+
+	@GraphQLTypeExtension(CTCollection.class)
+	public class GetCTCollectionByExternalReferenceCodeShareLinkTypeExtension {
+
+		public GetCTCollectionByExternalReferenceCodeShareLinkTypeExtension(
+			CTCollection cTCollection) {
+
+			_cTCollection = cTCollection;
+		}
+
+		@GraphQLField
+		public String byExternalReferenceCodeShareLink() throws Exception {
+			return _applyComponentServiceObjects(
+				_ctCollectionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				ctCollectionResource ->
+					ctCollectionResource.
+						getCTCollectionByExternalReferenceCodeShareLink(
+							_cTCollection.getExternalReferenceCode()));
 		}
 
 		private CTCollection _cTCollection;
@@ -724,3 +724,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1078242070

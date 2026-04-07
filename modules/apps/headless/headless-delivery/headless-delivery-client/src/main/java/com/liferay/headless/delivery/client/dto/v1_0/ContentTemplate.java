@@ -373,3 +373,4 @@ public class ContentTemplate implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2112193545

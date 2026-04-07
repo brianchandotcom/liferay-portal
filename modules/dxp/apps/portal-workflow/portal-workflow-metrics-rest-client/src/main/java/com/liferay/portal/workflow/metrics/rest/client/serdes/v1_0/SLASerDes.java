@@ -477,3 +477,4 @@ public class SLASerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2032336560

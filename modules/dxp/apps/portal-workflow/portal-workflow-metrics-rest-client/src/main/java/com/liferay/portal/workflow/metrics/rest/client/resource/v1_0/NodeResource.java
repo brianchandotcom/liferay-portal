@@ -723,3 +723,4 @@ public interface NodeResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-542295807

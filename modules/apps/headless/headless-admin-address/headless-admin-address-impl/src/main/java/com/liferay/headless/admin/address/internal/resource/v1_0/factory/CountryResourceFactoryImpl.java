@@ -324,3 +324,4 @@ public class CountryResourceFactoryImpl implements CountryResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:93035089

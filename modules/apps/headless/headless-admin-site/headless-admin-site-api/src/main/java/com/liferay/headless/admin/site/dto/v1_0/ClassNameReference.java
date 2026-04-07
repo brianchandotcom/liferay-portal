@@ -256,3 +256,4 @@ public class ClassNameReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2097632472

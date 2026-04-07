@@ -262,3 +262,4 @@ public class AccountGroupBriefSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1682429105

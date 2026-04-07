@@ -221,3 +221,4 @@ public class UiConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:182199088

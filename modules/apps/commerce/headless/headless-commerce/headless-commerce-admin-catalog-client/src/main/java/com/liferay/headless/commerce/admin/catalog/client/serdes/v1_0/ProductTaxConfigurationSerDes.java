@@ -263,3 +263,4 @@ public class ProductTaxConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1767580114

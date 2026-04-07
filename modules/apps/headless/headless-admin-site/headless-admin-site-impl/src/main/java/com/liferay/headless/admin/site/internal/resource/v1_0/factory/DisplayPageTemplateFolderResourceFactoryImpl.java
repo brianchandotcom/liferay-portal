@@ -342,3 +342,4 @@ public class DisplayPageTemplateFolderResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2078668901

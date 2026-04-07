@@ -829,3 +829,4 @@ public abstract class BaseSiteResourceTestCase {
 	private com.liferay.ai.hub.rest.resource.v1_0.SiteResource _siteResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1566665234

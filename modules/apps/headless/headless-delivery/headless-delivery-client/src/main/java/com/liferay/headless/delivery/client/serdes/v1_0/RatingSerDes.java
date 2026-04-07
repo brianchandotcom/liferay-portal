@@ -396,3 +396,4 @@ public class RatingSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:946449045

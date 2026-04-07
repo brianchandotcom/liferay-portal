@@ -289,3 +289,4 @@ public class AgentDefinition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2140802737

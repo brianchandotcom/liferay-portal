@@ -284,3 +284,4 @@ public class DiscountRuleSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-752694993

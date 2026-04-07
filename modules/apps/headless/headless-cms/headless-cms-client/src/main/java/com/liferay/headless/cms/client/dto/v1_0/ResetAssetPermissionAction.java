@@ -61,3 +61,4 @@ public class ResetAssetPermissionAction
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-957367669

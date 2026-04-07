@@ -26,3 +26,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class SamlAdminRESTApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:506545788

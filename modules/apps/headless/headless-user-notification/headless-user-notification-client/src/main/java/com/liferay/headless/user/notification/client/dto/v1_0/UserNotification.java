@@ -180,3 +180,4 @@ public class UserNotification implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1901102464

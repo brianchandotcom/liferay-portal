@@ -271,3 +271,4 @@ public interface UserResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-95191500

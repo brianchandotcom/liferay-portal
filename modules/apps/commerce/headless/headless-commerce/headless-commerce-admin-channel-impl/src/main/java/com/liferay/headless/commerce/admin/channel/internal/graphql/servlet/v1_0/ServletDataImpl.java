@@ -558,44 +558,44 @@ public class ServletDataImpl implements ServletData {
 							"getShippingFixedOptionTermTerm"));
 
 					put(
-						"query#Channel.accountAddressByExternalReferenceCodeAccountAddressChannels",
+						"query#ChannelAccount.channel",
 						new ObjectValuePair<>(
-							AccountAddressChannelResourceImpl.class,
-							"getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage"));
+							ChannelResourceImpl.class, "getChannel"));
 					put(
 						"query#Channel.shippingMethods",
 						new ObjectValuePair<>(
 							ShippingMethodResourceImpl.class,
 							"getChannelShippingMethodsPage"));
 					put(
-						"query#ChannelAccount.channel",
+						"query#Channel.accountAddressByExternalReferenceCodeAccountAddressChannels",
 						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "getChannel"));
-					put(
-						"query#Channel.byExternalReferenceCodeChannelAccounts",
-						new ObjectValuePair<>(
-							ChannelAccountResourceImpl.class,
-							"getChannelByExternalReferenceCodeChannelAccountsPage"));
-					put(
-						"query#Channel.byExternalReferenceCodeProductDisplayPages",
-						new ObjectValuePair<>(
-							ProductDisplayPageResourceImpl.class,
-							"getChannelByExternalReferenceCodeProductDisplayPagesPage"));
-					put(
-						"query#Channel.byExternalReferenceCodeDefaultCategoryDisplayPage",
-						new ObjectValuePair<>(
-							DefaultCategoryDisplayPageResourceImpl.class,
-							"getChannelByExternalReferenceCodeDefaultCategoryDisplayPage"));
+							AccountAddressChannelResourceImpl.class,
+							"getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage"));
 					put(
 						"query#Channel.byExternalReferenceCodeCategoryDisplayPages",
 						new ObjectValuePair<>(
 							CategoryDisplayPageResourceImpl.class,
 							"getChannelByExternalReferenceCodeCategoryDisplayPagesPage"));
 					put(
+						"query#Channel.byExternalReferenceCodeChannelAccounts",
+						new ObjectValuePair<>(
+							ChannelAccountResourceImpl.class,
+							"getChannelByExternalReferenceCodeChannelAccountsPage"));
+					put(
+						"query#Channel.byExternalReferenceCodeDefaultCategoryDisplayPage",
+						new ObjectValuePair<>(
+							DefaultCategoryDisplayPageResourceImpl.class,
+							"getChannelByExternalReferenceCodeDefaultCategoryDisplayPage"));
+					put(
 						"query#Channel.byExternalReferenceCodeDefaultProductDisplayPage",
 						new ObjectValuePair<>(
 							DefaultProductDisplayPageResourceImpl.class,
 							"getChannelByExternalReferenceCodeDefaultProductDisplayPage"));
+					put(
+						"query#Channel.byExternalReferenceCodeProductDisplayPages",
+						new ObjectValuePair<>(
+							ProductDisplayPageResourceImpl.class,
+							"getChannelByExternalReferenceCodeProductDisplayPagesPage"));
 				}
 			};
 
@@ -664,3 +664,4 @@ public class ServletDataImpl implements ServletData {
 		_termResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2005418826

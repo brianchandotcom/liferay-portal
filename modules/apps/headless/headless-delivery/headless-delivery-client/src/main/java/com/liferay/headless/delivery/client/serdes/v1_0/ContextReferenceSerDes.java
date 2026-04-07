@@ -204,3 +204,4 @@ public class ContextReferenceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1418154196

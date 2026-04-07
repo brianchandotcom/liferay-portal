@@ -477,3 +477,4 @@ public class CollaboratorSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1987536654

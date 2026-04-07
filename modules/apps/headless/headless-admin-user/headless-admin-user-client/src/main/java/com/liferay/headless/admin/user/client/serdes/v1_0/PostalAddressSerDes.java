@@ -647,3 +647,4 @@ public class PostalAddressSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-66181744

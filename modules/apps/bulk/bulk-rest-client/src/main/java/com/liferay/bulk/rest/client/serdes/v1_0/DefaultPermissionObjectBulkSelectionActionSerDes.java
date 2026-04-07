@@ -474,3 +474,4 @@ public class DefaultPermissionObjectBulkSelectionActionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1237956783

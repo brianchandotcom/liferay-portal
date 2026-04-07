@@ -235,3 +235,4 @@ public class PriceListChannel implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1033236180

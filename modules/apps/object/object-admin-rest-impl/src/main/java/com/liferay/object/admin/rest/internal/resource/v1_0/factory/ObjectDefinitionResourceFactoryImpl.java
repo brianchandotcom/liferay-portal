@@ -332,3 +332,4 @@ public class ObjectDefinitionResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:217270720

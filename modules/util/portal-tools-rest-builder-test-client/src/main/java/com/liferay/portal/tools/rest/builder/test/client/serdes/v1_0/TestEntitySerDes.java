@@ -448,3 +448,4 @@ public class TestEntitySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:612167682

@@ -99,3 +99,4 @@ public class In implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-505710209

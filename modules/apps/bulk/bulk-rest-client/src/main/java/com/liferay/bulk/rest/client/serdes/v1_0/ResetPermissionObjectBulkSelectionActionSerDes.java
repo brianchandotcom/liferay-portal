@@ -325,3 +325,4 @@ public class ResetPermissionObjectBulkSelectionActionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:912360074

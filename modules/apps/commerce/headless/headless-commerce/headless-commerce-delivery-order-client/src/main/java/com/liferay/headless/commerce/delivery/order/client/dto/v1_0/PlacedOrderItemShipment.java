@@ -458,3 +458,4 @@ public class PlacedOrderItemShipment implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1233180675

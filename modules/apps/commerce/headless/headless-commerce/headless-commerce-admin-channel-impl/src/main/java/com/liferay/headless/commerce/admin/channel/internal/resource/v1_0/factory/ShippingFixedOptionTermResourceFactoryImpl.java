@@ -340,3 +340,4 @@ public class ShippingFixedOptionTermResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-207902297

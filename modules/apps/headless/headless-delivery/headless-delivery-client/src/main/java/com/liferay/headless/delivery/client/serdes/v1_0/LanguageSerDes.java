@@ -337,3 +337,4 @@ public class LanguageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1499814890

@@ -333,3 +333,4 @@ public class SiteConfigurationResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-224563618

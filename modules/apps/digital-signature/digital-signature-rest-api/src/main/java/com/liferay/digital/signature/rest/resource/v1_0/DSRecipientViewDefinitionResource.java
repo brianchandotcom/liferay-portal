@@ -150,3 +150,4 @@ public interface DSRecipientViewDefinitionResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2004082270

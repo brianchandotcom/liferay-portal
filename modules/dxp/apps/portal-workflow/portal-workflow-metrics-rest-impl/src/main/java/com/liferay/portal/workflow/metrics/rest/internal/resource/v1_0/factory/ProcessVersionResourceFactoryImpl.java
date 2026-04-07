@@ -330,3 +330,4 @@ public class ProcessVersionResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1366722483

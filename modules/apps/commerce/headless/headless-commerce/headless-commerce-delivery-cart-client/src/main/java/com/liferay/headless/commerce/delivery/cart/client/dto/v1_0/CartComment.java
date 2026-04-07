@@ -245,3 +245,4 @@ public class CartComment implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-417843312

@@ -285,3 +285,4 @@ public class BlogPostingImage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1825255882

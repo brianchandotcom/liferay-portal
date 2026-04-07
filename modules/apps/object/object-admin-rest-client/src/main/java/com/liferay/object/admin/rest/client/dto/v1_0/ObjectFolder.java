@@ -225,3 +225,4 @@ public class ObjectFolder implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:840515150

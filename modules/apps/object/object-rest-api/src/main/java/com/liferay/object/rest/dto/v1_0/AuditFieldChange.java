@@ -362,3 +362,4 @@ public class AuditFieldChange implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:998503525

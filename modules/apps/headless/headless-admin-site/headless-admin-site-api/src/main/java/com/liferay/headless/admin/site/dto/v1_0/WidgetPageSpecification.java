@@ -389,3 +389,4 @@ public class WidgetPageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-374238191

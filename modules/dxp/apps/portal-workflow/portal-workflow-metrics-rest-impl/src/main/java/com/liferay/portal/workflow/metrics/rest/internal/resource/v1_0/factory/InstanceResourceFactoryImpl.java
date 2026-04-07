@@ -326,3 +326,4 @@ public class InstanceResourceFactoryImpl implements InstanceResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1547475697

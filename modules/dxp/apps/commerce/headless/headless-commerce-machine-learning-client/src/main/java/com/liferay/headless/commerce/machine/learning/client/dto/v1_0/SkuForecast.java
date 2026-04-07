@@ -201,3 +201,4 @@ public class SkuForecast implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:486993271

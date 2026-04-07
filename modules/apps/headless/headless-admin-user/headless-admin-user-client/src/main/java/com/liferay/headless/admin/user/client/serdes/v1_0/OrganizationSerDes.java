@@ -1312,3 +1312,4 @@ public class OrganizationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1280472915

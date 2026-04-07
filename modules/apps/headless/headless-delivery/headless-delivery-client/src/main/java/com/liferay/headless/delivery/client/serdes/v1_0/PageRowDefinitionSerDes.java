@@ -665,3 +665,4 @@ public class PageRowDefinitionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-652044922

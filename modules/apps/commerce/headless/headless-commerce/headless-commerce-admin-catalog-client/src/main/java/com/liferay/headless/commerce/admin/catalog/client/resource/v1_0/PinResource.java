@@ -1081,3 +1081,4 @@ public interface PinResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1763031225

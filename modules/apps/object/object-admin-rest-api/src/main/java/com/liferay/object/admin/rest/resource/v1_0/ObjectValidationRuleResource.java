@@ -200,3 +200,4 @@ public interface ObjectValidationRuleResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:231347600

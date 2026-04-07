@@ -287,3 +287,4 @@ public class GridSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-93757200

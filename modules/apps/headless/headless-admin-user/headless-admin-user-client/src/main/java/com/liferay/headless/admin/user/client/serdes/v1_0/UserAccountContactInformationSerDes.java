@@ -596,3 +596,4 @@ public class UserAccountContactInformationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-15292096

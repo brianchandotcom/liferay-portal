@@ -2715,109 +2715,46 @@ public class Query {
 						specificationResource, sortsString))));
 	}
 
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodeConfigurationTypeExtension {
+	@GraphQLTypeExtension(Catalog.class)
+	public class GetAttachmentByExternalReferenceCodeTypeExtension {
 
-		public GetProductByExternalReferenceCodeConfigurationTypeExtension(
-			Attachment attachment) {
+		public GetAttachmentByExternalReferenceCodeTypeExtension(
+			Catalog catalog) {
 
-			_attachment = attachment;
+			_catalog = catalog;
 		}
 
 		@GraphQLField
-		public ProductConfiguration
-				productByExternalReferenceCodeConfiguration()
-			throws Exception {
-
+		public Attachment attachmentByExternalReferenceCode() throws Exception {
 			return _applyComponentServiceObjects(
-				_productConfigurationResourceComponentServiceObjects,
+				_attachmentResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				productConfigurationResource ->
-					productConfigurationResource.
-						getProductByExternalReferenceCodeConfiguration(
-							_attachment.getExternalReferenceCode()));
+				attachmentResource ->
+					attachmentResource.getAttachmentByExternalReferenceCode(
+						_catalog.getExternalReferenceCode()));
 		}
 
-		private Attachment _attachment;
+		private Catalog _catalog;
 
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodeTypeExtension {
+	public class GetCatalogByExternalReferenceCodeTypeExtension {
 
-		public GetProductByExternalReferenceCodeTypeExtension(
+		public GetCatalogByExternalReferenceCodeTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public Product productByExternalReferenceCode() throws Exception {
+		public Catalog catalogByExternalReferenceCode() throws Exception {
 			return _applyComponentServiceObjects(
-				_productResourceComponentServiceObjects,
+				_catalogResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				productResource ->
-					productResource.getProductByExternalReferenceCode(
+				catalogResource ->
+					catalogResource.getCatalogByExternalReferenceCode(
 						_attachment.getExternalReferenceCode()));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodeCategoriesPageTypeExtension {
-
-		public GetProductByExternalReferenceCodeCategoriesPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public CategoryPage productByExternalReferenceCodeCategories(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_categoryResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				categoryResource -> new CategoryPage(
-					categoryResource.
-						getProductByExternalReferenceCodeCategoriesPage(
-							_attachment.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductByExternalReferenceCodeGroupedProductsPageTypeExtension {
-
-		public GetProductByExternalReferenceCodeGroupedProductsPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public GroupedProductPage productByExternalReferenceCodeGroupedProducts(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_groupedProductResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				groupedProductResource -> new GroupedProductPage(
-					groupedProductResource.
-						getProductByExternalReferenceCodeGroupedProductsPage(
-							_attachment.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
 		}
 
 		private Attachment _attachment;
@@ -2848,31 +2785,22 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPageTypeExtension {
+	public class GetOptionByExternalReferenceCodeTypeExtension {
 
-		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPageTypeExtension(
+		public GetOptionByExternalReferenceCodeTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public ProductConfigurationListAccountGroupPage
-				productConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroups(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
+		public Option optionByExternalReferenceCode() throws Exception {
 			return _applyComponentServiceObjects(
-				_productConfigurationListAccountGroupResourceComponentServiceObjects,
+				_optionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				productConfigurationListAccountGroupResource ->
-					new ProductConfigurationListAccountGroupPage(
-						productConfigurationListAccountGroupResource.
-							getProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage(
-								_attachment.getExternalReferenceCode(),
-								Pagination.of(page, pageSize))));
+				optionResource ->
+					optionResource.getOptionByExternalReferenceCode(
+						_attachment.getExternalReferenceCode()));
 		}
 
 		private Attachment _attachment;
@@ -2880,56 +2808,24 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductByExternalReferenceCodeProductChannelsPageTypeExtension {
+	public class GetOptionCategoryByExternalReferenceCodeTypeExtension {
 
-		public GetProductByExternalReferenceCodeProductChannelsPageTypeExtension(
+		public GetOptionCategoryByExternalReferenceCodeTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public ProductChannelPage productByExternalReferenceCodeProductChannels(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+		public OptionCategory optionCategoryByExternalReferenceCode()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_productChannelResourceComponentServiceObjects,
+				_optionCategoryResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				productChannelResource -> new ProductChannelPage(
-					productChannelResource.
-						getProductByExternalReferenceCodeProductChannelsPage(
-							_attachment.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetSkuByExternalReferenceCodeSkuSubscriptionConfigurationTypeExtension {
-
-		public GetSkuByExternalReferenceCodeSkuSubscriptionConfigurationTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public SkuSubscriptionConfiguration
-				skuByExternalReferenceCodeSkuSubscriptionConfiguration()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_skuSubscriptionConfigurationResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				skuSubscriptionConfigurationResource ->
-					skuSubscriptionConfigurationResource.
-						getSkuByExternalReferenceCodeSkuSubscriptionConfiguration(
+				optionCategoryResource ->
+					optionCategoryResource.
+						getOptionCategoryByExternalReferenceCode(
 							_attachment.getExternalReferenceCode()));
 		}
 
@@ -2963,49 +2859,21 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodeCatalogTypeExtension {
+	public class GetProductByExternalReferenceCodeTypeExtension {
 
-		public GetProductByExternalReferenceCodeCatalogTypeExtension(
+		public GetProductByExternalReferenceCodeTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public Catalog productByExternalReferenceCodeCatalog(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
+		public Product productByExternalReferenceCode() throws Exception {
 			return _applyComponentServiceObjects(
-				_catalogResourceComponentServiceObjects,
+				_productResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				catalogResource ->
-					catalogResource.getProductByExternalReferenceCodeCatalog(
-						_attachment.getExternalReferenceCode(),
-						Pagination.of(page, pageSize)));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetCatalogByExternalReferenceCodeTypeExtension {
-
-		public GetCatalogByExternalReferenceCodeTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public Catalog catalogByExternalReferenceCode() throws Exception {
-			return _applyComponentServiceObjects(
-				_catalogResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				catalogResource ->
-					catalogResource.getCatalogByExternalReferenceCode(
+				productResource ->
+					productResource.getProductByExternalReferenceCode(
 						_attachment.getExternalReferenceCode()));
 		}
 
@@ -3014,292 +2882,79 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class GetSpecificationByExternalReferenceCodeTypeExtension {
+	public class GetProductConfigurationByExternalReferenceCodeTypeExtension {
 
-		public GetSpecificationByExternalReferenceCodeTypeExtension(
+		public GetProductConfigurationByExternalReferenceCodeTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public Specification specificationByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_specificationResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				specificationResource ->
-					specificationResource.
-						getSpecificationByExternalReferenceCode(
-							_attachment.getExternalReferenceCode()));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductByExternalReferenceCodeMappedProductsPageTypeExtension {
-
-		public GetProductByExternalReferenceCodeMappedProductsPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public MappedProductPage productByExternalReferenceCodeMappedProducts(
-				@GraphQLName("search") String search,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_mappedProductResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				mappedProductResource -> new MappedProductPage(
-					mappedProductResource.
-						getProductByExternalReferenceCodeMappedProductsPage(
-							_attachment.getExternalReferenceCode(), search,
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								mappedProductResource, sortsString))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetSkuByExternalReferenceCodeSkuVirtualSettingsTypeExtension {
-
-		public GetSkuByExternalReferenceCodeSkuVirtualSettingsTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public SkuVirtualSettings skuByExternalReferenceCodeSkuVirtualSettings()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_skuVirtualSettingsResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				skuVirtualSettingsResource ->
-					skuVirtualSettingsResource.
-						getSkuByExternalReferenceCodeSkuVirtualSettings(
-							_attachment.getExternalReferenceCode()));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodeDiagramTypeExtension {
-
-		public GetProductByExternalReferenceCodeDiagramTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public Diagram productByExternalReferenceCodeDiagram()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_diagramResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				diagramResource ->
-					diagramResource.getProductByExternalReferenceCodeDiagram(
-						_attachment.getExternalReferenceCode()));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductByExternalReferenceCodeProductAccountGroupsPageTypeExtension {
-
-		public GetProductByExternalReferenceCodeProductAccountGroupsPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductAccountGroupPage
-				productByExternalReferenceCodeProductAccountGroups(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productAccountGroupResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productAccountGroupResource -> new ProductAccountGroupPage(
-					productAccountGroupResource.
-						getProductByExternalReferenceCodeProductAccountGroupsPage(
-							_attachment.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodeSkusPageTypeExtension {
-
-		public GetProductByExternalReferenceCodeSkusPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public SkuPage productByExternalReferenceCodeSkus(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_skuResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				skuResource -> new SkuPage(
-					skuResource.getProductByExternalReferenceCodeSkusPage(
-						_attachment.getExternalReferenceCode(),
-						Pagination.of(page, pageSize))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Catalog.class)
-	public class GetAttachmentByExternalReferenceCodeTypeExtension {
-
-		public GetAttachmentByExternalReferenceCodeTypeExtension(
-			Catalog catalog) {
-
-			_catalog = catalog;
-		}
-
-		@GraphQLField
-		public Attachment attachmentByExternalReferenceCode() throws Exception {
-			return _applyComponentServiceObjects(
-				_attachmentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				attachmentResource ->
-					attachmentResource.getAttachmentByExternalReferenceCode(
-						_catalog.getExternalReferenceCode()));
-		}
-
-		private Catalog _catalog;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageTypeExtension {
-
-		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductConfigurationPage
-				productConfigurationListByExternalReferenceCodeProductConfigurations(
-					@GraphQLName("search") String search,
-					@GraphQLName("showDifferences") Boolean showDifferences,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public ProductConfiguration
+				productConfigurationByExternalReferenceCode()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
 				_productConfigurationResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				productConfigurationResource -> new ProductConfigurationPage(
+				productConfigurationResource ->
 					productConfigurationResource.
-						getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-							_attachment.getExternalReferenceCode(), search,
-							showDifferences,
-							_filterBiFunction.apply(
-								productConfigurationResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								productConfigurationResource, sortsString))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypesPageTypeExtension {
-
-		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypesPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductConfigurationListOrderTypePage
-				productConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypes(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productConfigurationListOrderTypeResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productConfigurationListOrderTypeResource ->
-					new ProductConfigurationListOrderTypePage(
-						productConfigurationListOrderTypeResource.
-							getProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypesPage(
-								_attachment.getExternalReferenceCode(),
-								Pagination.of(page, pageSize))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductByExternalReferenceCodeShippingConfigurationTypeExtension {
-
-		public GetProductByExternalReferenceCodeShippingConfigurationTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductShippingConfiguration
-				productByExternalReferenceCodeShippingConfiguration()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productShippingConfigurationResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productShippingConfigurationResource ->
-					productShippingConfigurationResource.
-						getProductByExternalReferenceCodeShippingConfiguration(
+						getProductConfigurationByExternalReferenceCode(
 							_attachment.getExternalReferenceCode()));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductConfigurationListByExternalReferenceCodeTypeExtension {
+
+		public GetProductConfigurationListByExternalReferenceCodeTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductConfigurationList
+				productConfigurationListByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productConfigurationListResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productConfigurationListResource ->
+					productConfigurationListResource.
+						getProductConfigurationListByExternalReferenceCode(
+							_attachment.getExternalReferenceCode()));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductGroupByExternalReferenceCodeTypeExtension {
+
+		public GetProductGroupByExternalReferenceCodeTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductGroup productGroupByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productGroupResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productGroupResource ->
+					productGroupResource.getProductGroupByExternalReferenceCode(
+						_attachment.getExternalReferenceCode()));
 		}
 
 		private Attachment _attachment;
@@ -3356,51 +3011,24 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodeByVersionTypeExtension {
+	public class GetSpecificationByExternalReferenceCodeTypeExtension {
 
-		public GetProductByExternalReferenceCodeByVersionTypeExtension(
+		public GetSpecificationByExternalReferenceCodeTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public Product productByExternalReferenceCodeByVersion(
-				@GraphQLName("version") Integer version)
+		public Specification specificationByExternalReferenceCode()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_productResourceComponentServiceObjects,
+				_specificationResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				productResource ->
-					productResource.getProductByExternalReferenceCodeByVersion(
-						_attachment.getExternalReferenceCode(), version));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductConfigurationByExternalReferenceCodeTypeExtension {
-
-		public GetProductConfigurationByExternalReferenceCodeTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductConfiguration
-				productConfigurationByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productConfigurationResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productConfigurationResource ->
-					productConfigurationResource.
-						getProductConfigurationByExternalReferenceCode(
+				specificationResource ->
+					specificationResource.
+						getSpecificationByExternalReferenceCode(
 							_attachment.getExternalReferenceCode()));
 		}
 
@@ -3431,6 +3059,181 @@ public class Query {
 						getProductByExternalReferenceCodeAttachmentsPage(
 							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductByExternalReferenceCodeImagesPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeImagesPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public AttachmentPage productByExternalReferenceCodeImages(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_attachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				attachmentResource -> new AttachmentPage(
+					attachmentResource.
+						getProductByExternalReferenceCodeImagesPage(
+							_attachment.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductByExternalReferenceCodeCatalogTypeExtension {
+
+		public GetProductByExternalReferenceCodeCatalogTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public Catalog productByExternalReferenceCodeCatalog(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_catalogResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				catalogResource ->
+					catalogResource.getProductByExternalReferenceCodeCatalog(
+						_attachment.getExternalReferenceCode(),
+						Pagination.of(page, pageSize)));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductByExternalReferenceCodeCategoriesPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeCategoriesPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public CategoryPage productByExternalReferenceCodeCategories(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_categoryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				categoryResource -> new CategoryPage(
+					categoryResource.
+						getProductByExternalReferenceCodeCategoriesPage(
+							_attachment.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductByExternalReferenceCodeDiagramTypeExtension {
+
+		public GetProductByExternalReferenceCodeDiagramTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public Diagram productByExternalReferenceCodeDiagram()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_diagramResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				diagramResource ->
+					diagramResource.getProductByExternalReferenceCodeDiagram(
+						_attachment.getExternalReferenceCode()));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductByExternalReferenceCodeGroupedProductsPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeGroupedProductsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public GroupedProductPage productByExternalReferenceCodeGroupedProducts(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_groupedProductResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				groupedProductResource -> new GroupedProductPage(
+					groupedProductResource.
+						getProductByExternalReferenceCodeGroupedProductsPage(
+							_attachment.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductByExternalReferenceCodeMappedProductsPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeMappedProductsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public MappedProductPage productByExternalReferenceCodeMappedProducts(
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_mappedProductResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				mappedProductResource -> new MappedProductPage(
+					mappedProductResource.
+						getProductByExternalReferenceCodeMappedProductsPage(
+							_attachment.getExternalReferenceCode(), search,
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								mappedProductResource, sortsString))));
 		}
 
 		private Attachment _attachment;
@@ -3471,6 +3274,293 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductByExternalReferenceCodePinsPageTypeExtension {
+
+		public GetProductByExternalReferenceCodePinsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public PinPage productByExternalReferenceCodePins(
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_pinResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				pinResource -> new PinPage(
+					pinResource.getProductByExternalReferenceCodePinsPage(
+						_attachment.getExternalReferenceCode(), search,
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(pinResource, sortsString))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductByExternalReferenceCodeProductAccountGroupsPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeProductAccountGroupsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductAccountGroupPage
+				productByExternalReferenceCodeProductAccountGroups(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productAccountGroupResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productAccountGroupResource -> new ProductAccountGroupPage(
+					productAccountGroupResource.
+						getProductByExternalReferenceCodeProductAccountGroupsPage(
+							_attachment.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductByExternalReferenceCodeProductChannelsPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeProductChannelsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductChannelPage productByExternalReferenceCodeProductChannels(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productChannelResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productChannelResource -> new ProductChannelPage(
+					productChannelResource.
+						getProductByExternalReferenceCodeProductChannelsPage(
+							_attachment.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductByExternalReferenceCodeConfigurationTypeExtension {
+
+		public GetProductByExternalReferenceCodeConfigurationTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductConfiguration
+				productByExternalReferenceCodeConfiguration()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productConfigurationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productConfigurationResource ->
+					productConfigurationResource.
+						getProductByExternalReferenceCodeConfiguration(
+							_attachment.getExternalReferenceCode()));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageTypeExtension {
+
+		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductConfigurationPage
+				productConfigurationListByExternalReferenceCodeProductConfigurations(
+					@GraphQLName("search") String search,
+					@GraphQLName("showDifferences") Boolean showDifferences,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productConfigurationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productConfigurationResource -> new ProductConfigurationPage(
+					productConfigurationResource.
+						getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
+							_attachment.getExternalReferenceCode(), search,
+							showDifferences,
+							_filterBiFunction.apply(
+								productConfigurationResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								productConfigurationResource, sortsString))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountsPageTypeExtension {
+
+		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductConfigurationListAccountPage
+				productConfigurationListByExternalReferenceCodeProductConfigurationListAccounts(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productConfigurationListAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productConfigurationListAccountResource ->
+					new ProductConfigurationListAccountPage(
+						productConfigurationListAccountResource.
+							getProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountsPage(
+								_attachment.getExternalReferenceCode(),
+								Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPageTypeExtension {
+
+		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductConfigurationListAccountGroupPage
+				productConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroups(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productConfigurationListAccountGroupResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productConfigurationListAccountGroupResource ->
+					new ProductConfigurationListAccountGroupPage(
+						productConfigurationListAccountGroupResource.
+							getProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage(
+								_attachment.getExternalReferenceCode(),
+								Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPageTypeExtension {
+
+		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductConfigurationListChannelPage
+				productConfigurationListByExternalReferenceCodeProductConfigurationListChannels(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productConfigurationListChannelResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productConfigurationListChannelResource ->
+					new ProductConfigurationListChannelPage(
+						productConfigurationListChannelResource.
+							getProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPage(
+								_attachment.getExternalReferenceCode(),
+								Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypesPageTypeExtension {
+
+		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypesPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductConfigurationListOrderTypePage
+				productConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypes(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productConfigurationListOrderTypeResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productConfigurationListOrderTypeResource ->
+					new ProductConfigurationListOrderTypePage(
+						productConfigurationListOrderTypeResource.
+							getProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypesPage(
+								_attachment.getExternalReferenceCode(),
+								Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductGroupByExternalReferenceCodeProductGroupProductsPageTypeExtension {
 
@@ -3495,34 +3585,6 @@ public class Query {
 						getProductGroupByExternalReferenceCodeProductGroupProductsPage(
 							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductConfigurationListByExternalReferenceCodeTypeExtension {
-
-		public GetProductConfigurationListByExternalReferenceCodeTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductConfigurationList
-				productConfigurationListByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productConfigurationListResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productConfigurationListResource ->
-					productConfigurationListResource.
-						getProductConfigurationListByExternalReferenceCode(
-							_attachment.getExternalReferenceCode()));
 		}
 
 		private Attachment _attachment;
@@ -3565,29 +3627,26 @@ public class Query {
 
 	@GraphQLTypeExtension(Attachment.class)
 	public class
-		GetProductByExternalReferenceCodeRelatedProductsPageTypeExtension {
+		GetProductByExternalReferenceCodeShippingConfigurationTypeExtension {
 
-		public GetProductByExternalReferenceCodeRelatedProductsPageTypeExtension(
+		public GetProductByExternalReferenceCodeShippingConfigurationTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public RelatedProductPage productByExternalReferenceCodeRelatedProducts(
-				@GraphQLName("type") String type,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+		public ProductShippingConfiguration
+				productByExternalReferenceCodeShippingConfiguration()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_relatedProductResourceComponentServiceObjects,
+				_productShippingConfigurationResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				relatedProductResource -> new RelatedProductPage(
-					relatedProductResource.
-						getProductByExternalReferenceCodeRelatedProductsPage(
-							_attachment.getExternalReferenceCode(), type,
-							Pagination.of(page, pageSize))));
+				productShippingConfigurationResource ->
+					productShippingConfigurationResource.
+						getProductByExternalReferenceCodeShippingConfiguration(
+							_attachment.getExternalReferenceCode()));
 		}
 
 		private Attachment _attachment;
@@ -3627,91 +3686,26 @@ public class Query {
 
 	@GraphQLTypeExtension(Attachment.class)
 	public class
-		GetProductByExternalReferenceCodeMappedProductBySequenceTypeExtension {
+		GetProductByExternalReferenceCodeSubscriptionConfigurationTypeExtension {
 
-		public GetProductByExternalReferenceCodeMappedProductBySequenceTypeExtension(
+		public GetProductByExternalReferenceCodeSubscriptionConfigurationTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public MappedProduct
-				productByExternalReferenceCodeMappedProductBySequence(
-					@GraphQLName("sequence") String sequence)
+		public ProductSubscriptionConfiguration
+				productByExternalReferenceCodeSubscriptionConfiguration()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_mappedProductResourceComponentServiceObjects,
+				_productSubscriptionConfigurationResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				mappedProductResource ->
-					mappedProductResource.
-						getProductByExternalReferenceCodeMappedProductBySequence(
-							_attachment.getExternalReferenceCode(), sequence));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPageTypeExtension {
-
-		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductConfigurationListChannelPage
-				productConfigurationListByExternalReferenceCodeProductConfigurationListChannels(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productConfigurationListChannelResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productConfigurationListChannelResource ->
-					new ProductConfigurationListChannelPage(
-						productConfigurationListChannelResource.
-							getProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPage(
-								_attachment.getExternalReferenceCode(),
-								Pagination.of(page, pageSize))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountsPageTypeExtension {
-
-		public GetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountsPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductConfigurationListAccountPage
-				productConfigurationListByExternalReferenceCodeProductConfigurationListAccounts(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productConfigurationListAccountResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productConfigurationListAccountResource ->
-					new ProductConfigurationListAccountPage(
-						productConfigurationListAccountResource.
-							getProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountsPage(
-								_attachment.getExternalReferenceCode(),
-								Pagination.of(page, pageSize))));
+				productSubscriptionConfigurationResource ->
+					productSubscriptionConfigurationResource.
+						getProductByExternalReferenceCodeSubscriptionConfiguration(
+							_attachment.getExternalReferenceCode()));
 		}
 
 		private Attachment _attachment;
@@ -3747,107 +3741,27 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodeImagesPageTypeExtension {
+	public class
+		GetProductByExternalReferenceCodeProductVirtualSettingsTypeExtension {
 
-		public GetProductByExternalReferenceCodeImagesPageTypeExtension(
+		public GetProductByExternalReferenceCodeProductVirtualSettingsTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public AttachmentPage productByExternalReferenceCodeImages(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+		public ProductVirtualSettings
+				productByExternalReferenceCodeProductVirtualSettings()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_attachmentResourceComponentServiceObjects,
+				_productVirtualSettingsResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				attachmentResource -> new AttachmentPage(
-					attachmentResource.
-						getProductByExternalReferenceCodeImagesPage(
-							_attachment.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductByExternalReferenceCodePinsPageTypeExtension {
-
-		public GetProductByExternalReferenceCodePinsPageTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public PinPage productByExternalReferenceCodePins(
-				@GraphQLName("search") String search,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_pinResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				pinResource -> new PinPage(
-					pinResource.getProductByExternalReferenceCodePinsPage(
-						_attachment.getExternalReferenceCode(), search,
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(pinResource, sortsString))));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetOptionByExternalReferenceCodeTypeExtension {
-
-		public GetOptionByExternalReferenceCodeTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public Option optionByExternalReferenceCode() throws Exception {
-			return _applyComponentServiceObjects(
-				_optionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				optionResource ->
-					optionResource.getOptionByExternalReferenceCode(
-						_attachment.getExternalReferenceCode()));
-		}
-
-		private Attachment _attachment;
-
-	}
-
-	@GraphQLTypeExtension(Attachment.class)
-	public class GetProductGroupByExternalReferenceCodeTypeExtension {
-
-		public GetProductGroupByExternalReferenceCodeTypeExtension(
-			Attachment attachment) {
-
-			_attachment = attachment;
-		}
-
-		@GraphQLField
-		public ProductGroup productGroupByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_productGroupResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				productGroupResource ->
-					productGroupResource.getProductGroupByExternalReferenceCode(
-						_attachment.getExternalReferenceCode()));
+				productVirtualSettingsResource ->
+					productVirtualSettingsResource.
+						getProductByExternalReferenceCodeProductVirtualSettings(
+							_attachment.getExternalReferenceCode()));
 		}
 
 		private Attachment _attachment;
@@ -3856,25 +3770,84 @@ public class Query {
 
 	@GraphQLTypeExtension(Attachment.class)
 	public class
-		GetProductByExternalReferenceCodeSubscriptionConfigurationTypeExtension {
+		GetProductByExternalReferenceCodeRelatedProductsPageTypeExtension {
 
-		public GetProductByExternalReferenceCodeSubscriptionConfigurationTypeExtension(
+		public GetProductByExternalReferenceCodeRelatedProductsPageTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public ProductSubscriptionConfiguration
-				productByExternalReferenceCodeSubscriptionConfiguration()
+		public RelatedProductPage productByExternalReferenceCodeRelatedProducts(
+				@GraphQLName("type") String type,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_productSubscriptionConfigurationResourceComponentServiceObjects,
+				_relatedProductResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				productSubscriptionConfigurationResource ->
-					productSubscriptionConfigurationResource.
-						getProductByExternalReferenceCodeSubscriptionConfiguration(
+				relatedProductResource -> new RelatedProductPage(
+					relatedProductResource.
+						getProductByExternalReferenceCodeRelatedProductsPage(
+							_attachment.getExternalReferenceCode(), type,
+							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetProductByExternalReferenceCodeSkusPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeSkusPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public SkuPage productByExternalReferenceCodeSkus(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_skuResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				skuResource -> new SkuPage(
+					skuResource.getProductByExternalReferenceCodeSkusPage(
+						_attachment.getExternalReferenceCode(),
+						Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetSkuByExternalReferenceCodeSkuSubscriptionConfigurationTypeExtension {
+
+		public GetSkuByExternalReferenceCodeSkuSubscriptionConfigurationTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public SkuSubscriptionConfiguration
+				skuByExternalReferenceCodeSkuSubscriptionConfiguration()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_skuSubscriptionConfigurationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				skuSubscriptionConfigurationResource ->
+					skuSubscriptionConfigurationResource.
+						getSkuByExternalReferenceCodeSkuSubscriptionConfiguration(
 							_attachment.getExternalReferenceCode()));
 		}
 
@@ -3913,26 +3886,24 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class
-		GetProductByExternalReferenceCodeProductVirtualSettingsTypeExtension {
+	public class GetSkuByExternalReferenceCodeSkuVirtualSettingsTypeExtension {
 
-		public GetProductByExternalReferenceCodeProductVirtualSettingsTypeExtension(
+		public GetSkuByExternalReferenceCodeSkuVirtualSettingsTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public ProductVirtualSettings
-				productByExternalReferenceCodeProductVirtualSettings()
+		public SkuVirtualSettings skuByExternalReferenceCodeSkuVirtualSettings()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_productVirtualSettingsResourceComponentServiceObjects,
+				_skuVirtualSettingsResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				productVirtualSettingsResource ->
-					productVirtualSettingsResource.
-						getProductByExternalReferenceCodeProductVirtualSettings(
+				skuVirtualSettingsResource ->
+					skuVirtualSettingsResource.
+						getSkuByExternalReferenceCodeSkuVirtualSettings(
 							_attachment.getExternalReferenceCode()));
 		}
 
@@ -3941,25 +3912,54 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Attachment.class)
-	public class GetOptionCategoryByExternalReferenceCodeTypeExtension {
+	public class GetProductByExternalReferenceCodeByVersionTypeExtension {
 
-		public GetOptionCategoryByExternalReferenceCodeTypeExtension(
+		public GetProductByExternalReferenceCodeByVersionTypeExtension(
 			Attachment attachment) {
 
 			_attachment = attachment;
 		}
 
 		@GraphQLField
-		public OptionCategory optionCategoryByExternalReferenceCode()
+		public Product productByExternalReferenceCodeByVersion(
+				@GraphQLName("version") Integer version)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_optionCategoryResourceComponentServiceObjects,
+				_productResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				optionCategoryResource ->
-					optionCategoryResource.
-						getOptionCategoryByExternalReferenceCode(
-							_attachment.getExternalReferenceCode()));
+				productResource ->
+					productResource.getProductByExternalReferenceCodeByVersion(
+						_attachment.getExternalReferenceCode(), version));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductByExternalReferenceCodeMappedProductBySequenceTypeExtension {
+
+		public GetProductByExternalReferenceCodeMappedProductBySequenceTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public MappedProduct
+				productByExternalReferenceCodeMappedProductBySequence(
+					@GraphQLName("sequence") String sequence)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_mappedProductResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				mappedProductResource ->
+					mappedProductResource.
+						getProductByExternalReferenceCodeMappedProductBySequence(
+							_attachment.getExternalReferenceCode(), sequence));
 		}
 
 		private Attachment _attachment;
@@ -6236,3 +6236,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:667127741

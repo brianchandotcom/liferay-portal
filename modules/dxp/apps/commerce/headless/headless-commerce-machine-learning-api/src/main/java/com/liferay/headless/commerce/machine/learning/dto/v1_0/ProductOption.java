@@ -352,3 +352,4 @@ public class ProductOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-298749806

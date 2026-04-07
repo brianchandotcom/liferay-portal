@@ -226,3 +226,4 @@ public class ReplacementSku implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1195651745

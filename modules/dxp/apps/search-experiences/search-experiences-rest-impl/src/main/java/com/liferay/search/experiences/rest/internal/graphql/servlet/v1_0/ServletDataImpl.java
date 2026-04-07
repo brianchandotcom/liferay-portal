@@ -363,16 +363,6 @@ public class ServletDataImpl implements ServletData {
 							"getSearchableAssetNameLanguagePage"));
 
 					put(
-						"query#SXPBlueprint.sXPElementByExternalReferenceCode",
-						new ObjectValuePair<>(
-							SXPElementResourceImpl.class,
-							"getSXPElementByExternalReferenceCode"));
-					put(
-						"query#SXPElement.export",
-						new ObjectValuePair<>(
-							SXPElementResourceImpl.class,
-							"getSXPElementExport"));
-					put(
 						"query#ElementInstance.sXPElement",
 						new ObjectValuePair<>(
 							SXPElementResourceImpl.class, "getSXPElement"));
@@ -386,6 +376,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SXPBlueprintResourceImpl.class,
 							"getSXPBlueprintExport"));
+					put(
+						"query#SXPBlueprint.sXPElementByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"getSXPElementByExternalReferenceCode"));
+					put(
+						"query#SXPElement.export",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"getSXPElementExport"));
 				}
 			};
 
@@ -434,3 +434,4 @@ public class ServletDataImpl implements ServletData {
 		_searchableAssetNameDisplayResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-446816875

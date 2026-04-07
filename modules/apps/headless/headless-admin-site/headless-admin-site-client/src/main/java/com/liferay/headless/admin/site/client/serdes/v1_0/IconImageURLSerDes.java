@@ -202,3 +202,4 @@ public class IconImageURLSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1777989669

@@ -284,3 +284,4 @@ public class DeleteObjectBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:766010842

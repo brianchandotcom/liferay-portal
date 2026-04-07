@@ -192,3 +192,4 @@ public interface PaymentResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1813024983

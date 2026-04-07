@@ -360,3 +360,4 @@ public class ObjectLayoutBoxSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1110104379

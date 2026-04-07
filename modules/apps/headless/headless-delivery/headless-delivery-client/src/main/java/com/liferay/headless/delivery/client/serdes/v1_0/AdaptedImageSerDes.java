@@ -343,3 +343,4 @@ public class AdaptedImageSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1462231506

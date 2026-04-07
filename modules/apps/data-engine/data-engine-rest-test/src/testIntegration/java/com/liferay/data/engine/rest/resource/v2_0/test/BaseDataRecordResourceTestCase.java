@@ -2600,3 +2600,4 @@ public abstract class BaseDataRecordResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2016520376

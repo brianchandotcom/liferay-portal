@@ -194,3 +194,4 @@ public class SortSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1992064292

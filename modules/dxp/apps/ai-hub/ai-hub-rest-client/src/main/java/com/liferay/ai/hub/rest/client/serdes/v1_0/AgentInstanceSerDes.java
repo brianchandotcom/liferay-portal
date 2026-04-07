@@ -308,3 +308,4 @@ public class AgentInstanceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1196015678

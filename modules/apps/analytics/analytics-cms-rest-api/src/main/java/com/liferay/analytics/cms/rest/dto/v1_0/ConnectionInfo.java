@@ -394,3 +394,4 @@ public class ConnectionInfo implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:85709443

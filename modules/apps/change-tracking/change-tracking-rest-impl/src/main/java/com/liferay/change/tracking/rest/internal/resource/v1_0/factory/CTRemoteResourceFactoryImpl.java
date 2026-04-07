@@ -326,3 +326,4 @@ public class CTRemoteResourceFactoryImpl implements CTRemoteResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-437648317

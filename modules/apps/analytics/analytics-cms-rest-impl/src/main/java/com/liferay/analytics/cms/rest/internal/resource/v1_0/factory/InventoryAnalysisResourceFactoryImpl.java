@@ -333,3 +333,4 @@ public class InventoryAnalysisResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1382977405

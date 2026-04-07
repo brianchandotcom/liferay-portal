@@ -772,3 +772,4 @@ public interface UserNotificationResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1456712358

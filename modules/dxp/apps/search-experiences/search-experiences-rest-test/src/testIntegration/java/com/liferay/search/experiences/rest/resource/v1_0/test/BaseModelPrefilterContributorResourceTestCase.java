@@ -918,3 +918,4 @@ public abstract class BaseModelPrefilterContributorResourceTestCase {
 		ModelPrefilterContributorResource _modelPrefilterContributorResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1819478150

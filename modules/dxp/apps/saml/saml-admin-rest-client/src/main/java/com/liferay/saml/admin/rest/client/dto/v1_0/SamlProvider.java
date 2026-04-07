@@ -264,3 +264,4 @@ public class SamlProvider implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1200076765

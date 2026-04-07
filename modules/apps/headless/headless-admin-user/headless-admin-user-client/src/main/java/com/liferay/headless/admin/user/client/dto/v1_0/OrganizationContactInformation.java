@@ -147,3 +147,4 @@ public class OrganizationContactInformation implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-829488598

@@ -316,3 +316,4 @@ public class DataDefinitionFieldLinkSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1433900611

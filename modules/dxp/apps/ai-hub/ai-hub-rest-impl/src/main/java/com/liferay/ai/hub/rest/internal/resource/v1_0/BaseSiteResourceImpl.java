@@ -515,3 +515,4 @@ public abstract class BaseSiteResourceImpl implements SiteResource {
 		LogFactoryUtil.getLog(BaseSiteResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:1375202377

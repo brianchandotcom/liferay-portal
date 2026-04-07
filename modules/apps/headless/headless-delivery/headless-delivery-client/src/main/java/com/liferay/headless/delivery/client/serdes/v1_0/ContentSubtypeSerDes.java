@@ -229,3 +229,4 @@ public class ContentSubtypeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1478564861

@@ -1021,3 +1021,4 @@ public abstract class BaseAccountAddressChannelResourceImpl
 		LogFactoryUtil.getLog(BaseAccountAddressChannelResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:247323287

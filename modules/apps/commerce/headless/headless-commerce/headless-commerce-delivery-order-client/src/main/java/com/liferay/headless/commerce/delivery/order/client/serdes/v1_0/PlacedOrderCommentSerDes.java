@@ -349,3 +349,4 @@ public class PlacedOrderCommentSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2133614008

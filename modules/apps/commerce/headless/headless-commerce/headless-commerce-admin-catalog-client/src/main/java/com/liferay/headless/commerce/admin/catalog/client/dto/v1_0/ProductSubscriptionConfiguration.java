@@ -383,3 +383,4 @@ public class ProductSubscriptionConfiguration
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-489020137

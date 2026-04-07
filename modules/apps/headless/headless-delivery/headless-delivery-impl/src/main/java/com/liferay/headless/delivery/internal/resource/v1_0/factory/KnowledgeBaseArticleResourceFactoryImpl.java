@@ -335,3 +335,4 @@ public class KnowledgeBaseArticleResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:508845671

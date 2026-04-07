@@ -333,3 +333,4 @@ public class AsahSegmentsEntryResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:338052303

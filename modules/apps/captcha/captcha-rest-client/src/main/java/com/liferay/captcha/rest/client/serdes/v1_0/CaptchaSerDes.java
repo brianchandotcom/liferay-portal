@@ -256,3 +256,4 @@ public class CaptchaSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2073055038

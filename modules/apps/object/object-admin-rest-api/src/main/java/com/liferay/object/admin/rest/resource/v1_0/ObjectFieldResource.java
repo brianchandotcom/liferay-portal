@@ -194,3 +194,4 @@ public interface ObjectFieldResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-309403129

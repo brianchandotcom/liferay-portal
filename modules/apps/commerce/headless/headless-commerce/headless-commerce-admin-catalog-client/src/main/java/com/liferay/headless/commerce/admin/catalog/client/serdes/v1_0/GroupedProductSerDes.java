@@ -436,3 +436,4 @@ public class GroupedProductSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1028833886

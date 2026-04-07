@@ -1039,3 +1039,4 @@ public abstract class BaseGroupResourceTestCase {
 	private com.liferay.scim.rest.resource.v1_0.GroupResource _groupResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:846907300

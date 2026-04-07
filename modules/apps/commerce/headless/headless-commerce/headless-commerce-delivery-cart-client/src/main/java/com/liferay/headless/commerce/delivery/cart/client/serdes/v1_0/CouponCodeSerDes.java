@@ -199,3 +199,4 @@ public class CouponCodeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1470965255

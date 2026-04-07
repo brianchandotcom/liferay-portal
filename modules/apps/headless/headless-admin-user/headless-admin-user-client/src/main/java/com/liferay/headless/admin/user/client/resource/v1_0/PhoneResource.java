@@ -1998,3 +1998,4 @@ public interface PhoneResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1818597052

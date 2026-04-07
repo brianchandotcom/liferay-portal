@@ -210,3 +210,4 @@ public class AggregationConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:227589770

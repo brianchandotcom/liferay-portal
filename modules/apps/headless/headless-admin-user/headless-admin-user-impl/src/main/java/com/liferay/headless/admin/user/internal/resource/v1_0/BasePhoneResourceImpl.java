@@ -1470,3 +1470,4 @@ public abstract class BasePhoneResourceImpl
 		LogFactoryUtil.getLog(BasePhoneResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:853408789

@@ -3398,3 +3398,4 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1736747917

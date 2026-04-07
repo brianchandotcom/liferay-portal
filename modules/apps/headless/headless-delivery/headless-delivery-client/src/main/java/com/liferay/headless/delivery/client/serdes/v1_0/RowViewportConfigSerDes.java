@@ -259,3 +259,4 @@ public class RowViewportConfigSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:560209338

@@ -147,3 +147,4 @@ public class DisplayPageTemplateOpenGraphSettings
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1164041594

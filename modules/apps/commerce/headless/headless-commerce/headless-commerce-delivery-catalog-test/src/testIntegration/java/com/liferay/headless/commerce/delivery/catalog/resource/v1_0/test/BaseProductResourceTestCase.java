@@ -2665,3 +2665,4 @@ public abstract class BaseProductResourceTestCase {
 			ProductResource _productResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:2059441890

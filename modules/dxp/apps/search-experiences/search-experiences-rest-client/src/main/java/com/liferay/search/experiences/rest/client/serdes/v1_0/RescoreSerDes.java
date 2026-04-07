@@ -332,3 +332,4 @@ public class RescoreSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:33191507

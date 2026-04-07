@@ -141,3 +141,4 @@ public class AvailabilityEstimate implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1175691326

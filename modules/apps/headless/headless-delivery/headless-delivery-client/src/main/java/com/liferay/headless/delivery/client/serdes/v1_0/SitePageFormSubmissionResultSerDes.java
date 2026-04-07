@@ -286,3 +286,4 @@ public class SitePageFormSubmissionResultSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-207472334

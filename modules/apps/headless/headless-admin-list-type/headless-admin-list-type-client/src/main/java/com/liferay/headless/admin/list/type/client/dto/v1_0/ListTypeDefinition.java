@@ -341,3 +341,4 @@ public class ListTypeDefinition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1445694709

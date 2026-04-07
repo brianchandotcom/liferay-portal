@@ -242,3 +242,4 @@ public class MappedBackgroundImageValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:493407

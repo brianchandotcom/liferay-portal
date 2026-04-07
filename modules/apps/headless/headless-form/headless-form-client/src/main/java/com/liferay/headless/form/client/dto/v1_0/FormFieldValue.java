@@ -158,3 +158,4 @@ public class FormFieldValue implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-4906213

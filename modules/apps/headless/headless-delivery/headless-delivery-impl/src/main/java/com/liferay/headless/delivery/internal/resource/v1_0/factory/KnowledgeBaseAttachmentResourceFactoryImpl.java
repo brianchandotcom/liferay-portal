@@ -340,3 +340,4 @@ public class KnowledgeBaseAttachmentResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:97411262

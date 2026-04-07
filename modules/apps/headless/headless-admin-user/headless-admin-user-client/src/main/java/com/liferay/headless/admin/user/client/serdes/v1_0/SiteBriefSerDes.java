@@ -395,3 +395,4 @@ public class SiteBriefSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1350868395

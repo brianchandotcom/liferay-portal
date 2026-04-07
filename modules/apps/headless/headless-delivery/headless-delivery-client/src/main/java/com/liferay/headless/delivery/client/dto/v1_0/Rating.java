@@ -226,3 +226,4 @@ public class Rating implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:723728824

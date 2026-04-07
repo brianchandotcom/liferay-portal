@@ -1972,3 +1972,4 @@ public interface SXPElementResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2018143805

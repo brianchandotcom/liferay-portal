@@ -372,3 +372,4 @@ public class PostalAddress implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1355150096

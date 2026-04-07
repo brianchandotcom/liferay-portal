@@ -850,3 +850,4 @@ public class ObjectRelationshipSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-198459560

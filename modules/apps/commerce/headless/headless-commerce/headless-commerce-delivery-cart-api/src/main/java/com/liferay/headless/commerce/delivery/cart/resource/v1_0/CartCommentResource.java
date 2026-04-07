@@ -191,3 +191,4 @@ public interface CartCommentResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2031050021

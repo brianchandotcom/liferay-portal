@@ -181,3 +181,4 @@ public class Metric implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1337670635

@@ -167,3 +167,4 @@ public class WorkflowInstanceSubmit implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1624800443

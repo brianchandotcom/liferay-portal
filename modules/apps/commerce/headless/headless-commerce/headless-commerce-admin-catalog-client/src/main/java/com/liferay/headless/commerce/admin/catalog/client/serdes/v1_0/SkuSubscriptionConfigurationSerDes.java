@@ -584,3 +584,4 @@ public class SkuSubscriptionConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:351677411

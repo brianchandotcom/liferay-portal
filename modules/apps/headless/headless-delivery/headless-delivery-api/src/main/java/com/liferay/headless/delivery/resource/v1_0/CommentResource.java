@@ -306,3 +306,4 @@ public interface CommentResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-736381510

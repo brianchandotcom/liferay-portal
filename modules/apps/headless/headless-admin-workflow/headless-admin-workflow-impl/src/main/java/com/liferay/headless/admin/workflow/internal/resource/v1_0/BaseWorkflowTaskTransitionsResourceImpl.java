@@ -512,3 +512,4 @@ public abstract class BaseWorkflowTaskTransitionsResourceImpl
 		LogFactoryUtil.getLog(BaseWorkflowTaskTransitionsResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:219149438

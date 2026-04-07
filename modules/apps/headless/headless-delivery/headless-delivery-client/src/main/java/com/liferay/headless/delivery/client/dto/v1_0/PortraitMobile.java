@@ -120,3 +120,4 @@ public class PortraitMobile implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1049214156

@@ -182,3 +182,4 @@ public class FormPage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1071791604

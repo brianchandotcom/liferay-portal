@@ -252,10 +252,24 @@ public class ServletDataImpl implements ServletData {
 							"getShipmentShippingAddress"));
 
 					put(
+						"query#ShipmentItem.shipment",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class, "getShipment"));
+					put(
+						"query#ShipmentItem.shipmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class,
+							"getShipmentByExternalReferenceCode"));
+					put(
 						"query#Shipment.byExternalReferenceCodeItem",
 						new ObjectValuePair<>(
 							ShipmentItemResourceImpl.class,
 							"getShipmentByExternalReferenceCodeItem"));
+					put(
+						"query#Shipment.items",
+						new ObjectValuePair<>(
+							ShipmentItemResourceImpl.class,
+							"getShipmentItemsPage"));
 					put(
 						"query#Shipment.byExternalReferenceCodeItems",
 						new ObjectValuePair<>(
@@ -266,20 +280,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ShippingAddressResourceImpl.class,
 							"getShipmentByExternalReferenceCodeShippingAddress"));
-					put(
-						"query#ShipmentItem.shipment",
-						new ObjectValuePair<>(
-							ShipmentResourceImpl.class, "getShipment"));
-					put(
-						"query#ShipmentItem.shipmentByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ShipmentResourceImpl.class,
-							"getShipmentByExternalReferenceCode"));
-					put(
-						"query#Shipment.items",
-						new ObjectValuePair<>(
-							ShipmentItemResourceImpl.class,
-							"getShipmentItemsPage"));
 				}
 			};
 
@@ -296,3 +296,4 @@ public class ServletDataImpl implements ServletData {
 		_shippingAddressResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-335642271

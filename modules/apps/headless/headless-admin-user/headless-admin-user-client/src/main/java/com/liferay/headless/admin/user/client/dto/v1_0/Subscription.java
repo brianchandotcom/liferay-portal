@@ -203,3 +203,4 @@ public class Subscription implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2127576580

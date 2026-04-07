@@ -332,3 +332,4 @@ public class DiscountProductResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1090304041

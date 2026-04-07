@@ -286,3 +286,4 @@ public class OpenGraphSettingsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1510971489

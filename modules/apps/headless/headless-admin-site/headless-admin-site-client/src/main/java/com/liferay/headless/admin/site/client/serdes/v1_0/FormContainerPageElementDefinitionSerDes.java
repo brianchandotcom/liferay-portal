@@ -492,3 +492,4 @@ public class FormContainerPageElementDefinitionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1466072809

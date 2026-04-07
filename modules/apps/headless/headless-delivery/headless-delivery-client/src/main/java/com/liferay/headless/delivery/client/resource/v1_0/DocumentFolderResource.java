@@ -4166,3 +4166,4 @@ public interface DocumentFolderResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:392381031

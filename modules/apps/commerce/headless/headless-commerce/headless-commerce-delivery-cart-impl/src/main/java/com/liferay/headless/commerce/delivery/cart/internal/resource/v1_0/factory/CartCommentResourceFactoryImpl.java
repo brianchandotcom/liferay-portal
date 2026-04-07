@@ -329,3 +329,4 @@ public class CartCommentResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1771992661

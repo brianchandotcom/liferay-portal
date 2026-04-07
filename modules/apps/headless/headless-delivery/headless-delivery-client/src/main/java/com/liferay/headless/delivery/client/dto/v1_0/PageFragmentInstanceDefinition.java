@@ -296,3 +296,4 @@ public class PageFragmentInstanceDefinition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-762991218

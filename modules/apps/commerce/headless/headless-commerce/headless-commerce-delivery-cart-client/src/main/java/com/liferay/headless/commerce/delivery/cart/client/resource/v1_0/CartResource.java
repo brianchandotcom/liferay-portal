@@ -2609,3 +2609,4 @@ public interface CartResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2105420519

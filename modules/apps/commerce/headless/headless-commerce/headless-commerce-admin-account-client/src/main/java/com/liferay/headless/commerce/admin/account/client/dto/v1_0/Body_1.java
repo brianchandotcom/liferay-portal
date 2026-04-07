@@ -76,3 +76,4 @@ public class Body_1 implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1311671505

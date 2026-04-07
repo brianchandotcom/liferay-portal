@@ -245,3 +245,4 @@ public class DocumentBulkSelectionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:577008399

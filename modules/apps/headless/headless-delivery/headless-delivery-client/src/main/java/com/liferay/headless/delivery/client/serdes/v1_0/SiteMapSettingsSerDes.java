@@ -289,3 +289,4 @@ public class SiteMapSettingsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1830405810

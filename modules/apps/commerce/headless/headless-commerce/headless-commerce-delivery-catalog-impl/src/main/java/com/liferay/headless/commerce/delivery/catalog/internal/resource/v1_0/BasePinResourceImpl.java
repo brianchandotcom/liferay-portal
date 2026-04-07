@@ -857,3 +857,4 @@ public abstract class BasePinResourceImpl
 		LogFactoryUtil.getLog(BasePinResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-216021478

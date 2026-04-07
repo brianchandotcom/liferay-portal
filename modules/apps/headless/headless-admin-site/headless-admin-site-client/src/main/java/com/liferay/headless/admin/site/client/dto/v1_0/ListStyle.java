@@ -144,3 +144,4 @@ public class ListStyle
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2001143322

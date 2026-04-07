@@ -679,3 +679,4 @@ public interface RoleResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:2144228798

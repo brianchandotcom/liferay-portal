@@ -109,3 +109,4 @@ public class ColorPaletteFragmentConfigurationFieldValue
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1630118854

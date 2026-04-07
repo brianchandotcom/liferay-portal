@@ -562,3 +562,4 @@ public class PageFormStepContainerDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:469123365

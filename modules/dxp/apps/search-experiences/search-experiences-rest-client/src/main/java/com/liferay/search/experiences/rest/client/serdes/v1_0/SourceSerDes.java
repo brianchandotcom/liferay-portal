@@ -266,3 +266,4 @@ public class SourceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1577448900

@@ -330,3 +330,4 @@ public class SearchResponseResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:770627727

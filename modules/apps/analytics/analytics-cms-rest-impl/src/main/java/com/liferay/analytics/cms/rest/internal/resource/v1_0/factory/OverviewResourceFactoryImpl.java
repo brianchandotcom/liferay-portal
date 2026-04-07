@@ -326,3 +326,4 @@ public class OverviewResourceFactoryImpl implements OverviewResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-506586796

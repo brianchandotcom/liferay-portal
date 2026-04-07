@@ -221,3 +221,4 @@ public class VersionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:132677675

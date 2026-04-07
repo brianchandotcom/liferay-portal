@@ -337,3 +337,4 @@ public class ServiceProviderConfigResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1622406294

@@ -284,3 +284,4 @@ public class TaskStatisticsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-862585066

@@ -254,3 +254,4 @@ public class CollectionDisplayViewportSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-520231174

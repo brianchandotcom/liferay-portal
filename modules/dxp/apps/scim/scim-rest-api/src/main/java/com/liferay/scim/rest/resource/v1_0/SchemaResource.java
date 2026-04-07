@@ -135,3 +135,4 @@ public interface SchemaResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:867914938

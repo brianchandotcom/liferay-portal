@@ -332,3 +332,4 @@ public class OAuthClientEntryResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1560393373

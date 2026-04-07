@@ -414,3 +414,4 @@ public class PermissionObjectBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1520764151

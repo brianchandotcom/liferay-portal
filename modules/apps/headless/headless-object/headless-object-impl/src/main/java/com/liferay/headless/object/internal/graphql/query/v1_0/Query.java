@@ -251,6 +251,36 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(ObjectEntryFolder.class)
+	public class GetObjectEntryFolderCollaboratorsPageTypeExtension {
+
+		public GetObjectEntryFolderCollaboratorsPageTypeExtension(
+			ObjectEntryFolder objectEntryFolder) {
+
+			_objectEntryFolder = objectEntryFolder;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the collaborators of an object entry folder."
+		)
+		public CollaboratorPage collaborators(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_collaboratorResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				collaboratorResource -> new CollaboratorPage(
+					collaboratorResource.getObjectEntryFolderCollaboratorsPage(
+						_objectEntryFolder.getId(),
+						Pagination.of(page, pageSize))));
+		}
+
+		private ObjectEntryFolder _objectEntryFolder;
+
+	}
+
+	@GraphQLTypeExtension(ObjectEntryFolder.class)
 	public class
 		GetObjectEntryFolderCollaboratorByTypeCollaboratorTypeExtension {
 
@@ -275,36 +305,6 @@ public class Query {
 					collaboratorResource.
 						getObjectEntryFolderCollaboratorByTypeCollaborator(
 							_objectEntryFolder.getId(), type, collaboratorId));
-		}
-
-		private ObjectEntryFolder _objectEntryFolder;
-
-	}
-
-	@GraphQLTypeExtension(ObjectEntryFolder.class)
-	public class GetObjectEntryFolderCollaboratorsPageTypeExtension {
-
-		public GetObjectEntryFolderCollaboratorsPageTypeExtension(
-			ObjectEntryFolder objectEntryFolder) {
-
-			_objectEntryFolder = objectEntryFolder;
-		}
-
-		@GraphQLField(
-			description = "Retrieves the collaborators of an object entry folder."
-		)
-		public CollaboratorPage collaborators(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_collaboratorResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				collaboratorResource -> new CollaboratorPage(
-					collaboratorResource.getObjectEntryFolderCollaboratorsPage(
-						_objectEntryFolder.getId(),
-						Pagination.of(page, pageSize))));
 		}
 
 		private ObjectEntryFolder _objectEntryFolder;
@@ -496,3 +496,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-144589511

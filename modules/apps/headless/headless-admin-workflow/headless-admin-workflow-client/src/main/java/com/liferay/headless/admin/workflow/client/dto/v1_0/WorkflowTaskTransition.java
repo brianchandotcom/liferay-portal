@@ -144,3 +144,4 @@ public class WorkflowTaskTransition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-16853075

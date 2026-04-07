@@ -347,3 +347,4 @@ public class AnalyticsDXPEntityBatchExporterResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1563185973

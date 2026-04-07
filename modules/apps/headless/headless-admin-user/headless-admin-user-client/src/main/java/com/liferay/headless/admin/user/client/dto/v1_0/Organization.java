@@ -718,3 +718,4 @@ public class Organization implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1236262129

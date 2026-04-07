@@ -289,3 +289,4 @@ public class CommerceChannelSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-964536635

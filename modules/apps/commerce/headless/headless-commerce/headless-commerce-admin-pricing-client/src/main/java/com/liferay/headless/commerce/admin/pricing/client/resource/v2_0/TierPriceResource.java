@@ -1513,3 +1513,4 @@ public interface TierPriceResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-133054665

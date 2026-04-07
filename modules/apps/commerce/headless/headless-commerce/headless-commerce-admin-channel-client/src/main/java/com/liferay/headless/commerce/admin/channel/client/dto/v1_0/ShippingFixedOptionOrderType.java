@@ -218,3 +218,4 @@ public class ShippingFixedOptionOrderType implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:87966569

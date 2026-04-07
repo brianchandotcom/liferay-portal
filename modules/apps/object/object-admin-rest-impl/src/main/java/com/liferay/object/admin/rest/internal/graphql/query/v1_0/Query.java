@@ -669,29 +669,6 @@ public class Query {
 				objectViewId));
 	}
 
-	@GraphQLTypeExtension(ObjectLayoutTab.class)
-	public class GetObjectRelationshipTypeExtension {
-
-		public GetObjectRelationshipTypeExtension(
-			ObjectLayoutTab objectLayoutTab) {
-
-			_objectLayoutTab = objectLayoutTab;
-		}
-
-		@GraphQLField
-		public ObjectRelationship objectRelationship() throws Exception {
-			return _applyComponentServiceObjects(
-				_objectRelationshipResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				objectRelationshipResource ->
-					objectRelationshipResource.getObjectRelationship(
-						_objectLayoutTab.getObjectRelationshipId()));
-		}
-
-		private ObjectLayoutTab _objectLayoutTab;
-
-	}
-
 	@GraphQLTypeExtension(ObjectView.class)
 	public class GetObjectDefinitionTypeExtension {
 
@@ -710,40 +687,6 @@ public class Query {
 		}
 
 		private ObjectView _objectView;
-
-	}
-
-	@GraphQLTypeExtension(ObjectDefinition.class)
-	public class
-		GetObjectDefinitionByExternalReferenceCodeObjectViewsPageTypeExtension {
-
-		public GetObjectDefinitionByExternalReferenceCodeObjectViewsPageTypeExtension(
-			ObjectDefinition objectDefinition) {
-
-			_objectDefinition = objectDefinition;
-		}
-
-		@GraphQLField
-		public ObjectViewPage byExternalReferenceCodeObjectViews(
-				@GraphQLName("search") String search,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_objectViewResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				objectViewResource -> new ObjectViewPage(
-					objectViewResource.
-						getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-							_objectDefinition.getExternalReferenceCode(),
-							search, Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								objectViewResource, sortsString))));
-		}
-
-		private ObjectDefinition _objectDefinition;
 
 	}
 
@@ -769,42 +712,52 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(ObjectDefinition.class)
-	public class
-		GetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageTypeExtension {
+	@GraphQLTypeExtension(ObjectLayoutTab.class)
+	public class GetObjectRelationshipTypeExtension {
 
-		public GetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageTypeExtension(
-			ObjectDefinition objectDefinition) {
+		public GetObjectRelationshipTypeExtension(
+			ObjectLayoutTab objectLayoutTab) {
 
-			_objectDefinition = objectDefinition;
+			_objectLayoutTab = objectLayoutTab;
 		}
 
 		@GraphQLField
-		public ObjectRelationshipPage
-				byExternalReferenceCodeObjectRelationships(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
-			throws Exception {
-
+		public ObjectRelationship objectRelationship() throws Exception {
 			return _applyComponentServiceObjects(
 				_objectRelationshipResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				objectRelationshipResource -> new ObjectRelationshipPage(
-					objectRelationshipResource.
-						getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
-							_objectDefinition.getExternalReferenceCode(),
-							search,
-							_filterBiFunction.apply(
-								objectRelationshipResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								objectRelationshipResource, sortsString))));
+				objectRelationshipResource ->
+					objectRelationshipResource.getObjectRelationship(
+						_objectLayoutTab.getObjectRelationshipId()));
 		}
 
-		private ObjectDefinition _objectDefinition;
+		private ObjectLayoutTab _objectLayoutTab;
+
+	}
+
+	@GraphQLTypeExtension(ObjectFolder.class)
+	public class GetObjectDefinitionByExternalReferenceCodeTypeExtension {
+
+		public GetObjectDefinitionByExternalReferenceCodeTypeExtension(
+			ObjectFolder objectFolder) {
+
+			_objectFolder = objectFolder;
+		}
+
+		@GraphQLField
+		public ObjectDefinition objectDefinitionByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_objectDefinitionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectDefinitionResource ->
+					objectDefinitionResource.
+						getObjectDefinitionByExternalReferenceCode(
+							_objectFolder.getExternalReferenceCode()));
+		}
+
+		private ObjectFolder _objectFolder;
 
 	}
 
@@ -939,29 +892,42 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(ObjectFolder.class)
-	public class GetObjectDefinitionByExternalReferenceCodeTypeExtension {
+	@GraphQLTypeExtension(ObjectDefinition.class)
+	public class
+		GetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageTypeExtension {
 
-		public GetObjectDefinitionByExternalReferenceCodeTypeExtension(
-			ObjectFolder objectFolder) {
+		public GetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageTypeExtension(
+			ObjectDefinition objectDefinition) {
 
-			_objectFolder = objectFolder;
+			_objectDefinition = objectDefinition;
 		}
 
 		@GraphQLField
-		public ObjectDefinition objectDefinitionByExternalReferenceCode()
+		public ObjectRelationshipPage
+				byExternalReferenceCodeObjectRelationships(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_objectDefinitionResourceComponentServiceObjects,
+				_objectRelationshipResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				objectDefinitionResource ->
-					objectDefinitionResource.
-						getObjectDefinitionByExternalReferenceCode(
-							_objectFolder.getExternalReferenceCode()));
+				objectRelationshipResource -> new ObjectRelationshipPage(
+					objectRelationshipResource.
+						getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+							_objectDefinition.getExternalReferenceCode(),
+							search,
+							_filterBiFunction.apply(
+								objectRelationshipResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								objectRelationshipResource, sortsString))));
 		}
 
-		private ObjectFolder _objectFolder;
+		private ObjectDefinition _objectDefinition;
 
 	}
 
@@ -994,6 +960,40 @@ public class Query {
 							search, Pagination.of(page, pageSize),
 							_sortsBiFunction.apply(
 								objectValidationRuleResource, sortsString))));
+		}
+
+		private ObjectDefinition _objectDefinition;
+
+	}
+
+	@GraphQLTypeExtension(ObjectDefinition.class)
+	public class
+		GetObjectDefinitionByExternalReferenceCodeObjectViewsPageTypeExtension {
+
+		public GetObjectDefinitionByExternalReferenceCodeObjectViewsPageTypeExtension(
+			ObjectDefinition objectDefinition) {
+
+			_objectDefinition = objectDefinition;
+		}
+
+		@GraphQLField
+		public ObjectViewPage byExternalReferenceCodeObjectViews(
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_objectViewResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectViewResource -> new ObjectViewPage(
+					objectViewResource.
+						getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+							_objectDefinition.getExternalReferenceCode(),
+							search, Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								objectViewResource, sortsString))));
 		}
 
 		private ObjectDefinition _objectDefinition;
@@ -1511,3 +1511,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
+// LIFERAY-REST-BUILDER-HASH:826270216

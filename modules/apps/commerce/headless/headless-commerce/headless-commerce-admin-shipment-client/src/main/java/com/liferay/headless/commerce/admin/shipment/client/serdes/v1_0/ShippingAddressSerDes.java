@@ -590,3 +590,4 @@ public class ShippingAddressSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1058234990

@@ -195,3 +195,4 @@ public interface PhoneResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-415795642

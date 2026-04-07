@@ -295,3 +295,4 @@ public class SitePagesNavigationMenuValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1398923710

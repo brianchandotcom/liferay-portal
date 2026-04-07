@@ -330,3 +330,4 @@ public class WarehouseItemResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-759402131

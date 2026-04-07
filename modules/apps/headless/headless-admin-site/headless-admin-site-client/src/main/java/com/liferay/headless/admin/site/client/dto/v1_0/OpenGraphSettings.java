@@ -145,3 +145,4 @@ public class OpenGraphSettings implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1644392436

@@ -279,24 +279,24 @@ public class ServletDataImpl implements ServletData {
 							CTRemoteResourceImpl.class, "getCTRemotesPage"));
 
 					put(
+						"query#CTProcess.cTCollection",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class, "getCTCollection"));
+					put(
 						"query#CTCollection.shareLink",
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class,
 							"getCTCollectionShareLink"));
 					put(
-						"query#CTCollection.byExternalReferenceCodeShareLink",
-						new ObjectValuePair<>(
-							CTCollectionResourceImpl.class,
-							"getCTCollectionByExternalReferenceCodeShareLink"));
-					put(
-						"query#CTProcess.cTCollection",
-						new ObjectValuePair<>(
-							CTCollectionResourceImpl.class, "getCTCollection"));
-					put(
 						"query#CTCollection.ctCollectionCTEntries",
 						new ObjectValuePair<>(
 							CTEntryResourceImpl.class,
 							"getCtCollectionCTEntriesPage"));
+					put(
+						"query#CTCollection.byExternalReferenceCodeShareLink",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"getCTCollectionByExternalReferenceCodeShareLink"));
 					put(
 						"query#CTCollection.ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
 						new ObjectValuePair<>(
@@ -322,3 +322,4 @@ public class ServletDataImpl implements ServletData {
 		_ctEntryResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-581149680

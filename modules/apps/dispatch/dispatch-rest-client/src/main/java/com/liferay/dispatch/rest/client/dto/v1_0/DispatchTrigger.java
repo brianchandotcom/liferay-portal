@@ -375,3 +375,4 @@ public class DispatchTrigger implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1612603590

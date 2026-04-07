@@ -277,3 +277,4 @@ public class CollapseSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:789662967

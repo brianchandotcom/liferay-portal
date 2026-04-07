@@ -434,3 +434,4 @@ public class PriceListAccountGroupSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-143463845

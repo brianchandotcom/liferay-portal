@@ -401,3 +401,4 @@ public class TestEntityAddressSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:577642723

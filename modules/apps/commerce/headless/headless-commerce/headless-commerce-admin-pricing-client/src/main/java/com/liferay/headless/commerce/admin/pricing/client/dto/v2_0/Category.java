@@ -135,3 +135,4 @@ public class Category implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1415877314

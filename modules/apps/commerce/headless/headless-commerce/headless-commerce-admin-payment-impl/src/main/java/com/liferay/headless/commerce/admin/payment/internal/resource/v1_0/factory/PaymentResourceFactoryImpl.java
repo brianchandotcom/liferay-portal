@@ -324,3 +324,4 @@ public class PaymentResourceFactoryImpl implements PaymentResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-730638746

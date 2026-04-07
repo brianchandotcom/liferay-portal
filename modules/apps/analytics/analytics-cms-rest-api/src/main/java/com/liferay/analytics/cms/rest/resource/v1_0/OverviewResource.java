@@ -139,3 +139,4 @@ public interface OverviewResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1712641368

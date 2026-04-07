@@ -134,3 +134,4 @@ public interface WorkflowTaskAssignableUsersResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1212705317

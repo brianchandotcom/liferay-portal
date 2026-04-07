@@ -228,3 +228,4 @@ public class DefaultValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1390731204

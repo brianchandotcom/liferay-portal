@@ -187,3 +187,4 @@ public interface OrderRuleResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1975182384

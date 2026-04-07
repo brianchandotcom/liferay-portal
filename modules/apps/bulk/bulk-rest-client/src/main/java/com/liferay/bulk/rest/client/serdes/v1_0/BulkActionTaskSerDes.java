@@ -462,3 +462,4 @@ public class BulkActionTaskSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:216564101

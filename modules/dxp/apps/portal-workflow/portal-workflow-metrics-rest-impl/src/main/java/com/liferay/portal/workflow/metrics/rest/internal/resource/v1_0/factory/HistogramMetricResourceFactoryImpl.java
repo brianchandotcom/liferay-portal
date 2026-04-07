@@ -332,3 +332,4 @@ public class HistogramMetricResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1841085292

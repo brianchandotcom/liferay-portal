@@ -251,3 +251,4 @@ public class PageFormRelationshipDefinition implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:237622589

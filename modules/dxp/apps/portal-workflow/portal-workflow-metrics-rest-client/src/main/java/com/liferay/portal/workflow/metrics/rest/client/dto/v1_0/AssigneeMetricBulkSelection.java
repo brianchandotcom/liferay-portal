@@ -209,3 +209,4 @@ public class AssigneeMetricBulkSelection implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-682881658

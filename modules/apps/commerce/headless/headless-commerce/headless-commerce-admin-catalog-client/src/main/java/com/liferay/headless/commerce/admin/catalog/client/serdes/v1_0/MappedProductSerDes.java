@@ -543,3 +543,4 @@ public class MappedProductSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1421314091

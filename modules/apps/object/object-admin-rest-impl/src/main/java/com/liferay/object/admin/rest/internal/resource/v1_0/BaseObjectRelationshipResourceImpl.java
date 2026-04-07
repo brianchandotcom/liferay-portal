@@ -1431,3 +1431,4 @@ public abstract class BaseObjectRelationshipResourceImpl
 		LogFactoryUtil.getLog(BaseObjectRelationshipResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:621217942

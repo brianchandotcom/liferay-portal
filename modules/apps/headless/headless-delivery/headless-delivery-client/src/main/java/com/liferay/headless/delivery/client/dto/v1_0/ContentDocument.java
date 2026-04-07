@@ -313,3 +313,4 @@ public class ContentDocument implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1064023417

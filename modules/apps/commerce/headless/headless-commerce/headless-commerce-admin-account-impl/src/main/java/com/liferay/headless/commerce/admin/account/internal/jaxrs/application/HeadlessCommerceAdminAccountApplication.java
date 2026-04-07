@@ -27,3 +27,4 @@ import org.osgi.service.component.annotations.Component;
 @Generated("")
 public class HeadlessCommerceAdminAccountApplication extends Application {
 }
+// LIFERAY-REST-BUILDER-HASH:2131541040

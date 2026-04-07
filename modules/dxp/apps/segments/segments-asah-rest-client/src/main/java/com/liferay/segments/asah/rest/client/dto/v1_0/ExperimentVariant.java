@@ -97,3 +97,4 @@ public class ExperimentVariant implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-577236404

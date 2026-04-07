@@ -329,3 +329,4 @@ public class ExportTaskResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1279303018

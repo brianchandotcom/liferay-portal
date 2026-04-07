@@ -333,3 +333,4 @@ public class PageSpecificationResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1275130148

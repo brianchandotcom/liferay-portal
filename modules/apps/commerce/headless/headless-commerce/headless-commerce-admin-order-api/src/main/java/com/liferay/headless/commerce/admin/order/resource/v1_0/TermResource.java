@@ -184,3 +184,4 @@ public interface TermResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-299432808

@@ -332,3 +332,4 @@ public class DispatchTriggerResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:364572956

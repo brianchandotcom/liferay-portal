@@ -1072,3 +1072,4 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1169019255

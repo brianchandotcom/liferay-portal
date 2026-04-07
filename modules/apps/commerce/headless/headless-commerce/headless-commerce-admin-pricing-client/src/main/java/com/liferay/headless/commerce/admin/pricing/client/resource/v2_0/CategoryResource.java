@@ -383,3 +383,4 @@ public interface CategoryResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1662395462

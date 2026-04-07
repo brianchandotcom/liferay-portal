@@ -329,3 +329,4 @@ public class DiscountCategorySerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:552517313

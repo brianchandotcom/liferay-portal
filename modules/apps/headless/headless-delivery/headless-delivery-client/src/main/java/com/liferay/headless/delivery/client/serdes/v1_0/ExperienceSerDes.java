@@ -301,3 +301,4 @@ public class ExperienceSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1388352618

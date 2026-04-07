@@ -1135,3 +1135,4 @@ public abstract class BaseProductConfigurationListAccountResourceImpl
 			BaseProductConfigurationListAccountResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:630975278

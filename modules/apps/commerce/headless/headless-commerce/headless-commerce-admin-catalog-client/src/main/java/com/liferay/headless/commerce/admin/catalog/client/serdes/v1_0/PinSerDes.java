@@ -301,3 +301,4 @@ public class PinSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1591466970

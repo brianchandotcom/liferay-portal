@@ -559,3 +559,4 @@ public abstract class BaseSkuSubscriptionConfigurationResourceImpl
 			BaseSkuSubscriptionConfigurationResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:543264697

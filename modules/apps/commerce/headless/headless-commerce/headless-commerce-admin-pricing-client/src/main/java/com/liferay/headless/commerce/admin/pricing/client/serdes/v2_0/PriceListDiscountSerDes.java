@@ -399,3 +399,4 @@ public class PriceListDiscountSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-82176365

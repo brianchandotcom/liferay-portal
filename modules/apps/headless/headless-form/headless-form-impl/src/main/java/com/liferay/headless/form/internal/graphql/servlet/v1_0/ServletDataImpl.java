@@ -184,14 +184,14 @@ public class ServletDataImpl implements ServletData {
 							"getSiteFormStructuresPage"));
 
 					put(
+						"query#FormRecord.form",
+						new ObjectValuePair<>(
+							FormResourceImpl.class, "getForm"));
+					put(
 						"query#Form.formRecordByLatestDraft",
 						new ObjectValuePair<>(
 							FormRecordResourceImpl.class,
 							"getFormFormRecordByLatestDraft"));
-					put(
-						"query#FormRecord.form",
-						new ObjectValuePair<>(
-							FormResourceImpl.class, "getForm"));
 				}
 			};
 
@@ -212,3 +212,4 @@ public class ServletDataImpl implements ServletData {
 		_formStructureResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-107935929

@@ -477,3 +477,4 @@ public class ProductConfigurationListOrderTypeSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-275900396

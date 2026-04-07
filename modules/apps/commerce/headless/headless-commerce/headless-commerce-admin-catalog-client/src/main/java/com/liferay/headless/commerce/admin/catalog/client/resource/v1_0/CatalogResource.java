@@ -1738,3 +1738,4 @@ public interface CatalogResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1776714664

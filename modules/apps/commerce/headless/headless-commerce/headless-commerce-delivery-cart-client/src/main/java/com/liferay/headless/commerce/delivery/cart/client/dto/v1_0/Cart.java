@@ -1165,3 +1165,4 @@ public class Cart implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1280040337

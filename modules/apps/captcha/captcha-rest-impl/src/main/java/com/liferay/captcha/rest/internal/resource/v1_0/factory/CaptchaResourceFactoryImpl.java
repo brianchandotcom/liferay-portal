@@ -324,3 +324,4 @@ public class CaptchaResourceFactoryImpl implements CaptchaResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:397961696

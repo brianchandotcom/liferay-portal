@@ -109,3 +109,4 @@ public class ServletDataImpl implements ServletData {
 		_cookiesConsentPreferenceResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:256119608

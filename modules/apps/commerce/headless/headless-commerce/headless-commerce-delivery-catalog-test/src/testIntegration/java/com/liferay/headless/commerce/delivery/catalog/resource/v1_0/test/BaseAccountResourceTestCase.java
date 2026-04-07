@@ -1814,3 +1814,4 @@ public abstract class BaseAccountResourceTestCase {
 			AccountResource _accountResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:295068474

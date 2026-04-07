@@ -203,3 +203,4 @@ public class AccountForecast implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:65454005

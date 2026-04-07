@@ -99,3 +99,4 @@ public class ContentSubtype implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1135010520

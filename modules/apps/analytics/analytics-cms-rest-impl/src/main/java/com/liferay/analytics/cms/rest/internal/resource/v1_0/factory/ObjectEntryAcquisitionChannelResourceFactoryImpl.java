@@ -347,3 +347,4 @@ public class ObjectEntryAcquisitionChannelResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-873617880

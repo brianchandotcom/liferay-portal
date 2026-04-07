@@ -244,15 +244,15 @@ public class ServletDataImpl implements ServletData {
 							"getScopeScopeKeyObjectEntryFoldersPage"));
 
 					put(
-						"query#ObjectEntryFolder.collaboratorByTypeCollaborator",
-						new ObjectValuePair<>(
-							CollaboratorResourceImpl.class,
-							"getObjectEntryFolderCollaboratorByTypeCollaborator"));
-					put(
 						"query#ObjectEntryFolder.collaborators",
 						new ObjectValuePair<>(
 							CollaboratorResourceImpl.class,
 							"getObjectEntryFolderCollaboratorsPage"));
+					put(
+						"query#ObjectEntryFolder.collaboratorByTypeCollaborator",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"getObjectEntryFolderCollaboratorByTypeCollaborator"));
 
 					put(
 						"query#ObjectEntryFolder.parentObjectEntryFolder",
@@ -271,3 +271,4 @@ public class ServletDataImpl implements ServletData {
 		_objectEntryFolderResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:2025660169

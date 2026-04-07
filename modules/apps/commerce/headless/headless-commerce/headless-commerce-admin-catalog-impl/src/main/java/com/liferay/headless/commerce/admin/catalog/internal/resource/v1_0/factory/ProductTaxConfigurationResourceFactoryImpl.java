@@ -340,3 +340,4 @@ public class ProductTaxConfigurationResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1256264193

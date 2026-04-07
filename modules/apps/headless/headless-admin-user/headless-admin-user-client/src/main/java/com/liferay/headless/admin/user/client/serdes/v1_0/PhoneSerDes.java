@@ -342,3 +342,4 @@ public class PhoneSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-705231845

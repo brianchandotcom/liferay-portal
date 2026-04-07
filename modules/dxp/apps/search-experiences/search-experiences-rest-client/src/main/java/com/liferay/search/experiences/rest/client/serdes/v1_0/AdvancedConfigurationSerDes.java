@@ -307,3 +307,4 @@ public class AdvancedConfigurationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:650659727

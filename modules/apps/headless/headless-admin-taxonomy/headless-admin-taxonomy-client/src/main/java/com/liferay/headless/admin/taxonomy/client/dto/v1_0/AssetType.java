@@ -139,3 +139,4 @@ public class AssetType implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-329834697

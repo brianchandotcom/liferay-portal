@@ -655,3 +655,4 @@ public abstract class BaseFriendlyUrlHistoryResourceImpl
 		LogFactoryUtil.getLog(BaseFriendlyUrlHistoryResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2018574715

@@ -516,3 +516,4 @@ public class NestedTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:485477058

@@ -181,3 +181,4 @@ public class CookiesConsentPreference implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:673963349

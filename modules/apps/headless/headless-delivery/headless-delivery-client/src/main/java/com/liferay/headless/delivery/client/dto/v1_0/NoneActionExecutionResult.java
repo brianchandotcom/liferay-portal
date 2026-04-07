@@ -79,3 +79,4 @@ public class NoneActionExecutionResult implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1466975750

@@ -326,3 +326,4 @@ public class CTProcessResourceFactoryImpl implements CTProcessResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:189278692

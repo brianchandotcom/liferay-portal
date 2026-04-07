@@ -255,3 +255,4 @@ public class HTMLFragmentInlineValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-349180219

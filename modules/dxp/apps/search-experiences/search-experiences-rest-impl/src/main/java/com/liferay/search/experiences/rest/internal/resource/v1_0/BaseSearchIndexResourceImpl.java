@@ -803,3 +803,4 @@ public abstract class BaseSearchIndexResourceImpl
 		LogFactoryUtil.getLog(BaseSearchIndexResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-121851106

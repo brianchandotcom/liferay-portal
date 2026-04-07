@@ -614,3 +614,4 @@ public interface ProductShippingConfigurationResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1398587524

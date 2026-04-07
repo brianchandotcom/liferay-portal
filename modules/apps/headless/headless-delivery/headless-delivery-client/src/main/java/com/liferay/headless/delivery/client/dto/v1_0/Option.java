@@ -122,3 +122,4 @@ public class Option implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:727711631

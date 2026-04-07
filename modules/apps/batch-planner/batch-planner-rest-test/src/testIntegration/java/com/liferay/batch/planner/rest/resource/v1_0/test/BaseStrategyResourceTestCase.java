@@ -958,3 +958,4 @@ public abstract class BaseStrategyResourceTestCase {
 		_strategyResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:553022407

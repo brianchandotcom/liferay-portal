@@ -120,3 +120,4 @@ public class Membership implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2029287307

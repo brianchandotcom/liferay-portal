@@ -588,29 +588,24 @@ public class ServletDataImpl implements ServletData {
 							ObjectViewResourceImpl.class, "getObjectView"));
 
 					put(
-						"query#ObjectLayoutTab.objectRelationship",
-						new ObjectValuePair<>(
-							ObjectRelationshipResourceImpl.class,
-							"getObjectRelationship"));
-					put(
 						"query#ObjectView.objectDefinition",
 						new ObjectValuePair<>(
 							ObjectDefinitionResourceImpl.class,
 							"getObjectDefinition"));
 					put(
-						"query#ObjectDefinition.byExternalReferenceCodeObjectViews",
-						new ObjectValuePair<>(
-							ObjectViewResourceImpl.class,
-							"getObjectDefinitionByExternalReferenceCodeObjectViewsPage"));
-					put(
 						"query#ObjectFieldSetting.objectField",
 						new ObjectValuePair<>(
 							ObjectFieldResourceImpl.class, "getObjectField"));
 					put(
-						"query#ObjectDefinition.byExternalReferenceCodeObjectRelationships",
+						"query#ObjectLayoutTab.objectRelationship",
 						new ObjectValuePair<>(
 							ObjectRelationshipResourceImpl.class,
-							"getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage"));
+							"getObjectRelationship"));
+					put(
+						"query#ObjectFolder.objectDefinitionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ObjectDefinitionResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCode"));
 					put(
 						"query#ObjectDefinition.objectFolderByExternalReferenceCode",
 						new ObjectValuePair<>(
@@ -632,15 +627,20 @@ public class ServletDataImpl implements ServletData {
 							ObjectLayoutResourceImpl.class,
 							"getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage"));
 					put(
-						"query#ObjectFolder.objectDefinitionByExternalReferenceCode",
+						"query#ObjectDefinition.byExternalReferenceCodeObjectRelationships",
 						new ObjectValuePair<>(
-							ObjectDefinitionResourceImpl.class,
-							"getObjectDefinitionByExternalReferenceCode"));
+							ObjectRelationshipResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage"));
 					put(
 						"query#ObjectDefinition.byExternalReferenceCodeObjectValidationRules",
 						new ObjectValuePair<>(
 							ObjectValidationRuleResourceImpl.class,
 							"getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage"));
+					put(
+						"query#ObjectDefinition.byExternalReferenceCodeObjectViews",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectViewsPage"));
 				}
 			};
 
@@ -677,3 +677,4 @@ public class ServletDataImpl implements ServletData {
 		_objectViewResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:742076

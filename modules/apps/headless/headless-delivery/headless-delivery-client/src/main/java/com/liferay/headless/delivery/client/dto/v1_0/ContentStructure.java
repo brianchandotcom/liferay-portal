@@ -312,3 +312,4 @@ public class ContentStructure implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-68455767

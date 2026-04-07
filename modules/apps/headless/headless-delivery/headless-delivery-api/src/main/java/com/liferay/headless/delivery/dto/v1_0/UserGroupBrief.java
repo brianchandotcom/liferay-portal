@@ -287,3 +287,4 @@ public class UserGroupBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:859190258

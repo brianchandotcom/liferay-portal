@@ -348,3 +348,4 @@ public class SXPParameterContributorDefinitionResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1608482570

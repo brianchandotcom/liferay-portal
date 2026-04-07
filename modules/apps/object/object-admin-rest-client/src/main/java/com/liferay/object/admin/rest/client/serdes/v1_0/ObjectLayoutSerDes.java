@@ -483,3 +483,4 @@ public class ObjectLayoutSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-932540266

@@ -468,3 +468,4 @@ public class SitemapSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-662493522

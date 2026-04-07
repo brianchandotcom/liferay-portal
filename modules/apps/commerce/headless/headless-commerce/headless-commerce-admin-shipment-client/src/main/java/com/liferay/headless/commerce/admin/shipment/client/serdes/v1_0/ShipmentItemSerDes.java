@@ -650,3 +650,4 @@ public class ShipmentItemSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:375477465

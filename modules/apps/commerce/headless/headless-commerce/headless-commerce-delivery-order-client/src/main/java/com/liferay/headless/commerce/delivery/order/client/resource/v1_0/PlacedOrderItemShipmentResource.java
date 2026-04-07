@@ -518,3 +518,4 @@ public interface PlacedOrderItemShipmentResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1992368757

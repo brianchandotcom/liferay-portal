@@ -390,3 +390,4 @@ public class OrderRuleChannelSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:877703374

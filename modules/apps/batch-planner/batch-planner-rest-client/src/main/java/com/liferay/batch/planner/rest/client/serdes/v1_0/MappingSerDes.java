@@ -373,3 +373,4 @@ public class MappingSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-2099976604

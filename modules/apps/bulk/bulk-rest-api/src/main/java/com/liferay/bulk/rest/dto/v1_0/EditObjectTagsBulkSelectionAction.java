@@ -414,3 +414,4 @@ public class EditObjectTagsBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1176826794

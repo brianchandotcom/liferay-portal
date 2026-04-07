@@ -83,3 +83,4 @@ public class SitePageURLValue
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:656060296

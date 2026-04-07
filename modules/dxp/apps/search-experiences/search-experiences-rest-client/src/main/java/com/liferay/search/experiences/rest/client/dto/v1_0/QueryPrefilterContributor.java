@@ -79,3 +79,4 @@ public class QueryPrefilterContributor implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-580546958

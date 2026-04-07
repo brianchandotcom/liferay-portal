@@ -151,3 +151,4 @@ public interface SubscriptionResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1985386709

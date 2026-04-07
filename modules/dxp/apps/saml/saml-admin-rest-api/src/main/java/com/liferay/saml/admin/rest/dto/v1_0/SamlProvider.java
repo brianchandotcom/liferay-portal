@@ -667,3 +667,4 @@ public class SamlProvider implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:908521445

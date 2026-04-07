@@ -103,3 +103,4 @@ public class ServletDataImpl implements ServletData {
 		_samlProviderResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-264492833

@@ -1190,3 +1190,4 @@ public abstract class BaseLanguageResourceTestCase {
 		_languageResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:670081312

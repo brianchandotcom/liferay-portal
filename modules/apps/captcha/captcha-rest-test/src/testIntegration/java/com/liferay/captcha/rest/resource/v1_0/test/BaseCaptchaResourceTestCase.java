@@ -944,3 +944,4 @@ public abstract class BaseCaptchaResourceTestCase {
 		_captchaResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1499753409

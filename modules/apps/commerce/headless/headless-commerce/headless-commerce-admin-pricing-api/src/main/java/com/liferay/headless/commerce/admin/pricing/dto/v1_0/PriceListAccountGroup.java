@@ -517,3 +517,4 @@ public class PriceListAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:1499136490

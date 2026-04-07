@@ -254,3 +254,4 @@ public class FailedItemSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1337417326

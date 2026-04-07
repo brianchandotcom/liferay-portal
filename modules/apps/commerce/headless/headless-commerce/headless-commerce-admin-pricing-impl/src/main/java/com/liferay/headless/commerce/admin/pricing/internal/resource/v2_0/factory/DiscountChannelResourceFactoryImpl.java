@@ -332,3 +332,4 @@ public class DiscountChannelResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:356217850

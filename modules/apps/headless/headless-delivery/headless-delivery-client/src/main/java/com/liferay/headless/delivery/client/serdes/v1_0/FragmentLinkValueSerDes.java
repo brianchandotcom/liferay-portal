@@ -236,3 +236,4 @@ public class FragmentLinkValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:95810818

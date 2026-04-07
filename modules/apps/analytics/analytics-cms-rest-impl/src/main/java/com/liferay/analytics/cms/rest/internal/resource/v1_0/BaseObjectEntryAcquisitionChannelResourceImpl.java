@@ -539,3 +539,4 @@ public abstract class BaseObjectEntryAcquisitionChannelResourceImpl
 			BaseObjectEntryAcquisitionChannelResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1971250037

@@ -357,3 +357,4 @@ public class FragmentConfigurationFieldValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1983156341

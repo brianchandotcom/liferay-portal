@@ -137,3 +137,4 @@ public class OrganizationBrief implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1195688540

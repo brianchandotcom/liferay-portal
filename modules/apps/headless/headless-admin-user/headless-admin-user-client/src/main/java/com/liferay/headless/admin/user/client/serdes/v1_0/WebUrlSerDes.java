@@ -309,3 +309,4 @@ public class WebUrlSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:390196231

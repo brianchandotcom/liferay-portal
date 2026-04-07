@@ -97,3 +97,4 @@ public class VideoValue implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1988563648

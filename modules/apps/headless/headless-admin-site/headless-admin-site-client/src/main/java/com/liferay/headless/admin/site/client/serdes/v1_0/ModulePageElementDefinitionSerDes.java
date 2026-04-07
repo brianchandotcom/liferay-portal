@@ -269,3 +269,4 @@ public class ModulePageElementDefinitionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1768990710

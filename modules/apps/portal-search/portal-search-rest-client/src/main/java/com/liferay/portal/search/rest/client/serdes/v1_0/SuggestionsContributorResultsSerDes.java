@@ -309,3 +309,4 @@ public class SuggestionsContributorResultsSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:749967419

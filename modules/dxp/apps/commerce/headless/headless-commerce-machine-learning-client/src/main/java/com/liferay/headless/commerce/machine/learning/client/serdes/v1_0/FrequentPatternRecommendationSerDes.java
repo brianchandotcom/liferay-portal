@@ -395,3 +395,4 @@ public class FrequentPatternRecommendationSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1096170192

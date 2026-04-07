@@ -459,3 +459,4 @@ public class WarehouseItemSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1213660186

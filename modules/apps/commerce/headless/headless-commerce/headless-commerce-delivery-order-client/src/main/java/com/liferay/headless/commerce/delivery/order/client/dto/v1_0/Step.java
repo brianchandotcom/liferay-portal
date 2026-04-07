@@ -118,3 +118,4 @@ public class Step implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:322026862

@@ -1900,3 +1900,4 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 		PlacedOrderItemShipmentResource _placedOrderItemShipmentResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:743810060

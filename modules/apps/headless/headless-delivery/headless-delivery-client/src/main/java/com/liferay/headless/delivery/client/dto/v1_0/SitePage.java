@@ -662,3 +662,4 @@ public class SitePage implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1117046868

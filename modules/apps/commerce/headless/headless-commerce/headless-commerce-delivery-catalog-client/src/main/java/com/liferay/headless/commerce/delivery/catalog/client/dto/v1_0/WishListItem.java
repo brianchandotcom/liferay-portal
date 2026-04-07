@@ -198,3 +198,4 @@ public class WishListItem implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1557483387

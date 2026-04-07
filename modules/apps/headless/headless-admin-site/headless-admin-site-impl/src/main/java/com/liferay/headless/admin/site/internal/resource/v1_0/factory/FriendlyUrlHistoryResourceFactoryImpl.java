@@ -333,3 +333,4 @@ public class FriendlyUrlHistoryResourceFactoryImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:594531984

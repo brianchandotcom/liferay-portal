@@ -1077,3 +1077,4 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceImpl
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1877784891

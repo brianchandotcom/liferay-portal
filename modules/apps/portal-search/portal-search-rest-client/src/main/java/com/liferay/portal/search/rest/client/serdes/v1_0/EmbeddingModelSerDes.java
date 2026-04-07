@@ -202,3 +202,4 @@ public class EmbeddingModelSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:190516723

@@ -320,3 +320,4 @@ public class BulkActionItemSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-270595840

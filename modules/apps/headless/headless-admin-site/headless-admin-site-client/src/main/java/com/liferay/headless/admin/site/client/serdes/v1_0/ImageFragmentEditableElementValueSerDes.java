@@ -288,3 +288,4 @@ public class ImageFragmentEditableElementValueSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1693029081

@@ -377,3 +377,4 @@ public class WidgetLookAndFeelConfigSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-436600226

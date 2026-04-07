@@ -324,3 +324,4 @@ public class IndexResourceFactoryImpl implements IndexResource.Factory {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-361236086

@@ -843,16 +843,6 @@ public class ServletDataImpl implements ServletData {
 							"getTestEntityTestEntityAddress"));
 
 					put(
-						"query#SiteTestEntity.testEntityPermissions",
-						new ObjectValuePair<>(
-							SiteTestEntityResourceImpl.class,
-							"getSiteTestEntityPermissionsPage"));
-					put(
-						"query#TestEntity.testEntityAddress",
-						new ObjectValuePair<>(
-							TestEntityAddressResourceImpl.class,
-							"getTestEntityTestEntityAddress"));
-					put(
 						"query#CompanyTestEntity.batchTestEntityByExternalReferenceCode",
 						new ObjectValuePair<>(
 							BatchTestEntityResourceImpl.class,
@@ -868,6 +858,16 @@ public class ServletDataImpl implements ServletData {
 							SharedInternalModelBatchTestEntityResourceImpl.
 								class,
 							"getSharedInternalModelBatchTestEntityByExternalReferenceCode"));
+					put(
+						"query#SiteTestEntity.testEntityPermissions",
+						new ObjectValuePair<>(
+							SiteTestEntityResourceImpl.class,
+							"getSiteTestEntityPermissionsPage"));
+					put(
+						"query#TestEntity.testEntityAddress",
+						new ObjectValuePair<>(
+							TestEntityAddressResourceImpl.class,
+							"getTestEntityTestEntityAddress"));
 				}
 			};
 
@@ -940,3 +940,4 @@ public class ServletDataImpl implements ServletData {
 		_testEntityAddressResourceComponentServiceObjects;
 
 }
+// LIFERAY-REST-BUILDER-HASH:593829650

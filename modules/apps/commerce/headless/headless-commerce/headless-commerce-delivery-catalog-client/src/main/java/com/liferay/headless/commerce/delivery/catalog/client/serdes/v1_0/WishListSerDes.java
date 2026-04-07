@@ -298,3 +298,4 @@ public class WishListSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1897354390

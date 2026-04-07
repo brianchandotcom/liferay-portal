@@ -296,3 +296,4 @@ public class FragmentFieldActionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1071036677

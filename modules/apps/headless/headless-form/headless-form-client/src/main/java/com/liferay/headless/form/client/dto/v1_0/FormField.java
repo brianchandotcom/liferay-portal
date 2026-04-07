@@ -665,3 +665,4 @@ public class FormField implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-778646196

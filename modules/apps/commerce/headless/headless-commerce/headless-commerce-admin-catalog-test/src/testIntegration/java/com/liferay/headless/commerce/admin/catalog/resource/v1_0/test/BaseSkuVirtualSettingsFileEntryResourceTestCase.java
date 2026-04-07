@@ -2055,3 +2055,4 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-485569170

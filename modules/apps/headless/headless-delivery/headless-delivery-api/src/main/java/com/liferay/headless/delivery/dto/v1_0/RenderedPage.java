@@ -480,3 +480,4 @@ public class RenderedPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
+// LIFERAY-REST-BUILDER-HASH:720186445

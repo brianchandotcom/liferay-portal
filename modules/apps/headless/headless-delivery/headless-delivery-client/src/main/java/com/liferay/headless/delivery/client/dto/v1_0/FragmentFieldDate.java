@@ -97,3 +97,4 @@ public class FragmentFieldDate implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1821893310

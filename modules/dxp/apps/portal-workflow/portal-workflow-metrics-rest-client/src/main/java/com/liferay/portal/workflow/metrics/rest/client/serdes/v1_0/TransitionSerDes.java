@@ -228,3 +228,4 @@ public class TransitionSerDes {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1380989998

@@ -82,3 +82,4 @@ public class ObjectEntryHistogramMetric implements Cloneable, Serializable {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1286474142

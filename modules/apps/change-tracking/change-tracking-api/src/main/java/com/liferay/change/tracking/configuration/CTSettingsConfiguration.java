@@ -25,6 +25,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTSettingsConfiguration {
 
 	@Meta.AD(
+		deflt = "false", description = "clean-up-cts-content-data-description",
+		name = "clean-up-cts-content-data", required = false
+	)
+	public boolean cleanUpCTSContentData();
+
+	@Meta.AD(
 		deflt = "0", name = "default-ct-collection-template-id",
 		required = false
 	)

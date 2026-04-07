@@ -7,6 +7,7 @@
 		"@clayui/icon": "^3.159.0",
 		"@clayui/layout": "^3.159.0",
 		"@clayui/link": "^3.159.0",
+		"@clayui/multi-select": "^3.159.0",
 		"@clayui/panel": "^3.159.0",
 		"@clayui/provider": "^3.159.0",
 		"@clayui/toolbar": "^3.159.0",

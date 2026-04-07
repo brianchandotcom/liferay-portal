@@ -5,8 +5,9 @@
 
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import ClayMultiSelect from '@clayui/multi-select';
 import ClayPanel from '@clayui/panel';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import './AgentDefinitionForm.scss';
 
@@ -20,15 +21,25 @@ import {InputLocalized} from 'frontend-js-components-web';
 
 import Toolbar from '../components/ToolBar';
 import {
+	deleteAgentDefinitionToContentRetrievers,
 	getAgentDefinition,
 	putAgentDefinition,
+	putAgentDefinitionToContentRetrievers,
 } from './services/AgentDefinitionService';
+import {getContentRetrievers} from './services/ContentRetrieverService';
 import {
 	getWorkflowDefinition,
 	getWorkflowDefinitions,
 } from './services/WorkflowDefinitionService';
 import {AgentDefinition} from './types/AgentDefinition';
+import {ContentRetriever} from './types/ContentRetriever';
 import {WorkflowDefinition} from './types/WorkflowDefinition';
+
+const contentRetrieversList = await (async () => {
+	const response = await getContentRetrievers();
+
+	return response.items || [];
+})();
 
 export default function AgentDefinitionForm({
 	accountEntryExternalReferenceCode,
@@ -49,6 +60,56 @@ export default function AgentDefinitionForm({
 	const [workflowDefinitions, setWorkflowDefinitions] = useState<
 		WorkflowDefinition[]
 	>([]);
+
+	const [contentRetrievers, setContentRetrievers] = useState<
+		ContentRetriever[]
+	>([]);
+
+	const initialContentRetrieversRef = useRef<ContentRetriever[]>([]);
+
+	const [dataSourceValue, setDataSourceValue] = useState('');
+
+	const syncRelationships = async (agentDefinitionERC: string) => {
+		const initialERCs = new Set(
+			initialContentRetrieversRef.current.map(
+				(contentRetriever) => contentRetriever.externalReferenceCode
+			)
+		);
+		const currentERCs = new Set(
+			contentRetrievers.map(
+				(contentRetriever) => contentRetriever.externalReferenceCode
+			)
+		);
+
+		const toAdd = contentRetrievers.filter(
+			(contentRetriever) =>
+				!initialERCs.has(contentRetriever.externalReferenceCode)
+		);
+		const toRemove = initialContentRetrieversRef.current.filter(
+			(contentRetriever) =>
+				!currentERCs.has(contentRetriever.externalReferenceCode)
+		);
+
+		const requests = [
+			...toAdd.map((contentRetriever) =>
+				putAgentDefinitionToContentRetrievers(
+					agentDefinitionERC,
+					contentRetriever.externalReferenceCode
+				)
+			),
+			...toRemove.map((contentRetriever) =>
+				deleteAgentDefinitionToContentRetrievers(
+					agentDefinitionERC,
+					contentRetriever.externalReferenceCode
+				)
+			),
+		];
+
+		if (requests.length) {
+			await Promise.all(requests);
+			initialContentRetrieversRef.current = [...contentRetrievers];
+		}
+	};
 
 	const handleActive = () => {
 		setFormData((prev) => ({
@@ -76,6 +137,10 @@ export default function AgentDefinitionForm({
 	const handleSubmit = async () => {
 		try {
 			const response = await putAgentDefinition(formData);
+
+			if (formData.externalReferenceCode) {
+				await syncRelationships(formData.externalReferenceCode);
+			}
 
 			if (response?.status?.label === 'approved') {
 				openToast({
@@ -136,6 +201,13 @@ export default function AgentDefinitionForm({
 					workflowDefinitionName:
 						agentDefinition.workflowDefinitionName,
 				});
+
+				setContentRetrievers(
+					agentDefinition.agentDefinitionsToContentRetrievers
+				);
+
+				initialContentRetrieversRef.current =
+					agentDefinition.agentDefinitionsToContentRetrievers;
 			}
 			catch (error) {
 				openToast({
@@ -177,7 +249,7 @@ export default function AgentDefinitionForm({
 		}
 
 		fetchWorkflowDefinitions();
-	}, [formData, readonly]);
+	}, [formData.workflowDefinitionName, readonly]);
 
 	return (
 		<>
@@ -272,8 +344,10 @@ export default function AgentDefinitionForm({
 											)}
 											required={true}
 											translations={
-												(formData.title_i18n as LocalizedValue<string>) ||
-												{}
+												(formData.title_i18n as Record<
+													string,
+													string
+												>) || {}
 											}
 										/>
 									</ClayForm.Group>
@@ -418,6 +492,46 @@ export default function AgentDefinitionForm({
 											)}
 										</Picker>
 									</ClayForm.Group>
+								</ClayPanel.Body>
+							</ClayPanel>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+
+					<ClayLayout.Row>
+						<ClayLayout.Col md={12}>
+							<ClayPanel
+								className="agent-definition-details"
+								collapsable={false}
+								title={Liferay.Language.get('data-sources')}
+							>
+								<ClayPanel.Body>
+									<h2>
+										{Liferay.Language.get('data-sources')}
+									</h2>
+
+									<label htmlFor="assignedSources">
+										{Liferay.Language.get(
+											'assigned-sources'
+										)}
+									</label>
+
+									<ClayMultiSelect
+										allowDuplicateValues={false}
+										allowsCustomLabel={false}
+										disabled={readonly}
+										inputName="assignedSources"
+										items={contentRetrievers}
+										locator={{
+											label: 'title',
+											value: 'externalReferenceCode',
+										}}
+										onChange={setDataSourceValue}
+										onItemsChange={(items) =>
+											setContentRetrievers(items)
+										}
+										sourceItems={contentRetrieversList}
+										value={dataSourceValue}
+									/>
 								</ClayPanel.Body>
 							</ClayPanel>
 						</ClayLayout.Col>

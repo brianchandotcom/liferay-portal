@@ -21,7 +21,8 @@ async function getAgentDefinitions() {
 
 async function getAgentDefinition(externalReferenceCode: string) {
 	const response = await fetch(
-		`${AGENT_DEFINITION_BY_ERC_URI}${externalReferenceCode}`,
+		`${AGENT_DEFINITION_BY_ERC_URI}${externalReferenceCode}` +
+			'?nestedFields=agentDefinitionsToContentRetrievers',
 		{
 			method: 'GET',
 		}
@@ -45,4 +46,32 @@ async function putAgentDefinition(agentDefinition: AgentDefinition) {
 	return response.json();
 }
 
-export {getAgentDefinition, getAgentDefinitions, putAgentDefinition};
+async function putAgentDefinitionToContentRetrievers(
+	agentDefinitionERC: string,
+	contentRetrieverERC: string
+) {
+	return fetch(
+		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
+			`/agentDefinitionsToContentRetrievers/${contentRetrieverERC}`,
+		{method: 'PUT'}
+	);
+}
+
+async function deleteAgentDefinitionToContentRetrievers(
+	agentDefinitionERC: string,
+	contentRetrieverERC: string
+) {
+	return fetch(
+		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
+			`/agentDefinitionsToContentRetrievers/${contentRetrieverERC}`,
+		{method: 'DELETE'}
+	);
+}
+
+export {
+	getAgentDefinition,
+	getAgentDefinitions,
+	putAgentDefinition,
+	putAgentDefinitionToContentRetrievers,
+	deleteAgentDefinitionToContentRetrievers,
+};

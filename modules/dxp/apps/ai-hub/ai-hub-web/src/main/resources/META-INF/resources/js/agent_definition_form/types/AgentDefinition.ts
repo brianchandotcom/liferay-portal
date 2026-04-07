@@ -10,8 +10,6 @@ export type AgentDefinition = {
 	inputVariables: string;
 	outputVariable: string;
 	r_accountToAIHubAgentDefinitions_accountEntryERC: string;
-	title_i18n: {
-		[key: string]: string;
-	};
+	title_i18n: Record<string, string>;
 	workflowDefinitionName: string;
 };

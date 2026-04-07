@@ -69,6 +69,10 @@ public class Node {
 		return _classNameId;
 	}
 
+	public int getIndex() {
+		return _index;
+	}
+
 	public List<Node> getParentNodes() {
 		return Collections.unmodifiableList(_parentNodes);
 	}
@@ -84,6 +88,10 @@ public class Node {
 		return HashUtil.hash(hash, _primaryKey);
 	}
 
+	public void setIndex(int index) {
+		_index = index;
+	}
+
 	@Override
 	public String toString() {
 		return StringBundler.concat(
@@ -92,6 +100,7 @@ public class Node {
 
 	private List<Node> _childNodes = Collections.emptyList();
 	private final long _classNameId;
+	private int _index;
 	private List<Node> _parentNodes = Collections.emptyList();
 	private final long _primaryKey;
 

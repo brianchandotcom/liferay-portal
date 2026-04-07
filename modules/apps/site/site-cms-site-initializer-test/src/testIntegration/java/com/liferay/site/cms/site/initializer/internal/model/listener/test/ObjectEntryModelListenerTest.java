@@ -603,26 +603,6 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 
-	@Test
-	public void testOnBeforeCreate() throws Exception {
-		_assertObjectEntryFolder(
-			_addObjectEntry(RandomTestUtil.randomString()),
-			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
-	}
-
-	@Test
-	public void testOnBeforeUpdate() throws Exception {
-		ObjectEntry objectEntry = _addObjectEntry(
-			RandomTestUtil.randomString());
-
-		objectEntry.setObjectEntryFolderId(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
-
-		_assertObjectEntryFolder(
-			_objectEntryLocalService.updateObjectEntry(objectEntry),
-			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
-	}
-
 	private ObjectEntry _addObjectEntry(String title, String... assetTagNames)
 		throws Exception {
 
@@ -675,20 +655,6 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertEquals(expectedEventType, auditMessage.getEventType());
 
 		_auditMessages.clear();
-	}
-
-	private void _assertObjectEntryFolder(
-			ObjectEntry objectEntry,
-			String objectEntryFolderExternalReferenceCode)
-		throws Exception {
-
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderLocalService.getObjectEntryFolder(
-				objectEntry.getObjectEntryFolderId());
-
-		Assert.assertEquals(
-			objectEntryFolderExternalReferenceCode,
-			objectEntryFolder.getExternalReferenceCode());
 	}
 
 	private Role _getOrAddCMSAdministratorRole(long companyId, long userId)

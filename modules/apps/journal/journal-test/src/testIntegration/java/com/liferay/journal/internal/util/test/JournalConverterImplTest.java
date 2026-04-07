@@ -610,25 +610,25 @@ public class JournalConverterImplTest {
 		_addField(
 			ddmStructureId, null, fields, "document_library",
 			HashMapBuilder.<Locale, List<Serializable>>put(
-				_enLocale, Collections.singletonList("document")
+				_enLocale, Collections.singletonList("")
 			).put(
-				_ptLocale, Collections.singletonList("document")
+				_ptLocale, Collections.singletonList("")
 			).build());
 
 		_addField(
 			ddmStructureId, null, fields, "link_to_layout",
 			HashMapBuilder.<Locale, List<Serializable>>put(
-				_enLocale, Collections.singletonList("link")
+				_enLocale, Collections.singletonList("")
 			).put(
-				_ptLocale, Collections.singletonList("link")
+				_ptLocale, Collections.singletonList("")
 			).build());
 
 		_addField(
 			ddmStructureId, null, fields, "text_area",
 			HashMapBuilder.<Locale, List<Serializable>>put(
-				_enLocale, Collections.singletonList("Sample text area")
+				_enLocale, Collections.singletonList("")
 			).put(
-				_ptLocale, Collections.singletonList("Texto de exemplo")
+				_ptLocale, Collections.singletonList("")
 			).build());
 
 		_addField(
@@ -674,41 +674,41 @@ public class JournalConverterImplTest {
 		_addField(
 			ddmStructureId, null, fields, "text",
 			HashMapBuilder.<Locale, List<Serializable>>put(
-				_enLocale, Collections.singletonList("hello")
+				_enLocale, Collections.singletonList("")
 			).put(
-				_ptLocale, Collections.singletonList("ola")
+				_ptLocale, Collections.singletonList("")
 			).build());
 
 		_addField(
 			ddmStructureId, null, fields, "text_box",
 			HashMapBuilder.<Locale, List<Serializable>>put(
-				_enLocale, Collections.singletonList("value1")
+				_enLocale, Collections.singletonList("")
 			).put(
-				_ptLocale, Collections.singletonList("valor1")
+				_ptLocale, Collections.singletonList("")
 			).build());
 
 		_addField(
 			ddmStructureId, null, fields, "image_1",
 			HashMapBuilder.<Locale, List<Serializable>>put(
-				_enLocale, Collections.singletonList("image1")
+				_enLocale, Collections.singletonList("")
 			).put(
-				_ptLocale, Collections.singletonList("image1")
+				_ptLocale, Collections.singletonList("")
 			).build());
 
 		_addField(
 			ddmStructureId, null, fields, "image_2",
 			HashMapBuilder.<Locale, List<Serializable>>put(
-				_enLocale, Collections.singletonList("image2")
+				_enLocale, Collections.singletonList("")
 			).put(
-				_ptLocale, Collections.singletonList("image2")
+				_ptLocale, Collections.singletonList("")
 			).build());
 
 		_addField(
 			ddmStructureId, null, fields, "image_3",
 			HashMapBuilder.<Locale, List<Serializable>>put(
-				_enLocale, Collections.singletonList("image3")
+				_enLocale, Collections.singletonList("")
 			).put(
-				_ptLocale, Collections.singletonList("image3")
+				_ptLocale, Collections.singletonList("")
 			).build());
 
 		Field fieldsDisplayField = new Field(
@@ -890,9 +890,16 @@ public class JournalConverterImplTest {
 				_enLocale, Collections.singletonList("Servicios")
 			).build());
 
+		_addField(
+			ddmStructureId, null, fields, "subtitulo",
+			HashMapBuilder.<Locale, List<Serializable>>put(
+				_enLocale, Collections.singletonList("")
+			).build());
+
 		Field fieldsDisplayField = new Field(
 			ddmStructureId, DDM.FIELDS_DISPLAY_NAME,
-			"backgroundcolor_INSTANCE_koamvduz,titulo_INSTANCE_ieaastyz,");
+			"backgroundcolor_INSTANCE_koamvduz,titulo_INSTANCE_ieaastyz," +
+				"subtitulo_INSTANCE_lsamnmcz");
 
 		fields.put(fieldsDisplayField);
 

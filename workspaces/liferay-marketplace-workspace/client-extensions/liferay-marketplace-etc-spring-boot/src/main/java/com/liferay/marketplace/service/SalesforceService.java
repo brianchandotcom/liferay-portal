@@ -56,8 +56,12 @@ public class SalesforceService extends BaseService {
 			return new JSONObject(response);
 		}
 		catch (WebClientResponseException webClientResponseException) {
-			return new JSONObject(
-				webClientResponseException.getResponseBodyAsString());
+			_log.error(
+				"Unable to create Salesforce opportunity " +
+					salesforceOpportunity,
+				webClientResponseException);
+
+			return null;
 		}
 	}
 

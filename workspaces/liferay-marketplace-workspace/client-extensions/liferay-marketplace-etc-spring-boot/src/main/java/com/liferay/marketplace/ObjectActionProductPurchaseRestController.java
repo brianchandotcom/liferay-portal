@@ -508,14 +508,7 @@ public class ObjectActionProductPurchaseRestController
 				_marketplaceService.getUserAccount(
 					order.getCreatorEmailAddress())));
 
-		if (!jsonObject.optBoolean("success")) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to create Salesforce opportunity for order ",
-					order.getId(), " message: ",
-					jsonObject.optString("message"), " error: ",
-					jsonObject.optString("error")));
-
+		if (jsonObject == null) {
 			return;
 		}
 

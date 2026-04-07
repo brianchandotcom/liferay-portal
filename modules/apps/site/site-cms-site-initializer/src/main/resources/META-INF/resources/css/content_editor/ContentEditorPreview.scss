@@ -19,6 +19,7 @@
 
 		background: white;
 		height: 100%;
+		max-width: calc(100vw - 500px);
 		position: fixed;
 		right: 0;
 		top: calc(var(--control-menu-container-height) + 56px);

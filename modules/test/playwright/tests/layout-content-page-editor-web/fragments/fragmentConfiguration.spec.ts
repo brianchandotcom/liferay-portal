@@ -411,7 +411,10 @@ test.describe('Advanced Configuration', () => {
 		pageEditorPage,
 		site,
 	}) => {
-		const layouts = {fragment: null, searchBar: null};
+		const layouts: {fragment: Layout | null; searchBar: Layout | null} = {
+			fragment: null,
+			searchBar: null,
+		};
 
 		// Create a page with the Search Bar widget
 
@@ -1475,6 +1478,7 @@ test.describe('Styles Configuration', () => {
 			'5',
 			'px'
 		);
+
 		expect(
 			await pageEditorPage.getFragmentStyle({
 				fragmentId: headingId,
@@ -1570,14 +1574,19 @@ test.describe('Styles Configuration', () => {
 				else if (type === 'color') {
 					await expect(
 						page
-							.getByLabel(label, {exact: true})
-							.getByLabel('Color', {exact: true})
+							.locator('input')
+							.and(
+								page
+									.getByLabel(label, {exact: true})
+									.getByLabel('Color', {exact: true})
+							)
 					).toHaveValue(defaultValue);
 				}
 				else if (type === 'select') {
 					expect(
 						await page
-							.getByLabel(label, {exact: true})
+							.locator('select')
+							.and(page.getByLabel(label, {exact: true}))
 							.evaluate(
 								(node: HTMLSelectElement) =>
 									node.options[node.selectedIndex].text
@@ -1586,7 +1595,9 @@ test.describe('Styles Configuration', () => {
 				}
 				else {
 					await expect(
-						page.getByLabel(label, {exact: true})
+						page
+							.locator('input')
+							.and(page.getByLabel(label, {exact: true}))
 					).toHaveValue(defaultValue);
 				}
 			}

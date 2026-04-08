@@ -5,7 +5,6 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -77,8 +76,7 @@ public class ObjectEntryVersionServiceImpl
 			long objectEntryId, int version)
 		throws PortalException {
 
-		_checkModelResourcePermission(
-			objectEntryId, ObjectActionKeys.OBJECT_ENTRY_HISTORY);
+		_checkModelResourcePermission(objectEntryId, ActionKeys.UPDATE);
 
 		return objectEntryVersionLocalService.getObjectEntryVersion(
 			objectEntryId, version);
@@ -89,8 +87,7 @@ public class ObjectEntryVersionServiceImpl
 			long objectEntryId, int start, int end)
 		throws PortalException {
 
-		_checkModelResourcePermission(
-			objectEntryId, ObjectActionKeys.OBJECT_ENTRY_HISTORY);
+		_checkModelResourcePermission(objectEntryId, ActionKeys.UPDATE);
 
 		return objectEntryVersionLocalService.getObjectEntryVersions(
 			objectEntryId, start, end);
@@ -102,8 +99,7 @@ public class ObjectEntryVersionServiceImpl
 			OrderByComparator<ObjectEntryVersion> orderByComparator)
 		throws PortalException {
 
-		_checkModelResourcePermission(
-			objectEntryId, ObjectActionKeys.OBJECT_ENTRY_HISTORY);
+		_checkModelResourcePermission(objectEntryId, ActionKeys.UPDATE);
 
 		return objectEntryVersionLocalService.getObjectEntryVersions(
 			objectEntryId, start, end, orderByComparator);
@@ -113,8 +109,7 @@ public class ObjectEntryVersionServiceImpl
 	public int getObjectEntryVersionsCount(long objectEntryId)
 		throws PortalException {
 
-		_checkModelResourcePermission(
-			objectEntryId, ObjectActionKeys.OBJECT_ENTRY_HISTORY);
+		_checkModelResourcePermission(objectEntryId, ActionKeys.UPDATE);
 
 		return objectEntryVersionLocalService.getObjectEntryVersionsCount(
 			objectEntryId);

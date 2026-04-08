@@ -1,5 +1,6 @@
 import ClayLink from '@clayui/link';
 import FaroConstants from 'shared/util/constants';
+import Label from '@clayui/label';
 import React from 'react';
 import {AssetIcon, MimeTypes} from 'assets/components/AssetsIcon';
 import {Routes, toRoute} from './router';
@@ -63,7 +64,21 @@ export const columns = {
 				</div>
 			</div>
 		);
-	}
+	},
+	cmsLabelRenderer: ({
+		displayType,
+		label
+	}: {
+		displayType: 'danger' | 'info' | 'secondary' | 'success' | 'warning';
+		label: React.ReactNode;
+	}) => (
+		<Label
+			className='fds-label font-weight-semi-bold rounded'
+			displayType={displayType}
+		>
+			{label}
+		</Label>
+	)
 };
 
 /**

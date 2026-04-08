@@ -59,7 +59,7 @@ export default class ProductPurchaseDXPTypeFree extends ProductPurchase {
 		await HeadlessDXPFreeRequest.createDXPFreeRequest({
 			...this.form,
 			r_orderToDXPFreeActivationKeyRequest_commerceOrderId: order.id,
-		});
+		}).catch(console.error);
 
 		return order;
 	}

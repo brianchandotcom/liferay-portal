@@ -5,6 +5,7 @@
 
 package com.liferay.change.tracking.store.internal;
 
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -16,11 +17,13 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
@@ -101,6 +104,14 @@ public class CTStoreCTEventListener implements CTEventListener {
 					CTCollectionThreadLocal.
 						setProductionModeWithSafeCloseable()) {
 
+				CTSettingsConfiguration ctSettingsConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						CTSettingsConfiguration.class,
+						CompanyThreadLocal.getCompanyId());
+
+				boolean cleanUpCTSContentData =
+					ctSettingsConfiguration.cleanUpCTSContentData();
+
 				for (CTEntry ctEntry : addOrModifiedCTEntries) {
 					CTSContent ctsContent =
 						_ctsContentLocalService.getCTSContent(
@@ -115,9 +126,11 @@ public class CTStoreCTEventListener implements CTEventListener {
 						_ctsContentLocalService.openDataInputStream(
 							ctsContent.getCtsContentId()));
 
-					_ctEntryLocalService.deleteCTEntry(ctEntry, true);
+					if (cleanUpCTSContentData) {
+						_ctEntryLocalService.deleteCTEntry(ctEntry, true);
 
-					_ctsContentLocalService.deleteCTSContent(ctsContent);
+						_ctsContentLocalService.deleteCTSContent(ctsContent);
+					}
 				}
 			}
 			catch (PortalException portalException) {
@@ -159,6 +172,9 @@ public class CTStoreCTEventListener implements CTEventListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTStoreCTEventListener.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

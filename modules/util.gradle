@@ -76,7 +76,7 @@ configurations {
 }
 
 dependencies {
-	generateBranchValidationScriptConfiguration group: "com.liferay", name: "com.liferay.jenkins.results.parser", version: "1.0.1784"
+	generateBranchValidationScriptConfiguration group: "com.liferay", name: "com.liferay.jenkins.results.parser", version: "1.0.1785"
 }
 
 formatSourceCurrentBranch {

@@ -6,5 +6,7 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="GradleDependencyArtifactsCheck" files="sharepoint-soap/sharepoint-soap-repository/build\.gradle" />
+		<suppress checks="GradleRestClientModuleDependenciesCheck" files="saml/saml-admin-rest-client/build\.gradle" />
+		<suppress checks="GradleRestClientModuleDependenciesCheck" files="search-experiences/search-experiences-rest-client/build\.gradle" />
 	</source-check>
 </suppressions>

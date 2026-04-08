@@ -1542,6 +1542,54 @@ test(
 );
 
 test(
+	'Expiration date filter does not allow "from" date to be before today',
+	{tag: '@LPD-78935'},
+	async ({assetsPage, page}) => {
+		const addFilterButton = page.getByRole('button', {name: 'Add Filter'});
+
+		await test.step('Go to All section', async () => {
+			await assetsPage.gotoAll();
+		});
+
+		await test.step('Choose to filter by Expiration Date', async () => {
+			await page.getByRole('button', {name: 'Filter'}).click();
+
+			await page.getByRole('menuitem', {name: 'Expiration Date'}).click();
+		});
+
+		const fromDateInput = page.getByLabel('From');
+		const toDateInput = page.getByLabel('To', {exact: true});
+
+		const fromDate = new Date();
+		const toDate = new Date();
+
+		await test.step('Check that the "Add filter" button is disabled if "from" date is before today', async () => {
+			fromDate.setDate(fromDate.getDate() - 1);
+			await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
+			await expect(addFilterButton).toBeDisabled();
+		});
+
+		await test.step('Check that the "Add filter" button is enabled if "from" date is today or after', async () => {
+			fromDate.setDate(fromDate.getDate() + 2);
+			await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
+			await expect(addFilterButton).toBeEnabled();
+		});
+
+		await test.step('Check that the "Add filter" button is disabled if "to" date is before "from date"', async () => {
+			toDate.setDate(toDate.getDate());
+			await toDateInput.fill(toDate.toISOString().split('T')[0]);
+			await expect(addFilterButton).toBeDisabled();
+		});
+
+		await test.step('Check that the "Add filter" button is enabled if "to" date is after "from date"', async () => {
+			toDate.setDate(toDate.getDate() + 5);
+			await toDateInput.fill(toDate.toISOString().split('T')[0]);
+			await expect(addFilterButton).toBeEnabled();
+		});
+	}
+);
+
+test(
 	'FDS Table content disappears after clicking "Show Details" and then "Expire"',
 	{tag: '@LPD-69267'},
 	async ({apiHelpers, assetsPage, page}) => {

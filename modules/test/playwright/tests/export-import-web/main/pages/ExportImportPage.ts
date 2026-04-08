@@ -227,10 +227,11 @@ export class ExportImportPage {
 
 	async expectPortletCounts(
 		label: string | RegExp,
-		counts: {deletions?: number; items?: number},
 		{
+			counts = {},
 			registrations,
 		}: {
+			counts?: {deletions?: number; items?: number};
 			registrations?: Array<{
 				counts: {deletions?: number; items?: number};
 				label: string | RegExp;

@@ -135,13 +135,9 @@ test(
 
 		await uiElementsPage.clickNewButton();
 
-		await exportImportPage.expectPortletCounts(
-			/^\s*Pages\s*/,
-			{},
-			{
-				registrations: [{counts: {items: 2}, label: 'Master Pages'}],
-			}
-		);
+		await exportImportPage.expectPortletCounts(/^\s*Pages\s*/, {
+			registrations: [{counts: {items: 2}, label: 'Master Pages'}],
+		});
 	}
 );
 
@@ -192,7 +188,7 @@ test('Can see deletion counts at site level', async ({
 	await exportImportPage.deletionsLabel.check();
 
 	await exportImportPage.expectPortletCounts(objectDefinition.name, {
-		items: 2,
+		counts: {items: 2},
 	});
 
 	await apiHelpers.objectEntry.deleteObjectEntry(
@@ -203,8 +199,7 @@ test('Can see deletion counts at site level', async ({
 	await exportImportPage.refreshCountsLink.click();
 
 	await exportImportPage.expectPortletCounts(objectDefinition.name, {
-		deletions: 1,
-		items: 1,
+		counts: {deletions: 1, items: 1},
 	});
 
 	await apiHelpers.objectEntry.deleteObjectEntry(
@@ -215,7 +210,7 @@ test('Can see deletion counts at site level', async ({
 	await exportImportPage.refreshCountsLink.click();
 
 	await exportImportPage.expectPortletCounts(objectDefinition.name, {
-		deletions: 2,
+		counts: {deletions: 2},
 	});
 
 	await exportImportPage.deletionsLabel.uncheck();
@@ -328,29 +323,26 @@ test(
 
 			await exportImportPage.deletionsLabel.check();
 
-			await exportImportPage.expectPortletCounts(
-				'Pages',
-				{deletions: 6},
-				{
-					registrations: [
-						{
-							counts: {deletions: 1},
-							label: 'Display Page Template Folders',
-						},
-						{
-							counts: {deletions: 1},
-							label: 'Display Page Templates',
-						},
-						{counts: {deletions: 1}, label: 'Master Pages'},
-						{
-							counts: {deletions: 1},
-							label: /^\s*Page Templates\s*/,
-						},
-						{counts: {deletions: 1}, label: 'Page Template Sets'},
-						{counts: {deletions: 1}, label: 'Utility Pages'},
-					],
-				}
-			);
+			await exportImportPage.expectPortletCounts('Pages', {
+				counts: {deletions: 6},
+				registrations: [
+					{
+						counts: {deletions: 1},
+						label: 'Display Page Template Folders',
+					},
+					{
+						counts: {deletions: 1},
+						label: 'Display Page Templates',
+					},
+					{counts: {deletions: 1}, label: 'Master Pages'},
+					{
+						counts: {deletions: 1},
+						label: /^\s*Page Templates\s*/,
+					},
+					{counts: {deletions: 1}, label: 'Page Template Sets'},
+					{counts: {deletions: 1}, label: 'Utility Pages'},
+				],
+			});
 		});
 	}
 );

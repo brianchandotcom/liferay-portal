@@ -110,13 +110,16 @@ const TriggerButton = React.forwardRef(
 		return (
 			<ClayButton
 				{...props}
-				aria-label={sub(Liferay.Language.get('select-a-unit'), unit)}
+				aria-label={sub(
+					Liferay.Language.get('select-a-unit-currently-selected-x'),
+					unit
+				)}
 				className="border-0 layout__length-input__button p-1"
 				displayType="secondary"
 				monospaced
 				ref={ref}
 				size="sm"
-				title={Liferay.Language.get('select-units')}
+				title={Liferay.Language.get('select-a-unit')}
 			>
 				{defaultUnit ||
 					(unit === CUSTOM ? (

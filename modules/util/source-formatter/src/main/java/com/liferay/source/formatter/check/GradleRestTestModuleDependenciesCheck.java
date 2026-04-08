@@ -16,11 +16,20 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class GradleRestClientDependenciesCheck extends BaseFileCheck {
+public class GradleRestTestModuleDependenciesCheck extends BaseFileCheck {
+
+	@Override
+	public boolean isModuleSourceCheck() {
+		return true;
+	}
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
+
+		if (!absolutePath.endsWith("-rest-test/build.gradle")) {
+			return content;
+		}
 
 		List<String> dependenciesBlocks =
 			GradleSourceUtil.getDependenciesBlocks(content);
@@ -41,16 +50,19 @@ public class GradleRestClientDependenciesCheck extends BaseFileCheck {
 			while (matcher.find()) {
 				String matched = matcher.group();
 
-				if (!StringUtil.startsWith(
+				if (StringUtil.startsWith(
 						matched, "testIntegrationImplementation")) {
 
-					addMessage(
-						fileName,
-						"Project dependencies \".*-rest-client\" can only be " +
-							"used for \"testIntegrationImplementation\"",
-						SourceUtil.getLineNumber(
-							content, content.indexOf(matched)));
+					continue;
 				}
+
+				addMessage(
+					fileName,
+					"Project dependencies \".*-rest-client\" can only be " +
+						"used for \"testIntegrationImplementation\" in " +
+							"`*-rest-test` modules",
+					SourceUtil.getLineNumber(
+						content, content.indexOf(matched)));
 			}
 		}
 

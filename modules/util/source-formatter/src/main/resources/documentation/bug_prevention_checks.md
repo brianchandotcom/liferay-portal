@@ -60,6 +60,7 @@ GradlePetraModuleDependenciesCheck | .gradle | Checks that dependencies in `petr
 GradlePropertiesCheck | .gradle | Validates property values in gradle build files. |
 GradleProvidedDependenciesCheck | .gradle | Validates the scope of dependencies in build gradle files. |
 [GradleRequiredDependenciesCheck](check/gradle_required_dependencies_check.md#gradlerequireddependenciescheck) | .gradle | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |
+GradleRestClientModuleDependenciesCheck | .gradle | Validates that only Jakarta dependencies can be used in `*-rest-client` modules. |
 GradleRestTestModuleDependenciesCheck | .gradle | Validates the project dependencies `*-rest-client` can only be used for `testIntegrationImplementation` in `*-rest-test` modules. |
 GradleTestDependencyVersionCheck | .gradle | Checks the version for dependencies in gradle build files. |
 GradleTestUtilDeployDirCheck | .gradle | Checks for incorrect use of `deployDir`. |

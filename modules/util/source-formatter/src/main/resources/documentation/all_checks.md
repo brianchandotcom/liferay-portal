@@ -124,6 +124,7 @@ GradlePetraModuleDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#b
 GradlePropertiesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Validates property values in gradle build files. |
 GradleProvidedDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Validates the scope of dependencies in build gradle files. |
 [GradleRequiredDependenciesCheck](check/gradle_required_dependencies_check.md#gradlerequireddependenciescheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |
+GradleRestClientModuleDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Validates that only Jakarta dependencies can be used in `*-rest-client` modules. |
 GradleRestTestModuleDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Validates the project dependencies `*-rest-client` can only be used for `testIntegrationImplementation` in `*-rest-test` modules. |
 GradleStylingCheck | [Styling](styling_checks.md#styling-checks) | .gradle | Applies rules to enforce consistency in code style. |
 [GradleTaskCreationCheck](check/gradle_task_creation_check.md#gradletaskcreationcheck) | [Styling](styling_checks.md#styling-checks) | .gradle | Checks that a task is declared on a separate line before the closure. |

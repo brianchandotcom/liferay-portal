@@ -135,10 +135,10 @@ public class SearchEngineInitializer implements Runnable {
 				_concurrentReindexManager.deleteNextIndex(_companyId);
 			}
 
-			_log.error("Error encountered while reindexing", exception);
+			_log.error("Unable to reindex", exception);
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Reindexing failed");
+				_log.info("Unable to reindex");
 			}
 		}
 		finally {

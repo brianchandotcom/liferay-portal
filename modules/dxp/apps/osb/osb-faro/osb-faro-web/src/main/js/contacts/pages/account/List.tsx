@@ -8,11 +8,8 @@ import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import TotalAccounts from 'contacts/components/account/TotalAccounts';
 import URLConstants from 'shared/util/url-constants';
+import {columns, pagination} from 'shared/util/frontend-data-set';
 import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
-import {
-	frontendDataSetColumns,
-	pagination
-} from 'shared/util/frontend-data-set';
 import {isNil} from 'lodash/fp';
 import {LifecycleStages} from './utils/constants';
 import {Routes, toRoute} from 'shared/util/router';
@@ -168,7 +165,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 											value
 										}) =>
 											value &&
-											frontendDataSetColumns.cmsLabel({
+											columns.cmsLabelRenderer({
 												displayType:
 													lifecycleStagesLabelMap[
 														value
@@ -236,7 +233,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 											apiURL: `/o/contacts/${groupId}/account/industries`,
 											entityFieldType: 'string',
 											id: 'industry',
-											itemKey: 'industry',
+											itemKey: 'name',
 											itemLabel: 'name',
 											label: Liferay.Language.get(
 												'industry'
@@ -248,7 +245,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 											apiURL: `/o/contacts/${groupId}/account/countries`,
 											entityFieldType: 'string',
 											id: 'country',
-											itemKey: 'country',
+											itemKey: 'name',
 											itemLabel: 'name',
 											label: Liferay.Language.get(
 												'country'

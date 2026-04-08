@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -30,6 +31,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -100,6 +102,60 @@ public class NotificationTemplateResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetNotificationTemplatesPage() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testPatchNotificationTemplate() throws Exception {
+		super.testPatchNotificationTemplate();
+
+		NotificationTemplate notificationTemplate =
+			randomNotificationTemplate();
+
+		notificationTemplate.setRecipientType(
+			NotificationRecipientConstants.TYPE_EMAIL);
+		notificationTemplate.setRecipients(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"from", RandomTestUtil.randomString()
+				).put(
+					"fromName",
+					Collections.singletonMap(
+						"en_US", RandomTestUtil.randomString())
+				).put(
+					"to",
+					Collections.singletonMap(
+						"en_US", RandomTestUtil.randomString())
+				).put(
+					"toType", NotificationRecipientConstants.TYPE_EMAIL
+				).build()
+			});
+		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
+
+		notificationTemplate = _addNotificationTemplate(notificationTemplate);
+
+		JSONObject recipientsJSONObject = JSONUtil.put(
+			"from", RandomTestUtil.randomString()
+		).put(
+			"fromName", JSONUtil.put("en_US", RandomTestUtil.randomString())
+		).put(
+			"to", JSONUtil.put("en_US", RandomTestUtil.randomString())
+		).put(
+			"toType", NotificationRecipientConstants.TYPE_EMAIL
+		);
+
+		JSONAssert.assertEquals(
+			recipientsJSONObject.toString(),
+			JSONUtil.getValueAsString(
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"recipients", JSONUtil.put(recipientsJSONObject)
+					).toString(),
+					"notification/v1.0/notification-templates/" +
+						notificationTemplate.getId(),
+					Http.Method.PATCH),
+				"JSONArray/recipients", "JSONObject/0"),
+			JSONCompareMode.LENIENT);
 	}
 
 	@Override

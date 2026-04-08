@@ -1,9 +1,4 @@
 .sv-filter-content {
-	.custom-control-input {
-		accent-color: var(--color-action-primary-default);
-		opacity: 1;
-	}
-
 	.custom-control-outside label {
 		display: inline;
 	}
@@ -22,6 +17,7 @@
 			color: var(--color-neutral-10);
 			font-size: var(--font-size-sm);
 			left: 0;
+			margin-top: 0.0625rem;
 			padding-left: var(--spacer-4);
 			position: absolute;
 			width: 100%;

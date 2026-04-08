@@ -334,6 +334,16 @@ public abstract class BaseAgentInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"instructionDefinitionScope", additionalAssertFieldName)) {
+
+				if (agentInstance.getInstructionDefinitionScope() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("sseEventSinkKey", additionalAssertFieldName)) {
 				if (agentInstance.getSseEventSinkKey() == null) {
 					valid = false;
@@ -495,6 +505,19 @@ public abstract class BaseAgentInstanceResourceTestCase {
 				if (!Objects.deepEquals(
 						agentInstance1.getExternalReferenceCode(),
 						agentInstance2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"instructionDefinitionScope", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						agentInstance1.getInstructionDefinitionScope(),
+						agentInstance2.getInstructionDefinitionScope())) {
 
 					return false;
 				}
@@ -716,6 +739,11 @@ public abstract class BaseAgentInstanceResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("instructionDefinitionScope")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("sseEventSinkKey")) {
@@ -1039,4 +1067,4 @@ public abstract class BaseAgentInstanceResourceTestCase {
 		_agentInstanceResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:169228060
+// LIFERAY-REST-BUILDER-HASH:-1707334826

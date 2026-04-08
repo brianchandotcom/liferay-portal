@@ -184,7 +184,6 @@ resource "helm_release" "alloy" {
 								targets=discovery.kubernetes.nodes.targets
 							}
 							discovery.relabel "liferay_relabel" {
-								targets=discovery.kubernetes.liferay_pods.targets
 								rule {
 									regex="(.*)"
 									replacement="$1:12345"
@@ -199,6 +198,7 @@ resource "helm_release" "alloy" {
 									replacement="liferay"
 									target_label="job"
 								}
+								targets=discovery.kubernetes.liferay_pods.targets
 							}
 							logging {
 								format="logfmt"

@@ -32,6 +32,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectActionNameConstants;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -1009,10 +1010,27 @@ public class ObjectDefinitionResourceImpl
 
 			for (ObjectAction objectAction : objectActions) {
 				com.liferay.object.model.ObjectAction
+					serviceBuilderObjectAction = null;
+
+				if (StringUtil.equals(
+						objectAction.getName(),
+						ObjectActionNameConstants.NAME_ASSIGN_TO_ME) &&
+					GetterUtil.getBoolean(objectAction.getSystem())) {
+
+					serviceBuilderObjectAction =
+						_objectActionLocalService.fetchObjectAction(
+							objectDefinitionId, objectAction.getName());
+
+					if (serviceBuilderObjectAction == null) {
+						continue;
+					}
+				}
+				else {
 					serviceBuilderObjectAction =
 						_objectActionLocalService.fetchObjectAction(
 							objectAction.getExternalReferenceCode(),
 							objectDefinitionId);
+				}
 
 				if (serviceBuilderObjectAction != null) {
 					if (FeatureFlagManagerUtil.isEnabled(

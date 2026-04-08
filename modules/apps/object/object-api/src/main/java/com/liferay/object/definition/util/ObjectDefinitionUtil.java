@@ -128,7 +128,8 @@ public class ObjectDefinitionUtil {
 		"com.liferay.headless.builder.impl", "com.liferay.list.type.service",
 		"com.liferay.mcp.server", "com.liferay.notification.service",
 		"com.liferay.object.service", "com.liferay.site.initializer.cmp",
-		"com.liferay.site.initializer.cms", "com.liferay.site.initializer.dsr"
+		"com.liferay.site.initializer.cms", "com.liferay.site.initializer.dsr",
+		"com.liferay.site.initializer.seo.studio"
 	};
 
 	private static final Map<String, String>

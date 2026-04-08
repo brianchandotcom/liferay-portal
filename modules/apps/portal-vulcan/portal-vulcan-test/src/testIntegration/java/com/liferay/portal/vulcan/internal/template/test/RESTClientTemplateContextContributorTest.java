@@ -64,7 +64,7 @@ public class RESTClientTemplateContextContributorTest {
 				).put(
 					"templateType", "site-initializer"
 				).toString(),
-				"headless-site/v1.0/sites", Http.Method.POST);
+				"headless-admin-site/v1.0/sites", Http.Method.POST);
 
 			HTTPTestUtil.customize(
 			).withoutModulePath(

@@ -126,7 +126,7 @@ export class DataMigrationCenterPage {
 		if ((await this.scopeSelector.all()).length) {
 			this.scopeSelector.selectOption(
 				await this.page
-					.locator('option', {hasText: /^Liferay( DXP)?$/})
+					.locator('option', {hasText: /^Liferay( DXP Site)?$/})
 					.textContent()
 			);
 		}

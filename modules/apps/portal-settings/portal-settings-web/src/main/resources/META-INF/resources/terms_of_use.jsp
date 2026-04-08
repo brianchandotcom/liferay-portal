@@ -39,7 +39,7 @@ TermsOfUseContentProvider termsOfUseContentProvider = (TermsOfUseContentProvider
 
 					Liferay.Util.openConfirmModal({
 						message:
-							'<%= UnicodeLanguageUtil.get(request, "this-will-require-all-users-to-re-accept-the-terms-of-use-are-you-sure-you-want-to-proceed") %>',
+							'<%= UnicodeLanguageUtil.get(request, "this-will-require-all-users-to-reaccept-the-terms-of-use-are-you-sure-you-want-to-proceed") %>',
 						onConfirm: (isConfirmed) => {
 							if (isConfirmed) {
 								submitForm(

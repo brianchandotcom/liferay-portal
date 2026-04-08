@@ -1497,8 +1497,29 @@ test(
 test(
 	'Expiration date filter allows future dates',
 	{tag: '@LPD-69189'},
-	async ({assetsPage, page}) => {
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const file1Title = `Content ${getRandomString()}`;
+
+		const futureDate = new Date();
+
+		futureDate.setDate(futureDate.getDate() + 1);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				expirationDate: futureDate.toISOString(),
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			'Default'
+		);
+
 		await assetsPage.gotoAll();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
 
 		// Choose to filter by Expiration Date
 
@@ -1506,25 +1527,15 @@ test(
 
 		await page.getByRole('menuitem', {name: 'Expiration Date'}).click();
 
-		// Verify that future dates are allowed by checking the max attribute
-
 		const fromDateInput = page.getByLabel('From');
 		const toDateInput = page.getByLabel('To', {exact: true});
 
-		expect(
-			new Date(await fromDateInput.getAttribute('max')).getTime()
-		).toBeNaN();
-		expect(
-			new Date(await toDateInput.getAttribute('max')).getTime()
-		).toBeNaN();
-
-		// Set future From and To dates
+		// Set future From and To dates covering futureDate
 
 		const fromDate = new Date();
 		const toDate = new Date();
 
-		fromDate.setDate(fromDate.getDate() + 5);
-		toDate.setDate(toDate.getDate() + 10);
+		toDate.setDate(toDate.getDate() + 2);
 
 		// Fill in future dates and see that filter label is applied
 
@@ -1537,6 +1548,76 @@ test(
 			page
 				.getByRole('button', {name: /Expiration Date:/})
 				.locator('.label-section')
+		).toBeVisible();
+
+		// Verify that the content is still visible (it was filtered out before the fix)
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Content can be filtered by Review Date',
+	{tag: '@LPD-85206'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const file1Title = `Content ${getRandomString()}`;
+
+		const pastDate = new Date();
+
+		pastDate.setDate(pastDate.getDate() - 1);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				reviewDate: pastDate.toISOString(),
+				title: file1Title,
+			},
+			applicationName,
+			'Default'
+		);
+
+		await assetsPage.gotoAll();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+
+		// Choose to filter by Review Date
+
+		await page.getByRole('button', {name: 'Filter'}).click();
+
+		await page.getByRole('menuitem', {name: 'Review Date'}).click();
+
+		const fromDateInput = page.getByLabel('From');
+		const toDateInput = page.getByLabel('To', {exact: true});
+
+		// Set past From and To dates covering pastDate
+
+		const fromDate = new Date();
+		const toDate = new Date();
+
+		fromDate.setDate(fromDate.getDate() - 2);
+
+		// Fill in dates and see that filter label is applied
+
+		await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
+		await toDateInput.fill(toDate.toISOString().split('T')[0]);
+
+		await page.getByRole('button', {name: 'Add Filter'}).click();
+
+		await expect(
+			page
+				.getByRole('button', {name: /Review Date:/})
+				.locator('.label-section')
+		).toBeVisible();
+
+		// Verify that the content is visible
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
 		).toBeVisible();
 	}
 );

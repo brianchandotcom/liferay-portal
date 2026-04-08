@@ -9,9 +9,12 @@ import React from 'react';
 import TotalAccounts from 'contacts/components/account/TotalAccounts';
 import URLConstants from 'shared/util/url-constants';
 import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
+import {
+	frontendDataSetColumns,
+	pagination
+} from 'shared/util/frontend-data-set';
 import {isNil} from 'lodash/fp';
 import {LifecycleStages} from './utils/constants';
-import {frontendDataSetColumns, pagination} from 'shared/util/frontend-data-set';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {toThousands} from 'shared/util/numbers';

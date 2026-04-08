@@ -413,8 +413,7 @@ public class MirrorsGetTask extends Task {
 					exception) {
 
 			System.out.println(
-				"Unable to download file.\n" +
-					exception.getMessage());
+				"Unable to download file.\n" + exception.getMessage());
 		}
 	}
 

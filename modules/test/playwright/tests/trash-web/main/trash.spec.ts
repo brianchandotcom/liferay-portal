@@ -102,33 +102,5 @@ test(
 				page.getByText('You do not have the required permissions')
 			).toBeVisible();
 		});
-
-		await test.step('Clean up', async () => {
-			const promises = [];
-
-			if (siteOne?.id) {
-				promises.push(
-					apiHelpers.headlessAdminSite.deleteSite(
-						siteOne.externalReferenceCode
-					)
-				);
-			}
-
-			if (siteTwo?.id) {
-				promises.push(
-					apiHelpers.headlessAdminSite.deleteSite(
-						siteTwo.externalReferenceCode
-					)
-				);
-			}
-
-			if (user?.id) {
-				promises.push(
-					apiHelpers.headlessAdminUser.deleteUserAccount(user.id)
-				);
-			}
-
-			await Promise.allSettled(promises);
-		});
 	}
 );

@@ -291,7 +291,7 @@ public class NotificationTemplateResourceImpl
 
 		if (notificationTemplate.getRecipients() != null) {
 			existingNotificationTemplate.setRecipients(
-				notificationTemplate.getRecipients());
+				notificationTemplate::getRecipients);
 		}
 	}
 

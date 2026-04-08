@@ -29,6 +29,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
+		'LPD-34594': {enabled: true},
 	}),
 	loginTest(),
 	structureBuilderPagesTest
@@ -238,22 +239,28 @@ test(
 
 		await page.getByRole('menuitem', {name: 'Delete'}).click();
 
-		expect(page.getByText('Some of the selected files')).toBeVisible();
+		await expect(
+			page.getByText('Some of the selected files')
+		).toBeVisible();
 
 		await page.getByRole('button', {name: 'Delete'}).click();
 
-		await page.reload();
+		await waitForAlert(page, 'Info:Delete action started for 2 assets.', {
+			type: 'info',
+		});
 
 		await expect(
-			page.getByRole('cell', {name: file1Title})
+			page.getByRole('cell', {exact: true, name: file1Title})
 		).not.toBeVisible();
 		await expect(
-			page.getByRole('cell', {name: file2Title})
+			page.getByRole('cell', {exact: true, name: file2Title})
 		).not.toBeVisible();
 
 		await recycleBinPage.goto();
 
-		await expect(page.getByRole('cell', {name: file1Title})).toBeVisible();
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
 	}
 );
 
@@ -311,13 +318,15 @@ test(
 
 		await page.getByRole('button', {name: 'Delete'}).click();
 
-		await page.reload();
+		await waitForAlert(page, 'Info:Delete action started for 2 assets.', {
+			type: 'info',
+		});
 
 		await expect(
-			page.getByRole('cell', {name: file1Title})
+			page.getByRole('cell', {exact: true, name: file1Title})
 		).not.toBeVisible();
 		await expect(
-			page.getByRole('cell', {name: file2Title})
+			page.getByRole('cell', {exact: true, name: file2Title})
 		).not.toBeVisible();
 	}
 );
@@ -370,12 +379,25 @@ test(
 
 		await page.getByRole('menuitem', {name: 'Delete'}).click();
 
-		await page.reload();
+		await waitForAlert(page, 'Info:Delete action started for 2 assets.', {
+			type: 'info',
+		});
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).not.toBeVisible();
+		await expect(
+			page.getByRole('cell', {exact: true, name: file2Title})
+		).not.toBeVisible();
 
 		await recycleBinPage.goto();
 
-		await expect(page.getByRole('cell', {name: file1Title})).toBeVisible();
-		await expect(page.getByRole('cell', {name: file2Title})).toBeVisible();
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+		await expect(
+			page.getByRole('cell', {exact: true, name: file2Title})
+		).toBeVisible();
 	}
 );
 

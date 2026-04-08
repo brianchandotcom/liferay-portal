@@ -7,8 +7,8 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.headless.site.dto.v1_0.Site;
-import com.liferay.headless.site.resource.v1_0.SiteResource;
+import com.liferay.headless.admin.site.dto.v1_0.Site;
+import com.liferay.headless.admin.site.resource.v1_0.SiteResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -161,7 +161,7 @@ public class SiteInitializerClientExtension
 			httpServletRequest
 		).build();
 
-		return siteResource.putSiteByExternalReferenceCode(
+		return siteResource.putSiteSiteInitializer(
 			externalReferenceCode, multipartBody);
 	}
 

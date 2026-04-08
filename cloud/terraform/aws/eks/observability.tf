@@ -123,6 +123,13 @@ resource "helm_release" "alloy" {
 									role="service"
 								}
 							}
+							discovery.kubernetes "liferay_pods" {
+								role="pod"
+								selectors {
+									label="component=liferay"
+									role="pod"
+								}
+							}
 							discovery.kubernetes "nodes" {
 								role="node"
 							}
@@ -174,7 +181,24 @@ resource "helm_release" "alloy" {
 									replacement="/metrics/resource"
 									target_label="__metrics_path__"
 								}
-								targets = discovery.kubernetes.nodes.targets
+								targets=discovery.kubernetes.nodes.targets
+							}
+							discovery.relabel "liferay_relabel" {
+								targets=discovery.kubernetes.liferay_pods.targets
+								rule {
+									regex="(.*)"
+									replacement="$1:12345"
+									source_labels=["__meta_kubernetes_pod_ip"]
+									target_label="__address__"
+								}
+								rule {
+									replacement="/metrics"
+									target_label="__metrics_path__"
+								}
+								rule {
+									replacement="liferay"
+									target_label="job"
+								}
 							}
 							logging {
 								format="logfmt"
@@ -200,6 +224,10 @@ resource "helm_release" "alloy" {
 									ca_file="/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 									insecure_skip_verify=true
 								}
+							}
+							prometheus.scrape "liferay" {
+								forward_to=[prometheus.remote_write.amp.receiver]
+								targets=discovery.relabel.liferay_relabel.output
 							}
 						EOT
 					}

@@ -53,7 +53,7 @@ const LDPOrderSummary = () => {
 
 		productPurchase.setForm({
 			...form,
-			salesforceProject:
+			salesforceProjectId:
 				salesforceProject?.externalReferenceCode as string,
 		});
 

@@ -12,10 +12,10 @@ import ProductPurchase from './ProductPurchase';
 type LDPProvisioningForm = z.infer<typeof zodSchema.ldpProvisioning>;
 
 export default class ProductPurchaseLDP extends ProductPurchase {
-	private form?: LDPProvisioningForm & {salesforceProject: string};
+	private form?: LDPProvisioningForm & {salesforceProjectId: string};
 	protected orderTypeExternalReferenceCode = OrderTypes.ADDONS;
 
-	setForm(form: LDPProvisioningForm & {salesforceProject: string}) {
+	setForm(form: LDPProvisioningForm & {salesforceProjectId: string}) {
 		this.form = form;
 	}
 
@@ -50,7 +50,7 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 						ownerEmailAddress: this.form?.workspaceOwnerEmail,
 						workspaceName: this.form?.workspaceName,
 					},
-					salesforceProject: this.form?.salesforceProject,
+					salesforceProjectId: this.form?.salesforceProjectId,
 				}),
 			},
 		} as Cart;

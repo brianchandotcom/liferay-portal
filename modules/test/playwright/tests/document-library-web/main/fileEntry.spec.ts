@@ -929,7 +929,9 @@ test(
 		);
 
 		await globalMenuPage.goToSite('Global');
-		await apiHelpers.headlessAdminSite.deleteSite(site.externalReferenceCode);
+		await apiHelpers.headlessAdminSite.deleteSite(
+			site.externalReferenceCode
+		);
 		await documentLibraryPage.deleteDocumentType(dTypeTitle);
 
 		await waitForAlert(

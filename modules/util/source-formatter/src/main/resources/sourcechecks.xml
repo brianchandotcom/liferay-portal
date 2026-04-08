@@ -391,7 +391,7 @@
 		</check>
 		<check name="GradlePetraModuleDependenciesCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks that dependencies in `petra` moudule can only contains `petra` dependencies." />
+			<description name="Checks that dependencies in `petra` module can only contains `petra` dependencies." />
 		</check>
 	</source-processor>
 	<source-processor name="GroovySourceProcessor">

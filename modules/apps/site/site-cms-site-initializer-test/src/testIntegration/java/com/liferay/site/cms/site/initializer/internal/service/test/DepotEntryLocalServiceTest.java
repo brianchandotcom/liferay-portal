@@ -211,8 +211,7 @@ public class DepotEntryLocalServiceTest {
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER)));
 
 		String[] assetLibraryMemberObjectEntryActionIds = {
-			ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
-			ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
+			ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD, ActionKeys.VIEW
 		};
 
 		Assert.assertArrayEquals(

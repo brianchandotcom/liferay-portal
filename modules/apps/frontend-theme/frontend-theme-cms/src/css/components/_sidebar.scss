@@ -7,7 +7,9 @@
 	}
 
 	.lfr-layout-structure-item-sidebar & {
-		position: fixed;
+		position: static;
+		transform: none;
+		width: unset;
 	}
 }
 

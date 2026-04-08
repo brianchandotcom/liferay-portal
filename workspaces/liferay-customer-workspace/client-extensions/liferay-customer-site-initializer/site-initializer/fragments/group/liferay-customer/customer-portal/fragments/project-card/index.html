@@ -1,5 +1,6 @@
 [#assign
-	currentURL = (themeDisplay.getURLCurrent()!"")?keep_before("/home")!""
+	currentFriendlyURL = themeDisplay.getURLCurrent()!""
+	currentURL = ([ "/", "" ]?seq_contains(currentFriendlyURL))?then("", currentFriendlyURL?keep_before("/home")!"")
 	koroneikiAccounts = restClient.get("/c/koroneikiaccounts?pageSize=1&sort=dateCreated:desc")
 	lastCreatedProjectERC = ""
 	lastViewedProjectERC = ""

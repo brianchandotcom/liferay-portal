@@ -194,11 +194,11 @@ public class SalesforceOpportunity {
 		Map<String, String> customFields =
 			(Map<String, String>)_order.getCustomFields();
 
-		JSONObject provisioningFormJSONObject = new JSONObject(
-			customFields.getOrDefault("order-metadata", "{}")
-		).getJSONObject(
-			"provisioningForm"
-		);
+		JSONObject orderMetadataJSONObject = new JSONObject(
+			customFields.getOrDefault("order-metadata", "{}"));
+
+		JSONObject provisioningFormJSONObject =
+			orderMetadataJSONObject.getJSONObject("provisioningForm");
 
 		return new JSONObject(
 		).put(
@@ -216,6 +216,9 @@ public class SalesforceOpportunity {
 			).put(
 				_getPrimaryContactJSONObject().put("role", "LDP Administrator")
 			)
+		).put(
+			"projectId",
+			orderMetadataJSONObject.getString("salesforceProjectId")
 		).put(
 			"securityContactEmailAddress", _order.getCreatorEmailAddress()
 		).put(

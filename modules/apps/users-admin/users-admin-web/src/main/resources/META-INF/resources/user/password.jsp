@@ -24,6 +24,11 @@ else {
 	if (!passwordPolicy.isChangeable()) {
 		passwordResetDisabled = true;
 	}
+
+	if (passwordPolicy.isChangeRequired()) {
+		passwordResetDisabled = true;
+		passwordReset = true;
+	}
 }
 %>
 

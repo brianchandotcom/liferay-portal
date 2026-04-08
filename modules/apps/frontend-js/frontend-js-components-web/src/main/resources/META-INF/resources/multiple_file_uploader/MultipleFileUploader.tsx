@@ -200,7 +200,10 @@ export default function MultipleFileUploader({
 				try {
 					const response = await uploadRequest({fileData});
 
-					if ('error' in response && typeof response.error === 'string') {
+					if (
+						'error' in response &&
+						typeof response.error === 'string'
+					) {
 						failedFiles.push({
 							...fileData,
 							errorMessage: response.error,

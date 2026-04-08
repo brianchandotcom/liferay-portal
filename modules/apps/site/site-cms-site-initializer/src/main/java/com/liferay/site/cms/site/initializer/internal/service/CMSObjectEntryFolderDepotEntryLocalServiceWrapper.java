@@ -222,8 +222,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 					externalReferenceCode, companyId);
 
 		String[] assetLibraryMemberObjectEntryActionIds = {
-			ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
-			ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
+			ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD, ActionKeys.VIEW
 		};
 		String[] objectDefinitionActionIds = TransformUtil.transformToArray(
 			_resourceActionLocalService.getResourceActions(

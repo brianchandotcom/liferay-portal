@@ -107,7 +107,8 @@ public class RESTClientHttpServletRequestWrapper
 			return attributeValue;
 		}
 
-		if (VulcanConstants.TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER.equals(
+		if (name.startsWith("jakarta.servlet.include.") ||
+			VulcanConstants.TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER.equals(
 				name)) {
 
 			return null;

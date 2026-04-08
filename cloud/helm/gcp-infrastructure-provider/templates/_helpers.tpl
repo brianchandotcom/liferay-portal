@@ -17,7 +17,3 @@ securityContext:
     seccompProfile:
         type: RuntimeDefault
 {{- end -}}
-
-{{- define "liferay.ksaPrincipal" -}}
-principal://iam.googleapis.com/projects/{{ .Values.gcp.projectNumber }}/locations/global/workloadIdentityPools/{{ .Values.gcp.projectId }}.svc.id.goog/subject/ns/{{ .Release.Namespace }}/sa/{{ .Values.global.backupServiceAccountName }}
-{{- end -}}

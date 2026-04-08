@@ -37,6 +37,6 @@ metadata:
     name: {{ $iamRoleName }}-binding
 spec:
     forProvider:
-        member: {{ include "liferay.ksaPrincipal" . | quote }}
+        member: "principal://iam.googleapis.com/projects/{{ .Values.gcp.projectNumber }}/locations/global/workloadIdentityPools/{{ .Values.gcp.projectId }}.svc.id.goog/subject/ns/{{ .Release.Namespace }}/sa/{{ .Values.serviceAccountName }}"
         project: {{ .Values.gcp.projectId }}
         role: {{ printf "projects/%s/roles/%s" .Values.gcp.projectId $iamRoleName }}

@@ -1,5 +1,3 @@
-global:
-    backupServiceAccountName: "backup-controller"
 clusterBootstrap:
     image: alpine:3
     resources:
@@ -21,3 +19,4 @@ gcp:
     projectNumber: ""
 liferay-subchart-backup-controller:
     enabled: true
+    serviceAccountName: "backup-controller"

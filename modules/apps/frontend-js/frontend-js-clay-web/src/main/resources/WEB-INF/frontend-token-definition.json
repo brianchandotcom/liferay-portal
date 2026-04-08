@@ -1,0 +1,1959 @@
+{
+	"frontendTokenCategories": [
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "primary",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary"
+								}
+							],
+							"name": "colorPrimary",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#0053f0",
+							"editorType": "ColorPicker",
+							"label": "darken-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary-d1"
+								}
+							],
+							"name": "colorPrimaryDarken1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#004ad7",
+							"editorType": "ColorPicker",
+							"label": "darken-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary-d2"
+								}
+							],
+							"name": "colorPrimaryDarken2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#5791ff",
+							"editorType": "ColorPicker",
+							"label": "lighten-0",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary-l0"
+								}
+							],
+							"name": "colorPrimaryLighten0",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#80acff",
+							"editorType": "ColorPicker",
+							"label": "lighten-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary-l1"
+								}
+							],
+							"name": "colorPrimaryLighten1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#b3cdff",
+							"editorType": "ColorPicker",
+							"label": "lighten-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary-l2"
+								}
+							],
+							"name": "colorPrimaryLighten2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f0f5ff",
+							"editorType": "ColorPicker",
+							"label": "lighten-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary-l3"
+								}
+							],
+							"name": "colorPrimaryLighten3",
+							"type": "String"
+						}
+					],
+					"label": "primary",
+					"name": "primaryPalette"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#6b6c7e",
+							"editorType": "ColorPicker",
+							"label": "secondary",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary"
+								}
+							],
+							"name": "colorSecondary",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#393a4a",
+							"editorType": "ColorPicker",
+							"label": "darken-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary-d1"
+								}
+							],
+							"name": "colorSecondaryDarken1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#30313f",
+							"editorType": "ColorPicker",
+							"label": "darken-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary-d2"
+								}
+							],
+							"name": "colorSecondaryDarken2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#9b92a5",
+							"editorType": "ColorPicker",
+							"label": "lighten-0",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary-l0"
+								}
+							],
+							"name": "colorSecondaryLighten0",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#a7a9bc",
+							"editorType": "ColorPicker",
+							"label": "lighten-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary-l1"
+								}
+							],
+							"name": "colorSecondaryLighten1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#cdced9",
+							"editorType": "ColorPicker",
+							"label": "lighten-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary-l2"
+								}
+							],
+							"name": "colorSecondaryLighten2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#e7e7ed",
+							"editorType": "ColorPicker",
+							"label": "lighten-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary-l3"
+								}
+							],
+							"name": "colorSecondaryLighten3",
+							"type": "String"
+						}
+					],
+					"label": "secondary",
+					"name": "secondaryPalette"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#2e5aac",
+							"editorType": "ColorPicker",
+							"label": "info",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "info"
+								}
+							],
+							"name": "colorInfo",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#294f98",
+							"editorType": "ColorPicker",
+							"label": "darken-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "info-d1"
+								}
+							],
+							"name": "colorInfoDarken1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#234584",
+							"editorType": "ColorPicker",
+							"label": "darken-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "info-d2"
+								}
+							],
+							"name": "colorInfoDarken2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#89a7e0",
+							"editorType": "ColorPicker",
+							"label": "lighten-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "info-l1"
+								}
+							],
+							"name": "colorInfoLighten1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#eef2fa",
+							"editorType": "ColorPicker",
+							"label": "lighten-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "info-l2"
+								}
+							],
+							"name": "colorInfoLighten2",
+							"type": "String"
+						}
+					],
+					"label": "info",
+					"name": "infoPalette"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#287d3c",
+							"editorType": "ColorPicker",
+							"label": "success",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "success"
+								}
+							],
+							"name": "colorSuccess",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#226a33",
+							"editorType": "ColorPicker",
+							"label": "darken-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "success-d1"
+								}
+							],
+							"name": "colorSuccessDarken1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#1c5629",
+							"editorType": "ColorPicker",
+							"label": "darken-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "success-d2"
+								}
+							],
+							"name": "colorSuccessDarken2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#5aca75",
+							"editorType": "ColorPicker",
+							"label": "lighten-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "success-l1"
+								}
+							],
+							"name": "colorSuccessLighten1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#edf9f0",
+							"editorType": "ColorPicker",
+							"label": "lighten-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "success-l2"
+								}
+							],
+							"name": "colorSuccessLighten2",
+							"type": "String"
+						}
+					],
+					"label": "success",
+					"name": "successPalette"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#b95000",
+							"editorType": "ColorPicker",
+							"label": "warning",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "warning"
+								}
+							],
+							"name": "colorWarning",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#9f4500",
+							"editorType": "ColorPicker",
+							"label": "darken-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "warning-d1"
+								}
+							],
+							"name": "colorWarningDarken1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#863a00",
+							"editorType": "ColorPicker",
+							"label": "darken-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "warning-d2"
+								}
+							],
+							"name": "colorWarningDarken2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#ff8f39",
+							"editorType": "ColorPicker",
+							"label": "lighten-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "warning-l1"
+								}
+							],
+							"name": "colorWarningLighten1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#fff4ec",
+							"editorType": "ColorPicker",
+							"label": "lighten-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "warning-l2"
+								}
+							],
+							"name": "colorWarningLighten2",
+							"type": "String"
+						}
+					],
+					"label": "warning",
+					"name": "warningPalette"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#da1414",
+							"editorType": "ColorPicker",
+							"label": "danger",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "danger"
+								}
+							],
+							"name": "colorDanger",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#c31212",
+							"editorType": "ColorPicker",
+							"label": "darken-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "danger-d1"
+								}
+							],
+							"name": "colorDangerDarken1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#ab1010",
+							"editorType": "ColorPicker",
+							"label": "darken-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "danger-d2"
+								}
+							],
+							"name": "colorDangerDarken2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f48989",
+							"editorType": "ColorPicker",
+							"label": "lighten-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "danger-l1"
+								}
+							],
+							"name": "colorDangerLighten1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#feefef",
+							"editorType": "ColorPicker",
+							"label": "lighten-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "danger-l2"
+								}
+							],
+							"name": "colorDangerLighten2",
+							"type": "String"
+						}
+					],
+					"label": "danger",
+					"name": "dangerPalette"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#000",
+							"editorType": "ColorPicker",
+							"label": "black",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "black"
+								}
+							],
+							"name": "colorBlack",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#fff",
+							"editorType": "ColorPicker",
+							"label": "white",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "white"
+								}
+							],
+							"name": "colorWhite",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f7f8f9",
+							"editorType": "ColorPicker",
+							"label": "gray-100",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-100"
+								}
+							],
+							"name": "colorGray100",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f1f2f5",
+							"editorType": "ColorPicker",
+							"label": "gray-200",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-200"
+								}
+							],
+							"name": "colorGray200",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#e7e7ed",
+							"editorType": "ColorPicker",
+							"label": "gray-300",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-300"
+								}
+							],
+							"name": "colorGray300",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#cdced9",
+							"editorType": "ColorPicker",
+							"label": "gray-400",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-400"
+								}
+							],
+							"name": "colorGray400",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#a7a9bc",
+							"editorType": "ColorPicker",
+							"label": "gray-500",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-500"
+								}
+							],
+							"name": "colorGray500",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#6b6c7e",
+							"editorType": "ColorPicker",
+							"label": "gray-600",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-600"
+								}
+							],
+							"name": "colorGray600",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#495057",
+							"editorType": "ColorPicker",
+							"label": "gray-700",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-700"
+								}
+							],
+							"name": "colorGray700",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#393a4a",
+							"editorType": "ColorPicker",
+							"label": "gray-800",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-800"
+								}
+							],
+							"name": "colorGray800",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#272833",
+							"editorType": "ColorPicker",
+							"label": "gray-900",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-900"
+								}
+							],
+							"name": "colorGray900",
+							"type": "String"
+						}
+					],
+					"label": "base-colors",
+					"name": "baseColors"
+				}
+			],
+			"label": "color-system",
+			"name": "colorSystem"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "1rem",
+							"editorType": "Length",
+							"label": "spacer",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer"
+								}
+							],
+							"name": "spacer",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0rem",
+							"editorType": "Length",
+							"label": "spacer-0",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-0"
+								}
+							],
+							"name": "spacer0",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.25rem",
+							"editorType": "Length",
+							"label": "spacer-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-1"
+								}
+							],
+							"name": "spacer1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.5rem",
+							"editorType": "Length",
+							"label": "spacer-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-2"
+								}
+							],
+							"name": "spacer2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem",
+							"editorType": "Length",
+							"label": "spacer-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-3"
+								}
+							],
+							"name": "spacer3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.5rem",
+							"editorType": "Length",
+							"label": "spacer-4",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-4"
+								}
+							],
+							"name": "spacer4",
+							"type": "String"
+						},
+						{
+							"defaultValue": "3rem",
+							"editorType": "Length",
+							"label": "spacer-5",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-5"
+								}
+							],
+							"name": "spacer5",
+							"type": "String"
+						},
+						{
+							"defaultValue": "4.5rem",
+							"editorType": "Length",
+							"label": "spacer-6",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-6"
+								}
+							],
+							"name": "spacer6",
+							"type": "String"
+						},
+						{
+							"defaultValue": "6rem",
+							"editorType": "Length",
+							"label": "spacer-7",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-7"
+								}
+							],
+							"name": "spacer7",
+							"type": "String"
+						},
+						{
+							"defaultValue": "7.5rem",
+							"editorType": "Length",
+							"label": "spacer-8",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-8"
+								}
+							],
+							"name": "spacer8",
+							"type": "String"
+						},
+						{
+							"defaultValue": "9rem",
+							"editorType": "Length",
+							"label": "spacer-9",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-9"
+								}
+							],
+							"name": "spacer9",
+							"type": "String"
+						},
+						{
+							"defaultValue": "10rem",
+							"editorType": "Length",
+							"label": "spacer-10",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-10"
+								}
+							],
+							"name": "spacer10",
+							"type": "String"
+						}
+					],
+					"label": "spacers",
+					"name": "spacers"
+				}
+			],
+			"label": "spacing",
+			"name": "spacing"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
+							"label": "font-family-sans-serif",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-family-sans-serif"
+								}
+							],
+							"name": "fontFamilySansSerif",
+							"type": "String"
+						},
+						{
+							"defaultValue": "Georgia, \"Times New Roman\", Times, serif",
+							"label": "font-family-serif",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-family-serif"
+								}
+							],
+							"name": "fontFamilySerif",
+							"type": "String"
+						},
+						{
+							"defaultValue": "SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace",
+							"label": "font-family-monospace",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-family-monospace"
+								}
+							],
+							"name": "fontFamilyMonospace",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:fontFamilySansSerif",
+							"label": "font-family-base",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-family-base"
+								}
+							],
+							"name": "fontFamilyBase",
+							"type": "String",
+							"validValues": [
+								{
+									"label": "sans-serif",
+									"value": "var(--font-family-sans-serif)"
+								},
+								{
+									"label": "serif",
+									"value": "var(--font-family-serif)"
+								},
+								{
+									"label": "monospace",
+									"value": "var(--font-family-monospace)"
+								}
+							]
+						}
+					],
+					"label": "font-families",
+					"name": "fontFamilies"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "1rem",
+							"editorType": "Length",
+							"label": "font-size-base",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-size-base"
+								}
+							],
+							"name": "fontSizeBase",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.25rem",
+							"editorType": "Length",
+							"label": "font-size-lg",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-size-lg"
+								}
+							],
+							"name": "fontSizeLarge",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.875rem",
+							"editorType": "Length",
+							"label": "font-size-sm",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-size-sm"
+								}
+							],
+							"name": "fontSizeSmall",
+							"type": "String"
+						}
+					],
+					"label": "font-size",
+					"name": "fontSize"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "400",
+							"label": "font-weight-normal",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-normal"
+								}
+							],
+							"name": "fontWeightNormal",
+							"type": "String"
+						},
+						{
+							"defaultValue": "600",
+							"label": "font-weight-semi-bold",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-semi-bold"
+								}
+							],
+							"name": "fontWeightSemiBold",
+							"type": "String"
+						},
+						{
+							"defaultValue": "700",
+							"label": "font-weight-bold",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-bold"
+								}
+							],
+							"name": "fontWeightBold",
+							"type": "String"
+						}
+					],
+					"label": "font-weight",
+					"name": "fontWeight"
+				}
+			],
+			"label": "typography",
+			"name": "typography"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorPrimary",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-primary-background-color"
+								}
+							],
+							"name": "btnPrimaryBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-primary-color"
+								}
+							],
+							"name": "btnPrimaryColor",
+							"type": "String"
+						}
+					],
+					"label": "primary",
+					"name": "buttonPrimary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-secondary-background-color"
+								}
+							],
+							"name": "btnSecondaryBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorSecondary",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-secondary-color"
+								}
+							],
+							"name": "btnSecondaryColor",
+							"type": "String"
+						}
+					],
+					"label": "secondary",
+					"name": "buttonSecondary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorSuccess",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-success-background-color"
+								}
+							],
+							"name": "btnSuccessBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-success-color"
+								}
+							],
+							"name": "btnSuccessColor",
+							"type": "String"
+						}
+					],
+					"label": "success",
+					"name": "buttonSuccess"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorInfo",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-info-background-color"
+								}
+							],
+							"name": "btnInfoBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-info-color"
+								}
+							],
+							"name": "btnInfoColor",
+							"type": "String"
+						}
+					],
+					"label": "info",
+					"name": "buttonInfo"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWarning",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-warning-background-color"
+								}
+							],
+							"name": "btnWarningBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-warning-color"
+								}
+							],
+							"name": "btnWarningColor",
+							"type": "String"
+						}
+					],
+					"label": "warning",
+					"name": "buttonWarning"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorDanger",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-danger-background-color"
+								}
+							],
+							"name": "btnDangerBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-danger-color"
+								}
+							],
+							"name": "btnDangerColor",
+							"type": "String"
+						}
+					],
+					"label": "danger",
+					"name": "buttonDanger"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray200",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-light-background-color"
+								}
+							],
+							"name": "btnLightBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray900",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-light-color"
+								}
+							],
+							"name": "btnLightColor",
+							"type": "String"
+						}
+					],
+					"label": "light",
+					"name": "buttonLight"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray900",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-dark-background-color"
+								}
+							],
+							"name": "btnDarkBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray200",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-dark-color"
+								}
+							],
+							"name": "btnDarkColor",
+							"type": "String"
+						}
+					],
+					"label": "dark",
+					"name": "buttonDark"
+				}
+			],
+			"label": "buttons",
+			"name": "buttons"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorPrimaryLighten3",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-primary-background-color"
+								}
+							],
+							"name": "alertPrimaryBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorPrimaryLighten1",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-primary-border-color"
+								}
+							],
+							"name": "alertPrimaryBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorPrimary",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-primary-color"
+								}
+							],
+							"name": "alertPrimaryColor",
+							"type": "String"
+						}
+					],
+					"label": "primary",
+					"name": "alertPrimary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray100",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-secondary-background-color"
+								}
+							],
+							"name": "alertSecondaryBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray400",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-secondary-border-color"
+								}
+							],
+							"name": "alertSecondaryBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorSecondary",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-secondary-color"
+								}
+							],
+							"name": "alertSecondaryColor",
+							"type": "String"
+						}
+					],
+					"label": "secondary",
+					"name": "alertSecondary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorSuccessLighten2",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-success-background-color"
+								}
+							],
+							"name": "alertSuccessBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorSuccessLighten1",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-success-border-color"
+								}
+							],
+							"name": "alertSuccessBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorSuccess",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-success-color"
+								}
+							],
+							"name": "alertSuccessColor",
+							"type": "String"
+						}
+					],
+					"label": "success",
+					"name": "alertSuccess"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorInfoLighten2",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-info-background-color"
+								}
+							],
+							"name": "alertInfoBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorInfoLighten1",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-info-border-color"
+								}
+							],
+							"name": "alertInfoBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorInfo",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-info-color"
+								}
+							],
+							"name": "alertInfoColor",
+							"type": "String"
+						}
+					],
+					"label": "info",
+					"name": "alertInfo"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWarningLighten2",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-warning-background-color"
+								}
+							],
+							"name": "alertWarningBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWarningLighten1",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-warning-border-color"
+								}
+							],
+							"name": "alertWarningBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWarning",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-warning-color"
+								}
+							],
+							"name": "alertWarningColor",
+							"type": "String"
+						}
+					],
+					"label": "warning",
+					"name": "alertWarning"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorDangerLighten2",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-danger-background-color"
+								}
+							],
+							"name": "alertDangerBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorDanger",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-danger-border-color"
+								}
+							],
+							"name": "alertDangerBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorDanger",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-danger-color"
+								}
+							],
+							"name": "alertDangerColor",
+							"type": "String"
+						}
+					],
+					"label": "danger",
+					"name": "alertDanger"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-light-background-color"
+								}
+							],
+							"name": "alertLightBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray100",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-light-border-color"
+								}
+							],
+							"name": "alertLightBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray900",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-light-color"
+								}
+							],
+							"name": "alertLightColor",
+							"type": "String"
+						}
+					],
+					"label": "light",
+					"name": "alertLight"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray800",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-dark-background-color"
+								}
+							],
+							"name": "alertDarkBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray700",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-dark-border-color"
+								}
+							],
+							"name": "alertDarkBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray200",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "alert-dark-color"
+								}
+							],
+							"name": "alertDarkColor",
+							"type": "String"
+						}
+					],
+					"label": "dark",
+					"name": "alertDark"
+				}
+			],
+			"label": "alerts",
+			"name": "alerts"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorPrimary",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-primary-background-color"
+								}
+							],
+							"name": "badgePrimaryBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-primary-color"
+								}
+							],
+							"name": "badgePrimaryColor",
+							"type": "String"
+						}
+					],
+					"label": "primary",
+					"name": "badgePrimary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorSecondaryLighten3",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-secondary-background-color"
+								}
+							],
+							"name": "badgeSecondaryBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray900",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-secondary-color"
+								}
+							],
+							"name": "badgeSecondaryColor",
+							"type": "String"
+						}
+					],
+					"label": "secondary",
+					"name": "badgeSecondary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorSuccess",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-success-background-color"
+								}
+							],
+							"name": "badgeSuccessBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-success-color"
+								}
+							],
+							"name": "badgeSuccessColor",
+							"type": "String"
+						}
+					],
+					"label": "success",
+					"name": "badgeSuccess"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorInfo",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-info-background-color"
+								}
+							],
+							"name": "badgeInfoBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-info-color"
+								}
+							],
+							"name": "badgeInfoColor",
+							"type": "String"
+						}
+					],
+					"label": "info",
+					"name": "badgeInfo"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWarning",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-warning-background-color"
+								}
+							],
+							"name": "badgeWarningBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-warning-color"
+								}
+							],
+							"name": "badgeWarningColor",
+							"type": "String"
+						}
+					],
+					"label": "warning",
+					"name": "badgeWarning"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorDanger",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-danger-background-color"
+								}
+							],
+							"name": "badgeDangerBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "badge-danger-color"
+								}
+							],
+							"name": "badgeDangerColor",
+							"type": "String"
+						}
+					],
+					"label": "danger",
+					"name": "badgeDanger"
+				}
+			],
+			"label": "badges",
+			"name": "badges"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-bg"
+								}
+							],
+							"name": "cardBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "unquote('hsl(from #{$black} h s l / 0.125)')",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-border-color"
+								}
+							],
+							"name": "cardBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--border-radius)",
+							"editorType": "Length",
+							"label": "border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-border-radius"
+								}
+							],
+							"name": "cardBorderRadius",
+							"type": "String"
+						}
+					],
+					"label": "cards",
+					"name": "cards"
+				}
+			],
+			"label": "cards",
+			"name": "cards"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorWhite",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "dropdown-background-color"
+								}
+							],
+							"name": "dropdownBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray300",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "dropdown-border-color"
+								}
+							],
+							"name": "dropdownBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray600",
+							"editorType": "ColorPicker",
+							"label": "item-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "dropdown-item-color"
+								}
+							],
+							"name": "dropdownItemColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorPrimaryLighten3",
+							"editorType": "ColorPicker",
+							"label": "item-hover-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "dropdown-item-hover-background-color"
+								}
+							],
+							"name": "dropdownItemHoverBackgroundColor",
+							"type": "String"
+						}
+					],
+					"label": "dropdowns",
+					"name": "dropdowns"
+				}
+			],
+			"label": "dropdowns",
+			"name": "dropdowns"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "pagination-background-color"
+								}
+							],
+							"name": "paginationBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray600",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "pagination-color"
+								}
+							],
+							"name": "paginationColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "com.liferay.frontend.js.clay.web:colorGray900",
+							"editorType": "ColorPicker",
+							"label": "hover-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "pagination-hover-color"
+								}
+							],
+							"name": "paginationHoverColor",
+							"type": "String"
+						}
+					],
+					"label": "pagination",
+					"name": "pagination"
+				}
+			],
+			"label": "pagination",
+			"name": "pagination"
+		}
+	],
+	"name": "Clay"
+}

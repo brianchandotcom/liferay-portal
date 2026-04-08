@@ -69,9 +69,7 @@ public class LiferayGlobalObjectPostAUIDynamicInclude
 				"text/javascript");
 
 			_renderScript(
-				"await import(`@liferay/language" +
-					"/${Liferay.ThemeDisplay.getLanguageId()}/frontend-js-web" +
-						"/all.js`);",
+				"import '@liferay/language/frontend-js-web/all.js';",
 				httpServletRequest, httpServletResponse.getWriter(), null,
 				"module");
 		}

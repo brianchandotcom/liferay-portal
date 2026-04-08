@@ -4,7 +4,7 @@
 		"node-scripts": "./bin.js"
 	},
 	"com.liferay": {
-		"sha256": "baaed270c8e73a494506779215bdeaf568caf458b06837e4b78aa51b46485e6a"
+		"sha256": "c55502d9c2f7f20dcd5fed1cd6608310c9f239e573e20886348e2cc818cf69a7"
 	},
 	"dependencies": {
 		"@babel/preset-env": "7.24.7",
@@ -24,6 +24,7 @@
 		"@types/jest": "26.0.14",
 		"@types/react-dom": "17.0.3",
 		"@types/vfile-message": "2.0.0",
+		"@typescript-eslint/parser": "^7.8.0",
 		"acorn": "^8.14.0",
 		"acorn-typescript": "^1.4.13",
 		"babel-eslint": "^10.1.0",
@@ -55,6 +56,7 @@
 		"sonda": "^0.7.1",
 		"stylelint": "13.2.0",
 		"tar": "^7.2.0",
+		"typescript": "4.4.2",
 		"unzipper": "^0.11.6"
 	},
 	"exports": {

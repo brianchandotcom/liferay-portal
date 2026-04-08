@@ -12,6 +12,7 @@ import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,6 +48,8 @@ public class FrontendJSWebDynamicJSImportMapsContributor
 		writer.write(FrontendJSWebUtil.getPortalContextPath(_portal));
 		writer.write(
 			LanguageFrontendResourceRequestHandler.LANGUAGE_URI_PREFIX);
+		writer.write(_language.getLanguageId(httpServletRequest));
+		writer.write(StringPool.SLASH);
 		writer.write(StringPool.QUOTE);
 
 		CachingStrategy cachingStrategy =
@@ -112,6 +115,9 @@ public class FrontendJSWebDynamicJSImportMapsContributor
 
 	@Reference
 	private HashedFilesRegistry _hashedFilesRegistry;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

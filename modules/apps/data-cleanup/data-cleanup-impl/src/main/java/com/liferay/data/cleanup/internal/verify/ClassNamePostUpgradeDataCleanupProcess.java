@@ -154,6 +154,11 @@ public class ClassNamePostUpgradeDataCleanupProcess
 								_log.debug(classNotFoundException);
 							}
 						}
+						catch (Exception exception) {
+							_log.error(exception);
+
+							return;
+						}
 					}
 
 					if (clazz == null) {

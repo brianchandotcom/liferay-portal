@@ -166,8 +166,7 @@ public class UserModelListener extends BaseModelListener<User> {
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Unable to get terms of use article configuration",
-					exception);
+					"Unable to get journal service configuration", exception);
 			}
 
 			_auditRouter.route(auditMessage);

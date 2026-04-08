@@ -413,8 +413,8 @@ public class MirrorsGetTask extends Task {
 					exception) {
 
 			System.out.println(
-				"Unable to run GCP commands to download file " +
-					exception.getMessage() + ".");
+				"Unable to download file.\n" +
+					exception.getMessage());
 		}
 	}
 

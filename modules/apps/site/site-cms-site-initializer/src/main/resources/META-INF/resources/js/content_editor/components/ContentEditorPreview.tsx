@@ -8,7 +8,7 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {EVENT_HANDLE_PREVIEW} from './ContentEditorToolbar';
 
@@ -64,6 +64,16 @@ export default function ContentEditorPreview({title}: {title: string}) {
 	}, [isVisible, previewWidth]);
 
 	useEventListener('mouseup', () => setResizing(false), true, window);
+
+	useEventListener(
+		'resize',
+		useCallback(
+			() => setIsVisible(window.document.body.clientWidth >= 992),
+			[]
+		),
+		true,
+		window
+	);
 
 	if (!Liferay.FeatureFlags['LPD-44507']) {
 		return null;

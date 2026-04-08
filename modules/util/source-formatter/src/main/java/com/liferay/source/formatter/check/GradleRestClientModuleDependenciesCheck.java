@@ -24,7 +24,9 @@ public class GradleRestClientModuleDependenciesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!absolutePath.endsWith("-rest-client/build.gradle")) {
+		if (absolutePath.contains("/third-party/") ||
+			!absolutePath.endsWith("-rest-client/build.gradle")) {
+
 			return content;
 		}
 

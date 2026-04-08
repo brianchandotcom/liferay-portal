@@ -23,7 +23,7 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 </c:choose>
 	<c:choose>
 		<c:when test='<%= !Objects.equals(screenNavigationCategoryKey, "details") && Validator.isNotNull(screenNavigationCategoryKey) %>'>
-			<div>
+			<div class="lfr-objects__object-definition-details-management-toolbar">
 				<react:component
 					module="{ObjectManagementToolbar} from object-web"
 					props='<%=

@@ -6,6 +6,7 @@
 import {PanelResizer as Resizer, useObservedMaxWidth} from '@clayui/shared';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -14,10 +15,12 @@ import {EVENT_HANDLE_PREVIEW} from './ContentEditorToolbar';
 import '../../../css/content_editor/ContentEditorPreview.scss';
 
 const PREVIEW_WIDTH_MIN = 500;
+const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';
 
 export default function ContentEditorPreview({title}: {title: string}) {
 	const [isVisible, setIsVisible] = useState<boolean>(false);
-	const [resizeWidth, setResizeWidth] = useState<number>(
+	const [resizeWidth, setResizeWidth] = useSessionState(
+		PREVIEW_WIDTH_SESSION_KEY,
 		window.innerWidth / 2
 	);
 	const [resizing, setResizing] = useState<boolean>(false);
@@ -27,7 +30,7 @@ export default function ContentEditorPreview({title}: {title: string}) {
 	const sidePanelBarRef = useRef<HTMLElement | null>(null);
 
 	const previewWidthMax = useObservedMaxWidth(previewRef);
-	const previewWidth = Math.min(previewWidthMax, resizeWidth);
+	const previewWidth = Math.min(previewWidthMax, resizeWidth!);
 
 	useEffect(() => {
 		contentRef.current = document.querySelector('#content');

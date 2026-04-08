@@ -8,26 +8,26 @@ metadata:
 spec:
     forProvider:
         permissions:
-            - cloudsql.backupRuns.create
-            - cloudsql.backupRuns.delete
-            - cloudsql.databases.list
-            - cloudsql.instances.export
-            - cloudsql.instances.get
-            - cloudsql.instances.list
-            - cloudsql.instances.update
-            - storage.buckets.get
-            - storage.buckets.list
-            - storage.objects.delete
-            - storage.objects.list
-            - storagetransfer.jobs.create
-            - storagetransfer.jobs.delete
-            - storagetransfer.jobs.get
-            - storagetransfer.jobs.run
-            - storagetransfer.operations.get
-            - storagetransfer.operations.list
-            - storagetransfer.projects.getServiceAccount
+            -   cloudsql.backupRuns.create
+            -   cloudsql.backupRuns.delete
+            -   cloudsql.databases.list
+            -   cloudsql.instances.export
+            -   cloudsql.instances.get
+            -   cloudsql.instances.list
+            -   cloudsql.instances.update
+            -   storage.buckets.get
+            -   storage.buckets.list
+            -   storage.objects.delete
+            -   storage.objects.list
+            -   storagetransfer.jobs.create
+            -   storagetransfer.jobs.delete
+            -   storagetransfer.jobs.get
+            -   storagetransfer.jobs.run
+            -   storagetransfer.operations.get
+            -   storagetransfer.operations.list
+            -   storagetransfer.projects.getServiceAccount
         project: {{ .Values.gcp.projectId }}
-        title: "Liferay Backup Controller Role"
+        title: Liferay Backup Controller Role
 ---
 apiVersion: cloudplatform.gcp.m.upbound.io/v1beta1
 kind: ProjectIAMMember
@@ -37,6 +37,6 @@ metadata:
     name: {{ $iamRoleName }}-binding
 spec:
     forProvider:
-        member: "principal://iam.googleapis.com/projects/{{ .Values.gcp.projectNumber }}/locations/global/workloadIdentityPools/{{ .Values.gcp.projectId }}.svc.id.goog/subject/ns/{{ .Release.Namespace }}/sa/{{ .Values.serviceAccountName }}"
+        member: principal://iam.googleapis.com/projects/{{ .Values.gcp.projectNumber }}/locations/global/workloadIdentityPools/{{ .Values.gcp.projectId }}.svc.id.goog/subject/ns/{{ .Release.Namespace }}/sa/{{ .Values.serviceAccountName }}
         project: {{ .Values.gcp.projectId }}
         role: {{ printf "projects/%s/roles/%s" .Values.gcp.projectId $iamRoleName }}

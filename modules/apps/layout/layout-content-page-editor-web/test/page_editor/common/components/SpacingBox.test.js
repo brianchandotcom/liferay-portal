@@ -164,10 +164,14 @@ describe('SpacingBox', () => {
 	let _getComputedStyle;
 
 	beforeEach(() => {
+		Liferay.FeatureFlags['LPD-40054'] = true;
+
 		_getComputedStyle = window.getComputedStyle;
 	});
 
 	afterEach(() => {
+		Liferay.FeatureFlags['LPD-40054'] = false;
+
 		window.getComputedStyle = _getComputedStyle;
 	});
 
@@ -263,7 +267,9 @@ describe('SpacingBox', () => {
 
 			userEvent.click(screen.getByLabelText('padding-left'));
 
-			expect(screen.queryByTitle('select-units')).not.toBeInTheDocument();
+			expect(
+				screen.queryByTitle('select-a-unit')
+			).not.toBeInTheDocument();
 		});
 
 		it('calls onChange when setting a custom value', async () => {

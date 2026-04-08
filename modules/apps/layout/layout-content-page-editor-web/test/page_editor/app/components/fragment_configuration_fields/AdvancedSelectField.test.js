@@ -260,7 +260,7 @@ describe('AdvancedSelectField', () => {
 			value: 'mystyle',
 		});
 
-		expect(screen.getByTitle('select-units')).toBeInTheDocument();
+		expect(screen.getByTitle('select-a-unit')).toBeInTheDocument();
 	});
 
 	it('does not render the Detach button when user does not have update permission', () => {

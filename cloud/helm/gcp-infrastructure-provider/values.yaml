@@ -1,3 +1,5 @@
+global:
+    backupServiceAccountName: "backup-controller"
 clusterBootstrap:
     image: alpine:3
     resources:

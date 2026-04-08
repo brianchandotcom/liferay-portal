@@ -400,6 +400,9 @@ public class ObjectEntryModelDocumentContributor
 				objectEntry.getCompanyId(), "LPD-17564")) {
 
 			document.addDate(Field.DISPLAY_DATE, objectEntry.getDisplayDate());
+			document.addDate(
+				Field.EXPIRATION_DATE, objectEntry.getExpirationDate());
+			document.addDate(Field.REVIEW_DATE, objectEntry.getReviewDate());
 
 			_contributeObjectEntryFolder(
 				document, objectEntry.getObjectEntryFolderId());

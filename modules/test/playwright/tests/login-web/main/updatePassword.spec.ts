@@ -86,6 +86,9 @@ test('LPD-85237: Check if the main content skip link works', async ({page}) => {
 	const skipLink = page.getByRole('link', {name: 'Skip to Main Content'});
 	await expect(skipLink).toHaveAttribute('href', '#main-content');
 
-	await skipLink.click();
-	expect(page.url()).toContain('#main-content');
+	await skipLink.focus();
+	await expect(skipLink).toBeFocused();
+	await page.keyboard.press('Enter');
+
+	await expect(page.url()).toContain('#main-content');
 });

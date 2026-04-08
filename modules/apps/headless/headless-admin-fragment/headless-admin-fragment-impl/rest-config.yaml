@@ -1,0 +1,15 @@
+apiDir: ../headless-admin-fragment-api/src/main/java
+apiPackagePath: com.liferay.headless.admin.fragment
+application:
+    baseURI: /headless-admin-fragment
+    className: HeadlessAdminFragmentApplication
+    name: Liferay.Headless.Admin.Fragment
+author: Rubén Pulido
+clientDir: ../headless-admin-fragment-client/src/main/java
+compatibilityVersion: 15
+forcePredictableOperationId: true
+generateBatch: true
+generateGraphQL: false
+generatePermissions: true
+javaEEPackage: jakarta
+testDir: ../headless-admin-fragment-test/src/testIntegration/java

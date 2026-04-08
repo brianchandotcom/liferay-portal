@@ -24,23 +24,42 @@ public class BaseDBProcessTest {
 
 	@Test
 	public void testGetFixedThreadPoolSize() throws Exception {
-		_testGetFixedThreadPoolSize(1, 1);
+		_testGetFixedThreadPoolSize(DBType.MYSQL, 1, 1);
 
 		Runtime runtime = Runtime.getRuntime();
 
-		_testGetFixedThreadPoolSize(runtime.availableProcessors(), 100);
+		_testGetFixedThreadPoolSize(
+			DBType.MYSQL, runtime.availableProcessors(), 1000);
+
+		_testGetFixedThreadPoolSize(DBType.HYPERSONIC, 1, 1000);
 	}
 
 	private void _testGetFixedThreadPoolSize(
-			int expectedFixedThreadPoolSize, int maximumPoolSize)
+			DBType dbType, int expectedFixedThreadPoolSize, int maximumPoolSize)
 		throws Exception {
 
 		Runtime runtime = Runtime.getRuntime();
 
-		try (MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic =
+		try (MockedStatic<DBManagerUtil> dbManagerUtilMockedStatic =
+				Mockito.mockStatic(DBManagerUtil.class);
+			MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic =
 				Mockito.mockStatic(PortalInstancePool.class);
 			MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
 				PropsUtil.class)) {
+
+			DB db = Mockito.mock(DB.class);
+
+			dbManagerUtilMockedStatic.when(
+				DBManagerUtil::getDB
+			).thenReturn(
+				db
+			);
+
+			Mockito.when(
+				db.getDBType()
+			).thenReturn(
+				dbType
+			);
 
 			portalInstancePoolMockedStatic.when(
 				PortalInstancePool::getCompanyIds

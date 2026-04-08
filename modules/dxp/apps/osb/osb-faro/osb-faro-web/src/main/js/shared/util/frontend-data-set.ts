@@ -10,7 +10,6 @@ export const pagination = {
 	initialPageNumber: cur
 };
 
-
 export const frontendDataSetColumns = {
 	cmsLabel: ({
 		displayType,

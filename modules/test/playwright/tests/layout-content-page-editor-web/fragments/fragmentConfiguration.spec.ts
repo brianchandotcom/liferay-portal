@@ -27,6 +27,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	collectionsPagesTest,
 	featureFlagsTest({
+		'LPD-40054': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	fragmentsPagesTest,
@@ -39,8 +40,8 @@ const test = mergeTests(
 const STYLES = [
 	{defaultValue: 'Align Left', label: 'Text Align', type: 'button'},
 
-	{defaultValue: '#00000000', label: 'Background Color', type: 'color'},
-	{defaultValue: '#1C1C24', label: 'Border Color', type: 'color'},
+	{defaultValue: '00000000', label: 'Background Color', type: 'color'},
+	{defaultValue: '1C1C24', label: 'Border Color', type: 'color'},
 
 	{defaultValue: 'Inherited', label: 'Font Family', type: 'select'},
 	{defaultValue: 'Inherited', label: 'Font Size', type: 'select'},
@@ -1574,12 +1575,10 @@ test.describe('Styles Configuration', () => {
 				else if (type === 'color') {
 					await expect(
 						page
-							.locator('input')
-							.and(
-								page
-									.getByLabel(label, {exact: true})
-									.getByLabel('Color', {exact: true})
-							)
+							.getByLabel(label, {exact: true})
+							.getByRole('textbox', {
+								name: `Color selection is ${defaultValue}.`,
+							})
 					).toHaveValue(defaultValue);
 				}
 				else if (type === 'select') {
@@ -1634,25 +1633,22 @@ test.describe('Styles Configuration', () => {
 			await pageEditorPage.goToConfigurationTab('Styles');
 
 			await page
-				.locator('.layout__dropdown-color-picker__selector')
+				.locator('.layout__color-picker__token-button')
+				.first()
 				.click();
+
+			const colorPalette = page.locator(
+				'.show .layout__color-picker__color-palette'
+			);
 
 			for (const palette of COLOR_PICKER_PALETTES) {
 				await expect(
-					page
-						.locator(
-							'.layout__dropdown-color-picker__color-palette'
-						)
-						.getByText(palette.title)
+					colorPalette.getByText(palette.title)
 				).toBeAttached();
 
 				for (const section of palette.sections) {
 					await expect(
-						page
-							.locator(
-								'.layout__dropdown-color-picker__color-palette'
-							)
-							.getByText(section)
+						colorPalette.getByText(section)
 					).toBeAttached();
 				}
 			}
@@ -1692,7 +1688,9 @@ test.describe('Styles Configuration', () => {
 
 		const backgroundColorInput = page
 			.getByLabel('Background Color')
-			.locator('.layout__color-picker__input');
+			.getByRole('textbox', {
+				name: /Color selection is/,
+			});
 
 		await fillAndClickOutside(page, backgroundColorInput, '#AAA');
 
@@ -1704,6 +1702,6 @@ test.describe('Styles Configuration', () => {
 
 		await fillAndClickOutside(page, backgroundColorInput, '#000');
 
-		await expect(backgroundColorInput).toHaveValue('#000000');
+		await expect(backgroundColorInput).toHaveValue('000000');
 	});
 });

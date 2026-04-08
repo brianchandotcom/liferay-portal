@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
@@ -12,7 +13,14 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
 
-const test = mergeTests(isolatedSiteTest, loginTest(), styleBookPageTest);
+const test = mergeTests(
+	featureFlagsTest({
+		'LPD-40054': {enabled: true},
+	}),
+	isolatedSiteTest,
+	loginTest(),
+	styleBookPageTest
+);
 
 test.beforeEach(async ({site, styleBooksPage}) => {
 	await styleBooksPage.goto(site.friendlyUrlPath);
@@ -29,9 +37,7 @@ test(
 		});
 
 		const valueInput = formGroup.locator('input');
-		const unitButton = formGroup.getByRole('button', {
-			name: 'Select a unit',
-		});
+		const unitButton = formGroup.getByTitle('Select a Unit');
 
 		await test.step('Assert that a token with unit only accepts numeric values', async () => {
 			await styleBooksPage.selectTokenCategory('Spacing');
@@ -55,7 +61,7 @@ test(
 			await test.step(`Change unit to "CUSTOM", set value to "${inputValue}", and assert it identifies the unit`, async () => {
 				await clickAndExpectToBeVisible({
 					autoClick: true,
-					target: page.getByRole('menuitem', {name: 'CUSTOM'}),
+					target: page.getByRole('option', {name: 'CUSTOM'}),
 					trigger: unitButton,
 				});
 

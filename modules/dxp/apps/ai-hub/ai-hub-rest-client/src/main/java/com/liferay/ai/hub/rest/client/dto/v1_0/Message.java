@@ -45,6 +45,31 @@ public class Message implements Cloneable, Serializable {
 
 	protected Chat chat;
 
+	public String getChatbotExternalReferenceCode() {
+		return chatbotExternalReferenceCode;
+	}
+
+	public void setChatbotExternalReferenceCode(
+		String chatbotExternalReferenceCode) {
+
+		this.chatbotExternalReferenceCode = chatbotExternalReferenceCode;
+	}
+
+	public void setChatbotExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			chatbotExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			chatbotExternalReferenceCode =
+				chatbotExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String chatbotExternalReferenceCode;
+
 	public Map<String, ?> getContext() {
 		return context;
 	}
@@ -186,4 +211,4 @@ public class Message implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1557931318
+// LIFERAY-REST-BUILDER-HASH:-1123536041

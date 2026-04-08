@@ -29,8 +29,8 @@
 
 	.sidebar {
 		height: var(--sidebar-layout-height);
-		scroll-behavior: smooth;
 		width: var(--sidebar-layout-width);
+		scroll-behavior: smooth;
 
 		.menubar-primary {
 			.nav-link {

@@ -19,4 +19,4 @@ gcp:
     projectNumber: ""
 liferay-subchart-backup-controller:
     enabled: true
-    serviceAccountName: "backup-controller"
+    serviceAccountName: backup-controller

@@ -713,10 +713,12 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processPendingOrders() throws Exception {
-		Page<Order> page = _getOrdersPage(
-			"orderStatus/any(x:(x eq " + _ORDER_STATUS_PENDING +
-				")) and orderTypeExternalReferenceCode ne 'SOLUTIONS7'",
-			-1, -1);
+		String filter = StringBundler.concat(
+			"orderStatus/any(x:(x eq ", _ORDER_STATUS_PENDING,
+			")) and not (orderTypeExternalReferenceCode in (",
+			"'AI_HUB', 'DXP', 'SOLUTIONS7'))");
+
+		Page<Order> page = _getOrdersPage(filter, -1, -1);
 
 		if (page.getTotalCount() == 0) {
 			if (_log.isInfoEnabled()) {

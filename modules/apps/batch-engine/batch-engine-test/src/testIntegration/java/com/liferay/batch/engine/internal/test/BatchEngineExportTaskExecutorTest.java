@@ -433,7 +433,7 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	@Test
-	public void testExportObjectEntriesIncrementsLastSessionRecorderCount()
+	public void testExportObjectEntriesLastSessionRecorderCount()
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _addPublishedTestObjectDefinition(

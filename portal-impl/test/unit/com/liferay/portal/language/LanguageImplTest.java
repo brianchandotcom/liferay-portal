@@ -28,18 +28,17 @@ public class LanguageImplTest {
 		LanguageImpl languageImpl = new LanguageImpl();
 
 		Assert.assertEquals(
-			"foo;bar;{/*removed: await import('@liferay/language...')*/};baz;",
+			"foo;bar;{/*removed: import '@liferay/language...'*/};baz;",
 			languageImpl.process(
-				null, null,
-				"foo;bar;await import('@liferay/language/foo/all.js');baz;"
+				null, null, "foo;bar;import '@liferay/language/foo/all.js';baz;"
 			).toString());
 		Assert.assertEquals(
-			"foo;{/*removed: await import('@liferay/language...')*/};bar;" +
-				"{/*removed: await import('@liferay/language...')*/};baz;",
+			"foo;{/*removed: import '@liferay/language...'*/};bar;" +
+				"{/*removed: import '@liferay/language...'*/};baz;",
 			languageImpl.process(
 				null, null,
-				"foo;await import('@liferay/language/foo/all.js');bar;" +
-					"await import('@liferay/language/foo/all.js');baz;"
+				"foo;import   '@liferay/language/foo/all.js';bar;" +
+					"import '@liferay/language/foo/all.js';baz;"
 			).toString());
 	}
 

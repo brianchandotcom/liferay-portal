@@ -46,6 +46,14 @@ export default function MultipleFilesUploadModalContent({
 
 	const [space, setSpace] = useState<Space>();
 
+	const formValidation = async () => {
+		const error = (groupId || 0) <= 0;
+
+		setGroupIdError(error);
+
+		return error === false;
+	};
+
 	const getAssetLibraryLink = () => {
 		const assetLibrary = assetLibraries?.find(
 			(assetLibrary) => Number(assetLibrary.groupId) === groupId
@@ -140,6 +148,7 @@ export default function MultipleFilesUploadModalContent({
 
 			<MultipleFileUploader
 				filesToUpload={filesToUpload}
+				formValidation={formValidation}
 				onModalClose={onModalClose}
 				onUploadComplete={onUploadComplete}
 				scopeSelectorElement={

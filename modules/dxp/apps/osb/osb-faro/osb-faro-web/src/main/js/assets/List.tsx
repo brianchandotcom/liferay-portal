@@ -9,7 +9,7 @@ import getCN from 'classnames';
 import React, {useMemo, useRef, useState} from 'react';
 import {AssetIcon} from './components/AssetsIcon';
 import {ClayButtonWithIcon} from '@clayui/button';
-import {columns, pagination} from 'shared/util/frontend-data-set';
+import {columns, pagination, useSnapshots} from 'shared/util/frontend-data-set';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {Heading, Text} from '@clayui/core';
 import {pickBy} from 'lodash';
@@ -35,13 +35,11 @@ const List = () => {
 
 	const [infoPanel, setInfoPanel] = useState(null);
 
+	const snapshots = useSnapshots('assetTable');
+
 	const FrontendDataSet = useFrontendDataSet();
 
 	const sidePanelRef = useRef(null);
-
-	// Disable fetch filter interceptor for now.
-
-	// useEffect(() => createFetchFilterInterceptor(), []);
 
 	let rangeSelectorParams = `rangeKey=${rangeSelectors.rangeKey}`;
 
@@ -154,8 +152,6 @@ const List = () => {
 							}}
 							filters={filters}
 							id='assetTable'
-							// Trick to restart FDS every time the rangeSelectors changes.
-
 							itemsActions={[
 								{
 									data: {
@@ -168,18 +164,23 @@ const List = () => {
 									onClick: setInfoPanel
 								}
 							]}
+							// Trick to restart FDS every time the rangeSelectors changes.
+
 							key={Object.values(rangeSelectors).join()}
 							pagination={pagination}
 							showPagination
+							snapshots={snapshots}
+							snapshotsEnabled
 							views={[
 								{
 									contentRenderer: 'table',
-									default: false,
-									label: 'table',
+									default: true,
+									label: Liferay.Language.get('default-view'),
 									name: 'table',
 									schema: {
 										fields: [
 											{
+												_key: 'assetTitle',
 												contentRenderer:
 													'assetTitleRenderer',
 												fieldName: 'assetTitle',
@@ -192,6 +193,7 @@ const List = () => {
 												truncate: true
 											},
 											{
+												_key: 'assetTypeMetric',
 												fieldName: 'assetType',
 												label: Liferay.Language.get(
 													'type'
@@ -199,6 +201,7 @@ const List = () => {
 												sortable: true
 											},
 											{
+												_key: 'viewsMetric',
 												contentRenderer:
 													'assetMetricRenderer',
 												fieldName: 'viewsMetric',
@@ -208,6 +211,7 @@ const List = () => {
 												sortable: true
 											},
 											{
+												_key: 'impressionsMetric',
 												contentRenderer:
 													'assetMetricRenderer',
 												fieldName: 'impressionsMetric',
@@ -217,6 +221,7 @@ const List = () => {
 												sortable: true
 											},
 											{
+												_key: 'downloadsMetric',
 												contentRenderer:
 													'assetMetricRenderer',
 												fieldName: 'downloadsMetric',

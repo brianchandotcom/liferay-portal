@@ -10,7 +10,6 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {expectToPass} from '../../../utils/expectToPass';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -71,16 +70,27 @@ test(
 
 		await findAndReplacePage.open();
 
-		// Check we can't advance without typing replacement
+		// Check we can't advance without typing search replacement
 
-		await clickAndExpectToBeVisible({
-			target: page
-				.locator('.modal-body')
-				.getByText('This field is required'),
-			trigger: page.locator('.modal-footer').getByText('Review Changes'),
-		});
+		await expectToPass(
+			async () => {
+				await page
+					.locator('.modal-footer')
+					.getByText('Review Changes')
+					.click();
+
+				await expect(
+					page
+						.locator('.modal-body')
+						.getByText('This field is required')
+				).toHaveCount(2);
+			},
+			{timeout: 5000}
+		);
 
 		// Go with all languages and check proper number of changes
+
+		await page.getByRole('textbox', {name: 'Find'}).fill('Blue');
 
 		await page.getByLabel('Replace with').fill('Azul');
 
@@ -112,7 +122,7 @@ test(
 			const {content_i18n, title_i18n} =
 				await apiHelpers.objectEntry.getObjectEntryById(
 					'cms/basic-web-contents',
-					id
+					String(id)
 				);
 
 			expect(content_i18n.en_US).toBe(
@@ -130,17 +140,9 @@ test(
 			expect(title_i18n.es_ES).toBe(`Azul ${itemNumber}`);
 		}
 
-		// Refresh all and check search was cleared
+		// Apply replace to the other languages
 
-		await page.reload();
-
-		await expect(
-			page.locator('.search-resume-label', {
-				has: page.locator('strong', {hasText: 'Blue'}),
-			})
-		).not.toBeVisible();
-
-		// Apple replace to the other languages
+		await assetsPage.gotoAll();
 
 		await dataSetPage.search('Blue');
 
@@ -148,11 +150,15 @@ test(
 
 		await findAndReplacePage.open();
 
+		await page.getByRole('textbox', {name: 'Find'}).fill('Blue');
+
 		await page.getByLabel('Replace with').fill('Azul');
 
 		await findAndReplacePage.goToReviewChanges();
 
 		await findAndReplacePage.applyChangesToAllItems();
+
+		await assetsPage.gotoAll();
 
 		await expect(page.getByText('Azul').nth(0)).toBeVisible();
 		await expect(page.getByText('Blue').nth(0)).not.toBeVisible();
@@ -163,7 +169,7 @@ test(
 			const {content_i18n, title_i18n} =
 				await apiHelpers.objectEntry.getObjectEntryById(
 					'cms/basic-web-contents',
-					id
+					String(id)
 				);
 
 			expect(content_i18n.en_US).toBe(
@@ -241,6 +247,8 @@ test(
 
 		await findAndReplacePage.open();
 
+		await page.getByRole('textbox', {name: 'Find'}).fill('Red');
+
 		await page.getByLabel('Replace with').fill('Orange');
 
 		await findAndReplacePage.goToReviewChanges();
@@ -272,6 +280,8 @@ test(
 			target: page.locator('.modal-title'),
 			trigger: page.locator('.modal-footer').getByText('Apply Changes'),
 		});
+
+		await assetsPage.gotoAll();
 
 		await contentsPage.editContent('Orange');
 

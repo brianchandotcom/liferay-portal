@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.journal.internal.upgrade.v6_1_8.test;
+package com.liferay.journal.internal.upgrade.v6_1_9.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
@@ -119,7 +119,7 @@ public class DDMFieldAttributeUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.journal.internal.upgrade.v6_1_8." +
+		"com.liferay.journal.internal.upgrade.v6_1_9." +
 			"DDMFieldAttributeUpgradeProcess";
 
 	private static final long _STORAGE_ID = 0;

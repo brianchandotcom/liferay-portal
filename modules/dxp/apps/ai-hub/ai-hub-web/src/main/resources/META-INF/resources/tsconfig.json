@@ -1,5 +1,5 @@
 {
-	"@generated": "ad4fd671312b547d96a947fd64c9c6bf5fb1b9a8",
+	"@generated": "b4d3896375ce6c83d89bca92b11bf3415462463e",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,6 +16,12 @@
 			],
 			"@liferay/object-js-components-web": [
 				"../../../../../../../../../apps/object/object-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"dynamic-data-mapping-form-field-type": [
+				"../../../../../../../../../apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"dynamic-data-mapping-form-field-type/api": [
+				"../../../../../../../../../apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/api/api.ts"
 			],
 			"frontend-js-components-web": [
 				"../../../../../../../../../apps/frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
@@ -48,6 +54,9 @@
 		},
 		{
 			"path": "../../../../../../../../../apps/object/object-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../../../apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../../../apps/frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"

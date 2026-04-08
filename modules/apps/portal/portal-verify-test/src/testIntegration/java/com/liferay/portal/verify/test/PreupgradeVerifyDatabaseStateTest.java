@@ -172,7 +172,10 @@ public class PreupgradeVerifyDatabaseStateTest
 	public void testVerifyPreupgradeMissingColumnName() throws Exception {
 		_alterColumnName("UserTracker", "companyId", "companyId_backup LONG");
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				PreupgradeVerifyDatabaseState.class.getName(),
+				LoggerTestUtil.ERROR)) {
+
 			testVerify();
 
 			Assert.fail();
@@ -235,12 +238,20 @@ public class PreupgradeVerifyDatabaseStateTest
 
 				LogEntry logEntry = logEntries.get(0);
 
+				String prefix = "A missing table was detected";
+
+				if (PropsValues.DATABASE_PARTITION_ENABLED) {
+					prefix = StringBundler.concat(
+						prefix, " for company ",
+						PortalInstancePool.getDefaultCompanyId());
+				}
+
 				Assert.assertEquals(
 					StringBundler.concat(
-						"Missing tables detected: [",
+						prefix, StringPool.COLON, StringPool.SPACE,
+						StringPool.OPEN_BRACKET,
 						_getNormalizedName(objectDefinition.getDBTableName()),
-						"] in company ",
-						PortalInstancePool.getDefaultCompanyId()),
+						StringPool.CLOSE_BRACKET),
 					logEntry.getMessage());
 			}
 			finally {
@@ -289,10 +300,19 @@ public class PreupgradeVerifyDatabaseStateTest
 
 				LogEntry logEntry = logEntries.get(0);
 
+				String prefix = "A missing table was detected";
+
+				if (PropsValues.DATABASE_PARTITION_ENABLED) {
+					prefix = StringBundler.concat(
+						prefix, " for company ",
+						TestPropsValues.getCompanyId());
+				}
+
 				Assert.assertEquals(
 					StringBundler.concat(
-						"Missing tables detected: [", tableName,
-						"] in company ", TestPropsValues.getCompanyId()),
+						prefix, StringPool.COLON, StringPool.SPACE,
+						StringPool.OPEN_BRACKET, tableName,
+						StringPool.CLOSE_BRACKET),
 					logEntry.getMessage());
 			}
 			finally {
@@ -342,11 +362,15 @@ public class PreupgradeVerifyDatabaseStateTest
 
 				Set<String> expectedMessages = Set.of(
 					StringBundler.concat(
-						"Missing tables detected: [", tableName,
-						"] in company ", TestPropsValues.getCompanyId()),
+						"A missing table was detected for company ",
+						TestPropsValues.getCompanyId(), StringPool.COLON,
+						StringPool.SPACE, StringPool.OPEN_BRACKET, tableName,
+						StringPool.CLOSE_BRACKET),
 					StringBundler.concat(
-						"Missing views detected: [", viewName, "] in company ",
-						TestPropsValues.getCompanyId()));
+						"A missing view was detected for company ",
+						TestPropsValues.getCompanyId(), StringPool.COLON,
+						StringPool.SPACE, StringPool.OPEN_BRACKET, viewName,
+						StringPool.CLOSE_BRACKET));
 
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -381,7 +405,10 @@ public class PreupgradeVerifyDatabaseStateTest
 
 		_renameView("Release_", "Release_backup");
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				PreupgradeVerifyDatabaseState.class.getName(),
+				LoggerTestUtil.ERROR)) {
+
 			testVerify();
 
 			Assert.fail();
@@ -391,8 +418,10 @@ public class PreupgradeVerifyDatabaseStateTest
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Missing views detected: [", viewName, "] in company ",
-					TestPropsValues.getCompanyId()),
+					"A missing view was detected for company ",
+					TestPropsValues.getCompanyId(), StringPool.COLON,
+					StringPool.SPACE, StringPool.OPEN_BRACKET, viewName,
+					StringPool.CLOSE_BRACKET),
 				exception.getMessage());
 		}
 		finally {
@@ -406,44 +435,73 @@ public class PreupgradeVerifyDatabaseStateTest
 
 		String originalData = serviceComponent.getData();
 
-		try {
-			serviceComponent.setData(StringPool.BLANK);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				PreupgradeVerifyDatabaseState.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-			serviceComponent =
+			try {
+				serviceComponent.setData(StringPool.BLANK);
+
+				serviceComponent =
+					_serviceComponentLocalService.updateServiceComponent(
+						serviceComponent);
+
+				testVerify();
+
+				Assert.fail();
+			}
+			catch (Exception exception) {
+				Set<String> tableNames = DBResourceUtil.parseCreateTableSQL(
+					originalData);
+
+				Set<String> normalizedTableNames = new TreeSet<>(
+					TransformUtil.transform(
+						tableNames, this::_getNormalizedName));
+
+				String prefix = "Stale tables were detected";
+
+				if (PropsValues.DATABASE_PARTITION_ENABLED) {
+					prefix = StringBundler.concat(
+						prefix, " for company ",
+						PortalInstancePool.getDefaultCompanyId());
+				}
+
+				Set<String> expectedMessages = new HashSet<>(
+					Set.of(
+						StringBundler.concat(
+							prefix, StringPool.COLON, StringPool.SPACE,
+							normalizedTableNames)));
+
+				if (PropsValues.DATABASE_PARTITION_ENABLED) {
+					expectedMessages.add(
+						StringBundler.concat(
+							"Stale tables were detected for company ",
+							TestPropsValues.getCompanyId(), StringPool.COLON,
+							StringPool.SPACE, normalizedTableNames));
+				}
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), expectedMessages.size(),
+					logEntries.size());
+
+				Set<String> verifyMessages = new HashSet<>();
+
+				for (LogEntry entry : logEntries) {
+					verifyMessages.add(entry.getMessage());
+				}
+
+				Assert.assertEquals(
+					verifyMessages.toString(), expectedMessages,
+					verifyMessages);
+			}
+			finally {
+				serviceComponent.setData(originalData);
+
 				_serviceComponentLocalService.updateServiceComponent(
 					serviceComponent);
-
-			testVerify();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Set<String> tableNames = DBResourceUtil.parseCreateTableSQL(
-				originalData);
-
-			Set<String> normalizedTableNames = new TreeSet<>(
-				TransformUtil.transform(tableNames, this::_getNormalizedName));
-
-			String expectedMsg = StringBundler.concat(
-				"Stale tables from a previous upgrade detected: ",
-				normalizedTableNames, " in company ",
-				PortalInstancePool.getDefaultCompanyId());
-
-			if (PropsValues.DATABASE_PARTITION_ENABLED) {
-				expectedMsg = StringBundler.concat(
-					expectedMsg,
-					", Stale tables from a previous upgrade detected: ",
-					normalizedTableNames, " in company ",
-					TestPropsValues.getCompanyId());
 			}
-
-			Assert.assertEquals(expectedMsg, exception.getMessage());
-		}
-		finally {
-			serviceComponent.setData(originalData);
-
-			_serviceComponentLocalService.updateServiceComponent(
-				serviceComponent);
 		}
 	}
 

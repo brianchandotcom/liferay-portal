@@ -27,7 +27,7 @@ public class PlaywrightTimeoutFailureMessageGenerator
 			return null;
 		}
 
-		return "Playwright test timed out: " + matcher.group(0);
+		return "Playwright " + matcher.group(0);
 	}
 
 	@Override

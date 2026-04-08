@@ -834,10 +834,12 @@ test(
 
 			await performLogin(page, 'test');
 
-			await apiHelpers.objectEntry.deleteObjectEntry(
-				applicationName,
-				String(objectEntry.id)
-			);
+			if (objectEntry?.id) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					applicationName,
+					String(objectEntry.id)
+				);
+			}
 
 			await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
 				vocabularyId

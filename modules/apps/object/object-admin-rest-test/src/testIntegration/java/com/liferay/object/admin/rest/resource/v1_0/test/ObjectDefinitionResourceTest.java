@@ -35,6 +35,7 @@ import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionNameConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
@@ -886,6 +887,7 @@ public class ObjectDefinitionResourceTest
 		assertValid(postObjectDefinition);
 
 		_testPostObjectDefinitionBatch();
+		_testPostObjectDefinitionWithAssigneeObjectField();
 		_testPostObjectDefinitionWithSystemAggregationObjectField();
 		_testPostObjectDefinitionWithWorkflowDefinitionLinks();
 	}
@@ -2317,6 +2319,22 @@ public class ObjectDefinitionResourceTest
 		return objectDefinition;
 	}
 
+	private void _assertAssignToMeObjectAction(
+		ObjectDefinition objectDefinition) {
+
+		ObjectAction[] objectActions = objectDefinition.getObjectActions();
+
+		Assert.assertEquals(
+			Arrays.toString(objectActions), 1, objectActions.length);
+
+		ObjectAction objectAction = objectActions[0];
+
+		Assert.assertEquals(
+			ObjectActionNameConstants.NAME_ASSIGN_TO_ME,
+			objectAction.getName());
+		Assert.assertTrue(objectAction.getSystem());
+	}
+
 	private void _assertGetObjectDefinitionsPageWithFilter(
 			List<ObjectDefinition> expectedObjectDefinitions,
 			String filterString)
@@ -3054,6 +3072,39 @@ public class ObjectDefinitionResourceTest
 		Assert.assertNotNull(
 			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
 				objectDefinition2.getExternalReferenceCode()));
+	}
+
+	private void _testPostObjectDefinitionWithAssigneeObjectField()
+		throws Exception {
+
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setEnableObjectEntrySubscription(false);
+		randomObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.ASSIGNEE;
+						DBType = ObjectField.DBType.LONG;
+						label = RandomTestUtil.randomLanguageIdStringMap();
+						name = StringUtil.randomId();
+					}
+				}
+			});
+
+		ObjectDefinition postObjectDefinition =
+			testPostObjectDefinition_addObjectDefinition(
+				randomObjectDefinition);
+
+		_assertAssignToMeObjectAction(postObjectDefinition);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			postObjectDefinition.getId());
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			postObjectDefinition);
+
+		_assertAssignToMeObjectAction(postObjectDefinition);
 	}
 
 	private void _testPostObjectDefinitionWithSystemAggregationObjectField()

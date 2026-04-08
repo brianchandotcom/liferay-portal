@@ -72,12 +72,8 @@ import org.osgi.framework.launch.Framework;
 public abstract class BaseLicenseTestCase implements Serializable {
 
 	public static SafeCloseable disableValidateWithSafeCloseable() {
-		ResettableClassFileTransformer resettableClassFileTransformer =
-			_transformMethod(ReflectionsHolder._validateMethod, true);
-
-		return () -> resettableClassFileTransformer.reset(
-			ReflectionsHolder._instrumentation,
-			AgentBuilder.RedefinitionStrategy.RETRANSFORMATION);
+		return setReturnValueWithSafeCloseable(
+			ReflectionsHolder._validateMethod, true);
 	}
 
 	public static boolean isReleaseBundle() {
@@ -88,13 +84,20 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return false;
 	}
 
-	public static SafeCloseable setVersionWithSafeCloseable(String version) {
+	public static SafeCloseable setReturnValueWithSafeCloseable(
+		Method method, Object result) {
+
 		ResettableClassFileTransformer resettableClassFileTransformer =
-			_transformMethod(ReflectionsHolder._versionMethod, version);
+			_transformMethod(method, result);
 
 		return () -> resettableClassFileTransformer.reset(
 			ReflectionsHolder._instrumentation,
 			AgentBuilder.RedefinitionStrategy.RETRANSFORMATION);
+	}
+
+	public static SafeCloseable setVersionWithSafeCloseable(String version) {
+		return setReturnValueWithSafeCloseable(
+			ReflectionsHolder._versionMethod, version);
 	}
 
 	public void assertBundlesExisted(String... bundleNames) {
@@ -252,20 +255,18 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		throws Exception {
 
 		return deployFreeTierPortalLicense(
-			_FREE_TIER_DOMAIN, StringPool.BLANK, System.currentTimeMillis(),
-			validityPeriod);
+			_FREE_TIER_DOMAIN, StringPool.BLANK, validityPeriod);
 	}
 
 	public File deployFreeTierPortalLicense(String domain, long validityPeriod)
 		throws Exception {
 
 		return deployFreeTierPortalLicense(
-			domain, StringPool.BLANK, System.currentTimeMillis(),
-			validityPeriod);
+			domain, StringPool.BLANK, validityPeriod);
 	}
 
 	public File deployFreeTierPortalLicense(
-			String domain, String key, long startTime, long validityPeriod)
+			String domain, String key, long validityPeriod)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(20);
@@ -281,7 +282,11 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		sb.append(_FREE_TIER_LICENSE_TYPE);
 		sb.append("</license-type><license-version>6</license-version>");
 		sb.append("<start-date>");
+
+		long startTime = System.currentTimeMillis();
+
 		sb.append(_DATE_FORMAT.format(new Date(startTime)));
+
 		sb.append("</start-date><expiration-date>");
 		sb.append(_DATE_FORMAT.format(new Date(startTime + validityPeriod)));
 		sb.append("</expiration-date>");
@@ -466,6 +471,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return value;
 	}
 
+	protected static Class<?> getValidateClass() {
+		return ReflectionsHolder._validateClass;
+	}
+
 	protected void assertPortalInvalidatedWithBrokenFile(
 			String fileName, String failMessage)
 		throws Exception {
@@ -515,10 +524,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 	protected String getPortalProductId() {
 		return getProperty("product.id.portal");
-	}
-
-	protected Class<?> getValidateClass() {
-		return ReflectionsHolder._validateClass;
 	}
 
 	protected String hitHomePage(String host, int port) throws Exception {

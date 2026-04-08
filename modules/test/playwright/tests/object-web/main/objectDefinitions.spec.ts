@@ -1062,6 +1062,73 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		).toBeHidden();
 	});
 
+	test('can view the object management toolbar in different tabs.', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectDefinitionExternalReferenceCode =
+			'ObjectDefinitionExternalReferenceCode' + getRandomInt();
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				enableFormContainer: true,
+				externalReferenceCode: objectDefinitionExternalReferenceCode,
+				label: {
+					en_US: objectDefinitionLabel,
+				},
+				name: 'ObjectDefinitionName' + getRandomInt(),
+				pluralLabel: {
+					en_US: 'ObjectDefinitionsLabel' + getRandomInt(),
+				},
+				scope: 'company',
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		const tabs = [
+			'Details',
+			'Fields',
+			'Relationships',
+			'Actions',
+			'Views',
+			'Validations',
+			'State Manager',
+		];
+
+		for (const tab of tabs) {
+			await page.getByRole('link', {name: tab}).click();
+
+			await expect(
+				page.getByRole('heading', {
+					level: 3,
+					name: objectDefinition.label['en_US'],
+				})
+			).toBeVisible();
+
+			await expect(
+				page.getByLabel('Edit External Reference Code')
+			).toBeVisible();
+
+			await expect(
+				page.getByText(objectDefinition.externalReferenceCode)
+			).toBeVisible();
+
+			await expect(
+				page.getByText(objectDefinition.id.toString())
+			).toBeVisible();
+		}
+	});
+
 	test('cannot publish definition with duplicate friendlyURL prefix', async ({
 		apiHelpers,
 		editObjectDetailsPage,

@@ -388,6 +388,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that dependencies in `petra` module can only contains `petra` dependencies." />
 		</check>
+		<check name="GradleRestClientModuleDependenciesCheck">
+			<category name="Bug Prevention" />
+			<description name="Validates that only Jakarta dependencies can be used in `*-rest-client` modules." />
+		</check>
 		<check name="GradleRestTestModuleDependenciesCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates the project dependencies `*-rest-client` can only be used for `testIntegrationImplementation` in `*-rest-test` modules." />

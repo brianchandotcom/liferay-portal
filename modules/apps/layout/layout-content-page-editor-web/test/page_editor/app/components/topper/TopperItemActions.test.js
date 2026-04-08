@@ -107,6 +107,10 @@ const renderTopperItemActions = ({
 };
 
 describe('TopperItemActions', () => {
+	afterEach(() => {
+		Liferay.FeatureFlags['LPS-169837'] = false;
+	});
+
 	it('does not open TopperItemActions if disabled', async () => {
 		const {baseElement} = renderTopperItemActions({isDisabled: true});
 
@@ -175,7 +179,17 @@ describe('TopperItemActions', () => {
 		expect(screen.queryByText('save-composition')).not.toBeInTheDocument();
 	});
 
+	it('does not render add-rule action if feature flag is disabled', () => {
+		Liferay.FeatureFlags['LPS-169837'] = false;
+
+		renderTopperItemActions({itemId: 'itemId3'});
+
+		expect(screen.queryByText('add-rule')).not.toBeInTheDocument();
+	});
+
 	it('calls openRulesModal with a readOnly action when clicking add-rule', async () => {
+		Liferay.FeatureFlags['LPS-169837'] = true;
+
 		renderTopperItemActions({itemId: 'itemId3'});
 
 		await userEvent.click(screen.getByText('add-rule'));

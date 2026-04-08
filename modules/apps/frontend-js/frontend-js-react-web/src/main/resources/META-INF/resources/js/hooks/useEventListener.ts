@@ -19,7 +19,7 @@ export default function useEventListener(
 	eventName: string,
 	handler: EventListenerOrEventListenerObject,
 	phase: boolean,
-	target: Node
+	target: EventTarget
 ) {
 	useEffect(() => {
 		if (target) {

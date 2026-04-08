@@ -87,7 +87,8 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 
 	private static final Set<String> _excludedSiteInitializerKeys = Set.of(
 		"com.liferay.site.initializer.cmp", "com.liferay.site.initializer.cms",
-		"com.liferay.site.initializer.dsr");
+		"com.liferay.site.initializer.dsr",
+		"com.liferay.site.initializer.seo.studio");
 
 	private ServiceTrackerMap<String, SiteInitializer> _serviceTrackerMap;
 

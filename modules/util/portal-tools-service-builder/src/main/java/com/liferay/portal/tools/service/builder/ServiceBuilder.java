@@ -182,6 +182,8 @@ public class ServiceBuilder {
 		String inputFilesDirName = arguments.get("service.input.files.dir");
 
 		if (Validator.isNotNull(inputFilesDirName)) {
+			_gitSearchStartDirName = inputFilesDirName;
+
 			List<String> apiModulePaths = _processModuleServiceFiles(
 				Paths.get(inputFilesDirName), arguments);
 
@@ -6329,7 +6331,7 @@ public class ServiceBuilder {
 
 	private boolean _hasLocalChanges(File propsFile) throws Exception {
 		for (String localChangesFileName :
-				GitUtil.getLocalChangesFileNames("")) {
+				GitUtil.getLocalChangesFileNames(_gitSearchStartDirName)) {
 
 			if (localChangesFileName.equals(propsFile.getPath())) {
 				return true;
@@ -8696,6 +8698,7 @@ public class ServiceBuilder {
 		StringBundler.concat(
 			"public .* get.*", Pattern.quote("("), "|public boolean is.*",
 			Pattern.quote("(")));
+	private static String _gitSearchStartDirName = "";
 	private static final List<String> _highCardinalityColumnNames =
 		Arrays.asList("externalReferenceCode", "uuid_");
 	private static final ClassLoader _negativeCachingClassLoader;

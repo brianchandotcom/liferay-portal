@@ -181,7 +181,7 @@ const SitesSelector = ({
 					</label>
 
 					<ItemSelector
-						apiURL={`${location.origin}/o/headless-site/v1.0/sites?active=true`}
+						apiURL={`${location.origin}/o/headless-admin-site/v1.0/sites?active=true`}
 						id="siteSelector"
 						items={site ? [site] : []}
 						onItemsChange={(items: Site[]) => {

@@ -13,12 +13,20 @@ const outdir = path.resolve('build', 'node', 'packageRunBuild', 'resources');
 /* doHover function known issue: Expected Parser stream to be available
 https://github.com/graphql/graphiql/issues/4157 */
 
+const graphiqlReactPath = path.dirname(
+	require.resolve('@graphiql/react/package.json')
+);
+
 const monacoEditorPath = path.dirname(
-	require.resolve('monaco-editor/package.json')
+	require.resolve('monaco-editor/package.json', {
+		paths: [graphiqlReactPath],
+	})
 );
 
 const monacoGraphqlPath = path.dirname(
-	require.resolve('monaco-graphql/package.json')
+	require.resolve('monaco-graphql/package.json', {
+		paths: [graphiqlReactPath],
+	})
 );
 
 module.exports = {

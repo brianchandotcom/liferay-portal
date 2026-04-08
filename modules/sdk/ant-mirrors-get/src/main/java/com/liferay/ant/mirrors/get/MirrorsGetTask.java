@@ -376,10 +376,6 @@ public class MirrorsGetTask extends Task {
 
 		try {
 			if (gcpCredentialsFile != null) {
-				System.out.println(
-					"Activating service account with " + gcpCredentialsFile +
-						".");
-
 				Process process = _executeCommands(
 					new String[] {
 						"gcloud", "auth", "activate-service-account",

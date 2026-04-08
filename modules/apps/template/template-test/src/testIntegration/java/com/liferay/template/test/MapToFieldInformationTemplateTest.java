@@ -225,7 +225,8 @@ public class MapToFieldInformationTemplateTest {
 			_segmentsExperienceId);
 
 		for (String string : strings) {
-			Assert.assertEquals(html, count, StringUtil.count(html, string));
+			Assert.assertEquals(
+				html, count, StringUtil.count(html, string + "</h1>"));
 		}
 	}
 

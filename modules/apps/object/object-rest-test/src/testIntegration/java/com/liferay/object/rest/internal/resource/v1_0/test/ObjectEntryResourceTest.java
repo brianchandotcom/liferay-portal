@@ -16459,17 +16459,11 @@ public class ObjectEntryResourceTest {
 			"update", _getActionValue(href, "PATCH")
 		).put(
 			"versions",
-			() -> {
-				if (!objectDefinition.isEnableObjectEntryHistory()) {
-					return null;
-				}
-
-				return _getActionValue(
-					StringBundler.concat(
-						scopedEndpoint, "/by-external-reference-code/",
-						externalReferenceCode, "/versions"),
-					"GET");
-			}
+			_getActionValue(
+				StringBundler.concat(
+					scopedEndpoint, "/by-external-reference-code/",
+					externalReferenceCode, "/versions"),
+				"GET")
 		).build();
 	}
 

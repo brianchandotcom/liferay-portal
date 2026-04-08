@@ -891,7 +891,6 @@ test(
 		documentLibraryPage,
 		globalMenuPage,
 		page,
-		site,
 		siteSettingsLocalizationPage,
 	}) => {
 		const dTypeTitle = getRandomString();
@@ -900,6 +899,10 @@ test(
 			dTypeTitle,
 			'/global'
 		);
+
+		const site = await apiHelpers.headlessAdminSite.postSite({
+			name: getRandomString(),
+		});
 
 		await siteSettingsLocalizationPage.setCustomDefaultLanguage(
 			'Spanish (Spain)',

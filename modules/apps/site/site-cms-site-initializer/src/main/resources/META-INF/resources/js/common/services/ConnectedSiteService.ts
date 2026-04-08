@@ -36,7 +36,7 @@ async function getConnectedSitesFromSpace(externalReferenceCode: string) {
 
 async function getAllSites() {
 	return await ApiHelper.get<{items: Site[]}>(
-		`/o/headless-site/v1.0/sites?active=true`
+		`/o/headless-admin-site/v1.0/sites?active=true`
 	);
 }
 

@@ -74,7 +74,7 @@ export default function getLinkerPlugin(
 				async (info) => {
 					const {importer, kind, path} = info;
 
-					// Resolve exported module locally inside export briges so
+					// Resolve exported module locally inside export bridges so
 					// that it is bundled instead of linked.
 
 					if (moduleName !== 'main' && path === moduleName) {
@@ -84,7 +84,10 @@ export default function getLinkerPlugin(
 					// Leave DXP runtime URLs untouched as they are trusted to
 					// be already correct.
 
-					if (path.includes('/__liferay__/')) {
+					if (
+						path.includes('/__liferay__/') ||
+						path.startsWith('@liferay/language')
+					) {
 						return {
 							external: true,
 							path,

@@ -92,8 +92,8 @@ public class PreupgradeVerifyCompanyUsersTest
 			}
 			catch (Exception exception) {
 				Set<String> expectedMessages = Set.of(
-					"No admin user found was for company " + _companyId,
-					"No guest user found was for company " + _companyId);
+					"No admin user was found for company " + _companyId,
+					"No guest user was found for company " + _companyId);
 
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 

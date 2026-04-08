@@ -131,14 +131,23 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 				dbInspector, missingTableNames);
 
 			if (!missingTableNames.isEmpty()) {
+				String prefix = (missingTableNames.size() == 1) ?
+					"A missing table was detected" :
+						"Missing tables were detected";
+
+				if (PropsValues.DATABASE_PARTITION_ENABLED) {
+					prefix = StringBundler.concat(
+						prefix, " for company ",
+						CompanyThreadLocal.getNonsystemCompanyId());
+				}
+
 				_verifyMessages.add(
 					StringBundler.concat(
-						"Missing tables detected: ",
+						prefix, StringPool.COLON, StringPool.SPACE,
 						new TreeSet<>(
 							TransformUtil.transform(
-								missingTableNames, dbInspector::normalizeName)),
-						" in company ",
-						CompanyThreadLocal.getNonsystemCompanyId()));
+								missingTableNames,
+								dbInspector::normalizeName))));
 			}
 
 			Set<String> databaseViewNames = new TreeSet<>(
@@ -149,11 +158,15 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 			viewNames.removeAll(databaseViewNames);
 
 			if (!viewNames.isEmpty()) {
+				String prefix = (viewNames.size() == 1) ?
+					"A missing view was detected for company " :
+						"Missing views were detected for company ";
+
 				_verifyMessages.add(
 					StringBundler.concat(
-						"Missing views detected: ", new TreeSet<>(viewNames),
-						" in company ",
-						CompanyThreadLocal.getNonsystemCompanyId()));
+						prefix, CompanyThreadLocal.getNonsystemCompanyId(),
+						StringPool.COLON, StringPool.SPACE,
+						new TreeSet<>(viewNames)));
 			}
 		}
 
@@ -176,12 +189,19 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		previousUpgradeStaleTableNames.retainAll(targetVersionNewTableNames);
 
 		if (!previousUpgradeStaleTableNames.isEmpty()) {
+			String prefix = (previousUpgradeStaleTableNames.size() == 1) ?
+				"A stale table was detected" : "Stale tables were detected";
+
+			if (PropsValues.DATABASE_PARTITION_ENABLED) {
+				prefix = StringBundler.concat(
+					prefix, " for company ",
+					CompanyThreadLocal.getNonsystemCompanyId());
+			}
+
 			_verifyMessages.add(
 				StringBundler.concat(
-					"Stale tables from a previous upgrade detected: ",
-					new TreeSet<>(previousUpgradeStaleTableNames),
-					" in company ",
-					CompanyThreadLocal.getNonsystemCompanyId()));
+					prefix, StringPool.COLON, StringPool.SPACE,
+					new TreeSet<>(previousUpgradeStaleTableNames)));
 		}
 
 		_verifyColumns(dbInspector);

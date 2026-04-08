@@ -126,6 +126,9 @@ const DateRangeFilter = ({
 		selectedData?.to && formatDateObject(selectedData.to)
 	);
 
+	const [fromDateValid, setFromDateValid] = useState(true);
+	const [toDateValid, setToDateValid] = useState(true);
+
 	let actionType = 'edit';
 
 	if (selectedData && !fromValue && !toValue) {
@@ -136,9 +139,7 @@ const DateRangeFilter = ({
 		actionType = 'add';
 	}
 
-	let submitDisabled = true;
-
-	if (
+	const isChanged =
 		actionType === 'delete' ||
 		((!selectedData || !selectedData.from) && fromValue) ||
 		((!selectedData || !selectedData.to) && toValue) ||
@@ -147,28 +148,34 @@ const DateRangeFilter = ({
 			fromValue !== formatDateObject(selectedData.from)) ||
 		(selectedData &&
 			selectedData.to &&
-			toValue !== formatDateObject(selectedData.to))
-	) {
-		submitDisabled = false;
-	}
+			toValue !== formatDateObject(selectedData.to));
+
+	const submitDisabled = !isChanged || !fromDateValid || !toDateValid;
 
 	return (
 		<>
 			<ClayDropDown.Caption>
-				<div className="form-group">
+				<div className="fds-date-range form-group">
 					<ClayForm.Group className="form-group-sm">
 						<label htmlFor={`from-${id}`}>
 							{Liferay.Language.get('from')}
 						</label>
 
 						<input
-							className="form-control"
+							className="fds-from-date form-control"
 							id={`from-${id}`}
 							max={toValue || (max && formatDateObject(max))}
 							min={min && formatDateObject(min)}
-							onChange={(event) =>
-								setFromValue(event.target.value)
-							}
+							onBlur={(event) => {
+								event.target.reportValidity();
+
+								setFromDateValid(event.target.checkValidity());
+							}}
+							onChange={(event) => {
+								setFromValue(event.target.value);
+
+								setFromDateValid(event.target.checkValidity());
+							}}
 							pattern="\d{4}-\d{2}-\d{2}"
 							placeholder={placeholder || 'yyyy-mm-dd'}
 							type="date"
@@ -182,11 +189,20 @@ const DateRangeFilter = ({
 						</label>
 
 						<input
-							className="form-control"
+							className="fds-to-date form-control"
 							id={`to-${id}`}
 							max={max && formatDateObject(max)}
 							min={fromValue || (min && formatDateObject(min))}
-							onChange={(event) => setToValue(event.target.value)}
+							onBlur={(event) => {
+								event.target.reportValidity();
+
+								setToDateValid(event.target.checkValidity());
+							}}
+							onChange={(event) => {
+								setToValue(event.target.value);
+
+								setToDateValid(event.target.checkValidity());
+							}}
 							pattern="\d{4}-\d{2}-\d{2}"
 							placeholder={placeholder || 'yyyy-mm-dd'}
 							type="date"

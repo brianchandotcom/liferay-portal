@@ -16,11 +16,11 @@ GradleIndentationCheck | [Styling](styling_checks.md#styling-checks) | Finds inc
 GradleJavaVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks values of properties `sourceCompatibility` and `targetCompatibility` in gradle build files. |
 GradleMissingDependenciesForUpgradeJava21Check | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks missing dependencies for upgrade Java 21 in gradle build files. |
 GradleMissingJarManifestTaskCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds missing `jarManifest` task when using `jarPatched` task in gradle build files. |
-GradlePetraModuleDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that dependencies in `petra` moudule can only contains `petra` dependencies. |
+GradlePetraModuleDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that dependencies in `petra` module can only contains `petra` dependencies. |
 GradlePropertiesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Validates property values in gradle build files. |
 GradleProvidedDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Validates the scope of dependencies in build gradle files. |
 [GradleRequiredDependenciesCheck](check/gradle_required_dependencies_check.md#gradlerequireddependenciescheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |
-GradleRestClientDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Validates the project dependencies `.*-rest-client` can only be used for `testIntegrationImplementation`. |
+GradleRestTestModuleDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Validates the project dependencies `*-rest-client` can only be used for `testIntegrationImplementation` in `*-rest-test` modules. |
 GradleStylingCheck | [Styling](styling_checks.md#styling-checks) | Applies rules to enforce consistency in code style. |
 [GradleTaskCreationCheck](check/gradle_task_creation_check.md#gradletaskcreationcheck) | [Styling](styling_checks.md#styling-checks) | Checks that a task is declared on a separate line before the closure. |
 GradleTestDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks the version for dependencies in gradle build files. |

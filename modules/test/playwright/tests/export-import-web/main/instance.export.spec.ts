@@ -460,7 +460,7 @@ test('can see corresponding elements at instance level', async ({
 
 	await companyExportImportPage.exportImportPage.expectPortletCounts(
 		objectDefinition.name,
-		{items: 1}
+		{counts: {items: 1}}
 	);
 
 	await expect(
@@ -689,7 +689,7 @@ test('Can see deletion counts at instance level', async ({
 
 	await companyExportImportPage.exportImportPage.expectPortletCounts(
 		objectDefinition.name,
-		{items: 2}
+		{counts: {items: 2}}
 	);
 
 	await apiHelpers.objectEntry.deleteObjectEntry(
@@ -701,7 +701,7 @@ test('Can see deletion counts at instance level', async ({
 
 	await companyExportImportPage.exportImportPage.expectPortletCounts(
 		objectDefinition.name,
-		{deletions: 1, items: 1}
+		{counts: {deletions: 1, items: 1}}
 	);
 
 	await apiHelpers.objectEntry.deleteObjectEntry(
@@ -713,7 +713,7 @@ test('Can see deletion counts at instance level', async ({
 
 	await companyExportImportPage.exportImportPage.expectPortletCounts(
 		objectDefinition.name,
-		{deletions: 2}
+		{counts: {deletions: 2}}
 	);
 
 	await companyExportImportPage.exportImportPage.deletionsLabel.uncheck();

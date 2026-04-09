@@ -243,6 +243,10 @@ test(
 		).toHaveCount(1);
 
 		await organizationManagementPage
+			.organizationNode(organization3.name)
+			.click();
+
+		await organizationManagementPage
 			.menuButton(
 				organizationManagementPage.organizationNode(organization3.name)
 			)

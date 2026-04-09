@@ -1417,19 +1417,19 @@ public abstract class BaseWorkspaceGitRepository
 
 			GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-			String upstreamBranchName = getUpstreamBranchName();
-
-			if (!gitWorkingDirectory.localGitBranchExists(upstreamBranchName)) {
-				gitWorkingDirectory.createLocalGitBranch(
-					upstreamBranchName, true, getBaseBranchSHA());
-			}
-
 			String branchName = getBranchName();
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
 				gitWorkingDirectory.checkoutLocalGitBranch(
 					gitWorkingDirectory.createLocalGitBranch(
 						branchName, true, "HEAD"));
+			}
+
+			String upstreamBranchName = getUpstreamBranchName();
+
+			if (!gitWorkingDirectory.localGitBranchExists(upstreamBranchName)) {
+				gitWorkingDirectory.createLocalGitBranch(
+					upstreamBranchName, true, getBaseBranchSHA());
 			}
 		}
 	}

@@ -31,6 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceReturnPanelApp extends BasePanelApp {
 
 	@Override
+	public String getIcon() {
+		return "redo";
+	}
+
+	@Override
 	public Portlet getPortlet() {
 		return _portlet;
 	}

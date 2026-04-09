@@ -11,8 +11,6 @@ import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
-import java.util.Calendar;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -56,11 +54,7 @@ public class ExpirationDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public DateFDSFilterItem getMinDateFDSFilterItem() {
-		Calendar calendar = Calendar.getInstance();
-
-		return new DateFDSFilterItem(
-			calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+		return new DateFDSFilterItem(0, 0, 0);
 	}
 
 }

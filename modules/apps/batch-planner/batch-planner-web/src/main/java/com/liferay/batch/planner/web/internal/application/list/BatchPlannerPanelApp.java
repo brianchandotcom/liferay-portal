@@ -31,6 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 public class BatchPlannerPanelApp extends BasePanelApp {
 
 	@Override
+	public String getIcon() {
+		return "database";
+	}
+
+	@Override
 	public Portlet getPortlet() {
 		return _portlet;
 	}

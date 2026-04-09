@@ -28,6 +28,7 @@ public class EditContentRetrieverDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		_groupLocalService = groupLocalService;
+		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -46,10 +47,14 @@ public class EditContentRetrieverDisplayContext {
 						GroupConstants.DEFAULT_PARENT_GROUP_ID),
 					"/web", group.getFriendlyURL(), "/agent-builder");
 			}
+		).put(
+			"externalReferenceCode",
+			_httpServletRequest.getParameter("externalReferenceCode")
 		).build();
 	}
 
 	private final GroupLocalService _groupLocalService;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -63,9 +63,9 @@ public abstract class BaseDisplayContextTestCase {
 
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), objectFolderId, null, false,
-				true, false, true, enableObjectEntryDraft, false, false, false,
-				null,
+				null, TestPropsValues.getUserId(), objectFolderId, null, true,
+				false, true, false, true, enableObjectEntryDraft, false, false,
+				false, null,
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,

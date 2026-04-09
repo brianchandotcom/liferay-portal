@@ -1015,7 +1015,7 @@ public class EditInfoItemStrutsActionTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, _user.getUserId(), 0, null, false, true,
+				null, _user.getUserId(), 0, null, true, false, true,
 				enableFriendlyURLCustomization, true, true, false, false, false,
 				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

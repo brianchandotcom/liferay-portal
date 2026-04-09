@@ -736,7 +736,7 @@ public class TaxonomyVocabularyResourceImpl
 
 	private long _getClassNameId(Long assetTypeId, String assetTypeType) {
 		if (Validator.isNull(assetTypeType)) {
-			if (Validator.isNull(assetTypeId)) {
+			if (assetTypeId == null) {
 				throw new BadRequestException("Invalid Vocabulary Asset Type");
 			}
 

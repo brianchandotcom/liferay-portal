@@ -244,8 +244,7 @@ public class OpenAPIParserUtil {
 				continue;
 			}
 
-			openAPIYAML = YAMLUtil.loadOpenAPIYAML(
-				FileUtil.read(externalFile));
+			openAPIYAML = YAMLUtil.loadOpenAPIYAML(FileUtil.read(externalFile));
 
 			externalReferencesMap.putAll(
 				OpenAPIUtil.getAllSchemas(configYAML, openAPIYAML));

@@ -47,7 +47,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URL;
 

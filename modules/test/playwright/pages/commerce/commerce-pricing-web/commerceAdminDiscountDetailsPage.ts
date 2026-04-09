@@ -12,10 +12,15 @@ export class CommerceAdminDiscountDetailsPage extends CommerceDNDTablePage {
 	readonly amountFieldReuiredErrorMessage: Locator;
 	readonly cartTotalMiniumAmountInput: Locator;
 	readonly editDiscountRuleFrame: FrameLocator;
+	readonly eligibilityEntryCell: (name: string) => Locator;
+	readonly eligibilityTab: Locator;
 	readonly mustBeDecimalErrorMessage: Locator;
 	readonly mustBeValidNumberErrorMessage: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
+	readonly specificAccountsRadio: Locator;
+	readonly specificChannelsRadio: Locator;
+	readonly specificOrderTypesRadio: Locator;
 
 	constructor(page: Page) {
 		super(
@@ -42,9 +47,33 @@ export class CommerceAdminDiscountDetailsPage extends CommerceDNDTablePage {
 			this.editDiscountRuleFrame.getByText(
 				'Please enter a valid number.'
 			);
+		this.eligibilityEntryCell = (name: string) =>
+			page.getByRole('cell', {name}).first();
+		this.eligibilityTab = page.getByRole('link', {
+			exact: true,
+			name: 'Eligibility',
+		});
 		this.page = page;
 		this.saveButton = this.editDiscountRuleFrame.getByRole('button', {
 			name: 'Save',
 		});
+		this.specificAccountsRadio = page.getByRole('radio', {
+			name: 'Specific Accounts',
+		});
+		this.specificChannelsRadio = page.getByRole('radio', {
+			name: 'Specific Channels',
+		});
+		this.specificOrderTypesRadio = page.getByRole('radio', {
+			name: 'Specific Order Types',
+		});
+	}
+
+	async addEligibilityEntry(placeholder: string, entryName: string) {
+		const findInput = this.page.getByPlaceholder(placeholder);
+
+		await findInput.click();
+		await findInput.fill(entryName);
+
+		await this.eligibilityEntryCell(entryName).click();
 	}
 }

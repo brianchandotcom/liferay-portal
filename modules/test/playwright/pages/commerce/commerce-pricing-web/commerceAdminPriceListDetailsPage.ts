@@ -15,11 +15,15 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 	readonly addTierPriceEntrySaveButton: Locator;
 	readonly editPriceTierFrame: FrameLocator;
 	readonly editPriceTierPrice: Locator;
+	readonly eligibilityEntryCell: (name: string) => Locator;
+	readonly eligibilityTab: Locator;
 	readonly entriesTab: Locator;
 	readonly findSkuInput: Locator;
 	readonly page: Page;
 	readonly scheduleLabel: Locator;
 	readonly selectButton: Locator;
+	readonly specificAccountsRadio: Locator;
+	readonly specificChannelsRadio: Locator;
 	readonly skuLink: (price: string) => Locator;
 	readonly skusTableRowLink: (skuName: string) => Locator;
 
@@ -47,10 +51,22 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 		this.editPriceTierPrice = this.editPriceTierFrame.getByLabel(
 			'Tier Price Required'
 		);
+		this.eligibilityEntryCell = (name: string) =>
+			page.getByRole('cell', {name}).first();
+		this.eligibilityTab = page.getByRole('link', {
+			exact: true,
+			name: 'Eligibility',
+		});
 		this.entriesTab = page.getByRole('link', {name: 'Entries'});
 		this.findSkuInput = page.getByPlaceholder('Find a SKU');
 		this.page = page;
 		this.scheduleLabel = page.getByText('Schedule');
+		this.specificAccountsRadio = page.getByRole('radio', {
+			name: 'Specific Accounts',
+		});
+		this.specificChannelsRadio = page.getByRole('radio', {
+			name: 'Specific Channels',
+		});
 		this.selectButton = page.getByRole('button', {name: 'Select'});
 		this.skuLink = (price: string) =>
 			page
@@ -59,5 +75,16 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 				.getByRole('link', {name: price});
 		this.skusTableRowLink = (sku: string) =>
 			page.getByRole('link', {exact: true, name: sku});
+	}
+
+	async addEligibilityEntry(placeholder: string, entryName: string) {
+		const findInput = this.page.getByPlaceholder(placeholder);
+
+		await findInput.click();
+		await findInput.fill(entryName);
+
+		await this.eligibilityEntryCell(entryName).click();
+
+		await this.eligibilityTab.click();
 	}
 }

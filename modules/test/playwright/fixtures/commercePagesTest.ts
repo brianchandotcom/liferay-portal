@@ -70,6 +70,7 @@ import {CommerceWishListPage} from '../pages/commerce/commerce-wish-list-web/com
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceInstanceSettingsPage} from '../pages/commerce/commerceInstanceSettingsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
+import {CommercePricingSystemSettingsPage} from '../pages/commerce/commercePricingSystemSettingsPage';
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -121,6 +122,7 @@ const commercePagesTest = test.extend<{
 	commerceLayoutsPage: CommerceLayoutsPage;
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
+	commercePricingSystemSettingsPage: CommercePricingSystemSettingsPage;
 	commerceSpecificationsPage: CommerceSpecificationsPage;
 	commerceThemeClassicCatalogPage: CommerceThemeClassicCatalogPage;
 	commerceThemeClassicOrdersPage: CommerceThemeClassicOrdersPage;
@@ -289,6 +291,9 @@ const commercePagesTest = test.extend<{
 	},
 	commercePaymentsPage: async ({page}, use) => {
 		await use(new CommercePaymentsPage(page));
+	},
+	commercePricingSystemSettingsPage: async ({page}, use) => {
+		await use(new CommercePricingSystemSettingsPage(page));
 	},
 	commerceSpecificationsPage: async ({page}, use) => {
 		await use(new CommerceSpecificationsPage(page));

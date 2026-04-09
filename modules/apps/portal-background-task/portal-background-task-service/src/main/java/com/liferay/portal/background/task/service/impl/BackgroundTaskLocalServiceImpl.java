@@ -126,15 +126,8 @@ public class BackgroundTaskLocalServiceImpl
 			long userId, long backgroundTaskId, String fileName, File file)
 		throws PortalException {
 
-		BackgroundTask backgroundTask = getBackgroundTask(backgroundTaskId);
-
-		Folder folder = backgroundTask.addAttachmentsFolder();
-
-		_portletFileRepository.addPortletFileEntry(
-			null, backgroundTask.getGroupId(), userId,
-			BackgroundTask.class.getName(), backgroundTask.getPrimaryKey(),
-			PortletKeys.BACKGROUND_TASK, folder.getFolderId(), file, fileName,
-			ContentTypes.APPLICATION_ZIP, false);
+		addBackgroundTaskAttachment(
+			userId, backgroundTaskId, fileName, fileName, file);
 	}
 
 	@Override

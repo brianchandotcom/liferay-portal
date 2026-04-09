@@ -757,7 +757,7 @@ public class DDMFormValuesExportImportContentProcessor
 
 				_portletDataContext.addReferenceElement(
 					_stagedModel, entityElement, layout,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+					PortletDataContext.REFERENCE_TYPE_LAZY, true);
 			}
 		}
 

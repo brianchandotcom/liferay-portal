@@ -482,7 +482,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 						int index = fileEntryPath.lastIndexOf(StringPool.SLASH);
 
 						if (index != -1) {
-							folderPath = fileEntryPath.substring(0, index);
+							folderPath = fileEntryPath.substring(0, index + 1);
 						}
 
 						String newFileName =

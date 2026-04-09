@@ -82,7 +82,6 @@ function EnterpriseModal() {
 
 	return (
 		<CardStyleModal
-			badgeText={Liferay.Language.get('enterprise')}
 			body={Liferay.Language.get(
 				'editor-customization-is-available-on-the-enterprise-subscription'
 			)}
@@ -100,6 +99,7 @@ function EnterpriseModal() {
 			]}
 			imageSrc={`${config.imagesPath}/editor_customizer.svg`}
 			onCloseModal={() => setVisible(false)}
+			showEnterpriseIndicator
 			title={Liferay.Language.get(
 				'upgrade-to-unlock-the-editor-customization'
 			)}

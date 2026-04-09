@@ -10,10 +10,10 @@ import path from 'path';
 import {
 	getFDSDateFormat,
 	getFDSDateTimeFormat,
-} from '../../../tests/object-web/main/utils/dateFormat';
+} from '../../../tests/object-web/utils/dateFormat';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
-import type {SupportedBusinessType} from '../../../tests/object-web/main/utils/generateObjectEntry';
+import type {SupportedBusinessType} from '../../../tests/object-web/utils/generateObjectEntry';
 
 export class ViewObjectEntriesPage {
 	readonly backButton: Locator;

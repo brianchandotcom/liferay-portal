@@ -28,8 +28,8 @@ import performLogin, {
 	userData,
 } from '../../../utils/performLogin';
 import {readFileFromZip} from '../../../utils/zip';
-import {generateObjectEntryValues} from '../../object-web/main/utils/generateObjectEntry';
-import {generateObjectFields} from '../../object-web/main/utils/generateObjectFields';
+import {generateObjectEntryValues} from '../../object-web/utils/generateObjectEntry';
+import {generateObjectFields} from '../../object-web/utils/generateObjectFields';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {portletExportImportPageTest} from './fixtures/portletExportImportPageTest';

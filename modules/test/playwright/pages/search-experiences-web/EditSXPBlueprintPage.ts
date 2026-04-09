@@ -154,6 +154,12 @@ export class EditSXPBlueprintPage {
 		}
 	}
 
+	async closePreviewSidebar() {
+		if ((await this.page.locator('.preview-sidebar.open').count()) > 0) {
+			await this.previewSidebarButton.click();
+		}
+	}
+
 	async addPreviewAttributes(attributes: {key: string; value: string}[]) {
 		await this.page.getByLabel('Search Context Attributes').click();
 

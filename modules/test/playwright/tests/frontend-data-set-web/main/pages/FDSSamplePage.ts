@@ -230,7 +230,7 @@ export class FDSSamplePage {
 
 	async assignTaskToMe() {
 		const assignToMeButton = this.page
-			.locator('.fds-role-tasks')
+			.locator('.fds-roles-tasks')
 			.getByLabel('Assign to Me');
 
 		await assignToMeButton.click();

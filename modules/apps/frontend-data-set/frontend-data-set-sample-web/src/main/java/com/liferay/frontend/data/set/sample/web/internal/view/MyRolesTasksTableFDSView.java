@@ -22,10 +22,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = true,
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.MY_ROLE_TASKS,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.MY_ROLES_TASKS,
 	service = FDSView.class
 )
-public class MyRoleTasksTableFDSView extends BaseTableFDSView {
+public class MyRolesTasksTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

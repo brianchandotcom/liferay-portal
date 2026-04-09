@@ -36,7 +36,7 @@ public class DynamicActionsFDSDisplayContext {
 		).build();
 	}
 
-	public String getRoleTasksAPIURL() {
+	public String getRolesTasksAPIURL() {
 		return "/o/headless-admin-workflow/v1.0/workflow-tasks" +
 			"/assigned-to-my-roles";
 	}

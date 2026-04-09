@@ -3938,36 +3938,28 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (FeatureFlagManagerUtil.isEnabled(
 				group.getCompanyId(), "LPD-82960")) {
 
-			if (Validator.isNotNull(typeSettings)) {
-				UnicodeProperties newTypeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.create(
-						true
-					).fastLoad(
-						typeSettings
-					).build();
+			UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					Validator.isNotNull(typeSettings) ? typeSettings :
+						group.getTypeSettings()
+				).build();
 
-				if (GetterUtil.getBoolean(
-						newTypeSettingsUnicodeProperties.getProperty(
-							GroupConstants.
-								TYPE_SETTINGS_KEY_MAINTENANCE_MODE))) {
+			boolean maintenanceMode = GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.getProperty(
+					GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE));
 
-					active = false;
-				}
-				else if (active) {
-					newTypeSettingsUnicodeProperties.remove(
-						GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
-
-					typeSettings = newTypeSettingsUnicodeProperties.toString();
-				}
-			}
-			else if (active && group.isMaintenanceMode()) {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					group.getTypeSettingsProperties();
-
-				typeSettingsUnicodeProperties.remove(
+			if (!group.isActive() && active) {
+				String property = typeSettingsUnicodeProperties.remove(
 					GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
 
-				group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+				if (property != null) {
+					typeSettings = typeSettingsUnicodeProperties.toString();
+				}
+			}
+			else if (!group.isMaintenanceMode() && maintenanceMode) {
+				active = false;
 			}
 		}
 

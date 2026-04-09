@@ -657,43 +657,33 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<Account> getAccounts(
-		FaroProject faroProject, String channelId, String dataSourceId,
-		String individualSegmentId, String filterString, String query,
-		List<String> fields, int cur, int delta,
-		List<OrderByField> orderByFields) {
+		FaroProject faroProject, String channelId, String filterString,
+		String query, int cur, int delta, String sort) {
 
 		Map<String, Object> uriVariables = getUriVariables(
-			faroProject, cur, delta, orderByFields,
-			FilterConstants.FIELD_NAME_CONTEXT_ACCOUNT);
+			faroProject, cur, delta, null);
 
 		if (Validator.isNotNull(channelId)) {
 			uriVariables.put("channelId", channelId);
 		}
 
-		FilterBuilder filterBuilder = new FilterBuilder();
-
-		filterBuilder.addFilter(
-			"dataSourceId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-			dataSourceId);
-		filterBuilder.addFilter(filterString);
-		filterBuilder.addSearchFilter(
-			query, fields, FilterConstants.FIELD_NAME_CONTEXT_ACCOUNT);
-
-		uriVariables.put("filter", filterBuilder.build());
-
-		String type = null;
-
-		if (Validator.isNotNull(individualSegmentId)) {
-			type = Rels.INDIVIDUAL_SEGMENT_ACCOUNTS;
-
-			uriVariables.put("id", individualSegmentId);
+		if (Validator.isNotNull(filterString)) {
+			uriVariables.put("filter", filterString);
 		}
-		else {
-			type = Rels.ACCOUNTS;
+
+		if (Validator.isNotNull(query)) {
+			uriVariables.put("query", query);
+		}
+
+		if (Validator.isNotNull(sort)) {
+			uriVariables.put(
+				"sort",
+				Arrays.asList(
+					StringUtil.replace(sort, CharPool.COLON, CharPool.COMMA)));
 		}
 
 		PagedModel<?, Account> pagedModel = get(
-			faroProject, type,
+			faroProject, Rels.ACCOUNTS,
 			new ParameterizedTypeReference<EntityModelPagedModel<Account>>() {
 			},
 			uriVariables);

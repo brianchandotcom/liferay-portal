@@ -58,7 +58,7 @@ test('can export at site level with custom export task name', async ({
 });
 
 test(
-	'can export at site level without file name',
+	'cannot export at site level without file name',
 	{tag: '@LPD-76875'},
 	async ({exportImportPage, page}) => {
 		await exportImportPage.goToExport();

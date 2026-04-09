@@ -8,6 +8,7 @@
 		"jsx": "react",
 		"module": "esnext",
 		"moduleResolution": "node",
+		"outDir": "build",
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"target": "ES5"

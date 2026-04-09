@@ -14,6 +14,7 @@ import com.liferay.osb.faro.web.internal.controller.main.IssueController;
 import com.liferay.osb.faro.web.internal.controller.main.MainController;
 import com.liferay.osb.faro.web.internal.controller.main.NotificationController;
 import com.liferay.osb.faro.web.internal.controller.main.OAuth2Controller;
+import com.liferay.osb.faro.web.internal.controller.main.PageExperienceController;
 import com.liferay.osb.faro.web.internal.controller.main.PreferencesController;
 import com.liferay.osb.faro.web.internal.controller.main.ProjectController;
 import com.liferay.osb.faro.web.internal.controller.main.ReportController;
@@ -54,6 +55,7 @@ public class MainApplication extends BaseApplication {
 		controllers.add(_mainController);
 		controllers.add(_notificationController);
 		controllers.add(_oAuth2Controller);
+		controllers.add(_pageExperienceController);
 		controllers.add(_preferencesController);
 		controllers.add(_projectController);
 		controllers.add(_reportController);
@@ -85,6 +87,9 @@ public class MainApplication extends BaseApplication {
 
 	@Reference
 	private OAuth2Controller _oAuth2Controller;
+
+	@Reference
+	private PageExperienceController _pageExperienceController;
 
 	@Reference
 	private PreferencesController _preferencesController;

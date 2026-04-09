@@ -40,6 +40,7 @@ import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChang
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentRealTimeMembership;
 import com.liferay.osb.faro.engine.client.model.IndividualTransformation;
 import com.liferay.osb.faro.engine.client.model.Interest;
+import com.liferay.osb.faro.engine.client.model.PageExperience;
 import com.liferay.osb.faro.engine.client.model.PageVisited;
 import com.liferay.osb.faro.engine.client.model.ProjectUsageMetric;
 import com.liferay.osb.faro.engine.client.model.Provider;
@@ -462,6 +463,12 @@ public interface ContactsEngineClient {
 		int delta, List<OrderByField> orderByFields);
 
 	public Date getLastSeenDate(FaroProject faroProject);
+
+	public Results<PageExperience> getPageExperiences(
+			FaroProject faroProject, String canonicalUrl, String channelId,
+			String keywords, int page, String pageTitle, int size,
+			String sortString)
+		throws Exception;
 
 	public Results<PageVisited> getPagesVisited(
 		FaroProject faroProject, String channelId, String ownerId,

@@ -210,6 +210,8 @@ public interface Rels {
 
 	public static final String ORGANIZATIONS = "organizations";
 
+	public static final String PAGE_EXPERIENCES = "page-experiences";
+
 	public static final String PAGE_VISIT = "page-visited";
 
 	public static final String PAGE_VISITED = "page-visited";

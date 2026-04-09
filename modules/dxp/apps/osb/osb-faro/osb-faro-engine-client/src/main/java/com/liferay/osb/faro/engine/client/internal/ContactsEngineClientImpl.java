@@ -50,6 +50,7 @@ import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChang
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentRealTimeMembership;
 import com.liferay.osb.faro.engine.client.model.IndividualTransformation;
 import com.liferay.osb.faro.engine.client.model.Interest;
+import com.liferay.osb.faro.engine.client.model.PageExperience;
 import com.liferay.osb.faro.engine.client.model.PageVisited;
 import com.liferay.osb.faro.engine.client.model.PagedModel;
 import com.liferay.osb.faro.engine.client.model.ProjectUsageMetric;
@@ -2561,6 +2562,43 @@ public class ContactsEngineClientImpl
 		return get(
 			faroProject, Rels.PROJECTS_LAST_SEEN_DATE,
 			faroProject.getProjectId(), Date.class);
+	}
+
+	@Override
+	public Results<PageExperience> getPageExperiences(
+			FaroProject faroProject, String canonicalUrl, String channelId,
+			String keywords, int page, String pageTitle, int size,
+			String sortString)
+		throws Exception {
+
+		Map<String, Object> uriVariables = getUriVariables(
+			faroProject, page, size, null);
+
+		uriVariables.put("canonicalUrl", canonicalUrl);
+		uriVariables.put("channelId", channelId);
+
+		if (Validator.isNotNull(keywords)) {
+			uriVariables.put("keywords", keywords);
+		}
+
+		uriVariables.put("pageTitle", pageTitle);
+
+		if (Validator.isNotNull(sortString)) {
+			uriVariables.put(
+				"sort",
+				Arrays.asList(
+					StringUtil.replace(
+						sortString, CharPool.COLON, CharPool.COMMA)));
+		}
+
+		PagedModel<?, PageExperience> pagedModel = get(
+			faroProject, Rels.PAGE_EXPERIENCES,
+			new ParameterizedTypeReference
+				<EntityModelPagedModel<PageExperience>>() {
+			},
+			uriVariables);
+
+		return pagedModel.getResults();
 	}
 
 	@Override

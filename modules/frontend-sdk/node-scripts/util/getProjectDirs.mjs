@@ -9,7 +9,8 @@ import path from 'path';
 import {MODULES_DIR} from './locations.mjs';
 
 const IGNORED_PROJECT_DIRS = ['modules'];
-const NO_RECURSE_PROJECT_DIRS = [
+
+export const NO_RECURSE_PROJECT_DIRS = [
 	'clay',
 	'frontend-sdk',
 	'build',

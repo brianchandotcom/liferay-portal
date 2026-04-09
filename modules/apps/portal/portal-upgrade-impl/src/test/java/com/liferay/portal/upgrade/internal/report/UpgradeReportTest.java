@@ -145,6 +145,16 @@ public class UpgradeReportTest {
 		Assert.assertEquals(
 			runningUpgradeProcesses.toString(), 3,
 			runningUpgradeProcesses.size());
+
+		List<String> actualKeys = new ArrayList<>(
+			reportDataDiagnostics.keySet());
+
+		List<String> expectedKeys = List.of(
+			"execution.date", "execution.time", "errors", "failed.sqls",
+			"warnings", "longest.upgrade.processes", "longest.running.sqls",
+			"data.clean.up");
+
+		Assert.assertEquals(expectedKeys, actualKeys);
 	}
 
 	@Test

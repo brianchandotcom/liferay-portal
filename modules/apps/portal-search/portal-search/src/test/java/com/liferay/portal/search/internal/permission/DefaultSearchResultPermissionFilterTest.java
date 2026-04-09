@@ -6,16 +6,21 @@
 package com.liferay.portal.search.internal.permission;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.internal.searcher.SearchResponseImpl;
@@ -120,6 +125,88 @@ public class DefaultSearchResultPermissionFilterTest {
 	}
 
 	@Test
+	public void testSearchWithDynamicInheritanceEnabled() throws Exception {
+		_groupAdmin = false;
+		_permissionFilteredSearchResultAccurateCountThreshold = 0;
+
+		ResourcePermissionLocalService resourcePermissionLocalService =
+			Mockito.mock(ResourcePermissionLocalService.class);
+
+		ResourcePermissionLocalServiceUtil.setService(
+			resourcePermissionLocalService);
+
+		Mockito.when(
+			resourcePermissionLocalService.hasResourcePermission(
+				Mockito.anyLong(), Mockito.anyString(),
+				Mockito.eq(ResourceConstants.SCOPE_COMPANY),
+				Mockito.anyString(), Mockito.any(), Mockito.eq(ActionKeys.VIEW))
+		).thenReturn(
+			true
+		);
+
+		Indexer<?> indexer = Mockito.mock(Indexer.class);
+
+		Mockito.when(
+			indexer.isFilterSearch()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			indexer.hasPermission(
+				Mockito.any(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.eq(ActionKeys.VIEW))
+		).thenReturn(
+			false
+		);
+
+		IndexerRegistry indexerRegistry = Mockito.mock(IndexerRegistry.class);
+
+		Mockito.when(
+			indexerRegistry.getIndexer(Mockito.anyString())
+		).thenReturn(
+			(Indexer)indexer
+		);
+
+		Mockito.when(
+			_serviceTrackerMap.containsKey(Mockito.anyString())
+		).thenReturn(
+			false
+		);
+
+		DefaultSearchResultPermissionFilter
+			defaultSearchResultPermissionFilter =
+				_getDefaultSearchResultPermissionFilter(indexerRegistry);
+
+		SearchContext searchContext = _getSearchContext(10);
+
+		Assert.assertEquals(
+			9,
+			defaultSearchResultPermissionFilter.search(
+				searchContext
+			).getLength());
+
+		Mockito.when(
+			_serviceTrackerMap.containsKey(Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		defaultSearchResultPermissionFilter =
+			_getDefaultSearchResultPermissionFilter(indexerRegistry);
+
+		searchContext = _getSearchContext(10);
+
+		Assert.assertEquals(
+			0,
+			defaultSearchResultPermissionFilter.search(
+				searchContext
+			).getLength());
+
+		ResourcePermissionLocalServiceUtil.setService(null);
+	}
+
+	@Test
 	public void testSearchWithSizeZero() {
 		_groupAdmin = false;
 		_permissionFilteredSearchResultAccurateCountThreshold = 0;
@@ -146,6 +233,14 @@ public class DefaultSearchResultPermissionFilterTest {
 	private DefaultSearchResultPermissionFilter
 		_getDefaultSearchResultPermissionFilter() {
 
+		return _getDefaultSearchResultPermissionFilter(
+			Mockito.mock(IndexerRegistry.class));
+	}
+
+	private DefaultSearchResultPermissionFilter
+		_getDefaultSearchResultPermissionFilter(
+			IndexerRegistry indexerRegistry) {
+
 		_mockSearchResultPermissionFilterConfiguration();
 
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
@@ -153,10 +248,9 @@ public class DefaultSearchResultPermissionFilterTest {
 
 		return new DefaultSearchResultPermissionFilter(
 			_defaultSearchResultPermissionFilterConfiguration,
-			Mockito.mock(FacetPostProcessor.class),
-			Mockito.mock(IndexerRegistry.class), _permissionChecker,
-			Mockito.mock(RelatedEntryIndexerRegistry.class), _searchFunction,
-			searchRequestBuilderFactory, _serviceTrackerMap);
+			Mockito.mock(FacetPostProcessor.class), indexerRegistry,
+			_permissionChecker, Mockito.mock(RelatedEntryIndexerRegistry.class),
+			_searchFunction, searchRequestBuilderFactory, _serviceTrackerMap);
 	}
 
 	private Document _getDocument(String companyId, int index) {

@@ -43,6 +43,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
@@ -251,18 +254,9 @@ public class TaxonomyVocabularyResourceTest
 	public void testPostSiteTaxonomyVocabulary() throws Exception {
 		super.testPostSiteTaxonomyVocabulary();
 
-		TaxonomyVocabulary randomTaxonomyVocabulary =
-			randomTaxonomyVocabulary();
-
-		randomTaxonomyVocabulary.setVisibilityType(
-			TaxonomyVocabulary.VisibilityType.EMPTY);
-
-		TaxonomyVocabulary postTaxonomyVocabulary =
-			testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
-				randomTaxonomyVocabulary);
-
-		assertEquals(randomTaxonomyVocabulary, postTaxonomyVocabulary);
-		assertValid(postTaxonomyVocabulary);
+		_testPostSiteTaxonomyVocabulary();
+		_testPostSiteTaxonomyVocabularyInvalidAssetTypeType();
+		_testPostSiteTaxonomyVocabularyInvalidAssetTypeSubtype();
 	}
 
 	@Override
@@ -544,6 +538,116 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
 	}
 
+	private void _testPostSiteTaxonomyVocabulary() throws Exception {
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		randomTaxonomyVocabulary.setVisibilityType(
+			TaxonomyVocabulary.VisibilityType.EMPTY);
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
+				randomTaxonomyVocabulary);
+
+		assertEquals(randomTaxonomyVocabulary, postTaxonomyVocabulary);
+		assertValid(postTaxonomyVocabulary);
+	}
+
+	private void _testPostSiteTaxonomyVocabularyInvalidAssetTypeSubtype()
+		throws Exception {
+
+		String randomSubtype = RandomTestUtil.randomString();
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		randomTaxonomyVocabulary.setAssetTypes(
+			new AssetType[] {
+				new AssetType() {
+					{
+						required = true;
+						subtype = randomSubtype;
+						type = "StructuredContent";
+					}
+				}
+			});
+
+		TaxonomyVocabulary postTaxonomyVocabulary = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_LOG_NAME, LoggerTestUtil.DEBUG)) {
+
+			postTaxonomyVocabulary =
+				testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
+					randomTaxonomyVocabulary);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Invalid asset type subtype " + randomSubtype,
+				logEntry.getMessage());
+		}
+
+		AssetType[] assetTypes = postTaxonomyVocabulary.getAssetTypes();
+
+		Assert.assertEquals(assetTypes.toString(), 1, assetTypes.length);
+
+		AssetType assetType = assetTypes[0];
+
+		Assert.assertEquals("AllAssetSubtypes", assetType.getSubtype());
+		Assert.assertEquals("StructuredContent", assetType.getType());
+		Assert.assertFalse(assetType.getRequired());
+	}
+
+	private void _testPostSiteTaxonomyVocabularyInvalidAssetTypeType()
+		throws Exception {
+
+		String randomType = RandomTestUtil.randomString();
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		randomTaxonomyVocabulary.setAssetTypes(
+			new AssetType[] {
+				new AssetType() {
+					{
+						required = true;
+						subtype = RandomTestUtil.randomString();
+						type = randomType;
+					}
+				}
+			});
+
+		TaxonomyVocabulary postTaxonomyVocabulary = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_LOG_NAME, LoggerTestUtil.DEBUG)) {
+
+			postTaxonomyVocabulary =
+				testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
+					randomTaxonomyVocabulary);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Invalid asset type type " + randomType, logEntry.getMessage());
+		}
+
+		AssetType[] assetTypes = postTaxonomyVocabulary.getAssetTypes();
+
+		Assert.assertEquals(assetTypes.toString(), 1, assetTypes.length);
+
+		AssetType assetType = assetTypes[0];
+
+		Assert.assertEquals("AllAssetSubtypes", assetType.getSubtype());
+		Assert.assertEquals("AllAssetTypes", assetType.getType());
+		Assert.assertFalse(assetType.getRequired());
+	}
+
 	private void _testPutSiteTaxonomyVocabularyByExternalReferenceCodeExternalReferenceCode()
 		throws Exception {
 
@@ -672,6 +776,10 @@ public class TaxonomyVocabularyResourceTest
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
 			assetVocabulary.getVisibilityType());
 	}
+
+	private static final String _LOG_NAME =
+		"com.liferay.headless.admin.taxonomy.internal.resource.v1_0." +
+			"TaxonomyVocabularyResourceImpl";
 
 	@Inject
 	private AssetVocabularyGroupRelLocalService

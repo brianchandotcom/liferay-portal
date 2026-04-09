@@ -247,7 +247,11 @@ test.describe('Site Scope', () => {
 		});
 
 		await test.step('Remove first site from blueprint scope', async () => {
+			await editSXPBlueprintPage.closePreviewSidebar();
+
 			await editSXPBlueprintPage.removeScope({label: site1.name});
+
+			await editSXPBlueprintPage.openPreviewSidebar();
 		});
 
 		await test.step('Verify web content is no longer shown in blueprint preview', async () => {

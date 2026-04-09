@@ -281,16 +281,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		return Math.toIntExact(axisCount);
 	}
 
-	protected File getModulesDir() {
-		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)getJob();
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalTestClassJob.getPortalGitWorkingDirectory();
-
-		return new File(
-			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
-	}
-
 	protected File getPlaywrightBaseDir() {
 		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)getJob();
 
@@ -539,6 +529,16 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		return sb.toString();
 	}
 
+	private File _getModulesDir() {
+		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)getJob();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
+
+		return new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+	}
+
 	private JobProperty _getPlaywrightProjectsIncludesJobProperty() {
 		JobProperty playwrightProjectsIncludesJobProperty = getJobProperty(
 			"playwright.test.project", testSuiteName, batchName);
@@ -772,7 +772,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		try {
 			jsonObject = new JSONObject(
 				JenkinsResultsParserUtil.read(
-					new File(getModulesDir(), "package.json")));
+					new File(_getModulesDir(), "package.json")));
 		}
 		catch (FileNotFoundException fileNotFoundException) {
 			return false;

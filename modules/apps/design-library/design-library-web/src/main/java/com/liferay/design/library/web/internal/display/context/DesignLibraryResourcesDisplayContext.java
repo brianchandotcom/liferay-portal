@@ -6,6 +6,7 @@
 package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -49,7 +50,7 @@ public class DesignLibraryResourcesDisplayContext {
 		).getGroup();
 
 		return HashMapBuilder.<String, Object>put(
-			"actionItems", _getActionItemsJSONArray(group)
+			"actionItems", _getActionItemsJSONArray(group, designLibraryEntryId)
 		).put(
 			"breadcrumbItems", _getBreadcrumbItemsJSONArray(group)
 		).build();
@@ -81,12 +82,21 @@ public class DesignLibraryResourcesDisplayContext {
 				"link"));
 	}
 
-	private JSONArray _getActionItemsJSONArray(Group group)
+	private JSONArray _getActionItemsJSONArray(
+			Group group, long designLibraryEntryId)
 		throws PortalException {
 
 		return JSONUtil.putAll(
 			JSONUtil.put(
-				"href", "#settings"
+				"href",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/design_library/design_library_settings"
+				).setParameter(
+					DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY,
+					designLibraryEntryId
+				).buildString()
 			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "settings")
 			).put(

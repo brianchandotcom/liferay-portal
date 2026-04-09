@@ -21,6 +21,7 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -58,48 +59,76 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			_layoutExportBackgroundTaskExecutor, "_exportImportLocalService",
 			_exportImportLocalService);
 
-		MockedStatic<Time> timeMockedStatic = Mockito.mockStatic(Time.class);
+		_timeMockedStatic = Mockito.mockStatic(Time.class);
 
-		timeMockedStatic.when(
+		_timeMockedStatic.when(
 			Time::getTimestamp
 		).thenReturn(
 			"999988887777"
 		);
 	}
 
+	@After
+	public void tearDown() {
+		_timeMockedStatic.close();
+	}
+
 	@Test
-	public void testExecuteCalculatesCorrectAttachmentNames() throws Exception {
+	public void test() throws Exception {
+		BackgroundTask backgroundTask = Mockito.mock(BackgroundTask.class);
 		long backgroundTaskId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			backgroundTask.getBackgroundTaskId()
+		).thenReturn(
+			backgroundTaskId
+		);
+
 		long userId = RandomTestUtil.randomLong();
-		String exportName = "My Test Layout Export";
-		File dummyLarFile = new File("dummy.lar");
 
-		BackgroundTask backgroundTask = _mockBackgroundTask(backgroundTaskId);
-		ExportImportConfiguration exportImportConfiguration =
-			_mockExportImportConfiguration(userId, exportName);
+		Map<String, Serializable> settingsMap =
+			HashMapBuilder.<String, Serializable>put(
+				"userId", userId
+			).build();
 
-		LayoutExportBackgroundTaskExecutor spyExecutor = Mockito.spy(
-			_layoutExportBackgroundTaskExecutor);
+		ExportImportConfiguration exportImportConfiguration = Mockito.mock(
+			ExportImportConfiguration.class);
+
+		Mockito.when(
+			exportImportConfiguration.getSettingsMap()
+		).thenReturn(
+			settingsMap
+		);
+
+		Mockito.when(
+			exportImportConfiguration.getName()
+		).thenReturn(
+			"My Test Layout Export"
+		);
+
+		LayoutExportBackgroundTaskExecutor layoutExportBackgroundTaskExecutor =
+			Mockito.spy(_layoutExportBackgroundTaskExecutor);
 
 		Mockito.doReturn(
 			exportImportConfiguration
 		).when(
-			spyExecutor
+			layoutExportBackgroundTaskExecutor
 		).getExportImportConfiguration(
 			backgroundTask
 		);
+
+		File larFile = new File("file.lar");
 
 		Mockito.when(
 			_exportImportLocalService.exportLayoutsAsFile(
 				exportImportConfiguration)
 		).thenReturn(
-			dummyLarFile
+			larFile
 		);
 
-		BackgroundTaskResult backgroundTaskResult = spyExecutor.execute(
-			backgroundTask);
-
-		Assert.assertEquals(BackgroundTaskResult.SUCCESS, backgroundTaskResult);
+		Assert.assertEquals(
+			BackgroundTaskResult.SUCCESS,
+			layoutExportBackgroundTaskExecutor.execute(backgroundTask));
 
 		ArgumentCaptor<String> sourceFileNameCaptor = ArgumentCaptor.forClass(
 			String.class);
@@ -111,60 +140,21 @@ public class LayoutExportBackgroundTaskExecutorTest {
 		).addBackgroundTaskAttachment(
 			Mockito.eq(userId), Mockito.eq(backgroundTaskId),
 			sourceFileNameCaptor.capture(), titleCaptor.capture(),
-			Mockito.eq(dummyLarFile)
+			Mockito.eq(larFile)
 		);
-
-		String sourceFileName = sourceFileNameCaptor.getValue();
-
-		String title = titleCaptor.getValue();
-
-		Assert.assertEquals("My_Test_Layout_Export.lar", title);
 
 		Assert.assertEquals(
-			"My_Test_Layout_Export-999988887777.lar", sourceFileName);
-	}
+			"My_Test_Layout_Export.lar", titleCaptor.getValue());
 
-	private BackgroundTask _mockBackgroundTask(long backgroundTaskId) {
-		BackgroundTask backgroundTask = Mockito.mock(BackgroundTask.class);
-
-		Mockito.when(
-			backgroundTask.getBackgroundTaskId()
-		).thenReturn(
-			backgroundTaskId
-		);
-
-		return backgroundTask;
-	}
-
-	private ExportImportConfiguration _mockExportImportConfiguration(
-		long userId, String name) {
-
-		ExportImportConfiguration exportImportConfiguration = Mockito.mock(
-			ExportImportConfiguration.class);
-
-		Map<String, Serializable> settingsMap =
-			HashMapBuilder.<String, Serializable>put(
-				"userId", userId
-			).build();
-
-		Mockito.when(
-			exportImportConfiguration.getSettingsMap()
-		).thenReturn(
-			settingsMap
-		);
-
-		Mockito.when(
-			exportImportConfiguration.getName()
-		).thenReturn(
-			name
-		);
-
-		return exportImportConfiguration;
+		Assert.assertEquals(
+			"My_Test_Layout_Export-999988887777.lar",
+			sourceFileNameCaptor.getValue());
 	}
 
 	private BackgroundTaskManager _backgroundTaskManager;
 	private ExportImportLocalService _exportImportLocalService;
 	private LayoutExportBackgroundTaskExecutor
 		_layoutExportBackgroundTaskExecutor;
+	private MockedStatic<Time> _timeMockedStatic;
 
 }

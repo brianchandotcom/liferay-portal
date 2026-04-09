@@ -8,8 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-MyRoleTasksFDSDisplayContext myRoleTasksFDSDisplayContext = new MyRoleTasksFDSDisplayContext(request);
-MyUserTasksFDSDisplayContext myUserTasksFDSDisplayContext = new MyUserTasksFDSDisplayContext(request);
+DynamicActionsFDSDisplayContext dynamicActionsFDSDisplayContext = new DynamicActionsFDSDisplayContext(request);
 %>
 
 <div class="row">
@@ -19,7 +18,7 @@ MyUserTasksFDSDisplayContext myUserTasksFDSDisplayContext = new MyUserTasksFDSDi
 		</div>
 
 		<frontend-data-set:headless-display
-			apiURL="<%= myRoleTasksFDSDisplayContext.getAPIURL() %>"
+			apiURL="<%= dynamicActionsFDSDisplayContext.getRoleTasksAPIURL() %>"
 			id="<%= FDSSampleFDSNames.MY_ROLE_TASKS %>"
 			style="fluid"
 		/>
@@ -31,7 +30,7 @@ MyUserTasksFDSDisplayContext myUserTasksFDSDisplayContext = new MyUserTasksFDSDi
 		</div>
 
 		<frontend-data-set:headless-display
-			apiURL="<%= myUserTasksFDSDisplayContext.getAPIURL() %>"
+			apiURL="<%= dynamicActionsFDSDisplayContext.getUserTasksAPIURL() %>"
 			id="<%= FDSSampleFDSNames.MY_USER_TASKS %>"
 			style="fluid"
 		/>

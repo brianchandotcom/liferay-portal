@@ -15,14 +15,12 @@ import java.util.Map;
 /**
  * @author Juanjo Fernández
  */
-public class MyUserTasksFDSDisplayContext {
+public class DynamicActionsFDSDisplayContext {
 
-	public MyUserTasksFDSDisplayContext(HttpServletRequest httpServletRequest) {
+	public DynamicActionsFDSDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
 		_httpServletRequest = httpServletRequest;
-	}
-
-	public String getAPIURL() {
-		return "/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-me";
 	}
 
 	public Map<String, Object> getEmptyState() {
@@ -36,6 +34,15 @@ public class MyUserTasksFDSDisplayContext {
 			"title",
 			LanguageUtil.get(_httpServletRequest, "no-data-sets-created")
 		).build();
+	}
+
+	public String getRoleTasksAPIURL() {
+		return "/o/headless-admin-workflow/v1.0/workflow-tasks" +
+			"/assigned-to-my-roles";
+	}
+
+	public String getUserTasksAPIURL() {
+		return "/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-me";
 	}
 
 	private final HttpServletRequest _httpServletRequest;

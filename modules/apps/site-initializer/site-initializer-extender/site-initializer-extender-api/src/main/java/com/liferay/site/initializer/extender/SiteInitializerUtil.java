@@ -124,7 +124,7 @@ public class SiteInitializerUtil {
 
 		for (Map.Entry<String, String> entry : valuesMap.entrySet()) {
 			map.put(
-				LocaleUtil.fromLanguageId(entry.getKey()),
+				LocaleUtil.fromLanguageId(entry.getKey(), false),
 				prefix + entry.getValue());
 		}
 

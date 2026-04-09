@@ -3219,7 +3219,7 @@ public class ObjectDefinitionLocalServiceImpl
 				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
 
 			_handleException(
-				new ObjectDefinitionEnableCategorizationException(
+				new ObjectDefinitionEnableCommentsException(
 					"Enable comments is only allowed for object definitions " +
 						"with the default storage type"),
 				"enableComments", true);

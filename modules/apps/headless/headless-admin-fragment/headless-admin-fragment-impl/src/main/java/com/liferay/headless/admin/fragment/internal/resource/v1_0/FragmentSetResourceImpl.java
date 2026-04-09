@@ -8,6 +8,7 @@ package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
@@ -17,6 +18,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,6 +59,25 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 					GroupUtil.getGroupId(
 						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode)));
+	}
+
+	@Override
+	public Page<FragmentSet> getSiteFragmentSetsPage(
+			String siteExternalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		return Page.of(
+			transform(
+				_fragmentCollectionService.getFragmentCollections(
+					groupId, pagination.getStartPosition(),
+					pagination.getEndPosition(),
+					FragmentCollectionNameComparator.getInstance(true)),
+				this::_toFragmentSet),
+			pagination,
+			_fragmentCollectionService.getFragmentCollectionsCount(groupId));
 	}
 
 	@Override

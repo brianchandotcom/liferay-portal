@@ -62,14 +62,11 @@ public class LayoutExportBackgroundTaskExecutor
 			exportImportConfiguration.getName(), CharPool.SPACE,
 			CharPool.UNDERLINE);
 
-		String title = name + ".lar";
-
-		String sourceFileName = StringBundler.concat(
-			name, StringPool.DASH, Time.getTimestamp(), ".lar");
-
 		_backgroundTaskManager.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(), sourceFileName, title,
-			larFile);
+			userId, backgroundTask.getBackgroundTaskId(),
+			StringBundler.concat(
+				name, StringPool.DASH, Time.getTimestamp(), ".lar"),
+			name + ".lar", larFile);
 
 		return BackgroundTaskResult.SUCCESS;
 	}

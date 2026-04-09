@@ -123,10 +123,15 @@ public class ContentRetrieverResourceTest
 
 	@Override
 	@Test
-	public void testPostContentRetriever() throws Exception {
+	public void testPutContentRetrieverByExternalReferenceCode()
+		throws Exception {
+
+		ContentRetriever randomContentRetriever = randomContentRetriever();
+
 		ContentRetriever contentRetriever =
-			contentRetrieverResource.postContentRetriever(
-				randomContentRetriever());
+			contentRetrieverResource.putContentRetrieverByExternalReferenceCode(
+				randomContentRetriever.getExternalReferenceCode(),
+				randomContentRetriever);
 
 		Assert.assertNotNull(
 			_objectEntryManager.getObjectEntry(
@@ -148,8 +153,12 @@ public class ContentRetrieverResourceTest
 			testDeleteContentRetrieverByExternalReferenceCode_addContentRetriever()
 		throws Exception {
 
-		_contentRetriever = contentRetrieverResource.postContentRetriever(
-			randomContentRetriever());
+		ContentRetriever randomContentRetriever = randomContentRetriever();
+
+		_contentRetriever =
+			contentRetrieverResource.putContentRetrieverByExternalReferenceCode(
+				randomContentRetriever.getExternalReferenceCode(),
+				randomContentRetriever);
 
 		return _contentRetriever;
 	}

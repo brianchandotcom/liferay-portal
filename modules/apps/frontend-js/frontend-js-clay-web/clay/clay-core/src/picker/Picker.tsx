@@ -4,6 +4,7 @@
  */
 
 import Button from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import Icon from '@clayui/icon';
 import {
 	InternalDispatch,
@@ -19,6 +20,7 @@ import {
 	useIsMobileDevice,
 	useNavigation,
 	useOverlayPosition,
+	usePrevious,
 } from '@clayui/shared';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -99,6 +101,12 @@ type Props<T> = {
 	'disabled'?: boolean;
 
 	/**
+	 * Defines the name of the property key that is used in the items filter
+	 * test.
+	 */
+	'filterKey'?: string;
+
+	/**
 	 * The id of the component.
 	 */
 	'id'?: string;
@@ -109,8 +117,10 @@ type Props<T> = {
 	'messages'?: {
 		itemDescribedby?: string;
 		itemSelected?: string;
+		noResultsFound?: string;
 		scrollToBottomAriaLabel?: string;
 		scrollToTopAriaLabel?: string;
+		searchPlaceholder?: string;
 	};
 
 	/**
@@ -135,6 +145,16 @@ type Props<T> = {
 	'placeholder'?: string;
 
 	/**
+	 * Flag to indicate if the component should be searchable.
+	 */
+	'searchable'?: boolean;
+
+	/**
+	 * The threshold of items to show the search input.
+	 */
+	'searchableThreshold'?: number;
+
+	/**
 	 * The currently selected key (controlled).
 	 */
 	'selectedKey'?: React.Key;
@@ -156,8 +176,10 @@ const defaultMessages = {
 	itemDescribedby:
 		'You are currently on a text element, inside of a list box.',
 	itemSelected: '{0}, selected',
+	noResultsFound: 'No results found',
 	scrollToBottomAriaLabel: 'Scroll to bottom',
 	scrollToTopAriaLabel: 'Scroll to top',
+	searchPlaceholder: 'Search',
 };
 
 export function Picker<T extends Record<string, any> | string | number>({
@@ -171,6 +193,7 @@ export function Picker<T extends Record<string, any> | string | number>({
 	defaultSelectedKey,
 	direction = 'bottom',
 	disabled,
+	filterKey,
 	id,
 	items,
 	messages: externalMessages,
@@ -178,6 +201,8 @@ export function Picker<T extends Record<string, any> | string | number>({
 	onActiveChange,
 	onSelectionChange,
 	placeholder = 'Select an option',
+	searchable,
+	searchableThreshold,
 	selectedKey: externalSelectedKey,
 	shrink,
 	width,
@@ -206,14 +231,32 @@ export function Picker<T extends Record<string, any> | string | number>({
 		value: externalSelectedKey,
 	});
 
+	const [searchValue, setSearchValue] = useState('');
+
+	const filterFn = useCallback(
+		(value: string) =>
+			value.toLowerCase().includes(searchValue.toLowerCase()),
+		[searchValue]
+	);
+
 	// We initialize the collection in the picker and then pass it down so the
 	// collection can be cached even before the listbox is not mounted.
 
 	const collection = useCollection<T, unknown>({
 		children,
+		filter: filterFn,
+		filterKey: filterKey ?? 'textValue',
 		items,
 		suppressTextValueWarning: false,
 	});
+
+	const totalItems = items ? items.length : React.Children.count(children);
+
+	const isSearchable =
+		searchable === true ||
+		(searchable === undefined &&
+			searchableThreshold !== undefined &&
+			totalItems > searchableThreshold);
 
 	const [activeDescendant, setActiveDescendant] = useState(() =>
 		selectedKey || selectedKey === 0
@@ -224,12 +267,39 @@ export function Picker<T extends Record<string, any> | string | number>({
 	const ariaControls = useId();
 
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
+	const searchRef = useRef<HTMLInputElement | null>(null);
 	const menuRef = useRef<HTMLDivElement | null>(null);
 	const listRef = useRef<HTMLUListElement | null>(null);
 
 	const announcerAPIRef = useRef<AnnouncerAPI>(null);
 
+	const getOptions = useCallback(
+		() =>
+			getFocusableList(menuRef).filter(
+				(element) => element.getAttribute('role') === 'option'
+			),
+		[]
+	);
+
 	const {isFocusVisible} = useInteractionFocus();
+
+	const previousActive = usePrevious(active);
+
+	useEffect(() => {
+		if (active && !previousActive && isSearchable) {
+			searchRef.current?.focus();
+		}
+
+		if (!active && previousActive) {
+			setSearchValue('');
+		}
+	}, [active, isSearchable]);
+
+	useEffect(() => {
+		if (collection.getSize() === 0 && searchValue !== '') {
+			announcerAPIRef.current?.announce(messages.noResultsFound);
+		}
+	}, [collection.getSize(), searchValue]);
 
 	useOverlayPosition(
 		{
@@ -310,7 +380,7 @@ export function Picker<T extends Record<string, any> | string | number>({
 		) {
 			setActiveDescendant(collection.getFirstItem().key);
 		}
-	}, [items]);
+	}, [items, searchValue]);
 
 	const [isArrowVisible, setIsArrowVisible] = useState<
 		null | 'top' | 'bottom' | 'both'
@@ -488,7 +558,7 @@ export function Picker<T extends Record<string, any> | string | number>({
 
 							event.preventDefault();
 
-							const list = getFocusableList(menuRef);
+							const list = getOptions();
 
 							onMoveFocus(
 								event.key,
@@ -574,6 +644,86 @@ export function Picker<T extends Record<string, any> | string | number>({
 									: undefined,
 						}}
 					>
+						{isSearchable && (
+							<form onSubmit={(event) => event.preventDefault()}>
+								<div className="pb-2 pt-3 px-3">
+									<ClayInput.Group small>
+										<ClayInput.GroupItem className="input-group-item-focusable">
+											<ClayInput
+												aria-label={
+													messages.searchPlaceholder
+												}
+												insetAfter
+												onChange={(event) =>
+													setSearchValue(
+														event.target.value
+													)
+												}
+												onKeyDown={(
+													event: React.KeyboardEvent<HTMLInputElement>
+												) => {
+													if (
+														event.key === Keys.Enter
+													) {
+														onPress();
+													}
+
+													if (
+														event.key === Keys.Esc
+													) {
+														setActive(false);
+														triggerRef.current?.focus();
+													}
+
+													if (
+														event.key ===
+															'PageUp' ||
+														event.key === 'PageDown'
+													) {
+														event.preventDefault();
+
+														const list =
+															getOptions();
+
+														onMoveFocus(
+															event.key,
+															list.findIndex(
+																(element) =>
+																	element.getAttribute(
+																		'id'
+																	) ===
+																	String(
+																		activeDescendant
+																	)
+															),
+															list
+														);
+													}
+
+													navigationProps.onKeyDown(
+														event as React.KeyboardEvent<HTMLElement>
+													);
+												}}
+												placeholder={
+													messages.searchPlaceholder
+												}
+												ref={searchRef}
+												type="text"
+												value={searchValue}
+											/>
+
+											<ClayInput.GroupInsetItem
+												after
+												tag="span"
+											>
+												<Icon symbol="search" />
+											</ClayInput.GroupInsetItem>
+										</ClayInput.GroupItem>
+									</ClayInput.Group>
+								</div>
+							</form>
+						)}
+
 						{UNSAFE_behavior === 'secondary' &&
 							(isArrowVisible === 'top' ||
 								isArrowVisible === 'both') && (
@@ -605,11 +755,28 @@ export function Picker<T extends Record<string, any> | string | number>({
 							aria-labelledby={otherProps['aria-labelledby']}
 							className="inline-scroller list-unstyled"
 							id={ariaControls}
-							onFocus={() => triggerRef.current?.focus()}
+							onFocus={() => {
+								if (isSearchable) {
+									searchRef.current?.focus();
+								}
+								else {
+									triggerRef.current?.focus();
+								}
+							}}
 							ref={listRef}
 							role="listbox"
 							tabIndex={-1}
 						>
+							{collection.getSize() === 0 &&
+								searchValue !== '' && (
+									<li
+										className="dropdown-item"
+										role="presentation"
+									>
+										{messages.noResultsFound}
+									</li>
+								)}
+
 							<PickerContext.Provider value={context}>
 								<Collection<T> collection={collection} />
 							</PickerContext.Provider>

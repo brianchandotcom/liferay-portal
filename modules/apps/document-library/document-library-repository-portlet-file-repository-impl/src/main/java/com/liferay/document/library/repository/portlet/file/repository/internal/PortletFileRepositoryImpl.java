@@ -132,6 +132,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			indexingEnabled);
 	}
 
+	@Override
 	public FileEntry addPortletFileEntry(
 			String externalReferenceCode, long groupId, long userId,
 			String className, long classPK, String portletId, long folderId,

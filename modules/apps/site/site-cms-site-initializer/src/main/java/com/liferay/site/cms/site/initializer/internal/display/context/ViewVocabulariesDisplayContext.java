@@ -103,6 +103,17 @@ public class ViewVocabulariesDisplayContext {
 							PortalUtil.getLayoutFullURL(
 								LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 									_themeDisplay.getScopeGroupId(), false,
+									"/categorization/new-category"),
+								_themeDisplay),
+							"vocabularyId", "{id}"),
+						"plus", "add-category",
+						LanguageUtil.get(_httpServletRequest, "add-category"),
+						"get", "update", null),
+					new FDSActionDropdownItem(
+						HttpComponentsUtil.addParameter(
+							PortalUtil.getLayoutFullURL(
+								LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+									_themeDisplay.getScopeGroupId(), false,
 									"/categorization/view-categories"),
 								_themeDisplay),
 							"vocabularyId", "{id}"),

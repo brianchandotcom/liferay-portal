@@ -206,6 +206,8 @@ public class RetrievalAugmentorUtil {
 		HighlightBuilderFactory highlightBuilderFactory, String[] indexNames,
 		Query query, SearchEngineAdapter searchEngineAdapter) {
 
+		List<Content> contents = new ArrayList<>();
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setFetchSource(false);
@@ -235,8 +237,6 @@ public class RetrievalAugmentorUtil {
 			searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
-		List<Content> contents = new ArrayList<>();
 
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
 			Map<String, HighlightField> highlightFields =

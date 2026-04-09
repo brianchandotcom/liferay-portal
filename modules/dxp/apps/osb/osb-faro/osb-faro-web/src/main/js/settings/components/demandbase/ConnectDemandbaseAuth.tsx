@@ -5,8 +5,8 @@ import React, {useEffect, useState} from 'react';
 import {Alert} from 'shared/types';
 import {CopyInputValue} from '../CopyInputValue';
 import {createDemandbase, updateDemandbase} from 'shared/api/data-source';
+import {CredentialTypes, DataSourceStatuses} from 'shared/util/constants';
 import {DataSource} from 'shared/util/records';
-import {DataSourceStatuses} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 
@@ -63,7 +63,11 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 				try {
 					if (dataSource) {
 						const updatedDataSource = await updateDemandbase({
-							credentials: {token},
+							credentials: {
+								privateKey: token,
+								publicKey: '',
+								type: CredentialTypes.Token
+							},
 							groupId,
 							id: dataSource.id,
 							name: dataSource.name,
@@ -80,7 +84,11 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 						onSubmit(updatedDataSource);
 					} else {
 						const newDataSource = await createDemandbase({
-							credentials: {token},
+							credentials: {
+								privateKey: token,
+								publicKey: '',
+								type: CredentialTypes.Token
+							},
 							groupId,
 							name: Liferay.Language.get('demandbase'),
 							status: DataSourceStatuses.Active

@@ -313,9 +313,29 @@ paths:
                     content:
                         text/event-stream: {}
             tags: ["Chat"]
-    "/content-retrievers":
-        post:
-            operationId: postContentRetriever
+    "/content-retrievers/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteContentRetrieverByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ContentRetriever"]
+        put:
+            operationId: putContentRetrieverByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -333,21 +353,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ContentRetriever"
-            tags: ["ContentRetriever"]
-    "/content-retrievers/by-external-reference-code/{externalReferenceCode}":
-        delete:
-            operationId: deleteContentRetrieverByExternalReferenceCode
-            parameters:
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
             tags: ["ContentRetriever"]
     "/sites/by-external-reference-code/{externalReferenceCode}/site-initializer":
         put:

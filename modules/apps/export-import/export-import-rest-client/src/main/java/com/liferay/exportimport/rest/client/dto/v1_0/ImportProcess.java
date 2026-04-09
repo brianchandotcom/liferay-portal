@@ -182,4 +182,4 @@ public class ImportProcess implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:984156644
+// LIFERAY-REST-BUILDER-HASH:-607638037

@@ -97,4 +97,4 @@ public class Type implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-714379489
+// LIFERAY-REST-BUILDER-HASH:1626305510

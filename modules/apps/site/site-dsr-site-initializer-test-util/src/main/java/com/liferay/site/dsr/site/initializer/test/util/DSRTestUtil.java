@@ -41,6 +41,10 @@ public class DSRTestUtil {
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
 			GroupConstants.DSR);
 
+		group.setExternalReferenceCode("L_" + GroupConstants.DSR);
+
+		group = GroupLocalServiceUtil.updateGroup(group);
+
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

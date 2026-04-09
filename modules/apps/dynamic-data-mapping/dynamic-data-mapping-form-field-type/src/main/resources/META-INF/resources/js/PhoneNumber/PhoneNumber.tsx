@@ -6,15 +6,11 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
-import {
-	CountryInfo,
-	getCombinedValue,
-	getFlag,
-	parsePhoneValue,
-} from './phoneNumberUtil';
+import {CountryInfo, getFlagSymbol, parsePhoneValue} from './phoneNumberUtil';
 
 interface PhoneNumberProps {
 	countries?: CountryInfo[];
@@ -28,120 +24,148 @@ interface PhoneNumberProps {
 	[key: string]: unknown;
 }
 
-const PhoneNumber: React.FC<PhoneNumberProps> = ({
+const PhoneNumber = ({
 	countries = [],
 	name,
 	onBlur,
 	onChange,
 	onFocus,
 	predefinedValue,
-	readOnly: disabled,
+	readOnly,
 	value: initialValue,
 	...otherProps
-}) => {
-	const currentValue = initialValue || predefinedValue || '';
-
-	const [selectedCountryA2, setSelectedCountryA2] = useState('');
+}: PhoneNumberProps) => {
 	const [localNumber, setLocalNumber] = useState('');
-	const [dropdownActive, setDropdownActive] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
-
-	const triggerRef = useRef<HTMLButtonElement>(null);
-
-	const selectedCountry = useMemo(
-		() => countries.find((c) => c.a2 === selectedCountryA2),
-		[countries, selectedCountryA2]
+	const [selectedCountry, setSelectedCountry] = useState<CountryInfo>(
+		countries[0]
 	);
+
+	const combinedValue = `+${selectedCountry.idd}${localNumber.replace(/\D/g, '')}`;
+
+	const disabled = readOnly || (otherProps.disabled as boolean);
+
+	const countriesWithFlagSymbol = useMemo(() => {
+		return countries.map((country) => {
+			return {
+				...country,
+				symbol: getFlagSymbol(country.a2),
+			};
+		});
+	}, [countries]);
 
 	const filteredCountries = useMemo(() => {
 		if (!searchTerm) {
-			return countries;
+			return countriesWithFlagSymbol;
 		}
 
-		const term = searchTerm.toLowerCase();
-
-		return countries.filter(
-			(c) =>
-				c.name.toLowerCase().includes(term) ||
-				c.idd.includes(term) ||
-				c.a2.toLowerCase().includes(term)
+		return countriesWithFlagSymbol.filter(
+			(country) =>
+				country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				country.idd.includes(searchTerm)
 		);
-	}, [countries, searchTerm]);
+	}, [countriesWithFlagSymbol, searchTerm]);
 
-	const fireChange = useCallback(
-		(countryA2: string, number: string) => {
-			if (!onChange) {
-				return;
-			}
-
+	const handleValueChange = (country: CountryInfo, number: string) => {
+		if (onChange) {
 			onChange({
 				target: {
-					value: getCombinedValue(countryA2, number, countries),
+					value: `+${country.idd}${number.replace(/\D/g, '')}`,
 				},
 			});
-		},
-		[countries, onChange]
-	);
+		}
+	};
 
+	/** Parse the phone value to set the initial states. */
 	useEffect(() => {
-		const parsed = parsePhoneValue(currentValue);
+		const {countryA2, localNumber} = parsePhoneValue(
+			initialValue || predefinedValue || ''
+		);
 
-		setSelectedCountryA2(parsed.countryA2);
-		setLocalNumber(parsed.localNumber);
-	}, [currentValue]);
+		const country = countriesWithFlagSymbol.find(
+			(country) => country.a2 === countryA2
+		);
+
+		setSelectedCountry(country || countriesWithFlagSymbol[0]);
+		setLocalNumber(localNumber);
+
+		// eslint-disable-next-line react-compiler/react-compiler
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
 			<div className="d-flex">
 				<ClayDropDown
-					active={dropdownActive}
-					onActiveChange={setDropdownActive}
+					closeOnClick
 					trigger={
 						<ClayButton
 							className="btn-secondary mr-2"
 							disabled={disabled}
 							displayType="secondary"
-							ref={triggerRef}
 							style={{minWidth: '90px'}}
 						>
-							{selectedCountry ? (
-								<span>
-									{getFlag(selectedCountry.a2)}
+							<span className="align-items-center d-flex">
+								{selectedCountry.symbol && (
+									<ClayIcon symbol={selectedCountry.symbol} />
+								)}
 
-									{' +'}
-
-									{selectedCountry.idd}
+								<span className="ml-1">
+									+{selectedCountry.idd}
 								</span>
-							) : (
-								<span>{Liferay.Language.get('country')}</span>
-							)}
+
+								<span className="inline-item inline-item-after">
+									<ClayIcon symbol="caret-double" />
+								</span>
+							</span>
 						</ClayButton>
 					}
 				>
 					<div className="p-2">
 						<ClayInput
-							onChange={(e) => setSearchTerm(e.target.value)}
-							placeholder={Liferay.Language.get('search')}
-							sizing="sm"
+							onChange={(event) =>
+								setSearchTerm(event.target.value)
+							}
 							type="text"
 							value={searchTerm}
 						/>
 					</div>
 
-					<ClayDropDown.ItemList>
+					<ClayDropDown.ItemList className="dropdown-menu-indicator-start">
 						{filteredCountries.map((country) => (
 							<ClayDropDown.Item
+								active={selectedCountry.a2 === country.a2}
 								key={country.a2}
 								onClick={() => {
-									setSelectedCountryA2(country.a2);
-									setDropdownActive(false);
 									setSearchTerm('');
-									fireChange(country.a2, localNumber);
+									setSelectedCountry(country);
+									handleValueChange(country, localNumber);
 								}}
 							>
-								{getFlag(country.a2)} {country.name}
-+
-								{country.idd}
+								<span className="dropdown-item-indicator-start">
+									{selectedCountry.a2 === country.a2 && (
+										<ClayIcon symbol="check" />
+									)}
+								</span>
+
+								<div className="autofit-row">
+									<div className="autofit-col">
+										{country.symbol && (
+											<ClayIcon symbol={country.symbol} />
+										)}
+									</div>
+
+									<div
+										className="autofit-col"
+										style={{minWidth: '30px'}}
+									>
+										{`+${country.idd}`}
+									</div>
+
+									<div className="autofit-col autofit-col-expand">
+										{country.name}
+									</div>
+								</div>
 							</ClayDropDown.Item>
 						))}
 					</ClayDropDown.ItemList>
@@ -150,8 +174,8 @@ const PhoneNumber: React.FC<PhoneNumberProps> = ({
 				<ClayInput
 					className="ddm-field-text form-control"
 					disabled={disabled}
-					id={name}
-					name={name}
+					id={(otherProps.id as string) ?? name}
+					name={`${name}_localNumber`}
 					onBlur={onBlur}
 					onChange={(event) => {
 						const newNumber = event.target.value.replace(
@@ -160,15 +184,16 @@ const PhoneNumber: React.FC<PhoneNumberProps> = ({
 						);
 
 						setLocalNumber(newNumber);
-						fireChange(selectedCountryA2, newNumber);
+						handleValueChange(selectedCountry, newNumber);
 					}}
 					onFocus={onFocus}
 					pattern="[0-9\s\-().]*"
-					placeholder={Liferay.Language.get('enter-a-phone-number')}
 					type="tel"
 					value={localNumber}
 				/>
 			</div>
+
+			<input name={name} type="hidden" value={combinedValue} />
 		</FieldBase>
 	);
 };

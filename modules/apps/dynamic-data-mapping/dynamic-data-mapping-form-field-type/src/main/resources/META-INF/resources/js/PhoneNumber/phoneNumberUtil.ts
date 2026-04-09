@@ -7,9 +7,10 @@ export interface CountryInfo {
 	a2: string;
 	idd: string;
 	name: string;
+	symbol?: string;
 }
 
-export const COUNTRIES: CountryInfo[] = [
+export const DEFAULT_COUNTRIES: CountryInfo[] = [
 	{a2: 'US', idd: '1', name: 'United States'},
 	{a2: 'GB', idd: '44', name: 'United Kingdom'},
 	{a2: 'DE', idd: '49', name: 'Germany'},
@@ -54,16 +55,55 @@ export const COUNTRIES: CountryInfo[] = [
 
 // Pre-sorted by IDD length descending for longest-match parsing
 
-const COUNTRIES_BY_IDD_LENGTH = [...COUNTRIES].sort(
+const COUNTRIES_BY_IDD_LENGTH = [...DEFAULT_COUNTRIES].sort(
 	(a, b) => b.idd.length - a.idd.length
 );
 
-export function getFlag(a2: string): string {
-	return String.fromCodePoint(
-		...[...a2.toUpperCase()].map(
-			(char) => 0x1f1e6 + char.charCodeAt(0) - 65
-		)
-	);
+const FLAG_ICON_MAP: Record<string, string> = {
+	AE: 'ar-sa',
+	AR: 'es-ar',
+	AT: 'de-at',
+	AU: 'en-au',
+	BE: 'nl-be',
+	BR: 'pt-br',
+	CA: 'en-ca',
+	CH: 'de-ch',
+	CL: 'es-es',
+	CN: 'zh-cn',
+	CO: 'es-co',
+	DE: 'de-de',
+	DK: 'da-dk',
+	ES: 'es-es',
+	FI: 'fi-fi',
+	FR: 'fr-fr',
+	GB: 'en-gb',
+	ID: 'in-id',
+	IE: 'en-ie',
+	IL: 'iw-il',
+	IN: 'hi-in',
+	IT: 'it-it',
+	JP: 'ja-jp',
+	KR: 'ko-kr',
+	MX: 'es-mx',
+	MY: 'ms-my',
+	NL: 'nl-nl',
+	NO: 'no-no',
+	NZ: 'en-au',
+	PH: 'en-us',
+	PL: 'pl-pl',
+	PT: 'pt-pt',
+	RU: 'ru-ru',
+	SA: 'ar-sa',
+	SE: 'sv-se',
+	SG: 'en-us',
+	TH: 'th-th',
+	TR: 'tr-tr',
+	US: 'en-us',
+	ZA: 'en-gb',
+};
+
+export function getFlagSymbol(a2: string): string {
+	return FLAG_ICON_MAP[a2.toUpperCase()] || '';
 }
 
 export function parsePhoneValue(value: string): {
@@ -91,7 +131,7 @@ export function parsePhoneValue(value: string): {
 export function getCombinedValue(
 	countryA2: string,
 	localNumber: string,
-	countries: CountryInfo[] = COUNTRIES
+	countries: CountryInfo[] = DEFAULT_COUNTRIES
 ): string {
 	const country = countries.find((c) => c.a2 === countryA2);
 

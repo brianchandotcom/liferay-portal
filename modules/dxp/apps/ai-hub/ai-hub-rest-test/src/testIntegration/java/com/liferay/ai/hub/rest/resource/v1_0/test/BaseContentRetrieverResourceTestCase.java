@@ -18,9 +18,6 @@ import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.pagination.Page;
 import com.liferay.ai.hub.rest.client.resource.v1_0.ContentRetrieverResource;
 import com.liferay.ai.hub.rest.client.serdes.v1_0.ContentRetrieverSerDes;
-import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
-import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
-import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -103,16 +100,6 @@ public abstract class BaseContentRetrieverResourceTestCase {
 			testCompany.getCompanyId());
 
 		contentRetrieverResource = ContentRetrieverResource.builder(
-		).authentication(
-			_testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -224,72 +211,72 @@ public abstract class BaseContentRetrieverResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentRetriever() throws Exception {
-		ContentRetriever randomContentRetriever = randomContentRetriever();
-
-		ContentRetriever postContentRetriever =
-			testPostContentRetriever_addContentRetriever(
-				randomContentRetriever);
-
-		assertEquals(randomContentRetriever, postContentRetriever);
-		assertValid(postContentRetriever);
-	}
-
-	protected ContentRetriever testPostContentRetriever_addContentRetriever(
-			ContentRetriever contentRetriever)
+	public void testPutContentRetrieverByExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		ContentRetriever postContentRetriever =
+			testPutContentRetrieverByExternalReferenceCode_addContentRetriever();
 
-	@Test
-	public void testBatchEngineDeleteImportTask() throws Exception {
-		ContentRetriever contentRetriever1 =
-			testBatchEngineDeleteImportTask_addContentRetriever();
+		ContentRetriever randomContentRetriever = randomContentRetriever();
 
-		testBatchEngineDeleteImportTask_deleteContentRetriever(
-			200, contentRetriever1.getExternalReferenceCode());
+		ContentRetriever putContentRetriever =
+			contentRetrieverResource.putContentRetrieverByExternalReferenceCode(
+				postContentRetriever.getExternalReferenceCode(),
+				randomContentRetriever);
+
+		assertEquals(randomContentRetriever, putContentRetriever);
+		assertValid(putContentRetriever);
+
+		ContentRetriever getContentRetriever =
+			testPutContentRetrieverByExternalReferenceCode_getContentRetriever(
+				putContentRetriever.getExternalReferenceCode());
+
+		assertEquals(randomContentRetriever, getContentRetriever);
+		assertValid(getContentRetriever);
+
+		ContentRetriever newContentRetriever =
+			testPutContentRetrieverByExternalReferenceCode_createContentRetriever();
+
+		putContentRetriever =
+			contentRetrieverResource.putContentRetrieverByExternalReferenceCode(
+				newContentRetriever.getExternalReferenceCode(),
+				newContentRetriever);
+
+		assertEquals(newContentRetriever, putContentRetriever);
+		assertValid(putContentRetriever);
+
+		getContentRetriever =
+			testPutContentRetrieverByExternalReferenceCode_getContentRetriever(
+				putContentRetriever.getExternalReferenceCode());
+
+		assertEquals(newContentRetriever, getContentRetriever);
+
+		Assert.assertEquals(
+			newContentRetriever.getExternalReferenceCode(),
+			putContentRetriever.getExternalReferenceCode());
 	}
 
 	protected ContentRetriever
-			testBatchEngineDeleteImportTask_addContentRetriever()
+		testPutContentRetrieverByExternalReferenceCode_getContentRetriever(
+			String externalReferenceCode) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ContentRetriever
+			testPutContentRetrieverByExternalReferenceCode_addContentRetriever()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void testBatchEngineDeleteImportTask_deleteContentRetriever(
-			int expectedStatusCode, String externalReferenceCode,
-			String... parameters)
+	protected ContentRetriever
+			testPutContentRetrieverByExternalReferenceCode_createContentRetriever()
 		throws Exception {
 
-		ImportTaskResource importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			_testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).parameters(
-			parameters
-		).build();
-
-		HttpResponse httpResponse =
-			importTaskResource.deleteImportTaskHttpResponse(
-				"com.liferay.ai.hub.rest.dto.v1_0.ContentRetriever", null, null,
-				null, null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode)));
-
-		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
-
-		if (expectedStatusCode == 200) {
-			waitForFinish(
-				"COMPLETED",
-				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-		}
+		return randomContentRetriever();
 	}
 
 	protected void assertContains(
@@ -1167,30 +1154,7 @@ public abstract class BaseContentRetrieverResourceTestCase {
 		return randomContentRetriever();
 	}
 
-	protected final JSONObject waitForFinish(
-			String expectedExecuteStatus, JSONObject jsonObject)
-		throws Exception {
-
-		while (true) {
-			ImportTask importTask = importTaskResource.getImportTask(
-				jsonObject.getLong("id"));
-
-			ImportTask.ExecuteStatus executeStatus =
-				importTask.getExecuteStatus();
-
-			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
-				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
-
-				Assert.assertEquals(
-					expectedExecuteStatus, executeStatus.getValue());
-
-				return jsonObject;
-			}
-		}
-	}
-
 	protected ContentRetrieverResource contentRetrieverResource;
-	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -1400,4 +1364,4 @@ public abstract class BaseContentRetrieverResourceTestCase {
 		_contentRetrieverResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1179988954
+// LIFERAY-REST-BUILDER-HASH:-1875265096

@@ -7,9 +7,6 @@ package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.rest.dto.v1_0.ContentRetriever;
 import com.liferay.ai.hub.rest.resource.v1_0.ContentRetrieverResource;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.petra.function.UnsafeBiConsumer;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -18,24 +15,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
-import com.liferay.portal.odata.sort.SortField;
-import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
@@ -44,20 +27,11 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.NotSupportedException;
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
-import java.io.Serializable;
-
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Feliphe Marinho
@@ -66,8 +40,7 @@ import java.util.Set;
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
 public abstract class BaseContentRetrieverResourceImpl
-	implements ContentRetrieverResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<ContentRetriever> {
+	implements ContentRetrieverResource {
 
 	/**
 	 * Invoke this method with the command line:
@@ -104,35 +77,13 @@ public abstract class BaseContentRetrieverResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/content-retrievers' -d $'{"crawlDate": ___, "description_i18n": ___, "externalReferenceCode": ___, "indexName": ___, "title_i18n": ___, "type": ___, "url": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ContentRetriever")
-		}
-	)
-	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/content-retrievers")
-	@jakarta.ws.rs.POST
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ContentRetriever postContentRetriever(
-			ContentRetriever contentRetriever)
-		throws Exception {
-
-		return new ContentRetriever();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/content-retrievers/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/ai-hub/v1.0/content-retrievers/by-external-reference-code/{externalReferenceCode}' -d $'{"crawlDate": ___, "description_i18n": ___, "externalReferenceCode": ___, "indexName": ___, "title_i18n": ___, "type": ___, "url": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -141,211 +92,26 @@ public abstract class BaseContentRetrieverResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "ContentRetriever")
 		}
 	)
-	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/content-retrievers/batch")
-	@jakarta.ws.rs.POST
-	@jakarta.ws.rs.Produces("application/json")
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
+		"/content-retrievers/by-external-reference-code/{externalReferenceCode}"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
 	@Override
-	public Response postContentRetrieverBatch(
+	public ContentRetriever putContentRetrieverByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ContentRetriever contentRetriever)
 		throws Exception {
 
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.postImportTask(
-				ContentRetriever.class.getName(), callbackURL, null, object)
-		).build();
-	}
-
-	@Override
-	@SuppressWarnings("PMD.UnusedLocalVariable")
-	public void create(
-			Collection<ContentRetriever> contentRetrievers,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		UnsafeFunction<ContentRetriever, ContentRetriever, Exception>
-			contentRetrieverUnsafeFunction = null;
-
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
-
-		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			contentRetrieverUnsafeFunction =
-				contentRetriever -> postContentRetriever(contentRetriever);
-		}
-
-		if (contentRetrieverUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Create strategy \"" + createStrategy +
-					"\" is not supported for ContentRetriever");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				contentRetrievers, contentRetrieverUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				contentRetrievers, contentRetrieverUnsafeFunction::apply);
-		}
-		else {
-			for (ContentRetriever contentRetriever : contentRetrievers) {
-				contentRetrieverUnsafeFunction.apply(contentRetriever);
-			}
-		}
-	}
-
-	@Override
-	public void delete(
-			Collection<ContentRetriever> contentRetrievers,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		UnsafeFunction<ContentRetriever, ContentRetriever, Exception>
-			contentRetrieverUnsafeFunction = contentRetriever -> {
-				if (contentRetriever.getExternalReferenceCode() != null) {
-					deleteContentRetrieverByExternalReferenceCode(
-						contentRetriever.getExternalReferenceCode());
-
-					return contentRetriever;
-				}
-
-				throw new UnsupportedOperationException(
-					"Unable to delete by external reference code or ID");
-			};
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				contentRetrievers, contentRetrieverUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				contentRetrievers, contentRetrieverUnsafeFunction::apply);
-		}
-		else {
-			for (ContentRetriever contentRetriever : contentRetrievers) {
-				contentRetrieverUnsafeFunction.apply(contentRetriever);
-			}
-		}
-	}
-
-	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
-	}
-
-	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray();
-	}
-
-	@Override
-	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
-		throws Exception {
-
-		return getEntityModel(
-			new MultivaluedHashMap<String, Object>(multivaluedMap));
-	}
-
-	public String getResourceName() {
-		return "ContentRetriever";
-	}
-
-	public String getVersion() {
-		return "v1.0";
-	}
-
-	@Override
-	public Page<ContentRetriever> read(
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts,
-			Map<String, Serializable> parameters, String search)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Override
-	public void setLanguageId(String languageId) {
-		this.contextAcceptLanguage = new AcceptLanguage() {
-
-			@Override
-			public List<Locale> getLocales() {
-				return null;
-			}
-
-			@Override
-			public String getPreferredLanguageId() {
-				return languageId;
-			}
-
-			@Override
-			public Locale getPreferredLocale() {
-				return LocaleUtil.fromLanguageId(languageId);
-			}
-
-			@Override
-			public boolean isAcceptAllLanguages() {
-				if (ExportImportThreadLocal.isExportInProcess()) {
-					return true;
-				}
-
-				return AcceptLanguage.super.isAcceptAllLanguages();
-			}
-
-		};
-	}
-
-	@Override
-	public void update(
-			Collection<ContentRetriever> contentRetrievers,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
+		return new ContentRetriever();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
-	}
-
-	public void setContextBatchUnsafeBiConsumer(
-		UnsafeBiConsumer
-			<Collection<ContentRetriever>,
-			 UnsafeFunction<ContentRetriever, ContentRetriever, Exception>,
-			 Exception> contextBatchUnsafeBiConsumer) {
-
-		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
-	}
-
-	public void setContextBatchUnsafeConsumer(
-		UnsafeBiConsumer
-			<Collection<ContentRetriever>,
-			 UnsafeConsumer<ContentRetriever, Exception>, Exception>
-				contextBatchUnsafeConsumer) {
-
-		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -416,87 +182,6 @@ public abstract class BaseContentRetrieverResourceImpl
 
 	protected String getApplicationPath() {
 		return "ai-hub";
-	}
-
-	public void setVulcanBatchEngineExportTaskResource(
-		VulcanBatchEngineExportTaskResource
-			vulcanBatchEngineExportTaskResource) {
-
-		this.vulcanBatchEngineExportTaskResource =
-			vulcanBatchEngineExportTaskResource;
-	}
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource) {
-
-		this.vulcanBatchEngineImportTaskResource =
-			vulcanBatchEngineImportTaskResource;
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.filter.Filter toFilter(
-		String filterString, Map<String, List<String>> multivaluedMap) {
-
-		try {
-			EntityModel entityModel = getEntityModel(multivaluedMap);
-
-			FilterParser filterParser = filterParserProvider.provide(
-				entityModel);
-
-			com.liferay.portal.odata.filter.Filter oDataFilter =
-				new com.liferay.portal.odata.filter.Filter(
-					filterParser.parse(filterString));
-
-			return expressionConvert.convert(
-				oDataFilter.getExpression(),
-				contextAcceptLanguage.getPreferredLocale(), entityModel);
-		}
-		catch (Exception exception) {
-			_log.error("Invalid filter " + filterString, exception);
-
-			return null;
-		}
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Sort[] toSorts(String sortString) {
-		if (Validator.isNull(sortString)) {
-			return null;
-		}
-
-		try {
-			SortParser sortParser = sortParserProvider.provide(
-				getEntityModel(Collections.emptyMap()));
-
-			if (sortParser == null) {
-				return null;
-			}
-
-			com.liferay.portal.odata.sort.Sort oDataSort =
-				new com.liferay.portal.odata.sort.Sort(
-					sortParser.parse(sortString));
-
-			List<SortField> sortFields = oDataSort.getSortFields();
-			com.liferay.portal.kernel.search.Sort[] sorts =
-				new com.liferay.portal.kernel.search.Sort[sortFields.size()];
-
-			for (int i = 0; i < sortFields.size(); i++) {
-				SortField sortField = sortFields.get(i);
-
-				sorts[i] = new com.liferay.portal.kernel.search.Sort(
-					sortField.getSortableFieldName(
-						contextAcceptLanguage.getPreferredLocale()),
-					!sortField.isAscending());
-			}
-
-			return sorts;
-		}
-		catch (Exception exception) {
-			_log.error("Invalid sort " + sortString, exception);
-
-			return new com.liferay.portal.kernel.search.Sort[0];
-		}
 	}
 
 	protected Map<String, String> addAction(
@@ -851,14 +536,6 @@ public abstract class BaseContentRetrieverResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
-	protected UnsafeBiConsumer
-		<Collection<ContentRetriever>,
-		 UnsafeFunction<ContentRetriever, ContentRetriever, Exception>,
-		 Exception> contextBatchUnsafeBiConsumer;
-	protected UnsafeBiConsumer
-		<Collection<ContentRetriever>,
-		 UnsafeConsumer<ContentRetriever, Exception>, Exception>
-			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -873,13 +550,9 @@ public abstract class BaseContentRetrieverResourceImpl
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
 	protected SortParserProvider sortParserProvider;
-	protected VulcanBatchEngineExportTaskResource
-		vulcanBatchEngineExportTaskResource;
-	protected VulcanBatchEngineImportTaskResource
-		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseContentRetrieverResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-509670308
+// LIFERAY-REST-BUILDER-HASH:-610455932

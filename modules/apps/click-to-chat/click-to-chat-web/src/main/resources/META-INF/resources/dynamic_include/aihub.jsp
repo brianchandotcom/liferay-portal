@@ -13,22 +13,21 @@
 			return;
 		}
 
+		var linkElement = document.createElement('link');
+
+		linkElement.href = 'https://ai.hub.liferay.com/index-css';
+		linkElement.rel = 'stylesheet';
+
+		document.head.appendChild(linkElement);
+
 		var scriptElement = document.createElement('script');
 
-		scriptElement.id = 'aihub-chat-widget-script';
-		scriptElement.src = 'https://aihub.liferay.com/chat/widget.js';
+		scriptElement.id = 'aihub-chatbot-widget-script';
+		scriptElement.src = 'https://ai.hub.liferay.com/index-js';
 		scriptElement.setAttribute(
-			'data-account-id',
+			'chatbot-external-reference-code',
 			'<%= clickToChatChatProviderAccountId %>'
 		);
-
-		<c:if test="<%= themeDisplay.isSignedIn() %>">
-			scriptElement.setAttribute(
-				'data-user-email',
-				'<%= user.getEmailAddress() %>'
-			);
-			scriptElement.setAttribute('data-user-name', '<%= user.getFullName() %>');
-		</c:if>
 
 		document.body.appendChild(scriptElement);
 	})();

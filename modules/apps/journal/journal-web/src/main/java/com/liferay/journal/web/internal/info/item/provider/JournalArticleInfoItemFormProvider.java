@@ -55,13 +55,12 @@ public class JournalArticleInfoItemFormProvider
 	public InfoForm getInfoForm() {
 		try {
 			return _getInfoForm(
-				StringPool.BLANK,
 				assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName()),
 				displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName(), StringPool.BLANK,
 					JournalArticle.class.getSimpleName(), 0),
-				0);
+				StringPool.BLANK, 0);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -76,7 +75,6 @@ public class JournalArticleInfoItemFormProvider
 
 		try {
 			return _getInfoForm(
-				String.valueOf(ddmStructureId),
 				assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					assetEntryLocalService.getEntry(
 						JournalArticle.class.getName(),
@@ -85,7 +83,7 @@ public class JournalArticleInfoItemFormProvider
 					JournalArticle.class.getName(),
 					String.valueOf(ddmStructureId),
 					JournalArticle.class.getSimpleName(), 0),
-				0);
+				String.valueOf(ddmStructureId), 0);
 		}
 		catch (NoSuchClassTypeException noSuchClassTypeException) {
 			throw new RuntimeException(
@@ -106,14 +104,13 @@ public class JournalArticleInfoItemFormProvider
 		throws NoSuchFormVariationException {
 
 		return _getInfoForm(
-			formVariationKey,
 			assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				JournalArticle.class.getName(),
 				GetterUtil.getLong(formVariationKey), groupId),
 			displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 				JournalArticle.class.getName(), formVariationKey,
 				JournalArticle.class.getSimpleName(), groupId),
-			groupId);
+			formVariationKey, groupId);
 	}
 
 	@Reference
@@ -186,8 +183,9 @@ public class JournalArticleInfoItemFormProvider
 	}
 
 	private InfoForm _getInfoForm(
-			String formVariationKey, InfoFieldSet assetEntryInfoFieldSet,
-			InfoFieldSet displayPageInfoFieldSet, long groupId)
+			InfoFieldSet assetEntryInfoFieldSet,
+			InfoFieldSet displayPageInfoFieldSet, String formVariationKey,
+			long groupId)
 		throws NoSuchFormVariationException {
 
 		try {

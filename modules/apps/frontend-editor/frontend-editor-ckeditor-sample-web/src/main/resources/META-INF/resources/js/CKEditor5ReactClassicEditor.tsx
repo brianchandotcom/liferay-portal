@@ -9,8 +9,9 @@ import ClayButton from '@clayui/button';
 import {
 	CKEditor5ClassicEditor as ClassicEditor,
 	LiferayEditorConfig,
+	TEditor,
 } from 'frontend-editor-ckeditor-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import Timestamp from './Timestamp';
 
@@ -22,6 +23,8 @@ const CKEditor5ReactClassicEditor = ({
 	editorTransformerURLs?: Array<string>;
 }) => {
 	const [disabled, setDisabled] = useState(false);
+
+	const editorRef = useRef<TEditor>();
 
 	const config: LiferayEditorConfig = {
 		...editorConfig,
@@ -53,19 +56,44 @@ const CKEditor5ReactClassicEditor = ({
 
 	return (
 		<div className="container-fluid">
-			<div className="mb-2 row">
+			<ClayButton.Group spaced>
 				<ClayButton
 					onClick={() => {
 						setDisabled(!disabled);
 					}}
 				>
-					Toggle editor ReadOnly mode
+					Toggle disabled prop
 				</ClayButton>
-			</div>
 
-			<div className="row">
+				<ClayButton
+					onClick={() => {
+						const editor = editorRef.current;
+
+						if (!editor) {
+							return;
+						}
+
+						if (editor.isReadOnly) {
+							editor.disableReadOnlyMode('sample');
+						}
+						else {
+							editor.enableReadOnlyMode('sample');
+						}
+					}}
+				>
+					Toggle internal read-only mode
+				</ClayButton>
+			</ClayButton.Group>
+
+			<div className="mt-3 row">
 				<div>
-					<ClassicEditor config={config} disabled={disabled} />
+					<ClassicEditor
+						config={config}
+						disabled={disabled}
+						onReady={(editor) => {
+							editorRef.current = editor;
+						}}
+					/>
 				</div>
 			</div>
 		</div>

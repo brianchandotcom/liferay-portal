@@ -1,26 +1,32 @@
 .sv-filter-content {
-	.custom-control-outside label {
-		display: inline;
-	}
-
-	.disabled.sv-clear-button {
-		color: var(--color-action-neutral-disabled);
-	}
-
 	.sv-filter-box {
 		background-color: var(--color-neutral-1);
 		border-radius: var(--border-radius-lg);
 		margin-bottom: var(--spacer-3);
 		padding: var(--spacer-3);
 
-		& label span {
+		.custom-control-input {
+			position: relative;
+			width: 100%;
+		}
+
+		.custom-control-label {
 			color: var(--color-neutral-10);
 			font-size: var(--font-size-sm);
+			height: 1.5rem;
 			left: 0;
-			margin-top: 0.0625rem;
 			padding-left: var(--spacer-4);
 			position: absolute;
 			width: 100%;
+
+			&:before {
+				border-color: var(--color-neutral-10);
+			}
+		}
+
+		.custom-control-label-text {
+			line-height: 1.5rem;
+			position: relative;
 		}
 	}
 
@@ -28,5 +34,9 @@
 		color: var(--color-action-neutral-default);
 		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-semi-bold);
+
+		&.disabled {
+			color: var(--color-action-neutral-disabled);
+		}
 	}
 }

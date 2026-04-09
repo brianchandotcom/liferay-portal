@@ -70,6 +70,7 @@ class TPriceList {
 	currencyCode: string;
 	id?: number;
 	name: string;
+	priority?: number;
 	type: string;
 }
 

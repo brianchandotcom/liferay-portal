@@ -10,13 +10,19 @@ export class CommerceChannelDefaultsPage {
 	readonly defaultBillingCommerceAddressesActions: Locator;
 	readonly defaultBillingCommerceAddressesButton: Locator;
 	readonly defaultCommerceCurrencies: Locator;
+	readonly defaultCommerceCurrenciesActions: Locator;
 	readonly defaultCommerceCurrenciesButton: Locator;
+	readonly defaultCommerceCurrenciesCell: (name: string) => Locator;
 	readonly defaultCommerceDiscounts: Locator;
+	readonly defaultCommerceDiscountsActions: Locator;
 	readonly defaultCommerceDiscountsButton: Locator;
+	readonly defaultCommerceDiscountsCell: (name: string) => Locator;
 	readonly defaultCommercePaymentMethod: Locator;
 	readonly defaultCommercePaymentMethodButton: Locator;
 	readonly defaultCommercePriceLists: Locator;
+	readonly defaultCommercePriceListsActions: Locator;
 	readonly defaultCommercePriceListsButton: Locator;
+	readonly defaultCommercePriceListsCell: (name: string) => Locator;
 	readonly defaultCommerceShippingOption: Locator;
 	readonly defaultCommerceShippingOptionButton: Locator;
 	readonly defaultDeliveryCommerceTermEntries: Locator;
@@ -31,8 +37,11 @@ export class CommerceChannelDefaultsPage {
 	readonly editFrame: FrameLocator;
 	readonly editFrameChannelSelect: Locator;
 	readonly editFrameCurrencySelect: Locator;
+	readonly editFrameDiscountSelect: Locator;
+	readonly editFrameOverrideCheckbox: Locator;
 	readonly editFramePriceListSelect: Locator;
 	readonly editFrameSaveButton: Locator;
+	readonly deleteMenuItem: Locator;
 	readonly editMenuItem: Locator;
 	readonly channelEntry: (channelEntryName: string) => Locator;
 	readonly channelEntryAddButton: (channelEntryName: string) => Locator;
@@ -54,13 +63,25 @@ export class CommerceChannelDefaultsPage {
 		this.defaultCommerceCurrencies = page.getByTestId(
 			'defaultCommerceCurrencies'
 		);
+		this.defaultCommerceCurrenciesActions =
+			this.defaultCommerceCurrencies.getByRole('button', {
+				name: 'Actions',
+			});
 		this.defaultCommerceCurrenciesButton =
 			this.defaultCommerceCurrencies.getByLabel('Add Default Currency');
+		this.defaultCommerceCurrenciesCell = (name: string) =>
+			this.defaultCommerceCurrencies.getByRole('cell', {name});
 		this.defaultCommerceDiscounts = page.getByTestId(
 			'defaultCommerceDiscounts'
 		);
+		this.defaultCommerceDiscountsActions =
+			this.defaultCommerceDiscounts.getByRole('button', {
+				name: 'Actions',
+			});
 		this.defaultCommerceDiscountsButton =
 			this.defaultCommerceDiscounts.getByLabel('Add Default Discount');
+		this.defaultCommerceDiscountsCell = (name: string) =>
+			this.defaultCommerceDiscounts.getByRole('cell', {name});
 		this.defaultCommercePaymentMethod = page.getByTestId(
 			'defaultCommercePaymentMethod'
 		);
@@ -69,8 +90,14 @@ export class CommerceChannelDefaultsPage {
 		this.defaultCommercePriceLists = page.getByTestId(
 			'defaultCommercePriceLists'
 		);
+		this.defaultCommercePriceListsActions =
+			this.defaultCommercePriceLists.getByRole('button', {
+				name: 'Actions',
+			});
 		this.defaultCommercePriceListsButton =
 			this.defaultCommercePriceLists.getByLabel('Add Default Price List');
+		this.defaultCommercePriceListsCell = (name: string) =>
+			this.defaultCommercePriceLists.getByRole('cell', {name});
 		this.defaultCommerceShippingOption = page.getByTestId(
 			'defaultCommerceShippingOption'
 		);
@@ -103,6 +130,7 @@ export class CommerceChannelDefaultsPage {
 				.locator('[data-testid="fdsCreationActionButton"]');
 		this.defaultUsers = page.getByTestId('defaultUsers');
 		this.defaultUsersButton = this.defaultUsers.getByLabel('Add User');
+		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.editFrame = page.frameLocator('.fds-modal-body > iframe');
 		this.editMenuItem = page.getByRole('menuitem', {name: 'Edit'});
 		this.page = page;
@@ -110,6 +138,10 @@ export class CommerceChannelDefaultsPage {
 		this.editFrameChannelSelect = this.editFrame.getByLabel('Channel');
 		this.editFrameCurrencySelect =
 			this.editFrame.getByLabel('Currency Required');
+		this.editFrameDiscountSelect = this.editFrame.getByLabel('Discount');
+		this.editFrameOverrideCheckbox = this.editFrame.getByLabel(
+			'Override Eligibility'
+		);
 		this.editFramePriceListSelect = this.editFrame.getByLabel('Price List');
 		this.editFrameSaveButton = this.editFrame.getByRole('button', {
 			exact: true,

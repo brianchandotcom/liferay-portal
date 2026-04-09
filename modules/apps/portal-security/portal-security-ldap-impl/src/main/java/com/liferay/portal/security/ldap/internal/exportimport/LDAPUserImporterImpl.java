@@ -698,10 +698,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 		return user;
 	}
 
-	protected String escapeLDAPName(String ldapName) {
-		return StringUtil.replace(ldapName, '\\', "\\\\");
-	}
-
 	protected User getUser(long companyId, LDAPUser ldapUser) throws Exception {
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);

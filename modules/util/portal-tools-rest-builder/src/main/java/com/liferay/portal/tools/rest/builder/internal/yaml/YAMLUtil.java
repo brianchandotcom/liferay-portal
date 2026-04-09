@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml;
 
+import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.Security;
 import com.liferay.portal.tools.rest.builder.internal.yaml.exception.InvalidYAMLException;
@@ -15,6 +16,9 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.XML;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
@@ -33,9 +37,16 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YAMLUtil {
 
-	public static ConfigYAML loadConfigYAML(String yamlString) {
+	public static ConfigYAML loadConfigYAML(String baseDir, File file)
+		throws IOException {
+
 		try {
-			return _YAML_CONFIG.loadAs(yamlString, ConfigYAML.class);
+			ConfigYAML configYAML = _YAML_CONFIG.loadAs(
+				FileUtil.read(file), ConfigYAML.class);
+
+			configYAML.setBaseDir(baseDir);
+
+			return configYAML;
 		}
 		catch (MarkedYAMLException markedYAMLException) {
 			throw new InvalidYAMLException(markedYAMLException);

@@ -47,8 +47,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -128,12 +127,13 @@ public class RESTBuilder {
 
 		_copyrightFile = copyrightFile;
 
-		_configDir = configDir;
+		_configDir = configDir.getCanonicalFile();
 
 		File configFile = new File(_configDir, "rest-config.yaml");
 
-		try (InputStream inputStream = new FileInputStream(configFile)) {
-			_configYAML = YAMLUtil.loadConfigYAML(StringUtil.read(inputStream));
+		try {
+			_configYAML = YAMLUtil.loadConfigYAML(
+				_configDir.getPath(), configFile);
 
 			if (forceClientVersionDescription != null) {
 				_configYAML.setForceClientVersionDescription(

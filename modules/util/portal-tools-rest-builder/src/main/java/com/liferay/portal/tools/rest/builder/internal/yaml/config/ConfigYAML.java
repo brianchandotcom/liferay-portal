@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml.config;
 
+import java.io.File;
+
 /**
  * @author Peter Shin
  */
@@ -24,6 +26,10 @@ public class ConfigYAML {
 
 	public String getAuthor() {
 		return _author;
+	}
+
+	public String getBaseDir() {
+		return _baseDir;
 	}
 
 	public String getClientDir() {
@@ -142,6 +148,17 @@ public class ConfigYAML {
 		_author = author;
 	}
 
+	public void setBaseDir(String baseDir) {
+		_baseDir = baseDir;
+
+		File baseDirFile = new File(baseDir);
+
+		_apiDir = _resolveDir(baseDirFile, _apiDir);
+		_clientDir = _resolveDir(baseDirFile, _clientDir);
+		_implDir = _resolveDir(baseDirFile, _implDir);
+		_testDir = _resolveDir(baseDirFile, _testDir);
+	}
+
 	public void setChangeTrackingEnabled(boolean changeTrackingEnabled) {
 		_changeTrackingEnabled = changeTrackingEnabled;
 	}
@@ -252,10 +269,27 @@ public class ConfigYAML {
 		_warningsEnabled = warningsEnabled;
 	}
 
+	private String _resolveDir(File baseDir, String dir) {
+		if (dir == null) {
+			return null;
+		}
+
+		File dirFile = new File(dir);
+
+		if (dirFile.isAbsolute()) {
+			return dir;
+		}
+
+		File resolvedFile = new File(baseDir, dir);
+
+		return resolvedFile.getPath();
+	}
+
 	private String _apiDir;
 	private String _apiPackagePath;
 	private Application _application;
 	private String _author;
+	private String _baseDir;
 	private boolean _changeTrackingEnabled;
 	private String _clientDir;
 	private String _clientMavenGroupId;

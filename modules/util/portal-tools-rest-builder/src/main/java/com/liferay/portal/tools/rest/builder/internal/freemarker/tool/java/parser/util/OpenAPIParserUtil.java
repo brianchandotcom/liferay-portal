@@ -229,6 +229,8 @@ public class OpenAPIParserUtil {
 
 		Map<String, Schema> externalReferencesMap = new TreeMap<>();
 
+		String baseDir = configYAML.getBaseDir();
+
 		String externalReference = null;
 		Set<String> visitedPaths = new HashSet<>();
 
@@ -236,27 +238,25 @@ public class OpenAPIParserUtil {
 			getExternalReferences(openAPIYAML));
 
 		while ((externalReference = queue.poll()) != null) {
-			String path = externalReference.substring(
-				0, externalReference.indexOf("#"));
+			File externalFile = _resolveExternalFile(
+				baseDir, externalReference);
 
-			if (visitedPaths.contains(path)) {
+			if (!visitedPaths.add(externalFile.getPath())) {
 				continue;
 			}
 
-			visitedPaths.add(path);
-
 			openAPIYAML = YAMLUtil.loadOpenAPIYAML(
-				FileUtil.read(new File(path)));
+				FileUtil.read(externalFile));
 
 			externalReferencesMap.putAll(
 				OpenAPIUtil.getAllSchemas(configYAML, openAPIYAML));
 
+			String parentPath = externalFile.getParent() + "/";
+
 			for (String curExternalReference :
 					getExternalReferences(openAPIYAML)) {
 
-				queue.add(
-					path.substring(0, path.lastIndexOf("/") + 1) +
-						curExternalReference);
+				queue.add(parentPath + curExternalReference);
 			}
 		}
 
@@ -319,29 +319,29 @@ public class OpenAPIParserUtil {
 
 		Map<String, String> javaDataTypeMap = new TreeMap<>();
 
+		String baseDir = configYAML.getBaseDir();
+
 		Set<String> visitedPaths = new HashSet<>();
 
 		try {
 			for (String externalReference :
 					getExternalReferences(openAPIYAML)) {
 
-				String path = externalReference.substring(
-					0, externalReference.indexOf("#"));
+				File externalFile = _resolveExternalFile(
+					baseDir, externalReference);
 
-				if (visitedPaths.contains(path)) {
+				if (!visitedPaths.add(externalFile.getPath())) {
 					continue;
 				}
 
-				visitedPaths.add(path);
-
-				String configPath = StringUtil.replace(
-					path, "rest-openapi.yaml", "rest-config.yaml");
+				File configFile = new File(
+					externalFile.getParent(), "rest-config.yaml");
 
 				ConfigYAML externalConfigYAML = YAMLUtil.loadConfigYAML(
-					FileUtil.read(new File(configPath)));
+					externalFile.getParent(), configFile);
 
 				OpenAPIYAML externalOpenAPIYAML = YAMLUtil.loadOpenAPIYAML(
-					FileUtil.read(new File(path)));
+					FileUtil.read(externalFile));
 
 				if ((externalConfigYAML == null) ||
 					(externalOpenAPIYAML == null)) {
@@ -733,6 +733,22 @@ public class OpenAPIParserUtil {
 		}
 
 		return null;
+	}
+
+	private static File _resolveExternalFile(
+			String baseDir, String externalReference)
+		throws IOException {
+
+		String path = externalReference.substring(
+			0, externalReference.indexOf("#"));
+
+		File externalFile = new File(path);
+
+		if (!externalFile.isAbsolute()) {
+			externalFile = new File(baseDir, path);
+		}
+
+		return externalFile.getCanonicalFile();
 	}
 
 	private static final Map<Map.Entry<String, String>, String>

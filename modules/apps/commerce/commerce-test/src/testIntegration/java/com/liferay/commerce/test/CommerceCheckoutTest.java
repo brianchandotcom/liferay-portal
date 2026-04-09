@@ -29,8 +29,6 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
-import com.liferay.commerce.price.list.model.CommercePriceEntry;
-import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -773,22 +771,10 @@ public class CommerceCheckoutTest {
 				continue;
 			}
 
-			CommercePriceList commercePriceList =
-				_commercePriceListLocalService.getCatalogBaseCommercePriceList(
-					cpInstance.getGroupId());
+			BigDecimal unitPrice = commerceOrderItem.getUnitPrice();
 
-			CommercePriceEntry commercePriceEntry =
-				_commercePriceEntryLocalService.fetchCommercePriceEntry(
-					commercePriceList.getCommercePriceListId(),
-					cpInstance.getCPInstanceUuid(),
-					commerceOrderItem.getUnitOfMeasureKey());
-
-			BigDecimal price = commercePriceEntry.getPrice();
-
-			BigDecimal totalItemPrice = price.multiply(
-				commerceOrderItem.getQuantity());
-
-			expectedSubtotal = expectedSubtotal.add(totalItemPrice);
+			expectedSubtotal = expectedSubtotal.add(
+				unitPrice.multiply(commerceOrderItem.getQuantity()));
 		}
 
 		BigDecimal actualSubtotal = commerceOrder.getSubtotal();

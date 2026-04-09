@@ -16,7 +16,9 @@ const test = mergeTests(
 	apiHelpersTest,
 	designLibrariesPageTest,
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
+		'LPD-34594': {enabled: true},
 		'LPD-36105': {enabled: true},
 		'LPD-57283': {enabled: true},
 	}),
@@ -315,5 +317,86 @@ test('Can connect and disconnect a site from a design library', async ({
 		await designLibrariesPage.goto();
 
 		await designLibrariesPage.delete(designLibraryName);
+	});
+});
+
+test('Can view and edit a design library settings', async ({
+	designLibrariesPage,
+	page,
+}) => {
+	const designLibraryName = getRandomString();
+	const editedDesignLibraryName = getRandomString();
+	const editedDesignLibraryDescription = getRandomString();
+
+	await test.step('Create a new design library', async () => {
+		await designLibrariesPage.goto();
+
+		await designLibrariesPage.create({name: designLibraryName});
+
+		await waitForAlert(
+			page,
+			`Success:${designLibraryName} was created successfully.`
+		);
+
+		await expectRedirectionToLibrary(designLibraryName, page);
+	});
+
+	await test.step('View the design library settings', async () => {
+		const settingsMenuItem = page
+			.getByRole('menu')
+			.getByRole('menuitem', {name: 'Settings'});
+
+		await page
+			.getByRole('button', {
+				name: 'More Actions',
+			})
+			.click();
+
+		await expect(page.getByRole('menu')).toBeVisible();
+
+		await expect(settingsMenuItem).toBeVisible();
+
+		await settingsMenuItem.click();
+
+		await expect(page.getByRole('textbox', {name: 'Name'})).toHaveValue(
+			designLibraryName
+		);
+
+		await expect(
+			page.getByRole('textbox', {name: 'Description'})
+		).toHaveValue('');
+	});
+
+	await test.step('Edit the design library settings', async () => {
+		await page
+			.getByRole('textbox', {name: 'Name'})
+			.fill(editedDesignLibraryName);
+
+		await page
+			.getByRole('textbox', {name: 'Description'})
+			.fill(editedDesignLibraryDescription);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(
+			page,
+			`Success:${editedDesignLibraryName} was saved successfully.`
+		);
+
+		await page.reload();
+
+		await expect(page.getByRole('textbox', {name: 'Name'})).toHaveValue(
+			editedDesignLibraryName
+		);
+
+		await expect(
+			page.getByRole('textbox', {name: 'Description'})
+		).toHaveValue(editedDesignLibraryDescription);
+	});
+
+	await test.step('Delete created design library', async () => {
+		await designLibrariesPage.goto();
+
+		await designLibrariesPage.delete(editedDesignLibraryName);
 	});
 });

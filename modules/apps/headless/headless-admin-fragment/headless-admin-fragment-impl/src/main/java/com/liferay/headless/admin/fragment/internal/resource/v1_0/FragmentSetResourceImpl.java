@@ -31,6 +31,18 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 
 	@Override
+	public void deleteSiteFragmentSet(
+			String siteExternalReferenceCode,
+			String fragmentSetExternalReferenceCode)
+		throws Exception {
+
+		_fragmentCollectionService.deleteFragmentCollection(
+			fragmentSetExternalReferenceCode,
+			GroupUtil.getStagingAwareGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode));
+	}
+
+	@Override
 	public FragmentSet getSiteFragmentSet(
 			String siteExternalReferenceCode,
 			String fragmentSetExternalReferenceCode)

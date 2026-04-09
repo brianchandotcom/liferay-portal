@@ -166,6 +166,11 @@ public class FDSAdminDisplayContext {
 			));
 	}
 
+	public String getImportedSystemFDSEntriesDataProviderURL() {
+		return _getDataProviderURL(
+			FDSAdminPortletFDSNames.IMPORTED_SYSTEM_FDS_ENTRIES);
+	}
+
 	public String getImportSystemDataSetURL() {
 		ResourceURL resourceURL =
 			(ResourceURL)PortalUtil.getControlPanelPortletURL(
@@ -260,11 +265,6 @@ public class FDSAdminDisplayContext {
 			"/frontend_data_set_admin/save_data_set_table_sections");
 
 		return resourceURL.toString();
-	}
-
-	public String getSystemFDSEntryInfosDataProviderURL() {
-		return _getDataProviderURL(
-			FDSAdminPortletFDSNames.SYSTEM_FDS_ENTRY_INFOS);
 	}
 
 	public JSONArray getSystemFDSEntryJSONArray() throws Exception {

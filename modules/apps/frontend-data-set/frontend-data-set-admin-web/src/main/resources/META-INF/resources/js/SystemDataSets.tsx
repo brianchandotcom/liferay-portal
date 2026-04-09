@@ -130,15 +130,15 @@ const SystemDataSetsView = ({
 const SelectSystemDataSetModalContent = ({
 	closeModal,
 	importSystemDataSetURL,
+	importedSystemFDSEntriesDataProviderURL,
 	loadData,
 	namespace,
-	systemFDSEntryInfosDataProviderURL,
 }: {
 	closeModal: Function;
 	importSystemDataSetURL: string;
+	importedSystemFDSEntriesDataProviderURL: string;
 	loadData: Function;
 	namespace: string;
-	systemFDSEntryInfosDataProviderURL: string;
 }) => {
 	const [createButtonDisabled, setCreateButtonDisabled] = useState(true);
 	const [selectedSystemDataSet, setSelectedSystemDataSet] =
@@ -187,7 +187,7 @@ const SelectSystemDataSetModalContent = ({
 				<div className="modal-height-full select-system-data-set-modal-body">
 					<FrontendDataSet
 						{...FDS_DEFAULT_PROPS}
-						apiURL={systemFDSEntryInfosDataProviderURL}
+						apiURL={importedSystemFDSEntriesDataProviderURL}
 						id="SystemDataSets"
 						onSelectedItemsChange={(
 							selectedItems: Array<ISystemDataSet>
@@ -238,15 +238,15 @@ const SelectSystemDataSetModalContent = ({
 const SystemDataSets = ({
 	editDataSetURL,
 	importSystemDataSetURL,
+	importedSystemFDSEntriesDataProviderURL,
 	namespace,
 	systemDataSets,
-	systemFDSEntryInfosDataProviderURL,
 }: {
 	editDataSetURL: string;
 	importSystemDataSetURL: string;
+	importedSystemFDSEntriesDataProviderURL: string;
 	namespace: string;
 	systemDataSets: Array<ISystemDataSet>;
-	systemFDSEntryInfosDataProviderURL: string;
 }) => {
 	const [toggleDisabled, setToogleDisabled] = useState(false);
 
@@ -375,11 +375,11 @@ const SystemDataSets = ({
 							<SelectSystemDataSetModalContent
 								closeModal={closeModal}
 								importSystemDataSetURL={importSystemDataSetURL}
+								importedSystemFDSEntriesDataProviderURL={
+									importedSystemFDSEntriesDataProviderURL
+								}
 								loadData={loadData}
 								namespace={namespace}
-								systemFDSEntryInfosDataProviderURL={
-									systemFDSEntryInfosDataProviderURL
-								}
 							/>
 						),
 						size: 'lg',

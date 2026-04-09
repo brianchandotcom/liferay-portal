@@ -9,7 +9,7 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletFDSNames;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
-import com.liferay.frontend.data.set.admin.web.internal.model.SystemFDSEntryInfo;
+import com.liferay.frontend.data.set.admin.web.internal.model.ImportedSystemFDSEntry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -43,14 +43,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Arroyo
  */
 @Component(
-	property = "fds.data.provider.key=" + FDSAdminPortletFDSNames.SYSTEM_FDS_ENTRY_INFOS,
+	property = "fds.data.provider.key=" + FDSAdminPortletFDSNames.IMPORTED_SYSTEM_FDS_ENTRIES,
 	service = FDSDataProvider.class
 )
-public class SystemFDSEntryInfoFDSDataProvider
-	implements FDSDataProvider<SystemFDSEntryInfo> {
+public class ImportedSystemFDSEntriesFDSDataProvider
+	implements FDSDataProvider<ImportedSystemFDSEntry> {
 
 	@Override
-	public List<SystemFDSEntryInfo> getItems(
+	public List<ImportedSystemFDSEntry> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
@@ -98,7 +98,7 @@ public class SystemFDSEntryInfoFDSDataProvider
 
 		return TransformUtil.transform(
 			systemFDSEntries.subList(start, end),
-			(SystemFDSEntry systemFDSEntry) -> _toSystemFDSEntryInfo(
+			(SystemFDSEntry systemFDSEntry) -> _toImportedSystemFDSEntry(
 				httpServletRequest, objectDefinition, systemFDSEntry));
 	}
 
@@ -131,7 +131,7 @@ public class SystemFDSEntryInfoFDSDataProvider
 		}
 	}
 
-	private SystemFDSEntryInfo _toSystemFDSEntryInfo(
+	private ImportedSystemFDSEntry _toImportedSystemFDSEntry(
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition, SystemFDSEntry systemFDSEntry) {
 
@@ -140,7 +140,7 @@ public class SystemFDSEntryInfoFDSDataProvider
 			ObjectDefinitionConstants.GROUP_ID_DEFAULT,
 			objectDefinition.getObjectDefinitionId());
 
-		return new SystemFDSEntryInfo(
+		return new ImportedSystemFDSEntry(
 			systemFDSEntry.getAdditionalAPIURLParameters(httpServletRequest),
 			systemFDSEntry.getDefaultItemsPerPage(),
 			systemFDSEntry.getDescription(), objectEntry != null,

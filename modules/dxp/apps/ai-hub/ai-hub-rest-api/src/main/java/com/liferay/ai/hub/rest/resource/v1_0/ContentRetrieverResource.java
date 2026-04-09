@@ -14,15 +14,12 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 
 import jakarta.annotation.Generated;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -48,11 +45,8 @@ public interface ContentRetrieverResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public ContentRetriever postContentRetriever(
-			ContentRetriever contentRetriever)
-		throws Exception;
-
-	public Response postContentRetrieverBatch(String callbackURL, Object object)
+	public ContentRetriever putContentRetrieverByExternalReferenceCode(
+			String externalReferenceCode, ContentRetriever contentRetriever)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -94,14 +88,6 @@ public interface ContentRetrieverResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
-
-	public void setVulcanBatchEngineExportTaskResource(
-		VulcanBatchEngineExportTaskResource
-			vulcanBatchEngineExportTaskResource);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default com.liferay.portal.kernel.search.filter.Filter toFilter(
 		String filterString) {
@@ -151,4 +137,4 @@ public interface ContentRetrieverResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:644787274
+// LIFERAY-REST-BUILDER-HASH:1415975121

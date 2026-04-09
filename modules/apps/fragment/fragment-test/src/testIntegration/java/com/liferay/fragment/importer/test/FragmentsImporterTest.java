@@ -261,35 +261,148 @@ public class FragmentsImporterTest {
 				_user.getUserId(), _group.getGroupId(), 0,
 				fileWithFolderResources, FragmentsImportStrategy.OVERWRITE,
 				false);
+
+			List<FragmentCollection> fragmentCollections =
+				_fragmentCollectionLocalService.getFragmentCollections(
+					_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			Assert.assertEquals(
+				fragmentCollections.toString(), 1, fragmentCollections.size());
+
+			FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+			Map<String, FileEntry> resourcesMap =
+				fragmentCollection.getResourcesMap();
+
+			Assert.assertEquals(
+				resourcesMap.toString(), 2, resourcesMap.size());
+
+			Assert.assertNotNull(resourcesMap.get("image1.png"));
+			Assert.assertNotNull(resourcesMap.get("folder1/image2.png"));
+
+			FileEntry fileEntry = resourcesMap.get("image1.png");
+
+			Assert.assertEquals("image1.png", fileEntry.getTitle());
+
+			fileEntry = resourcesMap.get("folder1/image2.png");
+
+			Assert.assertEquals("image2.png", fileEntry.getTitle());
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				fileWithFolderResources, FragmentsImportStrategy.OVERWRITE,
+				false);
+
+			fragmentCollection =
+				_fragmentCollectionLocalService.fetchFragmentCollection(
+					fragmentCollection.getFragmentCollectionId());
+
+			resourcesMap = fragmentCollection.getResourcesMap();
+
+			Assert.assertEquals(
+				resourcesMap.toString(), 4, resourcesMap.size());
+
+			Assert.assertNotNull(resourcesMap.get("image1.png"));
+			Assert.assertNotNull(resourcesMap.get("image1 (1).png"));
+			Assert.assertNotNull(resourcesMap.get("folder1/image2.png"));
+			Assert.assertNotNull(resourcesMap.get("folder1/image2 (1).png"));
+
+			fileEntry = resourcesMap.get("image1 (1).png");
+
+			Assert.assertEquals("image1 (1).png", fileEntry.getTitle());
+
+			fileEntry = resourcesMap.get("folder1/image2 (1).png");
+
+			Assert.assertEquals("image2 (1).png", fileEntry.getTitle());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getFragmentCollections(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		FileUtil.delete(fileWithFolderResources);
+	}
 
-		Assert.assertEquals(
-			fragmentCollections.toString(), 1, fragmentCollections.size());
+	@Test
+	public void testImportFragmentEntriesWithFolderResourcesPropagation()
+		throws Exception {
 
-		FragmentCollection fragmentCollection = fragmentCollections.get(0);
+		File fileWithFolderResources = _generateZipFileWithFolderResources();
 
-		Map<String, FileEntry> resourcesMap =
-			fragmentCollection.getResourcesMap();
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Assert.assertEquals(resourcesMap.toString(), 2, resourcesMap.size());
+		_configurationProvider.saveCompanyConfiguration(
+			FragmentServiceConfiguration.class, _group.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"propagateChanges", true
+			).build());
 
-		Assert.assertNotNull(resourcesMap.get("image1.png"));
-		Assert.assertNotNull(resourcesMap.get("folder1/image2.png"));
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				fileWithFolderResources, FragmentsImportStrategy.OVERWRITE,
+				false);
 
-		FileEntry fileEntry = resourcesMap.get("image1.png");
+			List<FragmentCollection> fragmentCollections =
+				_fragmentCollectionLocalService.getFragmentCollections(
+					_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals("image1.png", fileEntry.getTitle());
+			Assert.assertEquals(
+				fragmentCollections.toString(), 1, fragmentCollections.size());
 
-		fileEntry = resourcesMap.get("folder1/image2.png");
+			FragmentCollection fragmentCollection = fragmentCollections.get(0);
 
-		Assert.assertEquals("image2.png", fileEntry.getTitle());
+			Map<String, FileEntry> resourcesMap =
+				fragmentCollection.getResourcesMap();
+
+			Assert.assertEquals(
+				resourcesMap.toString(), 2, resourcesMap.size());
+
+			Assert.assertNotNull(resourcesMap.get("image1.png"));
+			Assert.assertNotNull(resourcesMap.get("folder1/image2.png"));
+
+			FileEntry fileEntry = resourcesMap.get("image1.png");
+
+			Assert.assertEquals("image1.png", fileEntry.getTitle());
+
+			fileEntry = resourcesMap.get("folder1/image2.png");
+
+			Assert.assertEquals("image2.png", fileEntry.getTitle());
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				fileWithFolderResources, FragmentsImportStrategy.OVERWRITE,
+				false);
+
+			fragmentCollection =
+				_fragmentCollectionLocalService.fetchFragmentCollection(
+					fragmentCollection.getFragmentCollectionId());
+
+			resourcesMap = fragmentCollection.getResourcesMap();
+
+			Assert.assertEquals(
+				resourcesMap.toString(), 2, resourcesMap.size());
+
+			Assert.assertNotNull(resourcesMap.get("image1.png"));
+			Assert.assertNotNull(resourcesMap.get("folder1/image2.png"));
+
+			fileEntry = resourcesMap.get("image1.png");
+
+			Assert.assertEquals("image1.png", fileEntry.getTitle());
+
+			fileEntry = resourcesMap.get("folder1/image2.png");
+
+			Assert.assertEquals("image2.png", fileEntry.getTitle());
+		}
+		finally {
+			_configurationProvider.saveCompanyConfiguration(
+				FragmentServiceConfiguration.class, _group.getCompanyId(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"propagateChanges", false
+				).build());
+
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		FileUtil.delete(fileWithFolderResources);
 	}

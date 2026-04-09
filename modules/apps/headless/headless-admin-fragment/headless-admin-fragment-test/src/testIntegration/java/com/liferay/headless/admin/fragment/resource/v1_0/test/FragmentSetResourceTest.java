@@ -8,6 +8,8 @@ package com.liferay.headless.admin.fragment.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
+import com.liferay.headless.admin.fragment.client.problem.Problem;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -112,6 +114,17 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		Assert.assertEquals(originalKey, putFragmentSet.getKey());
 		Assert.assertEquals(
 			originalMarketplace, putFragmentSet.getMarketplace());
+
+		FragmentSet duplicateKeyFragmentSet = randomFragmentSet();
+
+		duplicateKeyFragmentSet.setKey(originalKey);
+
+		_assertProblemException(
+			"CONFLICT", "A fragment set with the same key already exists",
+			() -> fragmentSetResource.putSiteFragmentSet(
+				testGroup.getExternalReferenceCode(),
+				duplicateKeyFragmentSet.getExternalReferenceCode(),
+				duplicateKeyFragmentSet));
 	}
 
 	@Override
@@ -158,6 +171,24 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		return fragmentSetResource.putSiteFragmentSet(
 			testGroup.getExternalReferenceCode(),
 			fragmentSet.getExternalReferenceCode(), fragmentSet);
+	}
+
+	private void _assertProblemException(
+			String status, String title,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(status, problem.getStatus());
+			Assert.assertEquals(title, problem.getTitle());
+		}
 	}
 
 	@Inject

@@ -55,7 +55,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -517,13 +516,9 @@ public abstract class BaseNotificationType implements NotificationType {
 			notificationRecipientId);
 		notificationRecipientSetting.setName(name);
 
-		if (value instanceof LinkedHashMap) {
+		if (value instanceof Map) {
 			notificationRecipientSetting.setValueMap(
-				LocalizedMapUtil.getLocalizedMap((LinkedHashMap)value));
-		}
-		else if (value instanceof Map) {
-			notificationRecipientSetting.setValueMap(
-				(Map<Locale, String>)value);
+				LocalizedMapUtil.getLocalizedMap((Map)value));
 		}
 		else {
 			notificationRecipientSetting.setValue(String.valueOf(value));

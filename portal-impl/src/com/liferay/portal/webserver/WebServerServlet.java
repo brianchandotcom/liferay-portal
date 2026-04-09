@@ -1355,6 +1355,9 @@ public class WebServerServlet extends HttpServlet {
 
 			fileName = trashTitleResolver.getOriginalTitle(fileName);
 		}
+		else if (ParamUtil.getBoolean(httpServletRequest, "useTitle")) {
+			fileName = fileEntry.getTitle();
+		}
 
 		httpServletResponse.setHeader(
 			HttpHeaders.CACHE_CONTROL,

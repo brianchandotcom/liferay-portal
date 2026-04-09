@@ -1542,7 +1542,7 @@ test(
 );
 
 test(
-	'Expiration date filter does not allow "from" date to be before today',
+	'Expiration date filter does not allow "to" date to be before "from" date',
 	{tag: '@LPD-78935'},
 	async ({assetsPage, page}) => {
 		const addFilterButton = page.getByRole('button', {name: 'Add Filter'});
@@ -1563,7 +1563,7 @@ test(
 		const fromDate = new Date();
 		const toDate = new Date();
 
-		await test.step('Check that the "Add filter" button is disabled if "from" date is before today', async () => {
+		await test.step('Check that the "Add filter" button is disabled if "from" date is a past date', async () => {
 			fromDate.setDate(fromDate.getDate() - 1);
 			await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
 			await expect(addFilterButton).toBeDisabled();

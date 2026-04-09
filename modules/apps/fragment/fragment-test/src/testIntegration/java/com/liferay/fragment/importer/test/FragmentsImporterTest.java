@@ -844,15 +844,9 @@ public class FragmentsImporterTest {
 	private File _generateZipFileWithFolderResources() throws Exception {
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
-		URL collectionURL = _bundle.getEntry(
-			_PATH_FRAGMENTS_WITH_FOLDER_RESOURCES +
-				FragmentExportImportConstants.FILE_NAME_COLLECTION);
-
-		try (InputStream inputStream = collectionURL.openStream()) {
-			zipWriter.addEntry(
-				FragmentExportImportConstants.FILE_NAME_COLLECTION,
-				inputStream);
-		}
+		_addZipWriterEntry(
+			zipWriter, _PATH_DEPENDENCIES + "fragments-with-folder-resources",
+			FragmentExportImportConstants.FILE_NAME_COLLECTION);
 
 		_addZipWriterEntry(
 			zipWriter, _PATH_FRAGMENTS_WITH_FOLDER_RESOURCES + "resources",

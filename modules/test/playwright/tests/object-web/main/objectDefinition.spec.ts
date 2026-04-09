@@ -26,7 +26,7 @@ import getFormContainerDefinition from '../../layout-content-page-editor-web/mai
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {localizationPagesTest} from '../../site-admin-web/main/fixtures/localizationPagesTest';
-import {generateObjectFields} from './utils/generateObjectFields';
+import {generateObjectFields} from '../utils/generateObjectFields';
 
 const test = mergeTests(
 	collectionsPagesTest,

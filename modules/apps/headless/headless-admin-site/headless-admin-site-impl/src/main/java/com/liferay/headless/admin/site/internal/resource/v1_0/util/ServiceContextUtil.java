@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.admin.site.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.headless.common.spi.util.GroupUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;

@@ -6,6 +6,8 @@
 import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 
+import {DesignLibrary} from '../types';
+
 async function create({
 	description,
 	name,
@@ -37,6 +39,26 @@ async function create({
 	return await response.json();
 }
 
+async function get(externalReferenceCode: string): Promise<DesignLibrary> {
+	const response = await fetch(
+		`/o/headless-asset-library/v1.0/asset-libraries/${externalReferenceCode}`,
+		{
+			headers: DEFAULT_FETCH_HEADERS,
+			method: 'GET',
+		}
+	);
+
+	if (!response.ok) {
+		const errorData = await response.json().catch(() => {
+			return null;
+		});
+
+		throw errorData;
+	}
+
+	return await response.json();
+}
+
 async function remove({href, method}: {href: string; method: string}) {
 	const response = await fetch(href, {
 		headers: DEFAULT_FETCH_HEADERS,
@@ -52,7 +74,30 @@ async function remove({href, method}: {href: string; method: string}) {
 	}
 }
 
+async function update(externalReferenceCode: string, body: any) {
+	const response = await fetch(
+		`/o/headless-asset-library/v1.0/asset-libraries/${externalReferenceCode}`,
+		{
+			body: JSON.stringify(body),
+			headers: DEFAULT_FETCH_HEADERS,
+			method: 'PATCH',
+		}
+	);
+
+	if (!response.ok) {
+		const errorData = await response.json().catch(() => {
+			return null;
+		});
+
+		throw errorData;
+	}
+
+	return await response.json();
+}
+
 export default {
 	create,
+	get,
 	remove,
+	update,
 };

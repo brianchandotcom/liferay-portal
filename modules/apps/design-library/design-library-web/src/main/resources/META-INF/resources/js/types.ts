@@ -17,6 +17,37 @@ export interface DesignLibraryItem {
 	name: string;
 }
 
+export interface DesignLibrary {
+	assetLibraryKey: string;
+	creatorUserId: string;
+	description: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	settings?: DesignLibrarySettings;
+	siteId: number;
+}
+
+export interface DesignLibrarySettings {
+	availableLanguageIds?: string[];
+	defaultLanguageId?: string;
+	logoColor?:
+		| 'outline-0'
+		| 'outline-1'
+		| 'outline-2'
+		| 'outline-3'
+		| 'outline-4'
+		| 'outline-5'
+		| 'outline-6'
+		| 'outline-7'
+		| 'outline-8'
+		| 'outline-9';
+	sharingEnabled?: boolean;
+	trashEnabled?: boolean;
+	trashEntriesMaxAge?: number;
+	useCustomLanguages?: boolean;
+}
+
 export interface Site {
 	descriptiveName: string;
 	externalReferenceCode: string;

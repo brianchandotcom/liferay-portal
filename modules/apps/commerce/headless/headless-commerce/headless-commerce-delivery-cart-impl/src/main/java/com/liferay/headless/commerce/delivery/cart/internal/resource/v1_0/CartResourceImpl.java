@@ -170,7 +170,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Override
 	public Cart getCart(Long cartId) throws Exception {
-		return _toCart(GetterUtil.getLong(cartId));
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			GetterUtil.getLong(cartId));
+
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	@Override

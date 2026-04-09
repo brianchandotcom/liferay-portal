@@ -13141,7 +13141,7 @@ company.default.web.id=www.able.com</echo>
 						<pull-clamd-docker-container image="${clamd.docker.image}" />
 						<start-docker-container image="${clamd.docker.image}" name="clamd">\
 							--expose=3310 \
-Comment view						</start-docker-container>
+						</start-docker-container>
 					</then>
 				</if>
 

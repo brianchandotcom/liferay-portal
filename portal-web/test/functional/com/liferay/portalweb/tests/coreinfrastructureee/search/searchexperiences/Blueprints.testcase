@@ -2789,7 +2789,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.viewEntriesSpecificOrder(entryList = "Test Blueprint 2,Test Blueprint 3,Test Blueprint 1");
+		Blueprints.viewEntriesSpecificOrder(entryList = "Test Blueprint 3,Test Blueprint 2,Test Blueprint 1");
 
 		Click(
 			columnName = "Modified",

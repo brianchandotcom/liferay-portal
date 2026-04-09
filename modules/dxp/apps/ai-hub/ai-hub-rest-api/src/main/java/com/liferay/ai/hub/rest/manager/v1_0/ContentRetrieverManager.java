@@ -18,9 +18,10 @@ public interface ContentRetrieverManager {
 			String externalReferenceCode)
 		throws Exception;
 
-	public ContentRetriever postContentRetriever(
+	public ContentRetriever putContentRetriever(
 			long companyId, ContentRetriever contentRetriever,
-			DTOConverterContext dtoConverterContext)
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode)
 		throws Exception;
 
 }

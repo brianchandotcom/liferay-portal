@@ -11,6 +11,7 @@ import com.liferay.ai.hub.rest.manager.v1_0.ContentRetrieverManager;
 import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -27,6 +28,8 @@ import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+
+import java.text.DateFormat;
 
 import java.time.Instant;
 
@@ -61,52 +64,48 @@ public class ContentRetrieverManagerImpl implements ContentRetrieverManager {
 	}
 
 	@Override
-	public ContentRetriever postContentRetriever(
+	public ContentRetriever putContentRetriever(
 			long companyId, ContentRetriever contentRetriever,
-			DTOConverterContext dtoConverterContext)
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode)
 		throws Exception {
 
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
 			dtoConverterContext.getUserId());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "AIHubContentRetriever");
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)_objectEntryManager;
+
+		ObjectEntry objectEntry = defaultObjectEntryManager.fetchObjectEntry(
+			dtoConverterContext, externalReferenceCode, objectDefinition, null);
+
+		if (objectEntry != null) {
+			return _toContentRetriever(
+				_updateObjectEntry(
+					accountEntry.getAccountEntryId(), companyId,
+					contentRetriever,
+					String.valueOf(objectEntry.getPropertyValue("crawlDate")),
+					dtoConverterContext, externalReferenceCode,
+					String.valueOf(objectEntry.getPropertyValue("indexName")),
+					objectDefinition));
+		}
 
 		String indexName = StringBundler.concat(
 			_indexNameBuilder.getIndexName(companyId), "-ai-hub-",
 			accountEntry.getAccountEntryId(), "-crawl-results-",
 			PortalUUIDUtil.generate());
 
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext,
-			_objectDefinitionLocalService.getObjectDefinition(
-				companyId, "AIHubContentRetriever"),
-			new ObjectEntry() {
-				{
-					setExternalReferenceCode(
-						contentRetriever::getExternalReferenceCode);
-					setProperties(
-						() -> HashMapBuilder.<String, Object>put(
-							"crawlDate", contentRetriever.getCrawlDate()
-						).put(
-							"description_i18n",
-							contentRetriever.getDescription_i18n()
-						).put(
-							"indexName", indexName
-						).put(
-							"r_accountToAIHubContentRetrievers_accountEntryId",
-							String.valueOf(accountEntry.getAccountEntryId())
-						).put(
-							"title_i18n", contentRetriever.getTitle_i18n()
-						).put(
-							"type", contentRetriever.getType()
-						).put(
-							"url", contentRetriever.getUrl()
-						).build());
-				}
-			},
-			null);
-
 		_createIndex(indexName);
 
-		return _toContentRetriever(objectEntry);
+		return _toContentRetriever(
+			_updateObjectEntry(
+				accountEntry.getAccountEntryId(), companyId, contentRetriever,
+				null, dtoConverterContext, externalReferenceCode, indexName,
+				objectDefinition));
 	}
 
 	private void _createIndex(String indexName) throws Exception {
@@ -188,6 +187,46 @@ public class ContentRetrieverManagerImpl implements ContentRetrieverManager {
 						objectEntry.getPropertyValue("url")));
 			}
 		};
+	}
+
+	private ObjectEntry _updateObjectEntry(
+			long accountEntryId, long companyId,
+			ContentRetriever contentRetriever, String crawlDate,
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, String indexName,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _objectEntryManager.updateObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition,
+			new ObjectEntry() {
+				{
+					setExternalReferenceCode(
+						contentRetriever::getExternalReferenceCode);
+					setProperties(
+						() -> HashMapBuilder.<String, Object>put(
+							"crawlDate",
+							GetterUtil.getDate(
+								crawlDate, DateFormat.getDateInstance())
+						).put(
+							"description_i18n",
+							contentRetriever.getDescription_i18n()
+						).put(
+							"indexName", indexName
+						).put(
+							"r_accountToAIHubContentRetrievers_accountEntryId",
+							String.valueOf(accountEntryId)
+						).put(
+							"title_i18n", contentRetriever.getTitle_i18n()
+						).put(
+							"type", contentRetriever.getType()
+						).put(
+							"url", contentRetriever.getUrl()
+						).build());
+				}
+			},
+			null);
 	}
 
 	@Reference

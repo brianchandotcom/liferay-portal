@@ -48,8 +48,8 @@ public class ContentRetrieverResourceImpl
 	}
 
 	@Override
-	public ContentRetriever postContentRetriever(
-			ContentRetriever contentRetriever)
+	public ContentRetriever putContentRetrieverByExternalReferenceCode(
+			String externalReferenceCode, ContentRetriever contentRetriever)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -58,13 +58,14 @@ public class ContentRetrieverResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _contentRetrieverManager.postContentRetriever(
+		return _contentRetrieverManager.putContentRetriever(
 			contextCompany.getCompanyId(), contentRetriever,
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), null,
 				_dtoConverterRegistry, contextHttpServletRequest, null,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
+				contextUser),
+			externalReferenceCode);
 	}
 
 	@Reference

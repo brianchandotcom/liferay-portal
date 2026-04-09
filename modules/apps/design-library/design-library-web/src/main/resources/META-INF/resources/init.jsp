@@ -8,11 +8,15 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %>
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.design.library.web.internal.constants.DesignLibraryAdminFDSNames" %><%@
 page import="com.liferay.design.library.web.internal.constants.DesignLibraryConstants" %><%@
 page import="com.liferay.design.library.web.internal.display.context.DesignLibraryResourcesDisplayContext" %><%@
+page import="com.liferay.design.library.web.internal.display.context.DesignLibrarySettingsDisplayContext" %><%@
 page import="com.liferay.design.library.web.internal.display.context.ViewDesignLibraryAdminDisplayContext" %>
+
+<liferay-theme:defineObjects />
 
 <portlet:defineObjects />

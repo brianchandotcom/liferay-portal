@@ -58,6 +58,35 @@ interface MultipleFileUploaderProps {
 	validExtensions?: string;
 }
 
+function getBaseName(filename: string): string {
+	const index = filename.lastIndexOf('.');
+
+	return index > 0 ? filename.substring(0, index) : filename;
+}
+
+function getUploadBatches(files: FileData[]): FileData[][] {
+	const batches: { baseNames: Set<string>; files: FileData[] }[] = [];
+
+	for (const fileData of files) {
+		const baseName = getBaseName(fileData.name);
+
+		const batch = batches.find(batch => !batch.baseNames.has(baseName));
+
+		if (batch) {
+			batch.files.push(fileData);
+			batch.baseNames.add(baseName);
+		}
+		else {
+			batches.push({
+				baseNames: new Set([baseName]),
+				files: [fileData],
+			});
+		}
+	}
+
+	return batches.map(batch => batch.files);
+}
+
 export default function MultipleFileUploader({
 	buttonLabel,
 	description,
@@ -195,8 +224,9 @@ export default function MultipleFileUploader({
 		const failedFiles: FailedFile[] = [];
 		const uploadedFiles: string[] = [];
 
-		Promise.allSettled(
-			filesToUpload.map(async (fileData: FileData) => {
+		for (const uploadBatch of getUploadBatches(filesToUpload)) {
+		await Promise.allSettled(
+			uploadBatch.map(async (fileData: FileData) => {
 				try {
 					const response = await uploadRequest({fileData});
 
@@ -251,6 +281,7 @@ export default function MultipleFileUploader({
 				});
 			}
 		});
+		}
 	};
 
 	return (

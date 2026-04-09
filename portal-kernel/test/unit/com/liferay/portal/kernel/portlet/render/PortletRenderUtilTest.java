@@ -67,11 +67,11 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"/header-portal.(" + _HASH + ").css",
 				"/header-portal.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/nocombo-header-portal.(" + _HASH + ").css",
 				"/o/portlet-web/header-portlet.(" + _HASH + ").css",
 				"/o/portlet-web/header-portlet.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/o/portlet-web/nocombo-header-portlet.(" + _HASH + ").css",
 				"http://example.com/header-portal.css",
 				"http://example.com/header-portlet.css"),
@@ -108,11 +108,11 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"/footer-portal.(" + _HASH + ").css",
 				"/footer-portal.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/nocombo-footer-portal.(" + _HASH + ").css",
 				"/o/portlet-web/footer-portlet.(" + _HASH + ").css",
 				"/o/portlet-web/footer-portlet.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/o/portlet-web/nocombo-footer-portlet.(" + _HASH + ").css",
 				"http://example.com/footer-portal.css",
 				"http://example.com/footer-portlet.css"),
@@ -136,11 +136,11 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"/portal/header-portal.(" + _HASH + ").css",
 				"/portal/header-portal.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/portal/nocombo-header-portal.(" + _HASH + ").css",
 				"/portal/o/portlet-web/header-portlet.(" + _HASH + ").css",
 				"/portal/o/portlet-web/header-portlet.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/portal/o/portlet-web/nocombo-header-portlet.(" + _HASH +
 					").css",
 				"http://example.com/header-portal.css",
@@ -165,11 +165,11 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"/portal/footer-portal.(" + _HASH + ").css",
 				"/portal/footer-portal.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/portal/nocombo-footer-portal.(" + _HASH + ").css",
 				"/portal/o/portlet-web/footer-portlet.(" + _HASH + ").css",
 				"/portal/o/portlet-web/footer-portlet.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/portal/o/portlet-web/nocombo-footer-portlet.(" + _HASH +
 					").css",
 				"http://example.com/footer-portal.css",
@@ -211,13 +211,12 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"/proxy/portal/header-portal.(" + _HASH + ").css",
 				"/proxy/portal/header-portal.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/proxy/portal/nocombo-header-portal.(" + _HASH + ").css",
 				"/proxy/portal/o/portlet-web/header-portlet.(" + _HASH +
 					").css",
 				"/proxy/portal/o/portlet-web/header-portlet.tokenized.(" +
-					_HASH +
-						").css?themeId=classic_WAR_classictheme&tokenize=true",
+					_HASH + ").css?themeId=classic_WAR_classictheme",
 				"/proxy/portal/o/portlet-web/nocombo-header-portlet.(" + _HASH +
 					").css",
 				"http://example.com/header-portal.css",
@@ -242,13 +241,12 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"/proxy/portal/footer-portal.(" + _HASH + ").css",
 				"/proxy/portal/footer-portal.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/proxy/portal/nocombo-footer-portal.(" + _HASH + ").css",
 				"/proxy/portal/o/portlet-web/footer-portlet.(" + _HASH +
 					").css",
 				"/proxy/portal/o/portlet-web/footer-portlet.tokenized.(" +
-					_HASH +
-						").css?themeId=classic_WAR_classictheme&tokenize=true",
+					_HASH + ").css?themeId=classic_WAR_classictheme",
 				"/proxy/portal/o/portlet-web/nocombo-footer-portlet.(" + _HASH +
 					").css",
 				"http://example.com/footer-portal.css",
@@ -288,11 +286,11 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"/proxy/header-portal.(" + _HASH + ").css",
 				"/proxy/header-portal.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/proxy/nocombo-header-portal.(" + _HASH + ").css",
 				"/proxy/o/portlet-web/header-portlet.(" + _HASH + ").css",
 				"/proxy/o/portlet-web/header-portlet.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/proxy/o/portlet-web/nocombo-header-portlet.(" + _HASH +
 					").css",
 				"http://example.com/header-portal.css",
@@ -317,11 +315,11 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"/proxy/footer-portal.(" + _HASH + ").css",
 				"/proxy/footer-portal.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/proxy/nocombo-footer-portal.(" + _HASH + ").css",
 				"/proxy/o/portlet-web/footer-portlet.(" + _HASH + ").css",
 				"/proxy/o/portlet-web/footer-portlet.tokenized.(" + _HASH +
-					").css?themeId=classic_WAR_classictheme&tokenize=true",
+					").css?themeId=classic_WAR_classictheme",
 				"/proxy/o/portlet-web/nocombo-footer-portlet.(" + _HASH +
 					").css",
 				"http://example.com/footer-portal.css",

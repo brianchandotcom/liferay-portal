@@ -62,17 +62,17 @@ test(
 
 		await test.step('Check the bulk actions are listed', async () => {
 			await expect(
-				page.locator('.dropdown-menu.show').getByRole('menuitem')
+				fdsSamplePage.dropdownMenu.getByRole('menuitem')
 			).toHaveCount(3);
 			await expect(
-				page.locator('.dropdown-menu.show').getByRole('menuitem')
+				fdsSamplePage.dropdownMenu.getByRole('menuitem')
 			).toHaveText(['Label', 'Delete', 'Test']);
 		});
 
 		await test.step('Close ellipsis actions menu', async () => {
 			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
 
-			await expect(page.locator('.dropdown-menu.show')).toBeHidden();
+			await expect(fdsSamplePage.dropdownMenu).toBeHidden();
 		});
 
 		await test.step('Check in medium-width windows the bulk actions text is hidden', async () => {
@@ -163,8 +163,7 @@ test(
 		await test.step('Without Select All flag active, requests sent actual item selection to bulk actions', async () => {
 			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
 
-			await page
-				.locator('.dropdown-menu.show')
+			await fdsSamplePage.dropdownMenu
 				.getByRole('menuitem', {name: 'test'})
 				.click();
 
@@ -200,8 +199,7 @@ test(
 
 			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
 
-			await page
-				.locator('.dropdown-menu.show')
+			await fdsSamplePage.dropdownMenu
 				.getByRole('menuitem', {name: 'test'})
 				.click();
 

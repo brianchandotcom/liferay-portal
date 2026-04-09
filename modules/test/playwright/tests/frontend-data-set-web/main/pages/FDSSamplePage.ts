@@ -32,6 +32,7 @@ export class FDSSamplePage {
 		items: Locator;
 	};
 	readonly creatorFilterSearchInput: Locator;
+	readonly dropdownMenu: Locator;
 	readonly emptyStateContainer: Locator;
 	readonly fdsWrapper: Locator;
 	readonly fileDropModal: Locator;
@@ -119,6 +120,7 @@ export class FDSSamplePage {
 		this.creatorFilterSearchInput = page
 			.locator('.data-set-filter')
 			.getByRole('textbox', {name: 'Search'});
+		this.dropdownMenu = page.locator('.dropdown-menu.show');
 		this.emptyStateContainer = page.locator('.fds .c-empty-state');
 		this.fdsWrapper = page.locator('div.data-set-wrapper').first();
 		this.fileDropModal = page.getByRole('dialog', {
@@ -280,10 +282,8 @@ export class FDSSamplePage {
 		await waitForFDS({page, visualizationMode});
 	}
 
-	async checkDropdownMenuIconsAreVisible(itemActionButton: Locator) {
-		const dropdownMenu = await this.getDropdownId(itemActionButton);
-
-		const menuItems = dropdownMenu.getByRole('menuitem');
+	async checkDropdownMenuIconsAreVisible() {
+		const menuItems = this.dropdownMenu.getByRole('menuitem');
 
 		for (const menuItem of await menuItems.all()) {
 			await expect
@@ -297,17 +297,7 @@ export class FDSSamplePage {
 	async clickItemAction(action: string, item: number = 0) {
 		await this.itemActionsButtons.nth(item).click();
 
-		const dropdownId = await this.itemActionsButtons
-			.nth(item)
-			.getAttribute('aria-controls');
-
-		await this.page
-			.locator(`#${dropdownId}`)
-			.filter({has: this.page.getByRole('menu')})
-			.waitFor();
-
-		await this.page
-			.locator(`#${dropdownId}`)
+		await this.dropdownMenu
 			.getByRole('menuitem', {
 				exact: true,
 				name: action,
@@ -331,18 +321,6 @@ export class FDSSamplePage {
 		await workflowModal.getByRole('button', {name: 'Save'}).click();
 
 		await workflowModal.waitFor({state: 'hidden'});
-	}
-
-	async getDropdownId(itemActionButton: Locator) {
-		await itemActionButton.click();
-
-		const dropdownId = await itemActionButton.getAttribute('aria-controls');
-
-		const dropdownMenu = this.page.locator(`#${dropdownId}`);
-
-		await dropdownMenu.filter({has: this.page.getByRole('menu')}).waitFor();
-
-		return dropdownMenu;
 	}
 
 	async search(value: string) {

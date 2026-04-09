@@ -119,8 +119,6 @@ test(
 
 			await page.reload();
 
-			await page.waitForResponse((resp) => resp.status() === 200);
-
 			await waitForFDS({
 				empty: true,
 				page,

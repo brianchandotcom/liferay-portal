@@ -322,7 +322,7 @@ public class SitemapManagerTest {
 
 			_setUpAssetCategoryDisplayPage();
 
-			_assertEmptySitemap(_layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), _layout.getUuid());
 		}
 	}
 
@@ -356,7 +356,7 @@ public class SitemapManagerTest {
 
 			_setUpAssetCategoryDisplayPage();
 
-			_assertEmptySitemap(_layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), _layout.getUuid());
 		}
 	}
 
@@ -390,7 +390,7 @@ public class SitemapManagerTest {
 
 			_setUpAssetCategoryDisplayPage();
 
-			_assertEmptySitemap(_layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), _layout.getUuid());
 		}
 	}
 
@@ -554,7 +554,7 @@ public class SitemapManagerTest {
 							"includeWebContent", false
 						).build())) {
 
-			_assertEmptySitemap(_layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), _layout.getUuid());
 		}
 	}
 
@@ -586,7 +586,7 @@ public class SitemapManagerTest {
 							"includeWebContent", false
 						).build())) {
 
-			_assertEmptySitemap(_layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), _layout.getUuid());
 		}
 	}
 
@@ -618,7 +618,7 @@ public class SitemapManagerTest {
 							"includeWebContent", false
 						).build())) {
 
-			_assertEmptySitemap(_layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), _layout.getUuid());
 		}
 	}
 
@@ -725,7 +725,7 @@ public class SitemapManagerTest {
 
 			_addRedirectEntry(sourceURL.substring(1));
 
-			_assertEmptySitemap(_layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), _layout.getUuid());
 		}
 	}
 
@@ -781,7 +781,7 @@ public class SitemapManagerTest {
 
 			_addRedirectEntry(sourceURL.substring(1));
 
-			_assertEmptySitemap(childLayout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), childLayout.getUuid());
 		}
 	}
 
@@ -821,7 +821,7 @@ public class SitemapManagerTest {
 			Layout layout = _layoutLocalService.getLayout(
 				assetDisplayPageEntry.getPlid());
 
-			_assertEmptySitemap(layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), layout.getUuid());
 		}
 	}
 
@@ -861,7 +861,7 @@ public class SitemapManagerTest {
 			Layout layout = _layoutLocalService.getLayout(
 				assetDisplayPageEntry.getPlid());
 
-			_assertEmptySitemap(layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), layout.getUuid());
 		}
 	}
 
@@ -901,7 +901,7 @@ public class SitemapManagerTest {
 			Layout layout = _layoutLocalService.getLayout(
 				assetDisplayPageEntry.getPlid());
 
-			_assertEmptySitemap(layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), layout.getUuid());
 		}
 	}
 
@@ -1007,7 +1007,7 @@ public class SitemapManagerTest {
 
 			_addRedirectEntry(sourceURL.substring(1));
 
-			_assertEmptySitemap(layout.getUuid());
+			_assertEmptySitemap(_group.getGroupId(), layout.getUuid());
 		}
 	}
 
@@ -1071,11 +1071,19 @@ public class SitemapManagerTest {
 		_redirectEntryLocalService.addRedirectEntry(redirectEntry);
 	}
 
-	private void _assertEmptySitemap(String uuid) throws Exception {
-		Assert.assertEquals(
-			StringPool.BLANK,
-			_sitemapManager.getSitemap(
-				uuid, _group.getGroupId(), false, _themeDisplay));
+	private void _assertEmptySitemap(long groupId, String uuid)
+		throws Exception {
+
+		String xml = _sitemapManager.getSitemap(
+			uuid, groupId, false, _themeDisplay);
+
+		Document document = _saxReader.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		Assert.assertTrue(
+			rootElement.elements(
+			).isEmpty());
 	}
 
 	private void _assertSitemap(
@@ -1338,10 +1346,7 @@ public class SitemapManagerTest {
 							"includeWebContent", false
 						).build())) {
 
-			Assert.assertEquals(
-				StringPool.BLANK,
-				_sitemapManager.getSitemap(
-					null, guestGroupId, false, _themeDisplay));
+			_assertEmptySitemap(guestGroupId, null);
 		}
 	}
 
@@ -1373,7 +1378,7 @@ public class SitemapManagerTest {
 							"includeWebContent", false
 						).build())) {
 
-			_assertEmptySitemap(uuid);
+			_assertEmptySitemap(_group.getGroupId(), uuid);
 		}
 	}
 

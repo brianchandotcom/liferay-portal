@@ -1,13 +1,21 @@
 {
 	"date_detection": false,
 	"properties": {
-		"text": {
-			"index": false,
+		"body": {
 			"type": "text"
 		},
-		"text_embedding_3072": {
-			"dims": 3072,
-			"type": "dense_vector"
+		"last_crawled_at": {
+			"type": "date"
+		},
+		"text_embedding": {
+			"inference_id": "google-vertex-ai-gemini-embedding-001",
+			"type": "semantic_text"
+		},
+		"title": {
+			"type": "text"
+		},
+		"url": {
+			"type": "keyword"
 		}
 	}
 }

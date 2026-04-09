@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource;
@@ -74,6 +75,36 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 				_getServiceContext(groupId, fragmentSet)));
 	}
 
+	@Override
+	public FragmentSet putSiteFragmentSet(
+			String siteExternalReferenceCode,
+			String fragmentSetExternalReferenceCode, FragmentSet fragmentSet)
+		throws Exception {
+
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					fragmentSetExternalReferenceCode, groupId);
+
+		if (fragmentCollection == null) {
+			return _toFragmentSet(
+				_fragmentCollectionService.addFragmentCollection(
+					fragmentSetExternalReferenceCode, groupId,
+					fragmentSet.getKey(), fragmentSet.getName(),
+					fragmentSet.getDescription(),
+					GetterUtil.getBoolean(fragmentSet.getMarketplace()),
+					_getServiceContext(groupId, fragmentSet)));
+		}
+
+		return _toFragmentSet(
+			_fragmentCollectionService.updateFragmentCollection(
+				fragmentCollection.getFragmentCollectionId(),
+				fragmentSet.getName(), fragmentSet.getDescription()));
+	}
+
 	private ServiceContext _getServiceContext(
 		long groupId, FragmentSet fragmentSet) {
 
@@ -101,6 +132,9 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;

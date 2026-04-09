@@ -12,28 +12,6 @@ const CONTENT_RETRIEVER_BASE_URI = '/o/ai-hub/v1.0/content-retrievers/';
 const CONTENT_RETRIEVER_BY_EXTERNAL_REFERENCE_CODE_URI =
 	'/o/ai-hub/content-retrievers/by-external-reference-code/';
 
-async function postContentRetriever(contentRetriever: ContentRetriever) {
-	const response = await fetch(`${CONTENT_RETRIEVER_BASE_URI}`, {
-		body: JSON.stringify({
-			...contentRetriever,
-			crawlDate: new Date().toISOString(),
-		}),
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		method: 'POST',
-	});
-
-	if (!response.ok) {
-		const error = await response
-			.json()
-			.catch(() => new Error(response.statusText));
-		throw error;
-	}
-
-	return response.json();
-}
-
 async function getContentRetriever(externalReferenceCode: string) {
 	const response = await fetch(
 		`${CONTENT_RETRIEVER_BY_EXTERNAL_REFERENCE_CODE_URI}${externalReferenceCode}`,
@@ -48,4 +26,29 @@ async function getContentRetriever(externalReferenceCode: string) {
 	return response.json();
 }
 
-export {postContentRetriever, getContentRetriever};
+async function putContentRetriever(
+	contentRetriever: ContentRetriever,
+	externalReferenceCode: string
+) {
+	const response = await fetch(
+		`${CONTENT_RETRIEVER_BASE_URI}${externalReferenceCode}`,
+		{
+			body: JSON.stringify(contentRetriever),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'PUT',
+		}
+	);
+
+	if (!response.ok) {
+		const error = await response
+			.json()
+			.catch(() => new Error(response.statusText));
+		throw error;
+	}
+
+	return response.json();
+}
+
+export {putContentRetriever, getContentRetriever};

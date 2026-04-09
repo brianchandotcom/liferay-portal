@@ -12,14 +12,14 @@ DynamicActionsFDSDisplayContext dynamicActionsFDSDisplayContext = new DynamicAct
 %>
 
 <div class="row">
-	<div class="col-md-6 fds-role-tasks">
+	<div class="col-md-6 fds-roles-tasks">
 		<div class="p-2">
-			<h2>My Role Tasks</h2>
+			<h2>My Roles Tasks</h2>
 		</div>
 
 		<frontend-data-set:headless-display
-			apiURL="<%= dynamicActionsFDSDisplayContext.getRoleTasksAPIURL() %>"
-			id="<%= FDSSampleFDSNames.MY_ROLE_TASKS %>"
+			apiURL="<%= dynamicActionsFDSDisplayContext.getRolesTasksAPIURL() %>"
+			id="<%= FDSSampleFDSNames.MY_ROLES_TASKS %>"
 			style="fluid"
 		/>
 	</div>

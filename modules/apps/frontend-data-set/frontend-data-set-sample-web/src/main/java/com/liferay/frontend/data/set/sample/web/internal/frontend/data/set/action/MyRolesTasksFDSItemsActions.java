@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Juanjo Fernández
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.MY_ROLE_TASKS,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.MY_ROLES_TASKS,
 	service = FDSItemsActions.class
 )
-public class MyRoleTasksFDSItemsActions implements FDSItemsActions {
+public class MyRolesTasksFDSItemsActions implements FDSItemsActions {
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(

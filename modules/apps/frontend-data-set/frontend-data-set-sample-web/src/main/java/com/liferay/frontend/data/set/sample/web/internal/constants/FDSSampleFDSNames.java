@@ -31,8 +31,8 @@ public class FDSSampleFDSNames {
 	public static final String MINIMUM =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-minimum";
 
-	public static final String MY_ROLE_TASKS =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-myRoleTasks";
+	public static final String MY_ROLES_TASKS =
+		FDSSamplePortletKeys.FDS_SAMPLE + "-myRolesTasks";
 
 	public static final String MY_USER_TASKS =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-myUserTasks";

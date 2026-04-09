@@ -135,7 +135,7 @@ test('Dynamic Actions', async ({
 		await fdsSamplePage.selectTab('Dynamic Actions');
 
 		await waitForFDS({
-			container: '.fds-role-tasks',
+			container: '.fds-roles-tasks',
 			page,
 			visualizationMode: EFDSVisualizationMode.TABLE,
 		});
@@ -223,7 +223,7 @@ test('Dynamic Actions', async ({
 		await page.reload();
 
 		await waitForFDS({
-			container: '.fds-role-tasks',
+			container: '.fds-roles-tasks',
 			page,
 			visualizationMode: EFDSVisualizationMode.TABLE,
 		});

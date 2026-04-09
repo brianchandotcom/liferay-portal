@@ -5,8 +5,8 @@
 
 import {ObjectField} from '@liferay/object-admin-rest-client-js';
 
-import {getRandomInt} from '../../../../utils/getRandomInt';
-import getRandomString from '../../../../utils/getRandomString';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import {
 	getObjectEntryAPIDateFormat,
 	getObjectEntryAPIDateTimeFormat,

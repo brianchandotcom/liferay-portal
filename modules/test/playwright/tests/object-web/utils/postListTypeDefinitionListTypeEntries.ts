@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
-import {getRandomInt} from '../../../../utils/getRandomInt';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {getRandomInt} from '../../../utils/getRandomInt';
 
 export async function postListTypeDefinitionListTypeEntries({
 	apiHelpers,

@@ -5,7 +5,7 @@
 
 import {ObjectField} from '@liferay/object-admin-rest-client-js';
 
-import {getRandomInt} from '../../../../utils/getRandomInt';
+import {getRandomInt} from '../../../utils/getRandomInt';
 
 type objectFieldBaseProperties = {
 	externalReferenceCode?: string;

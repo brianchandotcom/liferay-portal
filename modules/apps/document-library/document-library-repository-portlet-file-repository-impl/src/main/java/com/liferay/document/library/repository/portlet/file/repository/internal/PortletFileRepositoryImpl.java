@@ -638,11 +638,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		if (fileEntry.isInTrash()) {
 			fileName = _trashHelper.getOriginalTitle(fileEntry.getTitle());
 		}
-		else if (Validator.isNotNull(queryString) &&
-				 queryString.contains("useTitle=true")) {
-
-			fileName = fileEntry.getTitle();
-		}
 
 		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(fileName)));
 

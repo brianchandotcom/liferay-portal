@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "fds.data.provider.key=" + FDSAdminPortletFDSNames.FDS_ENTRY_FDS_SELECTION_FILTER_ITEMS,
 	service = FDSDataProvider.class
 )
-public class FDSEntryFDSSelectionFilterItemFDSDataProvider
+public class FDSEntryFDSSelectionFilterItemsFDSDataProvider
 	implements FDSDataProvider<FDSSelectionFilterItem> {
 
 	@Override

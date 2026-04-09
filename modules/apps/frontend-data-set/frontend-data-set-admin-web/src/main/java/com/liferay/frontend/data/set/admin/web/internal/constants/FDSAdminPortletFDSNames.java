@@ -13,7 +13,7 @@ public class FDSAdminPortletFDSNames {
 	public static final String FDS_ENTRY_FDS_SELECTION_FILTER_ITEMS =
 		FDSAdminPortletKeys.FDS_ADMIN + "-fdsEntryFDSSelectionFilterItems";
 
-	public static final String SYSTEM_FDS_ENTRY_INFOS =
-		FDSAdminPortletKeys.FDS_ADMIN + "-systemFDSEntryInfos";
+	public static final String IMPORTED_SYSTEM_FDS_ENTRIES =
+		FDSAdminPortletKeys.FDS_ADMIN + "-importedSystemFDSEntries";
 
 }

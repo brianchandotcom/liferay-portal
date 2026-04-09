@@ -14,13 +14,13 @@
 			HashMapBuilder.<String, Object>put(
 				"editDataSetURL", fdsAdminDisplayContext.getEditDataSetURL()
 			).put(
+				"importedSystemFDSEntriesDataProviderURL", fdsAdminDisplayContext.getImportedSystemFDSEntriesDataProviderURL()
+			).put(
 				"importSystemDataSetURL", fdsAdminDisplayContext.getImportSystemDataSetURL()
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
 				"systemDataSets", fdsAdminDisplayContext.getSystemFDSEntryJSONArray()
-			).put(
-				"systemFDSEntryInfosDataProviderURL", fdsAdminDisplayContext.getSystemFDSEntryInfosDataProviderURL()
 			).build()
 		%>'
 	/>

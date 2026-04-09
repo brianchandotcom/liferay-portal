@@ -84,16 +84,13 @@ test('Check behavior of conditional item actions', async ({
 
 		await expect(itemActionButton).toBeVisible();
 
-		const dropdownId = await itemActionButton.getAttribute('aria-controls');
-
 		await itemActionButton.click();
 
-		await page
-			.locator(`#${dropdownId}`)
+		await fdsSamplePage.dropdownMenu
 			.filter({has: page.getByRole('menu')})
 			.waitFor();
 
-		await expect(page.locator(`#${dropdownId}`)).toBeVisible();
+		await expect(fdsSamplePage.dropdownMenu).toBeVisible();
 
 		await page.keyboard.press('Escape');
 	});
@@ -101,44 +98,28 @@ test('Check behavior of conditional item actions', async ({
 	await test.step('Check that users have different item actions', async () => {
 		await expect(managerUserItemActionsButton).toBeVisible();
 
-		const dropdownId =
-			await managerUserItemActionsButton.getAttribute('aria-controls');
-
 		await managerUserItemActionsButton.click();
 
-		await page
-			.locator(`#${dropdownId}`)
+		await fdsSamplePage.dropdownMenu
 			.filter({has: page.getByRole('menu')})
 			.waitFor();
 
 		await expect(
-			page.locator(`#${dropdownId}`).getByRole('menuitem')
-		).toHaveCount(4);
-
-		await expect(
-			page.locator(`#${dropdownId}`).getByRole('menuitem')
+			fdsSamplePage.dropdownMenu.getByRole('menuitem')
 		).toHaveText(['Book', 'Job Archive', 'Deactivate', 'Activity']);
 
 		await page.keyboard.press('Escape');
 
 		await expect(guestUserItemActionsButton).toBeVisible();
 
-		const guestUserdropdownId =
-			await guestUserItemActionsButton.getAttribute('aria-controls');
-
 		await guestUserItemActionsButton.click();
 
-		await page
-			.locator(`#${guestUserdropdownId}`)
+		await fdsSamplePage.dropdownMenu
 			.filter({has: page.getByRole('menu')})
 			.waitFor();
 
 		await expect(
-			page.locator(`#${guestUserdropdownId}`).getByRole('menuitem')
-		).toHaveCount(3);
-
-		await expect(
-			page.locator(`#${guestUserdropdownId}`).getByRole('menuitem')
+			fdsSamplePage.dropdownMenu.getByRole('menuitem')
 		).toHaveText(['Book', 'Job Archive', 'Deactivate']);
 
 		await page.keyboard.press('Escape');
@@ -165,44 +146,28 @@ test('Check behavior of conditional item actions', async ({
 
 		await expect(managerUserItemActionsButton).toBeVisible();
 
-		const dropdownId =
-			await managerUserItemActionsButton.getAttribute('aria-controls');
-
 		await managerUserItemActionsButton.click();
 
-		await page
-			.locator(`#${dropdownId}`)
+		await fdsSamplePage.dropdownMenu
 			.filter({has: page.getByRole('menu')})
 			.waitFor();
 
 		await expect(
-			page.locator(`#${dropdownId}`).getByRole('menuitem')
-		).toHaveCount(4);
-
-		await expect(
-			page.locator(`#${dropdownId}`).getByRole('menuitem')
+			fdsSamplePage.dropdownMenu.getByRole('menuitem')
 		).toHaveText(['Book', 'Job Archive', 'Deactivate', 'Activity']);
 
 		await page.keyboard.press('Escape');
 
 		await expect(guestUserItemActionsButton).toBeVisible();
 
-		const guestUserdropdownId =
-			await guestUserItemActionsButton.getAttribute('aria-controls');
-
 		await guestUserItemActionsButton.click();
 
-		await page
-			.locator(`#${guestUserdropdownId}`)
+		await fdsSamplePage.dropdownMenu
 			.filter({has: page.getByRole('menu')})
 			.waitFor();
 
 		await expect(
-			page.locator(`#${guestUserdropdownId}`).getByRole('menuitem')
-		).toHaveCount(3);
-
-		await expect(
-			page.locator(`#${guestUserdropdownId}`).getByRole('menuitem')
+			fdsSamplePage.dropdownMenu.getByRole('menuitem')
 		).toHaveText(['Book', 'Job Archive', 'Activate']);
 
 		await page.keyboard.press('Escape');

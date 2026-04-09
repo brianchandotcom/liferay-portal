@@ -239,10 +239,10 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
-			String className, boolean enableComments,
-			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
-			boolean enableIndexSearch, boolean enableObjectEntryDraft,
-			boolean enableObjectEntrySchedule,
+			String className, boolean enableCategorization,
+			boolean enableComments, boolean enableFormContainer,
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableObjectEntryDraft, boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
@@ -256,14 +256,15 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return _addObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className, null,
-			enableComments, enableFormContainer, enableFriendlyURLCustomization,
-			enableIndexSearch, enableObjectEntryDraft, false,
-			enableObjectEntrySchedule, enableObjectEntrySubscription,
-			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, true,
-			name, panelAppOrder, panelCategoryKey, null, null, pluralLabelMap,
-			portlet, scope, storageType, false, null, 0,
-			WorkflowConstants.STATUS_DRAFT, objectDefinitionSettings,
-			objectFields, workflowDefinitionLinks, serviceContext);
+			enableCategorization, enableComments, enableFormContainer,
+			enableFriendlyURLCustomization, enableIndexSearch,
+			enableObjectEntryDraft, false, enableObjectEntrySchedule,
+			enableObjectEntrySubscription, enableObjectEntryVersioning,
+			friendlyURLSeparator, labelMap, true, name, panelAppOrder,
+			panelCategoryKey, null, null, pluralLabelMap, portlet, scope,
+			storageType, false, null, 0, WorkflowConstants.STATUS_DRAFT,
+			objectDefinitionSettings, objectFields, workflowDefinitionLinks,
+			serviceContext);
 	}
 
 	@Override
@@ -424,10 +425,11 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
-			String className, String dbTableName, boolean enableComments,
-			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
-			boolean enableIndexSearch, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryHistory, boolean enableObjectEntrySchedule,
+			String className, String dbTableName, boolean enableCategorization,
+			boolean enableComments, boolean enableFormContainer,
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, boolean modifiable, String name,
@@ -451,9 +453,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return _addObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
-			dbTableName, enableComments, enableFormContainer,
-			enableFriendlyURLCustomization, enableIndexSearch,
-			enableObjectEntryDraft, enableObjectEntryHistory,
+			dbTableName, enableCategorization, enableComments,
+			enableFormContainer, enableFriendlyURLCustomization,
+			enableIndexSearch, enableObjectEntryDraft, enableObjectEntryHistory,
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
 			modifiable, name, panelAppOrder, panelCategoryKey,
@@ -1514,10 +1516,11 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private ObjectDefinition _addObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
-			String className, String dbTableName, boolean enableComments,
-			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
-			boolean enableIndexSearch, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryHistory, boolean enableObjectEntrySchedule,
+			String className, String dbTableName, boolean enableCategorization,
+			boolean enableComments, boolean enableFormContainer,
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, boolean modifiable, String name,
@@ -1557,6 +1560,8 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateExternalReferenceCode(externalReferenceCode, system);
 		_validateClassName(
 			0, user.getCompanyId(), className, modifiable, system);
+		_validateEnableCategorization(
+			enableCategorization, modifiable, storageType, system);
 		_validateEnableComments(
 			enableComments, modifiable, storageType, system);
 		_validateEnableFormContainer(
@@ -1595,10 +1600,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setClassName(
 			_getClassName(className, modifiable, system));
 		objectDefinition.setDBTableName(dbTableName);
-		objectDefinition.setEnableCategorization(
-			!objectDefinition.isUnmodifiableSystemObject() &&
-			StringUtil.equals(
-				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
+		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableFormContainer(enableFormContainer);
 		objectDefinition.setEnableFriendlyURLCustomization(
@@ -3182,8 +3184,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 			_handleException(
 				new ObjectDefinitionEnableCategorizationException(
-					"Enable categorization is not allowed for system object " +
-						"definitions"),
+					"Enable categorization is not allowed for unmodifiable " +
+						"system object definitions"),
 				"enableCategorization", true);
 		}
 

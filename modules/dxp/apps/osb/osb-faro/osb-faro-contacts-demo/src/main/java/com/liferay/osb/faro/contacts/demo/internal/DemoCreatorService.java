@@ -7,20 +7,22 @@ package com.liferay.osb.faro.contacts.demo.internal;
 
 import com.liferay.osb.faro.constants.FaroProjectConstants;
 import com.liferay.osb.faro.constants.FaroUserConstants;
+import com.liferay.osb.faro.contacts.model.constants.JSONConstants;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.model.Channel;
 import com.liferay.osb.faro.engine.client.model.Individual;
 import com.liferay.osb.faro.engine.client.model.LCPProject;
 import com.liferay.osb.faro.engine.client.model.Results;
+import com.liferay.osb.faro.engine.client.util.JSONUtil;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.provisioning.client.ProvisioningClient;
+import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
+import com.liferay.osb.faro.provisioning.client.model.display.main.FaroSubscriptionDisplay;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.util.FaroPropsValues;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -29,20 +31,16 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.nio.charset.StandardCharsets;
-
 import java.util.Collections;
 import java.util.Date;
-import java.util.Map;
-
-import org.apache.commons.codec.binary.Base64;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Matthew Kong
@@ -77,18 +75,6 @@ public abstract class DemoCreatorService {
 		createFaroChannels();
 	}
 
-	protected static String encodeAuthorizationFields(
-		String userName, String password) {
-
-		String authorizationString = StringBundler.concat(
-			userName, StringPool.COLON, password);
-
-		return new String(
-			Base64.encodeBase64(
-				authorizationString.getBytes(StandardCharsets.UTF_8)),
-			StandardCharsets.UTF_8);
-	}
-
 	protected abstract void createData() throws Exception;
 
 	protected void createFaroChannels() throws Exception {
@@ -106,24 +92,40 @@ public abstract class DemoCreatorService {
 	}
 
 	protected FaroProject createFaroProject() throws Exception {
-		Http.Options options = new Http.Options();
+		User user = userLocalService.getUserByEmailAddress(
+			portal.getDefaultCompanyId(), "test@liferay.com");
 
-		options.addPart("corpProjectUuid", FaroPropsValues.FARO_PROJECT_ID);
-		options.addPart("name", FaroPropsValues.FARO_PROJECT_ID);
-		options.addPart("ownerEmailAddress", "test@liferay.com");
-		options.addPart("serverLocation", LCPProject.Cluster.US.toString());
-		options.addPart("timeZoneId", "UTC");
-		options.setHeaders(headers);
-		options.setLocation(
-			"http://localhost:8080/o/faro/main/project/provisioned");
-		options.setPost(true);
+		OSBAccountEntry osbAccountEntry = provisioningClient.getOSBAccountEntry(
+			FaroPropsValues.FARO_PROJECT_ID);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			http.URLtoString(options));
+		FaroSubscriptionDisplay faroSubscriptionDisplay =
+			new FaroSubscriptionDisplay(osbAccountEntry);
 
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(
-				jsonObject.getLong("groupId"));
+		FaroProject faroProject = faroProjectLocalService.addFaroProject(
+			user.getUserId(), FaroPropsValues.FARO_PROJECT_ID,
+			osbAccountEntry.getDossieraAccountKey(),
+			osbAccountEntry.getCorpEntryName(), osbAccountEntry.getName(),
+			FaroPropsValues.FARO_PROJECT_ID, Collections.emptyList(),
+			StringPool.BLANK, StringPool.BLANK,
+			LCPProject.Cluster.US.toString(), JSONConstants.NULL_JSON_ARRAY,
+			FaroProjectConstants.STATE_UNCONFIGURED,
+			JSONUtil.writeValueAsString(faroSubscriptionDisplay), "UTC", null);
+
+		faroProject.setWeDeployKey(FaroPropsValues.FARO_DEFAULT_WE_DEPLOY_KEY);
+
+		String weDeployKey =
+			contactsEngineClient.addProject(faroProject) + ".lfr.cloud";
+
+		faroProject.setWeDeployKey(weDeployKey);
+
+		faroProject = faroProjectLocalService.updateFaroProject(faroProject);
+
+		Role role = roleLocalService.getRole(
+			user.getCompanyId(), RoleConstants.SITE_OWNER);
+
+		faroUserLocalService.addFaroUser(
+			user.getUserId(), faroProject.getGroupId(), 0, role.getRoleId(),
+			"test@liferay.com", FaroUserConstants.STATUS_PENDING, false);
 
 		faroProject.setState(FaroProjectConstants.STATE_NOT_READY);
 
@@ -192,10 +194,6 @@ public abstract class DemoCreatorService {
 		return false;
 	}
 
-	protected static final Map<String, String> headers =
-		Collections.singletonMap(
-			"Authorization",
-			"Basic " + encodeAuthorizationFields("test@liferay.com", "test"));
 	protected static final Log log = LogFactoryUtil.getLog(
 		DemoCreatorService.class);
 
@@ -214,10 +212,13 @@ public abstract class DemoCreatorService {
 	protected FaroUserLocalService faroUserLocalService;
 
 	@Reference
-	protected Http http;
-
-	@Reference
 	protected Portal portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected volatile ProvisioningClient provisioningClient;
 
 	@Reference
 	protected RoleLocalService roleLocalService;

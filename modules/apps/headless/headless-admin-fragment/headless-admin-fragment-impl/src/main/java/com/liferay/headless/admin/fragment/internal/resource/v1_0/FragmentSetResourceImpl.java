@@ -10,6 +10,7 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
+import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.common.spi.util.GroupUtil;
@@ -40,6 +41,8 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 			String fragmentSetExternalReferenceCode)
 		throws Exception {
 
+		EnabledUtil.checkEnabled(contextCompany);
+
 		_fragmentCollectionService.deleteFragmentCollection(
 			fragmentSetExternalReferenceCode,
 			GroupUtil.getStagingAwareGroupId(
@@ -51,6 +54,8 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 			String siteExternalReferenceCode,
 			String fragmentSetExternalReferenceCode)
 		throws Exception {
+
+		EnabledUtil.checkEnabled(contextCompany);
 
 		return _toFragmentSet(
 			_fragmentCollectionService.
@@ -65,6 +70,8 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 	public Page<FragmentSet> getSiteFragmentSetsPage(
 			String siteExternalReferenceCode, Pagination pagination)
 		throws Exception {
+
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -85,6 +92,8 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 			String siteExternalReferenceCode, FragmentSet fragmentSet)
 		throws Exception {
 
+		EnabledUtil.checkEnabled(contextCompany);
+
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
@@ -102,6 +111,8 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 			String siteExternalReferenceCode,
 			String fragmentSetExternalReferenceCode, FragmentSet fragmentSet)
 		throws Exception {
+
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);

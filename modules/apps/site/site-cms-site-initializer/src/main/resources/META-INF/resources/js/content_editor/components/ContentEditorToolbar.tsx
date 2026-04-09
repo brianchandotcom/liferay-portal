@@ -13,12 +13,14 @@ import ClayLink from '@clayui/link';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {sessionStorage, sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useId, useState} from 'react';
+import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
 import AIAssistantChat from './AIAssistantChat/AIAssistantChat';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
+
+export const EVENT_CLOSE_PREVIEW = 'contentEditor:closePreview';
 
 export const EVENT_HANDLE_PREVIEW = 'contentEditor:handlePreview';
 
@@ -43,6 +45,8 @@ export default function ContentEditorToolbar({
 	const [formId, setFormId] = useState<string | undefined>();
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [showPreview, setShowPreview] = useState<boolean>(false);
+
+	const previewButtonRef = useRef<HTMLButtonElement>(null);
 
 	const optionsTitle = hasWorkflow
 		? Liferay.Language.get('submit-for-workflow-options')
@@ -122,6 +126,18 @@ export default function ContentEditorToolbar({
 		}
 	}, [getForm, handlePublishSuccessMessage]);
 
+	useEffect(() => {
+		const closePreview = () => {
+			setShowPreview(false);
+
+			previewButtonRef.current?.focus();
+		};
+
+		Liferay.on(EVENT_CLOSE_PREVIEW, closePreview);
+
+		return () => Liferay.detach(EVENT_CLOSE_PREVIEW, closePreview);
+	}, []);
+
 	return (
 		<Toolbar
 			backURL={backURL}
@@ -169,6 +185,7 @@ export default function ContentEditorToolbar({
 								showPreview: nextShowPreview,
 							});
 						}}
+						ref={previewButtonRef}
 						size="sm"
 					>
 						<ClayIcon

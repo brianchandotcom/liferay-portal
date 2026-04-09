@@ -68,8 +68,8 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			null, userId, objectFolderId, null, false, true, false, true, false,
-			false, false, false,
+			null, userId, objectFolderId, null, true, false, true, false, true,
+			false, false, false, false,
 			FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, null, null,
@@ -91,8 +91,8 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			null, TestPropsValues.getUserId(), 0, null, false, false, true,
-			false, false, false, false, false, null,
+			null, TestPropsValues.getUserId(), 0, null, true, false, false,
+			true, false, false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(name), name, null, null,
 			LocalizedMapUtil.getLocalizedMap(name), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY,
@@ -134,8 +134,8 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			null, userId, 0, ObjectDefinitionUtil.generateRandomClassName(),
-			dbTableName, false, true, false, true, false, false, false, false,
-			false, null, labelMap, true, name, null, null,
+			dbTableName, true, false, true, false, true, false, false, false,
+			false, false, null, labelMap, true, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
 			scope, titleObjectFieldName, version,
 			WorkflowConstants.STATUS_DRAFT, Collections.emptyList(),
@@ -153,7 +153,7 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			externalReferenceCode, userId, 0, className, dbTableName, false,
-			false, false, true, false, false, false, false, false, null,
+			false, false, false, true, false, false, false, false, false, null,
 			labelMap, false, name, null, null, pkObjectFieldDBColumnName,
 			pkObjectFieldName, pluralLabelMap, false, scope,
 			titleObjectFieldName, version, WorkflowConstants.STATUS_APPROVED,
@@ -191,9 +191,10 @@ public class ObjectDefinitionTestUtil {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				null, userId, objectFolderId, null, false, true, false, true,
-				enableObjectEntryDraft, false, enableObjectEntrySubscription,
-				enableObjectEntryVersioning, null,
+				null, userId, objectFolderId, null, true, false, true, false,
+				true, enableObjectEntryDraft, false,
+				enableObjectEntrySubscription, enableObjectEntryVersioning,
+				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

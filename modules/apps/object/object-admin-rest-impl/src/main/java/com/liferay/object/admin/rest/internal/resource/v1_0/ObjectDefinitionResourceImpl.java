@@ -347,6 +347,7 @@ public class ObjectDefinitionResourceImpl
 							objectDefinition.
 								getObjectFolderExternalReferenceCode()),
 						objectDefinition.getClassName(),
+						_isEnableCategorization(objectDefinition),
 						GetterUtil.getBoolean(
 							objectDefinition.getEnableComments()),
 						GetterUtil.getBoolean(
@@ -398,6 +399,7 @@ public class ObjectDefinitionResourceImpl
 							objectDefinition.
 								getObjectFolderExternalReferenceCode()),
 						objectDefinition.getClassName(),
+						_isEnableCategorization(objectDefinition),
 						GetterUtil.getBoolean(
 							objectDefinition.getEnableComments()),
 						GetterUtil.getBoolean(
@@ -1376,6 +1378,22 @@ public class ObjectDefinitionResourceImpl
 
 		return GetterUtil.getBoolean(
 			queryParameters.getFirst("accumulateError"));
+	}
+
+	private boolean _isEnableCategorization(ObjectDefinition objectDefinition) {
+		Boolean enableCategorization =
+			objectDefinition.getEnableCategorization();
+		String storageType = objectDefinition.getStorageType();
+
+		if ((enableCategorization == null) &&
+			Validator.isNotNull(storageType) &&
+			!StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			return false;
+		}
+
+		return GetterUtil.getBoolean(enableCategorization, true);
 	}
 
 	private ObjectDefinition _toObjectDefinition(

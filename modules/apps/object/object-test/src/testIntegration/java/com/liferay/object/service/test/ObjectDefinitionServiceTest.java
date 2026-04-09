@@ -375,8 +375,8 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());*/
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			null, user.getUserId(), 0, null, false, true, false, true, false,
-			false, false, false, null,
+			null, user.getUserId(), 0, null, true, false, true, false, true,
+			false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -399,8 +399,8 @@ public class ObjectDefinitionServiceTest {
 
 		return _objectDefinitionService.addSystemObjectDefinition(
 			RandomTestUtil.randomString(), user.getUserId(), objectFolderId,
-			ObjectDefinitionUtil.generateRandomClassName(), false, true, false,
-			true, false, false, false, false, false, null,
+			ObjectDefinitionUtil.generateRandomClassName(), true, false, true,
+			false, true, false, false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"Test", null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -431,8 +431,8 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
-					null, objectFolderId, null, false, true, false, true, false,
-					false, false, false, null,
+					null, objectFolderId, null, true, false, true, false, true,
+					false, false, false, false, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					ObjectDefinitionTestUtil.getRandomName(), null, null,

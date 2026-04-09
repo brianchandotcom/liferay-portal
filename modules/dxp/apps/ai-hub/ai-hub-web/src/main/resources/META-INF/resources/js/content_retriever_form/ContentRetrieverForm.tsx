@@ -15,7 +15,7 @@ import Toolbar from '../components/ToolBar';
 import InlineTextInput from './components/inline_text_input/InlineTextInput';
 import {
 	getContentRetriever,
-	postContentRetriever,
+	putContentRetriever,
 } from './services/ContentRetrieverService';
 
 import './ContentRetriever.scss';
@@ -71,7 +71,7 @@ export default function ContentRetrieverForm({
 		},
 		onSubmit: async (values, {setSubmitting}) => {
 			try {
-				await postContentRetriever(values);
+				await putContentRetriever(values, externalReferenceCode);
 
 				openToast({
 					message: Liferay.Language.get(

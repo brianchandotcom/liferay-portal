@@ -173,16 +173,11 @@ test('Dynamic Actions', async ({
 
 		await expect(tableItemActionButton).toBeVisible();
 
-		const dropdownMenu = await fdsSamplePage.getDropdownId(
-			tableItemActionButton
-		);
+		await tableItemActionButton.click();
 
-		await expect(dropdownMenu.getByRole('menuitem')).toHaveCount(2);
-
-		await expect(dropdownMenu.getByRole('menuitem')).toHaveText([
-			'Approve',
-			'Reject',
-		]);
+		await expect(
+			fdsSamplePage.dropdownMenu.getByRole('menuitem')
+		).toHaveText(['Approve', 'Reject']);
 	});
 
 	await test.step('Can Reject the pending task with a comment', async () => {

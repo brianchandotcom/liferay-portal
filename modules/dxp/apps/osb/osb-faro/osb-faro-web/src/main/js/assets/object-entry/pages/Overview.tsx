@@ -1,7 +1,7 @@
 import AudienceReportCard from 'shared/components/audience-report/AudienceReportBaseCard';
-import DevicesCard from 'assets/blog/hocs/DevicesCard';
-import LocationsCard from 'assets/blog/hocs/LocationsCard';
-import ObjectEntryMetricCard from '../components/ObjectEntryMetricCard';
+import DevicesCard from 'assets/object-entry/hocs/DevicesCard';
+import LocationsCard from 'assets/object-entry/hocs/LocationsCard';
+import ObjectEntryMetricCard from 'assets/object-entry/components/ObjectEntryMetricCard';
 import React from 'react';
 import {
 	Accessor,

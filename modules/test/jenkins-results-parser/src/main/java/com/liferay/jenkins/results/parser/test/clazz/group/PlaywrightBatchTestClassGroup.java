@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.text.SimpleDateFormat;
@@ -278,6 +279,16 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		long axisCount = Math.floorDiv(totalDuration, targetAxisDuration) + 1;
 
 		return Math.toIntExact(axisCount);
+	}
+
+	protected File getModulesDir() {
+		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)getJob();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
+
+		return new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 	}
 
 	protected File getPlaywrightBaseDir() {
@@ -755,6 +766,35 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		return testClasses;
 	}
 
+	private boolean _isPlaywrightInYarnWorkspace() throws IOException {
+		JSONObject jsonObject;
+
+		try {
+			jsonObject = new JSONObject(
+				JenkinsResultsParserUtil.read(
+					new File(getModulesDir(), "package.json")));
+		}
+		catch (FileNotFoundException fileNotFoundException) {
+			return false;
+		}
+
+		JSONObject workspacesJSONObject = jsonObject.getJSONObject(
+			"workspaces");
+
+		JSONArray packagesJSONArray = workspacesJSONObject.getJSONArray(
+			"packages");
+
+		for (int i = 0; i < packagesJSONArray.length(); i++) {
+			if (Objects.equals(
+					packagesJSONArray.getString(i), "test/playwright")) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _loadPlaywrightJSONObjects() {
 		synchronized (_playwrightJSONObjectsLoaded) {
 			if (_playwrightJSONObjectsLoaded.get()) {
@@ -773,6 +813,10 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			try {
+				if (!_isPlaywrightInYarnWorkspace()) {
+					_callNPMCommand(playwrightBaseDir, "npm install");
+				}
+
 				String result = _callNPMCommand(
 					playwrightBaseDir,
 					"npm run playwright test -- --list --reporter=json");

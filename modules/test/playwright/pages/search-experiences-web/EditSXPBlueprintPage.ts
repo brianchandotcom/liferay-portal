@@ -149,13 +149,13 @@ export class EditSXPBlueprintPage {
 	// Preview Sidebar
 
 	async openPreviewSidebar() {
-		if ((await this.page.locator('.preview-sidebar.open').count()) < 1) {
+		if (await this.page.locator('.preview-sidebar.open').isHidden()) {
 			await this.previewSidebarButton.click();
 		}
 	}
 
 	async closePreviewSidebar() {
-		if ((await this.page.locator('.preview-sidebar.open').count()) > 0) {
+		if (await this.page.locator('.preview-sidebar.open').isVisible()) {
 			await this.previewSidebarButton.click();
 		}
 	}

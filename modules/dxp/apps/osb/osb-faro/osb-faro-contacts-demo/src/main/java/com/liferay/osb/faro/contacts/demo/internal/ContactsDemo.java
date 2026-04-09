@@ -8,26 +8,29 @@ package com.liferay.osb.faro.contacts.demo.internal;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.util.FaroPropsValues;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.concurrent.FutureTask;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shinn Lok
  */
-@Component(service = PortalInstanceLifecycleListener.class)
-public class ContactsDemo extends BasePortalInstanceLifecycleListener {
+@Component(service = {})
+public class ContactsDemo {
 
-	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	@Activate
+	protected void activate() {
 		if (Validator.isBlank(FaroPropsValues.FARO_DEMO_CREATOR_METHOD) ||
 			StringUtil.equals(
 				FaroPropsValues.FARO_DEMO_CREATOR_METHOD, "none")) {
@@ -39,28 +42,59 @@ public class ContactsDemo extends BasePortalInstanceLifecycleListener {
 			return;
 		}
 
-		try {
-			FaroProject faroProject =
-				_faroProjectLocalService.createFaroProject(0);
+		_futureTask = new FutureTask<>(
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					long startTime = System.currentTimeMillis();
 
-			faroProject.setWeDeployKey(
-				FaroPropsValues.FARO_DEFAULT_WE_DEPLOY_KEY);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
+					while ((System.currentTimeMillis() - startTime) <
+								(Time.MINUTE * 5)) {
 
-		if (StringUtil.equals(
-				FaroPropsValues.FARO_DEMO_CREATOR_METHOD, "nanite")) {
+						try {
+							FaroProject faroProject =
+								_faroProjectLocalService.createFaroProject(0);
 
-			_naniteDemoCreatorService.createDemo();
-		}
-		else {
-			_snapshotDemoCreatorService.createDemo();
-		}
+							faroProject.setWeDeployKey(
+								FaroPropsValues.FARO_DEFAULT_WE_DEPLOY_KEY);
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Completed demo data creation");
+							break;
+						}
+						catch (Exception exception) {
+							_log.error(exception);
+
+							Thread.sleep(Time.SECOND * 30);
+						}
+					}
+
+					if (StringUtil.equals(
+							FaroPropsValues.FARO_DEMO_CREATOR_METHOD,
+							"nanite")) {
+
+						_naniteDemoCreatorService.createDemo();
+					}
+					else {
+						_snapshotDemoCreatorService.createDemo();
+					}
+
+					if (_log.isInfoEnabled()) {
+						_log.info("Completed demo data creation");
+					}
+
+					return null;
+				}));
+
+		Thread thread = new Thread(
+			_futureTask, "Contacts Demo Creation Thread");
+
+		thread.setDaemon(true);
+
+		thread.start();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_futureTask != null) {
+			_futureTask.cancel(true);
 		}
 	}
 
@@ -68,6 +102,8 @@ public class ContactsDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;
+
+	private FutureTask<Void> _futureTask;
 
 	@Reference
 	private NaniteDemoCreatorService _naniteDemoCreatorService;

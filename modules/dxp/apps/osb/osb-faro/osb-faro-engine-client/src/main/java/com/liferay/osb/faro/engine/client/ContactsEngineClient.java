@@ -175,10 +175,8 @@ public interface ContactsEngineClient {
 		List<OrderByField> orderByFields);
 
 	public Results<Account> getAccounts(
-		FaroProject faroProject, String channelId, String dataSourceId,
-		String individualSegmentId, String filterString, String query,
-		List<String> fields, int cur, int delta,
-		List<OrderByField> orderByFields);
+		FaroProject faroProject, String channelId, String filterString,
+		String query, int cur, int delta, String sort);
 
 	public Results<Distribution> getAccountsDistribution(
 		FaroProject faroProject, String channelId, String fieldMappingFieldName,

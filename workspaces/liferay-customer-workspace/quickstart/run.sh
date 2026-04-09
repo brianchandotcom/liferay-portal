@@ -19,7 +19,7 @@ function check_health {
 
 function download_hotfix {
 	for file_url in \
-		"https://releases-cdn.liferay.com/dxp/hotfix/2026.q1.0-lts/liferay-dxp-2026.q1.0-lts-hotfix-11.zip"
+		"https://releases-cdn.liferay.com/dxp/hotfix/2026.q1.2-lts/liferay-dxp-2026.q1.2-lts-hotfix-3.zip"
 	do
 		local hotfix_file_name
 

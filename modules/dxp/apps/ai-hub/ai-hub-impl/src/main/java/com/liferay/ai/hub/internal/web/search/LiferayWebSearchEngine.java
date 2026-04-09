@@ -118,7 +118,7 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 				continue;
 			}
 
-			String url = "";
+			String url = oAuth2Application.getHomePageURL();
 
 			if (searchResult.getItemURL() != null) {
 				url = searchResult.getItemURL();

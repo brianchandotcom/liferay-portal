@@ -18,8 +18,8 @@ jest.mock('frontend-js-web', () => ({
 	...(jest.requireActual('frontend-js-web') as object),
 	dateUtils: {
 		getFirstDayOfWeek: jest.fn(),
-		getMonthsLong: jest.fn(),
-		getWeekdaysShort: jest.fn(),
+		getMonthsLong: jest.fn().mockReturnValue([]),
+		getWeekdaysShort: jest.fn().mockReturnValue([]),
 	},
 }));
 

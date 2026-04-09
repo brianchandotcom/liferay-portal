@@ -4605,6 +4605,8 @@ public class ObjectDefinitionLocalServiceTest {
 			boolean enableCategorization)
 		throws Exception {
 
+		// Publish modifiable system object definition
+
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				null, TestPropsValues.getUserId(), 0,

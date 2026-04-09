@@ -12,6 +12,7 @@ interface Props
 	extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
 	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
 	errorMessage?: string;
+	helpIcon?: string;
 	insetAfter?: boolean;
 	insetBefore?: boolean;
 	label: string;
@@ -23,6 +24,7 @@ export default function FieldText({
 	component = 'input',
 	disabled,
 	errorMessage,
+	helpIcon,
 	id,
 	label,
 	name,
@@ -40,6 +42,7 @@ export default function FieldText({
 			errorMessage={errorMessage}
 			feedbackId={feedbackId}
 			fieldId={fieldId}
+			helpIcon={helpIcon}
 			label={label}
 			required={required}
 		>

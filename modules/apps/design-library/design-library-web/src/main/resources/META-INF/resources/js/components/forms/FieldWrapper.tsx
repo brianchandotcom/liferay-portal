@@ -4,6 +4,7 @@
  */
 
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {ReactNode} from 'react';
 
@@ -17,6 +18,7 @@ export default function FieldWrapper({
 	errorMessage,
 	feedbackId,
 	fieldId,
+	helpIcon,
 	label,
 	required,
 }: {
@@ -26,6 +28,7 @@ export default function FieldWrapper({
 	errorMessage?: string;
 	feedbackId?: string;
 	fieldId: string;
+	helpIcon?: string;
 	label: string;
 	required?: boolean;
 }) {
@@ -41,6 +44,17 @@ export default function FieldWrapper({
 
 				{required && <RequiredMark />}
 			</label>
+
+			{helpIcon ? (
+				<ClayIcon
+					className="lfr-portal-tooltip ml-1 text-secondary"
+					data-title={helpIcon}
+					focusable="false"
+					role="dialog"
+					symbol="question-circle"
+					tabIndex={0}
+				/>
+			) : null}
 
 			{children}
 

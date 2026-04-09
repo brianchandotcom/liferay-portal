@@ -9,8 +9,11 @@ import {ContentRetriever} from '../types/ContentRetriever';
 
 const CONTENT_RETRIEVER_BASE_URI = '/o/ai-hub/v1.0/content-retrievers/';
 
+const CONTENT_RETRIEVER_BY_EXTERNAL_REFERENCE_CODE_URI =
+	'/o/ai-hub/content-retrievers/by-external-reference-code/';
+
 async function postContentRetriever(contentRetriever: ContentRetriever) {
-	const response = await fetch(CONTENT_RETRIEVER_BASE_URI, {
+	const response = await fetch(`${CONTENT_RETRIEVER_BASE_URI}`, {
 		body: JSON.stringify({
 			...contentRetriever,
 			crawlDate: new Date().toISOString(),
@@ -18,7 +21,7 @@ async function postContentRetriever(contentRetriever: ContentRetriever) {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		method: 'PUT',
+		method: 'POST',
 	});
 
 	if (!response.ok) {
@@ -31,4 +34,18 @@ async function postContentRetriever(contentRetriever: ContentRetriever) {
 	return response.json();
 }
 
-export {postContentRetriever};
+async function getContentRetriever(externalReferenceCode: string) {
+	const response = await fetch(
+		`${CONTENT_RETRIEVER_BY_EXTERNAL_REFERENCE_CODE_URI}${externalReferenceCode}`,
+		{
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+		}
+	);
+
+	return response.json();
+}
+
+export {postContentRetriever, getContentRetriever};

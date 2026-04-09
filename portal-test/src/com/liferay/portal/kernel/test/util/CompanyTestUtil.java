@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.test.util;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -38,27 +39,9 @@ public class CompanyTestUtil {
 	}
 
 	public static Company addCompany(boolean initialize) throws Exception {
-		if (!initialize) {
-			return addCompany(RandomTestUtil.randomString());
-		}
-
-		try {
-			return TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					Company company = addCompany(RandomTestUtil.randomString());
-
-					PortalInstances.initCompany(company);
-
-					return company;
-				});
-		}
-		catch (Exception exception) {
-			throw exception;
-		}
-		catch (Throwable throwable) {
-			throw new Exception(throwable);
-		}
+		return _addCompany(
+			CompanyTestUtil::addCompany, initialize,
+			RandomTestUtil.randomString());
 	}
 
 	public static Company addCompany(String name) throws Exception {
@@ -67,6 +50,19 @@ public class CompanyTestUtil {
 		return CompanyLocalServiceUtil.addCompany(
 			null, name, virtualHostname, virtualHostname, 0, true, true, null,
 			null, null, null, null, null);
+	}
+
+	public static Company addCompanyWithWebId(boolean initialize, String webId)
+		throws Exception {
+
+		return _addCompany(
+			CompanyTestUtil::addCompanyWithWebId, initialize, webId);
+	}
+
+	public static Company addCompanyWithWebId(String webId) throws Exception {
+		return CompanyLocalServiceUtil.addCompany(
+			null, webId, webId, webId, 0, true, true, null, null, null, null,
+			null, null);
 	}
 
 	public static void resetCompanyLocales(
@@ -116,6 +112,34 @@ public class CompanyTestUtil {
 		// Reset company locales cache
 
 		LanguageUtil.resetAvailableLocales(companyId);
+	}
+
+	private static Company _addCompany(
+			UnsafeFunction<String, Company, Exception> addCompanyUnsafeFunction,
+			boolean initialize, String webId)
+		throws Exception {
+
+		if (!initialize) {
+			return addCompanyUnsafeFunction.apply(webId);
+		}
+
+		try {
+			return TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					Company company = addCompanyUnsafeFunction.apply(webId);
+
+					PortalInstances.initCompany(company);
+
+					return company;
+				});
+		}
+		catch (Exception exception) {
+			throw exception;
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
 	}
 
 	private static final TransactionConfig _transactionConfig;

@@ -245,7 +245,41 @@ test('Ability to save and edit DSM date filters @LPS-181281', async ({
 
 		await filtersPage.assertValidationError('Date range is invalid');
 
-		await filtersPage.cancelAddFilterForm();
+		await filtersPage.newDateRangeFilterForm.toInput.fill('2001-12-11');
+
+		await filtersPage.saveAddFilterForm();
+	});
+
+	await test.step('Edit the filter, check that the date format did not change @LPD-84141', async () => {
+		await filtersPage.assertFiltersTableRowCount(1);
+
+		await filtersPage
+			.getRowByText(filterNewName)
+			.locator('.actions-cell button')
+			.click();
+
+		const editButton = filtersPage.page.getByRole('menuitem', {
+			name: 'Edit',
+		});
+
+		await expect(editButton).toBeInViewport();
+
+		await editButton.click();
+
+		await expect(
+			filtersPage.newDateRangeFilterForm.fromInput
+		).toBeInViewport();
+
+		await expect(filtersPage.newDateRangeFilterForm.fromInput).toHaveValue(
+			'2001-12-10'
+		);
+		await expect(filtersPage.newDateRangeFilterForm.toInput).toHaveValue(
+			'2001-12-11'
+		);
+
+		await filtersPage.saveAddFilterForm();
+
+		await filtersPage.assertFiltersTableRowCount(1);
 	});
 });
 

@@ -27,14 +27,12 @@ interface IBodyProps {
 	onSave: Function;
 }
 
-const intl = new Intl.DateTimeFormat(
-	Liferay.ThemeDisplay.getBCP47LanguageId(),
-	{
-		day: '2-digit',
-		month: '2-digit',
-		year: 'numeric',
-	}
-);
+const toISO8601 = function (date: Date): string {
+	const zeroPad = (value: number, length: number) =>
+		(value + '').padStart(length, '0');
+
+	return `${date.getFullYear()}-${zeroPad(date.getMonth() + 1, 2)}-${zeroPad(date.getDate(), 2)}`;
+};
 
 function Body({
 	fieldNames: usedFieldNames,
@@ -62,12 +60,12 @@ function Body({
 	);
 	const [from, setFrom] = useState<string>(
 		filter && (filter as IDateFilter)?.from
-			? intl.format(new Date((filter as IDateFilter)?.from))
+			? toISO8601(new Date((filter as IDateFilter)?.from))
 			: ''
 	);
 	const [to, setTo] = useState<string>(
 		filter && (filter as IDateFilter)?.to
-			? intl.format(new Date((filter as IDateFilter)?.to))
+			? toISO8601(new Date((filter as IDateFilter)?.to))
 			: ''
 	);
 	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);

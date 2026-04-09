@@ -131,9 +131,6 @@ public interface Rels {
 
 	public static final String INDIVIDUAL_SEGMENT = "individual-segment";
 
-	public static final String INDIVIDUAL_SEGMENT_ACCOUNTS =
-		"individual-segment-accounts";
-
 	public static final String INDIVIDUAL_SEGMENT_ACTIVATION =
 		"individual-segment-activation";
 

@@ -50,14 +50,14 @@ public class AddDepotEntryMVCActionCommandTest {
 		_mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		_mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 		_mockLiferayPortletActionRequest.setParameter(
-			"description", RandomTestUtil.randomString());
+			"redirect", RandomTestUtil.randomString());
 		_mockLiferayPortletActionRequest.setParameter(
 			"name", RandomTestUtil.randomString());
 		_mockLiferayPortletActionRequest.setParameter(
-			"redirect", RandomTestUtil.randomString());
-		_mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			"description", RandomTestUtil.randomString());
 
 		_mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();

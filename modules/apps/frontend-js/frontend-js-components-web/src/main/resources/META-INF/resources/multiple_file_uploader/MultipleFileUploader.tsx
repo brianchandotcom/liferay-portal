@@ -65,12 +65,12 @@ function getBaseName(filename: string): string {
 }
 
 function getUploadBatches(files: FileData[]): FileData[][] {
-	const batches: { baseNames: Set<string>; files: FileData[] }[] = [];
+	const batches: {baseNames: Set<string>; files: FileData[]}[] = [];
 
 	for (const fileData of files) {
 		const baseName = getBaseName(fileData.name);
 
-		const batch = batches.find(batch => !batch.baseNames.has(baseName));
+		const batch = batches.find((batch) => !batch.baseNames.has(baseName));
 
 		if (batch) {
 			batch.files.push(fileData);
@@ -84,7 +84,7 @@ function getUploadBatches(files: FileData[]): FileData[][] {
 		}
 	}
 
-	return batches.map(batch => batch.files);
+	return batches.map((batch) => batch.files);
 }
 
 export default function MultipleFileUploader({
@@ -225,62 +225,62 @@ export default function MultipleFileUploader({
 		const uploadedFiles: string[] = [];
 
 		for (const uploadBatch of getUploadBatches(filesToUpload)) {
-		await Promise.allSettled(
-			uploadBatch.map(async (fileData: FileData) => {
-				try {
-					const response = await uploadRequest({fileData});
+			await Promise.allSettled(
+				uploadBatch.map(async (fileData: FileData) => {
+					try {
+						const response = await uploadRequest({fileData});
 
-					if (
-						'error' in response &&
-						typeof response.error === 'string'
-					) {
+						if (
+							'error' in response &&
+							typeof response.error === 'string'
+						) {
+							failedFiles.push({
+								...fileData,
+								errorMessage: response.error,
+								failed: true,
+							});
+						}
+						else if ('multipleErrors' in response) {
+							response.errors.map((item) => {
+								failedFiles.push({
+									...item,
+									failed: true,
+								});
+							});
+						}
+						else {
+							uploadedFiles.push(fileData.name);
+						}
+					}
+					catch (error) {
+						let errorMessage = Liferay.Language.get(
+							'there-was-an-unknown-error'
+						);
+
+						if (error instanceof Error) {
+							errorMessage = error.message;
+						}
+
 						failedFiles.push({
 							...fileData,
-							errorMessage: response.error,
+							errorMessage,
 							failed: true,
 						});
 					}
-					else if ('multipleErrors' in response) {
-						response.errors.map((item) => {
-							failedFiles.push({
-								...item,
-								failed: true,
-							});
-						});
-					}
-					else {
-						uploadedFiles.push(fileData.name);
-					}
-				}
-				catch (error) {
-					let errorMessage = Liferay.Language.get(
-						'there-was-an-unknown-error'
-					);
+				})
+			).then(() => {
+				setIsLoading(false);
 
-					if (error instanceof Error) {
-						errorMessage = error.message;
-					}
+				setFilesToUpload([]);
+				setFailedFiles(failedFiles);
 
-					failedFiles.push({
-						...fileData,
-						errorMessage,
-						failed: true,
+				if (onUploadComplete) {
+					onUploadComplete({
+						failedFiles: failedFiles.map((file) => file.name),
+						successFiles: uploadedFiles,
 					});
 				}
-			})
-		).then(() => {
-			setIsLoading(false);
-
-			setFilesToUpload([]);
-			setFailedFiles(failedFiles);
-
-			if (onUploadComplete) {
-				onUploadComplete({
-					failedFiles: failedFiles.map((file) => file.name),
-					successFiles: uploadedFiles,
-				});
-			}
-		});
+			});
 		}
 	};
 

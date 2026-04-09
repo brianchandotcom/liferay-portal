@@ -16,12 +16,13 @@ ViewHomeRecentAssetsSectionDisplayContext viewHomeRecentAssetsSectionDisplayCont
 		<div class="align-items-center d-flex justify-content-between">
 			<span aria-level=2 class="font-weight-semi-bold text-4" role="heading"><liferay-ui:message key="recent-assets" /></span>
 
-			<clay:button
-				cssClass="font-weight-semi-bold"
-				displayType="link"
+			<clay:link
+				borderless="<%= true %>"
+				cssClass="font-weight-semi-bold text-3"
 				href="<%= viewHomeRecentAssetsSectionDisplayContext.getAssetsAllURL() %>"
 				label='<%= LanguageUtil.get(request, "view-all") %>'
 				small="<%= true %>"
+				title='<%= LanguageUtil.get(request, "view-all") %>'
 			/>
 		</div>
 

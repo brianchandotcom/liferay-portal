@@ -282,11 +282,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected File getPlaywrightBaseDir() {
-		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)getJob();
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalTestClassJob.getPortalGitWorkingDirectory();
-
 		return new File(
 			portalGitWorkingDirectory.getWorkingDirectory(),
 			"modules/test/playwright");
@@ -767,26 +762,38 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private boolean _isPlaywrightInYarnWorkspace() throws IOException {
-		JSONObject jsonObject;
+		File packageJSONFile = new File(_getModulesDir(), "package.json");
 
-		try {
-			jsonObject = new JSONObject(
-				JenkinsResultsParserUtil.read(
-					new File(_getModulesDir(), "package.json")));
-		}
-		catch (FileNotFoundException fileNotFoundException) {
+		if (!packageJSONFile.exists()) {
 			return false;
 		}
 
-		JSONObject workspacesJSONObject = jsonObject.getJSONObject(
+		String packageJSONFileContent = JenkinsResultsParserUtil.read(
+			packageJSONFile);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(packageJSONFileContent)) {
+			return false;
+		}
+
+		JSONObject packageJSONObject = new JSONObject(packageJSONFileContent);
+
+		JSONObject workspacesJSONObject = packageJSONObject.optJSONObject(
 			"workspaces");
 
-		JSONArray packagesJSONArray = workspacesJSONObject.getJSONArray(
+		if (workspacesJSONObject == null) {
+			return false;
+		}
+
+		JSONArray packagesJSONArray = workspacesJSONObject.optJSONArray(
 			"packages");
+
+		if (packagesJSONArray == null) {
+			return false;
+		}
 
 		for (int i = 0; i < packagesJSONArray.length(); i++) {
 			if (Objects.equals(
-					packagesJSONArray.getString(i), "test/playwright")) {
+					packagesJSONArray.optString(i), "test/playwright")) {
 
 				return true;
 			}

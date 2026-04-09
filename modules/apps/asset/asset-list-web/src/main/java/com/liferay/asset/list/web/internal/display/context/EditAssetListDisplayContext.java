@@ -881,8 +881,37 @@ public class EditAssetListDisplayContext {
 		return _referencedModelsGroupIds;
 	}
 
-	public long[] getResolvedReferencedModelsGroupIds() throws PortalException {
-		return _resolveGroupIds(getReferencedModelsGroupIds());
+	public List<Long> getResolvedReferencedModelsGroupIds()
+		throws PortalException {
+
+		List<Long> groupIdList = ListUtil.fromArray(
+			getReferencedModelsGroupIds());
+
+		Iterator<Long> iterator = groupIdList.iterator();
+
+		while (iterator.hasNext()) {
+			long groupId = iterator.next();
+
+			Group group = _groupService.getGroup(groupId);
+
+			if (group.isDepot() && _isSpaceDepotEntryGroup(group)) {
+				iterator.remove();
+			}
+		}
+
+		try {
+			Group cmsGroup = _groupService.getGroup(
+				_themeDisplay.getCompanyId(), GroupConstants.CMS);
+
+			groupIdList.add(cmsGroup.getGroupId());
+		}
+		catch (NoSuchGroupException noSuchGroupException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchGroupException);
+			}
+		}
+
+		return groupIdList;
 	}
 
 	public SearchContainer<AssetListEntryAssetEntryRel> getSearchContainer() {
@@ -1527,36 +1556,6 @@ public class EditAssetListDisplayContext {
 		}
 
 		return false;
-	}
-
-	private long[] _resolveGroupIds(long[] groupIds) throws PortalException {
-		List<Long> groupIdList = ListUtil.fromArray(groupIds);
-
-		Iterator<Long> iterator = groupIdList.iterator();
-
-		while (iterator.hasNext()) {
-			long groupId = iterator.next();
-
-			Group group = _groupService.getGroup(groupId);
-
-			if (group.isDepot() && _isSpaceDepotEntryGroup(group)) {
-				iterator.remove();
-			}
-		}
-
-		try {
-			Group cmsGroup = _groupService.getGroup(
-				_themeDisplay.getCompanyId(), GroupConstants.CMS);
-
-			groupIdList.add(cmsGroup.getGroupId());
-		}
-		catch (NoSuchGroupException noSuchGroupException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException);
-			}
-		}
-
-		return ArrayUtil.toLongArray(groupIdList);
 	}
 
 	private void _setDDMStructure() throws Exception {

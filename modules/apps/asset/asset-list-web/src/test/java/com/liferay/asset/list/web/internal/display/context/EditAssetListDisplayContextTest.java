@@ -437,10 +437,11 @@ public class EditAssetListDisplayContextTest {
 			Mockito.anyLong(), Mockito.eq(GroupConstants.CMS)
 		);
 
-		long[] resolvedGroupIds =
-			displayContext.getResolvedReferencedModelsGroupIds();
-
-		Assert.assertTrue(ArrayUtil.contains(resolvedGroupIds, siteGroupId));
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				ArrayUtil.toLongArray(
+					displayContext.getResolvedReferencedModelsGroupIds()),
+				siteGroupId));
 	}
 
 	@Test
@@ -492,8 +493,8 @@ public class EditAssetListDisplayContextTest {
 			displayContext
 		).getReferencedModelsGroupIds();
 
-		long[] resolvedGroupIds =
-			displayContext.getResolvedReferencedModelsGroupIds();
+		long[] resolvedGroupIds = ArrayUtil.toLongArray(
+			displayContext.getResolvedReferencedModelsGroupIds());
 
 		Assert.assertTrue(ArrayUtil.contains(resolvedGroupIds, siteGroupId));
 		Assert.assertTrue(ArrayUtil.contains(resolvedGroupIds, cmsGroupId));

@@ -793,7 +793,7 @@ public class UpgradeReport {
 
 						if (resultSet2.next()) {
 							tableCounts.put(
-								tableName, (long)resultSet2.getInt("count"));
+								tableName, resultSet2.getLong("count"));
 						}
 					}
 					catch (SQLException sqlException) {

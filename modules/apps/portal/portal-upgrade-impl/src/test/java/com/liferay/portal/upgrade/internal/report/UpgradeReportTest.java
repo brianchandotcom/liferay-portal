@@ -176,7 +176,7 @@ public class UpgradeReportTest {
 		);
 
 		Mockito.when(
-			countResultSet.getLong(1)
+			countResultSet.getLong("count")
 		).thenReturn(
 			3000000000L
 		);

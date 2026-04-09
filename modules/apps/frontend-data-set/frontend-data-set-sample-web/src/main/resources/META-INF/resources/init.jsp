@@ -19,10 +19,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames" %><%@
 page import="com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleWebKeys" %><%@
 page import="com.liferay.frontend.data.set.sample.web.internal.display.context.ControlledFDSDisplayContext" %><%@
+page import="com.liferay.frontend.data.set.sample.web.internal.display.context.DynamicActionsFDSDisplayContext" %><%@
 page import="com.liferay.frontend.data.set.sample.web.internal.display.context.EmptyFDSDisplayContext" %><%@
 page import="com.liferay.frontend.data.set.sample.web.internal.display.context.FDSSampleDisplayContext" %><%@
-page import="com.liferay.frontend.data.set.sample.web.internal.display.context.MyRoleTasksFDSDisplayContext" %><%@
-page import="com.liferay.frontend.data.set.sample.web.internal.display.context.MyUserTasksFDSDisplayContext" %><%@
 page import="com.liferay.frontend.data.set.sample.web.internal.display.context.ReactFDSDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

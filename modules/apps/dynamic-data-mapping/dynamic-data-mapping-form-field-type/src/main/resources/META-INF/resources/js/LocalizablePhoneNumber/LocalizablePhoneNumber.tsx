@@ -3,15 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {useFormState} from 'data-engine-js-components-web';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {
-	COUNTRIES,
+	DEFAULT_COUNTRIES,
 	getCombinedValue,
-	getFlag,
+	getFlagSymbol,
 	parsePhoneValue,
 } from '../PhoneNumber/phoneNumberUtil';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
@@ -36,7 +39,7 @@ const INITIAL_EDITING_LOCALE = {
 
 const LocalizablePhoneNumberInner = ({
 	availableLocales = [],
-	countries = COUNTRIES,
+	countries = DEFAULT_COUNTRIES,
 	defaultLocale = INITIAL_DEFAULT_LOCALE,
 	editingLocale = INITIAL_EDITING_LOCALE,
 	fieldName,
@@ -65,6 +68,19 @@ const LocalizablePhoneNumberInner = ({
 
 	const [selectedCountryA2, setSelectedCountryA2] = useState('');
 	const [localNumber, setLocalNumber] = useState('');
+	const [searchTerm, setSearchTerm] = useState('');
+
+	const filteredCountries = useMemo(() => {
+		return sortedCountries.filter(
+			(country) =>
+				country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				country.idd.includes(searchTerm)
+		);
+	}, [searchTerm, sortedCountries]);
+
+	const selectedCountry = useMemo(() => {
+		return countries.find((country) => country.a2 === selectedCountryA2);
+	}, [countries, selectedCountryA2]);
 
 	useEffect(() => {
 		const parsed = parsePhoneValue(currentInternalValue || '');
@@ -155,36 +171,82 @@ const LocalizablePhoneNumberInner = ({
 		<ClayInput.Group>
 			<ClayInput.GroupItem append>
 				<div className="d-flex w-100">
-					<select
-						className="btn btn-secondary form-control mr-2"
-						disabled={readOnly}
-						onChange={(e) => {
-							const newA2 = e.target.value;
+					<ClayDropDown
+						trigger={
+							<ClayButton
+								className="btn-secondary mr-2"
+								disabled={readOnly}
+								displayType="secondary"
+								style={{minWidth: '90px'}}
+							>
+								{selectedCountry ? (
+									<span className="align-items-center d-flex">
+										<ClayIcon
+											symbol={getFlagSymbol(
+												selectedCountry.a2
+											)}
+										/>
 
-							setSelectedCountryA2(newA2);
-							handleValueChange(newA2, localNumber);
-						}}
-						style={{maxWidth: '140px'}}
-						value={selectedCountryA2}
+										<span className="ml-1">
+											+{selectedCountry.idd}
+										</span>
+									</span>
+								) : (
+									<span>
+										{Liferay.Language.get('country')}
+									</span>
+								)}
+
+								<ClayIcon
+									className="inline-item inline-item-after"
+									symbol="caret-double"
+								/>
+							</ClayButton>
+						}
 					>
-						<option value="">
-							{Liferay.Language.get('country')}
-						</option>
+						<div className="p-2">
+							<ClayInput
+								onChange={(event) =>
+									setSearchTerm(event.target.value)
+								}
+								type="text"
+								value={searchTerm}
+							/>
+						</div>
 
-						{sortedCountries.map((country) => (
-							<option key={country.a2} value={country.a2}>
-								{getFlag(country.a2)} +{country.idd}{' '}
+						<ClayDropDown.ItemList>
+							{filteredCountries.map((country) => (
+								<ClayDropDown.Item
+									key={country.a2}
+									onClick={() => {
+										setSelectedCountryA2(country.a2);
+										setSearchTerm('');
+										handleValueChange(
+											country.a2,
+											localNumber
+										);
+									}}
+								>
+									<span className="align-items-center d-flex">
+										<ClayIcon
+											symbol={getFlagSymbol(country.a2)}
+										/>
 
-								{country.name}
-							</option>
-						))}
-					</select>
+										<span className="ml-2">
+											{`+${country.idd} ${country.name}`}
+										</span>
+									</span>
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 
 					<input
 						aria-label={label}
 						className="ddm-field-text form-control"
 						disabled={readOnly}
-						id={name}
+						id={id ?? name}
+						name={`${name}_localNumber`}
 						onBlur={onFieldBlurred}
 						onChange={(e) => {
 							const newNumber = e.target.value.replace(

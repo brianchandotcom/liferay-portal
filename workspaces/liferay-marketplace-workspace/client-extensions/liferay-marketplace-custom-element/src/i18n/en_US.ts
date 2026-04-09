@@ -351,8 +351,8 @@ export default {
 		'How satisfied are you with the product?',
 	'how-useful-is-the-product-for-your-workflow':
 		'How useful is the product for your workflow?',
-	'i-agree-to-the-processing-of-my-personal-data-for-the-purpose-of-evaluating-my-beta-access-request-in-accordance-with-liferay’s-privacy-policy':
-		'I agree to the processing of my personal data for the purpose of evaluating my beta access request in accordance with Liferay’s Privacy Policy.',
+	'i-agree-to-the-processing-of-my-personal-data-for-the-purpose-of-evaluating-my-beta-access-request-in-accordance-with':
+		'I agree to the processing of my personal data for the purpose of evaluating my beta access request in accordance with',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
 	'i-have-read-and-agree-to-the-liferay-end-user-agreement':
@@ -419,6 +419,7 @@ export default {
 	'liferay-publisher-license-agreement':
 		'Liferay Publisher License Agreement',
 	'liferay-s': 'Liferay’s',
+	'liferay-s-privacy-policy': 'Liferay’s Privacy Policy',
 	'liferay-saas': 'Liferay SaaS',
 	'liferay-self-hosted': 'Liferay Self-Hosted',
 	'liferay-version': 'Liferay Version',

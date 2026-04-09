@@ -419,9 +419,18 @@ const AIHubForm = () => {
 						})}
 						htmlFor="user-agreement"
 					>
-						{i18n.translate(
-							'i-agree-to-the-processing-of-my-personal-data-for-the-purpose-of-evaluating-my-beta-access-request-in-accordance-with-liferay’s-privacy-policy'
-						)}
+						<span>
+							{i18n.translate(
+								'i-agree-to-the-processing-of-my-personal-data-for-the-purpose-of-evaluating-my-beta-access-request-in-accordance-with'
+							)}
+							<a
+								className="ml-1"
+								href={productAgreements.links.privacyPolicy}
+								target="_blank"
+							>
+								{i18n.translate('liferay-s-privacy-policy')}
+							</a>
+						</span>
 						<RequiredMask />
 					</label>
 				</div>
@@ -443,7 +452,7 @@ const AIHubForm = () => {
 
 				<a
 					className="ml-1"
-					href={productAgreements.links.eula}
+					href={productAgreements.links.privacyPolicy}
 					target="_blank"
 				>
 					privacy policy for details.

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -56,6 +57,64 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSiteFragmentSet() throws Exception {
+		FragmentSet fragmentSet = randomFragmentSet();
+
+		FragmentSet putFragmentSet = fragmentSetResource.putSiteFragmentSet(
+			testGroup.getExternalReferenceCode(),
+			fragmentSet.getExternalReferenceCode(), fragmentSet);
+
+		assertEquals(fragmentSet, putFragmentSet);
+		assertValid(putFragmentSet);
+
+		FragmentSet getFragmentSet = fragmentSetResource.getSiteFragmentSet(
+			testGroup.getExternalReferenceCode(),
+			putFragmentSet.getExternalReferenceCode());
+
+		assertEquals(fragmentSet, getFragmentSet);
+		assertValid(getFragmentSet);
+
+		fragmentSet.setDescription(RandomTestUtil.randomString());
+		fragmentSet.setName(RandomTestUtil.randomString());
+
+		putFragmentSet = fragmentSetResource.putSiteFragmentSet(
+			testGroup.getExternalReferenceCode(),
+			fragmentSet.getExternalReferenceCode(), fragmentSet);
+
+		assertEquals(fragmentSet, putFragmentSet);
+		assertValid(putFragmentSet);
+
+		getFragmentSet = fragmentSetResource.getSiteFragmentSet(
+			testGroup.getExternalReferenceCode(),
+			putFragmentSet.getExternalReferenceCode());
+
+		assertEquals(fragmentSet, getFragmentSet);
+		assertValid(getFragmentSet);
+
+		String originalExternalReferenceCode =
+			fragmentSet.getExternalReferenceCode();
+		String originalKey = fragmentSet.getKey();
+
+		Boolean originalMarketplace = fragmentSet.getMarketplace();
+
+		fragmentSet.setExternalReferenceCode(RandomTestUtil.randomString());
+		fragmentSet.setKey(RandomTestUtil.randomString());
+		fragmentSet.setMarketplace(!originalMarketplace);
+
+		putFragmentSet = fragmentSetResource.putSiteFragmentSet(
+			testGroup.getExternalReferenceCode(), originalExternalReferenceCode,
+			fragmentSet);
+
+		Assert.assertEquals(
+			originalExternalReferenceCode,
+			putFragmentSet.getExternalReferenceCode());
+		Assert.assertEquals(originalKey, putFragmentSet.getKey());
+		Assert.assertEquals(
+			originalMarketplace, putFragmentSet.getMarketplace());
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"description", "externalReferenceCode", "key", "marketplace", "name"
@@ -77,8 +136,9 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			String siteExternalReferenceCode, FragmentSet fragmentSet)
 		throws Exception {
 
-		return fragmentSetResource.postSiteFragmentSet(
-			siteExternalReferenceCode, fragmentSet);
+		return fragmentSetResource.putSiteFragmentSet(
+			siteExternalReferenceCode, fragmentSet.getExternalReferenceCode(),
+			fragmentSet);
 	}
 
 	@Override
@@ -95,8 +155,9 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			FragmentSet fragmentSet)
 		throws Exception {
 
-		return fragmentSetResource.postSiteFragmentSet(
-			testGroup.getExternalReferenceCode(), fragmentSet);
+		return fragmentSetResource.putSiteFragmentSet(
+			testGroup.getExternalReferenceCode(),
+			fragmentSet.getExternalReferenceCode(), fragmentSet);
 	}
 
 	@Inject

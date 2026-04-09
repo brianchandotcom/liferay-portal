@@ -274,8 +274,9 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 	public void testUpgradeWithObjectEntry() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, false, true, false,
-				true, false, false, false, false, RandomTestUtil.randomString(),
+				null, TestPropsValues.getUserId(), 0, null, true, false, true,
+				false, true, false, false, false, false,
+				RandomTestUtil.randomString(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"TestObject", null, "control_panel.sites",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

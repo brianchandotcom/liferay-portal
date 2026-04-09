@@ -115,8 +115,9 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinitionLocalService.addSystemObjectDefinition(
 				null, TestPropsValues.getUserId(),
 				objectFolder.getObjectFolderId(),
-				ObjectDefinitionUtil.generateRandomClassName(), null, false,
-				true, false, true, false, false, false, false, false, null,
+				ObjectDefinitionUtil.generateRandomClassName(), null, true,
+				false, true, false, true, false, false, false, false, false,
+				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, "Test", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -185,8 +186,9 @@ public class ObjectEntryLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				null, TestPropsValues.getUserId(),
 				objectFolder.getObjectFolderId(),
-				ObjectDefinitionUtil.generateRandomClassName(), null, false,
-				true, false, true, false, false, false, false, false, null,
+				ObjectDefinitionUtil.generateRandomClassName(), null, true,
+				false, true, false, true, false, false, false, false, false,
+				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, "Test" + StringUtil.randomString(), null, null, null,
 				null,

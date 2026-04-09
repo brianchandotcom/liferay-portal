@@ -101,8 +101,8 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), objectFolderId, null, false,
-				true, false, true, false, false, false, false, null,
+				null, TestPropsValues.getUserId(), objectFolderId, null, true,
+				false, true, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

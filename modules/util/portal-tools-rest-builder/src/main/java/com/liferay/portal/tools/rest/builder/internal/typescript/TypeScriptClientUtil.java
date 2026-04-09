@@ -698,12 +698,15 @@ public class TypeScriptClientUtil {
 					referencedYAMLFile = new File(parentYAMLPath);
 				}
 				else {
-					String referencedYAMLFileName = parentYAMLPath.substring(
-						0, parentYAMLPath.lastIndexOf("/") + 1);
+					String parentDir = configYAML.getBaseDir();
 
-					referencedYAMLFileName += reference.split("#")[0];
+					if (Validator.isNotNull(parentYAMLPath)) {
+						parentDir = parentYAMLPath.substring(
+							0, parentYAMLPath.lastIndexOf("/") + 1);
+					}
 
-					referencedYAMLFile = new File(referencedYAMLFileName);
+					referencedYAMLFile = new File(
+						parentDir, reference.split("#")[0]);
 				}
 
 				files.add(referencedYAMLFile);

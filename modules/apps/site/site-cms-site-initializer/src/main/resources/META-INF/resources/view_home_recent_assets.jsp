@@ -19,6 +19,7 @@ ViewHomeRecentAssetsSectionDisplayContext viewHomeRecentAssetsSectionDisplayCont
 			<clay:link
 				borderless="<%= true %>"
 				cssClass="font-weight-semi-bold text-3"
+				data-canonical-name='<%= LanguageUtil.format(request, "view-x", "recent-assets", true) %>'
 				href="<%= viewHomeRecentAssetsSectionDisplayContext.getAssetsAllURL() %>"
 				label='<%= LanguageUtil.get(request, "view-all") %>'
 				small="<%= true %>"

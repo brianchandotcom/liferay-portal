@@ -14,7 +14,6 @@ import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.PromptUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.RetrievalAugmentorUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
-import com.liferay.ai.hub.model.VertexAIEmbeddingModel;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -31,6 +30,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowNodeManager;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
+import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -165,10 +166,10 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			).retrievalAugmentor(
 				RetrievalAugmentorUtil.createRetrievalAugmentor(
 					kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
+					_fieldConfigBuilderFactory, _highlightBuilderFactory,
 					kaleoNodeSettingValues, serviceContext.getLocale(),
 					_objectEntryManager, _searchEngineAdapter,
-					serviceContext.getUserId(), _vertexAIEmbeddingModel,
-					workflowContext)
+					serviceContext.getUserId(), workflowContext)
 			).systemMessageProviderFunction(
 				memoryId -> prompt
 			).toolProvider(
@@ -269,6 +270,12 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
+	private FieldConfigBuilderFactory _fieldConfigBuilderFactory;
+
+	@Reference
+	private HighlightBuilderFactory _highlightBuilderFactory;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -281,9 +288,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
-
-	@Reference
-	private VertexAIEmbeddingModel _vertexAIEmbeddingModel;
 
 	@Reference
 	private WorkflowNodeManager _workflowNodeManager;

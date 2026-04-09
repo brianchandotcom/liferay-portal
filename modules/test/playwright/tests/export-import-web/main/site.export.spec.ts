@@ -17,6 +17,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import getRandomString from '../../../utils/getRandomString';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
+import {getTempDir} from '../../../utils/temp';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {readFileFromZip} from '../../../utils/zip';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
@@ -48,19 +49,19 @@ test('can export at site level with custom export task name', async ({
 }) => {
 	await exportImportPage.goToExport();
 
-	const taskName = getRandomString();
+	const taskName = 'MyExport-' + getRandomString();
 
 	const exportFilePath = await exportImportPage.export({taskName});
 
-	const expectedFileName = `${taskName.replace(/ /g, '_')}.lar`;
-
-	expect(exportFilePath).toContain(expectedFileName);
+	expect(exportFilePath).toMatch(
+		new RegExp(`${getTempDir()}${taskName + '.lar'}`)
+	);
 });
 
 test(
 	'cannot export at site level without file name',
 	{tag: '@LPD-76875'},
-	async ({exportImportPage, page}) => {
+	async ({exportImportPage}) => {
 		await exportImportPage.goToExport();
 
 		await exportImportPage.newExportButton.click();
@@ -68,7 +69,7 @@ test(
 		await exportImportPage.exportButton.click();
 
 		await expect(
-			page.getByRole('alert').filter({
+			exportImportPage.page.getByRole('alert').filter({
 				hasText: 'Please enter a file with a valid file name.',
 			})
 		).toBeVisible();
@@ -79,16 +80,12 @@ test(
 	'can export twice with the same name without overwriting the original file',
 	{tag: '@LPD-76875'},
 	async ({apiHelpers, exportImportPage}) => {
-		const taskName = getRandomString();
-		const expectedFileName = `${taskName.replace(/ /g, '_')}.lar`;
+		const taskName = 'MyExport-' + getRandomString();
 
 		await exportImportPage.goToExport();
-		const firstExportFilePath = await exportImportPage.export({taskName});
 
-		const firstManifest = await readFileFromZip(
-			'manifest.xml',
-			firstExportFilePath
-		);
+		const exportFilePath1 = await exportImportPage.export({taskName});
+		const content1 = await readFileFromZip('manifest.xml', exportFilePath1);
 
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -101,25 +98,27 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+		const applicationName = normalizeRestPath(
+			objectDefinition.restContextPath
+		);
+
 		await apiHelpers.objectEntry.postObjectEntry(
 			{textField: objectDefinition.name},
 			`${applicationName}/scopes/Guest`
 		);
 
 		await exportImportPage.goToExport();
-		const secondExportFilePath = await exportImportPage.export({taskName});
 
-		const secondManifest = await readFileFromZip(
-			'manifest.xml',
-			secondExportFilePath
+		const exportFilePath2 = await exportImportPage.export({taskName});
+		const content2 = await readFileFromZip('manifest.xml', exportFilePath2);
+
+		expect(exportFilePath1).toMatch(
+			new RegExp(`${getTempDir()}${taskName + '.lar'}`)
 		);
+		expect(exportFilePath1).toEqual(exportFilePath2);
 
-		expect(firstExportFilePath).toContain(expectedFileName);
-		expect(secondExportFilePath).toContain(expectedFileName);
-
-		expect(firstManifest).not.toContain(objectDefinition.name);
-		expect(secondManifest).toContain(objectDefinition.name);
+		expect(content1).not.toContain(objectDefinition.name);
+		expect(content2).toContain(objectDefinition.name);
 	}
 );
 

@@ -13,7 +13,10 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import Toolbar from '../components/ToolBar';
 import InlineTextInput from './components/inline_text_input/InlineTextInput';
-import {postContentRetriever} from './services/ContentRetrieverService';
+import {
+	getContentRetriever,
+	postContentRetriever,
+} from './services/ContentRetrieverService';
 
 import './ContentRetriever.scss';
 
@@ -21,7 +24,13 @@ import Icon from '@clayui/icon';
 
 import LocalizedTextarea from './components/localized_text_area';
 
-export default function ContentRetrieverForm({backURL}: {backURL: string}) {
+export default function ContentRetrieverForm({
+	backURL,
+	externalReferenceCode,
+}: {
+	backURL: string;
+	externalReferenceCode: string;
+}) {
 	const [shouldNavigate, setShouldNavigate] = useState(false);
 
 	const availableLocales = useMemo(
@@ -66,7 +75,7 @@ export default function ContentRetrieverForm({backURL}: {backURL: string}) {
 
 				openToast({
 					message: Liferay.Language.get(
-						'content-retriever-saved-successfully'
+						'content-retriever-was-saved-successfully'
 					),
 					type: 'success',
 				});
@@ -116,6 +125,27 @@ export default function ContentRetrieverForm({backURL}: {backURL: string}) {
 			return errors;
 		},
 	});
+
+	useEffect(() => {
+		if (externalReferenceCode) {
+			(async () => {
+				try {
+					const response = await getContentRetriever(
+						externalReferenceCode
+					);
+
+					formik.setValues({
+						description_i18n: response.description_i18n || {},
+						title_i18n: response.title_i18n || {},
+						url: response.url || '',
+					});
+				}
+				catch (error) {
+					console.error(error);
+				}
+			})();
+		}
+	}, [externalReferenceCode, formik]);
 
 	return (
 		<>

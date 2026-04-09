@@ -17,7 +17,7 @@ import getLoremIpsumText from '../../../utils/lorem-ipsum-util/getLoremIpsumText
 import getGridDefinition from '../../layout-content-page-editor-web/main/utils/getGridDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
-import evaluateKeepCheckingAfterFound from '../../object-web/main/utils/keepCheckingAfterFound';
+import evaluateKeepCheckingAfterFound from '../../object-web/utils/keepCheckingAfterFound';
 import {deleteItems} from './utils/deleteItems';
 
 const test = mergeTests(

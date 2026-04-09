@@ -25,7 +25,7 @@ import performLogin, {
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
-import {generateObjectEntryValues} from '../../object-web/main/utils/generateObjectEntry';
+import {generateObjectEntryValues} from '../../object-web/utils/generateObjectEntry';
 
 export const test = mergeTests(
 	apiHelpersTest,

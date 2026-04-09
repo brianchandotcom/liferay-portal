@@ -44,7 +44,7 @@ public class CategorizationBreadcrumbUtil {
 			JSONUtil.put(
 				"active", true
 			).put(
-				"label", assetCategory.getName()
+				"label", assetCategory.getTitle(themeDisplay.getLocale())
 			)
 		);
 	}
@@ -65,7 +65,7 @@ public class CategorizationBreadcrumbUtil {
 				"label",
 				LanguageUtil.format(
 					themeDisplay.getLocale(), "x-usages",
-					assetCategory.getName())
+					assetCategory.getTitle(themeDisplay.getLocale()))
 			)
 		);
 	}
@@ -96,7 +96,7 @@ public class CategorizationBreadcrumbUtil {
 						"vocabularyId", category.getVocabularyId(),
 						"categoryId", category.getCategoryId())
 				).put(
-					"label", category.getName()
+					"label", category.getTitle(themeDisplay.getLocale())
 				));
 		}
 
@@ -146,7 +146,7 @@ public class CategorizationBreadcrumbUtil {
 						"vocabularyId", assetVocabularyId);
 				}
 			).put(
-				"label", assetVocabulary.getName()
+				"label", assetVocabulary.getTitle(themeDisplay.getLocale())
 			));
 	}
 

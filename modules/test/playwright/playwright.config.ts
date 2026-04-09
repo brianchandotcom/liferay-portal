@@ -41,6 +41,7 @@ import {config as commerceFragmentImplConfig} from './tests/commerce/commerce-fr
 import {config as commerceInitializerUtilConfig} from './tests/commerce/commerce-initializer-util/main/config';
 import {config as commerceInventoryWebConfig} from './tests/commerce/commerce-inventory-web/main/config';
 import {config as commerceOrderContentWebConfig} from './tests/commerce/commerce-order-content-web/main/config';
+import {config as commerceOrderManagementConfig} from './tests/commerce/commerce-order-management/main/config';
 import {config as commerceOrderWebConfig} from './tests/commerce/commerce-order-web/main/config';
 import {config as commercePaymentsWebConfig} from './tests/commerce/commerce-payment-web/main/config';
 import {config as commercePricingWebConfig} from './tests/commerce/commerce-pricing-web/main/config';
@@ -243,6 +244,7 @@ export default defineConfig({
 		commerceFragmentImplConfig,
 		commerceInitializerUtilConfig,
 		commerceInventoryWebConfig,
+		commerceOrderManagementConfig,
 		commerceOrderWebConfig,
 		commerceOrderContentWebConfig,
 		commercePaymentsWebConfig,

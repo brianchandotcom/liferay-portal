@@ -225,6 +225,8 @@ public abstract class BaseNotificationType implements NotificationType {
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				notificationContext.getCompanyId(), "LPD-17564") &&
+			!FeatureFlagManagerUtil.isEnabled(
+				notificationContext.getCompanyId(), "LPD-66359") &&
 			!notificationTemplate.isSystem() &&
 			StringUtil.startsWith(
 				notificationTemplate.getExternalReferenceCode(),

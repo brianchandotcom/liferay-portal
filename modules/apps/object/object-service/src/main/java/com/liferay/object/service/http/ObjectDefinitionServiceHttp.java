@@ -44,7 +44,8 @@ public class ObjectDefinitionServiceHttp {
 	public static com.liferay.object.model.ObjectDefinition
 			addCustomObjectDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long objectFolderId, String className, boolean enableComments,
+				long objectFolderId, String className,
+				boolean enableCategorization, boolean enableComments,
 				boolean enableFormContainer,
 				boolean enableFriendlyURLCustomization,
 				boolean enableIndexSearch, boolean enableObjectEntryDraft,
@@ -73,7 +74,7 @@ public class ObjectDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, objectFolderId, className,
-				enableComments, enableFormContainer,
+				enableCategorization, enableComments, enableFormContainer,
 				enableFriendlyURLCustomization, enableIndexSearch,
 				enableObjectEntryDraft, enableObjectEntrySchedule,
 				enableObjectEntrySubscription, enableObjectEntryVersioning,
@@ -114,7 +115,8 @@ public class ObjectDefinitionServiceHttp {
 			addSystemObjectDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long userId, long objectFolderId, String className,
-				boolean enableComments, boolean enableFormContainer,
+				boolean enableCategorization, boolean enableComments,
+				boolean enableFormContainer,
 				boolean enableFriendlyURLCustomization,
 				boolean enableIndexSearch, boolean enableObjectEntryDraft,
 				boolean enableObjectEntryHistory,
@@ -142,13 +144,14 @@ public class ObjectDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, userId, objectFolderId,
-				className, enableComments, enableFormContainer,
-				enableFriendlyURLCustomization, enableIndexSearch,
-				enableObjectEntryDraft, enableObjectEntryHistory,
-				enableObjectEntrySchedule, enableObjectEntrySubscription,
-				enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
-				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
-				scope, objectDefinitionSettings, objectFields,
+				className, enableCategorization, enableComments,
+				enableFormContainer, enableFriendlyURLCustomization,
+				enableIndexSearch, enableObjectEntryDraft,
+				enableObjectEntryHistory, enableObjectEntrySchedule,
+				enableObjectEntrySubscription, enableObjectEntryVersioning,
+				friendlyURLSeparator, labelMap, name, panelAppOrder,
+				panelCategoryKey, pluralLabelMap, portlet, scope,
+				objectDefinitionSettings, objectFields,
 				workflowDefinitionLinks);
 
 			Object returnObj = null;
@@ -833,10 +836,11 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {
 			String.class, long.class, String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, boolean.class, boolean.class, String.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			java.util.Map.class, boolean.class, String.class, String.class,
-			java.util.List.class, java.util.List.class, java.util.List.class,
+			boolean.class, boolean.class, boolean.class, boolean.class,
+			String.class, java.util.Map.class, String.class, String.class,
+			String.class, java.util.Map.class, boolean.class, String.class,
+			String.class, java.util.List.class, java.util.List.class,
+			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addSystemObjectDefinitionParameterTypes1 =
@@ -844,9 +848,10 @@ public class ObjectDefinitionServiceHttp {
 			String.class, long.class, long.class, String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			String.class, java.util.Map.class, String.class, String.class,
-			String.class, java.util.Map.class, boolean.class, String.class,
-			java.util.List.class, java.util.List.class, java.util.List.class
+			boolean.class, String.class, java.util.Map.class, String.class,
+			String.class, String.class, java.util.Map.class, boolean.class,
+			String.class, java.util.List.class, java.util.List.class,
+			java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes2 =
 		new Class[] {long.class};
@@ -901,4 +906,4 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {long.class, long.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:456280664
+// LIFERAY-SERVICE-BUILDER-HASH:-1680167408

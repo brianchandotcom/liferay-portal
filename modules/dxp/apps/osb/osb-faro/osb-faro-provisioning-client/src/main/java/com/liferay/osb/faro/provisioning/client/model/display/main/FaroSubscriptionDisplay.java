@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.faro.web.internal.model.display.main;
+package com.liferay.osb.faro.provisioning.client.model.display.main;
 
 import com.liferay.osb.faro.constants.FaroProjectConstants;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroProjectUsageTable;
+import com.liferay.osb.faro.provisioning.client.constants.FaroSubscriptionConstants;
 import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
+import com.liferay.osb.faro.provisioning.client.subscription.FaroSubscriptionPlan;
 import com.liferay.osb.faro.service.FaroProjectUsageLocalService;
-import com.liferay.osb.faro.web.internal.constants.FaroSubscriptionConstants;
-import com.liferay.osb.faro.web.internal.subscription.FaroSubscriptionPlan;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

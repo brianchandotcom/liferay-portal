@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.faro.web.internal.subscription;
+package com.liferay.osb.faro.provisioning.client.subscription;
 
 /**
  * @author Matthew Kong

@@ -431,10 +431,6 @@ public class SitemapManagerImpl implements SitemapManager {
 			_getLayoutSets(groupId, layoutUuid, privateLayout, themeDisplay),
 			layoutUuid, rootElement, themeDisplay);
 
-		if (!rootElement.hasContent()) {
-			return StringPool.BLANK;
-		}
-
 		_removeEntriesAndSize(rootElement);
 
 		return document.asXML();

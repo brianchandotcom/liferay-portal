@@ -8,12 +8,13 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
 import {EVENT_HANDLE_PREVIEW} from './ContentEditorToolbar';
 
 import '../../../css/content_editor/ContentEditorPreview.scss';
 
+const BREAKPOINT_LG = 992;
 const PREVIEW_WIDTH_MIN = 500;
 const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';
 
@@ -31,6 +32,7 @@ export default function ContentEditorPreview({title}: {title: string}) {
 
 	const previewWidthMax = useObservedMaxWidth(previewRef);
 	const previewWidth = Math.min(previewWidthMax, resizeWidth!);
+	const titleId = useId();
 
 	useEffect(() => {
 		contentRef.current = document.querySelector('#content');
@@ -38,9 +40,8 @@ export default function ContentEditorPreview({title}: {title: string}) {
 			'.content-editor__side-panel'
 		);
 
-		const handlePreview = ({showPreview}: {showPreview: boolean}) => {
+		const handlePreview = ({showPreview}: {showPreview: boolean}) =>
 			setIsVisible(showPreview);
-		};
 
 		Liferay.on(EVENT_HANDLE_PREVIEW, handlePreview);
 
@@ -68,7 +69,12 @@ export default function ContentEditorPreview({title}: {title: string}) {
 	useEventListener(
 		'resize',
 		useCallback(
-			() => setIsVisible(window.document.body.clientWidth >= 992),
+			() =>
+				setIsVisible(
+					(isVisible) =>
+						isVisible &&
+						window.document.body.clientWidth >= BREAKPOINT_LG
+				),
 			[]
 		),
 		true,
@@ -81,16 +87,23 @@ export default function ContentEditorPreview({title}: {title: string}) {
 
 	return (
 		<div
+			aria-labelledby={titleId}
 			className={classNames('content-editor__preview c-slideout-end', {
 				resizing,
 				visible: isVisible,
 			})}
+			onTransitionEnd={({propertyName}) => {
+				if (isVisible && propertyName === 'visibility') {
+					previewRef.current?.focus();
+				}
+			}}
 			ref={previewRef}
 			style={{width: previewWidth}}
+			tabIndex={-1}
 		>
 			{isVisible ? (
 				<div className="border-bottom d-flex justify-content-between p-3">
-					<span className="font-weight-bold text-6">
+					<span className="font-weight-bold text-6" id={titleId}>
 						{sub(Liferay.Language.get('x-preview'), title)}
 					</span>
 				</div>

@@ -61,12 +61,12 @@ public class LDAPUserImporterImplTest {
 		LDAPServerConfiguration ldapServerConfiguration = Mockito.mock(
 			LDAPServerConfiguration.class);
 
-		String modifiedDate = "Thu Apr 2 19:18:33 GMT 2026";
+		String modifiedDateString = "Thu Apr 2 19:18:33 GMT 2026";
 
 		Mockito.when(
 			ldapServerConfiguration.modifiedDate()
 		).thenReturn(
-			modifiedDate
+			modifiedDateString
 		);
 
 		Mockito.when(
@@ -131,7 +131,7 @@ public class LDAPUserImporterImplTest {
 			dateUtilMockedStatic.verify(
 				() -> DateUtil.parseDate(
 					Mockito.eq("EEE MMM d HH:mm:ss zzz yyyy"),
-					Mockito.eq(modifiedDate), Mockito.eq(LocaleUtil.US)),
+					Mockito.eq(modifiedDateString), Mockito.eq(LocaleUtil.US)),
 				Mockito.times(1));
 		}
 	}

@@ -33,19 +33,33 @@ type AgentDefinitionOption = {
 };
 
 function generateEmbedCode(externalReferenceCode: string) {
-	return `<script id="${externalReferenceCode}_pid">
-  (function() {
-    var scriptElement1 = document.createElement("script");
+	return `
+<link href="https://ai.hub.liferay.com/index-css" rel="stylesheet">
 
-    scriptElement1.async = true;
-    scriptElement1.charset = "UTF-8";
-    scriptElement1.setAttribute("crossorigin", "*");
-    scriptElement1.src = "/o/ai-hub/chatbots/${externalReferenceCode}";
+<script>
+	(function () {
+		function loadWidget() {
+			if (document.getElementById('aihub-chatbot-widget-script')) {
+				return;
+			}
 
-    var scriptElement2 = document.getElementsByTagName("script")[0];
+			var scriptElement = document.createElement('script');
 
-    scriptElement2.parentNode.insertBefore(scriptElement1, scriptElement2);
-  })();
+			scriptElement.id = 'aihub-chatbot-widget-script';
+			scriptElement.setAttribute('ai-hub-url', 'https://ai.hub.liferay.com');
+			scriptElement.setAttribute('chatbot-external-reference-code', '${externalReferenceCode}');
+			scriptElement.src = 'https://ai.hub.liferay.com/index-js';
+
+			document.body.appendChild(scriptElement);
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', loadWidget);
+		}
+		else {
+			loadWidget();
+		}
+	})();
 </script>`;
 }
 

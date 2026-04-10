@@ -73,6 +73,7 @@ export type ObjectDefinition = {
 		| 'L_CMS_STRUCTURE_REPEATABLE_GROUPS';
 	objectRelationships?: ObjectRelationship[];
 	pluralLabel: Liferay.Language.LocalizedValue<string>;
+	restContextPath?: string;
 	scope: 'company' | 'depot' | 'site';
 	status?: {
 		code: number;

@@ -64,6 +64,7 @@ export type Structure = {
 	id?: number;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
+	path: string;
 	spaces: Spaces;
 	status: Status;
 	system: boolean;

@@ -88,6 +88,7 @@ const INITIAL_STATE: State = {
 		erc: '',
 		label: {},
 		name: '',
+		path: '',
 		spaces: 'all',
 		status: 'new',
 		system: false,

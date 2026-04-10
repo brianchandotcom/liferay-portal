@@ -63,19 +63,10 @@ public class AnalyticsReportsDataProvider {
 			Map<String, AcquisitionChannel> acquisitionChannels =
 				new HashMap<>();
 
-			String endpoint = String.format(
-				"api/1.0/pages/acquisition-channels?canonicalURL=" +
-					"%s&endDate=%s&interval=D&startDate=%s",
-				HtmlUtil.escapeURL(url),
-				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()),
-				DateTimeFormatter.ISO_DATE.format(
-					timeRange.getStartLocalDate()));
-
-			if (Validator.isNotNull(experienceId)) {
-				endpoint += "&experienceId=" + experienceId;
-			}
-
-			String response = _asahFaroBackendClient.doGet(companyId, endpoint);
+			String response = _asahFaroBackendClient.doGet(
+				companyId,
+				_getPagesEndpoint(
+					experienceId, "acquisition-channels", timeRange, url));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -118,19 +109,10 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
-			String endpoint = String.format(
-				"api/1.0/pages/page-referrer-hosts?canonicalURL=" +
-					"%s&endDate=%s&interval=D&startDate=%s",
-				HtmlUtil.escapeURL(url),
-				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()),
-				DateTimeFormatter.ISO_DATE.format(
-					timeRange.getStartLocalDate()));
-
-			if (Validator.isNotNull(experienceId)) {
-				endpoint += "&experienceId=" + experienceId;
-			}
-
-			String response = _asahFaroBackendClient.doGet(companyId, endpoint);
+			String response = _asahFaroBackendClient.doGet(
+				companyId,
+				_getPagesEndpoint(
+					experienceId, "page-referrer-hosts", timeRange, url));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -157,19 +139,9 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
-			String endpoint = String.format(
-				"api/1.0/pages/read-counts?canonicalURL=%s&endDate=%s&" +
-					"interval=D&startDate=%s",
-				HtmlUtil.escapeURL(url),
-				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()),
-				DateTimeFormatter.ISO_DATE.format(
-					timeRange.getStartLocalDate()));
-
-			if (Validator.isNotNull(experienceId)) {
-				endpoint += "&experienceId=" + experienceId;
-			}
-
-			String response = _asahFaroBackendClient.doGet(companyId, endpoint);
+			String response = _asahFaroBackendClient.doGet(
+				companyId,
+				_getPagesEndpoint(experienceId, "read-counts", timeRange, url));
 
 			return _objectMapper.readValue(response, HistoricalMetric.class);
 		}
@@ -185,19 +157,9 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
-			String endpoint = String.format(
-				"api/1.0/pages/view-counts?canonicalURL=%s&endDate=%s&" +
-					"interval=D&startDate=%s",
-				HtmlUtil.escapeURL(url),
-				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()),
-				DateTimeFormatter.ISO_DATE.format(
-					timeRange.getStartLocalDate()));
-
-			if (Validator.isNotNull(experienceId)) {
-				endpoint += "&experienceId=" + experienceId;
-			}
-
-			String response = _asahFaroBackendClient.doGet(companyId, endpoint);
+			String response = _asahFaroBackendClient.doGet(
+				companyId,
+				_getPagesEndpoint(experienceId, "view-counts", timeRange, url));
 
 			return _objectMapper.readValue(response, HistoricalMetric.class);
 		}
@@ -213,19 +175,10 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
-			String endpoint = String.format(
-				"api/1.0/pages/page-referrers?canonicalURL=%s&endDate=%s&" +
-					"interval=D&startDate=%s",
-				HtmlUtil.escapeURL(url),
-				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()),
-				DateTimeFormatter.ISO_DATE.format(
-					timeRange.getStartLocalDate()));
-
-			if (Validator.isNotNull(experienceId)) {
-				endpoint += "&experienceId=" + experienceId;
-			}
-
-			String response = _asahFaroBackendClient.doGet(companyId, endpoint);
+			String response = _asahFaroBackendClient.doGet(
+				companyId,
+				_getPagesEndpoint(
+					experienceId, "page-referrers", timeRange, url));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -252,19 +205,10 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
-			String endpoint = String.format(
-				"api/1.0/pages/social-page-referrers?canonicalURL=" +
-					"%s&endDate=%s&interval=D&startDate=%s",
-				HtmlUtil.escapeURL(url),
-				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()),
-				DateTimeFormatter.ISO_DATE.format(
-					timeRange.getStartLocalDate()));
-
-			if (Validator.isNotNull(experienceId)) {
-				endpoint += "&experienceId=" + experienceId;
-			}
-
-			String response = _asahFaroBackendClient.doGet(companyId, endpoint);
+			String response = _asahFaroBackendClient.doGet(
+				companyId,
+				_getPagesEndpoint(
+					experienceId, "social-page-referrers", timeRange, url));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -289,16 +233,10 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
-			String endpoint =
-				"api/1.0/pages/read-count?canonicalURL=" +
-					HtmlUtil.escapeURL(url);
-
-			if (Validator.isNotNull(experienceId)) {
-				endpoint += "&experienceId=" + experienceId;
-			}
-
 			long totalReads = GetterUtil.getLong(
-				_asahFaroBackendClient.doGet(companyId, endpoint));
+				_asahFaroBackendClient.doGet(
+					companyId,
+					_getPagesEndpoint(experienceId, "read-count", null, url)));
 
 			return Math.max(
 				0, totalReads - _getTodayReads(companyId, experienceId, url));
@@ -312,16 +250,10 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
-			String endpoint =
-				"api/1.0/pages/view-count?canonicalURL=" +
-					HtmlUtil.escapeURL(url);
-
-			if (Validator.isNotNull(experienceId)) {
-				endpoint += "&experienceId=" + experienceId;
-			}
-
 			long totalViews = GetterUtil.getLong(
-				_asahFaroBackendClient.doGet(companyId, endpoint));
+				_asahFaroBackendClient.doGet(
+					companyId,
+					_getPagesEndpoint(experienceId, "view-count", null, url)));
 
 			return Math.max(
 				0, totalViews - _getTodayViews(companyId, experienceId, url));
@@ -392,6 +324,27 @@ public class AnalyticsReportsDataProvider {
 
 	public boolean isValidAnalyticsConnection(long companyId) throws Exception {
 		return _asahFaroBackendClient.isValidConnection(companyId);
+	}
+
+	private String _getPagesEndpoint(
+		String experienceId, String path, TimeRange timeRange, String url) {
+
+		String endpoint = String.format(
+			"api/1.0/pages/%s?canonicalURL=%s", path, HtmlUtil.escapeURL(url));
+
+		if (Validator.isNotNull(experienceId)) {
+			endpoint += "&experienceId=" + experienceId;
+		}
+
+		if (timeRange != null) {
+			endpoint += String.format(
+				"&endDate=%s&interval=D&startDate=%s",
+				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()),
+				DateTimeFormatter.ISO_DATE.format(
+					timeRange.getStartLocalDate()));
+		}
+
+		return endpoint;
 	}
 
 	private long _getTodayReads(long companyId, String experienceId, String url)

@@ -21,7 +21,7 @@ resource "helm_release" "envoy_gateway" {
 					replicas=2
 				}
 				podDisruptionBudget={
-					minAvailable=1
+					maxUnavailable=1
 				}
 			}),
 	]
@@ -33,7 +33,7 @@ resource "kubernetes_pod_disruption_budget_v1" "envoy_proxy_pdb" {
 		namespace=var.gateway_namespace
 	}
 	spec {
-		min_available="1"
+		max_unavailable="1"
 		selector {
 			match_labels={
 				"app.kubernetes.io/component"="proxy"

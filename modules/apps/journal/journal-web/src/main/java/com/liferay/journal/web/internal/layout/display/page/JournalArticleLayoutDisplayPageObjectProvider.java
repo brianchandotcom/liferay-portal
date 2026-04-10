@@ -13,6 +13,9 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
 
@@ -39,7 +42,11 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 
 	@Override
 	public long getClassNameId() {
-		return _assetEntry.getClassNameId();
+		if (_assetEntry != null) {
+			return _assetEntry.getClassNameId();
+		}
+
+		return PortalUtil.getClassNameId(JournalArticle.class.getName());
 	}
 
 	@Override
@@ -49,12 +56,20 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 
 	@Override
 	public long getClassTypeId() {
-		return _assetEntry.getClassTypeId();
+		if (_assetEntry != null) {
+			return _assetEntry.getClassTypeId();
+		}
+
+		return _article.getDDMStructureId();
 	}
 
 	@Override
 	public String getDescription(Locale locale) {
-		return _assetEntry.getDescription(locale);
+		if (_assetEntry != null) {
+			return _assetEntry.getDescription(locale);
+		}
+
+		return _article.getDescription(locale);
 	}
 
 	@Override
@@ -74,20 +89,43 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getKeywords(Locale locale) {
+		if (_assetEntry != null) {
+			return _assetHelper.getAssetKeywords(
+				_assetEntry.getClassName(), _assetEntry.getClassPK(), locale);
+		}
+
 		return _assetHelper.getAssetKeywords(
-			_assetEntry.getClassName(), _assetEntry.getClassPK(), locale);
+			JournalArticle.class.getName(), _article.getResourcePrimKey(),
+			locale);
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _assetEntry.getTitle(locale);
+		if (_assetEntry != null) {
+			return _assetEntry.getTitle(locale);
+		}
+
+		return _article.getTitle(locale);
 	}
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		AssetRenderer<?> assetRenderer = _assetEntry.getAssetRenderer();
+		if (_assetEntry != null) {
+			AssetRenderer<?> assetRenderer = _assetEntry.getAssetRenderer();
 
-		return assetRenderer.getUrlTitle(locale);
+			return assetRenderer.getUrlTitle(locale);
+		}
+
+		try {
+			return _article.getUrlTitle(locale);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return _article.getUrlTitle();
 	}
 
 	private AssetEntry _getAssetEntry(JournalArticle journalArticle)
@@ -107,6 +145,9 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 		return assetRendererFactory.getAssetEntry(
 			JournalArticle.class.getName(), assetEntryClassPK);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleLayoutDisplayPageObjectProvider.class.getName());
 
 	private final JournalArticle _article;
 	private final AssetEntry _assetEntry;

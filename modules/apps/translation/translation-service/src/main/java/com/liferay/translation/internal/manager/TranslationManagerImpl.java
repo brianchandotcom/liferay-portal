@@ -220,7 +220,7 @@ public class TranslationManagerImpl implements TranslationManager {
 
 		String title = getTitle(className, classPK, locale);
 
-		if (title == null) {
+		if (Validator.isNull(title)) {
 			title =
 				_language.get(locale, "model.resource." + className) +
 					StringPool.SPACE + classPK;

@@ -1,0 +1,5 @@
+$toolbar-height: 3.5rem;
+
+.view-asset-preview-container {
+	height: calc(100vh - #{$toolbar-height});
+}

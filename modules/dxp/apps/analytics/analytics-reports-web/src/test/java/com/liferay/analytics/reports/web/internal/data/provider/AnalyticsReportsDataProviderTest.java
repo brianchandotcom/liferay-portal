@@ -78,7 +78,7 @@ public class AnalyticsReportsDataProviderTest {
 
 		Map<String, AcquisitionChannel> acquisitionChannels =
 			analyticsReportsDataProvider.getAcquisitionChannels(
-				RandomTestUtil.randomLong(), timeRange,
+				RandomTestUtil.randomLong(), null, timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -122,7 +122,7 @@ public class AnalyticsReportsDataProviderTest {
 
 		List<ReferringURL> referringURLS =
 			analyticsReportsDataProvider.getDomainReferringURLs(
-				RandomTestUtil.randomLong(), timeRange,
+				RandomTestUtil.randomLong(), null, timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(referringURLS.toString(), 3, referringURLS.size());
@@ -163,7 +163,7 @@ public class AnalyticsReportsDataProviderTest {
 
 		HistoricalMetric historicalMetric =
 			analyticsReportsDataProvider.getHistoricalReadsHistoricalMetric(
-				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong(), null,
 				TimeRange.of(TimeSpan.LAST_7_DAYS, 0),
 				RandomTestUtil.randomString());
 
@@ -212,7 +212,7 @@ public class AnalyticsReportsDataProviderTest {
 
 		List<ReferringURL> referringURLS =
 			analyticsReportsDataProvider.getPageReferringURLs(
-				RandomTestUtil.randomLong(), timeRange,
+				RandomTestUtil.randomLong(), null, timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(referringURLS.toString(), 3, referringURLS.size());
@@ -256,7 +256,7 @@ public class AnalyticsReportsDataProviderTest {
 
 		List<ReferringSocialMedia> referringSocialMediaList =
 			analyticsReportsDataProvider.getReferringSocialMediaList(
-				RandomTestUtil.randomLong(), timeRange,
+				RandomTestUtil.randomLong(), null, timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -305,7 +305,8 @@ public class AnalyticsReportsDataProviderTest {
 		Assert.assertEquals(
 			Long.valueOf(12340),
 			analyticsReportsDataProvider.getTotalReads(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString()));
+				RandomTestUtil.randomLong(), null,
+				RandomTestUtil.randomString()));
 	}
 
 	@Test(expected = PortalException.class)
@@ -315,7 +316,7 @@ public class AnalyticsReportsDataProviderTest {
 				_getAnalyticsSettingsManager(), _getHttp(new IOException()));
 
 		analyticsReportsDataProvider.getTotalReads(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+			RandomTestUtil.randomLong(), null, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -350,7 +351,8 @@ public class AnalyticsReportsDataProviderTest {
 		Assert.assertEquals(
 			Long.valueOf(12340),
 			analyticsReportsDataProvider.getTotalViews(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString()));
+				RandomTestUtil.randomLong(), null,
+				RandomTestUtil.randomString()));
 	}
 
 	@Test(expected = PortalException.class)
@@ -360,7 +362,7 @@ public class AnalyticsReportsDataProviderTest {
 				_getAnalyticsSettingsManager(), _getHttp(new IOException()));
 
 		analyticsReportsDataProvider.getTotalViews(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+			RandomTestUtil.randomLong(), null, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -386,7 +388,7 @@ public class AnalyticsReportsDataProviderTest {
 
 		Map<TrafficChannel.Type, TrafficChannel> trafficChannels =
 			analyticsReportsDataProvider.getTrafficChannels(
-				RandomTestUtil.randomLong(), timeRange,
+				RandomTestUtil.randomLong(), null, timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -421,7 +423,7 @@ public class AnalyticsReportsDataProviderTest {
 		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		analyticsReportsDataProvider.getTrafficChannels(
-			RandomTestUtil.randomLong(), timeRange,
+			RandomTestUtil.randomLong(), null, timeRange,
 			RandomTestUtil.randomString());
 	}
 

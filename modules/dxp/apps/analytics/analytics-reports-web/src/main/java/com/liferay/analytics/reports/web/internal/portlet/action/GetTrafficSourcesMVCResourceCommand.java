@@ -89,6 +89,7 @@ public class GetTrafficSourcesMVCResourceCommand
 				_getTrafficSourcesJSONArray(
 					analyticsReportsDataProvider, canonicalURL,
 					themeDisplay.getCompanyId(),
+					ParamUtil.getString(resourceRequest, "experienceId"),
 					_portal.getLiferayPortletRequest(resourceRequest),
 					_portal.getLiferayPortletResponse(resourceResponse),
 					timeSpan.toTimeRange(timeSpanOffset), resourceBundle));
@@ -110,7 +111,8 @@ public class GetTrafficSourcesMVCResourceCommand
 
 	private List<TrafficChannel> _getTrafficChannels(
 			AnalyticsReportsDataProvider analyticsReportsDataProvider,
-			String canonicalURL, long companyId, TimeRange timeRange)
+			String canonicalURL, long companyId, String experienceId,
+			TimeRange timeRange)
 		throws Exception {
 
 		Map<TrafficChannel.Type, TrafficChannel> emptyMap = HashMapBuilder.put(
@@ -152,7 +154,7 @@ public class GetTrafficSourcesMVCResourceCommand
 		try {
 			Map<TrafficChannel.Type, TrafficChannel> trafficChannels =
 				analyticsReportsDataProvider.getTrafficChannels(
-					companyId, timeRange, canonicalURL);
+					companyId, experienceId, timeRange, canonicalURL);
 
 			emptyMap.forEach(
 				(type, trafficChannel) -> trafficChannels.merge(
@@ -180,14 +182,15 @@ public class GetTrafficSourcesMVCResourceCommand
 
 	private JSONArray _getTrafficSourcesJSONArray(
 			AnalyticsReportsDataProvider analyticsReportsDataProvider,
-			String canonicalURL, long companyId,
+			String canonicalURL, long companyId, String experienceId,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, TimeRange timeRange,
 			ResourceBundle resourceBundle)
 		throws Exception {
 
 		List<TrafficChannel> trafficChannels = _getTrafficChannels(
-			analyticsReportsDataProvider, canonicalURL, companyId, timeRange);
+			analyticsReportsDataProvider, canonicalURL, companyId, experienceId,
+			timeRange);
 
 		Comparator<TrafficChannel> comparator = Comparator.comparing(
 			TrafficChannel::getTrafficShare);

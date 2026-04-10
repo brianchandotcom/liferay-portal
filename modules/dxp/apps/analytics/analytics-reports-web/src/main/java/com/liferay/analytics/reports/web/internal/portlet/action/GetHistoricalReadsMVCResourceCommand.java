@@ -69,6 +69,7 @@ public class GetHistoricalReadsMVCResourceCommand
 			HistoricalMetric historicalMetric =
 				analyticsReportsDataProvider.getHistoricalReadsHistoricalMetric(
 					_portal.getCompanyId(resourceRequest),
+					ParamUtil.getString(resourceRequest, "experienceId"),
 					timeSpan.toTimeRange(timeSpanOffset), canonicalURL);
 
 			jsonObject.put(

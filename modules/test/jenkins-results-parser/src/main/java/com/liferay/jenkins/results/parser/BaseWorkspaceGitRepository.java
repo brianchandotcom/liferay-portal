@@ -696,7 +696,9 @@ public abstract class BaseWorkspaceGitRepository
 			LocalGitBranch localGitBranch = getLocalGitBranch();
 
 			int commitCount = gitWorkingDirectory.getCommitCountBetweenBranches(
-				localGitBranch.getUpstreamBranchName(),
+				gitWorkingDirectory.getMergeBaseCommitSHA(
+					localGitBranch.getName(), _getSenderBranchSHAName(),
+					getUpstreamBranchName()),
 				localGitBranch.getName());
 
 			sb.append(commitCount + 1);
@@ -725,6 +727,17 @@ public abstract class BaseWorkspaceGitRepository
 			sb.append(getUpstreamBranchName());
 			sb.append(" ");
 			sb.append(getBaseBranchSHA());
+
+			commands.add(sb.toString());
+
+			sb.setLength(0);
+
+			sb.append("git -C ");
+			sb.append(clonedWorkingDirectory);
+			sb.append(" update-ref refs/heads/");
+			sb.append(_getSenderBranchSHAName());
+			sb.append(" ");
+			sb.append(getSenderBranchSHA());
 
 			commands.add(sb.toString());
 
@@ -900,6 +913,9 @@ public abstract class BaseWorkspaceGitRepository
 			gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 		}
 
+		gitWorkingDirectory.createLocalGitBranch(
+			_getSenderBranchSHAName(), true, getSenderBranchSHA());
+
 		String baseBranchSHA = getBaseBranchSHA();
 
 		if (!gitWorkingDirectory.localSHAExists(baseBranchSHA)) {
@@ -962,6 +978,9 @@ public abstract class BaseWorkspaceGitRepository
 				gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 			}
 		}
+
+		gitWorkingDirectory.createLocalGitBranch(
+			_getSenderBranchSHAName(), true, getSenderBranchSHA());
 
 		return gitWorkingDirectory.createLocalGitBranch(
 			getBranchName(), true, getSenderBranchSHA());
@@ -1107,6 +1126,10 @@ public abstract class BaseWorkspaceGitRepository
 
 	private String _getSenderBranchHeadSHA() {
 		return getString("sender_branch_head_sha");
+	}
+
+	private String _getSenderBranchSHAName() {
+		return getSenderBranchName() + "__" + getSenderBranchSHAShort();
 	}
 
 	private RemoteGitRef _getSenderRemoteGitRef() {

@@ -35,7 +35,25 @@ resource "helm_release" "envoy_gateway" {
 				deployment={
 					replicas=2
 				}
+				podDisruptionBudget={
+					minAvailable=1
+				}
 			}),
 	]
 	version="v${var.envoy_gateway_helm_chart_version}"
+}
+resource "kubernetes_pod_disruption_budget_v1" "envoy_proxy_pdb" {
+	metadata {
+		name="envoy-proxy-pdb"
+		namespace=var.gateway_namespace
+	}
+	spec {
+		min_available="1"
+		selector {
+			match_labels={
+				"app.kubernetes.io/component"="proxy"
+				"app.kubernetes.io/name"="envoy"
+			}
+		}
+	}
 }

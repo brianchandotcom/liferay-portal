@@ -36,6 +36,7 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -170,6 +171,7 @@ public class UpdateFixesMVCActionCommand extends BaseMVCActionCommand {
 		patcherFix.setLatestFix(true);
 		patcherFix.setObsolete(false);
 		patcherFix.setStatus(status);
+		patcherFix.setStatusDate(new Date());
 		patcherFix.setType(type);
 
 		patcherFix = _patcherFixLocalService.updatePatcherFix(patcherFix);

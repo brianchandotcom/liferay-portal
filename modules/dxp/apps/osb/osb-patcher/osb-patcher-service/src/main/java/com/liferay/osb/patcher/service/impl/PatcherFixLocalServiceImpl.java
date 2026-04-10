@@ -70,6 +70,7 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setName(name);
 		patcherFix.setType(type);
 		patcherFix.setStatus(status);
+		patcherFix.setStatusDate(new Date());
 
 		PatcherFixRelUtil.addPatcherFixRel(
 			patcherFix.getPatcherFixId(), parentPatcherFixIds);
@@ -287,6 +288,7 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setModifiedDate(new Date());
 		patcherFix.setGitHash(gitHash);
 		patcherFix.setStatus(status);
+		patcherFix.setStatusDate(new Date());
 
 		User user = _userLocalService.getUser(userId);
 
@@ -316,6 +318,7 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setGitHash(gitHash);
 		patcherFix.setJenkinsResults(jenkinsResults);
 		patcherFix.setStatus(status);
+		patcherFix.setStatusDate(new Date());
 
 		User user = _userLocalService.getUser(userId);
 
@@ -398,6 +401,7 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 		patcherFix.setModifiedDate(new Date());
 		patcherFix.setStatus(status);
+		patcherFix.setStatusDate(new Date());
 
 		User user = _userLocalService.getUser(userId);
 

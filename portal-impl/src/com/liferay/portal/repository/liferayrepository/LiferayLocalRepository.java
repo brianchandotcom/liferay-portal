@@ -111,7 +111,8 @@ public class LiferayLocalRepository
 			externalReferenceCode, userId, getGroupId(), getRepositoryId(),
 			toFolderId(folderId), sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, fileEntryTypeId, ddmFormValuesMap, file,
-			null, size, null, null, null, serviceContext);
+			null, size, displayDate, expirationDate, reviewDate,
+			serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

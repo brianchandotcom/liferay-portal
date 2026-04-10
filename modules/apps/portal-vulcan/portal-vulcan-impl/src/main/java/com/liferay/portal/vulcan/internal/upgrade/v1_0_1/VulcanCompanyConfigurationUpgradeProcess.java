@@ -5,83 +5,79 @@
 
 package com.liferay.portal.vulcan.internal.upgrade.v1_0_1;
 
-import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.internal.configuration.VulcanCompanyConfiguration;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import java.util.Dictionary;
 
-import org.apache.felix.cm.file.ConfigurationHandler;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Vendel Toreki
  */
 public class VulcanCompanyConfigurationUpgradeProcess extends UpgradeProcess {
 
+	public VulcanCompanyConfigurationUpgradeProcess(
+		CompanyLocalService companyLocalService,
+		ConfigurationAdmin configurationAdmin) {
+
+		_companyLocalService = companyLocalService;
+		_configurationAdmin = configurationAdmin;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasTable("Configuration_")) {
+		_companyLocalService.forEachCompany(
+			company -> _upgradeVulcanCompanyConfigurations(
+				company.getCompanyId()));
+	}
+
+	private void _upgradeVulcanCompanyConfigurations(long companyId)
+		throws Exception {
+
+		String factoryPid =
+			"com.liferay.portal.vulcan.internal.configuration." +
+				"VulcanCompanyConfiguration";
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			StringBundler.concat(
+				"(&(",
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				"=", companyId, ")(path=*)(service.factoryPid=", factoryPid,
+				"))"));
+
+		if (configurations == null) {
 			return;
 		}
 
-		try (Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(
-				StringBundler.concat(
-					"select * from Configuration_ where configurationId LIKE ",
-					"'%", VulcanCompanyConfiguration.class.getName(), "%'"));
-			PreparedStatement preparedStatement =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update Configuration_ set dictionary = ? where " +
-						"configurationId = ?")) {
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> dictionary =
+				configuration.getProperties();
 
-			while (resultSet.next()) {
-				String dictionaryString = resultSet.getString("dictionary");
-
-				if (Validator.isNull(dictionaryString)) {
-					continue;
-				}
-
-				Dictionary<String, Object> dictionary =
-					ConfigurationHandler.read(
-						new UnsyncByteArrayInputStream(
-							dictionaryString.getBytes(StringPool.UTF8)));
-
-				Object value = dictionary.get("companyId");
-
-				if (value instanceof Long) {
-					continue;
-				}
-
-				dictionary.put("companyId", GetterUtil.getLong(value));
-
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-					new UnsyncByteArrayOutputStream();
-
-				ConfigurationHandler.write(
-					unsyncByteArrayOutputStream, dictionary);
-
-				preparedStatement.setString(
-					1, unsyncByteArrayOutputStream.toString());
-
-				preparedStatement.setString(
-					2, resultSet.getString("configurationId"));
-
-				preparedStatement.addBatch();
+			if ((dictionary == null) || dictionary.isEmpty()) {
+				continue;
 			}
 
-			preparedStatement.executeBatch();
+			Object value = dictionary.get(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
+
+			if ((value == null) || (value instanceof Long)) {
+				continue;
+			}
+
+			dictionary.put(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				GetterUtil.getLong(value));
+
+			configuration.update(dictionary);
 		}
 	}
+
+	private final CompanyLocalService _companyLocalService;
+	private final ConfigurationAdmin _configurationAdmin;
 
 }

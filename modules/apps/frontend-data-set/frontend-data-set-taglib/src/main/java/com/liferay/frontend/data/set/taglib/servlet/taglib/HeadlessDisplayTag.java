@@ -46,6 +46,8 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 			}
 
 			_setFiltersJSONArray();
+
+			_setGroupedFiltersJSONArray();
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -258,6 +260,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_filtersJSONArray = null;
 		_formId = null;
 		_formName = null;
+		_groupedFiltersJSONArray = null;
 		_nestedItemsKey = null;
 		_nestedItemsReferenceKey = null;
 		_selectedItemsKey = null;
@@ -296,6 +299,8 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 				"formId", _validateDataAttribute(_formId)
 			).put(
 				"formName", _validateDataAttribute(_formName)
+			).put(
+				"groupedFilters", _groupedFiltersJSONArray
 			).put(
 				"id", getId()
 			).put(
@@ -338,6 +343,11 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 			getFdsFilters(), getId(), getRequest());
 	}
 
+	private void _setGroupedFiltersJSONArray() {
+		_groupedFiltersJSONArray = fdsSerializer.serializeGroupedFilters(
+			getId(), getRequest());
+	}
+
 	private Object _validateDataAttribute(Object object) {
 		if (Validator.isNull(object)) {
 			return null;
@@ -361,6 +371,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	private JSONArray _filtersJSONArray;
 	private String _formId;
 	private String _formName;
+	private JSONArray _groupedFiltersJSONArray;
 	private String _nestedItemsKey;
 	private String _nestedItemsReferenceKey;
 	private String _selectedItemsKey;

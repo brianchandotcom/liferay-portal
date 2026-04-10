@@ -3,7 +3,42 @@
 	"hidden": true,
 	"name": "New Space",
 	"name_i18n": {
-		"en_US": "New Space"
+		"ar_SA": "مساحة جديدة",
+		"ca_AD": "Espai nou",
+		"ca_ES": "Espai nou",
+		"ca_ES_VALENCIA": "Espai nou",
+		"cs_CZ": "Nový prostor",
+		"de_AT": "Neuer Bereich",
+		"de_CH": "Neuer Bereich",
+		"de_DE": "Neuer Bereich",
+		"en_AU": "New Space",
+		"en_CA": "New Space",
+		"en_GB": "New Space",
+		"en_IE": "New Space",
+		"en_US": "New Space",
+		"es_AR": "Nuevo espacio",
+		"es_CO": "Nuevo espacio",
+		"es_ES": "Nuevo espacio",
+		"es_MX": "Nuevo espacio",
+		"fi_FI": "Uusi tila",
+		"fr_BE": "Nouvel espace",
+		"fr_CA": "Nouvel espace",
+		"fr_CH": "Nouvel espace",
+		"fr_FR": "Nouvel espace",
+		"gl_ES": "Novo espazo",
+		"hu_HU": "Új munkaterület",
+		"it_CH": "Nuovo spazio",
+		"it_IT": "Nuovo spazio",
+		"ja_JP": "新しいスペース",
+		"ko_KR": "새로운 공간",
+		"nl_BE": "Nieuwe ruimte",
+		"nl_NL": "Nieuwe ruimte",
+		"pt_BR": "Novo espaço",
+		"pt_PT": "Novo espaço",
+		"ru_RU": "Новое пространство",
+		"sv_SE": "Nytt utrymme",
+		"zh_CN": "新空间",
+		"zh_TW": "新空間"
 	},
 	"permissions": [
 		{
@@ -17,12 +52,6 @@
 			"actionIds": [
 			],
 			"roleName": "Guest",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-			],
-			"roleName": "Site Member",
 			"scope": 4
 		}
 	],

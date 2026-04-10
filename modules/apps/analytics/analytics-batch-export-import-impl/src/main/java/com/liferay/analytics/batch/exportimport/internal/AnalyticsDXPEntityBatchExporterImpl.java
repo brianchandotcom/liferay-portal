@@ -12,13 +12,11 @@ import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.time.Instant;
@@ -160,25 +158,13 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			LocalDateTime localDateTime)
 		throws Exception {
 
-		User user = _userLocalService.fetchUserByScreenName(
-			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
-
-		if (user == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to add dispatch trigger ", dispatchTriggerName,
-						" because the analytics administrator user does not ",
-						"exist for company ", companyId));
-			}
-
-			return null;
-		}
-
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				null, user.getUserId(), dispatchTriggerName, null,
-				dispatchTriggerName, false);
+				null,
+				_userLocalService.getUserIdByScreenName(
+					companyId,
+					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN),
+				dispatchTriggerName, null, dispatchTriggerName, false);
 
 		return _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId(), true, _CRON_EXPRESSION,

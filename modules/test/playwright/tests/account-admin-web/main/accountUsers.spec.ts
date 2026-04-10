@@ -22,6 +22,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {nextPage, setItemsPerPage} from '../../../utils/pagination';
 import performLogin from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {enableGlobalMenuFeatureFlag} from '../../roles-admin-web/main/utils/featureFlag';
 
 export const test = mergeTests(
 	accountsPagesTest,
@@ -1652,6 +1653,8 @@ test(
 				'',
 				`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
 			);
+
+			await enableGlobalMenuFeatureFlag(newPage);
 
 			await accountsPage.goto(false);
 

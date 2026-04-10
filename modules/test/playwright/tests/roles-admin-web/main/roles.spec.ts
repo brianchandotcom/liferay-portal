@@ -23,6 +23,7 @@ import {
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {setupBookmark} from './utils/bookmarks';
+import {enableGlobalMenuFeatureFlag} from './utils/featureFlag';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -40,9 +41,14 @@ export const test = mergeTests(
 
 test.beforeAll(async ({browser}) => {
 	const page = await browser.newPage();
-	const rolesPage = new RolesPage(page);
+
+	await page.goto('/');
 
 	await performLoginViaApi({page, screenName: 'test'});
+
+	await enableGlobalMenuFeatureFlag(page);
+
+	const rolesPage = new RolesPage(page);
 
 	await rolesPage.goto();
 

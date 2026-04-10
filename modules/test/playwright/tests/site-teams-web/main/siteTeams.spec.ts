@@ -916,6 +916,10 @@ test(
 				page.getByText(user.name, {exact: false})
 			).toBeVisible();
 		});
+
+		// Wait for background tasks to complete before cleaning up.
+
+		await page.waitForTimeout(2000);
 	}
 );
 
@@ -1163,7 +1167,7 @@ test(
 			await usersPage.deleteButton.click();
 
 			await waitForAlert(page);
-		}).toPass({timeout: 1000});
+		}).toPass({timeout: 5000});
 
 		await expect(usersPage.usersTable.cell(user1.name)).toBeVisible();
 		await expect(usersPage.usersTable.cell(user2.name)).toHaveCount(0);

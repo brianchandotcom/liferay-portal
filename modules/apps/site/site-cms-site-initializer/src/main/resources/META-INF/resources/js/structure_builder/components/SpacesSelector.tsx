@@ -18,11 +18,6 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectErrors from '../selectors/selectErrors';
 import {ReferencedStructure, Structure} from '../types/Structure';
 
-type Item = {
-	label: string;
-	value: string;
-};
-
 export default function SpacesSelector({
 	disabled,
 	structure,
@@ -72,7 +67,7 @@ export default function SpacesSelector({
 
 				{isDisabled ? (
 					<ClayMultiSelect
-						disabled={true}
+						disabled
 						id={id}
 						items={selectedSpaces.map((space) => ({
 							label: space.name,
@@ -106,12 +101,10 @@ export default function SpacesSelector({
 								});
 							}
 						}}
-						onItemsChange={(items: Array<Item | Space>) => {
+						onItemsChange={(items: Array<Space>) => {
 							dispatch({
 								spaces: items.map(
-									(item) =>
-										(item as Space).externalReferenceCode ||
-										(item as Item).value
+									(item) => item.externalReferenceCode
 								),
 								type: 'update-structure',
 							});
@@ -154,7 +147,10 @@ export default function SpacesSelector({
 	);
 }
 
-function getSelection(structureSpaces: Structure['spaces'], spaces: Space[]) {
+function getSelection(
+	structureSpaces: Structure['spaces'],
+	spaces: Space[]
+): Space[] {
 	if (structureSpaces === 'all') {
 		return [];
 	}

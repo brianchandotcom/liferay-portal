@@ -77,15 +77,11 @@ test(
 
 			await copyFolderModalPage.space(spaceName).click();
 
-			await expect(async () => {
-				await copyFolderModalPage
-					.folderRadio('Contents')
-					.click({timeout: 500});
+			await expect(
+				copyFolderModalPage.folderRadio(folder2Name)
+			).toBeVisible();
 
-				await expect(copyFolderModalPage.selectButton).toBeEnabled({
-					timeout: 500,
-				});
-			}).toPass({timeout: 5000});
+			await expect(copyFolderModalPage.selectButton).toBeEnabled();
 
 			await copyFolderModalPage.selectButton.click();
 			await copyFolderModalPage.duplicateDialog.waitFor();
@@ -104,7 +100,6 @@ test(
 			});
 
 			await copyFolderModalPage.spaceInModal(spaceName).click();
-			await copyFolderModalPage.navigableFolder('Contents').click();
 
 			await expect(async () => {
 				await copyFolderModalPage
@@ -130,7 +125,6 @@ test(
 			});
 
 			await copyFolderModalPage.spaceInModal(spaceName).click();
-			await copyFolderModalPage.navigableFolder('Contents').click();
 
 			await expect(async () => {
 				await copyFolderModalPage
@@ -220,19 +214,19 @@ test(
 
 			await copyFolderModalPage.space(spaceName).click();
 
-			await expect(async () => {
-				await copyFolderModalPage
-					.folderRadio('Contents')
-					.click({timeout: 500});
+			await expect(
+				copyFolderModalPage.folderRadio(folder2Name)
+			).toBeVisible();
 
-				await expect(copyFolderModalPage.selectButton).toBeEnabled({
-					timeout: 500,
-				});
-			}).toPass({timeout: 5000});
+			await expect(copyFolderModalPage.selectButton).toBeEnabled();
 
 			await copyFolderModalPage.selectButton.click();
 
-			await waitForAlert(page, `was successfully copied to`);
+			await waitForAlert(
+				page,
+				'Assets could not be moved. Please ensure the name is unique in the destination.',
+				{type: 'danger'}
+			);
 		});
 
 		await test.step('Bulk copy a folder inside another non-root folder', async () => {
@@ -247,7 +241,6 @@ test(
 			await assetsPage.execBulkItemAction('Copy To');
 
 			await copyFolderModalPage.spaceInModal(spaceName).click();
-			await copyFolderModalPage.navigableFolder('Contents').click();
 
 			await expect(async () => {
 				await copyFolderModalPage
@@ -272,7 +265,6 @@ test(
 			await assetsPage.execBulkItemAction('Copy To');
 
 			await copyFolderModalPage.spaceInModal(spaceName).click();
-			await copyFolderModalPage.navigableFolder('Contents').click();
 
 			await expect(async () => {
 				await copyFolderModalPage
@@ -286,7 +278,153 @@ test(
 
 			await copyFolderModalPage.selectButton.click();
 
-			await waitForAlert(page, `was successfully copied to`);
+			await waitForAlert(
+				page,
+				'Assets could not be moved. Please ensure the name is unique in the destination.',
+				{type: 'danger'}
+			);
+		});
+	}
+);
+
+test(
+	'Root Contents folder is not visible in move and copy dialogs',
+	{tag: '@LPD-83152'},
+	async ({
+		apiHelpers,
+		assetsPage,
+		copyFolderModalPage,
+		page,
+		spaceSummaryPage,
+	}) => {
+		const spaceName = `Space ${getRandomString()}`;
+		const folderName = `Folder ${getRandomString()}`;
+		const contentTitle = `Content ${getRandomString()}`;
+
+		let user;
+
+		await test.step('Create a new Space', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a user and add as content reviewer member to the space', async () => {
+			user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const cmsAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'CMS Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				cmsAdminRole.id,
+				Number(user.id)
+			);
+
+			await spaceSummaryPage.goto(spaceName);
+			await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
+			await spaceSummaryPage.addRoleToSpaceMember(
+				'Content Reviewer',
+				user.name
+			);
+		});
+
+		await test.step('Create a folder and content inside the Space', async () => {
+			await spaceSummaryPage.goto(spaceName);
+			await spaceSummaryPage.createContentFolder(folderName);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+		});
+
+		await test.step('Login as content reviewer user', async () => {
+			await performUserSwitch(page, user.alternateName);
+		});
+
+		await test.step('Verify Contents folder is not visible in Copy To dialog', async () => {
+			await assetsPage.gotoContents();
+			await assetsPage.execItemAction({
+				action: 'Copy To',
+				filter: contentTitle,
+			});
+
+			await copyFolderModalPage.space(spaceName).click();
+
+			await expect(
+				page.getByRole('radio', {name: `Select ${folderName}`})
+			).toBeVisible();
+			await expect(
+				page.getByRole('radio', {name: 'Select Contents'})
+			).not.toBeVisible();
+
+			await page.getByRole('button', {name: 'Cancel'}).click();
+		});
+
+		await test.step('Verify Contents folder is not visible in Copy To dialog table view', async () => {
+			await assetsPage.gotoContents();
+
+			await assetsPage.execItemAction({
+				action: 'Copy To',
+				filter: contentTitle,
+			});
+
+			await copyFolderModalPage.space(spaceName).click();
+
+			await expect(
+				page.getByRole('radio', {name: `Select ${folderName}`})
+			).toBeVisible();
+
+			await copyFolderModalPage.selectTableView();
+
+			await expect(
+				copyFolderModalPage.modal.getByRole('cell', {
+					exact: true,
+					name: folderName,
+				})
+			).toBeVisible();
+			await expect(
+				copyFolderModalPage.modal.getByRole('cell', {
+					exact: true,
+					name: 'Contents',
+				})
+			).not.toBeVisible();
+
+			await page.getByRole('button', {name: 'Cancel'}).click();
+		});
+
+		await test.step('Verify Contents folder is not visible in Move dialog', async () => {
+			await assetsPage.gotoContents();
+
+			await assetsPage.dataSetFragmentPage.execItemAction({
+				action: 'Move',
+				filter: contentTitle,
+			});
+
+			await copyFolderModalPage.space(spaceName).click();
+
+			await expect(
+				page.getByRole('radio', {name: `Select ${folderName}`})
+			).toBeVisible();
+			await expect(
+				page.getByRole('radio', {name: 'Select Contents'})
+			).not.toBeVisible();
+
+			await page.getByRole('button', {name: 'Cancel'}).click();
 		});
 	}
 );

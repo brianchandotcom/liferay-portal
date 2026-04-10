@@ -41,6 +41,16 @@ resource "google_compute_firewall" "allow_internal" {
 	priority=1000
 	source_ranges=[local.pod_cidr, local.service_cidr, local.subnet_cidr,]
 }
+resource "google_compute_firewall" "allow_master" {
+	allow {
+		ports=["443", "10250", "9443",]
+		protocol="tcp"
+	}
+	name="${var.deployment_name}-allow-master"
+	network=google_compute_network.vpc.name
+	priority=1000
+	source_ranges=[var.master_ipv4_cidr_block,]
+}
 resource "google_compute_firewall" "envoy_ingress_managed" {
 	allow {
 		ports=["10080", "10443",]

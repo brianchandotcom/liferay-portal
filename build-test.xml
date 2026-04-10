@@ -12323,7 +12323,17 @@ send_user $expect_out(buffer)]]></echo>
 				<basedir file="${liferay.faces.bridge.impl.dir}/test/integration" />
 				<basedir file="${liferay.faces.portal.dir}/test/integration" />
 				<basedir file="${test.workspace.dir}" />
-				<exclude name="**/node_modules/**/TEST-*.xml" />
+				<exclude name="**/.git/**" />
+				<exclude name="**/.gradle/**" />
+				<exclude name="**/bin/**" />
+				<exclude name="**/build/**" />
+				<exclude name="**/classes/**" />
+				<exclude name="**/dist/**" />
+				<exclude name="**/node_modules/**" />
+				<exclude name="**/src/**" />
+				<exclude name="**/test-classes/**" />
+				<exclude name="**/test-coverage/**" />
+				<exclude name="**/tmp/**" />
 				<include name="**/TEST-*.xml" />
 			</multirootfileset>
 		</path>

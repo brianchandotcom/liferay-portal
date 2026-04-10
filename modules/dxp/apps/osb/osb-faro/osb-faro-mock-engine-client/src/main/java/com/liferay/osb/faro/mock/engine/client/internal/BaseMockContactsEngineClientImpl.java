@@ -957,13 +957,13 @@ public abstract class BaseMockContactsEngineClientImpl
 	@Override
 	public Results<PageExperience> getPageExperiences(
 			FaroProject faroProject, String canonicalUrl, String channelId,
-			String keywords, int page, String pageTitle, int size,
+			int page, String pageTitle, String search, int size,
 			String sortString)
 		throws Exception {
 
 		return contactsEngineClient.getPageExperiences(
-			faroProject, canonicalUrl, channelId, keywords, page, pageTitle,
-			size, sortString);
+			faroProject, canonicalUrl, channelId, page, pageTitle, search, size,
+			sortString);
 	}
 
 	@Override

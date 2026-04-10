@@ -466,7 +466,7 @@ public interface ContactsEngineClient {
 
 	public Results<PageExperience> getPageExperiences(
 			FaroProject faroProject, String canonicalUrl, String channelId,
-			String keywords, int page, String pageTitle, int size,
+			int page, String pageTitle, String search, int size,
 			String sortString)
 		throws Exception;
 

@@ -17,13 +17,6 @@
 				"type": "layout"
 			},
 			{
-				"displayIcon": "books",
-				"externalReferenceCode": "DSRPRIMARYNAVIGATION3",
-				"friendlyURL": "/templates",
-				"privateLayout": false,
-				"type": "layout"
-			},
-			{
 				"displayIcon": "analytics",
 				"externalReferenceCode": "DSRPRIMARYNAVIGATION4",
 				"friendlyURL": "/analytics",

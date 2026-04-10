@@ -161,7 +161,7 @@ public class CompanyLocalServiceDBPartitionTest
 	@Test
 	public void testAddCompany() throws Exception {
 		int dbPartitionsCount = _getDBPartitionsCount();
-		int rulesCount = _getRulesCount(defaultPartitionName);
+		long rulesCount = _getRulesCount(defaultPartitionName);
 
 		_company1 = CompanyTestUtil.addCompany();
 
@@ -489,7 +489,7 @@ public class CompanyLocalServiceDBPartitionTest
 	@FeatureFlag("LPD-11342")
 	@Test
 	public void testCopyDBPartitionCompany() throws Exception {
-		int rulesCount = _getRulesCount(defaultPartitionName);
+		long rulesCount = _getRulesCount(defaultPartitionName);
 
 		Configuration configuration =
 			CompanyLocalServiceTestUtil.createFactoryConfiguration(
@@ -1133,7 +1133,7 @@ public class CompanyLocalServiceDBPartitionTest
 		throw new SQLException("At least one database partition is required");
 	}
 
-	private int _getRulesCount(String partitionName) throws Exception {
+	private long _getRulesCount(String partitionName) throws Exception {
 		if (db.getDBType() != DBType.POSTGRESQL) {
 			return 0;
 		}
@@ -1153,7 +1153,7 @@ public class CompanyLocalServiceDBPartitionTest
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				return resultSet.getInt("count");
+				return resultSet.getLong("count");
 			}
 		}
 	}

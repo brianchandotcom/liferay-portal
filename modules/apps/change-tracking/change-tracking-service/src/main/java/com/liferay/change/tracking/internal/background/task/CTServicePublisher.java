@@ -121,7 +121,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());
 	}
 
-	private int _getPredeletedRowCount(
+	private long _getPredeletedRowCount(
 			Connection connection, String tableName, String primaryKeyName)
 		throws Exception {
 
@@ -141,7 +141,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getInt("count");
+					return resultSet.getLong("count");
 				}
 			}
 		}
@@ -188,7 +188,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		}
 
 		if (_deletionCTEntries != null) {
-			int predeletedRowCount = _getPredeletedRowCount(
+			long predeletedRowCount = _getPredeletedRowCount(
 				connection, tableName, primaryKeyName);
 
 			if (predeletedRowCount != _deletionCTEntries.size()) {

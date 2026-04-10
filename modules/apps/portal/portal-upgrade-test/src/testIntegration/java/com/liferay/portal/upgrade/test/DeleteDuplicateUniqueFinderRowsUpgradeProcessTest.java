@@ -235,7 +235,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			if (!duplicatesRemoved) {
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(2, resultSet.getInt("count"));
+				Assert.assertEquals(2, resultSet.getLong("count"));
 
 				return;
 			}

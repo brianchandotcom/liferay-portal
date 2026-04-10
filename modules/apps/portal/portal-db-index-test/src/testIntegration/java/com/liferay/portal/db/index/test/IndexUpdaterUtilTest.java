@@ -244,7 +244,7 @@ public class IndexUpdaterUtilTest {
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					Assert.assertTrue(resultSet.next());
 
-					Assert.assertEquals(1, resultSet.getInt("count"));
+					Assert.assertEquals(1, resultSet.getLong("count"));
 				}
 
 				List<IndexMetadata> indexMetadatas = _db.getIndexMetadatas(

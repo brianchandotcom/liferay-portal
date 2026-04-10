@@ -872,7 +872,7 @@ public class CTCollectionLocalServiceImpl
 				preparedStatement.setLong(1, ctCollectionId);
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					if (resultSet.next() && (resultSet.getInt("count") > 0)) {
+					if (resultSet.next() && (resultSet.getLong("count") > 0)) {
 						return true;
 					}
 				}

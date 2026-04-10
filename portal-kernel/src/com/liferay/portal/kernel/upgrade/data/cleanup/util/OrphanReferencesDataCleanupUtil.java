@@ -124,7 +124,7 @@ public class OrphanReferencesDataCleanupUtil {
 
 			while (resultSet.next()) {
 				DataCleanupLoggingUtil.logDelete(
-					_log, resultSet.getInt("count"), readOnly, sourceTableName,
+					_log, resultSet.getLong("count"), readOnly, sourceTableName,
 					StringBundler.concat(
 						sourceColumnName, StringPool.SPACE,
 						resultSet.getObject(sourceColumnName),

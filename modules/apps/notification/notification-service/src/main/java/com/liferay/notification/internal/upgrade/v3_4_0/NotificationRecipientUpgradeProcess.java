@@ -32,10 +32,10 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 				"select count(*) as count from NotificationRecipientSetting");
 			ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 
-			if (resultSet1.next() && (resultSet1.getInt("count") > 0)) {
+			if (resultSet1.next() && (resultSet1.getLong("count") > 0)) {
 				return;
 			}
-			else if (resultSet2.next() && (resultSet2.getInt("count") == 0)) {
+			else if (resultSet2.next() && (resultSet2.getLong("count") == 0)) {
 				return;
 			}
 		}

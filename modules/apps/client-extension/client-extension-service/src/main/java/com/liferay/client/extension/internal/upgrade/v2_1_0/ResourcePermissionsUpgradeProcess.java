@@ -40,7 +40,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					if (resultSet.getInt("count") > 0) {
+					if (resultSet.getLong("count") > 0) {
 						return true;
 					}
 				}

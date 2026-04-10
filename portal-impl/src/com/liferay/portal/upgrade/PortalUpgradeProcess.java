@@ -499,7 +499,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setString(2, testString);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next() && (resultSet.getInt("count") > 0)) {
+				if (resultSet.next() && (resultSet.getLong("count") > 0)) {
 					return true;
 				}
 			}

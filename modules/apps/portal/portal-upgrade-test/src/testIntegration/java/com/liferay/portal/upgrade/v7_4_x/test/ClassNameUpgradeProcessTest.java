@@ -496,7 +496,7 @@ public class ClassNameUpgradeProcessTest {
 		return fileEntryMetadataId;
 	}
 
-	private int _count(String table, String column, long structureId)
+	private long _count(String table, String column, long structureId)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
@@ -509,7 +509,7 @@ public class ClassNameUpgradeProcessTest {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				return resultSet.getInt("count");
+				return resultSet.getLong("count");
 			}
 		}
 
@@ -576,21 +576,21 @@ public class ClassNameUpgradeProcessTest {
 		return 0;
 	}
 
-	private int _getDDMStructureRelatedTablesCount(
+	private long _getDDMStructureRelatedTablesCount(
 			long structureId, long structureVersionId)
 		throws Exception {
 
-		int dlFileEntryMetadataCount = _count(
+		long dlFileEntryMetadataCount = _count(
 			"DLFileEntryMetadata", "DDMStructureId", structureId);
-		int ddmFieldCount = _count(
+		long ddmFieldCount = _count(
 			"DDMField", "structureVersionId", structureVersionId);
-		int ddmStorageLinkCount = _count(
+		long ddmStorageLinkCount = _count(
 			"DDMStorageLink", "structureId", structureId);
-		int ddmStructureLayoutCount = _count(
+		long ddmStructureLayoutCount = _count(
 			"DDMStructureLayout", "structureVersionId", structureVersionId);
-		int ddmStructureLinkCount = _count(
+		long ddmStructureLinkCount = _count(
 			"DDMStructureLink", "structureId", structureId);
-		int ddmStructureVersionCount = _count(
+		long ddmStructureVersionCount = _count(
 			"DDMStructureVersion", "structureId", structureId);
 
 		return dlFileEntryMetadataCount + ddmFieldCount + ddmStorageLinkCount +

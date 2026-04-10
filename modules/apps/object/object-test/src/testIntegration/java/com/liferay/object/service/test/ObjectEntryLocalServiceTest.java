@@ -7937,7 +7937,7 @@ public class ObjectEntryLocalServiceTest {
 		return false;
 	}
 
-	private int _count() throws Exception {
+	private long _count() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -7948,7 +7948,7 @@ public class ObjectEntryLocalServiceTest {
 
 			resultSet.next();
 
-			return resultSet.getInt("count");
+			return resultSet.getLong("count");
 		}
 	}
 

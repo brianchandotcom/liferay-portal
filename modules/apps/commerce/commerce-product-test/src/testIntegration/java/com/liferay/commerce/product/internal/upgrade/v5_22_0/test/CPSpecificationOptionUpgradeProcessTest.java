@@ -96,7 +96,7 @@ public class CPSpecificationOptionUpgradeProcessTest {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					Assert.assertEquals(1, resultSet.getInt("count"));
+					Assert.assertEquals(1, resultSet.getLong("count"));
 				}
 			}
 		}

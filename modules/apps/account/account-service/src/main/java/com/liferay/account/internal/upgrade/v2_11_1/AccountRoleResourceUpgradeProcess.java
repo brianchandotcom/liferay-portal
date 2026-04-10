@@ -37,7 +37,7 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					if (resultSet.getInt("count") > 0) {
+					if (resultSet.getLong("count") > 0) {
 						return true;
 					}
 

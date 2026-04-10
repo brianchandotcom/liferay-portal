@@ -75,10 +75,10 @@ public class UpgradePartitionedControlTableTest
 							ResultSet resultSet =
 								preparedStatement.executeQuery()) {
 
-							int count = 0;
+							long count = 0;
 
 							if (resultSet.next()) {
-								count = resultSet.getInt("count");
+								count = resultSet.getLong("count");
 							}
 
 							Assert.assertEquals(1, count);

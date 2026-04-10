@@ -50,7 +50,7 @@ public class KBFolderUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setString(1, urlTitle + "%");
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next() || (resultSet.getInt("count") == 0)) {
+				if (!resultSet.next() || (resultSet.getLong("count") == 0)) {
 					return urlTitle;
 				}
 

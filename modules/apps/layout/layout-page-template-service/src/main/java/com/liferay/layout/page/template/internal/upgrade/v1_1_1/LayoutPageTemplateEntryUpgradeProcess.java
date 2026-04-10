@@ -80,7 +80,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 							countPreparedStatement.executeQuery();
 
 						if (countResultSet.next() &&
-							(countResultSet.getInt("count") > 0)) {
+							(countResultSet.getLong("count") > 0)) {
 
 							newName = name + i;
 						}

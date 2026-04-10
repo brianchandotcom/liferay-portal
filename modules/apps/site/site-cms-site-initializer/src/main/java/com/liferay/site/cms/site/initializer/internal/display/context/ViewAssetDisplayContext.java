@@ -17,6 +17,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -113,6 +116,18 @@ public class ViewAssetDisplayContext {
 				_objectEntry.getGroupId(), "/by-external-reference-code/",
 				_objectEntry.getExternalReferenceCode(),
 				"?nestedFields=file.metadata,file.previewURL,file.thumbnailURL")
+		).put(
+			"hasCommentPermission",
+			() -> {
+				ModelResourcePermission<ObjectEntry> modelResourcePermission =
+					ModelResourcePermissionRegistryUtil.
+						getModelResourcePermission(
+							_objectDefinition.getClassName());
+
+				return modelResourcePermission.contains(
+					_themeDisplay.getPermissionChecker(), _objectEntry,
+					ActionKeys.ADD_DISCUSSION);
+			}
 		).build();
 	}
 

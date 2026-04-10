@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import {formatStorage, sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -21,9 +20,9 @@ export default function DragZoneBackground({maxSize}: {maxSize: number}) {
 				{Liferay.Language.get('drag-and-drop-your-file-or')}
 			</p>
 
-			<ClayButton displayType="secondary">
+			<span className="btn btn-secondary">
 				{Liferay.Language.get('select-files')}
-			</ClayButton>
+			</span>
 
 			<p className="my-2">
 				{sub(

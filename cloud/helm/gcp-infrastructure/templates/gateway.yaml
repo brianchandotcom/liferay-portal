@@ -14,8 +14,6 @@ metadata:
 spec:
     {{- if .Values.gateway.clientTrafficPolicySpec }}
     {{- toYaml .Values.gateway.clientTrafficPolicySpec | nindent 4 }}
-    {{- else }}
-    enableProxyProtocol: true
     {{- end }}
     targetRefs:
         -   group: gateway.networking.k8s.io

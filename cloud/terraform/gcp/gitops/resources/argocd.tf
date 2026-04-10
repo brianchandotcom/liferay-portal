@@ -61,6 +61,12 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 							]
 							kind="LiferayInfrastructure"
 						},
+						{
+							group=""
+							jsonPointers=["/data"]
+							kind="Secret"
+							name="${var.infrastructure_git_repo_config.target.name}-db-root-password"
+						},
 					]
 					project=local.infrastructure_appproject_name
 					sources=[

@@ -142,10 +142,10 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getModifiedDate(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, true, false, null, null, null,
-				fileEntry.getExpirationDate(), fileEntry.getMimeType(),
-				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
-				null, 0, 0, null);
+				assetTagNames, true, false, null, null,
+				fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+				fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getDescription(), null, null, null, 0, 0, null);
 		}
 
 		AssetEntry fileVersionAssetEntry = _assetEntryLocalService.fetchEntry(
@@ -172,9 +172,9 @@ public class DLAppHelperLocalServiceImpl
 			fileEntry.getModifiedDate(), DLFileEntryConstants.getClassName(),
 			fileVersion.getFileVersionId(), fileEntry.getUuid(),
 			fileEntryTypeId, assetCategoryIds, assetTagNames, true, false, null,
-			null, null, fileEntry.getExpirationDate(), fileEntry.getMimeType(),
-			fileEntry.getTitle(), fileEntry.getDescription(), null, null, null,
-			0, 0, null);
+			null, fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			fileEntry.getMimeType(), fileEntry.getTitle(),
+			fileEntry.getDescription(), null, null, null, 0, 0, null);
 
 		AssetLinkManagerUtil.updateLinks(
 			AssetLinkManagerUtil.getDirectLinksIds(
@@ -527,7 +527,7 @@ public class DLAppHelperLocalServiceImpl
 			Date publishDate = null;
 
 			if (visible) {
-				publishDate = fileEntry.getCreateDate();
+				publishDate = fileEntry.getDisplayDate();
 			}
 
 			assetEntry = _assetEntryLocalService.updateEntry(
@@ -717,7 +717,7 @@ public class DLAppHelperLocalServiceImpl
 								fileEntry.getFileEntryId(), fileEntry.getUuid(),
 								fileEntryTypeId, assetCategoryIds,
 								assetTagNames, true, true, null, null,
-								fileEntry.getCreateDate(),
+								fileEntry.getDisplayDate(),
 								fileEntry.getExpirationDate(),
 								draftAssetEntry.getMimeType(),
 								fileEntry.getTitle(),
@@ -740,7 +740,7 @@ public class DLAppHelperLocalServiceImpl
 				if (assetEntry != null) {
 					_assetEntryLocalService.updateEntry(
 						assetEntry.getClassName(), assetEntry.getClassPK(),
-						assetEntry.getCreateDate(),
+						fileEntry.getDisplayDate(),
 						assetEntry.getExpirationDate(), assetEntry.isListable(),
 						true);
 				}

@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.rest.client.serdes.v1_0;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.Variable;
+import com.liferay.ai.hub.rest.client.dto.v1_0.ProvisioningRequest;
 import com.liferay.ai.hub.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,22 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class VariableSerDes {
+public class ProvisioningRequestSerDes {
 
-	public static Variable toDTO(String json) {
-		VariableJSONParser variableJSONParser = new VariableJSONParser();
+	public static ProvisioningRequest toDTO(String json) {
+		ProvisioningRequestJSONParser provisioningRequestJSONParser =
+			new ProvisioningRequestJSONParser();
 
-		return variableJSONParser.parseToDTO(json);
+		return provisioningRequestJSONParser.parseToDTO(json);
 	}
 
-	public static Variable[] toDTOs(String json) {
-		VariableJSONParser variableJSONParser = new VariableJSONParser();
+	public static ProvisioningRequest[] toDTOs(String json) {
+		ProvisioningRequestJSONParser provisioningRequestJSONParser =
+			new ProvisioningRequestJSONParser();
 
-		return variableJSONParser.parseToDTOs(json);
+		return provisioningRequestJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Variable variable) {
-		if (variable == null) {
+	public static String toJSON(ProvisioningRequest provisioningRequest) {
+		if (provisioningRequest == null) {
 			return "null";
 		}
 
@@ -44,30 +46,16 @@ public class VariableSerDes {
 
 		sb.append("{");
 
-		if (variable.getName() != null) {
+		if (provisioningRequest.getCustomerName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"customerName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(variable.getName()));
-
-			sb.append("\"");
-		}
-
-		if (variable.getType() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(variable.getType()));
+			sb.append(_escape(provisioningRequest.getCustomerName()));
 
 			sb.append("\"");
 		}
@@ -78,53 +66,49 @@ public class VariableSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		VariableJSONParser variableJSONParser = new VariableJSONParser();
+		ProvisioningRequestJSONParser provisioningRequestJSONParser =
+			new ProvisioningRequestJSONParser();
 
-		return variableJSONParser.parseToMap(json);
+		return provisioningRequestJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Variable variable) {
-		if (variable == null) {
+	public static Map<String, String> toMap(
+		ProvisioningRequest provisioningRequest) {
+
+		if (provisioningRequest == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (variable.getName() == null) {
-			map.put("name", null);
+		if (provisioningRequest.getCustomerName() == null) {
+			map.put("customerName", null);
 		}
 		else {
-			map.put("name", String.valueOf(variable.getName()));
-		}
-
-		if (variable.getType() == null) {
-			map.put("type", null);
-		}
-		else {
-			map.put("type", String.valueOf(variable.getType()));
+			map.put(
+				"customerName",
+				String.valueOf(provisioningRequest.getCustomerName()));
 		}
 
 		return map;
 	}
 
-	public static class VariableJSONParser extends BaseJSONParser<Variable> {
+	public static class ProvisioningRequestJSONParser
+		extends BaseJSONParser<ProvisioningRequest> {
 
 		@Override
-		protected Variable createDTO() {
-			return new Variable();
+		protected ProvisioningRequest createDTO() {
+			return new ProvisioningRequest();
 		}
 
 		@Override
-		protected Variable[] createDTOArray(int size) {
-			return new Variable[size];
+		protected ProvisioningRequest[] createDTOArray(int size) {
+			return new ProvisioningRequest[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "name")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
+			if (Objects.equals(jsonParserFieldName, "customerName")) {
 				return false;
 			}
 
@@ -133,17 +117,13 @@ public class VariableSerDes {
 
 		@Override
 		protected void setField(
-			Variable variable, String jsonParserFieldName,
+			ProvisioningRequest provisioningRequest, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "name")) {
+			if (Objects.equals(jsonParserFieldName, "customerName")) {
 				if (jsonParserFieldValue != null) {
-					variable.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
-				if (jsonParserFieldValue != null) {
-					variable.setType((String)jsonParserFieldValue);
+					provisioningRequest.setCustomerName(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -227,4 +207,4 @@ public class VariableSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1407704194
+// LIFERAY-REST-BUILDER-HASH:-743840718

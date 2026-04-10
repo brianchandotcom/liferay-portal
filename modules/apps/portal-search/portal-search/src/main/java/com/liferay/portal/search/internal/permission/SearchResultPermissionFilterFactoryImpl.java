@@ -67,10 +67,6 @@ public class SearchResultPermissionFilterFactoryImpl
 				DefaultSearchResultPermissionFilterConfiguration.class,
 				properties);
 
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
-		}
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext,
 			(Class<ModelResourcePermission<? extends ClassedModel>>)
@@ -82,9 +78,7 @@ public class SearchResultPermissionFilterFactoryImpl
 
 	@Deactivate
 	protected void deactivate() {
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
-		}
+		_serviceTrackerMap.close();
 	}
 
 	@Reference

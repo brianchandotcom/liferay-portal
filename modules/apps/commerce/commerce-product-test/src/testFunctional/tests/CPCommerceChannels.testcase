@@ -869,7 +869,7 @@ definition {
 		task ("And when the buyer reach the visibility tab for a product inside the Products section") {
 			CommerceProducts.openProductsAdmin();
 
-			AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
 			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
 
@@ -2068,7 +2068,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
+		CommerceNavigator.searchEntry(entryName = "Turbocharger");
 
 		CommerceNavigator.gotoEntry(entryName = "Turbocharger");
 
@@ -2098,7 +2098,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
-		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
+		CommerceNavigator.searchEntry(entryName = "Turbocharger");
 
 		AssertElementPresent(
 			key_entry = "Turbocharger",

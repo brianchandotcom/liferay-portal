@@ -3181,7 +3181,7 @@ definition {
 		task ("When the admin navigates to Commerce -> Inventory -> SKU (e.g. the one relating to the product from the Minium catalog) -> On Order tab") {
 			CommerceInventory.openInventoryAdmin();
 
-			AppBuilderAdmin.searchByItem(itemName = "MIN55861");
+			CommerceNavigator.searchEntry(entryName = "MIN55861");
 
 			CommerceNavigator.gotoEntry(entryName = "MIN55861");
 
@@ -3205,7 +3205,7 @@ definition {
 		task ("When the admin navigates to Commerce -> Inventory -> SKU (the other one) -> On Order tab") {
 			CommerceInventory.openInventoryAdmin();
 
-			AppBuilderAdmin.searchByItem(itemName = "TESTSKU");
+			CommerceNavigator.searchEntry(entryName = "TESTSKU");
 
 			CommerceNavigator.gotoEntry(entryName = "TESTSKU");
 

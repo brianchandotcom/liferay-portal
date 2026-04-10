@@ -75,7 +75,7 @@ definition {
 
 		SelectFrameTop();
 
-		AppBuilderAdmin.searchByItem(itemName = "TestSKU");
+		CommerceNavigator.searchEntry(entryName = "TestSKU");
 
 		CommerceNavigator.gotoEntry(entryName = "TestSKU");
 
@@ -125,7 +125,7 @@ definition {
 
 		Navigator.gotoBack();
 
-		AppBuilderAdmin.searchByItem(itemName = "TestSKU");
+		CommerceNavigator.searchEntry(entryName = "TestSKU");
 
 		AssertElementNotPresent(
 			key_entryName = "TestSKU",
@@ -1095,7 +1095,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+		CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
 		Click(
 			key_entryName = "ABS Sensor",
@@ -1190,7 +1190,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+		CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
 		Click(
 			key_entryName = "ABS Sensor",
@@ -1220,7 +1220,7 @@ definition {
 
 		CommerceInventory.openInventoryAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "MIN93015");
+		CommerceNavigator.searchEntry(entryName = "MIN93015");
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#INVENTORY_BY_WAREHOUSE_AVAILABLE_LABEL",

@@ -364,7 +364,7 @@ definition {
 
 	@summary = "Default summary"
 	macro checkProductStatusAfterDuplicationAndConvertionToDraft(entryName = null, productName = null, productCatalog = null, status = null) {
-		AppBuilderAdmin.searchByItem(itemName = ${entryName});
+		CommerceNavigator.searchEntry(entryName = ${entryName});
 
 		CommerceNavigator.gotoEntry(entryName = ${entryName});
 
@@ -378,7 +378,7 @@ definition {
 
 		Click(locator1 = "Icon#BACK");
 
-		AppBuilderAdmin.searchByItem(itemName = ${entryName});
+		CommerceNavigator.searchEntry(entryName = ${entryName});
 
 		CommerceNavigator.gotoEntry(entryName = ${entryName});
 

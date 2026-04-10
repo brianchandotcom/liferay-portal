@@ -39,7 +39,7 @@ definition {
 
 		Click(locator1 = "Icon#BACK");
 
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
 
@@ -80,7 +80,7 @@ definition {
 
 		Click(locator1 = "Icon#BACK");
 
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
 
@@ -161,7 +161,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
+		CommerceNavigator.searchEntry(entryName = "Turbocharger");
 
 		CommerceNavigator.gotoEntry(entryName = "Turbocharger");
 
@@ -185,7 +185,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
-		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
+		CommerceNavigator.searchEntry(entryName = "Turbocharger");
 
 		AssertElementPresent(
 			key_entry = "Turbocharger",

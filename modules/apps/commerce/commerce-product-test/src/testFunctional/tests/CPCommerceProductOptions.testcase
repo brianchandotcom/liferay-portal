@@ -1851,7 +1851,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+		CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
 		Click(
 			key_entryName = "ABS Sensor",

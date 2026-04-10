@@ -213,7 +213,7 @@ definition {
 		task ("When the admin opens 'Hoses'") {
 			CommerceProducts.openProductsAdmin();
 
-			AppBuilderAdmin.searchByItem(itemName = "Hoses");
+			CommerceNavigator.searchEntry(entryName = "Hoses");
 
 			CommerceNavigator.gotoEntry(entryName = "Hoses");
 		}
@@ -274,7 +274,7 @@ definition {
 		task ("But if the admin goes back on the product admin page and opens the 'Draft' Hoses and clicks on publish") {
 			CommerceProducts.openProductsAdmin();
 
-			AppBuilderAdmin.searchByItem(itemName = "Hoses");
+			CommerceNavigator.searchEntry(entryName = "Hoses");
 
 			Click(
 				key_productName = "Hoses",
@@ -287,7 +287,7 @@ definition {
 		task ("Then if the admin search for 'Hoses' on the product page the admin will see 3 approved 'Hoses'") {
 			Navigator.gotoBack();
 
-			AppBuilderAdmin.searchByItem(itemName = "Hoses");
+			CommerceNavigator.searchEntry(entryName = "Hoses");
 
 			CommerceProducts.checkProductsPresent(list = "Hoses:Approved:1,Hoses:Approved:2,Hoses:Approved:3");
 

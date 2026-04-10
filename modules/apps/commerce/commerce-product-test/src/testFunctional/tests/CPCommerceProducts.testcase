@@ -465,7 +465,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
 
@@ -657,7 +657,7 @@ definition {
 
 		Click(locator1 = "Icon#BACK");
 
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 
 		AssertElementPresent(
 			key_status = "Draft",
@@ -686,7 +686,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
 
@@ -694,7 +694,7 @@ definition {
 
 		Click(locator1 = "Icon#BACK");
 
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 
 		AssertElementPresent(
 			key_status = "Approved",
@@ -974,7 +974,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
 
@@ -1643,7 +1643,7 @@ definition {
 		task ("Then into the product ABS Sensor Media tab a new entry is present with the png extension") {
 			CommerceProducts.openProductsAdmin();
 
-			AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
 			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
 
@@ -1719,7 +1719,7 @@ definition {
 		task ("Then the image is uploaded successfully") {
 			CommerceProducts.openProductsAdmin();
 
-			AppBuilderAdmin.searchByItem(itemName = "Brake Fluid");
+			CommerceNavigator.searchEntry(entryName = "Brake Fluid");
 
 			CommerceNavigator.gotoEntry(entryName = "Brake Fluid");
 
@@ -1849,7 +1849,7 @@ definition {
 		task ("And the image is uploaded successfully") {
 			CommerceProducts.openProductsAdmin();
 
-			AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
 			takeScreenshot();
 
@@ -2655,7 +2655,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		AppBuilderAdmin.searchByItem(itemName = '''"Brake Fluid"''');
+		CommerceNavigator.searchEntry(entryName = '''"Brake Fluid"''');
 
 		Click(
 			key_entryName = "Brake Fluid",

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -459,8 +460,8 @@ public class EditAssetListDisplayContextTest {
 		Mockito.doReturn(
 			cmsGroup
 		).when(
-			_groupService
-		).getGroup(
+			_groupLocalService
+		).fetchGroup(
 			Mockito.anyLong(), Mockito.eq(GroupConstants.CMS)
 		);
 
@@ -854,8 +855,8 @@ public class EditAssetListDisplayContextTest {
 		return new EditAssetListDisplayContext(
 			_assetRendererFactoryClassProvider,
 			_assetVocabularyGroupRelLocalService, _assetVocabularyService,
-			_depotEntryLocalService, _depotEntryService, _groupService,
-			_infoSearchClassMapperRegistry, _itemSelector,
+			_depotEntryLocalService, _depotEntryService, _groupLocalService,
+			_groupService, _infoSearchClassMapperRegistry, _itemSelector,
 			_objectDefinitionLocalService, _portletRequest, _portletResponse,
 			_segmentsConfigurationProvider, unicodeProperties);
 	}
@@ -1068,6 +1069,8 @@ public class EditAssetListDisplayContextTest {
 		DepotEntryLocalService.class);
 	private final DepotEntryService _depotEntryService = Mockito.mock(
 		DepotEntryService.class);
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
 	private final GroupService _groupService = Mockito.mock(GroupService.class);
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);

@@ -56,7 +56,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -75,6 +74,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -137,7 +137,8 @@ public class EditAssetListDisplayContext {
 		AssetVocabularyGroupRelLocalService assetVocabularyGroupRelLocalService,
 		AssetVocabularyService assetVocabularyService,
 		DepotEntryLocalService depotEntryLocalService,
-		DepotEntryService depotEntryService, GroupService groupService,
+		DepotEntryService depotEntryService,
+		GroupLocalService groupLocalService, GroupService groupService,
 		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -151,6 +152,7 @@ public class EditAssetListDisplayContext {
 		_assetVocabularyService = assetVocabularyService;
 		_depotEntryLocalService = depotEntryLocalService;
 		_depotEntryService = depotEntryService;
+		_groupLocalService = groupLocalService;
 		_groupService = groupService;
 		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 		_itemSelector = itemSelector;
@@ -903,16 +905,11 @@ public class EditAssetListDisplayContext {
 			}
 		}
 
-		try {
-			Group cmsGroup = _groupService.getGroup(
-				_themeDisplay.getCompanyId(), GroupConstants.CMS);
+		Group cmsGroup = _groupLocalService.fetchGroup(
+			_themeDisplay.getCompanyId(), GroupConstants.CMS);
 
+		if (cmsGroup != null) {
 			groupIdList.add(cmsGroup.getGroupId());
-		}
-		catch (NoSuchGroupException noSuchGroupException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException);
-			}
 		}
 
 		return groupIdList;
@@ -1641,6 +1638,7 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldValue;
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private final DepotEntryService _depotEntryService;
+	private final GroupLocalService _groupLocalService;
 	private final GroupService _groupService;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;

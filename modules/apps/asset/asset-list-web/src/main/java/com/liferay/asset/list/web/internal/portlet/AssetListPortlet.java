@@ -32,6 +32,7 @@ import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -100,8 +101,8 @@ public class AssetListPortlet extends MVCPortlet {
 			new EditAssetListDisplayContext(
 				_assetRendererFactoryClassProvider,
 				_assetVocabularyGroupRelLocalService, _assetVocabularyService,
-				_depotEntryLocalService, _depotEntryService, _groupService,
-				_infoSearchClassMapperRegistry, _itemSelector,
+				_depotEntryLocalService, _depotEntryService, _groupLocalService,
+				_groupService, _infoSearchClassMapperRegistry, _itemSelector,
 				_objectDefinitionLocalService, renderRequest, renderResponse,
 				_segmentsConfigurationProvider,
 				_getUnicodeProperties(assetListDisplayContext)));
@@ -188,6 +189,9 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private GroupService _groupService;

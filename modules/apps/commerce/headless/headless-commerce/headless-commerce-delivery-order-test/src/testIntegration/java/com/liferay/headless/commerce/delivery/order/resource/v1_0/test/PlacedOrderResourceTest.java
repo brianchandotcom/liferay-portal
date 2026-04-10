@@ -60,6 +60,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -574,6 +575,14 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		};
 	}
 
+	private Date _getRequestedDeliveryDate() {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.MONTH, 1);
+
+		return calendar.getTime();
+	}
+
 	private void _testGetChannelAccountPlacedOrdersPageWithSearchByPurchaseOrderNumber()
 		throws Exception {
 
@@ -623,7 +632,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		commerceOrder.setName(RandomTestUtil.randomString() + StringPool.AT);
 		commerceOrder.setPurchaseOrderNumber(
 			RandomTestUtil.randomString() + StringPool.AMPERSAND);
-		commerceOrder.setRequestedDeliveryDate(RandomTestUtil.nextDate());
+		commerceOrder.setRequestedDeliveryDate(_getRequestedDeliveryDate());
 
 		User filterUser = UserTestUtil.addUser(testCompany);
 

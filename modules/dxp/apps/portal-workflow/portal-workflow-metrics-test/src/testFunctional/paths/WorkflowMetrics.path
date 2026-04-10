@@ -536,6 +536,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FIELD_MAPPINGS_METRICS_ACTIONS</td>
+	<td>//div[@class='header-actions']//a[contains(text(),'${key_index}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WARNING_SLA_BLOCKED</td>
 	<td>//div[contains(text(),'1 SLA is blocked. Fix the SLA configuration to resume accurate reporting')]</td>
 	<td></td>

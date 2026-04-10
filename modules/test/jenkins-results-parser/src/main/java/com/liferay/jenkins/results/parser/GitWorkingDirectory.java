@@ -1603,6 +1603,17 @@ public class GitWorkingDirectory {
 				"Unable to perform merge-base with less than two commits");
 		}
 
+		if (refNames.length > 2) {
+			List<String> refNamesList = new ArrayList<>();
+
+			refNamesList.add(getMergeBaseCommitSHA(refNames[0], refNames[1]));
+
+			Collections.addAll(
+				refNamesList, Arrays.copyOfRange(refNames, 2, refNames.length));
+
+			return getMergeBaseCommitSHA(refNamesList.toArray(new String[0]));
+		}
+
 		StringBuilder sb = new StringBuilder("git merge-base");
 
 		for (String refName : refNames) {

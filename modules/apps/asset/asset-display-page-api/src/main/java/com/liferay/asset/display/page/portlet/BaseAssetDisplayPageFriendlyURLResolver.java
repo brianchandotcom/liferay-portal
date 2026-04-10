@@ -115,7 +115,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
 			layoutDisplayPageProvider);
 
-		AssetEntry assetEntry = _getAssetEntry(layoutDisplayPageObjectProvider);
+		AssetEntry assetEntry = _getAssetEntry(
+			infoItem, layoutDisplayPageObjectProvider);
 
 		httpServletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
@@ -343,13 +344,14 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	@Reference
 	protected Portal portal;
 
-	private AssetEntry _getAssetEntry(
+	private <T> AssetEntry _getAssetEntry(
+		T infoItem,
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
 
 		String className = infoSearchClassMapperRegistry.getSearchClassName(
 			layoutDisplayPageObjectProvider.getClassName());
 
-		AssetRendererFactory<?> assetRendererFactory =
+		AssetRendererFactory<T> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
@@ -357,7 +359,11 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			return null;
 		}
 
-		long classPK = layoutDisplayPageObjectProvider.getClassPK();
+		long classPK = assetRendererFactory.getAssetEntryClassPK(infoItem);
+
+		if (classPK == 0) {
+			return null;
+		}
 
 		try {
 			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(

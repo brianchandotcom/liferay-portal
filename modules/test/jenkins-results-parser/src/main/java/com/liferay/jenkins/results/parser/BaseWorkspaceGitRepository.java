@@ -1450,6 +1450,8 @@ public abstract class BaseWorkspaceGitRepository
 				gitWorkingDirectory.createLocalGitBranch(
 					upstreamBranchName, true, getBaseBranchSHA());
 			}
+
+			gitWorkingDirectory.displayLog();
 		}
 	}
 

@@ -227,4 +227,20 @@ describe('Picker search', () => {
 		expect(onSelectionChange).toHaveBeenCalledWith('Mango');
 		expect(combobox).toHaveTextContent('Mango');
 	});
+
+	it('renders search input with correct accessibility attributes', () => {
+		const {getByPlaceholderText, getByRole} = render(
+			<Picker items={items} searchable>
+				{(item) => <Option key={item}>{item}</Option>}
+			</Picker>
+		);
+
+		fireEvent.click(getByRole('combobox'));
+
+		const searchInput = getByPlaceholderText('Search');
+
+		expect(searchInput).toHaveAttribute('aria-autocomplete', 'list');
+		expect(searchInput).toHaveAttribute('aria-controls');
+		expect(searchInput).toHaveAttribute('aria-activedescendant');
+	});
 });

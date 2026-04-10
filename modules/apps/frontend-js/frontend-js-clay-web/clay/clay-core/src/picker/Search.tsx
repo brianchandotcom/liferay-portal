@@ -12,6 +12,7 @@ import {PickerMessages} from './Picker';
 
 type Props = {
 	activeDescendant: React.Key;
+	ariaControls: string;
 	getOptions: () => Array<HTMLElement>;
 	messages: PickerMessages;
 	onActiveChange: InternalDispatch<boolean>;
@@ -31,6 +32,7 @@ type Props = {
 export const Search = React.forwardRef<HTMLInputElement, Props>(function Search(
 	{
 		activeDescendant,
+		ariaControls,
 		getOptions,
 		messages,
 		onActiveChange,
@@ -50,12 +52,16 @@ export const Search = React.forwardRef<HTMLInputElement, Props>(function Search(
 
 	function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
 		if (event.key === Keys.Enter) {
+			event.preventDefault();
+			event.stopPropagation();
 			onPress();
 
 			return;
 		}
 
 		if (event.key === Keys.Esc) {
+			event.preventDefault();
+			event.stopPropagation();
 			onActiveChange(false);
 			triggerRef.current?.focus();
 
@@ -89,6 +95,13 @@ export const Search = React.forwardRef<HTMLInputElement, Props>(function Search(
 				<ClayInput.Group small>
 					<ClayInput.GroupItem className="input-group-item-focusable">
 						<ClayInput
+							aria-activedescendant={
+								activeDescendant
+									? String(activeDescendant)
+									: undefined
+							}
+							aria-autocomplete="list"
+							aria-controls={ariaControls}
 							aria-label={messages.searchPlaceholder}
 							insetAfter
 							onChange={onChange}

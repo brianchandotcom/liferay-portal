@@ -636,6 +636,7 @@ export function Picker<T extends Record<string, any> | string | number>({
 					>
 						<Search
 							activeDescendant={activeDescendant}
+							ariaControls={ariaControls}
 							getOptions={getOptions}
 							messages={messages}
 							onActiveChange={setActive}

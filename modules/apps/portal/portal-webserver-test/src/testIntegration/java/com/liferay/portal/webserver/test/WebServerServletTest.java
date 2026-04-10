@@ -13,8 +13,10 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -47,6 +50,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.webserver.WebServerServlet;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
@@ -75,6 +79,25 @@ public class WebServerServletTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserLocalServiceUtil.getGuestUser(_group.getCompanyId());
+	}
+
+	@Test
+	public void testGetDefaultImage() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER,
+			UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
+		mockHttpServletRequest.setParameter("img_id", "0");
+		mockHttpServletRequest.setPathInfo("/account_logo");
+
+		Image image = ReflectionTestUtil.invoke(
+			_webServerServlet, "getDefaultImage",
+			new Class<?>[] {HttpServletRequest.class, long.class},
+			mockHttpServletRequest, 0L);
+
+		Assert.assertEquals(ImageToolUtil.getDefaultOrganizationLogo(), image);
 	}
 
 	@Test

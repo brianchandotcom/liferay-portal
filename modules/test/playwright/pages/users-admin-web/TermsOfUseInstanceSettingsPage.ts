@@ -12,6 +12,7 @@ export class TermsOfUseInstanceSettingsPage {
 	readonly groupIdInput: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly page: Page;
+	readonly resetConsentButton: Locator;
 	readonly saveButton: Locator;
 	readonly termsOfUseRequiredCheckbox: Locator;
 
@@ -20,6 +21,9 @@ export class TermsOfUseInstanceSettingsPage {
 		this.groupIdInput = page.getByLabel('Group ID');
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.page = page;
+		this.resetConsentButton = page.getByRole('button', {
+			name: 'Reset',
+		});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.termsOfUseRequiredCheckbox = page.getByLabel(
 			'Require Terms of Use'

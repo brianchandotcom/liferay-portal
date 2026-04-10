@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
@@ -40,17 +41,45 @@ public class YAMLUtil {
 	public static ConfigYAML loadConfigYAML(String baseDir, File file)
 		throws IOException {
 
-		try {
-			ConfigYAML configYAML = _YAML_CONFIG.loadAs(
-				FileUtil.read(file), ConfigYAML.class);
+		String filePath = file.getPath();
 
-			configYAML.setBaseDir(baseDir);
+		ConfigYAML configYAML = _configYAMLMap.get(filePath);
 
-			return configYAML;
+		if (configYAML == null) {
+			try {
+				configYAML = _YAML_CONFIG.loadAs(
+					FileUtil.read(file), ConfigYAML.class);
+
+				_configYAMLMap.put(filePath, configYAML);
+			}
+			catch (MarkedYAMLException markedYAMLException) {
+				throw new InvalidYAMLException(markedYAMLException);
+			}
 		}
-		catch (MarkedYAMLException markedYAMLException) {
-			throw new InvalidYAMLException(markedYAMLException);
+
+		ConfigYAML clonedConfigYAML = configYAML.clone();
+
+		clonedConfigYAML.setBaseDir(baseDir);
+
+		return clonedConfigYAML;
+	}
+
+	public static OpenAPIYAML loadOpenAPIYAML(File file) throws IOException {
+		String filePath = file.getPath();
+
+		OpenAPIYAML openAPIYAML = _openAPIYAMLMap.get(filePath);
+
+		if (openAPIYAML != null) {
+			return openAPIYAML;
 		}
+
+		openAPIYAML = loadOpenAPIYAML(FileUtil.read(file));
+
+		if (openAPIYAML != null) {
+			_openAPIYAMLMap.put(filePath, openAPIYAML);
+		}
+
+		return openAPIYAML;
 	}
 
 	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
@@ -67,6 +96,12 @@ public class YAMLUtil {
 
 		OpenAPIValidator.validate(fileName, yamlString, _YAML_OPEN_API);
 	}
+
+	private static final Map<String, ConfigYAML> _configYAMLMap =
+		new ConcurrentHashMap<>();
+
+	private static final Map<String, OpenAPIYAML> _openAPIYAMLMap =
+		new ConcurrentHashMap<>();
 
 	private static final Yaml _YAML_CONFIG;
 

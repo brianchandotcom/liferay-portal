@@ -13,7 +13,6 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaM
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.YAMLUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
@@ -244,7 +243,7 @@ public class OpenAPIParserUtil {
 				continue;
 			}
 
-			openAPIYAML = YAMLUtil.loadOpenAPIYAML(FileUtil.read(externalFile));
+			openAPIYAML = YAMLUtil.loadOpenAPIYAML(externalFile);
 
 			externalReferencesMap.putAll(
 				OpenAPIUtil.getAllSchemas(configYAML, openAPIYAML));
@@ -338,7 +337,7 @@ public class OpenAPIParserUtil {
 					externalFile.getParent(), configFile);
 
 				OpenAPIYAML externalOpenAPIYAML = YAMLUtil.loadOpenAPIYAML(
-					FileUtil.read(externalFile));
+					externalFile);
 
 				if ((externalConfigYAML == null) ||
 					(externalOpenAPIYAML == null)) {

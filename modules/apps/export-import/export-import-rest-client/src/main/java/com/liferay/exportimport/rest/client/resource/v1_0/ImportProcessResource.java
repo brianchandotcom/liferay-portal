@@ -6,13 +6,17 @@
 package com.liferay.exportimport.rest.client.resource.v1_0;
 
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcess;
+import com.liferay.exportimport.rest.client.dto.v1_0.ValidationResponse;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.pagination.Page;
 import com.liferay.exportimport.rest.client.pagination.Pagination;
 import com.liferay.exportimport.rest.client.problem.Problem;
 import com.liferay.exportimport.rest.client.serdes.v1_0.ImportProcessSerDes;
+import com.liferay.exportimport.rest.client.serdes.v1_0.ValidationResponseSerDes;
 
 import jakarta.annotation.Generated;
+
+import java.io.File;
 
 import java.net.URL;
 
@@ -97,6 +101,16 @@ public interface ImportProcessResource {
 				String fieldNames)
 		throws Exception;
 
+	public ValidationResponse postScopeScopeKeyValidate(
+			String scopeKey, ImportProcess importProcess,
+			Map<String, File> multipartFiles)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postScopeScopeKeyValidateHttpResponse(
+			String scopeKey, ImportProcess importProcess,
+			Map<String, File> multipartFiles)
+		throws Exception;
+
 	public void postSiteImportProcessesPageExportBatch(
 			Long siteId, Long creatorId, String search, Integer status,
 			String sortString, String callbackURL, String contentType,
@@ -108,6 +122,14 @@ public interface ImportProcessResource {
 				Long siteId, Long creatorId, String search, Integer status,
 				String sortString, String callbackURL, String contentType,
 				String fieldNames)
+		throws Exception;
+
+	public ValidationResponse postValidate(
+			ImportProcess importProcess, Map<String, File> multipartFiles)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postValidateHttpResponse(
+			ImportProcess importProcess, Map<String, File> multipartFiles)
 		throws Exception;
 
 	public static class Builder {
@@ -986,6 +1008,124 @@ public interface ImportProcessResource {
 			return httpInvoker.invoke();
 		}
 
+		public ValidationResponse postScopeScopeKeyValidate(
+				String scopeKey, ImportProcess importProcess,
+				Map<String, File> multipartFiles)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postScopeScopeKeyValidateHttpResponse(
+					scopeKey, importProcess, multipartFiles);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ValidationResponseSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse postScopeScopeKeyValidateHttpResponse(
+				String scopeKey, ImportProcess importProcess,
+				Map<String, File> multipartFiles)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.multipart();
+
+			httpInvoker.part(
+				"importProcess", ImportProcessSerDes.toJSON(importProcess));
+
+			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
+				httpInvoker.part(entry.getKey(), entry.getValue());
+			}
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/export-import/v1.0/scopes/{scopeKey}/validate");
+
+			httpInvoker.path("scopeKey", scopeKey);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public void postSiteImportProcessesPageExportBatch(
 				Long siteId, Long creatorId, String search, Integer status,
 				String sortString, String callbackURL, String contentType,
@@ -1120,6 +1260,119 @@ public interface ImportProcessResource {
 			return httpInvoker.invoke();
 		}
 
+		public ValidationResponse postValidate(
+				ImportProcess importProcess, Map<String, File> multipartFiles)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = postValidateHttpResponse(
+				importProcess, multipartFiles);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ValidationResponseSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse postValidateHttpResponse(
+				ImportProcess importProcess, Map<String, File> multipartFiles)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.multipart();
+
+			httpInvoker.part(
+				"importProcess", ImportProcessSerDes.toJSON(importProcess));
+
+			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
+				httpInvoker.part(entry.getKey(), entry.getValue());
+			}
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/export-import/v1.0/validate");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		private ImportProcessResourceImpl(Builder builder) {
 			_builder = builder;
 		}
@@ -1132,4 +1385,4 @@ public interface ImportProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1783946611
+// LIFERAY-REST-BUILDER-HASH:473284743

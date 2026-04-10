@@ -5,15 +5,34 @@
 
 package com.liferay.osb.faro.contacts.demo.internal;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.cfg.MapperConfig;
+import com.fasterxml.jackson.databind.introspect.AnnotatedField;
+
 import com.liferay.osb.faro.constants.FaroProjectConstants;
 import com.liferay.osb.faro.constants.FaroUserConstants;
 import com.liferay.osb.faro.contacts.model.constants.JSONConstants;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
+import com.liferay.osb.faro.engine.client.mixin.BaseMixin;
+import com.liferay.osb.faro.engine.client.mixin.CredentialsMixin;
+import com.liferay.osb.faro.engine.client.mixin.OAuth1CredentialsMixin;
+import com.liferay.osb.faro.engine.client.mixin.OAuth2CredentialsMixin;
+import com.liferay.osb.faro.engine.client.mixin.PageVisitMixin;
+import com.liferay.osb.faro.engine.client.mixin.TokenCredentialsMixin;
 import com.liferay.osb.faro.engine.client.model.Channel;
+import com.liferay.osb.faro.engine.client.model.Credentials;
 import com.liferay.osb.faro.engine.client.model.Individual;
+import com.liferay.osb.faro.engine.client.model.Interest;
 import com.liferay.osb.faro.engine.client.model.LCPProject;
+import com.liferay.osb.faro.engine.client.model.PageVisited;
 import com.liferay.osb.faro.engine.client.model.Results;
-import com.liferay.osb.faro.engine.client.util.JSONUtil;
+import com.liferay.osb.faro.engine.client.model.credentials.OAuth1Credentials;
+import com.liferay.osb.faro.engine.client.model.credentials.OAuth2Credentials;
+import com.liferay.osb.faro.engine.client.model.credentials.TokenCredentials;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.provisioning.client.ProvisioningClient;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
@@ -109,7 +128,8 @@ public abstract class DemoCreatorService {
 			StringPool.BLANK, StringPool.BLANK,
 			LCPProject.Cluster.US.toString(), JSONConstants.NULL_JSON_ARRAY,
 			FaroProjectConstants.STATE_UNCONFIGURED,
-			JSONUtil.writeValueAsString(faroSubscriptionDisplay), "UTC", null);
+			_objectMapper.writeValueAsString(faroSubscriptionDisplay), "UTC",
+			null);
 
 		faroProject.setWeDeployKey(FaroPropsValues.FARO_DEFAULT_WE_DEPLOY_KEY);
 
@@ -231,6 +251,41 @@ public abstract class DemoCreatorService {
 		{"corbin.murakami", RoleConstants.SITE_MEMBER},
 		{"michelle.hoshi", RoleConstants.SITE_ADMINISTRATOR},
 		{"test", RoleConstants.SITE_OWNER}
+	};
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			addMixIn(Credentials.class, CredentialsMixin.class);
+			addMixIn(Interest.class, BaseMixin.class);
+			addMixIn(OAuth1Credentials.class, OAuth1CredentialsMixin.class);
+			addMixIn(OAuth2Credentials.class, OAuth2CredentialsMixin.class);
+			addMixIn(PageVisited.class, PageVisitMixin.class);
+			addMixIn(TokenCredentials.class, TokenCredentialsMixin.class);
+			configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+			setPropertyNamingStrategy(
+				new PropertyNamingStrategy() {
+
+					@Override
+					public String nameForField(
+						MapperConfig<?> config, AnnotatedField field,
+						String defaultName) {
+
+						if (defaultName.startsWith(StringPool.UNDERLINE)) {
+							defaultName = defaultName.substring(1);
+						}
+
+						defaultName = StringUtil.removeSubstring(
+							defaultName, "Display");
+
+						return super.nameForField(config, field, defaultName);
+					}
+
+				});
+
+			setVisibility(
+				PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+		}
 	};
 
 }

@@ -11,12 +11,14 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
@@ -97,6 +99,28 @@ public class InfoItemHelper {
 				StringPool.CLOSE_PARENTHESIS));
 	}
 
+	private String _getStringValue(
+		InfoFieldValue<Object> infoFieldValue, Locale locale) {
+
+		Object value = infoFieldValue.getValue();
+
+		if (value instanceof InfoLocalizedValue) {
+			InfoLocalizedValue<Object> infoLocalizedValue =
+				(InfoLocalizedValue<Object>)value;
+
+			String stringValue = (String)infoLocalizedValue.getValue(locale);
+
+			if (Validator.isNotNull(stringValue)) {
+				return stringValue;
+			}
+
+			return (String)infoLocalizedValue.getValue(
+				infoLocalizedValue.getDefaultLocale());
+		}
+
+		return (String)value;
+	}
+
 	private String _getTitle(String className, Object object, Locale locale) {
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -106,13 +130,21 @@ public class InfoItemHelper {
 			infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
 
 		if (titleInfoFieldValue != null) {
-			return (String)titleInfoFieldValue.getValue(locale);
+			String value = _getStringValue(titleInfoFieldValue, locale);
+
+			if (Validator.isNotNull(value)) {
+				return value;
+			}
 		}
 
 		InfoFieldValue<Object> nameInfoFieldValue =
 			infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
 
-		return (String)nameInfoFieldValue.getValue(locale);
+		if (nameInfoFieldValue != null) {
+			return _getStringValue(nameInfoFieldValue, locale);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(InfoItemHelper.class);

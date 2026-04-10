@@ -2,53 +2,98 @@ import ClayButton from '@clayui/button';
 import Dropdown from '@clayui/drop-down';
 import Form, {ClayInput} from '@clayui/form';
 import Icon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {LifecycleContext} from '../context/LifecycleContext';
+import {Option, Picker, Text} from '@clayui/core';
 
-import {Option, Picker} from '@clayui/core';
+const FilterType = {
+	ALL: 'ALL',
+	GREATER_THAN: 'GT',
+	LESS_THAN: 'LT',
+	// eslint-disable-next-line sort-keys
+	BETWEEN: 'BETWEEN'
+};
 
-const REVENUE_FILTER_OPTIONS = [
-	'All Revenue Ranges',
-	'Revenue is greater than',
-	'Revenue is less than',
-	'Revenue is between'
-];
+const REVENUE_CONFIG = {
+	[FilterType.ALL]: {fields: [], op: null},
+	[FilterType.GREATER_THAN]: {fields: ['min'], op: 'gt'},
+	[FilterType.LESS_THAN]: {fields: ['max'], op: 'lt'},
+	[FilterType.BETWEEN]: {fields: ['min', 'max'], op: ['ge', 'le']}
+};
+
+const REVENUE_LABELS = {
+	[FilterType.ALL]: Liferay.Language.get('all-revenue-ranges'),
+	[FilterType.GREATER_THAN]: Liferay.Language.get('revenue-is-greater-than'),
+	[FilterType.LESS_THAN]: Liferay.Language.get('revenue-is-less-than'),
+	[FilterType.BETWEEN]: Liferay.Language.get('revenue-is-between')
+};
+
+const REVENUE_FILTER_KEYS = Object.values(FilterType);
 
 const GlobalFilters = () => {
 	const {filters, updateFilters} = useContext(LifecycleContext);
+
 	const [dropdownActive, setDropdownActive] = useState(false);
 
 	const [formValue, setFormValue] = useState({
-		filterOption: REVENUE_FILTER_OPTIONS[0],
+		filterType: FilterType.ALL,
 		max: '',
 		min: ''
 	});
 
-	const handleSelectionChange = value => {
-		setFormValue({
-			...formValue,
-			filterOption: value,
-			max: '',
-			min: ''
-		});
-	};
+	const buildODataString = (values, fieldName = 'revenue') => {
+		const {filterType} = values;
+		const config = REVENUE_CONFIG[filterType];
 
-	const handleInputChange = event => {
-		const {name, value} = event.target;
-		setFormValue(prev => ({
-			...prev,
-			[name]: value
-		}));
+		if (!config?.op) return '';
+
+		const {fields, op} = config;
+
+		const parts = fields
+			.map((field, index) => {
+				const val = values[field];
+				const operator = Array.isArray(op) ? op[index] : op;
+
+				return val !== '' ? `${fieldName} ${operator} ${val}` : null;
+			})
+			.filter(Boolean);
+
+		if (parts.length === 0) return '';
+
+		const joined = parts.join(' and ');
+		return Array.isArray(op) && parts.length > 1 ? `(${joined})` : joined;
 	};
 
 	const handleApply = () => {
-		updateFilters({...filters, revenue: formValue});
+		updateFilters({
+			...filters,
+			revenue: {
+				...formValue,
+				oDataFilterString: buildODataString(formValue)
+			}
+		});
 		setDropdownActive(false);
 	};
 
-	const isBetween = formValue.filterOption === 'Revenue is between';
-	const isGreater = formValue.filterOption === 'Revenue is greater than';
-	const isLess = formValue.filterOption === 'Revenue is less than';
+	const handleSelectionChange = key => {
+		const config = REVENUE_CONFIG[key];
+
+		setFormValue({
+			filterType: key,
+			max: config.fields.includes('max') ? '10' : '',
+			min: config.fields.includes('min') ? '1' : ''
+		});
+	};
+
+	useEffect(() => {
+		console.log(filters);
+	});
+
+	const currentConfig = REVENUE_CONFIG[formValue.filterType];
+	const showMin = currentConfig.fields.includes('min');
+	const showMax = currentConfig.fields.includes('max');
+
+	const isInvalid = currentConfig.fields.some(field => !formValue[field]);
 
 	return (
 		<Dropdown
@@ -63,65 +108,101 @@ const GlobalFilters = () => {
 					<span className='inline-item inline-item-before'>
 						<Icon symbol='filter' />
 					</span>
-					{formValue.filterOption}
+					{REVENUE_LABELS[formValue.filterType]}
 				</ClayButton>
 			}
 			triggerIcon='caret-bottom'
 		>
-			<Form className='p-3'>
-				<Form.Group>
-					<label htmlFor='picker'>{'Range Type'}</label>
-					<Picker
-						activeItem={formValue.filterOption}
-						id='picker'
-						items={REVENUE_FILTER_OPTIONS}
-						onSelectionChange={handleSelectionChange}
-						placeholder={formValue.filterOption}
-						width={100}
-					>
-						{item => <Option key={item}>{item}</Option>}
-					</Picker>
-				</Form.Group>
+			<div className='container-fluid p-3'>
+				<Form>
+					<div className='mb-3 text-uppercase'>
+						<Text color='secondary' size={2} weight='semi-bold'>
+							{Liferay.Language.get('filter-by-revenue')}
+						</Text>
+					</div>
 
-				{(isGreater || isLess || isBetween) && (
-					<Form.Group className='form-group-autofit'>
-						{(isGreater || isBetween) && (
-							<Form.Group>
-								<ClayInput
-									id='min'
-									name='min'
-									onChange={handleInputChange}
-									placeholder='0.00'
-									type='number'
-									value={formValue.min}
-								/>
-							</Form.Group>
-						)}
-
-						{(isLess || isBetween) && (
-							<Form.Group>
-								<ClayInput
-									id='max'
-									name='max'
-									onChange={handleInputChange}
-									placeholder='1000.00'
-									type='number'
-									value={formValue.max}
-								/>
-							</Form.Group>
-						)}
+					<Form.Group>
+						<label className='text-weight-normal text-secondary'>
+							{Liferay.Language.get('condition')}
+						</label>
+						<Picker
+							activeItem={formValue.filterType}
+							as={React.forwardRef((props, ref) => (
+								<ClayButton
+									{...props}
+									className='justify-content-between rounded-lg w-100'
+									displayType='secondary'
+									ref={ref}
+									size='sm'
+								>
+									{REVENUE_LABELS[formValue.filterType]}
+									<span className='inline-item inline-item-after'>
+										<Icon symbol='caret-double' />
+									</span>
+								</ClayButton>
+							))}
+							items={REVENUE_FILTER_KEYS}
+							onSelectionChange={key =>
+								handleSelectionChange(key)
+							}
+						>
+							{key => (
+								<Option key={key}>{REVENUE_LABELS[key]}</Option>
+							)}
+						</Picker>
 					</Form.Group>
-				)}
 
-				<ClayButton
-					block
-					className='mt-3'
-					displayType='primary'
-					onClick={handleApply}
-				>
-					{'Apply'}
-				</ClayButton>
-			</Form>
+					{(showMin || showMax) && (
+						<div className='gx-1 mt-3 row'>
+							{showMin && (
+								<div className={showMax ? 'col-6' : 'col-12'}>
+									<Form.Group className='mb-0' small>
+										<ClayInput
+											name='min'
+											onChange={e =>
+												setFormValue({
+													...formValue,
+													min: e.target.value
+												})
+											}
+											type='number'
+											value={formValue.min}
+										/>
+									</Form.Group>
+								</div>
+							)}
+							{showMax && (
+								<div className={showMin ? 'col-6' : 'col-12'}>
+									<Form.Group className='mb-0' small>
+										<ClayInput
+											name='max'
+											onChange={e =>
+												setFormValue({
+													...formValue,
+													max: e.target.value
+												})
+											}
+											type='number'
+											value={formValue.max}
+										/>
+									</Form.Group>
+								</div>
+							)}
+						</div>
+					)}
+
+					<ClayButton
+						block
+						className='mt-3'
+						disabled={isInvalid}
+						displayType='primary'
+						onClick={handleApply}
+						size='sm'
+					>
+						{Liferay.Language.get('apply')}
+					</ClayButton>
+				</Form>
+			</div>
 		</Dropdown>
 	);
 };

@@ -5,6 +5,10 @@
 		.col-md-3:has(.hidden-item-selector-item) {
 			display: none;
 		}
+
+		tr.hidden-item-selector-item {
+			display: none;
+		}
 	}
 }
 

@@ -106,11 +106,12 @@ async function handleRequest<T>(
 	}
 }
 
-async function get<T>(url: string) {
+async function get<T>(url: string, signal?: AbortSignal) {
 	return handleRequest<T>(() =>
 		fetch(url, {
 			headers: HEADERS_ALL_LANGUAGES,
 			method: 'GET',
+			signal,
 		})
 	);
 }

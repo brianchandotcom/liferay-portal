@@ -57,6 +57,7 @@ const DEFAULT_STATE: State = {
 		erc: 'structure-erc',
 		label: 'untitled-structure' as any,
 		name: 'UntitledStructure',
+		path: '',
 		spaces: [],
 		status: 'new',
 		system: false,

@@ -10,7 +10,11 @@ import {
 	EConfigInURLBehavior,
 	IFrontendDataSetProps,
 } from '@liferay/frontend-data-set-web';
-import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
+import {
+	getCMSItemSelectorFilters,
+	getCMSItemSelectorGroupedFilters,
+	openItemSelectorModal,
+} from '@liferay/frontend-js-item-selector-web';
 import {mimeTypeUtils} from 'frontend-js-web';
 import React from 'react';
 
@@ -44,21 +48,8 @@ const CMS_FILE_SEARCH_API_URL = `${location.origin}/o/search/v1.0/search?${[
 	'nestedFields=embedded,file.thumbnailURL',
 ].join('&')}`;
 
-const FDS_PROPS: IFrontendDataSetProps = {
+const FDS_PROPS: Omit<IFrontendDataSetProps, 'filters' | 'id'> = {
 	configInURLBehavior: EConfigInURLBehavior.OFF,
-	filters: [
-		{
-			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
-			entityFieldType: 'collection',
-			id: 'groupIds',
-			itemKey: 'siteId',
-			itemLabel: 'name',
-			label: Liferay.Language.get('space'),
-			multiple: true,
-			type: 'selection',
-		},
-	],
-	id: '',
 	pagination: {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,
@@ -171,6 +162,10 @@ class HeadlessItemSelector extends Plugin {
 					apiURL: `${CMS_FILE_SEARCH_API_URL}&filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3) and (extension in ('${ALLOWED_IMAGE_FILE_EXTENSIONS.join("','")}')))`,
 					fdsProps: {
 						...FDS_PROPS,
+						filters: getCMSItemSelectorFilters(
+							Liferay.ThemeDisplay.getSiteGroupId()
+						),
+						groupedFilters: getCMSItemSelectorGroupedFilters(),
 						id: `ImageHeadlessItemSelectorFDS_${getRandomId()}`,
 					},
 					itemTypeLabel: Liferay.Language.get('image'),
@@ -212,6 +207,10 @@ class HeadlessItemSelector extends Plugin {
 					apiURL: `${CMS_FILE_SEARCH_API_URL}&filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))`,
 					fdsProps: {
 						...FDS_PROPS,
+						filters: getCMSItemSelectorFilters(
+							Liferay.ThemeDisplay.getSiteGroupId()
+						),
+						groupedFilters: getCMSItemSelectorGroupedFilters(),
 						id: `VideoHeadlessItemSelectorFDS_${getRandomId()}`,
 					},
 					itemTypeLabel: Liferay.Language.get('video'),

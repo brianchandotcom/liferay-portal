@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.AgentInstance;
+import com.liferay.ai.hub.rest.dto.v1_0.ProvisioningRequest;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -14,15 +14,12 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 
 import jakarta.annotation.Generated;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -42,16 +39,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface AgentInstanceResource {
+public interface ProvisioningRequestResource {
 
-	public void getAgentInstanceSubscribe(
-			jakarta.ws.rs.sse.SseEventSink sseEventSink)
-		throws Exception;
-
-	public AgentInstance postAgentInstance(AgentInstance agentInstance)
-		throws Exception;
-
-	public Response postAgentInstanceBatch(String callbackURL, Object object)
+	public void postProvisioning(ProvisioningRequest provisioningRequest)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -94,14 +84,6 @@ public interface AgentInstanceResource {
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
 
-	public void setVulcanBatchEngineExportTaskResource(
-		VulcanBatchEngineExportTaskResource
-			vulcanBatchEngineExportTaskResource);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
-
 	public default com.liferay.portal.kernel.search.filter.Filter toFilter(
 		String filterString) {
 
@@ -124,7 +106,7 @@ public interface AgentInstanceResource {
 	@ProviderType
 	public interface Builder {
 
-		public AgentInstanceResource build();
+		public ProvisioningRequestResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 
@@ -150,4 +132,4 @@ public interface AgentInstanceResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-602409023
+// LIFERAY-REST-BUILDER-HASH:-1560635043

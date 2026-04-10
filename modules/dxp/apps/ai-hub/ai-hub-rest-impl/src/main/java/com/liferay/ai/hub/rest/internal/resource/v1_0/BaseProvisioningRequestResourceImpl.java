@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.Message;
-import com.liferay.ai.hub.rest.resource.v1_0.MessageResource;
+import com.liferay.ai.hub.rest.dto.v1_0.ProvisioningRequest;
+import com.liferay.ai.hub.rest.resource.v1_0.ProvisioningRequestResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,40 +39,28 @@ import java.util.Map;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseMessageResourceImpl implements MessageResource {
+public abstract class BaseProvisioningRequestResourceImpl
+	implements ProvisioningRequestResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/chats/by-external-reference-code/{externalReferenceCode}/messages' -d $'{"chatbotExternalReferenceCode": ___, "context": ___, "instructionDefinitionScope": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/provisioning' -d $'{"customerName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Parameters(
+	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ProvisioningRequest"
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Message")}
-	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path(
-		"/chats/by-external-reference-code/{externalReferenceCode}/messages"
-	)
+	@jakarta.ws.rs.Path("/provisioning")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Message postChatByExternalReferenceCodeMessage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			Message message)
+	public void postProvisioning(ProvisioningRequest provisioningRequest)
 		throws Exception {
-
-		return new Message();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -517,7 +505,7 @@ public abstract class BaseMessageResourceImpl implements MessageResource {
 	protected SortParserProvider sortParserProvider;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseMessageResourceImpl.class);
+		LogFactoryUtil.getLog(BaseProvisioningRequestResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-245496752
+// LIFERAY-REST-BUILDER-HASH:1404985212

@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.Site;
+import com.liferay.ai.hub.rest.client.dto.v1_0.ProvisioningRequest;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.pagination.Page;
-import com.liferay.ai.hub.rest.client.resource.v1_0.SiteResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.SiteSerDes;
+import com.liferay.ai.hub.rest.client.resource.v1_0.ProvisioningRequestResource;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.ProvisioningRequestSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -72,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseSiteResourceTestCase {
+public abstract class BaseProvisioningRequestResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -93,12 +93,12 @@ public abstract class BaseSiteResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_siteResource.setContextCompany(testCompany);
+		_provisioningRequestResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		siteResource = SiteResource.builder(
+		provisioningRequestResource = ProvisioningRequestResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -119,23 +119,24 @@ public abstract class BaseSiteResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Site site1 = randomSite();
+		ProvisioningRequest provisioningRequest1 = randomProvisioningRequest();
 
-		String json = objectMapper.writeValueAsString(site1);
+		String json = objectMapper.writeValueAsString(provisioningRequest1);
 
-		Site site2 = SiteSerDes.toDTO(json);
+		ProvisioningRequest provisioningRequest2 =
+			ProvisioningRequestSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(site1, site2));
+		Assert.assertTrue(equals(provisioningRequest1, provisioningRequest2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Site site = randomSite();
+		ProvisioningRequest provisioningRequest = randomProvisioningRequest();
 
-		String json1 = objectMapper.writeValueAsString(site);
-		String json2 = SiteSerDes.toJSON(site);
+		String json1 = objectMapper.writeValueAsString(provisioningRequest);
+		String json2 = ProvisioningRequestSerDes.toJSON(provisioningRequest);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -163,57 +164,41 @@ public abstract class BaseSiteResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Site site = randomSite();
+		ProvisioningRequest provisioningRequest = randomProvisioningRequest();
 
-		site.setExternalReferenceCode(regex);
+		provisioningRequest.setCustomerName(regex);
 
-		String json = SiteSerDes.toJSON(site);
+		String json = ProvisioningRequestSerDes.toJSON(provisioningRequest);
 
 		Assert.assertFalse(json.contains(regex));
 
-		site = SiteSerDes.toDTO(json);
+		provisioningRequest = ProvisioningRequestSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, site.getExternalReferenceCode());
+		Assert.assertEquals(regex, provisioningRequest.getCustomerName());
 	}
 
 	@Test
-	public void testPutSiteByExternalReferenceCodeSiteInitializer()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Site site = testPutSiteByExternalReferenceCodeSiteInitializer_addSite();
-
-		assertHttpResponseStatusCode(
-			204,
-			siteResource.
-				putSiteByExternalReferenceCodeSiteInitializerHttpResponse(
-					site.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			siteResource.
-				putSiteByExternalReferenceCodeSiteInitializerHttpResponse("-"));
+	public void testPostProvisioning() throws Exception {
+		Assert.assertTrue(false);
 	}
 
-	protected Site testPutSiteByExternalReferenceCodeSiteInitializer_addSite()
-		throws Exception {
+	protected void assertContains(
+		ProvisioningRequest provisioningRequest,
+		List<ProvisioningRequest> provisioningRequests) {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void assertContains(Site site, List<Site> sites) {
 		boolean contains = false;
 
-		for (Site item : sites) {
-			if (equals(site, item)) {
+		for (ProvisioningRequest item : provisioningRequests) {
+			if (equals(provisioningRequest, item)) {
 				contains = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(sites + " does not contain " + site, contains);
+		Assert.assertTrue(
+			provisioningRequests + " does not contain " + provisioningRequest,
+			contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -224,52 +209,69 @@ public abstract class BaseSiteResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Site site1, Site site2) {
+	protected void assertEquals(
+		ProvisioningRequest provisioningRequest1,
+		ProvisioningRequest provisioningRequest2) {
+
 		Assert.assertTrue(
-			site1 + " does not equal " + site2, equals(site1, site2));
+			provisioningRequest1 + " does not equal " + provisioningRequest2,
+			equals(provisioningRequest1, provisioningRequest2));
 	}
 
-	protected void assertEquals(List<Site> sites1, List<Site> sites2) {
-		Assert.assertEquals(sites1.size(), sites2.size());
+	protected void assertEquals(
+		List<ProvisioningRequest> provisioningRequests1,
+		List<ProvisioningRequest> provisioningRequests2) {
 
-		for (int i = 0; i < sites1.size(); i++) {
-			Site site1 = sites1.get(i);
-			Site site2 = sites2.get(i);
+		Assert.assertEquals(
+			provisioningRequests1.size(), provisioningRequests2.size());
 
-			assertEquals(site1, site2);
+		for (int i = 0; i < provisioningRequests1.size(); i++) {
+			ProvisioningRequest provisioningRequest1 =
+				provisioningRequests1.get(i);
+			ProvisioningRequest provisioningRequest2 =
+				provisioningRequests2.get(i);
+
+			assertEquals(provisioningRequest1, provisioningRequest2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Site> sites1, List<Site> sites2) {
+		List<ProvisioningRequest> provisioningRequests1,
+		List<ProvisioningRequest> provisioningRequests2) {
 
-		Assert.assertEquals(sites1.size(), sites2.size());
+		Assert.assertEquals(
+			provisioningRequests1.size(), provisioningRequests2.size());
 
-		for (Site site1 : sites1) {
+		for (ProvisioningRequest provisioningRequest1 : provisioningRequests1) {
 			boolean contains = false;
 
-			for (Site site2 : sites2) {
-				if (equals(site1, site2)) {
+			for (ProvisioningRequest provisioningRequest2 :
+					provisioningRequests2) {
+
+				if (equals(provisioningRequest1, provisioningRequest2)) {
 					contains = true;
 
 					break;
 				}
 			}
 
-			Assert.assertTrue(sites2 + " does not contain " + site1, contains);
+			Assert.assertTrue(
+				provisioningRequests2 + " does not contain " +
+					provisioningRequest1,
+				contains);
 		}
 	}
 
-	protected void assertValid(Site site) throws Exception {
+	protected void assertValid(ProvisioningRequest provisioningRequest)
+		throws Exception {
+
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (site.getExternalReferenceCode() == null) {
+			if (Objects.equals("customerName", additionalAssertFieldName)) {
+				if (provisioningRequest.getCustomerName() == null) {
 					valid = false;
 				}
 
@@ -284,18 +286,20 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Site> page) {
+	protected void assertValid(Page<ProvisioningRequest> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<Site> page, Map<String, Map<String, String>> expectedActions) {
+		Page<ProvisioningRequest> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<Site> sites = page.getItems();
+		java.util.Collection<ProvisioningRequest> provisioningRequests =
+			page.getItems();
 
-		int size = sites.size();
+		int size = provisioningRequests.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -333,11 +337,10 @@ public abstract class BaseSiteResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("externalReferenceCode"));
-
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.Site.class)) {
+					com.liferay.ai.hub.rest.dto.v1_0.ProvisioningRequest.
+						class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -385,20 +388,21 @@ public abstract class BaseSiteResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Site site1, Site site2) {
-		if (site1 == site2) {
+	protected boolean equals(
+		ProvisioningRequest provisioningRequest1,
+		ProvisioningRequest provisioningRequest2) {
+
+		if (provisioningRequest1 == provisioningRequest2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
+			if (Objects.equals("customerName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						site1.getExternalReferenceCode(),
-						site2.getExternalReferenceCode())) {
+						provisioningRequest1.getCustomerName(),
+						provisioningRequest2.getCustomerName())) {
 
 					return false;
 				}
@@ -462,13 +466,13 @@ public abstract class BaseSiteResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_siteResource instanceof EntityModelResource)) {
+		if (!(_provisioningRequestResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_siteResource;
+			(EntityModelResource)_provisioningRequestResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -501,7 +505,8 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Site site) {
+		EntityField entityField, String operator,
+		ProvisioningRequest provisioningRequest) {
 
 		StringBundler sb = new StringBundler();
 
@@ -513,8 +518,8 @@ public abstract class BaseSiteResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("externalReferenceCode")) {
-			Object object = site.getExternalReferenceCode();
+		if (entityFieldName.equals("customerName")) {
+			Object object = provisioningRequest.getCustomerName();
 
 			String value = String.valueOf(object);
 
@@ -601,26 +606,31 @@ public abstract class BaseSiteResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected Site randomSite() throws Exception {
-		return new Site() {
+	protected ProvisioningRequest randomProvisioningRequest() throws Exception {
+		return new ProvisioningRequest() {
 			{
-				externalReferenceCode = StringUtil.toLowerCase(
+				customerName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected Site randomIrrelevantSite() throws Exception {
-		Site randomIrrelevantSite = randomSite();
+	protected ProvisioningRequest randomIrrelevantProvisioningRequest()
+		throws Exception {
 
-		return randomIrrelevantSite;
+		ProvisioningRequest randomIrrelevantProvisioningRequest =
+			randomProvisioningRequest();
+
+		return randomIrrelevantProvisioningRequest;
 	}
 
-	protected Site randomPatchSite() throws Exception {
-		return randomSite();
+	protected ProvisioningRequest randomPatchProvisioningRequest()
+		throws Exception {
+
+		return randomProvisioningRequest();
 	}
 
-	protected SiteResource siteResource;
+	protected ProvisioningRequestResource provisioningRequestResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -819,14 +829,15 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseSiteResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseProvisioningRequestResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.SiteResource _siteResource;
+	private com.liferay.ai.hub.rest.resource.v1_0.ProvisioningRequestResource
+		_provisioningRequestResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1471442351
+// LIFERAY-REST-BUILDER-HASH:-1797623067

@@ -13,6 +13,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryVersionLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -66,9 +67,13 @@ public class ObjectEntryInfoItemUtil {
 				false, null, null, null, null, themeDisplay.getLocale(), null,
 				themeDisplay.getUser());
 
+		com.liferay.object.model.ObjectEntry serviceBuilderHeadObjectEntry =
+			ObjectEntryLocalServiceUtil.fetchObjectEntry(
+				serviceBuilderObjectEntry.getHeadObjectEntryId());
+
 		ObjectEntryVersion objectEntryVersion =
 			ObjectEntryVersionLocalServiceUtil.fetchObjectEntryVersion(
-				serviceBuilderObjectEntry.getObjectEntryId(),
+				serviceBuilderHeadObjectEntry.getHeadObjectEntryId(),
 				serviceBuilderObjectEntry.getVersion());
 
 		if (objectEntryVersion != null) {
@@ -79,11 +84,11 @@ public class ObjectEntryInfoItemUtil {
 		try {
 			return objectEntryManager.getObjectEntry(
 				themeDisplay.getCompanyId(), dtoConverterContext,
-				serviceBuilderObjectEntry.getExternalReferenceCode(),
+				serviceBuilderHeadObjectEntry.getExternalReferenceCode(),
 				objectDefinition,
 				getScopeKey(
-					serviceBuilderObjectEntry.getGroupId(), objectDefinition,
-					objectScopeProviderRegistry));
+					serviceBuilderHeadObjectEntry.getGroupId(),
+					objectDefinition, objectScopeProviderRegistry));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

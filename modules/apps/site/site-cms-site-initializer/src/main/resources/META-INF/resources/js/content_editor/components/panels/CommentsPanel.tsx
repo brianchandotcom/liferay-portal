@@ -30,7 +30,7 @@ export default function CommentsPanel({
 	getCommentsURL,
 }: {
 	addCommentURL: string;
-	comments: Comment[];
+	comments?: Comment[];
 	deleteCommentURL: string;
 	editCommentURL: string;
 	editorConfig: LiferayEditorConfig;

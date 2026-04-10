@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -290,7 +291,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	public void testObjectEntryInfoItemFieldValuesProviderWithAttachmentObjectField()
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _addObjectDefinition(
+		_objectDefinition = _addObjectDefinition(
 			new AttachmentObjectFieldBuilder(
 			).labelMap(
 				RandomTestUtil.randomLocaleStringMap()
@@ -306,91 +307,138 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 					_createObjectFieldSetting("maximumFileSize", "100"))
 			).build());
 
-		objectDefinition =
+		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId());
+				_objectDefinition.getObjectDefinitionId());
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.png",
+			ContentTypes.IMAGE_PNG, RandomTestUtil.randomBytes(), null, null,
+			null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(),
+			"localizedAttachmentObjectFieldName");
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getI18nObjectFieldName(),
+				HashMapBuilder.<String, Object>put(
+					"en_US", fileEntry.getFileEntryId()
+				).put(
+					"es_ES", () -> null
+				).build()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_pushServiceContext(_getThemeDisplay(StringPool.BLANK, "UTC"));
 
 		try {
-			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.png",
-				ContentTypes.IMAGE_PNG, RandomTestUtil.randomBytes(), null,
-				null, null,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			InfoItemFieldValuesProvider<ObjectEntry>
+				infoItemFieldValuesProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemFieldValuesProvider.class,
+						_objectDefinition.getClassName());
 
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(),
-				"localizedAttachmentObjectFieldName");
+			InfoItemFieldValues infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(objectEntry);
+
+			Assert.assertNotNull(infoItemFieldValues);
+
+			InfoFieldValue<Object> downloadURLInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					objectField.getObjectFieldId() + "#downloadURL");
+
+			Assert.assertNotNull(downloadURLInfoFieldValue);
+
+			Assert.assertNotNull(
+				downloadURLInfoFieldValue.getValue(LocaleUtil.US));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testObjectEntryInfoItemFieldValuesProviderWithObjectEntryVersioning()
+		throws Exception {
+
+		ObjectField objectField = new TextObjectFieldBuilder(
+		).labelMap(
+			RandomTestUtil.randomLocaleStringMap()
+		).name(
+			"a" + RandomTestUtil.randomString()
+		).build();
+
+		_objectDefinition = _addObjectDefinition(true, objectField);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId());
+
+		_pushServiceContext(_getThemeDisplay(StringPool.BLANK, "UTC"));
+
+		try {
+			String approvedValue = RandomTestUtil.randomString();
 
 			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 				_group.getGroupId(), TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
 				HashMapBuilder.<String, Serializable>put(
-					objectField.getI18nObjectFieldName(),
-					HashMapBuilder.<String, Object>put(
-						"en_US", fileEntry.getFileEntryId()
-					).put(
-						"es_ES", () -> null
-					).build()
+					objectField.getName(), approvedValue
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			_objectEntryLocalService.partialUpdateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
+				HashMapBuilder.<String, Serializable>put(
+					objectField.getName(), RandomTestUtil.randomString()
+				).put(
+					"status", WorkflowConstants.STATUS_PENDING
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
 
-			MockHttpServletRequest mockHttpServletRequest =
-				new MockHttpServletRequest();
+			InfoItemFieldValuesProvider<ObjectEntry>
+				infoItemFieldValuesProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemFieldValuesProvider.class,
+						_objectDefinition.getClassName());
 
-			mockHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY,
-				_getThemeDisplay(StringPool.BLANK, "UTC"));
+			InfoItemFieldValues infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(objectEntry);
 
-			serviceContext.setRequest(mockHttpServletRequest);
+			Assert.assertNotNull(infoItemFieldValues);
 
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(objectField.getName());
 
-			try {
-				InfoItemFieldValuesProvider<ObjectEntry>
-					infoItemFieldValuesProvider =
-						_infoItemServiceRegistry.getFirstInfoItemService(
-							InfoItemFieldValuesProvider.class,
-							objectDefinition.getClassName());
-
-				InfoItemFieldValues infoItemFieldValues =
-					infoItemFieldValuesProvider.getInfoItemFieldValues(
-						objectEntry);
-
-				Assert.assertNotNull(infoItemFieldValues);
-
-				InfoFieldValue<Object> downloadURLInfoFieldValue =
-					infoItemFieldValues.getInfoFieldValue(
-						objectField.getObjectFieldId() + "#downloadURL");
-
-				Assert.assertNotNull(downloadURLInfoFieldValue);
-
-				Assert.assertNotNull(
-					downloadURLInfoFieldValue.getValue(LocaleUtil.US));
-			}
-			finally {
-				ServiceContextThreadLocal.popServiceContext();
-			}
+			Assert.assertEquals(approvedValue, infoFieldValue.getValue());
 		}
 		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition.getObjectDefinitionId());
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 
-	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
+	private ObjectDefinition _addObjectDefinition(
+			boolean enableObjectEntryVersioning, ObjectField... objectFields)
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
 			null, TestPropsValues.getUserId(), 0, null, true, false, true,
-			false, true, false, false, false, false, null,
+			false, true, false, false, false, enableObjectEntryVersioning, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -398,6 +446,12 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Collections.emptyList(), Arrays.asList(objectFields),
 			Collections.emptyList(), new ServiceContext());
+	}
+
+	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
+		throws Exception {
+
+		return _addObjectDefinition(false, objectFields);
 	}
 
 	private void _assertInfoFieldValue(
@@ -478,10 +532,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		return themeDisplay;
 	}
 
-	private void _testObjectEntryInfoItemFieldValuesProvider(
-			FileEntry fileEntry, LocalDateTime localDateTime,
-			ObjectAction objectAction, ObjectEntry objectEntry,
-			String parentTextObjectFieldNameValue, ThemeDisplay themeDisplay)
+	private void _pushServiceContext(ThemeDisplay themeDisplay)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -496,6 +547,15 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		serviceContext.setRequest(mockHttpServletRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+	}
+
+	private void _testObjectEntryInfoItemFieldValuesProvider(
+			FileEntry fileEntry, LocalDateTime localDateTime,
+			ObjectAction objectAction, ObjectEntry objectEntry,
+			String parentTextObjectFieldNameValue, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		_pushServiceContext(themeDisplay);
 
 		try {
 			InfoItemFieldValuesProvider<ObjectEntry>
@@ -627,6 +687,9 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

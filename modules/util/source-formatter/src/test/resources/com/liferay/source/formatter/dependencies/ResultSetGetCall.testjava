@@ -71,7 +71,7 @@ public class ResultSetGetCall {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				System.out.println(resultSet.getLong("count"));
+				System.out.println(resultSet.getInt("count"));
 			}
 		}
 	}

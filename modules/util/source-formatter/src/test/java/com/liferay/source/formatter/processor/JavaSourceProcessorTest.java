@@ -879,7 +879,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"calling method \"resultSet.get*\"",
 				60
 			).addExpectedMessage(
-				"Use \"resultSet.getInt\" for count", 74
+				"Use \"resultSet.getLong\" for count", 74
 			));
 	}
 

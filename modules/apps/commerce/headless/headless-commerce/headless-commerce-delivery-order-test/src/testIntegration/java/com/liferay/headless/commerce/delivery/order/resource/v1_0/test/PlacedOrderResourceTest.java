@@ -64,6 +64,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -115,6 +116,21 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 			_country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
 			_serviceContext);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		for (CommerceOrder commerceOrder :
+				_commerceOrderLocalService.getCommerceOrders(
+					_commerceChannel.getGroupId(),
+					_accountEntry.getAccountEntryId(), -1, -1, null)) {
+
+			_commerceOrderLocalService.deleteCommerceOrder(
+				commerceOrder.getCommerceOrderId());
+		}
 	}
 
 	@Override

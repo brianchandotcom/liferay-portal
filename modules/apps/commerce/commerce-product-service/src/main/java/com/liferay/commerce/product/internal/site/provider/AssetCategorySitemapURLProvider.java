@@ -152,7 +152,7 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 			_sitemapManager.addURLElement(
 				element, alternateFriendlyURL, typeSettingsUnicodeProperties,
 				layout.getModifiedDate(), categoryFriendlyURL,
-				alternateFriendlyURLs);
+				alternateFriendlyURLs, layout.getGroupId());
 		}
 	}
 

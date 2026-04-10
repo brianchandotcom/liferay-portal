@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
@@ -55,6 +58,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -73,7 +77,33 @@ public class SitemapManagerImpl implements SitemapManager {
 	public void addURLElement(
 		Element element, String url,
 		UnicodeProperties typeSettingsUnicodeProperties, Date modifiedDate,
-		String canonicalURL, Map<Locale, String> alternateURLs) {
+		String canonicalURL, Map<Locale, String> alternateURLs, long groupId) {
+
+		String path = HttpComponentsUtil.getPath(url);
+		String contextPath = _portal.getPathContext();
+
+		if (Validator.isNotNull(contextPath) && path.startsWith(contextPath)) {
+			path = path.substring(contextPath.length());
+		}
+
+		String fullURL = path;
+
+		if (fullURL.startsWith(StringPool.SLASH)) {
+			fullURL = fullURL.substring(1);
+		}
+
+		String friendlyURL = _getFriendlyURL(path, groupId);
+
+		if (friendlyURL.startsWith(StringPool.SLASH)) {
+			friendlyURL = friendlyURL.substring(1);
+		}
+
+		RedirectProvider.Redirect redirect = _redirectProvider.getRedirect(
+			groupId, friendlyURL, fullURL, null);
+
+		if (redirect != null) {
+			return;
+		}
 
 		Element urlElement = element.addElement("url");
 
@@ -223,6 +253,67 @@ public class SitemapManagerImpl implements SitemapManager {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private String _getFriendlyURL(String path, long groupId) {
+		int[] groupFriendlyURLIndex = _portal.getGroupFriendlyURLIndex(path);
+
+		if (groupFriendlyURLIndex != null) {
+			if (groupFriendlyURLIndex[1] < path.length()) {
+				return path.substring(groupFriendlyURLIndex[1]);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId == 0) {
+			companyId = _companyIds.computeIfAbsent(
+				groupId,
+				key -> {
+					try {
+						Group group = _groupLocalService.getGroup(key);
+
+						return group.getCompanyId();
+					}
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(portalException);
+						}
+
+						return 0L;
+					}
+				});
+		}
+
+		for (Locale availableLocale :
+				_language.getAvailableLocales(companyId)) {
+
+			String i18nPath =
+				StringPool.SLASH + LocaleUtil.toLanguageId(availableLocale);
+
+			if (path.startsWith(i18nPath + StringPool.SLASH) ||
+				path.equals(i18nPath)) {
+
+				String pathWithoutLocale = path.substring(i18nPath.length());
+
+				int[] tempIndices = _portal.getGroupFriendlyURLIndex(
+					pathWithoutLocale);
+
+				if (tempIndices != null) {
+					if (tempIndices[1] < pathWithoutLocale.length()) {
+						return pathWithoutLocale.substring(tempIndices[1]);
+					}
+
+					return StringPool.BLANK;
+				}
+
+				return pathWithoutLocale;
+			}
+		}
+
+		return path;
 	}
 
 	private String _getIndexSitemap(
@@ -566,6 +657,8 @@ public class SitemapManagerImpl implements SitemapManager {
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 
+	private final Map<Long, Long> _companyIds = new ConcurrentHashMap<>();
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -580,6 +673,9 @@ public class SitemapManagerImpl implements SitemapManager {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RedirectProvider _redirectProvider;
 
 	@Reference
 	private SAXReader _saxReader;

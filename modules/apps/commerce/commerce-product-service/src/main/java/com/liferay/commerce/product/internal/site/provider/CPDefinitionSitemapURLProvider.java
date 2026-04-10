@@ -167,7 +167,7 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 			_sitemapManager.addURLElement(
 				element, alternateFriendlyURL, typeSettingsUnicodeProperties,
 				layout.getModifiedDate(), productFriendlyURL,
-				alternateFriendlyURLs);
+				alternateFriendlyURLs, layout.getGroupId());
 		}
 	}
 

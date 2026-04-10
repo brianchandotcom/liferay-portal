@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.scancode;
 
 import com.google.api.gax.paging.Page;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
@@ -336,19 +337,57 @@ public class ScanCodeCloudBucket {
 		return storage.get(getName());
 	}
 
+	private Storage _getBucketStorage(String credentialsPath) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(credentialsPath)) {
+			return null;
+		}
+
+		File credentialsFile = new File(credentialsPath);
+
+		if (!credentialsFile.exists()) {
+			return null;
+		}
+
+		try {
+			Storage storage = StorageOptions.newBuilder(
+			).setCredentials(
+				GoogleCredentials.fromStream(
+					new FileInputStream(credentialsFile))
+			).build(
+			).getService();
+
+			if (storage.get(getName()) != null) {
+				return storage;
+			}
+		}
+		catch (Exception exception) {
+		}
+
+		return null;
+	}
+
 	private Storage _getStorage() {
+		try {
+			String scancodeCredentialsPath =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"google.application.crendential.file[scancode]");
+
+			Storage storage = _getBucketStorage(scancodeCredentialsPath);
+
+			if (storage != null) {
+				return storage;
+			}
+		}
+		catch (Exception exception) {
+		}
+
 		Storage storage = null;
 
 		try {
 			String credentials = JenkinsResultsParserUtil.getBuildProperty(
 				"scancode.credentials.file");
 
-			storage = StorageOptions.newBuilder(
-			).setCredentials(
-				ServiceAccountCredentials.fromStream(
-					new FileInputStream(credentials))
-			).build(
-			).getService();
+			storage = _getBucketStorage(credentials);
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();

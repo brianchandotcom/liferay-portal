@@ -85,7 +85,7 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			String text = firstChildDetailAST.getText();
 
-			if (methodName.equals("getLong") && text.equals("\"count\"")) {
+			if (methodName.equals("getInt") && text.equals("\"count\"")) {
 				log(firstChildDetailAST, _MSG_METHOD_USE);
 
 				continue;

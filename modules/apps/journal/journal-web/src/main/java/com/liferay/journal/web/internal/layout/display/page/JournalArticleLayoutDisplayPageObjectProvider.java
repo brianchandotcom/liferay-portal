@@ -97,9 +97,15 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				JournalArticle.class.getName());
 
+		long assetEntryClassPK = assetRendererFactory.getAssetEntryClassPK(
+			journalArticle);
+
+		if (assetEntryClassPK == 0) {
+			return null;
+		}
+
 		return assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(),
-			assetRendererFactory.getAssetEntryClassPK(journalArticle));
+			JournalArticle.class.getName(), assetEntryClassPK);
 	}
 
 	private final JournalArticle _article;

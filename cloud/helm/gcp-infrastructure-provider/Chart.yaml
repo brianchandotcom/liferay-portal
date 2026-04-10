@@ -5,6 +5,10 @@ dependencies:
         name: liferay-subchart-backup-controller
         repository: file://./charts/liferay-subchart-backup-controller
         version: 0.1.0
+    -   condition: liferay-subchart-backup-create.enabled
+        name: liferay-subchart-backup-create
+        repository: file://./charts/liferay-subchart-backup-create
+        version: 0.1.0
 description:
     Liferay is an all-in-one DXP, LCAP, and Commerce platform. This chart provides cloud infrastructure resource definitions for GCP.
 icon: https://www-cdn.liferay.com/documents/d/guest/liferay-logo

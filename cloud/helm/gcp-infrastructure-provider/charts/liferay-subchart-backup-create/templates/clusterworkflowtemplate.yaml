@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ClusterWorkflowTemplate
+metadata:
+    labels:
+        component: backup-create-platform
+    name: backup-create-cluster-workflow-template
+spec:
+    arguments:
+        parameters:
+            -   name: environment-id
+            -   name: project-id
+    artifactGC:
+        {{- .Values.argo.workflowSpec.artifactGC | toYaml | nindent 8 }}
+    entrypoint: main
+    podGC:
+        {{- .Values.argo.workflowSpec.podGC | toYaml | nindent 8 }}
+    serviceAccountName: backup-create-service-account
+    templates:
+        -   name: main
+            steps:
+                -   -   name: create-backup
+                        template: create-backup
+        -   name: create-backup
+            resource:
+                action: create
+                manifest: |-
+                    apiVersion: backup.liferay.cloud/v1alpha1
+                    kind: LiferayBackup
+                    metadata:
+                        generateName: "liferay-backup-"
+                        namespace: {{ "{{" }}workflow.namespace}}
+                    spec:
+                        databaseSnapshot:
+                            databaseInstanceLookup:
+                                matchLabels:
+                                    active: "true"
+                                    app: liferay
+                                    environment-id: {{ "{{" }}workflow.parameters.environment-id}}
+                                    project-id: {{ "{{" }}workflow.parameters.project-id}}
+                                    should-back-up: "true"
+                        documentLibrary:
+                            destination:
+                                gcs:
+                                    bucketLookup:
+                                        matchLabels:
+                                            app: liferay
+                                            environment-id: {{ "{{" }}workflow.parameters.environment-id}}
+                                            is-backup-vault: "true"
+                                            project-id: {{ "{{" }}workflow.parameters.project-id}}
+                                type: gcs
+                            source:
+                                gcs:
+                                    bucketLookup:
+                                        matchLabels:
+                                            active: "true"
+                                            app: liferay
+                                            environment-id: {{ "{{" }}workflow.parameters.environment-id}}
+                                            project-id: {{ "{{" }}workflow.parameters.project-id}}
+                                            should-back-up: "true"
+                                type: gcs
+    ttlStrategy:
+        {{- .Values.argo.workflowSpec.ttlStrategy | toYaml | nindent 8 }}

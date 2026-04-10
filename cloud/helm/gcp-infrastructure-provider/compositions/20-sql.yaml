@@ -32,7 +32,7 @@ spec:
                 sslMode: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
             tier: {{ $databaseSpec.instanceType | default "db-custom-1-3840" }}
             userLabels:
-                {{- $labels | toYaml | nindent 16 }}
+                {{- $backupTargetLabels | toYaml | nindent 16 }}
     managementPolicies: {{ $managementPolicies }}
 ---
 apiVersion: sql.gcp.m.upbound.io/v1beta1

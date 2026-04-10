@@ -1,0 +1,8 @@
+argo:
+    workflowSpec:
+        artifactGC:
+            strategy: OnWorkflowDeletion
+        podGC:
+            strategy: OnWorkflowSuccess
+        ttlStrategy:
+            secondsAfterCompletion: 86400

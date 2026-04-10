@@ -1,3 +1,13 @@
+resource "google_project_iam_member" "storagetransfer_agent_permissions" {
+	for_each=toset(
+		[
+			"roles/storage.admin",
+			"roles/storagetransfer.serviceAgent",
+		])
+	member="serviceAccount:project-${local.project_number}@storage-transfer-service.iam.gserviceaccount.com"
+	project=var.project_id
+	role=each.key
+}
 resource "google_project_service" "apis" {
 	disable_on_destroy=false
 	for_each=toset(
@@ -18,12 +28,23 @@ resource "google_project_service" "apis" {
 			"servicenetworking.googleapis.com",
 			"sqladmin.googleapis.com",
 			"storage-api.googleapis.com",
+			"storagetransfer.googleapis.com",
 			"sts.googleapis.com",
 		])
 	project=var.project_id
 	service=each.key
 }
+resource "google_project_service_identity" "storagetransfer_identity" {
+	depends_on=[google_project_service.apis]
+	project=var.project_id
+	provider=google-beta
+	service="storagetransfer.googleapis.com"
+}
 resource "time_sleep" "wait_for_apis" {
 	create_duration="60s"
-	depends_on=[google_project_service.apis]
+	depends_on=[
+		google_project_iam_member.storagetransfer_agent_permissions,
+		google_project_service.apis,
+		google_project_service_identity.storagetransfer_identity,
+	]
 }

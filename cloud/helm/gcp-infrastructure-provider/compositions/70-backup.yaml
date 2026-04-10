@@ -1,5 +1,5 @@
 {{- if $backup.enabled }}
-{{- $backupVaultLabels := merge (dict) $labels (dict "liferay.com/is-backup-vault" "true") }}
+{{- $backupVaultLabels := merge (dict) $labels (dict "is-backup-vault" "true") }}
 apiVersion: storage.gcp.m.upbound.io/v1beta1
 kind: Bucket
 metadata:
@@ -25,5 +25,53 @@ spec:
         location: {{ $backup.region | default $region }}
         storageClass: {{ $backup.storageClass | quote }}
         uniformBucketLevelAccess: true
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-create-role-binding
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: backup-create-role-binding
+spec:
+    forProvider:
+        manifest:
+            apiVersion: rbac.authorization.k8s.io/v1
+            kind: RoleBinding
+            metadata:
+                labels:
+                    {{- $labels | toYaml | nindent 20 }}
+                name: backup-create-role-binding
+                namespace: {{ $namespace }}
+            roleRef:
+                apiGroup: rbac.authorization.k8s.io
+                kind: ClusterRole
+                name: backup-create-cluster-role
+            subjects:
+                -   kind: ServiceAccount
+                    name: backup-create-service-account
+                    namespace: {{ $namespace }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-create-service-account
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: backup-create-service-account
+spec:
+    forProvider:
+        manifest:
+            apiVersion: v1
+            kind: ServiceAccount
+            metadata:
+                labels:
+                    {{- $labels | toYaml | nindent 20 }}
+                name: backup-create-service-account
+                namespace: {{ $namespace }}
     managementPolicies: {{ $managementPolicies }}
 {{- end }}

@@ -14,7 +14,7 @@ spec:
         {{- end }}
         forceDestroy: {{ $forceDestroy }}
         labels:
-            {{- $labels | toYaml | nindent 12 }}
+            {{- $backupTargetLabels | toYaml | nindent 12 }}
         location: {{ $storage.region | default $region }}
         storageClass: STANDARD
         uniformBucketLevelAccess: true

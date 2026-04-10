@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    labels:
+        component: backup-create-platform
+    name: backup-create-cluster-role
+rules:
+    -   apiGroups: ["backup.liferay.cloud"]
+        resources: ["liferaybackups"]
+        verbs:
+            -   create

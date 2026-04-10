@@ -127,7 +127,6 @@ spec:
                                         -   source
                                     type: object
                             required:
-                                -   databaseDump
                                 -   databaseSnapshot
                                 -   documentLibrary
                             type: object

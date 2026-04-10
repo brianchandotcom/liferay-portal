@@ -6,6 +6,13 @@ provider "google" {
 	project=var.project_id
 	region=var.region
 }
+provider "google-beta" {
+	default_labels={
+		deployment_name=var.deployment_name
+	}
+	project=var.project_id
+	region=var.region
+}
 provider "helm" {
 	kubernetes={
 		host="https://connectgateway.googleapis.com/v1/projects/${local.project_number}/locations/global/gkeMemberships/${var.deployment_name}-membership"
@@ -20,7 +27,11 @@ terraform {
 	required_providers {
 		google={
 			source="hashicorp/google"
-			version="~> 6.0"
+			version="~> 7.0"
+		}
+		google-beta={
+			source="hashicorp/google-beta"
+			version="~> 7.0"
 		}
 		helm={
 			source="hashicorp/helm"

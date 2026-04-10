@@ -23,6 +23,7 @@
 {{- $gsaEmail := printf "%s@%s.iam.gserviceaccount.com" $gsaName $env.projectId -}}
 {{- $hash := printf "%s-%s" $databaseName $env.projectId | sha256sum | trunc 7 -}}
 {{- $labels := merge $commonTags (dict "app" "liferay" "environment-id" $environmentId "project-id" $projectId) -}}
+{{- $backupTargetLabels := merge (dict) $labels (dict "active" "true" "should-back-up" "true") -}}
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
 {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}

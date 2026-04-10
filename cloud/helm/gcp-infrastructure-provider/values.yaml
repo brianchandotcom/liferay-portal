@@ -20,3 +20,5 @@ gcp:
 liferay-subchart-backup-controller:
     enabled: true
     serviceAccountName: backup-controller
+liferay-subchart-backup-create:
+    enabled: true

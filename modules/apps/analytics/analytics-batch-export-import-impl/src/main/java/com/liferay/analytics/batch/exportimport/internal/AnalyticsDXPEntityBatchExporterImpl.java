@@ -86,21 +86,6 @@ public class AnalyticsDXPEntityBatchExporterImpl
 				continue;
 			}
 
-			User user = _fetchAnalyticsAdminUser(companyId);
-
-			if (user == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to refresh dispatch trigger ",
-							dispatchTriggerName,
-							" because the analytics administrator user does ",
-							"not exist for company ", companyId));
-				}
-
-				continue;
-			}
-
 			_dispatchLogLocalService.deleteDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId());
 
@@ -122,8 +107,8 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
 
 			_addDispatchTrigger(
-				dispatchTriggerName, zonedDateTime.toLocalDateTime(),
-				user.getUserId());
+				companyId, dispatchTriggerName,
+				zonedDateTime.toLocalDateTime());
 		}
 	}
 
@@ -141,23 +126,8 @@ public class AnalyticsDXPEntityBatchExporterImpl
 				continue;
 			}
 
-			User user = _fetchAnalyticsAdminUser(companyId);
-
-			if (user == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to schedule dispatch trigger ",
-							dispatchTriggerName,
-							" because the analytics administrator user does ",
-							"not exist for company ", companyId));
-				}
-
-				continue;
-			}
-
 			_addDispatchTrigger(
-				dispatchTriggerName, LocalDateTime.now(), user.getUserId());
+				companyId, dispatchTriggerName, LocalDateTime.now());
 		}
 	}
 
@@ -186,14 +156,29 @@ public class AnalyticsDXPEntityBatchExporterImpl
 	}
 
 	private DispatchTrigger _addDispatchTrigger(
-			String dispatchTriggerName, LocalDateTime localDateTime,
-			long userId)
+			long companyId, String dispatchTriggerName,
+			LocalDateTime localDateTime)
 		throws Exception {
+
+		User user = _userLocalService.fetchUserByScreenName(
+			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
+
+		if (user == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to add dispatch trigger ", dispatchTriggerName,
+						" because the analytics administrator user does not ",
+						"exist for company ", companyId));
+			}
+
+			return null;
+		}
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				null, userId, dispatchTriggerName, null, dispatchTriggerName,
-				false);
+				null, user.getUserId(), dispatchTriggerName, null,
+				dispatchTriggerName, false);
 
 		return _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId(), true, _CRON_EXPRESSION,
@@ -201,11 +186,6 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth(),
 			localDateTime.getYear(), localDateTime.getHour(),
 			localDateTime.getMinute(), "UTC");
-	}
-
-	private User _fetchAnalyticsAdminUser(long companyId) {
-		return _userLocalService.fetchUserByScreenName(
-			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
 	}
 
 	private static final String _CRON_EXPRESSION = "0 0 * * * ?";

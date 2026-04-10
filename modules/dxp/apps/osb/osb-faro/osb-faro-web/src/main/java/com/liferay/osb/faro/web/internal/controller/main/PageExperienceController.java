@@ -36,9 +36,9 @@ public class PageExperienceController extends BaseFaroController {
 			@PathParam("groupId") long groupId,
 			@QueryParam("canonicalUrl") String canonicalUrl,
 			@QueryParam("channelId") String channelId,
-			@QueryParam("keywords") String keywords,
 			@DefaultValue("1") @QueryParam("page") int page,
 			@QueryParam("pageTitle") String pageTitle,
+			@QueryParam("search") String search,
 			@DefaultValue("20") @QueryParam("size") int size,
 			@QueryParam("sort") String sortString)
 		throws Exception {
@@ -46,7 +46,7 @@ public class PageExperienceController extends BaseFaroController {
 		return new FaroFDSResultsDisplay(
 			contactsEngineClient.getPageExperiences(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				canonicalUrl, channelId, keywords, page, pageTitle, size,
+				canonicalUrl, channelId, page, pageTitle, search, size,
 				sortString),
 			page, size);
 	}

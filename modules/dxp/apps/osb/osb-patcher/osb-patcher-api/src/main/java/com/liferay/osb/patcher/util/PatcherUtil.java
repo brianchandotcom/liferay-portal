@@ -511,7 +511,7 @@ public class PatcherUtil {
 					else {
 						PatcherFixUtil.processOSBPatcherFixAddJenkinsStatus(
 							GetterUtil.getLong(patcherId),
-							jenkinsStatusJSONString, defaultUser);
+							jenkinsStatusJSONString, user);
 					}
 				}
 				catch (Exception exception) {

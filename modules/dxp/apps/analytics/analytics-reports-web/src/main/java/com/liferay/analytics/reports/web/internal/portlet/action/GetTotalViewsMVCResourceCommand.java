@@ -55,7 +55,9 @@ public class GetTotalViewsMVCResourceCommand extends BaseMVCResourceCommand {
 			JSONObject jsonObject = JSONUtil.put(
 				"analyticsReportsTotalViews",
 				analyticsReportsDataProvider.getTotalViews(
-					_portal.getCompanyId(resourceRequest), canonicalURL));
+					_portal.getCompanyId(resourceRequest),
+					ParamUtil.getString(resourceRequest, "experienceId"),
+					canonicalURL));
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);

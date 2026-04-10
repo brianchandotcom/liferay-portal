@@ -85,6 +85,8 @@ public class GetReferralTrafficSourcesMVCResourceCommand
 						_getDomainReferringURLs(
 							analyticsReportsDataProvider, canonicalURL,
 							themeDisplay.getCompanyId(),
+							ParamUtil.getString(
+								resourceRequest, "experienceId"),
 							timeSpan.toTimeRange(timeSpanOffset)))
 				).put(
 					"referringPages",
@@ -92,6 +94,8 @@ public class GetReferralTrafficSourcesMVCResourceCommand
 						_getPageReferringURLs(
 							analyticsReportsDataProvider, canonicalURL,
 							themeDisplay.getCompanyId(),
+							ParamUtil.getString(
+								resourceRequest, "experienceId"),
 							timeSpan.toTimeRange(timeSpanOffset)))
 				));
 		}
@@ -111,7 +115,8 @@ public class GetReferralTrafficSourcesMVCResourceCommand
 
 	private List<ReferringURL> _getDomainReferringURLs(
 			AnalyticsReportsDataProvider analyticsReportsDataProvider,
-			String canonicalURL, long companyId, TimeRange timeRange)
+			String canonicalURL, long companyId, String experienceId,
+			TimeRange timeRange)
 		throws Exception {
 
 		if (!analyticsReportsDataProvider.isValidAnalyticsConnection(
@@ -121,12 +126,13 @@ public class GetReferralTrafficSourcesMVCResourceCommand
 		}
 
 		return analyticsReportsDataProvider.getDomainReferringURLs(
-			companyId, timeRange, canonicalURL);
+			companyId, experienceId, timeRange, canonicalURL);
 	}
 
 	private List<ReferringURL> _getPageReferringURLs(
 			AnalyticsReportsDataProvider analyticsReportsDataProvider,
-			String canonicalURL, long companyId, TimeRange timeRange)
+			String canonicalURL, long companyId, String experienceId,
+			TimeRange timeRange)
 		throws Exception {
 
 		if (!analyticsReportsDataProvider.isValidAnalyticsConnection(
@@ -136,7 +142,7 @@ public class GetReferralTrafficSourcesMVCResourceCommand
 		}
 
 		return analyticsReportsDataProvider.getPageReferringURLs(
-			companyId, timeRange, canonicalURL);
+			companyId, experienceId, timeRange, canonicalURL);
 	}
 
 	private Comparator<ReferringURL> _getReferringURLComparator() {

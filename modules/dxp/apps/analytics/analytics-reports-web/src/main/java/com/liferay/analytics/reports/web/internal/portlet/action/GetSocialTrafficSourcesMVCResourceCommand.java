@@ -84,6 +84,7 @@ public class GetSocialTrafficSourcesMVCResourceCommand
 					_getReferringSocialMediaList(
 						analyticsReportsDataProvider, canonicalURL,
 						themeDisplay.getCompanyId(),
+						ParamUtil.getString(resourceRequest, "experienceId"),
 						timeSpan.toTimeRange(timeSpanOffset)),
 					resourceBundle));
 
@@ -131,7 +132,8 @@ public class GetSocialTrafficSourcesMVCResourceCommand
 
 	private List<ReferringSocialMedia> _getReferringSocialMediaList(
 			AnalyticsReportsDataProvider analyticsReportsDataProvider,
-			String canonicalURL, long companyId, TimeRange timeRange)
+			String canonicalURL, long companyId, String experienceId,
+			TimeRange timeRange)
 		throws Exception {
 
 		if (!analyticsReportsDataProvider.isValidAnalyticsConnection(
@@ -141,7 +143,7 @@ public class GetSocialTrafficSourcesMVCResourceCommand
 		}
 
 		return analyticsReportsDataProvider.getReferringSocialMediaList(
-			companyId, timeRange, canonicalURL);
+			companyId, experienceId, timeRange, canonicalURL);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

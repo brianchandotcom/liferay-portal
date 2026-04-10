@@ -304,9 +304,15 @@ public class BatchEngineExportTaskExecutorImpl
 				cursorPaginationActive = true;
 			}
 
+			int batchIndex = 1;
+
+			long readStartTimeNs = System.nanoTime();
+
 			Page<?> page = batchEngineTaskItemDelegate.read(
 				filter, Pagination.of(1, exportBatchSize), sorts,
 				filteredParameters, (String)parameters.get("search"));
+
+			long readTimeMs = (System.nanoTime() - readStartTimeNs) / 1_000_000;
 
 			batchEngineExportTask.setTotalItemsCount(
 				Math.toIntExact(page.getTotalCount()));
@@ -329,7 +335,12 @@ public class BatchEngineExportTaskExecutorImpl
 					}
 				}
 
+				long writeStartTimeNs = System.nanoTime();
+
 				batchEngineExportTaskItemWriter.write(items);
+
+				long writeTimeMs = (System.nanoTime() - writeStartTimeNs) /
+					1_000_000;
 
 				batchEngineExportTask.setProcessedItemsCount(
 					batchEngineExportTask.getProcessedItemsCount() +
@@ -355,7 +366,24 @@ public class BatchEngineExportTaskExecutorImpl
 							updateBatchEngineExportTask(batchEngineExportTask);
 				}
 
+				long syncLastSessionStartTimeNs = System.nanoTime();
+
 				_clearSessionPersistenceContext();
+
+				long syncLastSessionTimeMs =
+					(System.nanoTime() - syncLastSessionStartTimeNs) /
+						1_000_000;
+
+				System.out.println(
+					String.format(
+						"{\"event\":\"batchExportMetrics\",\"batchIndex\":" +
+							"%d,\"readTimeMs\":%d,\"writeTimeMs\":%d," +
+								"\"syncLastSessionTimeMs\":%d," +
+									"\"itemCount\":%d,\"processedItemsCount\":" +
+										"%d}",
+						batchIndex, readTimeMs, writeTimeMs,
+						syncLastSessionTimeMs, items.size(),
+						batchEngineExportTask.getProcessedItemsCount()));
 
 				if (Thread.interrupted()) {
 					throw new InterruptedException();
@@ -379,18 +407,25 @@ public class BatchEngineExportTaskExecutorImpl
 				}
 
 				if (cursorPaginationActive) {
+					readStartTimeNs = System.nanoTime();
+
 					page = batchEngineTaskItemDelegate.read(
 						_createCursorFilter(filter, lastItemId),
 						Pagination.of(1, exportBatchSize), sorts,
 						filteredParameters, (String)parameters.get("search"));
 				}
 				else {
+					readStartTimeNs = System.nanoTime();
+
 					page = batchEngineTaskItemDelegate.read(
 						filter,
 						Pagination.of((int)page.getPage() + 1, exportBatchSize),
 						sorts, filteredParameters,
 						(String)parameters.get("search"));
 				}
+
+				readTimeMs = (System.nanoTime() - readStartTimeNs) / 1_000_000;
+				batchIndex++;
 
 				items = page.getItems();
 			}
@@ -689,7 +724,7 @@ public class BatchEngineExportTaskExecutorImpl
 			batchEngineExportTask.getBatchEngineExportTaskId());
 	}
 
-	private static final boolean _USE_EXPORT_CURSOR_PAGINATION = true;
+	private static final boolean _USE_EXPORT_CURSOR_PAGINATION = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskExecutorImpl.class);

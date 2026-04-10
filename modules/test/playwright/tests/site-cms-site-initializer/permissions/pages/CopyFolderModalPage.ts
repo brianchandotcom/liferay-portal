@@ -16,6 +16,7 @@ export class CopyFolderModalPage {
 	readonly selectButton: Locator;
 	readonly space: (spaceName: string) => Locator;
 	readonly spaceInModal: (spaceName: string) => Locator;
+	readonly changeViewComboBox: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -40,5 +41,13 @@ export class CopyFolderModalPage {
 		this.spaceInModal = (spaceName: string) => {
 			return this.modal.getByLabel(spaceName);
 		};
+		this.changeViewComboBox = this.modal.getByRole('combobox', {
+			name: /View Selected/,
+		});
+	}
+
+	async selectTableView() {
+		await this.changeViewComboBox.click();
+		await this.page.getByRole('option', {name: 'Table'}).click();
 	}
 }

@@ -6,6 +6,7 @@
 package com.liferay.portal.db.index;
 
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -222,13 +223,15 @@ public class IndexUpdaterUtil {
 		_processedServletContextNames.clear();
 	}
 
-	private static void _deleteDuplicates(
+	private static boolean _deleteDuplicates(
 			Connection connection, DB db, String tableName, String indexesSQL)
 		throws Exception {
 
 		Matcher matcher = _uniqueIndexPattern.matcher(indexesSQL);
 
 		DBInspector dbInspector = new DBInspector(connection);
+
+		boolean duplicatesDeleted = false;
 
 		while (matcher.find()) {
 			if (dbInspector.hasIndex(tableName, matcher.group(1))) {
@@ -250,8 +253,12 @@ public class IndexUpdaterUtil {
 						StringPool.COMMA_AND_SPACE),
 					orderByColumns + " asc");
 
-			duplicateUniqueFinderRowsCleaner.deleteDuplicates();
+			if (duplicateUniqueFinderRowsCleaner.deleteDuplicates()) {
+				duplicatesDeleted = true;
+			}
 		}
+
+		return duplicatesDeleted;
 	}
 
 	private static ExecutorService _getExecutorService() {
@@ -330,11 +337,24 @@ public class IndexUpdaterUtil {
 							throw sqlException;
 						}
 
-						_deleteDuplicates(
-							connection, db, tableName, indexesSQL);
+						if (_deleteDuplicates(
+								connection, db, tableName, indexesSQL)) {
 
-						db.updateIndexes(
-							connection, tableName, indexesSQL, true);
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"Deleted duplicate records from table ",
+										tableName,
+										" before retrying unique index ",
+										"creation"));
+							}
+
+							db.updateIndexes(
+								connection, tableName, indexesSQL, true);
+						}
+						else {
+							throw sqlException;
+						}
 					}
 				}
 				catch (Exception exception) {

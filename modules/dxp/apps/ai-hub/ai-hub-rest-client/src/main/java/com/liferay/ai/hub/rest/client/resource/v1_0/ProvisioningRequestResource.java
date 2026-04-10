@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.rest.client.resource.v1_0;
 
+import com.liferay.ai.hub.rest.client.dto.v1_0.ProvisioningRequest;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.problem.Problem;
 
@@ -24,19 +25,17 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface SiteResource {
+public interface ProvisioningRequestResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public void putSiteByExternalReferenceCodeSiteInitializer(
-			String externalReferenceCode)
+	public void postProvisioning(ProvisioningRequest provisioningRequest)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			putSiteByExternalReferenceCodeSiteInitializerHttpResponse(
-				String externalReferenceCode)
+	public HttpInvoker.HttpResponse postProvisioningHttpResponse(
+			ProvisioningRequest provisioningRequest)
 		throws Exception;
 
 	public static class Builder {
@@ -52,8 +51,8 @@ public interface SiteResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public SiteResource build() {
-			return new SiteResourceImpl(this);
+		public ProvisioningRequestResource build() {
+			return new ProvisioningRequestResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -145,15 +144,14 @@ public interface SiteResource {
 
 	}
 
-	public static class SiteResourceImpl implements SiteResource {
+	public static class ProvisioningRequestResourceImpl
+		implements ProvisioningRequestResource {
 
-		public void putSiteByExternalReferenceCodeSiteInitializer(
-				String externalReferenceCode)
+		public void postProvisioning(ProvisioningRequest provisioningRequest)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteByExternalReferenceCodeSiteInitializerHttpResponse(
-					externalReferenceCode);
+				postProvisioningHttpResponse(provisioningRequest);
 
 			String content = httpResponse.getContent();
 
@@ -214,14 +212,14 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				putSiteByExternalReferenceCodeSiteInitializerHttpResponse(
-					String externalReferenceCode)
+		public HttpInvoker.HttpResponse postProvisioningHttpResponse(
+				ProvisioningRequest provisioningRequest)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			httpInvoker.body(
+				provisioningRequest.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -240,14 +238,12 @@ public interface SiteResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/sites/by-external-reference-code/{externalReferenceCode}/site-initializer");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+						"/o/ai-hub/v1.0/provisioning");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -257,16 +253,16 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		private SiteResourceImpl(Builder builder) {
+		private ProvisioningRequestResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			SiteResource.class.getName());
+			ProvisioningRequestResource.class.getName());
 
 		private Builder _builder;
 
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-648581001
+// LIFERAY-REST-BUILDER-HASH:1249096298

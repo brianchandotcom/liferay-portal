@@ -109,6 +109,11 @@ components:
                 text:
                     type: string
             type: object
+        ProvisioningRequest:
+            properties:
+                customerName:
+                    type: string
+            type: object
         Site:
             properties:
                 externalReferenceCode:
@@ -349,6 +354,22 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["ContentRetriever"]
+    "/provisioning":
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProvisioningRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProvisioningRequest"
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ProvisioningRequest"]
     "/sites/by-external-reference-code/{externalReferenceCode}/site-initializer":
         put:
             operationId: putSiteByExternalReferenceCodeSiteInitializer

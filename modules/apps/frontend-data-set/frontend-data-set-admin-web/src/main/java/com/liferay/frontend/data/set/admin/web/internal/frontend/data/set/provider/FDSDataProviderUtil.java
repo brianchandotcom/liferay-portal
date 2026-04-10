@@ -7,13 +7,11 @@ package com.liferay.frontend.data.set.admin.web.internal.frontend.data.set.provi
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Daniel Sanz
@@ -23,40 +21,28 @@ public class FDSDataProviderUtil {
 	public static List<SystemFDSEntry> getSystemFDSEntries(
 		String keywords, SystemFDSEntryRegistry systemFDSEntryRegistry) {
 
-		Set<String> systemFDSNames = systemFDSEntryRegistry.getSystemFDSNames();
+		return TransformUtil.transform(
+			systemFDSEntryRegistry.getSystemFDSNames(),
+			(String systemFDSName) -> {
+				SystemFDSEntry systemFDSEntry =
+					systemFDSEntryRegistry.getSystemFDSEntry(systemFDSName);
 
-		if (systemFDSNames == null) {
-			return Collections.emptyList();
-		}
+				if (systemFDSEntry == null) {
+					return null;
+				}
 
-		List<SystemFDSEntry> systemFDSEntries = new ArrayList<>();
+				if (Validator.isNotNull(keywords) &&
+					(Validator.isNull(systemFDSEntry.getTitle()) ||
+					 !StringUtil.matchesIgnoreCase(
+						 systemFDSEntry.getTitle(), keywords)) &&
+					!StringUtil.matchesIgnoreCase(
+						systemFDSEntry.getName(), keywords)) {
 
-		for (String systemFDSName : systemFDSNames) {
-			SystemFDSEntry systemFDSEntry =
-				systemFDSEntryRegistry.getSystemFDSEntry(systemFDSName);
+					return null;
+				}
 
-			if (systemFDSEntry == null) {
-				continue;
-			}
-
-			String label = systemFDSEntry.getTitle();
-
-			if (Validator.isNull(label)) {
-				label = systemFDSEntry.getName();
-			}
-
-			if (Validator.isNotNull(keywords) &&
-				!StringUtil.matchesIgnoreCase(label, keywords) &&
-				!StringUtil.matchesIgnoreCase(
-					systemFDSEntry.getName(), keywords)) {
-
-				continue;
-			}
-
-			systemFDSEntries.add(systemFDSEntry);
-		}
-
-		return systemFDSEntries;
+				return systemFDSEntry;
+			});
 	}
 
 }

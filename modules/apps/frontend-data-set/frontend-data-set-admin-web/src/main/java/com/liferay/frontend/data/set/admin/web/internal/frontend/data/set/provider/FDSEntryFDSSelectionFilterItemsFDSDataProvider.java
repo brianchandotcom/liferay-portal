@@ -19,6 +19,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.search.Sort;
@@ -36,7 +37,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -121,40 +121,27 @@ public class FDSEntryFDSSelectionFilterItemsFDSDataProvider
 		}
 	}
 
-	private boolean _contains(
-		String externalReferenceCode, List<SystemFDSEntry> systemFDSEntries) {
-
-		for (SystemFDSEntry systemFDSEntry : systemFDSEntries) {
-			if (Objects.equals(
-					systemFDSEntry.getName(), externalReferenceCode)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private List<FDSSelectionFilterItem> _getFDSEntryFDSSelectionFilterItems(
 			long companyId, FDSKeywords fdsKeywords)
 		throws PortalException {
-
-		List<FDSSelectionFilterItem> fdsEntries = new ArrayList<>();
 
 		List<SystemFDSEntry> systemFDSEntries =
 			FDSDataProviderUtil.getSystemFDSEntries(
 				fdsKeywords.getKeywords(), _systemFDSEntryRegistry);
 
-		for (SystemFDSEntry systemFDSEntry : systemFDSEntries) {
-			String label = systemFDSEntry.getTitle();
+		List<FDSSelectionFilterItem> fdsSelectionFilterItems =
+			TransformUtil.transform(
+				systemFDSEntries,
+				(SystemFDSEntry systemFDSEntry) -> {
+					String label = systemFDSEntry.getTitle();
 
-			if (Validator.isNull(label)) {
-				label = systemFDSEntry.getName();
-			}
+					if (Validator.isNull(label)) {
+						label = systemFDSEntry.getName();
+					}
 
-			fdsEntries.add(
-				new FDSSelectionFilterItem(systemFDSEntry.getName(), label));
-		}
+					return new FDSSelectionFilterItem(
+						systemFDSEntry.getName(), label);
+				});
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
@@ -162,7 +149,7 @@ public class FDSEntryFDSSelectionFilterItemsFDSDataProvider
 					"L_DATA_SET", companyId);
 
 		if (objectDefinition == null) {
-			return fdsEntries;
+			return fdsSelectionFilterItems;
 		}
 
 		ObjectEntryManager objectEntryManager =
@@ -180,33 +167,38 @@ public class FDSEntryFDSSelectionFilterItemsFDSDataProvider
 						LocaleUtil.getMostRelevantLocale(), null, null),
 					null, null, fdsKeywords.getKeywords(), null);
 
-			for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
-				String externalReferenceCode =
-					objectEntry.getExternalReferenceCode();
+			fdsSelectionFilterItems.addAll(
+				TransformUtil.transform(
+					ListUtil.filter(
+						ListUtil.fromCollection(objectEntriesPage.getItems()),
+						(ObjectEntry objectEntry) -> !ListUtil.exists(
+							systemFDSEntries,
+							systemFDSEntry -> Objects.equals(
+								systemFDSEntry.getName(),
+								objectEntry.getExternalReferenceCode()))),
+					(ObjectEntry objectEntry) -> {
+						String externalReferenceCode =
+							objectEntry.getExternalReferenceCode();
 
-				if (Validator.isNull(externalReferenceCode) ||
-					_contains(externalReferenceCode, systemFDSEntries)) {
+						Map<String, Object> properties =
+							objectEntry.getProperties();
 
-					continue;
-				}
+						String label = GetterUtil.getString(
+							properties.get("label"));
 
-				Map<String, Object> properties = objectEntry.getProperties();
+						if (Validator.isNull(label)) {
+							label = externalReferenceCode;
+						}
 
-				String label = GetterUtil.getString(properties.get("label"));
-
-				if (Validator.isNull(label)) {
-					label = externalReferenceCode;
-				}
-
-				fdsEntries.add(
-					new FDSSelectionFilterItem(externalReferenceCode, label));
-			}
+						return new FDSSelectionFilterItem(
+							externalReferenceCode, label);
+					}));
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}
 
-		return fdsEntries;
+		return fdsSelectionFilterItems;
 	}
 
 	@Reference

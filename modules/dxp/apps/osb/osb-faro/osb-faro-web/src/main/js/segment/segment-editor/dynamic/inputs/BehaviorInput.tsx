@@ -4,9 +4,6 @@ import DateFilterConjunctionInput from './components/DateFilterConjunctionInput'
 import Form from 'shared/components/form';
 import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
 import React from 'react';
-import RealTimePeriodInput, {
-	DEFAULT_OPTIONS
-} from './components/RealTimePeriodInput';
 import SelectEntityFromModal from './components/SelectEntityFromModal';
 import {
 	ACTIVITY_KEY,
@@ -103,10 +100,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 	_completedAnalytics = false;
 
-	componentDidMount() {
-		this.initializeRealTimeDefaults();
-	}
-
 	componentDidUpdate() {
 		const {
 			id,
@@ -119,21 +112,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 		if (!id && valid && !this._completedAnalytics) {
 			this._completedAnalytics = true;
-		}
-	}
-
-	initializeRealTimeDefaults() {
-		const isRealTime = this.props.segmentType === SegmentTypes.RealTime;
-
-		if (isRealTime) {
-			const currentPeriod = this.getRealTimePeriodFromCriterion();
-
-			if (!currentPeriod) {
-				this.handleRealTimePeriodChange(
-					DEFAULT_OPTIONS.interval,
-					DEFAULT_OPTIONS.timeWindow
-				);
-			}
 		}
 	}
 
@@ -318,70 +296,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		onChange(params);
 	}
 
-	@autobind
-	handleRealTimePeriodChange(interval: number, timeWindow: string) {
-		const {onChange, touched, valid, value} = this.props;
-
-		const newDayValue = `${interval}_${timeWindow}`;
-
-		const conjunctionDateFilterIndex = getIndexFromPropertyName(
-			value,
-			'day'
-		);
-
-		let dayCriterion;
-		if (conjunctionDateFilterIndex >= 0) {
-			const existingDayIMap = getFilterCriterionIMap(
-				value,
-				conjunctionDateFilterIndex
-			);
-
-			dayCriterion = existingDayIMap.merge({
-				operatorName: RelationalOperators.GE,
-				touched: true,
-				valid: true,
-				value: newDayValue
-			});
-		} else {
-			dayCriterion = fromJS({
-				operatorName: RelationalOperators.GE,
-				propertyName: 'day',
-				touched: true,
-				valid: true,
-				value: newDayValue
-			});
-		}
-
-		const updatedValue = value.mergeIn(
-			['criterionGroup', 'items', 1],
-			dayCriterion
-		);
-
-		onChange({
-			touched: {...touched, dateFilter: true},
-			valid: {...valid, dateFilter: true},
-			value: updatedValue
-		});
-	}
-
-	getRealTimePeriodFromCriterion(): {
-		interval: number;
-		timeWindow: string;
-	} | null {
-		const {value} = this.props;
-
-		const dayValue = value.getIn(['criterionGroup', 'items', 1, 'value']);
-
-		if (!dayValue || typeof dayValue !== 'string') return null;
-
-		const [intervalStr, timeWindow] = dayValue.split('_');
-		const interval = Number(intervalStr);
-
-		if (!timeWindow || Number.isNaN(interval)) return null;
-
-		return {interval, timeWindow};
-	}
-
 	invalidateAsset() {
 		const {onChange, touched, valid} = this.props;
 
@@ -425,10 +339,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 			Map({propertyName: 'day'})
 		).toJS();
 
-		const isRealTime = segmentType === SegmentTypes.RealTime;
-
-		const initialPeriod = this.getRealTimePeriodFromCriterion();
-
 		return (
 			<div className='criteria-statement'>
 				<Form.Group autoFit>
@@ -467,31 +377,25 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 					/>
 				</Form.Group>
 
-				<Form.Group autoFit>
-					<OccurenceConjunctionInput
-						onChange={this.handleOccurenceConjunctionChange}
-						operatorName={
-							value.get('operator') as FunctionalOperators &
-								RelationalOperators
-						}
-						touched={touched.occurenceCount}
-						valid={valid.occurenceCount}
-						value={value.get('value')}
-					/>
-
-					{isRealTime ? (
-						<RealTimePeriodInput
-							initialInterval={initialPeriod?.interval}
-							initialTimeWindow={initialPeriod?.timeWindow}
-							onChange={this.handleRealTimePeriodChange}
+				{segmentType === SegmentTypes.Batch && (
+					<Form.Group autoFit>
+						<OccurenceConjunctionInput
+							onChange={this.handleOccurenceConjunctionChange}
+							operatorName={
+								value.get('operator') as FunctionalOperators &
+									RelationalOperators
+							}
+							touched={touched.occurenceCount}
+							valid={valid.occurenceCount}
+							value={value.get('value')}
 						/>
-					) : (
+
 						<DateFilterConjunctionInput
 							conjunctionCriterion={conjunctionCriterion}
 							onChange={this.handleDateFilterConjunctionChange}
 						/>
-					)}
-				</Form.Group>
+					</Form.Group>
+				)}
 			</div>
 		);
 	}

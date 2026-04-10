@@ -62,6 +62,7 @@ describe('refreshReferencedStructures', () => {
 				en_US: 'Structure',
 			},
 			name: 'structure-name',
+			path: '',
 			spaces: [],
 			status: 'published',
 			system: false,

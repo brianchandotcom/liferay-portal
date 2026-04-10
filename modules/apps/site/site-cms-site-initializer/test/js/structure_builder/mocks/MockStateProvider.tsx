@@ -20,6 +20,7 @@ export const DEFAULT_STRUCTURE: Structure = {
 		[Liferay.ThemeDisplay.getDefaultLanguageId()]: 'untitled-structure',
 	} as any,
 	name: 'UntitledStructure',
+	path: '',
 	spaces: [],
 	status: 'new',
 	system: false,

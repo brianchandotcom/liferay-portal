@@ -67,6 +67,7 @@ const DEFAULT_STATE: State = {
 		erc: 'main-erc',
 		label: {en_US: 'MainStructure'},
 		name: 'mainStructure',
+		path: '',
 		spaces: [],
 		status: 'draft',
 		system: false,

@@ -29,6 +29,7 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest()
 );
+
 interface SpaceTest {
 	assetLibraryKey: string;
 	name: string;
@@ -64,7 +65,7 @@ function createObjectEntryData({title}: {title: string}) {
 	return {
 		file: {
 			fileBase64:
-				'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',
+				'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',
 			name: `${newTitle.replace(' ', '_')}.png`,
 		},
 		objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -81,18 +82,6 @@ async function createSpace(
 		settings: {},
 		type: 'Space',
 	});
-}
-
-async function deleteSampleFile(
-	apiHelpers: DataApiHelpers,
-	id?: number
-): Promise<void> {
-	if (id) {
-		await apiHelpers.objectEntry.deleteObjectEntry(
-			APPLICATION_NAME,
-			String(id)
-		);
-	}
 }
 
 async function uploadSampleFile(
@@ -148,20 +137,11 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 	await itemSelectorSamplePage.goToPage({layout, site});
 });
 
-test.afterEach(async ({apiHelpers}) => {
-	await deleteSampleFile(apiHelpers, firstSpaceObjectEntry.id);
-	await deleteSampleFile(apiHelpers, secondSpaceObjectEntry.id);
-});
-
-test('Item Selector Modal with Spaces filter for when selecting CMS Files', async ({
+test('Item Selector Modal filters availability for CMS Files', async ({
 	itemSelectorSamplePage,
 	page,
 }) => {
-	await test.step('Check that an Item Selector Modal appears in the page', async () => {
-		await expect(page.getByText('Item Selector Modal')).toBeVisible();
-	});
-
-	await test.step('Check if Spaces filter is available', async () => {
+	await test.step('Check if Item Selector Modal appears and open filters', async () => {
 		await itemSelectorSamplePage.selectCMSFileButton.click();
 
 		await expect(
@@ -170,24 +150,72 @@ test('Item Selector Modal with Spaces filter for when selecting CMS Files', asyn
 
 		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
 
-		await expect(
-			page.getByText(firstSpaceObjectEntry.title, {exact: true})
-		).toBeVisible();
+		await itemSelectorSamplePage.filtersButton.click();
+	});
 
-		await expect(
-			page.getByText(secondSpaceObjectEntry.title, {exact: true})
-		).toBeVisible();
+	await test.step('Check that all CMS filters are present in the dropdown', async () => {
+		const expectedFilterLabels = [
+			'Space',
+			'Type',
+			'Category',
+			'Tags',
+			'Author',
+			'Status',
+			'Create Date',
+			'Display Date',
+			'Expiration Date',
+			'Modified Date',
+			'Publish Date',
+			'Review Date',
+		];
 
-		await expect(itemSelectorSamplePage.filtersButton).toBeVisible();
+		for (const label of expectedFilterLabels) {
+			await expect(
+				page.getByRole('menuitem', {name: label})
+			).toBeVisible();
+		}
+	});
+
+	await test.step('Verify Type filter is not empty', async () => {
+		await page.getByRole('menuitem', {name: 'Type'}).click();
+
+		await expect(page.getByText('No items were found')).toBeHidden();
+
+		await expect(page.getByRole('checkbox').first()).toBeVisible();
+
+		await page.getByRole('button', {name: 'Back'}).click();
+	});
+
+	await test.step('Verify Status filter options', async () => {
+		await page.getByRole('menuitem', {name: 'Status'}).click();
+
+		const expectedStatusLabels = [
+			'Approved',
+			'Pending',
+			'Draft',
+			'Expired',
+			'Scheduled',
+		];
+
+		for (const label of expectedStatusLabels) {
+			await expect(page.getByLabel(label)).toBeVisible();
+		}
+	});
+});
+
+test('Item Selector Modal Space filter functionality', async ({
+	itemSelectorSamplePage,
+	page,
+}) => {
+	await test.step('Open Item Selector Modal', async () => {
+		await itemSelectorSamplePage.selectCMSFileButton.click();
+		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
 	});
 
 	await test.step(`Filter CMS Files by ${firstSpace.name}`, async () => {
 		await itemSelectorSamplePage.filtersButton.click();
-
 		await page.getByRole('menuitem', {name: 'Space'}).click();
-
 		await page.getByLabel(firstSpace.name).click();
-
 		await page.getByRole('button', {name: 'Add Filter'}).click();
 
 		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});

@@ -363,15 +363,15 @@ function SidePanel(props: SidePanelProps) {
 			<VerticalBar.Bar displayType="light" items={items}>
 				{(item) => (
 					<VerticalBar.Item divider={item.divider} key={item.title}>
-						<Button
+						<ClayButtonWithIcon
 							aria-label={item.title}
 							data-tooltip-align="left"
 							displayType={null}
 							ref={panel === item.title ? buttonRef : null}
+							symbol={item.icon}
 							title={item.title}
 						>
-							<ClayIcon symbol={item.icon} />
-						</Button>
+						</ClayButtonWithIcon>
 					</VerticalBar.Item>
 				)}
 			</VerticalBar.Bar>

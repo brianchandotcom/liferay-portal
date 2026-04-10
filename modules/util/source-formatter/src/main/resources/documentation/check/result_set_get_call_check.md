@@ -1,13 +1,9 @@
 ## ResultSetGetCallCheck
 
-When calling `java.sql.Connection.prepareStatement(String sql)` with `sql` of
-the format `select count(*)`, we should use the type `int` when retrieving the
-value for `count` instead of `long`.
+Using `resultSet.getInt("count")` for a count result is risky as it will fail
+if the value exceeds the int range.
 
-The call `long count = recordSet.getLong(1)` will fail with a
-`java.lang.ClassCastException`.
-
-See <https://liferay.atlassian.net/browse/LPSA-19410>.
+It's safer to use `resultSet.getLong("count")` instead.
 
 ### Example
 
@@ -20,7 +16,7 @@ PreparedStatement preparedStatement =
 ResultSet resultSet = preparedStatement.executeQuery();
 
 if (resultSet.next()) {
-    long count = resultSet.getLong("count");
+    int count = resultSet.getInt("count");
 }
 ```
 
@@ -33,7 +29,7 @@ PreparedStatement preparedStatement =
 ResultSet resultSet = preparedStatement.executeQuery();
 
 if (resultSet.next()) {
-    int count = resultSet.getInt("count");
+    long count = resultSet.getLong("count");
 }
 ```
 
@@ -47,12 +43,12 @@ Incorrect:
 
 ```java
 PreparedStatement preparedStatement =
-    connection.prepareStatement("select count(*) as count from Table");
+    connection.prepareStatement("select count(*) from Table");
 
 ResultSet resultSet = preparedStatement.executeQuery();
 
 if (resultSet.next()) {
-    int count = resultSet.getInt(1);
+    long count = resultSet.getLong(1);
 }
 ```
 
@@ -65,6 +61,6 @@ PreparedStatement preparedStatement =
 ResultSet resultSet = preparedStatement.executeQuery();
 
 if (resultSet.next()) {
-    int count = resultSet.getInt("count");
+    long count = resultSet.getLong("count");
 }
 ```

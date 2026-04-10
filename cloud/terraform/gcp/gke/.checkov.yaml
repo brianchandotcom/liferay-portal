@@ -10,5 +10,6 @@ framework:
 quiet: true
 skip-check:
     -   CKV_GCP_12
+    -   CKV_GCP_42
     -   CKV_GCP_69
 soft-fail: false

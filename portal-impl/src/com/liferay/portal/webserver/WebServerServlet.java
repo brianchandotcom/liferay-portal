@@ -468,8 +468,14 @@ public class WebServerServlet extends HttpServlet {
 
 		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
 
-		if (path.startsWith("/company_logo") ||
-			path.startsWith("/layout_set_logo") || path.startsWith("/logo")) {
+		if (path.startsWith("/account_logo") ||
+			path.startsWith("/organization_logo")) {
+
+			return ImageToolUtil.getDefaultOrganizationLogo();
+		}
+		else if (path.startsWith("/company_logo") ||
+				 path.startsWith("/layout_set_logo") ||
+				 path.startsWith("/logo")) {
 
 			return ImageToolUtil.getDefaultCompanyLogo();
 		}
@@ -478,9 +484,6 @@ public class WebServerServlet extends HttpServlet {
 		}
 		else if (path.startsWith("/liferay_logo")) {
 			return ImageToolUtil.getDefaultLiferayLogo();
-		}
-		else if (path.startsWith("/organization_logo")) {
-			return ImageToolUtil.getDefaultOrganizationLogo();
 		}
 		else if (path.startsWith("/user_female_portrait")) {
 			return ImageToolUtil.getDefaultUserFemalePortrait();

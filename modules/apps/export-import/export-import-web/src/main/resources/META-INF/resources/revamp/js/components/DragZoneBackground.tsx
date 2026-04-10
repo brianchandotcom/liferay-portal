@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {formatStorage, sub} from 'frontend-js-web';
 import React from 'react';
 
 export default function DragZoneBackground({maxSize}: {maxSize: number}) {
@@ -25,11 +26,11 @@ export default function DragZoneBackground({maxSize}: {maxSize: number}) {
 			</ClayButton>
 
 			<p className="my-2">
-				{Liferay.Util.sub(
+				{sub(
 					Liferay.Language.get(
 						'only-lar-files-are-allowed-max-file-size-is-x'
 					),
-					Liferay.Util.formatStorage(maxSize, {
+					formatStorage(maxSize, {
 						addSpaceBeforeSuffix: true,
 					})
 				)}

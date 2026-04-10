@@ -4,7 +4,6 @@
  */
 
 import Button from '@clayui/button';
-import {ClayInput} from '@clayui/form';
 import Icon from '@clayui/icon';
 import {
 	InternalDispatch,
@@ -20,17 +19,27 @@ import {
 	useIsMobileDevice,
 	useNavigation,
 	useOverlayPosition,
-	usePrevious,
 } from '@clayui/shared';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {Collection, useCollection} from '../collection';
 import {LiveAnnouncer} from '../live-announcer';
+import {Search} from './Search';
 import {PickerContext} from './context';
+import {useSearch} from './useSearch';
 
 import type {ICollectionProps} from '../collection';
 import type {AnnouncerAPI} from '../live-announcer';
+
+export type PickerMessages = {
+	itemDescribedby: string;
+	itemSelected: string;
+	noResultsFound: string;
+	scrollToBottomAriaLabel: string;
+	scrollToTopAriaLabel: string;
+	searchPlaceholder: string;
+};
 
 type Props<T> = {
 
@@ -114,14 +123,7 @@ type Props<T> = {
 	/**
 	 * Messages for the Picker.
 	 */
-	'messages'?: {
-		itemDescribedby?: string;
-		itemSelected?: string;
-		noResultsFound?: string;
-		scrollToBottomAriaLabel?: string;
-		scrollToTopAriaLabel?: string;
-		searchPlaceholder?: string;
-	};
+	'messages'?: Partial<PickerMessages>;
 
 	/**
 	 * Flag to make the component hybrid, when identified it is on a mobile
@@ -172,7 +174,7 @@ type Props<T> = {
 	[key: string]: any;
 } & Omit<ICollectionProps<T, unknown>, 'virtualize'>;
 
-const defaultMessages = {
+const defaultMessages: PickerMessages = {
 	itemDescribedby:
 		'You are currently on a text element, inside of a list box.',
 	itemSelected: '{0}, selected',
@@ -231,32 +233,26 @@ export function Picker<T extends Record<string, any> | string | number>({
 		value: externalSelectedKey,
 	});
 
-	const [searchValue, setSearchValue] = useState('');
+	const totalItems = items ? items.length : React.Children.count(children);
 
-	const filterFn = useCallback(
-		(value: string) =>
-			value.toLowerCase().includes(searchValue.toLowerCase()),
-		[searchValue]
-	);
+	const {filter, isSearchable, searchRef, searchValue, setSearchValue} =
+		useSearch({
+			active,
+			searchable,
+			searchableThreshold,
+			totalItems,
+		});
 
 	// We initialize the collection in the picker and then pass it down so the
 	// collection can be cached even before the listbox is not mounted.
 
 	const collection = useCollection<T, unknown>({
 		children,
-		filter: filterFn,
+		filter,
 		filterKey: filterKey ?? 'textValue',
 		items,
 		suppressTextValueWarning: false,
 	});
-
-	const totalItems = items ? items.length : React.Children.count(children);
-
-	const isSearchable =
-		searchable === true ||
-		(searchable === undefined &&
-			searchableThreshold !== undefined &&
-			totalItems > searchableThreshold);
 
 	const [activeDescendant, setActiveDescendant] = useState(() =>
 		selectedKey || selectedKey === 0
@@ -267,7 +263,6 @@ export function Picker<T extends Record<string, any> | string | number>({
 	const ariaControls = useId();
 
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
-	const searchRef = useRef<HTMLInputElement | null>(null);
 	const menuRef = useRef<HTMLDivElement | null>(null);
 	const listRef = useRef<HTMLUListElement | null>(null);
 
@@ -283,23 +278,18 @@ export function Picker<T extends Record<string, any> | string | number>({
 
 	const {isFocusVisible} = useInteractionFocus();
 
-	const previousActive = usePrevious(active);
-
-	useEffect(() => {
-		if (active && !previousActive && isSearchable) {
-			searchRef.current?.focus();
-		}
-
-		if (!active && previousActive) {
-			setSearchValue('');
-		}
-	}, [active, isSearchable]);
-
-	useEffect(() => {
-		if (collection.getSize() === 0 && searchValue !== '') {
-			announcerAPIRef.current?.announce(messages.noResultsFound);
-		}
-	}, [collection.getSize(), searchValue]);
+	useEffect(
+		function announceEmptyStateWhenSearching() {
+			if (
+				isSearchable &&
+				collection.getSize() === 0 &&
+				totalItems !== 0
+			) {
+				announcerAPIRef.current?.announce(messages.noResultsFound);
+			}
+		},
+		[collection.getSize(), searchValue, totalItems]
+	);
 
 	useOverlayPosition(
 		{
@@ -644,85 +634,20 @@ export function Picker<T extends Record<string, any> | string | number>({
 									: undefined,
 						}}
 					>
-						{isSearchable && (
-							<form onSubmit={(event) => event.preventDefault()}>
-								<div className="pb-2 pt-3 px-3">
-									<ClayInput.Group small>
-										<ClayInput.GroupItem className="input-group-item-focusable">
-											<ClayInput
-												aria-label={
-													messages.searchPlaceholder
-												}
-												insetAfter
-												onChange={(event) =>
-													setSearchValue(
-														event.target.value
-													)
-												}
-												onKeyDown={(
-													event: React.KeyboardEvent<HTMLInputElement>
-												) => {
-													if (
-														event.key === Keys.Enter
-													) {
-														onPress();
-													}
-
-													if (
-														event.key === Keys.Esc
-													) {
-														setActive(false);
-														triggerRef.current?.focus();
-													}
-
-													if (
-														event.key ===
-															'PageUp' ||
-														event.key === 'PageDown'
-													) {
-														event.preventDefault();
-
-														const list =
-															getOptions();
-
-														onMoveFocus(
-															event.key,
-															list.findIndex(
-																(element) =>
-																	element.getAttribute(
-																		'id'
-																	) ===
-																	String(
-																		activeDescendant
-																	)
-															),
-															list
-														);
-													}
-
-													navigationProps.onKeyDown(
-														event as React.KeyboardEvent<HTMLElement>
-													);
-												}}
-												placeholder={
-													messages.searchPlaceholder
-												}
-												ref={searchRef}
-												type="text"
-												value={searchValue}
-											/>
-
-											<ClayInput.GroupInsetItem
-												after
-												tag="span"
-											>
-												<Icon symbol="search" />
-											</ClayInput.GroupInsetItem>
-										</ClayInput.GroupItem>
-									</ClayInput.Group>
-								</div>
-							</form>
-						)}
+						<Search
+							activeDescendant={activeDescendant}
+							getOptions={getOptions}
+							messages={messages}
+							onActiveChange={setActive}
+							onChange={setSearchValue}
+							onKeyDown={navigationProps.onKeyDown}
+							onMoveFocus={onMoveFocus}
+							onPress={onPress}
+							ref={searchRef}
+							triggerRef={triggerRef}
+							value={searchValue}
+							visible={isSearchable}
+						/>
 
 						{UNSAFE_behavior === 'secondary' &&
 							(isArrowVisible === 'top' ||

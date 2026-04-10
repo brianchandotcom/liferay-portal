@@ -93,7 +93,7 @@ public class CTScoreCalculator {
 		_portalCache.removeAll();
 	}
 
-	private long _countTable(long modelClassNameId) {
+	private int _countTable(long modelClassNameId) {
 		CTService<?> ctService = _ctServiceRegistry.getCTService(
 			modelClassNameId);
 
@@ -130,7 +130,7 @@ public class CTScoreCalculator {
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					if (resultSet.next()) {
-						return resultSet.getLong("count");
+						return (int)resultSet.getLong("count");
 					}
 
 					return 0;

@@ -43,6 +43,8 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutTab;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -139,6 +141,13 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		try {
+			if (_objectDefinition.isDefaultStorageType() &&
+				_objectDefinition.isEnableObjectEntryVersioning()) {
+
+				return _getCollectionInfoPageByApprovedObjectEntries(
+					collectionQuery);
+			}
+
 			if (!_objectDefinition.isAccountEntryRestricted() &&
 				_objectDefinition.isDefaultStorageType() &&
 				_objectDefinition.isEnableIndexSearch()) {
@@ -408,6 +417,46 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			BooleanClauseFactoryUtil.create(
 				booleanQuery, BooleanClauseOccur.MUST.getName())
 		};
+	}
+
+	private InfoPage<ObjectEntry> _getCollectionInfoPageByApprovedObjectEntries(
+			CollectionQuery collectionQuery)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
+					_objectDefinition.getStorageType()));
+
+		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntriesPage =
+			defaultObjectEntryManager.getApprovedObjectEntries(
+				themeDisplay.getCompanyId(), _objectDefinition,
+				scopeGroup.getGroupKey(), null,
+				new DefaultDTOConverterContext(
+					false, null, null, null, null, themeDisplay.getLocale(),
+					null, themeDisplay.getUser()),
+				_getFilterString(collectionQuery),
+				ObjectEntryInfoCollectionProviderUtil.getPagination(
+					collectionQuery.getPagination()),
+				ObjectEntryInfoCollectionProviderUtil.getSearch(
+					collectionQuery),
+				null);
+
+		return InfoPage.of(
+			TransformUtil.transform(
+				new ArrayList<>(objectEntriesPage.getItems()),
+				objectEntry -> ObjectEntryUtil.toObjectEntry(
+					_objectDefinition, objectEntry)),
+			collectionQuery.getPagination(),
+			(int)objectEntriesPage.getTotalCount());
 	}
 
 	private InfoPage<ObjectEntry> _getCollectionInfoPageByIndexer(

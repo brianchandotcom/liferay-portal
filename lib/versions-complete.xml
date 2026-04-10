@@ -1658,7 +1658,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.mcp.server.jar!mcp-core.jar</file-name>
-				<version>0.17.2</version>
+				<version>1.0.1</version>
 				<project-name>Bundle io.modelcontextprotocol.sdk : mcp-core</project-name>
 				<project-url>https://github.com/modelcontextprotocol/java-sdk</project-url>
 				<licenses>
@@ -1670,8 +1670,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.mcp.server.jar!mcp-json-jackson2.jar</file-name>
-				<version>0.17.2</version>
-				<project-name>Java MCP SDK JSON Jackson</project-name>
+				<version>1.0.1</version>
+				<project-name>Bundle io.modelcontextprotocol.sdk : mcp-json-jackson2</project-name>
 				<project-url>https://github.com/modelcontextprotocol/java-sdk</project-url>
 				<licenses>
 					<license>
@@ -2580,8 +2580,20 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch8.impl.jar!log4j-api.jar</file-name>
-				<version>2.17.1</version>
+				<version>2.20.0</version>
 				<project-name>Apache Log4j API</project-name>
+				<project-url>https://www.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.search.elasticsearch8.impl.jar!log4j-core.jar</file-name>
+				<version>2.20.0</version>
+				<project-name>Apache Log4j Core</project-name>
 				<project-url>https://www.apache.org/</project-url>
 				<licenses>
 					<license>
@@ -2631,18 +2643,6 @@
 				<version>1.2.LIFERAY-PATCHED-2</version>
 				<project-name>Apache Commons Logging</project-name>
 				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.search.elasticsearch8.impl.jar!org.apache.logging.log4j.core.jar</file-name>
-				<version>2.17.1.LIFERAY-PATCHED-2</version>
-				<project-name>Apache Log4j Core</project-name>
-				<project-url>https://www.apache.org/</project-url>
 				<licenses>
 					<license>
 						<license-name>LGPL 2.1</license-name>
@@ -4027,8 +4027,20 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.tools.db.partition.migration.validator.jar!log4j-api.jar</file-name>
-				<version>2.17.1</version>
+				<version>2.20.0</version>
 				<project-name>Apache Log4j API</project-name>
+				<project-url>https://www.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.partition.migration.validator.jar!log4j-core.jar</file-name>
+				<version>2.20.0</version>
+				<project-name>Apache Log4j Core</project-name>
 				<project-url>https://www.apache.org/</project-url>
 				<licenses>
 					<license>
@@ -4045,18 +4057,6 @@
 				<licenses>
 					<license>
 						<license-name>The GNU General Public License, v2 with Universal FOSS Exception, v1.0</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tools.db.partition.migration.validator.jar!org.apache.logging.log4j.core.jar</file-name>
-				<version>2.17.1.LIFERAY-PATCHED-2</version>
-				<project-name>Apache Log4j Core</project-name>
-				<project-url>https://www.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7101,7 +7101,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/log4j-1.2-api.jar</file-name>
-				<version>2.17.1</version>
+				<version>2.20.0</version>
 				<project-name>Log4j 1.x Compatibility API</project-name>
 				<project-url>http://logging.apache.org/log4j</project-url>
 				<licenses>
@@ -7845,7 +7845,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/log4j-api.jar</file-name>
-				<version>2.17.1</version>
+				<version>2.20.0</version>
 				<project-name>Log4j API</project-name>
 				<project-url>http://logging.apache.org/log4j</project-url>
 				<licenses>
@@ -7857,7 +7857,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/log4j-core.jar</file-name>
-				<version>2.17.1.LIFERAY-PATCHED-2</version>
+				<version>2.20.0</version>
 				<project-name>Log4j Core</project-name>
 				<project-url>http://logging.apache.org/log4j</project-url>
 				<licenses>

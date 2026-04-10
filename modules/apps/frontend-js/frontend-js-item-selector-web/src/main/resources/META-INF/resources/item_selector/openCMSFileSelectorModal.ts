@@ -8,6 +8,10 @@ import {render} from '@liferay/frontend-js-react-web';
 import CMSFileUploaderComponent from '../item_selector_file_uploader/CMSFileUploaderComponent';
 import DetachedCMSFilesItemSelectorModal from './DetachedCMSFilesItemSelectorModal';
 import {IItemSelectorModalProps} from './ItemSelectorModal';
+import {
+	getCMSItemSelectorFilters,
+	getCMSItemSelectorGroupedFilters,
+} from './getCMSItemSelectorFilters';
 
 interface CMSFile {
 	description: string;
@@ -71,20 +75,8 @@ const CMS_FILE_ITEM_SELECTOR_CONFIG: CMSFileItemSelectorModalConfig = {
 
 const FDS_PROPS: Omit<
 	CMSFileItemSelectorModalProps['fdsProps'],
-	'id' | 'items'
+	'filters' | 'id' | 'items'
 > = {
-	filters: [
-		{
-			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
-			entityFieldType: 'collection',
-			id: 'groupIds',
-			itemKey: 'siteId',
-			itemLabel: 'name',
-			label: Liferay.Language.get('space'),
-			multiple: true,
-			type: 'selection',
-		},
-	],
 	pagination: {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,
@@ -189,6 +181,8 @@ export default function openCMSFileSelectorModal({
 			allowedExtensions,
 			fdsProps: {
 				...FDS_PROPS,
+				filters: getCMSItemSelectorFilters(groupId),
+				groupedFilters: getCMSItemSelectorGroupedFilters(),
 				...fdsProps,
 				id: `CMSItemSelectorFDS_${getRandomId()}`,
 			},

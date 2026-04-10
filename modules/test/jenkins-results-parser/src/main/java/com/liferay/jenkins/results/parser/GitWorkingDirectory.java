@@ -1827,13 +1827,15 @@ public class GitWorkingDirectory {
 				checkoutLocalGitBranch(tempLocalGitBranch);
 			}
 
-			RemoteGitRef senderRemoteGitRef = getRemoteGitRef(
-				senderBranchName, senderRemoteURL, true);
+			if (localSHAExists(senderSHA)) {
+				createLocalGitBranch(senderBranchName, true, senderSHA);
+			}
+			else {
+				RemoteGitRef senderRemoteGitRef = getRemoteGitRef(
+					senderBranchName, senderRemoteURL, true);
 
-			fetch(senderRemoteGitRef);
-
-			LocalGitBranch rebasedLocalGitBranch = createLocalGitBranch(
-				rebasedLocalGitBranchName, true, senderSHA);
+				fetch(senderRemoteGitRef);
+			}
 
 			RemoteGitBranch upstreamRemoteGitBranch = getRemoteGitBranch(
 				upstreamBranchName, getUpstreamGitRemote(), true);
@@ -1842,12 +1844,21 @@ public class GitWorkingDirectory {
 				upstreamBranchSHA = upstreamRemoteGitBranch.getSHA();
 			}
 
-			if (!localSHAExists(upstreamBranchSHA)) {
+			LocalGitBranch upstreamLocalGitBranch;
+
+			if (localSHAExists(upstreamBranchSHA)) {
+				upstreamLocalGitBranch = createLocalGitBranch(
+					upstreamBranchName, true, upstreamBranchSHA);
+			}
+			else {
 				fetch(upstreamRemoteGitBranch);
+
+				upstreamLocalGitBranch = createLocalGitBranch(
+					upstreamRemoteGitBranch.getName(), true, upstreamBranchSHA);
 			}
 
-			LocalGitBranch upstreamLocalGitBranch = createLocalGitBranch(
-				upstreamRemoteGitBranch.getName(), true, upstreamBranchSHA);
+			LocalGitBranch rebasedLocalGitBranch = createLocalGitBranch(
+				rebasedLocalGitBranchName, true, senderSHA);
 
 			rebasedLocalGitBranch = rebase(
 				true, upstreamLocalGitBranch, rebasedLocalGitBranch);

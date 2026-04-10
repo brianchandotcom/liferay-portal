@@ -33,12 +33,17 @@ test.afterEach(
 	async ({page, termsOfUseInstanceSettingsPage, userLoginPage}) => {
 		await performLoginViaApi({page, screenName: 'test'});
 
-		await page.waitForLoadState('networkidle');
+		await expect(async () => {
+			await page.goto('/');
 
-		if (await userLoginPage.iAgreeButton.isVisible()) {
-			await userLoginPage.iAgreeButton.click();
-			await page.waitForLoadState('networkidle');
-		}
+			if (await userLoginPage.iAgreeButton.isVisible()) {
+				await userLoginPage.iAgreeButton.click();
+			}
+
+			await expect(page.getByTitle('User Profile Menu')).toBeVisible({
+				timeout: 3000,
+			});
+		}).toPass({timeout: 30000});
 
 		await termsOfUseInstanceSettingsPage.goto();
 
@@ -188,5 +193,22 @@ test(
 		finally {
 			await apiHelpers.headlessSite.deleteSite(site.id);
 		}
+	}
+);
+
+test(
+	'Reset terms of use consent displays the in-progress alert',
+	{tag: '@LPD-81612'},
+	async ({page, termsOfUseInstanceSettingsPage}) => {
+		await termsOfUseInstanceSettingsPage.goto();
+
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await termsOfUseInstanceSettingsPage.resetConsentButton.click();
+
+		await waitForAlert(
+			page,
+			'Success:Terms of use consent reset is in progress.'
+		);
 	}
 );

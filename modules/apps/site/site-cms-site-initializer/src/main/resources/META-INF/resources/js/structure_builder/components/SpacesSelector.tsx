@@ -30,8 +30,6 @@ export default function SpacesSelector({
 	disabled?: boolean;
 	structure: Structure | ReferencedStructure;
 }) {
-	const [value, setValue] = React.useState('');
-
 	const {spaces: structureSpaces, uuid: structureUuid} = structure;
 
 	const dispatch = useStateDispatch();
@@ -108,7 +106,6 @@ export default function SpacesSelector({
 								});
 							}
 						}}
-						onChange={setValue}
 						onItemsChange={(items: Array<Item | Space>) => {
 							dispatch({
 								spaces: items.map(
@@ -119,7 +116,6 @@ export default function SpacesSelector({
 								type: 'update-structure',
 							});
 						}}
-						value={value}
 					>
 						{(item: Space) => (
 							<ItemSelector.Item

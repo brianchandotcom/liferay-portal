@@ -305,6 +305,8 @@ function BulkActionsMonitor() {
 		pollProcessingTasks();
 	}, [getTasks, pollProcessingTasks]);
 
+	const taskStatusToggle = Liferay.Language.get('task-status-toggle');
+
 	return processingTasks || tasks.length ? (
 		<DropDown
 			active={active}
@@ -312,13 +314,16 @@ function BulkActionsMonitor() {
 			trigger={
 				<div>
 					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('task-status-toggle')}
+						aria-label={taskStatusToggle}
 						borderless
 						className={classnames('task-status-toggle', {
 							'task-status-toggle-show': !processingTasks,
 						})}
+						data-tooltip="true"
+						data-tooltip-align="left"
 						displayType="secondary"
 						symbol="forms"
+						title={taskStatusToggle}
 					/>
 
 					{processingTasks > 0 ? (

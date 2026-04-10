@@ -87,7 +87,6 @@ public class JSONUtil {
 			addMixIn(PageVisited.class, PageVisitMixin.class);
 			addMixIn(TokenCredentials.class, TokenCredentialsMixin.class);
 			configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
 			setPropertyNamingStrategy(
 				new PropertyNamingStrategy() {
 
@@ -107,7 +106,6 @@ public class JSONUtil {
 					}
 
 				});
-
 			setVisibility(
 				PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 		}

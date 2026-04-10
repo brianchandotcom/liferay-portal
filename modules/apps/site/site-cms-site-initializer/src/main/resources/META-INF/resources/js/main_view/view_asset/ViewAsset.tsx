@@ -15,7 +15,6 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import AssetPreview from '../../common/components/AssetPreview';
 import Toolbar from '../../common/components/Toolbar';
 import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
-import {SharingPermission} from '../../common/types/SharingPermission';
 import CommentsPanel from '../../content_editor/components/panels/CommentsPanel';
 import ObjectEntryService from '../info_panel/services/ObjectEntryService';
 
@@ -35,6 +34,7 @@ interface ViewAssetProps {
 	commentsProps: CommentsProps;
 	contentViewURL: string;
 	getObjectEntryURL: string;
+	hasCommentPermission: boolean;
 }
 
 const ViewAssetCommentsPanel = ({
@@ -74,6 +74,7 @@ export default function ViewAsset({
 	commentsProps,
 	contentViewURL,
 	getObjectEntryURL,
+	hasCommentPermission,
 }: ViewAssetProps) {
 	const [itemState, setItemState] = useState<ISearchAssetObjectEntry | null>(
 		null
@@ -121,15 +122,12 @@ export default function ViewAsset({
 	const file = item.embedded.file;
 	const link = file?.link;
 
-	const showCommentsPanel =
-		item.actionIds?.includes(SharingPermission.Comment) ?? true;
-
 	return (
 		<>
 			<Toolbar backURL={backURL} title={item.title}>
 				<Toolbar.Item>
 					<div className="align-items-center c-gap-2 d-flex">
-						{showCommentsPanel && (
+						{hasCommentPermission && (
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(
 									'show-comments'
@@ -176,7 +174,7 @@ export default function ViewAsset({
 					onOpenChange={setOpenSidePanel}
 					open={openSidePanel}
 				>
-					{showCommentsPanel && (
+					{hasCommentPermission && (
 						<ViewAssetCommentsPanel
 							commentsProps={commentsProps}
 							item={item}

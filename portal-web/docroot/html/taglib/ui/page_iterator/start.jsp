@@ -30,7 +30,7 @@ int initialPages = 20;
 if (portletURL != null) {
 	String[] urlArray = PortalUtil.stripURLAnchor(portletURL.toString(), StringPool.POUND);
 
-	url = urlArray[0];
+	url = PortalUtil.escapeRedirect(urlArray[0]);
 	urlAnchor = urlArray[1];
 
 	if (url.indexOf(CharPool.QUESTION) == -1) {

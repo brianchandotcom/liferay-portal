@@ -12,6 +12,7 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -25,6 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -91,32 +93,38 @@ public class ContentEditorPreviewComponentSectionFragmentRenderer
 			return Collections.emptyMap();
 		}
 
-		return HashMapBuilder.<String, Object>put(
-			"title",
-			_getTitle(
-				httpServletRequest, layoutDisplayPageObjectProvider,
-				(ObjectEntry)displayObject)
-		).build();
-	}
-
-	private String _getTitle(
-		HttpServletRequest httpServletRequest,
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-		ObjectEntry objectEntry) {
+		ObjectEntry objectEntry = (ObjectEntry)displayObject;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String title = layoutDisplayPageObjectProvider.getTitle(
-			themeDisplay.getLocale());
+		return HashMapBuilder.<String, Object>put(
+			"getPreviewDataURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				"/cms/get_preview_data?objectEntryId=",
+				objectEntry.getObjectEntryId())
+		).put(
+			"title",
+			_getTitle(
+				layoutDisplayPageObjectProvider, themeDisplay.getLocale(),
+				objectEntry)
+		).build();
+	}
+
+	private String _getTitle(
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+		Locale locale, ObjectEntry objectEntry) {
+
+		String title = layoutDisplayPageObjectProvider.getTitle(locale);
 
 		if (Validator.isNull(title)) {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					objectEntry.getObjectDefinitionId());
 
-			return objectDefinition.getLabel(themeDisplay.getLocale());
+			return objectDefinition.getLabel(locale);
 		}
 
 		return title;

@@ -10,7 +10,17 @@ import java.io.File;
 /**
  * @author Peter Shin
  */
-public class ConfigYAML {
+public class ConfigYAML implements Cloneable {
+
+	@Override
+	public ConfigYAML clone() {
+		try {
+			return (ConfigYAML)super.clone();
+		}
+		catch (CloneNotSupportedException cloneNotSupportedException) {
+			throw new RuntimeException(cloneNotSupportedException);
+		}
+	}
 
 	public String getApiDir() {
 		return _apiDir;

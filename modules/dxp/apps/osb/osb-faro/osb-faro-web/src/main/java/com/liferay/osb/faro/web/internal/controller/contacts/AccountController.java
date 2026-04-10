@@ -28,7 +28,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
@@ -101,6 +103,27 @@ public class AccountController extends BaseFaroController {
 		Function<Account, AccountDisplay> function = AccountDisplay::new;
 
 		return new FaroFDSResultsDisplay(results, function, page, pageSize);
+	}
+
+	@GET
+	@Path("/fds_field_values")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public FaroFDSResultsDisplay<Object> searchFDSFieldValues(
+			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") long channelId,
+			@QueryParam("fieldMappingFieldName") String fieldMappingFieldName,
+			@QueryParam("query") String query, @QueryParam("page") int page,
+			@QueryParam("pageSize") int pageSize)
+		throws Exception {
+
+		Results<Object> results = contactsEngineClient.getAccountFieldValues(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), channelId,
+			fieldMappingFieldName, query, page, pageSize);
+
+		Function<Object, Map<String, String>> function =
+			object -> Collections.singletonMap("name", String.valueOf(object));
+
+		return new FaroFDSResultsDisplay<>(results, function, page, pageSize);
 	}
 
 	@GET

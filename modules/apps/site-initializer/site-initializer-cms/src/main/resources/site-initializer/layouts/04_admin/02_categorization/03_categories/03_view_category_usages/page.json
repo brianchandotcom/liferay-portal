@@ -3,7 +3,31 @@
 	"hidden": false,
 	"name": "Category Usages",
 	"name_i18n": {
-		"en_US": "Category Usages"
+		"ar_SA": "استخدامات الفئة",
+		"ca_AD": "Usos de la categoria",
+		"ca_ES": "Usos de la categoria",
+		"ca_ES_VALENCIA": "Usos de la categoria",
+		"de_AT": "Kategorienutzungen",
+		"de_CH": "Kategorienutzungen",
+		"de_DE": "Kategorienutzungen",
+		"en_US": "Category Usages",
+		"es_AR": "Usos de categoría",
+		"es_CO": "Usos de categoría",
+		"es_ES": "Usos de categoría",
+		"es_MX": "Usos de categoría",
+		"fi_FI": "Luokkien käytöt",
+		"fr_BE": "Utilisations des catégories",
+		"fr_CH": "Utilisations des catégories",
+		"fr_FR": "Utilisations des catégories",
+		"hu_HU": "Kategóriahasználat",
+		"ja_JP": "カテゴリの使用状況",
+		"lo_LA": "ການນຳໃຊ້ໝວດ",
+		"nl_BE": "Categoriegebruik",
+		"nl_NL": "Categoriegebruik",
+		"pt_BR": "Usos de Categoria",
+		"pt_PT": "Usos de Categoria",
+		"sv_SE": "Kategorianvändningar",
+		"zh_CN": "类别使用"
 	},
 	"permissions": [
 		{

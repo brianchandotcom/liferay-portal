@@ -4,7 +4,32 @@
 	"hidden": false,
 	"name": "Assets",
 	"name_i18n": {
-		"en_US": "Assets"
+		"ar_SA": "الأصول",
+		"ca_AD": "Actius",
+		"ca_ES": "Actius",
+		"ca_ES_VALENCIA": "Actius",
+		"de_AT": "Assets",
+		"de_CH": "Assets",
+		"de_DE": "Assets",
+		"en_US": "Assets",
+		"es_AR": "Activos",
+		"es_CO": "Activos",
+		"es_ES": "Activos",
+		"es_MX": "Activos",
+		"fi_FI": "Resurssit",
+		"fr_BE": "Actifs",
+		"fr_CH": "Actifs",
+		"fr_FR": "Actifs",
+		"hu_HU": "Tartalmak",
+		"ja_JP": "アセット",
+		"km_KH": "ទ្រព្យសកម្ម",
+		"lo_LA": "ຊັບສິນ",
+		"nl_BE": "Assets",
+		"nl_NL": "Assets",
+		"pt_BR": "Ativos",
+		"pt_PT": "Ativos",
+		"sv_SE": "Tillgångar",
+		"zh_CN": "资源"
 	},
 	"permissions": [
 		{

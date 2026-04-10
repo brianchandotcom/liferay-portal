@@ -3,7 +3,31 @@
 	"hidden": true,
 	"name": "Structure Builder",
 	"name_i18n": {
-		"en_US": "Structure Builder"
+		"ar_SA": "باني الهياكل",
+		"ca_AD": "Generador d'estructures",
+		"ca_ES": "Generador d'estructures",
+		"ca_ES_VALENCIA": "Generador d'estructures",
+		"de_AT": "Structure Builder",
+		"de_CH": "Structure Builder",
+		"de_DE": "Structure Builder",
+		"en_US": "Structure Builder",
+		"es_AR": "Generador de estructuras",
+		"es_CO": "Generador de estructuras",
+		"es_ES": "Generador de estructuras",
+		"es_MX": "Generador de estructuras",
+		"fi_FI": "Rakenteen luontityökalu",
+		"fr_BE": "Constructeur de structures",
+		"fr_CH": "Constructeur de structures",
+		"fr_FR": "Constructeur de structures",
+		"hu_HU": "Struktúraépítő",
+		"ja_JP": "ストラクチャービルダー",
+		"lo_LA": "ຕົວສ້າງໂຄງສ້າງ",
+		"nl_BE": "Structuurbouwer",
+		"nl_NL": "Structuurbouwer",
+		"pt_BR": "Construtor de Estrutura",
+		"pt_PT": "Criador de Estrutura",
+		"sv_SE": "Strukturverktyg",
+		"zh_CN": "结构生成器"
 	},
 	"permissions": [
 		{

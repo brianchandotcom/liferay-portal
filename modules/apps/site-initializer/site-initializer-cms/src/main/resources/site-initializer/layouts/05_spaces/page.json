@@ -3,7 +3,32 @@
 	"hidden": true,
 	"name": "All Spaces",
 	"name_i18n": {
-		"en_US": "All Spaces"
+		"ar_SA": "جميع المساحات",
+		"ca_AD": "Tots els espais",
+		"ca_ES": "Tots els espais",
+		"ca_ES_VALENCIA": "Tots els espais",
+		"de_AT": "Alle Bereiche",
+		"de_CH": "Alle Bereiche",
+		"de_DE": "Alle Bereiche",
+		"en_US": "All Spaces",
+		"es_AR": "Todos los espacios",
+		"es_CO": "Todos los espacios",
+		"es_ES": "Todos los espacios",
+		"es_MX": "Todos los espacios",
+		"fi_FI": "Kaikki tilat",
+		"fr_BE": "Tous les espaces",
+		"fr_CH": "Tous les espaces",
+		"fr_FR": "Tous les espaces",
+		"gl_ES": "Todos os espazos",
+		"hu_HU": "Összes munkaterület",
+		"ja_JP": "すべてのスペース",
+		"lo_LA": "ພື້ນທີ່ທັງໝົດ",
+		"nl_BE": "Alle ruimten",
+		"nl_NL": "Alle ruimten",
+		"pt_BR": "Todos os espaços",
+		"pt_PT": "Todos os espaços",
+		"sv_SE": "Alla utrymmen",
+		"zh_CN": "所有空间"
 	},
 	"permissions": [
 		{

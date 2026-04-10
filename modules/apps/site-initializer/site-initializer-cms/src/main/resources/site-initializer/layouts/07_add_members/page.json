@@ -3,7 +3,43 @@
 	"hidden": true,
 	"name": "Add Space Members",
 	"name_i18n": {
-		"en_US": "Add Space Members"
+		"ar_SA": "إضافة أعضاء المساحة",
+		"ca_AD": "Afegir membres de l'espai",
+		"ca_ES": "Afegir membres de l'espai",
+		"ca_ES_VALENCIA": "Afegir membres de l'espai",
+		"cs_CZ": "Přidat členy prostoru",
+		"de_AT": "Bereichsmitglieder hinzufügen",
+		"de_CH": "Bereichsmitglieder hinzufügen",
+		"de_DE": "Bereichsmitglieder hinzufügen",
+		"el_GR": "Προσθήκη μελών χώρου",
+		"en_AU": "Add Space Members",
+		"en_CA": "Add Space Members",
+		"en_GB": "Add Space Members",
+		"en_IE": "Add Space Members",
+		"en_US": "Add Space Members",
+		"es_AR": "Añadir miembros al espacio",
+		"es_CO": "Añadir miembros al espacio",
+		"es_ES": "Añadir miembros al espacio",
+		"es_MX": "Añadir miembros al espacio",
+		"fi_FI": "Lisää tilan jäseniä",
+		"fr_BE": "Ajouter des membres à l'espace",
+		"fr_CA": "Ajouter des membres à l'espace",
+		"fr_CH": "Ajouter des membres à l'espace",
+		"fr_FR": "Ajouter des membres à l'espace",
+		"gl_ES": "Engadir membros ao espazo",
+		"hu_HU": "Munkaterület-tagok hozzáadása",
+		"it_CH": "Aggiungi membri dello spazio",
+		"it_IT": "Aggiungi membri dello spazio",
+		"ja_JP": "スペースメンバーを追加",
+		"ko_KR": "공간 구성원 추가",
+		"nl_BE": "Ruimteleden toevoegen",
+		"nl_NL": "Ruimteleden toevoegen",
+		"pt_BR": "Adicionar membros do espaço",
+		"pt_PT": "Adicionar membros do espaço",
+		"ru_RU": "Добавить участников пространства",
+		"sv_SE": "Lägg till medlemmar i utrymmet",
+		"zh_CN": "添加空间成员",
+		"zh_TW": "添加空間成員"
 	},
 	"permissions": [
 		{
@@ -17,12 +53,6 @@
 			"actionIds": [
 			],
 			"roleName": "Guest",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-			],
-			"roleName": "Site Member",
 			"scope": 4
 		}
 	],

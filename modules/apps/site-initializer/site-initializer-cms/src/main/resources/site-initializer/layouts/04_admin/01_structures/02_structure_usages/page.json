@@ -3,7 +3,31 @@
 	"hidden": true,
 	"name": "Structure Usages",
 	"name_i18n": {
-		"en_US": "Structure Usages"
+		"ar_SA": "استخدامات الهيكل",
+		"ca_AD": "Usos de l'estructura",
+		"ca_ES": "Usos de l'estructura",
+		"ca_ES_VALENCIA": "Usos de l'estructura",
+		"de_AT": "Strukturnutzungen",
+		"de_CH": "Strukturnutzungen",
+		"de_DE": "Strukturnutzungen",
+		"en_US": "Structure Usages",
+		"es_AR": "Usos de estructuras",
+		"es_CO": "Usos de estructuras",
+		"es_ES": "Usos de estructuras",
+		"es_MX": "Usos de estructuras",
+		"fi_FI": "Rakenteen käytöt",
+		"fr_BE": "Utilisations des structures",
+		"fr_CH": "Utilisations des structures",
+		"fr_FR": "Utilisations des structures",
+		"hu_HU": "Struktúrahasználat",
+		"ja_JP": "ストラクチャーの使用状況",
+		"lo_LA": "ການໃຊ້ງານໂຄງສ້າງ",
+		"nl_BE": "Structuurgebruik",
+		"nl_NL": "Structuurgebruik",
+		"pt_BR": "Usos de Estrutura",
+		"pt_PT": "Usos de Estrutura",
+		"sv_SE": "Strukturanvändningar",
+		"zh_CN": "结构使用"
 	},
 	"permissions": [
 		{

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -118,6 +119,7 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		patcherFix.setType(type);
 		patcherFix.setStatus(status);
+		patcherFix.setStatusDate(new Date());
 
 		patcherFix = _patcherFixLocalService.updatePatcherFix(patcherFix);
 

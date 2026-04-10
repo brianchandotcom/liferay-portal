@@ -4,12 +4,11 @@
  */
 
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
-import {ENDPOINTS} from '../constants/endpoints';
 
 const getEndpointByScope = (isCompanyGroup: boolean, groupId?: number) => {
 	return isCompanyGroup
-		? ENDPOINTS.VALIDATE_IMPORT_FILE
-		: ENDPOINTS.VALIDATE_SITE_IMPORT_FILE(groupId ?? 0);
+		? '/o/export-import/v1.0/validate-import-file'
+		: `/o/export-import/v1.0/sites/${groupId ?? 0}/validate-import-file`;
 };
 
 export async function getValidateLarFileEndpoint({

@@ -3,6 +3,7 @@ import com.liferay.gradle.plugins.source.formatter.FormatSourceTask
 import com.liferay.gradle.plugins.util.PortalTools
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
+import com.liferay.jenkins.results.parser.test.suite.BranchValidator
 
 import java.nio.file.Files
 
@@ -12,6 +13,10 @@ import org.gradle.util.GUtil
 
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.jenkins.results.parser", version: "1.0.1789"
+	}
 }
 
 apply plugin: "com.liferay.source.formatter"
@@ -21,7 +26,7 @@ task appendHotfixQualifier
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
-task generateBranchValidationScript(type: JavaExec)
+task generateBranchValidationScript
 task printDependencyPath
 task removeHotfixQualifier
 task setUpLibs
@@ -71,14 +76,6 @@ appendHotfixQualifier {
 	}
 }
 
-configurations {
-	generateBranchValidationScriptConfiguration
-}
-
-dependencies {
-	generateBranchValidationScriptConfiguration group: "com.liferay", name: "com.liferay.jenkins.results.parser", version: "1.0.1789"
-}
-
 formatSourceCurrentBranch {
 	description = "Runs Liferay Source Formatter to format the project files that are added or modified in the current Git branch."
 	formatCurrentBranch = true
@@ -99,11 +96,6 @@ generateBranchValidationScript {
 
 	File outputDir = file "${buildDir}/${task.name}"
 
-	args repoRootDir, outputDir
-
-	classpath = configurations.generateBranchValidationScriptConfiguration
-	mainClass = "com.liferay.jenkins.results.parser.test.suite.BranchValidator"
-
 	outputs.file provider {
 		file "${outputDir}/validate_branch.sh"
 	}
@@ -113,6 +105,8 @@ generateBranchValidationScript {
 	}
 
 	doLast {
+		BranchValidator.generateValidateBranchScript(repoRootDir.absolutePath, outputDir.absolutePath)
+
 		println ""
 		println "Script generated at: file://${outputs.files.singleFile}"
 	}

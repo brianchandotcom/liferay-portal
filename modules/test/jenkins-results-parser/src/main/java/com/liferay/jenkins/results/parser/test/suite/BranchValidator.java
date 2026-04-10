@@ -21,51 +21,23 @@ import java.util.Set;
  */
 public class BranchValidator {
 
-	public static void main(String[] args) throws IOException {
-		String gitRepositoryDirPath = null;
+	public static void generateValidateBranchScript(
+			String gitRepositoryDirPath, String outputDirPath)
+		throws IOException {
 
-		if (args.length > 0) {
-			gitRepositoryDirPath = args[0];
-		}
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryDirPath)) {
-			throw new IllegalArgumentException(
-				"Git repository directory is null or empty");
-		}
-
-		String outputDirPath = null;
-
-		if (args.length > 1) {
-			outputDirPath = args[1];
-		}
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(outputDirPath)) {
-			throw new IllegalArgumentException(
-				"Output directory is null or empty");
-		}
-
-		BranchValidator branchValidator = new BranchValidator(
-			gitRepositoryDirPath, outputDirPath);
-
-		branchValidator.generate();
-	}
-
-	public BranchValidator(String gitRepositoryDirPath, String outputDirPath) {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryDirPath)) {
 			throw new IllegalArgumentException(
 				"Git repository directory is not set");
 		}
 
-		_gitWorkingDirectory =
+		GitWorkingDirectory gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				"master", gitRepositoryDirPath, "liferay-portal");
 
-		_outputDir = new File(outputDirPath);
-	}
+		File outputDir = new File(outputDirPath);
 
-	public void generate() throws IOException {
 		RelevantRuleEngine relevantRuleEngine = new RelevantRuleEngine(
-			_gitWorkingDirectory, _TEST_SUITE_NAME);
+			gitWorkingDirectory, _TEST_SUITE_NAME);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -73,11 +45,11 @@ public class BranchValidator {
 		sb.append("function main {\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo \"This script was generated on branch ");
-		sb.append(_gitWorkingDirectory.getCurrentBranchName());
+		sb.append(gitWorkingDirectory.getCurrentBranchName());
 		sb.append(" (");
 
 		LocalGitBranch localGitBranch =
-			_gitWorkingDirectory.getCurrentLocalGitBranch();
+			gitWorkingDirectory.getCurrentLocalGitBranch();
 
 		String sha = localGitBranch.getSHA();
 
@@ -88,7 +60,7 @@ public class BranchValidator {
 		sb.append(") which is ");
 
 		String upstreamMasterAheadBehindDescription =
-			_gitWorkingDirectory.getUpstreamMasterAheadBehindDescription();
+			gitWorkingDirectory.getUpstreamMasterAheadBehindDescription();
 
 		sb.append(upstreamMasterAheadBehindDescription);
 
@@ -114,8 +86,8 @@ public class BranchValidator {
 
 		Set<String> commands = new LinkedHashSet<>();
 
-		_gitWorkingDirectory.setCacheBashCommands(true);
-		_gitWorkingDirectory.setUseUpstreamMasterDiffBase(true);
+		gitWorkingDirectory.setCacheBashCommands(true);
+		gitWorkingDirectory.setUseUpstreamMasterDiffBase(true);
 
 		for (RelevantRule relevantRule :
 				relevantRuleEngine.getMatchingRelevantRules(null)) {
@@ -203,20 +175,13 @@ public class BranchValidator {
 
 		String generatedScript = sb.toString();
 
-		File scriptFile = new File(_outputDir, "validate_branch.sh");
+		File scriptFile = new File(outputDir, "validate_branch.sh");
 
 		JenkinsResultsParserUtil.write(scriptFile, generatedScript);
 
 		scriptFile.setExecutable(true);
 	}
 
-	public GitWorkingDirectory getGitWorkingDirectory() {
-		return _gitWorkingDirectory;
-	}
-
 	private static final String _TEST_SUITE_NAME = "relevant-local";
-
-	private final GitWorkingDirectory _gitWorkingDirectory;
-	private final File _outputDir;
 
 }

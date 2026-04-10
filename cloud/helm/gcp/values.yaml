@@ -7,6 +7,12 @@ liferay-default:
         sidecar.opentelemetry.io/inject: "false"
     configmap:
         data:
+            com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config: |
+                authenticationEnabled=B"false"
+                httpSSLEnabled=B"false"
+                networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
+                operationMode="REMOTE"
+                productionModeEnabled=B"true"
             com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config: |
                 authenticationEnabled=B"false"
                 httpSSLEnabled=B"false"
@@ -75,6 +81,9 @@ liferay-default:
                 name: liferay-license
                 subPath: license.xml
         x-liferay-gcp:
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
+                name: liferay-configmap
+                subPath: com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config

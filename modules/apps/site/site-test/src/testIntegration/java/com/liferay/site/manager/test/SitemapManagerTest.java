@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -633,6 +634,61 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testSitemapIncludePagesWithLocaleAndRedirect()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_layout.setTitle("Spanish Title", LocaleUtil.SPAIN);
+
+			_layout = _layoutLocalService.updateLayout(_layout);
+
+			String canonicalURL = _portal.getCanonicalURL(
+				_portal.getLayoutFullURL(_layout, _themeDisplay), _themeDisplay,
+				_layout);
+
+			Map<Locale, String> alternateURLs =
+				_sitemapManager.getAlternateURLs(
+					canonicalURL, _themeDisplay, _layout);
+
+			String spanishURL = alternateURLs.get(LocaleUtil.SPAIN);
+
+			_assertSitemap(
+				true, _group.getGroupId(), _layout.getUuid(), canonicalURL,
+				spanishURL);
+
+			String sourceURL = HttpComponentsUtil.getPath(spanishURL);
+
+			_addRedirectEntry(sourceURL.substring(1));
+
+			_assertSitemap(
+				true, _group.getGroupId(), _layout.getUuid(), canonicalURL);
+		}
+	}
+
+	@Test
 	public void testSitemapIncludePagesWithRedirect() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -667,24 +723,65 @@ public class SitemapManagerTest {
 
 			String sourceURL = HttpComponentsUtil.getPath(canonicalURL);
 
-			if (sourceURL.startsWith(StringPool.SLASH)) {
-				sourceURL = sourceURL.substring(1);
-			}
-
-			RedirectEntry redirectEntry =
-				_redirectEntryLocalService.createRedirectEntry(
-					CounterLocalServiceUtil.increment());
-
-			redirectEntry.setUuid(PortalUUIDUtil.generate());
-			redirectEntry.setGroupId(_group.getGroupId());
-			redirectEntry.setCompanyId(TestPropsValues.getCompanyId());
-			redirectEntry.setDestinationURL("https://liferay.com");
-			redirectEntry.setPermanent(true);
-			redirectEntry.setSourceURL(sourceURL);
-
-			_redirectEntryLocalService.addRedirectEntry(redirectEntry);
+			_addRedirectEntry(sourceURL.substring(1));
 
 			_assertEmptySitemap(_layout.getUuid());
+		}
+	}
+
+	@Test
+	public void testSitemapIncludePagesWithVirtualHostAndRedirect()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			String virtualHostname = StringUtil.randomString(8);
+
+			_layoutSetLocalService.updateVirtualHosts(
+				_group.getGroupId(), false,
+				TreeMapBuilder.put(
+					virtualHostname, _layout.getDefaultLanguageId()
+				).build());
+
+			Layout childLayout = LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId(), _layout.getPlid());
+
+			_setUpThemeDisplay(_group, childLayout, virtualHostname);
+
+			String canonicalURL = _portal.getCanonicalURL(
+				_portal.getLayoutFullURL(childLayout, _themeDisplay),
+				_themeDisplay, childLayout);
+
+			_assertSitemap(
+				true, _group.getGroupId(), childLayout.getUuid(), canonicalURL);
+
+			String sourceURL = HttpComponentsUtil.getPath(canonicalURL);
+
+			_addRedirectEntry(sourceURL.substring(1));
+
+			_assertEmptySitemap(childLayout.getUuid());
 		}
 	}
 
@@ -904,23 +1001,11 @@ public class SitemapManagerTest {
 						journalArticle.getUrlTitle()),
 					_themeDisplay, _layout));
 
-			RedirectEntry redirectEntry =
-				_redirectEntryLocalService.createRedirectEntry(
-					CounterLocalServiceUtil.increment());
-
-			redirectEntry.setUuid(PortalUUIDUtil.generate());
-			redirectEntry.setGroupId(_group.getGroupId());
-			redirectEntry.setCompanyId(TestPropsValues.getCompanyId());
-			redirectEntry.setDestinationURL("https://liferay.com");
-			redirectEntry.setPermanent(true);
-
 			String sourceURL =
 				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE +
 					journalArticle.getUrlTitle();
 
-			redirectEntry.setSourceURL(sourceURL.substring(1));
-
-			_redirectEntryLocalService.addRedirectEntry(redirectEntry);
+			_addRedirectEntry(sourceURL.substring(1));
 
 			_assertEmptySitemap(layout.getUuid());
 		}
@@ -969,6 +1054,21 @@ public class SitemapManagerTest {
 			journalArticle.getResourcePrimKey(),
 			journalArticle.getDDMStructureKey(),
 			AssetDisplayPageConstants.TYPE_SPECIFIC);
+	}
+
+	private void _addRedirectEntry(String sourceURL) throws Exception {
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.createRedirectEntry(
+				CounterLocalServiceUtil.increment());
+
+		redirectEntry.setUuid(PortalUUIDUtil.generate());
+		redirectEntry.setGroupId(_group.getGroupId());
+		redirectEntry.setCompanyId(TestPropsValues.getCompanyId());
+		redirectEntry.setDestinationURL("https://liferay.com");
+		redirectEntry.setPermanent(true);
+		redirectEntry.setSourceURL(sourceURL);
+
+		_redirectEntryLocalService.addRedirectEntry(redirectEntry);
 	}
 
 	private void _assertEmptySitemap(String uuid) throws Exception {

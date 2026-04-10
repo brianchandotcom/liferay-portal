@@ -90,11 +90,9 @@ public class RESTClientHttpServletRequestWrapper
 		_httpServletRequest = httpServletRequest;
 		_pathInfo = pathInfo;
 
-		int questionMarkIndex = pathInfo.indexOf('?');
+		int index = pathInfo.indexOf('?');
 
-		_queryString =
-			(questionMarkIndex > -1) ?
-				pathInfo.substring(questionMarkIndex + 1) : null;
+		_queryString = (index > -1) ? pathInfo.substring(index + 1) : null;
 
 		_parameterMap = HttpComponentsUtil.getParameterMap(_queryString);
 	}

@@ -1,5 +1,6 @@
 liferay-default:
     annotations:
+        gke-gcsfuse/volumes: "true"
         instrumentation.opentelemetry.io/inject-dotnet: "false"
         instrumentation.opentelemetry.io/inject-java: "false"
         instrumentation.opentelemetry.io/inject-nodejs: "false"
@@ -105,8 +106,6 @@ liferay-default:
         bucketName: ""
         driver: gcsfuse.csi.storage.gke.io
         enabled: false
-    podAnnotations:
-        gke-gcsfuse/volumes: "true"
     podSecurityContext:
         fsGroup: 1000
         runAsNonRoot: true

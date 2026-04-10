@@ -27,13 +27,6 @@ interface IBodyProps {
 	onSave: Function;
 }
 
-const toISO8601 = function (date: Date): string {
-	const zeroPad = (value: number, length: number) =>
-		(value + '').padStart(length, '0');
-
-	return `${date.getFullYear()}-${zeroPad(date.getMonth() + 1, 2)}-${zeroPad(date.getDate(), 2)}`;
-};
-
 function Body({
 	fieldNames: usedFieldNames,
 	fields,
@@ -60,12 +53,18 @@ function Body({
 	);
 	const [from, setFrom] = useState<string>(
 		filter && (filter as IDateFilter)?.from
-			? toISO8601(new Date((filter as IDateFilter)?.from))
+			? dateUtils.format(
+					new Date((filter as IDateFilter)?.from),
+					'yyyy-MM-dd'
+				)
 			: ''
 	);
 	const [to, setTo] = useState<string>(
 		filter && (filter as IDateFilter)?.to
-			? toISO8601(new Date((filter as IDateFilter)?.to))
+			? dateUtils.format(
+					new Date((filter as IDateFilter)?.to),
+					'yyyy-MM-dd'
+				)
 			: ''
 	);
 	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);

@@ -79,9 +79,37 @@ public class LanguageFrontendResourceRequestHandler
 
 		String[] requestURIParts = requestURI.split(StringPool.SLASH);
 
-		if ((requestURIParts.length != 3) ||
-			!Objects.equals(requestURIParts[2], "all.js")) {
+		if ((requestURIParts.length != 3) && (requestURIParts.length != 4)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Invalid request " + httpServletRequest.getRequestURI());
+			}
 
+			return null;
+		}
+
+		String servletContextPath = requestURIParts[1];
+
+		String allJS = requestURIParts[2];
+
+		// LPD-83084
+
+		if (requestURIParts.length == 4) {
+			servletContextPath = requestURIParts[2];
+			allJS = requestURIParts[3];
+
+			if (!Objects.equals(requestURIParts[0], requestURIParts[1])) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid request " +
+							httpServletRequest.getRequestURI());
+				}
+
+				return null;
+			}
+		}
+
+		if (!Objects.equals(allJS, "all.js")) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Invalid request " + httpServletRequest.getRequestURI());
@@ -93,7 +121,7 @@ public class LanguageFrontendResourceRequestHandler
 		URL url = _hashedFilesRegistry.getResource(
 			StringBundler.concat(
 				portalContextPath, Portal.PATH_MODULE, StringPool.SLASH,
-				requestURIParts[1], "/language.json"));
+				servletContextPath, "/language.json"));
 
 		if (url == null) {
 			if (_log.isWarnEnabled()) {

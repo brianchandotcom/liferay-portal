@@ -33,9 +33,9 @@ test.afterEach(
 	async ({page, termsOfUseInstanceSettingsPage, userLoginPage}) => {
 		await performLoginViaApi({page, screenName: 'test'});
 
-		await expect(async () => {
-			await page.goto('/');
+		await page.goto('/');
 
+		await expect(async () => {
 			if (await userLoginPage.iAgreeButton.isVisible()) {
 				await userLoginPage.iAgreeButton.click();
 			}
@@ -68,7 +68,10 @@ test(
 		await test.step('Enable terms of use', async () => {
 			if (await userLoginPage.iAgreeButton.isVisible()) {
 				await userLoginPage.iAgreeButton.click();
-				await page.waitForLoadState('networkidle');
+
+				await expect(page.getByTitle('User Profile Menu')).toBeVisible({
+					timeout: 30000,
+				});
 			}
 
 			await termsOfUseInstanceSettingsPage.goto();
@@ -80,7 +83,10 @@ test(
 
 			if (await userLoginPage.iAgreeButton.isVisible()) {
 				await userLoginPage.iAgreeButton.click();
-				await page.waitForLoadState('networkidle');
+
+				await expect(page.getByTitle('User Profile Menu')).toBeVisible({
+					timeout: 30000,
+				});
 			}
 
 			await termsOfUseInstanceSettingsPage.goto();
@@ -202,7 +208,7 @@ test(
 	async ({page, termsOfUseInstanceSettingsPage}) => {
 		await termsOfUseInstanceSettingsPage.goto();
 
-		page.on('dialog', (dialog) => dialog.accept());
+		page.once('dialog', (dialog) => dialog.accept());
 
 		await termsOfUseInstanceSettingsPage.resetConsentButton.click();
 

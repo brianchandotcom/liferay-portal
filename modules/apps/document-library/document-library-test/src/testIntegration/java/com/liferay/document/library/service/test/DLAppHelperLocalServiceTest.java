@@ -6,15 +6,23 @@
 package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -31,6 +39,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.io.InputStream;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -52,16 +63,102 @@ public class DLAppHelperLocalServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	@TestInfo("LPD-85646")
+	public void testAddFileEntry() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.YEAR, -1);
+
+		Date displayDate = calendar.getTime();
+
+		FileEntry fileEntry = _addFileEntry(
+			RandomTestUtil.randomString(), displayDate,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		Assert.assertNotNull(assetEntry);
+
+		Date assetEntryPublishDate = assetEntry.getPublishDate();
+
+		Assert.assertEquals(
+			displayDate.getTime(), assetEntryPublishDate.getTime());
+	}
+
+	@Test
+	@TestInfo("LPD-85646")
+	public void testCheckAssetEntry() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.YEAR, -1);
+
+		Date displayDate = calendar.getTime();
+
+		FileEntry fileEntry = _addFileEntry(
+			RandomTestUtil.randomString(), displayDate,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		fileEntry = _dlAppLocalService.updateFileEntry(
+			fileEntry.getUserId(), fileEntry.getFileEntryId(),
+			fileEntry.getFileName(), fileEntry.getMimeType(),
+			fileEntry.getTitle(), "", fileEntry.getDescription(), "",
+			DLVersionNumberIncrease.MINOR,
+			fileEntry.getContentStream(
+			).readAllBytes(),
+			displayDate, fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(),
+			ServiceContextTestUtil.getServiceContext());
+
+		DLFileVersion dlFileVersion =
+			_dlFileVersionLocalService.getLatestFileVersion(
+				fileEntry.getFileEntryId(), false);
+
+		dlFileVersion.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		_dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
+
+		AssetEntry fileEntryAssetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		_assetEntryLocalService.deleteAssetEntry(
+			fileEntryAssetEntry.getEntryId());
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		_dlAppHelperLocalService.checkAssetEntry(
+			fileEntry.getUserId(), fileEntry, fileVersion);
+
+		fileEntryAssetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		AssetEntry fileVersionAssetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntry.class.getName(), fileVersion.getFileVersionId());
+
+		Assert.assertNotNull(fileEntryAssetEntry);
+		Assert.assertNotNull(fileVersionAssetEntry);
+
+		Date fileAssetEntryPublishDate = fileEntryAssetEntry.getPublishDate();
+
+		Date fileVersionAssetEntryPublishDate =
+			fileVersionAssetEntry.getPublishDate();
+
+		Assert.assertEquals(
+			displayDate.getTime(), fileAssetEntryPublishDate.getTime());
+		Assert.assertEquals(
+			displayDate.getTime(), fileVersionAssetEntryPublishDate.getTime());
+	}
+
+	@Test
 	public void testMoveFileEntryFromTrashRestoresFileEntryContent()
 		throws Exception {
 
 		String content = StringUtil.randomString();
 
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			content.getBytes(), null, null, null,
+		FileEntry fileEntry = _addFileEntry(
+			content, null, RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlAppHelperLocalService.moveFileEntryToTrash(
@@ -129,11 +226,7 @@ public class DLAppHelperLocalServiceTest {
 
 		serviceContext.setRequest(mockHttpServletRequest);
 
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.txt",
-			ContentTypes.TEXT_PLAIN, fileEntryContent.getBytes(), null, null,
-			null, serviceContext);
+		_addFileEntry(fileEntryContent, null, "test.txt", serviceContext);
 
 		Assert.assertEquals(
 			"http://localhost:8080/web/guest/d/test-txt",
@@ -146,11 +239,8 @@ public class DLAppHelperLocalServiceTest {
 
 		String content = StringUtil.randomString();
 
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			content.getBytes(), null, null, null,
+		FileEntry fileEntry = _addFileEntry(
+			content, null, RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlAppHelperLocalService.moveFileEntryToTrash(
@@ -169,6 +259,61 @@ public class DLAppHelperLocalServiceTest {
 			_file.getBytes(restoredFileEntry.getContentStream()));
 	}
 
+	@Test
+	@TestInfo("LPD-85646")
+	public void testUpdateFileEntry() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.YEAR, -1);
+
+		Date displayDate = calendar.getTime();
+
+		FileEntry fileEntry = _addFileEntry(
+			RandomTestUtil.randomString(), displayDate,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		calendar.add(Calendar.YEAR, -1);
+
+		Date updatedDisplayDate = calendar.getTime();
+
+		fileEntry = _dlAppLocalService.updateFileEntry(
+			fileEntry.getUserId(), fileEntry.getFileEntryId(),
+			fileEntry.getFileName(), fileEntry.getMimeType(),
+			fileEntry.getTitle(), "", fileEntry.getDescription(), "",
+			DLVersionNumberIncrease.AUTOMATIC,
+			fileEntry.getContentStream(
+			).readAllBytes(),
+			updatedDisplayDate, fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(),
+			ServiceContextTestUtil.getServiceContext());
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		Assert.assertNotNull(assetEntry);
+
+		Date assetEntryPublishDate = assetEntry.getPublishDate();
+
+		Assert.assertEquals(
+			updatedDisplayDate.getTime(), assetEntryPublishDate.getTime());
+	}
+
+	private FileEntry _addFileEntry(
+			String content, Date displayDate, String fileName,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.TEXT_PLAIN, content.getBytes(), displayDate, null,
+			null, serviceContext);
+	}
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -177,6 +322,9 @@ public class DLAppHelperLocalServiceTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileVersionLocalService _dlFileVersionLocalService;
 
 	@Inject
 	private File _file;

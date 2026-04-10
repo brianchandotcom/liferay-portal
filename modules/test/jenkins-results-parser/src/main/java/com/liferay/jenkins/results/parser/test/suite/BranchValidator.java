@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
+import com.liferay.jenkins.results.parser.GitRemote;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -180,6 +181,78 @@ public class BranchValidator {
 		JenkinsResultsParserUtil.write(scriptFile, generatedScript);
 
 		scriptFile.setExecutable(true);
+	}
+
+	public static void postValidateBranchCommitStatus(
+		String gitRepositoryDirPath) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryDirPath)) {
+			throw new IllegalArgumentException(
+				"Git repository directory is not set");
+		}
+
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				"master", gitRepositoryDirPath, "liferay-portal");
+
+		try {
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				"command -v gh");
+
+			if (process.waitFor() != 0) {
+				return;
+			}
+
+			GitRemote gitRemote = gitWorkingDirectory.getGitRemote("origin");
+
+			if (gitRemote == null) {
+				return;
+			}
+
+			String gitHubUsername = GitWorkingDirectory.getGitHubUserName(
+				gitRemote);
+
+			if (gitHubUsername == null) {
+				return;
+			}
+
+			gitHubUsername = gitHubUsername.trim();
+
+			if (gitHubUsername.isEmpty()) {
+				return;
+			}
+
+			String branchName = gitWorkingDirectory.getCurrentBranchName();
+
+			String remoteGitBranchSHA =
+				gitWorkingDirectory.getRemoteGitBranchSHA(
+					branchName, gitRemote);
+
+			LocalGitBranch localGitBranch =
+				gitWorkingDirectory.getCurrentLocalGitBranch();
+
+			if ((remoteGitBranchSHA == null) ||
+				!remoteGitBranchSHA.equals(localGitBranch.getSHA())) {
+
+				return;
+			}
+
+			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+			String command = JenkinsResultsParserUtil.combine(
+				"gh api repos/", gitHubUsername, "/liferay-portal/statuses/",
+				localGitBranch.getSHA(),
+				" -f context=\"gw validateBranch\" -f description=\"All tasks ",
+				"and tests passed local testing\" -f state=\"success\"");
+
+			process = JenkinsResultsParserUtil.executeBashCommands(
+				workingDirectory, command);
+
+			process.waitFor();
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to update GitHub post commit status");
+		}
 	}
 
 	private static final String _TEST_SUITE_NAME = "relevant-local";

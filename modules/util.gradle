@@ -27,6 +27,7 @@ task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
 task generateBranchValidationScript
+task postValidateBranchCommitStatus
 task printDependencyPath
 task removeHotfixQualifier
 task setUpLibs
@@ -112,6 +113,20 @@ generateBranchValidationScript {
 	}
 }
 
+postValidateBranchCommitStatus {
+	logging.captureStandardOutput(LogLevel.INFO)
+
+	doLast {
+		BranchValidator.postValidateBranchCommitStatus(repoRootDir.absolutePath)
+	}
+
+	onlyIf {
+		Task validateTask = tasks.getByName("validateBranch")
+
+		validateTask.state.executed && (validateTask.state.failure == null)
+	}
+}
+
 printDependencyPath {
 	doLast {
 		assert project.properties["dependencyNotation"] : "Please provide a value for the '-PdependencyNotation' property"
@@ -193,6 +208,7 @@ validateBranch {
 	dependsOn generateBranchValidationScript
 
 	executable generateBranchValidationScript.outputs.files.singleFile
+	finalizedBy postValidateBranchCommitStatus
 	standardInput = System.in
 	workingDir repoRootDir
 }

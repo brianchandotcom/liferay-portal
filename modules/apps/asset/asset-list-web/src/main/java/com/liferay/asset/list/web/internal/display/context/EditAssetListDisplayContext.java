@@ -34,6 +34,7 @@ import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -134,6 +136,7 @@ public class EditAssetListDisplayContext {
 		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
 		AssetVocabularyGroupRelLocalService assetVocabularyGroupRelLocalService,
 		AssetVocabularyService assetVocabularyService,
+		DepotEntryLocalService depotEntryLocalService,
 		DepotEntryService depotEntryService, GroupService groupService,
 		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector,
@@ -146,6 +149,7 @@ public class EditAssetListDisplayContext {
 		_assetVocabularyGroupRelLocalService =
 			assetVocabularyGroupRelLocalService;
 		_assetVocabularyService = assetVocabularyService;
+		_depotEntryLocalService = depotEntryLocalService;
 		_depotEntryService = depotEntryService;
 		_groupService = groupService;
 		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
@@ -1548,10 +1552,14 @@ public class EditAssetListDisplayContext {
 	}
 
 	private boolean _isSpaceDepotEntryGroup(Group group) {
-		int depotEntryType = GetterUtil.getInteger(
-			group.getTypeSettingsProperty("depotEntryType"));
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			group.getGroupId());
 
-		if (depotEntryType == DepotConstants.TYPE_SPACE) {
+		if ((depotEntry != null) &&
+			(depotEntry.getType() == DepotConstants.TYPE_SPACE) &&
+			FeatureFlagManagerUtil.isEnabled(
+				depotEntry.getCompanyId(), "LPD-17564")) {
+
 			return true;
 		}
 
@@ -1631,6 +1639,7 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldLabel;
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private final DepotEntryService _depotEntryService;
 	private final GroupService _groupService;
 	private final HttpServletRequest _httpServletRequest;

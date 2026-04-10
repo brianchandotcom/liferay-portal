@@ -19,7 +19,9 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 
@@ -410,7 +413,7 @@ public class EditAssetListDisplayContextTest {
 	public void testGetResolvedReferencedModelsGroupIds() throws Exception {
 		long siteGroupId = RandomTestUtil.randomLong();
 
-		Group siteGroup = _setUpGroup(siteGroupId, false, "");
+		Group siteGroup = _setUpGroup(siteGroupId);
 
 		Mockito.doReturn(
 			siteGroup
@@ -444,6 +447,7 @@ public class EditAssetListDisplayContextTest {
 				siteGroupId));
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetResolvedReferencedModelsGroupIdsWithSpaces()
 		throws Exception {
@@ -462,7 +466,7 @@ public class EditAssetListDisplayContextTest {
 
 		long siteGroupId = RandomTestUtil.randomLong();
 
-		Group siteGroup = _setUpGroup(siteGroupId, false, "");
+		Group siteGroup = _setUpGroup(siteGroupId);
 
 		Mockito.doReturn(
 			siteGroup
@@ -474,13 +478,29 @@ public class EditAssetListDisplayContextTest {
 
 		long spaceGroupId = RandomTestUtil.randomLong();
 
-		Group spaceGroup = _setUpGroup(spaceGroupId, true, "1");
+		Group spaceGroup = _setUpGroup(spaceGroupId, true);
 
 		Mockito.doReturn(
 			spaceGroup
 		).when(
 			_groupService
 		).getGroup(
+			spaceGroupId
+		);
+
+		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
+
+		Mockito.doReturn(
+			DepotConstants.TYPE_SPACE
+		).when(
+			depotEntry
+		).getType();
+
+		Mockito.doReturn(
+			depotEntry
+		).when(
+			_depotEntryLocalService
+		).fetchGroupDepotEntry(
 			spaceGroupId
 		);
 
@@ -834,10 +854,10 @@ public class EditAssetListDisplayContextTest {
 		return new EditAssetListDisplayContext(
 			_assetRendererFactoryClassProvider,
 			_assetVocabularyGroupRelLocalService, _assetVocabularyService,
-			_depotEntryService, _groupService, _infoSearchClassMapperRegistry,
-			_itemSelector, _objectDefinitionLocalService, _portletRequest,
-			_portletResponse, _segmentsConfigurationProvider,
-			unicodeProperties);
+			_depotEntryLocalService, _depotEntryService, _groupService,
+			_infoSearchClassMapperRegistry, _itemSelector,
+			_objectDefinitionLocalService, _portletRequest, _portletResponse,
+			_segmentsConfigurationProvider, unicodeProperties);
 	}
 
 	private void _setUpAssetListEntryLocalServiceUtil(
@@ -975,12 +995,10 @@ public class EditAssetListDisplayContextTest {
 	}
 
 	private Group _setUpGroup(long scopeGroupId) {
-		return _setUpGroup(scopeGroupId, false, "");
+		return _setUpGroup(scopeGroupId, false);
 	}
 
-	private Group _setUpGroup(
-		long scopeGroupId, boolean depot, String depotEntryType) {
-
+	private Group _setUpGroup(long scopeGroupId, boolean depot) {
 		Group scopeGroup = Mockito.mock(Group.class);
 
 		Mockito.doReturn(
@@ -994,14 +1012,6 @@ public class EditAssetListDisplayContextTest {
 		).when(
 			scopeGroup
 		).isDepot();
-
-		Mockito.doReturn(
-			depotEntryType
-		).when(
-			scopeGroup
-		).getTypeSettingsProperty(
-			"depotEntryType"
-		);
 
 		return scopeGroup;
 	}
@@ -1054,6 +1064,8 @@ public class EditAssetListDisplayContextTest {
 			AssetVocabularyGroupRelLocalService.class);
 	private final AssetVocabularyService _assetVocabularyService = Mockito.mock(
 		AssetVocabularyService.class);
+	private final DepotEntryLocalService _depotEntryLocalService = Mockito.mock(
+		DepotEntryLocalService.class);
 	private final DepotEntryService _depotEntryService = Mockito.mock(
 		DepotEntryService.class);
 	private final GroupService _groupService = Mockito.mock(GroupService.class);

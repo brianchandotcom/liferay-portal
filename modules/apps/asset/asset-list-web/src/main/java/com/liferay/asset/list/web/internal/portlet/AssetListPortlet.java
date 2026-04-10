@@ -22,6 +22,7 @@ import com.liferay.asset.list.web.internal.display.context.InfoCollectionProvide
 import com.liferay.asset.list.web.internal.display.context.SelectStructureFieldDisplayContext;
 import com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDropdownItems;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -99,7 +100,7 @@ public class AssetListPortlet extends MVCPortlet {
 			new EditAssetListDisplayContext(
 				_assetRendererFactoryClassProvider,
 				_assetVocabularyGroupRelLocalService, _assetVocabularyService,
-				_depotEntryService, _groupService,
+				_depotEntryLocalService, _depotEntryService, _groupService,
 				_infoSearchClassMapperRegistry, _itemSelector,
 				_objectDefinitionLocalService, renderRequest, renderResponse,
 				_segmentsConfigurationProvider,
@@ -178,6 +179,9 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMIndexer _ddmIndexer;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private DepotEntryService _depotEntryService;

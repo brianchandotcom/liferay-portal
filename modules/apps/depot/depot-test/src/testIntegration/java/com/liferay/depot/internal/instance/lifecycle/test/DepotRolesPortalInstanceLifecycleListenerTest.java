@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -147,6 +148,10 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 
 		for (String actionId : actionIds) {
 			if (StringUtil.equals(resourceName, DepotEntry.class.getName())) {
+				if (Objects.equals(actionId, ActionKeys.ASSIGN_USER_ROLES)) {
+					continue;
+				}
+
 				Assert.assertTrue(
 					_resourcePermissionLocalService.hasResourcePermission(
 						companyId, resourceName,

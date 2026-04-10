@@ -52,6 +52,13 @@ export type FilesUploaderComponent = React.ComponentType<{
 }>;
 
 export interface IItemSelectorModalProps<T> {
+
+	/**
+	 * When true, the Select button remains enabled even when no items are
+	 * selected. Clicking it calls onItemsChange with an empty array.
+	 */
+	allowEmptySelection?: boolean;
+
 	allowedExtensions?: string;
 
 	/**
@@ -73,6 +80,12 @@ export interface IItemSelectorModalProps<T> {
 	 * URL for item creation used to open a new tab.
 	 */
 	createItemURL?: string;
+
+	/**
+	 * Label shown in the footer as "{label} Selected" when
+	 * 'allowEmptySelection' is true and no items are selected.
+	 */
+	emptySelectionLabel?: string;
 
 	/**
 	 * Configuration properties of the Frontend Data Set used to display data.
@@ -157,11 +170,13 @@ const EMPTY_STATE_PROPS = {
 };
 
 function ItemSelectorModal<T extends Record<string, any>>({
+	allowEmptySelection = false,
 	allowedExtensions,
 	apiURL,
 	breadcrumbs,
 	breadcrumbsLabel = true,
 	createItemURL,
+	emptySelectionLabel,
 	fdsProps,
 	filesUploaderComponent: FilesUploaderComponent,
 	groupId,
@@ -200,6 +215,8 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	};
 
 	const hasSelectedItems = !!selectedItems.length;
+
+	const isSelectEnabled = hasSelectedItems || allowEmptySelection;
 
 	const fileDropSettings = useMemo<IFileDropSettings>(() => {
 		return {
@@ -329,7 +346,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 				<ClayModal.Footer
 					className={classNames({
 						'bg-primary-l3 border-primary border-top':
-							hasSelectedItems,
+							isSelectEnabled,
 					})}
 					first={
 						hasSelectedItems ? (
@@ -360,6 +377,13 @@ function ItemSelectorModal<T extends Record<string, any>>({
 									</strong>
 								</ClayButton>
 							</div>
+						) : allowEmptySelection && emptySelectionLabel ? (
+							<div className="align-items-center d-flex">
+								{sub(
+									Liferay.Language.get('x-selected'),
+									emptySelectionLabel
+								)}
+							</div>
 						) : undefined
 					}
 					last={
@@ -378,7 +402,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 
 							<ClayButton
 								className="item-preview selector-button"
-								disabled={!hasSelectedItems}
+								disabled={!isSelectEnabled}
 								onClick={() => {
 									onItemsChange(
 										multiSelect

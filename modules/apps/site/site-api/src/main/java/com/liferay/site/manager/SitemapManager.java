@@ -25,10 +25,20 @@ public interface SitemapManager {
 
 	public static final int MAXIMUM_ENTRIES = 50000;
 
+	public default void addURLElement(
+		Element element, String url,
+		UnicodeProperties typeSettingsUnicodeProperties, Date modifiedDate,
+		String canonicalURL, Map<Locale, String> alternateURLs) {
+
+		addURLElement(
+			element, url, typeSettingsUnicodeProperties, modifiedDate,
+			canonicalURL, alternateURLs, 0);
+	}
+
 	public void addURLElement(
 		Element element, String url,
 		UnicodeProperties typeSettingsUnicodeProperties, Date modifiedDate,
-		String canonicalURL, Map<Locale, String> alternateURLs);
+		String canonicalURL, Map<Locale, String> alternateURLs, long groupId);
 
 	public String encodeXML(String input);
 

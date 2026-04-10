@@ -243,7 +243,8 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 			for (String alternateURL : alternateURLs.values()) {
 				_sitemapManager.addURLElement(
 					element, alternateURL, typeSettingsUnicodeProperties,
-					objectEntry.getModifiedDate(), canonicalURL, alternateURLs);
+					objectEntry.getModifiedDate(), canonicalURL, alternateURLs,
+					layout.getGroupId());
 			}
 		}
 	}

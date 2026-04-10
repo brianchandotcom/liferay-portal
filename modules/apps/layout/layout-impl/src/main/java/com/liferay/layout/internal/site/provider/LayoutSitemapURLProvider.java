@@ -136,7 +136,8 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		for (String alternateURL : alternateURLs.values()) {
 			_sitemapManager.addURLElement(
 				element, alternateURL, typeSettingsUnicodeProperties,
-				layout.getModifiedDate(), layoutFullURL, alternateURLs);
+				layout.getModifiedDate(), layoutFullURL, alternateURLs,
+				layout.getGroupId());
 		}
 	}
 

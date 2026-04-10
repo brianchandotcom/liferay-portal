@@ -14,6 +14,8 @@ import {
 import {
 	IItemSelectorModalProps,
 	ItemSelectorModal,
+	getCMSItemSelectorFilters,
+	getCMSItemSelectorGroupedFilters,
 } from '@liferay/frontend-js-item-selector-web';
 import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
@@ -239,18 +241,10 @@ function CMSFilesItemSelectorModal({
 						},
 					],
 				},
-				filters: [
-					{
-						apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
-						entityFieldType: 'collection',
-						id: 'groupIds',
-						itemKey: 'siteId',
-						itemLabel: 'name',
-						label: Liferay.Language.get('space'),
-						multiple: true,
-						type: 'selection',
-					},
-				],
+				filters: getCMSItemSelectorFilters(
+					Liferay.ThemeDisplay.getSiteGroupId()
+				),
+				groupedFilters: getCMSItemSelectorGroupedFilters(),
 				id: `itemSelectorModal-cms-${uuidv4()}`,
 				inlineNotificationComponent: NewItemsNotificationComponent,
 				pagination: {

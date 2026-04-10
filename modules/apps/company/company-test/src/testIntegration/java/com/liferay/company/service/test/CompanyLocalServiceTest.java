@@ -1244,29 +1244,37 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateCompanyWithInvalidMaxUsers() throws Exception {
-		_testValidateMaxUsers(-1);
-		_testValidateMaxUsers(-100);
+		_testUpdateCompanyMaxUsers(-1);
+		_testUpdateCompanyMaxUsers(-100);
 	}
 
 	@Test
 	public void testUpdateCompanyWithInvalidMx() throws Exception {
-		_testUpdateMx("abc", false, true);
-		_testUpdateMx(StringPool.BLANK, false, true);
+		_testUpdateCompanyMx("abc", false, true);
+		_testUpdateCompanyMx(StringPool.BLANK, false, true);
 	}
 
 	@Test
 	public void testUpdateCompanyWithInvalidVirtualHostnames()
 		throws Exception {
 
-		_testUpdateVirtualHostnames(
+		_testUpdateCompanyVirtualHostnames(
 			new String[] {StringPool.BLANK, "localhost", ".abc"}, true);
 	}
 
 	@Test
 	public void testUpdateCompanyWithValidMaxUsers() throws Exception {
-		_testValidateMaxUsers(0);
-		_testValidateMaxUsers(20);
-		_testValidateMaxUsers(10000);
+		_testUpdateCompanyMaxUsers(0);
+		_testUpdateCompanyMaxUsers(20);
+		_testUpdateCompanyMaxUsers(10000);
+	}
+
+	@Test
+	public void testUpdateCompanyWithValidMx() throws Exception {
+		_testUpdateCompanyMx("abc.com", true, true);
+		_testUpdateCompanyMx("abc.com", true, false);
+		_testUpdateCompanyMx(StringPool.BLANK, false, true);
+		_testUpdateCompanyMx(StringPool.BLANK, false, false);
 	}
 
 	@Test
@@ -1337,14 +1345,6 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateMx() throws Exception {
-		_testUpdateMx("abc.com", true, true);
-		_testUpdateMx("abc.com", true, false);
-		_testUpdateMx(StringPool.BLANK, false, true);
-		_testUpdateMx(StringPool.BLANK, false, false);
-	}
-
-	@Test
 	public void testUpdateValidCompanyNames() throws Exception {
 		String companyName = _company.getName();
 
@@ -1365,7 +1365,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateValidVirtualHostnames() throws Exception {
-		_testUpdateVirtualHostnames(
+		_testUpdateCompanyVirtualHostnames(
 			new String[] {
 				"abc.com", "255.0.0.0", "0:0:0:0:0:0:0:1", "::1",
 				"0000:0000:0000:0000:0000:0000:0000:0001"
@@ -1615,36 +1615,37 @@ public class CompanyLocalServiceTest {
 		LanguageUtil.resetAvailableLocales(companyId);
 	}
 
-	private void _testUpdateCompanyNames(
-			Company company, String[] companyNames, boolean expectFailure)
-		throws Exception {
+	private void _testUpdateCompanyMaxUsers(int maxUsers) throws Exception {
+		int originalMaxUsers = _company.getMaxUsers();
 
-		for (String companyName : companyNames) {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						company.getCompanyId())) {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
 
-				company = _companyLocalService.updateCompany(
-					company.getCompanyId(), company.getVirtualHostname(),
-					company.getMx(), company.getHomeURL(), true, null,
-					companyName, company.getLegalName(), company.getLegalId(),
-					company.getLegalType(), company.getSicCode(),
-					company.getTickerSymbol(), company.getIndustry(),
-					company.getType(), company.getSize());
+			try {
+				_company = _companyLocalService.updateCompany(
+					_company.getCompanyId(), _company.getVirtualHostname(),
+					_company.getMx(), maxUsers, _company.isActive());
 
-				Assert.assertFalse(expectFailure);
+				Assert.assertTrue(maxUsers >= 0);
+
+				Assert.assertEquals(maxUsers, _company.getMaxUsers());
 			}
-			catch (CompanyNameException companyNameException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(companyNameException);
-				}
+			catch (CompanyMaxUsersException companyMaxUsersException) {
+				Assert.assertTrue(maxUsers < 0);
 
-				Assert.assertTrue(expectFailure);
+				Assert.assertEquals(originalMaxUsers, _company.getMaxUsers());
+			}
+			finally {
+				_company = _companyLocalService.updateCompany(
+					_company.getCompanyId(), _company.getVirtualHostname(),
+					_company.getMx(), originalMaxUsers, _company.isActive());
 			}
 		}
 	}
 
-	private void _testUpdateMx(String mx, boolean valid, boolean mailMxUpdate)
+	private void _testUpdateCompanyMx(
+			String mx, boolean valid, boolean mailMxUpdate)
 		throws Exception {
 
 		String originalMx = _company.getMx();
@@ -1684,7 +1685,36 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private void _testUpdateVirtualHostnames(
+	private void _testUpdateCompanyNames(
+			Company company, String[] companyNames, boolean expectFailure)
+		throws Exception {
+
+		for (String companyName : companyNames) {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						company.getCompanyId())) {
+
+				company = _companyLocalService.updateCompany(
+					company.getCompanyId(), company.getVirtualHostname(),
+					company.getMx(), company.getHomeURL(), true, null,
+					companyName, company.getLegalName(), company.getLegalId(),
+					company.getLegalType(), company.getSicCode(),
+					company.getTickerSymbol(), company.getIndustry(),
+					company.getType(), company.getSize());
+
+				Assert.assertFalse(expectFailure);
+			}
+			catch (CompanyNameException companyNameException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(companyNameException);
+				}
+
+				Assert.assertTrue(expectFailure);
+			}
+		}
+	}
+
+	private void _testUpdateCompanyVirtualHostnames(
 			String[] virtualHostnames, boolean expectFailure)
 		throws Exception {
 
@@ -1734,33 +1764,6 @@ public class CompanyLocalServiceTest {
 			_company = _companyLocalService.updateCompany(
 				_company.getCompanyId(), originalVirtualHostname,
 				_company.getMx(), _company.getMaxUsers(), _company.isActive());
-		}
-	}
-
-	private void _testValidateMaxUsers(int maxUsers) throws Exception {
-		int originalMaxUsers = _company.getMaxUsers();
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					_company.getCompanyId())) {
-
-			_company = _companyLocalService.updateCompany(
-				_company.getCompanyId(), _company.getVirtualHostname(),
-				_company.getMx(), maxUsers, _company.isActive());
-
-			Assert.assertTrue(maxUsers >= 0);
-
-			Assert.assertEquals(maxUsers, _company.getMaxUsers());
-		}
-		catch (CompanyMaxUsersException companyMaxUsersException) {
-			Assert.assertTrue(maxUsers < 0);
-
-			Assert.assertEquals(originalMaxUsers, _company.getMaxUsers());
-		}
-		finally {
-			_company = _companyLocalService.updateCompany(
-				_company.getCompanyId(), _company.getVirtualHostname(),
-				_company.getMx(), originalMaxUsers, _company.isActive());
 		}
 	}
 

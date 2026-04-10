@@ -377,4 +377,4 @@ public class ReportEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-504243578
+// LIFERAY-REST-BUILDER-HASH:-1197984036

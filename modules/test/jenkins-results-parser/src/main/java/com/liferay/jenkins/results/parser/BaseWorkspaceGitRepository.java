@@ -1417,13 +1417,9 @@ public abstract class BaseWorkspaceGitRepository
 
 			GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-			String branchName = getBranchName();
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
-				gitWorkingDirectory.checkoutLocalGitBranch(
-					gitWorkingDirectory.createLocalGitBranch(
-						branchName, true, "HEAD"));
-			}
+			gitWorkingDirectory.checkoutLocalGitBranch(
+				gitWorkingDirectory.createLocalGitBranch(
+					getBranchName(), true, "HEAD"));
 
 			String upstreamBranchName = getUpstreamBranchName();
 

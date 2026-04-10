@@ -93,13 +93,13 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 	private AssetEntry _getAssetEntry(JournalArticle journalArticle)
 		throws PortalException {
 
-		AssetRendererFactory<?> assetRendererFactory =
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				JournalArticle.class.getName());
 
 		return assetRendererFactory.getAssetEntry(
 			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
+			assetRendererFactory.getAssetEntryClassPK(journalArticle));
 	}
 
 	private final JournalArticle _article;

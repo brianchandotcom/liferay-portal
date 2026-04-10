@@ -60,7 +60,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			int oldDLFileEntryMetadatasCount = _getDLFileEntryMetadatasCount(
+			long oldDLFileEntryMetadatasCount = _getDLFileEntryMetadatasCount(
 				oldStructureId);
 
 			if (oldDLFileEntryMetadatasCount == 0) {
@@ -73,7 +73,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 
 			long newStructureId = newDDMStructureValues[1];
 
-			int newDLFileEntryMetadatasCount = _getDLFileEntryMetadatasCount(
+			long newDLFileEntryMetadatasCount = _getDLFileEntryMetadatasCount(
 				newStructureId);
 
 			if (newDLFileEntryMetadatasCount == 0) {
@@ -225,7 +225,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private int _getDLFileEntryMetadatasCount(long structureId)
+	private long _getDLFileEntryMetadatasCount(long structureId)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -237,7 +237,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				return resultSet.getInt("count");
+				return resultSet.getLong("count");
 			}
 		}
 

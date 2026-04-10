@@ -151,7 +151,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			preparedStatement.setLong(1, groupId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next() && (resultSet.getInt("count") > 0)) {
+				if (resultSet.next() && (resultSet.getLong("count") > 0)) {
 					return true;
 				}
 			}

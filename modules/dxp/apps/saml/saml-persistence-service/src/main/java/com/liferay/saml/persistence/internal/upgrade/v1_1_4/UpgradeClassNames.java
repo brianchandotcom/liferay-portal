@@ -47,7 +47,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 				ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 				if (resultSet1.next()) {
-					if (resultSet1.getInt("count") <= 1) {
+					if (resultSet1.getLong("count") <= 1) {
 						continue;
 					}
 

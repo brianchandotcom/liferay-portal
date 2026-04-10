@@ -712,7 +712,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 				resultSet.next();
 
 				Assert.assertEquals(
-					_PROCESS_CONCURRENTLY_COUNT, resultSet.getInt("count"));
+					_PROCESS_CONCURRENTLY_COUNT, resultSet.getLong("count"));
 			}
 		}
 	}

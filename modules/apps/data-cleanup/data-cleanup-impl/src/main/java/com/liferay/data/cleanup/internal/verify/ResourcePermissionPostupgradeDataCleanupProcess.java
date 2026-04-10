@@ -96,7 +96,7 @@ public class ResourcePermissionPostupgradeDataCleanupProcess
 						name);
 
 					DataCleanupLoggingUtil.logDelete(
-						_log, resultSet.getInt("count"),
+						_log, resultSet.getLong("count"),
 						_dbInspector.normalizeName("ResourcePermission"),
 						StringBundler.concat("\"", name, "\" was not found"));
 				}

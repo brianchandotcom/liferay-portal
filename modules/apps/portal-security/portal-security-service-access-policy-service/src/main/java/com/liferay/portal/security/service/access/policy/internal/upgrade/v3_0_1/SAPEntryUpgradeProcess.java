@@ -49,7 +49,7 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 
 						resultSet.next();
 
-						if (resultSet.getInt("count") != 0) {
+						if (resultSet.getLong("count") != 0) {
 							return;
 						}
 

@@ -232,7 +232,7 @@ public class CTCollectionServiceTest {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(0, resultSet.getInt("count"));
+				Assert.assertEquals(0, resultSet.getLong("count"));
 			}
 		}
 

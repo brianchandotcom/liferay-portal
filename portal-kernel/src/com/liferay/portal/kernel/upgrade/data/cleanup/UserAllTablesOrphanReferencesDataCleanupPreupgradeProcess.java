@@ -100,7 +100,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 
 			while (resultSet.next()) {
 				long companyId = resultSet.getLong("companyId");
-				long count = resultSet.getInt("count");
+				long count = resultSet.getLong("count");
 				long userId = resultSet.getLong(sourceColumnName);
 
 				if (_deleteTableNames.contains(sourceTableName) ||

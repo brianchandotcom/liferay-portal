@@ -364,7 +364,7 @@ public class ObjectDefinitionUpgradeProcessTest {
 
 			Assert.assertNotNull(resultSet.next());
 
-			Assert.assertEquals(1L, resultSet.getInt("count"));
+			Assert.assertEquals(1L, resultSet.getLong("count"));
 		}
 	}
 

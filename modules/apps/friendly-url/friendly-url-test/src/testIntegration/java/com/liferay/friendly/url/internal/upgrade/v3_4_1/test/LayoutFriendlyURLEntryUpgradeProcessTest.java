@@ -208,11 +208,11 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 
 		_deleteFriendlyURLEntries(draftLayout2, layout2);
 
-		int expectedFriendlyURLEntriesCount =
+		long expectedFriendlyURLEntriesCount =
 			_getRowsCount("FriendlyURLEntry") + 2;
-		int expectedFriendlyURLEntryMappingsCount =
+		long expectedFriendlyURLEntryMappingsCount =
 			_getRowsCount("FriendlyURLEntryMapping") + 2;
-		int expectedFriendlyURLEntryLocalizationsCount =
+		long expectedFriendlyURLEntryLocalizationsCount =
 			_getRowsCount("FriendlyURLEntryLocalization") + 2;
 
 		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
@@ -465,7 +465,7 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		return friendlyURLEntry;
 	}
 
-	private int _getRowsCount(String tableName) throws Exception {
+	private long _getRowsCount(String tableName) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -474,7 +474,7 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				return resultSet.getInt("count");
+				return resultSet.getLong("count");
 			}
 		}
 

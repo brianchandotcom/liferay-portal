@@ -5,18 +5,116 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.ai.hub.rest.client.dto.v1_0.ProvisioningRequest;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
-import org.junit.Ignore;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Feliphe Marinho
+ * @author Carolina Barbosa
  */
-@Ignore
+@FeatureFlag("LPD-62272")
 @RunWith(Arquillian.class)
 public class ProvisioningRequestResourceTest
 	extends BaseProvisioningRequestResourceTestCase {
-}
 
-// LIFERAY-REST-BUILDER-HASH:-97428460
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		SiteInitializer siteInitializer =
+			_siteInitializerRegistry.getSiteInitializer(
+				"com.liferay.ai.hub.site.initializer");
+
+		siteInitializer.initialize(TestPropsValues.getGroupId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
+		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Override
+	@Test
+	public void testPostProvisioning() throws Exception {
+		ProvisioningRequest provisioningRequest = randomProvisioningRequest();
+
+		String customerName = provisioningRequest.getCustomerName();
+
+		provisioningRequestResource.postProvisioning(provisioningRequest);
+
+		AccountEntry accountEntry =
+			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+				customerName, TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(customerName, accountEntry.getName());
+
+		User user = _userLocalService.getUserByScreenName(
+			TestPropsValues.getCompanyId(), customerName + "-service-account");
+
+		Assert.assertEquals(UserConstants.TYPE_SERVICE_ACCOUNT, user.getType());
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				accountEntry.getAccountEntryId(), user.getUserId()));
+
+		accountEntry =
+			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+				"L_AI_HUB", TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				accountEntry.getAccountEntryId(), user.getUserId()));
+	}
+
+	private static String _originalName;
+	private static PermissionChecker _originalPermissionChecker;
+
+	@Inject
+	private static SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+}

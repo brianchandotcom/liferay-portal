@@ -588,7 +588,9 @@ export async function guestCheckoutSetUp(
 	});
 
 	await productMenuPagesButton.click();
-	await page.locator('[aria-label="Select All Items on the Page"]').click();
+	await page
+		.getByRole('checkbox', {name: 'Select All Items on the Page'})
+		.click();
 	await page.getByRole('button', {name: 'Permissions'}).click();
 
 	const guestActionViewCheckbox = page

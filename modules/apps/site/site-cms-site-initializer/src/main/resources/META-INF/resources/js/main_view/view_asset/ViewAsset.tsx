@@ -18,6 +18,9 @@ import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
 import {SharingPermission} from '../../common/types/SharingPermission';
 import CommentsPanel from '../../content_editor/components/panels/CommentsPanel';
 import ObjectEntryService from '../info_panel/services/ObjectEntryService';
+
+import '../../../css/view_asset/ViewAsset.scss';
+
 interface CommentsProps {
 	addCommentURL: string;
 	deleteCommentURL: string;
@@ -163,7 +166,7 @@ export default function ViewAsset({
 
 			<div className="h-100" ref={containerRef}>
 				<div className="d-flex h-100">
-					<div className="h-100 justify-content-center mx-6 preview-container py-4 w-100">
+					<div className="justify-content-center mx-6 view-asset-preview-container w-100">
 						<AssetPreview item={item} url={contentViewURL} />
 					</div>
 				</div>

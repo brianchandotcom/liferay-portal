@@ -325,10 +325,11 @@ public abstract class BaseMockContactsEngineClientImpl
 	@Override
 	public Results<Account> getAccounts(
 		FaroProject faroProject, String channelId, String filterString,
-		String query, int cur, int delta, String sort) {
+		String query, int cur, int delta, String sortString) {
 
 		return contactsEngineClient.getAccounts(
-			faroProject, channelId, filterString, query, cur, delta, sort);
+			faroProject, channelId, filterString, query, cur, delta,
+			sortString);
 	}
 
 	@Override
@@ -420,11 +421,11 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	public Results<AssetSummary> getAssetSummaries(
 		FaroProject faroProject, long channelId, String filterString,
-		String keywords, int rangeKey, int cur, int delta, String sort) {
+		String keywords, int rangeKey, int cur, int delta, String sortString) {
 
 		return contactsEngineClient.getAssetSummaries(
 			faroProject, channelId, filterString, keywords, rangeKey, cur,
-			delta, sort);
+			delta, sortString);
 	}
 
 	@Override

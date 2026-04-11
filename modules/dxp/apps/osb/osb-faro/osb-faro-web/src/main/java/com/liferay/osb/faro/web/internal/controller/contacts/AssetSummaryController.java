@@ -41,7 +41,8 @@ public class AssetSummaryController extends BaseFaroController {
 			@QueryParam("search") String search,
 			@QueryParam("rangeKey") int rangeKey, @QueryParam("page") int page,
 			@DefaultValue("20") @QueryParam("pageSize") int pageSize,
-			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String sort)
+			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
+				sortString)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -49,7 +50,7 @@ public class AssetSummaryController extends BaseFaroController {
 
 		Results<AssetSummary> results = contactsEngineClient.getAssetSummaries(
 			faroProject, channelId, filterString, search, rangeKey, page,
-			pageSize, sort);
+			pageSize, sortString);
 
 		Function<AssetSummary, AssetSummaryDisplay> function =
 			AssetSummaryDisplay::new;

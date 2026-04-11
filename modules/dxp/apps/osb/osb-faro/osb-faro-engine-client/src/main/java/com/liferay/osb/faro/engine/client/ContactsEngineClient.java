@@ -176,7 +176,7 @@ public interface ContactsEngineClient {
 
 	public Results<Account> getAccounts(
 		FaroProject faroProject, String channelId, String filterString,
-		String query, int cur, int delta, String sort);
+		String query, int cur, int delta, String sortString);
 
 	public Results<Distribution> getAccountsDistribution(
 		FaroProject faroProject, String channelId, String fieldMappingFieldName,
@@ -219,7 +219,7 @@ public interface ContactsEngineClient {
 
 	public Results<AssetSummary> getAssetSummaries(
 		FaroProject faroProject, long channelId, String filterString,
-		String keywords, int rangeKey, int cur, int delta, String sort);
+		String keywords, int rangeKey, int cur, int delta, String sortString);
 
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
 		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,

@@ -90,12 +90,13 @@ public class AccountController extends BaseFaroController {
 			@QueryParam("filter") String filterString,
 			@QueryParam("page") int page, @QueryParam("pageSize") int pageSize,
 			@QueryParam("query") String query,
-			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String sort)
+			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
+				sortString)
 		throws Exception {
 
 		Results<Account> results = contactsEngineClient.getAccounts(
 			faroProjectLocalService.getFaroProjectByGroupId(groupId), channelId,
-			filterString, query, page, pageSize, sort);
+			filterString, query, page, pageSize, sortString);
 
 		Function<Account, AccountDisplay> function = AccountDisplay::new;
 

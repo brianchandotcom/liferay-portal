@@ -712,7 +712,7 @@ public abstract class BaseWorkspaceGitRepository
 
 			sb.setLength(0);
 
-			sb.append("cp ");
+			sb.append("cp -f ");
 			sb.append(new File(workingDirectory, ".git/config"));
 			sb.append(" ");
 			sb.append(new File(clonedWorkingDirectory, ".git/config"));
@@ -723,10 +723,12 @@ public abstract class BaseWorkspaceGitRepository
 
 			sb.append("git -C ");
 			sb.append(clonedWorkingDirectory);
-			sb.append(" update-ref refs/heads/");
-			sb.append(getUpstreamBranchName());
+			sb.append(" fetch -f ");
+			sb.append(workingDirectory);
 			sb.append(" ");
-			sb.append(getBaseBranchSHA());
+			sb.append(_getSenderBranchSHAName());
+			sb.append(":");
+			sb.append(_getSenderBranchSHAName());
 
 			commands.add(sb.toString());
 
@@ -738,6 +740,41 @@ public abstract class BaseWorkspaceGitRepository
 			sb.append(_getSenderBranchSHAName());
 			sb.append(" ");
 			sb.append(getSenderBranchSHA());
+
+			commands.add(sb.toString());
+
+			sb.setLength(0);
+
+			sb.append("git -C ");
+			sb.append(clonedWorkingDirectory);
+			sb.append(" update-ref refs/heads/");
+			sb.append(localGitBranch.getName());
+			sb.append(" ");
+			sb.append(localGitBranch.getSHA());
+
+			commands.add(sb.toString());
+
+			sb.setLength(0);
+
+			sb.append("git -C ");
+			sb.append(clonedWorkingDirectory);
+			sb.append(" fetch -f ");
+			sb.append(workingDirectory);
+			sb.append(" ");
+			sb.append(getUpstreamBranchName());
+			sb.append(":");
+			sb.append(getUpstreamBranchName());
+
+			commands.add(sb.toString());
+
+			sb.setLength(0);
+
+			sb.append("git -C ");
+			sb.append(clonedWorkingDirectory);
+			sb.append(" update-ref refs/heads/");
+			sb.append(getUpstreamBranchName());
+			sb.append(" ");
+			sb.append(getBaseBranchSHA());
 
 			commands.add(sb.toString());
 

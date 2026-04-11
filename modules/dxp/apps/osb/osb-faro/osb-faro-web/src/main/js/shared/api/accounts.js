@@ -11,14 +11,14 @@ const {
 export function fetch({accountId, groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/account/${accountId}`
+		path: `faro/contacts/${groupId}/account/${accountId}`
 	});
 }
 
 export function fetchDetails({accountId, groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/account/${accountId}/details`
+		path: `faro/contacts/${groupId}/account/${accountId}/details`
 	});
 }
 
@@ -36,14 +36,14 @@ export function fetchFieldValues({
 			query: escapeSingleQuotes(query)
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/account/field_values`
+		path: `faro/contacts/${groupId}/account/field_values`
 	});
 }
 
 export function fetchMetrics({groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/account/metrics`
+		path: `faro/contacts/${groupId}/account/metrics`
 	});
 }
 

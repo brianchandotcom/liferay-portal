@@ -158,7 +158,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						{FrontendDataSet && (
 							<Card>
 								<FrontendDataSet
-									apiURL={`/o/contacts/${groupId}/account/search`}
+									apiURL={`/o/faro/contacts/${groupId}/account/search`}
 									configInURLBehavior='off'
 									customDataRenderers={{
 										accountLifecycleStageRenderer: ({
@@ -230,7 +230,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 											type: 'selection'
 										},
 										{
-											apiURL: `/o/contacts/${groupId}/account/industries`,
+											apiURL: `/o/faro/contacts/${groupId}/account/fds_field_values?channelId=${channelId}&fieldMappingFieldName=industry`,
 											entityFieldType: 'string',
 											id: 'industry',
 											itemKey: 'name',
@@ -242,7 +242,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 											type: 'selection'
 										},
 										{
-											apiURL: `/o/contacts/${groupId}/account/countries`,
+											apiURL: `/o/faro/contacts/${groupId}/account/fds_field_values?channelId=${channelId}&fieldMappingFieldName=country`,
 											entityFieldType: 'string',
 											id: 'country',
 											itemKey: 'name',

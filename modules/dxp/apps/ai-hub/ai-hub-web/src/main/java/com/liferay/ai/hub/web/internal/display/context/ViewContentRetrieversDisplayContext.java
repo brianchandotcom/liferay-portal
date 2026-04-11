@@ -64,6 +64,13 @@ public class ViewContentRetrieversDisplayContext {
 				"get", null, null),
 			new FDSActionDropdownItem(
 				getAPIURL() +
+					"/by-external-reference-code/{externalReferenceCode}" +
+						"/object-actions/crawl",
+				"reload", "put",
+				LanguageUtil.get(_httpServletRequest, "sync-now"), "put", null,
+				"async"),
+			new FDSActionDropdownItem(
+				getAPIURL() +
 					"/by-external-reference-code/{externalReferenceCode}",
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",

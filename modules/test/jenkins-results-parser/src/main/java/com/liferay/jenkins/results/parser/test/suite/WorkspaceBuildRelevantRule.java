@@ -32,10 +32,10 @@ public class WorkspaceBuildRelevantRule extends RelevantRule {
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		List<File> modifiedDirsList = getModifiedDirsList(
+		List<File> modifiedDirs = getModifiedDirsList(
 			new File(gitWorkingDirectory.getWorkingDirectory(), "workspaces"));
 
-		for (File modifiedDir : modifiedDirsList) {
+		for (File modifiedDir : modifiedDirs) {
 			String workspaceDirName = modifiedDir.getName();
 
 			testScriptCommands.add(

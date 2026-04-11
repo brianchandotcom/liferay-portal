@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Kenji Heigel
@@ -36,7 +37,7 @@ public class PortalCoreJavaUnitTestRelevantRule extends RelevantRule {
 		List<File> modifiedDirsList = getModifiedDirsList(
 			getGitWorkingDirectory().getWorkingDirectory());
 
-		Set<String> modifiedDirNames = new HashSet<>();
+		Set<String> modifiedDirNames = new TreeSet<>();
 
 		for (File modifiedDir : modifiedDirsList) {
 			String modifiedDirName = modifiedDir.getName();

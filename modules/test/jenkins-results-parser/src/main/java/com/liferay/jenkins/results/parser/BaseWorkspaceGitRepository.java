@@ -697,7 +697,7 @@ public abstract class BaseWorkspaceGitRepository
 
 			int commitCount = gitWorkingDirectory.getCommitCountBetweenBranches(
 				gitWorkingDirectory.getMergeBaseCommitSHA(
-					localGitBranch.getName(), _getSenderBranchSHAName(),
+					localGitBranch.getName(), _getSenderBranchHeadName(),
 					getUpstreamBranchName()),
 				localGitBranch.getName());
 
@@ -726,9 +726,9 @@ public abstract class BaseWorkspaceGitRepository
 			sb.append(" fetch -f ");
 			sb.append(workingDirectory);
 			sb.append(" ");
-			sb.append(_getSenderBranchSHAName());
+			sb.append(_getSenderBranchHeadName());
 			sb.append(":");
-			sb.append(_getSenderBranchSHAName());
+			sb.append(_getSenderBranchHeadName());
 
 			commands.add(sb.toString());
 
@@ -737,7 +737,7 @@ public abstract class BaseWorkspaceGitRepository
 			sb.append("git -C ");
 			sb.append(clonedWorkingDirectory);
 			sb.append(" update-ref refs/heads/");
-			sb.append(_getSenderBranchSHAName());
+			sb.append(_getSenderBranchHeadName());
 			sb.append(" ");
 			sb.append(getSenderBranchSHA());
 
@@ -945,7 +945,7 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		gitWorkingDirectory.createLocalGitBranch(
-			_getSenderBranchSHAName(), true, getSenderBranchSHA());
+			_getSenderBranchHeadName(), true, getSenderBranchSHA());
 
 		String baseBranchSHA = getBaseBranchSHA();
 
@@ -1011,7 +1011,7 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		gitWorkingDirectory.createLocalGitBranch(
-			_getSenderBranchSHAName(), true, getSenderBranchSHA());
+			_getSenderBranchHeadName(), true, getSenderBranchSHA());
 
 		return gitWorkingDirectory.createLocalGitBranch(
 			getBranchName(), true, getSenderBranchSHA());
@@ -1155,12 +1155,12 @@ public abstract class BaseWorkspaceGitRepository
 		return "";
 	}
 
-	private String _getSenderBranchHeadSHA() {
-		return getString("sender_branch_head_sha");
+	private String _getSenderBranchHeadName() {
+		return getSenderBranchName() + "__" + getSenderBranchSHAShort();
 	}
 
-	private String _getSenderBranchSHAName() {
-		return getSenderBranchName() + "__" + getSenderBranchSHAShort();
+	private String _getSenderBranchHeadSHA() {
+		return getString("sender_branch_head_sha");
 	}
 
 	private RemoteGitRef _getSenderRemoteGitRef() {

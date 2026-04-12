@@ -597,6 +597,11 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 							"analyticsReportsHistoricalViewsURL",
 							"/analytics_reports/get_historical_views")
 					).put(
+						AnalyticsReportsInfoItem.Action.PAGE_EXPERIENCES,
+						new ObjectValuePair<>(
+							"analyticsReportsPageExperiencesURL",
+							"/analytics_reports/get_page_experiences")
+					).put(
 						AnalyticsReportsInfoItem.Action.TOTAL_READS,
 						new ObjectValuePair<>(
 							"analyticsReportsTotalReadsURL",

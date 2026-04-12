@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +44,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = AnalyticsReportsInfoItem.class)
 public class LayoutAnalyticsReportsInfoItem
 	implements AnalyticsReportsInfoItem<Layout> {
+
+	@Override
+	public List<Action> getActions() {
+		return Arrays.asList(
+			Action.HISTORICAL_VIEWS, Action.PAGE_EXPERIENCES,
+			Action.TOTAL_VIEWS, Action.TRAFFIC_CHANNELS);
+	}
 
 	@Override
 	public String getAuthorName(Layout layout) {

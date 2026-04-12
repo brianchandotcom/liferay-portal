@@ -202,7 +202,7 @@ public class AnalyticsReportsDataProvider {
 					typeFactory.constructCollectionLikeType(
 						List.class, PageExperience.class)),
 				Pagination.of(
-					pageJSONObject.getInt("number"),
+					pageJSONObject.getInt("number") + 1,
 					pageJSONObject.getInt("size")),
 				pageJSONObject.getInt("totalElements"));
 		}
@@ -381,7 +381,7 @@ public class AnalyticsReportsDataProvider {
 		}
 
 		if (page >= 0) {
-			endpoint += "&page=" + page;
+			endpoint += "&page=" + (page - 1);
 		}
 
 		if (size >= 0) {

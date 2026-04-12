@@ -5,6 +5,8 @@
 
 package com.liferay.dynamic.data.mapping.internal.util;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -22,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -167,7 +169,9 @@ public class DDMFormValuesToFieldsConverterImpl
 		if (MapUtil.isEmpty(value.getValues())) {
 			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-			if (_isEmpty(predefinedValue.getValues())) {
+			if (_isPredefinedValueEmpty(
+					ddmFormField, predefinedValue.getValues())) {
+
 				LocalizedValue localizedValue = new LocalizedValue(
 					defaultLocale);
 
@@ -251,18 +255,27 @@ public class DDMFormValuesToFieldsConverterImpl
 		return availableLocales;
 	}
 
-	private boolean _isEmpty(Map<Locale, String> valuesMap) {
+	private boolean _isPredefinedValueEmpty(
+		DDMFormField ddmFormField, Map<Locale, String> valuesMap) {
+
 		if (MapUtil.isEmpty(valuesMap)) {
 			return true;
 		}
 
-		for (String value : valuesMap.values()) {
-			if (Validator.isNotNull(value)) {
+		DDMFormFieldType ddmFormFieldType =
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
+				ddmFormField.getType());
+
+		for (String predefinedValue : valuesMap.values()) {
+			if (!ddmFormFieldType.isPredefinedValueEmpty(predefinedValue)) {
 				return false;
 			}
 		}
 
 		return true;
 	}
+
+	@Reference
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 }

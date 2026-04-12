@@ -6,6 +6,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Marcellus Tavares
@@ -27,6 +28,10 @@ public interface DDMFormFieldType {
 
 	public default boolean isCustomDDMFormFieldType() {
 		return false;
+	}
+
+	public default boolean isPredefinedValueEmpty(String value) {
+		return Validator.isNull(value);
 	}
 
 }

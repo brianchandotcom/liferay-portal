@@ -9,6 +9,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,6 +45,17 @@ public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 	@Override
 	public String getName() {
 		return DDMFormFieldTypeConstants.CHECKBOX;
+	}
+
+	@Override
+	public boolean isPredefinedValueEmpty(String value) {
+		if (super.isPredefinedValueEmpty(value) ||
+			StringUtil.equals(value, "[\"false\"]")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

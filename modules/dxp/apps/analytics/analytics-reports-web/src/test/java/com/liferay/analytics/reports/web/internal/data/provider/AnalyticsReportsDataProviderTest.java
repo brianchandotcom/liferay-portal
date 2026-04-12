@@ -8,6 +8,7 @@ package com.liferay.analytics.reports.web.internal.data.provider;
 import com.liferay.analytics.reports.web.internal.model.AcquisitionChannel;
 import com.liferay.analytics.reports.web.internal.model.HistogramMetric;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
+import com.liferay.analytics.reports.web.internal.model.PageExperience;
 import com.liferay.analytics.reports.web.internal.model.ReferringSocialMedia;
 import com.liferay.analytics.reports.web.internal.model.ReferringURL;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
@@ -16,11 +17,13 @@ import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.IOException;
 
@@ -186,6 +189,66 @@ public class AnalyticsReportsDataProviderTest {
 		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
 
 		Assert.assertEquals(localDate, zonedDateTime.toLocalDate());
+	}
+
+	@Test
+	public void testGetPageExperiences() throws Exception {
+		JSONObject jsonObject = JSONUtil.put(
+			"_embedded",
+			JSONUtil.put(
+				"pageExperiences",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"id", "exp1"
+					).put(
+						"name", "Experience 1"
+					)
+				).put(
+					JSONUtil.put(
+						"id", "exp2"
+					).put(
+						"name", "Experience 2"
+					)
+				))
+		).put(
+			"page",
+			JSONUtil.put(
+				"number", 0
+			).put(
+				"size", 2
+			).put(
+				"totalElements", 2
+			)
+		);
+
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
+				_getHttp(
+					Collections.singletonMap(
+						"/page-experiences", jsonObject.toString())));
+
+		Page<PageExperience> pageExperiencesPage =
+			analyticsReportsDataProvider.getPageExperiences(
+				RandomTestUtil.randomLong(), 1, null, 2, null,
+				RandomTestUtil.randomString());
+
+		Assert.assertEquals(2, pageExperiencesPage.getTotalCount());
+
+		List<PageExperience> items =
+			(List<PageExperience>)pageExperiencesPage.getItems();
+
+		Assert.assertEquals(items.toString(), 2, items.size());
+
+		PageExperience pageExperience1 = items.get(0);
+
+		Assert.assertEquals("exp1", pageExperience1.getId());
+		Assert.assertEquals("Experience 1", pageExperience1.getName());
+
+		PageExperience pageExperience2 = items.get(1);
+
+		Assert.assertEquals("exp2", pageExperience2.getId());
+		Assert.assertEquals("Experience 2", pageExperience2.getName());
 	}
 
 	@Test

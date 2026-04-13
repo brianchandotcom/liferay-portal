@@ -103,6 +103,12 @@ export interface IAssetVersion {
 	};
 }
 
+export interface IBreadcrumbItem {
+	active?: boolean;
+	href?: string;
+	label: string;
+}
+
 export interface ISearchAssetObjectEntry {
 	actionIds?: SharingPermission[];
 	actions: IAssetObjectEntry['actions'];

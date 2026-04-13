@@ -12,7 +12,7 @@ import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import ExportTranslationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/ExportTranslationModalContent';
-import exportTranslationBulkAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkAction';
+import {exportTranslationBulkActionRequest} from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkActionRequest';
 
 const mockCloseModal = jest.fn();
 
@@ -21,10 +21,9 @@ jest.mock('frontend-js-components-web', () => ({
 }));
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkAction',
+	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkActionRequest',
 	() => ({
-		__esModule: true,
-		default: jest.fn(() => Promise.resolve()),
+		exportTranslationBulkActionRequest: jest.fn(() => Promise.resolve()),
 	})
 );
 
@@ -99,10 +98,8 @@ const renderComponent = (
 	return render(<ExportTranslationModalContent {...props} />);
 };
 
-(global as any).URL = {
-	createObjectURL: jest.fn(() => 'blob:mock/url-string'),
-	revokeObjectURL: jest.fn(),
-};
+global.URL.createObjectURL = jest.fn(() => 'blob:mock/url-string') as any;
+global.URL.revokeObjectURL = jest.fn() as any;
 
 describe('ExportTranslationModalContent', () => {
 	afterEach(() => {
@@ -196,7 +193,7 @@ describe('ExportTranslationModalContent', () => {
 		});
 	});
 
-	it('calls exportTranslationBulkAction when selectedData is provided and the export button is clicked', async () => {
+	it('calls exportTranslationBulkActionRequest when selectedData is provided and the export button is clicked', async () => {
 		const selectedData = {items: [], selectAll: true};
 		const {getByLabelText, getByText} = renderComponent({
 			...DEFAULT_PROPS,
@@ -210,16 +207,18 @@ describe('ExportTranslationModalContent', () => {
 		fireEvent.click(getByText('export'));
 
 		await waitFor(() => {
-			expect(exportTranslationBulkAction).toHaveBeenCalledWith({
-				apiURL: '/api/test',
-				keyValues: {
-					sourceLanguageId: 'en_US',
-					targetLanguageIds: ['es_ES', 'fr_FR'],
-					xliffMimeType: 'application/xliff+xml',
-				},
-				selectedData,
-				type: 'ExportTranslationBulkAction',
-			});
+			expect(exportTranslationBulkActionRequest).toHaveBeenCalledWith(
+				expect.objectContaining({
+					apiURL: '/api/test',
+					keyValues: {
+						sourceLanguageId: 'en_US',
+						targetLanguageIds: ['es_ES', 'fr_FR'],
+						xliffMimeType: 'application/xliff+xml',
+					},
+					selectedData,
+					type: 'ExportTranslationBulkAction',
+				})
+			);
 		});
 	});
 });

@@ -27,13 +27,11 @@ public interface SegmentsEntryProviderRegistry {
 			long groupId, String className, long classPK)
 		throws PortalException {
 
-		return getSegmentsEntryIds(
-			groupId, className, classPK, null, new long[0]);
+		return getSegmentsEntryIds(groupId, className, classPK, null);
 	}
 
 	public long[] getSegmentsEntryIds(
-			long groupId, String className, long classPK, Context context,
-			long[] segmentEntryIds)
+			long groupId, String className, long classPK, Context context)
 		throws PortalException;
 
 	public SegmentsEntryProvider getSegmentsEntryProvider(String source);

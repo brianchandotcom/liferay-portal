@@ -15,6 +15,6 @@ import com.liferay.segments.context.Context;
 public interface SegmentsEntryRetriever {
 
 	public long[] getSegmentsEntryIds(
-		long groupId, long userId, Context context, long[] segmentEntryIds);
+		long groupId, long userId, Context context);
 
 }

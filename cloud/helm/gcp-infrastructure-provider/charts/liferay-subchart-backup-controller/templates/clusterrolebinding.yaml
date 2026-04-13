@@ -8,5 +8,5 @@ roleRef:
     name: backup-controller-clusterrole
 subjects:
     -   kind: ServiceAccount
-        name: backup-controller
+        name: {{ .Values.serviceAccountName }}
         namespace: {{ .Release.Namespace }}

@@ -505,6 +505,8 @@ public class RESTBuilder {
 	private static List<String> _processRESTConfigFiles(String baseDirName)
 		throws Exception {
 
+		List<String> baselineTasks = new ArrayList<>();
+
 		Path baseDirPath = Paths.get(baseDirName);
 
 		List<Path> restConfigYamlPaths = new ArrayList<>();
@@ -560,8 +562,6 @@ public class RESTBuilder {
 				}
 
 			});
-
-		List<String> baselineTasks = new ArrayList<>();
 
 		for (Path restConfigYamlPath : restConfigYamlPaths) {
 			String baselineTask = _processRESTConfigFile(

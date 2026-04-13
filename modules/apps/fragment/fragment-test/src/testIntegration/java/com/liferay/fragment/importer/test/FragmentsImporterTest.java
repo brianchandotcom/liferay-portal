@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
@@ -254,14 +255,22 @@ public class FragmentsImporterTest {
 		File zipFile = _generateZipFileWithFolderResources();
 
 		_testImportFragmentEntriesWithFolderResources(
-			Map.of(
-				"folder1/image2.png", "image2.png", "image1.png", "image1.png"),
+			HashMapBuilder.put(
+				"folder1/image2.png", "image2.png"
+			).put(
+				"image1.png", "image1.png"
+			).build(),
 			zipFile);
 		_testImportFragmentEntriesWithFolderResources(
-			Map.of(
-				"folder1/image2 (1).png", "image2 (1).png",
-				"folder1/image2.png", "image2.png", "image1 (1).png",
-				"image1 (1).png", "image1.png", "image1.png"),
+			HashMapBuilder.put(
+				"folder1/image2 (1).png", "image2 (1).png"
+			).put(
+				"folder1/image2.png", "image2.png"
+			).put(
+				"image1 (1).png", "image1 (1).png"
+			).put(
+				"image1.png", "image1.png"
+			).build(),
 			zipFile);
 
 		FileUtil.delete(zipFile);
@@ -281,14 +290,18 @@ public class FragmentsImporterTest {
 
 		try {
 			_testImportFragmentEntriesWithFolderResources(
-				Map.of(
-					"folder1/image2.png", "image2.png", "image1.png",
-					"image1.png"),
+				HashMapBuilder.put(
+					"folder1/image2.png", "image2.png"
+				).put(
+					"image1.png", "image1.png"
+				).build(),
 				zipFile);
 			_testImportFragmentEntriesWithFolderResources(
-				Map.of(
-					"folder1/image2.png", "image2.png", "image1.png",
-					"image1.png"),
+				HashMapBuilder.put(
+					"folder1/image2.png", "image2.png"
+				).put(
+					"image1.png", "image1.png"
+				).build(),
 				zipFile);
 		}
 		finally {

@@ -58,11 +58,13 @@ public class WorkflowContextUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName);
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", fieldName, ", workflowContext from ", tableName,
 					" where workflowContext is not null and workflowContext ",
 					"not like '%serializable%'"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			JSONSerializer jsonSerializer = _getJSONSerializer();

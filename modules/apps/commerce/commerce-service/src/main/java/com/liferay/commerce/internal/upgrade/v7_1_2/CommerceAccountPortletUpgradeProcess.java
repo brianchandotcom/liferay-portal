@@ -33,7 +33,9 @@ public class CommerceAccountPortletUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateLayout);
+
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(selectLayout)) {
 
 			while (resultSet.next()) {

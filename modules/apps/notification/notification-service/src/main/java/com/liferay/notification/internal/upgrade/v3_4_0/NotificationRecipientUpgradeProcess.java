@@ -28,8 +28,10 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 				"select count(*) as count from NotificationRecipient");
 
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select count(*) as count from NotificationRecipientSetting");
+
 			ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 
 			if (resultSet1.next() && (resultSet1.getLong("count") > 0)) {
@@ -47,12 +49,15 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					"NotificationQueueEntry"));
 
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select notificationTemplateId, companyId, userId, ",
 					"userName, createDate, modifiedDate from ",
 					"NotificationTemplate"));
+
 			ResultSet resultSet2 = preparedStatement2.executeQuery();
+
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

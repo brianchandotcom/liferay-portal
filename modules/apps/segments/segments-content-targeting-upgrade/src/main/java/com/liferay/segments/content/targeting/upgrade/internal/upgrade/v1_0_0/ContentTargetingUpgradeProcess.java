@@ -180,9 +180,11 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeContentTargetingUserSegments() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
+
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from CT_UserSegment");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			ServiceContext serviceContext = new ServiceContext();
 

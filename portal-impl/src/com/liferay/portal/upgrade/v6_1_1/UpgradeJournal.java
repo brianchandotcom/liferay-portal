@@ -31,6 +31,7 @@ public class UpgradeJournal extends UpgradeProcess {
 				"select id_, content from JournalArticle");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

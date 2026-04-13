@@ -234,8 +234,10 @@ public class UpgradeSharding extends UpgradeProcess {
 
 	protected List<String> getShardNames() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select name from Shard");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			List<String> shardNames = new ArrayList<>();

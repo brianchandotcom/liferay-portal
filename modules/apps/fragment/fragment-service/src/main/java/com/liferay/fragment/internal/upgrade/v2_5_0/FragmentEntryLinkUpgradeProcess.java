@@ -42,6 +42,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 						"'BASIC_SECTION%'");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

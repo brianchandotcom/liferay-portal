@@ -155,6 +155,7 @@ public class CompanyDataCleanupPreupgradeProcessTest
 					_connection.prepareStatement(
 						"select companyId from " + tableName +
 							" where id_ in (1, 2) order by id_");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

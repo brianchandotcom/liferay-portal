@@ -105,6 +105,7 @@ public class UpgradeGroup extends UpgradeProcess {
 						"friendlyURL != '/global'")));
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

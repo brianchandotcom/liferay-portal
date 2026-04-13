@@ -68,6 +68,7 @@ public class Log4jConfigUtilTest {
 				Mockito.mockStatic(CompanyThreadLocal.class);
 			MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic =
 				Mockito.mockStatic(PortalInstancePool.class);
+
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 

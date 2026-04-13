@@ -73,12 +73,12 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 					"select DDLRecordSet.*, TEMP_TABLE.structureVersionId ",
 					"from DDLRecordSet inner join (select structureId, ",
 					"max(structureVersionId) as structureVersionId from ",
-					"DDMStructureVersion group by ",
-					"DDMStructureVersion.structureId) TEMP_TABLE on ",
-					"DDLRecordSet.DDMStructureId = TEMP_TABLE.structureId ",
-					"where scope = 2"));
+					"DDMStructureVersion group by DDMStructureVersion.",
+					"structureId) TEMP_TABLE on DDLRecordSet.DDMStructureId ",
+					"= TEMP_TABLE.structureId where scope = 2"));
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

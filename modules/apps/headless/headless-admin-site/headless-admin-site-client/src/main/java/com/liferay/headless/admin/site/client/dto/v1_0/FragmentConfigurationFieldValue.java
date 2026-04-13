@@ -93,7 +93,8 @@ public abstract class FragmentConfigurationFieldValue
 		CATEGORY("Category"), CHECKBOX("Checkbox"), COLLECTION("Collection"),
 		COLOR_PALETTE("ColorPalette"), COLOR_PICKER("ColorPicker"),
 		ITEM("Item"), LENGTH("Length"), NAVIGATION_MENU("NavigationMenu"),
-		SELECT("Select"), TEXT("Text"), URL("URL"), VIDEO("Video");
+		SELECT("Select"), TARGET_COLLECTION_DISPLAY("TargetCollectionDisplay"),
+		TEXT("Text"), URL("URL"), VIDEO("Video");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

@@ -14,6 +14,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 
 export const test = mergeTests(
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPD-35013': {enabled: true},
 	}),
 	isolatedSiteTest,

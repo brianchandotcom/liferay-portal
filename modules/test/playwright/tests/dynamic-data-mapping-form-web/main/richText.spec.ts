@@ -12,7 +12,13 @@ import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {deleteItems} from './utils/deleteItems';
 
-const baseTest = mergeTests(formsPagesTest, loginTest());
+const baseTest = mergeTests(
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
+	formsPagesTest,
+	loginTest()
+);
 
 const xssBypassTest = mergeTests(
 	baseTest,

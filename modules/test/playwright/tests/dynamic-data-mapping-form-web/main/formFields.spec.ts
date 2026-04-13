@@ -12,8 +12,15 @@ import {getRandomInt} from '../../../utils/getRandomInt';
 import performLoginViaApi, {performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {deleteItems} from './utils/deleteItems';
+import {featureFlagsTest} from "../../../fixtures/featureFlagsTest";
 
-export const test = mergeTests(dataApiHelpersTest, loginTest(), formsPagesTest);
+export const test = mergeTests(
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
+	loginTest(),
+	formsPagesTest);
 
 test.afterEach(async ({formsPage}) => {
 	await formsPage.goTo();

@@ -11,10 +11,14 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import {featureFlagsTest} from "../../../fixtures/featureFlagsTest";
 
 export const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
 	loginTest(),
 	messageBoardsPagesTest
 );

@@ -14,10 +14,14 @@ import {editIFramePageTest} from './fixtures/editIFramePageTest';
 import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditIFramePage} from './pages/EditIFramePage';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
+import {featureFlagsTest} from "../../../fixtures/featureFlagsTest";
 
 const test = mergeTests(
 	clientExtensionsPageTest,
 	editIFramePageTest,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
 	loginTest()
 );
 

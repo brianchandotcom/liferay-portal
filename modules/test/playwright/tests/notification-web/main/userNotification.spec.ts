@@ -13,10 +13,14 @@ import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {blogsPagesTest} from '../../../tests/blogs-web/main/fixtures/blogsPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {featureFlagsTest} from "../../../fixtures/featureFlagsTest";
 
 export const test = mergeTests(
 	apiHelpersTest,
 	blogsPagesTest,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
 	loginTest(),
 	notificationPagesTest,
 	workflowPagesTest

@@ -23,6 +23,7 @@ const test = mergeTests(
 	blogsPagesTest,
 	loginTest(),
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPD-39304': {enabled: true},
 		'LPS-178052': {enabled: true},
 	})

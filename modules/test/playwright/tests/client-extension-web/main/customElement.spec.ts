@@ -14,10 +14,14 @@ import {editCustomElementPageTest} from './fixtures/editCustomElementPageTest';
 import {Column} from './pages/ClientExtensionsPage';
 import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditCustomElementPage} from './pages/EditCustomElementPage';
+import {featureFlagsTest} from "../../../fixtures/featureFlagsTest";
 
 const test = mergeTests(
 	clientExtensionsPageTest,
 	editCustomElementPageTest,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
 	loginTest()
 );
 

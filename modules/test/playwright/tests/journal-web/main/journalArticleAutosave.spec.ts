@@ -33,6 +33,7 @@ const autoSaveTest = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPD-11228': {enabled: true},
+		'LPD-11235': {enabled: true},
 		'LPD-36105': {enabled: true},
 	}),
 	isolatedSiteTest,

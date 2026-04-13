@@ -50,8 +50,6 @@ export default function PopoverTooltip({
 
 	const triggerProps: any = {
 		'aria-describedby': showPopover ? id : null,
-		'onBlur': () => setShowPopover(false),
-		'onFocus': () => setShowPopover(true),
 		'onMouseEnter': () => setShowPopover(true),
 		'onMouseLeave': () => setShowPopover(false),
 		'type': 'button',

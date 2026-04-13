@@ -516,7 +516,7 @@ public class RESTBuilder {
 
 		Path moduleDirPath = restConfigYamlPath.getParent();
 
-		System.err.println("Processing " + moduleDirPath.getFileName());
+		System.out.println("Processing " + moduleDirPath.getFileName());
 
 		RESTBuilder restBuilder = new RESTBuilder(
 			null, moduleDirPath.toFile(), null, null, null);
@@ -2047,7 +2047,7 @@ public class RESTBuilder {
 					!Objects.equals(propertySchema.getFormat(), "double") &&
 					!Objects.equals(propertySchema.getFormat(), "float")) {
 
-					System.err.println(
+					System.out.println(
 						StringBundler.concat(
 							"The property \"", entry1.getKey(), '.',
 							entry2.getKey(),
@@ -2069,7 +2069,7 @@ public class RESTBuilder {
 					requiredPropertySchemaNames) {
 
 				if (!propertySchemaNames.contains(requiredPropertySchemaName)) {
-					System.err.println(
+					System.out.println(
 						StringBundler.concat(
 							"The required property \"",
 							requiredPropertySchemaName, "\" is not defined in ",

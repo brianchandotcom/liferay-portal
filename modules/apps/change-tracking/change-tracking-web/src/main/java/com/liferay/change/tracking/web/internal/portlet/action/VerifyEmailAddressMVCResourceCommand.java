@@ -102,7 +102,9 @@ public class VerifyEmailAddressMVCResourceCommand
 
 			return;
 		}
-		else if (user.getUserId() == ctCollection.getUserId()) {
+		else if ((ctCollection != null) &&
+				 (user.getUserId() == ctCollection.getUserId())) {
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(

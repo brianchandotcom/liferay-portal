@@ -36,3 +36,23 @@ if (container) {
 		logoName.style.opacity = hasCustomImage || apiImg ? '0' : '1';
 	}
 }
+
+if (!window.onFileEntrySaved) {
+	window.onFileEntrySaved = (data) => {
+
+		// eslint-disable-next-line no-console
+		console.info(data);
+	};
+
+	Liferay.on('fileEntrySaved', window.onFileEntrySaved);
+}
+
+if (!window.onMessagePosted) {
+	window.onMessagePosted = (data) => {
+
+		// eslint-disable-next-line no-console
+		console.info(data);
+	};
+
+	Liferay.on('messagePosted', window.onMessagePosted);
+}

@@ -2381,6 +2381,46 @@ public class DefaultObjectEntryManagerImpl
 			serviceBuilderObjectEntry);
 	}
 
+	private String _getObjectEntryFolderExternalReferenceCode(
+		long companyId, long groupId, ObjectDefinition objectDefinition) {
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564") ||
+			(groupId == 0) ||
+			!StringUtil.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_DEPOT)) {
+
+			return null;
+		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if ((group == null) || !group.isDepot()) {
+			return null;
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			groupId);
+
+		if ((depotEntry == null) ||
+			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+
+			return null;
+		}
+
+		ObjectFolder objectFolder = objectDefinition.getObjectFolder();
+
+		if ((objectFolder != null) &&
+			Objects.equals(
+				objectFolder.getExternalReferenceCode(),
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+
+			return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
+		}
+
+		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
+	}
+
 	private long _getObjectEntryFolderId(
 			long companyId, long groupId, ObjectEntry objectEntry,
 			ObjectDefinition objectDefinition, ServiceContext serviceContext)
@@ -2393,41 +2433,16 @@ public class DefaultObjectEntryManagerImpl
 			long objectEntryFolderId = GetterUtil.getLong(
 				objectEntry.getObjectEntryFolderId());
 
-			if ((objectEntryFolderId != 0) ||
-				!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564") ||
-				(groupId == 0)) {
-
+			if (objectEntryFolderId != 0) {
 				return objectEntryFolderId;
 			}
 
-			Group group = _groupLocalService.fetchGroup(groupId);
+			objectEntryFolderExternalReferenceCode =
+				_getObjectEntryFolderExternalReferenceCode(
+					companyId, groupId, objectDefinition);
 
-			if ((group == null) || !group.isDepot()) {
+			if (Validator.isNull(objectEntryFolderExternalReferenceCode)) {
 				return objectEntryFolderId;
-			}
-
-			DepotEntry depotEntry =
-				_depotEntryLocalService.fetchGroupDepotEntry(groupId);
-
-			if ((depotEntry == null) ||
-				(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
-
-				return objectEntryFolderId;
-			}
-
-			ObjectFolder objectFolder = objectDefinition.getObjectFolder();
-
-			if ((objectFolder != null) &&
-				Objects.equals(
-					objectFolder.getExternalReferenceCode(),
-					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
-
-				objectEntryFolderExternalReferenceCode =
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
-			}
-			else {
-				objectEntryFolderExternalReferenceCode =
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
 			}
 		}
 

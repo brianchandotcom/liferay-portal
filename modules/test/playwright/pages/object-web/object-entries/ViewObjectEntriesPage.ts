@@ -301,7 +301,7 @@ export class ViewObjectEntriesPage {
 			.click();
 
 		await this.selectFileIframeArabic
-			.getByRole('link', {name: 'Liferay DXP Site'})
+			.getByRole('link', {name: 'موقع Liferay DXP'})
 			.click();
 
 		await this.selectFileIframeArabic
@@ -328,7 +328,7 @@ export class ViewObjectEntriesPage {
 		const fileChooser = await fileChooserPromise;
 
 		await fileChooser.setFiles(
-			path.join(dirName, 'dependencies', fileName)
+			path.join(dirName, '../dependencies', fileName)
 		);
 	}
 

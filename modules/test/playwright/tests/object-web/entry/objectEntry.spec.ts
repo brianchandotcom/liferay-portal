@@ -4418,7 +4418,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			const editorBody = editorFrame.locator('body');
 
 			const file = fs.readFileSync(
-				path.join(__dirname, 'dependencies', 'tree.png')
+				path.join(__dirname, '../dependencies', 'tree.png')
 			);
 
 			await pasteFile(editorBody, {

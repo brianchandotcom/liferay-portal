@@ -1,7 +1,6 @@
 import ClayLink from '@clayui/link';
 import FaroConstants from 'shared/util/constants';
 import Label from '@clayui/label';
-import Link from '@clayui/link';
 import React, {useEffect, useState} from 'react';
 import {AssetIcon, MimeTypes} from 'assets/components/AssetsIcon';
 import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
@@ -84,19 +83,19 @@ export const columns = {
 	dateRenderer: ({value}) => (
 		<div>{value && formatUTCDate(value, CUSTOM_DATE_FORMAT)}</div>
 	),
-	nameAndLinkRenderer: ({groupId, itemData, value}) => {
+	nameAndLinkRenderer: ({groupId, itemData, route, value}) => {
 		const itemTitle = value || itemData.id;
 
 		return (
-			<Link
+			<ClayLink
 				className='font-weight-semi-bold text-dark'
-				href={toRoute(Routes.CONTACTS_ACCOUNT, {
+				href={toRoute(route, {
 					groupId,
 					id: itemData.id
 				})}
 			>
 				{itemTitle}
-			</Link>
+			</ClayLink>
 		);
 	}
 };

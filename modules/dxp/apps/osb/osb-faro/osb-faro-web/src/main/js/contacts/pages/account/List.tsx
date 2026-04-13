@@ -183,6 +183,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 											columns.nameAndLinkRenderer({
 												groupId,
 												itemData,
+												route: Routes.CONTACTS_ACCOUNT,
 												value
 											}),
 										annualRevenueRenderer: ({value}) => (

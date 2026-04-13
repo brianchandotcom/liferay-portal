@@ -66,8 +66,7 @@ public class SegmentsEntryProviderRegistryTest {
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				TestPropsValues.getUserId(), new Context(),
-				new long[] {segmentsEntry1.getSegmentsEntryId()});
+				TestPropsValues.getUserId(), new Context());
 
 		Assert.assertEquals(
 			Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);
@@ -80,8 +79,7 @@ public class SegmentsEntryProviderRegistryTest {
 
 		segmentsEntryIds = _segmentsEntryProviderRegistry.getSegmentsEntryIds(
 			_group.getGroupId(), User.class.getName(),
-			TestPropsValues.getUserId(), new Context(),
-			new long[] {segmentsEntry2.getSegmentsEntryId()});
+			TestPropsValues.getUserId(), new Context());
 
 		Assert.assertEquals(
 			Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);

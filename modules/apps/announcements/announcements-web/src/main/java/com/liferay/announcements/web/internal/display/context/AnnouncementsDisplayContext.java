@@ -162,8 +162,7 @@ public class AnnouncementsDisplayContext {
 					_segmentsEntryRetriever.getSegmentsEntryIds(
 						_announcementsRequestHelper.getScopeGroupId(),
 						_themeDisplay.getUserId(),
-						_requestContextMapper.map(_httpServletRequest),
-						new long[0]);
+						_requestContextMapper.map(_httpServletRequest));
 
 				for (long segmentsEntryId : segmentsEntryIds) {
 					List<SegmentsEntryRole> segmentsEntryRoles =

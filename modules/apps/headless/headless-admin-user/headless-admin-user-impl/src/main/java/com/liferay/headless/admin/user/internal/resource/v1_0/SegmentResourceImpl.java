@@ -59,8 +59,7 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 				ArrayUtil.toArray(
 					_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 						siteId, user.getModelClassName(), user.getPrimaryKey(),
-						_requestContextMapper.map(contextHttpServletRequest),
-						new long[0])),
+						_requestContextMapper.map(contextHttpServletRequest))),
 				segmentsEntryId -> _toSegment(
 					_segmentsEntryService.getSegmentsEntry(segmentsEntryId))));
 	}

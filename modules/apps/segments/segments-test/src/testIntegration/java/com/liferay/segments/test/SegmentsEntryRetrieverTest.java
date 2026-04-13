@@ -76,7 +76,7 @@ public class SegmentsEntryRetrieverTest {
 
 			long[] segmentsEntryIds =
 				_segmentsEntryRetriever.getSegmentsEntryIds(
-					_group.getGroupId(), _user.getUserId(), null, new long[0]);
+					_group.getGroupId(), _user.getUserId(), null);
 
 			Assert.assertEquals(
 				Arrays.toString(segmentsEntryIds), 2, segmentsEntryIds.length);
@@ -123,7 +123,7 @@ public class SegmentsEntryRetrieverTest {
 	@Test
 	public void testGetSegmentsEntryIdsWithoutSegmentsEntry() throws Exception {
 		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
-			_group.getGroupId(), _user.getUserId(), null, new long[0]);
+			_group.getGroupId(), _user.getUserId(), null);
 
 		Assert.assertEquals(
 			Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);
@@ -175,7 +175,7 @@ public class SegmentsEntryRetrieverTest {
 
 		try {
 			return _segmentsEntryRetriever.getSegmentsEntryIds(
-				_group.getGroupId(), _user.getUserId(), null, new long[0]);
+				_group.getGroupId(), _user.getUserId(), null);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

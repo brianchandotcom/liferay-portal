@@ -629,8 +629,7 @@ public class SitePageResourceImpl
 					layout.getPlid(),
 					_segmentsEntryRetriever.getSegmentsEntryIds(
 						layout.getGroupId(), contextUser.getUserId(),
-						_requestContextMapper.map(httpServletRequest),
-						new long[0]));
+						_requestContextMapper.map(httpServletRequest)));
 
 		if (ArrayUtil.isEmpty(segmentsExperienceIds)) {
 			return _segmentsExperienceLocalService.fetchSegmentsExperience(

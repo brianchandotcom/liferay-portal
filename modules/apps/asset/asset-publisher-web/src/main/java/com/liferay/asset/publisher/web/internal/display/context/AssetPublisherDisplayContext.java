@@ -2427,8 +2427,7 @@ public class AssetPublisherDisplayContext {
 			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
 			_requestContextMapper.map(
 				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(_portletRequest))),
-			new long[0]);
+					_portal.getHttpServletRequest(_portletRequest))));
 
 		return TransformUtil.transformToLongArray(
 			_assetListEntrySegmentsEntryRelLocalService.

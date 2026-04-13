@@ -36,8 +36,8 @@ public class UserGroupRoleModelListener
 		try {
 			long[] segmentsEntryIds =
 				_segmentsEntryRetriever.getSegmentsEntryIds(
-					userGroupRole.getGroupId(), userGroupRole.getUserId(), null,
-					new long[0]);
+					userGroupRole.getGroupId(), userGroupRole.getUserId(),
+					null);
 
 			for (long segmentsEntryId : segmentsEntryIds) {
 				_deleteSegmentsEntryId(userGroupRole, segmentsEntryId);

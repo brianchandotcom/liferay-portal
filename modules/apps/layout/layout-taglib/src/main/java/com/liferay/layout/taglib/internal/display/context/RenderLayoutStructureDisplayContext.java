@@ -1123,7 +1123,7 @@ public class RenderLayoutStructureDisplayContext {
 
 			_segmentsEntryIds = segmentsEntryRetriever.getSegmentsEntryIds(
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-				requestContextMapper.map(_httpServletRequest), new long[0]);
+				requestContextMapper.map(_httpServletRequest));
 		}
 
 		return _segmentsEntryIds;

@@ -384,7 +384,7 @@
 		},
 		{
 			"className": "com.liferay.object.model.ObjectDefinition#P4T1",
-			"enableCategorization": true,
+			"enableCategorization": false,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_CMS_BULK_ACTION_TASK",
 			"label": {

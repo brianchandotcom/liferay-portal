@@ -7,14 +7,9 @@ import {fetch} from 'frontend-js-web';
 
 import {ContentRetriever} from '../types/ContentRetriever';
 
-const CONTENT_RETRIEVER_BASE_URI = '/o/ai-hub/v1.0/content-retrievers/';
-
-const CONTENT_RETRIEVER_BY_EXTERNAL_REFERENCE_CODE_URI =
-	'/o/ai-hub/content-retrievers/by-external-reference-code/';
-
 async function getContentRetriever(externalReferenceCode: string) {
 	const response = await fetch(
-		`${CONTENT_RETRIEVER_BY_EXTERNAL_REFERENCE_CODE_URI}${externalReferenceCode}`,
+		`/o/ai-hub/content-retrievers/by-external-reference-code/${externalReferenceCode}`,
 		{
 			headers: {
 				'Content-Type': 'application/json',
@@ -31,7 +26,7 @@ async function putContentRetriever(
 	externalReferenceCode: string
 ) {
 	const response = await fetch(
-		`${CONTENT_RETRIEVER_BASE_URI}${externalReferenceCode}`,
+		`/o/ai-hub/v1.0/content-retrievers/by-external-reference-code/${externalReferenceCode}`,
 		{
 			body: JSON.stringify(contentRetriever),
 			headers: {

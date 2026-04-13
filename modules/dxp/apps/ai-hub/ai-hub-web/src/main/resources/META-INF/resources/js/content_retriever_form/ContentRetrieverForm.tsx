@@ -31,6 +31,12 @@ export default function ContentRetrieverForm({
 	backURL: string;
 	externalReferenceCode: string;
 }) {
+	const [initialValues, setInitialValues] = useState({
+		description_i18n: {},
+		title_i18n: {},
+		url: '',
+	});
+
 	const [shouldNavigate, setShouldNavigate] = useState(false);
 
 	const availableLocales = useMemo(
@@ -64,11 +70,8 @@ export default function ContentRetrieverForm({
 	}, [shouldNavigate, backURL]);
 
 	const formik = useFormik({
-		initialValues: {
-			description_i18n: {},
-			title_i18n: {},
-			url: '',
-		},
+		enableReinitialize: true,
+		initialValues,
 		onSubmit: async (values, {setSubmitting}) => {
 			try {
 				await putContentRetriever(values, externalReferenceCode);
@@ -127,25 +130,27 @@ export default function ContentRetrieverForm({
 	});
 
 	useEffect(() => {
-		if (externalReferenceCode) {
-			(async () => {
-				try {
-					const response = await getContentRetriever(
-						externalReferenceCode
-					);
-
-					formik.setValues({
-						description_i18n: response.description_i18n || {},
-						title_i18n: response.title_i18n || {},
-						url: response.url || '',
-					});
-				}
-				catch (error) {
-					console.error(error);
-				}
-			})();
+		if (!externalReferenceCode) {
+			return;
 		}
-	}, [externalReferenceCode, formik]);
+
+		(async () => {
+			try {
+				const response = await getContentRetriever(
+					externalReferenceCode
+				);
+
+				setInitialValues({
+					description_i18n: response.description_i18n || {},
+					title_i18n: response.title_i18n || {},
+					url: response.url || '',
+				});
+			}
+			catch (error) {
+				console.error(error);
+			}
+		})();
+	}, [externalReferenceCode]);
 
 	return (
 		<>

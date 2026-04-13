@@ -3151,9 +3151,25 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testPublishCustomObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition1 = _publishCustomObjectDefinition();
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				null, TestPropsValues.getUserId(), 0, null, false, false, true,
+				false, true, false, false, false, false, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.emptyList(), new ServiceContext());
 
-		_assertPublishedObjectDefinition(objectDefinition1);
+		AssertUtils.assertFailure(
+			ObjectDefinitionStatusException.class,
+			"At least one object field must be added when publishing the " +
+				"object definition",
+			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 
@@ -3163,20 +3179,26 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 
-		ObjectDefinition objectDefinition3 = _publishCustomObjectDefinition(
+		ObjectDefinition objectDefinition3 = _publishCustomObjectDefinition();
+
+		_assertPublishedObjectDefinition(objectDefinition3);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
+
+		ObjectDefinition objectDefinition4 = _publishCustomObjectDefinition(
 			false);
 
 		Assert.assertNull(
-			IndexerRegistryUtil.getIndexer(objectDefinition3.getClassName()));
+			IndexerRegistryUtil.getIndexer(objectDefinition4.getClassName()));
 
-		ObjectDefinition objectDefinition4 = _publishCustomObjectDefinition(
+		ObjectDefinition objectDefinition5 = _publishCustomObjectDefinition(
 			true);
 
 		Assert.assertNotNull(
-			IndexerRegistryUtil.getIndexer(objectDefinition4.getClassName()));
+			IndexerRegistryUtil.getIndexer(objectDefinition5.getClassName()));
 
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition4);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition5);
 	}
 
 	@Test

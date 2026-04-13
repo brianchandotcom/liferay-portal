@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -63,6 +64,11 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpSAXReaderUtil();
+
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValuesToFieldsConverter,
+			"_ddmFormFieldTypeServicesRegistry",
+			getMockedDDMFormFieldTypeServicesRegistry());
 	}
 
 	@Test
@@ -168,28 +174,36 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	public void testConversionWithEmptyPredefinedValueInNondefaultLocale()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
-			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
-			LocaleUtil.US);
-
-		DDMFormField ddmFormField = createTextDDMFormField("Text");
-
-		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.BRAZIL);
-
-		predefinedValue.addString(LocaleUtil.BRAZIL, StringPool.BLANK);
-
-		ddmFormField.setPredefinedValue(predefinedValue);
-
-		addDDMFormFields(ddmForm, ddmFormField);
-
-		Fields fields = _ddmFormValuesToFieldsConverter.convert(
-			createStructure(RandomTestUtil.randomString(), ddmForm),
-			DDMFormValuesTestUtil.createDDMFormValues(ddmForm));
-
-		testField(
-			fields.get("Text"), createValuesList(StringPool.BLANK),
-			createValuesList(StringPool.BLANK),
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+		_testConversionWithEmptyPredefinedValueInNondefaultLocale(
+			_createDDMFormField(
+				"string", RandomTestUtil.randomString(),
+				DDMFormFieldTypeConstants.CHECKBOX),
+			"[\"false\"]");
+		_testConversionWithEmptyPredefinedValueInNondefaultLocale(
+			_createDDMFormField(
+				"string", RandomTestUtil.randomString(),
+				DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE),
+			"[]");
+		_testConversionWithEmptyPredefinedValueInNondefaultLocale(
+			_createDDMFormField(
+				"json", RandomTestUtil.randomString(),
+				DDMFormFieldTypeConstants.IMAGE),
+			"{}");
+		_testConversionWithEmptyPredefinedValueInNondefaultLocale(
+			_createDDMFormField(
+				"string", RandomTestUtil.randomString(),
+				DDMFormFieldTypeConstants.RADIO),
+			"[]");
+		_testConversionWithEmptyPredefinedValueInNondefaultLocale(
+			_createDDMFormField(
+				"string", RandomTestUtil.randomString(),
+				DDMFormFieldTypeConstants.SELECT),
+			"[]");
+		_testConversionWithEmptyPredefinedValueInNondefaultLocale(
+			_createDDMFormField(
+				"string", RandomTestUtil.randomString(),
+				DDMFormFieldTypeConstants.TEXT),
+			StringPool.BLANK);
 	}
 
 	@Test
@@ -662,6 +676,49 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		Assert.assertTrue(clazz.isAssignableFrom(Boolean.class));
 
 		Assert.assertEquals(expectedValue, value);
+	}
+
+	private DDMFormField _createDDMFormField(
+		String dataType, String name, String type) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, type);
+
+		ddmFormField.setDataType(dataType);
+		ddmFormField.setFieldReference(name);
+		ddmFormField.setLocalizable(true);
+
+		LocalizedValue label = ddmFormField.getLabel();
+
+		label.addString(LocaleUtil.US, name);
+
+		return ddmFormField;
+	}
+
+	private void _testConversionWithEmptyPredefinedValueInNondefaultLocale(
+			DDMFormField ddmFormField, String predefinedValue)
+		throws Exception {
+
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.US);
+
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.BRAZIL);
+
+		localizedValue.addString(LocaleUtil.BRAZIL, predefinedValue);
+
+		ddmFormField.setPredefinedValue(localizedValue);
+
+		addDDMFormFields(ddmForm, ddmFormField);
+
+		Fields fields = _ddmFormValuesToFieldsConverter.convert(
+			createStructure(RandomTestUtil.randomString(), ddmForm),
+			DDMFormValuesTestUtil.createDDMFormValues(ddmForm));
+
+		testField(
+			fields.get(ddmFormField.getName()),
+			createValuesList(StringPool.BLANK),
+			createValuesList(StringPool.BLANK),
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 	}
 
 	private Set<Locale> _availableLocales;

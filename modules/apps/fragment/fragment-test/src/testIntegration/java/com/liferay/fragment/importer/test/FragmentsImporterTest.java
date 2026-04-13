@@ -251,28 +251,27 @@ public class FragmentsImporterTest {
 	public void testImportFragmentEntriesWithFolderResources()
 		throws Exception {
 
-		File fileWithFolderResources = _generateZipFileWithFolderResources();
+		File zipFile = _generateZipFileWithFolderResources();
 
-		_testFolderResources(
-			fileWithFolderResources,
+		_testImportFragmentEntriesWithFolderResources(
 			Map.of(
-				"folder1/image2.png", "image2.png", "image1.png",
-				"image1.png"));
-		_testFolderResources(
-			fileWithFolderResources,
+				"folder1/image2.png", "image2.png", "image1.png", "image1.png"),
+			zipFile);
+		_testImportFragmentEntriesWithFolderResources(
 			Map.of(
 				"folder1/image2 (1).png", "image2 (1).png",
 				"folder1/image2.png", "image2.png", "image1 (1).png",
-				"image1 (1).png", "image1.png", "image1.png"));
+				"image1 (1).png", "image1.png", "image1.png"),
+			zipFile);
 
-		FileUtil.delete(fileWithFolderResources);
+		FileUtil.delete(zipFile);
 	}
 
 	@Test
 	public void testImportFragmentEntriesWithFolderResourcesPropagation()
 		throws Exception {
 
-		File fileWithFolderResources = _generateZipFileWithFolderResources();
+		File zipFile = _generateZipFileWithFolderResources();
 
 		_configurationProvider.saveCompanyConfiguration(
 			FragmentServiceConfiguration.class, _group.getCompanyId(),
@@ -281,16 +280,16 @@ public class FragmentsImporterTest {
 			).build());
 
 		try {
-			_testFolderResources(
-				fileWithFolderResources,
+			_testImportFragmentEntriesWithFolderResources(
 				Map.of(
 					"folder1/image2.png", "image2.png", "image1.png",
-					"image1.png"));
-			_testFolderResources(
-				fileWithFolderResources,
+					"image1.png"),
+				zipFile);
+			_testImportFragmentEntriesWithFolderResources(
 				Map.of(
 					"folder1/image2.png", "image2.png", "image1.png",
-					"image1.png"));
+					"image1.png"),
+				zipFile);
 		}
 		finally {
 			_configurationProvider.saveCompanyConfiguration(
@@ -300,7 +299,7 @@ public class FragmentsImporterTest {
 				).build());
 		}
 
-		FileUtil.delete(fileWithFolderResources);
+		FileUtil.delete(zipFile);
 	}
 
 	@Test
@@ -960,8 +959,8 @@ public class FragmentsImporterTest {
 		}
 	}
 
-	private void _testFolderResources(
-			File fileWithFolderResources, Map<String, String> expectedResources)
+	private void _testImportFragmentEntriesWithFolderResources(
+			Map<String, String> expectedResourcesMap, File zipFile)
 		throws Exception {
 
 		ServiceContextThreadLocal.pushServiceContext(
@@ -969,9 +968,8 @@ public class FragmentsImporterTest {
 
 		try {
 			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0,
-				fileWithFolderResources, FragmentsImportStrategy.OVERWRITE,
-				false);
+				_user.getUserId(), _group.getGroupId(), 0, zipFile,
+				FragmentsImportStrategy.OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -987,10 +985,12 @@ public class FragmentsImporterTest {
 			fragmentCollection.getResourcesMap();
 
 		Assert.assertEquals(
-			resourcesMap.toString(), expectedResources.size(),
+			resourcesMap.toString(), expectedResourcesMap.size(),
 			resourcesMap.size());
 
-		for (Map.Entry<String, String> entry : expectedResources.entrySet()) {
+		for (Map.Entry<String, String> entry :
+				expectedResourcesMap.entrySet()) {
+
 			FileEntry fileEntry = resourcesMap.get(entry.getKey());
 
 			Assert.assertNotNull(fileEntry);

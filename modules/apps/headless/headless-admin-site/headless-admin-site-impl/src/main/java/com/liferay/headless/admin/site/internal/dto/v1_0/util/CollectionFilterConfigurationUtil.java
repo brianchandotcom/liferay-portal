@@ -18,10 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class CollectionFilterConfigurationUtil {
 
-	public static final String RENDERER_KEY =
-		"com.liferay.fragment.renderer.collection.filter.internal." +
-			"CollectionFilterFragmentRenderer";
-
 	public static JSONObject getConfigurationJSONObject(
 		FragmentCollectionFilterRegistry fragmentCollectionFilterRegistry,
 		String filterKey) {

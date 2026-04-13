@@ -47,6 +47,10 @@ export default function ({namespace}) {
 				`input[type='radio'][name='${namespace}floatingIcon']`
 			);
 
+			const forcedReconsentButton = document.getElementById(
+				`${namespace}forcedReconsentButton`
+			);
+
 			const logoSelectorContainer = document.getElementById(
 				`${namespace}logoSelectorContainer`
 			);
@@ -70,6 +74,8 @@ export default function ({namespace}) {
 					dissentRenewalPeriodTimeUnit.classList.remove('disabled');
 					dissentRenewalPeriodTimeUnit.removeAttribute('disabled');
 					explicitConsentMode.removeAttribute('disabled');
+					forcedReconsentButton.removeAttribute('disabled');
+					forcedReconsentButton.classList.remove('disabled');
 
 					if (Liferay.FeatureFlags['LPD-75027']) {
 						floatingIconEnabled.removeAttribute('disabled');
@@ -113,6 +119,8 @@ export default function ({namespace}) {
 					dissentRenewalPeriodTimeUnit.classList.add('disabled');
 					dissentRenewalPeriodTimeUnit.setAttribute('disabled', '');
 					explicitConsentMode.setAttribute('disabled', '');
+					forcedReconsentButton.classList.add('disabled');
+					forcedReconsentButton.setAttribute('disabled', '');
 
 					if (Liferay.FeatureFlags['LPD-75027']) {
 						floatingIconEnabled.setAttribute('disabled', '');

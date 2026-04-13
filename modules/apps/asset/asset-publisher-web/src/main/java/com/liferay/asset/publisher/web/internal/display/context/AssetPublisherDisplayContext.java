@@ -118,6 +118,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.rss.util.RSSUtil;
 import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 
@@ -2422,19 +2423,30 @@ public class AssetPublisherDisplayContext {
 	}
 
 	private long[] _getSegmentsEntryIds(AssetListEntry assetListEntry) {
-		return _segmentsEntryRetriever.getSegmentsEntryIds(
+		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
 			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
 			_requestContextMapper.map(
 				_portal.getOriginalServletRequest(
 					_portal.getHttpServletRequest(_portletRequest))),
-			ArrayUtil.toLongArray(
-				TransformUtil.transform(
-					_assetListEntrySegmentsEntryRelLocalService.
-						getAssetListEntrySegmentsEntryRels(
-							assetListEntry.getAssetListEntryId(),
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					assetListEntrySegmentsEntryRel ->
-						assetListEntrySegmentsEntryRel.getSegmentsEntryId())));
+			new long[0]);
+
+		return TransformUtil.transformToLongArray(
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRels(
+					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+			assetListEntrySegmentsEntryRel -> {
+				long segmentsEntryId =
+					assetListEntrySegmentsEntryRel.getSegmentsEntryId();
+
+				if ((segmentsEntryId == SegmentsEntryConstants.ID_DEFAULT) ||
+					ArrayUtil.contains(segmentsEntryIds, segmentsEntryId)) {
+
+					return segmentsEntryId;
+				}
+
+				return null;
+			});
 	}
 
 	private boolean _isShowRelatedAssets() {

@@ -53,10 +53,14 @@ public abstract class BaseDisplayContextTestCase {
 		mockHttpServletRequest = getMockHttpServletRequest();
 
 		themeDisplay = getThemeDisplay(mockHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
 	protected ObjectDefinition addCustomObjectDefinition(
-			long objectFolderId, boolean active, boolean enableObjectEntryDraft,
+			long objectFolderId, boolean active, boolean enableComments,
+			boolean enableObjectEntryDraft,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			String scope, int status)
 		throws Exception {
@@ -64,8 +68,8 @@ public abstract class BaseDisplayContextTestCase {
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), objectFolderId, null, true,
-				false, true, false, true, enableObjectEntryDraft, false, false,
-				false, null,
+				enableComments, true, false, true, enableObjectEntryDraft,
+				false, false, false, null,
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -116,6 +120,17 @@ public abstract class BaseDisplayContextTestCase {
 			objectDefinition.getObjectDefinitionSettings(),
 			Collections.emptyList(), Collections.emptyList(),
 			new ServiceContext());
+	}
+
+	protected ObjectDefinition addCustomObjectDefinition(
+			long objectFolderId, boolean active, boolean enableObjectEntryDraft,
+			List<ObjectDefinitionSetting> objectDefinitionSettings,
+			String scope, int status)
+		throws Exception {
+
+		return addCustomObjectDefinition(
+			objectFolderId, active, false, enableObjectEntryDraft,
+			objectDefinitionSettings, scope, status);
 	}
 
 	protected ObjectDefinition addCustomObjectDefinition(

@@ -37,6 +37,7 @@ public class UpgradeSchema extends UpgradeProcess {
 				"select companyId, key_ from Company");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

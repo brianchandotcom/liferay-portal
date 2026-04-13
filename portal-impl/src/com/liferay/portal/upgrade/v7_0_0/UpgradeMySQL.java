@@ -135,7 +135,9 @@ public class UpgradeMySQL extends UpgradeProcess {
 
 	protected void upgradeTableEngine() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery("show table status")) {
 
 			while (resultSet.next()) {

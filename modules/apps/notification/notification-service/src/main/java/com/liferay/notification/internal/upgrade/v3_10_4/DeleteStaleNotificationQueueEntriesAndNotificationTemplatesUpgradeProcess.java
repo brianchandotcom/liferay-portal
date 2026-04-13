@@ -64,8 +64,10 @@ public class
 					"notificationQueueEntryId", "NotificationQueueEntry");
 			PreparedStatement selectPreparedStatement1 =
 				_getSelectPreparedStatement();
+
 			PreparedStatement selectPreparedStatement2 =
 				_getSelectPreparedStatement("NotificationQueueEntry");
+
 			ResultSet resultSet1 = selectPreparedStatement2.executeQuery()) {
 
 			while (resultSet1.next()) {
@@ -145,8 +147,10 @@ public class
 					"notificationTemplateId", "NotificationTemplate");
 			PreparedStatement preparedStatement1 =
 				_getSelectPreparedStatement();
+
 			PreparedStatement preparedStatement2 = _getSelectPreparedStatement(
 				"NotificationTemplate");
+
 			ResultSet resultSet1 = preparedStatement2.executeQuery()) {
 
 			while (resultSet1.next()) {

@@ -153,6 +153,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 						"where ctCollectionId = 0");
 
 			ResultSet resultSet = selectPreparedStatement.executeQuery();
+
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -162,48 +163,48 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				String settings = resultSet.getString("settings_");
 
-				if (Validator.isNotNull(settings)) {
-					JSONObject settingsJSONObject =
-						_jsonFactory.createJSONObject(settings);
+				if (Validator.isNull(settings)) {
+					continue;
+				}
 
-					JSONArray fieldValuesJSONArray =
-						settingsJSONObject.getJSONArray("fieldValues");
+				JSONObject settingsJSONObject = _jsonFactory.createJSONObject(
+					settings);
 
-					for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
-						JSONObject jsonObject =
-							fieldValuesJSONArray.getJSONObject(i);
+				JSONArray fieldValuesJSONArray =
+					settingsJSONObject.getJSONArray("fieldValues");
 
-						if (Objects.equals(
-								jsonObject.getString("name"), "storageType")) {
+				for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
+					JSONObject jsonObject = fieldValuesJSONArray.getJSONObject(
+						i);
 
-							JSONArray oldJSONArray =
-								_jsonFactory.createJSONArray(
-									jsonObject.getString("value"));
+					if (Objects.equals(
+							jsonObject.getString("name"), "storageType")) {
 
-							JSONArray newJSONArray =
-								_jsonFactory.createJSONArray();
+						JSONArray oldJSONArray = _jsonFactory.createJSONArray(
+							jsonObject.getString("value"));
 
-							for (Object value : oldJSONArray) {
-								if (Objects.equals(value, "json")) {
-									value = "default";
-								}
+						JSONArray newJSONArray = _jsonFactory.createJSONArray();
 
-								newJSONArray.put(value);
+						for (Object value : oldJSONArray) {
+							if (Objects.equals(value, "json")) {
+								value = "default";
 							}
 
-							jsonObject.put("value", newJSONArray);
-
-							break;
+							newJSONArray.put(value);
 						}
+
+						jsonObject.put("value", newJSONArray);
+
+						break;
 					}
-
-					updatePreparedStatement.setString(
-						1, settingsJSONObject.toString());
-					updatePreparedStatement.setLong(
-						2, resultSet.getLong("formInstanceId"));
-
-					updatePreparedStatement.addBatch();
 				}
+
+				updatePreparedStatement.setString(
+					1, settingsJSONObject.toString());
+				updatePreparedStatement.setLong(
+					2, resultSet.getLong("formInstanceId"));
+
+				updatePreparedStatement.addBatch();
 			}
 
 			updatePreparedStatement.executeBatch();

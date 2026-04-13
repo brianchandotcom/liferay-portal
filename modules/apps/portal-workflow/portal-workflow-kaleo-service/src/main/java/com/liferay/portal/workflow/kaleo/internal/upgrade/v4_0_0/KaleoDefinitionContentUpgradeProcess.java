@@ -33,6 +33,7 @@ public class KaleoDefinitionContentUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
 					"select content, ", columnName, " from ", tableName));
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

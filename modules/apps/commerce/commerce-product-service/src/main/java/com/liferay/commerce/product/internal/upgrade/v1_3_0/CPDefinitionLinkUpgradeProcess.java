@@ -24,7 +24,9 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CPDefinitionLink set CProductId = ? where " +
 					"CPDefinitionId2 = ?");
+
 			Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select * from CPDefinitionLink")) {
 

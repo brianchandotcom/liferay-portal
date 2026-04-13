@@ -224,11 +224,14 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 
 	private void _updateContentImages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select id_, resourcePrimKey, groupId, companyId, userId, " +
 					"content from JournalArticle where content like " +
 						"'%type=\"image\"%'");
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

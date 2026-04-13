@@ -22,11 +22,12 @@ public class RecordGroupUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select DDLRecordSet.groupId, DDLRecord.recordId from ",
-					"DDLRecord inner join DDLRecordSet on ",
-					"DDLRecord.recordSetId = DDLRecordSet.recordSetId where ",
-					"DDLRecord.groupId != DDLRecordSet.groupId"));
+					"DDLRecord inner join DDLRecordSet on DDLRecord.",
+					"recordSetId = DDLRecordSet.recordSetId where DDLRecord.",
+					"groupId != DDLRecordSet.groupId"));
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

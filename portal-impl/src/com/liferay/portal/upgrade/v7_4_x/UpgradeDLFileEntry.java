@@ -45,6 +45,7 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 						"= ''");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

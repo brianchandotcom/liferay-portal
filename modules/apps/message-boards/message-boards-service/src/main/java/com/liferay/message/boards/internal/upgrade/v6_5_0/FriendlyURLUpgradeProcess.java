@@ -38,6 +38,7 @@ public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 							"MBCategory order by name, categoryId asc");
 
 				ResultSet resultSet = preparedStatement1.executeQuery();
+
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection,

@@ -148,6 +148,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 				"select layoutPageTemplateEntryId, " +
 					"layoutPageTemplateEntryKey, layoutPrototypeId, name " +
 						"from LayoutPageTemplateEntry");
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

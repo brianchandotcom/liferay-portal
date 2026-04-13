@@ -158,8 +158,10 @@ public class Table {
 
 		try (UnsyncBufferedWriter unsyncBufferedWriter =
 				new UnsyncBufferedWriter(new FileWriter(tempFileName));
+
 			PreparedStatement preparedStatement = getSelectPreparedStatement(
 				connection);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

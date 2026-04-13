@@ -45,6 +45,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 						"select distinct name from ResourcePermission");
 
 				ResultSet resultSet1 = preparedStatement1.executeQuery();
+
 				PreparedStatement preparedStatement2 =
 					connection.prepareStatement(
 						"select distinct primKey from ResourcePermission " +

@@ -43,7 +43,9 @@ public class CPDAvailabilityEstimateUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CPDAvailabilityEstimate set CProductId = ? where " +
 					"CPDefinitionId = ?");
+
 			Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select distinct CPDefinitionId from " +
 					"CPDAvailabilityEstimate")) {

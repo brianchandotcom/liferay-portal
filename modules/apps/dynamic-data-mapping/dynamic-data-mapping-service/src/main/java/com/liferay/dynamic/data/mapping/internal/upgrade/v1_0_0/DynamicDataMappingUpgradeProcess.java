@@ -1322,8 +1322,10 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeStructuresPermissions() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from DDMStructure");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -1474,8 +1476,10 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeTemplatesPermissions() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from DDMTemplate");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

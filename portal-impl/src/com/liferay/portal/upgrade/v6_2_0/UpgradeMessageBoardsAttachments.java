@@ -62,10 +62,12 @@ public class UpgradeMessageBoardsAttachments
 	@Override
 	protected void updateAttachments() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select messageId, groupId, companyId, userId, userName, " +
 					"threadId from MBMessage where classNameId = 0 and " +
 						"classPK = 0");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

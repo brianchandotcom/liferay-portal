@@ -81,6 +81,7 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select KaleoDefinitionVersion.* from ",
@@ -93,6 +94,7 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 					"join KaleoDefinition on KaleoDefinitionVersion.name = ",
 					"KaleoDefinition.name where KaleoDefinition.",
 					"kaleoDefinitionId is null"));
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

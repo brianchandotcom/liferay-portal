@@ -22,10 +22,12 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 
 	protected void addLayoutFriendlyURL() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select plid, groupId, companyId, userId, userName, " +
 					"createDate, modifiedDate, privateLayout, friendlyURL " +
 						"from Layout");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

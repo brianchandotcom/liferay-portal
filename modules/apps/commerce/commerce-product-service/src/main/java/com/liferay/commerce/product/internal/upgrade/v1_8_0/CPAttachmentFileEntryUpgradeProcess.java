@@ -41,7 +41,9 @@ public class CPAttachmentFileEntryUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateCPAttachmentFileEntrySQL);
+
 			Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(selectCPDefinitionSQL)) {
 
 			while (resultSet.next()) {

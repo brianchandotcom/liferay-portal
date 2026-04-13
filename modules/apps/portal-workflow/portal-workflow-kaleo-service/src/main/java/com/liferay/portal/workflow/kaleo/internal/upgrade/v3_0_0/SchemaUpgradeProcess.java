@@ -94,14 +94,16 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 		List<PreparedStatement> preparedStatements = new ArrayList<>(18);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select KaleoDefinition.kaleoDefinitionId, ",
 					"KaleoDefinitionVersion.kaleoDefinitionVersionId from ",
 					"KaleoDefinitionVersion inner join KaleoDefinition on ",
-					"KaleoDefinition.companyId = ",
-					"KaleoDefinitionVersion.companyId and ",
-					"KaleoDefinition.name = KaleoDefinitionVersion.name"));
+					"KaleoDefinition.companyId = KaleoDefinitionVersion.",
+					"companyId and KaleoDefinition.name = ",
+					"KaleoDefinitionVersion.name"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			for (String tableName : _TABLE_NAMES) {

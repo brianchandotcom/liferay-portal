@@ -82,6 +82,7 @@ public class UpgradeExternalReferenceCode extends UpgradeProcess {
 					connection.prepareStatement(selectSB.toString());
 
 				ResultSet resultSet = preparedStatement1.executeQuery();
+
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection, updateSB.toString())) {

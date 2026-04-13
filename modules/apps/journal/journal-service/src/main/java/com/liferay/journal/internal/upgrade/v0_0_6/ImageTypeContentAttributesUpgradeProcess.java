@@ -101,10 +101,13 @@ public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 
 	private void _updateContentImages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select id_, content from JournalArticle where content like " +
 					"'%type=\"image\"%'");
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

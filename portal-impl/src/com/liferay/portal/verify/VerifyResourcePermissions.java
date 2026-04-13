@@ -94,9 +94,11 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableResourcedModel.getTableName());
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_getVerifyResourcedModelSQL(
 					true, verifiableResourcedModel, role));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

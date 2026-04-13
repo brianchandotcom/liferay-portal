@@ -56,6 +56,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = s.executeQuery(
 				"select mvccVersion, remoteAppEntryId, companyId, userId " +
 					"from RemoteAppEntry");
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

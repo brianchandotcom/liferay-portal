@@ -125,6 +125,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 			ResultSet resultSet = s.executeQuery(
 				"select ctCollectionId, lPageTemplateStructureRelId, data_ " +
 					"from LayoutPageTemplateStructureRel");
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

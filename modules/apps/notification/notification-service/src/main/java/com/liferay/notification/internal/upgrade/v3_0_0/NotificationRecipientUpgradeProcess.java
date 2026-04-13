@@ -40,12 +40,15 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					"fromName, to_, toName FROM NotificationQueueEntry"));
 
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select notificationTemplateId, companyId, userId, ",
 					"userName, createDate, modifiedDate, bcc, cc, from_, ",
 					"fromName, to_ FROM NotificationTemplate"));
+
 			ResultSet resultSet2 = preparedStatement2.executeQuery();
+
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -53,7 +56,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 						"insert into NotificationRecipient (uuid_, ",
 						"notificationRecipientId, companyId, userId, ",
 						"userName, createDate, modifiedDate, classNameId, ",
-						"classPK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"));
+						"classPK) values (?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -61,7 +64,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 						"insert into NotificationRecipientSetting (uuid_, ",
 						"notificationRecipientSettingId, companyId, userId, ",
 						"userName, createDate, modifiedDate, ",
-						"notificationRecipientId, name, value) VALUES (?, ?, ",
+						"notificationRecipientId, name, value) values (?, ?, ",
 						"?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
 			while (resultSet1.next()) {

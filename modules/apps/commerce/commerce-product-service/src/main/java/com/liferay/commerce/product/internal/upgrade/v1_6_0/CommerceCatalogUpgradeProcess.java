@@ -66,8 +66,10 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, insertCommerceChannelRelSQL);
+
 			Statement s1 = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
 			ResultSet resultSet = s1.executeQuery(
 				"select distinct groupId, companyId, userId, userName, " +
 					"defaultLanguageId from CPDefinition")) {

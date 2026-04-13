@@ -455,11 +455,13 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void updateAssetEntryClassTypeId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(
 					"select distinct companyId, groupId, resourcePrimKey, " +
 						"structureId from JournalArticle where structureId " +
 							"!= ''"));
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			long classNameId = _getClassNameId(
@@ -495,10 +497,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void updateContentSearch() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select groupId, portletId from JournalContentSearch group " +
 					"by groupId, portletId having count(groupId) > 1 and " +
 						"count(portletId) > 1");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -1064,8 +1068,10 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void updateStructures() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from JournalStructure");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -1078,8 +1084,10 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void updateTemplates() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from JournalTemplate");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -1221,9 +1229,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		int count = 0;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select distinct groupId, articleId, urlTitle from " +
 					"JournalArticle");
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			Map<String, String> processedArticleIds = new HashMap<>();

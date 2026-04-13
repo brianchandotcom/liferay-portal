@@ -33,8 +33,10 @@ public class UpgradeRatings extends UpgradeProcess {
 
 	protected void upgradeRatingsEntry() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select distinct classNameId from RatingsEntry");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -115,6 +117,7 @@ public class UpgradeRatings extends UpgradeProcess {
 					connection.prepareStatement(selectSQL);
 
 				ResultSet resultSet = preparedStatement1.executeQuery();
+
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection, updateSQL)) {

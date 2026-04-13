@@ -36,6 +36,7 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 				sql);
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -45,25 +46,25 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				String settings = resultSet.getString("settings_");
 
-				if (Validator.isNotNull(settings)) {
-					JSONObject settingsJSONObject =
-						_jsonFactory.createJSONObject(settings);
-
-					_addNewSetting(
-						settingsJSONObject, "autosaveEnabled", "true");
-					_addNewSetting(
-						settingsJSONObject, "requireAuthentication", "false");
-
-					_updateSettings(settingsJSONObject);
-
-					preparedStatement2.setString(
-						1, settingsJSONObject.toString());
-
-					preparedStatement2.setLong(
-						2, resultSet.getLong("formInstanceId"));
-
-					preparedStatement2.addBatch();
+				if (Validator.isNull(settings)) {
+					continue;
 				}
+
+				JSONObject settingsJSONObject = _jsonFactory.createJSONObject(
+					settings);
+
+				_addNewSetting(settingsJSONObject, "autosaveEnabled", "true");
+				_addNewSetting(
+					settingsJSONObject, "requireAuthentication", "false");
+
+				_updateSettings(settingsJSONObject);
+
+				preparedStatement2.setString(1, settingsJSONObject.toString());
+
+				preparedStatement2.setLong(
+					2, resultSet.getLong("formInstanceId"));
+
+				preparedStatement2.addBatch();
 			}
 
 			preparedStatement2.executeBatch();

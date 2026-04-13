@@ -32,6 +32,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					"= 0) where Layout.masterLayoutPlid > 0"));
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

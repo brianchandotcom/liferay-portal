@@ -165,6 +165,7 @@ public class ExternalDataSourceControllerTest {
 					path);
 
 			JarInputStream jarInputStream = new JarInputStream(inputStream);
+
 			JarOutputStream jarOutputStream = new JarOutputStream(
 				unsyncByteArrayOutputStream)) {
 

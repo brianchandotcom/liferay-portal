@@ -57,9 +57,11 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 
 	protected void updateLayoutSetBranches() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select groupId, layoutSetBranchId, privateLayout from " +
 					"LayoutSetBranch");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

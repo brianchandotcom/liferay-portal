@@ -131,8 +131,10 @@ public class CPInstanceOptionValueRelUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, insertCPInstanceOptionValueRelSQL);
+
 			Statement s = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
 			ResultSet resultSet = s.executeQuery(
 				"select CPInstanceId, groupId, companyId, userId, userName, " +
 					"CPDefinitionId, json from CPInstance")) {

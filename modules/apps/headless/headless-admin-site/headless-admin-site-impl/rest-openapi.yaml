@@ -1246,6 +1246,7 @@ components:
                     Length: "#/components/schemas/LengthFragmentConfigurationFieldValue"
                     NavigationMenu: "#/components/schemas/NavigationMenuFragmentConfigurationFieldValue"
                     Select: "#/components/schemas/SelectFragmentConfigurationFieldValue"
+                    TargetCollectionDisplay: "#/components/schemas/TargetCollectionDisplayFragmentConfigurationFieldValue"
                     Text: "#/components/schemas/TextFragmentConfigurationFieldValue"
                     URL: "#/components/schemas/URLFragmentConfigurationFieldValue"
                     Video: "#/components/schemas/VideoFragmentConfigurationFieldValue"
@@ -1255,8 +1256,8 @@ components:
                     # @review
                     description:
                         The configuration field's type (category, checkbox, collection, colorPalette, colorPicker, item,
-                        length, navigationMenu, select, text, URL, video).
-                    enum: [Category, Checkbox, Collection, ColorPalette, ColorPicker, Item, Length, NavigationMenu, Select, Text, URL, Video]
+                        length, navigationMenu, select, targetCollectionDisplay, text, URL, video).
+                    enum: [Category, Checkbox, Collection, ColorPalette, ColorPicker, Item, Length, NavigationMenu, Select, TargetCollectionDisplay, Text, URL, Video]
                     type: string
             required:
                 -   type
@@ -3776,6 +3777,30 @@ components:
                         The localized success notification message.
                 showNotification:
                     type: boolean
+            type: object
+        TargetCollectionDisplayFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The page element external reference codes of the target collection displays.
+                            items:
+                                type: string
+                            type: array
+                        value_i18n:
+                            additionalProperties:
+                                items:
+                                    type: string
+                                type: array
+                            # @review
+                            description:
+                                The localized page element external reference codes of the target collection displays.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type target collection display.
             type: object
         TaxonomyCategoryBrief:
             # @review

@@ -49,6 +49,7 @@ spec:
                                             GRANT ALL PRIVILEGES ON DATABASE "{{ $databaseName }}" TO "{{ $databaseIamUser }}";
                                             GRANT ALL ON ALL TABLES IN SCHEMA public TO "{{ $databaseIamUser }}";
                                             GRANT cloudsqlsuperuser TO "{{ $databaseIamUser }}";
+                                            GRANT "{{ $databaseIamUser }}" to postgres;
                                             EOF
                                 command:
                                     -   /bin/sh

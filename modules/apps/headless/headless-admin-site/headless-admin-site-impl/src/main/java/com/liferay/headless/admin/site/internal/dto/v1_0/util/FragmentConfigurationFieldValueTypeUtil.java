@@ -63,6 +63,9 @@ public class FragmentConfigurationFieldValueTypeUtil {
 		).put(
 			"select", FragmentConfigurationFieldValue.Type.SELECT
 		).put(
+			"targetCollectionDisplay",
+			FragmentConfigurationFieldValue.Type.TARGET_COLLECTION_DISPLAY
+		).put(
 			"text", FragmentConfigurationFieldValue.Type.TEXT
 		).put(
 			"url", FragmentConfigurationFieldValue.Type.URL

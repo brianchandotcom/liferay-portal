@@ -12,6 +12,13 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
+	<path id="rest.builder.classpath">
+		<fileset
+			dir="${sdk.dir}/dependencies/com.liferay.portal.tools.rest.builder/lib"
+			includes="*.jar"
+		/>
+	</path>
+
 	<path id="service.builder.classpath">
 		<fileset
 			dir="${sdk.dir}/dependencies/com.liferay.portal.tools.service.builder/lib"
@@ -227,6 +234,50 @@
 			<jvmarg value="-Dproject.dir=${project.dir}" />
 			<jvmarg value="-Dproject.modules.dir=${project.dir}/modules" />
 		</java>
+	</target>
+
+	<target name="build-rests">
+		<java
+			classname="com.liferay.portal.tools.rest.builder.RESTBuilder"
+			classpathref="rest.builder.classpath"
+			failonerror="true"
+			fork="${fork.mode}"
+			logError="true"
+			newenvironment="${fork.mode}"
+			outputproperty="rest.builder.batch.output"
+		>
+			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
+			<jvmarg if:true="${jvm.debug}" value="-Dfile.encoding=UTF-8" />
+			<jvmarg if:true="${jvm.debug}" value="-XX:MaxMetaspaceSize=512m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xms512m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xmx1024m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xss2048k" />
+			<arg value="rest.config.dirs=${basedir}/../modules" />
+		</java>
+
+		<if>
+			<istrue value="${build.rests.baseline.enabled}" />
+			<then>
+				<propertyregex
+					input="${rest.builder.batch.output}"
+					override="true"
+					property="rest.builder.baseline.tasks"
+					regexp="rest\.builder\.baseline\.tasks=(.*)"
+					select="\1"
+				/>
+
+				<if>
+					<isset property="rest.builder.baseline.tasks" />
+					<then>
+						<gradle-execute dir="../modules" forcedcacheenabled="false" task="${rest.builder.baseline.tasks}">
+							<arg value="--continue" />
+							<arg value="--parallel" />
+							<arg value="--quiet" />
+						</gradle-execute>
+					</then>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="build-service-counter">

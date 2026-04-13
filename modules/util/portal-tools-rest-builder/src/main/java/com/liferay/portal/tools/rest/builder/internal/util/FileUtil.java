@@ -41,7 +41,7 @@ public class FileUtil {
 
 		Files.delete(file.toPath());
 
-		System.out.println("Deleting " + file.getCanonicalPath());
+		System.err.println("Deleting " + file.getCanonicalPath());
 	}
 
 	public static void deleteFiles(String dirName, List<File> files)
@@ -185,7 +185,7 @@ public class FileUtil {
 				file.toPath(), parsedContent.getBytes(StandardCharsets.UTF_8));
 
 			if (!oldContent.equals(parsedContent)) {
-				System.out.println("Writing " + file.getCanonicalPath());
+				System.err.println("Writing " + file.getCanonicalPath());
 			}
 		}
 		else {
@@ -193,7 +193,7 @@ public class FileUtil {
 				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
 
 			if (!oldContent.equals(content)) {
-				System.out.println("Writing " + file.getCanonicalPath());
+				System.err.println("Writing " + file.getCanonicalPath());
 			}
 		}
 	}

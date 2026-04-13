@@ -1,3 +1,4 @@
+{{- if .Values.backup.enabled -}}
 apiVersion: argoproj.io/v1alpha1
 kind: CronWorkflow
 metadata:
@@ -43,3 +44,4 @@ spec:
                     command: [sh, -c]
                     image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
                 name: cleanup-backups
+{{- end -}}

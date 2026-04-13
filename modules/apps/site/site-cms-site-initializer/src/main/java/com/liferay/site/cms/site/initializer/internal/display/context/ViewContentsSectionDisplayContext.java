@@ -11,8 +11,11 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -49,6 +52,22 @@ public class ViewContentsSectionDisplayContext
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal,
 			translationInfoItemFieldValuesExporterRegistry);
+	}
+
+	@Override
+	public Map<String, Object> getAdditionalProps() {
+		Map<String, Object> additionalProps = super.getAdditionalProps();
+
+		try {
+			additionalProps.put("breadcrumbProps", getBreadcrumbProps());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return additionalProps;
 	}
 
 	@Override
@@ -90,5 +109,8 @@ public class ViewContentsSectionDisplayContext
 	protected String getEmptyStateDescriptionKey() {
 		return "click-new-to-create-your-first-piece-of-content";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewContentsSectionDisplayContext.class);
 
 }

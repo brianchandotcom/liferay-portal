@@ -34,6 +34,7 @@ import com.liferay.headless.admin.site.dto.v1_0.SelectFragmentConfigurationField
 import com.liferay.headless.admin.site.dto.v1_0.SiteMenuNavigationMenuValue;
 import com.liferay.headless.admin.site.dto.v1_0.SitePageURLValue;
 import com.liferay.headless.admin.site.dto.v1_0.SitePagesNavigationMenuValue;
+import com.liferay.headless.admin.site.dto.v1_0.TargetCollectionDisplayFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.TemplateReference;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.URLFragmentConfigurationFieldValue;
@@ -325,6 +326,31 @@ public class FragmentConfigurationFieldValuesUtil {
 				},
 				selectFragmentConfigurationFieldValue.getValue(),
 				selectFragmentConfigurationFieldValue.getValue_i18n());
+		}
+
+		if (Objects.equals(
+				fragmentConfigurationFieldValue.getType(),
+				FragmentConfigurationFieldValue.Type.
+					TARGET_COLLECTION_DISPLAY)) {
+
+			TargetCollectionDisplayFragmentConfigurationFieldValue
+				targetCollectionDisplayFragmentConfigurationFieldValue =
+					(TargetCollectionDisplayFragmentConfigurationFieldValue)
+						fragmentConfigurationFieldValue;
+
+			String[] values =
+				targetCollectionDisplayFragmentConfigurationFieldValue.
+					getValue();
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			if (values != null) {
+				for (String value : values) {
+					jsonArray.put(value);
+				}
+			}
+
+			return jsonArray;
 		}
 
 		if (Objects.equals(

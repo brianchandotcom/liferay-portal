@@ -3,9 +3,44 @@
 		"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION",
 		"menuItems": [
 			{
-				"displayIcon": "plus-squares",
+				"displayIcon": "warehouse",
 				"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION1",
 				"friendlyURL": "/overview",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"displayIcon": "web-content",
+				"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION2",
+				"friendlyURL": "/content-seo",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"displayIcon": "sites",
+				"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION3",
+				"friendlyURL": "/site-seo",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"displayIcon": "chatbot",
+				"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION4",
+				"friendlyURL": "/aeo-geo",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"displayIcon": "cog",
+				"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION5",
+				"friendlyURL": "/tools",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"displayIcon": "control-panel",
+				"externalReferenceCode": "SEOSTUDIOPRIMARYNAVIGATION6",
+				"friendlyURL": "/settings",
 				"privateLayout": false,
 				"type": "layout"
 			}

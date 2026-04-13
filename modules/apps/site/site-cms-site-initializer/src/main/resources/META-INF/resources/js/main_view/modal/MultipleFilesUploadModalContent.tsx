@@ -56,7 +56,7 @@ export default function MultipleFilesUploadModalContent({
 
 	const getAssetLibraryLink = () => {
 		const assetLibrary = assetLibraries?.find(
-			(assetLibrary) => Number(assetLibrary.groupId) === groupId
+			(assetLibrary) => Number(assetLibrary.groupId) === Number(groupId)
 		);
 
 		return `<a href="${baseAssetLibraryViewURL}${assetLibrary?.groupId}" class="alert-link lead"><strong>${assetLibrary?.name}</strong></a>`;

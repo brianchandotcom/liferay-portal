@@ -26,6 +26,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.SelectFragmentConfigurati
 import com.liferay.headless.admin.site.client.dto.v1_0.SiteMenuNavigationMenuValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePageURLValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePagesNavigationMenuValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.TargetCollectionDisplayFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TemplateReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.URLFragmentConfigurationFieldValue;
@@ -285,6 +286,11 @@ public class FragmentConfigurationFieldValueTestUtil {
 				fragmentConfigurationField.isLocalizable(), value);
 		}
 
+		if (Objects.equals(type, "targetCollectionDisplay")) {
+			return _getTargetCollectionDisplayFragmentConfigurationFieldValue(
+				value);
+		}
+
 		if (Objects.equals(type, "text")) {
 			return _getTextFragmentConfigurationFieldValue(
 				fragmentConfigurationField.isLocalizable(), value);
@@ -511,6 +517,24 @@ public class FragmentConfigurationFieldValueTestUtil {
 		}
 
 		return selectFragmentConfigurationFieldValue;
+	}
+
+	private static FragmentConfigurationFieldValue
+		_getTargetCollectionDisplayFragmentConfigurationFieldValue(
+			Object object) {
+
+		TargetCollectionDisplayFragmentConfigurationFieldValue
+			targetCollectionDisplayFragmentConfigurationFieldValue =
+				new TargetCollectionDisplayFragmentConfigurationFieldValue() {
+					{
+						setType(() -> Type.TARGET_COLLECTION_DISPLAY);
+					}
+				};
+
+		targetCollectionDisplayFragmentConfigurationFieldValue.setValue(
+			(String[])object);
+
+		return targetCollectionDisplayFragmentConfigurationFieldValue;
 	}
 
 	private static FragmentConfigurationFieldValue

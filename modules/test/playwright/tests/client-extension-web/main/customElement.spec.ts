@@ -5,6 +5,7 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -14,7 +15,6 @@ import {editCustomElementPageTest} from './fixtures/editCustomElementPageTest';
 import {Column} from './pages/ClientExtensionsPage';
 import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditCustomElementPage} from './pages/EditCustomElementPage';
-import {featureFlagsTest} from "../../../fixtures/featureFlagsTest";
 
 const test = mergeTests(
 	clientExtensionsPageTest,

@@ -272,8 +272,8 @@ public class DuplicateUniqueFinderRowsCleaner {
 		sb.append(" from ");
 		sb.append(_tableName);
 
-		try (PreparedStatement preparedStatement =
-				_connection.prepareStatement(sb.toString());
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				sb.toString());
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

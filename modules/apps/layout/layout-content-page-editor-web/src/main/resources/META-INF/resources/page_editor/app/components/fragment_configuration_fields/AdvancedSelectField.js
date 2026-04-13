@@ -171,11 +171,12 @@ export function AdvancedSelectField({
 	return (
 		<div
 			aria-label={field.label}
-			className={classNames('d-flex  page-editor__select-field rounded', {
-				'custom': !isTokenValueOrInherited,
-				'input-group-item-focusable': Liferay.FeatureFlags['LPD-40054'],
-				'old': !Liferay.FeatureFlags['LPD-40054'],
-			})}
+			className={classNames(
+				'd-flex input-group-item-focusable page-editor__select-field rounded',
+				{
+					custom: !isTokenValueOrInherited,
+				}
+			)}
 			role="group"
 		>
 			{isTokenValueOrInherited ? (

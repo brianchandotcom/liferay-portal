@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
@@ -13,14 +12,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
 
-const test = mergeTests(
-	featureFlagsTest({
-		'LPD-40054': {enabled: true},
-	}),
-	isolatedSiteTest,
-	loginTest(),
-	styleBookPageTest
-);
+const test = mergeTests(isolatedSiteTest, loginTest(), styleBookPageTest);
 
 test.beforeEach(async ({site, styleBooksPage}) => {
 	await styleBooksPage.goto(site.friendlyUrlPath);

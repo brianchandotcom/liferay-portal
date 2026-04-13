@@ -85,14 +85,6 @@ const onTypeValue = async (input: HTMLInputElement, value: string) => {
 };
 
 describe('ColorPicker', () => {
-	afterEach(() => {
-		Liferay.FeatureFlags['LPD-40054'] = false;
-	});
-
-	beforeEach(() => {
-		Liferay.FeatureFlags['LPD-40054'] = true;
-	});
-
 	it('renders the ColorPicker', () => {
 		const {baseElement} = renderColorPicker();
 

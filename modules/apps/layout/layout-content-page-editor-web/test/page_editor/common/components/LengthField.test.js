@@ -36,14 +36,8 @@ const renderLengthField = ({
 
 describe('LengthField', () => {
 	afterEach(() => {
-		Liferay.FeatureFlags['LPD-40054'] = false;
-
 		jest.runOnlyPendingTimers();
 		jest.useRealTimers();
-	});
-
-	beforeEach(() => {
-		Liferay.FeatureFlags['LPD-40054'] = true;
 	});
 
 	async function openUnitDropdown(user = userEvent) {

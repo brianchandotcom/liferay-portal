@@ -164,14 +164,10 @@ describe('SpacingBox', () => {
 	let _getComputedStyle;
 
 	beforeEach(() => {
-		Liferay.FeatureFlags['LPD-40054'] = true;
-
 		_getComputedStyle = window.getComputedStyle;
 	});
 
 	afterEach(() => {
-		Liferay.FeatureFlags['LPD-40054'] = false;
-
 		window.getComputedStyle = _getComputedStyle;
 	});
 

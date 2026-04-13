@@ -128,14 +128,6 @@ jest.mock(
 );
 
 describe('AdvancedSelectField', () => {
-	afterEach(() => {
-		Liferay.FeatureFlags['LPD-40054'] = false;
-	});
-
-	beforeEach(() => {
-		Liferay.FeatureFlags['LPD-40054'] = true;
-	});
-
 	it('renders AdvancedSelectField', () => {
 		renderAdvancedSelectField();
 

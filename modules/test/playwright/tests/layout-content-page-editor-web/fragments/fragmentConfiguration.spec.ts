@@ -27,7 +27,6 @@ const test = mergeTests(
 	apiHelpersTest,
 	collectionsPagesTest,
 	featureFlagsTest({
-		'LPD-40054': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	fragmentsPagesTest,

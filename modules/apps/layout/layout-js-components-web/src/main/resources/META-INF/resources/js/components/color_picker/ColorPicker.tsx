@@ -24,7 +24,6 @@ import {
 } from '../../contexts/StyleErrorsContext';
 import {Color, ColorCategoryMap, Field, Token} from '../../types/ColorPicker';
 import ColorPickerField from './ColorPickerField';
-import OldColorPicker from './OldColorPicker';
 import {parseColorValue} from './parseColorValue';
 
 import './ColorPicker.scss';
@@ -377,9 +376,5 @@ function normalizeHexColor(color: string) {
 }
 
 export default function ColorPickerWrapper(props: Props) {
-	return Liferay.FeatureFlags['LPD-40054'] ? (
-		<ColorPicker {...props} />
-	) : (
-		<OldColorPicker {...props} />
-	);
+	return <ColorPicker {...props} />;
 }

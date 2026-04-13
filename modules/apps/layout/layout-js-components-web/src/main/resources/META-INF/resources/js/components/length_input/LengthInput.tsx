@@ -279,9 +279,7 @@ const LengthInput = forwardRef<LengthInputRef, Props>(
 
 		return (
 			<ClayForm.Group
-				className={classNames(className, 'layout__length-input w-100', {
-					old: !Liferay.FeatureFlags['LPD-40054'],
-				})}
+				className={classNames(className, 'layout__length-input w-100')}
 			>
 				<label
 					className={classNames({'sr-only': !showLabel})}

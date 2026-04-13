@@ -100,7 +100,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			try {
 				URL portalFixpackURL = new URL(
 					JenkinsResultsParserUtil.combine(
-						"https://files.liferay.com/private/ee/fix-packs/7.3.10",
+						"https://releases.liferay.com/fix-packs/7.3.10",
 						"/dxp/liferay-fix-pack-dxp-", fixpackVersion,
 						"-7310.zip"));
 
@@ -123,7 +123,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		try {
 			URL portalFixpackURL = new URL(
 				JenkinsResultsParserUtil.combine(
-					"https://files.liferay.com/private/ee/fix-packs/",
+					"https://releases.liferay.com/fix-packs/",
 					matcher.group("majorVersion"), ".",
 					matcher.group("minorVersion"), ".",
 					matcher.group("fixVersion"), "/",

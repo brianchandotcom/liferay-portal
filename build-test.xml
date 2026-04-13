@@ -2439,7 +2439,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<then>
 							<mirrors-get
 								dest="@{patching.tool.dir}/patches"
-								src="http://files.liferay.com/private/ee/fix-packs/${patch.portal.version}/dxp/liferay-fix-pack-${fixpack.build.name}.zip"
+								src="https://releases.liferay.com/fix-packs/${patch.portal.version}/dxp/liferay-fix-pack-${fixpack.build.name}.zip"
 							/>
 						</then>
 					</if>

@@ -245,7 +245,7 @@
 			"key": "portalFixpackReleaseURL",
 			"label": "Portal Fixpack Release URL",
 			"type": "url",
-			"valueDescription": "e.g. http://mirrors/files.liferay.com/private/ee/fix-packs/7.3.10/dxp/liferay-fix-pack-dxp-1-7310.zip",
+			"valueDescription": "e.g. https://releases.liferay.com/fix-packs/7.3.10/dxp/liferay-fix-pack-dxp-1-7310.zip",
 			"valueRegex": "https?://.+"
 		},
 		{
@@ -253,7 +253,7 @@
 			"key": "portalHotfixReleaseURL",
 			"label": "Portal Hotfix Release URL",
 			"type": "url",
-			"valueDescription": "e.g. http://mirrors.lax.liferay.com/files.liferay.com/private/ee/fix-packs/7.4.13/hotfix/liferay-hotfix-4521-7413.zip",
+			"valueDescription": "e.g. https://releases.liferay.com/fix-packs/7.4.13/hotfix/liferay-hotfix-4521-7413.zip",
 			"valueRegex": "https?://.+"
 		},
 		{

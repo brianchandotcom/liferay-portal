@@ -92,6 +92,8 @@ public class FragmentConfigurationTestUtil {
 		).put(
 			"select", "string"
 		).put(
+			"targetCollectionDisplay", "array"
+		).put(
 			"text", "string"
 		).put(
 			"url", "object"

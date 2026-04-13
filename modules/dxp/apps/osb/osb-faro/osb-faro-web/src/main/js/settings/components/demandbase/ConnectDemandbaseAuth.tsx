@@ -29,7 +29,7 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 	onCancel,
 	onSubmit
 }) => {
-	const endpointURL = `${window.location.origin}/api/account`;
+	const endpointURL = `${window.location.origin}/api/demandbase_accounts`;
 
 	const [token, setToken] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);

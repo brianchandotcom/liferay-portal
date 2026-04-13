@@ -338,6 +338,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 									redirect, namespace + "classPK",
 									fileEntry.getFileEntryId());
 							}
+
+							SessionMessages.add(
+								_portal.getHttpServletRequest(actionRequest),
+								"fileEntrySaved", fileEntry);
 						}
 
 						if (Validator.isNotNull(portletResource) ||
@@ -411,13 +415,19 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (KeyValuePair validFileNameKVP : validFileNameKVPs) {
+			String value = validFileNameKVP.getValue();
+
+			String[] split = value.split(StringPool.POUND, 2);
+
 			jsonArray.put(
 				JSONUtil.put(
 					"added", Boolean.TRUE
 				).put(
+					"fileEntryId", split[0]
+				).put(
 					"fileName", validFileNameKVP.getKey()
 				).put(
-					"originalFileName", validFileNameKVP.getValue()
+					"originalFileName", split[1]
 				));
 		}
 
@@ -481,7 +491,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				uploadPortletRequest, neverExpireDefaultValue,
 				user.getTimeZone());
 
-			_dlAppService.addFileEntry(
+			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, repositoryId, folderId, uniqueFileName,
 				tempFileEntry.getMimeType(), uniqueFileTitle, StringPool.BLANK,
 				description, changeLog, tempFileEntry.getContentStream(),
@@ -495,7 +505,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext);
 
 			validFileNameKVPs.add(
-				new KeyValuePair(uniqueFileName, selectedFileName));
+				new KeyValuePair(
+					uniqueFileName,
+					fileEntry.getFileEntryId() + StringPool.POUND +
+						selectedFileName));
 		}
 		catch (Exception exception) {
 			String errorMessage = _getAddMultipleFileEntriesErrorMessage(

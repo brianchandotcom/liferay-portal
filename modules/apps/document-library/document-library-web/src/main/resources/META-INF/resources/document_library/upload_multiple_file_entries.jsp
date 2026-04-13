@@ -206,6 +206,12 @@ if (portletTitleBasedNavigation) {
 														item.fileName +
 														')';
 												}
+
+												Liferay.fire('fileEntrySaved', {
+													groupId: Liferay.ThemeDisplay.getScopeGroupId(),
+													fileEntryId: item.fileEntryId,
+													fileName: item.fileName,
+												});
 											}
 											else {
 												cssClass = 'upload-error';

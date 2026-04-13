@@ -509,6 +509,10 @@ public class ObjectActionProductPurchaseRestController
 					order.getCreatorEmailAddress())));
 
 		if (jsonObject == null) {
+			_marketplaceService.updateOrder(
+				null, order.getId(),
+				MarketplaceConstants.ORDER_STATUS_CANCELLED);
+
 			return;
 		}
 

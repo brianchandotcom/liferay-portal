@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.fragment.collection.filter.FragmentCollectionFilterRegistry;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParserUtil;
 import com.liferay.headless.admin.site.dto.v1_0.BasicFragmentInstancePageElementDefinition;
@@ -19,9 +20,11 @@ import com.liferay.headless.admin.site.dto.v1_0.ColorPaletteFragmentConfiguratio
 import com.liferay.headless.admin.site.dto.v1_0.ColorPaletteValue;
 import com.liferay.headless.admin.site.dto.v1_0.ColorPickerFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.ContextualMenuNavigationMenuValue;
+import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.FormFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInstance;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.HrefURLValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemFragmentConfigurationFieldValue;
@@ -41,6 +44,7 @@ import com.liferay.headless.admin.site.dto.v1_0.URLFragmentConfigurationFieldVal
 import com.liferay.headless.admin.site.dto.v1_0.URLValue;
 import com.liferay.headless.admin.site.dto.v1_0.VideoFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.VideoValue;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionFilterConfigurationUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ContextualMenuTypeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentConfigurationFieldValueTypeUtil;
@@ -51,6 +55,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -74,6 +79,9 @@ import com.liferay.site.navigation.type.util.SiteNavigationMenuItemTypeRegistryU
 
 import java.util.Map;
 import java.util.Objects;
+
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Lourdes Fernández Besada
@@ -99,7 +107,7 @@ public class FragmentConfigurationFieldValuesUtil {
 					getFragmentInstance();
 
 			return _getFreeMarkerFragmentEntryProcessorJSONObject(
-				fragmentInstance.getConfiguration(),
+				_getConfiguration(fragmentInstance),
 				fragmentInstance.getFragmentConfigurationFieldValues(),
 				layoutStructureItemImporterContext);
 		}
@@ -338,19 +346,12 @@ public class FragmentConfigurationFieldValuesUtil {
 					(TargetCollectionDisplayFragmentConfigurationFieldValue)
 						fragmentConfigurationFieldValue;
 
-			String[] values =
+			return _getConfigurationObject(
+				fragmentConfigurationField.isLocalizable(),
+				values -> JSONUtil.toJSONArray(values, value -> value),
 				targetCollectionDisplayFragmentConfigurationFieldValue.
-					getValue();
-
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-			if (values != null) {
-				for (String value : values) {
-					jsonArray.put(value);
-				}
-			}
-
-			return jsonArray;
+					getValue(),
+				null);
 		}
 
 		if (Objects.equals(
@@ -526,6 +527,56 @@ public class FragmentConfigurationFieldValuesUtil {
 		).put(
 			"rgbValue", colorPaletteValue.getRgbValue()
 		);
+	}
+
+	private static String _getConfiguration(FragmentInstance fragmentInstance) {
+		FragmentReference fragmentReference =
+			fragmentInstance.getFragmentReference();
+
+		if (fragmentReference instanceof DefaultFragmentReference) {
+			DefaultFragmentReference defaultFragmentReference =
+				(DefaultFragmentReference)fragmentReference;
+
+			if (Objects.equals(
+					defaultFragmentReference.getDefaultFragmentKey(),
+					CollectionFilterConfigurationUtil.RENDERER_KEY)) {
+
+				String filterKey = null;
+
+				Map<String, FragmentConfigurationFieldValue>
+					fragmentConfigurationFieldValues =
+						fragmentInstance.getFragmentConfigurationFieldValues();
+
+				if (fragmentConfigurationFieldValues != null) {
+					FragmentConfigurationFieldValue filterKeyValue =
+						fragmentConfigurationFieldValues.get("filterKey");
+
+					if (filterKeyValue instanceof
+							TextFragmentConfigurationFieldValue) {
+
+						TextFragmentConfigurationFieldValue
+							textFragmentConfigurationFieldValue =
+								(TextFragmentConfigurationFieldValue)
+									filterKeyValue;
+
+						filterKey =
+							textFragmentConfigurationFieldValue.getValue();
+					}
+				}
+
+				FragmentCollectionFilterRegistry
+					fragmentCollectionFilterRegistry =
+						_fragmentCollectionFilterRegistryServiceTracker.
+							getService();
+
+				return CollectionFilterConfigurationUtil.
+					getConfigurationJSONObject(
+						fragmentCollectionFilterRegistry, filterKey
+					).toString();
+			}
+		}
+
+		return fragmentInstance.getConfiguration();
 	}
 
 	private static <T> JSONObject _getConfigurationJSONObject(
@@ -939,5 +990,13 @@ public class FragmentConfigurationFieldValuesUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentConfigurationFieldValuesUtil.class);
+
+	private static final ServiceTracker
+		<FragmentCollectionFilterRegistry, FragmentCollectionFilterRegistry>
+			_fragmentCollectionFilterRegistryServiceTracker =
+				ServiceTrackerFactory.open(
+					FrameworkUtil.getBundle(
+						FragmentConfigurationFieldValuesUtil.class),
+					FragmentCollectionFilterRegistry.class);
 
 }

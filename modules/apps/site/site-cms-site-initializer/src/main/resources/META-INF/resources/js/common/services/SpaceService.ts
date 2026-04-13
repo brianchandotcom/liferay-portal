@@ -62,19 +62,29 @@ async function getSpaceWithCache(
 }
 
 async function getSpaceContents({
+	page,
+	pageSize,
 	path,
 	siteId,
 }: {
+	page?: number;
+	pageSize?: number;
 	path: string;
 	siteId: number;
 }): Promise<RequestResult<{totalCount: number}>> {
 	const urlParams = new URLSearchParams();
 
-	urlParams.set('pageSize', '1');
+	if (page) {
+		urlParams.set('page', String(page));
+	}
+
+	if (pageSize) {
+		urlParams.set('pageSize', String(pageSize));
+	}
 
 	return await ApiHelper.get<{
 		totalCount: number;
-	}>(`${path}/scopes/${siteId}`);
+	}>(`${path}/scopes/${siteId}?${urlParams.toString()}`);
 }
 
 async function getSpaceUserGroups({

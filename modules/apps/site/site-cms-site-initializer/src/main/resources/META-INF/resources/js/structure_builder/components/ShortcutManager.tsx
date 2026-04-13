@@ -39,6 +39,8 @@ export default function ShortcutManager() {
 	const {data: objectDefinitions, status: objectDefinitionsStatus} =
 		useCache('object-definitions');
 
+	const {data: spaces} = useCache('spaces');
+
 	const shortcuts = useMemo(() => {
 		const map: Map<Combo, Shortcut> = new Map();
 
@@ -178,7 +180,9 @@ export default function ShortcutManager() {
 			handler: () =>
 				handlePublishStructure({
 					dispatch,
+					objectDefinitions,
 					showExperienceLink: true,
+					spaces,
 					staleCache,
 					state,
 					validate,
@@ -192,6 +196,7 @@ export default function ShortcutManager() {
 		objectDefinitionsStatus,
 		publishedChildren,
 		selection,
+		spaces,
 		staleCache,
 		state,
 		structure,

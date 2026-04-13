@@ -6,7 +6,12 @@
 import {dateUtils} from 'frontend-js-web';
 
 import {IAssetObjectEntry} from '../../../common/types/AssetType';
-import {ASSET_TYPE, L_CONTENTS, L_FILES} from './constants';
+import {
+	ASSET_TYPE,
+	ASSET_TYPE_ERC,
+	L_CMS_CONTENT_STRUCTURES,
+	L_CMS_FILE_TYPES,
+} from './constants';
 
 export function formatDate(date: string): string {
 	return dateUtils.format(new Date(date), 'P p');
@@ -14,20 +19,29 @@ export function formatDate(date: string): string {
 
 export function getAssetType(objectEntry: IAssetObjectEntry): string {
 	const {
-		objectEntryFolderExternalReferenceCode:
-			objectEntryFolderExternalReferenceCode = '',
+		systemProperties: {
+			objectDefinitionBrief: {
+				objectFolderExternalReferenceCode:
+					objectFolderExternalReferenceCode = '',
+			} = {},
+		} = {},
 	} = objectEntry;
 
-	let type = ASSET_TYPE.FOLDER;
-
-	if (objectEntryFolderExternalReferenceCode === L_CONTENTS) {
-		type = ASSET_TYPE.CONTENTS;
+	if (
+		objectFolderExternalReferenceCode ===
+			ASSET_TYPE_ERC.BASIC_WEB_CONTENT ||
+		objectFolderExternalReferenceCode === L_CMS_CONTENT_STRUCTURES
+	) {
+		return ASSET_TYPE.CONTENTS;
 	}
-	else if (objectEntryFolderExternalReferenceCode === L_FILES) {
-		type = ASSET_TYPE.FILES;
+	else if (
+		objectFolderExternalReferenceCode === ASSET_TYPE_ERC.BASIC_DOCUMENT ||
+		objectFolderExternalReferenceCode === L_CMS_FILE_TYPES
+	) {
+		return ASSET_TYPE.FILES;
 	}
 
-	return type;
+	return ASSET_TYPE.FOLDER;
 }
 
 export function getAssetLanguages(

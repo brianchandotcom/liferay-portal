@@ -161,6 +161,11 @@ public class ViewContentsSectionDisplayContextTest
 	}
 
 	@Override
+	protected String getFilterString() {
+		return "cmsRoot eq true and cmsSection eq 'contents'";
+	}
+
+	@Override
 	protected String getObjectFolderExternalReferenceCode() {
 		return ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES;
 	}

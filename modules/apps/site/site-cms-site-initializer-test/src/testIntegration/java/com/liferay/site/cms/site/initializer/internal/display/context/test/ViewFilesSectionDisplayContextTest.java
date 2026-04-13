@@ -49,9 +49,7 @@ public class ViewFilesSectionDisplayContextTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Override
-	public HashMap<String, Object> getBaseAdditionalProps()
-		throws PortalException {
-
+	public HashMap<String, Object> getBaseAdditionalProps() throws Exception {
 		return new HashMapBuilder<>().putAll(
 			super.getBaseAdditionalProps()
 		).put(
@@ -72,6 +70,11 @@ public class ViewFilesSectionDisplayContextTest
 		).put(
 			"external-video", getRedirect("L_CMS_EXTERNAL_VIDEO")
 		).build();
+	}
+
+	@Override
+	protected String getFilterString() {
+		return "cmsRoot eq true and cmsSection eq 'files'";
 	}
 
 	@Override

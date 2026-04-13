@@ -200,6 +200,11 @@ public class ViewRecycleBinSectionDisplayContextTest
 	}
 
 	@Override
+	protected String appendStatus(String filterString) {
+		return filterString + " and status eq 8";
+	}
+
+	@Override
 	protected CreationMenu getCreationMenu(
 		ObjectEntryFolder objectEntryFolder) {
 
@@ -209,6 +214,12 @@ public class ViewRecycleBinSectionDisplayContextTest
 	@Override
 	protected Map<String, String> getExpectedCreationMenuItems() {
 		return Collections.emptyMap();
+	}
+
+	@Override
+	protected String getFilterString() {
+		return "cmsRoot eq true and (cmsSection eq 'contents' or cmsSection " +
+			"eq 'files')";
 	}
 
 	@Override

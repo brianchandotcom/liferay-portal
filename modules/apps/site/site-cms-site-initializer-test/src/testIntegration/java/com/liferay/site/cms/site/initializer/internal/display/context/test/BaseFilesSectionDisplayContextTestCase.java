@@ -5,7 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.HashMap;
@@ -18,9 +17,7 @@ public abstract class BaseFilesSectionDisplayContextTestCase
 	extends BaseSectionDisplayContextTestCase {
 
 	@Override
-	public HashMap<String, Object> getBaseAdditionalProps()
-		throws PortalException {
-
+	public HashMap<String, Object> getBaseAdditionalProps() throws Exception {
 		return new HashMapBuilder<>().putAll(
 			super.getBaseAdditionalProps()
 		).put(

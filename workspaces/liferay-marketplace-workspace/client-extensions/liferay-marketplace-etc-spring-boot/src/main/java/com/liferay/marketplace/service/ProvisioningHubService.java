@@ -10,10 +10,14 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 import java.util.Objects;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,38 +29,59 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProvisioningHubService extends BaseService {
 
-	public void provision(Order order, ProductPurchase productPurchase)
+	public void provision(
+			Account koroneikiAccount, Order order,
+			ProductPurchase productPurchase)
 		throws Exception {
 
 		Product product = productPurchase.getProduct();
 
 		if (Objects.equals(product.getName(), "Liferay Data Platform")) {
-			Account koroneikiAccount = _koroneikiService.getKoroneikiAccount(
-				productPurchase.getAccountKey());
-
 			Map<String, String> properties = koroneikiAccount.getProperties();
 
 			String securityContactEmailAddress = properties.get(
 				"securityContactEmailAddress");
 
-			JSONObject jsonObject = new JSONObject(
-			).put(
-				"corpProjectName", koroneikiAccount.getName()
-			).put(
-				"corpProjectUuid", koroneikiAccount.getKey()
-			).put(
-				"incidentReportEmailAddresses",
-				securityContactEmailAddress.split(",")
-			).put(
-				"name", properties.get("ldpWorkspaceName")
-			).put(
-				"ownerEmailAddress", order.getCreatorEmailAddress()
-			).put(
-				"serverLocation",
-				_getServerLocation(properties.get("dataCenterLocation"))
-			);
+			JSONArray incidentReportEmailAddressesJSONArray = new JSONArray();
 
-			_analyticsService.provision(jsonObject, order.getId());
+			if (Validator.isNotNull(securityContactEmailAddress)) {
+				incidentReportEmailAddressesJSONArray = new JSONArray(
+					securityContactEmailAddress.split(","));
+			}
+
+			String analyticsProject = _analyticsService.provision(
+				new JSONObject(
+				).put(
+					"corpProjectName", koroneikiAccount.getName()
+				).put(
+					"corpProjectUuid", koroneikiAccount.getKey()
+				).put(
+					"incidentReportEmailAddresses",
+					incidentReportEmailAddressesJSONArray
+				).put(
+					"name", properties.get("ldpWorkspaceName")
+				).put(
+					"ownerEmailAddress", order.getCreatorEmailAddress()
+				).put(
+					"serverLocation",
+					_getServerLocation(properties.get("dataCenterLocation"))
+				));
+
+			_marketplaceService.completeOrder(
+				HashMapBuilder.put(
+					"order-metadata",
+					new JSONObject(
+						GetterUtil.get(
+							order.getCustomFields(
+							).get(
+								"order-metadata"
+							),
+							"{}")
+					).put(
+						"analyticsProject", new JSONObject(analyticsProject)
+					).toString()
+				).build(),
+				order.getId(), order.getPaymentStatus());
 		}
 	}
 
@@ -90,5 +115,8 @@ public class ProvisioningHubService extends BaseService {
 
 	@Autowired
 	private KoroneikiService _koroneikiService;
+
+	@Autowired
+	private MarketplaceService _marketplaceService;
 
 }

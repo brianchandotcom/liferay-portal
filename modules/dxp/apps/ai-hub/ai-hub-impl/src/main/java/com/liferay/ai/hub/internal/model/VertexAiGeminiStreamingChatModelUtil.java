@@ -5,6 +5,10 @@
 
 package com.liferay.ai.hub.internal.model;
 
+import com.liferay.ai.hub.internal.configuration.VertexAIConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
 
 /**
@@ -12,14 +16,20 @@ import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
  */
 public class VertexAiGeminiStreamingChatModelUtil {
 
-	public static VertexAiGeminiStreamingChatModel create() {
+	public static VertexAiGeminiStreamingChatModel create(long companyId)
+		throws ConfigurationException {
+
+		VertexAIConfiguration vertexAIConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				VertexAIConfiguration.class, companyId);
+
 		return VertexAiGeminiStreamingChatModel.builder(
 		).location(
-			"europe-central2"
+			vertexAIConfiguration.location()
 		).modelName(
-			"gemini-2.5-flash-lite"
+			vertexAIConfiguration.modelName()
 		).project(
-			"ai-hub-liferay"
+			vertexAIConfiguration.projectId()
 		).build();
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
+import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.FreeMarkerTool;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
@@ -78,15 +79,38 @@ import java.util.TreeSet;
 public class RESTBuilder {
 
 	public static void main(String[] args) throws Exception {
-		if ((args.length > 0) && args[0].startsWith("rest.config.dirs=")) {
-			List<String> baselineTasks = _processRESTConfigFiles(
-				args[0].substring("rest.config.dirs=".length()));
+		Map<String, String> arguments = null;
 
-			System.out.println(
-				"rest.builder.baseline.tasks=" +
-					StringUtil.merge(baselineTasks, StringPool.SPACE));
+		try {
+			arguments = ArgumentsUtil.parseArguments(args);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+		}
 
-			return;
+		if (arguments != null) {
+			String restConfigDirName = arguments.get("rest.config.dirs");
+
+			if (Validator.isNotNull(restConfigDirName)) {
+				List<String> baselineTasks = _processRESTConfigFiles(
+					restConfigDirName);
+
+				String baselineOutputFileName = arguments.get(
+					"rest.builder.baseline.output.file");
+
+				if (Validator.isNotNull(baselineOutputFileName) &&
+					!baselineTasks.isEmpty()) {
+
+					Files.write(
+						Paths.get(baselineOutputFileName),
+						StringUtil.merge(
+							baselineTasks, StringPool.SPACE
+						).getBytes(
+							StandardCharsets.UTF_8
+						));
+				}
+
+				return;
+			}
 		}
 
 		RESTBuilderArgs restBuilderArgs = new RESTBuilderArgs();

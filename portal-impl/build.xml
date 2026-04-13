@@ -237,6 +237,12 @@
 	</target>
 
 	<target name="build-rests">
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="build.rests.tstamp.value" />
+		</tstamp>
+
+		<property name="rest.builder.baseline.output.file" value="${java.io.tmpdir}/rest-builder-baseline-${build.rests.tstamp.value}" />
+
 		<java
 			classname="com.liferay.portal.tools.rest.builder.RESTBuilder"
 			classpathref="rest.builder.classpath"
@@ -244,7 +250,6 @@
 			fork="${fork.mode}"
 			logError="true"
 			newenvironment="${fork.mode}"
-			outputproperty="rest.builder.batch.output"
 		>
 			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
 			<jvmarg if:true="${jvm.debug}" value="-Dfile.encoding=UTF-8" />
@@ -253,29 +258,39 @@
 			<jvmarg if:true="${jvm.debug}" value="-Xmx1024m" />
 			<jvmarg if:true="${jvm.debug}" value="-Xss2048k" />
 			<arg value="rest.config.dirs=${basedir}/../modules" />
+			<arg if:true="${build.rests.baseline.enabled}" value="rest.builder.baseline.output.file=${rest.builder.baseline.output.file}" />
 		</java>
 
 		<if>
 			<istrue value="${build.rests.baseline.enabled}" />
 			<then>
-				<propertyregex
-					input="${rest.builder.batch.output}"
-					override="true"
-					property="rest.builder.baseline.tasks"
-					regexp="rest\.builder\.baseline\.tasks=(.*)"
-					select="\1"
-				/>
+				<trycatch>
+					<try>
+						<if>
+							<available file="${rest.builder.baseline.output.file}" />
+							<then>
+								<loadfile
+									property="rest.builder.baseline.tasks"
+									srcfile="${rest.builder.baseline.output.file}"
+								/>
 
-				<if>
-					<isset property="rest.builder.baseline.tasks" />
-					<then>
-						<gradle-execute dir="../modules" forcedcacheenabled="false" task="${rest.builder.baseline.tasks}">
-							<arg value="--continue" />
-							<arg value="--parallel" />
-							<arg value="--quiet" />
-						</gradle-execute>
-					</then>
-				</if>
+								<if>
+									<isset property="rest.builder.baseline.tasks" />
+									<then>
+										<gradle-execute dir="../modules" forcedcacheenabled="false" task="${rest.builder.baseline.tasks}">
+											<arg value="--continue" />
+											<arg value="--parallel" />
+											<arg value="--quiet" />
+										</gradle-execute>
+									</then>
+								</if>
+							</then>
+						</if>
+					</try>
+					<finally>
+						<delete failonerror="false" file="${rest.builder.baseline.output.file}" />
+					</finally>
+				</trycatch>
 			</then>
 		</if>
 	</target>
@@ -406,6 +421,12 @@
 
 		<ant dir="../portal-kernel" inheritAll="false" target="compile" />
 
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="build.services.tstamp.value" />
+		</tstamp>
+
+		<property name="service.builder.baseline.output.file" value="${java.io.tmpdir}/service-builder-baseline-${build.services.tstamp.value}" />
+
 		<java
 			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
 			classpathref="service.builder.classpath"
@@ -413,7 +434,6 @@
 			fork="${fork.mode}"
 			logError="true"
 			newenvironment="${fork.mode}"
-			outputproperty="service.builder.batch.output"
 		>
 			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
 			<jvmarg if:true="${jvm.debug}" value="-Dfile.encoding=UTF-8" />
@@ -423,6 +443,7 @@
 			<jvmarg if:true="${jvm.debug}" value="-Xss2048k" />
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
+			<arg if:true="${build.services.baseline.enabled}" value="service.builder.baseline.output.file=${service.builder.baseline.output.file}" />
 			<arg value="service.incubation.features=${service.builder.incubation.features}" />
 			<arg value="service.input.files.dir=${basedir}/../modules" />
 		</java>
@@ -430,24 +451,33 @@
 		<if>
 			<istrue value="${build.services.baseline.enabled}" />
 			<then>
-				<propertyregex
-					input="${service.builder.batch.output}"
-					override="true"
-					property="service.builder.baseline.tasks"
-					regexp="service\.builder\.baseline\.tasks=(.*)"
-					select="\1"
-				/>
+				<trycatch>
+					<try>
+						<if>
+							<available file="${service.builder.baseline.output.file}" />
+							<then>
+								<loadfile
+									property="service.builder.baseline.tasks"
+									srcfile="${service.builder.baseline.output.file}"
+								/>
 
-				<if>
-					<isset property="service.builder.baseline.tasks" />
-					<then>
-						<gradle-execute dir="../modules" forcedcacheenabled="false" task="${service.builder.baseline.tasks}">
-							<arg value="--continue" />
-							<arg value="--parallel" />
-							<arg value="--quiet" />
-						</gradle-execute>
-					</then>
-				</if>
+								<if>
+									<isset property="service.builder.baseline.tasks" />
+									<then>
+										<gradle-execute dir="../modules" forcedcacheenabled="false" task="${service.builder.baseline.tasks}">
+											<arg value="--continue" />
+											<arg value="--parallel" />
+											<arg value="--quiet" />
+										</gradle-execute>
+									</then>
+								</if>
+							</then>
+						</if>
+					</try>
+					<finally>
+						<delete failonerror="false" file="${service.builder.baseline.output.file}" />
+					</finally>
+				</trycatch>
 			</then>
 		</if>
 	</target>

@@ -184,12 +184,23 @@ public class ServiceBuilder {
 		if (Validator.isNotNull(inputFilesDirName)) {
 			_gitSearchStartDirName = inputFilesDirName;
 
-			List<String> apiModulePaths = _processModuleServiceFiles(
+			List<String> baselineTasks = _processModuleServiceFiles(
 				Paths.get(inputFilesDirName), arguments);
 
-			System.out.println(
-				"service.builder.baseline.tasks=" +
-					StringUtil.merge(apiModulePaths, StringPool.SPACE));
+			String baselineOutputFileName = arguments.get(
+				"service.builder.baseline.output.file");
+
+			if (Validator.isNotNull(baselineOutputFileName) &&
+				!baselineTasks.isEmpty()) {
+
+				Files.write(
+					Paths.get(baselineOutputFileName),
+					StringUtil.merge(
+						baselineTasks, StringPool.SPACE
+					).getBytes(
+						StandardCharsets.UTF_8
+					));
+			}
 
 			return;
 		}
@@ -2468,7 +2479,7 @@ public class ServiceBuilder {
 
 		executorService.shutdown();
 
-		List<String> apiModulePaths = new ArrayList<>();
+		List<String> baselineTasks = new ArrayList<>();
 		List<Exception> exceptions = new ArrayList<>();
 
 		for (Future<String> future : futures) {
@@ -2476,7 +2487,7 @@ public class ServiceBuilder {
 				String baselineTask = future.get();
 
 				if (baselineTask != null) {
-					apiModulePaths.add(baselineTask);
+					baselineTasks.add(baselineTask);
 				}
 			}
 			catch (ExecutionException executionException) {
@@ -2503,7 +2514,7 @@ public class ServiceBuilder {
 			throw runtimeException;
 		}
 
-		return apiModulePaths;
+		return baselineTasks;
 	}
 
 	private static void _readResourceActionModels(

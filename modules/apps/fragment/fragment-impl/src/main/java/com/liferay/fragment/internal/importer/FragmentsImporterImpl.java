@@ -234,9 +234,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	}
 
 	private void _addFileEntry(
-			long fragmentCollectionId, long groupId,
-			Map<String, Long> folderIdsMap, String path, Repository repository,
-			long userId, ZipFile zipFile, String zipEntryName)
+			Map<String, Long> folderIdsMap, long fragmentCollectionId,
+			long groupId, String path, Repository repository, long userId,
+			String zipEntryName, ZipFile zipFile)
 		throws Exception {
 
 		String fileName = path;
@@ -477,9 +477,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 							fileEntry.getFileEntryId());
 
 						_addFileEntry(
+							folderIdsMap,
 							fragmentCollection.getFragmentCollectionId(),
-							groupId, folderIdsMap, fileEntryPath, repository,
-							userId, zipFile, zipEntryNames.get(fileEntryPath));
+							groupId, fileEntryPath, repository, userId,
+							zipEntryNames.get(fileEntryPath), zipFile);
 
 						zipEntryNames.remove(fileEntryPath);
 					}
@@ -521,9 +522,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 		for (Map.Entry<String, String> entry : zipEntryNames.entrySet()) {
 			_addFileEntry(
-				fragmentCollection.getFragmentCollectionId(), groupId,
-				folderIdsMap, entry.getKey(), repository, userId, zipFile,
-				entry.getValue());
+				folderIdsMap, fragmentCollection.getFragmentCollectionId(),
+				groupId, entry.getKey(), repository, userId, entry.getValue(),
+				zipFile);
 		}
 	}
 

@@ -1,0 +1,75 @@
+---
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: elasticsearch-observer
+    name: {{ $searchName }}-observer
+spec:
+    forProvider:
+        manifest:
+            apiVersion: elasticsearch.k8s.elastic.co/v1
+            kind: Elasticsearch
+            metadata:
+                name: {{ $searchName }}
+                namespace: {{ $searchNamespace }}
+    managementPolicies: ["Observe"]
+---
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: elasticsearch-secret-observer
+    name: {{ $searchSecretName }}-observer
+spec:
+    forProvider:
+        manifest:
+            apiVersion: v1
+            kind: Secret
+            metadata:
+                name: {{ $searchSecretName }}
+                namespace: {{ $searchNamespace }}
+    managementPolicies: ["Observe"]
+---
+{{- $esObj := (index .observed.resources "elasticsearch-observer" | default dict).resource | default dict -}}
+{{- $esAtProvider := ($esObj.status | default dict).atProvider | default dict -}}
+{{- $esManifest := (index $esAtProvider "manifest" | default dict) -}}
+{{- $esStatus := (index $esManifest "status" | default dict) -}}
+{{- $health := (index $esStatus "health" | default "") -}}
+{{- $isSearchReady := or (eq $health "green") (eq $health "yellow") -}}
+
+{{- $secretObj := (index .observed.resources "elasticsearch-secret-observer" | default dict).resource | default dict -}}
+{{- $secretAtProvider := ($secretObj.status | default dict).atProvider | default dict -}}
+{{- $secretManifest := (index $secretAtProvider "manifest" | default dict) -}}
+{{- $secretData := (index $secretManifest "data" | default dict) -}}
+{{- $password := (index $secretData "elastic" | default "") -}}
+
+{{- if and $isSearchReady $password }}
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        crossplane.io/external-name: elasticsearch-connection-details
+        gotemplating.fn.crossplane.io/composition-resource-name: elasticsearch-connection-details-secret
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $xr.metadata.name }}-elasticsearch-connection-details-secret
+spec:
+    forProvider:
+        manifest:
+            apiVersion: v1
+            kind: Secret
+            metadata:
+                labels:
+                    {{- $labels | toYaml | nindent 20 }}
+                name: elasticsearch-connection-details
+                namespace: {{ $namespace }}
+            data:
+                ELASTICSEARCH_DEFAULT_PASSWORD: {{ $password }}
+            stringData:
+                ELASTICSEARCH_DEFAULT_PASSWORD_SECRET_NAME: {{ $searchSecretName | quote }}
+                ELASTICSEARCH_DEFAULT_USERNAME: elastic
+                ELASTICSEARCH_URL: http://{{ $searchName }}-es-http.{{ $searchNamespace }}.svc:9200
+            type: Opaque
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

@@ -58,6 +58,17 @@ spec:
                                             type: boolean
                                         region:
                                             type: string
+                                        restoreBackupContext:
+                                            nullable: true
+                                            properties:
+                                                backupRunId:
+                                                    format: int64
+                                                    type: integer
+                                                instanceId:
+                                                    type: string
+                                                project:
+                                                    type: string
+                                            type: object
                                         rootPasswordSecretName:
                                             type: string
                                         storageGB:
@@ -85,6 +96,12 @@ spec:
                                     type: string
                                 region:
                                     type: string
+                                restorePhase:
+                                    enum:
+                                        -   none
+                                        -   promoting
+                                        -   provisioning
+                                    type: string
                                 storage:
                                     properties:
                                         enableVersioning:
@@ -93,6 +110,11 @@ spec:
                                         region:
                                             type: string
                                     type: object
+                                targetActiveDataPlane:
+                                    enum:
+                                        -   blue
+                                        -   green
+                                    type: string
                             required:
                                 -   database
                                 -   environmentId

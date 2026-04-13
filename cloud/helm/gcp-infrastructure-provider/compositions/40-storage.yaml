@@ -1,11 +1,16 @@
+{{- range $i, $dataPlane := list "blue" "green" }}
+{{- if $i }}
+---
+{{- end }}
 apiVersion: storage.gcp.m.upbound.io/v1beta1
 kind: Bucket
 metadata:
     annotations:
-        gotemplating.fn.crossplane.io/composition-resource-name: liferay-gcs-bucket
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-gcs-bucket-{{ $dataPlane }}
     labels:
         {{- $labels | toYaml | nindent 8 }}
-    name: {{ $baseName }}-dl
+        dataPlane: {{ $dataPlane }}
+    name: {{ $baseName }}-dl-{{ $dataPlane }}
 spec:
     forProvider:
         {{- if $cmkEnabled }}
@@ -15,6 +20,7 @@ spec:
         forceDestroy: {{ $forceDestroy }}
         labels:
             {{- $backupTargetLabels | toYaml | nindent 12 }}
+            active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
         location: {{ $storage.region | default $region }}
         storageClass: STANDARD
         uniformBucketLevelAccess: true
@@ -26,13 +32,16 @@ apiVersion: storage.gcp.m.upbound.io/v1beta1
 kind: BucketIAMMember
 metadata:
     annotations:
-        gotemplating.fn.crossplane.io/composition-resource-name: liferay-gcs-iam
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-gcs-iam-{{ $dataPlane }}
     labels:
         {{- $labels | toYaml | nindent 8 }}
+        dataPlane: {{ $dataPlane }}
 spec:
     forProvider:
-        bucketRef:
-            name: {{ $baseName }}-dl
+        bucketSelector:
+            matchLabels:
+                dataPlane: {{ $dataPlane }}
         member: serviceAccount:{{ $gsaEmail }}
         role: roles/storage.admin
     managementPolicies: {{ $managementPolicies }}
+{{- end }}

@@ -18,14 +18,18 @@ spec:
                     {{- $labels | toYaml | nindent 20 }}
                 name: liferay-default
                 namespace: {{ $namespace }}
+{{- range $dataPlane := $dataPlanes }}
+{{- $instanceConnectionName := printf "%s:%s:%s-db-instance-%s" $env.projectId $region $xr.metadata.name $dataPlane }}
+{{- $jobName := printf "%s-db-grant-%s" $xr.metadata.name $dataPlane }}
 ---
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
 metadata:
     annotations:
-        gotemplating.fn.crossplane.io/composition-resource-name: liferay-db-grant-job
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-db-grant-job-{{ $dataPlane }}
     labels:
         {{- $labels | toYaml | nindent 8 }}
+        dataPlane: {{ $dataPlane }}
     name: {{ $jobName }}
 spec:
     forProvider:
@@ -35,6 +39,7 @@ spec:
             metadata:
                 labels:
                     {{- $labels | toYaml | nindent 20 }}
+                    dataPlane: {{ $dataPlane }}
                 name: {{ $jobName }}
                 namespace: {{ $namespace }}
             spec:
@@ -118,11 +123,13 @@ spec:
     readiness:
         celQuery: object.status.succeeded == 1
         policy: DeriveFromCelQuery
+{{- end }}
 ---
-{{- $isReady = false -}}
-{{- if .observed.resources -}}
-    {{- if (index .observed.resources "liferay-db-grant-job") -}}
-        {{- $job := index .observed.resources "liferay-db-grant-job" -}}
+{{- $isReady = false }}
+{{- if .observed.resources }}
+    {{- $activeJobResourceName := printf "liferay-db-grant-job-%s" $activeDataPlane }}
+    {{- if (index .observed.resources $activeJobResourceName) }}
+        {{- $job := index .observed.resources $activeJobResourceName }}
         {{- range $cond := $job.resource.status.conditions | default list }}
             {{- if and (eq $cond.type "Ready") (eq $cond.status "True") }}
                 {{- $isReady = true }}
@@ -144,19 +151,19 @@ spec:
     forProvider:
         manifest:
             apiVersion: v1
+            data:
+                DATABASE_ENDPOINT: {{ "localhost" | b64enc | quote }}
+                DATABASE_INSTANCE_NAME: {{ printf "%s:%s:%s-db-instance-%s" $env.projectId $region $xr.metadata.name $activeDataPlane | b64enc | quote }}
+                DATABASE_PORT: {{ $databasePort | default 5432 | toString | b64enc | quote }}
+                DATABASE_USERNAME: {{ $databaseIamUser | toString | b64enc | quote }}
+                LIFERAY_GCS_BUCKET_NAME: {{ printf "%s-dl-%s" $baseName $activeDataPlane | b64enc | quote }}
+                LIFERAY_OVERLAY_BUCKET_NAME: {{ printf "%s-overlay" $baseName | b64enc | quote }}
             kind: Secret
             metadata:
                 labels:
                     {{- $labels | toYaml | nindent 20 }}
                 name: managed-service-details
                 namespace: {{ $namespace }}
-            stringData:
-                DATABASE_ENDPOINT: localhost
-                DATABASE_INSTANCE_NAME: {{ $instanceConnectionName }}
-                DATABASE_PORT: {{ $databasePort | default 5432 | quote }}
-                DATABASE_USERNAME: {{ $databaseIamUser | toString }}
-                LIFERAY_GCS_BUCKET_NAME: {{ $baseName }}-dl
-                LIFERAY_OVERLAY_BUCKET_NAME: {{ $baseName }}-overlay
             type: Opaque
     managementPolicies: {{ $managementPolicies }}
 {{- end }}

@@ -3,7 +3,6 @@
 
 {{- $backup := $xr.spec.backup | default dict -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled | default false -}}
-{{- $databaseInstanceName := printf "%s-db-instance" $xr.metadata.name -}}
 {{- $databaseName := $xr.spec.database.name | default "lportal" -}}
 {{- $databasePort := "5432" -}}
 {{- $databaseSpec := $xr.spec.database -}}
@@ -13,7 +12,6 @@
 {{- $gsaName := printf "%s-sa" $xr.metadata.name -}}
 {{- $isReady := false -}}
 {{- $isSearchReady := false -}}
-{{- $jobName := printf "%s-db-grant" $xr.metadata.name -}}
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
 {{- $managementPoliciesOnce := (list "Create" "Observe" "Delete") | toJson -}}
@@ -33,9 +31,25 @@
 {{- $searchNamespace := printf "%s-elasticsearch" $namespace -}}
 {{- $searchSecretName := printf "%s-es-elastic-user" $searchName -}}
 
-{{- $backupTargetLabels := merge (dict) $labels (dict "active" "true" "should-back-up" "true") -}}
+{{- $backupTargetLabels := merge (dict) $labels (dict should-back-up" "true") -}}
 {{- $uidHash := printf "%s-%s" $env.projectNumber $projectIdFull | sha256sum | trunc 6 -}}
 
 {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
 {{- $cmkKeyName := printf "projects/%s/locations/%s/keyRings/%s-keyring/cryptoKeys/%s-key" $env.projectId $region $baseName $baseName -}}
+
+{{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
+{{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
+
+{{- $activeDataPlane := $targetActiveDataPlane -}}
+{{- $dataPlanes := list $targetActiveDataPlane -}}
+{{- $targetInactiveDataPlane := (eq $targetActiveDataPlane "blue") | ternary "green" "blue" -}}
+
+{{- $databaseInstanceManagementPolicies := $backup.enabled | ternary ((list "*") | toJson) $managementPolicies -}}
+
+{{- if (eq $restorePhase "promoting") -}}
+    {{- $dataPlanes = list "blue" "green" -}}
+{{- else if (eq $restorePhase "provisioning") -}}
+    {{- $activeDataPlane = $targetInactiveDataPlane -}}
+    {{- $dataPlanes = list "blue" "green" -}}
+{{- end }}

@@ -1,19 +1,31 @@
+{{- range $i, $dataPlane := $dataPlanes }}
+{{- $databaseInstanceName := printf "%s-db-instance-%s" $xr.metadata.name $dataPlane }}
+{{- if $i }}
+---
+{{- end }}
 apiVersion: sql.gcp.m.upbound.io/v1beta1
 kind: DatabaseInstance
 metadata:
     annotations:
-        gotemplating.fn.crossplane.io/composition-resource-name: database-primary
+        gotemplating.fn.crossplane.io/composition-resource-name: database-primary-{{ $dataPlane }}
     labels:
         {{- $labels | toYaml | nindent 8 }}
+        dataPlane: {{ $dataPlane }}
     name: {{ $databaseInstanceName }}
 spec:
     forProvider:
         databaseVersion: {{ $databaseSpec.databaseVersion | default "POSTGRES_18" }}
-        deletionProtection: {{ $databaseSpec.deletionProtection | default ($xr.spec.deletionProtection | default false) }}
+        deletionProtection: {{ and ($databaseSpec.deletionProtection | default ($xr.spec.deletionProtection | default false)) (eq $dataPlane $activeDataPlane) }}
         {{- if $cmkEnabled }}
         encryptionKmsKeyName: {{ $cmkKeyName }}
         {{- end }}
         region: {{ $region }}
+        {{- if and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) $databaseSpec.restoreBackupContext }}
+        restoreBackupContext:
+            backupRunId: {{ $databaseSpec.restoreBackupContext.backupRunId }}
+            instanceId: {{ $databaseSpec.restoreBackupContext.instanceId }}
+            project: {{ $databaseSpec.restoreBackupContext.project | default $env.projectId }}
+        {{- end }}
         rootPasswordSecretRef:
             key: password
             name: {{ $databaseSpec.rootPasswordSecretName }}
@@ -33,23 +45,27 @@ spec:
             tier: {{ $databaseSpec.instanceType | default "db-custom-1-3840" }}
             userLabels:
                 {{- $backupTargetLabels | toYaml | nindent 16 }}
-    managementPolicies: {{ $managementPolicies }}
+                active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
+    managementPolicies: {{ $databaseInstanceManagementPolicies }}
 ---
 apiVersion: sql.gcp.m.upbound.io/v1beta1
 kind: Database
 metadata:
     annotations:
         crossplane.io/external-name: {{ $databaseName }}
-        gotemplating.fn.crossplane.io/composition-resource-name: liferay-db
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-db-{{ $dataPlane }}
     labels:
         {{- $labels | toYaml | nindent 8 }}
-    name: {{ $xr.metadata.name }}-db
+        dataPlane: {{ $dataPlane }}
+    name: {{ $xr.metadata.name }}-db-{{ $dataPlane }}
 spec:
     forProvider:
         charset: UTF8
         collation: en_US.UTF8
+        deletionPolicy: ABANDON
         instanceSelector:
-            matchControllerRef: true
+            matchLabels:
+                dataPlane: {{ $dataPlane }}
     managementPolicies: {{ $managementPolicies }}
 ---
 apiVersion: sql.gcp.m.upbound.io/v1beta1
@@ -57,14 +73,17 @@ kind: User
 metadata:
     annotations:
         crossplane.io/external-name: {{ $databaseIamUser }}
-        gotemplating.fn.crossplane.io/composition-resource-name: liferay-iam-user
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-iam-user-{{ $dataPlane }}
     labels:
         {{- $labels | toYaml | nindent 8 }}
-    name: {{ $xr.metadata.name }}-db-user
+        dataPlane: {{ $dataPlane }}
+    name: {{ $xr.metadata.name }}-db-user-{{ $dataPlane }}
 spec:
     forProvider:
+        deletionPolicy: ABANDON
         instanceSelector:
-            matchControllerRef: true
+            matchLabels:
+                dataPlane: {{ $dataPlane }}
         type: CLOUD_IAM_SERVICE_ACCOUNT
     managementPolicies: {{ $managementPolicies }}
 ---
@@ -72,15 +91,15 @@ apiVersion: protection.crossplane.io/v1beta1
 kind: Usage
 metadata:
     annotations:
-        gotemplating.fn.crossplane.io/composition-resource-name: usage-instance-by-database
-    name: {{ $xr.metadata.name }}-instance-by-database
+        gotemplating.fn.crossplane.io/composition-resource-name: usage-instance-by-database-{{ $dataPlane }}
+    name: {{ $xr.metadata.name }}-instance-by-database-{{ $dataPlane }}
     namespace: {{ $namespace }}
 spec:
     by:
         apiVersion: sql.gcp.m.upbound.io/v1beta1
         kind: Database
         resourceRef:
-            name: {{ $xr.metadata.name }}-db
+            name: {{ $xr.metadata.name }}-db-{{ $dataPlane }}
     of:
         apiVersion: sql.gcp.m.upbound.io/v1beta1
         kind: DatabaseInstance
@@ -91,17 +110,18 @@ apiVersion: protection.crossplane.io/v1beta1
 kind: Usage
 metadata:
     annotations:
-        gotemplating.fn.crossplane.io/composition-resource-name: usage-instance-by-user
-    name: {{ $xr.metadata.name }}-instance-by-user
+        gotemplating.fn.crossplane.io/composition-resource-name: usage-instance-by-user-{{ $dataPlane }}
+    name: {{ $xr.metadata.name }}-instance-by-user-{{ $dataPlane }}
     namespace: {{ $namespace }}
 spec:
     by:
         apiVersion: sql.gcp.m.upbound.io/v1beta1
         kind: User
         resourceRef:
-            name: {{ $xr.metadata.name }}-db-user
+            name: {{ $xr.metadata.name }}-db-user-{{ $dataPlane }}
     of:
         apiVersion: sql.gcp.m.upbound.io/v1beta1
         kind: DatabaseInstance
         resourceRef:
             name: {{ $databaseInstanceName }}
+{{- end }}

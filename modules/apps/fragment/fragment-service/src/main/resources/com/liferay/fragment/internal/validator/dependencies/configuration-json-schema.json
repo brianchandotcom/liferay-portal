@@ -118,6 +118,18 @@
 					"if": {
 						"properties": {
 							"type": {
+								"const": "targetCollectionDisplay"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/definitions/fieldTargetCollectionDisplay"
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
 								"const": "text"
 							}
 						}
@@ -180,6 +192,7 @@
 						"length",
 						"navigationMenuSelector",
 						"select",
+						"targetCollectionDisplay",
 						"text",
 						"url",
 						"videoSelector"
@@ -465,6 +478,28 @@
 			],
 			"title": "The Items Schema",
 			"type": "object"
+		},
+		"fieldTargetCollectionDisplay": {
+			"properties": {
+				"defaultValue": {
+					"title": "The DefaultValue Schema",
+					"type": "array"
+				},
+				"typeOptions": {
+					"additionalProperties": false,
+					"properties": {
+						"dependency": {
+							"$ref": "#/definitions/dependency"
+						},
+						"enableCompatibleCollections": {
+							"title": "The EnableCompatibleCollections Schema",
+							"type": "boolean"
+						}
+					},
+					"title": "The Typeoptions Schema",
+					"type": "object"
+				}
+			}
 		},
 		"fieldText": {
 			"properties": {

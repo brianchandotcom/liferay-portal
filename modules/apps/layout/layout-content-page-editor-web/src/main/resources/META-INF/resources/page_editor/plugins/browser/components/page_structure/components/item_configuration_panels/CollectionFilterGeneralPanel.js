@@ -5,17 +5,14 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
-import {
-	TargetCollectionsField,
-	selectConfiguredCollectionDisplays,
-} from '../../../../../../app/components/fragment_configuration_fields/TargetCollectionsField';
+import {TargetCollectionDisplayField} from '../../../../../../app/components/fragment_configuration_fields/TargetCollectionDisplayField';
+import {selectConfiguredCollectionDisplays} from '../../../../../../app/components/fragment_configuration_fields/TargetCollectionDisplayField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
+import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {
 	useDispatch,
 	useSelector,
@@ -23,8 +20,8 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import CollectionService from '../../../../../../app/services/CollectionService';
-import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
+import getFragmentConfigurationValues from '../../../../../../app/utils/getFragmentConfigurationValues';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import isEmptyArray from '../../../../../../app/utils/isEmptyArray';
 import isEmptyObject from '../../../../../../app/utils/isEmptyObject';
@@ -34,18 +31,37 @@ import {CommonStyles} from './CommonStyles';
 import {FieldSet} from './FieldSet';
 
 export function CollectionFilterGeneralPanel({item}) {
+	const dispatch = useDispatch();
+
+	const fragmentEntryLink = useSelectorCallback(
+		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
+		[item.config.fragmentEntryLinkId]
+	);
+
+	const languageId = useSelector(selectLanguageId);
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
 	const collections = useSelectorCallback(
 		selectConfiguredCollectionDisplays,
 		[],
 		deepEqual
 	);
 
+	const [collectionFilters, setCollectionFilters] = useState(null);
 	const [filterableCollections, setFilterableCollections] = useState(null);
 	const [loading, setLoading] = useState(false);
 
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
+	const configurationValues =
+		getFragmentConfigurationValues(fragmentEntryLink);
+
+	const targetCollections = (
+		configurationValues.targetCollections || []
+	).filter((targetCollection) => filterableCollections?.[targetCollection]);
+
+	const selectedFilter = collectionFilters?.[configurationValues.filterKey];
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
@@ -84,71 +100,6 @@ export function CollectionFilterGeneralPanel({item}) {
 			.finally(() => setLoading(false));
 	}, [collections]);
 
-	if (loading) {
-		return <ClayLoadingIndicator className="my-0" size="sm" />;
-	}
-
-	const hasCollection = isEmptyObject(filterableCollections);
-
-	return (
-		<>
-			<div
-				className={classNames('mb-3', {
-					'panel-group-sm': !hasCollection,
-				})}
-			>
-				{hasCollection ? (
-					<p
-						aria-live="polite"
-						className="alert alert-info mt-2 text-center"
-					>
-						{Liferay.Language.get(
-							'display-a-collection-on-the-page-that-support-at-least-one-type-of-filter'
-						)}
-					</p>
-				) : (
-					<CollectionFilterGeneralPanelContent
-						filterableCollections={filterableCollections}
-						item={item}
-					/>
-				)}
-			</div>
-
-			<CommonStyles
-				commonStylesValues={itemConfig.styles}
-				item={item}
-				role={COMMON_STYLES_ROLES.general}
-			/>
-		</>
-	);
-}
-
-export function CollectionFilterGeneralPanelContent({
-	filterableCollections,
-	item,
-}) {
-	const dispatch = useDispatch();
-
-	const fragmentEntryLink = useSelectorCallback(
-		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
-		[item.config.fragmentEntryLinkId]
-	);
-
-	const languageId = useSelector(selectLanguageId);
-
-	const configurationValues =
-		fragmentEntryLink.editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR] ||
-		{};
-
-	const [collectionFilters, setCollectionFilters] = useState(null);
-
-	const selectedFilter = collectionFilters?.[configurationValues.filterKey];
-
-	const targetCollections =
-		configurationValues.targetCollections?.filter(
-			(targetCollection) => filterableCollections[targetCollection]
-		) ?? [];
-
 	useEffect(() => {
 		if (!collectionFilters) {
 			CollectionService.getCollectionFilters().then(
@@ -162,6 +113,19 @@ export function CollectionFilterGeneralPanelContent({
 	const onValueSelect = useCallback(
 		(name, value) => {
 			updateConfigurationValue({
+				dispatch,
+				fragmentEntryLink,
+				languageId,
+				name,
+				value,
+			});
+		},
+		[dispatch, fragmentEntryLink, languageId]
+	);
+
+	const onFilterValueSelect = useCallback(
+		(name, value) => {
+			updateConfigurationValue({
 				configuration: selectedFilter?.configuration,
 				dispatch,
 				fragmentEntryLink,
@@ -173,98 +137,98 @@ export function CollectionFilterGeneralPanelContent({
 		[dispatch, selectedFilter, fragmentEntryLink, languageId]
 	);
 
+	if (loading || filterableCollections === null) {
+		return <ClayLoadingIndicator className="my-0" size="sm" />;
+	}
+
 	return (
 		<>
-			<ClayPanel
-				collapsable
-				defaultExpanded
-				displayTitle={Liferay.Language.get('collection-filter-options')}
-				displayType="unstyled"
-				showCollapseIcon
-			>
-				<ClayPanel.Body>
-					<TargetCollectionsField
-						enableCompatibleCollections
-						filterableCollections={filterableCollections}
-						onValueSelect={(name, value) => {
-							if (!isEmptyArray(value)) {
-								onValueSelect(name, value);
-							}
-							else {
-								const nextConfigurationValues = {
-									filterKey: '',
-									[name]: value,
-								};
+			<div className="mb-3 panel-group-sm">
+				<ClayPanel
+					collapsable
+					defaultExpanded
+					displayTitle={Liferay.Language.get(
+						'collection-filter-options'
+					)}
+					displayType="unstyled"
+					showCollapseIcon
+				>
+					<ClayPanel.Body>
+						<TargetCollectionDisplayField
+							field={{
+								label: Liferay.Language.get(
+									'target-collection'
+								),
+								name: 'targetCollections',
+								typeOptions: {
+									enableCompatibleCollections: true,
+								},
+							}}
+							onValueSelect={onValueSelect}
+							value={configurationValues.targetCollections}
+						/>
 
-								dispatch(
-									updateFragmentConfiguration({
-										configurationValues:
-											nextConfigurationValues,
-										fragmentEntryLink,
-										languageId,
-									})
-								);
-							}
-						}}
-						value={targetCollections}
-					/>
-
-					{!isEmptyArray(targetCollections) &&
-						!isEmptyObject(collectionFilters) && (
-							<SelectField
-								field={{
-									label: Liferay.Language.get('filter'),
-									name: 'filterKey',
-									typeOptions: {
-										validValues: [
-											{
-												label: Liferay.Language.get(
-													'none'
-												),
-												value: '',
-											},
-											...filterSupportedFilters({
-												collectionFilters:
-													Object.values(
-														collectionFilters
+						{!isEmptyArray(targetCollections) &&
+							!isEmptyObject(collectionFilters) && (
+								<SelectField
+									field={{
+										label: Liferay.Language.get('filter'),
+										name: 'filterKey',
+										typeOptions: {
+											validValues: [
+												{
+													label: Liferay.Language.get(
+														'none'
 													),
-												filterableCollections,
-												targetCollections,
-											}).map(({key, label}) => ({
-												label,
-												value: key,
-											})),
-										],
-									},
-								}}
-								onValueSelect={onValueSelect}
-								value={configurationValues.filterKey}
-							/>
-						)}
-				</ClayPanel.Body>
-			</ClayPanel>
+													value: '',
+												},
+												...filterSupportedFilters({
+													collectionFilters:
+														Object.values(
+															collectionFilters
+														),
+													filterableCollections,
+													targetCollections,
+												}).map(({key, label}) => ({
+													label,
+													value: key,
+												})),
+											],
+										},
+									}}
+									onValueSelect={onFilterValueSelect}
+									value={configurationValues.filterKey}
+								/>
+							)}
+					</ClayPanel.Body>
+				</ClayPanel>
 
-			{!isEmptyArray(targetCollections) &&
-				selectedFilter?.configuration &&
-				selectedFilter.configuration.fieldSets
-					?.filter((fieldSet) => fieldSet.fields.length)
-					.map((fieldSet, index) => (
-						<div
-							className="mt-3"
-							key={`${fieldSet.label || ''}-${index}`}
-						>
-							<FieldSet
-								description={fieldSet.description}
-								fields={fieldSet.fields}
-								label={fieldSet.label}
-								languageId={languageId}
-								onValueSelect={(name, value) =>
-									onValueSelect(name, value)
-								}
-								values={configurationValues}
-							/>
-						</div>
-					))}
+				{!isEmptyArray(targetCollections) &&
+					selectedFilter?.configuration &&
+					selectedFilter.configuration.fieldSets
+						?.filter((fieldSet) => fieldSet.fields.length)
+						.map((fieldSet, index) => (
+							<div
+								className="mt-3"
+								key={`${fieldSet.label || ''}-${index}`}
+							>
+								<FieldSet
+									description={fieldSet.description}
+									fields={fieldSet.fields}
+									label={fieldSet.label}
+									languageId={languageId}
+									onValueSelect={onFilterValueSelect}
+									values={configurationValues}
+								/>
+							</div>
+						))}
+			</div>
+
+			<CommonStyles
+				commonStylesValues={itemConfig.styles}
+				item={item}
+				role={COMMON_STYLES_ROLES.general}
+			/>
 		</>
 	);
 }

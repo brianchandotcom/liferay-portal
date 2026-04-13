@@ -1,0 +1,23 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "array",
+					"defaultValue": [
+					],
+					"label": "target-collection",
+					"name": "targetCollections",
+					"type": "targetCollectionDisplay"
+				},
+				{
+					"defaultValue": "false",
+					"label": "include-clear-filters-option",
+					"name": "showClearFilters",
+					"type": "checkbox"
+				}
+			],
+			"label": "applied-filter-options"
+		}
+	]
+}

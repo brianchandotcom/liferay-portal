@@ -82,6 +82,14 @@ public class MBMessageStagedModelDataHandler
 	}
 
 	@Override
+	public MBMessage fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return _mbMessageLocalService.fetchMBMessageByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public MBMessage fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -293,8 +301,8 @@ public class MBMessageStagedModelDataHandler
 			MBMessage importedMessage = null;
 
 			if (portletDataContext.isDataStrategyMirror()) {
-				MBMessage existingMessage = fetchStagedModelByUuidAndGroupId(
-					message.getUuid(), portletDataContext.getScopeGroupId());
+				MBMessage existingMessage = fetchExistingStagedModel(
+					message, portletDataContext.getScopeGroupId());
 
 				if (existingMessage == null) {
 					serviceContext.setUuid(message.getUuid());

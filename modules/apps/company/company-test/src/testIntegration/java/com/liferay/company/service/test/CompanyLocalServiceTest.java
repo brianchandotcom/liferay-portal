@@ -1587,14 +1587,12 @@ public class CompanyLocalServiceTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
-			_companyLocalService.updateCompany(
+			_company = _companyLocalService.updateCompany(
 				_company.getCompanyId(), _company.getVirtualHostname(), mx,
 				_company.getMaxUsers(), _company.isActive());
 
-			_company = _companyLocalService.getCompany(_company.getCompanyId());
-
 			if (valid && mailMxUpdate) {
-				Assert.assertNotEquals(originalMx, _company.getMx());
+				Assert.assertEquals(mx, _company.getMx());
 			}
 			else {
 				Assert.assertEquals(originalMx, _company.getMx());
@@ -1615,22 +1613,21 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private void _testUpdateCompanyNames(boolean valid) throws Exception {
+	private void _testUpdateCompanyNames(boolean expectFailure)
+		throws Exception {
+
 		String companyName = _company.getName();
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
+					_company.getCompanyId())) {
 
 			Group group = null;
 
 			try {
 				String[] names;
 
-				if (valid) {
-					names = new String[] {RandomTestUtil.randomString()};
-				}
-				else {
+				if (expectFailure) {
 					group = GroupTestUtil.addGroup(
 						_company.getCompanyId(),
 						_userLocalService.getGuestUserId(
@@ -1641,8 +1638,11 @@ public class CompanyLocalServiceTest {
 						StringPool.BLANK, group.getDescriptiveName()
 					};
 				}
+				else {
+					names = new String[] {RandomTestUtil.randomString()};
+				}
 
-				_testUpdateCompanyNames(_company, names, !valid);
+				_testUpdateCompanyNames(_company, names, expectFailure);
 			}
 			finally {
 				_company = _companyLocalService.updateCompany(

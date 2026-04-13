@@ -42,16 +42,12 @@
 </c:if>
 
 <c:if test='<%= SessionMessages.contains(request, "fileEntrySaved") %>'>
-
-	<%
-	FileEntry fileEntrySaved = (FileEntry)SessionMessages.get(request, "fileEntrySaved");
-	%>
-
-	<aui:script>
-		Liferay.fire('fileEntrySaved', {
-			groupId: <%= fileEntrySaved.getGroupId() %>,
-			fileEntryId: <%= fileEntrySaved.getFileEntryId() %>,
-			fileName: '<%= HtmlUtil.escapeJS(fileEntrySaved.getFileName()) %>',
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"fileEntry", (FileEntry)SessionMessages.get(request, "fileEntrySaved")
+			).build()
+		%>'
+		module="{SessionMessages} from document-library-web"
+	/>
 </c:if>

@@ -1574,6 +1574,20 @@ app.server.type=@{app.server.type}]]></echo>
 				<format pattern="yyyyMMddkkmmssSSS" property="tstamp" />
 			</tstamp>
 
+			<if>
+				<and>
+					<available file="modules/yarn.lock" />
+					<isset property="nodejs.npm.ci.registry" />
+				</and>
+				<then>
+					<replace
+						file="modules/yarn.lock"
+						token="${nodejs.npm.ci.registry}"
+						value="https://registry.yarnpkg.com"
+					/>
+				</then>
+			</if>
+
 			<exec executable="git" output="${tstamp}.diff">
 				<arg value="diff" />
 				<arg value="--" />

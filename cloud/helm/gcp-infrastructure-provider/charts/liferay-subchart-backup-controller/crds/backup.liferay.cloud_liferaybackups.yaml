@@ -177,6 +177,12 @@ spec:
                                 databaseSnapshotId:
                                     format: int64
                                     type: integer
+                                resolvedDatabaseInstanceId:
+                                    type: string
+                                resolvedDestinationBucket:
+                                    type: string
+                                resolvedSourceBucket:
+                                    type: string
                                 startTime:
                                     format: date-time
                                     type: string

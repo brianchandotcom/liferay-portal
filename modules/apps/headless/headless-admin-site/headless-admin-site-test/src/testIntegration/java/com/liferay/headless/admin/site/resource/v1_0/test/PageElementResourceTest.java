@@ -44,6 +44,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContextualMenuNavigationMenuValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.DirectBackgroundImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.client.dto.v1_0.EmbeddedMessageFormContainerSubmissionResult;
@@ -68,6 +69,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
@@ -100,6 +102,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.headless.admin.site.client.serdes.v1_0.PageElementSerDes;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentConfigurationFieldValueTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentConfigurationTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEditableElementTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentMappedValueTestUtil;
@@ -130,6 +133,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -2636,6 +2640,113 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				new PageElement[0]));
 	}
 
+	private void _testPutSitePageSpecificationPageExperiencePageElementWithCollectionFilterFragmentRendererConfiguration()
+		throws Exception {
+
+		JSONObject configurationJSONObject = JSONUtil.put(
+			"fieldSets",
+			JSONUtil.put(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"dataType", "array"
+						).put(
+							"defaultValue", JSONFactoryUtil.createJSONArray()
+						).put(
+							"name", "targetCollections"
+						).put(
+							"type", "targetCollectionDisplay"
+						),
+						JSONUtil.put(
+							"defaultValue", ""
+						).put(
+							"name", "filterKey"
+						).put(
+							"type", "text"
+						)))));
+
+		String collectionFilterRendererKey =
+			"com.liferay.fragment.renderer.collection.filter.internal." +
+				"CollectionFilterFragmentRenderer";
+
+		for (Map<String, Object> configurationValuesMap :
+				new Map[] {
+					HashMapBuilder.<String, Object>put(
+						"filterKey", RandomTestUtil.randomString()
+					).put(
+						"targetCollections",
+						new String[] {
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString()
+						}
+					).build(),
+					HashMapBuilder.<String, Object>put(
+						"filterKey", RandomTestUtil.randomString()
+					).put(
+						"targetCollections",
+						new String[] {RandomTestUtil.randomString()}
+					).build()
+				}) {
+
+			_testPutSitePageSpecificationPageExperiencePageElement(
+				_getFragmentInstancePageElement(
+					new BasicFragmentInstancePageElementDefinition() {
+						{
+							setFragmentInstance(
+								new FragmentInstance() {
+									{
+										setConfiguration(
+											() -> StringPool.BLANK);
+										setCss(() -> StringPool.BLANK);
+										setCssClasses(
+											() -> new String[] {
+												RandomTestUtil.randomString()
+											});
+										setDatePropagated(
+											RandomTestUtil::nextDate);
+										setFragmentConfigurationFieldValues(
+											() ->
+												FragmentConfigurationFieldValueTestUtil.
+													getFragmentConfigurationFieldValuesMap(
+														configurationJSONObject,
+														configurationValuesMap,
+														testGroup.
+															getGroupId()));
+										setFragmentEditableElements(
+											() ->
+												new FragmentEditableElement[0]);
+										setFragmentInstanceExternalReferenceCode(
+											RandomTestUtil::randomString);
+										setFragmentReference(
+											() ->
+												new DefaultFragmentReference() {
+													{
+														setDefaultFragmentKey(
+															() ->
+																collectionFilterRendererKey);
+														setFragmentReferenceType(
+															() ->
+																FragmentReference.FragmentReferenceType.DEFAULT_FRAGMENT_REFERENCE);
+													}
+												});
+										setHtml(() -> StringPool.BLANK);
+										setIndexed(
+											RandomTestUtil::randomBoolean);
+										setJs(() -> StringPool.BLANK);
+										setName(RandomTestUtil::randomString);
+										setNamespace(
+											RandomTestUtil::randomString);
+										setUuid(RandomTestUtil::randomString);
+									}
+								});
+							setType(() -> Type.BASIC_FRAGMENT);
+						}
+					},
+					RandomTestUtil.randomString()));
+		}
+	}
+
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithContainerPageElement()
 		throws Exception {
 
@@ -3047,6 +3158,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						}),
 				externalReferenceCode));
 
+		_testPutSitePageSpecificationPageExperiencePageElementWithCollectionFilterFragmentRendererConfiguration();
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration();
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements();
 
@@ -3150,8 +3262,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					"value", selectValue3
 				)));
 
-		String targetCollectionDisplayFieldName =
-			RandomTestUtil.randomString();
+		String targetCollectionDisplayFieldName = RandomTestUtil.randomString();
 		String textFieldName = RandomTestUtil.randomString();
 		String urlFieldName = RandomTestUtil.randomString();
 		String videoFieldName = RandomTestUtil.randomString();
@@ -3279,8 +3390,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			).put(
 				targetCollectionDisplayFieldName,
 				new String[] {
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString()
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
 				}
 			).put(
 				textFieldName, RandomTestUtil.randomString()

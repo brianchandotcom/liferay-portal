@@ -39,15 +39,10 @@ spec:
                                                     properties:
                                                         bucket:
                                                             type: string
-                                                        bucketLookup:
-                                                            properties:
-                                                                matchLabels:
-                                                                    additionalProperties:
-                                                                        type: string
-                                                                    type: object
-                                                            type: object
                                                         path:
                                                             type: string
+                                                    required:
+                                                        -   bucket
                                                     type: object
                                                 type:
                                                     enum:
@@ -174,14 +169,16 @@ spec:
                                     x-kubernetes-list-map-keys:
                                         -   type
                                     x-kubernetes-list-type: map
+                                databaseInstanceId:
+                                    type: string
                                 databaseSnapshotId:
                                     format: int64
                                     type: integer
-                                resolvedDatabaseInstanceId:
+                                destinationBucket:
                                     type: string
-                                resolvedDestinationBucket:
+                                documentLibraryDestinationPath:
                                     type: string
-                                resolvedSourceBucket:
+                                sourceBucket:
                                     type: string
                                 startTime:
                                     format: date-time

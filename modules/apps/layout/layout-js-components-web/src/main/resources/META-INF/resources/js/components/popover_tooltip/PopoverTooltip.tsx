@@ -22,7 +22,7 @@ const BUTTON_COMPONENTS: Set<any> = new Set([
 	'button',
 ]);
 
-export function PopoverTooltip({
+export default function PopoverTooltip({
 	alignPosition = 'top',
 	content,
 	header = undefined,

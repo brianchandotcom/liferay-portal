@@ -7,13 +7,13 @@ import {expect, mergeTests} from '@playwright/test';
 import {readFileSync} from 'fs';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {blogsPagesTest} from '../../../tests/blogs-web/main/fixtures/blogsPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import {featureFlagsTest} from "../../../fixtures/featureFlagsTest";
 
 export const test = mergeTests(
 	apiHelpersTest,

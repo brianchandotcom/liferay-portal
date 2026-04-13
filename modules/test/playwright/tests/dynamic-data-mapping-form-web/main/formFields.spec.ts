@@ -6,13 +6,13 @@
 import {FrameLocator, Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLoginViaApi, {performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {deleteItems} from './utils/deleteItems';
-import {featureFlagsTest} from "../../../fixtures/featureFlagsTest";
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -20,7 +20,8 @@ export const test = mergeTests(
 		'LPD-11235': {enabled: true},
 	}),
 	loginTest(),
-	formsPagesTest);
+	formsPagesTest
+);
 
 test.afterEach(async ({formsPage}) => {
 	await formsPage.goTo();

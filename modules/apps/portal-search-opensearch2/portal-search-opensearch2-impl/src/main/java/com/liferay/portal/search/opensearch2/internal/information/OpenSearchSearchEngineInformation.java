@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.ConnectionInformation;
@@ -347,7 +346,8 @@ public class OpenSearchSearchEngineInformation
 
 		JsonObject jsonObject = _getNodesInfoJsonObject(openSearchClient);
 
-		String clusterName = jsonObject.getString("cluster_name", StringPool.BLANK);
+		String clusterName = jsonObject.getString(
+			"cluster_name", StringPool.BLANK);
 
 		connectionInformationBuilder.clusterName(clusterName);
 

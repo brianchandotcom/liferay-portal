@@ -6,6 +6,7 @@
 package com.liferay.segments.internal.events;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -113,12 +114,25 @@ public class SegmentsServicePreAction extends Action {
 				segmentsEntryIds = cachedSegmentsEntryIds;
 			}
 			else {
-				segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
-					groupId, userId,
-					_requestContextMapper.map(httpServletRequest),
-					ArrayUtil.toArray(
-						segmentsExperienceIdsSegmentsEntryIds.toArray(
-							new Long[0])));
+				long[] userSegmentsEntryIds =
+					_segmentsEntryRetriever.getSegmentsEntryIds(
+						groupId, userId,
+						_requestContextMapper.map(httpServletRequest),
+						new long[0]);
+
+				segmentsEntryIds = TransformUtil.transformToLongArray(
+					segmentsExperienceIdsSegmentsEntryIds,
+					segmentsEntryId -> {
+						if ((segmentsEntryId ==
+								SegmentsEntryConstants.ID_DEFAULT) ||
+							ArrayUtil.contains(
+								userSegmentsEntryIds, segmentsEntryId)) {
+
+							return segmentsEntryId;
+						}
+
+						return null;
+					});
 			}
 
 			httpServletRequest.setAttribute(

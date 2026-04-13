@@ -711,7 +711,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		_segmentsEntryIds = segmentsEntryRetriever.getSegmentsEntryIds(
 			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-			requestContextMapper.map(_httpServletRequest), new long[0]);
+			requestContextMapper.map(_httpServletRequest));
 
 		_segmentsEntryIds = _filterSegmentsEntryIds(
 			layoutListRetriever, listObjectReference, _segmentsEntryIds);

@@ -162,7 +162,7 @@ public class ContentSetElementResourceImpl
 
 		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
 			assetListEntry.getGroupId(), contextUser.getUserId(),
-			_requestContextMapper.map(contextHttpServletRequest), new long[0]);
+			_requestContextMapper.map(contextHttpServletRequest));
 
 		InfoPage<AssetEntry> infoPage =
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(

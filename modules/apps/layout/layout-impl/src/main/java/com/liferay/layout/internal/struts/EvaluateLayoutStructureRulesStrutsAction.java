@@ -85,8 +85,7 @@ public class EvaluateLayoutStructureRulesStrutsAction implements StrutsAction {
 				layoutStructureRules, themeDisplay.getPermissionChecker(),
 				_segmentsEntryRetriever.getSegmentsEntryIds(
 					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					_requestContextMapper.map(httpServletRequest),
-					new long[0]));
+					_requestContextMapper.map(httpServletRequest)));
 
 		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
 

@@ -1087,7 +1087,7 @@ public class UserSXPParameterContributorTest {
 		).when(
 			segmentsEntryRetriever
 		).getSegmentsEntryIds(
-			Mockito.anyLong(), Mockito.anyLong(), Mockito.any(), Mockito.any()
+			Mockito.anyLong(), Mockito.anyLong(), Mockito.any()
 		);
 
 		return segmentsEntryRetriever;

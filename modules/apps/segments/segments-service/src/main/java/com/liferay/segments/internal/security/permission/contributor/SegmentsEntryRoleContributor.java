@@ -111,7 +111,7 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 
 		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
 			roleCollection.getGroupId(), user.getUserId(),
-			_requestContextMapper.map(httpServletRequest), new long[0]);
+			_requestContextMapper.map(httpServletRequest));
 
 		if ((segmentsEntryIds.length > 0) && _log.isDebugEnabled()) {
 			_log.debug(

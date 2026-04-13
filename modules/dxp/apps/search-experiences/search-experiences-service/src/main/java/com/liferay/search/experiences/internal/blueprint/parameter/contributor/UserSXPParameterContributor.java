@@ -452,8 +452,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 							_language.getLanguageId(searchContext.getLocale()));
 						put(Context.SIGNED_IN, !user.isGuestUser());
 					}
-				},
-				new long[0]);
+				});
 
 			segmentsEntryIds = ArrayUtil.filter(
 				segmentsEntryIds, segmentsEntryId -> segmentsEntryId > 0);

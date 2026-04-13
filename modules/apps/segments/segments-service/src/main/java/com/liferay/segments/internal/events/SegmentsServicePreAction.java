@@ -117,8 +117,7 @@ public class SegmentsServicePreAction extends Action {
 				long[] userSegmentsEntryIds =
 					_segmentsEntryRetriever.getSegmentsEntryIds(
 						groupId, userId,
-						_requestContextMapper.map(httpServletRequest),
-						new long[0]);
+						_requestContextMapper.map(httpServletRequest));
 
 				segmentsEntryIds = TransformUtil.transformToLongArray(
 					segmentsExperienceIdsSegmentsEntryIds,

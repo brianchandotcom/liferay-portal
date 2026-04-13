@@ -186,7 +186,7 @@ public class SegmentsEntryProviderRegistryTest {
 
 		long[] actualSegmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
-				groupId, className, classPK, context, new long[0]);
+				groupId, className, classPK, context);
 
 		Arrays.sort(actualSegmentsEntryIds);
 

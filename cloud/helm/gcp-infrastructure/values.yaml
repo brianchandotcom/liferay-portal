@@ -1,8 +1,10 @@
 backup:
+    cleanupSchedule: "0 2 * * *"
     enabled: false
     region: ""
     retentionDays: 30
     schedule: 0 5 * * *
+    serviceAccountName: backup-controller
     storageClass: NEARLINE
 cmk:
     enabled: false
@@ -22,6 +24,10 @@ gateway:
     clientTrafficPolicySpec: {}
     name: ""
     spec: {}
+images:
+    helmKubectl:
+        repository: dtzar/helm-kubectl
+        tag: 4.1.1
 license:
     externalSecretName: ""
     targetSecretName: liferay-license

@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+    name: backup-cleanup-cron-workflow
+    namespace: {{ .Release.Namespace }}
+    labels:
+        component: backup-cleanup
+        environmentId: {{ .Values.environmentId }}
+        projectId: {{ .Values.projectId }}
+spec:
+    schedule: {{ .Values.backup.cleanupSchedule | quote }}
+    concurrencyPolicy: Forbid
+    workflowSpec:
+        entrypoint: cleanup-backups
+        serviceAccountName: {{ .Values.backup.serviceAccountName }}
+        startingDeadlineSeconds: 300
+        templates:
+            -   container:
+                    args:
+                        -   |
+                                set -euo pipefail
+
+                                RETENTION_DAYS={{ .Values.backup.retentionDays | default 30 }}
+                                RETENTION_SECONDS=$((RETENTION_DAYS * 24 * 60 * 60))
+
+                                echo "Cleanup backups older than ${RETENTION_DAYS} days"
+
+                                kubectl get liferaybackups --namespace {{ .Release.Namespace }} --output json | \
+                                jq --argjson retention "${RETENTION_SECONDS}" --raw-output '
+                                    .items[]
+                                    | select(.status.completionTime != null)
+                                    | select((now - (.status.completionTime | fromdateiso8601)) > $retention)
+                                    | .metadata.name
+                                ' | \
+                                while read -r name
+                                do
+                                    echo "Deleting backup ${name}"
+
+                                    kubectl delete liferaybackup "${name}" --namespace {{ .Release.Namespace }}
+                                done
+
+                                echo "Cleanup done"
+                    command: [sh, -c]
+                    image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
+                name: cleanup-backups

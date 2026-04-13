@@ -166,10 +166,10 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 
 									<span>
 										<clay:icon
-											aria-label='<%= LanguageUtil.get(request, "preview-help") %>'
+											aria-label='<%= LanguageUtil.get(request, "the-image-ratio-might-change-depending-on-where-the-URL-is-posted") %>'
 											cssClass="lfr-portal-tooltip ml-1"
 											symbol="question-circle-full"
-											title='<%= LanguageUtil.get(request, "preview-help") %>'
+											title='<%= LanguageUtil.get(request, "the-image-ratio-might-change-depending-on-where-the-URL-is-posted") %>'
 										/>
 									</span>
 								</div>

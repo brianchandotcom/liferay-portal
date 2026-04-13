@@ -7,6 +7,10 @@ export type RequestResult<T> =
 	| {data: null; error: string; status?: string | null}
 	| {data: T; error: null; status?: string | null};
 
+const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
+	'an-unexpected-error-occurred'
+);
+
 async function postFormDataWithProgress<T>(
 	url: string,
 	formData: FormData,
@@ -49,7 +53,7 @@ async function postFormDataWithProgress<T>(
 			catch (error) {
 				return resolve({
 					data: null,
-					error: Liferay.Language.get('an-unexpected-error-occurred'),
+					error: UNEXPECTED_ERROR_MESSAGE,
 				});
 			}
 
@@ -60,7 +64,7 @@ async function postFormDataWithProgress<T>(
 				const errorMessage =
 					responseData?.message ||
 					responseData?.error ||
-					Liferay.Language.get('an-unexpected-error-occurred');
+					UNEXPECTED_ERROR_MESSAGE;
 
 				resolve({
 					data: null,
@@ -73,7 +77,7 @@ async function postFormDataWithProgress<T>(
 		xhr.onerror = () =>
 			resolve({
 				data: null,
-				error: Liferay.Language.get('an-unexpected-error-occurred'),
+				error: UNEXPECTED_ERROR_MESSAGE,
 			});
 
 		xhr.send(formData);

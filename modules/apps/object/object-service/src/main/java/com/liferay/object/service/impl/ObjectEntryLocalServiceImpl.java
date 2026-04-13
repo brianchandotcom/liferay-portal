@@ -6566,13 +6566,6 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		if (!objectDefinition.isEnableCategorization()) {
-			assetCategoryIds = null;
-			assetTagNames = null;
-
-			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(true);
-		}
-
 		String mimeType = ContentTypes.TEXT_PLAIN;
 		String title = StringPool.BLANK;
 
@@ -6606,6 +6599,13 @@ public class ObjectEntryLocalServiceImpl
 				serviceContext.setAttribute(
 					"assetTagScopeGroupId", group.getGroupId());
 			}
+		}
+
+		if (!objectDefinition.isEnableCategorization()) {
+			assetCategoryIds = null;
+			assetTagNames = null;
+
+			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(true);
 		}
 
 		try {

@@ -3150,6 +3150,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					"value", selectValue3
 				)));
 
+		String targetCollectionDisplayFieldName =
+			RandomTestUtil.randomString();
 		String textFieldName = RandomTestUtil.randomString();
 		String urlFieldName = RandomTestUtil.randomString();
 		String videoFieldName = RandomTestUtil.randomString();
@@ -3208,6 +3210,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						"type", "select"
 					).put(
 						"typeOptions", typeOptionsJSONObject
+					).build()
+				).put(
+					targetCollectionDisplayFieldName,
+					HashMapBuilder.<String, Object>put(
+						"type", "targetCollectionDisplay"
 					).build()
 				).put(
 					textFieldName,
@@ -3270,6 +3277,12 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			).put(
 				selectFieldName, selectValue1
 			).put(
+				targetCollectionDisplayFieldName,
+				new String[] {
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()
+				}
+			).put(
 				textFieldName, RandomTestUtil.randomString()
 			).put(
 				urlFieldName,
@@ -3319,6 +3332,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				).build()
 			).put(
 				selectFieldName, selectValue2
+			).put(
+				targetCollectionDisplayFieldName,
+				new String[] {RandomTestUtil.randomString()}
 			).put(
 				textFieldName, RandomTestUtil.randomString()
 			).put(

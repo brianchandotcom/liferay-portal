@@ -856,7 +856,6 @@ public class FragmentsImporterTest {
 		_addZipWriterEntry(
 			zipWriter, _PATH_DEPENDENCIES + "fragments-with-folder-resources",
 			FragmentExportImportConstants.FILE_NAME_COLLECTION);
-
 		_addZipWriterEntry(
 			zipWriter, _PATH_FRAGMENTS_WITH_FOLDER_RESOURCES + "resources",
 			"image1.png");

@@ -28,6 +28,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -2666,10 +2667,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							"type", "text"
 						)))));
 
-		String collectionFilterRendererKey =
-			"com.liferay.fragment.renderer.collection.filter.internal." +
-				"CollectionFilterFragmentRenderer";
-
 		for (Map<String, Object> configurationValuesMap :
 				new Map[] {
 					HashMapBuilder.<String, Object>put(
@@ -2724,7 +2721,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 													{
 														setDefaultFragmentKey(
 															() ->
-																collectionFilterRendererKey);
+																FragmentRendererConstants.COLLECTION_FILTER_FRAGMENT_RENDERER_KEY);
 														setFragmentReferenceType(
 															() ->
 																FragmentReference.FragmentReferenceType.DEFAULT_FRAGMENT_REFERENCE);

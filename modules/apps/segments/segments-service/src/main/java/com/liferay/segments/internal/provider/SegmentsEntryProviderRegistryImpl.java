@@ -113,8 +113,7 @@ public class SegmentsEntryProviderRegistryImpl
 
 	@Override
 	public long[] getSegmentsEntryIds(
-			long groupId, String className, long classPK, Context context,
-			long[] segmentEntryIds)
+			long groupId, String className, long classPK, Context context)
 		throws PortalException {
 
 		String cacheKey = _generateCacheKey(classPK, context);
@@ -134,7 +133,7 @@ public class SegmentsEntryProviderRegistryImpl
 			finalSegmentsEntryIds = ArrayUtil.append(
 				finalSegmentsEntryIds,
 				segmentsEntryProvider.getSegmentsEntryIds(
-					groupId, className, classPK, context, segmentEntryIds,
+					groupId, className, classPK, context, new long[0],
 					finalSegmentsEntryIds));
 		}
 

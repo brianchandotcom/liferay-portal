@@ -15,6 +15,7 @@ export {default as FileNameInput} from './document_library/FileNameInput.es';
 export {default as InfoPanel} from './document_library/InfoPanel.es';
 export {default as LanguageSelector} from './document_library/LanguageSelector';
 export {default as LocaleChangedHandler} from './document_library/LocaleChangedHandler.es';
+export {default as SessionMessages} from './document_library/SessionMessages';
 export {default as WebdavURLCopyButton} from './document_library/WebdavURLCopyButton';
 export {default as ConfigureAIModal} from './document_library/ai/ConfigureAIModal';
 export {default as BulkStatus} from './document_library/bulk/BulkStatus.es';

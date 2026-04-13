@@ -92,7 +92,7 @@ components:
                     type: string
         BasicFragmentInstancePageElementDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageElementDefinition"                               
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         fragmentInstance:
                             $ref: "#/components/schemas/FragmentInstance"
@@ -102,7 +102,7 @@ components:
             # @review
             description:
                 The page element definition of a basic fragment instance.
-            type: object  
+            type: object
         BasicLayout:
             properties:
                 align:
@@ -1074,7 +1074,7 @@ components:
                     $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
                     description:
                         The definition of the result when a form container submission is successful.
-            type: object            
+            type: object
         FormContainerContextReference:
             # @review
             allOf:
@@ -1147,13 +1147,13 @@ components:
             type: object
         FormFragmentInstancePageElementDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageElementDefinition"                                  
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         fieldKey:
                             # @review
                             description:
                                 The mapped field key.
-                            type: string                     
+                            type: string
                         fragmentInstance:
                             $ref: "#/components/schemas/FragmentInstance"
                             # @review
@@ -1165,38 +1165,38 @@ components:
                             # @review
                             description:
                                 The localized help texts of the form fragment.
-                            type: object                                
+                            type: object
                         label_i18n:
                             additionalProperties:
                                 type: string
                             # @review
                             description:
                                 The localized labels of the form fragment.
-                            type: object                   
+                            type: object
                         markAsRequired:
                             # @review
                             description:
                                 Whether to mark as required.
-                            type: boolean              
+                            type: boolean
                         readOnlyField:
                             # @review
                             description:
                                 Whether to render as read-only field.
-                            type: boolean                        
+                            type: boolean
                         showHelpText:
                             # @review
                             description:
                                 Whether to show the help text.
-                            type: boolean                        
+                            type: boolean
                         showLabel:
                             # @review
                             description:
                                 Whether to show the label.
-                            type: boolean   
+                            type: boolean
             # @review
             description:
                 The page element definition of a form fragment instance.
-            type: object          
+            type: object
         FormStepContainerPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
@@ -3650,6 +3650,58 @@ components:
                         parentSitePageExternalReferenceCode:
                             type: string
                     type: object
+        SiteTemplate:
+            # @review
+            description:
+                Represents a site template.
+            properties:
+                active:
+                    description:
+                        Allow site administrators to create sites from this site template.
+                    type: boolean
+                defaultLanguageId:
+                    example: en_US
+                    type: string
+                description:
+                    description:
+                        The site template's description.
+                    type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized descriptions of the site template.
+                    type: object
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        The site template's name.
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized names of the site template.
+                    type: object
+                pagesUpdateable:
+                    description:
+                        Allow site administrators to add, remove, or configure applications and change page properties.
+                    type: boolean
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                siteExternalReferenceCode:
+                    description:
+                        The external reference code of the site associated with the site template.
+                    readOnly: true
+                    type: string
+            required:
+                -   name
+            type: object
         SitemapSettings:
             # @review
             description:

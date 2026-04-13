@@ -466,6 +466,8 @@ export default {
 	'monthly-increase': 'Monthly Increase',
 	'more-actions': 'More Actions',
 	'more-info': 'More Info',
+	'most-purchased-apps': 'Most Purchased Apps',
+	'most-purchased-products': 'Most Purchased Products',
 	'move-down': 'Move Down',
 	'move-to-bottom': 'Move to Bottom',
 	'move-to-top': 'Move to Top',
@@ -503,6 +505,7 @@ export default {
 	'notify-me-about-products-services-and-events':
 		'Notify me about products, services and events.',
 	'number-of-cpus': 'Number of CPUs',
+	'number-of-purchases': 'Number of purchases',
 	'object-action': 'Object Action',
 	'objective': 'Objective',
 	'of-target': 'of target',

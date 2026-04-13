@@ -347,8 +347,7 @@ public class OpenSearchSearchEngineInformation
 
 		JsonObject jsonObject = _getNodesInfoJsonObject(openSearchClient);
 
-		String clusterName = GetterUtil.getString(
-			jsonObject.getString("cluster_name", null));
+		String clusterName = jsonObject.getString("cluster_name", StringPool.BLANK);
 
 		connectionInformationBuilder.clusterName(clusterName);
 
@@ -365,11 +364,9 @@ public class OpenSearchSearchEngineInformation
 					nodeInformationBuilderFactory.getNodeInformationBuilder();
 
 				nodeInformationBuilder.name(
-					GetterUtil.getString(
-						nodeJsonObject.getString("name", null)));
+					nodeJsonObject.getString("name", StringPool.BLANK));
 				nodeInformationBuilder.version(
-					GetterUtil.getString(
-						nodeJsonObject.getString("version", null)));
+					nodeJsonObject.getString("version", StringPool.BLANK));
 
 				nodeInformationList.add(nodeInformationBuilder.build());
 			}

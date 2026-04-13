@@ -106,6 +106,20 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-sm-12 form-group">
+		<button class="btn btn-secondary <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />forcedReconsentButton" type="button">
+			<liferay-ui:message key="forced-reconsent" />
+		</button>
+
+		<div aria-hidden="true" class="c-mb-1 form-feedback-group">
+			<div class="form-text text-weight-normal">
+				<liferay-ui:message key="forced-reconsent-help" />
+			</div>
+		</div>
+	</div>
+</div>
+
 <aui:input name="modifiedDate" type="hidden" />
 
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-75032") %>'>
@@ -292,6 +306,32 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			toggleRenewalPeriodMaxAttribute(true, event.target.value);
 		});
 
+		var forcedReconsentButton = document.getElementById(
+			'<portlet:namespace />forcedReconsentButton'
+		);
+
+		var modifiedDate = document.getElementById(
+			'<portlet:namespace />modifiedDate'
+		);
+
+		if (forcedReconsentButton && modifiedDate) {
+			forcedReconsentButton.addEventListener('click', function (event) {
+				event.preventDefault();
+
+				Liferay.Util.openConfirmModal({
+					message:
+						'<liferay-ui:message key="you-are-about-to-force-reconsent" />',
+					onConfirm: function (isConfirmed) {
+						if (isConfirmed) {
+							modifiedDate.value = new Date().getTime();
+
+							form.submit();
+						}
+					},
+				});
+			});
+		}
+
 		form.addEventListener('submit', (event) => {
 			var consentRenewalPeriod = document.getElementById(
 				'<portlet:namespace />consentRenewalPeriod'
@@ -335,10 +375,6 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
 					onConfirm: (isConfirmed) => {
 						if (isConfirmed) {
-							var modifiedDate = document.getElementById(
-								'<portlet:namespace />modifiedDate'
-							);
-
 							modifiedDate.value = new Date().getTime();
 
 							form.submit();

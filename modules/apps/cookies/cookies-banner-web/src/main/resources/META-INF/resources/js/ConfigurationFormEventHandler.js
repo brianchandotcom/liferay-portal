@@ -47,6 +47,10 @@ export default function ({namespace}) {
 				`input[type='radio'][name='${namespace}floatingIcon']`
 			);
 
+			const forcedReconsentButton = document.getElementById(
+				`${namespace}forcedReconsentButton`
+			);
+
 			const logoSelectorContainer = document.getElementById(
 				`${namespace}logoSelectorContainer`
 			);
@@ -71,6 +75,8 @@ export default function ({namespace}) {
 					dissentRenewalPeriodTimeUnit.removeAttribute('disabled');
 					explicitConsentMode.removeAttribute('disabled');
 					floatingIconEnabled.removeAttribute('disabled');
+					forcedReconsentButton.removeAttribute('disabled');
+					forcedReconsentButton.classList.remove('disabled');
 
 					floatingIcons.forEach((iconInput) => {
 						iconInput.removeAttribute('disabled');
@@ -111,6 +117,8 @@ export default function ({namespace}) {
 					dissentRenewalPeriodTimeUnit.setAttribute('disabled', '');
 					explicitConsentMode.setAttribute('disabled', '');
 					floatingIconEnabled.setAttribute('disabled', '');
+					forcedReconsentButton.classList.add('disabled');
+					forcedReconsentButton.setAttribute('disabled', '');
 
 					floatingIcons.forEach((iconInput) => {
 						iconInput.setAttribute('disabled', '');

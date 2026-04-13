@@ -91,7 +91,15 @@ public class MarketplaceService extends BaseService {
 	public void completeOrder(long orderId, int paymentStatus)
 		throws Exception {
 
-		updateOrder(null, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
+		completeOrder(null, orderId, paymentStatus);
+	}
+
+	public void completeOrder(
+			Map<String, ?> customFields, long orderId, int paymentStatus)
+		throws Exception {
+
+		updateOrder(
+			customFields, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
 
 		updateOrder(
 			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
@@ -480,6 +488,12 @@ public class MarketplaceService extends BaseService {
 		SkuResource skuResource = getSkuResource();
 
 		return skuResource.getSku(id);
+	}
+
+	public Sku getSku(String externalReferenceCode) throws Exception {
+		SkuResource skuResource = getSkuResource();
+
+		return skuResource.getSkuByExternalReferenceCode(externalReferenceCode);
 	}
 
 	public SkuResource getSkuResource() throws Exception {

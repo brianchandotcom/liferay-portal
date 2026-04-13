@@ -32,8 +32,6 @@ import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -88,7 +86,8 @@ public class InformationTemplatesManagementToolbarDisplayContextTest {
 		_httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _setUpThemeDisplay());
 
-		InfoItemClassDetails infoItemClassDetails = _mockInfoItemClassDetails();
+		InfoItemClassDetails infoItemClassDetails = _mockInfoItemClassDetails(
+			_CLASS_NAME, _LABEL);
 
 		Mockito.when(
 			_infoItemServiceRegistry.getInfoItemClassDetails(
@@ -124,28 +123,54 @@ public class InformationTemplatesManagementToolbarDisplayContextTest {
 		String label = RandomTestUtil.randomString();
 
 		_testGetItemTypesJSONArray(label, label);
-
-	@Test
-	public void testSortedGetItemTypesJSONArray() {
-		_testGetItemTypesJSONArray(
-			Arrays.asList("EarlierInTheAlphabet", "LaterInTheAlphabet"),
-			Arrays.asList("LaterInTheAlphabet", "EarlierInTheAlphabet"));
 	}
 
-	private InfoItemClassDetails _mockInfoItemClassDetails() {
+	@Test
+	@TestInfo("LPD-63947")
+	public void testSortedGetItemTypesJSONArray() {
+		InfoItemClassDetails infoItemClassDetails1 = _mockInfoItemClassDetails(
+			RandomTestUtil.randomString(), "z");
+		InfoItemClassDetails infoItemClassDetails2 = _mockInfoItemClassDetails(
+			RandomTestUtil.randomString(), "a");
+
+		Mockito.when(
+			_infoItemServiceRegistry.getInfoItemClassDetails(
+				0, TemplateInfoItemCapability.KEY, null)
+		).thenReturn(
+			List.of(infoItemClassDetails1, infoItemClassDetails2)
+		);
+
+		JSONArray jsonArray = ReflectionTestUtil.invoke(
+			_informationTemplatesManagementToolbarDisplayContext,
+			"_getItemTypesJSONArray", new Class<?>[0]);
+
+		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
+
+		JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals("a", jsonObject1.getString("label"));
+
+		JSONObject jsonObject2 = jsonArray.getJSONObject(1);
+
+		Assert.assertEquals("z", jsonObject2.getString("label"));
+	}
+
+	private InfoItemClassDetails _mockInfoItemClassDetails(
+		String className, String label) {
+
 		InfoItemClassDetails infoItemClassDetails = Mockito.mock(
 			InfoItemClassDetails.class);
 
 		Mockito.when(
 			infoItemClassDetails.getClassName()
 		).thenReturn(
-			_CLASS_NAME
+			className
 		);
 
 		Mockito.when(
 			infoItemClassDetails.getLabel(LocaleUtil.CANADA)
 		).thenReturn(
-			_LABEL
+			label
 		);
 
 		return infoItemClassDetails;
@@ -178,65 +203,6 @@ public class InformationTemplatesManagementToolbarDisplayContextTest {
 		themeDisplay.setLocale(LocaleUtil.CANADA);
 
 		return themeDisplay;
-	}
-
-	private void _testGetItemTypesJSONArray(
-		List<String> expectedLabels, List<String> labels) {
-
-		List<InfoItemFormVariation> informationItemFormVariations =
-			new ArrayList<>();
-		List<String> keys = new ArrayList<>();
-
-		for (String label : labels) {
-			String key = RandomTestUtil.randomString();
-
-			keys.add(key);
-
-			informationItemFormVariations.add(
-				_mockInfoItemFormVariation(key, label));
-		}
-
-		Mockito.when(
-			_infoItemFormVariationsProvider.getInfoItemFormVariations(0)
-		).thenReturn(
-			informationItemFormVariations
-		);
-
-		JSONArray jsonArray = ReflectionTestUtil.invoke(
-			_informationTemplatesManagementToolbarDisplayContext,
-			"_getItemTypesJSONArray", new Class<?>[0]);
-
-		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
-
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-		Assert.assertEquals(_CLASS_NAME, jsonObject.getString("value"));
-		Assert.assertEquals(_LABEL, jsonObject.getString("label"));
-
-		Assert.assertTrue(jsonObject.has("subtypes"));
-
-		JSONArray subtypesJSONArray = jsonObject.getJSONArray("subtypes");
-
-		Assert.assertEquals(
-			subtypesJSONArray.toString(), labels.size(),
-			subtypesJSONArray.length());
-
-		for (int i = 0; i < labels.size(); i++) {
-			JSONObject subtypesJSONObject = subtypesJSONArray.getJSONObject(i);
-
-			String expectedLabel = expectedLabels.get(i);
-
-			int index = labels.indexOf(expectedLabel);
-
-			if ((index < 0) && StringPool.BLANK.equals(expectedLabel)) {
-				index = labels.indexOf(null);
-			}
-
-			Assert.assertEquals(
-				keys.get(index), subtypesJSONObject.getString("value"));
-			Assert.assertEquals(
-				expectedLabel, subtypesJSONObject.getString("label"));
-		}
 	}
 
 	private void _testGetItemTypesJSONArray(

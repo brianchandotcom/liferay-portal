@@ -11,6 +11,12 @@ import {EActionType} from './types';
 const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
 
 export async function createEventSource() {
+	const editMode = document.body.classList.contains('has-edit-mode-menu');
+
+	if (editMode) {
+		return;
+	}
+
 	const authorizationToken = await postAuthorizationToken();
 
 	if (!authorizationToken) {

@@ -15,6 +15,9 @@
 }
 
 .form-group-autofit {
+    .form-group {
+       margin-bottom: 5px;
+    }
 	margin-bottom: 0;
 }
 

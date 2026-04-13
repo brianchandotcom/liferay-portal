@@ -68,7 +68,15 @@ function uploadCMSFileToDocumentLibrary(
 					throw new Error(`Failed to upload ${fileName}`);
 				}
 
-				return response.json();
+				return response.json().then((item) => {
+					Liferay.fire('fileEntrySaved', {
+						fileEntryId: item.id,
+						fileName: item.fileName,
+						groupId: Liferay.ThemeDisplay.getScopeGroupId(),
+					});
+
+					return item;
+				});
 			});
 	});
 

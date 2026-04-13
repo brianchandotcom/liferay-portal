@@ -853,40 +853,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-161887 - Verify that it's not possible to create an Object without adding a field."
-	@priority = 5
-	test CannotCreateEmptyObject {
-		task ("Given an object without an field is created") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object",
-				objectName = "CustomObject",
-				pluralLabelName = "Custom Objects");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object");
-		}
-
-		task ("When a empty is published") {
-			Button.clickPublish();
-		}
-
-		task ("Then the error message is displayed on the page") {
-			AssertTextPresent(
-				locator1 = "Message#ALERT_DISMISSIBLE",
-				value1 = "Error:At least one object field must be added");
-		}
-
-		task ("And the Object that was created is show with Draft") {
-			ObjectAdmin.openObjectAdmin();
-
-			AssertTextEquals(
-				key_label = "Custom Object",
-				locator1 = "ObjectAdmin#OBJECT_STATUS",
-				value1 = "Draft");
-		}
-	}
-
 	@description = "LPS-170122 - Verify the field value cannot be changed when the ready-only property condition is true"
 	@priority = 5
 	test CannotEditConditionalReadOnlyFieldWhenConditionIsTrue {

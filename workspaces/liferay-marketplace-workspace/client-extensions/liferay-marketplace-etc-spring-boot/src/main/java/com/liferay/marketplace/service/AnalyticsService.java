@@ -6,10 +6,6 @@
 package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
-import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Base64;
 
@@ -41,13 +37,7 @@ public class AnalyticsService extends BaseService {
 		return "Basic " + encoder.encodeToString(authorization.getBytes());
 	}
 
-	public void provision(JSONObject jsonObject, long orderId)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Provisioning order " + orderId);
-		}
-
+	public String provision(JSONObject jsonObject) throws Exception {
 		String response = WebClient.builder(
 		).baseUrl(
 			_analyticsAuthUrl
@@ -72,8 +62,7 @@ public class AnalyticsService extends BaseService {
 			).with(
 				"name", jsonObject.getString("name")
 			).with(
-				"serverLocation",
-				_getServerLocation(jsonObject.getString("serverLocation"))
+				"serverLocation", jsonObject.getString("serverLocation")
 			).with(
 				"sharedCluster", "false"
 			).with(
@@ -86,42 +75,12 @@ public class AnalyticsService extends BaseService {
 			String.class
 		).block();
 
-		if (response == null) {
-			return;
-		}
-
 		if (_log.isInfoEnabled()) {
-			_log.info("Analytics project created for order " + orderId);
+			_log.info("Analytics project created " + response);
 		}
 
-		Order order = _marketplaceService.getOrder(orderId);
-
-		_marketplaceService.updateOrder(
-			HashMapBuilder.put(
-				"order-metadata",
-				new JSONObject(
-					GetterUtil.get(
-						order.getCustomFields(
-						).get(
-							"order-metadata"
-						),
-						"{}")
-				).put(
-					"analyticsProject", new JSONObject(response)
-				).toString()
-			).build(),
-			orderId, order.getOrderStatus());
+		return response;
 	}
-
-	private String _getServerLocation(String serverLocation) {
-		if (Validator.isBlank(serverLocation)) {
-			return _SERVER_LOCATION;
-		}
-
-		return serverLocation;
-	}
-
-	private static final String _SERVER_LOCATION = "us-west1-ac-uat-c1";
 
 	private static final Log _log = LogFactory.getLog(AnalyticsService.class);
 

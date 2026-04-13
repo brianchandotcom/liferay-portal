@@ -20,6 +20,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.client.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
@@ -35,7 +36,6 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -140,6 +140,22 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		return null;
 	}
 
+	private Long _getChannelId() throws Exception {
+		if (_channelId != null) {
+			return _channelId;
+		}
+
+		ChannelResource channelResource =
+			_marketplaceService.getChannelResource();
+
+		Channel channel = channelResource.getChannelByExternalReferenceCode(
+			_MARKETPLACE_CHANNEL);
+
+		_channelId = channel.getId();
+
+		return _channelId;
+	}
+
 	private CustomField[] _getCustomFields(
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
 			koroneikiAccount) {
@@ -180,6 +196,22 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				Objects.equals(externalLink.getEntityName(), entityName)) {
 
 				return externalLink.getEntityId();
+			}
+		}
+
+		return null;
+	}
+
+	private Order _getOrder(String externalReferenceCode) throws Exception {
+		OrderResource orderResource = _marketplaceService.getOrderResource();
+
+		try {
+			return orderResource.getOrderByExternalReferenceCode(
+				externalReferenceCode);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
 		}
 
@@ -302,6 +334,10 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			return;
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Processing product purchase create " + productPurchase);
+		}
+
 		String opportunityId = _getExternalLinkValue(
 			productPurchase.getExternalLinks(), "salesforce", "opportunity");
 
@@ -313,53 +349,49 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			return;
 		}
 
-		if (_channelId == null) {
-			synchronized (this) {
-				if (_channelId == null) {
-					ChannelResource channelResource =
-						_marketplaceService.getChannelResource();
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+			koroneikiAccount = _koroneikiService.getKoroneikiAccount(
+				productPurchase.getAccountKey());
 
-					Channel channel =
-						channelResource.getChannelByExternalReferenceCode(
-							_MARKETPLACE_CHANNEL);
+		Order order = _getOrder(opportunityId);
 
-					_channelId = channel.getId();
+		if (order == null) {
+			SkuResource skuResource = _marketplaceService.getSkuResource();
+
+			com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker.
+				HttpResponse httpResponse =
+					skuResource.getSkuByExternalReferenceCodeHttpResponse(
+						_getSkuExternalReferenceCode(
+							productPurchase.getProduct()));
+
+			if (!_isOKStatusCode(httpResponse.getStatusCode())) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Unable to process product purchase, SKU not found");
 				}
-			}
-		}
 
-		String accountKey = productPurchase.getAccountKey();
-
-		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account account =
-			_koroneikiService.getKoroneikiAccount(accountKey);
-
-		if (Validator.isNotNull(
-				_getExternalLinkValue(
-					account.getExternalLinks(), "salesforce", "project"))) {
-
-			accountKey = account.getParentAccountKey();
-		}
-
-		OrderResource orderResource = _marketplaceService.getOrderResource();
-
-		Order order;
-
-		try {
-			order = orderResource.getOrderByExternalReferenceCode(
-				opportunityId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				return;
 			}
 
-			String finalAccountKey = accountKey;
+			if (_getAccount(koroneikiAccount.getParentAccountKey()) == null) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Unable to process product purchase, Account not " +
+							"found");
+				}
+
+				return;
+			}
+
+			OrderResource orderResource =
+				_marketplaceService.getOrderResource();
 
 			order = orderResource.postOrder(
 				new Order() {
 					{
-						setAccountExternalReferenceCode(() -> finalAccountKey);
-						setChannelId(() -> _channelId);
+						setAccountExternalReferenceCode(
+							koroneikiAccount::getParentAccountKey);
+						setChannelId(() -> _getChannelId());
 						setCurrencyCode(() -> "USD");
 						setExternalReferenceCode(() -> opportunityId);
 						setOrderItems(
@@ -376,14 +408,16 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 								}
 							});
 						setOrderTypeExternalReferenceCode(() -> "ADDONS");
+						setPaymentStatus(
+							() ->
+								MarketplaceConstants.
+									ORDER_PAYMENT_STATUS_NOT_REQUIRED);
 					}
 				});
 		}
 
-		_provisioningHubService.provision(order, productPurchase);
-
-		_marketplaceService.updateOrder(
-			null, order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
+		_provisioningHubService.provision(
+			koroneikiAccount, order, productPurchase);
 	}
 
 	private Account _syncAccount(

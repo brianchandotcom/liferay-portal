@@ -61,6 +61,22 @@ export enum PaymentStatus {
 	PENDING = 1,
 }
 
+export const APP_ORDER_TYPES: readonly OrderTypes[] = [
+	OrderTypes.CLIENT_EXTENSION,
+	OrderTypes.CLOUD_APP,
+	OrderTypes.COMPOSITE_APP,
+	OrderTypes.DXP_APP,
+	OrderTypes.LOW_CODE_CONFIGURATION,
+	OrderTypes.OTHER,
+];
+
+export const LIFERAY_PRODUCT_ORDER_TYPES: readonly OrderTypes[] = [
+	OrderTypes.ADDONS,
+	OrderTypes.AI_HUB,
+	OrderTypes.CMP,
+	OrderTypes.DXP,
+];
+
 export const orderTypeDocumentationURL: Partial<Record<OrderTypes, string>> = {
 	[OrderTypes.CMP]: 'https://learn.liferay.com/content-marketing-platform',
 	[OrderTypes.DXP]:

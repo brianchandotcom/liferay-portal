@@ -19,6 +19,7 @@ import useKPI from '../hooks/useKPI';
 import useOrderMetrics from '../hooks/useOrderMetrics';
 import AdministratorAppsListView from './Apps/AdministratorAppsListView';
 import {AdministratorOrdersListView} from './Orders';
+import AdministratorMostPurchasedSection from './Purchased/AdministratorMostPurchasedSection';
 
 export default function AdministratorSummary() {
 	const {data: {kpis = []} = {}} = useKPI();
@@ -113,7 +114,9 @@ export default function AdministratorSummary() {
 				</Page>
 
 				<Page
-					pageRendererProps={{className: 'border py-2 rounded-lg'}}
+					pageRendererProps={{
+						className: 'border py-2 rounded-lg mb-8',
+					}}
 					rightButton={
 						<Link className="font-weight-bold" to="/apps">
 							{i18n.translate('view-all')}
@@ -134,6 +137,8 @@ export default function AdministratorSummary() {
 						}}
 					/>
 				</Page>
+
+				<AdministratorMostPurchasedSection />
 			</div>
 		</Page>
 	);

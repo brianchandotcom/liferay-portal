@@ -15,7 +15,7 @@ export default function updateFragmentConfiguration({
 	configurationValues,
 	fragmentEntryLink,
 }: {
-	configurationValues: Record<string, number | string>;
+	configurationValues: Record<string, number | string | string[]>;
 	fragmentEntryLink: FragmentEntryLink;
 }) {
 	const {editableValues, fragmentEntryLinkId} = fragmentEntryLink;

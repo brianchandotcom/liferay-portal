@@ -6,36 +6,71 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useHoverItem} from '../../contexts/ControlsContext';
 import {useSelectorCallback} from '../../contexts/StoreContext';
+import CollectionService from '../../services/CollectionService';
+import {deepEqual} from '../../utils/checkDeepEqual';
 import isEmptyArray from '../../utils/isEmptyArray';
 import {isLayoutDataItemDeleted} from '../../utils/isLayoutDataItemDeleted';
 
-export function selectConfiguredCollectionDisplays(state) {
-	return Object.values(state.layoutData.items).filter(
-		(item) =>
-			item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
-			item.config?.collection &&
-			!!Object.keys(item.config.collection).length &&
-			!isLayoutDataItemDeleted(state.layoutData, item.itemId)
-	);
-}
+export function TargetCollectionDisplayField({field, onValueSelect, value}) {
+	const enableCompatibleCollections =
+		field.typeOptions?.enableCompatibleCollections || false;
 
-export function TargetCollectionsField({
-	enableCompatibleCollections = false,
-	filterableCollections,
-	onValueSelect,
-	value,
-}) {
 	const [active, setActive] = useState(false);
-	const inputId = useId();
+	const [filterableCollections, setFilterableCollections] = useState(null);
+	const [loading, setLoading] = useState(false);
 	const [nextValue, setNextValue] = useState(value || []);
+
 	const hoverItem = useHoverItem();
+	const inputId = useId();
+
+	const collections = useSelectorCallback(
+		selectConfiguredCollectionDisplays,
+		[],
+		deepEqual
+	);
+
+	useEffect(() => {
+		if (isEmptyArray(collections)) {
+			setFilterableCollections({});
+
+			return;
+		}
+
+		setLoading(true);
+
+		CollectionService.getCollectionSupportedFilters(
+			collections.map((item) => ({
+				collectionId: item.itemId,
+				layoutObjectReference: item.config?.collection,
+			}))
+		)
+			.then((response) => {
+				const nextFilterableCollections = {};
+
+				collections
+					.filter(
+						(collection) =>
+							!isEmptyArray(response[collection.itemId])
+					)
+					.forEach((collection) => {
+						nextFilterableCollections[collection.itemId] = {
+							...collection,
+							supportedFilters: response[collection.itemId],
+						};
+					});
+
+				setFilterableCollections(nextFilterableCollections);
+			})
+			.finally(() => setLoading(false));
+	}, [collections]);
 
 	const inputValue = useSelectorCallback(
 		(state) => {
@@ -60,7 +95,7 @@ export function TargetCollectionsField({
 			selectedItems = [...nextValue, layoutItemId];
 
 			setNextValue(selectedItems);
-			onValueSelect('targetCollections', selectedItems);
+			onValueSelect(field.name, selectedItems);
 		}
 		else if (included) {
 			selectedItems = nextValue.filter(
@@ -68,9 +103,23 @@ export function TargetCollectionsField({
 			);
 
 			setNextValue(selectedItems);
-			onValueSelect('targetCollections', selectedItems);
+			onValueSelect(field.name, selectedItems);
 		}
 	};
+
+	if (loading || filterableCollections === null) {
+		return <ClayLoadingIndicator className="my-0" size="sm" />;
+	}
+
+	if (!Object.keys(filterableCollections).length) {
+		return (
+			<p aria-live="polite" className="alert alert-info mt-2 text-center">
+				{Liferay.Language.get(
+					'display-a-collection-on-the-page-that-support-at-least-one-type-of-filter'
+				)}
+			</p>
+		);
+	}
 
 	const items = Object.values(filterableCollections).map((item) => {
 		const isSelected = nextValue.includes(item.itemId);
@@ -95,7 +144,7 @@ export function TargetCollectionsField({
 	return (
 		<ClayForm.Group className="mt-1">
 			<label htmlFor={inputId}>
-				{Liferay.Language.get('target-collection')}
+				{field.label || Liferay.Language.get('target-collection')}
 			</label>
 
 			<ClayDropDown
@@ -175,5 +224,15 @@ function isItemDisabled({filterableCollections, itemId, targetCollections}) {
 			(targetCollectionsSupportedFilter) =>
 				targetCollectionsSupportedFilter.includes(supportedFilter)
 		)
+	);
+}
+
+export function selectConfiguredCollectionDisplays(state) {
+	return Object.values(state.layoutData.items).filter(
+		(item) =>
+			item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+			item.config?.collection &&
+			!!Object.keys(item.config.collection).length &&
+			!isLayoutDataItemDeleted(state.layoutData, item.itemId)
 	);
 }

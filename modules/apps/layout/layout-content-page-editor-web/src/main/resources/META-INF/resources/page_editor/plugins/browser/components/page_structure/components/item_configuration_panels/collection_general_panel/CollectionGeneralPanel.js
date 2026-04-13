@@ -13,11 +13,7 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../../../app/config/constants/collectionAppliedFiltersFragmentKey';
-import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../app/config/constants/collectionFilterFragmentEntryKey';
 import {COMMON_STYLES_ROLES} from '../../../../../../../app/config/constants/commonStylesRoles';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../../app/config/index';
 import {useDisplayPagePreviewItem} from '../../../../../../../app/contexts/DisplayPagePreviewItemContext';
@@ -34,7 +30,7 @@ import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
 import {CACHE_KEYS} from '../../../../../../../app/utils/cache';
 import {COLLECTION_LIST_STYLES} from '../../../../../../../app/utils/collectionListStyles';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
-import {isLayoutDataItemDeleted} from '../../../../../../../app/utils/isLayoutDataItemDeleted';
+import getTargetCollectionDisplayField from '../../../../../../../app/utils/getTargetCollectionDisplayField';
 import useCache from '../../../../../../../app/utils/useCache';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
 import {CommonStyles} from '../CommonStyles';
@@ -198,36 +194,14 @@ export function CollectionGeneralPanel({item}) {
 		({preventDefault}) => {
 			const state = getState();
 
-			const isLinkedToFilter = Object.values(state.layoutData.items)
-				.filter(
-					({itemId}) =>
-						!isLayoutDataItemDeleted(state.layoutData, itemId)
-				)
-				.some((layoutDataItem) => {
-					if (
-						layoutDataItem.type !== LAYOUT_DATA_ITEM_TYPES.fragment
-					) {
-						return false;
-					}
+			const isLinkedToFilter = Object.values(
+				state.fragmentEntryLinks
+			).some((fragmentEntryLink) => {
+				const field =
+					getTargetCollectionDisplayField(fragmentEntryLink);
 
-					const fragmentEntryLink =
-						state.fragmentEntryLinks[
-							layoutDataItem.config.fragmentEntryLinkId
-						];
-
-					if (
-						fragmentEntryLink.fragmentEntryKey !==
-							COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
-						fragmentEntryLink.fragmentEntryKey !==
-							COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY
-					) {
-						return false;
-					}
-
-					return fragmentEntryLink.editableValues[
-						FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-					]?.targetCollections?.includes(item.itemId);
-				});
+				return field?.targetCollections.includes(item.itemId);
+			});
 
 			if (isLinkedToFilter) {
 				openConfirmModal({

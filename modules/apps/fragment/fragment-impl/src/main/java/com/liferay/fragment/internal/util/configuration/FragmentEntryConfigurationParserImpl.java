@@ -526,6 +526,9 @@ public class FragmentEntryConfigurationParserImpl
 				 StringUtil.equalsIgnoreCase(
 					 fragmentConfigurationField.getType(), "select") ||
 				 StringUtil.equalsIgnoreCase(
+					 fragmentConfigurationField.getType(),
+					 "targetCollectionDisplay") ||
+				 StringUtil.equalsIgnoreCase(
 					 fragmentConfigurationField.getType(), "text")) {
 
 			if (fragmentConfigurationField.isLocalizable() &&

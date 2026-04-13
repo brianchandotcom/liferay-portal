@@ -65,6 +65,15 @@ public class JournalFolderStagedModelDataHandler
 	}
 
 	@Override
+	public JournalFolder fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return _journalFolderLocalService.
+			fetchJournalFolderByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public JournalFolder fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -178,8 +187,8 @@ public class JournalFolderStagedModelDataHandler
 		long groupId = portletDataContext.getScopeGroupId();
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			JournalFolder existingFolder = fetchStagedModelByUuidAndGroupId(
-				folder.getUuid(), groupId);
+			JournalFolder existingFolder = fetchExistingStagedModel(
+				folder, groupId);
 
 			if (existingFolder == null) {
 				String name = _journalFolderLocalService.getUniqueFolderName(

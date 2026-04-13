@@ -124,7 +124,7 @@ public class MarketplaceTopicSubscriber {
 			_subscriptionAdminClient.createSubscription(
 				Subscription.newBuilder(
 				).setAckDeadlineSeconds(
-					30
+					90
 				).setName(
 					subscriptionName
 				).setRetryPolicy(

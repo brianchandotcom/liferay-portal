@@ -6,12 +6,10 @@
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
 import com.nimbusds.jose.JOSEException;
@@ -29,7 +27,6 @@ import com.nimbusds.oauth2.sdk.TokenResponse;
 import com.nimbusds.oauth2.sdk.auth.ClientSecretBasic;
 import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
-import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.nimbusds.oauth2.sdk.pkce.CodeVerifier;
 import com.nimbusds.oauth2.sdk.token.RefreshToken;
@@ -126,14 +123,6 @@ public class OpenIdConnectTokenRequestUtil {
 
 		HTTPRequest httpRequest = tokenRequest.toHTTPRequest();
 
-		if (timeout == 0) {
-			timeout = GetterUtil.getInteger(
-				PropsUtil.get(
-					Http.class.getName() + ".timeout",
-					new Filter(uri.getHost())));
-		}
-
-		httpRequest.setConnectTimeout(timeout);
 		httpRequest.setReadTimeout(timeout);
 
 		if (_log.isDebugEnabled()) {
@@ -141,10 +130,14 @@ public class OpenIdConnectTokenRequestUtil {
 		}
 
 		try {
-			HTTPResponse httpResponse = httpRequest.send();
+			Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+				httpRequest);
+
+			String responseContent = HttpUtil.URLtoString(httpOptions);
 
 			TokenResponse tokenResponse = OIDCTokenResponseParser.parse(
-				httpResponse);
+				OpenIdConnectHTTPUtil.toHTTPResponse(
+					httpOptions, responseContent));
 
 			if (tokenResponse instanceof TokenErrorResponse) {
 				TokenErrorResponse tokenErrorResponse =

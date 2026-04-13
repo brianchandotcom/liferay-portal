@@ -10,7 +10,6 @@ import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
@@ -22,13 +21,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
+import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectHTTPUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectProviderUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectRequestParametersUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
@@ -40,7 +39,6 @@ import com.nimbusds.langtag.LangTagException;
 import com.nimbusds.oauth2.sdk.ErrorObject;
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
-import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.nimbusds.oauth2.sdk.id.State;
 import com.nimbusds.oauth2.sdk.pkce.CodeChallenge;
@@ -443,21 +441,15 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		httpRequest.setAccept(
 			"text/html, image/gif, image/jpeg, */*; q=0.2, */*; q=0.2");
 
-		URI userInfoEndpointURI = oidcProviderMetadata.getUserInfoEndpointURI();
-
-		int timeout = GetterUtil.getInteger(
-			PropsUtil.get(
-				Http.class.getName() + ".timeout",
-				new Filter(userInfoEndpointURI.getHost())));
-
-		httpRequest.setConnectTimeout(timeout);
-		httpRequest.setReadTimeout(timeout);
-
 		try {
-			HTTPResponse httpResponse = httpRequest.send();
+			Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+				httpRequest);
+
+			String responseContent = _http.URLtoString(httpOptions);
 
 			UserInfoResponse userInfoResponse = UserInfoResponse.parse(
-				httpResponse);
+				OpenIdConnectHTTPUtil.toHTTPResponse(
+					httpOptions, responseContent));
 
 			if (userInfoResponse instanceof UserInfoErrorResponse) {
 				UserInfoErrorResponse userInfoErrorResponse =
@@ -528,6 +520,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Language _language;

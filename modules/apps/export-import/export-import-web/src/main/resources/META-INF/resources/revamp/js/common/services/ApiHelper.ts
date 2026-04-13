@@ -20,6 +20,11 @@ async function postFormDataWithProgress<T>(
 	return new Promise((resolve) => {
 		const xhr = new XMLHttpRequest();
 
+		const handleAbort = () => {
+			xhr.abort();
+			resolve({data: null, error: 'Aborted'});
+		};
+
 		xhr.open('POST', url);
 
 		xhr.setRequestHeader('Accept', 'application/json');
@@ -30,10 +35,7 @@ async function postFormDataWithProgress<T>(
 		xhr.setRequestHeader('X-CSRF-Token', Liferay.authToken);
 
 		if (signal) {
-			signal.addEventListener('abort', () => {
-				xhr.abort();
-				resolve({data: null, error: 'Aborted'});
-			});
+			signal.addEventListener('abort', handleAbort);
 		}
 
 		if (onProgress && xhr.upload) {
@@ -79,6 +81,12 @@ async function postFormDataWithProgress<T>(
 				data: null,
 				error: UNEXPECTED_ERROR_MESSAGE,
 			});
+
+		xhr.onloadend = () => {
+			if (signal) {
+				signal.removeEventListener('abort', handleAbort);
+			}
+		};
 
 		xhr.send(formData);
 	});

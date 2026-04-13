@@ -35,12 +35,14 @@ public class CookiesPreferenceHandlingConfigurationUpgradeProcess
 		}
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
 					"select * from Configuration_ where configurationId LIKE ",
 					"'%",
 					CookiesPreferenceHandlingConfiguration.class.getName(),
 					"%'"));
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

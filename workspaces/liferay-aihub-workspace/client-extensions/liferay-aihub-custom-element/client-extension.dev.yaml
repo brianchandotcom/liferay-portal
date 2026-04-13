@@ -1,0 +1,19 @@
+assemble:
+    -   from: build/static
+        into: static
+liferay-ai-hub-custom-element:
+    cssURLs:
+        -   css/main.css
+    friendlyURLMapping: liferay-ai-hub-custom-element
+    htmlAttributes:
+        ai-hub-url: https://ai-dev.hub.liferay.com
+        chatbot-external-reference-code: MY_CHATBOT
+        id: aihub-chat-widget-script
+    htmlElementName: liferay-ai-hub-custom-element
+    instanceable: false
+    name: Liferay AI Hub
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        -   js/main.js
+    useESM: true

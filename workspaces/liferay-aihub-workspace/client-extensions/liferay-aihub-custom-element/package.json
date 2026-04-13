@@ -1,0 +1,33 @@
+{
+	"dependencies": {
+		"eventsource": "^4.1.0",
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
+		"react-markdown": "^10.1.0"
+	},
+	"devDependencies": {
+		"@types/json-schema": "^7.0.15",
+		"@types/react": "18.3.18",
+		"@types/react-dom": "18.3.5",
+		"@types/semver": "^7.7.1",
+		"esbuild": "0.24.2",
+		"eslint-plugin-react": "^7.34.0",
+		"prettier": "^3.8.1",
+		"typescript": "5.7.2"
+	},
+	"eslintConfig": {
+		"globals": {
+			"Liferay": true
+		}
+	},
+	"name": "liferay-ai-hub-custom-element",
+	"private": true,
+	"scripts": {
+		"build": "esbuild src/index.tsx --bundle --minify --outfile=build/static/js/main.js --format=iife",
+		"dev": "npm run build:dev && node dev-server.mjs",
+		"format": "prettier --write \"./**/*.{ts,tsx,css,js,jsx,json,md}\"",
+		"typecheck": "tsc --noEmit"
+	},
+	"type": "module",
+	"version": "1.0.0"
+}

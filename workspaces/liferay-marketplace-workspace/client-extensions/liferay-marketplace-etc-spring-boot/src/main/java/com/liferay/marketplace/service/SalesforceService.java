@@ -12,6 +12,7 @@ import com.google.auth.oauth2.IdTokenProvider;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.marketplace.model.SalesforceOpportunity;
+import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -57,9 +58,10 @@ public class SalesforceService extends BaseService {
 		}
 		catch (WebClientResponseException webClientResponseException) {
 			_log.error(
-				"Unable to create Salesforce opportunity " +
-					salesforceOpportunity,
-				webClientResponseException);
+				StringBundler.concat(
+					"Unable to create Salesforce opportunity ",
+					salesforceOpportunity, "\n",
+					webClientResponseException.getResponseBodyAsString()));
 
 			return null;
 		}

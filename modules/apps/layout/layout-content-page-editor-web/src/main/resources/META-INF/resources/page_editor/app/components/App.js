@@ -68,7 +68,7 @@ export default function App({state}) {
 									<WidgetsContextProvider>
 										<AppHooks />
 
-										<DisplayPagePreviewItemSelector dark />
+										<DisplayPagePreviewItemSelector />
 
 										<GlobalDragAndDropContextProvider>
 											<DragPreviewWrapper />

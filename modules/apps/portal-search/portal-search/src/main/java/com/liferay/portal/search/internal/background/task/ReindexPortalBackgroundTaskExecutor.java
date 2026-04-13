@@ -189,6 +189,7 @@ public class ReindexPortalBackgroundTaskExecutor
 
 		List<Callable<Void>> callables = new ArrayList<>();
 		Map<Callable<Void>, Long> callableCounts = new HashMap<>();
+		List<Callable<Void>> smallCallables = new ArrayList<>();
 
 		for (SearchEngineInitializer searchEngineInitializer :
 				searchEngineInitializers) {
@@ -199,20 +200,33 @@ public class ReindexPortalBackgroundTaskExecutor
 			for (Map.Entry<Indexer<?>, Long> entry :
 					reindexEntryCounts.entrySet()) {
 
-				Callable<Void> callable = () -> {
-					try (SafeCloseable safeCloseable =
-							BackgroundTaskThreadLocal.
-								setBackgroundTaskIdWithSafeCloseable(
-									backgroundTaskId)) {
+				Indexer<?> indexer = entry.getKey();
+				long count = entry.getValue();
 
-						searchEngineInitializer.reindexIndexer(entry.getKey());
-					}
+				if (count <= _SMALL_INDEXER_THRESHOLD) {
+					smallCallables.add(
+						() -> {
+							searchEngineInitializer.reindexIndexer(indexer);
 
-					return null;
-				};
+							return null;
+						});
+				}
+				else {
+					Callable<Void> callable = () -> {
+						try (SafeCloseable safeCloseable =
+								BackgroundTaskThreadLocal.
+									setBackgroundTaskIdWithSafeCloseable(
+										backgroundTaskId)) {
 
-				callables.add(callable);
-				callableCounts.put(callable, entry.getValue());
+							searchEngineInitializer.reindexIndexer(indexer);
+						}
+
+						return null;
+					};
+
+					callables.add(callable);
+					callableCounts.put(callable, count);
+				}
 			}
 		}
 
@@ -220,8 +234,27 @@ public class ReindexPortalBackgroundTaskExecutor
 			(callable1, callable2) -> Long.compare(
 				callableCounts.get(callable2), callableCounts.get(callable1)));
 
+		if (!smallCallables.isEmpty()) {
+			callables.add(
+				() -> {
+					try (SafeCloseable safeCloseable =
+							BackgroundTaskThreadLocal.
+								setBackgroundTaskIdWithSafeCloseable(
+									backgroundTaskId)) {
+
+						for (Callable<Void> callable : smallCallables) {
+							callable.call();
+						}
+					}
+
+					return null;
+				});
+		}
+
 		return callables;
 	}
+
+	private static final int _SMALL_INDEXER_THRESHOLD = 200;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexPortalBackgroundTaskExecutor.class);

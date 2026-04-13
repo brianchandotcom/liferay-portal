@@ -122,6 +122,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1070,6 +1071,8 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		// Site scope
+
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
 
 		_testExportImportObjectEntriesWithComments(
 			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);

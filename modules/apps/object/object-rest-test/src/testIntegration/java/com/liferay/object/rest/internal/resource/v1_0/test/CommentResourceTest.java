@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -46,7 +47,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Guilherme Camacho
  */
-@FeatureFlag("LPD-43996")
 @RunWith(Arquillian.class)
 public class CommentResourceTest {
 
@@ -110,6 +110,8 @@ public class CommentResourceTest {
 
 		// Site scope
 
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+
 		_testDeleteByExternalReferenceCodeComment(
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
@@ -124,6 +126,8 @@ public class CommentResourceTest {
 			0, _objectDefinition, _objectEntry);
 
 		// Site scope
+
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
 
 		_testGetByExternalReferenceCodeComment(
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
@@ -141,6 +145,8 @@ public class CommentResourceTest {
 
 		// Site scope
 
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+
 		_testGetByExternalReferenceCodeCommentChildCommentsPage(
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
@@ -156,6 +162,8 @@ public class CommentResourceTest {
 
 		// Site scope
 
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+
 		_testGetByExternalReferenceCodeCommentsPage(
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
@@ -170,6 +178,8 @@ public class CommentResourceTest {
 			0, _objectDefinition, _objectEntry);
 
 		// Site scope
+
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
 
 		_testPostByExternalReferenceCodeComment(
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
@@ -187,6 +197,8 @@ public class CommentResourceTest {
 
 		// Site scope
 
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+
 		_testPostByExternalReferenceCodeCommentReplyComment(
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
@@ -201,6 +213,8 @@ public class CommentResourceTest {
 			0, _objectDefinition, _objectEntry);
 
 		// Site scope
+
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
 
 		_testPutByExternalReferenceCodeComment(
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);

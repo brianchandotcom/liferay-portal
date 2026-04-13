@@ -44,6 +44,13 @@
 			],
 			"roleName": "Guest",
 			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "User",
+			"scope": 4
 		}
 	],
 	"private": false,

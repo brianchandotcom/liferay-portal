@@ -47,31 +47,36 @@ public class CollectionFilterConfigurationUtil {
 						"type", "text"
 					))));
 
-		if (Validator.isNotNull(filterKey) &&
-			(fragmentCollectionFilterRegistry != null)) {
+		if (Validator.isNull(filterKey) ||
+			(fragmentCollectionFilterRegistry == null)) {
 
-			FragmentCollectionFilter fragmentCollectionFilter =
-				fragmentCollectionFilterRegistry.getFragmentCollectionFilter(
-					filterKey);
+			return JSONUtil.put("fieldSets", fieldSetsJSONArray);
+		}
 
-			if (fragmentCollectionFilter != null) {
-				JSONObject filterConfigurationJSONObject =
-					fragmentCollectionFilter.getConfigurationJSONObject();
+		FragmentCollectionFilter fragmentCollectionFilter =
+			fragmentCollectionFilterRegistry.getFragmentCollectionFilter(
+				filterKey);
 
-				if (filterConfigurationJSONObject != null) {
-					JSONArray filterFieldSetsJSONArray =
-						filterConfigurationJSONObject.getJSONArray("fieldSets");
+		if (fragmentCollectionFilter == null) {
+			return JSONUtil.put("fieldSets", fieldSetsJSONArray);
+		}
 
-					if (filterFieldSetsJSONArray != null) {
-						for (int i = 0; i < filterFieldSetsJSONArray.length();
-							 i++) {
+		JSONObject filterConfigurationJSONObject =
+			fragmentCollectionFilter.getConfigurationJSONObject();
 
-							fieldSetsJSONArray.put(
-								filterFieldSetsJSONArray.getJSONObject(i));
-						}
-					}
-				}
-			}
+		if (filterConfigurationJSONObject == null) {
+			return JSONUtil.put("fieldSets", fieldSetsJSONArray);
+		}
+
+		JSONArray filterFieldSetsJSONArray =
+			filterConfigurationJSONObject.getJSONArray("fieldSets");
+
+		if (filterFieldSetsJSONArray == null) {
+			return JSONUtil.put("fieldSets", fieldSetsJSONArray);
+		}
+
+		for (int i = 0; i < filterFieldSetsJSONArray.length(); i++) {
+			fieldSetsJSONArray.put(filterFieldSetsJSONArray.getJSONObject(i));
 		}
 
 		return JSONUtil.put("fieldSets", fieldSetsJSONArray);

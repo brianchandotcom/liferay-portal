@@ -6601,6 +6601,9 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
+		boolean originalSkipRequiredCategoryValidation =
+			AssetVocabularyThreadLocal.isSkipRequiredCategoryValidation();
+
 		if (!objectDefinition.isEnableCategorization()) {
 			assetCategoryIds = null;
 			assetTagNames = null;
@@ -6625,7 +6628,8 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 		finally {
-			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(false);
+			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(
+				originalSkipRequiredCategoryValidation);
 		}
 	}
 

@@ -207,6 +207,7 @@ export const DOCUMENT_OBJECT_ENTRY = {
 		externalReferenceCode: 'a6d58af4-04a9-63e3-b3fc-002948d514c6',
 		file: {
 			alternativeText: '',
+			extension: 'jpeg',
 			externalReferenceCode: 'fea3e5a6-cc47-2459-3583-2f228aef2563',
 			fileURL:
 				'http://localhost:8080/documents/36035/36037/orange_cat.jpeg/fea3e5a6-cc47-2459-3583-2f228aef2563?version=1.0&t=1771435241269&imageThumbnail=1',
@@ -215,9 +216,14 @@ export const DOCUMENT_OBJECT_ENTRY = {
 				href: '/documents/36035/36037/orange_cat.jpeg/fea3e5a6-cc47-2459-3583-2f228aef2563?version=1.0&t=1771435241269&download=true&groupExternalReferenceCode=a0a0a05e-61d2-248e-4ffa-ae1df094e695&objectDefinitionExternalReferenceCode=L_CMS_BASIC_DOCUMENT&objectEntryExternalReferenceCode=a6d58af4-04a9-63e3-b3fc-002948d514c6&objectFieldExternalReferenceCode=FILE',
 				label: 'orange_cat.jpeg',
 			},
+			metadata: {
+				aspectRatio: 'tall',
+				resolution: '1920x1080',
+			},
 			mimeType: 'image/jpeg',
 			name: 'orange_cat.jpeg',
 			previewURL: '/documents/d/asset-library-36029/orange_cat',
+			size: '1.2 MB',
 			thumbnailURL:
 				'/documents/36035/36037/orange_cat.jpeg/fea3e5a6-cc47-2459-3583-2f228aef2563?version=1.0&t=1771435241269&imageThumbnail=1',
 		},

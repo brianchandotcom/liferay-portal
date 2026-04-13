@@ -37,6 +37,21 @@ const testSpace = {
 } as Space;
 
 const testAdditionalProps = {
+	breadcrumbProps: {
+		breadcrumbItems: [
+			{
+				label: testSpace.name,
+			},
+			{
+				label: 'content',
+			},
+			{
+				label: 'content-folder',
+			},
+		],
+		displayType: 'outline-0',
+		size: 'sm',
+	},
 	candidateAssetLibraries: [testSpace.id],
 	fileMimeTypeIcons: {
 		default: 'document-default',
@@ -120,10 +135,25 @@ describe('CMS Asset Type Info Panel', () => {
 	});
 
 	it('renders the component for an Image asset type', async () => {
+		const testFileAdditionalProps = {
+			...testAdditionalProps,
+			breadcrumbProps: {
+				...testAdditionalProps.breadcrumbProps,
+				breadcrumbItems: [
+					{
+						label: testSpace.name,
+					},
+					{
+						label: 'files',
+					},
+				],
+			},
+		};
+
 		const {container} = render(
 			<SidePanel containerRef={{current: null}}>
 				<AssetTypeInfoPanelContent
-					additionalProps={testAdditionalProps}
+					additionalProps={testFileAdditionalProps}
 					items={[DOCUMENT_OBJECT_ENTRY] as any}
 				/>
 			</SidePanel>
@@ -163,6 +193,14 @@ describe('CMS Asset Type Info Panel', () => {
 		expect(screen.getByText('metadata')).toBeInTheDocument();
 
 		expect(screen.queryByText('url')).toBeInTheDocument();
+
+		expect(screen.getByText('jpeg')).toBeInTheDocument();
+
+		expect(screen.getByText('1.2 MB')).toBeInTheDocument();
+
+		expect(screen.getByText('1920x1080')).toBeInTheDocument();
+
+		expect(screen.getByText('tall')).toBeInTheDocument();
 
 		expect(
 			screen.getByPlaceholderText(
@@ -239,6 +277,10 @@ describe('CMS Asset Type Info Panel', () => {
 
 		expect(
 			within(breadcrumb).getByRole('button', {name: 'content'})
+		).toBeInTheDocument();
+
+		expect(
+			within(breadcrumb).getByRole('button', {name: 'content-folder'})
 		).toBeInTheDocument();
 	});
 });

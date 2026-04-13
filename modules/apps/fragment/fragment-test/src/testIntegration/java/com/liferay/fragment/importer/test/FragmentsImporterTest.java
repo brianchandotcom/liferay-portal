@@ -583,7 +583,7 @@ public class FragmentsImporterTest {
 	@Test
 	@TestInfo("LPS-151013")
 	public void testImportFragmentEntriesWithResources() throws Exception {
-		_testResources(2, "[resources:image (1).png]");
+		_testImportFragmentEntriesWithResources(2, "[resources:image (1).png]");
 	}
 
 	@Test
@@ -600,7 +600,7 @@ public class FragmentsImporterTest {
 							"propagateChanges", true
 						).build())) {
 
-			_testResources(1, "[resources:image.png]");
+			_testImportFragmentEntriesWithResources(1, "[resources:image.png]");
 		}
 	}
 
@@ -995,7 +995,7 @@ public class FragmentsImporterTest {
 		}
 	}
 
-	private void _testResources(
+	private void _testImportFragmentEntriesWithResources(
 			int expectedNumberOfResources, String resourceReference)
 		throws Exception {
 

@@ -21,7 +21,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -282,13 +282,15 @@ public class FragmentsImporterTest {
 
 		File zipFile = _generateZipFileWithFolderResources();
 
-		_configurationProvider.saveCompanyConfiguration(
-			FragmentServiceConfiguration.class, _group.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"propagateChanges", true
-			).build());
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_group.getCompanyId(),
+						FragmentServiceConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"propagateChanges", true
+						).build())) {
 
-		try {
 			_testImportFragmentEntriesWithFolderResources(
 				HashMapBuilder.put(
 					"folder1/image2.png", "image2.png"
@@ -305,14 +307,8 @@ public class FragmentsImporterTest {
 				zipFile);
 		}
 		finally {
-			_configurationProvider.saveCompanyConfiguration(
-				FragmentServiceConfiguration.class, _group.getCompanyId(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"propagateChanges", false
-				).build());
+			FileUtil.delete(zipFile);
 		}
-
-		FileUtil.delete(zipFile);
 	}
 
 	@Test
@@ -595,36 +591,33 @@ public class FragmentsImporterTest {
 	public void testImportFragmentEntriesWithResourcesPropagation()
 		throws Exception {
 
-		_configurationProvider.saveCompanyConfiguration(
-			FragmentServiceConfiguration.class, _group.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"propagateChanges", true
-			).build());
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_group.getCompanyId(),
+						FragmentServiceConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"propagateChanges", true
+						).build())) {
 
-		try {
 			_testResources(1, "[resources:image.png]");
-		}
-		finally {
-			_configurationProvider.saveCompanyConfiguration(
-				FragmentServiceConfiguration.class, _group.getCompanyId(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"propagateChanges", false
-				).build());
 		}
 	}
 
 	@Test
 	public void testImportFragmentEntriesWithThumbnail() throws Exception {
-		_configurationProvider.saveCompanyConfiguration(
-			FragmentServiceConfiguration.class, _group.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"propagateChanges", true
-			).build());
-
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		try {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_group.getCompanyId(),
+						FragmentServiceConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"propagateChanges", true
+						).build())) {
+
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
 				FragmentsImportStrategy.OVERWRITE, false);
@@ -656,15 +649,6 @@ public class FragmentsImporterTest {
 					fragmentEntryLink.getFragmentEntryLinkId());
 
 			Assert.assertTrue(fragmentEntryLink.isLatestVersion());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-
-			_configurationProvider.saveCompanyConfiguration(
-				FragmentServiceConfiguration.class, _group.getCompanyId(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"propagateChanges", false
-				).build());
 		}
 	}
 
@@ -1098,10 +1082,6 @@ public class FragmentsImporterTest {
 		_PATH_DEPENDENCIES + "resources-collection/";
 
 	private Bundle _bundle;
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
-
 	private File _file;
 
 	@Inject

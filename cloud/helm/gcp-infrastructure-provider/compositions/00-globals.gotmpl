@@ -17,12 +17,15 @@
 {{- $namespace := $xr.metadata.namespace -}}
 {{- $overlay := $xr.spec.overlay | default dict -}}
 {{- $projectId := $xr.spec.projectId -}}
+{{- $searchName := printf "%s-es" $xr.metadata.name -}}
+{{- $searchNamespace := printf "%s-elasticsearch" $namespace -}}
+{{- $searchSecretName := printf "%s-es-elastic-user" $searchName -}}
 {{- $storage := $xr.spec.storage | default dict -}}
 
 {{- $databaseIamUser := printf "%s@%s.iam" $gsaName $env.projectId -}}
 {{- $gsaEmail := printf "%s@%s.iam.gserviceaccount.com" $gsaName $env.projectId -}}
 {{- $hash := printf "%s-%s" $databaseName $env.projectId | sha256sum | trunc 7 -}}
-{{- $labels := merge $commonTags (dict "app" "liferay" "environment-id" $environmentId "project-id" $projectId) -}}
+{{- $labels := merge $commonTags (dict "app" "liferay" "deployment-name" $env.deploymentName "environment-id" $environmentId "project-id" $projectId) -}}
 {{- $backupTargetLabels := merge (dict) $labels (dict "active" "true" "should-back-up" "true") -}}
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}

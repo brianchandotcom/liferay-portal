@@ -9,16 +9,20 @@ liferay-default:
     configmap:
         data:
             com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config: |
-                authenticationEnabled=B"false"
+                authenticationEnabled=B"true"
                 httpSSLEnabled=B"false"
                 networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
                 operationMode="REMOTE"
+                password="$[env:ELASTICSEARCH_DEFAULT_PASSWORD]"
                 productionModeEnabled=B"true"
+                username="$[env:ELASTICSEARCH_DEFAULT_USERNAME]"
             com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config: |
-                authenticationEnabled=B"false"
+                authenticationEnabled=B"true"
                 httpSSLEnabled=B"false"
                 networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
+                password="$[env:ELASTICSEARCH_DEFAULT_PASSWORD]"
                 productionModeEnabled=B"true"
+                username="$[env:ELASTICSEARCH_DEFAULT_USERNAME]"
             com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config: |
                 bucketName="$[env:LIFERAY_GCS_BUCKET_NAME]"
     customEnv:
@@ -72,6 +76,41 @@ liferay-default:
                         drop:
                             -   ALL
                     runAsNonRoot: true
+                    seccompProfile:
+                        type: RuntimeDefault
+        x-wait-for-elasticsearch:
+            -   command:
+                    -   sh
+                    -   -c
+                    -   |
+                        function main {
+                            echo "Waiting for Elasticsearch health to be \"green\" or \"yellow\" at \"${ELASTICSEARCH_URL}/_cluster/health\"."
+
+                            local auth_url="http://${ELASTICSEARCH_DEFAULT_USERNAME}:${ELASTICSEARCH_DEFAULT_PASSWORD}@${ELASTICSEARCH_URL#*//}/_cluster/health"
+
+                            until wget -qO- "${auth_url}" | grep -qE "\"status\":\"(green|yellow)\""
+                            do
+                                echo "Waiting for ES (current status: \"Red\" or \"Unreachable\")."
+
+                                sleep 5
+                            done
+
+                            echo "Elasticsearch is ready."
+                        }
+
+                        main
+                envFrom:
+                    -   secretRef:
+                            name: elasticsearch-connection-details
+                image: busybox:1.36
+                name: wait-for-elasticsearch
+                securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                        drop:
+                            -   ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
                     seccompProfile:
                         type: RuntimeDefault
     customLabels:

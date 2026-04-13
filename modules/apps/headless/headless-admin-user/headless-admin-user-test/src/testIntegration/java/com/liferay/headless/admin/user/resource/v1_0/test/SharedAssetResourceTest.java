@@ -590,7 +590,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 						return actionIds;
 					});
-
 				setAssetType("Object Entry Folder");
 				setDateCreated(sharingEntry.getCreateDate());
 				setDateModified(sharingEntry.getModifiedDate());
@@ -629,7 +628,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 						return actionIds;
 					});
-
 				setAssetType(_objectDefinition.getLabel(LocaleUtil.US));
 				setClassPK(sharingEntry.getClassPK());
 				setDateCreated(sharingEntry.getCreateDate());

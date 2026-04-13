@@ -8,7 +8,10 @@ import {render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import StructureService from '../../../../src/main/resources/META-INF/resources/js/common/services/StructureService';
+import {ObjectDefinitions} from '../../../../src/main/resources/META-INF/resources/js/common/types/ObjectDefinition';
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import StructureBuilderToolbar from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/StructureBuilderToolbar';
 import {Structure} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
@@ -41,6 +44,42 @@ jest.mock(
 
 const DEFAULT_CHILDREN = new Map([[getUuid(), {} as Field]]);
 
+const MOCK_SPACE_1: Space = {
+	assetLibraryKey: 'space-1-key',
+	creatorUserId: '1',
+	description: 'Space 1',
+	externalReferenceCode: 'space-1-erc',
+	id: 1,
+	name: 'Space 1',
+	siteId: 1001,
+};
+
+const MOCK_SPACE_2: Space = {
+	assetLibraryKey: 'space-2-key',
+	creatorUserId: '1',
+	description: 'Space 2',
+	externalReferenceCode: 'space-2-erc',
+	id: 2,
+	name: 'Space 2',
+	siteId: 1002,
+};
+
+const MOCK_OBJECT_DEFINITIONS: ObjectDefinitions = {
+	'structure-erc': {
+		externalReferenceCode: 'structure-erc',
+		label: {en_US: 'Structure'} as any,
+		objectDefinitionSettings: [
+			{
+				name: 'acceptedGroupExternalReferenceCodes',
+				value: 'space-1-erc,space-2-erc',
+			},
+			{name: 'acceptAllGroups', value: 'false'},
+		],
+		pluralLabel: {en_US: 'Structures'} as any,
+		scope: 'site',
+	} as any,
+};
+
 const renderComponent = (state: MockState) => {
 	const structure: Partial<Structure> = {
 		children: DEFAULT_CHILDREN,
@@ -50,7 +89,10 @@ const renderComponent = (state: MockState) => {
 	};
 
 	return render(
-		<MockCacheProvider objectDefinitions={{}}>
+		<MockCacheProvider
+			objectDefinitions={MOCK_OBJECT_DEFINITIONS}
+			spaces={[MOCK_SPACE_1, MOCK_SPACE_2]}
+		>
 			<MockStateProvider state={{...state, structure}}>
 				<StructureBuilderToolbar />
 			</MockStateProvider>
@@ -67,6 +109,10 @@ describe('StructureBuilderToolbar', () => {
 		StructureService.updateStructure = jest
 			.fn()
 			.mockResolvedValue({error: null});
+
+		SpaceService.getSpaceContents = jest
+			.fn()
+			.mockResolvedValue({data: {totalCount: 0}, error: null});
 	});
 
 	beforeEach(() => {
@@ -181,9 +227,7 @@ describe('StructureBuilderToolbar', () => {
 	});
 
 	it('Shows modal to publish when trying to customize editor and the structure is not published', async () => {
-		renderComponent({
-			structure: {status: 'new'},
-		});
+		renderComponent({structure: {status: 'new'}});
 
 		const managementBar: HTMLElement | null =
 			document.querySelector('.component-tbar')!;
@@ -265,9 +309,7 @@ describe('StructureBuilderToolbar', () => {
 
 		addParams.mockReturnValue(expectedUrl);
 
-		renderComponent({
-			structure: {status: 'published'},
-		});
+		renderComponent({structure: {status: 'published'}});
 
 		const managementBar: HTMLElement | null =
 			document.querySelector('.component-tbar')!;
@@ -280,6 +322,49 @@ describe('StructureBuilderToolbar', () => {
 		await waitFor(() => {
 			expect(mockNavigate).toBeCalledWith(
 				expect.stringContaining(expectedUrl)
+			);
+		});
+	});
+
+	it('restores removed spaces with content when publishing', async () => {
+		(
+			require('@liferay/layout-js-components-web')
+				.openConfirmModal as jest.Mock
+		).mockResolvedValue(true);
+
+		(SpaceService.getSpaceContents as jest.Mock).mockResolvedValue({
+			data: {totalCount: 2},
+			error: null,
+		});
+
+		renderComponent({
+			structure: {
+				erc: 'structure-erc',
+				path: '/my-structure',
+				spaces: [MOCK_SPACE_1.externalReferenceCode],
+				status: 'draft',
+			},
+		});
+
+		const publishButton = screen.getByRole('button', {name: 'publish'});
+
+		await userEvent.click(publishButton);
+
+		await waitFor(() => {
+			expect(SpaceService.getSpaceContents).toBeCalledWith({
+				path: '/my-structure',
+				siteId: MOCK_SPACE_2.siteId,
+			});
+		});
+
+		await waitFor(() => {
+			expect(StructureService.updateStructure).toBeCalledWith(
+				expect.objectContaining({
+					spaces: [
+						MOCK_SPACE_1.externalReferenceCode,
+						MOCK_SPACE_2.externalReferenceCode,
+					],
+				})
 			);
 		});
 	});

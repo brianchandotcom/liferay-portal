@@ -25,6 +25,7 @@ import {ASSET_TYPE} from './util/constants';
 
 const AssetTypeInfoPanelContent = ({
 	additionalProps: {
+		breadcrumbProps,
 		candidateAssetLibraries,
 		cmsGroupId,
 		commentsProps,
@@ -90,6 +91,7 @@ const AssetTypeInfoPanelContent = ({
 						({groupId}: {groupId: number}) =>
 							Number(groupId) === Number(asset.scopeId)
 					),
+					breadcrumbProps,
 					cmsGroupId,
 					commentsProps,
 					dataSetId,

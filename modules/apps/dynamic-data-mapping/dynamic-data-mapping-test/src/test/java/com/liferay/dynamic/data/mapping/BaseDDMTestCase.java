@@ -10,7 +10,10 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.CheckboxDDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.multiple.CheckboxMultipleDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.fieldset.FieldSetDDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.image.ImageDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.radio.RadioDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.select.SelectDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.text.TextDDMFormFieldType;
@@ -472,9 +475,30 @@ public abstract class BaseDDMTestCase {
 
 		Mockito.when(
 			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
+				Mockito.eq("checkbox"))
+		).thenReturn(
+			new CheckboxDDMFormFieldType()
+		);
+
+		Mockito.when(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
+				Mockito.eq("checkbox_multiple"))
+		).thenReturn(
+			new CheckboxMultipleDDMFormFieldType()
+		);
+
+		Mockito.when(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				Mockito.eq("fieldset"))
 		).thenReturn(
 			new FieldSetDDMFormFieldType()
+		);
+
+		Mockito.when(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
+				Mockito.eq("image"))
+		).thenReturn(
+			new ImageDDMFormFieldType()
 		);
 
 		Mockito.when(

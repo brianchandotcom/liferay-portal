@@ -28,7 +28,7 @@ import {
 } from '../context';
 import ObjectEntryService from '../services/ObjectEntryService';
 import {getAssetLanguages} from '../util';
-import {ASSET_TYPE, L_FILES} from '../util/constants';
+import {ASSET_TYPE} from '../util/constants';
 
 const AssetMetadata = () => {
 	const DATE_PATTERN = useMemo(
@@ -43,9 +43,8 @@ const AssetMetadata = () => {
 		[]
 	);
 
-	const {actions, asset, type}: IAssetTypeInfoPanelContext = useContext(
-		AssetTypeInfoPanelContext
-	);
+	const {actions, asset, breadcrumbProps, type}: IAssetTypeInfoPanelContext =
+		useContext(AssetTypeInfoPanelContext);
 
 	const copyText = useCallback(
 		(event: any) => {
@@ -237,21 +236,14 @@ const AssetMetadata = () => {
 
 						<ClayBreadcrumb
 							className="p-0"
-							items={[
-								{
+							items={breadcrumbProps?.breadcrumbItems.map(
+								(breadcrumbItem: any) => ({
 									active: false,
 									label: Liferay.Language.get(
-										`${space.name}`
+										breadcrumbItem.label
 									),
-								},
-								{
-									label:
-										asset.objectEntryFolderExternalReferenceCode ===
-										L_FILES
-											? Liferay.Language.get('files')
-											: Liferay.Language.get('content'),
-								},
-							]}
+								})
+							)}
 						/>
 					</div>
 				</div>

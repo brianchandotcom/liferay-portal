@@ -523,18 +523,12 @@ public class FragmentConfigurationFieldValueTestUtil {
 		_getTargetCollectionDisplayFragmentConfigurationFieldValue(
 			Object object) {
 
-		TargetCollectionDisplayFragmentConfigurationFieldValue
-			targetCollectionDisplayFragmentConfigurationFieldValue =
-				new TargetCollectionDisplayFragmentConfigurationFieldValue() {
-					{
-						setType(() -> Type.TARGET_COLLECTION_DISPLAY);
-					}
-				};
-
-		targetCollectionDisplayFragmentConfigurationFieldValue.setValue(
-			(String[])object);
-
-		return targetCollectionDisplayFragmentConfigurationFieldValue;
+		return new TargetCollectionDisplayFragmentConfigurationFieldValue() {
+			{
+				setType(() -> Type.TARGET_COLLECTION_DISPLAY);
+				setValue(() -> (String[])object);
+			}
+		};
 	}
 
 	private static FragmentConfigurationFieldValue

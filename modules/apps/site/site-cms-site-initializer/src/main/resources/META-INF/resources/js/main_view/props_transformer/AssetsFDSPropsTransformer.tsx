@@ -14,7 +14,10 @@ import React from 'react';
 import StatusLabel from '../../common/components/StatusLabel';
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
-import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
+import {
+	IBreadcrumbItem,
+	ISearchAssetObjectEntry,
+} from '../../common/types/AssetType';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
 import {getFormattedLabel} from '../../common/utils/getFormattedText';
 import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
@@ -114,6 +117,12 @@ const additionalAPIURLParametersTransformer = (
 	return `${prefixPart}${cleanedFilters.join(' and ')}`.trim();
 };
 
+export interface IBreadcrumbProps {
+	breadcrumbItems: IBreadcrumbItem[];
+	displayType: string;
+	size: string;
+}
+
 export type AdditionalProps = {
 	additionalAPIURLParameters: string | undefined;
 	assetLibraries: AssetLibrary[];
@@ -121,6 +130,7 @@ export type AdditionalProps = {
 	availableExportFileFormats: any[];
 	availableLocales: any[];
 	baseFolderViewURL: string;
+	breadcrumbProps?: IBreadcrumbProps;
 	brokenLinksCheckerEnabled: boolean;
 	candidateAssetLibraries: AssetLibrary[];
 	cmsGroupId?: number;

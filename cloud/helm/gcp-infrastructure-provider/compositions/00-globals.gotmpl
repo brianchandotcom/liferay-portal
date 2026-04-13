@@ -27,7 +27,7 @@
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
 {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
-{{- $region := $databaseSpec.region | default "us-central1" -}}
+{{- $region := $databaseSpec.region | default $xr.spec.region -}}
 {{- $uidHash := printf "%s-%s" $env.projectNumber $projectIdFull | sha256sum | trunc 6 -}}
 
 {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}

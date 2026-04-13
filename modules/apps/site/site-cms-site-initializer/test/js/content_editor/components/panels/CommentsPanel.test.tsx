@@ -12,17 +12,29 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import CommentsPanel from '../../../../../src/main/resources/META-INF/resources/js/content_editor/components/panels/CommentsPanel';
-import {Comment} from '../../../../../src/main/resources/META-INF/resources/js/content_editor/services/CommentService';
+import CommentService, {
+	Comment,
+} from '../../../../../src/main/resources/META-INF/resources/js/content_editor/services/CommentService';
 import {mockFetch} from '../../../__mocks__/frontend-js-web';
 
 jest.mock('@ckeditor/ckeditor5-react', () => ({
-	CKEditor: ({onReady}: any) => {
+	CKEditor: ({onChange, onReady}: any) => {
 		const mockEditor = {
 			getData: jest.fn().mockReturnValue('mocked data'),
+			setData: jest.fn(),
 		};
 		onReady(mockEditor);
 
-		return <input aria-label="Mocked CKEditor" />;
+		return (
+			<input
+				aria-label="Mocked CKEditor"
+				onChange={(event) => {
+					if (onChange) {
+						onChange(event, mockEditor);
+					}
+				}}
+			/>
+		);
 	},
 }));
 
@@ -62,10 +74,10 @@ const initialComments = [
 	},
 ] as Comment[];
 
-const renderComponent = () => {
+const renderComponent = (addCommentURL = 'addCommentURL') => {
 	return render(
 		<CommentsPanel
-			addCommentURL="addCommentURL"
+			addCommentURL={addCommentURL}
 			comments={initialComments}
 			deleteCommentURL="deleteCommentURL"
 			editCommentURL="editCommentURL"
@@ -199,6 +211,59 @@ describe('CommentsPanel', () => {
 		expect(mockFetch).toBeCalledWith('/c/portal/rate_entry', {
 			body: expect.objectContaining({score: 0}),
 			method: 'POST',
+		});
+	});
+
+	it('Adds a new comment and fires the messagePosted event', async () => {
+		const addCommentSpy = jest
+			.spyOn(CommentService, 'addComment')
+			.mockResolvedValue({
+				data: {
+					author: {
+						fullName: 'Test User',
+						portraitURL: '',
+						userId: '1',
+					},
+					body: 'mocked data',
+					children: [],
+					className: 'com.liferay.portal.kernel.model.Comment',
+					commentId: '345',
+					dateDescription: 'Just now',
+					edited: false,
+					negativeVotes: 0,
+					positiveVotes: 0,
+					rootComment: true,
+				},
+				error: null,
+			});
+		const addCommentURL = 'http://addCommentURL?classPK=123';
+		const liferayFireSpy = jest.spyOn(Liferay, 'fire');
+
+		renderComponent(addCommentURL);
+
+		await userEvent.type(
+			screen.getByLabelText('Mocked CKEditor'),
+			'Test comment'
+		);
+
+		await userEvent.click(screen.getByRole('button', {name: /save/i}));
+
+		await waitFor(() => {
+			expect(addCommentSpy).toBeCalledWith(
+				expect.objectContaining({
+					content: 'mocked data',
+					url: addCommentURL,
+				})
+			);
+
+			expect(liferayFireSpy).toHaveBeenCalledWith(
+				'messagePosted',
+				expect.objectContaining({
+					classPK: '123',
+					commentId: 345,
+					text: 'mocked data',
+				})
+			);
 		});
 	});
 });

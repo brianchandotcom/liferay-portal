@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -62,6 +63,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.trash.TrashHelper;
 
 import jakarta.ws.rs.NotSupportedException;
@@ -1002,7 +1004,16 @@ public class ObjectEntryFolderResourceImpl
 							_sharingConfigurationFactory.
 								getGroupSharingConfiguration(group);
 
-						if (!sharingConfiguration.isEnabled()) {
+						if (!sharingConfiguration.isEnabled() ||
+							!_sharingPermission.containsSharePermission(
+								PermissionThreadLocal.getPermissionChecker(),
+								_classNameLocalService.getClassNameId(
+									serviceBuilderObjectEntryFolder.
+										getModelClassName()),
+								serviceBuilderObjectEntryFolder.
+									getObjectEntryFolderId(),
+								group.getGroupId())) {
+
 							return null;
 						}
 
@@ -1073,6 +1084,9 @@ public class ObjectEntryFolderResourceImpl
 		ObjectEntryFolderResourceImpl.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
@@ -1115,6 +1129,9 @@ public class ObjectEntryFolderResourceImpl
 
 	@Reference
 	private SharingConfigurationFactory _sharingConfigurationFactory;
+
+	@Reference
+	private SharingPermission _sharingPermission;
 
 	@Reference
 	private TrashHelper _trashHelper;

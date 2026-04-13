@@ -627,6 +627,14 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public long getDemandbaseAccountsCount(
+		String dataSourceId, FaroProject faroProject) {
+
+		return contactsEngineClient.getDemandbaseAccountsCount(
+			dataSourceId, faroProject);
+	}
+
+	@Override
 	public Long getEnrichedProfilesCount(
 		FaroProject faroProject, Long channelId) {
 

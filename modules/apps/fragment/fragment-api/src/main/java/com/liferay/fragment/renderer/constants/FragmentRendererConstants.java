@@ -10,6 +10,10 @@ package com.liferay.fragment.renderer.constants;
  */
 public class FragmentRendererConstants {
 
+	public static final String COLLECTION_FILTER_FRAGMENT_RENDERER_KEY =
+		"com.liferay.fragment.renderer.collection.filter.internal." +
+			"CollectionFilterFragmentRenderer";
+
 	public static final String FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY =
 		"FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY";
 

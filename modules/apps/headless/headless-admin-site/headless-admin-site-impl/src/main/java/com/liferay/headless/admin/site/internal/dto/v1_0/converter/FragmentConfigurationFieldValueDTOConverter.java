@@ -906,18 +906,12 @@ public class FragmentConfigurationFieldValueDTOConverter
 		_getTargetCollectionDisplayFragmentConfigurationFieldValue(
 			JSONArray jsonArray) {
 
-		TargetCollectionDisplayFragmentConfigurationFieldValue
-			targetCollectionDisplayFragmentConfigurationFieldValue =
-				new TargetCollectionDisplayFragmentConfigurationFieldValue() {
-					{
-						setType(() -> Type.TARGET_COLLECTION_DISPLAY);
-					}
-				};
-
-		targetCollectionDisplayFragmentConfigurationFieldValue.setValue(
-			() -> JSONUtil.toStringArray(jsonArray));
-
-		return targetCollectionDisplayFragmentConfigurationFieldValue;
+		return new TargetCollectionDisplayFragmentConfigurationFieldValue() {
+			{
+				setType(() -> Type.TARGET_COLLECTION_DISPLAY);
+				setValue(() -> JSONUtil.toStringArray(jsonArray));
+			}
+		};
 	}
 
 	private FragmentConfigurationFieldValue

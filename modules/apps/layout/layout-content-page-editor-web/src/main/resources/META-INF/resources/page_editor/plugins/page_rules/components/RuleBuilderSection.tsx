@@ -8,6 +8,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
 import {
+	PopoverTooltip,
 	ScreenReaderAnnouncerContext,
 	isNullOrUndefined,
 } from '@liferay/layout-js-components-web';
@@ -21,7 +22,6 @@ import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataIt
 import {isAllowedInRules} from '../../../app/utils/isAllowedInRules';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
 import {translateConditionsToScript} from '../../../app/utils/translateConditionsToScript';
-import {PopoverTooltip} from '../../../common/components/PopoverTooltip';
 import {Action, Condition} from '../../../types/Rule';
 import ActionComponent from './Action';
 import AdvancedRuleEditor from './AdvancedRuleEditor';

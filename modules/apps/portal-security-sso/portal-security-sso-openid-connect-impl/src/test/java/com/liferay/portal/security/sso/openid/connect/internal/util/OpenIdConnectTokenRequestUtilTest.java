@@ -5,14 +5,14 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.oauth2.sdk.AuthorizationCode;
-import com.nimbusds.oauth2.sdk.TokenRequest;
 import com.nimbusds.oauth2.sdk.auth.Secret;
-import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.nimbusds.oauth2.sdk.id.Issuer;
@@ -27,6 +27,7 @@ import com.nimbusds.openid.connect.sdk.rp.OIDCClientInformation;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 import com.nimbusds.openid.connect.sdk.token.OIDCTokens;
 
+import java.net.SocketTimeoutException;
 import java.net.URI;
 
 import org.junit.After;
@@ -38,14 +39,7 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-
-import org.mockserver.client.server.MockServerClient;
-import org.mockserver.integration.ClientAndServer;
-import org.mockserver.matchers.Times;
-import org.mockserver.model.Delay;
-import org.mockserver.model.Header;
-import org.mockserver.model.HttpRequest;
-import org.mockserver.model.HttpResponse;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Christian Moura
@@ -137,27 +131,49 @@ public class OpenIdConnectTokenRequestUtilTest {
 			_oidcTokens
 		);
 
+		Answer<String> successfulResponseAnswer = invocation -> {
+			Http.Options options = invocation.getArgument(0);
+
+			Http.Response mockResponse = Mockito.mock(Http.Response.class);
+
+			Mockito.when(
+				mockResponse.getResponseCode()
+			).thenReturn(
+				200
+			);
+
+			Mockito.when(
+				mockResponse.getContentType()
+			).thenReturn(
+				"application/json"
+			);
+
+			options.setResponse(mockResponse);
+
+			return "{}";
+		};
+
+		_httpUtilMockedStatic.when(
+			() -> HttpUtil.URLtoString(Mockito.any(Http.Options.class))
+		).thenAnswer(
+			successfulResponseAnswer
+		).thenAnswer(
+			successfulResponseAnswer
+		).thenThrow(
+			new SocketTimeoutException("Read timed out")
+		);
+
 		_openIdConnectRequestParametersUtilMockedStatic.when(
 			() -> OpenIdConnectRequestParametersUtil.getResourceURIs(
 				Mockito.any())
 		).thenReturn(
 			new URI[] {URI.create("http://localhost:63636")}
 		);
-
-		HTTPRequest httpRequest = _setUpHttpRequest();
-
-		Mockito.when(
-			Mockito.mock(
-				TokenRequest.class
-			).toHTTPRequest()
-		).thenReturn(
-			httpRequest
-		);
 	}
 
 	@After
 	public void tearDown() {
-		_clientAndServer.stop();
+		_httpUtilMockedStatic.close();
 		_oidcTokenResponseParserMockedStatic.close();
 		_openIdConnectRequestParametersUtilMockedStatic.close();
 	}
@@ -195,66 +211,13 @@ public class OpenIdConnectTokenRequestUtilTest {
 		}
 	}
 
-	private HTTPRequest _setUpHttpRequest() throws Exception {
-		HTTPRequest httpRequest = Mockito.mock(HTTPRequest.class);
-
-		MockServerClient mockServerClient = new MockServerClient(
-			"localhost", 63636);
-
-		HTTPResponse httpResponse = Mockito.mock(HTTPResponse.class);
-
-		mockServerClient.when(
-			HttpRequest.request(
-			).withMethod(
-				"POST"
-			),
-			Times.exactly(2)
-		).respond(
-			HttpResponse.response(
-			).withBody(
-				String.valueOf(httpResponse)
-			).withHeader(
-				new Header("Content-Type", "application/json")
-			).withStatusCode(
-				200
-			)
-		);
-
-		mockServerClient.when(
-			HttpRequest.request(
-			).withMethod(
-				"POST"
-			),
-			Times.once()
-		).respond(
-			HttpResponse.response(
-			).withBody(
-				String.valueOf(httpResponse)
-			).withHeader(
-				new Header("Content-Type", "application/json")
-			).withStatusCode(
-				200
-			).withDelay(
-				Delay.seconds(10)
-			)
-		);
-
-		Mockito.when(
-			httpRequest.send()
-		).thenReturn(
-			httpResponse
-		);
-
-		return httpRequest;
-	}
-
 	private static final String _TOKEN_REQUEST_PARAMETERS = "{}";
 
 	private final AuthenticationSuccessResponse _authenticationSuccessResponse =
 		Mockito.mock(AuthenticationSuccessResponse.class);
-	private final ClientAndServer _clientAndServer =
-		ClientAndServer.startClientAndServer(63636);
 	private final CodeVerifier _codeVerifier = Mockito.mock(CodeVerifier.class);
+	private final MockedStatic<HttpUtil> _httpUtilMockedStatic =
+		Mockito.mockStatic(HttpUtil.class);
 	private final Nonce _nonce = Mockito.mock(Nonce.class);
 	private final OIDCClientInformation _oidcClientInformation = Mockito.mock(
 		OIDCClientInformation.class);

@@ -9,6 +9,7 @@ import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.util.CommentUtil;
 import com.liferay.headless.delivery.resource.v1_0.util.CommentResourceUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.provider.CommentEntityModel;
@@ -43,6 +44,7 @@ import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -71,10 +73,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String externalReferenceCode, String commentExternalReferenceCode)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -99,10 +98,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String commentExternalReferenceCode)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -197,10 +193,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String externalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -218,10 +211,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Comment comment)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -248,10 +238,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey, String externalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -269,10 +256,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String commentExternalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -300,10 +284,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Comment comment)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -331,10 +312,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String commentExternalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -441,10 +419,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -470,10 +445,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey, String search, Sort[] sorts)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -525,10 +497,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Pagination pagination, String scopeKey, String search, Sort[] sorts)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-43996")) {
-
+		if (!_isCommentsSupported()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -623,6 +592,22 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		return defaultObjectEntryManager.getObjectEntry(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			objectEntryExternalReferenceCode, _objectDefinition, scopeKey);
+	}
+
+	private boolean _isCommentsSupported() {
+		if (!_objectDefinition.isEnableComments()) {
+			return false;
+		}
+
+		if (Objects.equals(
+				_objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_SITE)) {
+
+			return true;
+		}
+
+		return FeatureFlagManagerUtil.isEnabled(
+			_objectDefinition.getCompanyId(), "LPD-43996");
 	}
 
 	private Comment _updateComment(

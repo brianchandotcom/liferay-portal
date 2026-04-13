@@ -104,6 +104,8 @@ public class FragmentsImporterTest {
 	@After
 	public void tearDown() throws Exception {
 		FileUtil.delete(_file);
+
+		FileUtil.delete(_resourcesFile);
 	}
 
 	@Test
@@ -254,26 +256,29 @@ public class FragmentsImporterTest {
 
 		File zipFile = _generateZipFileWithFolderResources();
 
-		_testImportFragmentEntriesWithFolderResources(
-			HashMapBuilder.put(
-				"folder1/image2.png", "image2.png"
-			).put(
-				"image1.png", "image1.png"
-			).build(),
-			zipFile);
-		_testImportFragmentEntriesWithFolderResources(
-			HashMapBuilder.put(
-				"folder1/image2 (1).png", "image2 (1).png"
-			).put(
-				"folder1/image2.png", "image2.png"
-			).put(
-				"image1 (1).png", "image1 (1).png"
-			).put(
-				"image1.png", "image1.png"
-			).build(),
-			zipFile);
-
-		FileUtil.delete(zipFile);
+		try {
+			_testImportFragmentEntriesWithFolderResources(
+				HashMapBuilder.put(
+					"folder1/image2.png", "image2.png"
+				).put(
+					"image1.png", "image1.png"
+				).build(),
+				zipFile);
+			_testImportFragmentEntriesWithFolderResources(
+				HashMapBuilder.put(
+					"folder1/image2 (1).png", "image2 (1).png"
+				).put(
+					"folder1/image2.png", "image2.png"
+				).put(
+					"image1 (1).png", "image1 (1).png"
+				).put(
+					"image1.png", "image1.png"
+				).build(),
+				zipFile);
+		}
+		finally {
+			FileUtil.delete(zipFile);
+		}
 	}
 
 	@Test

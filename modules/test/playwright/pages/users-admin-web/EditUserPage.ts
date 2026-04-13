@@ -128,6 +128,7 @@ export class EditUserPage {
 	readonly regularRoleCellButton: (name: string) => Locator;
 	readonly regularRolesTable: DataTablePage;
 	readonly removeMenuItem: Locator;
+	readonly requiredPasswordResetCheckbox: Locator;
 	readonly rolesLink: Locator;
 	readonly saveButton: Locator;
 	readonly screenNameError: Locator;
@@ -555,6 +556,9 @@ export class EditUserPage {
 		this.regularRoleCell = (name) => page.getByRole('cell', {name});
 		this.regularRoleCellButton = (name) =>
 			this.regularRoleCell(name).locator('..').getByRole('button');
+		this.requiredPasswordResetCheckbox = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_passwordReset'
+		);
 		this.regularRolesTable = new DataTablePage(
 			page,
 			page.locator(

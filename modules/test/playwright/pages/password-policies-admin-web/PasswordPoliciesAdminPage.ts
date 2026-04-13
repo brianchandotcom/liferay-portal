@@ -6,12 +6,15 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {TPasswordPolicy} from '../../helpers/PasswordPolicyApiHelper';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class PasswordPoliciesAdminPage {
 	readonly allowDictionaryWordsToggle: Locator;
+	readonly assigneeTab: Locator;
 	readonly globalMenuPage: GlobalMenuPage;
 	readonly changeableToggle: Locator;
+	readonly changeRequiredToggle: Locator;
 	readonly checkSyntaxToggle: Locator;
 	readonly description: Locator;
 	readonly expireable: Locator;
@@ -39,11 +42,13 @@ export class PasswordPoliciesAdminPage {
 			"Allow Dictionary Words If this is checked, common dictionary words are allowed as the user's passwords.",
 			{exact: true}
 		);
+		this.assigneeTab = page.getByRole('link', {name: 'Assignees'});
 		this.globalMenuPage = new GlobalMenuPage(page);
 		this.changeableToggle = page.getByLabel(
 			'Changeable If this is checked, the user can change their password.',
 			{exact: true}
 		);
+		this.changeRequiredToggle = page.getByText('Change Required');
 		this.checkSyntaxToggle = page.getByLabel(
 			'Enable Syntax Checking If this is checked, the password is read for certain words and/or a certain length.',
 			{exact: true}
@@ -105,6 +110,43 @@ export class PasswordPoliciesAdminPage {
 		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
+	async assignUser(passwordPolicyName: string, screenName: string) {
+		await this.page.getByRole('link', {name: passwordPolicyName}).click();
+
+		await this.assigneeTab.click();
+
+		await expect(async () => {
+			await this.page.getByRole('button', {name: 'New'}).click();
+
+			const iframe = this.page.frameLocator(
+				`iframe[title="Add Assignees to ${passwordPolicyName}"]`
+			);
+
+			const ariaLabelledbyId = screenName.replace(/\./g, '-');
+
+			const checkbox = iframe.locator(
+				`[aria-labelledby="_com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet_passwordPolicyMembers_${ariaLabelledbyId}"]`
+			);
+
+			await checkbox.check();
+
+			await expect(checkbox).toBeChecked();
+
+			await expect(
+				this.page.getByRole('button', {name: 'Add'})
+			).toBeVisible();
+
+			await this.page.getByRole('button', {name: 'Add'}).click();
+
+			await expect(
+				this.page.getByRole('cell', {
+					exact: true,
+					name: screenName,
+				})
+			).toBeVisible();
+		}).toPass({timeout: 3000});
+	}
+
 	async createPasswordPolicy(passwordPolicy: TPasswordPolicy) {
 		await this.newButton.click();
 		await this.name.fill(passwordPolicy.name);
@@ -118,11 +160,19 @@ export class PasswordPoliciesAdminPage {
 			);
 		}
 
-		await this.page
-			.getByRole('button', {name: 'Password Changes'})
-			.click({timeout: 500});
+		await this.page.getByRole('button', {name: 'Password Changes'}).click();
 
-		await this.changeableToggle.setChecked(!!passwordPolicy.changeableToggle);
+		if (passwordPolicy.changeableToggle !== undefined) {
+			await this.changeableToggle.setChecked(
+				passwordPolicy.changeableToggle
+			);
+		}
+
+		if (passwordPolicy.changeRequiredToggle !== undefined) {
+			await this.changeRequiredToggle.setChecked(
+				passwordPolicy.changeRequiredToggle
+			);
+		}
 
 		if (passwordPolicy.allowDictionaryWordsToggle !== undefined) {
 			await this.allowDictionaryWordsToggle.setChecked(
@@ -159,6 +209,26 @@ export class PasswordPoliciesAdminPage {
 		await this.saveButton.click();
 
 		await expect(await this.successMessage).toBeVisible();
+	}
+
+	async deleteAllPasswordPolicies() {
+		await this.goTo();
+
+		this.page.once('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		await this.page
+			.getByRole('checkbox', {name: 'Select All Items on the Page'})
+			.click();
+
+		await expect(
+			this.page.getByRole('button', {name: 'Delete'})
+		).toBeVisible();
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(this.page);
 	}
 
 	async editDefaultPasswordPolicy(passwordPolicy: TPasswordPolicy) {
@@ -234,7 +304,7 @@ export class PasswordPoliciesAdminPage {
 			.click();
 		await this.allowDictionaryWordsToggle.check();
 
-		if (await this.checkSyntaxToggle.isChecked()){
+		if (await this.checkSyntaxToggle.isChecked()) {
 			await this.minLength.fill(String(6));
 			await this.minLowerCase.fill(String(0));
 			await this.minNumbers.fill(String(1));

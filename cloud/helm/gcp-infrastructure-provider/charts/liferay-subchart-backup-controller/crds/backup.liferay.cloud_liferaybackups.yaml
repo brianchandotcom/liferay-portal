@@ -171,11 +171,11 @@ spec:
                                     x-kubernetes-list-type: map
                                 databaseSnapshot:
                                     properties:
-                                        instanceId:
-                                            type: string
-                                        snapshotId:
+                                        id:
                                             format: int64
                                             type: integer
+                                        instanceId:
+                                            type: string
                                     type: object
                                 databaseSnapshotId:
                                     format: int64

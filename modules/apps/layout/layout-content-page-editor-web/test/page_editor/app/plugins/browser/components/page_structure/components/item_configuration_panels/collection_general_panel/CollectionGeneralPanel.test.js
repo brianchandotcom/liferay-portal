@@ -8,7 +8,6 @@ import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/collectionFilterFragmentEntryKey';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -60,6 +59,21 @@ jest.mock(
 jest.mock(
 	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector',
 	() => jest.fn(() => null)
+);
+
+jest.mock(
+	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/openItemSelector',
+	() => ({openItemSelector: jest.fn()})
+);
+
+jest.mock(
+	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/CollectionItemContext',
+	() => ({useCustomCollectionSelectorURL: jest.fn(() => null)})
+);
+
+jest.mock(
+	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents',
+	() => jest.fn(() => [])
 );
 
 jest.mock(
@@ -494,7 +508,7 @@ describe('CollectionGeneralPanel', () => {
 			window.confirm = globalConfirm;
 		});
 
-		it('shows a confirmation when updating a collection linked to a filter', async () => {
+		it('shows a confirmation when changing a collection linked to a filter', async () => {
 			CollectionSelector.mockImplementation(
 				({onBeforeCollectionSelect}) => {
 					onBeforeCollectionSelect({preventDefault: () => {}});
@@ -507,13 +521,23 @@ describe('CollectionGeneralPanel', () => {
 				renderComponent({
 					fragmentEntryLinks: {
 						'collection-filter-fragment-a': {
+							configuration: {
+								fieldSets: [
+									{
+										fields: [
+											{
+												name: 'targetCollections',
+												type: 'targetCollectionDisplay',
+											},
+										],
+									},
+								],
+							},
 							editableValues: {
 								[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 									targetCollections: ['collection-display-a'],
 								},
 							},
-							fragmentEntryKey:
-								COLLECTION_FILTER_FRAGMENT_ENTRY_KEY,
 						},
 					},
 
@@ -525,14 +549,6 @@ describe('CollectionGeneralPanel', () => {
 								itemId: 'collection-display-a',
 								type: LAYOUT_DATA_ITEM_TYPES.collection,
 							},
-							'collection-filter-a': {
-								config: {
-									fragmentEntryLinkId:
-										'collection-filter-fragment-a',
-								},
-								itemId: 'collection-filter-a',
-								type: LAYOUT_DATA_ITEM_TYPES.fragment,
-							},
 						},
 					},
 				});
@@ -543,6 +559,59 @@ describe('CollectionGeneralPanel', () => {
 			expect(confirm).toHaveBeenCalledWith(
 				'if-you-change-the-collection-you-unlink-the-collection-filter\n\ndo-you-want-to-continue'
 			);
+		});
+
+		it('does not show a confirmation when changing a collection not linked to any filter', async () => {
+			CollectionSelector.mockImplementation(
+				({onBeforeCollectionSelect}) => {
+					onBeforeCollectionSelect({preventDefault: () => {}});
+
+					return <h1>Collection Selector</h1>;
+				}
+			);
+
+			await act(async () => {
+				renderComponent({
+					fragmentEntryLinks: {
+						'collection-filter-fragment-a': {
+							configuration: {
+								fieldSets: [
+									{
+										fields: [
+											{
+												name: 'targetCollections',
+												type: 'targetCollectionDisplay',
+											},
+										],
+									},
+								],
+							},
+							editableValues: {
+								[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
+									targetCollections: [
+										'other-collection-display',
+									],
+								},
+							},
+						},
+					},
+
+					itemId: 'collection-display-a',
+					layoutData: {
+						deletedItems: [],
+						items: {
+							'collection-display-a': {
+								itemId: 'collection-display-a',
+								type: LAYOUT_DATA_ITEM_TYPES.collection,
+							},
+						},
+					},
+				});
+			});
+
+			await screen.findByText('Collection Selector');
+
+			expect(confirm).not.toHaveBeenCalled();
 		});
 	});
 });

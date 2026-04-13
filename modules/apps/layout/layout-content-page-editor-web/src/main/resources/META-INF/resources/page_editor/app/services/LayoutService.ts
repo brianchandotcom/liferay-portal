@@ -291,12 +291,14 @@ export default {
 	},
 
 	updateCollectionDisplayConfig({
+		editableValuesChanges,
 		itemConfig,
 		itemId,
 		languageId,
 		onNetworkStatus,
 		segmentsExperienceId,
 	}: {
+		editableValuesChanges: Record<string, unknown>;
 		itemConfig: CollectionItemLayoutDataItem['config'];
 		itemId: string;
 		languageId: Liferay.Language.Locale;
@@ -311,6 +313,9 @@ export default {
 			config.updateCollectionDisplayConfigURL,
 			{
 				body: {
+					editableValuesChanges: JSON.stringify(
+						editableValuesChanges
+					),
 					itemConfig: JSON.stringify(itemConfig),
 					itemId,
 					languageId,

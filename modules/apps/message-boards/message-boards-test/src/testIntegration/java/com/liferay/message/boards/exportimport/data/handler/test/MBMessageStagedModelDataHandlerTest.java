@@ -13,6 +13,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -24,6 +25,7 @@ import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,6 +48,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +125,53 @@ public class MBMessageStagedModelDataHandlerTest
 		importedStagedModel = getStagedModel(stagedModel.getUuid(), liveGroup);
 
 		Assert.assertNotNull(importedStagedModel);
+	}
+
+	@Test
+	public void testImportWithExistingExternalReferenceCode() throws Exception {
+		initExport();
+
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+			null, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			stagingGroup.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, 0, 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
+			0.0, false,
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, mbMessage);
+
+		MBMessage existingMBMessage = MBMessageLocalServiceUtil.addMessage(
+			mbMessage.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), liveGroup.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, 0, 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
+			0.0, false,
+			ServiceContextTestUtil.getServiceContext(
+				liveGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			MBMessage exportedMBMessage = (MBMessage)readExportedStagedModel(
+				mbMessage);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedMBMessage);
+
+			MBMessage importedMBMessage =
+				MBMessageLocalServiceUtil.fetchMBMessageByExternalReferenceCode(
+					mbMessage.getExternalReferenceCode(),
+					liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				existingMBMessage.getMessageId(),
+				importedMBMessage.getMessageId());
+			Assert.assertEquals(
+				mbMessage.getSubject(), importedMBMessage.getSubject());
+		}
 	}
 
 	@Test

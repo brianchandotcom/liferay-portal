@@ -20,4 +20,6 @@ public class ObjectDDMFormFieldTypeConstants {
 
 	public static final String OBJECT_RELATIONSHIP = "object-relationship";
 
+	public static final String PHONE_NUMBER = "phone-number";
+
 }

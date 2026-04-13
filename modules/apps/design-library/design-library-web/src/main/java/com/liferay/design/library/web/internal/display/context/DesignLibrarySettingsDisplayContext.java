@@ -5,6 +5,7 @@
 
 package com.liferay.design.library.web.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +39,7 @@ public class DesignLibrarySettingsDisplayContext {
 		_designLibraryEntryId = designLibraryEntryId;
 	}
 
-	public Map<String, Object> getSettingsProps() throws PortalException {
+	public Map<String, Object> getProps() throws PortalException {
 		Group group = _getGroup();
 
 		return HashMapBuilder.<String, Object>put(
@@ -80,12 +81,20 @@ public class DesignLibrarySettingsDisplayContext {
 	}
 
 	private Group _getGroup() throws PortalException {
-		return DepotEntryLocalServiceUtil.getDepotEntry(
-			_designLibraryEntryId
-		).getGroup();
+		if (_group != null) {
+			return _group;
+		}
+
+		DepotEntry depotEntry = DepotEntryLocalServiceUtil.getDepotEntry(
+			_designLibraryEntryId);
+
+		_group = depotEntry.getGroup();
+
+		return _group;
 	}
 
 	private final long _designLibraryEntryId;
+	private Group _group;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 

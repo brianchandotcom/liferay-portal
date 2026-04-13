@@ -17,5 +17,5 @@ designLibrarySettingsDisplayContext.setPortletDisplay(portletDisplay, renderResp
 
 <react:component
 	module="{DesignLibrarySettings} from design-library-web"
-	props="<%= designLibrarySettingsDisplayContext.getSettingsProps() %>"
+	props="<%= designLibrarySettingsDisplayContext.getProps() %>"
 />

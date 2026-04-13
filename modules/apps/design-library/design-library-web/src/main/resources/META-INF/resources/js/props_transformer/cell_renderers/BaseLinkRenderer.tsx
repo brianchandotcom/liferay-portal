@@ -10,11 +10,11 @@ import {IItemsActions, replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
-import {DesignLibraryItem} from '../../types';
+import {DesignLibrary} from '../../types';
 
 export interface BaseLinkRendererProps {
 	action?: IItemsActions;
-	itemData: DesignLibraryItem;
+	itemData: DesignLibrary;
 	value: string;
 }
 

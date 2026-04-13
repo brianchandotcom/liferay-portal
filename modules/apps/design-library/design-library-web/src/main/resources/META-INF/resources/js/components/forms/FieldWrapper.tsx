@@ -51,7 +51,7 @@ export default function FieldWrapper({
 					data-title={helpIcon}
 					focusable="false"
 					role="dialog"
-					symbol="question-circle"
+					symbol="question-circle-full"
 					tabIndex={0}
 				/>
 			) : null}

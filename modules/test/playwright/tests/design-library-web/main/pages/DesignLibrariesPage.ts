@@ -77,4 +77,16 @@ export class DesignLibrariesPage extends POM {
 
 		await waitForAlert(this.page, `${name} was successfully deleted.`);
 	}
+
+	async goToDesignLibrary(designLibraryName: string) {
+		await this.goto();
+
+		const designLibraryLink = this.page.getByRole('link', {
+			name: designLibraryName,
+		});
+
+		await expect(designLibraryLink).toBeVisible();
+
+		await designLibraryLink.click();
+	}
 }

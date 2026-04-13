@@ -5,14 +5,14 @@
 
 import {dateUtils} from 'frontend-js-web';
 
-import {ActionItem, DesignLibraryItem} from '../../types';
+import {ActionItem, DesignLibrary} from '../../types';
 
 export default function createSetItemComponentProps(symbol: string) {
 	return function ({
 		item,
 		props,
 	}: {
-		item: DesignLibraryItem;
+		item: DesignLibrary;
 		props: {actions: ActionItem[]};
 	}) {
 		const editAction = props.actions.find((action) => {

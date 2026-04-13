@@ -68,7 +68,7 @@ public class PortalFixpackRelease {
 
 			return new URL(
 				JenkinsResultsParserUtil.combine(
-					"https://files.liferay.com/private/ee/fix-packs/",
+					"https://releases.liferay.com/fix-packs/",
 					portalBaseVersion, "/", portalFixpackType,
 					"/liferay-fix-pack-", portalFixpackType, "-",
 					portalFixpackVersion, "-", portalBaseBuildVersion, ".zip"));

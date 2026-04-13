@@ -442,6 +442,7 @@
 					<isset property="service.builder.baseline.tasks" />
 					<then>
 						<gradle-execute dir="../modules" forcedcacheenabled="false" task="${service.builder.baseline.tasks}">
+							<arg value="--continue" />
 							<arg value="--parallel" />
 							<arg value="--quiet" />
 						</gradle-execute>

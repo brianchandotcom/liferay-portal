@@ -47,12 +47,17 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
@@ -73,6 +78,17 @@ import java.util.TreeSet;
 public class RESTBuilder {
 
 	public static void main(String[] args) throws Exception {
+		if ((args.length > 0) && args[0].startsWith("rest.config.dirs=")) {
+			List<String> baselineTasks = _processRESTConfigFiles(
+				args[0].substring("rest.config.dirs=".length()));
+
+			System.out.println(
+				"rest.builder.baseline.tasks=" +
+					StringUtil.merge(baselineTasks, StringPool.SPACE));
+
+			return;
+		}
+
 		RESTBuilderArgs restBuilderArgs = new RESTBuilderArgs();
 
 		JCommander jCommander = new JCommander(restBuilderArgs);
@@ -413,8 +429,150 @@ public class RESTBuilder {
 		}
 	}
 
+	private static String _getBaselineTask(
+		Path baseDirPath, Path restConfigYamlPath) {
+
+		try {
+			String content = new String(
+				Files.readAllBytes(restConfigYamlPath), StandardCharsets.UTF_8);
+
+			int index = content.indexOf("apiDir:");
+
+			if (index == -1) {
+				return null;
+			}
+
+			int startIndex = index + "apiDir:".length();
+
+			int endIndex = content.indexOf('\n', startIndex);
+
+			if (endIndex == -1) {
+				endIndex = content.length();
+			}
+
+			String apiDirValue = content.substring(startIndex, endIndex);
+
+			Path apiDirPath = restConfigYamlPath.resolveSibling(
+				apiDirValue.trim());
+
+			Path apiModuleDirPath = apiDirPath.getParent();
+
+			while (apiModuleDirPath != null) {
+				if (Files.exists(apiModuleDirPath.resolve("bnd.bnd"))) {
+					break;
+				}
+
+				apiModuleDirPath = apiModuleDirPath.getParent();
+			}
+
+			if (apiModuleDirPath == null) {
+				return null;
+			}
+
+			Path relativePath = baseDirPath.relativize(
+				apiModuleDirPath.normalize());
+
+			String gradleProjectPath = StringUtil.replace(
+				relativePath.toString(), File.separatorChar, ':');
+
+			return ":" + gradleProjectPath + ":baseline";
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+	}
+
 	private static void _printHelp(JCommander jCommander) {
 		jCommander.usage();
+	}
+
+	private static String _processRESTConfigFile(
+			Path baseDirPath, Path restConfigYamlPath)
+		throws Exception {
+
+		Path moduleDirPath = restConfigYamlPath.getParent();
+
+		System.err.println("Processing " + moduleDirPath.getFileName());
+
+		RESTBuilder restBuilder = new RESTBuilder(
+			null, moduleDirPath.toFile(), null, null, null);
+
+		restBuilder.build();
+
+		return _getBaselineTask(baseDirPath, restConfigYamlPath);
+	}
+
+	private static List<String> _processRESTConfigFiles(String baseDirName)
+		throws Exception {
+
+		Path baseDirPath = Paths.get(baseDirName);
+
+		List<Path> restConfigYamlPaths = new ArrayList<>();
+
+		Files.walkFileTree(
+			baseDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dir, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String dirName = String.valueOf(dir.getFileName());
+
+					if (dirName.equals("build") || dirName.equals("classes") ||
+						dirName.equals("node_modules") ||
+						dirName.equals("src") ||
+						dirName.equals("test-classes") ||
+						dirName.startsWith(".")) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+					Path file, BasicFileAttributes basicFileAttributes) {
+
+					if (!Objects.equals(
+							String.valueOf(file.getFileName()),
+							"rest-config.yaml")) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					Path moduleDirPath = file.getParent();
+
+					String moduleName = String.valueOf(
+						moduleDirPath.getFileName());
+
+					if (!moduleName.endsWith("-rest-impl") ||
+						!Files.exists(moduleDirPath.resolve("build.gradle"))) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					restConfigYamlPaths.add(file);
+
+					return FileVisitResult.SKIP_SIBLINGS;
+				}
+
+			});
+
+		List<String> baselineTasks = new ArrayList<>();
+
+		for (Path restConfigYamlPath : restConfigYamlPaths) {
+			String baselineTask = _processRESTConfigFile(
+				baseDirPath, restConfigYamlPath);
+
+			if (baselineTask != null) {
+				baselineTasks.add(baselineTask);
+			}
+		}
+
+		return baselineTasks;
 	}
 
 	private String _addClientVersionDescription(String yamlString) {
@@ -1865,7 +2023,7 @@ public class RESTBuilder {
 					!Objects.equals(propertySchema.getFormat(), "double") &&
 					!Objects.equals(propertySchema.getFormat(), "float")) {
 
-					System.out.println(
+					System.err.println(
 						StringBundler.concat(
 							"The property \"", entry1.getKey(), '.',
 							entry2.getKey(),
@@ -1887,7 +2045,7 @@ public class RESTBuilder {
 					requiredPropertySchemaNames) {
 
 				if (!propertySchemaNames.contains(requiredPropertySchemaName)) {
-					System.out.println(
+					System.err.println(
 						StringBundler.concat(
 							"The required property \"",
 							requiredPropertySchemaName, "\" is not defined in ",

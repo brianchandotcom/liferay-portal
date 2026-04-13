@@ -9356,6 +9356,40 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["UtilityPage"]
+    /site-templates:
+        get:
+            description:
+                Retrieves the site templates. Results can be paginated.
+            operationId: getSiteTemplatesPage
+            parameters:
+                -   in: query
+                    name: active
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SiteTemplate"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SiteTemplate"
+                                type: array
+                    description:
+                        default response
+            tags: ["SiteTemplate"]
     /sites:
         get:
             description:

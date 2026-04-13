@@ -371,7 +371,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										</ul>
 
-										<c:if test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-43996") || !stagingGroupHelper.isCompanyGroup(group) %>'>
+										<c:if test='<%= !stagingGroupHelper.isCompanyGroup(group) || FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-43996") %>'>
 											<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-import-their">
 												<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 

@@ -18,6 +18,7 @@ import {ItemSelectorField} from './ItemSelectorField';
 import {NavigationMenuSelectorField} from './NavigationMenuSelectorField';
 import {SelectField} from './SelectField';
 import {SpacingBoxField} from './SpacingBoxField';
+import {TargetCollectionDisplayField} from './TargetCollectionDisplayField';
 import {TextField} from './TextField';
 import URLField from './URLField';
 import {VideoSelectorField} from './VideoSelectorField';
@@ -38,6 +39,7 @@ export const FRAGMENT_CONFIGURATION_FIELDS = {
 	navigationMenuSelector: NavigationMenuSelectorField,
 	select: SelectField,
 	spacing: SpacingBoxField,
+	targetCollectionDisplay: TargetCollectionDisplayField,
 	text: TextField,
 	url: URLField,
 	videoSelector: VideoSelectorField,

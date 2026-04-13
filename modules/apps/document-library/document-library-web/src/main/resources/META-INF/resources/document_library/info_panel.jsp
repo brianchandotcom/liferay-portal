@@ -82,6 +82,7 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolders();
 							</dd>
 
 							<%
+							request.setAttribute("info_panel_location.jsp-groupId", folder.getGroupId());
 							request.setAttribute("info_panel_location.jsp-parentFolder", folder.getParentFolder());
 							%>
 

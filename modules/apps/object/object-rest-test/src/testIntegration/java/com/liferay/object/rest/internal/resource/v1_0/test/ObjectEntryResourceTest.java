@@ -188,6 +188,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1350,6 +1351,8 @@ public class ObjectEntryResourceTest {
 		_testDeleteObjectEntryWithComments(0, _objectDefinition1);
 
 		// Site scope
+
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
 
 		_testDeleteObjectEntryWithComments(
 			_testGroupId, _siteScopedObjectDefinition1);
@@ -6154,6 +6157,8 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+
 		_testGetObjectEntriesPageWithComments(
 			_testGroupId, _siteScopedObjectDefinition1);
 	}
@@ -9504,6 +9509,8 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+
 		_enableComments(_siteScopedObjectDefinition1);
 
 		_testPatchPutObjectEntryWithComments(
@@ -11043,6 +11050,8 @@ public class ObjectEntryResourceTest {
 		_testPostObjectEntriesWithComments(0, _objectDefinition1);
 
 		// Site scope
+
+		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
 
 		_testPostObjectEntriesWithComments(
 			_testGroupId, _siteScopedObjectDefinition1);

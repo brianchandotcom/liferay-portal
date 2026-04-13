@@ -113,7 +113,10 @@ export default function ViewAsset({
 
 	if (!item) {
 		return (
-			<div className="align-items-center d-flex h-100 justify-content-center w-100">
+			<div
+				className="align-items-center d-flex h-100 justify-content-center w-100"
+				role="status"
+			>
 				<ClayLoadingIndicator />
 			</div>
 		);

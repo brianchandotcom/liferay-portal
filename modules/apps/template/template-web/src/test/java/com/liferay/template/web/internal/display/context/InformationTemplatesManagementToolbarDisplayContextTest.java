@@ -131,20 +131,24 @@ public class InformationTemplatesManagementToolbarDisplayContextTest {
 		InfoItemClassDetails infoItemClassDetails1 = _mockInfoItemClassDetails(
 			RandomTestUtil.randomString(), "z");
 		InfoItemClassDetails infoItemClassDetails2 = _mockInfoItemClassDetails(
+			RandomTestUtil.randomString(), "á");
+		InfoItemClassDetails infoItemClassDetails3 = _mockInfoItemClassDetails(
 			RandomTestUtil.randomString(), "a");
 
 		Mockito.when(
 			_infoItemServiceRegistry.getInfoItemClassDetails(
 				0, TemplateInfoItemCapability.KEY, null)
 		).thenReturn(
-			List.of(infoItemClassDetails1, infoItemClassDetails2)
+			List.of(
+				infoItemClassDetails1, infoItemClassDetails2,
+				infoItemClassDetails3)
 		);
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_informationTemplatesManagementToolbarDisplayContext,
 			"_getItemTypesJSONArray", new Class<?>[0]);
 
-		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
+		Assert.assertEquals(jsonArray.toString(), 3, jsonArray.length());
 
 		JSONObject jsonObject1 = jsonArray.getJSONObject(0);
 
@@ -152,7 +156,55 @@ public class InformationTemplatesManagementToolbarDisplayContextTest {
 
 		JSONObject jsonObject2 = jsonArray.getJSONObject(1);
 
-		Assert.assertEquals("z", jsonObject2.getString("label"));
+		Assert.assertEquals("á", jsonObject2.getString("label"));
+
+		JSONObject jsonObject3 = jsonArray.getJSONObject(2);
+
+		Assert.assertEquals("z", jsonObject3.getString("label"));
+	}
+
+	@Test
+	@TestInfo("LPD-63947")
+	public void testSortedGetItemTypesSubtypesJSONArray() {
+		InfoItemFormVariation infoItemFormVariation1 =
+			_mockInfoItemFormVariation(RandomTestUtil.randomString(), "z");
+		InfoItemFormVariation infoItemFormVariation2 =
+			_mockInfoItemFormVariation(RandomTestUtil.randomString(), "á");
+		InfoItemFormVariation infoItemFormVariation3 =
+			_mockInfoItemFormVariation(RandomTestUtil.randomString(), "a");
+
+		Mockito.when(
+			_infoItemFormVariationsProvider.getInfoItemFormVariations(0)
+		).thenReturn(
+			List.of(
+				infoItemFormVariation1, infoItemFormVariation2,
+				infoItemFormVariation3)
+		);
+
+		JSONArray jsonArray = ReflectionTestUtil.invoke(
+			_informationTemplatesManagementToolbarDisplayContext,
+			"_getItemTypesJSONArray", new Class<?>[0]);
+
+		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		JSONArray subtypesJSONArray = jsonObject.getJSONArray("subtypes");
+
+		Assert.assertEquals(
+			subtypesJSONArray.toString(), 3, subtypesJSONArray.length());
+
+		JSONObject subtypeJSONObject1 = subtypesJSONArray.getJSONObject(0);
+
+		Assert.assertEquals("a", subtypeJSONObject1.getString("label"));
+
+		JSONObject subtypeJSONObject2 = subtypesJSONArray.getJSONObject(1);
+
+		Assert.assertEquals("á", subtypeJSONObject2.getString("label"));
+
+		JSONObject subtypeJSONObject3 = subtypesJSONArray.getJSONObject(2);
+
+		Assert.assertEquals("z", subtypeJSONObject3.getString("label"));
 	}
 
 	private InfoItemClassDetails _mockInfoItemClassDetails(

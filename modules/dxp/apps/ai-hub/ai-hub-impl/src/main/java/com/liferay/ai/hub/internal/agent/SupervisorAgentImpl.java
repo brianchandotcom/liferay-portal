@@ -7,6 +7,7 @@ package com.liferay.ai.hub.internal.agent;
 
 import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.agent.SupervisorAgent;
+import com.liferay.ai.hub.internal.configuration.VertexAIConfiguration;
 import com.liferay.ai.hub.internal.memory.ChatMemoryProviderUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -15,6 +16,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
@@ -64,14 +66,19 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 					PermissionChecker originalPermissionChecker =
 						PermissionThreadLocal.getPermissionChecker();
 
+					VertexAIConfiguration vertexAIConfiguration =
+						_configurationProvider.getCompanyConfiguration(
+							VertexAIConfiguration.class,
+							agentContext.getCompanyId());
+
 					try (VertexAiGeminiChatModel vertexAiGeminiChatModel =
 							VertexAiGeminiChatModel.builder(
 							).location(
-								"europe-central2"
+								vertexAIConfiguration.location()
 							).modelName(
-								"gemini-2.5-flash-lite"
+								vertexAIConfiguration.modelName()
 							).project(
-								"ai-hub-liferay"
+								vertexAIConfiguration.projectId()
 							).build()) {
 
 						PermissionThreadLocal.setPermissionChecker(
@@ -209,6 +216,9 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SupervisorAgentImpl.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private NoticeableExecutorService _noticeableExecutorService;
 

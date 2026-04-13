@@ -152,7 +152,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		ServiceContext serviceContext = executionContext.getServiceContext();
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
-			VertexAiGeminiStreamingChatModelUtil.create();
+			VertexAiGeminiStreamingChatModelUtil.create(
+				serviceContext.getCompanyId());
 
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();

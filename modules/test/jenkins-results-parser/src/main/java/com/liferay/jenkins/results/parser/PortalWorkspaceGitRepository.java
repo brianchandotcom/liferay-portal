@@ -150,6 +150,8 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			if (!isSnapshot()) {
 				prepareGitWorkingDirectory();
 
+				_setUpBinariesCache();
+
 				prepareGitArchive();
 
 				setSetUp(true);
@@ -157,6 +159,8 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 			if (!isSetUp() && isSnapshot()) {
 				useGitArchive();
+
+				_setUpBinariesCache();
 			}
 		}
 		catch (IOException ioException) {

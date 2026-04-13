@@ -430,4 +430,53 @@ describe('CMSFileSelectorEventHandler', () => {
 
 		expect(window.location.href).toBe('http://localhost/current-page');
 	});
+
+	it('fires the fileEntrySaved event on file upload', async () => {
+		const mockBlob = new Blob(['test']);
+
+		mockFetch
+			.mockResolvedValueOnce({blob: () => Promise.resolve(mockBlob)})
+			.mockResolvedValueOnce({
+				json: () => Promise.resolve({fileName: 'file.pdf', id: 1}),
+				ok: true,
+			});
+
+		const liferayFireSpy = jest.spyOn(Liferay, 'fire');
+
+		CMSFileSelectorEventHandler();
+
+		const eventHandler = mockOn.mock.calls[0][1];
+
+		eventHandler({
+			data: {
+				folderId: 100,
+				groupId: Liferay.ThemeDisplay.getScopeGroupId(),
+				redirect: 'http://localhost/redirect',
+			},
+		});
+
+		const {onSelect} = mockOpenCMSFileSelectorModal.mock.calls[0][0];
+
+		onSelect([
+			{
+				embedded: {
+					file: {
+						link: {href: 'http://localhost/file.pdf'},
+						name: 'file.pdf',
+					},
+				},
+			},
+		]);
+
+		await flushPromises();
+
+		expect(liferayFireSpy).toHaveBeenCalledWith(
+			'fileEntrySaved',
+			expect.objectContaining({
+				fileEntryId: 1,
+				fileName: 'file.pdf',
+				groupId: Liferay.ThemeDisplay.getScopeGroupId(),
+			})
+		);
+	});
 });

@@ -604,7 +604,7 @@ public class JenkinsUtil {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyyMMddHHmmss");
 
-			PatcherFixLocalServiceUtil.updateRequestKey(
+			patcherFix = PatcherFixLocalServiceUtil.updateRequestKey(
 				patcherFix.getPatcherFixId(),
 				PatcherUtil.generatePatcherKey(
 					PatcherFix.class.getName(), patcherFix.getPatcherFixId(),

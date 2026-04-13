@@ -157,6 +157,8 @@ page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.Repository" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.repository.AuthenticationRepositoryException" %><%@
@@ -206,7 +208,8 @@ page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %><%@
 page import="com.liferay.trash.model.TrashEntry" %>
 
-<%@ page import="jakarta.portlet.PortletURL" %>
+<%@ page import="jakarta.portlet.PortletRequest" %><%@
+page import="jakarta.portlet.PortletURL" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %><%@
 page import="java.text.Format" %>

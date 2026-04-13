@@ -20,7 +20,16 @@ long parentFolderId = (parentFolder == null) ? DLFolderConstants.DEFAULT_PARENT_
 	<dd class="sidebar-dd">
 
 		<%
-		PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
+		long groupId = GetterUtil.getLong(request.getAttribute("info_panel_location.jsp-groupId"));
+
+		PortletURL viewFolderURL = null;
+
+		if (groupId > 0) {
+			viewFolderURL = PortalUtil.getControlPanelPortletURL(request, GroupLocalServiceUtil.getGroup(groupId), PortletProviderUtil.getPortletId(Folder.class.getName(), PortletProvider.Action.MANAGE), groupId, 0, PortletRequest.RENDER_PHASE);
+		}
+		else {
+			viewFolderURL = liferayPortletResponse.createRenderURL();
+		}
 
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view");

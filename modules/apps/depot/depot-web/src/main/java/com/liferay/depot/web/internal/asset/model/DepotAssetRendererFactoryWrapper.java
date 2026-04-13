@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.WindowState;
@@ -105,14 +107,43 @@ public class DepotAssetRendererFactoryWrapper<T>
 			return null;
 		}
 
-		if (group.isControlPanel() ||
-			ArrayUtil.contains(
-				_siteConnectedGroupGroupProvider.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_getGroupId(group.getGroupId())),
-				groupId)) {
+		if (group.isControlPanel()) {
+			return assetRenderer;
+		}
+
+		long[] currentAndAncestorSiteAndDepotGroupIds =
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(
+					_getGroupId(group.getGroupId()));
+
+		if (ArrayUtil.contains(
+				currentAndAncestorSiteAndDepotGroupIds, groupId)) {
 
 			return assetRenderer;
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			groupId);
+
+		if (depotEntry != null) {
+			StagingGroupHelper stagingGroupHelper =
+				StagingGroupHelperUtil.getStagingGroupHelper();
+
+			Group depotEntryGroup = depotEntry.getGroup();
+
+			if (stagingGroupHelper.isLocalLiveGroup(depotEntryGroup) ||
+				stagingGroupHelper.isRemoteLiveGroup(depotEntryGroup)) {
+
+				Group stagedDepotEntryGroup = depotEntryGroup.getStagingGroup();
+
+				if ((stagedDepotEntryGroup != null) &&
+					ArrayUtil.contains(
+						currentAndAncestorSiteAndDepotGroupIds,
+						stagedDepotEntryGroup.getGroupId())) {
+
+					return assetRenderer;
+				}
+			}
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -121,10 +152,9 @@ public class DepotAssetRendererFactoryWrapper<T>
 			return null;
 		}
 
-		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
-			groupId);
+		if ((depotEntry != null) &&
+			(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
 
-		if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
 			return assetRenderer;
 		}
 

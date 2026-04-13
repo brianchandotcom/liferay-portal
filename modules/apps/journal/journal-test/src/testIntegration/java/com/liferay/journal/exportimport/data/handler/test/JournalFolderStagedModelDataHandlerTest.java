@@ -7,16 +7,20 @@ package com.liferay.journal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -75,6 +79,48 @@ public class JournalFolderStagedModelDataHandlerTest
 		importedStagedModel = getStagedModel(stagedModel.getUuid(), liveGroup);
 
 		Assert.assertNotNull(importedStagedModel);
+	}
+
+	@Test
+	public void testImportWithExistingExternalReferenceCode() throws Exception {
+		initExport();
+
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.addFolder(
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, journalFolder);
+
+		JournalFolder existingJournalFolder =
+			JournalFolderLocalServiceUtil.addFolder(
+				journalFolder.getExternalReferenceCode(),
+				TestPropsValues.getUserId(), liveGroup.getGroupId(), 0,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			JournalFolder exportedJournalFolder =
+				(JournalFolder)readExportedStagedModel(journalFolder);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedJournalFolder);
+
+			JournalFolder importedJournalFolder =
+				JournalFolderLocalServiceUtil.
+					fetchJournalFolderByExternalReferenceCode(
+						journalFolder.getExternalReferenceCode(),
+						liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				existingJournalFolder.getFolderId(),
+				importedJournalFolder.getFolderId());
+			Assert.assertEquals(
+				journalFolder.getName(), importedJournalFolder.getName());
+		}
 	}
 
 	@Override

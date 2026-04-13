@@ -78,6 +78,21 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
+	public Folder fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		DLFolder dlFolder =
+			_dlFolderLocalService.fetchDLFolderByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		if (dlFolder != null) {
+			return new LiferayFolder(dlFolder);
+		}
+
+		return null;
+	}
+
+	@Override
 	public Folder fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
 		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(uuid, groupId);
 
@@ -249,8 +264,8 @@ public class FolderStagedModelDataHandler
 				repository.getDlFolderId());
 		}
 		else {
-			Folder existingFolder = fetchStagedModelByUuidAndGroupId(
-				folder.getUuid(), portletDataContext.getScopeGroupId());
+			Folder existingFolder = fetchExistingStagedModel(
+				folder, portletDataContext.getScopeGroupId());
 
 			if ((existingFolder == null) ||
 				!portletDataContext.isDataStrategyMirror()) {

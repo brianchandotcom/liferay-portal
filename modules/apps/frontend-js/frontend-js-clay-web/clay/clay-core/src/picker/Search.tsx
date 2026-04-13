@@ -8,13 +8,10 @@ import ClayIcon from '@clayui/icon';
 import {InternalDispatch, Keys} from '@clayui/shared';
 import React from 'react';
 
-import {PickerMessages} from './Picker';
-
 type Props = {
 	activeDescendant: React.Key;
 	ariaControls: string;
 	getOptions: () => Array<HTMLElement>;
-	messages: PickerMessages;
 	onActiveChange: InternalDispatch<boolean>;
 	onChange: InternalDispatch<string>;
 	onKeyDown: InternalDispatch<React.KeyboardEvent<HTMLElement>>;
@@ -24,9 +21,9 @@ type Props = {
 		list: Array<HTMLElement> | Array<React.Key>
 	) => void;
 	onPress: () => void;
+	placeholder: string;
 	triggerRef: React.RefObject<HTMLButtonElement | null>;
 	value: string;
-	visible: boolean;
 };
 
 export const Search = React.forwardRef<HTMLInputElement, Props>(function Search(
@@ -34,22 +31,17 @@ export const Search = React.forwardRef<HTMLInputElement, Props>(function Search(
 		activeDescendant,
 		ariaControls,
 		getOptions,
-		messages,
 		onActiveChange,
-		onChange: externalOnChange,
+		onChange,
 		onKeyDown: externalOnKeyDown,
 		onMoveFocus,
 		onPress,
+		placeholder,
 		triggerRef,
 		value,
-		visible,
 	},
 	ref
 ) {
-	function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-		externalOnChange(event.target.value);
-	}
-
 	function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
 		if (event.key === Keys.Enter) {
 			event.preventDefault();
@@ -90,34 +82,32 @@ export const Search = React.forwardRef<HTMLInputElement, Props>(function Search(
 	}
 
 	return (
-		visible && (
-			<div className="pb-2 pt-3 px-3">
-				<ClayInput.Group small>
-					<ClayInput.GroupItem className="input-group-item-focusable">
-						<ClayInput
-							aria-activedescendant={
-								activeDescendant
-									? String(activeDescendant)
-									: undefined
-							}
-							aria-autocomplete="list"
-							aria-controls={ariaControls}
-							aria-label={messages.searchPlaceholder}
-							insetAfter
-							onChange={onChange}
-							onKeyDown={onKeyDown}
-							placeholder={messages.searchPlaceholder}
-							ref={ref}
-							type="text"
-							value={value}
-						/>
+		<div className="pb-2 pt-3 px-3">
+			<ClayInput.Group small>
+				<ClayInput.GroupItem className="input-group-item-focusable">
+					<ClayInput
+						aria-activedescendant={
+							activeDescendant
+								? String(activeDescendant)
+								: undefined
+						}
+						aria-autocomplete="list"
+						aria-controls={ariaControls}
+						aria-label={placeholder}
+						insetAfter
+						onChange={(event) => onChange(event.target.value)}
+						onKeyDown={onKeyDown}
+						placeholder={placeholder}
+						ref={ref}
+						type="text"
+						value={value}
+					/>
 
-						<ClayInput.GroupInsetItem after tag="span">
-							<ClayIcon symbol="search" />
-						</ClayInput.GroupInsetItem>
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
-			</div>
-		)
+					<ClayInput.GroupInsetItem after tag="span">
+						<ClayIcon symbol="search" />
+					</ClayInput.GroupInsetItem>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+		</div>
 	);
 });

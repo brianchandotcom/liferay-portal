@@ -634,21 +634,22 @@ export function Picker<T extends Record<string, any> | string | number>({
 									: undefined,
 						}}
 					>
-						<Search
-							activeDescendant={activeDescendant}
-							ariaControls={ariaControls}
-							getOptions={getOptions}
-							messages={messages}
-							onActiveChange={setActive}
-							onChange={setSearchValue}
-							onKeyDown={navigationProps.onKeyDown}
-							onMoveFocus={onMoveFocus}
-							onPress={onPress}
-							ref={searchRef}
-							triggerRef={triggerRef}
-							value={searchValue}
-							visible={isSearchable}
-						/>
+						{isSearchable && (
+							<Search
+								activeDescendant={activeDescendant}
+								ariaControls={ariaControls}
+								getOptions={getOptions}
+								onActiveChange={setActive}
+								onChange={setSearchValue}
+								onKeyDown={navigationProps.onKeyDown}
+								onMoveFocus={onMoveFocus}
+								onPress={onPress}
+								placeholder={messages.searchPlaceholder}
+								ref={searchRef}
+								triggerRef={triggerRef}
+								value={searchValue}
+							/>
+						)}
 
 						{UNSAFE_behavior === 'secondary' &&
 							(isArrowVisible === 'top' ||

@@ -2347,7 +2347,7 @@ public class ServiceBuilder {
 		_threadLocalModelHints.set(moduleModelHintsImpl);
 
 		try {
-			System.err.println("Processing " + moduleDir.getFileName());
+			System.out.println("Processing " + moduleDir.getFileName());
 
 			new ServiceBuilder(
 				apiDir.toString(), true, autoNamespaceTables,

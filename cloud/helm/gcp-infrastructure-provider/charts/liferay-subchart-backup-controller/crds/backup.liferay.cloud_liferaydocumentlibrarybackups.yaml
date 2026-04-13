@@ -29,15 +29,10 @@ spec:
                                             properties:
                                                 bucket:
                                                     type: string
-                                                bucketLookup:
-                                                    properties:
-                                                        matchLabels:
-                                                            additionalProperties:
-                                                                type: string
-                                                            type: object
-                                                    type: object
                                                 path:
                                                     type: string
+                                            required:
+                                                -   bucket
                                             type: object
                                         type:
                                             enum:
@@ -54,15 +49,10 @@ spec:
                                             properties:
                                                 bucket:
                                                     type: string
-                                                bucketLookup:
-                                                    properties:
-                                                        matchLabels:
-                                                            additionalProperties:
-                                                                type: string
-                                                            type: object
-                                                    type: object
                                                 path:
                                                     type: string
+                                            required:
+                                                -   bucket
                                             type: object
                                         type:
                                             enum:
@@ -116,10 +106,6 @@ spec:
                                     x-kubernetes-list-map-keys:
                                         -   type
                                     x-kubernetes-list-type: map
-                                resolvedDestinationBucket:
-                                    type: string
-                                resolvedSourceBucket:
-                                    type: string
                                 retryAttempt:
                                     type: integer
                             type: object

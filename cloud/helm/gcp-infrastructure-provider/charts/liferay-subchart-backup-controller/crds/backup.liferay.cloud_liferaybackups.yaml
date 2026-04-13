@@ -39,15 +39,10 @@ spec:
                                                     properties:
                                                         bucket:
                                                             type: string
-                                                        bucketLookup:
-                                                            properties:
-                                                                matchLabels:
-                                                                    additionalProperties:
-                                                                        type: string
-                                                                    type: object
-                                                            type: object
                                                         path:
                                                             type: string
+                                                    required:
+                                                        -   bucket
                                                     type: object
                                                 type:
                                                     enum:
@@ -174,15 +169,26 @@ spec:
                                     x-kubernetes-list-map-keys:
                                         -   type
                                     x-kubernetes-list-type: map
+                                databaseSnapshot:
+                                    properties:
+                                        instanceId:
+                                            type: string
+                                        snapshotId:
+                                            format: int64
+                                            type: integer
+                                    type: object
                                 databaseSnapshotId:
                                     format: int64
                                     type: integer
-                                resolvedDatabaseInstanceId:
-                                    type: string
-                                resolvedDestinationBucket:
-                                    type: string
-                                resolvedSourceBucket:
-                                    type: string
+                                documentLibrary:
+                                    properties:
+                                        destinationBucket:
+                                            type: string
+                                        destinationPath:
+                                            type: string
+                                        sourceBucket:
+                                            type: string
+                                    type: object
                                 startTime:
                                     format: date-time
                                     type: string

@@ -48,9 +48,10 @@ function ActionDropdownItem({
 		}
 		else if (target === 'delete') {
 			confirmAndDeleteEntryAction({
-				bodyHTML: Liferay.Language.get(
-					'delete-design-library-confirmation-body'
-				),
+				bodyHTML: `
+					<p>${Liferay.Language.get('delete-design-library-confirmation-body-main')}</p>
+					<p>${Liferay.Language.get('delete-design-library-confirmation-body-warning')}</p>
+				`,
 				deleteAction: {
 					href,
 					method: 'DELETE',

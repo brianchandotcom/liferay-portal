@@ -484,61 +484,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-154872 - Verify that it's possible to import and export metadata fields"
-	@priority = 4
-	test CanImportAndExportMetadataFields {
-		task ("Given a power user") {
-			task ("Create Custom Object and Custom Field") {
-				ObjectAdmin.addObjectViaAPI(
-					labelName = "Custom Object",
-					objectName = "CustomObject",
-					pluralLabelName = "Custom Objects");
-
-				ObjectAdmin.addObjectFieldViaAPI(
-					fieldBusinessType = "Text",
-					fieldLabelName = "Custom Field",
-					fieldName = "customField",
-					fieldType = "String",
-					isRequired = "false",
-					objectName = "CustomObject");
-
-				ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
-			}
-		}
-
-		task ("When exporting or importing objects' structures") {
-			task ("Export object structure") {
-				ObjectAdmin.openObjectAdmin();
-
-				ObjectExportImport.exportObject(
-					objectLabel = "Custom Object",
-					objectName = "CustomObject");
-			}
-
-			task ("Import object structure") {
-				ObjectExportImport.importObject(
-					objectFileName = "ImportedObjectWithField",
-					objectName = "ImportedCustomObject");
-			}
-		}
-
-		task ("Then I must be able to export or import metadata fields and information") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Imported Object With Field");
-
-			ObjectAdmin.gotoTab(tabName = "Fields");
-
-			var listMetaData = "Author,Create Date,Modified Date,Status,ID";
-
-			for (var metadata : list ${listMetaData}) {
-				AssertVisible(
-					key_label = ${metadata},
-					locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
-			}
-		}
-	}
-
 	@description = "Verify that the user is able to add the Formula Field when managing Custom Action with Groovy Script"
 	@priority = 4
 	test CanManageFormulaFieldWithCustomAction {

@@ -968,8 +968,11 @@ public class ObjectEntryDTOConverter
 		return NestedFieldsSupplier.supply(
 			"comments",
 			nestedFieldNames -> {
-				if (!FeatureFlagManagerUtil.isEnabled(
-						objectDefinition.getCompanyId(), "LPD-43996") ||
+				if ((!Objects.equals(
+						objectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_SITE) &&
+					 !FeatureFlagManagerUtil.isEnabled(
+						 objectDefinition.getCompanyId(), "LPD-43996")) ||
 					!objectDefinition.isEnableComments() ||
 					!_discussionPermission.hasViewPermission(
 						PermissionThreadLocal.getPermissionChecker(),

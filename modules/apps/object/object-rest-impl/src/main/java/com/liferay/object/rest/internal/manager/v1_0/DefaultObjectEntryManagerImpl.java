@@ -2036,8 +2036,11 @@ public class DefaultObjectEntryManagerImpl
 		List<ObjectEntryComment> objectEntryComments = null;
 
 		if ((objectEntry.getComments() != null) &&
-			FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-43996")) {
+			(Objects.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_SITE) ||
+			 FeatureFlagManagerUtil.isEnabled(
+				 objectDefinition.getCompanyId(), "LPD-43996"))) {
 
 			objectEntryComments = TransformUtil.transformToList(
 				objectEntry.getComments(),

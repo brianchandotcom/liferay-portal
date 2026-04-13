@@ -82,7 +82,7 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select KaleoDefinitionVersion.* from ",
 					"KaleoDefinitionVersion join (select name,  ",
@@ -95,7 +95,7 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 					"KaleoDefinition.name where KaleoDefinition.",
 					"kaleoDefinitionId is null"));
 
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				long groupId = resultSet.getLong("groupId");

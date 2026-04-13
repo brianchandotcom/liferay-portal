@@ -396,6 +396,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 				</dd>
 
 				<%
+				request.setAttribute("info_panel_location.jsp-groupId", fileEntry.getGroupId());
 				request.setAttribute("info_panel_location.jsp-parentFolder", fileEntry.getFolder());
 				%>
 

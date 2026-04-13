@@ -10,6 +10,7 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -215,7 +216,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 
 		if (Objects.equals(
 				fragmentEntryLink.getRendererKey(),
-				CollectionFilterConfigurationUtil.RENDERER_KEY)) {
+				FragmentRendererConstants.
+					COLLECTION_FILTER_FRAGMENT_RENDERER_KEY)) {
 
 			String filterKey = GetterUtil.getString(
 				freeMarkerJSONObject.getString("filterKey"));

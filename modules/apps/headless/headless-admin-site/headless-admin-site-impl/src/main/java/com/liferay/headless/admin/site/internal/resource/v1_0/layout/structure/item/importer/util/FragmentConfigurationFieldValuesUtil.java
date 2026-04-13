@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilterRegistry;
+import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParserUtil;
 import com.liferay.headless.admin.site.dto.v1_0.BasicFragmentInstancePageElementDefinition;
@@ -539,7 +540,8 @@ public class FragmentConfigurationFieldValuesUtil {
 
 			if (Objects.equals(
 					defaultFragmentReference.getDefaultFragmentKey(),
-					CollectionFilterConfigurationUtil.RENDERER_KEY)) {
+					FragmentRendererConstants.
+						COLLECTION_FILTER_FRAGMENT_RENDERER_KEY)) {
 
 				String filterKey = null;
 

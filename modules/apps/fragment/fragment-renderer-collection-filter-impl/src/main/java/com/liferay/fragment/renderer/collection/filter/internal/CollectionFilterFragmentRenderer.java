@@ -11,6 +11,7 @@ import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -73,6 +74,12 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getIcon() {
 		return "filter";
+	}
+
+	@Override
+	public String getKey() {
+		return FragmentRendererConstants.
+			COLLECTION_FILTER_FRAGMENT_RENDERER_KEY;
 	}
 
 	@Override

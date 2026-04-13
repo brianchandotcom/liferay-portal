@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -35,6 +36,8 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.web.internal.security.permissions.resource.TemplateEntryPermission;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.text.Collator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -151,6 +154,8 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			return itemTypesJSONArray;
 		}
 
+		Collator collator = CollatorUtil.getInstance(_themeDisplay.getLocale());
+
 		List<InfoItemClassDetails> infoItemClassDetails = new ArrayList<>(
 			_infoItemServiceRegistry.getInfoItemClassDetails(
 				_themeDisplay.getScopeGroupId(), TemplateInfoItemCapability.KEY,
@@ -161,7 +166,8 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			Comparator.comparing(
 				curInfoItemClassDetails -> GetterUtil.getString(
 					curInfoItemClassDetails.getLabel(
-						_themeDisplay.getLocale()))));
+						_themeDisplay.getLocale())),
+				collator));
 
 		for (InfoItemClassDetails curInfoItemClassDetails :
 				infoItemClassDetails) {
@@ -205,7 +211,8 @@ public class InformationTemplatesManagementToolbarDisplayContext
 					Comparator.comparing(
 						infoItemFormVariation -> GetterUtil.getString(
 							infoItemFormVariation.getLabel(
-								_themeDisplay.getLocale()))));
+								_themeDisplay.getLocale())),
+						collator));
 
 				for (InfoItemFormVariation infoItemFormVariation :
 						infoItemFormVariations) {

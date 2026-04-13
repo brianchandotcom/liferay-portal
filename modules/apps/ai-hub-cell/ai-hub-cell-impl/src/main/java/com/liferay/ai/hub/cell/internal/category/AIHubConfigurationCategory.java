@@ -13,7 +13,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Feliphe Marinho
  */
 @Component(service = ConfigurationCategory.class)
-public class AIHubCellConfigurationCategory implements ConfigurationCategory {
+public class AIHubConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
@@ -22,7 +22,7 @@ public class AIHubCellConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return "ai-hub-cell";
+		return "ai-hub";
 	}
 
 	@Override

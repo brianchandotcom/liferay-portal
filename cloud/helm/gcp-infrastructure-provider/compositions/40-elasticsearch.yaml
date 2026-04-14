@@ -56,7 +56,7 @@ spec:
         manifest:
             apiVersion: v1
             data:
-                ELASTICSEARCH_DEFAULT_PASSWORD: {{ $password }}
+                ELASTICSEARCH_PASSWORD: {{ $password }}
             kind: Secret
             metadata:
                 labels:
@@ -64,8 +64,7 @@ spec:
                 name: elasticsearch-connection-details
                 namespace: {{ $namespace }}
             stringData:
-                ELASTICSEARCH_DEFAULT_PASSWORD_SECRET_NAME: {{ $searchSecretName | quote }}
-                ELASTICSEARCH_DEFAULT_USERNAME: elastic
+                ELASTICSEARCH_USERNAME: elastic
                 ELASTICSEARCH_URL: http://{{ $searchName }}-es-http.{{ $searchNamespace }}.svc:9200
             type: Opaque
     managementPolicies: {{ $managementPolicies }}

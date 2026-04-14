@@ -7,6 +7,11 @@ export type RequestResult<T> =
 	| {data: null; error: string; status?: string | null}
 	| {data: T; error: null; status?: string | null};
 
+interface ApiErrorResponse {
+	error?: string;
+	message?: string;
+}
+
 const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
 	'an-unexpected-error-occurred'
 );
@@ -50,7 +55,7 @@ async function postFormDataWithProgress<T>(
 		}
 
 		xhr.onload = () => {
-			let responseData: any;
+			let responseData: T | ApiErrorResponse;
 
 			try {
 				responseData = JSON.parse(xhr.responseText);
@@ -66,9 +71,11 @@ async function postFormDataWithProgress<T>(
 				resolve({data: responseData as T, error: null});
 			}
 			else {
+				const errorResponse = responseData as ApiErrorResponse;
+
 				const errorMessage =
-					responseData?.message ||
-					responseData?.error ||
+					errorResponse?.message ||
+					errorResponse?.error ||
 					UNEXPECTED_ERROR_MESSAGE;
 
 				resolve({

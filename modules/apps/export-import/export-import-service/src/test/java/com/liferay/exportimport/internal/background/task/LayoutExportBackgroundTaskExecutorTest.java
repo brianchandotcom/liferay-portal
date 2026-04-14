@@ -44,22 +44,12 @@ public class LayoutExportBackgroundTaskExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_backgroundTaskManager = Mockito.mock(BackgroundTaskManager.class);
-		_exportImportLocalService = Mockito.mock(
-			ExportImportLocalService.class);
-
-		_layoutExportBackgroundTaskExecutor =
-			new LayoutExportBackgroundTaskExecutor();
-
 		ReflectionTestUtil.setFieldValue(
 			_layoutExportBackgroundTaskExecutor, "_backgroundTaskManager",
 			_backgroundTaskManager);
-
 		ReflectionTestUtil.setFieldValue(
 			_layoutExportBackgroundTaskExecutor, "_exportImportLocalService",
 			_exportImportLocalService);
-
-		_timeMockedStatic = Mockito.mockStatic(Time.class);
 
 		_timeMockedStatic.when(
 			Time::getTimestamp
@@ -151,10 +141,14 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			sourceFileNameCaptor.getValue());
 	}
 
-	private BackgroundTaskManager _backgroundTaskManager;
-	private ExportImportLocalService _exportImportLocalService;
+	private BackgroundTaskManager _backgroundTaskManager = Mockito.mock(
+		BackgroundTaskManager.class);
+	private ExportImportLocalService _exportImportLocalService = Mockito.mock(
+			ExportImportLocalService.class);
 	private LayoutExportBackgroundTaskExecutor
-		_layoutExportBackgroundTaskExecutor;
-	private MockedStatic<Time> _timeMockedStatic;
+		_layoutExportBackgroundTaskExecutor =
+			new LayoutExportBackgroundTaskExecutor();
+	private MockedStatic<Time> _timeMockedStatic = Mockito.mockStatic(
+		Time.class);
 
 }

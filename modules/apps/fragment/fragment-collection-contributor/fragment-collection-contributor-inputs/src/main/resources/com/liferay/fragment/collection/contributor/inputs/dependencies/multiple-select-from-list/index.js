@@ -46,7 +46,7 @@ else {
 			registerLocalizedInput,
 			registerUnlocalizedInput,
 		}) => {
-			const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+			const defaultLanguageId = input.attributes.defaultLanguageId;
 
 			let currentLanguageId = defaultLanguageId;
 

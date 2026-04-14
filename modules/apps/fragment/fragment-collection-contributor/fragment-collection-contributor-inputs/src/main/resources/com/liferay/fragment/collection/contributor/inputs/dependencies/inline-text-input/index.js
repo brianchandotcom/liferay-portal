@@ -78,7 +78,7 @@ function main() {
 
 				inputElement.addEventListener('keyup', onKeyup);
 
-				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+				const defaultLanguageId = input.attributes.defaultLanguageId;
 
 				if (input.localizable) {
 					const {onBlur, onChange} = registerLocalizedInput({

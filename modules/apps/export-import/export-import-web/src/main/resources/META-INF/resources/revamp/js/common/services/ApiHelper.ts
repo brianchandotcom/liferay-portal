@@ -11,6 +11,12 @@ const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
 	'an-unexpected-error-occurred'
 );
 
+const HEADERS = {
+	'ACCEPT': 'application/json',
+	'ACCEPT-LANGUAGE': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'X-CSRF-Token': Liferay.authToken,
+};
+
 async function postFormDataWithProgress<T>(
 	url: string,
 	formData: FormData,
@@ -27,12 +33,9 @@ async function postFormDataWithProgress<T>(
 
 		xhr.open('POST', url);
 
-		xhr.setRequestHeader('Accept', 'application/json');
-		xhr.setRequestHeader(
-			'Accept-Language',
-			Liferay.ThemeDisplay.getBCP47LanguageId()
-		);
-		xhr.setRequestHeader('X-CSRF-Token', Liferay.authToken);
+		Object.entries(HEADERS).forEach(([key, value]) => {
+			xhr.setRequestHeader(key, value);
+		});
 
 		if (signal) {
 			signal.addEventListener('abort', handleAbort);

@@ -292,8 +292,8 @@ export class ChangeTrackingPage {
 		await this.globalMenuPage.goToApplications();
 
 		await this.page
-			.getByRole('menuitem', {exact: true, name: 'Publications'})
-			.and(this.page.locator('.nav-link[href]'))
+			.locator('.nav-link[href]')
+			.getByText('Publications')
 			.click();
 
 		const enablePublications = this.page.getByText('Enable Publications');

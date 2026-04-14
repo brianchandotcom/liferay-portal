@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -439,15 +440,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		inputTemplateNode.addAttribute(
 			"fileNameI18n", _jsonFactory.createJSONObject(fileNameI18n));
 
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		if (object instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)object;
-
-			inputTemplateNode.addAttribute(
-				"groupId", groupedModel.getGroupId());
-		}
+		inputTemplateNode.addAttribute(
+			"groupId", _getGroupId(httpServletRequest));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -555,6 +549,17 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		else if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
 			_addTextInfoFieldTypeInputTemplateNodeAttributes(
 				infoField, inputTemplateNode);
+		}
+
+		try {
+			inputTemplateNode.addAttribute(
+				"defaultLanguageId",
+				LocaleUtil.toLanguageId(
+					PortalUtil.getSiteDefaultLocale(
+						_getGroupId(httpServletRequest))));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
@@ -833,6 +838,23 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		return null;
+	}
+
+	private long _getGroupId(HttpServletRequest httpServletRequest) {
+		Object infoItem = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+
+		if (infoItem instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)infoItem;
+
+			return groupedModel.getGroupId();
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getScopeGroupId();
 	}
 
 	private InfoFieldValue<?> _getInfoFieldValue(

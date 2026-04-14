@@ -141,14 +141,14 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			sourceFileNameCaptor.getValue());
 	}
 
-	private BackgroundTaskManager _backgroundTaskManager = Mockito.mock(
+	private final BackgroundTaskManager _backgroundTaskManager = Mockito.mock(
 		BackgroundTaskManager.class);
-	private ExportImportLocalService _exportImportLocalService = Mockito.mock(
-			ExportImportLocalService.class);
-	private LayoutExportBackgroundTaskExecutor
+	private final ExportImportLocalService _exportImportLocalService =
+		Mockito.mock(ExportImportLocalService.class);
+	private final LayoutExportBackgroundTaskExecutor
 		_layoutExportBackgroundTaskExecutor =
 			new LayoutExportBackgroundTaskExecutor();
-	private MockedStatic<Time> _timeMockedStatic = Mockito.mockStatic(
+	private final MockedStatic<Time> _timeMockedStatic = Mockito.mockStatic(
 		Time.class);
 
 }

@@ -230,11 +230,19 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.PathSegment;
+import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriInfo;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+
+import java.net.URI;
 
 import java.sql.Timestamp;
 
@@ -7318,6 +7326,140 @@ public class DefaultObjectEntryManagerImplTest
 
 	@FeatureFlag("LPD-17564")
 	@Test
+	public void testGetVersionedObjectEntriesWithCopyAction() throws Exception {
+
+		// Company scope no folder
+
+		_enableObjectEntryVersioning();
+
+		ObjectEntry objectEntry = _updateObjectEntryVersion(
+			_objectDefinition1,
+			_addObjectEntry(
+				_objectDefinition1,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, 1),
+			2);
+
+		_user = _addUser();
+
+		_addRoleUser(
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+			_objectDefinition1, _user);
+
+		Role role = _addRoleUser(
+			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
+			_objectDefinition1, _user);
+
+		DTOConverterContext dtoConverterContext =
+			_createCopyActionDTOConverterContext(_user);
+
+		_assertVersionedObjectEntriesCopyAction(
+			dtoConverterContext, _objectDefinition1, objectEntry, null, true);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, _objectDefinition1.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		_assertVersionedObjectEntriesCopyAction(
+			dtoConverterContext, _objectDefinition1, objectEntry, null, false);
+
+		// Depot scope in folder
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), _depotEntry.getGroupId(),
+				adminUser.getUserId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, null, RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _addObjectEntry(
+			_objectDefinition6, objectEntryFolder.getObjectEntryFolderId(),
+			String.valueOf(_depotEntry.getGroupId()), 1);
+
+		_user = _addUser();
+
+		_userLocalService.addGroupUsers(
+			_depotEntry.getGroupId(), new long[] {_user.getUserId()});
+
+		_addRoleUser(
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+			_objectDefinition6, _user);
+
+		role = _roleLocalService.getRole(companyId, RoleConstants.USER);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			companyId, ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+			role.getRoleId(),
+			new String[] {ActionKeys.ADD_ENTRY, ActionKeys.VIEW});
+
+		dtoConverterContext = _createCopyActionDTOConverterContext(_user);
+
+		_assertVersionedObjectEntriesCopyAction(
+			dtoConverterContext, _objectDefinition6, objectEntry,
+			String.valueOf(_depotEntry.getGroupId()), true);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+			role.getRoleId(), ActionKeys.ADD_ENTRY);
+
+		_assertVersionedObjectEntriesCopyAction(
+			dtoConverterContext, _objectDefinition6, objectEntry,
+			String.valueOf(_depotEntry.getGroupId()), false);
+
+		// Depot scope no folder
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		objectEntry = _addObjectEntry(
+			_objectDefinition6,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			String.valueOf(_depotEntry.getGroupId()), 1);
+
+		_user = _addUser();
+
+		_userLocalService.addGroupUsers(
+			_depotEntry.getGroupId(), new long[] {_user.getUserId()});
+
+		_addRoleUser(
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+			_objectDefinition6, _user);
+
+		role = _addRoleUser(
+			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
+			_objectDefinition6, _user);
+
+		dtoConverterContext = _createCopyActionDTOConverterContext(_user);
+
+		_assertVersionedObjectEntriesCopyAction(
+			dtoConverterContext, _objectDefinition6, objectEntry,
+			String.valueOf(_depotEntry.getGroupId()), true);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, _objectDefinition6.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		_assertVersionedObjectEntriesCopyAction(
+			dtoConverterContext, _objectDefinition6, objectEntry,
+			String.valueOf(_depotEntry.getGroupId()), false);
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
 	public void testMoveObjectEntry() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry();
 
@@ -10568,6 +10710,25 @@ public class DefaultObjectEntryManagerImplTest
 			expectedValue, properties.get("textObjectFieldName"));
 	}
 
+	private void _assertVersionedObjectEntriesCopyAction(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey, boolean expected)
+		throws Exception {
+
+		Page<ObjectEntry> page =
+			_defaultObjectEntryManager.getVersionedObjectEntries(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				objectDefinition, scopeKey, null, null);
+
+		for (ObjectEntry versionedObjectEntry : page.getItems()) {
+			Map<String, Map<String, String>> actions =
+				versionedObjectEntry.getActions();
+
+			Assert.assertEquals(expected, actions.containsKey("copy"));
+		}
+	}
+
 	private void _assignAccountEntryRole(
 			AccountEntry accountEntry, Role role, User user)
 		throws Exception {
@@ -10641,6 +10802,117 @@ public class DefaultObjectEntryManagerImplTest
 
 		return StringBundler.concat(
 			"startswith( ", fieldName, ",'", value, "')");
+	}
+
+	private DTOConverterContext _createCopyActionDTOConverterContext(
+		User user) {
+
+		return new DefaultDTOConverterContext(
+			false, Collections.emptyMap(), dtoConverterRegistry, null,
+			LocaleUtil.getDefault(),
+			new UriInfo() {
+
+				@Override
+				public URI getAbsolutePath() {
+					return null;
+				}
+
+				@Override
+				public UriBuilder getAbsolutePathBuilder() {
+					return null;
+				}
+
+				@Override
+				public URI getBaseUri() {
+					return URI.create("http://localhost:8080/o/c/");
+				}
+
+				@Override
+				public UriBuilder getBaseUriBuilder() {
+					return UriBuilder.fromUri("http://localhost:8080/o/c/");
+				}
+
+				@Override
+				public List<Object> getMatchedResources() {
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<String> getMatchedURIs() {
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<String> getMatchedURIs(boolean decode) {
+					return Collections.emptyList();
+				}
+
+				@Override
+				public String getPath() {
+					return null;
+				}
+
+				@Override
+				public String getPath(boolean decode) {
+					return null;
+				}
+
+				@Override
+				public MultivaluedMap<String, String> getPathParameters() {
+					return new MultivaluedHashMap<>();
+				}
+
+				@Override
+				public MultivaluedMap<String, String> getPathParameters(
+					boolean decode) {
+
+					return new MultivaluedHashMap<>();
+				}
+
+				@Override
+				public List<PathSegment> getPathSegments() {
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<PathSegment> getPathSegments(boolean decode) {
+					return Collections.emptyList();
+				}
+
+				@Override
+				public MultivaluedMap<String, String> getQueryParameters() {
+					return new MultivaluedHashMap<>();
+				}
+
+				@Override
+				public MultivaluedMap<String, String> getQueryParameters(
+					boolean decode) {
+
+					return new MultivaluedHashMap<>();
+				}
+
+				@Override
+				public URI getRequestUri() {
+					return null;
+				}
+
+				@Override
+				public UriBuilder getRequestUriBuilder() {
+					return null;
+				}
+
+				@Override
+				public URI relativize(URI uri) {
+					return null;
+				}
+
+				@Override
+				public URI resolve(URI uri) {
+					return null;
+				}
+
+			},
+			user);
 	}
 
 	private DTOConverterContext _createDTOConverterContext() {

@@ -65,7 +65,7 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 	additionalProps="<%= mbEntriesManagementToolbarDisplayContext.getAdditionalProps() %>"
 	clearResultsURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	creationMenu="<%= mbEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled='<%= (entriesSearchContainer.getTotal() == 0) && (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && entriesNavigation.equals("all") %>'
+	disabled='<%= !mbAdminListDisplayContext.isShowSearch() && (entriesSearchContainer.getTotal() == 0) && (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && entriesNavigation.equals("all") %>'
 	filterDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= entriesSearchContainer.getTotal() %>"

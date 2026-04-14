@@ -430,7 +430,11 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public boolean isDisabled() {
-		return !_searchContainer.hasResults();
+		if (!isSearch() && !_searchContainer.hasResults()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSearch() {

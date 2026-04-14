@@ -339,8 +339,8 @@ public class BatchEngineExportTaskExecutorImpl
 
 				batchEngineExportTaskItemWriter.write(items);
 
-				long writeTimeMs = (System.nanoTime() - writeStartTimeNs) /
-					1_000_000;
+				long writeTimeMs =
+					(System.nanoTime() - writeStartTimeNs) / 1_000_000;
 
 				batchEngineExportTask.setProcessedItemsCount(
 					batchEngineExportTask.getProcessedItemsCount() +
@@ -568,6 +568,16 @@ public class BatchEngineExportTaskExecutorImpl
 		return filteredParameters;
 	}
 
+	private Long _getFirstItemId(Collection<?> items) {
+		if (items.isEmpty()) {
+			return null;
+		}
+
+		return _getItemId(
+			items.iterator(
+			).next());
+	}
+
 	private Long _getItemId(Object item) {
 		Class<?> clazz = item.getClass();
 
@@ -724,7 +734,7 @@ public class BatchEngineExportTaskExecutorImpl
 			batchEngineExportTask.getBatchEngineExportTaskId());
 	}
 
-	private static final boolean _USE_EXPORT_CURSOR_PAGINATION = false;
+	private static final boolean _USE_EXPORT_CURSOR_PAGINATION = true;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskExecutorImpl.class);

@@ -13,6 +13,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
@@ -118,6 +121,39 @@ public class WikiNodeStagedModelDataHandlerTest
 
 				Assert.assertNull(exportedStagedModel);
 			}
+		}
+	}
+
+	@Test
+	public void testImportWithExistingExternalReferenceCode() throws Exception {
+		initExport();
+
+		WikiNode wikiNode = WikiTestUtil.addNode(stagingGroup.getGroupId());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, wikiNode);
+
+		WikiNode existingWikiNode = WikiNodeLocalServiceUtil.addNode(
+			wikiNode.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				liveGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			WikiNode exportedWikiNode = (WikiNode)readExportedStagedModel(
+				wikiNode);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedWikiNode);
+
+			WikiNode importedWikiNode =
+				WikiNodeLocalServiceUtil.fetchWikiNodeByExternalReferenceCode(
+					wikiNode.getExternalReferenceCode(),
+					liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				existingWikiNode.getNodeId(), importedWikiNode.getNodeId());
+			Assert.assertEquals(wikiNode.getName(), importedWikiNode.getName());
 		}
 	}
 

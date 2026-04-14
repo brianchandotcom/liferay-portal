@@ -115,6 +115,8 @@ public class BaseBatchEngineTaskExecutorTest {
 				new TestBlogPostingBatchEngineTaskItemDelegate(),
 				new HashMapDictionary<String, String>());
 
+		batchReadDurations.clear();
+
 		initialCount = getBlogEntriesCount();
 	}
 
@@ -236,7 +238,9 @@ public class BaseBatchEngineTaskExecutorTest {
 
 			long siteId = GetterUtil.getLong(parameters.get("siteId"));
 
-			return _search(
+			long startTime = System.currentTimeMillis();
+
+			Page<BlogPosting> page = _search(
 				booleanQuery -> {
 				},
 				filter, search, pagination,
@@ -253,6 +257,10 @@ public class BaseBatchEngineTaskExecutorTest {
 					_blogsEntryService.getEntry(
 						GetterUtil.getLong(
 							document.get(Field.ENTRY_CLASS_PK)))));
+
+			batchReadDurations.add(System.currentTimeMillis() - startTime);
+
+			return page;
 		}
 
 		@Override
@@ -463,6 +471,7 @@ public class BaseBatchEngineTaskExecutorTest {
 	protected static final int ROWS_COUNT = 18;
 
 	protected Date baseDate;
+	protected final List<Long> batchReadDurations = new ArrayList<>();
 
 	@Inject
 	protected BlogsEntryLocalService blogsEntryLocalService;

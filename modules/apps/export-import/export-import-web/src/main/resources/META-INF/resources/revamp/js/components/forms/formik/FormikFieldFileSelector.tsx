@@ -10,7 +10,7 @@ import {RequestResult} from '../../../common/services/ApiHelper';
 import FileSelector, {FileSelectorStatus} from '../../FileSelector';
 import {FormikWrapper} from './FormikWrapper';
 
-interface LarValidationResponse {
+interface ValidationResponse {
 	errorMessages: string[];
 	success: boolean;
 	tempFilePath: string;
@@ -32,7 +32,7 @@ export function FormikFieldFileSelector({
 	'uploadRequest': (
 		file: File,
 		signal?: AbortSignal
-	) => Promise<RequestResult<LarValidationResponse>>;
+	) => Promise<RequestResult<ValidationResponse>>;
 	'validExtensions'?: string;
 }) {
 	const [field, , helpers] = useField(name);

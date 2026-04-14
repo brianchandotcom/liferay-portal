@@ -19,6 +19,7 @@ import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Paginatio
 import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.osb.provisioning.rest.client.dto.v1_0.LicenseKey;
 import com.liferay.osb.provisioning.rest.client.resource.v1_0.LicenseKeyResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -241,6 +242,33 @@ public class ProvisioningRestController extends BaseRestController {
 			MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
 
 		return licenseKey;
+	}
+
+	@PostMapping("license-key-type-free-domains-check")
+	public void postLicenseKeyTypeFreeDomainCheck(@RequestBody String json)
+		throws Exception {
+
+		LicenseKey licenseKey = LicenseKey.toDTO(json);
+
+		LicenseKeyResource licenseKeyResource =
+			_provisioningService.getLicenseKeyResource();
+
+		com.liferay.osb.provisioning.rest.client.pagination.Page<LicenseKey>
+			licenseKeysPage = licenseKeyResource.getLicenseKeysPage(
+				null,
+				StringBundler.concat(
+					"domains eq '", licenseKey.getDomains(), "' and owner eq '",
+					licenseKey.getOwner(), "'"),
+				com.liferay.osb.provisioning.rest.client.pagination.Pagination.
+					of(1, 20),
+				null);
+
+		if (licenseKeysPage.fetchFirstItem() != null) {
+			throw new ResponseStatusException(
+				HttpStatus.CONFLICT,
+				"A License key already provisioned for the owner with this " +
+					"domain");
+		}
 	}
 
 	@PostMapping("license-key-type-free/{id}/renew")

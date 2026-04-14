@@ -56,8 +56,13 @@ public class PatcherFixValidator {
 	}
 
 	public void validateAdd() throws Exception {
-		validateCommittish();
-		validateGitRemoteURL();
+		boolean autoFix = ParamUtil.getBoolean(_httpServletRequest, "autoFix");
+
+		if (!autoFix) {
+			validateCommittish();
+			validateGitRemoteURL();
+		}
+
 		validateProductVersion();
 		validatePatcherProjectVersionId();
 
@@ -580,7 +585,17 @@ public class PatcherFixValidator {
 	public void validateUpdate(PatcherFix patcherFix) throws Exception {
 		validatePatcherFix(patcherFix);
 
-		if ((patcherFix.getType() != PatcherFixConstants.TYPE_REBASE) ||
+		boolean autoFix = ParamUtil.getBoolean(_httpServletRequest, "autoFix");
+
+		if (autoFix &&
+			(patcherFix.getType() == PatcherFixConstants.TYPE_REBASE)) {
+
+			throw new PortalException(
+				"the-auto-fix-option-is-not-supported-for-rebase-type-fixes");
+		}
+
+		if (((patcherFix.getType() != PatcherFixConstants.TYPE_REBASE) &&
+			 !autoFix) ||
 			(patcherFix.getStatus() ==
 				WorkflowConstants.STATUS_FIX_REBASE_CONFLICT)) {
 

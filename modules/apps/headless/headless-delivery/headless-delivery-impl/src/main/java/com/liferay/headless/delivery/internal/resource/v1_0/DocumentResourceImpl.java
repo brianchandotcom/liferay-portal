@@ -1097,48 +1097,32 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			contentType = fileEntry.getMimeType();
 		}
 
-		String description = null;
-		Date displayDate = null;
-		Date expirationDate = null;
 		String fileName = null;
 		String title = null;
 		String urlTitle = null;
+		String description = fileEntry.getDescription();
+		Date displayDate = fileEntry.getDisplayDate();
+		Date expirationDate = fileEntry.getExpirationDate();
 
-		if (document == null) {
-			description = fileEntry.getDescription();
-			displayDate = fileEntry.getDisplayDate();
-			expirationDate = fileEntry.getExpirationDate();
-
-			fileName = binaryFile.getFileName();
-
-			if (fileName == null) {
-				fileName = fileEntry.getFileName();
-			}
-
-			title = fileEntry.getTitle();
-		}
-		else {
+		if (document != null) {
+			fileName = document.getFileName();
+			title = document.getTitle();
+			urlTitle = document.getFriendlyUrlPath();
 			description = document.getDescription();
 			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
+		}
 
-			fileName = document.getFileName();
+		if (fileName == null) {
+			fileName = binaryFile.getFileName();
+		}
 
-			if (fileName == null) {
-				fileName = binaryFile.getFileName();
-			}
+		if (fileName == null) {
+			fileName = fileEntry.getFileName();
+		}
 
-			if (fileName == null) {
-				fileName = fileEntry.getFileName();
-			}
-
-			title = document.getTitle();
-
-			if (title == null) {
-				title = fileEntry.getTitle();
-			}
-
-			urlTitle = document.getFriendlyUrlPath();
+		if (title == null) {
+			title = fileEntry.getTitle();
 		}
 
 		return _toDocument(

@@ -32,15 +32,14 @@ public class StoreAnalyticsFiltersStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String filters = ParamUtil.getString(httpServletRequest, "filters");
-
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(httpServletRequest);
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
 		httpSession.setAttribute(
-			DSRWebKeys.DSR_ANALYTICS_STORE_FILTERS, filters);
+			DSRWebKeys.DSR_ANALYTICS_STORE_FILTERS,
+			ParamUtil.getString(httpServletRequest, "filters"));
 
 		return null;
 	}

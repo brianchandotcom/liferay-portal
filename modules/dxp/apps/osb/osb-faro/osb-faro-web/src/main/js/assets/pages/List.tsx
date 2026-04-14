@@ -1,27 +1,111 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
-import ClayLabel from '@clayui/label';
-import ClayPanel from '@clayui/panel';
-import ClayTabs from '@clayui/tabs';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
+import ClaySticker from '@clayui/sticker';
 import FaroConstants from 'shared/util/constants';
-import getCN from 'classnames';
-import React, {useMemo, useRef, useState} from 'react';
-import {AssetIcon} from './components/AssetsIcon';
-import {ClayButtonWithIcon} from '@clayui/button';
-import {columns, pagination, useSnapshots} from 'shared/util/frontend-data-set';
+import React, {useMemo, useState} from 'react';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
-import {Heading, Text} from '@clayui/core';
+import {getMimeType} from 'assets/components/mime-type';
+import {InfoPanel} from 'assets/components/InfoPanel';
+import {pagination, useSnapshots} from 'shared/util/frontend-data-set';
 import {pickBy} from 'lodash';
+
 import {RangeSelectors} from 'shared/types';
-import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
+import {
+	removeUriQueryParam,
+	Routes,
+	setUriQueryValues,
+	toRoute
+} from 'shared/util/router';
+import {toThousands} from 'shared/util/numbers';
 import {useChannelContext} from 'shared/context/channel';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 import {useHistory, useParams} from 'react-router-dom';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const {cur: DEFAULT_CUR} = FaroConstants.pagination;
+
+const mapRoutes = {
+	blog: Routes.ASSETS_BLOGS_OVERVIEW,
+	document: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW,
+	form: Routes.ASSETS_FORMS_OVERVIEW,
+	webContent: Routes.ASSETS_WEB_CONTENT_OVERVIEW
+};
+
+const getAssetURL = ({
+	channelId,
+	groupId,
+	itemData,
+	rangeSelectorParams,
+	value = ''
+}: {
+	channelId: string;
+	groupId: string;
+	itemData: any;
+	rangeSelectorParams: string;
+	value?: string;
+}) => {
+	const assetTitle = value || itemData.assetTitle || itemData.id;
+
+	const oldAssetRoute = mapRoutes?.[itemData.assetType];
+
+	const route = oldAssetRoute ?? Routes.ASSETS_OBJECT_ENTRY_OVERVIEW;
+
+	return `${toRoute(route, {
+		assetId: itemData.id,
+		channelId,
+		groupId,
+		touchpoint: 'Any',
+		...(itemData.assetType && {
+			type: encodeURIComponent(itemData.assetType)
+		}),
+		...(assetTitle && {
+			title: encodeURIComponent(assetTitle)
+		})
+	})}?${rangeSelectorParams}`;
+};
+
+const columns = {
+	assetMetricRenderer: ({value}) => <span>{toThousands(value.value)}</span>,
+	assetTitleRenderer: ({channelId, groupId, rangeSelectorParams}) => ({
+		itemData,
+		value
+	}) => {
+		const URL = getAssetURL({
+			channelId,
+			groupId,
+			itemData,
+			rangeSelectorParams,
+			value
+		});
+
+		const mimeType = getMimeType({
+			assetType: itemData?.assetType,
+			mimeType: itemData?.assetMimeType
+		});
+
+		return (
+			<div className='align-items-center d-flex'>
+				<div className='mr-3'>
+					<ClaySticker
+						className={mimeType.className}
+						displayType='dark'
+					>
+						<ClayIcon symbol={mimeType.icon} />
+					</ClaySticker>
+				</div>
+
+				<div>
+					<ClayLink displayType='tertiary' href={URL}>
+						{value || itemData.id}
+					</ClayLink>
+				</div>
+			</div>
+		);
+	}
+};
 
 const List = () => {
 	const history = useHistory();
@@ -33,13 +117,11 @@ const List = () => {
 		initialRangeSelectors
 	);
 
-	const [infoPanel, setInfoPanel] = useState(null);
+	const [infoPanelData, setInfoPanelData] = useState(null);
 
 	const snapshots = useSnapshots('assetTable');
 
 	const FrontendDataSet = useFrontendDataSet();
-
-	const sidePanelRef = useRef(null);
 
 	let rangeSelectorParams = `rangeKey=${rangeSelectors.rangeKey}`;
 
@@ -88,10 +170,7 @@ const List = () => {
 	);
 
 	return (
-		<BasePage
-			className={getCN({'info-panel-opened': !!infoPanel})}
-			documentTitle={Liferay.Language.get('assets')}
-		>
+		<BasePage documentTitle={Liferay.Language.get('assets')}>
 			<BasePage.Header
 				breadcrumbs={[
 					breadcrumbs.getHome({
@@ -100,6 +179,7 @@ const List = () => {
 						label: selectedChannel?.name
 					})
 				]}
+				fluid
 				groupId={groupId}
 			>
 				<BasePage.Header.TitleSection
@@ -107,7 +187,7 @@ const List = () => {
 				/>
 			</BasePage.Header>
 
-			<BasePage.SubHeader>
+			<BasePage.SubHeader fluid>
 				<div className='d-flex justify-content-end w-100'>
 					<DropdownRangeKey
 						legacy={false}
@@ -133,7 +213,7 @@ const List = () => {
 				</div>
 			</BasePage.SubHeader>
 
-			<BasePage.Body>
+			<BasePage.Body fluid sidebarOpened={!!infoPanelData}>
 				<Card>
 					{FrontendDataSet && (
 						<FrontendDataSet
@@ -158,10 +238,25 @@ const List = () => {
 										id: 'infoPanel'
 									},
 									icon: 'info-circle-open',
-									label: Liferay.Language.get(
-										'show-info-panel'
-									),
-									onClick: setInfoPanel
+									label: Liferay.Language.get('show-details'),
+									onClick: setInfoPanelData
+								},
+								{
+									data: {
+										id: 'viewAsset'
+									},
+									icon: 'view',
+									label: Liferay.Language.get('view'),
+									onClick: ({itemData}) => {
+										history.push(
+											getAssetURL({
+												channelId,
+												groupId,
+												itemData,
+												rangeSelectorParams
+											})
+										);
+									}
 								}
 							]}
 							// Trick to restart FDS every time the rangeSelectors changes.
@@ -239,131 +334,14 @@ const List = () => {
 						/>
 					)}
 				</Card>
+
+				<InfoPanel
+					data={infoPanelData}
+					onClose={() => setInfoPanelData(null)}
+				/>
 			</BasePage.Body>
-
-			<div
-				className={getCN(
-					'frontend-data-set-side-panel  c-slideout c-slideout-absolute c-slideout-push c-slideout-end',
-					{
-						'c-slideout-shown': !!infoPanel
-					}
-				)}
-				id='infoPanel'
-				ref={sidePanelRef}
-			>
-				<div
-					className={getCN('sidebar sidebar-light', {
-						'c-slideout-show': !!infoPanel
-					})}
-					style={{width: 472}}
-				>
-					<div className='sidebar-header'>
-						<div className='autofit-row'>
-							<div className='autofit-col autofit-col-expand'>
-								<span className='component-title'>
-									<div className='align-items-center d-flex'>
-										{infoPanel?.itemData?.mimeType && (
-											<AssetIcon
-												className='mb-1 mr-2'
-												mimeType={
-													infoPanel?.itemData
-														?.mimeType
-												}
-											/>
-										)}
-
-										<Heading level={4} weight='semi-bold'>
-											{infoPanel?.itemData?.assetTitle ??
-												infoPanel?.itemData?.id}
-										</Heading>
-									</div>
-								</span>
-							</div>
-							<div className='autofit-col'>
-								<ClayButtonWithIcon
-									className='close'
-									displayType='unstyled'
-									onClick={() => setInfoPanel(null)}
-									symbol='times'
-								/>
-							</div>
-						</div>
-					</div>
-
-					<ClayTabs>
-						<ClayTabs.Item
-							innerProps={{
-								'aria-controls': 'tabpanel-1'
-							}}
-						>
-							{Liferay.Language.get('categorization')}
-						</ClayTabs.Item>
-					</ClayTabs>
-
-					<ClayTabs.Content fade>
-						<ClayTabs.TabPane aria-labelledby='tab-1'>
-							<InfoPanelItemContent
-								items={infoPanel?.itemData?.assetCategories}
-								title={Liferay.Language.get('categories')}
-							/>
-
-							<InfoPanelItemContent
-								items={infoPanel?.itemData?.assetTags}
-								title={Liferay.Language.get('tags')}
-							/>
-						</ClayTabs.TabPane>
-					</ClayTabs.Content>
-				</div>
-			</div>
 		</BasePage>
 	);
 };
-
-const InfoPanelItemContent = ({items, title}) => (
-	<ClayPanel
-		collapsable={false}
-		displayTitle={
-			<ClayPanel.Header className='border-bottom'>
-				<ClayPanel.Title className='panel-title text-secondary'>
-					{title}
-				</ClayPanel.Title>
-			</ClayPanel.Header>
-		}
-		displayType='unstyled'
-	>
-		<ClayPanel.Body>
-			{!items?.length && (
-				<>
-					<div className='mb-2'>
-						<Text size={4} weight='semi-bold'>
-							{sub(
-								Liferay.Language.get(
-									'no-x-were-found-for-this-asset'
-								),
-								[title]
-							)}
-						</Text>
-					</div>
-
-					<Text color='secondary' size={3}>
-						{sub(
-							Liferay.Language.get(
-								'go-to-your-content-management-system-to-manage-x'
-							),
-							[title]
-						)}
-					</Text>
-				</>
-			)}
-
-			{!!items?.length &&
-				items.map(({id, name}) => (
-					<ClayLabel className='label-lg' key={id}>
-						{name}
-					</ClayLabel>
-				))}
-		</ClayPanel.Body>
-	</ClayPanel>
-);
 
 export default List;

@@ -52,6 +52,8 @@ window.AlloyEditor = {
 	],
 };
 
+Liferay.FeatureFlags['LPD-11235'] = true;
+
 window.AUI = () => ({
 	...window.AUI,
 	use: (...modules) => {

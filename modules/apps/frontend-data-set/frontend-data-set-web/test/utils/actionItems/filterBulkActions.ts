@@ -24,7 +24,7 @@ describe('filterBulkActions', () => {
 		});
 	});
 
-	describe('when neither visibilityFilters nor isVisible are defined', () => {
+	describe('when isVisible is not defined', () => {
 		it('returns all actions', () => {
 			const bulkActions: IBulkActionItem[] = [
 				{href: '/action1'},
@@ -39,62 +39,6 @@ describe('filterBulkActions', () => {
 
 			expect(result).toHaveLength(2);
 			expect(result).toEqual(bulkActions);
-		});
-	});
-
-	describe('when visibilityFilters are defined', () => {
-		it('returns only the actions where every selected item matches all visibility filters', () => {
-			const localSelectedItems = [
-				{color: 'blue', status: 'active', type: 'document'},
-				{color: 'red', status: 'inactive', type: 'document'},
-			];
-
-			const bulkActions: IBulkActionItem[] = [
-				{
-					data: {
-						id: 'match-all',
-						visibilityFilters: {type: 'document'},
-					},
-				},
-				{
-					data: {
-						id: 'match-none',
-						visibilityFilters: {type: 'image'},
-					},
-				},
-				{
-					data: {
-						id: 'match-partial',
-						visibilityFilters: {color: 'blue'},
-					},
-				},
-			];
-
-			const result = filterBulkActions({
-				allItemsSelectedActive: false,
-				bulkActions,
-				selectedItems: localSelectedItems,
-			});
-
-			expect(result).toHaveLength(1);
-			expect(result[0].data?.id).toBe('match-all');
-		});
-
-		it('includes actions even if visibilityFilters do not match, when allItemsSelectedActive is true', () => {
-			const bulkActions: IBulkActionItem[] = [
-				{
-					data: {id: 'nomatch', visibilityFilters: {color: 'yellow'}},
-				},
-			];
-
-			const result = filterBulkActions({
-				allItemsSelectedActive: true,
-				bulkActions,
-				selectedItems,
-			});
-
-			expect(result).toHaveLength(1);
-			expect(result[0].data?.id).toBe('nomatch');
 		});
 	});
 

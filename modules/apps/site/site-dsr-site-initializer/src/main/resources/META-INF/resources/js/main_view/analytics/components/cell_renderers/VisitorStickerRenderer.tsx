@@ -8,7 +8,11 @@ import React from 'react';
 import AccountSticker from '../../../../common/components/AccountSticker';
 import {TVisitor} from '../../../../common/utils/types';
 
-export function visitorSticker({itemData}: {itemData: TVisitor}) {
+export default function VisitorStickerRenderer({
+	itemData,
+}: {
+	itemData: TVisitor;
+}) {
 	return (
 		<div className="d-flex inline-item">
 			<AccountSticker

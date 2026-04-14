@@ -5,11 +5,11 @@
 
 import React from 'react';
 
-function Loader({classNames = ''}) {
+function Loader({className = ''}) {
 	return (
 		<span
 			aria-hidden="true"
-			className={`loading-animation ${classNames}`.trim()}
+			className={`loading-animation ${className}`.trim()}
 		/>
 	);
 }

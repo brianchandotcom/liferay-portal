@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import {TLatestActivity} from '../../../../common/utils/types';
 
-export function timestampDataRenderer({itemData}: {itemData: TLatestActivity}) {
+export function TimeDataRenderer({itemData}: {itemData: TLatestActivity}) {
 	const {createDate = ''} = itemData;
 
 	return moment(createDate).fromNow(false);

@@ -4,63 +4,101 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+
+import VisitorStickerRenderer from './cell_renderers/VisitorStickerRenderer';
 
 import './../../../../css/components/MostActiveVisitors.scss';
-import {visitorSticker} from './cell_renderers/VisitorSticker';
-
-type TVisitor = {
-	activitiesCount: number;
-	emailAddress: string;
-	firstName: string;
-	lastName: string;
-	logoURL: string | undefined;
-};
+import useAnalyticsQuery from '../../../common/hooks/useAnalyticsQuery';
+import {TVisitor} from '../../../common/utils/types';
+import MostActiveVisitorsQuery from '../queries/MostActiveVisitorsQuery';
+import AnalyticsFrame from './AnalyticsFrame';
+import Loader from './Loader';
 
 const MostActiveVisitors = ({
-	items = [],
+	dsrDevEnvEnabled: useDevEnvData,
 	namespace,
 }: {
-	items: TVisitor[];
+	dsrDevEnvEnabled: boolean;
 	namespace: string;
 }) => {
+	const [data, setData] = useState<TVisitor[]>([]);
+	const [element, setElement] = useState<HTMLElement | null>(null);
+
+	const {isLoading, response} = useAnalyticsQuery({
+		element,
+		query: MostActiveVisitorsQuery,
+		settings: {
+			checkViewportVisibility: true,
+			useDevEnvData,
+		},
+		variables: {
+			channelId: '',
+			rangeKey: 7,
+			size: 10,
+			start: 0,
+		},
+	});
+
+	useEffect(() => {
+		if (response) {
+			setData(response);
+		}
+	}, [response]);
+
 	return (
-		<div className="most-active-visitors-fds">
-			<FrontendDataSet
-				customRenderers={{
-					tableCell: [
-						{
-							component: visitorSticker,
-							name: 'visitorSticker',
-							type: 'internal',
-						},
-					],
-				}}
-				id={namespace}
-				items={items}
-				showManagementBar={false}
-				showPagination={false}
-				showSearch={false}
-				showSelectAll={false}
-				views={[
-					{
-						contentRenderer: 'table',
-						label: Liferay.Language.get('table'),
-						name: 'table',
-						schema: {
-							fields: [
+		<AnalyticsFrame
+			icon="user"
+			title={Liferay.Language.get('most-active-visitors')}
+		>
+			<div className="most-active-visitors-container" ref={setElement}>
+				{isLoading ? (
+					<Loader />
+				) : !data?.length ? (
+					<p className="mt-3 text-center text-muted">
+						{Liferay.Language.get('no-data-available')}
+					</p>
+				) : (
+					<div className="most-active-visitors-fds">
+						<FrontendDataSet
+							customRenderers={{
+								tableCell: [
+									{
+										component: VisitorStickerRenderer,
+										name: 'visitorSticker',
+										type: 'internal',
+									},
+								],
+							}}
+							id={namespace}
+							items={data}
+							showManagementBar={false}
+							showPagination={false}
+							showSearch={false}
+							showSelectAll={false}
+							views={[
 								{
-									contentRenderer: 'visitorSticker',
-									fieldName: 'title',
-									label: '',
+									contentRenderer: 'table',
+									label: Liferay.Language.get('table'),
+									name: 'table',
+									schema: {
+										fields: [
+											{
+												contentRenderer:
+													'visitorSticker',
+												fieldName: 'title',
+												label: '',
+											},
+										],
+									},
+									thumbnail: 'table',
 								},
-							],
-						},
-						thumbnail: 'table',
-					},
-				]}
-			/>
-		</div>
+							]}
+						/>
+					</div>
+				)}
+			</div>
+		</AnalyticsFrame>
 	);
 };
 

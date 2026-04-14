@@ -15,6 +15,7 @@ export class ConsentManagerConfigurationPage {
 	readonly enabledCheckbox: Locator;
 	readonly explicitCookieConsentModeCheckbox: Locator;
 	readonly floatingIconEnabledCheckbox: Locator;
+	readonly forcedReconsentButton: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly storeConsentCheckbox: Locator;
@@ -58,6 +59,13 @@ export class ConsentManagerConfigurationPage {
 				exact: true,
 				name: 'Floating Icon Enabled',
 			});
+		this.forcedReconsentButton = this.systemSettingsPortletForm.getByRole(
+			'button',
+			{
+				exact: true,
+				name: 'Forced Re-Consent',
+			}
+		);
 		this.page = page;
 		this.saveButton = this.systemSettingsPortletForm.getByRole('button', {
 			exact: true,

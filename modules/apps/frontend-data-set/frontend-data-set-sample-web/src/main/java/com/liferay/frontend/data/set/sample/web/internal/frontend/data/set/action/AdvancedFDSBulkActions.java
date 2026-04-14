@@ -13,6 +13,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -62,6 +63,10 @@ public class AdvancedFDSBulkActions implements FDSBulkActions {
 				"lg"
 			).setTarget(
 				"modal"
+			).setVisibilityFilters(
+				HashMapBuilder.<String, Object>put(
+					"color", "Yellow"
+				).build()
 			).build(
 				"delete"
 			),

@@ -9,6 +9,7 @@ import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPort
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.analytics.reports.web.internal.model.PageExperience;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -22,10 +23,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,18 +54,20 @@ public class GetPageExperiencesMVCResourceCommand
 			new AnalyticsReportsDataProvider(_analyticsSettingsManager, _http);
 
 		try {
-			Page<PageExperience> pageExperiencesPage =
+			List<PageExperience> pageExperiences =
 				analyticsReportsDataProvider.getPageExperiences(
 					_portal.getCompanyId(resourceRequest),
-					ParamUtil.getInteger(resourceRequest, "page", 1),
-					ParamUtil.getString(resourceRequest, "search"),
-					ParamUtil.getInteger(resourceRequest, "size", 20),
-					ParamUtil.getString(resourceRequest, "sort"),
 					ParamUtil.getString(resourceRequest, "canonicalURL"));
+
+			JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+			for (PageExperience pageExperience : pageExperiences) {
+				jsonArray.put(pageExperience.toJSONObject());
+			}
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_jsonFactory.createJSONObject(pageExperiencesPage.toString()));
+				JSONUtil.put("pageExperiences", jsonArray));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

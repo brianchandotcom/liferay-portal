@@ -24,16 +24,12 @@ import com.liferay.analytics.reports.web.internal.model.TrafficSource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.time.format.DateTimeFormatter;
 
@@ -174,37 +170,21 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
-	public Page<PageExperience> getPageExperiences(
-			long companyId, int page, String search, int size, String sort,
-			String url)
+	public List<PageExperience> getPageExperiences(long companyId, String url)
 		throws PortalException {
 
 		try {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
-				_getPageExperiencesEndpoint(page, search, size, sort, url));
-
-			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-				response);
-
-			JSONObject embeddedJSONObject = responseJSONObject.getJSONObject(
-				"_embedded");
+				"api/1.0/pages/page-experiences?canonicalUrl=" +
+					HtmlUtil.escapeURL(url));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
-			JSONObject pageJSONObject = responseJSONObject.getJSONObject(
-				"page");
-
-			return Page.of(
-				_objectMapper.readValue(
-					String.valueOf(
-						embeddedJSONObject.getJSONArray("pageExperiences")),
-					typeFactory.constructCollectionLikeType(
-						List.class, PageExperience.class)),
-				Pagination.of(
-					pageJSONObject.getInt("number") + 1,
-					pageJSONObject.getInt("size")),
-				pageJSONObject.getInt("totalElements"));
+			return _objectMapper.readValue(
+				response,
+				typeFactory.constructCollectionType(
+					List.class, PageExperience.class));
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -367,32 +347,6 @@ public class AnalyticsReportsDataProvider {
 
 	public boolean isValidAnalyticsConnection(long companyId) throws Exception {
 		return _asahFaroBackendClient.isValidConnection(companyId);
-	}
-
-	private String _getPageExperiencesEndpoint(
-		int page, String search, int size, String sort, String url) {
-
-		String endpoint = String.format(
-			"api/1.0/pages/page-experiences?canonicalUrl=%s",
-			HtmlUtil.escapeURL(url));
-
-		if (Validator.isNotNull(search)) {
-			endpoint += "&keywords=" + search;
-		}
-
-		if (page >= 0) {
-			endpoint += "&page=" + (page - 1);
-		}
-
-		if (size >= 0) {
-			endpoint += "&size=" + size;
-		}
-
-		if (Validator.isNotNull(sort)) {
-			endpoint += "&sort=" + sort;
-		}
-
-		return endpoint;
 	}
 
 	private String _getPagesEndpoint(

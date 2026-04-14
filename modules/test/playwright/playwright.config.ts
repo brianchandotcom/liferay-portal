@@ -122,6 +122,7 @@ import {config as oauthClientAdministrationConfig} from './tests/oauth-client-ad
 import {config as objectActionWebConfig} from './tests/object-web/action/config';
 import {config as objectClientExtensionWebConfig} from './tests/object-web/client-extension/config';
 import {config as objectEntryWebConfig} from './tests/object-web/entry/config';
+import {config as objectExportImportWebConfig} from './tests/object-web/export-import/config';
 import {config as objectFieldWebConfig} from './tests/object-web/field/config';
 import {config as objectFolderWebConfig} from './tests/object-web/folder/config';
 import {config as objectFormsIntegrationWebConfig} from './tests/object-web/forms-integration/config';
@@ -345,6 +346,7 @@ export default defineConfig({
 		objectClientExtensionWebConfig,
 		objectDefinitionWebConfig,
 		objectEntryWebConfig,
+		objectExportImportWebConfig,
 		objectFieldWebConfig,
 		objectFolderWebConfig,
 		objectFormsIntegrationWebConfig,

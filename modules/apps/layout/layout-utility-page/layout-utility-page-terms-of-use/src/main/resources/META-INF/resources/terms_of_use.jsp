@@ -21,7 +21,7 @@
 	TermsOfUseContentProvider termsOfUseContentProvider = (TermsOfUseContentProvider)request.getAttribute(TermsOfUseContentProvider.class.getName());
 	%>
 
-	<div class="mt-4 sheet sheet-lg">
+	<div class="mt-4 sheet sheet-lg" id="main-content" role="main" tabindex="-1">
 		<div class="sheet-header">
 			<div class="autofit-padded-no-gutters-x autofit-row">
 				<div class="autofit-col autofit-col-expand">

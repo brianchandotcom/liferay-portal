@@ -251,6 +251,7 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
+	@TestInfo("LPD-83633")
 	public void testImportFragmentEntriesWithFolderResources()
 		throws Exception {
 

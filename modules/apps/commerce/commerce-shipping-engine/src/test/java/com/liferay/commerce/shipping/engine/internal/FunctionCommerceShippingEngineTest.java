@@ -72,6 +72,17 @@ public class FunctionCommerceShippingEngineTest {
 	}
 
 	@Test
+	public void testDeactivate() throws Exception {
+		_functionCommerceShippingEngine.deactivate();
+
+		Mockito.verify(
+			_commerceShippingMethodLocalService, Mockito.never()
+		).deleteCommerceShippingMethod(
+			Mockito.anyLong()
+		);
+	}
+
+	@Test
 	public void testGetCommerceShippingOptions() throws Exception {
 		List<CommerceShippingOption> commerceShippingOptions =
 			_functionCommerceShippingEngine.getCommerceShippingOptions(

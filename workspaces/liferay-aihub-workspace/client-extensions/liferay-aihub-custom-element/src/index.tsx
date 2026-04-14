@@ -18,10 +18,14 @@ if (!document.getElementById(CHATBOT_WIDGET_ID)) {
 	const scriptTag = document.getElementById('aihub-chatbot-widget-script');
 
 	if (!scriptTag) {
-		console.error('Element with id="aihub-chatbot-widget-script" not found');
+		console.error(
+			'Element with id="aihub-chatbot-widget-script" not found'
+		);
 	}
 	else {
-		const aiHubURL = scriptTag.getAttribute('ai-hub-url') || 'https://ai.hub.liferay.com';
+		const aiHubURL =
+			scriptTag.getAttribute('ai-hub-url') ||
+			'https://ai.hub.liferay.com';
 
 		if (!aiHubURL) {
 			console.warn(

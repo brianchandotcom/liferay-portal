@@ -5,8 +5,11 @@
 
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {createEventSource, getChatbotConfiguration, postChatMessage} from '../api';
-import type {ChatMessage, ChatbotConfiguration, WidgetConfiguration} from '../types';
+import {
+	createEventSource,
+	getChatbotConfiguration,
+	postChatMessage,
+} from '../api';
 import AssistantMessage from './AssistantMessage';
 import ChatbotFooter from './ChatbotFooter';
 import ChatbotHeader from './ChatbotHeader';
@@ -17,6 +20,12 @@ import {ChatIcon, CloseIcon} from './Icons';
 import LoadingIndicator from './LoadingIndicator';
 import UserMessage from './UserMessage';
 
+import type {
+	ChatMessage,
+	ChatbotConfiguration,
+	WidgetConfiguration,
+} from '../types';
+
 interface ChatbotWidgetProps {
 	widgetConfiguration: WidgetConfiguration;
 }
@@ -24,9 +33,8 @@ interface ChatbotWidgetProps {
 export default function ChatbotWidget({
 	widgetConfiguration,
 }: ChatbotWidgetProps) {
-	const [chatbotConfiguration, setChatbotConfiguration] = useState<ChatbotConfiguration | null>(
-		null
-	);
+	const [chatbotConfiguration, setChatbotConfiguration] =
+		useState<ChatbotConfiguration | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [notificationDismissed, setNotificationDismissed] = useState(false);
@@ -41,7 +49,9 @@ export default function ChatbotWidget({
 	const panelRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		getChatbotConfiguration(widgetConfiguration.chatbotExternalReferenceCode)
+		getChatbotConfiguration(
+			widgetConfiguration.chatbotExternalReferenceCode
+		)
 			.then(setChatbotConfiguration)
 			.catch((error) => {
 				console.error('Error fetching chatbot configuration:', error);
@@ -72,10 +82,7 @@ export default function ChatbotWidget({
 			catch (error) {
 				console.error('Error parsing chat message:', error);
 
-				setMessages((prev) => [
-					...prev,
-					{sender: 'error', text: ''},
-				]);
+				setMessages((prev) => [...prev, {sender: 'error', text: ''}]);
 			}
 
 			setLoading(false);
@@ -149,10 +156,7 @@ export default function ChatbotWidget({
 			catch (error) {
 				console.error('Failed to send message:', error);
 
-				setMessages((prev) => [
-					...prev,
-					{sender: 'error', text: ''},
-				]);
+				setMessages((prev) => [...prev, {sender: 'error', text: ''}]);
 				setLoading(false);
 			}
 		},

@@ -35,7 +35,7 @@ export const test = mergeTests(
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-11235': {enabled: false},
+		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	journalPagesTest,
@@ -658,8 +658,9 @@ test('event ending at midnight does not render on the next day', async ({
 
 	await calendarWidgetPage.closeModalEvent();
 	await calendarWidgetPage.monthViewTab.click();
-
-	await expect(page.getByTitle(title, {exact: true})).toHaveCount(1);
+	await expect(
+		page.getByTitle(title, {exact: true}).locator('visible=true')
+	).toHaveCount(1);
 	await expect(page.locator('.lfr-busy-day')).toHaveCount(1);
 });
 

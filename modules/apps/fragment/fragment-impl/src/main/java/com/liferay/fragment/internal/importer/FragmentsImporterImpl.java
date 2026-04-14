@@ -239,8 +239,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String zipEntryName, ZipFile zipFile)
 		throws Exception {
 
-		String fileName = path;
 		String folderPath = StringPool.BLANK;
+
+		String fileName = path;
 
 		int index = fileName.lastIndexOf(StringPool.SLASH);
 

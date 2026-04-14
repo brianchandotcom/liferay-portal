@@ -552,13 +552,11 @@ public class FragmentsImporterTest {
 			_generateZipFile(
 				_PATH_DEPENDENCIES + "fragments-collection/collection-name"),
 			FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
-
 		_fragmentsImporter.importFragmentEntries(
 			_user.getUserId(), _group.getGroupId(), 0,
 			_generateZipFile(
 				_PATH_DEPENDENCIES + "fragments-collection/freemarker"),
 			FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
-
 		_fragmentsImporter.importFragmentEntries(
 			_user.getUserId(), _group.getGroupId(), 0,
 			_generateZipFile(

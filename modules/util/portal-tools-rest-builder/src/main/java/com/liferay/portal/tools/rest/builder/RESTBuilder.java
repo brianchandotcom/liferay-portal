@@ -564,18 +564,8 @@ public class RESTBuilder {
 
 					if (!Objects.equals(
 							String.valueOf(file.getFileName()),
-							"rest-config.yaml")) {
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					Path moduleDirPath = file.getParent();
-
-					String moduleName = String.valueOf(
-						moduleDirPath.getFileName());
-
-					if (!moduleName.endsWith("-rest-impl") ||
-						!Files.exists(moduleDirPath.resolve("build.gradle"))) {
+							"rest-config.yaml") ||
+						!Files.exists(file.resolveSibling("build.gradle"))) {
 
 						return FileVisitResult.CONTINUE;
 					}

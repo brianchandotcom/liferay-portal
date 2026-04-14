@@ -142,7 +142,7 @@ const checkContentStructureMoveValidity = (
 		return false;
 	}
 
-	return item.embedded?.scopeId !== destinationSpaceScopeId;
+	return Number(item.embedded?.scopeId) !== Number(destinationSpaceScopeId);
 };
 
 function executeBulkCopyOrMoveAction({

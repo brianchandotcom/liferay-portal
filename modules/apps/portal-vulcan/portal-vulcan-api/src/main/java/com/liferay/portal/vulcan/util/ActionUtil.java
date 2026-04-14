@@ -93,6 +93,22 @@ public class ActionUtil {
 	public static Map<String, String> addAction(
 		String actionName, Class<?> clazz, Long id, String methodName,
 		Object object, Long ownerId, String permissionName, Long siteId,
+		Map<String, String> templateParameterMap, UriInfo uriInfo) {
+
+		try {
+			return _addAction(
+				actionName, clazz, id, methodName, null, object, ownerId, id,
+				permissionName, siteId, templateParameterMap, uriInfo,
+				() -> UriInfoUtil.getBaseUriBuilder(uriInfo));
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public static Map<String, String> addAction(
+		String actionName, Class<?> clazz, Long id, String methodName,
+		Object object, Long ownerId, String permissionName, Long siteId,
 		Supplier<UriBuilder> uriBuilderSupplier, UriInfo uriInfo) {
 
 		try {

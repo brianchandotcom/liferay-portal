@@ -15,6 +15,7 @@ import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.comment.ObjectEntryComment;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -108,6 +109,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -1568,6 +1570,30 @@ public class DefaultObjectEntryManagerImpl
 
 	private Map<String, String> _addAction(
 			String actionName, String methodName,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			Map<String, String> templateParameterMap, UriInfo uriInfo)
+		throws Exception {
+
+		if (serviceBuilderObjectEntry.isRootDescendantNode()) {
+			return null;
+		}
+
+		return ActionUtil.addAction(
+			actionName, ObjectEntryResourceImpl.class, 0L, methodName, null,
+			objectDefinition.getUserId(), objectDefinition.getResourceName(),
+			serviceBuilderObjectEntry.getGroupId(),
+			HashMapBuilder.put(
+				"externalReferenceCode",
+				serviceBuilderObjectEntry.getExternalReferenceCode()
+			).putAll(
+				templateParameterMap
+			).build(),
+			uriInfo);
+	}
+
+	private Map<String, String> _addAction(
+			String actionName, String methodName,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
 			Map<String, String> templateParameterMap, UriInfo uriInfo)
 		throws Exception {
@@ -2535,15 +2561,58 @@ public class DefaultObjectEntryManagerImpl
 						return null;
 					}
 
-					return _addAction(
-						ActionKeys.ADD_ENTRY,
-						new String[] {
-							"postByExternalReferenceCodeByVersionCopy",
+					long objectEntryFolderId =
+						serviceBuilderObjectEntry.getObjectEntryFolderId();
+
+					if (objectEntryFolderId !=
+							ObjectEntryFolderConstants.
+								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+						return ActionUtil.addAction(
+							ActionKeys.ADD_ENTRY, ObjectEntryResourceImpl.class,
+							objectEntryFolderId,
 							"postScopeScopeKeyByExternalReferenceCodeBy" +
-								"VersionCopy"
-						},
+								"VersionCopy",
+							null, _objectEntryFolderModelResourcePermission,
+							HashMapBuilder.put(
+								"externalReferenceCode",
+								serviceBuilderObjectEntry.
+									getExternalReferenceCode()
+							).put(
+								"scopeKey",
+								String.valueOf(
+									serviceBuilderObjectEntry.getGroupId())
+							).putAll(
+								templateParameterMap
+							).build(),
+							dtoConverterContext.getUriInfo());
+					}
+
+					ObjectScopeProvider copyObjectScopeProvider =
+						_objectScopeProviderRegistry.getObjectScopeProvider(
+							objectDefinition.getScope());
+
+					if (!copyObjectScopeProvider.isGroupAware()) {
+						return _addAction(
+							ObjectActionKeys.ADD_OBJECT_ENTRY,
+							"postByExternalReferenceCodeByVersionCopy",
+							objectDefinition, serviceBuilderObjectEntry,
+							templateParameterMap,
+							dtoConverterContext.getUriInfo());
+					}
+
+					return _addAction(
+						ObjectActionKeys.ADD_OBJECT_ENTRY,
+						"postScopeScopeKeyByExternalReferenceCodeByVersionCopy",
 						objectDefinition, serviceBuilderObjectEntry,
-						templateParameterMap, dtoConverterContext.getUriInfo());
+						HashMapBuilder.put(
+							"scopeKey",
+							String.valueOf(
+								serviceBuilderObjectEntry.getGroupId())
+						).putAll(
+							templateParameterMap
+						).build(),
+						dtoConverterContext.getUriInfo());
 				}
 			).put(
 				"delete",
@@ -4022,6 +4091,12 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
+	)
+	private ModelResourcePermission<ObjectEntryFolder>
+		_objectEntryFolderModelResourcePermission;
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;

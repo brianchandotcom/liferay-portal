@@ -64,8 +64,8 @@ spec:
                 name: elasticsearch-connection-details
                 namespace: {{ $namespace }}
             stringData:
-                ELASTICSEARCH_USERNAME: elastic
                 ELASTICSEARCH_URL: http://{{ $searchName }}-es-http.{{ $searchNamespace }}.svc:9200
+                ELASTICSEARCH_USERNAME: elastic
             type: Opaque
     managementPolicies: {{ $managementPolicies }}
 {{- end }}

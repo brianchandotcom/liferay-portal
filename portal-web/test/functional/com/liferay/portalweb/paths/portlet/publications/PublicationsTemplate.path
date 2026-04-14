@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_DROPDOWN_MENU</td>
-	<td>//tr[contains(.,'${key_templateName}')]//button[contains(@aria-controls,'dropdown-menu')]</td>
+	<td>//tr[contains(.,'${key_templateName}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 </tbody>

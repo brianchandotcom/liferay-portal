@@ -6,6 +6,8 @@
 package com.liferay.asset.list.web.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
@@ -20,6 +22,8 @@ import com.liferay.asset.list.web.internal.display.context.InfoCollectionProvide
 import com.liferay.asset.list.web.internal.display.context.SelectStructureFieldDisplayContext;
 import com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDropdownItems;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
@@ -28,6 +32,8 @@ import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -94,7 +100,9 @@ public class AssetListPortlet extends MVCPortlet {
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
 				_assetRendererFactoryClassProvider,
-				_infoSearchClassMapperRegistry, _itemSelector,
+				_assetVocabularyGroupRelLocalService, _assetVocabularyService,
+				_depotEntryLocalService, _depotEntryService, _groupLocalService,
+				_groupService, _infoSearchClassMapperRegistry, _itemSelector,
 				_objectDefinitionLocalService, renderRequest, renderResponse,
 				_segmentsConfigurationProvider,
 				_getUnicodeProperties(assetListDisplayContext)));
@@ -164,10 +172,29 @@ public class AssetListPortlet extends MVCPortlet {
 		_assetRendererFactoryClassProvider;
 
 	@Reference
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+
+	@Reference
+	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
 	private DDMIndexer _ddmIndexer;
 
 	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private DepotEntryService _depotEntryService;
+
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private InfoEditURLProviderRegistry _infoEditURLProviderRegistry;

@@ -11,12 +11,14 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
@@ -30,6 +32,10 @@ import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -51,6 +57,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -60,13 +67,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -109,6 +119,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -122,6 +133,11 @@ public class EditAssetListDisplayContext {
 
 	public EditAssetListDisplayContext(
 		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
+		AssetVocabularyGroupRelLocalService assetVocabularyGroupRelLocalService,
+		AssetVocabularyService assetVocabularyService,
+		DepotEntryLocalService depotEntryLocalService,
+		DepotEntryService depotEntryService,
+		GroupLocalService groupLocalService, GroupService groupService,
 		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -130,6 +146,13 @@ public class EditAssetListDisplayContext {
 		UnicodeProperties unicodeProperties) {
 
 		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
+		_assetVocabularyGroupRelLocalService =
+			assetVocabularyGroupRelLocalService;
+		_assetVocabularyService = assetVocabularyService;
+		_depotEntryLocalService = depotEntryLocalService;
+		_depotEntryService = depotEntryService;
+		_groupLocalService = groupLocalService;
+		_groupService = groupService;
 		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 		_itemSelector = itemSelector;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
@@ -833,11 +856,59 @@ public class EditAssetListDisplayContext {
 			return _referencedModelsGroupIds;
 		}
 
-		_referencedModelsGroupIds =
+		long[] currentAndAncestorSiteGroupIds =
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(
 				getSelectedGroupIds(), true);
 
+		Set<Long> referenceModelsGroupIdSet = new LinkedHashSet<>();
+
+		for (long currentAndAncestorSiteGroupId :
+				currentAndAncestorSiteGroupIds) {
+
+			referenceModelsGroupIdSet.add(currentAndAncestorSiteGroupId);
+
+			List<DepotEntry> currentAndGroupConnectedDepotEntries =
+				_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
+					currentAndAncestorSiteGroupId, DepotConstants.TYPE_ANY,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (DepotEntry currentAndGroupConnectedDepotEntry :
+					currentAndGroupConnectedDepotEntries) {
+
+				referenceModelsGroupIdSet.add(
+					currentAndGroupConnectedDepotEntry.getGroupId());
+			}
+		}
+
+		_referencedModelsGroupIds = ArrayUtil.toLongArray(
+			referenceModelsGroupIdSet);
+
 		return _referencedModelsGroupIds;
+	}
+
+	public List<Long> getResolvedReferencedModelsGroupIds()
+		throws PortalException {
+
+		List<Long> groupIdList = TransformUtil.transformToList(
+			getReferencedModelsGroupIds(),
+			groupId -> {
+				Group group = _groupService.getGroup(groupId);
+
+				if (group.isDepot() && _isSpaceDepotEntryGroup(group)) {
+					return null;
+				}
+
+				return groupId;
+			});
+
+		Group cmsGroup = _groupLocalService.fetchGroup(
+			_themeDisplay.getCompanyId(), GroupConstants.CMS);
+
+		if (cmsGroup != null) {
+			groupIdList.add(cmsGroup.getGroupId());
+		}
+
+		return groupIdList;
 	}
 
 	public SearchContainer<AssetListEntryAssetEntryRel> getSearchContainer() {
@@ -1006,11 +1077,50 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
+		long[] currentAndAncestorSiteGroupIds =
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				getReferencedModelsGroupIds());
+
+		Set<AssetVocabulary> groupsVocabularies = new LinkedHashSet<>(
+			_assetVocabularyService.getGroupsVocabularies(
+				currentAndAncestorSiteGroupIds));
+
+		if (_containsSpaceDepotEntryGroups(currentAndAncestorSiteGroupIds) &&
+			!ArrayUtil.contains(
+				currentAndAncestorSiteGroupIds, GroupConstants.GROUP_ID_ALL)) {
+
+			currentAndAncestorSiteGroupIds = ArrayUtil.append(
+				currentAndAncestorSiteGroupIds, GroupConstants.GROUP_ID_ALL);
+		}
+
+		for (long currentAndAncestorSiteGroupId :
+				currentAndAncestorSiteGroupIds) {
+
+			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
+				_assetVocabularyGroupRelLocalService.
+					getAssetVocabularyGroupRelsByGroupId(
+						currentAndAncestorSiteGroupId);
+
+			for (AssetVocabularyGroupRel assetVocabularyGroupRel :
+					assetVocabularyGroupRels) {
+
+				AssetVocabulary assetVocabulary =
+					_assetVocabularyService.fetchVocabulary(
+						assetVocabularyGroupRel.getVocabularyId());
+
+				if (assetVocabulary != null) {
+					groupsVocabularies.add(assetVocabulary);
+				}
+			}
+		}
+
 		List<AssetVocabulary> assetVocabularies = ListUtil.filter(
-			AssetVocabularyServiceUtil.getGroupsVocabularies(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					getReferencedModelsGroupIds())),
+			new ArrayList<>(groupsVocabularies),
 			vocabulary -> {
+				if (vocabulary == null) {
+					return false;
+				}
+
 				long[] classNameIds = vocabulary.getSelectedClassNameIds();
 
 				for (long classNameId : classNameIds) {
@@ -1143,6 +1253,18 @@ public class EditAssetListDisplayContext {
 				Boolean.FALSE.toString()));
 
 		return _subtypeFieldsFilterEnabled;
+	}
+
+	private boolean _containsSpaceDepotEntryGroups(long[] groupIds)
+		throws PortalException {
+
+		for (long groupId : groupIds) {
+			if (_isSpaceDepotEntryGroup(_groupService.getGroup(groupId))) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private List<AssetCategory> _filterAssetCategories(long[] categoryIds) {
@@ -1422,6 +1544,21 @@ public class EditAssetListDisplayContext {
 		};
 	}
 
+	private boolean _isSpaceDepotEntryGroup(Group group) {
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			group.getGroupId());
+
+		if ((depotEntry != null) &&
+			(depotEntry.getType() == DepotConstants.TYPE_SPACE) &&
+			FeatureFlagManagerUtil.isEnabled(
+				depotEntry.getCompanyId(), "LPD-17564")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _setDDMStructure() throws Exception {
 		_ddmStructureDisplayFieldValue = StringPool.BLANK;
 		_ddmStructureFieldLabel = StringPool.BLANK;
@@ -1483,6 +1620,9 @@ public class EditAssetListDisplayContext {
 	private Integer _assetListEntryType;
 	private final AssetRendererFactoryClassProvider
 		_assetRendererFactoryClassProvider;
+	private final AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+	private final AssetVocabularyService _assetVocabularyService;
 	private List<Long> _availableClassNameIds;
 	private List<SegmentsEntry> _availableSegmentsEntries;
 	private String _backURL;
@@ -1492,6 +1632,10 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldLabel;
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
+	private final DepotEntryLocalService _depotEntryLocalService;
+	private final DepotEntryService _depotEntryService;
+	private final GroupLocalService _groupLocalService;
+	private final GroupService _groupService;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 	private final ItemSelector _itemSelector;

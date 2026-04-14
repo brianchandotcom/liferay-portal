@@ -158,7 +158,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 				serviceContext.setAddGroupPermissions(true);
 				serviceContext.setAddGuestPermissions(true);
-				serviceContext.setIndexingEnabled(indexingEnabled);
 
 				Repository repository = addPortletRepository(
 					groupId, portletId, serviceContext);
@@ -168,6 +167,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 					serviceContext.setAttribute(
 						"classPK", String.valueOf(classPK));
 				}
+
+				serviceContext.setIndexingEnabled(indexingEnabled);
 
 				LocalRepository localRepository =
 					_repositoryProvider.getLocalRepository(

@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {postForm, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import filterBulkActions from '../../utils/actionItems/filterBulkActions';
@@ -173,11 +173,15 @@ function BulkActions({
 		[selectedItemsValue]
 	);
 
-	const filteredBulkActions = filterBulkActions({
-		allItemsSelectedActive,
-		bulkActions,
-		selectedItems,
-	});
+	const filteredBulkActions = useMemo(
+		() =>
+			filterBulkActions({
+				allItemsSelectedActive,
+				bulkActions,
+				selectedItems,
+			}),
+		[allItemsSelectedActive, bulkActions, selectedItems]
+	);
 
 	return showBulkActionsManagementBar && selectedItemsValue.length ? (
 		<FrontendDataSetContext.Consumer>

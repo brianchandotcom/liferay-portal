@@ -6,6 +6,10 @@
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
 		"jsx": "react",
+		"lib": [
+			"ES2019",
+			"DOM"
+		],
 		"module": "esnext",
 		"moduleResolution": "node",
 		"outDir": "build",

@@ -9,16 +9,6 @@ import React from 'react';
 
 import MostActiveVisitors from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/MostActiveVisitors';
 
-const mockData = [
-	{
-		activitiesCount: 150,
-		emailAddress: 'john.doe@liferay.com',
-		firstName: 'John',
-		lastName: 'Doe',
-		logoURL: 'https://test.com/logo.png',
-	},
-];
-
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
 });
@@ -31,6 +21,14 @@ const mockLiferayLanguageGet = jest.fn((key: string) => {
 	},
 };
 
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/common/hooks/useIsInViewport',
+	() => ({
+		__esModule: true,
+		default: jest.fn(() => true),
+	})
+);
+
 describe('MostActiveVisitors', () => {
 	beforeEach(() => {
 		jest.fn();
@@ -38,12 +36,16 @@ describe('MostActiveVisitors', () => {
 
 	afterEach(() => {
 		cleanup();
+
 		jest.clearAllMocks();
 	});
 
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
-			<MostActiveVisitors items={mockData} namespace="test-namespace" />
+			<MostActiveVisitors
+				dsrDevEnvEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(baseElement).toMatchSnapshot();
@@ -53,29 +55,5 @@ describe('MostActiveVisitors', () => {
 		expect(screen.getByText('150')).toBeInTheDocument();
 		expect(screen.getByText('actions')).toBeInTheDocument();
 		expect(screen.getByText('john.doe@liferay.com')).toBeInTheDocument();
-	});
-
-	it('renders correctly without a logoURL', () => {
-		const dataWithoutLogo = [
-			{
-				activitiesCount: 42,
-				emailAddress: 'jane.smith@liferay.com',
-				firstName: 'Jane',
-				lastName: 'Smith',
-				logoURL: undefined,
-			},
-		];
-
-		render(
-			<MostActiveVisitors
-				items={dataWithoutLogo}
-				namespace="test-namespace"
-			/>
-		);
-
-		expect(screen.getByText('Jane')).toBeInTheDocument();
-		expect(screen.getByText('Smith')).toBeInTheDocument();
-		expect(screen.getByText('42')).toBeInTheDocument();
-		expect(screen.getByText('jane.smith@liferay.com')).toBeInTheDocument();
 	});
 });

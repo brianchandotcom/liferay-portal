@@ -71,6 +71,8 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 			completeArgs.add(String.valueOf(networkTimeout));
 		}
 
+		completeArgs.add("--prefer-offline");
+
 		return completeArgs;
 	}
 

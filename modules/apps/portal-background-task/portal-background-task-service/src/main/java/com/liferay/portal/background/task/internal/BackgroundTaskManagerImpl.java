@@ -207,15 +207,15 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		String taskExecutorClassName, int status) {
 
 		com.liferay.portal.background.task.model.BackgroundTask
-			bcakgroundTaskModel =
+			backgroundTaskModel =
 				_backgroundTaskLocalService.fetchFirstBackgroundTask(
 					taskExecutorClassName, status);
 
-		if (bcakgroundTaskModel == null) {
+		if (backgroundTaskModel == null) {
 			return null;
 		}
 
-		return new BackgroundTaskImpl(bcakgroundTaskModel);
+		return new BackgroundTaskImpl(backgroundTaskModel);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import {ObjectRelationshipAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
@@ -17,6 +18,9 @@ import {generateObjectFields} from '../utils/generateObjectFields';
 
 const test = mergeTests(
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	objectPagesTest,
@@ -112,8 +116,6 @@ test('can anonymize object entries', async ({
 	await usersAndOrganizationsPage.goToUsers();
 
 	await usersAndOrganizationsPage.filterUsers('inactive');
-
-	await usersAndOrganizationsPage.activateUsers([userAccount.name]);
 
 	await viewObjectEntriesPage.goto(objectDefinition.className);
 
@@ -267,7 +269,7 @@ test('can delete object entries via personal data management', async ({
 
 	await personalDataErasurePage.deleteMenuItem.click();
 
-	await usersAndOrganizationsPage.goToUsers();
+	await usersAndOrganizationsPage.goToUsers(true);
 
 	await usersAndOrganizationsPage.filterUsers('inactive');
 

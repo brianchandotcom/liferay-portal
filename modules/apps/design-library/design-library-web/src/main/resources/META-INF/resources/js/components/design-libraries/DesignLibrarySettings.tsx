@@ -20,12 +20,14 @@ interface DesignLibrarySettingsProps {
 	backURL: string;
 	externalReferenceCode: string;
 	groupId: string;
+	portletId: string;
 }
 
 export default function DesignLibrarySettings({
 	backURL,
 	externalReferenceCode,
 	groupId,
+	portletId
 }: DesignLibrarySettingsProps) {
 	const id = useId();
 
@@ -75,9 +77,12 @@ export default function DesignLibrarySettings({
 
 				const updatedDesignLibrary = data as DesignLibrary;
 
-				if (setDesignLibrary) {
-					setDesignLibrary(updatedDesignLibrary);
+				setDesignLibrary(updatedDesignLibrary);
+
+				if (name !== designLibrary?.name) {
+					Liferay.Portlet.refresh(`#p_p_id_${portletId}_`);
 				}
+
 			}
 			catch (error: any) {
 				const errorMessage =

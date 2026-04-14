@@ -77,6 +77,7 @@ export class FDSSamplePage {
 	readonly toggleInfoPanelButton: Locator;
 	readonly userViewsActionsButton: Locator;
 	readonly userViewsDeleteAlert: Locator;
+	readonly userViewsRenameModal: Locator;
 	readonly userViewsSaveModal: Locator;
 	readonly userViewsSelectorButton: Locator;
 	readonly visualizationModeSelector: Locator;
@@ -219,6 +220,9 @@ export class FDSSamplePage {
 		});
 		this.userViewsDeleteAlert = page.getByRole('dialog', {
 			name: 'Delete View',
+		});
+		this.userViewsRenameModal = page.getByRole('dialog', {
+			name: 'Rename View',
 		});
 		this.userViewsSaveModal = page.getByRole('dialog', {
 			name: 'Save New View As',

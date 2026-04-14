@@ -118,6 +118,48 @@ test(
 			await expect(fdsSamplePage.table.headerCells).toHaveCount(10);
 		});
 
+		await test.step('Can not change a user view name if no name is provided', async () => {
+			await fdsSamplePage.userViewsSelectorButton.click();
+
+			await fdsSamplePage.dropdownMenu.waitFor();
+
+			await fdsSamplePage.dropdownMenu
+				.getByRole('option', {name: userView2Name})
+				.click();
+
+			await fdsSamplePage.userViewsActionsButton.click();
+
+			await fdsSamplePage.dropdownMenu.waitFor();
+
+			const menuItem = fdsSamplePage.dropdownMenu.getByRole('menuitem', {
+				name: 'Rename View',
+			});
+
+			await expect(menuItem).toBeVisible();
+
+			await menuItem.click();
+
+			await expect(fdsSamplePage.userViewsRenameModal).toBeInViewport();
+
+			await fdsSamplePage.userViewsRenameModal
+				.getByLabel('NameRequired')
+				.fill('');
+
+			await fdsSamplePage.userViewsRenameModal
+				.getByRole('button', {name: 'Save'})
+				.click();
+
+			await expect(
+				fdsSamplePage.userViewsRenameModal.getByText(
+					'This field is required.'
+				)
+			).toBeVisible();
+
+			await fdsSamplePage.userViewsRenameModal
+				.getByRole('button', {name: 'Cancel'})
+				.click();
+		});
+
 		await test.step('Can change a user view name', async () => {
 			await fdsSamplePage.userViewsSelectorButton.click();
 
@@ -135,13 +177,13 @@ test(
 
 			await menuItem.click();
 
-			await expect(fdsSamplePage.userViewsSaveModal).toBeInViewport();
+			await expect(fdsSamplePage.userViewsRenameModal).toBeInViewport();
 
-			await fdsSamplePage.userViewsSaveModal
+			await fdsSamplePage.userViewsRenameModal
 				.getByLabel('NameRequired')
 				.fill(newUserViewName);
 
-			await fdsSamplePage.userViewsSaveModal
+			await fdsSamplePage.userViewsRenameModal
 				.getByRole('button', {name: 'Save'})
 				.click();
 

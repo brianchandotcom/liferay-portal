@@ -10298,40 +10298,7 @@ ${output.content}</echo>
 					<arg value="--all" />
 				</exec>
 
-				<if>
-					<isset property="modules.test.class.group" />
-					<then>
-						<get-gradle-module-dir-task-names gradle.task.names="${modules.test.class.group}" />
-
-						<for delimiter="|" list="${gradle.module.dir.task.names}" param="gradle.module.dir.task.name" trim="true">
-							<sequential>
-								<local name="gradle.module.dir" />
-								<local name="gradle.task.name" />
-
-								<propertyregex
-									input="@{gradle.module.dir.task.name}"
-									override="true"
-									property="gradle.module.dir"
-									regexp="([^=]+)=([^=]+)"
-									replace="\1"
-								/>
-
-								<propertyregex
-									input="@{gradle.module.dir.task.name}"
-									override="true"
-									property="gradle.task.name"
-									regexp="([^=]+)=([^=]+)"
-									replace="\2"
-								/>
-
-								<execute-gradle-task-rest-builder gradle.module.dir="${gradle.module.dir}" gradle.task.name="${gradle.task.name}" />
-							</sequential>
-						</for>
-					</then>
-					<else>
-						<execute-gradle-task-rest-builder gradle.module.dir="modules" gradle.task.name="buildREST" />
-					</else>
-				</if>
+				<execute-ant-target-build-services ant.target.file="portal-impl/build.xml" ant.target.name="build-rests" />
 			</test-action>
 
 			<test-set-up>

@@ -28,6 +28,8 @@ components:
                         The expiration date to be a collaborator of the asset.
                     format: date-time
                     type: string
+                emailAddress:
+                    type: string
                 externalReferenceCode:
                     # @review
                     description:

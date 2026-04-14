@@ -1,0 +1,34 @@
+{
+	"devDependencies": {
+		"@liferay/eslint-plugin": "1.6.0",
+		"@liferay/prettier-plugin": "1.1.5",
+		"@liferay/stylelint-plugin": "1.1.0",
+		"@typescript-eslint/eslint-plugin": "^5.12.1",
+		"@typescript-eslint/parser": "^7.8.0",
+		"babel-eslint": "^10.1.0",
+		"eslint": "7.32.0",
+		"prettier": "3.2.5",
+		"typescript": "4.4.2"
+	},
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"client-extensions/liferay-sample-commerce-checkout-step",
+			"client-extensions/liferay-sample-custom-element-2",
+			"client-extensions/liferay-sample-custom-element-3",
+			"client-extensions/liferay-sample-custom-element-4",
+			"client-extensions/liferay-sample-custom-element-5",
+			"client-extensions/liferay-sample-editor-config-contributor",
+			"client-extensions/liferay-sample-etc-node",
+			"client-extensions/liferay-sample-fds-cell-renderer",
+			"client-extensions/liferay-sample-fds-filter",
+			"client-extensions/liferay-sample-theme-css-1",
+			"client-extensions/liferay-sample-theme-css-2",
+			"client-extensions/liferay-sample-theme-spritemap-2",
+			"client-extensions/liferay-sample-custom-element-6",
+			"client-extensions/liferay-sample-etc-frontend",
+			"client-extensions/liferay-sample-js-import-maps-entry",
+			"client-extensions/liferay-sample-theme-css-3"
+		]
+	}
+}

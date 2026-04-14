@@ -243,6 +243,47 @@ public class Collaborator implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateExpiredSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getEmailAddress() {
+		if (_emailAddressSupplier != null) {
+			emailAddress = _emailAddressSupplier.get();
+
+			_emailAddressSupplier = null;
+		}
+
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+
+		_emailAddressSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
+
+		_emailAddressSupplier = () -> {
+			try {
+				return emailAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String emailAddress;
+
+	@JsonIgnore
+	private Supplier<String> _emailAddressSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The collaborator external reference code."
 	)
@@ -594,6 +635,22 @@ public class Collaborator implements Serializable {
 			sb.append("\"");
 		}
 
+		String emailAddress = getEmailAddress();
+
+		if (emailAddress != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"emailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(emailAddress));
+
+			sb.append("\"");
+		}
+
 		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
@@ -783,4 +840,4 @@ public class Collaborator implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-969258372
+// LIFERAY-REST-BUILDER-HASH:1784333370

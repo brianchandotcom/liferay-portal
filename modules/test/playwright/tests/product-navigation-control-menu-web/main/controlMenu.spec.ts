@@ -17,13 +17,15 @@ import {
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
+import { journalPagesTest } from '../../journal-web/main/fixtures/journalPagesTest';
 
 const test = mergeTests(
 	dataApiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),
 	pagesAdminPagesTest,
-	siteSettingsPagesTest
+	siteSettingsPagesTest,
+	journalPagesTest
 );
 
 test(
@@ -172,3 +174,35 @@ test(
 		});
 	}
 );
+
+test('Check if the maintenance mode indicator is displaying correctly', async ({journalPage, page}) => {
+	const infoButton = page.getByRole('button', {
+            name: 'Open Maintenance Mode Definition'
+        });
+
+	await test.step('should show only the info icon without "Maintenance" text', async () => {
+
+		await journalPage.goto();
+
+        await expect(infoButton).toBeVisible();
+        await expect(infoButton).toHaveClass(/rounded-pill/); 
+        await expect(infoButton).toHaveClass(/btn-xs/);
+
+        const buttonText = await infoButton.innerText();
+        expect(buttonText.trim()).toBe('');
+
+        const icon = infoButton.locator('svg.lexicon-icon-info-circle-open');
+        await expect(icon).toBeVisible();
+
+        const iconContainer = infoButton.locator('span.inline-item');
+        await expect(iconContainer).not.toHaveClass(/inline-item-after/);
+    });
+
+    await test.step('should show popover/dialog when clicked', async () => {
+        await infoButton.click();
+
+        const popover = page.getByRole('dialog');
+        await expect(popover).toBeVisible();
+        await expect(popover).toContainText('This feature is in maintenance mode. Learn more about maintenance mode.');
+    });
+});

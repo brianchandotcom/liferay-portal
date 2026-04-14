@@ -72,7 +72,6 @@ public class ContentRetrieverManagerImpl implements ContentRetrieverManager {
 
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
 			dtoConverterContext.getUserId());
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				companyId, "AIHubContentRetriever");

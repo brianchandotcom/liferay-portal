@@ -119,6 +119,30 @@ test(
 );
 
 test(
+	'View All Files link is not rendered when there are no files',
+	{tag: '@LPD-85991'},
+	async ({apiHelpers, spaceSummaryPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+			},
+			type: 'Space',
+		});
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await expect(spaceSummaryPage.viewAllFilesLink).not.toBeVisible();
+
+		await spaceSummaryPage.createFileFolder('Folder' + getRandomInt());
+
+		await expect(spaceSummaryPage.viewAllFilesLink).toBeVisible();
+	}
+);
+
+test(
 	'Can view added files in the space summary page',
 	{tag: ['@LPD-62706', '@LPD-86299']},
 	async ({apiHelpers, page, spaceSummaryPage}) => {
@@ -176,6 +200,30 @@ test(
 
 		await expect(page.getByRole('link', {name: spaceName})).toBeVisible();
 		expect(page.getByRole('link', {name: 'Contents'})).toBeVisible();
+	}
+);
+
+test(
+	'View All Content link is not rendered when there is no content',
+	{tag: '@LPD-85991'},
+	async ({apiHelpers, spaceSummaryPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+			},
+			type: 'Space',
+		});
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await expect(spaceSummaryPage.viewAllContentLink).not.toBeVisible();
+
+		await spaceSummaryPage.createContentFolder('Folder' + getRandomInt());
+
+		await expect(spaceSummaryPage.viewAllContentLink).toBeVisible();
 	}
 );
 

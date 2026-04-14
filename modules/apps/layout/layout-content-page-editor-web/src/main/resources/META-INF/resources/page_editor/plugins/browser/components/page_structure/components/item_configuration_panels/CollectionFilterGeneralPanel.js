@@ -9,10 +9,11 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
-import {TargetCollectionDisplayField} from '../../../../../../app/components/fragment_configuration_fields/TargetCollectionDisplayField';
-import {selectConfiguredCollectionDisplays} from '../../../../../../app/components/fragment_configuration_fields/TargetCollectionDisplayField';
+import {
+	TargetCollectionDisplayField,
+	selectConfiguredCollectionDisplays,
+} from '../../../../../../app/components/fragment_configuration_fields/TargetCollectionDisplayField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
-import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {
 	useDispatch,
 	useSelector,

@@ -26,7 +26,7 @@ public interface AIHubCellConfiguration {
 	@Meta.AD(name = "client-id")
 	public String clientId();
 
-	@Meta.AD(name = "client-secret")
+	@Meta.AD(name = "client-secret", type = Meta.Type.Password)
 	public String clientSecret();
 
 	@Meta.AD(name = "service-url")

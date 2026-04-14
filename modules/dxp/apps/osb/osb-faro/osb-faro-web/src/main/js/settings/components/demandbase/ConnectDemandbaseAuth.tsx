@@ -63,6 +63,9 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 				try {
 					if (dataSource) {
 						const updatedDataSource = await updateDemandbase({
+							channelsConfiguration: dataSource.provider
+								.getIn(['channelsConfiguration'])
+								?.toJS(),
 							credentials: {
 								privateKey: token,
 								publicKey: '',

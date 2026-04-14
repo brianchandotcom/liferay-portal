@@ -80,6 +80,7 @@ liferay-default:
                         type: RuntimeDefault
         x-wait-for-elasticsearch:
             -   command:
+                    -   sh
                     -   /init-scripts/wait-for-elasticsearch.sh
                 envFrom:
                     -   secretRef:

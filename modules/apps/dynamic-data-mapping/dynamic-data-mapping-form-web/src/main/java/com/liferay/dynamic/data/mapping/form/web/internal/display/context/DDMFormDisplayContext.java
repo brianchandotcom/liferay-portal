@@ -601,19 +601,18 @@ public class DDMFormDisplayContext {
 		return LanguageUtil.get(resourceBundle, "submit-form");
 	}
 
-	public String getSuccessPageDescription(Locale locale)
-		throws PortalException {
-
+	public String getSuccessPageDescription() throws PortalException {
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			getDDMFormSuccessPageSettings();
 
 		LocalizedValue body = ddmFormSuccessPageSettings.getBody();
 
 		return GetterUtil.getString(
-			body.getString(locale), body.getString(body.getDefaultLocale()));
+			body.getString(_renderRequest.getLocale()),
+			body.getString(body.getDefaultLocale()));
 	}
 
-	public String getSuccessPageTitle(Locale locale) throws PortalException {
+	public String getSuccessPageTitle() throws PortalException {
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			getDDMFormSuccessPageSettings();
 
@@ -621,7 +620,7 @@ public class DDMFormDisplayContext {
 
 		return HtmlUtil.escape(
 			GetterUtil.getString(
-				title.getString(locale),
+				title.getString(_renderRequest.getLocale()),
 				title.getString(title.getDefaultLocale())));
 	}
 

@@ -443,11 +443,8 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		if (searchContainer.getTotal() <= 0) {
-			return true;
-		}
-
-		return false;
+		return !_dlAdminDisplayContext.isSearch() &&
+			   (searchContainer.getTotal() == 0);
 	}
 
 	@Override

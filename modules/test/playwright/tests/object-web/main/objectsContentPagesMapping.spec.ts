@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'path';
-
-import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -20,7 +19,7 @@ import createTempFile from '../../../utils/createTempFile';
 import getRandomString from '../../../utils/getRandomString';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {generateObjectFields} from './utils/generateObjectFields';
+import {generateObjectFields} from '../utils/generateObjectFields';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -36,8 +35,8 @@ const test = mergeTests(
 );
 
 test(
-	'LPD-78504 Can map preview URL of image attachment to fragment on content page',
-	{tag: '@LPD-78504'},
+	'Can map preview URL of image attachment to fragment on content page',
+	{tag: '@LPS-182999'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: MapPreviewURLOfImageAttachmentToFragment
 
@@ -59,7 +58,7 @@ test(
 		const document = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
 			createReadStream(
-				path.join(__dirname, 'dependencies', 'astronaut.png')
+				path.join(__dirname, '..', 'dependencies', 'astronaut.png')
 			),
 			{fileName: 'astronaut.png', title: getRandomString()}
 		);
@@ -108,9 +107,7 @@ test(
 
 		await test.step('Verify mapped image is shown in editor', async () => {
 			await expect(
-				page.locator(
-					'[data-lfr-editable-id="image-square"] img, img[data-lfr-editable-id="image-square"]'
-				)
+				page.locator('.component-image img')
 			).toBeVisible();
 		});
 
@@ -122,17 +119,15 @@ test(
 			);
 
 			await expect(
-				page.locator(
-					'[data-lfr-editable-id="image-square"] img, img[data-lfr-editable-id="image-square"]'
-				)
+				page.locator('.component-image img')
 			).toBeVisible();
 		});
 	}
 );
 
 test(
-	'LPD-78504 Can map preview URL of non-image attachment to fragment showing blank space',
-	{tag: '@LPD-78504'},
+	'Can map preview URL of non-image attachment to fragment showing blank space',
+	{tag: '@LPS-182999'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: MapPreviewURLOfNonImageAttachmentToFragment
 
@@ -211,16 +206,15 @@ test(
 				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			const imageLocator = page.locator(
-				'[data-lfr-editable-id="image-square"] img, img[data-lfr-editable-id="image-square"]'
-			);
-
-			await expect(async () => {
-				const box = await imageLocator.boundingBox();
-
-				expect(box).not.toBeNull();
-				expect(box!.height).toBeLessThanOrEqual(16);
-			}).toPass();
+			await expect
+				.poll(async () =>
+					page
+						.locator('.component-image img')
+						.evaluate(
+							(image: HTMLImageElement) => image.naturalWidth
+						)
+				)
+				.toBe(0);
 		});
 	}
 );

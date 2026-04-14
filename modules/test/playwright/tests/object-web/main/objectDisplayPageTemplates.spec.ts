@@ -27,8 +27,8 @@ const test = mergeTests(
 );
 
 test(
-	'LPD-78504 Cannot select unpublished object for a display page template',
-	{tag: '@LPD-78504'},
+	'Cannot select unpublished object for a display page template',
+	{tag: '@LPS-137871'},
 	async ({apiHelpers, displayPageTemplatesPage, page}) => {
 		const objectName = 'CustomObject' + getRandomInt();
 

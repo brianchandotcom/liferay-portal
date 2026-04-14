@@ -23,6 +23,7 @@ export class EditObjectDetailsPage {
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
 	readonly scopeCombobox: Locator;
+	readonly showWidgetToggle: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
@@ -67,6 +68,9 @@ export class EditObjectDetailsPage {
 		});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.scopeCombobox = page.getByRole('combobox', {name: 'Scope'});
+		this.showWidgetToggle = page.getByRole('switch', {
+			name: 'Show Widget in Page Builder',
+		});
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}
 

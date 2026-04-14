@@ -98,7 +98,7 @@ export function DisplayPagePreviewItemSelectorContent() {
 
 						<ClayIcon
 							className="flex-shrink-0 text-secondary"
-							symbol="caret-bottom"
+							symbol="caret-double"
 						/>
 					</button>
 				</p>

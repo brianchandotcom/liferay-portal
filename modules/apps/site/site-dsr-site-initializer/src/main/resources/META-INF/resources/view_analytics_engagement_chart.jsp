@@ -9,13 +9,26 @@
 
 <%
 ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext viewAnalyticsEngagementChartAnalyticsSectionDisplayContext = (ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext)request.getAttribute(ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext.class.getName());
+
+String type = viewAnalyticsEngagementChartAnalyticsSectionDisplayContext.getType();
 %>
 
 <div>
 	<div class="custom-empty-state dsr-section">
-		<react:component
-			module="{EngagementChart} from site-dsr-site-initializer"
-			props="<%= viewAnalyticsEngagementChartAnalyticsSectionDisplayContext.getProps() %>"
-		/>
+		<c:choose>
+			<c:when test='<%= type.equals("recent") %>'>
+				<react:component
+					module="{RecentEngagementChart} from site-dsr-site-initializer"
+					props="<%= viewAnalyticsEngagementChartAnalyticsSectionDisplayContext.getProps() %>"
+				/>
+			</c:when>
+			<c:when test='<%= type.equals("timeline") %>'>
+				<react:component
+					module="{TimelineEngagementChart} from site-dsr-site-initializer"
+					props="<%= viewAnalyticsEngagementChartAnalyticsSectionDisplayContext.getProps() %>"
+				/>
+			</c:when>
+			<c:otherwise />
+		</c:choose>
 	</div>
 </div>

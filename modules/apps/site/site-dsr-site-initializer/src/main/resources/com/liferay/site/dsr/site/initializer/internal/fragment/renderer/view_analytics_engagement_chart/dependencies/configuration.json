@@ -1,0 +1,27 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "recent",
+					"label": "type",
+					"name": "type",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "recent",
+								"value": "recent"
+							},
+							{
+								"label": "timeline",
+								"value": "timeline"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

@@ -80,8 +80,8 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 					pageTitle = LanguageUtil.get(request, "this-form-is-no-longer-available");
 				}
 				else if (showSuccessPage) {
-					pageDescription = ddmFormDisplayContext.getSuccessPageDescription(displayLocale);
-					pageTitle = ddmFormDisplayContext.getSuccessPageTitle(displayLocale);
+					pageDescription = ddmFormDisplayContext.getSuccessPageDescription();
+					pageTitle = ddmFormDisplayContext.getSuccessPageTitle();
 				}
 				else {
 					Map<String, String> limitToOneSubmissionPerUserMap = ddmFormDisplayContext.getLimitToOneSubmissionPerUserMap();

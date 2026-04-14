@@ -125,16 +125,12 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		AccountResource accountResource =
 			_marketplaceService.getAccountResource();
 
-		Page<Account> accountsPage = accountResource.getAccountsPage(
-			externalReferenceCode, "", Pagination.of(0, -1), "");
+		HttpInvoker.HttpResponse httpResponse =
+			accountResource.getAccountByExternalReferenceCodeHttpResponse(
+				externalReferenceCode);
 
-		for (Account account : accountsPage.getItems()) {
-			if (Objects.equals(
-					account.getExternalReferenceCode(),
-					externalReferenceCode)) {
-
-				return account;
-			}
+		if (_isOKStatusCode(httpResponse.getStatusCode())) {
+			return Account.toDTO(httpResponse.getContent());
 		}
 
 		return null;

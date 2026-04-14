@@ -125,7 +125,7 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 			}
 		}
 
-		return user;
+		throw new UnsupportedOperationException();
 	}
 
 	@Reference

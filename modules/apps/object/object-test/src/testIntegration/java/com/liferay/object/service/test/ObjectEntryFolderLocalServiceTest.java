@@ -6,6 +6,9 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
@@ -103,6 +106,16 @@ public class ObjectEntryFolderLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
 		_group = GroupTestUtil.addGroup();
 
 		_objectDefinition = _addObjectDefinition();
@@ -251,6 +264,17 @@ public class ObjectEntryFolderLocalServiceTest {
 			_hasResourcePermission(
 				ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, objectEntryFolder,
 				role));
+
+		AssetTestUtil.addVocabulary(
+			_depotEntry.getGroupId(), AssetCategoryConstants.ALL_CLASS_NAME_ID,
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, true);
+
+		_objectEntryFolderLocalService.addObjectEntryFolder(
+			StringUtil.randomString(), _depotEntry.getGroupId(),
+			TestPropsValues.getUserId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, StringUtil.randomString(),
+			new ServiceContext());
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -1149,6 +1173,12 @@ public class ObjectEntryFolderLocalServiceTest {
 		return _objectEntryFolderLocalService.updateObjectEntryFolder(
 			objectEntryFolder);
 	}
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

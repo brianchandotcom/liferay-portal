@@ -9,10 +9,13 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
@@ -1753,44 +1756,35 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddObjectEntryWithCopyAttribute() throws Exception {
-		FileEntry fileEntry = _addTempFileEntry(RandomTestUtil.randomString());
+	public void testAddObjectEntryWithCategorization() throws Exception {
+		Group group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+		AssetTestUtil.addVocabulary(
+			group.getGroupId(), AssetCategoryConstants.ALL_CLASS_NAME_ID,
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, true);
 
-		ObjectEntry objectEntry = _addObjectEntry(
-			_objectDefinition,
-			HashMapBuilder.<String, Serializable>put(
-				"attachment", fileEntry.getFileEntryId()
-			).put(
-				"emailAddressRequired", "peter@liferay.com"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build(),
-			serviceContext);
+		boolean originalEnableCategorization =
+			_siteObjectDefinition.isEnableCategorization();
 
-		Assert.assertNull(
-			_dlAppLocalService.fetchFileEntry(fileEntry.getFileEntryId()));
+		_siteObjectDefinition = _enableCategorization(
+			true, _siteObjectDefinition);
 
-		serviceContext.setAttribute(Constants.ACTION, Constants.COPY);
+		AssertUtils.assertFailure(
+			PortalException.class, null,
+			() -> _addObjectEntry(
+				group.getGroupId(),
+				_siteObjectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap()));
 
-		long persistedFileEntryId = MapUtil.getLong(
-			objectEntry.getValues(), "attachment");
+		_siteObjectDefinition = _enableCategorization(
+			false, _siteObjectDefinition);
 
 		_addObjectEntry(
-			_objectDefinition,
-			HashMapBuilder.<String, Serializable>put(
-				"attachment", persistedFileEntryId
-			).put(
-				"emailAddressRequired", "peter@liferay.com"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build(),
-			serviceContext);
+			group.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
 
-		Assert.assertNotNull(
-			_dlAppLocalService.fetchFileEntry(persistedFileEntryId));
+		_siteObjectDefinition = _enableCategorization(
+			originalEnableCategorization, _siteObjectDefinition);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -7849,6 +7843,15 @@ public class ObjectEntryLocalServiceTest {
 		return listTypeEntries;
 	}
 
+	private ObjectDefinition _enableCategorization(
+		boolean enable, ObjectDefinition objectDefinition) {
+
+		objectDefinition.setEnableCategorization(enable);
+
+		return _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+	}
+
 	private void _enableObjectEntryVersioning() {
 		_objectDefinition.setEnableObjectEntryVersioning(true);
 
@@ -9591,6 +9594,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

@@ -4,13 +4,32 @@
  */
 
 import '@testing-library/jest-dom';
-import {render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import RoomStatistics from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/RoomStatistics';
-import {mockRoomStatisticsData} from './__mocks__';
 
-const mockLiferayLanguageGet = jest.fn((key: string) => key);
+const {Liferay: originalLiferay} = global.window;
+
+const mockLiferayLanguageGet = jest.fn((key: string) => {
+	if (key === '1-hour') {
+		return '1 hour';
+	}
+
+	if (key === '1-minute') {
+		return '1 minute';
+	}
+
+	if (key === 'x-hours') {
+		return 'x hours';
+	}
+
+	if (key === 'x-minutes') {
+		return 'x minutes';
+	}
+
+	return key;
+});
 
 jest.mock('frontend-js-web', () => ({
 	...(jest.requireActual('frontend-js-web') as any),
@@ -29,32 +48,80 @@ jest.mock('frontend-js-web', () => ({
 	},
 };
 
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/common/hooks/useIsInViewport',
+	() => ({
+		__esModule: true,
+		default: jest.fn(() => true),
+	})
+);
+
 describe('RoomStatistics', () => {
+	beforeAll(() => {
+		window['Liferay'] = {
+			...originalLiferay,
+
+			detach: (name, fn): void => {
+				window.removeEventListener(name as string, fn as EventListener);
+			},
+			fire: (name, payload) => {
+				const event = document.createEvent('CustomEvent');
+
+				event.initCustomEvent(name);
+
+				if (payload) {
+					Object.keys(payload).forEach((key: string) => {
+						(event as any)[key] = payload[key];
+					});
+				}
+
+				window.dispatchEvent(event);
+			},
+			on: (name, fn) => {
+				if (fn) {
+					window.addEventListener(
+						name as string,
+						fn as EventListener
+					);
+				}
+
+				return {
+					detach: () => {
+						if (fn) {
+							window.removeEventListener(
+								name as string,
+								fn as EventListener
+							);
+						}
+
+						return 0;
+					},
+				};
+			},
+		};
+	});
+
+	afterAll(() => {
+		cleanup();
+
+		window.Liferay = originalLiferay;
+
+		jest.resetAllMocks();
+	});
+
 	it('matches snapshot', () => {
-		const {container} = render(
-			<RoomStatistics data={mockRoomStatisticsData} isLoading={false} />
-		);
+		const {container} = render(<RoomStatistics dsrDevEnvEnabled={true} />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('renders with provided data', () => {
-		const {getByText} = render(
-			<RoomStatistics data={mockRoomStatisticsData} isLoading={false} />
-		);
+		const {getByText} = render(<RoomStatistics dsrDevEnvEnabled={true} />);
 
 		expect(getByText('0-hours 45-minutes')).toBeInTheDocument();
 		expect(getByText('100')).toBeInTheDocument();
 		expect(getByText('20')).toBeInTheDocument();
 		expect(getByText('10')).toBeInTheDocument();
 		expect(getByText('5')).toBeInTheDocument();
-	});
-
-	it('renders loading state', () => {
-		const {container} = render(<RoomStatistics isLoading={true} />);
-
-		expect(
-			container.querySelector('.loading-animation')
-		).toBeInTheDocument();
 	});
 });

@@ -9,7 +9,6 @@ import React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import FrequencyChart from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/FrequencyChart';
-import {mockFrequencyChartData} from './__mocks__';
 
 global.ResizeObserver = ResizeObserver;
 
@@ -26,16 +25,19 @@ jest.mock('recharts', () => {
 	};
 });
 
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/common/hooks/useIsInViewport',
+	() => ({
+		__esModule: true,
+		default: jest.fn(() => true),
+	})
+);
+
 describe('VisitFrequencyChart component', () => {
 	let container: HTMLElement;
 
 	beforeEach(() => {
-		const view = render(
-			<FrequencyChart
-				frequencyChartItems={mockFrequencyChartData}
-				isLoading={false}
-			/>
-		);
+		const view = render(<FrequencyChart dsrDevEnvEnabled={true} />);
 
 		container = view.container;
 	});

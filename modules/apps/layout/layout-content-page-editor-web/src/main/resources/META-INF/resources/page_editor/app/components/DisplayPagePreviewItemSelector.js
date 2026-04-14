@@ -20,7 +20,7 @@ import {
 } from '../contexts/DisplayPagePreviewItemContext';
 import itemSelectorValueToInfoItem from '../utils/item_selector_value/itemSelectorValueToInfoItem';
 
-const NO_ITEM_LABEL = `-- ${Liferay.Language.get('none')} --`;
+const NO_ITEM_LABEL = `-- ${Liferay.Language.get('not-selected')} --`;
 
 export function DisplayPagePreviewItemSelector() {
 	const displayPagePreviewItemSelectorWrapper = useMemo(

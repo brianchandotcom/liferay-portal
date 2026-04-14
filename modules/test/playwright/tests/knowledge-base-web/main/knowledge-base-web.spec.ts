@@ -261,3 +261,24 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Search bar is not disabled after zero-result search',
+	{tag: '@LPD-86105'},
+	async ({apiHelpers, knowledgeBasePage, page, site}) => {
+		await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
+			articleBody: getRandomString(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await knowledgeBasePage.goto(site.friendlyUrlPath);
+
+		const searchInput = page.getByRole('searchbox');
+
+		await searchInput.fill(getRandomString());
+		await searchInput.press('Enter');
+
+		await expect(searchInput).not.toBeDisabled();
+	}
+);

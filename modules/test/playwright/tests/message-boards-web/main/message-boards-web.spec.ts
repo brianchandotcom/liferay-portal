@@ -257,3 +257,24 @@ test(
 		await expect(heading).toHaveText('Add Category');
 	}
 );
+
+test(
+	'Search bar is not disabled after zero-result search',
+	{tag: '@LPD-86105'},
+	async ({apiHelpers, messageBoardsPage, page, site}) => {
+		await apiHelpers.headlessDelivery.postMessageBoardThread({
+			articleBody: getRandomString(),
+			headline: getRandomString(),
+			siteId: site.id,
+		});
+
+		await messageBoardsPage.goto(site.friendlyUrlPath);
+
+		const searchInput = page.getByRole('searchbox');
+
+		await searchInput.fill(getRandomString());
+		await searchInput.press('Enter');
+
+		await expect(searchInput).not.toBeDisabled();
+	}
+);

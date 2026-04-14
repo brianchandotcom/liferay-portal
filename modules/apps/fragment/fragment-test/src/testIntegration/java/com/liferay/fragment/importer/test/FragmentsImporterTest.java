@@ -270,12 +270,6 @@ public class FragmentsImporterTest {
 			).put(
 				"image1.png", "image1.png"
 			).build());
-	}
-
-	@Test
-	public void testImportFragmentEntriesWithFolderResourcesPropagation()
-		throws Exception {
-
 		_testImportFragmentEntriesWithFolderResources(
 			true,
 			HashMapBuilder.put(
@@ -786,6 +780,16 @@ public class FragmentsImporterTest {
 		}
 	}
 
+	private void _deleteFragmentCollections(
+			List<FragmentCollection> fragmentCollections)
+		throws Exception {
+
+		for (FragmentCollection fragmentCollection : fragmentCollections) {
+			_fragmentCollectionLocalService.deleteFragmentCollection(
+				fragmentCollection);
+		}
+	}
+
 	private File _generateResourcesZipFile() throws Exception {
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
@@ -952,6 +956,10 @@ public class FragmentsImporterTest {
 				_testImportFragmentEntriesWithFolderResources(
 					expectedResourcesMap, zipFile);
 			}
+
+			_deleteFragmentCollections(
+				_fragmentCollectionLocalService.getFragmentCollections(
+					_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

@@ -1,9 +1,9 @@
 assemble:
-    -   from: build/static
+    -   from: build/vite
         into: static
 liferay-ai-hub-custom-element:
     cssURLs:
-        -   js/main.css
+        -   index.css
     friendlyURLMapping: liferay-ai-hub-custom-element
     htmlAttributes:
         ai-hub-url: https://ai.hub.liferay.com
@@ -15,5 +15,5 @@ liferay-ai-hub-custom-element:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        -   js/main.js
+        -   widget.js
     useESM: true

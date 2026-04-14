@@ -9,29 +9,17 @@ import React from 'react';
 
 import DocumentsStatistics from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/RoomDocumentsStatistics';
 
-const mockData = [
-	{
-		download: 324,
-		lastViewed: '2026-03-03T15:30:00Z',
-		title: 'pdf_test',
-		totalTimeViewingAsset: 500000,
-		totalViews: 89,
-		type: 'pdf',
-		userInvolved: ['Sara', 'Lorenzo', 'Chiara', 'Mik'],
-	},
-];
-
 const mockLiferayLanguageGet = jest.fn((key: string) => {
-	if (key === 'x-hour') {
-		return 'x hour';
+	if (key === '1-hour') {
+		return '1 hour';
+	}
+
+	if (key === '1-minute') {
+		return '1 minute';
 	}
 
 	if (key === 'x-hours') {
 		return 'x hours';
-	}
-
-	if (key === 'x-minute') {
-		return 'x minute';
 	}
 
 	if (key === 'x-minutes') {
@@ -64,6 +52,14 @@ jest.mock('frontend-js-web', () => ({
 	},
 }));
 
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/common/hooks/useIsInViewport',
+	() => ({
+		__esModule: true,
+		default: jest.fn(() => true),
+	})
+);
+
 describe('RoomDocumentsStatistics', () => {
 	beforeEach(() => {
 		jest.fn();
@@ -76,19 +72,25 @@ describe('RoomDocumentsStatistics', () => {
 
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
-			<DocumentsStatistics items={mockData} namespace="test-namespace" />
+			<DocumentsStatistics
+				dsrDevEnvEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(baseElement).toMatchSnapshot();
 
 		expect(screen.getByText('pdf_test')).toBeInTheDocument();
 		expect(screen.getByText('89')).toBeInTheDocument();
-		expect(screen.getByText('324')).toBeInTheDocument();
+		expect(screen.getAllByText('324')[0]).toBeInTheDocument();
 	});
 
 	it('renders the correct average time', () => {
 		render(
-			<DocumentsStatistics items={mockData} namespace="test-namespace" />
+			<DocumentsStatistics
+				dsrDevEnvEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(screen.getByText('1 hour 33 minutes')).toBeInTheDocument();
@@ -96,28 +98,34 @@ describe('RoomDocumentsStatistics', () => {
 
 	it('renders the correct last viewed date', () => {
 		render(
-			<DocumentsStatistics items={mockData} namespace="test-namespace" />
+			<DocumentsStatistics
+				dsrDevEnvEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
-		expect(screen.getByText('Mar 3, 2026')).toBeInTheDocument();
+		const count = screen.getAllByText('Mar 3, 2026');
+
+		expect(count.length).toBe(2);
 	});
 
 	it('renders the correct user involved count', () => {
 		render(
-			<DocumentsStatistics items={mockData} namespace="test-namespace" />
+			<DocumentsStatistics
+				dsrDevEnvEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
-		expect(screen.getByText('4 users')).toBeInTheDocument();
+		const count = screen.getAllByText('4 users');
+
+		expect(count.length).toBe(3);
 	});
 
 	it('handles duplicate users in user involved count', () => {
-		const duplicateUserData = [
-			{...mockData[0], userInvolved: ['Sara', 'Sara', 'Mik']},
-		];
-
 		render(
 			<DocumentsStatistics
-				items={duplicateUserData}
+				dsrDevEnvEnabled={true}
 				namespace="test-namespace"
 			/>
 		);

@@ -5,6 +5,34 @@
 	padding-right: 0.5rem;
 }
 
+.analytics-filters-toolbar {
+	& .dsr-date-range-picker {
+		border-color: #9b92a5;
+		border-radius: 0;
+		color: #6b6c7e;
+	}
+
+	& .dsr-date-range-preset-select {
+		border-color: #9b92a5;
+		color: #6b6c7e;
+	}
+
+	& .input-group-inset-item-after {
+		border-color: #9b92a5;
+	}
+}
+
+.analytics-frame {
+	&-icon {
+		background-color: $primary-l3;
+		color: $primary;
+	}
+}
+
+.dsr-analytics-navigation .container-fluid {
+	padding: 0;
+}
+
 .dsr-container-wrapper {
 	background-color: #fff;
 	flex: 0 0 calc(10 / 12 * 100%);
@@ -37,6 +65,10 @@
 	.menubar-vertical-expand-lg {
 		max-width: 100%;
 	}
+}
+
+.dsr-section:empty {
+	padding: 0 !important;
 }
 
 .dsr-select-template-modal {
@@ -142,4 +174,9 @@
 	.navbar-form > * {
 		padding-left: 0;
 	}
+}
+
+.room-filter-dropdown,
+.user-filter-dropdown {
+	max-width: 240px;
 }

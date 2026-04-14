@@ -1,23 +1,27 @@
-.most-active-visitors-fds {
-	.email-text {
-		font-size: 0.75rem;
-	}
+.most-active-visitors-container {
+	min-height: 200px;
 
-	.sticker {
-		font-size: 1.5rem;
-		height: 4rem;
-		width: 4rem;
-	}
+	.most-active-visitors-fds {
+		.email-text {
+			font-size: 0.75rem;
+		}
 
-	.sticker-img {
-		max-width: 120%;
-	}
+		.sticker {
+			font-size: 1.5rem;
+			height: 4rem;
+			width: 4rem;
+		}
 
-	.visitors-full-name {
-		font-size: 1rem;
-	}
+		.sticker-img {
+			max-width: 120%;
+		}
 
-	thead {
-		display: none;
+		.visitors-full-name {
+			font-size: 1rem;
+		}
+
+		thead {
+			display: none;
+		}
 	}
 }

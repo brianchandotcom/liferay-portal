@@ -1,20 +1,19 @@
-.latest-activity-container {
+.room-document-statistics-container {
 	min-height: 200px;
 
-	.latest-activity-fds {
+	.room-document-statistics-fds {
 		.table-responsive {
-			overflow-x: hidden;
+			margin-bottom: 0;
+
+			.table-list {
+				border-bottom: 0;
+				border-top: 0;
+			}
 		}
 
 		tbody td:last-child,
 		thead th:last-child {
 			display: none;
-		}
-
-		.sticker {
-			font-size: 1rem;
-			height: 2.25rem;
-			width: 2.25rem;
 		}
 
 		thead th {

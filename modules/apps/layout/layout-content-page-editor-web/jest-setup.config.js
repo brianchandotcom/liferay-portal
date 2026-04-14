@@ -9,6 +9,8 @@ import {initializeCache} from './src/main/resources/META-INF/resources/page_edit
 
 initializeCache();
 
+Liferay.FeatureFlags['LPD-11235'] = true;
+
 Liferay.Util.sub.mockImplementation((key, ...args) => {
 	const argsArray = args.flatMap((arg) => arg);
 

@@ -30,3 +30,5 @@ jest.mock('@ckeditor/ckeditor5-style/dist/index', () => ({}));
 jest.mock('@ckeditor/ckeditor5-table/dist/index', () => ({}));
 jest.mock('@ckeditor/ckeditor5-ui/dist/index', () => ({}));
 jest.mock('@ckeditor/ckeditor5-widget/dist/index', () => ({}));
+
+Liferay.FeatureFlags['LPD-11235'] = true;

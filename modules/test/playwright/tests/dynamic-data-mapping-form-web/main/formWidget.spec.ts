@@ -22,6 +22,7 @@ import {deleteItems} from './utils/deleteItems';
 
 const test = mergeTests(
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	dataApiHelpersTest,

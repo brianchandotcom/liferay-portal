@@ -14,7 +14,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {generateObjectFields} from './utils/generateObjectFields';
+import { generateObjectFields } from '../utils/generateObjectFields';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -29,8 +29,8 @@ const test = mergeTests(
 );
 
 test(
-	'LPD-78504 Can search for object entry on search experience in collection providers',
-	{tag: '@LPD-78504'},
+	'Can search for object entry on search experience in collection providers',
+	{tag: '@LPS-135388'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanSearchForObjectEntryOnSearchExperience
 
@@ -138,7 +138,7 @@ test(
 
 			const collectionTable = page.locator(
 				'.lfr-layout-structure-item-collection'
-			).first();
+			);
 
 			await expect(collectionTable.getByText(entryValueA)).toBeVisible();
 			await expect(collectionTable.getByText(entryValueB)).toBeVisible();
@@ -147,12 +147,11 @@ test(
 		await test.step('Search for entry A and verify entry B is filtered out', async () => {
 			const collectionTable = page.locator(
 				'.lfr-layout-structure-item-collection'
-			).first();
+			);
 
 			await expect(async () => {
 				const searchInput = page
-					.getByPlaceholder('Search', {exact: true})
-					.first();
+					.getByPlaceholder('Search', {exact: true});
 
 				await searchInput.fill(entryValueA, {timeout: 1000});
 				await searchInput.press('Enter', {timeout: 1000});

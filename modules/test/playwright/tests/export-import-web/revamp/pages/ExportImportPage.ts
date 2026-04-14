@@ -40,7 +40,7 @@ export class ExportImportPage {
 		this.exportMenuItem = page.getByRole('menuitem', {
 			name: 'Export',
 		});
-		this.fileSelector = page.getByRole('button', {name: 'Select File'});
+		this.fileSelector = page.getByText('Select file');
 		this.importButton = page.getByRole('button', {name: 'Import'});
 		this.importMenuItem = page.getByRole('menuitem', {
 			name: 'Import',

@@ -296,9 +296,13 @@ public class BatchEngineExportTaskExecutorImpl
 			Sort[] sorts = _getSorts(
 				batchEngineTaskItemDelegate, parameters, user);
 
-			boolean cursorPaginationActive =
-				_USE_EXPORT_CURSOR_PAGINATION &&
-					_isSearchCursorPaginationEnabled(sorts);
+			boolean cursorPaginationActive = false;
+
+			if (_USE_EXPORT_CURSOR_PAGINATION &&
+				_isSearchCursorPaginationEnabled(sorts)) {
+
+				cursorPaginationActive = true;
+			}
 
 			int batchIndex = 1;
 
@@ -335,8 +339,8 @@ public class BatchEngineExportTaskExecutorImpl
 
 				batchEngineExportTaskItemWriter.write(items);
 
-				long writeTimeMs = (System.nanoTime() - writeStartTimeNs) /
-					1_000_000;
+				long writeTimeMs =
+					(System.nanoTime() - writeStartTimeNs) / 1_000_000;
 
 				batchEngineExportTask.setProcessedItemsCount(
 					batchEngineExportTask.getProcessedItemsCount() +
@@ -407,16 +411,16 @@ public class BatchEngineExportTaskExecutorImpl
 
 					page = batchEngineTaskItemDelegate.read(
 						_createCursorFilter(filter, lastItemId),
-						Pagination.of(1, exportBatchSize), sorts, filteredParameters,
-						(String)parameters.get("search"));
+						Pagination.of(1, exportBatchSize), sorts,
+						filteredParameters, (String)parameters.get("search"));
 				}
 				else {
 					readStartTimeNs = System.nanoTime();
 
 					page = batchEngineTaskItemDelegate.read(
-						filter, Pagination.of(
-							(int)page.getPage() + 1, exportBatchSize), sorts,
-						filteredParameters,
+						filter,
+						Pagination.of((int)page.getPage() + 1, exportBatchSize),
+						sorts, filteredParameters,
 						(String)parameters.get("search"));
 				}
 
@@ -569,12 +573,17 @@ public class BatchEngineExportTaskExecutorImpl
 			return null;
 		}
 
-		return _getItemId(items.iterator().next());
+		return _getItemId(
+			items.iterator(
+			).next());
 	}
 
 	private Long _getItemId(Object item) {
 		try {
-			Method method = item.getClass().getMethod("getId");
+			Method method = item.getClass(
+			).getMethod(
+				"getId"
+			);
 
 			Object id = method.invoke(item);
 
@@ -589,8 +598,7 @@ public class BatchEngineExportTaskExecutorImpl
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to extract ID from " + item.getClass(),
-					exception);
+					"Unable to extract ID from " + item.getClass(), exception);
 			}
 		}
 
@@ -685,7 +693,11 @@ public class BatchEngineExportTaskExecutorImpl
 	}
 
 	private boolean _isSearchCursorPaginationEnabled(Sort[] sorts) {
-		return sorts == null;
+		if (sorts == null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private Map<String, List<String>> _toMultivaluedMap(
@@ -722,7 +734,7 @@ public class BatchEngineExportTaskExecutorImpl
 			batchEngineExportTask.getBatchEngineExportTaskId());
 	}
 
-	private static final boolean _USE_EXPORT_CURSOR_PAGINATION = false;
+	private static final boolean _USE_EXPORT_CURSOR_PAGINATION = true;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskExecutorImpl.class);

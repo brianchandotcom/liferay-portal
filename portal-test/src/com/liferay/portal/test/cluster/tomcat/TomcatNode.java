@@ -777,7 +777,7 @@ public class TomcatNode {
 			byte[] bytes = _serialize(clusterExecutable);
 
 			return () -> _serialize(
-				RPCUtil._invokeClusterExecutable(_deserialize(bytes)));
+				_invokeClusterExecutable(_deserialize(bytes)));
 		}
 
 		private static byte[] _serialize(Serializable serializable) {

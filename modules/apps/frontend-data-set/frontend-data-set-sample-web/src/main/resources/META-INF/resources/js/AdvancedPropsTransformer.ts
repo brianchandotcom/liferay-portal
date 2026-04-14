@@ -15,6 +15,7 @@ import dummyUploader from './dummyUploader';
 import {advancedFDSAtom} from './utils/atoms';
 
 import type {
+	IBulkActionItem,
 	ICardSchema,
 	IFileDropSettings,
 	IInternalRenderer,
@@ -44,6 +45,7 @@ function applyStyles(itemsActions: Array<IItemsActions>): Array<IItemsActions> {
 
 export default function propsTransformer({
 	additionalProps: {greeting},
+	bulkActions,
 	itemsActions,
 	selectedItemsKey,
 	...otherProps
@@ -153,6 +155,22 @@ export default function propsTransformer({
 	return {
 		...otherProps,
 		atom: advancedFDSAtom,
+		bulkActions: bulkActions?.map((action: IBulkActionItem) => {
+			const key = action?.data?.id as string;
+
+			if (!key || key !== 'test') {
+				return action;
+			}
+
+			return {
+				...action,
+				isVisible: (selectedItems: Array<any>) => {
+					return selectedItems.some((item: any) => {
+						return item.color === 'Green';
+					});
+				},
+			};
+		}),
 		customRenderers: {
 			listSection: [customListTitleRenderer],
 			tableCell: [customAuthorTableCellRenderer],

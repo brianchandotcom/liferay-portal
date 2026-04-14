@@ -6,7 +6,6 @@
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.dsr.site.initializer.internal.constants.DSRSiteInitializerFDSNames;
 
@@ -22,10 +21,9 @@ public class ViewAnalyticsLatestActivityAnalyticsSectionDisplayContext
 
 	public ViewAnalyticsLatestActivityAnalyticsSectionDisplayContext(
 		HttpServletRequest httpServletRequest,
-		ObjectDefinition objectDefinition,
-		ObjectEntryService objectEntryService) {
+		ObjectDefinition objectDefinition) {
 
-		super(httpServletRequest, objectDefinition, objectEntryService);
+		super(null, null, null, httpServletRequest, objectDefinition);
 	}
 
 	@Override

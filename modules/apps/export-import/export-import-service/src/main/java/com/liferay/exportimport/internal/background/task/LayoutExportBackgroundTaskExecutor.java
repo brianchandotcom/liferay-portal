@@ -54,13 +54,11 @@ public class LayoutExportBackgroundTaskExecutor
 
 		long userId = MapUtil.getLong(
 			exportImportConfiguration.getSettingsMap(), "userId");
-
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			exportImportConfiguration);
-
 		String name = StringUtil.replace(
 			exportImportConfiguration.getName(), CharPool.SPACE,
 			CharPool.UNDERLINE);
+		File larFile = _exportImportLocalService.exportLayoutsAsFile(
+			exportImportConfiguration);
 
 		_backgroundTaskManager.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(),

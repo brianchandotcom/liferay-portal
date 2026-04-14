@@ -8,7 +8,6 @@ package com.liferay.site.dsr.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.dsr.site.initializer.internal.display.context.ViewAnalyticsRoomStatisticsAnalyticsSectionDisplayContext;
@@ -45,8 +44,7 @@ public class ViewAnalyticsRoomStatisticsJSPSectionFragmentRenderer
 			httpServletRequest,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DSR_ROOM", themeDisplay.getCompanyId()),
-			_objectEntryService);
+					"L_DSR_ROOM", themeDisplay.getCompanyId()));
 	}
 
 	@Override
@@ -56,8 +54,5 @@ public class ViewAnalyticsRoomStatisticsJSPSectionFragmentRenderer
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryService _objectEntryService;
 
 }

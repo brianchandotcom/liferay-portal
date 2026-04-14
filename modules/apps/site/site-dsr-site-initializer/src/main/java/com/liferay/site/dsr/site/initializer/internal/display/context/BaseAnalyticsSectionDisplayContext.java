@@ -5,18 +5,24 @@
 
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectEntryService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.dsr.site.initializer.internal.constants.DSRWebKeys;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
-import java.util.Collections;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gianmarco Brunialti Masera
@@ -24,33 +30,64 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseAnalyticsSectionDisplayContext {
 
 	public BaseAnalyticsSectionDisplayContext(
+		JSONObject configurationJSONObject,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest,
-		ObjectDefinition objectDefinition,
-		ObjectEntryService objectEntryService) {
+		ObjectDefinition objectDefinition) {
 
+		this.configurationJSONObject = configurationJSONObject;
+		this.fragmentEntryConfigurationParser =
+			fragmentEntryConfigurationParser;
+		this.fragmentEntryLink = fragmentEntryLink;
 		this.httpServletRequest = httpServletRequest;
 		this.objectDefinition = objectDefinition;
-
-		_objectEntryService = objectEntryService;
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getProps() {
-		return Collections.emptyMap();
+	public String getAnalyticsStoreFilters() {
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		String filters = (String)httpSession.getAttribute(
+			DSRWebKeys.DSR_ANALYTICS_STORE_FILTERS);
+
+		if (Validator.isNotNull(filters)) {
+			return filters;
+		}
+
+		return StringPool.BLANK;
 	}
 
+	public Object getConfigurationValue(String name) {
+		if ((configurationJSONObject == null) ||
+			(fragmentEntryConfigurationParser == null) ||
+			(fragmentEntryLink == null)) {
+
+			return null;
+		}
+
+		return fragmentEntryConfigurationParser.getFieldValue(
+			configurationJSONObject,
+			fragmentEntryLink.getEditableValuesJSONObject(),
+			themeDisplay.getLocale(), name);
+	}
+
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>put(
+			"dsrDevEnvEnabled",
+			GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.DSR_DEV_ENV_ENABLED), true)
+		).build();
+	}
+
+	protected final JSONObject configurationJSONObject;
+	protected final FragmentEntryConfigurationParser
+		fragmentEntryConfigurationParser;
+	protected final FragmentEntryLink fragmentEntryLink;
 	protected final HttpServletRequest httpServletRequest;
 	protected final ObjectDefinition objectDefinition;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.dsr.site.initializer)"
-	)
-	protected ServletContext servletContext;
-
 	protected final ThemeDisplay themeDisplay;
-
-	private final ObjectEntryService _objectEntryService;
 
 }

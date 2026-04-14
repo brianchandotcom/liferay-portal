@@ -7,9 +7,16 @@ package com.liferay.site.dsr.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryService;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.dsr.site.initializer.internal.display.context.ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext;
 
@@ -27,6 +34,30 @@ public class ViewAnalyticsEngagementChartJSPSectionFragmentRenderer
 		<ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext> {
 
 	@Override
+	public JSONObject getConfigurationJSONObject(
+		FragmentRendererContext fragmentRendererContext) {
+
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				StringUtil.read(
+					getClass(),
+					"view_analytics_engagement_chart/dependencies" +
+						"/configuration.json"));
+
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject,
+				ResourceBundleUtil.getBundle("content.Language", getClass()));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return null;
+		}
+	}
+
+	@Override
 	public String getLabelKey() {
 		return "engagement-chart";
 	}
@@ -42,11 +73,12 @@ public class ViewAnalyticsEngagementChartJSPSectionFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		return new ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext(
-			httpServletRequest,
+			getConfigurationJSONObject(fragmentRendererContext),
+			_fragmentEntryConfigurationParser,
+			fragmentRendererContext.getFragmentEntryLink(), httpServletRequest,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DSR_ROOM", themeDisplay.getCompanyId()),
-			_objectEntryService);
+					"L_DSR_ROOM", themeDisplay.getCompanyId()));
 	}
 
 	@Override
@@ -54,10 +86,16 @@ public class ViewAnalyticsEngagementChartJSPSectionFragmentRenderer
 		return "/view_analytics_engagement_chart.jsp";
 	}
 
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewAnalyticsEngagementChartJSPSectionFragmentRenderer.class);
 
 	@Reference
-	private ObjectEntryService _objectEntryService;
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

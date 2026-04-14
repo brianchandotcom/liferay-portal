@@ -5,10 +5,17 @@
 
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectEntryService;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.site.dsr.site.initializer.internal.constants.DSRSiteInitializerFDSNames;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 /**
  * @author Gianmarco Brunialti Masera
@@ -17,11 +24,28 @@ public class ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext
 	extends BaseAnalyticsSectionDisplayContext {
 
 	public ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext(
+		JSONObject configurationJSONObject,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest,
-		ObjectDefinition objectDefinition,
-		ObjectEntryService objectEntryService) {
+		ObjectDefinition objectDefinition) {
 
-		super(httpServletRequest, objectDefinition, objectEntryService);
+		super(
+			configurationJSONObject, fragmentEntryConfigurationParser,
+			fragmentEntryLink, httpServletRequest, objectDefinition);
+	}
+
+	@Override
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>putAll(
+			super.getProps()
+		).put(
+			"namespace", DSRSiteInitializerFDSNames.MOST_ACTIVE_VISITORS
+		).build();
+	}
+
+	public String getType() {
+		return GetterUtil.getString(getConfigurationValue("type"));
 	}
 
 }

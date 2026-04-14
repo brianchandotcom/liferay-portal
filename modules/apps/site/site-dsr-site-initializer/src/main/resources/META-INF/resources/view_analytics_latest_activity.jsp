@@ -7,10 +7,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+ViewAnalyticsLatestActivityAnalyticsSectionDisplayContext viewAnalyticsLatestActivityAnalyticsSectionDisplayContext = (ViewAnalyticsLatestActivityAnalyticsSectionDisplayContext)request.getAttribute(ViewAnalyticsLatestActivityAnalyticsSectionDisplayContext.class.getName());
+%>
+
 <div>
 	<div class="custom-empty-state dsr-section">
 		<react:component
 			module="{LatestActivity} from site-dsr-site-initializer"
+			props="<%= viewAnalyticsLatestActivityAnalyticsSectionDisplayContext.getProps() %>"
 		/>
 	</div>
 </div>

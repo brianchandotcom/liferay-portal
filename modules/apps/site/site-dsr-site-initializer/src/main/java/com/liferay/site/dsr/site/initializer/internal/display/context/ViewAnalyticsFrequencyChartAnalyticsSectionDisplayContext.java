@@ -6,7 +6,6 @@
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectEntryService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -18,10 +17,9 @@ public class ViewAnalyticsFrequencyChartAnalyticsSectionDisplayContext
 
 	public ViewAnalyticsFrequencyChartAnalyticsSectionDisplayContext(
 		HttpServletRequest httpServletRequest,
-		ObjectDefinition objectDefinition,
-		ObjectEntryService objectEntryService) {
+		ObjectDefinition objectDefinition) {
 
-		super(httpServletRequest, objectDefinition, objectEntryService);
+		super(null, null, null, httpServletRequest, objectDefinition);
 	}
 
 }

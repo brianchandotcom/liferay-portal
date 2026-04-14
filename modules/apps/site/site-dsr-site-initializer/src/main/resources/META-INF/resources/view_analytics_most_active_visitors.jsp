@@ -7,10 +7,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+ViewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext viewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext = (ViewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext)request.getAttribute(ViewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext.class.getName());
+%>
+
 <div>
 	<div class="custom-empty-state dsr-section">
 		<react:component
 			module="{MostActiveVisitors} from site-dsr-site-initializer"
+			props="<%= viewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext.getProps() %>"
 		/>
 	</div>
 </div>

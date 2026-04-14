@@ -1,4 +1,3 @@
-import * as d3 from 'd3';
 import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
 import {isNumber, round} from 'lodash';
@@ -9,27 +8,39 @@ momentDurationFormatSetup(moment);
  * Remove Zero Precision
  * @param {string} str
  */
-const removeZeroPrecision = str => str.replace(/\.(0)+(k|G|M)?$/, '$2');
+const removeZeroPrecision = (str, locale) => {
+	const parts = new Intl.NumberFormat(locale).formatToParts(1.1);
+	const decimalPart = parts.find(part => part.type === 'decimal');
+	const decimalSeparator = decimalPart ? decimalPart.value : '.';
+
+	const regex = new RegExp(
+		`${decimalSeparator.replace('.', '\\.')}(0)+(k|G|M)?$`
+	);
+
+	return str.replace(regex, '$2');
+};
 
 /**
  * To Rounded Single Precision
  * @param {number} number
  */
-export const toRounded = (number, precision = 1) => {
-	const formatFixedPercent = d3.format(`3.${precision}f`);
+export const toRounded = (number, precision = 1, locale = undefined) => {
+	const formatted = new Intl.NumberFormat(locale, {
+		maximumFractionDigits: precision,
+		minimumFractionDigits: precision
+	}).format(number);
 
-	return removeZeroPrecision(formatFixedPercent(number).trim());
+	return removeZeroPrecision(formatted.trim(), locale);
 };
 
 /**
  * To Locale
  * @param {number} number
  */
-export const toLocale = number => {
-	const formatToLocale = d3.format(',');
-
-	return formatToLocale(number);
-};
+export const toLocale = (number, locale = undefined) =>
+	new Intl.NumberFormat(locale, {
+		maximumFractionDigits: 6
+	}).format(number);
 
 /**
  * To Thousands
@@ -72,10 +83,13 @@ export const toThousandsBase = (number, setFactor) => {
  * To Fixes Point
  * @param {number} number
  */
-export const toFixedPoint = number => {
-	const format = d3.format(',.0f');
+export const toFixedPoint = (number, locale = undefined) => {
+	const formatted = new Intl.NumberFormat(locale, {
+		maximumFractionDigits: 0,
+		useGrouping: true
+	}).format(number);
 
-	return removeZeroPrecision(format(number)).trim().toUpperCase();
+	return removeZeroPrecision(formatted, locale).trim().toUpperCase();
 };
 
 /**

@@ -4,6 +4,7 @@
  */
 
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
+import {objectToFormData} from 'frontend-js-web';
 
 const getEndpointByScope = (isCompanyGroup: boolean, groupId?: number) => {
 	return isCompanyGroup
@@ -30,17 +31,13 @@ export async function getValidateLarFileEndpoint({
 		tempFilePath: string;
 	}>
 > {
-	const formData = new FormData();
-
-	formData.append('file', file);
-
 	return await ApiHelper.postFormDataWithProgress<{
 		errorMessages: string[];
 		success: boolean;
 		tempFilePath: string;
 	}>(
 		getEndpointByScope(isCompanyGroup, groupId),
-		formData,
+		Liferay.Util.objectToFormData({file}),
 		(progressEvent) => {
 			onProgress(progressEvent);
 		},

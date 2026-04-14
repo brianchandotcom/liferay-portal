@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.osb.faro.engine.client,\
 	com.liferay.osb.faro.engine.client.constants,\
 	com.liferay.osb.faro.engine.client.exception,\
-	com.liferay.osb.faro.engine.client.mixin,\
 	com.liferay.osb.faro.engine.client.model,\
 	com.liferay.osb.faro.engine.client.model.credentials,\
 	com.liferay.osb.faro.engine.client.model.provider,\

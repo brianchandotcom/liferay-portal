@@ -3,243 +3,733 @@
 exports[`RoomDocumentsStatistics renders the component with provided data 1`] = `
 <body>
   <div>
-    <div
-      class="document-statistics-fds"
+    <section
+      class="analytics-frame border rounded-lg"
     >
-      <div
-        class="fds"
+      <header
+        class="align-items-center border-bottom d-flex justify-content-between p-3"
       >
+        <span
+          class="align-items-center d-flex"
+        >
+          <span
+            class="analytics-frame-icon btn-monospaced rounded-lg"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-documents-and-media"
+              role="presentation"
+            >
+              <use
+                href="#documents-and-media"
+              />
+            </svg>
+          </span>
+          <span
+            class="font-weight-semi-bold px-2"
+          >
+            most-engaged-documents
+          </span>
+        </span>
+      </header>
+      <div>
         <div
-          class="data-set-wrapper visualization-mode-table"
-          data-testid="visualization-mode-table"
+          class="room-documents-statistics-container"
         >
           <div
-            class="data-set data-set-inline"
+            class="room-document-statistics-fds"
           >
             <div
-              class="data-set-content-wrapper"
+              class="fds"
             >
-              <input
-                name="test-namespace_id"
-                readonly=""
-                type="hidden"
-                value=""
-              />
               <div
-                class="table-responsive"
+                class="data-set-wrapper visualization-mode-table"
+                data-testid="visualization-mode-table"
               >
-                <table
-                  class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped table-valign-middle table-sort"
-                  style="table-layout: fixed;"
+                <div
+                  class="data-set data-set-inline"
                 >
-                  <thead>
-                    <tr>
-                      <th
-                        class="cell-title table-head-title"
-                        data-id="string,title"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        title
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="cell-totalViews table-head-title"
-                        data-id="string,totalViews"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        total-views
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="cell-lastViewed table-head-title"
-                        data-id="string,lastViewed"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        last-viewed
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="cell-download table-head-title"
-                        data-id="string,download"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        download
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="cell-averageTime table-head-title"
-                        data-id="string,averageTime"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        average-time
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="cell-userInvolved table-head-title"
-                        data-id="string,userInvolved"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        user-involved
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="table-head-title"
-                        data-id="string,visibility"
-                        style="width: 64px;"
-                        tabindex="-1"
-                      >
-                        <span
-                          class="sr-only"
-                        >
-                          manage-columns-visibility
-                        </span>
-                        <div
-                          class="dropdown"
-                        >
-                          <button
-                            aria-haspopup="true"
-                            aria-label="manage-columns-visibility"
-                            class="dropdown-toggle btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
-                            title="manage-columns-visibility"
-                            type="button"
-                          >
-                            <svg
-                              class="lexicon-icon lexicon-icon-caret-bottom"
-                              role="presentation"
-                            >
-                              <use
-                                href="#caret-bottom"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      class=""
-                      data-id="string,$.0"
-                      tabindex="-1"
+                  <div
+                    class="data-set-content-wrapper"
+                  >
+                    <input
+                      name="test-namespace_id"
+                      readonly=""
+                      type="hidden"
+                      value=""
+                    />
+                    <div
+                      class="table-responsive"
                     >
-                      <td
-                        aria-colindex="1"
-                        class="cell-title"
-                        data-id="string,null:title"
-                        style="width: auto;"
-                        tabindex="-1"
+                      <table
+                        class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped table-valign-middle table-sort"
+                        style="table-layout: fixed;"
                       >
-                        <div>
-                          <span
-                            class="sticker c-mr-2 flex-shrink-0 inline-item inline-item-before file-icon-color-0 sticker-lg"
-                          >
-                            <span
-                              class="sticker-overlay inline-item"
+                        <thead>
+                          <tr>
+                            <th
+                              class="cell-title table-head-title"
+                              data-id="string,title"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
                             >
-                              <svg
-                                aria-label="pdf"
-                                class="lexicon-icon lexicon-icon-document-pdf"
-                                role="presentation"
+                              title
+                              <div
+                                class="dnd-th-resizer is-allowed"
+                              />
+                            </th>
+                            <th
+                              class="cell-totalViews table-head-title"
+                              data-id="string,totalViews"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              total-views
+                              <div
+                                class="dnd-th-resizer is-allowed"
+                              />
+                            </th>
+                            <th
+                              class="cell-lastViewed table-head-title"
+                              data-id="string,lastViewed"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              last-viewed
+                              <div
+                                class="dnd-th-resizer is-allowed"
+                              />
+                            </th>
+                            <th
+                              class="cell-download table-head-title"
+                              data-id="string,download"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              download
+                              <div
+                                class="dnd-th-resizer is-allowed"
+                              />
+                            </th>
+                            <th
+                              class="cell-averageTime table-head-title"
+                              data-id="string,averageTime"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              average-time
+                              <div
+                                class="dnd-th-resizer is-allowed"
+                              />
+                            </th>
+                            <th
+                              class="cell-userInvolved table-head-title"
+                              data-id="string,userInvolved"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              user-involved
+                              <div
+                                class="dnd-th-resizer is-allowed"
+                              />
+                            </th>
+                            <th
+                              class="table-head-title"
+                              data-id="string,visibility"
+                              style="width: 64px;"
+                              tabindex="-1"
+                            >
+                              <span
+                                class="sr-only"
                               >
-                                <use
-                                  href="#document-pdf"
-                                />
-                              </svg>
-                            </span>
-                          </span>
-                          <span
-                            aria-label="pdf_test"
-                            class="table-list-title"
+                                manage-columns-visibility
+                              </span>
+                              <div
+                                class="dropdown"
+                              >
+                                <button
+                                  aria-haspopup="true"
+                                  aria-label="manage-columns-visibility"
+                                  class="dropdown-toggle btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
+                                  title="manage-columns-visibility"
+                                  type="button"
+                                >
+                                  <svg
+                                    class="lexicon-icon lexicon-icon-caret-bottom"
+                                    role="presentation"
+                                  >
+                                    <use
+                                      href="#caret-bottom"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            class=""
+                            data-id="string,$.0"
+                            tabindex="-1"
                           >
-                            pdf_test
-                          </span>
-                        </div>
-                      </td>
-                      <td
-                        aria-colindex="2"
-                        class="cell-totalViews"
-                        data-id="string,null:totalViews"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        89
-                      </td>
-                      <td
-                        aria-colindex="3"
-                        class="cell-lastViewed"
-                        data-id="string,null:lastViewed"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        Mar 3, 2026
-                      </td>
-                      <td
-                        aria-colindex="4"
-                        class="cell-download"
-                        data-id="string,null:download"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        324
-                      </td>
-                      <td
-                        aria-colindex="5"
-                        class="cell-averageTime"
-                        data-id="string,null:averageTime"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        1 hour 33 minutes
-                      </td>
-                      <td
-                        aria-colindex="6"
-                        class="cell-userInvolved"
-                        data-id="string,null:userInvolved"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        4 users
-                      </td>
-                      <td
-                        aria-colindex="7"
-                        class="cell-item-actions"
-                        data-id="string,null:actions"
-                        style="width: auto;"
-                        tabindex="-1"
-                      />
-                    </tr>
-                  </tbody>
-                </table>
+                            <td
+                              aria-colindex="1"
+                              class="cell-title"
+                              data-id="string,null:title"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              <div>
+                                <span
+                                  class="sticker c-mr-2 flex-shrink-0 inline-item inline-item-before file-icon-color-0 sticker-lg"
+                                >
+                                  <span
+                                    class="sticker-overlay inline-item"
+                                  >
+                                    <svg
+                                      aria-label="pdf"
+                                      class="lexicon-icon lexicon-icon-document-pdf"
+                                      role="presentation"
+                                    >
+                                      <use
+                                        href="#document-pdf"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                                <span
+                                  aria-label="pdf_test"
+                                  class="table-list-title"
+                                >
+                                  pdf_test
+                                </span>
+                              </div>
+                            </td>
+                            <td
+                              aria-colindex="2"
+                              class="cell-totalViews"
+                              data-id="string,null:totalViews"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              89
+                            </td>
+                            <td
+                              aria-colindex="3"
+                              class="cell-lastViewed"
+                              data-id="string,null:lastViewed"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              Mar 2, 2026
+                            </td>
+                            <td
+                              aria-colindex="4"
+                              class="cell-download"
+                              data-id="string,null:download"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              324
+                            </td>
+                            <td
+                              aria-colindex="5"
+                              class="cell-averageTime"
+                              data-id="string,null:averageTime"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              1 hour 33 minutes
+                            </td>
+                            <td
+                              aria-colindex="6"
+                              class="cell-userInvolved"
+                              data-id="string,null:userInvolved"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              4 users
+                            </td>
+                            <td
+                              aria-colindex="7"
+                              class="cell-item-actions"
+                              data-id="string,null:actions"
+                              style="width: auto;"
+                              tabindex="-1"
+                            />
+                          </tr>
+                          <tr
+                            class=""
+                            data-id="string,$.1"
+                            tabindex="-1"
+                          >
+                            <td
+                              aria-colindex="1"
+                              class="cell-title"
+                              data-id="string,null:title"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              <div>
+                                <span
+                                  class="sticker c-mr-2 flex-shrink-0 inline-item inline-item-before file-icon-color-6 sticker-lg"
+                                >
+                                  <span
+                                    class="sticker-overlay inline-item"
+                                  >
+                                    <svg
+                                      aria-label="document"
+                                      class="lexicon-icon lexicon-icon-document-text"
+                                      role="presentation"
+                                    >
+                                      <use
+                                        href="#document-text"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                                <span
+                                  aria-label="doc_test2"
+                                  class="table-list-title"
+                                >
+                                  doc_test2
+                                </span>
+                              </div>
+                            </td>
+                            <td
+                              aria-colindex="2"
+                              class="cell-totalViews"
+                              data-id="string,null:totalViews"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              34
+                            </td>
+                            <td
+                              aria-colindex="3"
+                              class="cell-lastViewed"
+                              data-id="string,null:lastViewed"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              Mar 3, 2026
+                            </td>
+                            <td
+                              aria-colindex="4"
+                              class="cell-download"
+                              data-id="string,null:download"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              342
+                            </td>
+                            <td
+                              aria-colindex="5"
+                              class="cell-averageTime"
+                              data-id="string,null:averageTime"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              537 hours 9 minutes
+                            </td>
+                            <td
+                              aria-colindex="6"
+                              class="cell-userInvolved"
+                              data-id="string,null:userInvolved"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              3 users
+                            </td>
+                            <td
+                              aria-colindex="7"
+                              class="cell-item-actions"
+                              data-id="string,null:actions"
+                              style="width: auto;"
+                              tabindex="-1"
+                            />
+                          </tr>
+                          <tr
+                            class=""
+                            data-id="string,$.2"
+                            tabindex="-1"
+                          >
+                            <td
+                              aria-colindex="1"
+                              class="cell-title"
+                              data-id="string,null:title"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              <div>
+                                <span
+                                  class="sticker c-mr-2 flex-shrink-0 inline-item inline-item-before file-icon-color-0 sticker-lg"
+                                >
+                                  <span
+                                    class="sticker-overlay inline-item"
+                                  >
+                                    <svg
+                                      aria-label="pdf"
+                                      class="lexicon-icon lexicon-icon-document-pdf"
+                                      role="presentation"
+                                    >
+                                      <use
+                                        href="#document-pdf"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                                <span
+                                  aria-label="pdf_test2"
+                                  class="table-list-title"
+                                >
+                                  pdf_test2
+                                </span>
+                              </div>
+                            </td>
+                            <td
+                              aria-colindex="2"
+                              class="cell-totalViews"
+                              data-id="string,null:totalViews"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              34
+                            </td>
+                            <td
+                              aria-colindex="3"
+                              class="cell-lastViewed"
+                              data-id="string,null:lastViewed"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              Apr 3, 2026
+                            </td>
+                            <td
+                              aria-colindex="4"
+                              class="cell-download"
+                              data-id="string,null:download"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              45
+                            </td>
+                            <td
+                              aria-colindex="5"
+                              class="cell-averageTime"
+                              data-id="string,null:averageTime"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              3 hours 42 minutes
+                            </td>
+                            <td
+                              aria-colindex="6"
+                              class="cell-userInvolved"
+                              data-id="string,null:userInvolved"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              4 users
+                            </td>
+                            <td
+                              aria-colindex="7"
+                              class="cell-item-actions"
+                              data-id="string,null:actions"
+                              style="width: auto;"
+                              tabindex="-1"
+                            />
+                          </tr>
+                          <tr
+                            class=""
+                            data-id="string,$.3"
+                            tabindex="-1"
+                          >
+                            <td
+                              aria-colindex="1"
+                              class="cell-title"
+                              data-id="string,null:title"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              <div>
+                                <span
+                                  class="sticker c-mr-2 flex-shrink-0 inline-item inline-item-before file-icon-color-6 sticker-lg"
+                                >
+                                  <span
+                                    class="sticker-overlay inline-item"
+                                  >
+                                    <svg
+                                      aria-label="document"
+                                      class="lexicon-icon lexicon-icon-document-text"
+                                      role="presentation"
+                                    >
+                                      <use
+                                        href="#document-text"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                                <span
+                                  aria-label="document_test"
+                                  class="table-list-title"
+                                >
+                                  document_test
+                                </span>
+                              </div>
+                            </td>
+                            <td
+                              aria-colindex="2"
+                              class="cell-totalViews"
+                              data-id="string,null:totalViews"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              23
+                            </td>
+                            <td
+                              aria-colindex="3"
+                              class="cell-lastViewed"
+                              data-id="string,null:lastViewed"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              Mar 3, 2026
+                            </td>
+                            <td
+                              aria-colindex="4"
+                              class="cell-download"
+                              data-id="string,null:download"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              23
+                            </td>
+                            <td
+                              aria-colindex="5"
+                              class="cell-averageTime"
+                              data-id="string,null:averageTime"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              6 hours 49 minutes
+                            </td>
+                            <td
+                              aria-colindex="6"
+                              class="cell-userInvolved"
+                              data-id="string,null:userInvolved"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              2 users
+                            </td>
+                            <td
+                              aria-colindex="7"
+                              class="cell-item-actions"
+                              data-id="string,null:actions"
+                              style="width: auto;"
+                              tabindex="-1"
+                            />
+                          </tr>
+                          <tr
+                            class=""
+                            data-id="string,$.4"
+                            tabindex="-1"
+                          >
+                            <td
+                              aria-colindex="1"
+                              class="cell-title"
+                              data-id="string,null:title"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              <div>
+                                <span
+                                  class="sticker c-mr-2 flex-shrink-0 inline-item inline-item-before file-icon-color-0 sticker-lg"
+                                >
+                                  <span
+                                    class="sticker-overlay inline-item"
+                                  >
+                                    <svg
+                                      aria-label="pdf"
+                                      class="lexicon-icon lexicon-icon-document-pdf"
+                                      role="presentation"
+                                    >
+                                      <use
+                                        href="#document-pdf"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                                <span
+                                  aria-label="pdf_test3"
+                                  class="table-list-title"
+                                >
+                                  pdf_test3
+                                </span>
+                              </div>
+                            </td>
+                            <td
+                              aria-colindex="2"
+                              class="cell-totalViews"
+                              data-id="string,null:totalViews"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              67
+                            </td>
+                            <td
+                              aria-colindex="3"
+                              class="cell-lastViewed"
+                              data-id="string,null:lastViewed"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              Mar 9, 2026
+                            </td>
+                            <td
+                              aria-colindex="4"
+                              class="cell-download"
+                              data-id="string,null:download"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              768
+                            </td>
+                            <td
+                              aria-colindex="5"
+                              class="cell-averageTime"
+                              data-id="string,null:averageTime"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              0 hours 19 minutes
+                            </td>
+                            <td
+                              aria-colindex="6"
+                              class="cell-userInvolved"
+                              data-id="string,null:userInvolved"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              4 users
+                            </td>
+                            <td
+                              aria-colindex="7"
+                              class="cell-item-actions"
+                              data-id="string,null:actions"
+                              style="width: auto;"
+                              tabindex="-1"
+                            />
+                          </tr>
+                          <tr
+                            class=""
+                            data-id="string,$.5"
+                            tabindex="-1"
+                          >
+                            <td
+                              aria-colindex="1"
+                              class="cell-title"
+                              data-id="string,null:title"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              <div>
+                                <span
+                                  class="sticker c-mr-2 flex-shrink-0 inline-item inline-item-before file-icon-color-0 sticker-lg"
+                                >
+                                  <span
+                                    class="sticker-overlay inline-item"
+                                  >
+                                    <svg
+                                      aria-label="pdf"
+                                      class="lexicon-icon lexicon-icon-document-pdf"
+                                      role="presentation"
+                                    >
+                                      <use
+                                        href="#document-pdf"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                                <span
+                                  aria-label="pdf_test4"
+                                  class="table-list-title"
+                                >
+                                  pdf_test4
+                                </span>
+                              </div>
+                            </td>
+                            <td
+                              aria-colindex="2"
+                              class="cell-totalViews"
+                              data-id="string,null:totalViews"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              85
+                            </td>
+                            <td
+                              aria-colindex="3"
+                              class="cell-lastViewed"
+                              data-id="string,null:lastViewed"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              Mar 5, 2026
+                            </td>
+                            <td
+                              aria-colindex="4"
+                              class="cell-download"
+                              data-id="string,null:download"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              324
+                            </td>
+                            <td
+                              aria-colindex="5"
+                              class="cell-averageTime"
+                              data-id="string,null:averageTime"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              139 hours 6 minutes
+                            </td>
+                            <td
+                              aria-colindex="6"
+                              class="cell-userInvolved"
+                              data-id="string,null:userInvolved"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              3 users
+                            </td>
+                            <td
+                              aria-colindex="7"
+                              class="cell-item-actions"
+                              data-id="string,null:actions"
+                              style="width: auto;"
+                              tabindex="-1"
+                            />
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
   <div
     class="lfr-tooltip-scope"

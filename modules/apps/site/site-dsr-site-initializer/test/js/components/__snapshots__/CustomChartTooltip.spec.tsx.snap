@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomTooltip component render matching snapshot when data is provided 1`] = `
+<DocumentFragment>
+  <div
+    class="chart-tooltip-area"
+    data-qa-id="active-tooltip"
+  >
+    <p
+      class="chart-tooltip-label mb-1"
+    >
+      Feb 25, 2026
+    </p>
+    <p
+      class="chart-tooltip-value mb-1"
+    >
+      number-of-visits: 
+      <strong>
+        189
+      </strong>
+    </p>
+    <p
+      class="chart-tooltip-value mb-1"
+    >
+      time-spent: 
+      <strong>
+        1h 20 min
+      </strong>
+    </p>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CustomTooltip component tooltip matches snapshot when no data is provided 1`] = `<DocumentFragment />`;

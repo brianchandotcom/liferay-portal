@@ -30,6 +30,7 @@ import ProductPurchaseDXPTypeFree from '../../../services/ProductPurchaseDXPType
 import {PURPOSE_OPTIONS} from './constants';
 
 import './ActivationKeyForm.scss';
+import provisioningOAuth2 from '../../../../../services/oauth/Provisioning';
 
 const setValuesOptions = {
 	shouldDirty: true,
@@ -50,6 +51,7 @@ const ActivationKeyFormDXP = () => {
 		formState: {errors, isValid},
 		handleSubmit,
 		register,
+		setError,
 		setValue,
 		watch,
 	} = useForm<z.infer<typeof zodSchema.activationKey>>({
@@ -116,6 +118,31 @@ const ActivationKeyFormDXP = () => {
 		setLoading(true);
 
 		try {
+			await provisioningOAuth2.createLicenseKeyTypeFreeDomainCheck({
+				domains: form.domain,
+				owner:
+					form.businessEmailAddress ||
+					Liferay.ThemeDisplay.getUserEmailAddress(),
+			});
+		}
+		catch (error: any) {
+			if (error?.response?.status === 409 || error?.status === 409) {
+				setError('domain', {
+					message: i18n.translate(
+						'a-license-key-for-the-entered-domain-already-exists'
+					),
+				});
+			}
+			else {
+				console.error('Unexpected error:', error);
+			}
+
+			setLoading(false);
+
+			return;
+		}
+
+		try {
 			submitMarketoForm(form);
 
 			const productPurchase = new ProductPurchaseDXPTypeFree(
@@ -127,11 +154,12 @@ const ActivationKeyFormDXP = () => {
 
 			await handlePurchase(productPurchase);
 		}
-		catch (error) {
-			console.error(error);
+		catch (error: any) {
+			console.error('Unexpected error:', error);
 		}
-
-		setLoading(false);
+		finally {
+			setLoading(false);
+		}
 	};
 
 	return (

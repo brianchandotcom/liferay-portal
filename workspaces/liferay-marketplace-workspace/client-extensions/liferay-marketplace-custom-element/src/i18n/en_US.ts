@@ -6,6 +6,8 @@
 import {Liferay} from '../liferay/liferay';
 
 export default {
+	'a-license-key-for-the-entered-domain-already-exists':
+		'A license key for the entered domain already exists.',
 	'a-request-will-be-sent-to-deactivate-the-selected-activation-key-from-now-on-it-will-be-hidden-and-no-longer-visible':
 		'A request will be sent to deactivate the selected activation key. From now on, it will be hidden and no longer visible.',
 	'a-sleek-and-intuitive-admin-dashboard-for-monitoring-key-metrics':

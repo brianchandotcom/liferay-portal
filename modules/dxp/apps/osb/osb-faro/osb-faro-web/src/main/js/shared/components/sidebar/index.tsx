@@ -36,7 +36,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 			items: [
 				{
 					icon: 'polls',
-					label: Liferay.Language.get('Lifecycles'),
+					label: Liferay.Language.get('lifecycles'),
 					route: Routes.LIFECYCLE,
 					url: toRoute(Routes.LIFECYCLE, {channelId, groupId})
 				},

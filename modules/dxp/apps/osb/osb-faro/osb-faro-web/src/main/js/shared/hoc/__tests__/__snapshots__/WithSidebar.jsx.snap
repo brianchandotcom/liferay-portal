@@ -86,6 +86,36 @@ exports[`withSidebar should render with the sidebar 1`] = `
             >
               <a
                 class="link btn btn-unstyled"
+                href="/workspace/23/1/lifecycles"
+              >
+                <span
+                  class="link-content-wrapper"
+                >
+                  <span
+                    class="icon-wrapper"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-polls icon-root"
+                      role="presentation"
+                    >
+                      <use
+                        href="#polls"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="item-label"
+                  >
+                    Lifecycles
+                  </span>
+                </span>
+              </a>
+            </li>
+            <li
+              class="sidebar-item-root"
+            >
+              <a
+                class="link btn btn-unstyled"
                 href="/workspace/23/1/sites"
               >
                 <span

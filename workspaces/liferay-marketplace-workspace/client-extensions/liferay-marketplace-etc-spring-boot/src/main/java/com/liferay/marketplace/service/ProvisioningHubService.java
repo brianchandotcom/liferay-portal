@@ -10,12 +10,16 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 import java.util.Objects;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,51 +41,7 @@ public class ProvisioningHubService extends BaseService {
 		Product product = productPurchase.getProduct();
 
 		if (Objects.equals(product.getName(), "Liferay Data Platform")) {
-			Map<String, String> properties = koroneikiAccount.getProperties();
-
-			String securityContactEmailAddress = properties.get(
-				"securityContactEmailAddress");
-
-			JSONArray incidentReportEmailAddressesJSONArray = new JSONArray();
-
-			if (Validator.isNotNull(securityContactEmailAddress)) {
-				incidentReportEmailAddressesJSONArray = new JSONArray(
-					securityContactEmailAddress.split(","));
-			}
-
-			String analyticsProject = _analyticsService.provision(
-				new JSONObject(
-				).put(
-					"corpProjectName", koroneikiAccount.getName()
-				).put(
-					"corpProjectUuid", koroneikiAccount.getKey()
-				).put(
-					"incidentReportEmailAddresses",
-					incidentReportEmailAddressesJSONArray
-				).put(
-					"name", properties.get("ldpWorkspaceName")
-				).put(
-					"ownerEmailAddress", order.getCreatorEmailAddress()
-				).put(
-					"serverLocation",
-					_getServerLocation(properties.get("dataCenterLocation"))
-				));
-
-			_marketplaceService.completeOrder(
-				HashMapBuilder.put(
-					"order-metadata",
-					new JSONObject(
-						GetterUtil.get(
-							order.getCustomFields(
-							).get(
-								"order-metadata"
-							),
-							"{}")
-					).put(
-						"analyticsProject", new JSONObject(analyticsProject)
-					).toString()
-				).build(),
-				order.getId(), order.getPaymentStatus());
+			_provisionLDP(koroneikiAccount, order);
 		}
 	}
 
@@ -106,9 +66,76 @@ public class ProvisioningHubService extends BaseService {
 			return "us-west1-ac4-c1";
 		}
 
-		throw new IllegalArgumentException(
-			"Invalid data center location: " + dataCenterLocation);
+		return "us-west1-s2-c1";
 	}
+
+	private void _provisionLDP(Account koroneikiAccount, Order order)
+		throws Exception {
+
+		Map<String, String> properties = koroneikiAccount.getProperties();
+
+		if (Validator.isNull(properties.get("dataCenterLocation")) ||
+			Validator.isNull(properties.get("ldpWorkspaceName"))) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Missing properties to provision LDP. Account ",
+						koroneikiAccount.getKey(), ", properties: ",
+						properties));
+			}
+
+			return;
+		}
+
+		String securityContactEmailAddress = properties.get(
+			"securityContactEmailAddress");
+
+		JSONArray incidentReportEmailAddressesJSONArray = new JSONArray();
+
+		if (Validator.isNotNull(securityContactEmailAddress)) {
+			incidentReportEmailAddressesJSONArray = new JSONArray(
+				securityContactEmailAddress.split(","));
+		}
+
+		String analyticsProject = _analyticsService.provision(
+			new JSONObject(
+			).put(
+				"corpProjectName", koroneikiAccount.getName()
+			).put(
+				"corpProjectUuid", koroneikiAccount.getKey()
+			).put(
+				"incidentReportEmailAddresses",
+				incidentReportEmailAddressesJSONArray
+			).put(
+				"name", properties.get("ldpWorkspaceName")
+			).put(
+				"ownerEmailAddress",
+				properties.get("securityContactEmailAddress")
+			).put(
+				"serverLocation",
+				_getServerLocation(properties.get("dataCenterLocation"))
+			));
+
+		_marketplaceService.completeOrder(
+			HashMapBuilder.put(
+				"order-metadata",
+				new JSONObject(
+					GetterUtil.get(
+						order.getCustomFields(
+						).get(
+							"order-metadata"
+						),
+						"{}")
+				).put(
+					"analyticsProject", new JSONObject(analyticsProject)
+				).toString()
+			).build(),
+			order.getId(), order.getPaymentStatus());
+	}
+
+	private static final Log _log = LogFactory.getLog(
+		ProvisioningHubService.class);
 
 	@Autowired
 	private AnalyticsService _analyticsService;

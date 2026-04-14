@@ -29,8 +29,10 @@ export default function ChatbotInput({
 		}
 
 		const style = window.getComputedStyle(textarea);
+
 		const lineHeight =
 			parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.2;
+
 		const maxHeight = lineHeight * 4;
 
 		textarea.style.height = 'auto';

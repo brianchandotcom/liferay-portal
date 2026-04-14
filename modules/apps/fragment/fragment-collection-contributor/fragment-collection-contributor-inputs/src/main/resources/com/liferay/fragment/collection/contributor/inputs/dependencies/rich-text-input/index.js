@@ -85,7 +85,7 @@ else {
 		`${fragmentElementId}-rich-text-input`
 	);
 
-	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+	const defaultLanguageId = input.attributes.defaultLanguageId;
 
 	let currentLanguageId = defaultLanguageId;
 
@@ -95,7 +95,7 @@ else {
 			registerLocalizedInput,
 			registerUnlocalizedInput,
 		}) => {
-			const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+			const defaultLanguageId = input.attributes.defaultLanguageId;
 
 			if (input.localizable) {
 				const {onChange} = registerLocalizedInput({

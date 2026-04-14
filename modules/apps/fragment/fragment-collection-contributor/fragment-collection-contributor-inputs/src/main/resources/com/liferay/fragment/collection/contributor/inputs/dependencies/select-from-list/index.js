@@ -87,7 +87,7 @@ else {
 		}
 	}
 
-	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+	const defaultLanguageId = input.attributes.defaultLanguageId;
 
 	import('@liferay/fragment-impl/api').then(
 		({

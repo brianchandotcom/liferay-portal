@@ -40,7 +40,7 @@ else {
 	numericInput.addEventListener('keydown', handleOnKeydown);
 	numericInput.addEventListener('keyup', handleOnKeyUp);
 
-	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+	const defaultLanguageId = input.attributes.defaultLanguageId;
 
 	import('@liferay/fragment-impl/api').then(
 		({focusInput, registerLocalizedInput, registerUnlocalizedInput}) => {

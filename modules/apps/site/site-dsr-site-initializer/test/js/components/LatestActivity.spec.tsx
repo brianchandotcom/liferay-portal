@@ -9,15 +9,6 @@ import React from 'react';
 
 import LatestActivity from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/LatestActivity';
 
-const mockData = [
-	{
-		action: 'created a new document',
-		createDate: '2026-03-26T14:30:00Z',
-		logoURL: 'https://test.com/logo.png',
-		name: 'John Doe',
-	},
-];
-
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
 });
@@ -30,11 +21,36 @@ const mockLiferayLanguageGet = jest.fn((key: string) => {
 	},
 };
 
-jest.mock('moment/moment', () => {
-	return () => ({
-		fromNow: () => '2 hours ago',
-	});
+jest.mock('moment', () => {
+	const mockMomentInstance = {
+		fromNow: jest.fn().mockReturnValue('2 hours ago'),
+		startOf: jest.fn().mockReturnThis(),
+		subtract: jest.fn().mockReturnThis(),
+		toString: jest.fn().mockReturnValue('1772757506000'),
+		valueOf: jest.fn().mockReturnValue(1772757506000),
+	};
+
+	const momentMock = jest.fn(() => mockMomentInstance);
+
+	const nowMock = jest.fn(() => ({
+		toString: () => '1772757506000',
+		valueOf: () => 1772757506000,
+	}));
+
+	return {
+		__esModule: true,
+		default: momentMock,
+		now: nowMock,
+	};
 });
+
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/common/hooks/useIsInViewport',
+	() => ({
+		__esModule: true,
+		default: jest.fn(() => true),
+	})
+);
 
 describe('LatestActivity', () => {
 	beforeEach(() => {
@@ -48,38 +64,26 @@ describe('LatestActivity', () => {
 
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
-			<LatestActivity items={mockData} namespace="test-namespace" />
+			<LatestActivity
+				dsrDevEnvEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(baseElement).toMatchSnapshot();
 
 		expect(screen.getByText('John Doe')).toBeInTheDocument();
-		expect(screen.getByText('created a new document')).toBeInTheDocument();
+		expect(screen.getByText('Created a new document')).toBeInTheDocument();
 	});
 
 	it('renders the correct timestamp representation from moment', () => {
-		render(<LatestActivity items={mockData} namespace="test-namespace" />);
-
-		expect(screen.getByText('2 hours ago')).toBeInTheDocument();
-	});
-
-	it('renders correctly without a logoURL', () => {
-		const dataWithoutLogo = [
-			{
-				action: 'updated a document',
-				createDate: '2026-03-26T14:30:00Z',
-				name: 'Jane Doe',
-			},
-		];
-
 		render(
 			<LatestActivity
-				items={dataWithoutLogo}
+				dsrDevEnvEnabled={true}
 				namespace="test-namespace"
 			/>
 		);
 
-		expect(screen.getByText('Jane Doe')).toBeInTheDocument();
-		expect(screen.getByText('updated a document')).toBeInTheDocument();
+		expect(screen.getByText('2 hours ago')).toBeInTheDocument();
 	});
 });

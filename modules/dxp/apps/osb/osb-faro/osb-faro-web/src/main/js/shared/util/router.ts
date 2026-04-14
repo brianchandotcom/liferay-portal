@@ -85,62 +85,62 @@ export const Routes = buildRoutes({
 										path: '/blogs',
 										routes: {
 											ASSETS_BLOGS_KNOWN_INDIVIDUALS:
-												'/:assetId/known-individuals/:touchpoint/:title?',
+												'/:assetId/known-individuals/:touchpoint/:title?/:type?',
 											ASSETS_BLOGS_OVERVIEW:
-												'/:assetId/page/:touchpoint/:title?',
+												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_BLOGS_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?'
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
 										}
 									},
 									ASSETS_CUSTOM: {
 										path: '/custom',
 										routes: {
 											ASSETS_CUSTOM_DASHBOARD:
-												'/:id/page/:touchpoint/:title?'
+												'/:id/page/:touchpoint/:title?/:type?'
 										}
 									},
 									ASSETS_DOCUMENTS_AND_MEDIA: {
 										path: '/documents-and-media',
 										routes: {
 											ASSETS_DOCUMENTS_AND_MEDIA_KNOWN_INDIVIDUALS:
-												'/:assetId/known-individuals/:touchpoint/:title?',
+												'/:assetId/known-individuals/:touchpoint/:title?/:type?',
 											ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW:
-												'/:assetId/page/:touchpoint/:title?',
+												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_DOCUMENTS_AND_MEDIA_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title'
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
 										}
 									},
 									ASSETS_FORMS: {
 										path: '/forms',
 										routes: {
 											ASSETS_FORMS_KNOWN_INDIVIDUALS:
-												'/:assetId/known-individuals/:touchpoint/:title?',
+												'/:assetId/known-individuals/:touchpoint/:title?/:type?',
 											ASSETS_FORMS_OVERVIEW:
-												'/:assetId/page/:touchpoint/:title?',
+												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_FORMS_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?'
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
 										}
 									},
 									ASSETS_OBJECT_ENTRY: {
 										path: '/object-entry',
 										routes: {
 											ASSETS_OBJECT_ENTRY_KNOWN_INDIVIDUALS:
-												'/:assetId/known-individuals/:touchpoint/:title?',
+												'/:assetId/known-individuals/:touchpoint/:title?/:type?',
 											ASSETS_OBJECT_ENTRY_OVERVIEW:
-												'/:assetId/page/:touchpoint/:title?',
+												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_OBJECT_ENTRY_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title'
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
 										}
 									},
 									ASSETS_WEB_CONTENT: {
 										path: '/web-content',
 										routes: {
 											ASSETS_WEB_CONTENT_KNOWN_INDIVIDUALS:
-												'/:assetId/known-individuals/:touchpoint/:title?',
+												'/:assetId/known-individuals/:touchpoint/:title?/:type?',
 											ASSETS_WEB_CONTENT_OVERVIEW:
-												'/:assetId/page/:touchpoint/:title?',
+												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_WEB_CONTENT_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?'
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
 										}
 									}
 								}

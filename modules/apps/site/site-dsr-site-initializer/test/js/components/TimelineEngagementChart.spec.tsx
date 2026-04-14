@@ -8,8 +8,7 @@ import {render} from '@testing-library/react';
 import React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-import EngagementChart from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/EngagementChart';
-import {mockEngagementChartData} from './__mocks__';
+import TimelineEngagementChart from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/TimelineEngagementChart';
 
 global.ResizeObserver = ResizeObserver;
 
@@ -26,15 +25,20 @@ jest.mock('recharts', () => {
 	};
 });
 
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/common/hooks/useIsInViewport',
+	() => ({
+		__esModule: true,
+		default: jest.fn(() => true),
+	})
+);
+
 describe('EngagementTimelineChart component', () => {
 	let container: HTMLElement;
 
 	beforeEach(() => {
 		const view = render(
-			<EngagementChart
-				engagementChartItems={mockEngagementChartData}
-				isLoading={false}
-			/>
+			<TimelineEngagementChart dsrDevEnvEnabled={true} />
 		);
 
 		container = view.container;
@@ -67,7 +71,6 @@ describe('EngagementTimelineChart component', () => {
 		const xAxisTick = container.querySelector(
 			'.recharts-xAxis .recharts-cartesian-axis-tick-value'
 		);
-
 		expect(xAxisTick).toHaveTextContent('Feb 20');
 	});
 });

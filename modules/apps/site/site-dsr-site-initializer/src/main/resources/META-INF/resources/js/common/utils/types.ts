@@ -29,8 +29,7 @@ export interface IEngagementChartItem {
 }
 
 export interface IEngagementChartProps {
-	engagementChartItems?: IEngagementChartItem[] | null;
-	isLoading?: boolean;
+	data?: IEngagementChartItem[];
 }
 
 export interface IFrequencyChartItem {
@@ -227,5 +226,5 @@ export type TVisitor = {
 	emailAddress: string;
 	firstName: string;
 	lastName: string;
-	logoURL: string | undefined;
+	logoURL?: string;
 };

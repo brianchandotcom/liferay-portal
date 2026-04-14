@@ -7,11 +7,10 @@ import {formatStorage, sub} from 'frontend-js-web';
 import React from 'react';
 
 export default function DragZoneBackground({maxSize}: {maxSize: number}) {
-
 	return (
 		<>
 			<img
-				alt={Liferay.Language.get('drag-and-drop-your-file')}
+				alt=""
 				src={`${Liferay.ThemeDisplay.getPathContext()}/o/exportimport-web/revamp/images/drag_and_drop.svg`}
 			/>
 

@@ -129,6 +129,26 @@ public class DefaultSearchResultPermissionFilterTest {
 		_groupAdmin = false;
 		_permissionFilteredSearchResultAccurateCountThreshold = 0;
 
+		Mockito.when(
+			_indexer.hasPermission(
+				Mockito.any(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.eq(ActionKeys.VIEW))
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			_indexer.isFilterSearch()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_indexerRegistry.getIndexer(Mockito.anyString())
+		).thenReturn(
+			(Indexer)_indexer
+		);
+
 		ResourcePermissionLocalService resourcePermissionLocalService =
 			Mockito.mock(ResourcePermissionLocalService.class);
 
@@ -144,37 +164,16 @@ public class DefaultSearchResultPermissionFilterTest {
 			true
 		);
 
-		Mockito.when(
-			_indexer.isFilterSearch()
-		).thenReturn(
-			true
-		);
-
-		Mockito.when(
-			_indexer.hasPermission(
-				Mockito.any(), Mockito.anyString(), Mockito.anyLong(),
-				Mockito.eq(ActionKeys.VIEW))
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			_indexerRegistry.getIndexer(Mockito.anyString())
-		).thenReturn(
-			(Indexer)_indexer
-		);
-
 		DefaultSearchResultPermissionFilter
 			defaultSearchResultPermissionFilter =
-				_getDefaultSearchResultPermissionFilter(_indexerRegistry);
+				_getDefaultSearchResultPermissionFilter();
 
-		_assertResults(
-			defaultSearchResultPermissionFilter, 9, _getSearchContext(10),
-			false);
+		SearchContext searchContext = _getSearchContext(10);
 
-		_assertResults(
-			defaultSearchResultPermissionFilter, 0, _getSearchContext(10),
-			true);
+		_assertResultsCount(
+			searchContext, defaultSearchResultPermissionFilter, 9, false);
+		_assertResultsCount(
+			searchContext, defaultSearchResultPermissionFilter, 0, true);
 
 		ResourcePermissionLocalServiceUtil.setService(null);
 	}
@@ -203,18 +202,19 @@ public class DefaultSearchResultPermissionFilterTest {
 		Assert.assertEquals(Arrays.toString(docs), pageCount, docs.length);
 	}
 
-	private void _assertResults(
+	private void _assertResultsCount(
+		SearchContext searchContext,
 		DefaultSearchResultPermissionFilter defaultSearchResultPermissionFilter,
-		int expected, SearchContext searchContext, boolean serviceTracker) {
+		int expectedResultsCount, boolean serviceTrackerContainsKey) {
 
 		Mockito.when(
 			_serviceTrackerMap.containsKey(Mockito.anyString())
 		).thenReturn(
-			serviceTracker
+			serviceTrackerContainsKey
 		);
 
 		Assert.assertEquals(
-			expected,
+			expectedResultsCount,
 			defaultSearchResultPermissionFilter.search(
 				searchContext
 			).getLength());
@@ -223,14 +223,6 @@ public class DefaultSearchResultPermissionFilterTest {
 	private DefaultSearchResultPermissionFilter
 		_getDefaultSearchResultPermissionFilter() {
 
-		return _getDefaultSearchResultPermissionFilter(
-			Mockito.mock(IndexerRegistry.class));
-	}
-
-	private DefaultSearchResultPermissionFilter
-		_getDefaultSearchResultPermissionFilter(
-			IndexerRegistry indexerRegistry) {
-
 		_mockSearchResultPermissionFilterConfiguration();
 
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
@@ -238,7 +230,7 @@ public class DefaultSearchResultPermissionFilterTest {
 
 		return new DefaultSearchResultPermissionFilter(
 			_defaultSearchResultPermissionFilterConfiguration,
-			Mockito.mock(FacetPostProcessor.class), indexerRegistry,
+			Mockito.mock(FacetPostProcessor.class), _indexerRegistry,
 			_permissionChecker, Mockito.mock(RelatedEntryIndexerRegistry.class),
 			_searchFunction, searchRequestBuilderFactory, _serviceTrackerMap);
 	}

@@ -758,11 +758,10 @@ public class UpgradeReport {
 
 			return rootDir;
 		}
-		catch (IOException ioException) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get document library store root dir",
-					ioException);
+					"Unable to get document library store root dir", exception);
 			}
 		}
 

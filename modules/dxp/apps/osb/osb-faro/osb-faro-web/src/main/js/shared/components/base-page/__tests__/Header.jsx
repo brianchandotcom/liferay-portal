@@ -173,5 +173,24 @@ describe('BasePage.Header', () => {
 
 			expect(container).toMatchSnapshot();
 		});
+
+		it('renders TitleSection w/ subtitle & label', () => {
+			const {container} = render(
+				<Header.TitleSection label subtitle='Test Label'>
+					{'Test Test'}
+				</Header.TitleSection>
+			);
+
+			expect(container).toMatchSnapshot();
+		});
+
+		it('renders TitleSection w/ label & no subtitle', () => {
+			const {container} = render(
+				<Header.TitleSection label>{'Test Test'}</Header.TitleSection>
+			);
+
+			expect(container).toMatchSnapshot();
+			expect(document.querySelector('.label')).toBeNull();
+		});
 	});
 });

@@ -244,6 +244,116 @@ test(
 	}
 );
 
+test(
+	'Item selection and conditional bulk actions',
+	{tag: ['@LPD-83150']},
+	async ({fdsSamplePage, page}) => {
+		const firstItemRow = fdsSamplePage.table.bodyRows.first();
+		const secondItemRow = fdsSamplePage.table.bodyRows.nth(1);
+
+		const firstItemCheckbox = firstItemRow
+			.locator('.cell-select-item')
+			.getByRole('checkbox');
+
+		const secondItemCheckbox = secondItemRow
+			.locator('.cell-select-item')
+			.getByRole('checkbox');
+
+		await test.step('Select the first item in the table', async () => {
+			await firstItemCheckbox.check();
+
+			await expect(firstItemRow).toHaveClass(/table-active/);
+		});
+
+		await test.step('Check the highlighted bulk action "Label" is visible', async () => {
+			await expect(
+				fdsSamplePage.bulkActions.container.getByRole('button', {
+					name: 'Label',
+				})
+			).toHaveText('Label');
+		});
+
+		await test.step('Open ellipsis actions menu', async () => {
+			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
+		});
+
+		await test.step('Check the bulk actions are listed', async () => {
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveCount(3);
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveText(['Label', 'Delete', 'Test']);
+		});
+
+		await test.step('Close ellipsis actions menu', async () => {
+			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
+
+			await expect(page.locator('.dropdown-menu.show')).toBeHidden();
+		});
+
+		await test.step('Select the first item in the table', async () => {
+			await secondItemCheckbox.check();
+
+			await expect(secondItemRow).toHaveClass(/table-active/);
+		});
+
+		await test.step('Check that the highlighted bulk action "Label" is NOT visible', async () => {
+			await expect(
+				fdsSamplePage.bulkActions.container.getByRole('button', {
+					name: 'Label',
+				})
+			).not.toBeInViewport();
+		});
+
+		await test.step('Open ellipsis actions menu', async () => {
+			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
+		});
+
+		await test.step('Check that only 2 bulk actions are listed', async () => {
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveCount(2);
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveText(['Delete', 'Test']);
+		});
+
+		await test.step('Check Select All buton selects all elements', async () => {
+			await fdsSamplePage.selectionToolbar.clearButton.click();
+
+			const itemsSelectorCheckbox = page.locator(
+				'input[name="items-selector"]'
+			);
+
+			await itemsSelectorCheckbox.click();
+
+			await expect(
+				page.getByText('20 of 75 Items Selected')
+			).toBeVisible();
+
+			await fdsSamplePage.selectAllCheckbox.click();
+
+			await expect(
+				page.getByText('All Selected (75 of 75 Items)')
+			).toBeVisible();
+		});
+
+		await test.step('Open ellipsis actions menu', async () => {
+			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
+		});
+
+		await test.step('With Select All flag active, all bulk actions are available', async () => {
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveCount(3);
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveText(['Label', 'Delete', 'Test']);
+		});
+	}
+);
+
 test('InfoPanel behavior', async ({fdsSamplePage, page}) => {
 	const firstItemCheckbox = fdsSamplePage.table.container
 		.locator('tbody .cell-select-item')

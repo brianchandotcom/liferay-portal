@@ -15,7 +15,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 
@@ -26,11 +26,12 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<JournalArticle> {
 
 	public JournalArticleLayoutDisplayPageObjectProvider(
-			JournalArticle article, AssetHelper assetHelper)
+			JournalArticle article, AssetHelper assetHelper, Portal portal)
 		throws PortalException {
 
 		_article = article;
 		_assetHelper = assetHelper;
+		_portal = portal;
 
 		_assetEntry = _getAssetEntry(article);
 	}
@@ -46,7 +47,7 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 			return _assetEntry.getClassNameId();
 		}
 
-		return PortalUtil.getClassNameId(JournalArticle.class.getName());
+		return _portal.getClassNameId(JournalArticle.class.getName());
 	}
 
 	@Override
@@ -152,5 +153,6 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 	private final JournalArticle _article;
 	private final AssetEntry _assetEntry;
 	private final AssetHelper _assetHelper;
+	private final Portal _portal;
 
 }

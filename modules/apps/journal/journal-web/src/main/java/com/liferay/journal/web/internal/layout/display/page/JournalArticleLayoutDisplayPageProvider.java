@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,7 +57,7 @@ public class JournalArticleLayoutDisplayPageProvider
 			}
 
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, assetHelper);
+				article, assetHelper, portal);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -75,7 +76,7 @@ public class JournalArticleLayoutDisplayPageProvider
 			}
 
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, assetHelper);
+				article, assetHelper, portal);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -95,7 +96,7 @@ public class JournalArticleLayoutDisplayPageProvider
 			}
 
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, assetHelper);
+				article, assetHelper, portal);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -149,7 +150,7 @@ public class JournalArticleLayoutDisplayPageProvider
 
 		try {
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, assetHelper);
+				article, assetHelper, portal);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -161,6 +162,9 @@ public class JournalArticleLayoutDisplayPageProvider
 
 	@Reference
 	protected JournalArticleLocalService journalArticleLocalService;
+
+	@Reference
+	protected Portal portal;
 
 	@Reference
 	protected SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider;

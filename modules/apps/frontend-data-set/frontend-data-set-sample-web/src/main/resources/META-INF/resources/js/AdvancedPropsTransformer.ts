@@ -158,14 +158,14 @@ export default function propsTransformer({
 		bulkActions: bulkActions?.map((action: IBulkActionItem) => {
 			const key = action?.data?.id as string;
 
-			if (!key || key !== 'test') {
+			if (!key || key !== 'sampleBulkAction') {
 				return action;
 			}
 
 			return {
 				...action,
 				isVisible: (selectedItems: Array<any>) => {
-					return selectedItems.some((item: any) => {
+					return selectedItems.every((item: any) => {
 						return item.color === 'Green';
 					});
 				},

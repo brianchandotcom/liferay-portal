@@ -4,6 +4,7 @@ import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import getCN from 'classnames';
@@ -181,6 +182,7 @@ const Section: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 }) => <div className={getCN('header-section', className)}>{children}</div>;
 
 interface ITitleSectionProps extends React.HTMLAttributes<HTMLDivElement> {
+	label?: boolean;
 	subtitle?: React.ReactNode | string;
 	title?: string;
 }
@@ -199,6 +201,7 @@ interface IActionsProps extends React.HTMLAttributes<HTMLDivElement> {
 const TitleSection: React.FC<ITitleSectionProps> = ({
 	children,
 	className,
+	label = false,
 	subtitle,
 	title
 }) => (
@@ -211,7 +214,14 @@ const TitleSection: React.FC<ITitleSectionProps> = ({
 			{children}
 		</span>
 
-		{subtitle && <div className='subtitle'>{subtitle}</div>}
+		{subtitle &&
+			(label ? (
+				<ClayLabel className='mb-4' displayType='info'>
+					{subtitle}
+				</ClayLabel>
+			) : (
+				<div className='subtitle'>{subtitle}</div>
+			))}
 	</Section>
 );
 
@@ -245,6 +255,7 @@ const Actions: React.FC<IActionsProps> = ({actions = []}) => (
 
 interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 	breadcrumbs: IBreadcrumbArgs[];
+	fluid?: boolean;
 	groupId: string;
 }
 
@@ -254,8 +265,30 @@ const Header: React.FC<IHeaderProps> & {
 	Actions: typeof Actions;
 	Section: typeof Section;
 	TitleSection: typeof TitleSection;
-} = ({breadcrumbs, children, groupId}) => {
+} = ({breadcrumbs, children, fluid, groupId}) => {
 	const notificationResponse = useNotificationsAPI(groupId);
+
+	if (fluid) {
+		return (
+			<header className='header-root'>
+				<div className='mx-5'>
+					{breadcrumbs && (
+						<Row>
+							<Breadcrumbs items={breadcrumbs} />
+						</Row>
+					)}
+
+					{children}
+				</div>
+
+				<NotificationAlertList
+					{...notificationResponse}
+					groupId={groupId}
+					stripe
+				/>
+			</header>
+		);
+	}
 
 	return (
 		<header className='header-root'>

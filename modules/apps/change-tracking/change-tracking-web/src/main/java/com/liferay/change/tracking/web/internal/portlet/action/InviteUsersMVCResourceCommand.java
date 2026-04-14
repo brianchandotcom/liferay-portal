@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -150,6 +152,30 @@ public class InviteUsersMVCResourceCommand
 			throw exception;
 		}
 
+		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
+
+		for (long userId : userIds) {
+			try {
+				_userLocalService.getUserById(
+					themeDisplay.getCompanyId(), userId);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					JSONUtil.put(
+						"errorMessage",
+						_language.get(
+							httpServletRequest,
+							"your-request-failed-to-complete")));
+
+				return;
+			}
+		}
+
 		Group group = null;
 
 		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
@@ -206,8 +232,6 @@ public class InviteUsersMVCResourceCommand
 
 		int[] roleValues = ParamUtil.getIntegerValues(
 			resourceRequest, "roleValues");
-
-		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
 
 		for (int i = 0; i < userIds.length; i++) {
 			List<UserGroupRole> userGroupRoles =
@@ -424,6 +448,9 @@ public class InviteUsersMVCResourceCommand
 		_userNotificationEventLocalService.addUserNotificationEvent(
 			receiverUserId, notificationEvent);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InviteUsersMVCResourceCommand.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

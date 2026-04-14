@@ -292,6 +292,11 @@ AUI.add(
 					if (deletionsNode) {
 						deletionsNode.on('change', () => {
 							instance._refreshDeletions();
+							instance.all('.content-link').each((item) => {
+								instance._setContentLabels(
+									item.attr('data-portletid')
+								);
+							});
 						});
 					}
 
@@ -913,7 +918,11 @@ AUI.add(
 					const selectedContent = [];
 
 					inputs.each((item) => {
-						if (item.attr('checked')) {
+						if (
+							item.attr('checked') &&
+							(!item.ancestor('.deletions') ||
+								instance._isChecked('deletionsNode'))
+						) {
 							selectedContent.push(item.attr('data-name'));
 						}
 					});

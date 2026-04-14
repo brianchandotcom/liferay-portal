@@ -31,6 +31,9 @@ export function ConfigurationContainer({
 	setValues,
 	values,
 }: ConfigurationContainerProps) {
+	const isCommentsEnabled =
+		values.scope === 'site' || Liferay.FeatureFlags['LPD-43996'];
+
 	const isReadOnly = !values.modifiable && values.system;
 
 	const disabled =
@@ -89,7 +92,7 @@ export function ConfigurationContainer({
 					disabled={disabled}
 					label={sub(
 						Liferay.Language.get('enable-x'),
-						Liferay.FeatureFlags['LPD-43996']
+						isCommentsEnabled
 							? Liferay.Language.get('comments')
 							: Liferay.Language.get('comments-in-page-builder')
 					)}
@@ -109,7 +112,7 @@ export function ConfigurationContainer({
 					toggled={values.enableComments}
 				/>
 
-				{Liferay.FeatureFlags['LPD-43996'] && (
+				{isCommentsEnabled && (
 					<>
 						&nbsp;
 						<ClayTooltipProvider>

@@ -39,6 +39,10 @@ export const getRangeSelectorsFromQuery = query => {
 export const getSafeDecodedURIComponent = (
 	encodedURIComponent: string
 ): string => {
+	if (!isString(encodedURIComponent)) {
+		return '';
+	}
+
 	try {
 		return decodeURIComponent(encodedURIComponent);
 	} catch (error) {

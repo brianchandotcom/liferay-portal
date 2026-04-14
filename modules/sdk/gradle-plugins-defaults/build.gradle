@@ -23,7 +23,7 @@ dependencies {
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "1.1.8"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.dependency.checker", version: "1.0.7"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.go", version: "2.0.3"
-	api group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.79"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.80"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.24"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "4.0.27"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.testray", version: "1.0.23"

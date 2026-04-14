@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useField, useFormikContext} from 'formik';
+import {useField} from 'formik';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {RequestResult} from '../../../common/services/ApiHelper';
@@ -36,7 +36,7 @@ export function FormikFieldFileSelector({
 	'validExtensions'?: string;
 }) {
 	const [field, , helpers] = useField(name);
-	const {setFieldTouched} = useFormikContext();
+	const {setError, setTouched, setValue} = helpers;
 
 	const [status, setStatus] = useState<FileSelectorStatus>(
 		field.value ? 'STABLE_SUCCESS' : 'IDLE'
@@ -47,8 +47,6 @@ export function FormikFieldFileSelector({
 	const [serverError, setServerError] = useState<string | undefined>();
 
 	const abortControllerRef = useRef<AbortController | null>(null);
-
-	const {setError, setValue} = helpers;
 
 	useEffect(() => {
 		return () => {
@@ -133,7 +131,7 @@ export function FormikFieldFileSelector({
 				setStatus('ERROR');
 				setSelectedFile(undefined);
 				setValue(undefined);
-				setFieldTouched(name, true);
+				setTouched(true);
 
 				return;
 			}
@@ -143,7 +141,7 @@ export function FormikFieldFileSelector({
 			setTimeout(() => {
 				setStatus('SUCCESS');
 				setValue(file);
-				setFieldTouched(name, true);
+				setTouched(true);
 			}, 600);
 		}
 		catch (error: any) {
@@ -158,7 +156,7 @@ export function FormikFieldFileSelector({
 			setStatus('ERROR');
 			setSelectedFile(undefined);
 			setValue(undefined);
-			setFieldTouched(name, true);
+			setTouched(true);
 		}
 	};
 
@@ -167,7 +165,7 @@ export function FormikFieldFileSelector({
 		setStatus('ERROR');
 		setSelectedFile(undefined);
 		setValue(undefined);
-		setFieldTouched(name, true);
+		setTouched(true);
 	};
 
 	const handleRemove = () => {
@@ -180,7 +178,7 @@ export function FormikFieldFileSelector({
 		setSelectedFile(undefined);
 		setValue(undefined);
 		setServerError(undefined);
-		setFieldTouched(name, true);
+		setTouched(true);
 	};
 
 	return (

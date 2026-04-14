@@ -1120,6 +1120,26 @@ public abstract class BaseWorkspaceGitRepository
 			gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 		}
 
+		RemoteGitRef senderRemoteGitRef = _getSenderRemoteGitRef();
+
+		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"SHA ", senderBranchSHA, " was not found in branch '",
+					getSenderBranchName(), "' on ",
+					senderRemoteGitRef.getRemoteURL()));
+		}
+
+		if (!gitWorkingDirectory.refContainsSHA(
+				senderRemoteGitRef.getSHA(), senderBranchSHA)) {
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"SHA ", senderBranchSHA, " was not found in branch '",
+					getSenderBranchName(), "' on ",
+					senderRemoteGitRef.getRemoteURL()));
+		}
+
 		gitWorkingDirectory.createLocalGitBranch(
 			_getSenderBranchHeadName(), true, getSenderBranchSHA());
 
@@ -1127,6 +1147,26 @@ public abstract class BaseWorkspaceGitRepository
 
 		if (!gitWorkingDirectory.localSHAExists(baseBranchSHA)) {
 			gitWorkingDirectory.fetch(_getUpstreamRemoteGitRef());
+		}
+
+		RemoteGitRef upstreamRemoteGitRef = _getUpstreamRemoteGitRef();
+
+		if (!gitWorkingDirectory.localSHAExists(baseBranchSHA)) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"SHA ", baseBranchSHA, " was not found in branch '",
+					getUpstreamBranchName(), "' on ",
+					upstreamRemoteGitRef.getRemoteURL()));
+		}
+
+		if (!gitWorkingDirectory.refContainsSHA(
+				upstreamRemoteGitRef.getSHA(), baseBranchSHA)) {
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"SHA ", baseBranchSHA, " was not found in branch '",
+					getUpstreamBranchName(), "' on ",
+					upstreamRemoteGitRef.getRemoteURL()));
 		}
 
 		gitWorkingDirectory.createLocalGitBranch(
@@ -1184,6 +1224,26 @@ public abstract class BaseWorkspaceGitRepository
 			if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
 				gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 			}
+		}
+
+		RemoteGitRef senderRemoteGitRef = _getSenderRemoteGitRef();
+
+		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"SHA ", senderBranchSHA, " was not found in branch '",
+					getSenderBranchName(), "' on ",
+					senderRemoteGitRef.getRemoteURL()));
+		}
+
+		if (!gitWorkingDirectory.refContainsSHA(
+				senderRemoteGitRef.getSHA(), senderBranchSHA)) {
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"SHA ", senderBranchSHA, " was not found in branch '",
+					getSenderBranchName(), "' on ",
+					senderRemoteGitRef.getRemoteURL()));
 		}
 
 		gitWorkingDirectory.createLocalGitBranch(

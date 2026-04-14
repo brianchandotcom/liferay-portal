@@ -154,6 +154,18 @@ async function getRoomUserAccounts(roomId: number): Promise<IUserAccount[]> {
 	throw new Error(error);
 }
 
+async function getRooms(): Promise<{items: IRoomObjectEntry[]}> {
+	const {data, error} = await ApiHelper.get<{items: IRoomObjectEntry[]}>(
+		`${BASE_PATH}`
+	);
+
+	if (data) {
+		return data;
+	}
+
+	throw new Error(error);
+}
+
 async function updateRoom(
 	roomId: number,
 	{
@@ -203,6 +215,7 @@ export default {
 	getRoom,
 	getRoomInvitedMembers,
 	getRoomUserAccounts,
+	getRooms,
 	updateRoom,
 	updateRoomUserAccount,
 };

@@ -753,7 +753,8 @@ public class TomcatNode {
 		private static <T> T _deserialize(byte[] bytes)
 			throws ClassNotFoundException {
 
-			Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
+			Deserializer deserializer = new Deserializer(
+				ByteBuffer.wrap(bytes));
 
 			return deserializer.readObject();
 		}

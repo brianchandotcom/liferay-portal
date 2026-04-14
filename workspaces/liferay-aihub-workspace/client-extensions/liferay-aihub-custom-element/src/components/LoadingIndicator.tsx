@@ -5,12 +5,12 @@
 
 import React from 'react';
 
-export default function GeneratingIndicator() {
+export default function LoadingIndicator() {
 	return (
-		<div className="aihub-generating">
-			<div className="aihub-generating-spinner" />
+		<div className="aihub-loading">
+			<div className="aihub-loading-spinner" />
 
-			<span className="aihub-generating-text">Generating&hellip;</span>
+			<span className="aihub-loading-text">Generating&hellip;</span>
 		</div>
 	);
 }

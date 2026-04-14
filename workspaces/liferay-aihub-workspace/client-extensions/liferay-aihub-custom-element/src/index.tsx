@@ -12,17 +12,25 @@ import {WidgetConfiguration} from './types';
 
 import './index.css';
 
-const CHATBOT_WIDGET_ID = 'aihub-chat-widget';
+const CHATBOT_WIDGET_ID = 'aihub-chatbot-widget';
 
 if (!document.getElementById(CHATBOT_WIDGET_ID)) {
-	const scriptTag = document.getElementById('aihub-chat-widget-script');
+	const scriptTag = document.getElementById('aihub-chatbot-widget-script');
 
 	if (!scriptTag) {
-		console.error('Element with id="aihub-chat-widget-script" not found');
+		console.error('Element with id="aihub-chatbot-widget-script" not found');
 	}
 	else {
+		const aiHubURL = scriptTag.getAttribute('ai-hub-url') || 'https://ai.hub.liferay.com';
+
+		if (!aiHubURL) {
+			console.warn(
+				'Attribute "ai-hub-url" is missing from the widget script tag.'
+			);
+		}
+
 		const widgetConfiguration: WidgetConfiguration = {
-			aiHubURL: scriptTag.getAttribute('ai-hub-url') || '',
+			aiHubURL,
 			chatbotExternalReferenceCode:
 				scriptTag.getAttribute('chatbot-external-reference-code') || '',
 		};

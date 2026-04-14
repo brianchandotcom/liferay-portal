@@ -5,7 +5,7 @@
 
 import {EventSource} from 'eventsource';
 
-import {ChatbotConfig} from './types';
+import type {ChatbotConfiguration} from './types';
 
 let aiHubURL = '';
 
@@ -13,9 +13,9 @@ export function setAIHubURL(url: string) {
 	aiHubURL = url;
 }
 
-export async function getChatbotConfig(
+export async function getChatbotConfiguration(
 	chatbotExternalReferenceCode: string
-): Promise<ChatbotConfig> {
+): Promise<ChatbotConfiguration> {
 	const response = await fetch(
 		`${aiHubURL}/o/ai-hub/chatbots/by-external-reference-code/${chatbotExternalReferenceCode}`,
 		{
@@ -27,11 +27,11 @@ export async function getChatbotConfig(
 
 	if (!response.ok) {
 		throw new Error(
-			`Unable to fetch chatbot config: ${response.statusText}`
+			`Unable to fetch chatbot configuration: ${response.statusText}`
 		);
 	}
 
-	return (await response.json()) as ChatbotConfig;
+	return (await response.json()) as ChatbotConfiguration;
 }
 
 export function createEventSource(): EventSource {
@@ -51,7 +51,7 @@ export function postChatMessage(
 	chatbotExternalReferenceCode: string,
 	eventSourceReference: string,
 	text: string
-) {
+): Promise<Response> {
 	return fetch(
 		`${aiHubURL}/o/ai-hub/v1.0/chats/by-external-reference-code/${eventSourceReference}/messages`,
 		{

@@ -124,6 +124,27 @@ const displayToast = (
 	}
 };
 
+const checkContentStructureMoveValidity = (
+	item: any,
+	destinationSpaceScopeId: number | undefined
+): boolean => {
+	const objectFolderERC =
+		item.embedded?.systemProperties?.objectDefinitionBrief
+			?.objectFolderExternalReferenceCode;
+	const entryFolderERC =
+		item.embedded?.objectEntryFolderExternalReferenceCode;
+
+	const isContentStructureItem =
+		objectFolderERC === 'L_CMS_CONTENT_STRUCTURES' ||
+		entryFolderERC === 'L_CONTENTS';
+
+	if (!isContentStructureItem) {
+		return false;
+	}
+
+	return item.embedded?.scopeId !== destinationSpaceScopeId;
+};
+
 function executeBulkCopyOrMoveAction({
 	apiURL,
 	dataSetId,
@@ -340,6 +361,25 @@ function FolderItemSelectorModalContent({
 
 	const handleOnItemsChange = (folder: Folder, targetName?: string) => {
 		if (isBulk) {
+			const hasContentStructureInDifferentSpace = selectedData.items.some(
+				(item: any) =>
+					checkContentStructureMoveValidity(
+						item,
+						currentSpace?.scopeId
+					)
+			);
+
+			if (hasContentStructureInDifferentSpace) {
+				displayErrorToast(
+					Liferay.Language.get(
+						'the-asset-cannot-be-moved-because-its-content-type-is-not-available-in-the-destination-space.'
+					)
+				);
+				onOpenChange(false);
+
+				return;
+			}
+
 			const actionType = isCopy
 				? 'CopyObjectBulkSelectionAction'
 				: 'MoveObjectBulkSelectionAction';
@@ -353,6 +393,19 @@ function FolderItemSelectorModalContent({
 				targetName,
 				type: actionType,
 			});
+
+			return;
+		}
+
+		if (
+			checkContentStructureMoveValidity(itemData, currentSpace?.scopeId)
+		) {
+			displayErrorToast(
+				Liferay.Language.get(
+					'the-asset-cannot-be-moved-because-its-content-type-is-not-available-in-the-destination-space.'
+				)
+			);
+			onOpenChange(false);
 
 			return;
 		}

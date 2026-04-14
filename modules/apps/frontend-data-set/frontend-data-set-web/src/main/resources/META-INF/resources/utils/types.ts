@@ -108,9 +108,16 @@ export interface IBaseActions {
 	itemId: number | string;
 }
 
-interface IBulkActionItem {
+export interface IBulkActionItem {
+	data?: {
+		highlighted?: boolean;
+		id?: string;
+		modalSize?: string;
+		visibilityFilters?: IActionsDataFilter;
+	};
 	href?: string;
 	icon?: string;
+	isVisible?: (selectedItems: Array<any>) => boolean;
 	label?: string;
 	method?: string;
 	target?: 'modal' | 'sidePanel';
@@ -186,10 +193,10 @@ export interface IItemActionsData {
 	status?: ModalStatus;
 	successMessage?: string;
 	title?: string;
-	visibilityFilters?: IItemActionsDataFilter;
+	visibilityFilters?: IActionsDataFilter;
 }
 
-export interface IItemActionsDataFilter {
+export interface IActionsDataFilter {
 	[key: string]: boolean | number | string;
 }
 

@@ -124,17 +124,19 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 				Operation operation = pathItem.getGet();
 
-				List<Parameter> parameters = operation.getParameters();
+				if (operation != null) {
+					List<Parameter> parameters = operation.getParameters();
 
-				parameters.add(
-					1,
-					new Parameter() {
-						{
-							in("query");
-							name("assigneeUserExternalReferenceCode");
-							schema(new StringSchema());
-						}
-					});
+					parameters.add(
+						1,
+						new Parameter() {
+							{
+								in("query");
+								name("assigneeUserExternalReferenceCode");
+								schema(new StringSchema());
+							}
+						});
+				}
 			}
 
 			if (!key.contains("objectActionName") &&

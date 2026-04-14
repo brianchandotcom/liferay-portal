@@ -396,7 +396,8 @@ public class PatcherFixUtil {
 		}
 
 		for (PatcherFix patcherFix : patcherFixes) {
-			if ((patcherFix.getType() != PatcherFixConstants.TYPE_PATCH) &&
+			if ((patcherFix.getType() != PatcherFixConstants.TYPE_AUTO_FIX) &&
+				(patcherFix.getType() != PatcherFixConstants.TYPE_PATCH) &&
 				(patcherFix.getType() != PatcherFixConstants.TYPE_WORKAROUND) &&
 				(patcherFix.getType() != PatcherFixConstants.TYPE_REBASE)) {
 
@@ -663,6 +664,7 @@ public class PatcherFixUtil {
 			PatcherFixLocalServiceUtil.getPatcherFixes(
 				calendar.getTime(), false,
 				new int[] {
+					PatcherFixConstants.TYPE_AUTO_FIX,
 					PatcherFixConstants.TYPE_PATCH,
 					PatcherFixConstants.TYPE_WORKAROUND
 				},

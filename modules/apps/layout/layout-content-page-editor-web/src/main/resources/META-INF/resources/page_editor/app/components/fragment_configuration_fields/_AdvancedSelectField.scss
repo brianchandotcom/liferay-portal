@@ -4,51 +4,42 @@
 $prefix: '.page-editor__single-select-with-icon';
 
 html#{$cadmin-selector} .cadmin .page-editor__select-field {
-	&:not(.old) {
-		border: 1px solid $cadmin-secondary-l3;
+	border: 1px solid $cadmin-secondary-l3;
 
-		&:focus-within,
-		&:hover {
-			border-color: $cadmin-secondary-l0;
-		}
+	&:focus-within,
+	&:hover {
+		border-color: $cadmin-secondary-l0;
+	}
 
-		&:not(:hover):not(:focus-within):not(.custom)
-			.page-editor__select-field__action-button {
-			opacity: 0;
-		}
-
-		&.custom {
-			background-color: $cadmin-light;
-
-			.input-group {
-				background-color: transparent;
-				border: 0;
-			}
-
-			.input-group-inset,
-			.input-group-inset-item {
-				border-width: 0;
-			}
-		}
-
+	&:not(:hover):not(:focus-within):not(.custom)
 		.page-editor__select-field__action-button {
-			background-color: transparent;
-			height: 28px;
-			margin: 2px;
-			padding: 4px;
-			width: 28px;
+		opacity: 0;
+	}
 
-			&:focus-visible,
-			&:hover {
-				background-color: rgba($cadmin-dark, 0.06);
-			}
+	&.custom {
+		background-color: $cadmin-light;
+
+		.input-group {
+			background-color: transparent;
+			border: 0;
+		}
+
+		.input-group-inset,
+		.input-group-inset-item {
+			border-width: 0;
 		}
 	}
 
-	&.old {
-		&:not(:hover):not(.custom)
-			.page-editor__select-field__action-button:not(:focus) {
-			opacity: 0;
+	.page-editor__select-field__action-button {
+		background-color: transparent;
+		height: 28px;
+		margin: 2px;
+		padding: 4px;
+		width: 28px;
+
+		&:focus-visible,
+		&:hover {
+			background-color: rgba($cadmin-dark, 0.06);
 		}
 	}
 

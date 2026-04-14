@@ -1,11 +1,9 @@
 @import 'atlas-variables';
 @import 'cadmin-variables';
 
-@import 'DropdownColorPicker';
-
 html#{$cadmin-selector} {
 	.cadmin {
-		.layout__color-picker:not(.old) {
+		.layout__color-picker {
 			border: 1px solid $cadmin-secondary-l3;
 			display: flex;
 
@@ -80,9 +78,7 @@ html#{$cadmin-selector} {
 					opacity: 0;
 				}
 			}
-		}
 
-		.layout__color-picker {
 			&__color-palette .sheet-subtitle {
 				border-bottom: 0;
 				border-top: 1px solid $cadmin-secondary-l3;
@@ -126,34 +122,6 @@ html#{$cadmin-selector} {
 		&.layout__color-picker__dropdown .clay-color-dropdown-menu {
 			padding-left: 0;
 			padding-right: 0;
-		}
-
-		.old.layout__color-picker {
-			display: flex;
-
-			.clay-color-picker {
-				width: 100%;
-			}
-
-			.clay-color > .input-group-item > .input-group-text {
-				border-radius: 4px 0 0 4px;
-			}
-
-			&.has-error {
-				.clay-color > .input-group-item > .input-group-text {
-					border-color: $cadmin-danger-l1;
-				}
-			}
-
-			&.hovered .layout__dropdown-color-picker__selector {
-				background-color: $cadmin-gray-100;
-			}
-
-			&:not(:hover):not(:focus-within):not(.hovered):not(.custom) {
-				.layout__color-picker__action-button {
-					opacity: 0;
-				}
-			}
 		}
 	}
 }

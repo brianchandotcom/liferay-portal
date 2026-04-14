@@ -32,11 +32,7 @@ html#{$cadmin-selector} .cadmin {
 			&:not(:focus-within) .input-group-inset-item-before {
 				border-color: transparent;
 			}
-		}
-	}
 
-	div:not(.old).layout__length-input {
-		.input-group {
 			&:hover {
 				border-color: $cadmin-secondary-l0;
 			}

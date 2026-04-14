@@ -201,14 +201,13 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	private Order _getOrder(String externalReferenceCode) throws Exception {
 		OrderResource orderResource = _marketplaceService.getOrderResource();
 
-		try {
-			return orderResource.getOrderByExternalReferenceCode(
-				externalReferenceCode);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+		com.liferay.headless.commerce.admin.order.client.http.HttpInvoker.
+			HttpResponse httpResponse =
+				orderResource.getOrderByExternalReferenceCodeHttpResponse(
+					externalReferenceCode);
+
+		if (_isOKStatusCode(httpResponse.getStatusCode())) {
+			return Order.toDTO(httpResponse.getContent());
 		}
 
 		return null;

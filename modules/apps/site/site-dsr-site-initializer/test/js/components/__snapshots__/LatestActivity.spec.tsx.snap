@@ -3,177 +3,214 @@
 exports[`LatestActivity renders the component with provided data 1`] = `
 <body>
   <div>
-    <div
-      class="latest-activity-fds"
+    <section
+      class="analytics-frame border rounded-lg"
     >
-      <div
-        class="fds"
+      <header
+        class="align-items-center border-bottom d-flex justify-content-between p-3"
       >
-        <div
-          class="data-set-wrapper visualization-mode-table"
-          data-testid="visualization-mode-table"
+        <span
+          class="align-items-center d-flex"
         >
+          <span
+            class="analytics-frame-icon btn-monospaced rounded-lg"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-click"
+              role="presentation"
+            >
+              <use
+                href="#click"
+              />
+            </svg>
+          </span>
+          <span
+            class="font-weight-semi-bold px-2"
+          >
+            latest-activity
+          </span>
+        </span>
+        <a
+          class="btn btn-link font-weight-semi-bold"
+          href="http://localhost:8080/web/dsr/analytics/view-timeline"
+          title="view-all"
+        >
+          view-all
+        </a>
+      </header>
+      <div>
+        <div>
           <div
-            class="data-set data-set-inline"
+            class="latest-activity-fds"
           >
             <div
-              class="data-set-content-wrapper"
+              class="fds"
             >
-              <input
-                name="test-namespace_id"
-                readonly=""
-                type="hidden"
-                value=""
-              />
               <div
-                class="table-responsive"
+                class="data-set-wrapper visualization-mode-table"
+                data-testid="visualization-mode-table"
               >
-                <table
-                  class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped table-valign-middle table-sort"
-                  style="table-layout: fixed;"
+                <div
+                  class="data-set data-set-inline"
                 >
-                  <thead>
-                    <tr>
-                      <th
-                        class="cell-name table-head-title"
-                        data-id="string,name"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        name
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="cell-action table-head-title"
-                        data-id="string,action"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        action
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="cell-createDate table-head-title"
-                        data-id="string,createDate"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        timestamp
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="table-head-title"
-                        data-id="string,visibility"
-                        style="width: 64px;"
-                        tabindex="-1"
-                      >
-                        <span
-                          class="sr-only"
-                        >
-                          manage-columns-visibility
-                        </span>
-                        <div
-                          class="dropdown"
-                        >
-                          <button
-                            aria-haspopup="true"
-                            aria-label="manage-columns-visibility"
-                            class="dropdown-toggle btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
-                            title="manage-columns-visibility"
-                            type="button"
-                          >
-                            <svg
-                              class="lexicon-icon lexicon-icon-caret-bottom"
-                              role="presentation"
-                            >
-                              <use
-                                href="#caret-bottom"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      class=""
-                      data-id="string,$.0"
-                      tabindex="-1"
+                  <div
+                    class="data-set-content-wrapper"
+                  >
+                    <input
+                      name="test-namespace_id"
+                      readonly=""
+                      type="hidden"
+                      value=""
+                    />
+                    <div
+                      class="table-responsive"
                     >
-                      <td
-                        aria-colindex="1"
-                        class="cell-name"
-                        data-id="string,null:name"
-                        style="width: auto;"
-                        tabindex="-1"
+                      <table
+                        class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped table-valign-middle table-sort"
+                        style="table-layout: fixed;"
                       >
-                        <div
-                          class="d-flex inline-item"
-                        >
-                          <span
-                            class="sticker sticker-user-icon"
-                          >
-                            <span
-                              class="sticker-overlay"
+                        <thead>
+                          <tr>
+                            <th
+                              class="cell-name table-head-title"
+                              data-id="string,name"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
                             >
-                              <img
-                                alt="John Doe"
-                                class="sticker-img"
-                                src="https://test.com/logo.png"
+                              name
+                              <div
+                                class="dnd-th-resizer is-allowed"
                               />
-                            </span>
-                          </span>
-                          <p
-                            class="font-weight-semi-bold inline-item-after mb-0"
+                            </th>
+                            <th
+                              class="cell-action table-head-title"
+                              data-id="string,action"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              action
+                              <div
+                                class="dnd-th-resizer is-allowed"
+                              />
+                            </th>
+                            <th
+                              class="cell-createDate table-head-title"
+                              data-id="string,createDate"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              time
+                              <div
+                                class="dnd-th-resizer is-allowed"
+                              />
+                            </th>
+                            <th
+                              class="table-head-title"
+                              data-id="string,visibility"
+                              style="width: 64px;"
+                              tabindex="-1"
+                            >
+                              <span
+                                class="sr-only"
+                              >
+                                manage-columns-visibility
+                              </span>
+                              <div
+                                class="dropdown"
+                              >
+                                <button
+                                  aria-haspopup="true"
+                                  aria-label="manage-columns-visibility"
+                                  class="dropdown-toggle btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
+                                  title="manage-columns-visibility"
+                                  type="button"
+                                >
+                                  <svg
+                                    class="lexicon-icon lexicon-icon-caret-bottom"
+                                    role="presentation"
+                                  >
+                                    <use
+                                      href="#caret-bottom"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            class=""
+                            data-id="string,$.0"
+                            tabindex="-1"
                           >
-                            John Doe
-                          </p>
-                        </div>
-                      </td>
-                      <td
-                        aria-colindex="2"
-                        class="cell-action"
-                        data-id="string,null:action"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        created a new document
-                      </td>
-                      <td
-                        aria-colindex="3"
-                        class="cell-createDate"
-                        data-id="string,null:createDate"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        2 hours ago
-                      </td>
-                      <td
-                        aria-colindex="4"
-                        class="cell-item-actions"
-                        data-id="string,null:actions"
-                        style="width: auto;"
-                        tabindex="-1"
-                      />
-                    </tr>
-                  </tbody>
-                </table>
+                            <td
+                              aria-colindex="1"
+                              class="cell-name"
+                              data-id="string,null:name"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              <div
+                                class="d-flex inline-item"
+                              >
+                                <span
+                                  class="sticker sticker-user-icon"
+                                  style="background-color: rgba(170, 51, 255, 0.2); border: 1px solid rgba(170,51,255,1); color: rgb(170, 51, 255);"
+                                >
+                                  <span
+                                    class="sticker-overlay"
+                                  >
+                                    J
+                                  </span>
+                                </span>
+                                <p
+                                  class="font-weight-semi-bold inline-item-after mb-0"
+                                >
+                                  John Doe
+                                </p>
+                              </div>
+                            </td>
+                            <td
+                              aria-colindex="2"
+                              class="cell-action"
+                              data-id="string,null:action"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              Created a new document
+                            </td>
+                            <td
+                              aria-colindex="3"
+                              class="cell-createDate"
+                              data-id="string,null:createDate"
+                              style="width: auto;"
+                              tabindex="-1"
+                            >
+                              2 hours ago
+                            </td>
+                            <td
+                              aria-colindex="4"
+                              class="cell-item-actions"
+                              data-id="string,null:actions"
+                              style="width: auto;"
+                              tabindex="-1"
+                            />
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
   <div
     class="lfr-tooltip-scope"

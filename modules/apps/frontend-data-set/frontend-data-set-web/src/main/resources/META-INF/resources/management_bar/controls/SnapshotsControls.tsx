@@ -15,7 +15,7 @@ import {
 	openToast,
 } from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
-import React, {Ref, useContext, useRef, useState} from 'react';
+import React, {Ref, useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {DEFAULT_FETCH_HEADERS} from '../../constants';
@@ -73,7 +73,7 @@ const SnapshotsControlsTrigger = React.forwardRef(
 	)
 );
 
-function SaveSnapshotModalContent({
+function SaveSnapshotModalComponent({
 	closeModal,
 	initialLabel,
 	namespace,
@@ -86,25 +86,28 @@ function SaveSnapshotModalContent({
 	onSave: (label: string) => void;
 	title: string;
 }) {
+	const [label, setLabel] = useState(initialLabel);
 	const [nameValidationError, setNameValidationError] = useState(false);
 
-	const labelInputRef = useRef<HTMLInputElement>(null);
-
 	const handleSave = () => {
-		const label = labelInputRef.current?.value?.trim() ?? '';
+		const trimmedLabel = label.trim();
 
-		if (!label) {
+		if (!trimmedLabel) {
 			setNameValidationError(true);
 
 			return;
 		}
 
-		onSave(label);
+		onSave(trimmedLabel);
 	};
 
 	return (
 		<>
-			<ClayModal.Header>{title}</ClayModal.Header>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
+				{title}
+			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<ClayForm.Group
@@ -118,15 +121,13 @@ function SaveSnapshotModalContent({
 
 					<ClayInput
 						autoFocus={true}
-						defaultValue={initialLabel}
 						id={`${namespace}labelInput`}
-						onChange={() => {
-							if (nameValidationError) {
-								setNameValidationError(false);
-							}
+						onChange={(event) => {
+							setLabel(event.target.value);
+							setNameValidationError(false);
 						}}
-						ref={labelInputRef}
 						type="text"
+						value={label}
 					/>
 
 					{nameValidationError && (
@@ -199,10 +200,9 @@ const SnapshotsControls = () => {
 			)) ||
 		defaultSnapshotItem;
 
+	const activeSnapshotLabel = activeSnapshot.label ?? '';
 	const initialLabel =
-		activeSnapshot.erc !== DEFAULT_VIEW_ID
-			? activeSnapshot.label ?? ''
-			: '';
+		activeSnapshot.erc !== DEFAULT_VIEW_ID ? activeSnapshotLabel : '';
 
 	const saveSnapshot = ({
 		label,
@@ -290,17 +290,14 @@ const SnapshotsControls = () => {
 
 	const openSaveSnapshotModal = () => {
 		openModal({
-			contentComponent: ({closeModal}: {closeModal: () => void}) => (
-				<SaveSnapshotModalContent
+			contentComponent: ({closeModal}) => (
+				<SaveSnapshotModalComponent
 					closeModal={closeModal}
 					initialLabel={initialLabel}
 					namespace={namespace ?? ''}
-					onSave={(label) => {
-						saveSnapshot({
-							label,
-							processClose: closeModal,
-						});
-					}}
+					onSave={(label) =>
+						saveSnapshot({label, processClose: closeModal})
+					}
 					title={Liferay.Language.get('save-new-view-as')}
 				/>
 			),
@@ -364,17 +361,14 @@ const SnapshotsControls = () => {
 
 	const openRenameSnapshotModal = () => {
 		openModal({
-			contentComponent: ({closeModal}: {closeModal: () => void}) => (
-				<SaveSnapshotModalContent
+			contentComponent: ({closeModal}) => (
+				<SaveSnapshotModalComponent
 					closeModal={closeModal}
 					initialLabel={initialLabel}
 					namespace={namespace ?? ''}
-					onSave={(label) => {
-						renameActiveSnapshot({
-							label,
-							processClose: closeModal,
-						});
-					}}
+					onSave={(label) =>
+						renameActiveSnapshot({label, processClose: closeModal})
+					}
 					title={Liferay.Language.get('rename-view')}
 				/>
 			),

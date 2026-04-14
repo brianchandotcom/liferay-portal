@@ -10,12 +10,25 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,10 +42,13 @@ import com.liferay.translation.test.util.TranslationTestUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -92,6 +108,45 @@ public class TranslationManagerTest {
 
 		_testGetXLIFFFile("test-journal-article-v12.xlf", _MIMETYPE_XLIFF_1_2);
 		_testGetXLIFFFile("test-journal-article.xlf", _MIMETYPE_XLIFF_2_0);
+	}
+
+	@Test
+	@TestInfo("LPD-85323")
+	public void testObjectEntryGetTitle() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						Collections.singletonMap(
+							LocaleUtil.getDefault(), "Title")
+					).localized(
+						true
+					).name(
+						"title"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		String spanishTitle = RandomTestUtil.randomString();
+
+		Map<String, String> titles = HashMapBuilder.put(
+			"es_ES", spanishTitle
+		).build();
+
+		_testObjectEntryGetTitle(
+			"es_ES", spanishTitle, LocaleUtil.US, objectDefinition, titles);
+		_testObjectEntryGetTitle(
+			"es_ES", spanishTitle, LocaleUtil.SPAIN, objectDefinition, titles);
+
+		String englishTitle = RandomTestUtil.randomString();
+
+		titles.put("en_US", englishTitle);
+
+		_testObjectEntryGetTitle(
+			"es_ES", englishTitle, LocaleUtil.US, objectDefinition, titles);
+
+		_testObjectEntryGetTitle(
+			"es_ES", spanishTitle, LocaleUtil.SPAIN, objectDefinition, titles);
 	}
 
 	@Test
@@ -198,6 +253,38 @@ public class TranslationManagerTest {
 		}
 	}
 
+	private void _testObjectEntryGetTitle(
+			String defaultLangueId, String expectedTitle, Locale locale,
+			ObjectDefinition objectDefinition, Map<String, String> titles)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			defaultLangueId,
+			HashMapBuilder.put(
+				"title_i18n", (Serializable)titles
+			).build(),
+			serviceContext);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			Assert.assertEquals(
+				expectedTitle,
+				_translationManager.getTitle(
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId(), locale));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	private void _testProcessXLIFFTranslationFailureWithSingleFile(
 			File xliffFile)
 		throws Exception {
@@ -297,6 +384,9 @@ public class TranslationManagerTest {
 	private Group _group;
 
 	private JournalArticle _journalArticle;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private TranslationManager _translationManager;

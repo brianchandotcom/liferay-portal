@@ -63,7 +63,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolderCollaboratorByTypeCollaborator(collaboratorId: ___, objectEntryFolderId: ___, type: ___){actionIds, actions, creator, dateExpired, externalReferenceCode, id, name, portrait, share, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolderCollaboratorByTypeCollaborator(collaboratorId: ___, objectEntryFolderId: ___, type: ___){actionIds, actions, creator, dateExpired, emailAddress, externalReferenceCode, id, name, portrait, share, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the collaborator of an object entry."
@@ -108,7 +108,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(collaboratorId: ___, externalReferenceCode: ___, scopeKey: ___, type: ___){actionIds, actions, creator, dateExpired, externalReferenceCode, id, name, portrait, share, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(collaboratorId: ___, externalReferenceCode: ___, scopeKey: ___, type: ___){actionIds, actions, creator, dateExpired, emailAddress, externalReferenceCode, id, name, portrait, share, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the collaborator for an object entry folder."
@@ -496,4 +496,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-5503561
+// LIFERAY-REST-BUILDER-HASH:-953754825

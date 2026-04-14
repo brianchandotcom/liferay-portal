@@ -169,6 +169,7 @@ public abstract class BaseCollaboratorResourceTestCase {
 
 		Collaborator collaborator = randomCollaborator();
 
+		collaborator.setEmailAddress(regex);
 		collaborator.setExternalReferenceCode(regex);
 		collaborator.setName(regex);
 		collaborator.setPortrait(regex);
@@ -180,6 +181,7 @@ public abstract class BaseCollaboratorResourceTestCase {
 
 		collaborator = CollaboratorSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, collaborator.getEmailAddress());
 		Assert.assertEquals(regex, collaborator.getExternalReferenceCode());
 		Assert.assertEquals(regex, collaborator.getName());
 		Assert.assertEquals(regex, collaborator.getPortrait());
@@ -1576,6 +1578,14 @@ public abstract class BaseCollaboratorResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
+				if (collaborator.getEmailAddress() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -1777,6 +1787,17 @@ public abstract class BaseCollaboratorResourceTestCase {
 				if (!Objects.deepEquals(
 						collaborator1.getDateExpired(),
 						collaborator2.getDateExpired())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						collaborator1.getEmailAddress(),
+						collaborator2.getEmailAddress())) {
 
 					return false;
 				}
@@ -1994,6 +2015,52 @@ public abstract class BaseCollaboratorResourceTestCase {
 				sb.append(" ");
 
 				sb.append(_format.format(collaborator.getDateExpired()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("emailAddress")) {
+			Object object = collaborator.getEmailAddress();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
 			}
 
 			return sb.toString();
@@ -2239,6 +2306,9 @@ public abstract class BaseCollaboratorResourceTestCase {
 		return new Collaborator() {
 			{
 				dateExpired = RandomTestUtil.nextDate();
+				emailAddress =
+					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+						"@liferay.com";
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
@@ -2471,4 +2541,4 @@ public abstract class BaseCollaboratorResourceTestCase {
 		_collaboratorResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1008502985
+// LIFERAY-REST-BUILDER-HASH:-777099857

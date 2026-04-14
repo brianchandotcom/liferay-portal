@@ -107,6 +107,20 @@ public class CollaboratorSerDes {
 			sb.append("\"");
 		}
 
+		if (collaborator.getEmailAddress() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"emailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(collaborator.getEmailAddress()));
+
+			sb.append("\"");
+		}
+
 		if (collaborator.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -235,6 +249,14 @@ public class CollaboratorSerDes {
 				liferayToJSONDateFormat.format(collaborator.getDateExpired()));
 		}
 
+		if (collaborator.getEmailAddress() == null) {
+			map.put("emailAddress", null);
+		}
+		else {
+			map.put(
+				"emailAddress", String.valueOf(collaborator.getEmailAddress()));
+		}
+
 		if (collaborator.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -309,6 +331,9 @@ public class CollaboratorSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateExpired")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
@@ -360,6 +385,11 @@ public class CollaboratorSerDes {
 				if (jsonParserFieldValue != null) {
 					collaborator.setDateExpired(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
+				if (jsonParserFieldValue != null) {
+					collaborator.setEmailAddress((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -477,4 +507,4 @@ public class CollaboratorSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1312907804
+// LIFERAY-REST-BUILDER-HASH:-1693806390

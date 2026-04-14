@@ -111,6 +111,27 @@ public class Collaborator implements Cloneable, Serializable {
 
 	protected Date dateExpired;
 
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
+
+		try {
+			emailAddress = emailAddressUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String emailAddress;
+
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -263,4 +284,4 @@ public class Collaborator implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1761515157
+// LIFERAY-REST-BUILDER-HASH:911244300

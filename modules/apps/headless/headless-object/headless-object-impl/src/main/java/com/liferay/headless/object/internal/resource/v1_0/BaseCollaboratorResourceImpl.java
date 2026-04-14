@@ -582,7 +582,7 @@ public abstract class BaseCollaboratorResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}/collaborators/by-type/{type}/{collaboratorId}' -d $'{"actionIds": ___, "dateExpired": ___, "id": ___, "share": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}/collaborators/by-type/{type}/{collaboratorId}' -d $'{"actionIds": ___, "dateExpired": ___, "emailAddress": ___, "id": ___, "share": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Add or update a collaborator received in the request."
@@ -635,7 +635,7 @@ public abstract class BaseCollaboratorResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders/by-external-reference-code/{externalReferenceCode}/collaborators/by-type/{type}/{collaboratorId}' -d $'{"actionIds": ___, "dateExpired": ___, "id": ___, "share": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders/by-external-reference-code/{externalReferenceCode}/collaborators/by-type/{type}/{collaboratorId}' -d $'{"actionIds": ___, "dateExpired": ___, "emailAddress": ___, "id": ___, "share": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Add or update a collaborator received in the request."
@@ -1368,4 +1368,4 @@ public abstract class BaseCollaboratorResourceImpl
 		LogFactoryUtil.getLog(BaseCollaboratorResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:147681478
+// LIFERAY-REST-BUILDER-HASH:230273300

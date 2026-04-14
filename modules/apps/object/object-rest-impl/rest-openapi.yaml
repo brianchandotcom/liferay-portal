@@ -1551,6 +1551,7 @@ paths:
         delete:
             description:
                 Deletes the collaborator for an object entry and returns a 204 if the operation succeeds.
+            operationId: deleteScopeScopeKeyByExternalReferenceCodeCollaboratorByEmailAddress
             parameters:
                 -   in: path
                     name: scopeKey
@@ -1576,6 +1577,7 @@ paths:
         get:
             description:
                 Retrieves the collaborator for an object entry.
+            operationId: getScopeScopeKeyByExternalReferenceCodeCollaboratorByEmailAddress
             parameters:
                 -   in: path
                     name: scopeKey
@@ -1617,6 +1619,7 @@ paths:
         put:
             description:
                 Add or update a collaborator received in the request.
+            operationId: putScopeScopeKeyByExternalReferenceCodeCollaboratorByEmailAddress
             parameters:
                 -   in: path
                     name: scopeKey
@@ -2677,6 +2680,7 @@ paths:
         delete:
             description:
                 Deletes the collaborator for an object entry and returns a 204 if the operation succeeds.
+            operationId: deleteObjectEntryCollaboratorByEmailAddress
             parameters:
                 -   in: path
                     name: objectEntryId
@@ -2698,6 +2702,7 @@ paths:
         get:
             description:
                 Retrieves the collaborator for an object entry.
+            operationId: getObjectEntryCollaboratorByEmailAddress
             parameters:
                 -   in: path
                     name: objectEntryId
@@ -2735,6 +2740,7 @@ paths:
         put:
             description:
                 Add or update a collaborator received in the request.
+            operationId: putObjectEntryCollaboratorByEmailAddress
             parameters:
                 -   in: path
                     name: objectEntryId

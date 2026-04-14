@@ -41,14 +41,29 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CollaboratorResource {
 
+	public void deleteObjectEntryCollaboratorByEmailAddress(
+			Long objectEntryId, String emailAddress)
+		throws Exception;
+
 	public void deleteObjectEntryCollaboratorByTypeCollaborator(
 			Long objectEntryId, String type, Long collaboratorId)
+		throws Exception;
+
+	public void
+			deleteScopeScopeKeyByExternalReferenceCodeCollaboratorByEmailAddress(
+				String scopeKey, String externalReferenceCode,
+				String emailAddress)
 		throws Exception;
 
 	public void
 			deleteScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator(
 				String scopeKey, String externalReferenceCode, String type,
 				Long collaboratorId)
+		throws Exception;
+
+	public com.liferay.headless.object.dto.v1_0.Collaborator
+			getObjectEntryCollaboratorByEmailAddress(
+				Long objectEntryId, String emailAddress)
 		throws Exception;
 
 	public com.liferay.headless.object.dto.v1_0.Collaborator
@@ -59,6 +74,12 @@ public interface CollaboratorResource {
 	public Page<com.liferay.headless.object.dto.v1_0.Collaborator>
 			getObjectEntryCollaboratorsPage(
 				Long objectEntryId, Pagination pagination)
+		throws Exception;
+
+	public com.liferay.headless.object.dto.v1_0.Collaborator
+			getScopeScopeKeyByExternalReferenceCodeCollaboratorByEmailAddress(
+				String scopeKey, String externalReferenceCode,
+				String emailAddress)
 		throws Exception;
 
 	public com.liferay.headless.object.dto.v1_0.Collaborator
@@ -93,8 +114,21 @@ public interface CollaboratorResource {
 		throws Exception;
 
 	public com.liferay.headless.object.dto.v1_0.Collaborator
+			putObjectEntryCollaboratorByEmailAddress(
+				Long objectEntryId, String emailAddress,
+				com.liferay.headless.object.dto.v1_0.Collaborator collaborator)
+		throws Exception;
+
+	public com.liferay.headless.object.dto.v1_0.Collaborator
 			putObjectEntryCollaboratorByTypeCollaborator(
 				Long objectEntryId, String type, Long collaboratorId,
+				com.liferay.headless.object.dto.v1_0.Collaborator collaborator)
+		throws Exception;
+
+	public com.liferay.headless.object.dto.v1_0.Collaborator
+			putScopeScopeKeyByExternalReferenceCodeCollaboratorByEmailAddress(
+				String scopeKey, String externalReferenceCode,
+				String emailAddress,
 				com.liferay.headless.object.dto.v1_0.Collaborator collaborator)
 		throws Exception;
 
@@ -201,4 +235,4 @@ public interface CollaboratorResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:625659714
+// LIFERAY-REST-BUILDER-HASH:373799310

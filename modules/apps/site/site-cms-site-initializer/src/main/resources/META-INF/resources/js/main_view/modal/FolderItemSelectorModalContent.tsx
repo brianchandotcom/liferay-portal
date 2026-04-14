@@ -339,38 +339,78 @@ function FolderItemSelectorModalContent({
 	};
 
 	const handleOnItemsChange = (folder: Folder, targetName?: string) => {
+		const getDuplicateCheckPromise = (item: any) => {
+			const isFolder =
+				item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
+
+			if (isFolder) {
+				return FolderService.searchFolder(
+					item.embedded.scopeId,
+					item.title,
+					folder.id
+				);
+			}
+			else {
+				return ApiHelper.get(
+					`${item.actions['get-by-scope'].href}?filter=title eq '${item.title}' and folderId eq ${folder.id}`
+				);
+			}
+		};
+
 		if (isBulk) {
 			const actionType = isCopy
 				? 'CopyObjectBulkSelectionAction'
 				: 'MoveObjectBulkSelectionAction';
 
-			executeBulkCopyOrMoveAction({
-				apiURL,
-				dataSetId,
-				folder,
-				onClose: () => onOpenChange(false),
-				selectedData,
-				targetName,
-				type: actionType,
+			const duplicateCheckPromises = selectedData.items.map(
+				(selectedItem: any) =>
+					getDuplicateCheckPromise(selectedItem).then(
+						(result: any) => ({
+							data: result.data,
+							error: result.error,
+							item: selectedItem,
+						})
+					)
+			);
+
+			Promise.all(duplicateCheckPromises).then((results) => {
+				const duplicatedItemTitles: string[] = [];
+
+				results.forEach(({data, error, item}) => {
+					if (error) {
+						displayErrorToast(error);
+					}
+					else if (data?.items.length > 0) {
+						duplicatedItemTitles.push(item.title);
+					}
+				});
+
+				if (duplicatedItemTitles.length) {
+					displayErrorToast(
+						Liferay.Language.get(
+							'assets-could-not-be-moved.-please-ensure-the-name-is-unique-in-the-destination.'
+						)
+					);
+					onOpenChange(false);
+
+					return;
+				}
+
+				executeBulkCopyOrMoveAction({
+					apiURL,
+					dataSetId,
+					folder,
+					onClose: () => onOpenChange(false),
+					selectedData,
+					targetName,
+					type: actionType,
+				});
 			});
 
 			return;
 		}
 
-		const isFolder =
-			itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
-
-		const checkDuplicatePromise = isFolder
-			? FolderService.searchFolder(
-					itemData.embedded.scopeId,
-					itemData.title,
-					folder.id
-				)
-			: ApiHelper.get(
-					`${itemData.actions['get-by-scope'].href}?filter=title eq '${itemData.title}' and folderId eq ${folder.id}`
-				);
-
-		checkDuplicatePromise.then(({data, error}: any) => {
+		getDuplicateCheckPromise(itemData).then(({data, error}: any) => {
 			if (error) {
 				displayErrorToast(error);
 

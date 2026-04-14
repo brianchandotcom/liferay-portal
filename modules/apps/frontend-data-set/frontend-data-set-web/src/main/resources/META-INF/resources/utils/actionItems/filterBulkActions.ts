@@ -3,28 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getLocalizedValue} from '../getLocalizedValue';
-import {IActionsDataFilter, IBulkActionItem} from '../types';
-
-const matchesVisibilityFilters = (
-	action: IBulkActionItem,
-	selectedItemsData: Array<any>
-): boolean => {
-	if (!action?.data?.visibilityFilters) {
-		return true;
-	}
-
-	const visibilityFilters: IActionsDataFilter =
-		action?.data?.visibilityFilters;
-
-	return selectedItemsData.every((itemData: any) => {
-		return Object.keys(visibilityFilters).every(
-			(key: string) =>
-				getLocalizedValue(itemData, key)?.value ===
-				visibilityFilters[key]
-		);
-	});
-};
+import {IBulkActionItem} from '../types';
 
 const filterBulkActions = ({
 	allItemsSelectedActive,
@@ -40,20 +19,11 @@ const filterBulkActions = ({
 	}
 
 	return bulkActions.filter((bulkAction) => {
-		if (
-			!allItemsSelectedActive &&
-			!matchesVisibilityFilters(bulkAction, selectedItems)
-		) {
-			return false;
+		if (allItemsSelectedActive) {
+			return true;
 		}
 
-		if (
-			allItemsSelectedActive ||
-			!bulkAction.isVisible ||
-			bulkAction.isVisible(selectedItems)
-		) {
-			return bulkAction;
-		}
+		return !bulkAction.isVisible || bulkAction.isVisible(selectedItems);
 	});
 };
 

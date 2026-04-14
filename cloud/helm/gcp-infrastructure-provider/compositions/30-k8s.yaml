@@ -19,6 +19,19 @@ spec:
                 name: liferay-default
                 namespace: {{ $namespace }}
 {{- range $dataPlane := $dataPlanes }}
+{{- $dbInstanceResourceName := printf "database-primary-%s" $dataPlane }}
+{{- $dbReady := false }}
+{{- if $.observed.resources }}
+    {{- if (index $.observed.resources $dbInstanceResourceName) }}
+        {{- $db := index $.observed.resources $dbInstanceResourceName }}
+        {{- range $cond := $db.resource.status.conditions | default list }}
+            {{- if and (eq $cond.type "Ready") (eq $cond.status "True") }}
+                {{- $dbReady = true }}
+            {{- end }}
+        {{- end }}
+    {{- end }}
+{{- end }}
+{{- if $dbReady }}
 {{- $instanceConnectionName := printf "%s:%s:%s-db-instance-%s" $env.projectId $region $xr.metadata.name $dataPlane }}
 {{- $jobName := printf "%s-db-grant-%s" $xr.metadata.name $dataPlane }}
 ---
@@ -123,6 +136,7 @@ spec:
     readiness:
         celQuery: object.status.succeeded == 1
         policy: DeriveFromCelQuery
+{{- end }}
 {{- end }}
 ---
 {{- $isReady = false }}

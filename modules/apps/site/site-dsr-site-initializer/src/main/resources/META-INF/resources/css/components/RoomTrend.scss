@@ -5,7 +5,9 @@
 		position: relative;
 		width: 150px;
 	}
+}
 
+.room-trend {
 	&-button {
 		height: 40px;
 		width: 153px;
@@ -34,10 +36,14 @@
 		}
 	}
 
+	&-frame-height {
+		height: 120px;
+	}
+
 	&-pointer {
 		bottom: 0;
 		height: 50px;
-		left: calc(40% - 5px);
+		left: calc(50% - 5px);
 		position: absolute;
 		transform-origin: 50% 90%;
 		transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
@@ -48,7 +54,7 @@
 
 	&-semicircle {
 		display: block;
-		width: 80%;
+		width: 9rem;
 	}
 
 	p {

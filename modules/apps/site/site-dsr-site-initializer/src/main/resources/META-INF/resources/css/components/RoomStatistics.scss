@@ -1,29 +1,33 @@
 @import 'atlas-variables';
 
-.icon-blue-light {
-	fill: $blue-l2;
-}
+.room-statistics-container {
+	min-height: 102px;
 
-.icon-indigo-light {
-	fill: $indigo-l1;
-}
+	.icon-blue-light {
+		fill: $blue-l2;
+	}
 
-.icon-pink-light {
-	fill: $pink-l2;
-}
+	.icon-indigo-light {
+		fill: $indigo-l1;
+	}
 
-.icon-purple-light {
-	fill: $purple-l2;
-}
+	.icon-pink-light {
+		fill: $pink-l2;
+	}
 
-.icon-teal-light {
-	fill: $teal-l2;
-}
+	.icon-purple-light {
+		fill: $purple-l2;
+	}
 
-.room-statistics-label {
-	font-size: 14px;
-}
+	.icon-teal-light {
+		fill: $teal-l2;
+	}
 
-.room-statistics-text {
-	font-size: 20px;
+	.room-statistics-label {
+		font-size: 14px;
+	}
+
+	.room-statistics-text {
+		font-size: 20px;
+	}
 }

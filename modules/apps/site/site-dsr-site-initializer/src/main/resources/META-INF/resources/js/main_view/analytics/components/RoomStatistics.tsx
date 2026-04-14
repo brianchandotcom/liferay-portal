@@ -6,17 +6,19 @@
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import '../../../../css/components/RoomStatistics.scss';
 
 import moment from 'moment';
 
+import useAnalyticsQuery from '../../../common/hooks/useAnalyticsQuery';
 import {
 	IRoomStatistics,
 	IRoomStatisticsItem,
-	IRoomStatisticsProps,
 } from '../../../common/utils/types';
+import RoomStatisticsQuery from '../queries/RoomStatisticsQuery';
+import AnalyticsFrame from './AnalyticsFrame';
 import Loader from './Loader';
 
 const formatTime = (minutes?: number): string => {
@@ -29,21 +31,7 @@ const formatTime = (minutes?: number): string => {
 	const hours = Math.floor(duration.asHours());
 	const mins = duration.minutes();
 
-	const hoursLanguageKey = sub(
-		hours === 1
-			? Liferay.Language.get('x-hour').toLowerCase()
-			: Liferay.Language.get('x-hours').toLowerCase(),
-		[hours]
-	);
-
-	const minutesLanguageKey = sub(
-		mins === 1
-			? Liferay.Language.get('x-minute').toLowerCase()
-			: Liferay.Language.get('x-minutes').toLowerCase(),
-		[mins]
-	);
-
-	return `${hoursLanguageKey} ${minutesLanguageKey}`;
+	return sub(Liferay.Language.get('x-h-x-min'), [hours, mins]);
 };
 
 const formatData = (data: IRoomStatistics): IRoomStatisticsItem[] => {
@@ -86,60 +74,97 @@ const formatData = (data: IRoomStatistics): IRoomStatisticsItem[] => {
 	];
 };
 
-function RoomStatistics({data, isLoading}: IRoomStatisticsProps) {
-	if (isLoading) {
-		return <Loader />;
-	}
+function RoomStatistics({
+	dsrDevEnvEnabled: useDevEnvData,
+}: {
+	dsrDevEnvEnabled: boolean;
+}) {
+	const [data, setData] = useState<IRoomStatisticsItem[]>([]);
+	const [element, setElement] = useState<HTMLElement | null>(null);
 
-	if (!data) {
-		return <p>{Liferay.Language.get('no-data-available')}</p>;
-	}
+	const {isLoading, response} = useAnalyticsQuery({
+		element,
+		query: RoomStatisticsQuery,
+		settings: {
+			checkViewportVisibility: true,
+			useDevEnvData,
+		},
+		variables: {
+			channelId: '808122315193619922',
+			entityType: 'INDIVIDUAL',
+			keywords: '',
+			page: 1,
+			rangeEnd: null,
+			rangeKey: 7,
+			rangeStart: null,
+			size: 20,
+		},
+	});
 
-	const formattedData = formatData(data);
+	useEffect(() => {
+		if (response) {
+			setData(formatData(response));
+		}
+
+		return () => {};
+	}, [response, setData]);
 
 	return (
-		<div className="py-4">
-			<ClayLayout.Row className="align-items-center">
-				{formattedData.map(
-					(
-						roomStatisticsItem: IRoomStatisticsItem,
-						index: number
-					) => {
-						const showBorder = index !== formattedData.length - 1;
+		<AnalyticsFrame>
+			<div className="room-statistics-container" ref={setElement}>
+				{isLoading ? (
+					<Loader />
+				) : !data?.length ? (
+					<p className="mt-3 text-center text-muted">
+						{Liferay.Language.get('no-data-available')}
+					</p>
+				) : (
+					<div className="p-4">
+						<ClayLayout.Row className="align-items-center justify-content-between">
+							{data.map(
+								(
+									roomStatisticsItem: IRoomStatisticsItem,
+									index: number
+								) => {
+									return (
+										<ClayLayout.Col
+											className={`${index !== 0 ? 'border-left' : ''} col-auto pl-5`}
+											key={roomStatisticsItem.id}
+										>
+											<div>
+												<span className="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary">
+													{roomStatisticsItem.label}
+												</span>
 
-						return (
-							<ClayLayout.Col
-								className={`${showBorder ? 'border-right' : ''} pl-5`}
-								key={roomStatisticsItem.id}
-								size={2}
-							>
-								<div>
-									<span className="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary">
-										{roomStatisticsItem.label}
-									</span>
+												<ClayIcon
+													className="text-secondary"
+													symbol="question-circle"
+												/>
+											</div>
 
-									<ClayIcon
-										className="text-secondary"
-										symbol="question-circle"
-									/>
-								</div>
+											<div>
+												<ClayIcon
+													className={
+														roomStatisticsItem.className
+													}
+													symbol={
+														roomStatisticsItem.icon
+													}
+												/>
 
-								<div>
-									<ClayIcon
-										className={roomStatisticsItem.className}
-										symbol={roomStatisticsItem.icon}
-									/>
-
-									<span className="font-weight-semi-bold ml-2 room-statistics-text">
-										{roomStatisticsItem.value}
-									</span>
-								</div>
-							</ClayLayout.Col>
-						);
-					}
+												<span className="font-weight-semi-bold ml-2 room-statistics-text">
+													{roomStatisticsItem.value}
+												</span>
+											</div>
+										</ClayLayout.Col>
+									);
+								}
+							)}
+						</ClayLayout.Row>
+					</div>
 				)}
-			</ClayLayout.Row>
-		</div>
+			</div>
+		</AnalyticsFrame>
 	);
 }
 

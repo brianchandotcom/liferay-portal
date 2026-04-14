@@ -51,6 +51,7 @@ export {
 	DisplayType,
 	EConfigInURLBehavior,
 	IBaseFilterState,
+	IBulkActionItem,
 	ICardSchema,
 	IClientExtensionRenderer,
 	IListSchema,

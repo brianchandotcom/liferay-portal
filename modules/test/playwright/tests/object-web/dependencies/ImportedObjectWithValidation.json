@@ -65,24 +65,44 @@
 			"type": "String"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"externalReferenceCode": "c3ead905-3b1a-3ab0-37ea-130769e3c471",
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "null",
+			"externalReferenceCode": "46915102-302f-4107-c25b-8cf30a83d0bb",
 			"indexed": true,
-			"indexedAsKeyword": true,
+			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "Custom Field"
+				"en_US": "Custom Field 1"
 			},
-			"listTypeDefinitionExternalReferenceCode": "",
-			"name": "customField",
+			"localized": false,
+			"name": "customField1",
 			"objectFieldSettings": [
 			],
 			"required": false,
 			"state": false,
 			"system": false,
-			"type": "String"
+			"type": "Integer"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "null",
+			"externalReferenceCode": "0e769b86-89c1-6041-15b4-080b47872fac",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Custom Field 2"
+			},
+			"localized": false,
+			"name": "customField2",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Integer"
 		},
 		{
 			"DBType": "String",
@@ -168,6 +188,33 @@
 	"objectLayouts": [
 	],
 	"objectRelationships": [
+	],
+	"objectValidationRules": [
+		{
+			"active": true,
+			"engine": "compositeKey",
+			"engineLabel": "Composite Key",
+			"errorLabel": {
+				"en_US": "The field values are already in use. Please choose unique values."
+			},
+			"name": {
+				"en_US": "ValidationRule"
+			},
+			"objectDefinitionExternalReferenceCode": "165e29ae-62f6-079d-ed90-aab96d21ebae",
+			"objectValidationRuleSettings": [
+				{
+					"name": "compositeKeyObjectFieldExternalReferenceCode",
+					"value": "46915102-302f-4107-c25b-8cf30a83d0bb"
+				},
+				{
+					"name": "compositeKeyObjectFieldExternalReferenceCode",
+					"value": "0e769b86-89c1-6041-15b4-080b47872fac"
+				}
+			],
+			"outputType": "fullValidation",
+			"script": "",
+			"system": false
+		}
 	],
 	"objectViews": [
 	],

@@ -2,183 +2,193 @@
 
 exports[`RoomStatistics matches snapshot 1`] = `
 <div>
-  <div
-    class="py-4"
+  <section
+    class="analytics-frame border rounded-lg"
   >
-    <div
-      class="row align-items-center"
-    >
+    <div>
       <div
-        class="border-right pl-5 col-2"
+        class="room-statistics-container"
       >
-        <div>
-          <span
-            class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
+        <div
+          class="p-4"
+        >
+          <div
+            class="row align-items-center justify-content-between"
           >
-            time-viewed
-          </span>
-          <svg
-            class="lexicon-icon lexicon-icon-question-circle text-secondary"
-            role="presentation"
-          >
-            <use
-              href="#question-circle"
-            />
-          </svg>
-        </div>
-        <div>
-          <svg
-            class="lexicon-icon lexicon-icon-time icon-pink-light"
-            role="presentation"
-          >
-            <use
-              href="#time"
-            />
-          </svg>
-          <span
-            class="font-weight-semi-bold ml-2 room-statistics-text"
-          >
-            0-hours 45-minutes
-          </span>
-        </div>
-      </div>
-      <div
-        class="border-right pl-5 col-2"
-      >
-        <div>
-          <span
-            class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
-          >
-            total-visits
-          </span>
-          <svg
-            class="lexicon-icon lexicon-icon-question-circle text-secondary"
-            role="presentation"
-          >
-            <use
-              href="#question-circle"
-            />
-          </svg>
-        </div>
-        <div>
-          <svg
-            class="lexicon-icon lexicon-icon-view icon-blue-light"
-            role="presentation"
-          >
-            <use
-              href="#view"
-            />
-          </svg>
-          <span
-            class="font-weight-semi-bold ml-2 room-statistics-text"
-          >
-            100
-          </span>
-        </div>
-      </div>
-      <div
-        class="border-right pl-5 col-2"
-      >
-        <div>
-          <span
-            class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
-          >
-            visitors
-          </span>
-          <svg
-            class="lexicon-icon lexicon-icon-question-circle text-secondary"
-            role="presentation"
-          >
-            <use
-              href="#question-circle"
-            />
-          </svg>
-        </div>
-        <div>
-          <svg
-            class="lexicon-icon lexicon-icon-users icon-purple-light"
-            role="presentation"
-          >
-            <use
-              href="#users"
-            />
-          </svg>
-          <span
-            class="font-weight-semi-bold ml-2 room-statistics-text"
-          >
-            20
-          </span>
-        </div>
-      </div>
-      <div
-        class="border-right pl-5 col-2"
-      >
-        <div>
-          <span
-            class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
-          >
-            actions
-          </span>
-          <svg
-            class="lexicon-icon lexicon-icon-question-circle text-secondary"
-            role="presentation"
-          >
-            <use
-              href="#question-circle"
-            />
-          </svg>
-        </div>
-        <div>
-          <svg
-            class="lexicon-icon lexicon-icon-click icon-teal-light"
-            role="presentation"
-          >
-            <use
-              href="#click"
-            />
-          </svg>
-          <span
-            class="font-weight-semi-bold ml-2 room-statistics-text"
-          >
-            10
-          </span>
-        </div>
-      </div>
-      <div
-        class=" pl-5 col-2"
-      >
-        <div>
-          <span
-            class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
-          >
-            comments
-          </span>
-          <svg
-            class="lexicon-icon lexicon-icon-question-circle text-secondary"
-            role="presentation"
-          >
-            <use
-              href="#question-circle"
-            />
-          </svg>
-        </div>
-        <div>
-          <svg
-            class="lexicon-icon lexicon-icon-comments icon-indigo-light"
-            role="presentation"
-          >
-            <use
-              href="#comments"
-            />
-          </svg>
-          <span
-            class="font-weight-semi-bold ml-2 room-statistics-text"
-          >
-            5
-          </span>
+            <div
+              class=" col-auto pl-5 col"
+            >
+              <div>
+                <span
+                  class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
+                >
+                  time-viewed
+                </span>
+                <svg
+                  class="lexicon-icon lexicon-icon-question-circle text-secondary"
+                  role="presentation"
+                >
+                  <use
+                    href="#question-circle"
+                  />
+                </svg>
+              </div>
+              <div>
+                <svg
+                  class="lexicon-icon lexicon-icon-time icon-pink-light"
+                  role="presentation"
+                >
+                  <use
+                    href="#time"
+                  />
+                </svg>
+                <span
+                  class="font-weight-semi-bold ml-2 room-statistics-text"
+                >
+                  0-hours 45-minutes
+                </span>
+              </div>
+            </div>
+            <div
+              class="border-left col-auto pl-5 col"
+            >
+              <div>
+                <span
+                  class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
+                >
+                  total-visits
+                </span>
+                <svg
+                  class="lexicon-icon lexicon-icon-question-circle text-secondary"
+                  role="presentation"
+                >
+                  <use
+                    href="#question-circle"
+                  />
+                </svg>
+              </div>
+              <div>
+                <svg
+                  class="lexicon-icon lexicon-icon-view icon-blue-light"
+                  role="presentation"
+                >
+                  <use
+                    href="#view"
+                  />
+                </svg>
+                <span
+                  class="font-weight-semi-bold ml-2 room-statistics-text"
+                >
+                  100
+                </span>
+              </div>
+            </div>
+            <div
+              class="border-left col-auto pl-5 col"
+            >
+              <div>
+                <span
+                  class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
+                >
+                  visitors
+                </span>
+                <svg
+                  class="lexicon-icon lexicon-icon-question-circle text-secondary"
+                  role="presentation"
+                >
+                  <use
+                    href="#question-circle"
+                  />
+                </svg>
+              </div>
+              <div>
+                <svg
+                  class="lexicon-icon lexicon-icon-users icon-purple-light"
+                  role="presentation"
+                >
+                  <use
+                    href="#users"
+                  />
+                </svg>
+                <span
+                  class="font-weight-semi-bold ml-2 room-statistics-text"
+                >
+                  20
+                </span>
+              </div>
+            </div>
+            <div
+              class="border-left col-auto pl-5 col"
+            >
+              <div>
+                <span
+                  class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
+                >
+                  actions
+                </span>
+                <svg
+                  class="lexicon-icon lexicon-icon-question-circle text-secondary"
+                  role="presentation"
+                >
+                  <use
+                    href="#question-circle"
+                  />
+                </svg>
+              </div>
+              <div>
+                <svg
+                  class="lexicon-icon lexicon-icon-click icon-teal-light"
+                  role="presentation"
+                >
+                  <use
+                    href="#click"
+                  />
+                </svg>
+                <span
+                  class="font-weight-semi-bold ml-2 room-statistics-text"
+                >
+                  10
+                </span>
+              </div>
+            </div>
+            <div
+              class="border-left col-auto pl-5 col"
+            >
+              <div>
+                <span
+                  class="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary"
+                >
+                  comments
+                </span>
+                <svg
+                  class="lexicon-icon lexicon-icon-question-circle text-secondary"
+                  role="presentation"
+                >
+                  <use
+                    href="#question-circle"
+                  />
+                </svg>
+              </div>
+              <div>
+                <svg
+                  class="lexicon-icon lexicon-icon-comments icon-indigo-light"
+                  role="presentation"
+                >
+                  <use
+                    href="#comments"
+                  />
+                </svg>
+                <span
+                  class="font-weight-semi-bold ml-2 room-statistics-text"
+                >
+                  5
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 `;

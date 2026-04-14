@@ -3,171 +3,201 @@
 exports[`MostActiveVisitors renders the component with provided data 1`] = `
 <body>
   <div>
-    <div
-      class="most-active-visitors-fds"
+    <section
+      class="analytics-frame border rounded-lg"
     >
-      <div
-        class="fds"
+      <header
+        class="align-items-center border-bottom d-flex justify-content-between p-3"
       >
-        <div
-          class="data-set-wrapper visualization-mode-table"
-          data-testid="visualization-mode-table"
+        <span
+          class="align-items-center d-flex"
         >
+          <span
+            class="analytics-frame-icon btn-monospaced rounded-lg"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-user"
+              role="presentation"
+            >
+              <use
+                href="#user"
+              />
+            </svg>
+          </span>
+          <span
+            class="font-weight-semi-bold px-2"
+          >
+            most-active-visitors
+          </span>
+        </span>
+      </header>
+      <div>
+        <div>
           <div
-            class="data-set data-set-inline"
+            class="most-active-visitors-fds"
           >
             <div
-              class="data-set-content-wrapper"
+              class="fds"
             >
-              <input
-                name="test-namespace_id"
-                readonly=""
-                type="hidden"
-                value=""
-              />
               <div
-                class="table-responsive"
+                class="data-set-wrapper visualization-mode-table"
+                data-testid="visualization-mode-table"
               >
-                <table
-                  class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped table-valign-middle table-sort"
-                  style="table-layout: fixed;"
+                <div
+                  class="data-set data-set-inline"
                 >
-                  <thead>
-                    <tr>
-                      <th
-                        class="cell-title table-head-title"
-                        data-id="string,title"
-                        scope="col"
-                        style="width: auto;"
-                        tabindex="-1"
-                      >
-                        <span
-                          class="sr-only"
-                        >
-                          title
-                        </span>
-                        <div
-                          class="dnd-th-resizer is-allowed"
-                        />
-                      </th>
-                      <th
-                        class="table-head-title"
-                        data-id="string,visibility"
-                        style="width: 64px;"
-                        tabindex="-1"
-                      >
-                        <span
-                          class="sr-only"
-                        >
-                          manage-columns-visibility
-                        </span>
-                        <div
-                          class="dropdown"
-                        >
-                          <button
-                            aria-haspopup="true"
-                            aria-label="manage-columns-visibility"
-                            class="dropdown-toggle btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
-                            title="manage-columns-visibility"
-                            type="button"
-                          >
-                            <svg
-                              class="lexicon-icon lexicon-icon-caret-bottom"
-                              role="presentation"
-                            >
-                              <use
-                                href="#caret-bottom"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      class=""
-                      data-id="string,$.0"
-                      tabindex="-1"
+                  <div
+                    class="data-set-content-wrapper"
+                  >
+                    <input
+                      name="test-namespace_id"
+                      readonly=""
+                      type="hidden"
+                      value=""
+                    />
+                    <div
+                      class="table-responsive"
                     >
-                      <td
-                        aria-colindex="1"
-                        class="cell-title"
-                        data-id="string,null:title"
-                        style="width: auto;"
-                        tabindex="-1"
+                      <table
+                        class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped table-valign-middle table-sort"
+                        style="table-layout: fixed;"
                       >
-                        <div
-                          class="d-flex inline-item"
-                        >
-                          <span
-                            class="sticker sticker-user-icon"
-                          >
-                            <span
-                              class="sticker-overlay"
+                        <thead>
+                          <tr>
+                            <th
+                              class="cell-title table-head-title"
+                              data-id="string,title"
+                              scope="col"
+                              style="width: auto;"
+                              tabindex="-1"
                             >
-                              <img
-                                alt="John"
-                                class="sticker-img"
-                                src="https://test.com/logo.png"
+                              <span
+                                class="sr-only"
+                              >
+                                title
+                              </span>
+                              <div
+                                class="dnd-th-resizer is-allowed"
                               />
-                            </span>
-                          </span>
-                          <div
-                            class="ml-3"
+                            </th>
+                            <th
+                              class="table-head-title"
+                              data-id="string,visibility"
+                              style="width: 64px;"
+                              tabindex="-1"
+                            >
+                              <span
+                                class="sr-only"
+                              >
+                                manage-columns-visibility
+                              </span>
+                              <div
+                                class="dropdown"
+                              >
+                                <button
+                                  aria-haspopup="true"
+                                  aria-label="manage-columns-visibility"
+                                  class="dropdown-toggle btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
+                                  title="manage-columns-visibility"
+                                  type="button"
+                                >
+                                  <svg
+                                    class="lexicon-icon lexicon-icon-caret-bottom"
+                                    role="presentation"
+                                  >
+                                    <use
+                                      href="#caret-bottom"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            class=""
+                            data-id="string,$.0"
+                            tabindex="-1"
                           >
-                            <div
-                              class="align-items-center font-weight-semi-bold visitors-full-name"
+                            <td
+                              aria-colindex="1"
+                              class="cell-title"
+                              data-id="string,null:title"
+                              style="width: auto;"
+                              tabindex="-1"
                             >
-                              <span
-                                class="mb-0 mr-1"
+                              <div
+                                class="d-flex inline-item"
                               >
-                                John
-                              </span>
-                              <span
-                                class="mb-0"
-                              >
-                                Doe
-                              </span>
-                            </div>
-                            <div
-                              class="align-items-center"
-                            >
-                              <span
-                                class="mb-0 mr-1"
-                              >
-                                150
-                              </span>
-                              <span
-                                class="mb-0"
-                              >
-                                actions
-                              </span>
-                            </div>
-                            <p
-                              class="email-text mb-0 text-secondary"
-                            >
-                              john.doe@liferay.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        aria-colindex="2"
-                        class="cell-item-actions"
-                        data-id="string,null:actions"
-                        style="width: auto;"
-                        tabindex="-1"
-                      />
-                    </tr>
-                  </tbody>
-                </table>
+                                <span
+                                  class="sticker sticker-user-icon"
+                                  style="background-color: rgba(156, 39, 176, 0.2); border: 1px solid rgba(156,39,176,1); color: rgb(156, 39, 176);"
+                                >
+                                  <span
+                                    class="sticker-overlay"
+                                  >
+                                    J
+                                  </span>
+                                </span>
+                                <div
+                                  class="ml-3"
+                                >
+                                  <div
+                                    class="align-items-center font-weight-semi-bold visitors-full-name"
+                                  >
+                                    <span
+                                      class="mb-0 mr-1"
+                                    >
+                                      John
+                                    </span>
+                                    <span
+                                      class="mb-0"
+                                    >
+                                      Doe
+                                    </span>
+                                  </div>
+                                  <div
+                                    class="align-items-center"
+                                  >
+                                    <span
+                                      class="mb-0 mr-1"
+                                    >
+                                      150
+                                    </span>
+                                    <span
+                                      class="mb-0"
+                                    >
+                                      actions
+                                    </span>
+                                  </div>
+                                  <p
+                                    class="email-text mb-0 text-secondary"
+                                  >
+                                    john.doe@liferay.com
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td
+                              aria-colindex="2"
+                              class="cell-item-actions"
+                              data-id="string,null:actions"
+                              style="width: auto;"
+                              tabindex="-1"
+                            />
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
   <div
     class="lfr-tooltip-scope"

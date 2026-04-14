@@ -81,7 +81,7 @@ liferay-default:
         x-wait-for-elasticsearch:
             -   command:
                     -   sh
-                    -   /init-scripts/wait-for-elasticsearch.sh
+                    -   /liferay-init-scripts/wait-for-elasticsearch.sh
                 envFrom:
                     -   secretRef:
                             name: elasticsearch-connection-details
@@ -97,8 +97,8 @@ liferay-default:
                     seccompProfile:
                         type: RuntimeDefault
                 volumeMounts:
-                    -   mountPath: /init-scripts/wait-for-elasticsearch.sh
-                        name: liferay-scripts
+                    -   mountPath: /liferay-init-scripts/wait-for-elasticsearch.sh
+                        name: liferay-init-scripts
                         subPath: wait-for-elasticsearch.sh
     customLabels:
         origin: liferay-gcp
@@ -122,11 +122,11 @@ liferay-default:
             -   name: liferay-license
                 secret:
                     secretName: liferay-license
-        x-scripts:
+        x-liferay-init-scripts:
             -   configMap:
                     defaultMode: 0755
-                    name: liferay-scripts
-                name: liferay-scripts
+                    name: liferay-init-scripts
+                name: liferay-init-scripts
     network:
         enabled: true
         hostnames: []

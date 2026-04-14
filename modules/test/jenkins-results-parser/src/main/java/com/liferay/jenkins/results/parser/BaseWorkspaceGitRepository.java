@@ -1122,15 +1122,8 @@ public abstract class BaseWorkspaceGitRepository
 
 		RemoteGitRef senderRemoteGitRef = _getSenderRemoteGitRef();
 
-		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"SHA ", senderBranchSHA, " was not found in branch '",
-					getSenderBranchName(), "' on ",
-					senderRemoteGitRef.getRemoteURL()));
-		}
-
-		if (!gitWorkingDirectory.refContainsSHA(
+		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA) ||
+			!gitWorkingDirectory.refContainsSHA(
 				senderRemoteGitRef.getSHA(), senderBranchSHA)) {
 
 			throw new RuntimeException(
@@ -1151,15 +1144,8 @@ public abstract class BaseWorkspaceGitRepository
 
 		RemoteGitRef upstreamRemoteGitRef = _getUpstreamRemoteGitRef();
 
-		if (!gitWorkingDirectory.localSHAExists(baseBranchSHA)) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"SHA ", baseBranchSHA, " was not found in branch '",
-					getUpstreamBranchName(), "' on ",
-					upstreamRemoteGitRef.getRemoteURL()));
-		}
-
-		if (!gitWorkingDirectory.refContainsSHA(
+		if (!gitWorkingDirectory.localSHAExists(baseBranchSHA) ||
+			!gitWorkingDirectory.refContainsSHA(
 				upstreamRemoteGitRef.getSHA(), baseBranchSHA)) {
 
 			throw new RuntimeException(
@@ -1228,15 +1214,8 @@ public abstract class BaseWorkspaceGitRepository
 
 		RemoteGitRef senderRemoteGitRef = _getSenderRemoteGitRef();
 
-		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"SHA ", senderBranchSHA, " was not found in branch '",
-					getSenderBranchName(), "' on ",
-					senderRemoteGitRef.getRemoteURL()));
-		}
-
-		if (!gitWorkingDirectory.refContainsSHA(
+		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA) ||
+			!gitWorkingDirectory.refContainsSHA(
 				senderRemoteGitRef.getSHA(), senderBranchSHA)) {
 
 			throw new RuntimeException(

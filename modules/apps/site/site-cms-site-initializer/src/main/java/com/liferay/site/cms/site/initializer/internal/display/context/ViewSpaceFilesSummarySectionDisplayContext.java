@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -73,9 +74,10 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 					themeDisplay.getCompanyId());
 
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
-			getAPIURL(), getCreationMenu(), httpServletRequest,
-			"view-all-files", Collections.emptyMap(), Collections.emptyMap(),
-			"files",
+			getAPIURL() + StringPool.AMPERSAND +
+				getAdditionalAPIURLParameters(),
+			getCreationMenu(), httpServletRequest, "view-all-files",
+			Collections.emptyMap(), Collections.emptyMap(), "files",
 			ActionUtil.getBaseViewFolderURL(themeDisplay) +
 				objectEntryFolder.getObjectEntryFolderId());
 	}

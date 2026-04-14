@@ -6,7 +6,11 @@
 import {getObjectValueFromPath} from 'frontend-js-web';
 
 import {getLocalizedValue} from '../getLocalizedValue';
-import {EItemActionsType, IActionsDataFilter, IItemsActions} from '../types';
+import {
+	EItemActionsType,
+	IItemActionsDataFilter,
+	IItemsActions,
+} from '../types';
 import {ACTION_ITEM_TARGETS} from './constants';
 
 const hasPermission = (action: IItemsActions, itemData: any): boolean => {
@@ -33,7 +37,7 @@ const matchesVisibilityFilters = (
 		return true;
 	}
 
-	const visibilityFilters: IActionsDataFilter =
+	const visibilityFilters: IItemActionsDataFilter =
 		action?.data?.visibilityFilters;
 
 	return Object.keys(visibilityFilters).every(

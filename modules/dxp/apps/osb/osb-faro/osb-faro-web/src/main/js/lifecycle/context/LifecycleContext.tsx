@@ -3,7 +3,10 @@ import React, {createContext, ReactNode, useState} from 'react';
 interface ILifecycleFilters {
 	countryFilter: string;
 	industryFilter: string;
-	revenueFilter: string;
+	revenueFilter: {
+		filterString: string;
+		form: any;
+	};
 }
 
 interface ILifecycleContext {
@@ -20,7 +23,10 @@ export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
 	const initialFilters: ILifecycleFilters = {
 		countryFilter: '',
 		industryFilter: '',
-		revenueFilter: ''
+		revenueFilter: {
+			filterString: '',
+			form: undefined
+		}
 	};
 
 	const [filters, setFilters] = useState<ILifecycleFilters>(initialFilters);

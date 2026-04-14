@@ -56,7 +56,7 @@ function main() {
 
 				textarea.addEventListener('keyup', onKeyup);
 
-				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+				const defaultLanguageId = input.attributes.defaultLanguageId;
 
 				if (input.localizable) {
 					const {onChange} = registerLocalizedInput({

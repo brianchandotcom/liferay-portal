@@ -80,25 +80,7 @@ liferay-default:
                         type: RuntimeDefault
         x-wait-for-elasticsearch:
             -   command:
-                    -   sh
-                    -   -c
-                    -   |
-                        function main {
-                            echo "Waiting for Elasticsearch health to be \"green\" or \"yellow\" at \"${ELASTICSEARCH_URL}/_cluster/health\"."
-
-                            local auth_url="http://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@${ELASTICSEARCH_URL#*//}/_cluster/health"
-
-                            until wget -qO- "${auth_url}" | grep -qE "\"status\":\"(green|yellow)\""
-                            do
-                                echo "Waiting for ES (current status: \"Red\" or \"Unreachable\")."
-
-                                sleep 5
-                            done
-
-                            echo "Elasticsearch is ready."
-                        }
-
-                        main
+                    -   /opt/liferay/bin/wait-for-elasticsearch.sh
                 envFrom:
                     -   secretRef:
                             name: elasticsearch-connection-details
@@ -121,6 +103,9 @@ liferay-default:
                 name: liferay-license
                 subPath: license.xml
         x-liferay-gcp:
+            -   mountPath: /opt/liferay/bin/wait-for-elasticsearch.sh
+                name: liferay-scripts
+                subPath: wait-for-elasticsearch.sh
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
@@ -135,6 +120,11 @@ liferay-default:
             -   name: liferay-license
                 secret:
                     secretName: liferay-license
+        x-scripts:
+            -   configMap:
+                    defaultMode: 0755
+                    name: liferay-scripts
+                name: liferay-scripts
     network:
         enabled: true
         hostnames: []

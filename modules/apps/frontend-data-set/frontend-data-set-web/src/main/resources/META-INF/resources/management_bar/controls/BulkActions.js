@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
+import filterBulkActions from '../../utils/actionItems/filterBulkActions';
 import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {getOpenedSidePanel} from '../../utils/sidePanels';
 import InfoPanelToggleButton from './InfoPanelToggleButton';
@@ -172,6 +173,12 @@ function BulkActions({
 		[selectedItemsValue]
 	);
 
+	const filteredBulkActions = filterBulkActions({
+		allItemsSelectedActive,
+		bulkActions,
+		selectedItems,
+	});
+
 	return showBulkActionsManagementBar && selectedItemsValue.length ? (
 		<FrontendDataSetContext.Consumer>
 			{({formId, formName, loadData, namespace, sidePanelId}) => (
@@ -227,8 +234,8 @@ function BulkActions({
 
 					{showBulkActionsManagementBarActions && (
 						<ManagementToolbar.ItemList className="bulk-actions">
-							{!!bulkActions.length &&
-								bulkActions
+							{!!filteredBulkActions.length &&
+								filteredBulkActions
 									.filter(
 										(bulkAction) =>
 											bulkAction.data?.highlighted
@@ -274,7 +281,7 @@ function BulkActions({
 										);
 									})}
 
-							{!!bulkActions.length && (
+							{!!filteredBulkActions.length && (
 								<li className="nav-item">
 									<DropDown
 										closeOnClick
@@ -294,7 +301,7 @@ function BulkActions({
 										}
 									>
 										<DropDown.ItemList>
-											{bulkActions.map(
+											{filteredBulkActions.map(
 												(actionDefinition) => (
 													<DropDown.Item
 														key={

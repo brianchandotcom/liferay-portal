@@ -4,12 +4,11 @@
  */
 
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
-import {objectToFormData} from 'frontend-js-web';
 
 const getEndpointByScope = (isCompanyGroup: boolean, groupId?: number) => {
 	return isCompanyGroup
-		? '/o/export-import/v1.0/validate-import-file'
-		: `/o/export-import/v1.0/sites/${groupId ?? 0}/validate-import-file`;
+		? '/o/export-import/v1.0/validate'
+		: `/o/export-import/v1.0/scopes/${groupId ?? 0}/validate`;
 };
 
 export async function getValidateLarFileEndpoint({

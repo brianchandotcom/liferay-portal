@@ -9,6 +9,7 @@ import {getRandomInt} from '../../../utils/getRandomInt';
 
 type objectFieldBaseProperties = {
 	externalReferenceCode?: string;
+	indexed?: boolean;
 	indexedAsKeyword: boolean;
 	indexedLanguageId: string;
 	label: LocalizedValue<string>;

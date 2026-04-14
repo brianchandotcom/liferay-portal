@@ -14,6 +14,7 @@ export class EditObjectDetailsPage {
 	readonly page: Page;
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
+	readonly showWidgetToggle: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
@@ -32,6 +33,9 @@ export class EditObjectDetailsPage {
 			name: 'Publish',
 		});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.showWidgetToggle = page.getByRole('switch', {
+					name: 'Show Widget in Page Builder',
+				})
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}
 

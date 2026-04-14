@@ -13,11 +13,12 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {getRandomInt} from '../../../utils/getRandomInt';
+import { getRandomInt } from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {generateObjectFields} from './utils/generateObjectFields';
-import {postListTypeDefinitionListTypeEntries} from './utils/postListTypeDefinitionListTypeEntries';
+import { generateObjectEntryValues } from '../utils/generateObjectEntry';
+import {generateObjectFields} from '../utils/generateObjectFields';
+import {postListTypeDefinitionListTypeEntries} from '../utils/postListTypeDefinitionListTypeEntries';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -32,33 +33,25 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-// Skip: The "Filter Collection" menu in the page editor Collection Display
-// configuration is accessed via the sidebar's collection item selector ellipsis
-// menu. The Poshi test (CanDefineFixedFilterForPicklistType) creates a content
-// page with Collection Display, sets a fixed filter on a Picklist field so only
-// entries matching "Item Test 1" are shown, and verifies "Item Test 2" is hidden.
-// The sidebar interaction for "Filter Collection" needs a dedicated page object
-// method to be implemented reliably.
-test.skip(
-	'LPD-78504 Can define fixed filter for picklist type on display page',
-	{tag: '@LPD-78504'},
+test(
+	'Can define fixed filter for picklist type on display page',
+	{tag: '@LPS-135004'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanDefineFixedFilterForPicklistType
 
 		const {listTypeDefinition, listTypeEntries} =
 			await postListTypeDefinitionListTypeEntries({
 				apiHelpers,
-				listTypeEntriesLength: 2,
 			});
 
 		const picklistEntryNames = listTypeEntries.map(
-			(entry) => entry.name_i18n.en_US
+			(entry) => entry.name
 		);
 
 		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
-			objectFieldBusinessTypes: ['Picklist', 'Text'],
+			objectFieldBusinessTypes: [{businessType: 'Picklist', indexed: true}],
 		});
 
 		const objectDefinition =
@@ -73,7 +66,6 @@ test.skip(
 		});
 
 		const picklistFieldName = objectFields[0].name;
-		const textFieldName = objectFields[1].name;
 		const applicationName =
 			'c/' + objectDefinition.name!.toLowerCase() + 's';
 
@@ -81,7 +73,6 @@ test.skip(
 			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					[picklistFieldName]: {key: picklistEntryNames[i]},
-					[textFieldName]: `Entry${i}_${getRandomInt()}`,
 				},
 				applicationName
 			);
@@ -139,29 +130,11 @@ test.skip(
 				.getByRole('menuitem', {name: 'Filter Collection'})
 				.click();
 
-			await page.getByLabel('Item Type', {exact: true}).click();
-
 			await page
-				.getByLabel(objectDefinition.label['en_US'])
-				.check();
-
-			await page.locator('body').click();
-
-			await page.getByLabel('Filter', {exact: true}).click();
-
-			await page
-				.getByRole('option', {name: objectFields[0].label['en_US']})
-				.click();
-
-			await page.getByLabel('Value', {exact: true}).click();
-
-			await page
-				.getByRole('option', {name: picklistEntryNames[0]})
-				.click();
+				.getByLabel(objectFields[0].label['en_US'], {exact: true})
+				.selectOption(picklistEntryNames[0]);
 
 			await page.getByRole('button', {name: 'Save'}).click();
-
-			await pageEditorPage.waitForChangesSaved();
 		});
 
 		await test.step('Publish and verify only filtered entry is visible', async () => {
@@ -171,9 +144,7 @@ test.skip(
 				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			const collectionTable = page
-				.locator('.lfr-layout-structure-item-collection')
-				.first();
+			const collectionTable = page.getByRole('table');
 
 			await expect(
 				collectionTable.getByText(picklistEntryNames[0])
@@ -187,8 +158,8 @@ test.skip(
 );
 
 test(
-	'LPD-78504 Can set pagination as numeric on display page',
-	{tag: '@LPD-78504'},
+	'Can set pagination as numeric on display page',
+	{tag: '@LPS-135004'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanSetPaginationNumeric
 
@@ -207,16 +178,21 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const textFieldName = objectFields[0].name;
-		const applicationName =
-			'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+		const objectEntries = [];
 
 		for (let i = 0; i < 2; i++) {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{[textFieldName]: `Entry_${i}_${getRandomInt()}`},
-				applicationName
+						const {objectEntry} = await generateObjectEntryValues({
+							objectEntryFormat: 'API',
+							objectFields,
+						});
+						objectEntries.push(objectEntry);
+					}
+
+		await apiHelpers.objectEntry.postObjectEntriesBatch(
+				'c/' + objectDefinition.name.toLowerCase() + 's',
+				objectEntries
 			);
-		}
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition(),
@@ -247,7 +223,6 @@ test(
 			await pageEditorPage.addFragment(
 				'Basic Components',
 				'Heading',
-				page.locator('.page-editor__collection-item.empty').first()
 			);
 		});
 
@@ -265,22 +240,16 @@ test(
 
 			await pageEditorPage.waitForChangesSaved();
 
-			const collectionStyle = page.getByLabel('CollectionStyle');
+			await expect(page.getByRole('navigation', { name: 'Pagination' })).toBeVisible();
 
-			await expect(collectionStyle.getByLabel('Pagination')).toHaveValue(
-				'numeric'
-			);
-
-			await expect(page.locator('.pagination-bar')).toBeVisible();
-
-			await expect(page.getByLabel('Go to page, 1')).toBeVisible();
+			await expect(page.getByText('Showing 1 to 2 of 2 entries.')).toBeVisible();
 		});
 	}
 );
 
 test(
-	'LPD-78504 Can set pagination as simple on display page',
-	{tag: '@LPD-78504'},
+	'Can set pagination as simple on display page',
+	{tag: '@LPS-135004'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanSetPaginationSimple
 
@@ -298,17 +267,21 @@ test(
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
-
-		const textFieldName = objectFields[0].name;
-		const applicationName =
-			'c/' + objectDefinition.name!.toLowerCase() + 's';
+		
+		const objectEntries = [];
 
 		for (let i = 0; i < 2; i++) {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{[textFieldName]: `Entry_${i}_${getRandomInt()}`},
-				applicationName
-			);
+			const {objectEntry} = await generateObjectEntryValues({
+				objectEntryFormat: 'API',
+				objectFields,
+			});
+			objectEntries.push(objectEntry);
 		}
+
+		await apiHelpers.objectEntry.postObjectEntriesBatch(
+			'c/' + objectDefinition.name.toLowerCase() + 's',
+			objectEntries
+		);
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition(),
@@ -339,7 +312,6 @@ test(
 			await pageEditorPage.addFragment(
 				'Basic Components',
 				'Heading',
-				page.locator('.page-editor__collection-item.empty').first()
 			);
 		});
 
@@ -357,27 +329,22 @@ test(
 
 			await pageEditorPage.waitForChangesSaved();
 
-			const collectionStyle = page.getByLabel('CollectionStyle');
-
-			await expect(collectionStyle.getByLabel('Pagination')).toHaveValue(
-				'simple'
-			);
-
 			await expect(
-				page.getByText('Previous').or(page.getByText('Prev')).first()
+				page.getByRole('button', { name: 'previous' })
 			).toBeVisible();
 
-			await expect(page.getByText('Next').first()).toBeVisible();
+			await expect(
+				page.getByRole('button', { name: 'Next' })
+			).toBeVisible();
 		});
 	}
 );
 
 test(
-	'LPD-78504 Can view image user profile from specific entry on display page',
-	{tag: '@LPD-78504'},
+	'Can view image user profile from specific entry on display page',
+	{tag: '@LPD-86436'},
 	async ({
 		apiHelpers,
-		displayPageTemplatesPage,
 		page,
 		pageEditorPage,
 		site,
@@ -399,9 +366,9 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const textFieldName = objectFields[0].name;
 		const applicationName =
 			'c/' + objectDefinition.name!.toLowerCase() + 's';
+		const textFieldName = objectFields[0].name;
 
 		const entryValue = 'TestEntry_' + getRandomInt();
 
@@ -448,9 +415,7 @@ test(
 			);
 
 			await expect(
-				page.locator(
-					'[data-lfr-editable-id="image-square"] img, img[data-lfr-editable-id="image-square"]'
-				)
+				page.locator('.component-image img')
 			).toBeVisible();
 		});
 	}

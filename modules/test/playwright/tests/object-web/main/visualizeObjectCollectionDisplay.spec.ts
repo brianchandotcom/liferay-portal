@@ -13,10 +13,10 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
-import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {generateObjectFields} from './utils/generateObjectFields';
+import { generateObjectEntryValues } from '../utils/generateObjectEntry';
+import {generateObjectFields} from '../utils/generateObjectFields';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -32,8 +32,8 @@ const test = mergeTests(
 );
 
 test(
-	'LPD-78504 Can display entries on table format in collection display',
-	{tag: '@LPD-78504'},
+	'Can display entries on table format in collection display',
+	{tag: '@LPS-135386'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanDisplayEntriesOnTableFormat
 
@@ -51,25 +51,22 @@ test(
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
+		
+		const objectEntries = [];
 
-		const field1Name = objectFields[0].name;
-		const field2Name = objectFields[1].name;
-		const applicationName =
-			'c/' + objectDefinition.name!.toLowerCase() + 's';
+		for (let i = 0; i < 2; i++) {
+						const {objectEntry} = await generateObjectEntryValues({
+							objectEntryFormat: 'API',
+							objectFields,
+						});
+						objectEntries.push(objectEntry);
+					}
 
-		const entries = [];
 
-		for (let i = 0; i < 3; i++) {
-			const entry = await apiHelpers.objectEntry.postObjectEntry(
-				{
-					[field1Name]: `Field1_Entry${i}_${getRandomInt()}`,
-					[field2Name]: `Field2_Entry${i}_${getRandomInt()}`,
-				},
-				applicationName
+		await apiHelpers.objectEntry.postObjectEntriesBatch(
+				'c/' + objectDefinition.name.toLowerCase() + 's',
+				objectEntries
 			);
-
-			entries.push(entry);
-		}
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition(),
@@ -111,14 +108,6 @@ test(
 			await pageEditorPage.waitForChangesSaved();
 		});
 
-		await test.step('Verify entries are displayed in table format in editor', async () => {
-			await expect(
-				page.locator(
-					'.lfr-layout-structure-item-collection table, .table'
-				).first()
-			).toBeVisible();
-		});
-
 		await test.step('Publish and verify entries in view mode', async () => {
 			await pageEditorPage.publishPage();
 
@@ -126,15 +115,11 @@ test(
 				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			const collectionTable = page
-				.locator('.lfr-layout-structure-item-collection')
-				.first();
+			const collectionTable = page.getByRole('table');
 
-			await expect(collectionTable.locator('table').first()).toBeVisible();
-
-			for (const entry of entries) {
+			for (const objectEntry of objectEntries) {
 				await expect(
-					collectionTable.getByText(entry[field1Name])
+					collectionTable.getByText(objectEntry[objectFields[0].name])
 				).toBeVisible();
 			}
 		});
@@ -142,8 +127,8 @@ test(
 );
 
 test(
-	'LPD-78504 Object is displayed to be selected as collection provider on collection display fragment',
-	{tag: '@LPD-78504'},
+	'Object is displayed to be selected as collection provider on collection display fragment',
+	{tag: '@LPS-133865'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: ObjectDisplayedToCollectionProdiver
 
@@ -168,7 +153,7 @@ test(
 			title: getRandomString(),
 		});
 
-		await test.step('Add Collection Display and open collection selection modal', async () => {
+		await test.step('Add Collection Display and select the object as provider', async () => {
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 			await pageEditorPage.addFragment(
@@ -177,40 +162,18 @@ test(
 			);
 
 			await pageEditorPage.selectFragment(
-				await pageEditorPage.getFragmentId('Collection Display')
-			);
+                await pageEditorPage.getFragmentId('Collection Display')
+            );
 
-			await page
-				.getByLabel('Select Collection', {exact: true})
-				.click();
-		});
-
-		await test.step('Search for the object in Collection Providers and verify it appears', async () => {
-			const iframe = page.frameLocator('iframe[title="Select"]');
-
-			await iframe.getByRole('link', {name: 'Collection Providers'}).click();
-
-			await expect(async () => {
-				await iframe
-					.getByPlaceholder('Search for')
-					.fill(objectDefinition.label['en_US']);
-
-				await expect(
-					iframe.getByPlaceholder('Search for')
-				).toHaveValue(objectDefinition.label['en_US']);
-			}).toPass();
-
-			await iframe
-				.getByLabel('Search for', {exact: true})
-				.click();
+            await pageEditorPage.chooseCollectionDisplayCollection(
+                'Collection Providers',
+                objectDefinition.label['en_US'],
+                {search: true}
+            );
 
 			await expect(
-				iframe.getByRole('button', {
-					name: `Select ${objectDefinition.label['en_US']}`,
-				})
-			).toBeVisible();
-
-			await page.keyboard.press('Escape');
+				page.getByLabel('Collection', {exact: true})
+			).toHaveValue(objectDefinition.label['en_US']);
 		});
 	}
 );

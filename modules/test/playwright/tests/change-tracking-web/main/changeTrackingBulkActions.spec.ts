@@ -215,28 +215,18 @@ test.describe('Bulk actions in publications with incomplete status tests', () =>
 		}
 	);
 
-	test.afterEach(async ({apiHelpers, page, workflowPage}) => {
+	test.afterEach(async ({apiHelpers, workflowPage}) => {
 		await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
 
 		await workflowPage.goto();
 
-		const row = await page
-			.getByRole('row')
-			.filter({hasText: 'Web Content Article'});
-
-		const workflowEnabled = await row
-			.getByTitle('Workflow Definition')
-			.filter({hasText: 'Single Approver'});
-
-		if (await workflowEnabled.isVisible()) {
-			await workflowPage.changeWorkflow(
-				'Web Content Article',
-				'No Workflow',
-				{
-					disable: true,
-				}
-			);
-		}
+		await workflowPage.changeWorkflow(
+			'Web Content Article',
+			'No Workflow',
+			{
+				disable: true,
+			}
+		);
 	});
 
 	test('LPD-73271 Can view CTEntry bulk actions in review changes page', async ({

@@ -39,6 +39,8 @@ test.beforeEach(
 		journalEditArticlePage,
 		workflowPage,
 	}) => {
+		await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
+
 		await workflowPage.goto();
 		await workflowPage.changeWorkflow(
 			'Web Content Article',
@@ -57,28 +59,14 @@ test.beforeEach(
 	}
 );
 
-test.afterEach(async ({apiHelpers, page, workflowPage}) => {
+test.afterEach(async ({apiHelpers, workflowPage}) => {
 	await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
 
 	await workflowPage.goto();
 
-	const row = await page
-		.getByRole('row')
-		.filter({hasText: 'Web Content Article'});
-
-	const workflowEnabled = await row
-		.getByTitle('Workflow Definition')
-		.filter({hasText: 'Single Approver'});
-
-	if (workflowEnabled) {
-		await workflowPage.changeWorkflow(
-			'Web Content Article',
-			'No Workflow',
-			{
-				disable: true,
-			}
-		);
-	}
+	await workflowPage.changeWorkflow('Web Content Article', 'No Workflow', {
+		disable: true,
+	});
 });
 
 test('LPD-19748 Add workflow info to the View Change screen', async ({

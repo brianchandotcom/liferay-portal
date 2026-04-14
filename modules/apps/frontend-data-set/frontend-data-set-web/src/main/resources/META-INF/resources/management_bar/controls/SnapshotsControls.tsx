@@ -8,20 +8,14 @@ import {Option, Picker} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayModal from '@clayui/modal';
 import {
 	ManagementToolbar,
 	openModal,
 	openToast,
 } from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
-import React, {
-	Ref,
-	useCallback,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import React, {Ref, useContext, useRef, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {DEFAULT_FETCH_HEADERS} from '../../constants';
@@ -79,71 +73,91 @@ const SnapshotsControlsTrigger = React.forwardRef(
 	)
 );
 
-function SaveSnapshotModalBody({
+function SaveSnapshotModalContent({
+	closeModal,
 	initialLabel,
-	labelInputRef,
 	namespace,
-	setLabelGetterFunction,
+	onSave,
+	title,
 }: {
+	closeModal: () => void;
 	initialLabel: string;
-	labelInputRef: React.MutableRefObject<HTMLInputElement>;
 	namespace: string;
-	setLabelGetterFunction: (labelGetterFunction: () => null | string) => void;
+	onSave: (label: string) => void;
+	title: string;
 }) {
 	const [nameValidationError, setNameValidationError] = useState(false);
 
-	useEffect(() => {
-		setLabelGetterFunction(() => {
-			const label = labelInputRef.current?.value ?? '';
-			const trimmedLabel = label.trim();
+	const labelInputRef = useRef<HTMLInputElement>(null);
 
-			if (!trimmedLabel) {
-				setNameValidationError(true);
+	const handleSave = () => {
+		const label = labelInputRef.current?.value?.trim() ?? '';
 
-				return null;
-			}
+		if (!label) {
+			setNameValidationError(true);
 
-			setNameValidationError(false);
+			return;
+		}
 
-			return trimmedLabel;
-		});
-
-		return () => {
-			setLabelGetterFunction(() => null);
-		};
-	}, [setLabelGetterFunction, labelInputRef]);
+		onSave(label);
+	};
 
 	return (
-		<ClayForm.Group className={nameValidationError ? 'has-error' : ''}>
-			<label htmlFor={`${namespace}labelInput`}>
-				{Liferay.Language.get('name')}
+		<>
+			<ClayModal.Header>{title}</ClayModal.Header>
 
-				<RequiredMark />
-			</label>
+			<ClayModal.Body>
+				<ClayForm.Group
+					className={nameValidationError ? 'has-error' : ''}
+				>
+					<label htmlFor={`${namespace}labelInput`}>
+						{Liferay.Language.get('name')}
 
-			<ClayInput
-				autoFocus={true}
-				defaultValue={initialLabel}
-				id={`${namespace}labelInput`}
-				onChange={() => {
-					if (nameValidationError) {
-						setNameValidationError(false);
-					}
-				}}
-				ref={labelInputRef}
-				type="text"
+						<RequiredMark />
+					</label>
+
+					<ClayInput
+						autoFocus={true}
+						defaultValue={initialLabel}
+						id={`${namespace}labelInput`}
+						onChange={() => {
+							if (nameValidationError) {
+								setNameValidationError(false);
+							}
+						}}
+						ref={labelInputRef}
+						type="text"
+					/>
+
+					{nameValidationError && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								{Liferay.Language.get('this-field-is-required')}
+							</ClayForm.FeedbackItem>
+						</ClayForm.FeedbackGroup>
+					)}
+				</ClayForm.Group>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={closeModal}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton onClick={handleSave}>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
 			/>
-
-			{nameValidationError && (
-				<ClayForm.FeedbackGroup>
-					<ClayForm.FeedbackItem>
-						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-						{Liferay.Language.get('this-field-is-required')}
-					</ClayForm.FeedbackItem>
-				</ClayForm.FeedbackGroup>
-			)}
-		</ClayForm.Group>
+		</>
 	);
 }
 
@@ -185,17 +199,10 @@ const SnapshotsControls = () => {
 			)) ||
 		defaultSnapshotItem;
 
-	const labelInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-	const labelGetterFunctionRef = useRef<() => null | string>(() => null);
-	const setLabelGetterFunction = useCallback(
-		(labelGetterFunction: () => null | string) => {
-			labelGetterFunctionRef.current = labelGetterFunction;
-		},
-		[]
-	);
-	const activeSnapshotLabel = activeSnapshot.label ?? '';
 	const initialLabel =
-		activeSnapshot.erc !== DEFAULT_VIEW_ID ? activeSnapshotLabel : '';
+		activeSnapshot.erc !== DEFAULT_VIEW_ID
+			? activeSnapshot.label ?? ''
+			: '';
 
 	const saveSnapshot = ({
 		label,
@@ -283,37 +290,20 @@ const SnapshotsControls = () => {
 
 	const openSaveSnapshotModal = () => {
 		openModal({
-			bodyComponent: () => (
-				<SaveSnapshotModalBody
+			contentComponent: ({closeModal}: {closeModal: () => void}) => (
+				<SaveSnapshotModalContent
+					closeModal={closeModal}
 					initialLabel={initialLabel}
-					labelInputRef={labelInputRef}
 					namespace={namespace ?? ''}
-					setLabelGetterFunction={setLabelGetterFunction}
-				/>
-			),
-			buttons: [
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('cancel'),
-					type: 'cancel',
-				},
-				{
-					label: Liferay.Language.get('save'),
-					onClick: ({processClose}) => {
-						const label = labelGetterFunctionRef.current();
-
-						if (!label) {
-							return;
-						}
-
+					onSave={(label) => {
 						saveSnapshot({
 							label,
-							processClose,
+							processClose: closeModal,
 						});
-					},
-				},
-			],
-			title: Liferay.Language.get('save-new-view-as'),
+					}}
+					title={Liferay.Language.get('save-new-view-as')}
+				/>
+			),
 		});
 	};
 
@@ -374,37 +364,20 @@ const SnapshotsControls = () => {
 
 	const openRenameSnapshotModal = () => {
 		openModal({
-			bodyComponent: () => (
-				<SaveSnapshotModalBody
+			contentComponent: ({closeModal}: {closeModal: () => void}) => (
+				<SaveSnapshotModalContent
+					closeModal={closeModal}
 					initialLabel={initialLabel}
-					labelInputRef={labelInputRef}
 					namespace={namespace ?? ''}
-					setLabelGetterFunction={setLabelGetterFunction}
-				/>
-			),
-			buttons: [
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('cancel'),
-					type: 'cancel',
-				},
-				{
-					label: Liferay.Language.get('save'),
-					onClick: ({processClose}) => {
-						const label = labelGetterFunctionRef.current();
-
-						if (!label) {
-							return;
-						}
-
+					onSave={(label) => {
 						renameActiveSnapshot({
 							label,
-							processClose,
+							processClose: closeModal,
 						});
-					},
-				},
-			],
-			title: Liferay.Language.get('save-new-view-as'),
+					}}
+					title={Liferay.Language.get('rename-view')}
+				/>
+			),
 		});
 	};
 

@@ -1,0 +1,35 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "filters-are-disabled",
+					"name": "disableFilters",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "users-can-control-the-filters",
+					"name": "userControlledFilters",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "filters-are-session-persisted",
+					"name": "persistFilters",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

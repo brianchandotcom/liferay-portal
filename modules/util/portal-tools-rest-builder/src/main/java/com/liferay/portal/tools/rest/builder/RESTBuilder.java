@@ -65,6 +65,8 @@ import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -542,6 +544,8 @@ public class RESTBuilder {
 
 		Path baseDirPath = Paths.get(baseDirName);
 
+		Map<Path, Long> openAPIYAMLFileSizes = new HashMap<>();
+
 		List<Path> restConfigYamlPaths = new ArrayList<>();
 
 		Files.walkFileTree(
@@ -569,7 +573,8 @@ public class RESTBuilder {
 
 				@Override
 				public FileVisitResult visitFile(
-					Path file, BasicFileAttributes basicFileAttributes) {
+						Path file, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
 					if (!Objects.equals(
 							String.valueOf(file.getFileName()),
@@ -581,6 +586,10 @@ public class RESTBuilder {
 
 					restConfigYamlPaths.add(file);
 
+					openAPIYAMLFileSizes.put(
+						file,
+						Files.size(file.resolveSibling("rest-openapi.yaml")));
+
 					return FileVisitResult.SKIP_SIBLINGS;
 				}
 
@@ -589,6 +598,11 @@ public class RESTBuilder {
 		if (restConfigYamlPaths.isEmpty()) {
 			return Collections.emptyList();
 		}
+
+		restConfigYamlPaths.sort(
+			Comparator.comparingLong(
+				openAPIYAMLFileSizes::get
+			).reversed());
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			Runtime.getRuntime(

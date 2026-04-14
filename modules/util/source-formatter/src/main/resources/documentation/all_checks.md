@@ -58,7 +58,6 @@ ClassNameIdCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-chec
 CodeownersOrderCheck | [Styling](styling_checks.md#styling-checks) | CODEOWNERS | Sorts code owners in `CODEOWNERS` files. |
 CodeownersWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | CODEOWNERS | Finds missing and unnecessary whitespace in `CODEOWNERS` files. |
 [CompanyIterationCheck](check/company_iteration_check.md#companyiterationcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies. |
-[CompanyThreadLocalCheck](check/company_thread_local_check.md#companythreadlocalcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks usage of `CompanyThreadLocal`. |
 CompatClassImportsCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that classes are imported from `compat` modules, when possible. |
 ComponentAnnotationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on classes with @Component annotation. |
 [ComponentExposureCheck](check/component_exposure_check.md#componentexposurecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Avoid exposing static component. |
@@ -232,6 +231,7 @@ JavaCleanUpMethodSuperCleanUpCheck | [Bug Prevention](bug_prevention_checks.md#b
 JavaCollapseImportsCheck | [Performance](performance_checks.md#performance-checks) | .java | Collapses imports that use wildcard. |
 [JavaCollatorUtilCheck](check/java_collator_util_check.md#javacollatorutilcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks for correct use of `Collator`. |
 JavaCompanyScopedIdsCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where company scoped ids are used, see LPD-45118. |
+JavaCompanyThreadLocalCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that `CompanyThreadLocal.lock` and `CompanyThreadLocal.setCompanyId*` methods are not used. |
 [JavaComponentActivateCheck](check/java_component_activate_check.md#javacomponentactivatecheck) | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | .java | Checks if methods with annotation `@Activate` or `@Deactivate` follow naming conventions. |
 JavaComponentAnnotationsCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on classes with `@Component` annotation. |
 [JavaConfigurationAdminCheck](check/java_configuration_admin_check.md#javaconfigurationadmincheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks for correct use of `location == ?` when calling `org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration`. |
@@ -341,7 +341,6 @@ JavaUniqueUpgradeProcessCheck | [Bug Prevention](bug_prevention_checks.md#bug-pr
 [JavaUpgradeAlterCheck](check/java_upgrade_alter_check.md#javaupgradealtercheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on `alter` calls in Upgrade classes. |
 JavaUpgradeAlterColumnCallsOrderCheck | [Styling](styling_checks.md#styling-checks) | .java | Sorts method calls for altering table columns. |
 [JavaUpgradeClassCheck](check/java_upgrade_class_check.md#javaupgradeclasscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on Upgrade classes. |
-JavaUpgradeCompanyThreadLocalCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that we do not use `CompanyThreadLocal.setCompanyId*` in upgrade classes. |
 JavaUpgradeConnectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on connection in Upgrade classes. |
 JavaUpgradeCreateTableCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that we do not use `create table` statement in upgrade classes. |
 [JavaUpgradeDropTableCheck](check/java_upgrade_drop_table_check.md#javaupgradedroptablecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where `DROP_TABLE_IF_EXISTS` should be used (instead of `drop table if exists`). |
@@ -493,6 +492,7 @@ SHSubshellCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-check
 SQLEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .sql | Finds missing and unnecessary empty lines. |
 [SQLLongNamesCheck](check/sql_long_names_check.md#sqllongnamescheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .sql | Checks for table and column names that exceed 30 characters. |
 SQLStylingCheck | [Styling](styling_checks.md#styling-checks) | .sql | Applies rules to enforce consistency in code style. |
+SafeCloseableMissingCloseCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds missing `close()` calls for `SafeCloseable` instances. |
 SealedAndNonsealedModifierCheck | [Performance](performance_checks.md#performance-checks) | .java | Finds usage of `sealed` and `non-sealed`. |
 SelfReferenceCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases of unnecessary reference to its own class. |
 SemiColonCheck | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds cases of unnecessary semicolon. |

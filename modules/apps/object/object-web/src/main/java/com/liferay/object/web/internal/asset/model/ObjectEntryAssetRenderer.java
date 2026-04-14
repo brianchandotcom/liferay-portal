@@ -32,15 +32,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -253,18 +254,24 @@ public class ObjectEntryAssetRenderer
 			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
-		String mode = Constants.READ;
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			themeDisplay.getRequest(), _getPortletDisplayId(themeDisplay),
+			PortletRequest.RENDER_PHASE);
 
 		if (editable) {
-			mode = Constants.EDIT;
+			return StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/edit_content_item?objectEntryId=",
+				_objectEntry.getObjectEntryId(), "&p_l_mode=", Constants.EDIT,
+				"&redirect=", portletURL);
 		}
 
 		return StringBundler.concat(
-			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-			GroupConstants.CMS_FRIENDLY_URL,
-			"/edit_content_item?objectEntryId=",
-			_objectEntry.getObjectEntryId(), "&p_l_mode=", mode, "&redirect=",
-			HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
+			themeDisplay.getPortalURL(),
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/view-asset?objectEntryId=",
+			_objectEntry.getObjectEntryId(), "&backURL=", portletURL);
 	}
 
 	@Override
@@ -394,6 +401,16 @@ public class ObjectEntryAssetRenderer
 		}
 
 		return permissionChecker;
+	}
+
+	private String _getPortletDisplayId(ThemeDisplay themeDisplay) {
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (portletDisplay == null) {
+			return "com_liferay_notifications_web_portlet_NotificationsPortlet";
+		}
+
+		return portletDisplay.getId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

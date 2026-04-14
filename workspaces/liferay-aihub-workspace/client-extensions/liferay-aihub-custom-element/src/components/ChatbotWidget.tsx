@@ -5,16 +5,16 @@
 
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {createEventSource, getChatbotConfig, postChatMessage} from '../api';
-import {ChatMessage, ChatbotConfig, WidgetConfiguration} from '../types';
+import {createEventSource, getChatbotConfiguration, postChatMessage} from '../api';
+import type {ChatMessage, ChatbotConfiguration, WidgetConfiguration} from '../types';
 import AssistantMessage from './AssistantMessage';
 import ChatbotFooter from './ChatbotFooter';
 import ChatbotHeader from './ChatbotHeader';
 import ChatbotInput from './ChatbotInput';
 import ChatbotIntro from './ChatbotIntro';
 import ErrorMessage from './ErrorMessage';
-import GeneratingIndicator from './GeneratingIndicator';
 import {ChatIcon, CloseIcon} from './Icons';
+import LoadingIndicator from './LoadingIndicator';
 import UserMessage from './UserMessage';
 
 interface ChatbotWidgetProps {
@@ -24,67 +24,94 @@ interface ChatbotWidgetProps {
 export default function ChatbotWidget({
 	widgetConfiguration,
 }: ChatbotWidgetProps) {
-	const [chatbotConfig, setChatbotConfig] = useState<ChatbotConfig | null>(
+	const [chatbotConfiguration, setChatbotConfiguration] = useState<ChatbotConfiguration | null>(
 		null
 	);
-	const [generating, setGenerating] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [notificationDismissed, setNotificationDismissed] = useState(false);
 	const [open, setOpen] = useState(false);
+	const [subscribed, setSubscribed] = useState(false);
 
 	const eventSourceReference = useRef<string | null>(null);
-	const generatingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+	const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
 		null
 	);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
+	const panelRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		getChatbotConfig(widgetConfiguration.chatbotExternalReferenceCode)
-			.then(setChatbotConfig)
+		getChatbotConfiguration(widgetConfiguration.chatbotExternalReferenceCode)
+			.then(setChatbotConfiguration)
 			.catch((error) => {
-				console.error('Error fetching config:', error);
+				console.error('Error fetching chatbot configuration:', error);
 			});
 	}, [widgetConfiguration.chatbotExternalReferenceCode]);
 
 	useEffect(() => {
-		if (!chatbotConfig?.active) {
+		if (!chatbotConfiguration?.active) {
 			return;
 		}
 
 		const eventSource = createEventSource();
 
 		eventSource.addEventListener('Chat Message Sent', (event) => {
-			if (generatingTimeoutRef.current) {
-				clearTimeout(generatingTimeoutRef.current);
-				generatingTimeoutRef.current = null;
+			if (loadingTimeoutRef.current) {
+				clearTimeout(loadingTimeoutRef.current);
+				loadingTimeoutRef.current = null;
 			}
 
-			const dataJSON = JSON.parse((event as MessageEvent).data);
+			try {
+				const data = JSON.parse((event as MessageEvent).data);
 
-			setMessages((prev) => [
-				...prev,
-				{sender: 'assistant', text: dataJSON.data},
-			]);
+				setMessages((prev) => [
+					...prev,
+					{sender: 'assistant', text: data.data},
+				]);
+			}
+			catch (error) {
+				console.error('Error parsing chat message:', error);
 
-			setGenerating(false);
+				setMessages((prev) => [
+					...prev,
+					{sender: 'error', text: ''},
+				]);
+			}
+
+			setLoading(false);
 		});
 
 		eventSource.addEventListener('Subscribe', (event) => {
 			eventSourceReference.current = (event as MessageEvent).data;
+			setSubscribed(true);
+		});
+
+		eventSource.addEventListener('error', () => {
+			console.error('EventSource connection error');
+
+			setSubscribed(false);
+			setMessages((prev) => [...prev, {sender: 'error', text: ''}]);
 		});
 
 		return () => {
-			if (generatingTimeoutRef.current) {
-				clearTimeout(generatingTimeoutRef.current);
+			if (loadingTimeoutRef.current) {
+				clearTimeout(loadingTimeoutRef.current);
 			}
 
 			eventSource.close();
+			setSubscribed(false);
 		};
-	}, [chatbotConfig]);
+	}, [chatbotConfiguration]);
+
+	useEffect(() => {
+		if (open) {
+			panelRef.current?.focus();
+		}
+	}, [open]);
 
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
-	}, [messages, generating]);
+	}, [messages, loading]);
 
 	const handleToggle = useCallback(() => {
 		setOpen((prev) => !prev);
@@ -92,61 +119,66 @@ export default function ChatbotWidget({
 	}, []);
 
 	const sendMessage = useCallback(
-		(text: string) => {
+		async (text: string) => {
 			if (!eventSourceReference.current) {
 				return;
 			}
 
 			setMessages((prev) => [...prev, {sender: 'user', text}]);
-			setGenerating(true);
+			setLoading(true);
 
-			postChatMessage(
-				widgetConfiguration.chatbotExternalReferenceCode,
-				eventSourceReference.current,
-				text
-			)
-				.then((response) => {
-					if (!response.ok) {
-						throw new Error('Failed to post message');
-					}
+			try {
+				const response = await postChatMessage(
+					widgetConfiguration.chatbotExternalReferenceCode,
+					eventSourceReference.current,
+					text
+				);
 
-					generatingTimeoutRef.current = setTimeout(() => {
-						setMessages((prev) => [
-							...prev,
-							{sender: 'error', text: ''},
-						]);
-						setGenerating(false);
-					}, 30000);
-				})
-				.catch((error) => {
-					console.error('Failed to send message:', error);
+				if (!response.ok) {
+					throw new Error('Failed to post message');
+				}
 
+				loadingTimeoutRef.current = setTimeout(() => {
 					setMessages((prev) => [
 						...prev,
 						{sender: 'error', text: ''},
 					]);
-					setGenerating(false);
-				});
+					setLoading(false);
+				}, 30000);
+			}
+			catch (error) {
+				console.error('Failed to send message:', error);
+
+				setMessages((prev) => [
+					...prev,
+					{sender: 'error', text: ''},
+				]);
+				setLoading(false);
+			}
 		},
 		[widgetConfiguration.chatbotExternalReferenceCode]
 	);
 
-	if (!chatbotConfig || !chatbotConfig.active) {
+	if (!chatbotConfiguration?.active) {
 		return null;
 	}
 
 	return (
 		<>
-			<div className={'aihub-panel' + (open ? ' open' : '')}>
+			<div
+				className={`aihub-panel${open ? ' open' : ''}`}
+				ref={panelRef}
+				tabIndex={-1}
+			>
 				<ChatbotHeader
 					onClose={handleToggle}
-					title={chatbotConfig.title}
+					title={chatbotConfiguration.title}
 				/>
 
-				<div className="aihub-messages">
+				<div aria-live="polite" className="aihub-messages">
 					<ChatbotIntro
-						introMessage={chatbotConfig.introMessage}
-						title={chatbotConfig.title}
+						introMessage={chatbotConfiguration.introMessage}
+						title={chatbotConfiguration.title}
 					/>
 
 					{messages.map((msg, index) => {
@@ -163,15 +195,17 @@ export default function ChatbotWidget({
 						return <UserMessage key={index} text={msg.text} />;
 					})}
 
-					{generating && <GeneratingIndicator />}
+					{loading && <LoadingIndicator />}
 
 					<div ref={messagesEndRef} />
 				</div>
 
 				<ChatbotInput
-					disabled={generating}
+					disabled={
+						loading || !subscribed || !eventSourceReference.current
+					}
 					onSubmit={sendMessage}
-					placeholder={chatbotConfig.placeholderMessage}
+					placeholder={chatbotConfiguration.placeholderMessage}
 				/>
 
 				<ChatbotFooter />
@@ -179,9 +213,9 @@ export default function ChatbotWidget({
 
 			{!open &&
 				!notificationDismissed &&
-				chatbotConfig.notificationMessage && (
+				chatbotConfiguration.notificationMessage && (
 					<div className="aihub-notification">
-						<span>{chatbotConfig.notificationMessage}</span>
+						<span>{chatbotConfiguration.notificationMessage}</span>
 
 						<button
 							aria-label="Dismiss"

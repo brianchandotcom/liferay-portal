@@ -1,0 +1,68 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] {\npadding: 0 0.75rem 1.5rem;\n}\n\n.[$FRAGMENT_CLASS$] .dsr-section {\npadding: 0.75rem;\n}",
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "com.liferay.site.dsr.site.initializer.internal.fragment.renderer.ViewAnalyticsNavigationJSPSectionFragmentRenderer"
+							},
+							"fragmentConfig": {
+								"disableFilters": false,
+								"persistFilters": true,
+								"userControlledFilters": true
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "com.liferay.site.dsr.site.initializer.internal.fragment.renderer.ViewAnalyticsEngagementChartJSPSectionFragmentRenderer"
+							},
+							"fragmentConfig": {
+								"type": "timeline"
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "com.liferay.site.dsr.site.initializer.internal.fragment.renderer.ViewAnalyticsActivityLogJSPSectionFragmentRenderer"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "dsr-master"
+		}
+	},
+	"version": 1.1
+}

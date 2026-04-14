@@ -46,7 +46,7 @@ export class SpaceSummaryPage {
 			name: 'View All Content',
 		});
 
-		this.viewAllFilesLink = this.page.getByRole('link', {
+		this.viewAllFilesLink = this.page.getByRole('button', {
 			name: 'View All Files',
 		});
 

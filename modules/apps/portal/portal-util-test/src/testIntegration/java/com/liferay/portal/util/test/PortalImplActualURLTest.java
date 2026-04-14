@@ -203,7 +203,6 @@ public class PortalImplActualURLTest {
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				firstVersionJournalArticle.getDDMStructureKey(), true,
 				WorkflowConstants.STATUS_APPROVED);
-
 		String friendlyURL =
 			_layoutDisplayPageProvider.getURLSeparator() +
 				secondVersionJournalArticle.getUrlTitle(locale);
@@ -211,15 +210,12 @@ public class PortalImplActualURLTest {
 		_testGetActualURLWithDisplayPageTemplateAndVersion(
 			layoutPageTemplateEntry.getPlid(), firstVersionTitle, friendlyURL,
 			"1.0");
-
 		_testGetActualURLWithDisplayPageTemplateAndVersion(
 			layoutPageTemplateEntry.getPlid(), secondVersionTitle, friendlyURL,
 			"1.1");
-
 		_testGetActualURLWithDisplayPageTemplateAndVersion(
 			layoutPageTemplateEntry.getPlid(), draftVersionTitle, friendlyURL,
 			"1.2");
-
 		_testGetActualURLWithDisplayPageTemplateAndVersion(
 			layoutPageTemplateEntry.getPlid(), secondVersionTitle, friendlyURL,
 			null);

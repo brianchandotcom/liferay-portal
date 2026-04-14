@@ -41,10 +41,10 @@ export function FormikFieldFileSelector({
 	const [status, setStatus] = useState<FileSelectorStatus>(
 		field.value ? 'STABLE_SUCCESS' : 'IDLE'
 	);
-	const [currentFile, setCurrentFile] = useState<File | undefined>(
+	const [selectedFile, setSelectedFile] = useState<File | undefined>(
 		field.value instanceof File ? field.value : undefined
 	);
-	const [currentError, setCurrentError] = useState<string | undefined>();
+	const [serverError, setServerError] = useState<string | undefined>();
 
 	const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -84,8 +84,8 @@ export function FormikFieldFileSelector({
 				return undefined;
 			}
 
-			if (currentError) {
-				return currentError;
+			if (serverError) {
+				return serverError;
 			}
 
 			if (!value) {
@@ -94,7 +94,7 @@ export function FormikFieldFileSelector({
 
 			return undefined;
 		},
-		[status, currentError]
+		[status, serverError]
 	);
 
 	useEffect(() => {
@@ -109,8 +109,8 @@ export function FormikFieldFileSelector({
 		abortControllerRef.current = new AbortController();
 
 		setStatus('UPLOADING');
-		setCurrentError(undefined);
-		setCurrentFile(file);
+		setServerError(undefined);
+		setSelectedFile(file);
 		setValue(undefined);
 
 		try {
@@ -129,9 +129,9 @@ export function FormikFieldFileSelector({
 					result.error ||
 					Liferay.Language.get('an-unexpected-error-occurred');
 
-				setCurrentError(errorMsg);
+				setServerError(errorMsg);
 				setStatus('ERROR');
-				setCurrentFile(undefined);
+				setSelectedFile(undefined);
 				setValue(undefined);
 				setFieldTouched(name, true);
 
@@ -151,21 +151,21 @@ export function FormikFieldFileSelector({
 				return;
 			}
 
-			setCurrentError(
+			setServerError(
 				error.message ||
 					Liferay.Language.get('an-unexpected-error-occurred')
 			);
 			setStatus('ERROR');
-			setCurrentFile(undefined);
+			setSelectedFile(undefined);
 			setValue(undefined);
 			setFieldTouched(name, true);
 		}
 	};
 
 	const handleRejection = (error: string) => {
-		setCurrentError(error);
+		setServerError(error);
 		setStatus('ERROR');
-		setCurrentFile(undefined);
+		setSelectedFile(undefined);
 		setValue(undefined);
 		setFieldTouched(name, true);
 	};
@@ -177,9 +177,9 @@ export function FormikFieldFileSelector({
 		}
 
 		setStatus('IDLE');
-		setCurrentFile(undefined);
+		setSelectedFile(undefined);
 		setValue(undefined);
-		setCurrentError(undefined);
+		setServerError(undefined);
 		setFieldTouched(name, true);
 	};
 
@@ -202,7 +202,7 @@ export function FormikFieldFileSelector({
 						}
 						aria-labelledby={ariaLabelledby}
 						error={errorMessage}
-						file={currentFile}
+						file={selectedFile}
 						handleRejection={handleRejection}
 						handleUpload={handleUpload}
 						name={name}

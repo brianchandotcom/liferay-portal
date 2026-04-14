@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.field.business.type;
 
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -17,6 +16,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -249,13 +250,14 @@ public class RelationshipObjectFieldBusinessType
 			ObjectDefinition objectDefinition2 =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId2());
+			ObjectScopeProvider objectScopeProvider =
+				_objectScopeProviderRegistry.getObjectScopeProvider(
+					objectDefinition1.getScope());
 
 			if (Objects.equals(
 					objectDefinition1.getScope(),
-					ObjectDefinitionConstants.SCOPE_SITE) &&
-				Objects.equals(
-					objectDefinition2.getScope(),
-					ObjectDefinitionConstants.SCOPE_SITE)) {
+					objectDefinition2.getScope()) &&
+				objectScopeProvider.isGroupAware()) {
 
 				objectDefinition1GroupId = GetterUtil.getLong(groupId);
 			}
@@ -333,6 +335,9 @@ public class RelationshipObjectFieldBusinessType
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

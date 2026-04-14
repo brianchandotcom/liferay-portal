@@ -5,9 +5,6 @@
 
 package com.liferay.site.cmp.site.initializer.internal.struts;
 
-import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
-import com.liferay.headless.asset.library.dto.v1_0.Settings;
-import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
@@ -60,9 +57,6 @@ public class AddProjectStrutsAction implements StrutsAction {
 			return null;
 		}
 
-		AssetLibraryResource.Builder builder =
-			_assetLibraryResourceFactory.create();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -81,25 +75,6 @@ public class AddProjectStrutsAction implements StrutsAction {
 			SiteInitializerUtil.initialize(
 				themeDisplay.getCompanyId(), _siteInitializer);
 		}
-
-		AssetLibraryResource assetLibraryResource = builder.user(
-			themeDisplay.getUser()
-		).build();
-
-		AssetLibrary assetLibrary = assetLibraryResource.postAssetLibrary(
-			new AssetLibrary() {
-				{
-					setName(StringUtil::randomString);
-					setSettings(
-						() -> new Settings() {
-							{
-								setLogoColor(() -> "outline-0");
-								setTrashEnabled(() -> false);
-							}
-						});
-					setType(() -> Type.PROJECT);
-				}
-			});
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
@@ -126,7 +101,7 @@ public class AddProjectStrutsAction implements StrutsAction {
 						});
 				}
 			},
-			String.valueOf(assetLibrary.getSiteId()));
+			null);
 
 		String editProjectURL =
 			ActionUtil.getBaseEditProjectURL(objectDefinition, themeDisplay) +
@@ -141,9 +116,6 @@ public class AddProjectStrutsAction implements StrutsAction {
 
 		return null;
 	}
-
-	@Reference
-	private AssetLibraryResource.Factory _assetLibraryResourceFactory;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -8,6 +8,7 @@ package com.liferay.segments.internal.provider;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
@@ -380,7 +381,7 @@ public abstract class BaseSegmentsEntryProvider
 	}
 
 	private Map<String, Object> _getUserAttributes(User user) throws Exception {
-		Map<String, String> expandoValues = new HashMap<>();
+		Map<String, Object> expandoValues = new HashMap<>();
 
 		ExpandoTable expandoTable = expandoTableLocalService.fetchTable(
 			user.getCompanyId(),
@@ -407,7 +408,14 @@ public abstract class BaseSegmentsEntryProvider
 						CharPool.SPACE, CharPool.UNDERLINE));
 
 				if (expandoValue != null) {
-					expandoValues.put(key, expandoValue.getData());
+					if (expandoColumn.getType() ==
+							ExpandoColumnConstants.BOOLEAN) {
+
+						expandoValues.put(key, expandoValue.getBoolean());
+					}
+					else {
+						expandoValues.put(key, expandoValue.getData());
+					}
 				}
 				else {
 					expandoValues.put(key, StringPool.BLANK);

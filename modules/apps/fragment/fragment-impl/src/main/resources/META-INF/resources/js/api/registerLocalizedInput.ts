@@ -130,12 +130,12 @@ export function registerLocalizedInput({
 	const form = inputElement?.closest('.lfr-layout-structure-item-form');
 
 	let currentLanguageId =
-		getSelectedLanguageId(form?.id) || defaultLanguageId;
+		getSelectedLanguageId(form?.id) || Liferay.ThemeDisplay.getLanguageId();
 
 	if (changeTextDirection) {
 		inputElement?.setAttribute(
 			'dir',
-			Liferay.Language.direction[defaultLanguageId]!
+			Liferay.Language.direction[currentLanguageId]!
 		);
 	}
 

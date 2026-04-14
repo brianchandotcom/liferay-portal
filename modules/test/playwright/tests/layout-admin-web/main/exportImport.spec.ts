@@ -81,11 +81,9 @@ test(
 
 		// Create a site B
 
-		const siteB = await apiHelpers.headlessSite.createSite({
+		const siteB = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: siteB.externalReferenceCode, type: 'site'});
 
 		// Import the site A into the site B
 
@@ -228,11 +226,9 @@ test(
 
 		// Create a site B
 
-		const siteB = await apiHelpers.headlessSite.createSite({
+		const siteB = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: siteB.externalReferenceCode, type: 'site'});
 
 		// Import the site A into the site B
 
@@ -420,11 +416,9 @@ test(
 
 		// Create a site B
 
-		const siteB = await apiHelpers.headlessSite.createSite({
+		const siteB = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: siteB.externalReferenceCode, type: 'site'});
 
 		// Import the site A into the site B
 

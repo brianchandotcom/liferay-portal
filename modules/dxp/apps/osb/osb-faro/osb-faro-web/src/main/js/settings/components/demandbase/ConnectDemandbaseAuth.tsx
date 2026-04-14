@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {Alert} from 'shared/types';
 import {CopyInputValue} from '../CopyInputValue';
 import {createDemandbase, updateDemandbase} from 'shared/api/data-source';
-import {CredentialTypes, DataSourceStatuses} from 'shared/util/constants';
+import {CredentialTypes} from 'shared/util/constants';
 import {DataSource} from 'shared/util/records';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
@@ -63,8 +63,8 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 				try {
 					if (dataSource) {
 						const updatedDataSource = await updateDemandbase({
-							channelsConfiguration: dataSource.provider
-								.getIn(['channelsConfiguration'])
+							channelsConfiguration: dataSource
+								.getIn(['provider', 'channelsConfiguration'])
 								?.toJS(),
 							credentials: {
 								privateKey: token,
@@ -73,16 +73,8 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 							},
 							groupId,
 							id: dataSource.id,
-							name: dataSource.name,
-							status: DataSourceStatuses.Active
+							name: dataSource.name
 						} as any);
-
-						addAlert({
-							alertType: Alert.Types.Success,
-							message: Liferay.Language.get(
-								'data-source-credentials-saved'
-							)
-						});
 
 						onSubmit(updatedDataSource);
 					} else {
@@ -93,8 +85,7 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 								type: CredentialTypes.Token
 							},
 							groupId,
-							name: Liferay.Language.get('demandbase'),
-							status: DataSourceStatuses.Active
+							name: Liferay.Language.get('demandbase')
 						} as any);
 
 						onSubmit(newDataSource);
@@ -159,7 +150,7 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 						loading={isSubmitting}
 						type='submit'
 					>
-						{Liferay.Language.get('connect')}
+						{Liferay.Language.get('continue')}
 					</ClayButton>
 
 					{onCancel && (

@@ -43,9 +43,11 @@
 		</p>
 
 		[#if input.localizable]
-			<p class="d-none localized-text mb-0 mt-2 pl-2 [#if input.value?has_content]text-italic text-secondary[#else]text-info[/#if]" id="${fragmentElementId}-localized-text">
-				[#if input.value?has_content]
-					${input.value}
+			[#assign defaultValue = (input.valueI18n[input.attributes.defaultLanguageId])!"" /]
+
+			<p class="d-none localized-text mb-0 mt-2 pl-2 [#if defaultValue?has_content]text-italic text-secondary[#else]text-info[/#if]" id="${fragmentElementId}-localized-text">
+				[#if defaultValue?has_content]
+					${defaultValue}
 				[#else]
 					${languageUtil.get(locale, "there-is-no-default-value-to-localize")}
 				[/#if]

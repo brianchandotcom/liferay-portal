@@ -86,8 +86,8 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		return _type;
 	}
 
-	public Map<Locale, String> getValueI18n() {
-		return _valueI18n;
+	public Map<String, String> getValueI18n() {
+		return LocalizedMapUtil.getLanguageIdMap(_valueI18n);
 	}
 
 	public boolean isLocalizable() {

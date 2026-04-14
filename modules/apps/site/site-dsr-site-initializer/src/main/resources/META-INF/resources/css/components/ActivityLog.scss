@@ -1,0 +1,58 @@
+li.timeline-item::before {
+	background-color: #e7e7ed;
+	bottom: -20px;
+}
+li.timeline-item:first-of-type::before {
+	top: 34px;
+}
+li.timeline-item:last-of-type::before {
+	content: none;
+}
+.activity-logs-date {
+	background-color: #f7f8f9;
+	border: 1px solid #cdced9;
+}
+.fw-600 {
+	font-weight: 600;
+}
+.log-description {
+	border-left: 3px solid #dfb3ff;
+	font-size: 12px;
+	font-style: italic;
+}
+.log-time {
+	font-size: 10px;
+}
+.log-title {
+	font-size: 12px;
+}
+.timeline .panel-body > div {
+	line-height: 21px;
+}
+.timeline .sticker {
+	top: 12px;
+	transform: translateX(-50%);
+}
+.timeline-increment {
+	height: 32px;
+	line-height: 0;
+	width: 32px;
+}
+.timeline-increment-comment {
+	background-color: #f2e5ff;
+}
+.timeline-increment-icon-comment {
+	color: #aa33ff;
+}
+.timeline-increment-upload {
+	background-color: #f1fce9;
+}
+.timeline-increment-icon-upload {
+	color: #458613;
+}
+.timeline-increment-view {
+	background-color: #e5f6ff;
+}
+.timeline-increment-icon-view {
+	color: #0077b3;
+}

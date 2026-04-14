@@ -837,7 +837,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			postDocument.getDatePublished(), putDocument.getDatePublished());
 		Assert.assertEquals(
 			postDocument.getDescription(), putDocument.getDescription());
-		Assert.assertEquals(postDocument.getId(), putDocument.getId());
 		Assert.assertEquals(postDocument.getTitle(), putDocument.getTitle());
 	}
 

@@ -30,7 +30,7 @@ function TimelineEngagementChart({
 		variables: {
 			channelId: '',
 			devices: 'Any',
-			emailAddresses: ['test@liferay.com'],
+			emailAddresses: [],
 			interval: 'D',
 			location: 'Any',
 			rangeEnd: null,

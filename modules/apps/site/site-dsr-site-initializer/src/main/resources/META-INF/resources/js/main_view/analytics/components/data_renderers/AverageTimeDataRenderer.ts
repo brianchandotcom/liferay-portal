@@ -20,19 +20,15 @@ export function AverageTimeDataRenderer({
 	const hours = Math.floor(averageTimeSeconds / 3600);
 	const minutes = Math.floor((averageTimeSeconds % 3600) / 60);
 
-	const hoursLanguageKey = sub(
+	const hoursLabel =
 		hours === 1
-			? Liferay.Language.get('x-hour').toLowerCase()
-			: Liferay.Language.get('x-hours').toLowerCase(),
-		[hours]
-	);
+			? Liferay.Language.get('1-hour').toLowerCase()
+			: sub(Liferay.Language.get('x-hours'), hours).toLowerCase();
 
-	const minutesLanguageKey = sub(
+	const minutesLabel =
 		minutes === 1
-			? Liferay.Language.get('x-minute').toLowerCase()
-			: Liferay.Language.get('x-minutes').toLowerCase(),
-		[minutes]
-	);
+			? Liferay.Language.get('1-minute').toLowerCase()
+			: sub(Liferay.Language.get('x-minutes'), minutes).toLowerCase();
 
-	return `${hoursLanguageKey} ${minutesLanguageKey}`;
+	return `${hoursLabel} ${minutesLabel}`;
 }

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceImpl;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
@@ -32,6 +33,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -599,6 +601,58 @@ public class DDMFormDisplayContextTest {
 
 		Assert.assertEquals(
 			submitLabel, ddmFormDisplayContext.getSubmitLabel());
+	}
+
+	@Test
+	public void testGetSuccessPage() throws Exception {
+		DDMFormSuccessPageSettings ddmFormSuccessPageSettings = Mockito.mock(
+			DDMFormSuccessPageSettings.class);
+
+		String enValue = RandomTestUtil.randomString();
+		String ptValue = RandomTestUtil.randomString();
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				enValue, ptValue, LocaleUtil.SPAIN);
+
+		Mockito.when(
+			ddmFormSuccessPageSettings.getBody()
+		).thenReturn(
+			localizedValue
+		);
+
+		Mockito.when(
+			ddmFormSuccessPageSettings.getTitle()
+		).thenReturn(
+			localizedValue
+		);
+
+		MockRenderRequest mockRenderRequest = new MockRenderRequest();
+
+		mockRenderRequest.addPreferredLocale(LocaleUtil.US);
+		mockRenderRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _mockThemeDisplay(false));
+
+		DDMFormDisplayContext ddmFormDisplayContext = Mockito.spy(
+			_createDDMFormDisplayContext(mockRenderRequest));
+
+		Mockito.doReturn(
+			ddmFormSuccessPageSettings
+		).when(
+			ddmFormDisplayContext
+		).getDDMFormSuccessPageSettings();
+
+		Assert.assertEquals(
+			enValue, ddmFormDisplayContext.getSuccessPageDescription());
+		Assert.assertEquals(
+			enValue, ddmFormDisplayContext.getSuccessPageTitle());
+
+		mockRenderRequest.addPreferredLocale(LocaleUtil.BRAZIL);
+
+		Assert.assertEquals(
+			ptValue, ddmFormDisplayContext.getSuccessPageDescription());
+		Assert.assertEquals(
+			ptValue, ddmFormDisplayContext.getSuccessPageTitle());
 	}
 
 	@Test

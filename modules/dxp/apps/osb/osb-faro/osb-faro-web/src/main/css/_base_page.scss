@@ -7,6 +7,10 @@
 		flex-grow: 1;
 		min-height: 10rem;
 		position: relative;
+
+		&.flex-row {
+			flex-direction: row;
+		}
 	}
 
 	.header-container,
@@ -96,5 +100,25 @@
 		background: $white;
 		border-bottom: 1px solid $mainLighten74;
 		padding: 16px 0;
+	}
+
+	.fluid-body-root {
+		display: flex;
+
+		&.sidebar-opened .card-root {
+			max-width: calc(100% - 488px - 1rem);
+		}
+
+		.card-root {
+			margin: 1rem;
+			width: 100%;
+		}
+
+		.info-panel-root {
+			height: 100vh;
+			position: fixed;
+			top: 0;
+			transform: translateY(-1px);
+		}
 	}
 }

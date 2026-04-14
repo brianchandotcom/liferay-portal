@@ -891,15 +891,7 @@ public class EditAssetListDisplayContext {
 
 		List<Long> groupIdList = TransformUtil.transformToList(
 			getReferencedModelsGroupIds(),
-			groupId -> {
-				Group group = _groupService.getGroup(groupId);
-
-				if (group.isDepot() && _isSpaceDepotEntryGroup(group)) {
-					return null;
-				}
-
-				return groupId;
-			});
+			groupId -> _isSpaceDepotEntryGroup(groupId) ? null : groupId);
 
 		Group cmsGroup = _groupLocalService.fetchGroup(
 			_themeDisplay.getCompanyId(), GroupConstants.CMS);
@@ -1077,9 +1069,7 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
-		long[] currentAndAncestorSiteGroupIds =
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				getReferencedModelsGroupIds());
+		long[] currentAndAncestorSiteGroupIds = getReferencedModelsGroupIds();
 
 		Set<AssetVocabulary> groupsVocabularies = new LinkedHashSet<>(
 			_assetVocabularyService.getGroupsVocabularies(
@@ -1255,11 +1245,9 @@ public class EditAssetListDisplayContext {
 		return _subtypeFieldsFilterEnabled;
 	}
 
-	private boolean _containsSpaceDepotEntryGroups(long[] groupIds)
-		throws PortalException {
-
+	private boolean _containsSpaceDepotEntryGroups(long[] groupIds) {
 		for (long groupId : groupIds) {
-			if (_isSpaceDepotEntryGroup(_groupService.getGroup(groupId))) {
+			if (_isSpaceDepotEntryGroup(groupId)) {
 				return true;
 			}
 		}
@@ -1544,9 +1532,9 @@ public class EditAssetListDisplayContext {
 		};
 	}
 
-	private boolean _isSpaceDepotEntryGroup(Group group) {
+	private boolean _isSpaceDepotEntryGroup(long groupId) {
 		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			group.getGroupId());
+			groupId);
 
 		if ((depotEntry != null) &&
 			(depotEntry.getType() == DepotConstants.TYPE_SPACE) &&

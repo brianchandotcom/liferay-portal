@@ -19,6 +19,7 @@ import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.filter.expression.Expression;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -27,8 +28,10 @@ import com.liferay.segments.field.customizer.SegmentsFieldCustomizerRegistry;
 import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import com.liferay.segments.internal.odata.filter.expression.ExportExpressionVisitorImpl;
 import com.liferay.segments.internal.odata.filter.expression.ImportExpressionVisitorImpl;
+import com.liferay.segments.model.SegmentsEntry;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +55,7 @@ public class SegmentsEntryExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
-		if (Validator.isBlank(content)) {
+		if (Validator.isBlank(content) && _isAsahFaroSource(stagedModel)) {
 			return content;
 		}
 
@@ -73,7 +76,7 @@ public class SegmentsEntryExportImportContentProcessor
 		content = _replaceImportExpandoColumnReferences(
 			portletDataContext.getCompanyId(), content);
 
-		if (Validator.isBlank(content)) {
+		if (Validator.isBlank(content) && _isAsahFaroSource(stagedModel)) {
 			return content;
 		}
 
@@ -86,6 +89,14 @@ public class SegmentsEntryExportImportContentProcessor
 	@Override
 	public void validateContentReferences(long groupId, String content)
 		throws PortalException {
+	}
+
+	private boolean _isAsahFaroSource(StagedModel stagedModel) {
+		SegmentsEntry segmentsEntry = (SegmentsEntry)stagedModel;
+
+		return Objects.equals(
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+			segmentsEntry.getSource());
 	}
 
 	private String _replaceExportCriteriaReferences(

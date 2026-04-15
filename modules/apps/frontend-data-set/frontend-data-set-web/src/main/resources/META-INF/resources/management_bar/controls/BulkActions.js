@@ -178,9 +178,10 @@ function BulkActions({
 			filterBulkActions({
 				allItemsSelectedActive,
 				bulkActions,
+				globalFDSState,
 				selectedItems,
 			}),
-		[allItemsSelectedActive, bulkActions, selectedItems]
+		[allItemsSelectedActive, bulkActions, globalFDSState, selectedItems]
 	);
 
 	return showBulkActionsManagementBar && selectedItemsValue.length ? (

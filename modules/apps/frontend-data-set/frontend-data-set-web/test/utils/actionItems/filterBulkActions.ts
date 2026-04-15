@@ -4,9 +4,17 @@
  */
 
 import filterBulkActions from '../../../src/main/resources/META-INF/resources/utils/actionItems/filterBulkActions';
-import {IBulkActionItem} from '../../../src/main/resources/META-INF/resources/utils/types';
+import {
+	IBaseFilterState,
+	IBulkActionItem,
+	IFDSState,
+} from '../../../src/main/resources/META-INF/resources/utils/types';
 
 describe('filterBulkActions', () => {
+	const globalFDSState: IFDSState = {
+		filters: [] as Array<IBaseFilterState>,
+		search: {query: ''},
+	};
 	const selectedItems = [
 		{color: 'blue', id: 1, status: 'active'},
 		{color: 'red', id: 2, status: 'inactive'},
@@ -18,6 +26,7 @@ describe('filterBulkActions', () => {
 				filterBulkActions({
 					allItemsSelectedActive: false,
 					bulkActions: null as unknown as IBulkActionItem[],
+					globalFDSState,
 					selectedItems,
 				})
 			).toEqual([]);
@@ -34,6 +43,7 @@ describe('filterBulkActions', () => {
 			const result = filterBulkActions({
 				allItemsSelectedActive: false,
 				bulkActions,
+				globalFDSState,
 				selectedItems,
 			});
 
@@ -43,8 +53,15 @@ describe('filterBulkActions', () => {
 	});
 
 	describe('when isVisible is defined', () => {
-		it('filters actions based on the isVisible callback when allItemsSelectedActive is false', () => {
-			const isVisibleFn = jest.fn().mockReturnValue(false);
+		fit('filters actions based on the isVisible callback', () => {
+			const isVisibleFn = jest.fn(
+				({selectedItems = []}: {selectedItems?: Array<any>}) => {
+					return selectedItems.every((item: any) => {
+						return item.status === 'inactive';
+					});
+				}
+			);
+
 			const bulkActions: IBulkActionItem[] = [
 				{
 					data: {id: 'hidden-action'},
@@ -55,18 +72,26 @@ describe('filterBulkActions', () => {
 			const result = filterBulkActions({
 				allItemsSelectedActive: false,
 				bulkActions,
+				globalFDSState,
 				selectedItems,
 			});
 
 			expect(result).toHaveLength(0);
-			expect(isVisibleFn).toHaveBeenCalledWith(selectedItems);
+			expect(isVisibleFn).toHaveBeenCalledWith({
+				activeFilters: [],
+				activeSearch: {
+					query: '',
+				},
+				allItemsSelectedActive: false,
+				selectedItems,
+			});
 		});
 
-		it('bypasses the isVisible check and includes the action when allItemsSelectedActive is true', () => {
-			const isVisibleFn = jest.fn().mockReturnValue(false);
+		it('evaluates isVisible callback and includes the action when allItemsSelectedActive is true if it returns true', () => {
+			const isVisibleFn = jest.fn().mockReturnValue(true);
 			const bulkActions: IBulkActionItem[] = [
 				{
-					data: {id: 'hidden-action-but-all-selected'},
+					data: {id: 'visible-action-but-all-selected'},
 					isVisible: isVisibleFn,
 				},
 			];
@@ -74,12 +99,20 @@ describe('filterBulkActions', () => {
 			const result = filterBulkActions({
 				allItemsSelectedActive: true,
 				bulkActions,
+				globalFDSState,
 				selectedItems,
 			});
 
 			expect(result).toHaveLength(1);
-			expect(result[0].data?.id).toBe('hidden-action-but-all-selected');
-			expect(isVisibleFn).not.toHaveBeenCalled();
+			expect(result[0].data?.id).toBe('visible-action-but-all-selected');
+			expect(isVisibleFn).toHaveBeenCalledWith({
+				activeFilters: [],
+				activeSearch: {
+					query: '',
+				},
+				allItemsSelectedActive: true,
+				selectedItems,
+			});
 		});
 	});
 });

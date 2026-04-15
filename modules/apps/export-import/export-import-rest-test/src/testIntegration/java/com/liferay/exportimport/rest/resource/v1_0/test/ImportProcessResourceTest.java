@@ -135,26 +135,6 @@ public class ImportProcessResourceTest
 		};
 	}
 
-	private File _exportLayoutAsFile(long groupId) throws Exception {
-		Map<String, Serializable> parameterMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					TestPropsValues.getUser(), groupId, false, null,
-					new HashMap<String, String[]>());
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					TestPropsValues.getUserId(), groupId,
-					"Site Export Test - " + groupId,
-					"Description of site export",
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					parameterMap, new ServiceContext());
-
-		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
-			exportImportConfiguration);
-	}
-
 	private File _exportLayoutAsFile() throws Exception {
 		long companyGroupId = _getCompanyGroupId();
 
@@ -170,6 +150,26 @@ public class ImportProcessResourceTest
 					TestPropsValues.getUserId(), companyGroupId,
 					"Instance Export Test", "Description", 333, parameterMap,
 					new ServiceContext());
+
+		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
+			exportImportConfiguration);
+	}
+
+	private File _exportLayoutAsFile(long groupId) throws Exception {
+		Map<String, Serializable> parameterMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUser(), groupId, false, null,
+					new HashMap<String, String[]>());
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					TestPropsValues.getUserId(), groupId,
+					"Site Export Test - " + groupId,
+					"Description of site export",
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					parameterMap, new ServiceContext());
 
 		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);

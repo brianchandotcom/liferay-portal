@@ -77,6 +77,7 @@ export default function PreviewBody({
 				selectedKey={selectedChannelKey}
 				small
 				status={status}
+				width={240}
 			/>
 		</div>
 	);

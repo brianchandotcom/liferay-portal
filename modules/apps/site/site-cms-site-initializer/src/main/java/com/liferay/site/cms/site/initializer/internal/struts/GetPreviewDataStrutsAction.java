@@ -78,6 +78,10 @@ public class GetPreviewDataStrutsAction implements StrutsAction {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
 			long toGroupId = depotEntryGroupRel.getToGroupId();
 
@@ -99,21 +103,15 @@ public class GetPreviewDataStrutsAction implements StrutsAction {
 						"plid", layoutPageTemplateEntry.getPlid()
 					).put(
 						"url",
-						() -> {
-							ThemeDisplay themeDisplay =
-								(ThemeDisplay)httpServletRequest.getAttribute(
-									WebKeys.THEME_DISPLAY);
-
-							return HttpComponentsUtil.addParameters(
-								themeDisplay.getPortalURL() +
-									themeDisplay.getPathMain() +
-										"/portal/get_page_preview",
-								"className", objectDefinition.getClassName(),
-								"classPK", objectEntry.getObjectEntryId(),
-								"p_l_mode", Constants.PREVIEW, "selPlid",
-								layoutPageTemplateEntry.getPlid(), "p_p_state",
-								LiferayWindowState.POP_UP.toString());
-						}
+						() -> HttpComponentsUtil.addParameters(
+							themeDisplay.getPortalURL() +
+								themeDisplay.getPathMain() +
+									"/portal/get_page_preview",
+							"className", objectDefinition.getClassName(),
+							"classPK", objectEntry.getObjectEntryId(),
+							"p_l_mode", Constants.PREVIEW, "selPlid",
+							layoutPageTemplateEntry.getPlid(), "p_p_state",
+							LiferayWindowState.POP_UP.toString())
 					));
 			}
 
@@ -124,6 +122,8 @@ public class GetPreviewDataStrutsAction implements StrutsAction {
 					"displayPageTemplates", displayPagesJSONArray
 				).put(
 					"groupId", toGroupId
+				).put(
+					"logoURL", group.getLogoURL(themeDisplay, false)
 				).put(
 					"name", group.getDescriptiveName(LocaleUtil.getDefault())
 				));

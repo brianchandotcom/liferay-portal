@@ -464,10 +464,9 @@ public interface ContactsEngineClient {
 
 	public Date getLastSeenDate(FaroProject faroProject);
 
-	public Results<PageExperience> getPageExperiences(
+	public List<PageExperience> getPageExperiences(
 			FaroProject faroProject, String canonicalUrl, String channelId,
-			int page, String pageTitle, String search, int size,
-			String sortString)
+			String pageTitle)
 		throws Exception;
 
 	public Results<PageVisited> getPagesVisited(

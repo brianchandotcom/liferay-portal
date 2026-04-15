@@ -6,19 +6,32 @@
 package com.liferay.segments.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.expando.test.util.ExpandoTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -26,6 +39,8 @@ import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
 
@@ -48,7 +63,7 @@ public class SegmentsEntryProviderRegistryTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -93,6 +108,62 @@ public class SegmentsEntryProviderRegistryTest {
 				segmentsEntryIds, segmentsEntry2.getSegmentsEntryId()));
 	}
 
+	@Test
+	@TestInfo("LPD-86253")
+	public void testGetSegmentsEntryIdsWithCustomFieldAfterUpdateValue()
+		throws Exception {
+
+		Criteria criteria = new Criteria();
+
+		User user = UserTestUtil.addUser();
+
+		ExpandoTable expandoTable = _expandoTableLocalService.addDefaultTable(
+			user.getCompanyId(), User.class.getName());
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.BOOLEAN);
+
+		_expandoValueLocalService.addValue(
+			user.getCompanyId(), User.class.getName(), expandoTable.getName(),
+			expandoColumn.getName(), user.getUserId(), true);
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria,
+			StringBundler.concat(
+				"(customField/_", expandoColumn.getColumnId(), "_",
+				Normalizer.normalizeIdentifier(expandoColumn.getName()),
+				" eq true)"),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
+
+		Assert.assertArrayEquals(
+			new long[] {segmentsEntry.getSegmentsEntryId()},
+			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
+				_group.getGroupId(), User.class.getName(), user.getUserId(),
+				new Context()));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setExpandoBridgeAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				expandoColumn.getName(), false
+			).build());
+
+		user.setExpandoBridgeAttributes(serviceContext);
+
+		user = _userLocalService.updateUser(user);
+
+		Assert.assertTrue(
+			ArrayUtil.isEmpty(
+				_segmentsEntryProviderRegistry.getSegmentsEntryIds(
+					_group.getGroupId(), User.class.getName(), user.getUserId(),
+					new Context())));
+	}
+
 	private SegmentsEntry _addSegmentsEntry(String firstName) throws Exception {
 		Criteria criteria = new Criteria();
 
@@ -104,11 +175,20 @@ public class SegmentsEntryProviderRegistryTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 	}
 
+	@Inject
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Inject
+	private ExpandoValueLocalService _expandoValueLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject(
 		filter = "segments.criteria.contributor.key=user",

@@ -216,7 +216,6 @@ public class ImportProcessResourceTest
 						"file", file
 					).build());
 
-			Assert.assertNotNull(validationResponse);
 			Assert.assertFalse(validationResponse.getSuccess());
 		}
 		finally {
@@ -235,7 +234,6 @@ public class ImportProcessResourceTest
 						"file", file
 					).build());
 
-			Assert.assertNotNull(validationResponse);
 			Assert.assertTrue(validationResponse.getSuccess());
 			Assert.assertNotNull(validationResponse.getFileEntryId());
 		}

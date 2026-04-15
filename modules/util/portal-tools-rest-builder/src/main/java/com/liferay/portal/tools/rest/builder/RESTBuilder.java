@@ -237,6 +237,7 @@ public class RESTBuilder {
 
 		boolean createClientCustomFieldFiles = true;
 		boolean createClientScopeFiles = true;
+		boolean createLiberalPermissionCheckerFile = true;
 		List<String> validationErrorMessages = new ArrayList<>();
 
 		for (File openAPIYAMLFile :
@@ -387,7 +388,13 @@ public class RESTBuilder {
 
 				_createBaseResourceImplFile(
 					context, escapedVersion, schemaName);
-				_createLiberalPermissionCheckerFile(context);
+
+				if (createLiberalPermissionCheckerFile) {
+					_createLiberalPermissionCheckerFile(context);
+
+					createLiberalPermissionCheckerFile = false;
+				}
+
 				_createPropertiesFile(
 					context, escapedVersion,
 					String.valueOf(context.get("schemaPath")));

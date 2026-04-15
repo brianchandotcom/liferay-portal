@@ -69,8 +69,8 @@ public class LicenseManagerUtil {
 		return _licenseManager.getMacAddresses();
 	}
 
-	public static boolean isCMPEnabled() {
-		return _licenseManager.isCMPEnabled();
+	public static boolean isAppEnabled(App app) {
+		return _licenseManager.isAppEnabled(app);
 	}
 
 	public static boolean isFreeTier() {

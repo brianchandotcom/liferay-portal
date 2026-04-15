@@ -50,7 +50,7 @@ public interface LicenseManager {
 
 	public Set<String> getMacAddresses();
 
-	public boolean isCMPEnabled();
+	public boolean isAppEnabled(App app);
 
 	public boolean isFreeTier();
 

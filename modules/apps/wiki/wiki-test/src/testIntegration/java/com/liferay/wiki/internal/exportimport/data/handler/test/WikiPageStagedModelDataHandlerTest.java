@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
@@ -59,6 +60,41 @@ public class WikiPageStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testAtImportWikiNodePreservesLastPostDateWhenWikiPagesAdded()
+		throws Exception {
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			WikiNode.class.getSimpleName());
+
+		WikiNode wikiNode1 = (WikiNode)dependentStagedModels.get(0);
+
+		WikiPage wikiPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), wikiNode1.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId()));
+
+		try {
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+			exportImportStagedModel(wikiPage);
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
+
+		WikiNode wikiNode2 =
+			WikiNodeLocalServiceUtil.getWikiNodeByUuidAndGroupId(
+				wikiNode1.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			wikiNode1.getLastPostDate(), wikiNode2.getLastPostDate());
+	}
 
 	@Test
 	public void testDeleteAttachmentsFileEntry() throws Exception {

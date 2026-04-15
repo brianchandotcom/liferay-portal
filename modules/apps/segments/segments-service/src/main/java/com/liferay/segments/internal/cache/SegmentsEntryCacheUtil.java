@@ -18,6 +18,10 @@ public class SegmentsEntryCacheUtil {
 		_portalCache.removeAll();
 	}
 
+	public static void clear(String userId) {
+		_portalCache.remove(_generateCacheKey(userId));
+	}
+
 	public static long[] getSegmentsEntryIds(String userId) {
 		return _portalCache.get(_generateCacheKey(userId));
 	}

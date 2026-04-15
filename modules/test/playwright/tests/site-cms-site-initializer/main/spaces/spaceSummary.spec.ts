@@ -260,7 +260,7 @@ test(
 
 		await spaceSummaryPage.goto(spaceName);
 
-		expect(page.getByText(file1Title)).toBeVisible();
+		await expect(page.getByRole('link', {name: file1Title})).toBeVisible();
 
 		await apiHelpers.objectEntry.deleteObjectEntry(
 			applicationName,

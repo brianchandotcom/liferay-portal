@@ -119,7 +119,7 @@ public class JournalFolderStagedModelDataHandlerTest
 				existingJournalFolder.getFolderId(),
 				importedJournalFolder.getFolderId());
 			Assert.assertEquals(
-				journalFolder.getName(), importedJournalFolder.getName());
+				journalFolder.getUuid(), importedJournalFolder.getUuid());
 		}
 	}
 

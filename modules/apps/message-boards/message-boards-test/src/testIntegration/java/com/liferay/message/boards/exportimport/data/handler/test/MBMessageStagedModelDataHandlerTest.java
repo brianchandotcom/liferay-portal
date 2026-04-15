@@ -170,7 +170,7 @@ public class MBMessageStagedModelDataHandlerTest
 				existingMBMessage.getMessageId(),
 				importedMBMessage.getMessageId());
 			Assert.assertEquals(
-				mbMessage.getSubject(), importedMBMessage.getSubject());
+				mbMessage.getUuid(), importedMBMessage.getUuid());
 		}
 	}
 

@@ -337,16 +337,17 @@ export class EditUserPage {
 		});
 		this.customField = async (fieldName: string) => {
 			await page
+				.locator(
+					'[id="_com_liferay_users_admin_web_portlet_UsersAdminPortlet_fm"]'
+				)
 				.getByText('Custom Fields', {exact: true})
 				.waitFor({timeout: 15 * 1000});
 
 			const customField = page.getByText(fieldName);
 
-			if (await customField.isVisible()) {
-				return customField;
-			}
+			await expect(customField).toBeVisible();
 
-			throw new Error(`Cannot locate Custom Field ${fieldName}`);
+			return customField;
 		};
 		this.displaySettingsLink = page.getByRole('link', {
 			exact: true,

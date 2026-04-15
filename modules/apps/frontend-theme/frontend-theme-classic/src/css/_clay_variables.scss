@@ -1,3 +1,7 @@
-$enable-atlas-custom-properties: false !default;
+// To enable CSS Custom Properties, replace the import below with
+//
+// Your variable overwrites go here.
+//
+// @import 'clay/atlas-custom-properties/_variables';
 
 @import '_deprecated_clay_variables';

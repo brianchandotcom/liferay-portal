@@ -167,6 +167,7 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 			groupId, contextHttpServletRequest, null
 		).build();
 
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
 		serviceContext.setCreateDate(fragmentSet.getDateCreated());
 		serviceContext.setModifiedDate(fragmentSet.getDateModified());
 

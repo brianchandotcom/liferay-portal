@@ -65,8 +65,8 @@ describe('DisplayPagePreviewItemContext', () => {
 		});
 
 		expect(hook.result.current.recentItemList).toEqual([
-			{data: {}, label: 'First'},
 			{data: {}, label: 'Second'},
+			{data: {}, label: 'First'},
 		]);
 	});
 

@@ -44,9 +44,9 @@ import java.net.URISyntaxException;
 import org.assertj.core.api.AbstractUriAssert;
 import org.assertj.core.api.Assertions;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -64,8 +64,8 @@ public class UIItemsBuilderTest {
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_setUpGroupPermissionUtil();
 		_setUpPortletURLUtil();
 		_setUpStagedModelDataHandlerRegistryUtil();
@@ -108,8 +108,8 @@ public class UIItemsBuilderTest {
 		portalUtil.setPortal(new PortalImpl());
 	}
 
-	@AfterClass
-	public static void tearDownClass() {
+	@After
+	public void tearDown() {
 		_groupPermissionUtilMockedStatic.close();
 		_portletURLUtilMockedStatic.close();
 		_stagedModelDataHandlerRegistryUtilMockedStatic.close();
@@ -221,71 +221,6 @@ public class UIItemsBuilderTest {
 		Assert.assertTrue(uiItemsBuilder.isPublishActionAvailable());
 	}
 
-	private static void _setUpGroupPermissionUtil() {
-		_groupPermissionUtilMockedStatic = Mockito.mockStatic(
-			GroupPermissionUtil.class);
-	}
-
-	private static void _setUpPortletURLUtil() throws Exception {
-		_portletURLUtilMockedStatic = Mockito.mockStatic(PortletURLUtil.class);
-
-		Mockito.when(
-			PortletURLUtil.getCurrent(
-				Mockito.any(LiferayPortletRequest.class),
-				Mockito.any(LiferayPortletResponse.class))
-		).thenReturn(
-			new MockLiferayPortletURL()
-		);
-	}
-
-	private static void _setUpStagedModelDataHandlerRegistryUtil() {
-		_stagedModelDataHandlerRegistryUtilMockedStatic = Mockito.mockStatic(
-			StagedModelDataHandlerRegistryUtil.class);
-
-		StagedModelDataHandler<FileEntry> stagedModelDataHandler = Mockito.mock(
-			StagedModelDataHandler.class);
-
-		Mockito.when(
-			stagedModelDataHandler.getExportableStatuses()
-		).thenReturn(
-			new int[] {0}
-		);
-
-		Mockito.<StagedModelDataHandler>when(
-			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-				FileEntry.class.getName())
-		).thenReturn(
-			stagedModelDataHandler
-		);
-	}
-
-	private static void _setUpStagingGroupHelper() {
-		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
-			StagingGroupHelperUtil.class);
-
-		StagingGroupHelper stagingGroupHelper = Mockito.mock(
-			StagingGroupHelper.class);
-
-		Mockito.when(
-			StagingGroupHelperUtil.getStagingGroupHelper()
-		).thenReturn(
-			stagingGroupHelper
-		);
-
-		Mockito.when(
-			stagingGroupHelper.isStagingGroup(Mockito.anyLong())
-		).thenReturn(
-			true
-		);
-
-		Mockito.when(
-			stagingGroupHelper.isStagedPortlet(
-				Mockito.anyLong(), Mockito.anyString())
-		).thenReturn(
-			true
-		);
-	}
-
 	private void _addExportImportPortletInfoPermission(
 		ThemeDisplay themeDisplay, boolean contains) {
 
@@ -349,6 +284,71 @@ public class UIItemsBuilderTest {
 		return new UIItemsBuilder(
 			mockHttpServletRequest, _fileEntry, _fileVersion, null,
 			versioningStrategy, _dlurlHelper);
+	}
+
+	private void _setUpGroupPermissionUtil() {
+		_groupPermissionUtilMockedStatic = Mockito.mockStatic(
+			GroupPermissionUtil.class);
+	}
+
+	private void _setUpPortletURLUtil() throws Exception {
+		_portletURLUtilMockedStatic = Mockito.mockStatic(PortletURLUtil.class);
+
+		Mockito.when(
+			PortletURLUtil.getCurrent(
+				Mockito.any(LiferayPortletRequest.class),
+				Mockito.any(LiferayPortletResponse.class))
+		).thenReturn(
+			new MockLiferayPortletURL()
+		);
+	}
+
+	private void _setUpStagedModelDataHandlerRegistryUtil() {
+		_stagedModelDataHandlerRegistryUtilMockedStatic = Mockito.mockStatic(
+			StagedModelDataHandlerRegistryUtil.class);
+
+		StagedModelDataHandler<FileEntry> stagedModelDataHandler = Mockito.mock(
+			StagedModelDataHandler.class);
+
+		Mockito.when(
+			stagedModelDataHandler.getExportableStatuses()
+		).thenReturn(
+			new int[] {0}
+		);
+
+		Mockito.<StagedModelDataHandler>when(
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				FileEntry.class.getName())
+		).thenReturn(
+			stagedModelDataHandler
+		);
+	}
+
+	private void _setUpStagingGroupHelper() {
+		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
+			StagingGroupHelperUtil.class);
+
+		StagingGroupHelper stagingGroupHelper = Mockito.mock(
+			StagingGroupHelper.class);
+
+		Mockito.when(
+			StagingGroupHelperUtil.getStagingGroupHelper()
+		).thenReturn(
+			stagingGroupHelper
+		);
+
+		Mockito.when(
+			stagingGroupHelper.isStagingGroup(Mockito.anyLong())
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			stagingGroupHelper.isStagedPortlet(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			true
+		);
 	}
 
 	private static DLURLHelper _dlurlHelper;

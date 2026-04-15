@@ -700,10 +700,16 @@ public class FreeMarkerTool {
 	public String getObjectFieldStringValue(String type, Object value) {
 		if (value instanceof Date) {
 			if (type.equals("Date")) {
-				return _dateFormat.format(value);
+				return _dateFormat.get(
+				).format(
+					value
+				);
 			}
 
-			return _dateTimeDateFormat.format(value);
+			return _dateTimeDateFormat.get(
+			).format(
+				value
+			);
 		}
 
 		return value.toString();
@@ -1766,9 +1772,11 @@ public class FreeMarkerTool {
 		return parameterName;
 	}
 
-	private static final DateFormat _dateFormat = _getDateFormat("yyyy-MM-dd");
-	private static final DateFormat _dateTimeDateFormat = _getDateFormat(
-		DateUtil.ISO_8601_PATTERN);
+	private static final ThreadLocal<DateFormat> _dateFormat =
+		ThreadLocal.withInitial(() -> _getDateFormat("yyyy-MM-dd"));
+	private static final ThreadLocal<DateFormat> _dateTimeDateFormat =
+		ThreadLocal.withInitial(
+			() -> _getDateFormat(DateUtil.ISO_8601_PATTERN));
 	private static final FreeMarkerTool _freeMarkerTool = new FreeMarkerTool();
 
 }

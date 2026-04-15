@@ -484,9 +484,6 @@ public class AssetPublisherDisplayContextTest {
 	private static Configuration _assetPublisherWebConfiguration;
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
@@ -499,6 +496,9 @@ public class AssetPublisherDisplayContextTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@DeleteAfterTestRun
 	private Group _group;

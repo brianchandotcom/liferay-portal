@@ -8,16 +8,15 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {Picklist} from '../../common/types/Picklist';
 import {CacheStatus} from '../contexts/CacheContext';
 
 type Item = {id: number; name: string};
 
-type Props = {
+type Props<T> = {
 	disabled?: boolean;
 	id?: string;
 	items: Item[];
-	loader: () => Promise<Picklist[]>;
+	loader: () => Promise<T>;
 	onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
 	onSelectionChange?: (selectedKey: React.Key) => void;
 	placeholder?: string;
@@ -64,7 +63,7 @@ const Trigger = React.forwardRef(
 	}
 );
 
-export default function AsyncPicker({
+export default function AsyncPicker<T>({
 	disabled,
 	id,
 	items,
@@ -75,7 +74,7 @@ export default function AsyncPicker({
 	selectedKey,
 	status,
 	...otherProps
-}: Props) {
+}: Props<T>) {
 	const [active, setActive] = useState(false);
 
 	const [value, setValue] = useState(

@@ -21,6 +21,7 @@ import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetB
 import DuplicatedAssetFolderNamesModalContent, {
 	Option,
 } from './DuplicatedAssetFolderNamesModalContent';
+import { ObjectDefinition } from '../../common/types/ObjectDefinition';
 
 export type TFolderItemSelectorModalContent = {
 	action: FolderAction;
@@ -124,15 +125,18 @@ const displayToast = (
 	}
 };
 
-const checkContentStructureMoveValidity = (
+const isContentStructureMoveInvalid = async (
 	item: any,
-	destinationSpaceScopeId: number | undefined
-): boolean => {
+	destinationSpaceScopeId: number | undefined,
+	assetLibraries: AssetLibrary[]
+): Promise<boolean> => {
+	const {embedded} = item;
+
 	const objectFolderERC =
-		item.embedded?.systemProperties?.objectDefinitionBrief
+		embedded?.systemProperties?.objectDefinitionBrief
 			?.objectFolderExternalReferenceCode;
 	const entryFolderERC =
-		item.embedded?.objectEntryFolderExternalReferenceCode;
+		embedded?.objectEntryFolderExternalReferenceCode;
 
 	const isContentStructureItem =
 		objectFolderERC === 'L_CMS_CONTENT_STRUCTURES' ||
@@ -142,7 +146,47 @@ const checkContentStructureMoveValidity = (
 		return false;
 	}
 
-	return Number(item.embedded?.scopeId) !== Number(destinationSpaceScopeId);
+	const structureExternalReferenceCode = embedded?.systemProperties?.objectDefinitionBrief?.externalReferenceCode;
+
+	if (!structureExternalReferenceCode || !destinationSpaceScopeId) {
+		return true;
+	}
+
+	try {
+		const response = await ApiHelper.get(
+			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${structureExternalReferenceCode}`
+		);
+
+		if (response.error || !response.data) {
+			return true;
+		}
+
+		const objectDefinition = response.data as ObjectDefinition;
+		const acceptedGroupSettings = objectDefinition.objectDefinitionSettings?.find(
+			(setting) => setting.name === 'acceptedGroupExternalReferenceCodes'
+		);
+
+		if (!acceptedGroupSettings || !acceptedGroupSettings.value) {
+			return false;
+		}
+
+		const acceptedGroupERCs = acceptedGroupSettings.value.split(',');
+
+		const destinationAssetLibrary = assetLibraries.find(
+			(lib) => lib.groupId === destinationSpaceScopeId
+		);
+
+		if (!destinationAssetLibrary || !destinationAssetLibrary.externalReferenceCode) {
+			return true;
+		}
+
+		const destinationSpaceERC = destinationAssetLibrary.externalReferenceCode;
+		const isStructureAvailableInDestination = acceptedGroupERCs.includes(destinationSpaceERC);
+
+		return !isStructureAvailableInDestination;
+	} catch (error) {
+		return true;
+	}
 };
 
 function executeBulkCopyOrMoveAction({
@@ -359,14 +403,20 @@ function FolderItemSelectorModalContent({
 		};
 	};
 
-	const handleOnItemsChange = (folder: Folder, targetName?: string) => {
+	const handleOnItemsChange = async (folder: Folder, targetName?: string) => {
 		if (isBulk) {
-			const hasContentStructureInDifferentSpace = selectedData.items.some(
-				(item: any) =>
-					checkContentStructureMoveValidity(
+			const invalidMovesPromises = selectedData.items.map(
+				async (item: any) =>
+					await isContentStructureMoveInvalid(
 						item,
-						currentSpace?.scopeId
+						currentSpace?.scopeId,
+						assetLibraries
 					)
+			);
+
+			const invalidMovesResults = await Promise.all(invalidMovesPromises);
+			const hasContentStructureInDifferentSpace = invalidMovesResults.some(
+				(result: boolean) => result === true
 			);
 
 			if (hasContentStructureInDifferentSpace) {
@@ -397,9 +447,13 @@ function FolderItemSelectorModalContent({
 			return;
 		}
 
-		if (
-			checkContentStructureMoveValidity(itemData, currentSpace?.scopeId)
-		) {
+		const isInvalidSingleMove = await isContentStructureMoveInvalid(
+			itemData,
+			currentSpace?.scopeId,
+			assetLibraries
+		);
+
+		if (isInvalidSingleMove) {
 			displayErrorToast(
 				Liferay.Language.get(
 					'the-asset-cannot-be-moved-because-its-content-type-is-not-available-in-the-destination-space.'

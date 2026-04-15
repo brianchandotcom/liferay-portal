@@ -93,11 +93,23 @@ public class LayoutSetPrototypeServiceUtil {
 	}
 
 	public static List<LayoutSetPrototype> search(
+		long companyId, Boolean active, int start, int end,
+		OrderByComparator<LayoutSetPrototype> orderByComparator) {
+
+		return getService().search(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	public static List<LayoutSetPrototype> search(
 			long companyId, Boolean active,
 			OrderByComparator<LayoutSetPrototype> orderByComparator)
 		throws PortalException {
 
 		return getService().search(companyId, active, orderByComparator);
+	}
+
+	public static int searchCount(long companyId, Boolean active) {
+		return getService().searchCount(companyId, active);
 	}
 
 	public static LayoutSetPrototype updateLayoutSetPrototype(
@@ -130,4 +142,4 @@ public class LayoutSetPrototypeServiceUtil {
 	private static volatile LayoutSetPrototypeService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-965030567
+// LIFERAY-SERVICE-BUILDER-HASH:-1048047440

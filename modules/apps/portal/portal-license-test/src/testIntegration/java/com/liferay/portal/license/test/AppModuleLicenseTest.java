@@ -31,7 +31,7 @@ import org.osgi.framework.BundleContext;
  * @author Kevin Lee
  */
 @RunWith(Arquillian.class)
-public class CMPModuleLicenseTest extends BaseLicenseTestCase {
+public class AppModuleLicenseTest extends BaseLicenseTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {

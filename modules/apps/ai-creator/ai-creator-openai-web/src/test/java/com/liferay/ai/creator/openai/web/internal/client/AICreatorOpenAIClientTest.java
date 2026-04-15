@@ -455,11 +455,10 @@ public class AICreatorOpenAIClientTest {
 		_assertResponseJSONObject(responseJSONObject);
 	}
 
-	private static Language _originalLanguage;
-
 	private AICreatorOpenAIClient _aiCreatorOpenAIClient;
 	private Http _http;
 	private JSONFactory _jsonFactory;
 	private Language _language;
+	private Language _originalLanguage;
 
 }

@@ -134,8 +134,7 @@ public class AICreatorOpenAIClientExceptionTest {
 		);
 	}
 
-	private static Language _originalLanguage;
-
 	private Language _language;
+	private Language _originalLanguage;
 
 }

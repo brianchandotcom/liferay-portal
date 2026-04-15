@@ -10,6 +10,7 @@ const TouchpointDevicesQuery = gql`
 	query TouchpointDevicesQuery(
 		$channelId: String
 		$devices: String
+		$experienceId: String
 		$location: String
 		$rangeEnd: String
 		$rangeKey: Int
@@ -22,6 +23,7 @@ const TouchpointDevicesQuery = gql`
 			canonicalUrl: $touchpoint
 			country: $location
 			deviceType: $devices
+			experienceId: $experienceId
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart

@@ -68,9 +68,10 @@ const withLocationsCard = (
 			minHeight={536}
 			reportContainer={reportContainer}
 		>
-			{({filters, interval, rangeSelectors, router}) => (
+			{({experienceId, filters, interval, rangeSelectors, router}) => (
 				<Card.Body>
 					<LocationsGeoMap
+						experienceId={experienceId}
 						filters={filters}
 						interval={interval}
 						metricLabel={metricLabel}

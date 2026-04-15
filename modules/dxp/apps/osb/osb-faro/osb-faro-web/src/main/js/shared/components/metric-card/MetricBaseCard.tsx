@@ -34,6 +34,7 @@ export interface ICommonMetricProps {
 	emptyDescription?: React.ReactNode;
 	emptyTitle?: string;
 	filters: RawFilters;
+	experienceId?: string;
 	interval: Interval;
 	rangeSelectors: RangeSelectors;
 }
@@ -115,10 +116,11 @@ function MetricBaseCard<TChartData>({
 					reportContainer={reportContainer}
 					showInterval={showIntervals}
 				>
-					{({filters, interval, rangeSelectors}) => {
+					{({experienceId, filters, interval, rangeSelectors}) => {
 						const sharedProps: ICommonMetricProps = {
 							emptyDescription,
 							emptyTitle,
+							experienceId,
 							filters,
 							interval,
 							rangeSelectors

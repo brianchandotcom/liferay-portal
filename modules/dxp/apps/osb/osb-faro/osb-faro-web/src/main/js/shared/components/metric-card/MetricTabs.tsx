@@ -8,6 +8,7 @@ import {useMetricQuery} from './hooks';
 interface IMetricTabsRendererProps extends ICommonMetricProps {}
 
 const MetricTabsRenderer: React.FC<IMetricTabsRendererProps> = ({
+	experienceId,
 	filters,
 	interval,
 	rangeSelectors
@@ -15,6 +16,7 @@ const MetricTabsRenderer: React.FC<IMetricTabsRendererProps> = ({
 	const {queries, variables} = useData();
 
 	const {data, error, loading} = useMetricQuery({
+		experienceId,
 		filters,
 		interval,
 		Query: queries.TabsQuery,

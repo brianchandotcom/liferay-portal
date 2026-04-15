@@ -4,6 +4,7 @@ import BundleRouter from 'route-middleware/BundleRouter';
 import ClayLink from '@clayui/link';
 import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
 import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
+import ExperienceDropdown from '../components/ExperienceDropdown';
 import FilterBySegment from '../components/FilterBySegment';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
@@ -16,7 +17,8 @@ import {getMatchedRoute, Routes} from 'shared/util/router';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {pickBy} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {Switch} from 'react-router-dom';
+import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
+import {Switch, useHistory} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
@@ -56,7 +58,13 @@ const NAV_ITEMS = [
 function TouchpointRoutes({className, router}) {
 	const dataSourceStates = useDataSource();
 	const rangeSelectors = useQueryRangeSelectors();
-	const {channelId, groupId, title, touchpoint} = router.params;
+	const {
+		channelId,
+		experienceId: experienceIdfromURL,
+		groupId,
+		title,
+		touchpoint
+	} = router.params;
 	const [pathRangeSelectors, setPathRangeSelectors] = useState(
 		rangeSelectors
 	);
@@ -65,6 +73,8 @@ function TouchpointRoutes({className, router}) {
 	const decodedTitle = getSafeDecodedURIComponent(title);
 	const decodedTouchpoint = getSafeDecodedURIComponent(touchpoint);
 	const [selectedSegment, setSelectedSegment] = useState({});
+	const [experienceId, setExperienceId] = useState(experienceIdfromURL);
+	const history = useHistory();
 
 	useEffect(() => {
 		setPathRangeSelectors(rangeSelectors);
@@ -115,10 +125,34 @@ function TouchpointRoutes({className, router}) {
 
 			{matchedRoute === Routes.SITES_TOUCHPOINTS_OVERVIEW && (
 				<BasePage.SubHeader>
+					<ExperienceDropdown
+						groupId={groupId}
+						onChange={experienceId => {
+							history.push(setUriQueryValues({experienceId}));
+
+							setExperienceId(experienceId);
+						}}
+					/>
+
 					<div className='d-flex justify-content-end w-100'>
 						<DropdownRangeKey
 							legacy={false}
-							onRangeSelectorChange={setPathRangeSelectors}
+							onRangeSelectorChange={rangeSelectors => {
+								history.push(
+									setUriQueryValues(
+										pickBy({
+											...rangeSelectors
+										}),
+										removeUriQueryParam(
+											window.location.href,
+											'rangeEnd',
+											'rangeStart'
+										)
+									)
+								);
+
+								setPathRangeSelectors(rangeSelectors);
+							}}
 							rangeSelectors={pathRangeSelectors}
 						/>
 
@@ -150,6 +184,7 @@ function TouchpointRoutes({className, router}) {
 
 			<BasePage.Context.Provider
 				value={{
+					experienceId,
 					filters: {},
 					rangeSelectors: pathRangeSelectors,
 					router

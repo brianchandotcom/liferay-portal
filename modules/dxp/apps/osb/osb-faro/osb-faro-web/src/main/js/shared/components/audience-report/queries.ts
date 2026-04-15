@@ -23,6 +23,7 @@ export const PageAudienceReportQuery = ({metricName, name}) => gql`
 	query ${name}AudienceReportQuery(
 		$channelId: String
 		$devices: String
+		$experienceId: String
 		$location: String
 		$rangeEnd: String
 		$rangeKey: Int
@@ -35,6 +36,7 @@ export const PageAudienceReportQuery = ({metricName, name}) => gql`
 			canonicalUrl: $touchpoint
 			country: $location
 			deviceType: $devices
+			experienceId: $experienceId
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart
@@ -54,6 +56,7 @@ export const AssetAudienceReportQuery = ({metricName, name}) => gql`
 		$assetId: String!
 		$channelId: String
 		$devices: String
+		$experienceId: String
 		$location: String
 		$rangeEnd: String
 		$rangeKey: Int
@@ -67,6 +70,7 @@ export const AssetAudienceReportQuery = ({metricName, name}) => gql`
 			channelId: $channelId
 			country: $location
 			deviceType: $devices
+			experienceId: $experienceId
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart

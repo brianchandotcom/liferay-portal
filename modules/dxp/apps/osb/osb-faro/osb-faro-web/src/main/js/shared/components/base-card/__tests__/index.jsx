@@ -61,6 +61,7 @@ describe('BaseCard', () => {
 
 		expect(customBodyProps).toMatchInlineSnapshot(`
 		Object {
+		  "experienceId": null,
 		  "filters": Object {},
 		  "interval": "D",
 		  "onChangeInterval": [Function],

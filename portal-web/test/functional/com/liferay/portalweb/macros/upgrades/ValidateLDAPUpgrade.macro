@@ -9,8 +9,8 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "LDAP",
-			configurationName = "Authentication",
-			configurationScope = "Virtual Instance Scope");
+			configurationName = "General",
+			configurationScope = "System Scope");
 
 		FormFields.viewCheckboxChecked(fieldName = "enabled");
 
@@ -22,7 +22,7 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "LDAP",
 			configurationName = "Import",
-			configurationScope = "Virtual Instance Scope");
+			configurationScope = "System Scope");
 
 		FormFields.viewCheckboxChecked(fieldName = "importEnabled");
 
@@ -36,7 +36,7 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "LDAP",
 			configurationName = "Export",
-			configurationScope = "Virtual Instance Scope");
+			configurationScope = "System Scope");
 
 		FormFields.viewCheckboxChecked(fieldName = "exportEnabled");
 	}

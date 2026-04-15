@@ -352,7 +352,7 @@ function FolderItemSelectorModalContent({
 			}
 			else {
 				return ApiHelper.get(
-					`${item.actions['get-by-scope'].href}?filter=title eq '${item.title}' and folderId eq ${folder.id}`
+					`${item.actions['get-by-scope'].href}?filter=title eq '${(item.title || '').replace(/'/g, "''")}' and folderId eq ${folder.id}`
 				);
 			}
 		};
@@ -375,24 +375,29 @@ function FolderItemSelectorModalContent({
 
 			Promise.all(duplicateCheckPromises).then((results) => {
 				const duplicatedItemTitles: string[] = [];
+				let hasError = false;
 
 				results.forEach(({data, error, item}) => {
 					if (error) {
-						displayErrorToast(error);
+						if (!hasError) {
+							displayErrorToast(error);
+							hasError = true;
+						}
 					}
 					else if (data?.items.length > 0) {
 						duplicatedItemTitles.push(item.title);
 					}
 				});
 
-				if (duplicatedItemTitles.length) {
-					displayErrorToast(
-						Liferay.Language.get(
-							'assets-could-not-be-moved.-please-ensure-the-name-is-unique-in-the-destination.'
-						)
-					);
+				if (hasError || duplicatedItemTitles.length) {
+					if (!hasError) {
+						displayErrorToast(
+							Liferay.Language.get(
+								'assets-could-not-be-moved.-please-ensure-the-name-is-unique-in-the-destination.'
+							)
+						);
+					}
 					onOpenChange(false);
-
 					return;
 				}
 

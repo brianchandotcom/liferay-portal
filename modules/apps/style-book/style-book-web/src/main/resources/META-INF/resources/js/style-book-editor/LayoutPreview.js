@@ -8,6 +8,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {
 	useLoading,
@@ -16,6 +17,7 @@ import {
 	useSetLoading,
 } from './contexts/LayoutContext';
 import {useFrontendTokensValues} from './contexts/StyleBookEditorContext';
+import {getSortedFrontendTokenValues} from './utils/getSortedFrontendTokenValues';
 
 export default React.memo(function LayoutPreview() {
 	const frontendTokensValues = useFrontendTokensValues();
@@ -34,14 +36,16 @@ export default React.memo(function LayoutPreview() {
 			if (root) {
 				root.removeAttribute('style');
 
-				Object.values(frontendTokensValues).forEach(
-					({cssVariableMapping, value}) => {
-						root.style.setProperty(
-							`--${cssVariableMapping}`,
-							value
-						);
-					}
-				);
+				for (const {
+					cssVariableMapping,
+					value,
+				} of getSortedFrontendTokenValues(
+					frontendTokensValues,
+					config.frontendTokenDefinitions,
+					config.defaultTokenDefinitionPriority
+				)) {
+					root.style.setProperty(`--${cssVariableMapping}`, value);
+				}
 
 				setLoading(false);
 			}

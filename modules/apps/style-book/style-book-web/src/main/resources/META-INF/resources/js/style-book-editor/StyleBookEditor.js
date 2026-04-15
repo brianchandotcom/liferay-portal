@@ -48,6 +48,7 @@ const StyleBookEditor = React.memo(() => {
 });
 
 export default function ({
+	defaultTokenDefinitionPriority,
 	fragmentCollectionPreviewURL = '',
 	frontendTokenDefinitions = [],
 	frontendTokensValues = {},
@@ -68,6 +69,7 @@ export default function ({
 	);
 
 	initializeConfig({
+		defaultTokenDefinitionPriority,
 		fragmentCollectionPreviewURL,
 		frontendTokenDefinitions: filteredFrontendTokenDefinitions,
 		frontendTokens: getFrontendTokens(

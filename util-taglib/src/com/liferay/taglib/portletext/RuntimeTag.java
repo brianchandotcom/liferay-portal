@@ -49,6 +49,7 @@ import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;
 import jakarta.servlet.jsp.tagext.TagSupport;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -356,6 +357,10 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 					PortletContainerUtil.renderHeaders(
 						httpServletRequest, httpServletResponse, portlet);
 				}
+
+				PortletContainerUtil.processPublicRenderParameters(
+					httpServletRequest, layout,
+					Collections.singletonList(portlet), false);
 
 				PortletContainerUtil.render(
 					httpServletRequest, httpServletResponse, portlet);

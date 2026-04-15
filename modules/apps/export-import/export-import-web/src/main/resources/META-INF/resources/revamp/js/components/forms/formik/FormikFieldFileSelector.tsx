@@ -35,6 +35,8 @@ export function FormikFieldFileSelector({
 	) => Promise<RequestResult<ValidationResponse>>;
 	'validExtensions'?: string;
 }) {
+	const STATUS_CHANGE_DELAY = 1000;
+
 	const [field, , helpers] = useField(name);
 	const {setError, setTouched, setValue} = helpers;
 
@@ -62,7 +64,7 @@ export function FormikFieldFileSelector({
 		if (status === 'SUCCESS') {
 			timeout = setTimeout(() => {
 				setStatus('STABLE_SUCCESS');
-			}, 1500);
+			}, STATUS_CHANGE_DELAY);
 		}
 
 		return () => {
@@ -142,7 +144,7 @@ export function FormikFieldFileSelector({
 				setStatus('SUCCESS');
 				setValue(file);
 				setTouched(true);
-			}, 600);
+			}, STATUS_CHANGE_DELAY);
 		}
 		catch (error: any) {
 			if (error.name === 'AbortError') {

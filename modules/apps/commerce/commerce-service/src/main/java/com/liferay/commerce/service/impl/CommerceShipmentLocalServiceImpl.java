@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -80,53 +82,6 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceShipmentLocalServiceImpl
 	extends CommerceShipmentLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addDeliverySubscriptionCommerceShipment(long, long)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceShipment addCommerceDeliverySubscriptionShipment(
-			long userId, long commerceOrderId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber)
-		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
-
-		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
-
-		long commerceShipmentId = counterLocalService.increment();
-
-		CommerceShipment commerceShipment = commerceShipmentPersistence.create(
-			commerceShipmentId);
-
-		commerceShipment.setGroupId(commerceOrder.getGroupId());
-		commerceShipment.setCompanyId(user.getCompanyId());
-		commerceShipment.setUserId(user.getUserId());
-		commerceShipment.setUserName(user.getFullName());
-		commerceShipment.setCommerceAccountId(
-			commerceOrder.getCommerceAccountId());
-		commerceShipment.setCommerceAddressId(
-			commerceOrder.getShippingAddressId());
-		commerceShipment.setCommerceShippingMethodId(
-			commerceOrder.getCommerceShippingMethodId());
-		commerceShipment.setShippingOptionName(
-			commerceOrder.getShippingOptionName());
-		commerceShipment.setStatus(
-			CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
-
-		CommerceAddress commerceAddress = _updateCommerceShipmentAddress(
-			null, commerceShipment, name, description, street1, street2,
-			street3, city, zip, regionId, countryId, phoneNumber, null);
-
-		commerceShipment.setCommerceAddressId(
-			commerceAddress.getCommerceAddressId());
-
-		return commerceShipmentPersistence.update(commerceShipment);
-	}
-
 	@Override
 	public CommerceShipment addCommerceShipment(
 			long commerceOrderId, ServiceContext serviceContext)
@@ -150,6 +105,8 @@ public class CommerceShipmentLocalServiceImpl
 			long commerceAddressId, long commerceShippingMethodId,
 			String commerceShippingOptionName, ServiceContext serviceContext)
 		throws PortalException {
+
+		// Commerce Shipment
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
@@ -182,7 +139,14 @@ public class CommerceShipmentLocalServiceImpl
 			CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
 		commerceShipment.setExpandoBridgeAttributes(serviceContext);
 
-		return commerceShipmentPersistence.update(commerceShipment);
+		commerceShipment = commerceShipmentPersistence.update(commerceShipment);
+
+		// Resources
+
+		_resourceLocalService.addModelResources(
+			commerceShipment, serviceContext);
+
+		return commerceShipment;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -237,7 +201,16 @@ public class CommerceShipmentLocalServiceImpl
 			CommerceShipment commerceShipment, boolean restoreStockQuantity)
 		throws PortalException {
 
+		// Commerce Shipment
+
 		commerceShipment = commerceShipmentPersistence.remove(commerceShipment);
+
+		// Resources
+
+		_resourceLocalService.deleteResource(
+			commerceShipment, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		// Commerce Shipment Items
 
 		_commerceShipmentItemLocalService.deleteCommerceShipmentItems(
 			commerceShipment.getCommerceShipmentId(), restoreStockQuantity);
@@ -894,6 +867,9 @@ public class CommerceShipmentLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -320,8 +320,6 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 
 		if (forcedReconsentButton && modifiedDate) {
 			forcedReconsentButton.addEventListener('click', function (event) {
-				event.preventDefault();
-
 				Liferay.Util.openConfirmModal({
 					message:
 						'<liferay-ui:message key="you-are-about-to-force-reconsent" />',

@@ -105,6 +105,46 @@ public class AssetVocabularyStagedModelDataHandlerTest
 				).build()));
 	}
 
+	@Test
+	public void testImportWithExistingExternalReferenceCode() throws Exception {
+		initExport();
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			stagingGroup.getGroupId());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, assetVocabulary);
+
+		AssetVocabulary existingVocabulary = AssetTestUtil.addVocabulary(
+			liveGroup.getGroupId());
+
+		existingVocabulary.setExternalReferenceCode(
+			assetVocabulary.getExternalReferenceCode());
+
+		existingVocabulary = _assetVocabularyLocalService.updateAssetVocabulary(
+			existingVocabulary);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			AssetVocabulary exportedVocabulary =
+				(AssetVocabulary)readExportedStagedModel(assetVocabulary);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedVocabulary);
+
+			AssetVocabulary importedVocabulary =
+				_assetVocabularyLocalService.
+					fetchAssetVocabularyByExternalReferenceCode(
+						assetVocabulary.getExternalReferenceCode(),
+						liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				existingVocabulary.getVocabularyId(),
+				importedVocabulary.getVocabularyId());
+			Assert.assertEquals(
+				assetVocabulary.getUuid(), importedVocabulary.getUuid());
+		}
+	}
+
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,

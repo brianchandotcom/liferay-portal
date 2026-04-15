@@ -28,9 +28,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -473,6 +475,49 @@ public class FileEntryStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			"pdf_test-pdf", importedFriendlyURLEntry.getUrlTitle());
+	}
+
+	@Test
+	public void testImportWithExistingExternalReferenceCode() throws Exception {
+		initExport();
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			stagingGroup.getGroupId());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, fileEntry);
+
+		FileEntry existingFileEntry = DLAppTestUtil.addFileEntry(
+			liveGroup.getGroupId());
+
+		DLFileEntry existingDLFileEntry =
+			_dlFileEntryLocalService.fetchDLFileEntry(
+				existingFileEntry.getFileEntryId());
+
+		existingDLFileEntry.setExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		_dlFileEntryLocalService.updateDLFileEntry(existingDLFileEntry);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			FileEntry exportedFileEntry = (FileEntry)readExportedStagedModel(
+				fileEntry);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedFileEntry);
+
+			DLFileEntry importedDLFileEntry =
+				_dlFileEntryLocalService.
+					fetchDLFileEntryByExternalReferenceCode(
+						fileEntry.getExternalReferenceCode(),
+						liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				existingFileEntry.getFileEntryId(),
+				importedDLFileEntry.getFileEntryId());
+			Assert.assertEquals(
+				fileEntry.getUuid(), importedDLFileEntry.getUuid());
+		}
 	}
 
 	@Test

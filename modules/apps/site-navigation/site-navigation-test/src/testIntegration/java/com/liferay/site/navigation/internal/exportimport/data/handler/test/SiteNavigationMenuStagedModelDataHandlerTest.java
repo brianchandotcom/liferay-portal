@@ -6,7 +6,9 @@
 package com.liferay.site.navigation.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -24,6 +26,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -42,6 +45,48 @@ public class SiteNavigationMenuStagedModelDataHandlerTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+	}
+
+	@Test
+	public void testImportWithExistingExternalReferenceCode() throws Exception {
+		initExport();
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(stagingGroup);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, siteNavigationMenu);
+
+		SiteNavigationMenu existingSiteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(liveGroup);
+
+		existingSiteNavigationMenu.setExternalReferenceCode(
+			siteNavigationMenu.getExternalReferenceCode());
+
+		existingSiteNavigationMenu =
+			_siteNavigationMenuLocalService.updateSiteNavigationMenu(
+				existingSiteNavigationMenu);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			SiteNavigationMenu exportedSiteNavigationMenu =
+				(SiteNavigationMenu)readExportedStagedModel(siteNavigationMenu);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedSiteNavigationMenu);
+
+			SiteNavigationMenu importedSiteNavigationMenu =
+				_siteNavigationMenuLocalService.
+					fetchSiteNavigationMenuByExternalReferenceCode(
+						siteNavigationMenu.getExternalReferenceCode(),
+						liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				existingSiteNavigationMenu.getSiteNavigationMenuId(),
+				importedSiteNavigationMenu.getSiteNavigationMenuId());
+			Assert.assertEquals(
+				siteNavigationMenu.getUuid(),
+				importedSiteNavigationMenu.getUuid());
+		}
 	}
 
 	@Override

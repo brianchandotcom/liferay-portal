@@ -90,7 +90,7 @@ public class UserModelListenerTest {
 		AuditMessage agreedToTermsOfUseAuditMessage = null;
 
 		for (AuditMessage auditMessage : _auditMessages) {
-			if (EventTypes.AGGREED_TO_TERMS_OF_USE.equals(
+			if (EventTypes.AGREED_TO_TERMS_OF_USE.equals(
 					auditMessage.getEventType())) {
 
 				agreedToTermsOfUseAuditMessage = auditMessage;
@@ -122,8 +122,7 @@ public class UserModelListenerTest {
 
 		for (AuditMessage auditMessage : _auditMessages) {
 			Assert.assertNotEquals(
-				EventTypes.AGGREED_TO_TERMS_OF_USE,
-				auditMessage.getEventType());
+				EventTypes.AGREED_TO_TERMS_OF_USE, auditMessage.getEventType());
 		}
 	}
 

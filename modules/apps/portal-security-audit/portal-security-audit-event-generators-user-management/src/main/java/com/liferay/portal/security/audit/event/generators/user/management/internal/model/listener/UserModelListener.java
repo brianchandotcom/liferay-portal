@@ -138,7 +138,7 @@ public class UserModelListener extends BaseModelListener<User> {
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				EventTypes.AGGREED_TO_TERMS_OF_USE, User.class.getName(),
+				EventTypes.AGREED_TO_TERMS_OF_USE, User.class.getName(),
 				user.getUserId(), null);
 
 			JSONObject additionalInfoJSONObject =

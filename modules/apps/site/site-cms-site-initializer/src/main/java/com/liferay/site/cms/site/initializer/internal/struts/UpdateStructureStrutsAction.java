@@ -300,27 +300,24 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				_objectDefinition.getExternalReferenceCode(),
 				_objectDefinition);
 
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition =
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByExternalReferenceCode(
+							_objectDefinition.getExternalReferenceCode(),
+							_companyId);
+
+			if (serviceBuilderObjectDefinition != null) {
+				_deleteRelationships(
+					serviceBuilderObjectDefinition.getObjectDefinitionId());
+			}
+
 			if (ListUtil.isNotEmpty(_objectRelationships)) {
 				ObjectRelationshipResource objectRelationshipResource =
 					_getObjectRelationshipResource(_user);
 
 				for (ObjectRelationship objectRelationship :
 						_objectRelationships) {
-
-					com.liferay.object.model.ObjectDefinition
-						serviceBuilderObjectDefinition =
-							_objectDefinitionLocalService.
-								fetchObjectDefinitionByExternalReferenceCode(
-									objectRelationship.
-										getObjectDefinitionExternalReferenceCode2(),
-									_companyId);
-
-					if (serviceBuilderObjectDefinition == null) {
-						continue;
-					}
-
-					_deleteRelationships(
-						serviceBuilderObjectDefinition.getObjectDefinitionId());
 
 					objectRelationshipResource.
 						postObjectDefinitionByExternalReferenceCodeObjectRelationship(

@@ -8,6 +8,7 @@ package com.liferay.headless.admin.fragment.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
+import com.liferay.headless.admin.fragment.client.pagination.Page;
 import com.liferay.headless.admin.fragment.client.problem.Problem;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.language.Language;
@@ -21,6 +22,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -60,6 +62,33 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				fetchFragmentCollectionByExternalReferenceCode(
 					fragmentSet.getExternalReferenceCode(),
 					testGroup.getGroupId()));
+	}
+
+	@Override
+	@Test
+	public void testGetSiteFragmentSetsPage() throws Exception {
+		super.testGetSiteFragmentSetsPage();
+
+		FragmentSet nonmarketplaceFragmentSet = randomFragmentSet();
+
+		nonmarketplaceFragmentSet.setMarketplace(false);
+
+		nonmarketplaceFragmentSet = testGetSiteFragmentSetsPage_addFragmentSet(
+			testGroup.getExternalReferenceCode(), nonmarketplaceFragmentSet);
+
+		FragmentSet marketplaceFragmentSet = randomFragmentSet();
+
+		marketplaceFragmentSet.setMarketplace(true);
+
+		marketplaceFragmentSet = testGetSiteFragmentSetsPage_addFragmentSet(
+			testGroup.getExternalReferenceCode(), marketplaceFragmentSet);
+
+		_assertGetSiteFragmentSetsPageWithFilter(
+			nonmarketplaceFragmentSet, "marketplace eq false",
+			marketplaceFragmentSet);
+		_assertGetSiteFragmentSetsPageWithFilter(
+			marketplaceFragmentSet, "marketplace eq true",
+			nonmarketplaceFragmentSet);
 	}
 
 	@Override
@@ -197,6 +226,25 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 
 		return fragmentSetResource.postSiteFragmentSet(
 			testGroup.getExternalReferenceCode(), fragmentSet);
+	}
+
+	private void _assertGetSiteFragmentSetsPageWithFilter(
+			FragmentSet expectedFragmentSet, String filterString,
+			FragmentSet notExpectedFragmentSet)
+		throws Exception {
+
+		Page<FragmentSet> page = fragmentSetResource.getSiteFragmentSetsPage(
+			testGroup.getExternalReferenceCode(), filterString, null);
+
+		List<FragmentSet> fragmentSets = (List<FragmentSet>)page.getItems();
+
+		assertContains(expectedFragmentSet, fragmentSets);
+
+		for (FragmentSet fragmentSet : fragmentSets) {
+			Assert.assertNotEquals(
+				notExpectedFragmentSet.getExternalReferenceCode(),
+				fragmentSet.getExternalReferenceCode());
+		}
 	}
 
 	private void _assertProblemException(

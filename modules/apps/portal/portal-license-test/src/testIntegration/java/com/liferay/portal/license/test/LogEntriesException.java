@@ -5,7 +5,12 @@
 
 package com.liferay.portal.license.test;
 
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.log.LogEntry;
+
+import java.io.PrintWriter;
 
 import java.util.List;
 
@@ -25,6 +30,42 @@ public class LogEntriesException extends Exception {
 
 	public String getPayload() {
 		return _payload;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler();
+
+		sb.append("Total Log Entries is ");
+		sb.append(_logEntries.size());
+		sb.append(StringPool.NEW_LINE);
+
+		for (int i = 0; i < _logEntries.size(); i++) {
+			sb.append("Log Entry ");
+			sb.append(i + 1);
+			sb.append(":");
+
+			LogEntry logEntry = _logEntries.get(i);
+
+			sb.append(logEntry.getMessage());
+
+			Throwable throwable = logEntry.getThrowable();
+
+			if (throwable != null) {
+				UnsyncStringWriter unsyncStringWriter =
+					new UnsyncStringWriter();
+
+				try (PrintWriter printWriter = new PrintWriter(
+						unsyncStringWriter)) {
+
+					throwable.printStackTrace(printWriter);
+				}
+
+				sb.append(unsyncStringWriter.toString());
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private final List<LogEntry> _logEntries;

@@ -6,16 +6,22 @@
 package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.application.type.ApplicationType;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -23,8 +29,10 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.RenderRequest;
@@ -44,6 +52,61 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class PublicRenderParameterTest extends BasePortletContainerTestCase {
+
+	@Test
+	@TestInfo("LPD-86498")
+	public void testWithContentLayoutDirectURL() throws Exception {
+		String prpName = "categoryId";
+		String prpValue = RandomTestUtil.randomString(
+			LayoutFriendlyURLRandomizerBumper.INSTANCE,
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		testPortlet = new TestPortlet() {
+
+			@Override
+			public void render(
+					RenderRequest renderRequest, RenderResponse renderResponse)
+				throws IOException {
+
+				PrintWriter printWriter = renderResponse.getWriter();
+
+				printWriter.write(
+					TEST_PORTLET_ID + renderRequest.getParameter(prpName));
+			}
+
+		};
+
+		setUpPortlet(
+			testPortlet,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"jakarta.portlet.supported-public-render-parameter", prpName
+			).put(
+				"jakarta.portlet.version", "3.0"
+			).build(),
+			TEST_PORTLET_ID);
+
+		Layout contentLayout = LayoutTestUtil.addTypeContentLayout(group);
+
+		Layout draftLayout = contentLayout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addPortletToLayout(draftLayout, TEST_PORTLET_ID);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, contentLayout);
+
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(
+				StringBundler.concat(
+					"http://localhost:8080/web", group.getFriendlyURL(),
+					contentLayout.getFriendlyURL(LocaleUtil.getDefault()),
+					"?p_r_p_", prpName, "=", prpValue));
+
+		Assert.assertEquals(200, response.getCode());
+
+		String body = response.getBody();
+
+		Assert.assertTrue(body.contains(TEST_PORTLET_ID + prpValue));
+	}
 
 	@Test
 	public void testWithModuleLayoutTypeController() throws Exception {
@@ -189,5 +252,8 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		Assert.assertTrue(success.get());
 	}
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 }

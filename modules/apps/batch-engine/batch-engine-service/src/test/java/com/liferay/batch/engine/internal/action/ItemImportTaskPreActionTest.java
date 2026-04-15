@@ -12,6 +12,7 @@ import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -50,6 +51,20 @@ public class ItemImportTaskPreActionTest {
 			_itemImportTaskPreAction, "_userLocalService", _userLocalService);
 
 		_testEntity = _createTestEntity();
+	}
+
+	@Test
+	public void testRunPreserveCTCollectionId() throws Exception {
+		long ctCollectionId = RandomTestUtil.randomLong();
+
+		CTCollectionThreadLocal.setCTCollectionId(ctCollectionId);
+
+		_run(
+			BatchEngineImportTaskConstants.IMPORT_CREATOR_STRATEGY_KEEP_CREATOR,
+			_importTaskContext);
+
+		Assert.assertEquals(
+			ctCollectionId, CTCollectionThreadLocal.getCTCollectionId());
 	}
 
 	@Test

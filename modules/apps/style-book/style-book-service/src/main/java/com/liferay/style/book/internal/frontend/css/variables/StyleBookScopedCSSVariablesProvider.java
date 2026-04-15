@@ -7,6 +7,9 @@ package com.liferay.style.book.internal.frontend.css.variables;
 
 import com.liferay.frontend.css.variables.ScopedCSSVariables;
 import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -16,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -27,7 +31,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,12 +48,16 @@ public class StyleBookScopedCSSVariablesProvider
 	public Collection<ScopedCSSVariables> getScopedCSSVariablesCollection(
 		HttpServletRequest httpServletRequest) {
 
-		String frontendTokensValues = _getFrontendTokensValues(
+		String frontendTokensValues = getFrontendTokensValues(
 			httpServletRequest);
 
 		if (Validator.isNull(frontendTokensValues)) {
 			return Collections.emptyList();
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return Collections.singletonList(
 			new ScopedCSSVariables() {
@@ -61,12 +69,11 @@ public class StyleBookScopedCSSVariablesProvider
 						JSONObject frontendTokensValuesJSONObject =
 							_jsonFactory.createJSONObject(frontendTokensValues);
 
-						Iterator<String> iterator =
-							frontendTokensValuesJSONObject.keys();
+						List<String> sortedKeys = _getSortedKeys(
+							themeDisplay.getCompanyId(),
+							frontendTokensValuesJSONObject);
 
-						while (iterator.hasNext()) {
-							String key = iterator.next();
-
+						for (String key : sortedKeys) {
 							JSONObject frontendTokenValueJSONObject =
 								frontendTokensValuesJSONObject.getJSONObject(
 									key);
@@ -94,7 +101,7 @@ public class StyleBookScopedCSSVariablesProvider
 			});
 	}
 
-	private String _getFrontendTokensValues(
+	protected String getFrontendTokensValues(
 		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
@@ -124,8 +131,43 @@ public class StyleBookScopedCSSVariablesProvider
 		return styleBookEntry.getFrontendTokensValues();
 	}
 
+	private List<String> _getSortedKeys(long companyId, JSONObject jsonObject) {
+		Map<String, Integer> tokenDefinitionPriorities = new HashMap<>();
+
+		for (FrontendTokenDefinition frontendTokenDefinition :
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
+					companyId)) {
+
+			tokenDefinitionPriorities.put(
+				frontendTokenDefinition.getThemeId(),
+				frontendTokenDefinition.getPriority());
+		}
+
+		List<String> keys = ListUtil.fromCollection(jsonObject.keySet());
+
+		Map<String, Integer> keyPriorities = new HashMap<>(keys.size());
+
+		for (String key : keys) {
+			JSONObject tokenValueJSONObject = jsonObject.getJSONObject(key);
+
+			keyPriorities.put(
+				key,
+				tokenDefinitionPriorities.getOrDefault(
+					tokenValueJSONObject.getString("tokenDefinitionId"),
+					FrontendTokenDefinitionConstants.PRIORITY_LEGACY));
+		}
+
+		return ListUtil.sort(
+			keys,
+			(key1, key2) -> Integer.compare(
+				keyPriorities.get(key1), keyPriorities.get(key2)));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyleBookScopedCSSVariablesProvider.class);
+
+	@Reference
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

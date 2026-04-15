@@ -234,8 +234,8 @@ public class ImportProcessResourceTest
 						"file", file
 					).build());
 
-			Assert.assertTrue(validationResponse.getSuccess());
 			Assert.assertNotNull(validationResponse.getFileEntryId());
+			Assert.assertTrue(validationResponse.getSuccess());
 		}
 		finally {
 			FileUtil.delete(file);

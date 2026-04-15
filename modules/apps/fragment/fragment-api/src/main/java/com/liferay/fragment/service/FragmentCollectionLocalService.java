@@ -78,11 +78,13 @@ public interface FragmentCollectionLocalService
 	public FragmentCollection addFragmentCollection(
 		FragmentCollection fragmentCollection);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentCollection addFragmentCollection(
 			String externalReferenceCode, long userId, long groupId,
 			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentCollection addFragmentCollection(
 			String externalReferenceCode, long userId, long groupId,
 			String fragmentCollectionKey, String name, String description,
@@ -384,6 +386,7 @@ public interface FragmentCollectionLocalService
 	public FragmentCollection updateFragmentCollection(
 		FragmentCollection fragmentCollection);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentCollection updateFragmentCollection(
 			long fragmentCollectionId, String name, String description)
 		throws PortalException;
@@ -404,4 +407,4 @@ public interface FragmentCollectionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1786451978
+// LIFERAY-SERVICE-BUILDER-HASH:-1419417830

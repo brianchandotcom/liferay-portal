@@ -114,8 +114,13 @@ public class InfoItemHelper {
 				return stringValue;
 			}
 
-			return (String)infoLocalizedValue.getValue(
-				infoLocalizedValue.getDefaultLocale());
+			Locale defaultLocale = infoLocalizedValue.getDefaultLocale();
+
+			if (defaultLocale == null) {
+				return null;
+			}
+
+			return (String)infoLocalizedValue.getValue(defaultLocale);
 		}
 
 		return (String)value;

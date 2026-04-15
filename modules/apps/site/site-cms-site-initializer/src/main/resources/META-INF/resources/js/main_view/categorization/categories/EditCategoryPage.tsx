@@ -322,11 +322,6 @@ const EditCategoryPage = ({
 			label: Liferay.Language.get('general'),
 		},
 		{
-			component: <div>Images Tab Placeholder Content</div>,
-			id: 'images',
-			label: Liferay.Language.get('images'),
-		},
-		{
 			component: (
 				<EditCategoryPropertiesTab
 					category={category}

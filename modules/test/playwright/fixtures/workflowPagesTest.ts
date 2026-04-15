@@ -26,6 +26,7 @@ import {ProcessMetricsPage} from '../pages/portal-workflow-metrics-web/ProcessMe
 import {WorkflowTaskDetailsPage} from '../pages/portal-workflow-task-web/WorkflowTaskDetailsPage';
 import {WorkflowTasksPage} from '../pages/portal-workflow-task-web/WorkflowTasksPage';
 import {WorkflowPage} from '../pages/portal-workflow-web/WorkflowPage';
+import {PersonalMenuPage} from '../pages/users-admin-web/PersonalMenuPage';
 
 const workflowPagesTest = test.extend<{
 	actionPage: ActionPage;
@@ -40,6 +41,7 @@ const workflowPagesTest = test.extend<{
 	notificationSectionPage: NotificationSectionPage;
 	performanceByAssigneePage: PerformanceByAssigneePage;
 	performanceByStepPage: PerformanceByStepPage;
+	personalMenuPage: PersonalMenuPage;
 	processBuilderPage: ProcessBuilderPage;
 	processMetricsPage: ProcessMetricsPage;
 	scriptManagementPage: ScriptManagementPage;
@@ -85,6 +87,9 @@ const workflowPagesTest = test.extend<{
 	},
 	performanceByStepPage: async ({page}, use) => {
 		await use(new PerformanceByStepPage(page));
+	},
+	personalMenuPage: async ({page}, use) => {
+		await use(new PersonalMenuPage(page));
 	},
 	processBuilderPage: async ({page}, use) => {
 		await use(new ProcessBuilderPage(page));

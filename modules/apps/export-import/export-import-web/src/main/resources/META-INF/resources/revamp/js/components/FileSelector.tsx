@@ -154,7 +154,10 @@ export default function FileSelector({
 									}
 								/>
 
-								<div className="mt-1 small text-secondary">
+								<div
+									aria-live="polite"
+									className="mt-1 small text-secondary"
+								>
 									{config.statusText}...
 								</div>
 							</ClayLayout.Col>

@@ -28,16 +28,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
@@ -72,6 +75,7 @@ public class ObjectEntryAssetRendererTest {
 		_setUpObjectField();
 		_setUpObjectFieldLocalService();
 		_setUpObjectFieldUtilMockedStatic();
+		_setUpPortletURLFactoryUtilMockedStatic();
 	}
 
 	@Test
@@ -97,8 +101,12 @@ public class ObjectEntryAssetRendererTest {
 		);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(themeDisplay),
+			_getCMSFriendlyURL(false, themeDisplay),
 			assetRenderer.getSharingEntryRowPortletURL(false, themeDisplay));
+
+		Assert.assertEquals(
+			_getCMSFriendlyURL(true, themeDisplay),
+			assetRenderer.getSharingEntryRowPortletURL(true, themeDisplay));
 	}
 
 	@Test
@@ -152,8 +160,12 @@ public class ObjectEntryAssetRendererTest {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(themeDisplay),
-			assetRenderer.getURLSharingNotification(themeDisplay));
+			_getCMSFriendlyURL(false, themeDisplay),
+			assetRenderer.getURLSharingNotification(false, themeDisplay));
+
+		Assert.assertEquals(
+			_getCMSFriendlyURL(true, themeDisplay),
+			assetRenderer.getURLSharingNotification(true, themeDisplay));
 	}
 
 	@Test
@@ -231,7 +243,15 @@ public class ObjectEntryAssetRendererTest {
 		Assert.assertTrue(assetRenderer.hasViewPermission(_permissionChecker));
 	}
 
-	private String _getCMSFriendlyURL(ThemeDisplay themeDisplay) {
+	private String _getCMSFriendlyURL(
+		boolean editable, ThemeDisplay themeDisplay) {
+
+		Mockito.when(
+			themeDisplay.getPathFriendlyURLPublic()
+		).thenReturn(
+			"/web"
+		);
+
 		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
 
 		Mockito.when(
@@ -248,12 +268,10 @@ public class ObjectEntryAssetRendererTest {
 			portalURL
 		);
 
-		String urlCurrent = RandomTestUtil.randomString();
-
 		Mockito.when(
-			themeDisplay.getURLCurrent()
+			themeDisplay.getRequest()
 		).thenReturn(
-			urlCurrent
+			Mockito.mock(HttpServletRequest.class)
 		);
 
 		long objectEntryId = RandomTestUtil.randomLong();
@@ -278,10 +296,18 @@ public class ObjectEntryAssetRendererTest {
 			depotEntry
 		);
 
+		if (editable) {
+			return StringBundler.concat(
+				portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
+				"/edit_content_item?objectEntryId=", objectEntryId,
+				"&p_l_mode=edit&redirect=", _LIFERAY_PORTLET_URL);
+		}
+
 		return StringBundler.concat(
-			portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
-			"/edit_content_item?objectEntryId=", objectEntryId,
-			"&p_l_mode=read&redirect=", HtmlUtil.escapeURL(urlCurrent));
+			themeDisplay.getPortalURL(),
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/view-asset?objectEntryId=",
+			_objectEntry.getObjectEntryId(), "&backURL=", _LIFERAY_PORTLET_URL);
 	}
 
 	private String _getFriendlyURL(LiferayPortletRequest liferayPortletRequest)
@@ -405,12 +431,34 @@ public class ObjectEntryAssetRendererTest {
 		);
 	}
 
+	private void _setUpPortletURLFactoryUtilMockedStatic() {
+		LiferayPortletURL liferayPortletURL = Mockito.mock(
+			LiferayPortletURL.class);
+
+		Mockito.when(
+			liferayPortletURL.toString()
+		).thenReturn(
+			_LIFERAY_PORTLET_URL
+		);
+
+		_portletURLFactoryUtilMockedStatic.when(
+			() -> PortletURLFactoryUtil.create(
+				Mockito.any(HttpServletRequest.class),
+				Mockito.any(String.class), Mockito.any(String.class))
+		).thenReturn(
+			liferayPortletURL
+		);
+	}
+
 	private static final String _ATTACHMENT_DOWNLOAD_URL =
 		RandomTestUtil.randomString();
 
 	private static final long _FILE_ENTRY_ID = RandomTestUtil.randomLong();
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
+
+	private static final String _LIFERAY_PORTLET_URL =
+		"http://" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE =
 		RandomTestUtil.randomString();
@@ -424,6 +472,9 @@ public class ObjectEntryAssetRendererTest {
 	private static final MockedStatic<ObjectFieldUtil>
 		_objectFieldUtilMockedStatic = Mockito.mockStatic(
 			ObjectFieldUtil.class);
+	private static final MockedStatic<PortletURLFactoryUtil>
+		_portletURLFactoryUtilMockedStatic = Mockito.mockStatic(
+			PortletURLFactoryUtil.class);
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider = Mockito.mock(

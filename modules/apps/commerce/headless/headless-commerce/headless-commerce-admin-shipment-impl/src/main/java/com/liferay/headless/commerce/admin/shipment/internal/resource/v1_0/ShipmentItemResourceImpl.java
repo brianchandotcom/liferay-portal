@@ -152,7 +152,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 				shipmentItemId);
 
 		_commerceShipmentItemService.updateCommerceShipmentItem(
-			shipmentItemId,
+			commerceShipmentItem.getCommerceShipmentId(), shipmentItemId,
 			ShipmentItemUtil.getCommerceInventoryWarehouseId(
 				_commerceInventoryWarehouseService,
 				contextCompany.getCompanyId(),
@@ -164,6 +164,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 
 		if (!Validator.isBlank(shipmentItem.getExternalReferenceCode())) {
 			_commerceShipmentItemService.updateExternalReferenceCode(
+				commerceShipmentItem.getCommerceShipmentId(),
 				commerceShipmentItem.getCommerceShipmentItemId(),
 				shipmentItem.getExternalReferenceCode());
 		}
@@ -188,6 +189,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 		}
 
 		_commerceShipmentItemService.updateCommerceShipmentItem(
+			commerceShipmentItem.getCommerceShipmentId(),
 			commerceShipmentItem.getCommerceShipmentItemId(),
 			ShipmentItemUtil.getCommerceInventoryWarehouseId(
 				_commerceInventoryWarehouseService,

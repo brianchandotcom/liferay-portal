@@ -5,11 +5,12 @@
 
 package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceShipmentFDSNames;
 import com.liferay.commerce.frontend.model.ShipmentItem;
+import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -19,8 +20,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.portlet.ActionRequest;
@@ -49,17 +51,23 @@ public class ShippedCommerceShipmentItemFDSActionProvider
 			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
-		return DropdownItemListBuilder.add(
-			() -> _portletResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), null,
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS),
-			dropdownItem -> {
-				ShipmentItem shipmentItem = (ShipmentItem)model;
+		ShipmentItem shipmentItem = (ShipmentItem)model;
 
+		CommerceShipmentItem commerceShipmentItem =
+			_commerceShipmentItemService.getCommerceShipmentItem(
+				shipmentItem.getShipmentItemId());
+
+		CommerceShipment commerceShipment =
+			commerceShipmentItem.getCommerceShipment();
+
+		return DropdownItemListBuilder.add(
+			() -> _commerceShipmentModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commerceShipment.getCommerceShipmentId(), ActionKeys.DELETE),
+			dropdownItem -> {
 				dropdownItem.setHref(
 					_getShipmentItemDeleteURL(
 						shipmentItem.getShipmentItemId(), httpServletRequest));
-
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "delete"));
 			}
@@ -95,14 +103,18 @@ public class ShippedCommerceShipmentItemFDSActionProvider
 		ShippedCommerceShipmentItemFDSActionProvider.class);
 
 	@Reference
+	private CommerceShipmentItemService _commerceShipmentItemService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceShipment)"
+	)
+	private ModelResourcePermission<CommerceShipment>
+		_commerceShipmentModelResourcePermission;
+
+	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

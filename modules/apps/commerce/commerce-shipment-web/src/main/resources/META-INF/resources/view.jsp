@@ -11,7 +11,7 @@
 CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<c:if test="<%= commerceShipmentDisplayContext.hasManageCommerceShipmentsPermission() %>">
+<c:if test="<%= commerceShipmentDisplayContext.hasViewCommerceShipmentsPermission() %>">
 	<div class="row" id="<portlet:namespace />editShipmentContainer">
 		<div class="col-12">
 			<frontend-data-set:classic-display

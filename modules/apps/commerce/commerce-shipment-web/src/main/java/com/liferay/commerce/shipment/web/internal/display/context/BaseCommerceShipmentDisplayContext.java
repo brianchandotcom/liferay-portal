@@ -12,6 +12,7 @@ import com.liferay.commerce.shipment.web.internal.portlet.action.helper.ActionHe
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,13 +27,15 @@ import jakarta.servlet.http.HttpServletRequest;
 public class BaseCommerceShipmentDisplayContext<T> {
 
 	public BaseCommerceShipmentDisplayContext(
-		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-		PortletResourcePermission portletResourcePermission) {
+		ActionHelper actionHelper,
+		ModelResourcePermission<CommerceShipment>
+			commerceShipmentModelResourcePermission,
+		HttpServletRequest httpServletRequest) {
 
 		this.actionHelper = actionHelper;
+		this.commerceShipmentModelResourcePermission =
+			commerceShipmentModelResourcePermission;
 		this.httpServletRequest = httpServletRequest;
-
-		_portletResourcePermission = portletResourcePermission;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
@@ -103,19 +106,24 @@ public class BaseCommerceShipmentDisplayContext<T> {
 		return portletURL;
 	}
 
-	public boolean hasManageCommerceShipmentsPermission() {
-		return _portletResourcePermission.contains(
+	public boolean hasViewCommerceShipmentsPermission() {
+		PortletResourcePermission portletResourcePermission =
+			commerceShipmentModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
 			cpRequestHelper.getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+			CommerceActionKeys.VIEW_COMMERCE_SHIPMENTS);
 	}
 
 	protected final ActionHelper actionHelper;
+	protected final ModelResourcePermission<CommerceShipment>
+		commerceShipmentModelResourcePermission;
 	protected final CPRequestHelper cpRequestHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 
 	private CommerceShipment _commerceShipment;
-	private final PortletResourcePermission _portletResourcePermission;
 
 }

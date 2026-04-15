@@ -46,7 +46,9 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -81,12 +83,15 @@ public class CommerceShipmentDisplayContext
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderLocalService commerceOrderLocalService,
 		CommerceShipmentItemService commerceShipmentItemService,
+		ModelResourcePermission<CommerceShipment>
+			commerceShipmentModelResourcePermission,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CountryService countryService, HttpServletRequest httpServletRequest,
-		PortletResourcePermission portletResourcePermission,
 		RegionService regionService) {
 
-		super(actionHelper, httpServletRequest, portletResourcePermission);
+		super(
+			actionHelper, commerceShipmentModelResourcePermission,
+			httpServletRequest);
 
 		_commerceAddressFormatter = commerceAddressFormatter;
 		_commerceAddressService = commerceAddressService;
@@ -328,7 +333,9 @@ public class CommerceShipmentDisplayContext
 
 		CommerceShipment commerceShipment = getCommerceShipment();
 
-		if (hasManageCommerceShipmentsPermission() &&
+		if (commerceShipmentModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commerceShipment.getCommerceShipmentId(), ActionKeys.VIEW) &&
 			(commerceShipment.getStatus() ==
 				CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING)) {
 
@@ -345,7 +352,9 @@ public class CommerceShipmentDisplayContext
 
 		CommerceShipment commerceShipment = getCommerceShipment();
 
-		if (hasManageCommerceShipmentsPermission() &&
+		if (commerceShipmentModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commerceShipment.getCommerceShipmentId(), ActionKeys.UPDATE) &&
 			(commerceShipment.getStatus() ==
 				CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING)) {
 

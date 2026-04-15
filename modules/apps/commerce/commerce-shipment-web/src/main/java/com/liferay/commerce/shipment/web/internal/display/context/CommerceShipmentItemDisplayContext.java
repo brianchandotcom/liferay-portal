@@ -14,7 +14,7 @@ import com.liferay.commerce.shipment.web.internal.portlet.action.helper.ActionHe
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import jakarta.portlet.PortletURL;
 
@@ -33,9 +33,12 @@ public class CommerceShipmentItemDisplayContext
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceQuantityFormatter commerceQuantityFormatter,
 		CommerceShipmentItemService commerceShipmentItemService,
-		PortletResourcePermission portletResourcePermission) {
+		ModelResourcePermission<CommerceShipment>
+			commerceShipmentModelResourcePermission) {
 
-		super(actionHelper, httpServletRequest, portletResourcePermission);
+		super(
+			actionHelper, commerceShipmentModelResourcePermission,
+			httpServletRequest);
 
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceQuantityFormatter = commerceQuantityFormatter;

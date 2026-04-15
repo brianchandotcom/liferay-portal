@@ -5,8 +5,6 @@
 
 package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.constants.CommerceShipmentFDSNames;
@@ -23,9 +21,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.portlet.ActionRequest;
@@ -62,21 +61,19 @@ public class ProcessingCommerceShipmentItemFDSActionProvider
 			_commerceShipmentItemService.getCommerceShipmentItem(
 				shipmentItem.getShipmentItemId());
 
+		CommerceShipment commerceShipment =
+			commerceShipmentItem.getCommerceShipment();
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		return DropdownItemListBuilder.add(
-			() -> {
-				CommerceShipment commerceShipment =
-					commerceShipmentItem.getCommerceShipment();
-
-				return _portletResourcePermission.contains(
-					permissionChecker, null,
-					CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS) &&
-					   (commerceShipment.getStatus() ==
-						   CommerceShipmentConstants.
-							   SHIPMENT_STATUS_PROCESSING);
-			},
+			() ->
+				_commerceShipmentModelResourcePermission.contains(
+					permissionChecker, commerceShipment.getCommerceShipmentId(),
+					ActionKeys.UPDATE) &&
+				(commerceShipment.getStatus() ==
+					CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getShipmentItemEditURL(
@@ -86,9 +83,9 @@ public class ProcessingCommerceShipmentItemFDSActionProvider
 				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
-			() -> _portletResourcePermission.contains(
-				permissionChecker, null,
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS),
+			() -> _commerceShipmentModelResourcePermission.contains(
+				permissionChecker, commerceShipment.getCommerceShipmentId(),
+				ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getShipmentItemDeleteURL(
@@ -160,15 +157,16 @@ public class ProcessingCommerceShipmentItemFDSActionProvider
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceShipment)"
+	)
+	private ModelResourcePermission<CommerceShipment>
+		_commerceShipmentModelResourcePermission;
+
 	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

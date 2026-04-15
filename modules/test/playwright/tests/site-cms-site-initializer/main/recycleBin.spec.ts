@@ -8,9 +8,12 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {addCMSAdministrator} from '../../../utils/addCMSAdministrator';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
 import getRandomString from '../../../utils/getRandomString';
-import performLoginViaApi from '../../../utils/performLogin';
+import performLoginViaApi, {
+	performUserSwitch,
+} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {RecycleBinPage} from './pages/RecycleBinPage';
@@ -222,6 +225,12 @@ test(
 			applicationName,
 			spaceName
 		);
+
+		await test.step('Login as CMS Administrator', async () => {
+			const user = await addCMSAdministrator(apiHelpers);
+
+			await performUserSwitch(page, user.alternateName);
+		});
 
 		await test.step('Delete the contents so they can go into the Recycle Bin', async () => {
 			await contentsPage.goto();

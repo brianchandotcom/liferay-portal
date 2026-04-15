@@ -622,6 +622,31 @@ public class StyleBookEntryLocalServiceWrapper
 	}
 
 	@Override
+	public StyleBookEntry updatePreviewFileEntryId(
+			long previewFileEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updatePreviewFileEntryId(
+			previewFileEntryId, serviceContext, styleBookEntryId);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntry(
+			boolean defaultStylebookEntry, String frontendTokensValues,
+			String name, long previewFileEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			long styleBookEntryId, String styleBookEntryKey, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateStyleBookEntry(
+			defaultStylebookEntry, frontendTokensValues, name,
+			previewFileEntryId, serviceContext, styleBookEntryId,
+			styleBookEntryKey, userId);
+	}
+
+	@Override
 	public StyleBookEntry updateStyleBookEntry(
 			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
 			String frontendTokensValues, String name, String styleBookEntryKey,
@@ -640,6 +665,17 @@ public class StyleBookEntryLocalServiceWrapper
 
 		return _styleBookEntryLocalService.updateStyleBookEntry(
 			styleBookEntryId, frontendTokensValues, name);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntry(
+			String frontendTokensValues, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateStyleBookEntry(
+			frontendTokensValues, name, serviceContext, styleBookEntryId);
 	}
 
 	/**
@@ -701,4 +737,4 @@ public class StyleBookEntryLocalServiceWrapper
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:436187170
+// LIFERAY-SERVICE-BUILDER-HASH:1160539274

@@ -9,7 +9,7 @@
 				"en_US": "Crawl"
 			},
 			"name": "crawl",
-			"objectActionExecutorKey": "function#liferay-sample-etc-spring-boot-object-action-crawl",
+			"objectActionExecutorKey": "function#liferay-aihub-etc-spring-boot-object-action-crawl",
 			"objectActionTriggerKey": "standalone",
 			"parameters": {
 			}

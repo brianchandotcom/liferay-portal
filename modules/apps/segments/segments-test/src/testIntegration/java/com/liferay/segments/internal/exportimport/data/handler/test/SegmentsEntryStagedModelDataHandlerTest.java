@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -80,6 +82,36 @@ public class SegmentsEntryStagedModelDataHandlerTest
 			(StagedModelRepository<StagedExpandoColumn>)
 				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
 					StagedExpandoColumn.class.getName());
+	}
+
+	@Test
+	@TestInfo("LPD-86134")
+	public void testExportImportAsahFaroSourceSegmentsEntryWithEmptyCriteria()
+		throws Exception {
+
+		initExport();
+
+		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			stagingGroup.getGroupId(), null);
+
+		_segmentsEntry.setSource(
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, _segmentsEntry);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			SegmentsEntry exportedSegmentsEntry =
+				(SegmentsEntry)readExportedStagedModel(_segmentsEntry);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedSegmentsEntry);
+
+			_importedSegmentsEntry = (SegmentsEntry)getStagedModel(
+				_segmentsEntry.getUuid(), liveGroup);
+
+			Assert.assertNull(_importedSegmentsEntry.getCriteriaObj());
+		}
 	}
 
 	@Test

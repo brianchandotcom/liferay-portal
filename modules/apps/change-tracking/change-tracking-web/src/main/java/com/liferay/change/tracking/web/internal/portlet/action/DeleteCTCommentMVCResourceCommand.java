@@ -50,8 +50,9 @@ public class DeleteCTCommentMVCResourceCommand
 
 		CTComment ctComment = ctCommentLocalService.getCTComment(ctCommentId);
 
-		if (!_hasAdminRole(themeDisplay.getPermissionChecker()) &&
-			(ctComment.getUserId() != themeDisplay.getUserId())) {
+		if ((ctComment.getCompanyId() != themeDisplay.getCompanyId()) ||
+			(!_hasAdminRole(themeDisplay.getPermissionChecker()) &&
+			 (ctComment.getUserId() != themeDisplay.getUserId()))) {
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,

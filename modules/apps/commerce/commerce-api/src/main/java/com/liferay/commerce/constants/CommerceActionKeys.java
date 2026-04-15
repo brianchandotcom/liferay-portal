@@ -13,6 +13,8 @@ public class CommerceActionKeys {
 	public static final String ADD_COMMERCE_AVAILABILITY_ESTIMATE =
 		"ADD_COMMERCE_AVAILABILITY_ESTIMATE";
 
+	public static final String ADD_COMMERCE_SHIPMENT = "ADD_COMMERCE_SHIPMENT";
+
 	public static final String MANAGE_ALL_ACCOUNTS = "MANAGE_ALL_ACCOUNTS";
 
 	/**
@@ -28,9 +30,6 @@ public class CommerceActionKeys {
 	public static final String MANAGE_COMMERCE_ORDER_PRICES =
 		"MANAGE_COMMERCE_ORDER_PRICES";
 
-	public static final String MANAGE_COMMERCE_SHIPMENTS =
-		"MANAGE_COMMERCE_SHIPMENTS";
-
 	public static final String MANAGE_COMMERCE_SUBSCRIPTIONS =
 		"MANAGE_COMMERCE_SUBSCRIPTIONS";
 
@@ -38,5 +37,8 @@ public class CommerceActionKeys {
 
 	public static final String VIEW_COMMERCE_AVAILABILITY_ESTIMATES =
 		"VIEW_COMMERCE_AVAILABILITY_ESTIMATES";
+
+	public static final String VIEW_COMMERCE_SHIPMENTS =
+		"VIEW_COMMERCE_SHIPMENTS";
 
 }

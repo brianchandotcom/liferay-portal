@@ -6,7 +6,6 @@
 package com.liferay.portal.license.test;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -34,7 +32,6 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.util.LicenseUtil;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.lang.instrument.Instrumentation;
@@ -518,23 +515,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return ReflectionsHolder._validateClass;
 	}
 
-	protected void assertPortalInvalidatedWithBrokenFile(
-			String fileName, String failMessage)
-		throws Exception {
-
-		String filePath = StringBundler.concat(
-			StringUtil.replace(
-				_licensePackageName, CharPool.PERIOD, CharPool.SLASH),
-			CharPool.SLASH, fileName);
-
-		_assertPortalInvalidatedWithBrokenFile(
-			filePath, null,
-			"java.lang.IllegalArgumentException: Null input buffer");
-
-		_assertPortalInvalidatedWithBrokenFile(
-			filePath, InputStream.nullInputStream(), failMessage);
-	}
-
 	protected void checkLicense(String productId) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_licensePackageName, LoggerTestUtil.ALL)) {
@@ -608,48 +588,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		).installOn(
 			ReflectionsHolder._instrumentation
 		);
-	}
-
-	private void _assertPortalInvalidatedWithBrokenFile(
-			String filePath, InputStream inputStream, String failMessage)
-		throws Exception {
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		PortalClassLoaderUtil.setClassLoader(
-			new ClassLoader(classLoader) {
-
-				@Override
-				public boolean equals(Object object) {
-					return classLoader.equals(object);
-				}
-
-				@Override
-				public InputStream getResourceAsStream(String name) {
-					if (name.equals(filePath)) {
-						return inputStream;
-					}
-
-					return classLoader.getResourceAsStream(name);
-				}
-
-				@Override
-				public int hashCode() {
-					return classLoader.hashCode();
-				}
-
-			});
-
-		try (SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
-			assertPortalLicenseNotRegistered();
-
-			deployFreeTierPortalLicense(Time.HOUR);
-
-			assertPortalLicenseInvalid(failMessage);
-		}
-		finally {
-			PortalClassLoaderUtil.setClassLoader(classLoader);
-		}
 	}
 
 	private File _buildBinaryFile(

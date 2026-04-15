@@ -494,7 +494,7 @@ export class JournalEditArticlePage {
 			.click();
 
 		await selectDocumentIframe
-			.getByRole('link', {name: 'Liferay DXP Site'})
+			.getByRole('link', {name: /^Liferay DXP( Site)?$/})
 			.click();
 
 		await selectDocumentIframe

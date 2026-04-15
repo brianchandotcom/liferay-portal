@@ -124,6 +124,7 @@ import {config as objectClientExtensionWebConfig} from './tests/object-web/clien
 import {config as objectEntryWebConfig} from './tests/object-web/entry/config';
 import {config as objectFieldWebConfig} from './tests/object-web/field/config';
 import {config as objectFolderWebConfig} from './tests/object-web/folder/config';
+import {config as objectFormsIntegrationWebConfig} from './tests/object-web/forms-integration/config';
 import {config as objectHierarchyWebConfig} from './tests/object-web/hierarchy/config';
 import {config as objectLayoutWebConfig} from './tests/object-web/layout/config';
 import {config as listTypeDefinitionsWebConfig} from './tests/object-web/list-type-definition/config';
@@ -346,6 +347,7 @@ export default defineConfig({
 		objectEntryWebConfig,
 		objectFieldWebConfig,
 		objectFolderWebConfig,
+		objectFormsIntegrationWebConfig,
 		objectHierarchyWebConfig,
 		objectLayoutWebConfig,
 		objectRelationshipWebConfig,

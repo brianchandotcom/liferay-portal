@@ -236,10 +236,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			}
 		).put(
 			DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-			new String[] {
-				ActionKeys.ADD_DISCUSSION,
-				ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
-			}
+			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW}
 		).put(
 			RoleConstants.CMS_ADMINISTRATOR, actionIds
 		).put(

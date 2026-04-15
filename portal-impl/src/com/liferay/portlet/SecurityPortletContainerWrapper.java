@@ -107,6 +107,15 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	@Override
 	public void processPublicRenderParameters(
+		HttpServletRequest httpServletRequest, Layout layout,
+		List<Portlet> portlets, boolean lifecycleAction) {
+
+		_portletContainer.processPublicRenderParameters(
+			httpServletRequest, layout, portlets, lifecycleAction);
+	}
+
+	@Override
+	public void processPublicRenderParameters(
 		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
 		_portletContainer.processPublicRenderParameters(

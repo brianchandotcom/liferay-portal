@@ -8,6 +8,7 @@ package com.liferay.segments.provider.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -55,6 +56,7 @@ public class SegmentsEntryProviderRegistryTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86011")
 	public void testGetSegmentsEntryIds() throws Exception {
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntry(
 			RandomTestUtil.randomString());

@@ -73,7 +73,7 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 			return;
 		}
 
-		PrincipalThreadLocal.setName(user.getUserId());
+		PrincipalThreadLocal.setName(user.getUserId(), false);
 
 		batchEngineTaskItemDelegate.setContextUser(user);
 

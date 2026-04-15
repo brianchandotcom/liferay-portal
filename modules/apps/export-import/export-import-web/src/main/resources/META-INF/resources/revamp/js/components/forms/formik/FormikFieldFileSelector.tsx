@@ -57,17 +57,17 @@ export function FormikFieldFileSelector({
 	}, []);
 
 	useEffect(() => {
-		let timeoutId: any;
+		let timeout: NodeJS.Timeout;
 
 		if (status === 'SUCCESS') {
-			timeoutId = setTimeout(() => {
+			timeout = setTimeout(() => {
 				setStatus('STABLE_SUCCESS');
 			}, 1500);
 		}
 
 		return () => {
-			if (timeoutId) {
-				clearTimeout(timeoutId);
+			if (timeout) {
+				clearTimeout(timeout);
 			}
 		};
 	}, [status]);

@@ -173,8 +173,6 @@ public class AssetTagStagedModelDataHandler
 		AssetTag importedAssetTag = null;
 
 		if (existingAssetTag == null) {
-			serviceContext.setUuid(assetTag.getUuid());
-
 			importedAssetTag = _assetTagLocalService.addTag(
 				assetTag.getExternalReferenceCode(), userId,
 				portletDataContext.getScopeGroupId(),
@@ -203,6 +201,11 @@ public class AssetTagStagedModelDataHandler
 					serviceContext);
 			}
 		}
+
+		importedAssetTag.setUuid(assetTag.getUuid());
+
+		importedAssetTag = _assetTagLocalService.updateAssetTag(
+			importedAssetTag);
 
 		Group group = _groupLocalService.fetchGroup(
 			portletDataContext.getScopeGroupId());

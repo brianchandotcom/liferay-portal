@@ -270,6 +270,12 @@ public class CalendarBookingStagedModelDataHandler
 						calendarBooking.getSecondReminder(),
 						calendarBooking.getSecondReminderType(),
 						serviceContext);
+
+				importedCalendarBooking.setUuid(calendarBooking.getUuid());
+
+				importedCalendarBooking =
+					_calendarBookingLocalService.updateCalendarBooking(
+						importedCalendarBooking);
 			}
 		}
 		else {

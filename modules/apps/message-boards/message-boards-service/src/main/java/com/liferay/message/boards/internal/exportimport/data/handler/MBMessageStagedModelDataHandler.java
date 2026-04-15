@@ -353,6 +353,12 @@ public class MBMessageStagedModelDataHandler
 							message.getSubject(), message.getBody(),
 							inputStreamOVPs, message.getPriority(),
 							message.isAllowPingbacks(), serviceContext);
+
+						importedMessage.setUuid(message.getUuid());
+
+						importedMessage =
+							_mbMessageLocalService.updateMBMessage(
+								importedMessage);
 					}
 				}
 			}

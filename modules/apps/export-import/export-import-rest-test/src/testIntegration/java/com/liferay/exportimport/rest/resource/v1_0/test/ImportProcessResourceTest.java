@@ -195,10 +195,8 @@ public class ImportProcessResourceTest
 						"file", larFile
 					).build());
 
-			Assert.assertNotNull(validationResponse);
-			Assert.assertFalse(validationResponse.getSuccess());
-
 			Assert.assertTrue(validationResponse.getErrorMessages().length > 0);
+			Assert.assertFalse(validationResponse.getSuccess());
 		}
 		finally {
 			FileUtil.delete(larFile);
@@ -216,9 +214,8 @@ public class ImportProcessResourceTest
 						"file", larFile
 					).build());
 
-			Assert.assertNotNull(validationResponse);
-			Assert.assertTrue(validationResponse.getSuccess());
 			Assert.assertNotNull(validationResponse.getFileEntryId());
+			Assert.assertTrue(validationResponse.getSuccess());
 		}
 		finally {
 			FileUtil.delete(larFile);

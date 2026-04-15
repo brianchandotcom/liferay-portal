@@ -325,6 +325,8 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 						'<liferay-ui:message key="you-are-about-to-force-reconsent" />',
 					onConfirm: function (isConfirmed) {
 						if (isConfirmed) {
+							form.reset();
+
 							modifiedDate.value = new Date().getTime();
 
 							form.submit();

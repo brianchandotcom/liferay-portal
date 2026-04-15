@@ -39,9 +39,12 @@ if (container) {
 
 if (!window.onFileEntrySaved) {
 	window.onFileEntrySaved = (data) => {
-
-		// eslint-disable-next-line no-console
-		console.info(data);
+		if (typeof window.Analytics !== 'undefined') {
+			Analytics.track('documentUploaded', {
+				assetId: data.fileEntryId,
+				assetName: data.fileName,
+			});
+		}
 	};
 
 	Liferay.on('fileEntrySaved', window.onFileEntrySaved);
@@ -49,9 +52,12 @@ if (!window.onFileEntrySaved) {
 
 if (!window.onMessagePosted) {
 	window.onMessagePosted = (data) => {
-
-		// eslint-disable-next-line no-console
-		console.info(data);
+		if (typeof window.Analytics !== 'undefined') {
+			Analytics.track('commentPosted', {
+				assetId: data.classPK,
+				comment: data.text,
+			});
+		}
 	};
 
 	Liferay.on('messagePosted', window.onMessagePosted);

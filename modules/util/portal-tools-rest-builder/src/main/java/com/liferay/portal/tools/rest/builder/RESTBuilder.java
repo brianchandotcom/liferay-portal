@@ -211,6 +211,8 @@ public class RESTBuilder {
 	}
 
 	public void build() throws Exception {
+		_checkOpenAPIYAMLFiles();
+
 		FreeMarkerTool freeMarkerTool = FreeMarkerTool.getInstance();
 
 		Map<String, Object> context = HashMapBuilder.<String, Object>put(
@@ -248,18 +250,6 @@ public class RESTBuilder {
 
 		for (File openAPIYAMLFile :
 				FileUtil.getFiles(_configDir, "rest-openapi", ".yaml")) {
-
-			try {
-				_checkOpenAPIYAMLFile(freeMarkerTool, openAPIYAMLFile);
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-
-				throw new RuntimeException(
-					StringBundler.concat(
-						"Error in file \"", openAPIYAMLFile.getName(), "\": ",
-						exception.getMessage()));
-			}
 
 			String yamlString = FileUtil.read(openAPIYAMLFile);
 
@@ -608,7 +598,28 @@ public class RESTBuilder {
 			Runtime.getRuntime(
 			).availableProcessors());
 
-		List<Future<String>> futures = new ArrayList<>();
+		List<Future<?>> futures = new ArrayList<>();
+
+		for (Path restConfigYamlPath : restConfigYamlPaths) {
+			futures.add(
+				executorService.submit(
+					() -> {
+						Path moduleDirPath = restConfigYamlPath.getParent();
+
+						RESTBuilder restBuilder = new RESTBuilder(
+							null, moduleDirPath.toFile(), null, null, null);
+
+						restBuilder._checkOpenAPIYAMLFiles();
+
+						return null;
+					}));
+		}
+
+		for (Future<?> future : futures) {
+			future.get();
+		}
+
+		futures.clear();
 
 		for (Path restConfigYamlPath : restConfigYamlPaths) {
 			futures.add(
@@ -622,9 +633,9 @@ public class RESTBuilder {
 		List<String> baselineTasks = new ArrayList<>();
 		List<Exception> exceptions = new ArrayList<>();
 
-		for (Future<String> future : futures) {
+		for (Future<?> future : futures) {
 			try {
-				String baselineTask = future.get();
+				String baselineTask = (String)future.get();
 
 				if (baselineTask != null) {
 					baselineTasks.add(baselineTask);
@@ -718,7 +729,9 @@ public class RESTBuilder {
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
 		throws Exception {
 
-		String yamlString = _fixOpenAPILicense(FileUtil.read(file));
+		String originalYamlString = FileUtil.read(file);
+
+		String yamlString = _fixOpenAPILicense(originalYamlString);
 
 		yamlString = _fixOpenAPIPaths(yamlString);
 
@@ -746,7 +759,29 @@ public class RESTBuilder {
 			_validate(yamlString);
 		}
 
-		FileUtil.write(file, yamlString);
+		if (!originalYamlString.equals(yamlString)) {
+			FileUtil.write(file, yamlString);
+		}
+	}
+
+	private void _checkOpenAPIYAMLFiles() throws Exception {
+		FreeMarkerTool freeMarkerTool = FreeMarkerTool.getInstance();
+
+		for (File openAPIYAMLFile :
+				FileUtil.getFiles(_configDir, "rest-openapi", ".yaml")) {
+
+			try {
+				_checkOpenAPIYAMLFile(freeMarkerTool, openAPIYAMLFile);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				throw new RuntimeException(
+					StringBundler.concat(
+						"Error in file \"", openAPIYAMLFile.getName(), "\": ",
+						exception.getMessage()));
+			}
+		}
 	}
 
 	private boolean _containsVulcanCustomField(Schema schema) {

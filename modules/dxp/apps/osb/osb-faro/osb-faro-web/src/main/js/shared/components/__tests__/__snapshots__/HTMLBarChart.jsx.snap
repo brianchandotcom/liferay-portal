@@ -143,14 +143,14 @@ exports[`HTMLBarChart should render Progress item based on grid and type of grid
         class="analytics-bar-chart-html-grid-item"
       >
         <span>
-          1000%
+          1,000%
         </span>
       </div>
       <div
         class="analytics-bar-chart-html-grid-item"
       >
         <span>
-          1500%
+          1,500%
         </span>
       </div>
     </div>
@@ -260,14 +260,14 @@ exports[`HTMLBarChart should render Progress with Interval item based on grid an
         class="analytics-bar-chart-html-grid-item"
       >
         <span>
-          1000%
+          1,000%
         </span>
       </div>
       <div
         class="analytics-bar-chart-html-grid-item"
       >
         <span>
-          1500%
+          1,500%
         </span>
       </div>
     </div>

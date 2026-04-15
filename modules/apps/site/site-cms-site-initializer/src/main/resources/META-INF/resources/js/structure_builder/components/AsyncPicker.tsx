@@ -21,6 +21,7 @@ type Props<T> = {
 	onSelectionChange?: (selectedKey: React.Key) => void;
 	placeholder?: string;
 	selectedKey: React.Key;
+	small?: boolean;
 	status: CacheStatus;
 };
 
@@ -28,11 +29,13 @@ const Trigger = React.forwardRef(
 	(
 		{
 			open,
+			small,
 			status,
 			value,
 			...otherProps
 		}: {
 			open: boolean;
+			small: boolean;
 			status: CacheStatus;
 			value: string;
 		},
@@ -49,7 +52,10 @@ const Trigger = React.forwardRef(
 				{...otherProps}
 				className={classNames(
 					'align-items-center d-flex form-control form-control-select-secondary justify-content-between',
-					{'form-control-select': status !== 'saving'}
+					{
+						'form-control-select': status !== 'saving',
+						'form-control-sm': small,
+					}
 				)}
 				ref={ref}
 			>
@@ -72,6 +78,7 @@ export default function AsyncPicker<T>({
 	onSelectionChange,
 	placeholder = Liferay.Language.get('select-an-option'),
 	selectedKey,
+	small = false,
 	status,
 	...otherProps
 }: Props<T>) {
@@ -119,6 +126,7 @@ export default function AsyncPicker<T>({
 			open={active}
 			placeholder={placeholder}
 			selectedKey={selectedKey ? String(selectedKey) : ''}
+			small={small}
 			status={status}
 			value={value}
 			{...otherProps}

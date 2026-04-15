@@ -8,6 +8,7 @@ package com.liferay.portal.tools.rest.builder;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -215,6 +216,15 @@ public class RESTBuilder {
 	public void build() throws Exception {
 		_checkOpenAPIYAMLFiles();
 
+		try (AutoCloseable closeable = build(null)) {
+		}
+	}
+
+	public AutoCloseable build(ExecutorService executorService)
+		throws Exception {
+
+		Collection<Future<?>> futures = new ConcurrentLinkedQueue<>();
+
 		FreeMarkerTool freeMarkerTool = FreeMarkerTool.getInstance();
 
 		Map<String, Object> context = HashMapBuilder.<String, Object>put(
@@ -227,23 +237,27 @@ public class RESTBuilder {
 			"validator", Validator_IW.getInstance()
 		).build();
 
-		if (_configYAML.isGenerateREST() &&
-			(_configYAML.getApplication() != null)) {
+		_submit(
+			executorService, futures, context,
+			safeContext -> {
+				if (_configYAML.isGenerateREST() &&
+					(_configYAML.getApplication() != null)) {
 
-			_createApplicationFile(context);
-		}
+					_createApplicationFile(safeContext);
+				}
 
-		if (Validator.isNotNull(_configYAML.getClientDir())) {
-			_createClientAggregationFile(context);
-			_createClientBaseJSONParserFile(context);
-			_createClientFacetFile(context);
-			_createClientHttpInvokerFile(context);
-			_createClientPageFile(context);
-			_createClientPaginationFile(context);
-			_createClientPermissionFile(context);
-			_createClientProblemFile(context);
-			_createClientUnsafeSupplierFile(context);
-		}
+				if (Validator.isNotNull(_configYAML.getClientDir())) {
+					_createClientAggregationFile(safeContext);
+					_createClientBaseJSONParserFile(safeContext);
+					_createClientFacetFile(safeContext);
+					_createClientHttpInvokerFile(safeContext);
+					_createClientPageFile(safeContext);
+					_createClientPaginationFile(safeContext);
+					_createClientPermissionFile(safeContext);
+					_createClientProblemFile(safeContext);
+					_createClientUnsafeSupplierFile(safeContext);
+				}
+			});
 
 		boolean createClientCustomFieldFiles = true;
 		boolean createClientScopeFiles = true;
@@ -294,9 +308,14 @@ public class RESTBuilder {
 			if (_configYAML.isGenerateGraphQL() &&
 				(_configYAML.getApplication() != null)) {
 
-				_createGraphQLMutationFile(context, escapedVersion);
-				_createGraphQLQueryFile(context, escapedVersion);
-				_createGraphQLServletDataFile(context, escapedVersion);
+				_submit(
+					executorService, futures, context,
+					safeContext -> {
+						_createGraphQLMutationFile(safeContext, escapedVersion);
+						_createGraphQLQueryFile(safeContext, escapedVersion);
+						_createGraphQLServletDataFile(
+							safeContext, escapedVersion);
+					});
 			}
 
 			context.put("schemaName", "openapi");
@@ -304,8 +323,13 @@ public class RESTBuilder {
 			if (_configYAML.isGenerateOpenAPI() &&
 				(_configYAML.getResourceApplicationSelect() == null)) {
 
-				_createOpenAPIResourceFile(context, escapedVersion);
-				_createPropertiesFile(context, escapedVersion, "openapi");
+				_submit(
+					executorService, futures, context,
+					safeContext -> {
+						_createOpenAPIResourceFile(safeContext, escapedVersion);
+						_createPropertiesFile(
+							safeContext, escapedVersion, "openapi");
+					});
 			}
 
 			Map<String, Schema> schemas = freeMarkerTool.getSchemas(
@@ -322,13 +346,18 @@ public class RESTBuilder {
 					context, escapedVersion, javaDataTypeMap, schema,
 					schemaName, Collections.emptySet());
 
-				_createDTOFile(context, escapedVersion, schemaName);
+				_submit(
+					executorService, futures, context,
+					safeContext -> {
+						_createDTOFile(safeContext, escapedVersion, schemaName);
 
-				if (Validator.isNotNull(_configYAML.getClientDir())) {
-					_createClientDTOFile(context, escapedVersion, schemaName);
-					_createClientSerDesFile(
-						context, escapedVersion, schemaName);
-				}
+						if (Validator.isNotNull(_configYAML.getClientDir())) {
+							_createClientDTOFile(
+								safeContext, escapedVersion, schemaName);
+							_createClientSerDesFile(
+								safeContext, escapedVersion, schemaName);
+						}
+					});
 			}
 
 			for (Map.Entry<String, Schema> entry :
@@ -338,12 +367,17 @@ public class RESTBuilder {
 					context, escapedVersion, javaDataTypeMap, entry.getValue(),
 					entry.getKey(), Collections.emptySet());
 
-				_createEnumFile(context, escapedVersion, entry.getKey());
+				_submit(
+					executorService, futures, context,
+					safeContext -> {
+						_createEnumFile(
+							safeContext, escapedVersion, entry.getKey());
 
-				if (Validator.isNotNull(_configYAML.getClientDir())) {
-					_createClientEnumFile(
-						context, escapedVersion, entry.getKey());
-				}
+						if (Validator.isNotNull(_configYAML.getClientDir())) {
+							_createClientEnumFile(
+								safeContext, escapedVersion, entry.getKey());
+						}
+					});
 			}
 
 			schemas = freeMarkerTool.getAllSchemas(
@@ -384,47 +418,52 @@ public class RESTBuilder {
 					schemaName,
 					_getRelatedSchemaNames(allSchemas, javaMethodSignatures));
 
-				_createBaseResourceImplFile(
-					context, escapedVersion, schemaName);
-
 				if (createLiberalPermissionCheckerFile) {
 					_createLiberalPermissionCheckerFile(context);
 
 					createLiberalPermissionCheckerFile = false;
 				}
 
-				_createPropertiesFile(
-					context, escapedVersion,
-					String.valueOf(context.get("schemaPath")));
+				_submit(
+					executorService, futures, context,
+					safeContext -> {
+						_createBaseResourceImplFile(
+							safeContext, escapedVersion, schemaName);
+						_createPropertiesFile(
+							safeContext, escapedVersion,
+							String.valueOf(safeContext.get("schemaPath")));
 
-				if (_configYAML.getApplication() != null) {
-					_createResourceFactoryImplFile(
-						context, escapedVersion, schemaName);
-				}
+						if (_configYAML.getApplication() != null) {
+							_createResourceFactoryImplFile(
+								safeContext, escapedVersion, schemaName);
+						}
 
-				_createResourceFile(context, escapedVersion, schemaName);
-				_createResourceImplFile(context, escapedVersion, schemaName);
+						_createResourceFile(
+							safeContext, escapedVersion, schemaName);
+						_createResourceImplFile(
+							safeContext, escapedVersion, schemaName);
 
-				if (Validator.isNotNull(_configYAML.getClientDir())) {
-					_createClientResourceFile(
-						context, escapedVersion, schemaName);
-				}
+						if (Validator.isNotNull(_configYAML.getClientDir())) {
+							_createClientResourceFile(
+								safeContext, escapedVersion, schemaName);
+						}
 
-				if (Validator.isNotNull(_configYAML.getTestDir())) {
-					_createBaseResourceTestCaseFile(
-						context, escapedVersion, schemaName);
-					_createResourceTestFile(
-						context, escapedVersion, schemaName);
-				}
+						if (Validator.isNotNull(_configYAML.getTestDir())) {
+							_createBaseResourceTestCaseFile(
+								safeContext, escapedVersion, schemaName);
+							_createResourceTestFile(
+								safeContext, escapedVersion, schemaName);
+						}
 
-				if (_configYAML.isGenerateActionProviders()) {
-					_createBaseDTOActionMetadataProviderFile(
-						context, escapedVersion, schemaName);
-					_createDTOActionMetadataProviderFile(
-						context, escapedVersion, schemaName);
-					_createDTOActionProviderFile(
-						context, escapedVersion, schemaName);
-				}
+						if (_configYAML.isGenerateActionProviders()) {
+							_createBaseDTOActionMetadataProviderFile(
+								safeContext, escapedVersion, schemaName);
+							_createDTOActionMetadataProviderFile(
+								safeContext, escapedVersion, schemaName);
+							_createDTOActionProviderFile(
+								safeContext, escapedVersion, schemaName);
+						}
+					});
 			}
 
 			if (_configYAML.isGenerateClientJS() &&
@@ -443,19 +482,25 @@ public class RESTBuilder {
 				"OpenAPI validation errors:\n" + validationErrorMessagesString);
 		}
 
-		FileUtil.deleteFiles(_configYAML.getApiDir(), _files);
+		return () -> {
+			for (Future<?> future : futures) {
+				future.get();
+			}
 
-		if (Validator.isNotNull(_configYAML.getClientDir())) {
-			FileUtil.deleteFiles(_configYAML.getClientDir(), _files);
-		}
+			FileUtil.deleteFiles(_configYAML.getApiDir(), _files);
 
-		FileUtil.deleteFiles(_configYAML.getImplDir(), _files);
-		FileUtil.deleteFiles(
-			_configYAML.getImplDir() + "/../resources/OSGI-INF/", _files);
+			if (Validator.isNotNull(_configYAML.getClientDir())) {
+				FileUtil.deleteFiles(_configYAML.getClientDir(), _files);
+			}
 
-		if (Validator.isNotNull(_configYAML.getTestDir())) {
-			FileUtil.deleteFiles(_configYAML.getTestDir(), _files);
-		}
+			FileUtil.deleteFiles(_configYAML.getImplDir(), _files);
+			FileUtil.deleteFiles(
+				_configYAML.getImplDir() + "/../resources/OSGI-INF/", _files);
+
+			if (Validator.isNotNull(_configYAML.getTestDir())) {
+				FileUtil.deleteFiles(_configYAML.getTestDir(), _files);
+			}
+		};
 	}
 
 	private static String _getBaselineTask(
@@ -515,8 +560,8 @@ public class RESTBuilder {
 		jCommander.usage();
 	}
 
-	private static String _processRESTConfigFile(
-			Path baseDirPath, Path restConfigYamlPath)
+	private static AutoCloseable _processRESTConfigFile(
+			ExecutorService executorService, Path restConfigYamlPath)
 		throws Exception {
 
 		Path moduleDirPath = restConfigYamlPath.getParent();
@@ -526,9 +571,7 @@ public class RESTBuilder {
 		RESTBuilder restBuilder = new RESTBuilder(
 			null, moduleDirPath.toFile(), null, null, null);
 
-		restBuilder.build();
-
-		return _getBaselineTask(baseDirPath, restConfigYamlPath);
+		return restBuilder.build(executorService);
 	}
 
 	private static List<String> _processRESTConfigFiles(String baseDirName)
@@ -600,10 +643,10 @@ public class RESTBuilder {
 			Runtime.getRuntime(
 			).availableProcessors());
 
-		List<Future<?>> futures = new ArrayList<>();
+		List<Future<?>> checkFutures = new ArrayList<>();
 
 		for (Path restConfigYamlPath : restConfigYamlPaths) {
-			futures.add(
+			checkFutures.add(
 				executorService.submit(
 					() -> {
 						Path moduleDirPath = restConfigYamlPath.getParent();
@@ -617,31 +660,39 @@ public class RESTBuilder {
 					}));
 		}
 
-		for (Future<?> future : futures) {
+		for (Future<?> future : checkFutures) {
 			future.get();
 		}
 
-		futures.clear();
+		Future<List<String>> baselineTasksFuture = executorService.submit(
+			() -> {
+				List<String> baselineTasks = new ArrayList<>();
+
+				for (Path restConfigYamlPath : restConfigYamlPaths) {
+					String baselineTask = _getBaselineTask(
+						baseDirPath, restConfigYamlPath);
+
+					if (baselineTask != null) {
+						baselineTasks.add(baselineTask);
+					}
+				}
+
+				return baselineTasks;
+			});
+
+		List<Future<AutoCloseable>> autoCloseableFutures = new ArrayList<>();
 
 		for (Path restConfigYamlPath : restConfigYamlPaths) {
-			futures.add(
+			autoCloseableFutures.add(
 				executorService.submit(
 					() -> _processRESTConfigFile(
-						baseDirPath, restConfigYamlPath)));
+						executorService, restConfigYamlPath)));
 		}
 
-		executorService.shutdown();
-
-		List<String> baselineTasks = new ArrayList<>();
 		List<Exception> exceptions = new ArrayList<>();
 
-		for (Future<?> future : futures) {
-			try {
-				String baselineTask = (String)future.get();
-
-				if (baselineTask != null) {
-					baselineTasks.add(baselineTask);
-				}
+		for (Future<AutoCloseable> future : autoCloseableFutures) {
+			try (AutoCloseable autoCloseable = future.get()) {
 			}
 			catch (ExecutionException executionException) {
 				Throwable throwable = executionException.getCause();
@@ -653,7 +704,12 @@ public class RESTBuilder {
 					exceptions.add(executionException);
 				}
 			}
+			catch (Exception exception) {
+				exceptions.add(exception);
+			}
 		}
+
+		executorService.shutdown();
 
 		if (!exceptions.isEmpty()) {
 			RuntimeException runtimeException = new RuntimeException(
@@ -666,7 +722,7 @@ public class RESTBuilder {
 			throw runtimeException;
 		}
 
-		return baselineTasks;
+		return baselineTasksFuture.get();
 	}
 
 	private String _addClientVersionDescription(String yamlString) {
@@ -2071,6 +2127,33 @@ public class RESTBuilder {
 			"schemaVarNames", TextFormatter.formatPlural(schemaVarName));
 
 		context.put("relatedSchemaNames", relatedSchemaNames);
+	}
+
+	private void _submit(
+		ExecutorService executorService, Collection<Future<?>> futures,
+		Map<String, Object> context,
+		UnsafeConsumer<Map<String, Object>, Exception> unsafeConsumer) {
+
+		if (executorService == null) {
+			try {
+				unsafeConsumer.accept(context);
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			return;
+		}
+
+		Map<String, Object> safeContext = new HashMap<>(context);
+
+		futures.add(
+			executorService.submit(
+				() -> {
+					unsafeConsumer.accept(safeContext);
+
+					return null;
+				}));
 	}
 
 	private void _validate(String yamlString) {

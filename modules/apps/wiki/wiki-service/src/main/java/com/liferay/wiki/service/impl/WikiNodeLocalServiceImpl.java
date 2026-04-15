@@ -7,6 +7,7 @@ package com.liferay.wiki.service.impl;
 
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -136,6 +137,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		node.setUserName(user.getFullName());
 		node.setName(name);
 		node.setDescription(description);
+
+		_setLastPostDate(node, serviceContext);
 
 		try {
 			node = wikiNodePersistence.update(node);
@@ -512,7 +515,9 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		node.setName(name);
 		node.setDescription(description);
 
-		return wikiNodePersistence.update(node);
+		_setLastPostDate(node, serviceContext);
+
+		return wikiNodePersistence.update(node, serviceContext);
 	}
 
 	@Override
@@ -608,6 +613,22 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			}
 
 			_wikiPageLocalService.restorePageFromTrash(userId, page);
+		}
+	}
+
+	private void _setLastPostDate(
+		WikiNode node, ServiceContext serviceContext) {
+
+		if (!ExportImportThreadLocal.isImportInProcess() &&
+			!ExportImportThreadLocal.isStagingInProcess()) {
+
+			return;
+		}
+
+		Date lastPostDate = (Date)serviceContext.getAttribute("lastPostDate");
+
+		if (lastPostDate != null) {
+			node.setLastPostDate(lastPostDate);
 		}
 	}
 

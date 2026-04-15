@@ -130,6 +130,8 @@ public class WikiNodeStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			node);
 
+		serviceContext.setAttribute("lastPostDate", node.getLastPostDate());
+
 		WikiNode importedNode = null;
 
 		WikiNode existingNode = fetchStagedModelByUuidAndGroupId(

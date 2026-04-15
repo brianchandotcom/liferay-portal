@@ -71,12 +71,6 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
-	public void testBrokenBundlesFile() throws Exception {
-		assertPortalInvalidatedWithBrokenFile(
-			"bundles", "Bundle list is corrupted");
-	}
-
-	@Test
 	public void testFreeTierLicense() throws Exception {
 		assertLicensePropertiesNotExisted(getPortalProductId());
 

@@ -59,7 +59,7 @@ export class LdapServerPage {
 		this.baseProviderUrl = page.getByLabel('Base Provider URL The LDAP');
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.clockSkew = page.getByLabel('Clock Skew The system time');
-		this.closeButton = page.getByLabel('Close');
+		this.closeButton = page.getByLabel('Close', {exact: true});
 		this.credentials = page.getByLabel('Credentials');
 		this.customContactMapping = page.getByLabel('Custom Contact Mapping');
 		this.customUserMapping = page.getByLabel('Custom User Mapping');

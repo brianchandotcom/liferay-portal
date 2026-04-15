@@ -31,10 +31,8 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,19 +50,6 @@ public class EmptyModelManagerImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() {
-		ReflectionTestUtil.setFieldValue(_emptyModelManager, "_log", _log);
-
-		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
-			StagingGroupHelperUtil.class);
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_stagingGroupHelperUtilMockedStatic.close();
-	}
-
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
@@ -75,8 +60,10 @@ public class EmptyModelManagerImplTest {
 			_exportImportReportEntryLocalService);
 		ReflectionTestUtil.setFieldValue(
 			_emptyModelManager, "_groupLocalService", _groupLocalService);
+		ReflectionTestUtil.setFieldValue(_emptyModelManager, "_log", _log);
 
-		_stagingGroupHelperUtilMockedStatic.reset();
+		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
+			StagingGroupHelperUtil.class);
 	}
 
 	@After
@@ -84,6 +71,8 @@ public class EmptyModelManagerImplTest {
 		Mockito.verifyNoMoreInteractions(
 			_classNameLocalService, _exportImportReportEntryLocalService,
 			_group, _groupLocalService, _log, _user);
+
+		_stagingGroupHelperUtilMockedStatic.close();
 	}
 
 	@Test

@@ -28,7 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -51,16 +51,16 @@ public class AssetTagsDisplayContextTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@AfterClass
-	public static void tearDownClass() {
-		_portletURLUtilMockedStatic.close();
-		_stagingGroupHelperUtilMockedStatic.close();
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_setUpLanguageUtil();
 		_setUpPortletURLUtil();
+	}
+
+	@After
+	public void tearDown() {
+		_portletURLUtilMockedStatic.close();
+		_stagingGroupHelperUtilMockedStatic.close();
 	}
 
 	@Test

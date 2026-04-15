@@ -119,7 +119,7 @@ public class SegmentsEntryProviderRegistryImpl
 		String cacheKey = _generateCacheKey(classPK, context);
 
 		long[] cachedSegmentsEntryIds =
-			SegmentsEntryCacheUtil.getSegmentsEntryIds(cacheKey);
+			SegmentsEntryCacheUtil.getSegmentsEntryIds(cacheKey, classPK);
 
 		if (cachedSegmentsEntryIds != null) {
 			return cachedSegmentsEntryIds;
@@ -138,7 +138,7 @@ public class SegmentsEntryProviderRegistryImpl
 		}
 
 		SegmentsEntryCacheUtil.putSegmentsEntryIds(
-			cacheKey, finalSegmentsEntryIds);
+			cacheKey, finalSegmentsEntryIds, classPK);
 
 		Set<Long> segmentsEntryIdsSet = SetUtil.fromArray(
 			finalSegmentsEntryIds);

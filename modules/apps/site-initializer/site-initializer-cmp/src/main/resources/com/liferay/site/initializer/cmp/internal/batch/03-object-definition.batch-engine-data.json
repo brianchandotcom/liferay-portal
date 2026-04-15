@@ -412,7 +412,7 @@
 				},
 				{
 					"active": true,
-					"conditionExpression": "(status != 3) && NOT(oldValue(\"state\") != state && state == \"blocked\")",
+					"conditionExpression": "(status != 3) && isEmpty(oldValue(\"title\")) == false && NOT(oldValue(\"state\") != state && state == \"blocked\")",
 					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_UPDATED_OBJECT_ACTION",
 					"label": {
 						"en_US": "Task Subscription Updated"

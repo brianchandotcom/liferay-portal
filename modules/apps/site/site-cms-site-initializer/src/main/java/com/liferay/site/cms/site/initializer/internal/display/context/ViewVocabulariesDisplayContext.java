@@ -106,7 +106,7 @@ public class ViewVocabulariesDisplayContext {
 									"/categorization/new-category"),
 								_themeDisplay),
 							"vocabularyId", "{id}"),
-						"plus", "add-category",
+						null, "add-category",
 						LanguageUtil.get(_httpServletRequest, "add-category"),
 						"get", "update", null),
 					new FDSActionDropdownItem(
@@ -117,7 +117,7 @@ public class ViewVocabulariesDisplayContext {
 									"/categorization/view-categories"),
 								_themeDisplay),
 							"vocabularyId", "{id}"),
-						"categories", "view-categories",
+						null, "view-categories",
 						LanguageUtil.get(
 							_httpServletRequest, "view-categories"),
 						"get", null, null))

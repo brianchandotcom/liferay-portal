@@ -309,6 +309,26 @@
 				"scope": 1
 			},
 			{
+				"actionId": "DELETE",
+				"resource": "com.liferay.commerce.model.CommerceShipment",
+				"scope": 1
+			},
+			{
+				"actionId": "PERMISSIONS",
+				"resource": "com.liferay.commerce.model.CommerceShipment",
+				"scope": 1
+			},
+			{
+				"actionId": "UPDATE",
+				"resource": "com.liferay.commerce.model.CommerceShipment",
+				"scope": 1
+			},
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.commerce.model.CommerceShipment",
+				"scope": 1
+			},
+			{
 				"actionId": "MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 1
@@ -359,12 +379,17 @@
 				"scope": 1
 			},
 			{
+				"actionId": "ADD_COMMERCE_SHIPMENT",
+				"resource": "com.liferay.commerce.shipment",
+				"scope": 1
+			},
+			{
 				"actionId": "MANAGE_ALL_ACCOUNTS",
 				"resource": "com.liferay.commerce.shipment",
 				"scope": 1
 			},
 			{
-				"actionId": "MANAGE_COMMERCE_SHIPMENTS",
+				"actionId": "VIEW_COMMERCE_SHIPMENTS",
 				"resource": "com.liferay.commerce.shipment",
 				"scope": 1
 			},

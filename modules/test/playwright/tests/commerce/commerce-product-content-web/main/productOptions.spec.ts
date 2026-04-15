@@ -484,8 +484,9 @@ test(
 					},
 					{
 						actionIds: [
+							'ADD_COMMERCE_SHIPMENT',
 							'MANAGE_ALL_ACCOUNTS',
-							'MANAGE_COMMERCE_SHIPMENTS',
+							'VIEW_COMMERCE_SHIPMENTS',
 						],
 						primaryKey: companyId,
 						resourceName: 'com.liferay.commerce.shipment',

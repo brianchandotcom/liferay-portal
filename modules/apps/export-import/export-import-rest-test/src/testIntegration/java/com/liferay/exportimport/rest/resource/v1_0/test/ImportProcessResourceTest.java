@@ -60,8 +60,8 @@ public class ImportProcessResourceTest
 	public void testPostScopeScopeKeyValidate() throws Exception {
 		super.testPostScopeScopeKeyValidate();
 
-		_testPostScopeScopeKeyValidateWithInstanceLar();
-		_testPostScopeScopeKeyValidateWithSiteLar();
+		_testPostScopeScopeKeyValidateInDifferentScope();
+		_testPostScopeScopeKeyValidateInSameScope();
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class ImportProcessResourceTest
 	public void testPostValidate() throws Exception {
 		super.testPostValidate();
 
-		_testPostValidateWithInstanceLar();
-		_testPostValidateWithSiteLar();
+		_testPostValidateInDifferentScope();
+		_testPostValidateInSameScope();
 	}
 
 	@Override
@@ -135,26 +135,6 @@ public class ImportProcessResourceTest
 		};
 	}
 
-	private File _exportLayoutAsFile() throws Exception {
-		long companyGroupId = _getCompanyGroupId();
-
-		Map<String, Serializable> parameterMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					TestPropsValues.getUser(), companyGroupId, false, null,
-					new HashMap<String, String[]>());
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					TestPropsValues.getUserId(), companyGroupId,
-					"Instance Export Test", "Description", 333, parameterMap,
-					new ServiceContext());
-
-		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
-			exportImportConfiguration);
-	}
-
 	private File _exportLayoutAsFile(long groupId) throws Exception {
 		Map<String, Serializable> parameterMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
@@ -166,8 +146,8 @@ public class ImportProcessResourceTest
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
 					TestPropsValues.getUserId(), groupId,
-					"Site Export Test - " + groupId,
-					"Description of site export",
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					parameterMap, new ServiceContext());
 
@@ -182,10 +162,10 @@ public class ImportProcessResourceTest
 		return group.getGroupId();
 	}
 
-	private void _testPostScopeScopeKeyValidateWithInstanceLar()
+	private void _testPostScopeScopeKeyValidateInDifferentScope()
 		throws Exception {
 
-		File file = _exportLayoutAsFile();
+		File file = _exportLayoutAsFile(_getCompanyGroupId());
 
 		try {
 			ValidationResponse validationResponse =
@@ -206,7 +186,7 @@ public class ImportProcessResourceTest
 		}
 	}
 
-	private void _testPostScopeScopeKeyValidateWithSiteLar() throws Exception {
+	private void _testPostScopeScopeKeyValidateInSameScope() throws Exception {
 		File file = _exportLayoutAsFile(testGroup.getGroupId());
 
 		try {
@@ -225,15 +205,34 @@ public class ImportProcessResourceTest
 		}
 	}
 
-	private void _testPostValidateWithInstanceLar() throws Exception {
-		File larFile = _exportLayoutAsFile();
+	private void _testPostValidateInDifferentScope() throws Exception {
+		File file = _exportLayoutAsFile(testGroup.getGroupId());
 
 		try {
 			ValidationResponse validationResponse =
 				importProcessResource.postValidate(
 					null,
 					HashMapBuilder.<String, File>put(
-						"file", larFile
+						"file", file
+					).build());
+
+			Assert.assertNotNull(validationResponse);
+			Assert.assertFalse(validationResponse.getSuccess());
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	private void _testPostValidateInSameScope() throws Exception {
+		File file = _exportLayoutAsFile(_getCompanyGroupId());
+
+		try {
+			ValidationResponse validationResponse =
+				importProcessResource.postValidate(
+					null,
+					HashMapBuilder.<String, File>put(
+						"file", file
 					).build());
 
 			Assert.assertNotNull(validationResponse);
@@ -241,26 +240,7 @@ public class ImportProcessResourceTest
 			Assert.assertNotNull(validationResponse.getFileEntryId());
 		}
 		finally {
-			FileUtil.delete(larFile);
-		}
-	}
-
-	private void _testPostValidateWithSiteLar() throws Exception {
-		File larFile = _exportLayoutAsFile(testGroup.getGroupId());
-
-		try {
-			ValidationResponse validationResponse =
-				importProcessResource.postValidate(
-					null,
-					HashMapBuilder.<String, File>put(
-						"file", larFile
-					).build());
-
-			Assert.assertNotNull(validationResponse);
-			Assert.assertFalse(validationResponse.getSuccess());
-		}
-		finally {
-			FileUtil.delete(larFile);
+			FileUtil.delete(file);
 		}
 	}
 

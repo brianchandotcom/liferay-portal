@@ -20,14 +20,19 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.function.Consumer;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -39,6 +44,16 @@ public class DepotAssetRendererFactoryWrapperTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_setUpStagingGroupHelper();
+	}
+
+	@After
+	public void tearDown() {
+		_stagingGroupHelperUtilMockedStatic.close();
+	}
 
 	@Test
 	public void testAssetRendererReturnsFallbackGroup() throws Exception {
@@ -235,7 +250,7 @@ public class DepotAssetRendererFactoryWrapperTest {
 		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
 
 		Mockito.when(
-			_depotEntryLocalService.getGroupDepotEntry(Mockito.anyLong())
+			_depotEntryLocalService.fetchGroupDepotEntry(Mockito.anyLong())
 		).thenReturn(
 			depotEntry
 		);
@@ -339,6 +354,35 @@ public class DepotAssetRendererFactoryWrapperTest {
 
 		return groupId;
 	}
+
+	private void _setUpStagingGroupHelper() {
+		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
+			StagingGroupHelperUtil.class);
+
+		StagingGroupHelper stagingGroupHelper = Mockito.mock(
+			StagingGroupHelper.class);
+
+		Mockito.when(
+			StagingGroupHelperUtil.getStagingGroupHelper()
+		).thenReturn(
+			stagingGroupHelper
+		);
+
+		Mockito.when(
+			stagingGroupHelper.isLocalLiveGroup(Mockito.any())
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			stagingGroupHelper.isRemoteLiveGroup(Mockito.any())
+		).thenReturn(
+			false
+		);
+	}
+
+	private static MockedStatic<StagingGroupHelperUtil>
+		_stagingGroupHelperUtilMockedStatic;
 
 	private final AssetRendererFactory<Object> _assetRendererFactory =
 		Mockito.mock(AssetRendererFactory.class);

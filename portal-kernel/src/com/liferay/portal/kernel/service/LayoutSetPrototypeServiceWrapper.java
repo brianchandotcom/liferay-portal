@@ -102,6 +102,16 @@ public class LayoutSetPrototypeServiceWrapper
 
 	@Override
 	public java.util.List<LayoutSetPrototype> search(
+		long companyId, Boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
+			orderByComparator) {
+
+		return _layoutSetPrototypeService.search(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<LayoutSetPrototype> search(
 			long companyId, Boolean active,
 			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 				orderByComparator)
@@ -109,6 +119,11 @@ public class LayoutSetPrototypeServiceWrapper
 
 		return _layoutSetPrototypeService.search(
 			companyId, active, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(long companyId, Boolean active) {
+		return _layoutSetPrototypeService.searchCount(companyId, active);
 	}
 
 	@Override
@@ -149,4 +164,4 @@ public class LayoutSetPrototypeServiceWrapper
 	private LayoutSetPrototypeService _layoutSetPrototypeService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:69666309
+// LIFERAY-SERVICE-BUILDER-HASH:2060442549

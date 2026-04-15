@@ -73,12 +73,14 @@ const getLocationsMapperCountries = getMetric => {
 	 * @param {object} param1 context
 	 */
 	const mapPropsToOptions = ({
+		experienceId,
 		filters,
 		interval,
 		rangeSelectors,
 		router: {params}
 	}) => {
 		const {variables} = getVariables({
+			experienceId,
 			filters,
 			interval,
 			params,

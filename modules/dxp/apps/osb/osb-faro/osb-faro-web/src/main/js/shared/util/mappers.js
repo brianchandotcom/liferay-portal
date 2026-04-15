@@ -98,6 +98,7 @@ export function safeResultToProps(mapper) {
  */
 export function getVariables({
 	assetId: assetIdFromProps,
+	experienceId,
 	filters,
 	interval,
 	params,
@@ -142,6 +143,13 @@ export function getVariables({
 		variables = {
 			...variables,
 			channelId
+		};
+	}
+
+	if (experienceId) {
+		variables = {
+			...variables,
+			experienceId
 		};
 	}
 

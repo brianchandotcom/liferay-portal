@@ -151,10 +151,17 @@ const withDevicesCard = (
 				minHeight={536}
 				reportContainer={reportContainer}
 			>
-				{({filters, interval, rangeSelectors, router}) => (
+				{({
+					experienceId,
+					filters,
+					interval,
+					rangeSelectors,
+					router
+				}) => (
 					<Card.Body>
 						<TabsWithDevices
 							activeTab={activeTab}
+							experienceId={experienceId}
 							filters={filters}
 							interval={interval}
 							items={[

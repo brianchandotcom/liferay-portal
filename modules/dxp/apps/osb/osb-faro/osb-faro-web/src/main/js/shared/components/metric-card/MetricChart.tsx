@@ -325,6 +325,7 @@ interface IMetricChartRendererProps extends ICommonMetricProps {}
 const MetricChartRenderer: React.FC<IMetricChartRendererProps> = ({
 	emptyDescription,
 	emptyTitle,
+	experienceId,
 	filters,
 	interval,
 	rangeSelectors
@@ -334,6 +335,7 @@ const MetricChartRenderer: React.FC<IMetricChartRendererProps> = ({
 	const metricName = getMetricName(activeItemIndex, metrics);
 
 	const {data, error, loading} = useMetricQuery({
+		experienceId,
 		filters,
 		interval,
 		Query: queries.MetricQuery(metricName),

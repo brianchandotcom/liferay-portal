@@ -99,6 +99,7 @@ function AudienceReportWithData<TRawData>({
 
 interface IAudienceReportProps<TRawData>
 	extends Partial<IAudienceReportBaseCardProps> {
+	experienceId?: string | null;
 	filters: RawFilters;
 	rangeSelectors: RangeSelectors;
 	Query: DocumentNode;
@@ -107,6 +108,7 @@ interface IAudienceReportProps<TRawData>
 }
 
 function AudienceReport<TRawData>({
+	experienceId,
 	filters,
 	Query,
 	rangeSelectors,
@@ -118,6 +120,7 @@ function AudienceReport<TRawData>({
 		variables: {
 			assetId,
 			touchpoint: getSafeTouchpoint(touchpoint),
+			...(experienceId && {experienceId}),
 			...(otherProps.name !== Name.ObjectEntry && {
 				channelId,
 				title: getSafeDecodedURIComponent(title)

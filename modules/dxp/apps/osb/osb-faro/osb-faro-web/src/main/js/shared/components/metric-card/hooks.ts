@@ -32,6 +32,7 @@ export const useAssetVariables = (variables: ICommonVariables) => {
 
 type TMetricQuery = {
 	filters: RawFilters;
+	experienceId?: string;
 	interval: Interval;
 	Query: DocumentNode;
 	rangeSelectors: RangeSelectors;
@@ -39,6 +40,7 @@ type TMetricQuery = {
 };
 
 export const useMetricQuery = ({
+	experienceId,
 	filters,
 	interval,
 	Query,
@@ -50,7 +52,8 @@ export const useMetricQuery = ({
 		variables: variables({
 			interval,
 			...getFilters(filters),
-			...getSafeRangeSelectors(rangeSelectors)
+			...getSafeRangeSelectors(rangeSelectors),
+			...(experienceId && {experienceId})
 		})
 	});
 

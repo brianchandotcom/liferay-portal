@@ -188,6 +188,7 @@ export const PageMetricQuery = (metricName: string) => gql`
 	query PageMetricQuery(
 		$channelId: String
 		$devices: String
+		$experienceId: String
 		$location: String
 		$rangeEnd: String
 		$rangeKey: Int
@@ -200,6 +201,7 @@ export const PageMetricQuery = (metricName: string) => gql`
 			canonicalUrl: $touchpoint
 			country: $location
 			deviceType: $devices
+			experienceId: $experienceId
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart
@@ -218,6 +220,7 @@ export const PageMetricTabsQuery = gql`
 	query PageMetricQuery(
 		$channelId: String
 		$devices: String
+		$experienceId: String
 		$location: String
 		$rangeEnd: String
 		$rangeKey: Int
@@ -230,6 +233,7 @@ export const PageMetricTabsQuery = gql`
 			canonicalUrl: $touchpoint
 			country: $location
 			deviceType: $devices
+			experienceId: $experienceId
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart

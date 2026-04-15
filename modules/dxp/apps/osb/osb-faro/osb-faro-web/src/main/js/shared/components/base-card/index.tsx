@@ -35,7 +35,12 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 }) => {
 	const context = useContext(BasePage.Context);
 
-	const {filters, rangeSelectors: contextRangeSelectors, router} = context;
+	const {
+		experienceId,
+		filters,
+		rangeSelectors: contextRangeSelectors,
+		router
+	} = context;
 
 	const [interval, setInterval] = useState(INTERVAL_KEY_MAP.day);
 
@@ -51,6 +56,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 	const isGlobal = !!contextRangeSelectors;
 
 	const otherProps = {
+		experienceId,
 		filters,
 		interval,
 		onChangeInterval: setInterval,

@@ -119,6 +119,7 @@ else {
 				);
 
 				const {onChange} = registerLocalizedInput({
+					availableLanguageIds: input.attributes.availableLanguageIds,
 					customLocaleChangeHandler: true,
 					defaultLanguageId,
 					initialValues: input.valueI18n,

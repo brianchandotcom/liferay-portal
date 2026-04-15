@@ -11,6 +11,7 @@ import {
 import {getTranslationInput} from './getTranslationInput';
 
 type Args = {
+	availableLanguageIds?: string[];
 	changeTextDirection: boolean;
 	customLocaleChangeHandler: boolean;
 	defaultLanguageId: Liferay.Language.Locale;
@@ -40,6 +41,7 @@ type Args = {
 };
 
 export function registerLocalizedInput({
+	availableLanguageIds,
 	changeTextDirection = true,
 	customLocaleChangeHandler = false,
 	defaultLanguageId,
@@ -130,7 +132,10 @@ export function registerLocalizedInput({
 	const form = inputElement?.closest('.lfr-layout-structure-item-form');
 
 	let currentLanguageId =
-		getSelectedLanguageId(form?.id) || Liferay.ThemeDisplay.getLanguageId();
+		getSelectedLanguageId(form?.id) ||
+		(availableLanguageIds?.includes(Liferay.ThemeDisplay.getLanguageId())
+			? Liferay.ThemeDisplay.getLanguageId()
+			: defaultLanguageId);
 
 	if (changeTextDirection) {
 		inputElement?.setAttribute(

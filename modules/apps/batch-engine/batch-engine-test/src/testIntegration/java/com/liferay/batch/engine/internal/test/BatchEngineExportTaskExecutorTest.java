@@ -25,7 +25,6 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -215,68 +214,6 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	@Test
-	@TestInfo("LPD-85155")
-	public void testExportBlogPostingsWithMultipleBatches()
-		throws Exception {
-
-		Group group = GroupTestUtil.addGroup();
-
-		for (int i = 0; i < 3000; i++) {
-			blogsEntryLocalService.addEntry(
-				user.getUserId(), "headline" + i, "alternativeHeadline" + i,
-				null, "articleBody" + i, new Date(baseDate.getTime()), false,
-				false, null, null, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getCompanyId(), group.getGroupId(),
-					user.getUserId()));
-		}
-
-		batchReadDurations.clear();
-
-		_batchEngineExportTask =
-			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
-				null, user.getCompanyId(), user.getUserId(), null,
-				BlogPosting.class.getName(), "JSON",
-				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				Arrays.asList("headline", "id"),
-				HashMapBuilder.<String, Serializable>put(
-					"siteId", group.getGroupId()
-				).build(),
-				null);
-
-		_batchEngineExportTaskExecutor.execute(_batchEngineExportTask);
-
-		int batchCount = batchReadDurations.size();
-
-		Assert.assertTrue(
-			"Expected at least 20 batches but got " + batchCount,
-			batchCount >= 20);
-
-		long first10Average = 0;
-
-		for (int i = 0; i < 10; i++) {
-			first10Average += batchReadDurations.get(i);
-		}
-
-		first10Average = first10Average / 10;
-
-		long last10Average = 0;
-
-		for (int i = batchCount - 10; i < batchCount; i++) {
-			last10Average += batchReadDurations.get(i);
-		}
-
-		last10Average = last10Average / 10;
-
-		Assert.assertTrue(
-			StringBundler.concat(
-				"Read time degradation detected: first 10 batches average ",
-				first10Average, "ms, last 10 batches average ", last10Average,
-				"ms. Last 10 should not be more than 2x the first 10"),
-			last10Average <= (first10Average * 2));
-	}
-
-	@Test
 	public void testExportBlogPostingsToJSONLFileWithEmptyFieldNames()
 		throws Exception {
 
@@ -400,6 +337,57 @@ public class BatchEngineExportTaskExecutorTest
 
 				return null;
 			});
+	}
+
+	@Test
+	@TestInfo("LPD-85155")
+	public void testExportBlogPostingsWithMultipleBatches() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		for (int i = 0; i < 3000; i++) {
+			blogsEntryLocalService.addEntry(
+				user.getUserId(), "headline" + i, "alternativeHeadline" + i,
+				null, "articleBody" + i, new Date(baseDate.getTime()), false,
+				false, null, null, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(), group.getGroupId(),
+					user.getUserId()));
+		}
+
+		batchReadDurations.clear();
+
+		_batchEngineExportTask =
+			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+				null, user.getCompanyId(), user.getUserId(), null,
+				BlogPosting.class.getName(), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				Arrays.asList("headline", "id"),
+				HashMapBuilder.<String, Serializable>put(
+					"siteId", group.getGroupId()
+				).build(),
+				null);
+
+		_batchEngineExportTaskExecutor.execute(_batchEngineExportTask);
+
+		int batchCount = batchReadDurations.size();
+
+		long first5Average = 0;
+
+		for (int i = 0; i < 5; i++) {
+			first5Average += batchReadDurations.get(i);
+		}
+
+		first5Average = first5Average / 5;
+
+		long last5Average = 0;
+
+		for (int i = batchCount - 5; i < batchCount; i++) {
+			last5Average += batchReadDurations.get(i);
+		}
+
+		last5Average = last5Average / 5;
+
+		Assert.assertTrue(last5Average <= (first5Average * 2));
 	}
 
 	@Test

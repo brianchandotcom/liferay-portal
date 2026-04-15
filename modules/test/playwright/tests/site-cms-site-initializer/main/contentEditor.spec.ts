@@ -178,6 +178,51 @@ test(
 );
 
 test(
+	'Can set Spanish as the only language and default language of a space',
+	{tag: '@LPD-84148'},
+	async ({apiHelpers, contentsPage, page}) => {
+
+		// Create a space with Spanish as the only language and default language
+
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				availableLanguageIds: ['es-ES'],
+				defaultLanguageId: 'es-ES',
+				useCustomLanguages: true,
+			},
+			type: 'Space',
+		});
+
+		// Create a Blog in the space and save it
+
+		const blogTitle = getRandomString();
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent('Blog', spaceName);
+
+		await page.getByPlaceholder('New Blog').fill(blogTitle);
+
+		await contentsPage.saveContent();
+
+		// Edit the content and check the title is persisted
+
+		await contentsPage.editContent(blogTitle);
+
+		expect(page.getByPlaceholder('New Blog')).toHaveValue(blogTitle);
+
+		// Delete content
+
+		await contentsPage.goto();
+
+		await contentsPage.deleteContent(blogTitle);
+	}
+);
+
+test(
 	'Check the functionality of the Space List fragment CMS',
 	{tag: ['@LPD-52223']},
 	async ({contentsPage, page, structureBuilderPage}) => {

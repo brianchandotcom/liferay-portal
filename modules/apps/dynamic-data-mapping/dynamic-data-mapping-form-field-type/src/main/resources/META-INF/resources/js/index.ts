@@ -97,10 +97,8 @@ import Validation from './Validation/Validation';
 
 export {default as Checkbox} from './Checkbox/Checkbox';
 export {default as DatePicker} from './DatePicker/DatePicker';
-export {default as LocalizablePhoneNumber} from './LocalizablePhoneNumber/LocalizablePhoneNumber';
 export {default as Numeric} from './Numeric/Numeric';
 export {default as NumericInputMask} from './NumericInputMask/NumericInputMask';
-export {default as PhoneNumber} from './PhoneNumber/PhoneNumber';
 export {default as MultipleSelection} from './Select/MultipleSelect';
 export {default as Select} from './Select/Select';
 export type {Locale, FieldChangeEventHandler, LocalizedValue} from './types';

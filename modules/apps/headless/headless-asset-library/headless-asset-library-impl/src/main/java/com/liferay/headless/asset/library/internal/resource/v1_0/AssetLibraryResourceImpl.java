@@ -460,10 +460,11 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 			if (!expandoBridge.hasAttribute("cmsFirstTimeAccess")) {
 				expandoBridge.addAttribute(
-					"cmsFirstTimeAccess", ExpandoColumnConstants.BOOLEAN,
+					"cmsFirstTimeAccess", ExpandoColumnConstants.BOOLEAN, false,
 					false);
 
-				expandoBridge.setAttribute("cmsFirstTimeAccess", Boolean.FALSE);
+				expandoBridge.setAttribute(
+					"cmsFirstTimeAccess", Boolean.FALSE, false);
 			}
 		}
 

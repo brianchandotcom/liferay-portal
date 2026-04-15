@@ -195,7 +195,10 @@ public class ImportProcessResourceTest
 						"file", larFile
 					).build());
 
-			Assert.assertTrue(validationResponse.getErrorMessages().length > 0);
+			String[] errorMessages = validationResponse.getErrorMessages();
+
+			Assert.assertTrue(errorMessages.length > 0);
+
 			Assert.assertFalse(validationResponse.getSuccess());
 		}
 		finally {

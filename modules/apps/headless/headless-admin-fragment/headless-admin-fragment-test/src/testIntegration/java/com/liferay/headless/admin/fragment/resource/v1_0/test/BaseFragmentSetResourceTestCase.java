@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -266,7 +267,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 			testGetSiteFragmentSetsPage_getIrrelevantSiteExternalReferenceCode();
 
 		Page<FragmentSet> page = fragmentSetResource.getSiteFragmentSetsPage(
-			siteExternalReferenceCode, Pagination.of(1, 10));
+			siteExternalReferenceCode, null, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -277,7 +278,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 					randomIrrelevantFragmentSet());
 
 			page = fragmentSetResource.getSiteFragmentSetsPage(
-				irrelevantSiteExternalReferenceCode,
+				irrelevantSiteExternalReferenceCode, null,
 				Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -297,7 +298,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 			siteExternalReferenceCode, randomFragmentSet());
 
 		page = fragmentSetResource.getSiteFragmentSetsPage(
-			siteExternalReferenceCode, Pagination.of(1, 10));
+			siteExternalReferenceCode, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -331,13 +332,108 @@ public abstract class BaseFragmentSetResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteFragmentSetsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String siteExternalReferenceCode =
+			testGetSiteFragmentSetsPage_getSiteExternalReferenceCode();
+
+		FragmentSet fragmentSet1 = randomFragmentSet();
+
+		fragmentSet1 = testGetSiteFragmentSetsPage_addFragmentSet(
+			siteExternalReferenceCode, fragmentSet1);
+
+		for (EntityField entityField : entityFields) {
+			Page<FragmentSet> page =
+				fragmentSetResource.getSiteFragmentSetsPage(
+					siteExternalReferenceCode,
+					getFilterString(entityField, "between", fragmentSet1),
+					Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(fragmentSet1),
+				(List<FragmentSet>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteFragmentSetsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetSiteFragmentSetsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetSiteFragmentSetsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetSiteFragmentSetsPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteFragmentSetsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetSiteFragmentSetsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteFragmentSetsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetSiteFragmentSetsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetSiteFragmentSetsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String siteExternalReferenceCode =
+			testGetSiteFragmentSetsPage_getSiteExternalReferenceCode();
+
+		FragmentSet fragmentSet1 = testGetSiteFragmentSetsPage_addFragmentSet(
+			siteExternalReferenceCode, randomFragmentSet());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		FragmentSet fragmentSet2 = testGetSiteFragmentSetsPage_addFragmentSet(
+			siteExternalReferenceCode, randomFragmentSet());
+
+		for (EntityField entityField : entityFields) {
+			Page<FragmentSet> page =
+				fragmentSetResource.getSiteFragmentSetsPage(
+					siteExternalReferenceCode,
+					getFilterString(entityField, operator, fragmentSet1),
+					Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(fragmentSet1),
+				(List<FragmentSet>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteFragmentSetsPageWithPagination() throws Exception {
 		String siteExternalReferenceCode =
 			testGetSiteFragmentSetsPage_getSiteExternalReferenceCode();
 
 		Page<FragmentSet> fragmentSetsPage =
 			fragmentSetResource.getSiteFragmentSetsPage(
-				siteExternalReferenceCode, null);
+				siteExternalReferenceCode, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			fragmentSetsPage.getTotalCount());
@@ -358,7 +454,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<FragmentSet> page1 =
 				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -369,7 +465,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			Page<FragmentSet> page2 =
 				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -378,7 +474,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			Page<FragmentSet> page3 =
 				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -388,7 +484,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 		else {
 			Page<FragmentSet> page1 =
 				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, null,
 					Pagination.of(1, totalCount + 2));
 
 			List<FragmentSet> fragmentSets1 =
@@ -399,7 +495,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			Page<FragmentSet> page2 =
 				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, null,
 					Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -412,7 +508,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			Page<FragmentSet> page3 =
 				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, null,
 					Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(fragmentSet1, (List<FragmentSet>)page3.getItems());
@@ -555,6 +651,9 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 		return testGroup.getExternalReferenceCode();
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected void assertContains(
 		FragmentSet fragmentSet, List<FragmentSet> fragmentSets) {
@@ -1556,3 +1655,4 @@ public abstract class BaseFragmentSetResourceTestCase {
 			_fragmentSetResource;
 
 }
+// LIFERAY-REST-BUILDER-HASH:-322462788

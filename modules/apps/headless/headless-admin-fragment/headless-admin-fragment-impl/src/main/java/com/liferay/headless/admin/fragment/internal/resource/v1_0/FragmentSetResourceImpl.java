@@ -13,6 +13,7 @@ import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.common.spi.util.GroupUtil;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -68,7 +69,8 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 
 	@Override
 	public Page<FragmentSet> getSiteFragmentSetsPage(
-			String siteExternalReferenceCode, Pagination pagination)
+			String siteExternalReferenceCode, Filter filter,
+			Pagination pagination)
 		throws Exception {
 
 		EnabledUtil.checkEnabled(contextCompany);

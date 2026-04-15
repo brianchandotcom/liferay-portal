@@ -181,6 +181,10 @@ public abstract class BaseFragmentSetResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -205,6 +209,8 @@ public abstract class BaseFragmentSetResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
+			@jakarta.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter,
 			@jakarta.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -313,6 +319,10 @@ public abstract class BaseFragmentSetResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -340,6 +350,8 @@ public abstract class BaseFragmentSetResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
+			@jakarta.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -563,7 +575,7 @@ public abstract class BaseFragmentSetResourceImpl
 
 		if (parameters.containsKey("siteExternalReferenceCode")) {
 			return getSiteFragmentSetsPage(
-				(String)parameters.get("siteExternalReferenceCode"),
+				(String)parameters.get("siteExternalReferenceCode"), filter,
 				pagination);
 		}
 		else {
@@ -1174,3 +1186,4 @@ public abstract class BaseFragmentSetResourceImpl
 		LogFactoryUtil.getLog(BaseFragmentSetResourceImpl.class);
 
 }
+// LIFERAY-REST-BUILDER-HASH:1355018529

@@ -26,6 +26,8 @@ function main {
 
 	terraform_args="$(_get_terraform_apply_args "${1}" "${2}")"
 
+	_create_tfstate_bucket "${1}"
+
 	_set_up_aws_service_linked_roles
 
 	_set_up_aws_eks "${terraform_args}"
@@ -35,6 +37,139 @@ function main {
 	_set_up_aws_gitops "${terraform_args}"
 
 	_port_forward_argo_cd
+}
+
+function _create_tfstate_bucket {
+	local configuration_json_file="${1}"
+
+	if ! jq --exit-status '.variables.tfstate_bucket_name' "${configuration_json_file}" > /dev/null
+	then
+		_log "The configuration JSON file must contain property named \"variables.tfstate_bucket_name\"."
+
+		exit 1
+	fi
+
+	local bucket_name="$(jq --raw-output '.variables.tfstate_bucket_name' "${configuration_json_file}")"
+	local region="$(jq --raw-output '.variables.region' "${configuration_json_file}")"
+
+	if ! aws s3api head-bucket --bucket "${bucket_name}" --region "${region}" 1>/dev/null 2>&1
+	then
+		_log "Creating bucket ${bucket_name}."
+
+		_create_s3_bucket "${bucket_name}" "${region}"
+
+		_log "Bucket ${bucket_name} created successfully."
+	else
+		_log "Bucket ${bucket_name} already exists. Skipping creation process."
+	fi
+
+	_log "Configuring bucket ${bucket_name}."
+
+	_configure_s3_bucket "${bucket_name}" "${region}"
+
+	_log "Bucket ${bucket_name} configured successfully."
+}
+
+function _create_s3_bucket {
+	local bucket_name="${1}"
+	local region="${2}"
+
+	# Due to a legacy behavior on AWS, we must pass extra arguments and have a different retry logic if the
+	# region is different from "us-east-1".
+
+	# https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#:~:text=BucketAlreadyOwnedByYou
+	if [ "${region}" = "us-east-1" ]
+	then
+		aws s3api create-bucket \
+			--bucket "${bucket_name}" \
+			--object-lock-enabled-for-bucket \
+			--region "${region}" 1>/dev/null
+	else
+		aws s3api create-bucket \
+			--bucket "${bucket_name}" \
+			--create-bucket-configuration LocationConstraint="${region}" \
+			--object-lock-enabled-for-bucket \
+			--region "${region}" 1>/dev/null
+	fi
+
+	aws s3api put-bucket-versioning \
+		--bucket "${bucket_name}" \
+		--region "${region}" \
+		--versioning-configuration Status=Enabled
+}
+
+function _configure_s3_bucket {
+	local account_id="$(aws sts get-caller-identity --query "Account" --output text)"
+	local bucket_name="${1}"
+	local region="${2}"
+
+	local alias_name="alias/tfstate-${bucket_name}"
+
+	if ! kms_key_id=$(aws kms describe-key --key-id "${alias_name}" --query 'KeyMetadata.KeyId' --output text --region "${region}" 2>/dev/null)
+	then
+		_log "Creating KMS key for bucket ${bucket_name}."
+
+		local kms_key_id=$(aws kms create-key \
+		--description "Terraform State Storage Key" \
+		--output text \
+		--policy "{
+				\"Statement\": [{
+					\"Action\": \"kms:*\",
+					\"Effect\": \"Allow\",
+					\"Principal\": {\"AWS\": \"arn:aws:iam::${account_id}:root\"},
+					\"Resource\": \"*\"
+				}],
+				\"Version\": \"2012-10-17\"
+			}" \
+		--query 'KeyMetadata.KeyId' \
+		--region "${region}")
+
+		aws kms create-alias \
+			--alias-name "${alias_name}" \
+			--target-key-id "${kms_key_id}" \
+			--region "${region}"
+
+		_log "KMS key for bucket ${bucket_name} created successfully."
+	else
+		_log "KMS key for bucket ${bucket_name} already exists. Skipping creation process."
+	fi
+
+	aws s3api put-bucket-encryption \
+	--bucket "${bucket_name}" \
+	--region "${region}" \
+	--server-side-encryption-configuration "{
+			\"Rules\": [
+				{
+					\"ApplyServerSideEncryptionByDefault\": {
+							\"KMSMasterKeyID\": \"${kms_key_id}\",
+							\"SSEAlgorithm\": \"aws:kms\"
+					}
+				}
+			]
+		}"
+
+	aws s3api put-public-access-block \
+		--bucket "${bucket_name}" \
+		--region "${region}" \
+		--public-access-block-configuration '{
+				"BlockPublicAcls": true,
+				"BlockPublicPolicy": true,
+				"IgnorePublicAcls": true,
+				"RestrictPublicBuckets": true
+			}'
+
+	aws s3api put-object-lock-configuration \
+		--bucket "${bucket_name}" \
+		--region "${region}" \
+		--object-lock-configuration '{
+				"ObjectLockEnabled": "Enabled",
+				"Rule": {
+					"DefaultRetention": {
+						"Days": 90,
+						"Mode": "GOVERNANCE"
+					}
+				}
+			}'
 }
 
 function _generate_tfvars {
@@ -127,6 +262,10 @@ function _get_terraform_apply_args {
 	fi
 
 	echo "${apply_args[@]}"
+}
+
+function _log {
+	echo "[Tfstate bucket configuration] ${1}"
 }
 
 function _popd {

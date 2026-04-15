@@ -365,8 +365,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 			Assert.assertEquals(
 				existingBlogsEntry.getEntryId(), importedEntry.getEntryId());
-			Assert.assertEquals(
-				blogsEntry.getTitle(), importedEntry.getTitle());
+			Assert.assertEquals(blogsEntry.getUuid(), importedEntry.getUuid());
 		}
 	}
 

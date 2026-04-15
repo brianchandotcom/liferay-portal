@@ -153,7 +153,7 @@ public class WikiNodeStagedModelDataHandlerTest
 
 			Assert.assertEquals(
 				existingWikiNode.getNodeId(), importedWikiNode.getNodeId());
-			Assert.assertEquals(wikiNode.getName(), importedWikiNode.getName());
+			Assert.assertEquals(wikiNode.getUuid(), importedWikiNode.getUuid());
 		}
 	}
 

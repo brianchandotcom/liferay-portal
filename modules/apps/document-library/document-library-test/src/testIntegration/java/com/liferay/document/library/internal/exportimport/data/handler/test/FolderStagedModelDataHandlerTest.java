@@ -124,7 +124,7 @@ public class FolderStagedModelDataHandlerTest
 
 			Assert.assertEquals(
 				existingFolder.getFolderId(), importedDLFolder.getFolderId());
-			Assert.assertEquals(folder.getName(), importedDLFolder.getName());
+			Assert.assertEquals(folder.getUuid(), importedDLFolder.getUuid());
 		}
 	}
 

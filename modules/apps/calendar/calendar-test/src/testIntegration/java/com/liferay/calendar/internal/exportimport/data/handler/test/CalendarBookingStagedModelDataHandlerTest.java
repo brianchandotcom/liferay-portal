@@ -166,8 +166,7 @@ public class CalendarBookingStagedModelDataHandlerTest
 				existingCalendarBooking.getCalendarBookingId(),
 				importedCalendarBooking.getCalendarBookingId());
 			Assert.assertEquals(
-				calendarBooking.getTitleCurrentValue(),
-				importedCalendarBooking.getTitleCurrentValue());
+				calendarBooking.getUuid(), importedCalendarBooking.getUuid());
 		}
 	}
 

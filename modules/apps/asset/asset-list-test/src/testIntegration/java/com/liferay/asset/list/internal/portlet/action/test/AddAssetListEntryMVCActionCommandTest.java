@@ -145,10 +145,10 @@ public class AddAssetListEntryMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private static Company _company;
-
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

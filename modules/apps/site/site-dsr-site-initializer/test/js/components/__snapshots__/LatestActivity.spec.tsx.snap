@@ -39,7 +39,9 @@ exports[`LatestActivity renders the component with provided data 1`] = `
         </a>
       </header>
       <div>
-        <div>
+        <div
+          class="latest-activity-container"
+        >
           <div
             class="latest-activity-fds"
           >

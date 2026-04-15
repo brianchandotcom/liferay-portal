@@ -32,7 +32,9 @@ exports[`MostActiveVisitors renders the component with provided data 1`] = `
         </span>
       </header>
       <div>
-        <div>
+        <div
+          class="most-active-visitors-container"
+        >
           <div
             class="most-active-visitors-fds"
           >

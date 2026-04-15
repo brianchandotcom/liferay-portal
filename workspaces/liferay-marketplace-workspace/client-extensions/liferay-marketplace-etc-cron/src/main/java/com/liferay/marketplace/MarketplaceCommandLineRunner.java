@@ -31,6 +31,7 @@ import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResou
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
@@ -77,6 +78,8 @@ public class MarketplaceCommandLineRunner
 		_invoke(this::_processOnHoldTrials, "On Hold Trials");
 
 		_invoke(this::_processPendingOrders, "Pending Orders");
+
+		_invoke(this::_processMostPurchasedProducts, "Most Purchased Products");
 
 		_invoke(
 			this::_processProjectsUsingMarketplaceApps,
@@ -643,6 +646,99 @@ public class MarketplaceCommandLineRunner
 
 			_assignRoleToUserAccount(role, userAccount);
 			_assignAccountToUserAccount(account, userAccount);
+		}
+	}
+
+	private void _processMostPurchasedProducts() throws Exception {
+		int currentHour = ZonedDateTime.now(
+			ZoneOffset.UTC
+		).getHour();
+
+		if (currentHour > _WINDOW_SIZE_HOURS) {
+			return;
+		}
+
+		Map<Long, JSONObject> productsCountMap = new HashMap<>();
+
+		String filterString = StringBundler.concat(
+			"orderStatus/any(x:(x eq ", _ORDER_STATUS_COMPLETED,
+			")) or orderTypeExternalReferenceCode eq 'AI_HUB'");
+
+		_forEachOrder(
+			filterString,
+			order -> {
+				OrderItem[] orderItems = order.getOrderItems();
+
+				if (ArrayUtil.isEmpty(orderItems)) {
+					return;
+				}
+
+				OrderItem orderItem = orderItems[0];
+				String productName = null;
+
+				if (orderItem.getName() != null) {
+					productName = orderItem.getName(
+					).get(
+						"en_US"
+					);
+				}
+
+				Long productId = orderItem.getProductId();
+
+				if ((productName == null) || (productId == null)) {
+					return;
+				}
+
+				JSONObject productJSONObject = productsCountMap.get(productId);
+
+				if (productJSONObject == null) {
+					productJSONObject = new JSONObject(
+					).put(
+						"orderTypeExternalReferenceCode",
+						order.getOrderTypeExternalReferenceCode()
+					).put(
+						"productId", productId
+					).put(
+						"productName", productName
+					).put(
+						"total", 1L
+					);
+
+					productsCountMap.put(productId, productJSONObject);
+				}
+				else {
+					productJSONObject.put(
+						"total", productJSONObject.getLong("total") + 1L);
+				}
+			});
+
+		JSONArray productsPurchasedJSONArray = new JSONArray();
+
+		for (JSONObject productJSONObject : productsCountMap.values()) {
+			productsPurchasedJSONArray.put(productJSONObject);
+		}
+
+		JSONObject valueJSONObject = new JSONObject(
+		).put(
+			"createDate",
+			ZonedDateTime.now(
+				ZoneOffset.UTC
+			).format(
+				DateTimeFormatter.ISO_OFFSET_DATE_TIME
+			)
+		).put(
+			"productsPurchased", productsPurchasedJSONArray
+		);
+
+		_patchReport(
+			new JSONObject(
+			).put(
+				"value", valueJSONObject.toString()
+			).toString(),
+			"PURCHASED-PRODUCTS-COUNT");
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Processed most purchased products");
 		}
 	}
 

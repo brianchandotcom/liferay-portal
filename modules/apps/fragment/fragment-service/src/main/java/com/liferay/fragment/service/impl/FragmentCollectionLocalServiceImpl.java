@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -48,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentCollectionLocalServiceImpl
 	extends FragmentCollectionLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentCollection addFragmentCollection(
 			String externalReferenceCode, long userId, long groupId,
@@ -59,6 +62,7 @@ public class FragmentCollectionLocalServiceImpl
 			description, false, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentCollection addFragmentCollection(
 			String externalReferenceCode, long userId, long groupId,
@@ -285,6 +289,7 @@ public class FragmentCollectionLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentCollection updateFragmentCollection(
 			long fragmentCollectionId, String name, String description)

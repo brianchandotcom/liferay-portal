@@ -27,6 +27,10 @@ const mockLiferayLanguageGet = jest.fn((key: string) => {
 	Language: {
 		get: mockLiferayLanguageGet,
 	},
+	ThemeDisplay: {
+		...global.Liferay?.ThemeDisplay,
+		getBCP47LanguageId: () => 'en-US',
+	},
 };
 
 const {Liferay: originalLiferay} = global.window;

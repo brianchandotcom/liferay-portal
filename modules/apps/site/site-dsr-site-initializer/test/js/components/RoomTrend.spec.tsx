@@ -155,6 +155,8 @@ describe('RoomTrend', () => {
 	});
 
 	it('updates the pointer rotation when the trend status changes', async () => {
+		render(<RoomTrend />);
+
 		Liferay.fire('dsr-filters-updated', {
 			filters: {
 				room: {

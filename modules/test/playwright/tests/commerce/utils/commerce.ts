@@ -325,7 +325,11 @@ export async function configureOperationsManagerUserForSite(
 				scope: 1,
 			},
 			{
-				actionIds: ['MANAGE_ALL_ACCOUNTS', 'MANAGE_COMMERCE_SHIPMENTS'],
+				actionIds: [
+					'ADD_COMMERCE_SHIPMENT',
+					'MANAGE_ALL_ACCOUNTS',
+					'VIEW_COMMERCE_SHIPMENTS',
+				],
 				primaryKey: companyId,
 				resourceName: 'com.liferay.commerce.shipment',
 				scope: 1,

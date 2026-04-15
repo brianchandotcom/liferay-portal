@@ -279,6 +279,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 
 				commerceShipmentItem =
 					_commerceShipmentItemService.updateCommerceShipmentItem(
+						commerceShipmentId,
 						initialCommerceShipmentItem.getCommerceShipmentItemId(),
 						commerceInventoryWarehouseId, quantity, true);
 
@@ -298,12 +299,14 @@ public class EditCommerceShipmentItemMVCActionCommand
 
 				commerceShipmentItem =
 					_commerceShipmentItemService.updateCommerceShipmentItem(
+						commerceShipmentId,
 						commerceShipmentItem.getCommerceShipmentItemId(),
 						commerceInventoryWarehouseId, quantity, true);
 
 				if (BigDecimalUtil.eq(quantity, BigDecimal.ZERO)) {
 					commerceShipmentItem =
 						_commerceShipmentItemService.updateCommerceShipmentItem(
+							commerceShipmentId,
 							commerceShipmentItem.getCommerceShipmentItemId(), 0,
 							quantity, true);
 				}
@@ -317,7 +320,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 			actionRequest, "externalReferenceCode");
 
 		return _commerceShipmentItemService.updateExternalReferenceCode(
-			commerceShipmentItemId, externalReferenceCode);
+			commerceShipmentId, commerceShipmentItemId, externalReferenceCode);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

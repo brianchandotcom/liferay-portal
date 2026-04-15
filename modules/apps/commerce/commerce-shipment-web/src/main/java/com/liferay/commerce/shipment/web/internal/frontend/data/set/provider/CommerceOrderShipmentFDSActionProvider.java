@@ -5,11 +5,10 @@
 
 package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceShipmentFDSNames;
 import com.liferay.commerce.frontend.model.Shipment;
+import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -19,8 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -51,11 +52,12 @@ public class CommerceOrderShipmentFDSActionProvider
 		throws PortalException {
 
 		Shipment shipment = (Shipment)model;
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		return DropdownItemListBuilder.add(
-			() -> _portletResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), null,
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS),
+			() -> _commerceShipmentModelResourcePermission.contains(
+				permissionChecker, shipment.getShipmentId(), ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getShipmentEditURL(
@@ -64,9 +66,8 @@ public class CommerceOrderShipmentFDSActionProvider
 					_language.get(httpServletRequest, "edit"));
 			}
 		).add(
-			() -> _portletResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), null,
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS),
+			() -> _commerceShipmentModelResourcePermission.contains(
+				permissionChecker, shipment.getShipmentId(), ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getShipmentDeleteURL(
@@ -123,15 +124,16 @@ public class CommerceOrderShipmentFDSActionProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderShipmentFDSActionProvider.class);
 
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceShipment)"
+	)
+	private ModelResourcePermission<CommerceShipment>
+		_commerceShipmentModelResourcePermission;
+
 	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

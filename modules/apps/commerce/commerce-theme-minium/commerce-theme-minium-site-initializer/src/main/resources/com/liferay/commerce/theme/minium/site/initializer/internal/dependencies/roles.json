@@ -206,6 +206,15 @@
 			},
 			{
 				"actionIds": [
+					"DELETE",
+					"PERMISSIONS",
+					"UPDATE",
+					"VIEW"
+				],
+				"resource": "com.liferay.commerce.model.CommerceShipment"
+			},
+			{
+				"actionIds": [
 					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
 					"MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES",
 					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
@@ -231,8 +240,9 @@
 			},
 			{
 				"actionIds": [
+					"ADD_COMMERCE_SHIPMENT",
 					"MANAGE_ALL_ACCOUNTS",
-					"MANAGE_COMMERCE_SHIPMENTS"
+					"VIEW_COMMERCE_SHIPMENTS"
 				],
 				"resource": "com.liferay.commerce.shipment"
 			},

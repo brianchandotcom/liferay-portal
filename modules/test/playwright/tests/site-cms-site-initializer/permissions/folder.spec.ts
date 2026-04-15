@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {addCMSAdministrator} from '../../../utils/addCMSAdministrator';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -48,23 +49,7 @@ test(
 		});
 
 		await test.step('Create a user and assign CMS Administrator role and the space', async () => {
-			user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-			userData[user.alternateName] = {
-				name: user.givenName,
-				password: 'test',
-				surname: user.familyName,
-			};
-
-			const cmsAdminRole =
-				await apiHelpers.headlessAdminUser.getRoleByName(
-					'CMS Administrator'
-				);
-
-			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
-				cmsAdminRole.id,
-				Number(user.id)
-			);
+			user = await addCMSAdministrator(apiHelpers);
 
 			await spaceSummaryPage.goto(spaceName);
 

@@ -13,6 +13,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParser;
@@ -51,6 +52,10 @@ public class SegmentsEntryExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
+		if (Validator.isBlank(content)) {
+			return content;
+		}
+
 		Criteria criteria = CriteriaSerializer.deserialize(content);
 
 		content = _replaceExportCriteriaReferences(
@@ -67,6 +72,10 @@ public class SegmentsEntryExportImportContentProcessor
 
 		content = _replaceImportExpandoColumnReferences(
 			portletDataContext.getCompanyId(), content);
+
+		if (Validator.isBlank(content)) {
+			return content;
+		}
 
 		Criteria criteria = CriteriaSerializer.deserialize(content);
 

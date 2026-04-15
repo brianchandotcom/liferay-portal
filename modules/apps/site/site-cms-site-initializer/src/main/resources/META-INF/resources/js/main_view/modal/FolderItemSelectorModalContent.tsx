@@ -14,6 +14,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import FolderService from '../../common/services/FolderService';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
+import {ObjectDefinition} from '../../common/types/ObjectDefinition';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
 import {openCMSModal} from '../../common/utils/openCMSModal';
 import {displayErrorToast} from '../../common/utils/toastUtil';
@@ -21,7 +22,6 @@ import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetB
 import DuplicatedAssetFolderNamesModalContent, {
 	Option,
 } from './DuplicatedAssetFolderNamesModalContent';
-import { ObjectDefinition } from '../../common/types/ObjectDefinition';
 
 export type TFolderItemSelectorModalContent = {
 	action: FolderAction;
@@ -135,8 +135,7 @@ const isContentStructureMoveInvalid = async (
 	const objectFolderERC =
 		embedded?.systemProperties?.objectDefinitionBrief
 			?.objectFolderExternalReferenceCode;
-	const entryFolderERC =
-		embedded?.objectEntryFolderExternalReferenceCode;
+	const entryFolderERC = embedded?.objectEntryFolderExternalReferenceCode;
 
 	const isContentStructureItem =
 		objectFolderERC === 'L_CMS_CONTENT_STRUCTURES' ||
@@ -146,7 +145,9 @@ const isContentStructureMoveInvalid = async (
 		return false;
 	}
 
-	const structureExternalReferenceCode = embedded?.systemProperties?.objectDefinitionBrief?.externalReferenceCode;
+	const structureExternalReferenceCode =
+		embedded?.systemProperties?.objectDefinitionBrief
+			?.externalReferenceCode;
 
 	if (!structureExternalReferenceCode || !destinationSpaceScopeId) {
 		return true;
@@ -162,9 +163,11 @@ const isContentStructureMoveInvalid = async (
 		}
 
 		const objectDefinition = response.data as ObjectDefinition;
-		const acceptedGroupSettings = objectDefinition.objectDefinitionSettings?.find(
-			(setting) => setting.name === 'acceptedGroupExternalReferenceCodes'
-		);
+		const acceptedGroupSettings =
+			objectDefinition.objectDefinitionSettings?.find(
+				(setting) =>
+					setting.name === 'acceptedGroupExternalReferenceCodes'
+			);
 
 		if (!acceptedGroupSettings || !acceptedGroupSettings.value) {
 			return false;
@@ -176,15 +179,21 @@ const isContentStructureMoveInvalid = async (
 			(lib) => lib.groupId === destinationSpaceScopeId
 		);
 
-		if (!destinationAssetLibrary || !destinationAssetLibrary.externalReferenceCode) {
+		if (
+			!destinationAssetLibrary ||
+			!destinationAssetLibrary.externalReferenceCode
+		) {
 			return true;
 		}
 
-		const destinationSpaceERC = destinationAssetLibrary.externalReferenceCode;
-		const isStructureAvailableInDestination = acceptedGroupERCs.includes(destinationSpaceERC);
+		const destinationSpaceERC =
+			destinationAssetLibrary.externalReferenceCode;
+		const isStructureAvailableInDestination =
+			acceptedGroupERCs.includes(destinationSpaceERC);
 
 		return !isStructureAvailableInDestination;
-	} catch (error) {
+	}
+	catch (error) {
 		return true;
 	}
 };
@@ -404,6 +413,14 @@ function FolderItemSelectorModalContent({
 	};
 
 	const handleOnItemsChange = async (folder: Folder, targetName?: string) => {
+		const invalidContentActionMessage = isCopy
+			? Liferay.Language.get(
+					'the-asset-cannot-be-copied-because-its-content-type-is-not-available-in-the-destination-space.'
+				)
+			: Liferay.Language.get(
+					'the-asset-cannot-be-moved-because-its-content-type-is-not-available-in-the-destination-space.'
+				);
+
 		if (isBulk) {
 			const invalidMovesPromises = selectedData.items.map(
 				async (item: any) =>
@@ -415,16 +432,11 @@ function FolderItemSelectorModalContent({
 			);
 
 			const invalidMovesResults = await Promise.all(invalidMovesPromises);
-			const hasContentStructureInDifferentSpace = invalidMovesResults.some(
-				(result: boolean) => result === true
-			);
+			const hasContentStructureInDifferentSpace =
+				invalidMovesResults.some((result: boolean) => result === true);
 
 			if (hasContentStructureInDifferentSpace) {
-				displayErrorToast(
-					Liferay.Language.get(
-						'the-asset-cannot-be-moved-because-its-content-type-is-not-available-in-the-destination-space.'
-					)
-				);
+				displayErrorToast(invalidContentActionMessage);
 				onOpenChange(false);
 
 				return;
@@ -454,11 +466,7 @@ function FolderItemSelectorModalContent({
 		);
 
 		if (isInvalidSingleMove) {
-			displayErrorToast(
-				Liferay.Language.get(
-					'the-asset-cannot-be-moved-because-its-content-type-is-not-available-in-the-destination-space.'
-				)
-			);
+			displayErrorToast(invalidContentActionMessage);
 			onOpenChange(false);
 
 			return;

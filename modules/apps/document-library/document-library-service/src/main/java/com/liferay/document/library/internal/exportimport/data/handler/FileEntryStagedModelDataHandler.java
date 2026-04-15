@@ -605,6 +605,15 @@ public class FileEntryStagedModelDataHandler
 									folderId, serviceContext);
 						}
 
+						DLFileEntry importedDLFileEntry =
+							_dlFileEntryLocalService.fetchDLFileEntry(
+								importedFileEntry.getFileEntryId());
+
+						importedDLFileEntry.setUuid(fileEntry.getUuid());
+
+						_dlFileEntryLocalService.updateDLFileEntry(
+							importedDLFileEntry);
+
 						if (importedFileEntry instanceof LiferayFileEntry) {
 							LiferayFileEntry liferayFileEntry =
 								(LiferayFileEntry)importedFileEntry;

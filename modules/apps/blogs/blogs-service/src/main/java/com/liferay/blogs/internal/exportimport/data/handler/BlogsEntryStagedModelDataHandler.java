@@ -281,6 +281,11 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getDisplayDate(), entry.isAllowPingbacks(),
 				entry.isAllowTrackbacks(), trackbacks,
 				entry.getCoverImageCaption(), null, null, serviceContext);
+
+			importedEntry.setUuid(entry.getUuid());
+
+			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
+				importedEntry);
 		}
 
 		serviceContext.setModifiedDate(importedEntry.getModifiedDate());

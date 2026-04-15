@@ -295,6 +295,13 @@ public class FolderStagedModelDataHandler
 				importedFolder = _dlAppLocalService.updateFolder(
 					existingFolder.getFolderId(), parentFolderId, name,
 					folder.getDescription(), serviceContext);
+
+				DLFolder importedDLFolder = _dlFolderLocalService.fetchDLFolder(
+					importedFolder.getFolderId());
+
+				importedDLFolder.setUuid(folder.getUuid());
+
+				_dlFolderLocalService.updateDLFolder(importedDLFolder);
 			}
 		}
 

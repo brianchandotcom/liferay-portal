@@ -174,6 +174,11 @@ public class WikiNodeStagedModelDataHandler
 				importedNode = _wikiNodeLocalService.updateNode(
 					existingNode.getNodeId(), nodeName, node.getDescription(),
 					serviceContext);
+
+				importedNode.setUuid(node.getUuid());
+
+				importedNode = _wikiNodeLocalService.updateWikiNode(
+					importedNode);
 			}
 		}
 		else {

@@ -210,6 +210,11 @@ public class JournalFolderStagedModelDataHandler
 					userId, serviceContext.getScopeGroupId(),
 					existingFolder.getFolderId(), parentFolderId, name,
 					folder.getDescription(), false, serviceContext);
+
+				importedFolder.setUuid(folder.getUuid());
+
+				importedFolder = _journalFolderLocalService.updateJournalFolder(
+					importedFolder);
 			}
 		}
 		else {

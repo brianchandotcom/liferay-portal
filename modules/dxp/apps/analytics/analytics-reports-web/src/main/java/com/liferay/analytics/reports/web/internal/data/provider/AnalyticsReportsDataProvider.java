@@ -355,14 +355,19 @@ public class AnalyticsReportsDataProvider {
 		String endpoint = String.format(
 			"api/1.0/pages/%s?canonicalURL=%s", path, HtmlUtil.escapeURL(url));
 
+		if (timeRange != null) {
+			endpoint += String.format(
+				"&endDate=%s",
+				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()));
+		}
+
 		if (Validator.isNotNull(experienceId)) {
 			endpoint += "&experienceId=" + experienceId;
 		}
 
 		if (timeRange != null) {
 			endpoint += String.format(
-				"&endDate=%s&interval=D&startDate=%s",
-				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate()),
+				"&interval=D&startDate=%s",
 				DateTimeFormatter.ISO_DATE.format(
 					timeRange.getStartLocalDate()));
 		}

@@ -4,13 +4,15 @@
  */
 
 import {Option, Picker} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import {CacheStatus} from '../contexts/CacheContext';
 
-type Item = {id: number; name: string};
+type Item = {icon?: string; id: number; logoURL?: string; name: string};
 
 type Props<T> = {
 	disabled?: boolean;
@@ -131,7 +133,21 @@ export default function AsyncPicker<T>({
 			value={value}
 			{...otherProps}
 		>
-			{(item) => <Option key={item.id}>{item.name}</Option>}
+			{(item) => (
+				<Option key={item.id}>
+					{item.logoURL ? (
+						<ClaySticker className="c-mr-2" size="xs">
+							<ClaySticker.Image alt="" src={item.logoURL} />
+						</ClaySticker>
+					) : null}
+
+					{item.icon ? (
+						<ClayIcon className="mr-2" symbol={item.icon} />
+					) : null}
+
+					{item.name}
+				</Option>
+			)}
 		</Picker>
 	);
 }

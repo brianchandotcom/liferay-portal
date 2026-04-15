@@ -16,6 +16,7 @@ export type Site = {
 		url: string;
 	}[];
 	groupId: string;
+	logoURL: string;
 	name: string;
 };
 
@@ -46,11 +47,16 @@ export default function PreviewBody({
 
 	const channels = useMemo(
 		() => [
-			...sites.map(({groupId, name}) => ({
+			...sites.map(({groupId, logoURL, name}) => ({
 				id: Number(groupId),
+				logoURL,
 				name,
 			})),
-			{id: 1, name: Liferay.Language.get('external-url')},
+			{
+				icon: 'chain-broken',
+				id: 1,
+				name: Liferay.Language.get('external-url'),
+			},
 		],
 		[sites]
 	);

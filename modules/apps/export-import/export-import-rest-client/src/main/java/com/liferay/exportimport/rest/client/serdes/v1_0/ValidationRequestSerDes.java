@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.exportimport.rest.client.serdes.v1_0;
 
-import com.liferay.exportimport.rest.client.dto.v1_0.Status;
+import com.liferay.exportimport.rest.client.dto.v1_0.ValidationRequest;
 import com.liferay.exportimport.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,22 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class StatusSerDes {
+public class ValidationRequestSerDes {
 
-	public static Status toDTO(String json) {
-		StatusJSONParser statusJSONParser = new StatusJSONParser();
+	public static ValidationRequest toDTO(String json) {
+		ValidationRequestJSONParser validationRequestJSONParser =
+			new ValidationRequestJSONParser();
 
-		return statusJSONParser.parseToDTO(json);
+		return validationRequestJSONParser.parseToDTO(json);
 	}
 
-	public static Status[] toDTOs(String json) {
-		StatusJSONParser statusJSONParser = new StatusJSONParser();
+	public static ValidationRequest[] toDTOs(String json) {
+		ValidationRequestJSONParser validationRequestJSONParser =
+			new ValidationRequestJSONParser();
 
-		return statusJSONParser.parseToDTOs(json);
+		return validationRequestJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Status status) {
-		if (status == null) {
+	public static String toJSON(ValidationRequest validationRequest) {
+		if (validationRequest == null) {
 			return "null";
 		}
 
@@ -44,26 +46,16 @@ public class StatusSerDes {
 
 		sb.append("{");
 
-		if (status.getCode() != null) {
+		if (validationRequest.getFile() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"code\": ");
-
-			sb.append(status.getCode());
-		}
-
-		if (status.getLabel() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"label\": ");
+			sb.append("\"file\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(status.getLabel()));
+			sb.append(_escape(validationRequest.getFile()));
 
 			sb.append("\"");
 		}
@@ -74,53 +66,47 @@ public class StatusSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		StatusJSONParser statusJSONParser = new StatusJSONParser();
+		ValidationRequestJSONParser validationRequestJSONParser =
+			new ValidationRequestJSONParser();
 
-		return statusJSONParser.parseToMap(json);
+		return validationRequestJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Status status) {
-		if (status == null) {
+	public static Map<String, String> toMap(
+		ValidationRequest validationRequest) {
+
+		if (validationRequest == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (status.getCode() == null) {
-			map.put("code", null);
+		if (validationRequest.getFile() == null) {
+			map.put("file", null);
 		}
 		else {
-			map.put("code", String.valueOf(status.getCode()));
-		}
-
-		if (status.getLabel() == null) {
-			map.put("label", null);
-		}
-		else {
-			map.put("label", String.valueOf(status.getLabel()));
+			map.put("file", String.valueOf(validationRequest.getFile()));
 		}
 
 		return map;
 	}
 
-	public static class StatusJSONParser extends BaseJSONParser<Status> {
+	public static class ValidationRequestJSONParser
+		extends BaseJSONParser<ValidationRequest> {
 
 		@Override
-		protected Status createDTO() {
-			return new Status();
+		protected ValidationRequest createDTO() {
+			return new ValidationRequest();
 		}
 
 		@Override
-		protected Status[] createDTOArray(int size) {
-			return new Status[size];
+		protected ValidationRequest[] createDTOArray(int size) {
+			return new ValidationRequest[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "code")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "label")) {
+			if (Objects.equals(jsonParserFieldName, "file")) {
 				return false;
 			}
 
@@ -129,18 +115,12 @@ public class StatusSerDes {
 
 		@Override
 		protected void setField(
-			Status status, String jsonParserFieldName,
+			ValidationRequest validationRequest, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "code")) {
+			if (Objects.equals(jsonParserFieldName, "file")) {
 				if (jsonParserFieldValue != null) {
-					status.setCode(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "label")) {
-				if (jsonParserFieldValue != null) {
-					status.setLabel((String)jsonParserFieldValue);
+					validationRequest.setFile((String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -224,4 +204,4 @@ public class StatusSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1398775194
+// LIFERAY-REST-BUILDER-HASH:-1560933916

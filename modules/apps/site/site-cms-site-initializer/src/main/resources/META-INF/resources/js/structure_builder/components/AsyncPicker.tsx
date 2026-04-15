@@ -25,6 +25,7 @@ type Props<T> = {
 	selectedKey: React.Key;
 	small?: boolean;
 	status: CacheStatus;
+	width?: number;
 };
 
 const Trigger = React.forwardRef(
@@ -82,6 +83,7 @@ export default function AsyncPicker<T>({
 	selectedKey,
 	small = false,
 	status,
+	width,
 	...otherProps
 }: Props<T>) {
 	const [active, setActive] = useState(false);
@@ -131,6 +133,7 @@ export default function AsyncPicker<T>({
 			small={small}
 			status={status}
 			value={value}
+			width={width}
 			{...otherProps}
 		>
 			{(item) => (

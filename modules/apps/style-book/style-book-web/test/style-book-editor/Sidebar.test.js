@@ -92,6 +92,8 @@ jest.mock(
 					type: 'color',
 				},
 			},
+			sortFrontendTokenValues: (frontendTokensValues) =>
+				Object.values(frontendTokensValues),
 			themeFrontendTokenDefinitionId: 'theme',
 			themeName: 'Classic',
 		},

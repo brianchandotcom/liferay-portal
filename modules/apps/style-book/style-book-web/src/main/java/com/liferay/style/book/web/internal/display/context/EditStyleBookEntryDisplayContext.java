@@ -101,6 +101,9 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"defaultTokenDefinitionPriority",
+			FrontendTokenDefinitionConstants.PRIORITY_LEGACY
+		).put(
 			"fragmentCollectionPreviewURL",
 			ResourceURLBuilder.createResourceURL(
 				_renderResponse
@@ -318,7 +321,7 @@ public class EditStyleBookEntryDisplayContext {
 	private List<JSONObject> _getFrontendTokenDefinitionsJSONObjects()
 		throws Exception {
 
-		List<FrontendTokenDefinition> frontendTokenDefinitions =
+		List<FrontendTokenDefinition> frontendTokenDefinitions = ListUtil.sort(
 			ListUtil.filter(
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
 					_themeDisplay.getCompanyId()),
@@ -328,13 +331,25 @@ public class EditStyleBookEntryDisplayContext {
 						_styleBookEntry.getThemeId()) ||
 					Objects.equals(
 						frontendTokenDefinition.getThemeType(),
-						FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL));
+						FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL)),
+			(frontendTokenDefinition1, frontendTokenDefinition2) ->
+				Integer.compare(
+					frontendTokenDefinition2.getPriority(),
+					frontendTokenDefinition1.getPriority()));
 
 		return TransformUtil.transform(
 			frontendTokenDefinitions,
 			frontendTokenDefinition -> {
-				JSONObject jsonObject = frontendTokenDefinition.getJSONObject(
-					_themeDisplay.getLocale());
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				JSONObject frontendTokenDefinitionJSONObject =
+					frontendTokenDefinition.getJSONObject(
+						_themeDisplay.getLocale());
+
+				for (String key : frontendTokenDefinitionJSONObject.keySet()) {
+					jsonObject.put(
+						key, frontendTokenDefinitionJSONObject.get(key));
+				}
 
 				jsonObject.put(
 					"id", frontendTokenDefinition.getThemeId()
@@ -342,6 +357,8 @@ public class EditStyleBookEntryDisplayContext {
 					"name",
 					frontendTokenDefinition.getThemeName(
 						_themeDisplay.getLocale())
+				).put(
+					"priority", frontendTokenDefinition.getPriority()
 				);
 
 				return jsonObject;

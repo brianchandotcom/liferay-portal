@@ -10,6 +10,8 @@ import React from 'react';
 import StyleBookEditor from '../../src/main/resources/META-INF/resources/js/style-book-editor/StyleBookEditor';
 import {config} from '../../src/main/resources/META-INF/resources/js/style-book-editor/config';
 
+const DEFAULT_TOKEN_DEFINITION_PRIORITY = 300;
+
 jest.mock(
 	'../../src/main/resources/META-INF/resources/js/style-book-editor/useCloseProductMenu',
 	() => ({
@@ -27,11 +29,6 @@ jest.mock(
 	() => () => <div data-testid="LayoutPreview" />
 );
 
-jest.mock(
-	'../../src/main/resources/META-INF/resources/js/style-book-editor/Sidebar',
-	() => () => <div data-testid="Sidebar" />
-);
-
 global.Liferay = {
 	Language: {
 		get: jest.fn((key) => key),
@@ -47,11 +44,23 @@ const frontendTokenDefinitions = [
 						frontendTokens: [
 							{
 								defaultValue: '#000',
-								label: 'Token 1',
+								label: 'Theme Token',
 								mappings: [
-									{type: 'cssVariable', value: 'token-1'},
+									{type: 'cssVariable', value: 'theme-token'},
 								],
-								name: 'token1',
+								name: 'themeToken',
+								type: 'color',
+							},
+							{
+								defaultValue: '#000',
+								label: 'Conflicting Token (Theme)',
+								mappings: [
+									{
+										type: 'cssVariable',
+										value: 'conflicting-token',
+									},
+								],
+								name: 'conflictingToken',
 								type: 'color',
 							},
 						],
@@ -65,6 +74,7 @@ const frontendTokenDefinitions = [
 		],
 		id: 'theme',
 		name: 'Theme Tokens',
+		priority: 300,
 	},
 	{
 		frontendTokenCategories: [
@@ -81,6 +91,18 @@ const frontendTokenDefinitions = [
 								name: 'clayToken',
 								type: 'color',
 							},
+							{
+								defaultValue: '#000',
+								label: 'Conflicting Token (Clay)',
+								mappings: [
+									{
+										type: 'cssVariable',
+										value: 'conflicting-token',
+									},
+								],
+								name: 'conflictingToken',
+								type: 'color',
+							},
 						],
 						label: 'Clay Set',
 						name: 'claySet',
@@ -92,6 +114,7 @@ const frontendTokenDefinitions = [
 		],
 		id: 'clay',
 		name: 'Clay Tokens',
+		priority: 100,
 	},
 ];
 
@@ -107,6 +130,9 @@ describe('StyleBookEditor', () => {
 	it('initializes config with namespaced tokens and backward compatibility for theme tokens', () => {
 		render(
 			<StyleBookEditor
+				defaultTokenDefinitionPriority={
+					DEFAULT_TOKEN_DEFINITION_PRIORITY
+				}
 				frontendTokenDefinitions={frontendTokenDefinitions}
 				previewOptions={previewOptions}
 				themeFrontendTokenDefinitionId="theme"
@@ -115,20 +141,75 @@ describe('StyleBookEditor', () => {
 
 		// Namespaced keys should exist
 
-		expect(config.frontendTokens['theme:token1']).toBeDefined();
-		expect(config.frontendTokens['theme:token1'].value).toBe('#000');
+		expect(config.frontendTokens['theme:themeToken']).toBeDefined();
+		expect(config.frontendTokens['theme:themeToken'].value).toBe('#000');
 
 		expect(config.frontendTokens['clay:clayToken']).toBeDefined();
 		expect(config.frontendTokens['clay:clayToken'].value).toBe('#fff');
 
 		// Backward compatibility: theme tokens should also exist without namespace
 
-		expect(config.frontendTokens['token1']).toBeDefined();
-		expect(config.frontendTokens['token1'].name).toBe('token1');
-		expect(config.frontendTokens['token1'].value).toBe('#000');
+		expect(config.frontendTokens['themeToken']).toBeDefined();
+		expect(config.frontendTokens['themeToken'].name).toBe('themeToken');
+		expect(config.frontendTokens['themeToken'].value).toBe('#000');
 
 		// Clay tokens should NOT exist without namespace (unless it was the theme)
 
 		expect(config.frontendTokens['clayToken']).toBeUndefined();
+	});
+
+	it('respects priority precedence when multiple tokens map to the same CSS variable', () => {
+		const conflictingValues = {
+			'clay:conflictingToken': {
+				cssVariableMapping: 'conflicting-token',
+				tokenDefinitionId: 'clay',
+				value: '#fff',
+			},
+			'theme:conflictingToken': {
+				cssVariableMapping: 'conflicting-token',
+				tokenDefinitionId: 'theme',
+				value: '#000',
+			},
+		};
+
+		const {container} = render(
+			<StyleBookEditor
+				defaultTokenDefinitionPriority={
+					DEFAULT_TOKEN_DEFINITION_PRIORITY
+				}
+				frontendTokenDefinitions={frontendTokenDefinitions}
+				frontendTokensValues={conflictingValues}
+				previewOptions={previewOptions}
+				themeFrontendTokenDefinitionId="theme"
+			/>
+		);
+
+		const sidebar = container.querySelector('.style-book-editor__sidebar');
+
+		expect(sidebar.style.getPropertyValue('--conflicting-token')).toBe(
+			'#000'
+		);
+
+		const {container: reversedContainer} = render(
+			<StyleBookEditor
+				defaultTokenDefinitionPriority={
+					DEFAULT_TOKEN_DEFINITION_PRIORITY
+				}
+				frontendTokenDefinitions={frontendTokenDefinitions}
+				frontendTokensValues={Object.fromEntries(
+					Object.entries(conflictingValues).toReversed()
+				)}
+				previewOptions={previewOptions}
+				themeFrontendTokenDefinitionId="theme"
+			/>
+		);
+
+		const reversedSidebar = reversedContainer.querySelector(
+			'.style-book-editor__sidebar'
+		);
+
+		expect(
+			reversedSidebar.style.getPropertyValue('--conflicting-token')
+		).toBe('#000');
 	});
 });

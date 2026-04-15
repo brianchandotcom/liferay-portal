@@ -15,6 +15,7 @@ import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {LayoutContextProvider} from './contexts/LayoutContext';
 import {StyleBookEditorContextProvider} from './contexts/StyleBookEditorContext';
 import {useCloseProductMenu} from './useCloseProductMenu';
+import {getFrontendTokenValuesSorter} from './utils/getFrontendTokenValuesSorter';
 
 const StyleBookEditor = React.memo(() => {
 	useCloseProductMenu();
@@ -48,6 +49,7 @@ const StyleBookEditor = React.memo(() => {
 });
 
 export default function ({
+	defaultTokenDefinitionPriority,
 	fragmentCollectionPreviewURL = '',
 	frontendTokenDefinitions = [],
 	frontendTokensValues = {},
@@ -68,6 +70,7 @@ export default function ({
 	);
 
 	initializeConfig({
+		defaultTokenDefinitionPriority,
 		fragmentCollectionPreviewURL,
 		frontendTokenDefinitions: filteredFrontendTokenDefinitions,
 		frontendTokens: getFrontendTokens(
@@ -80,6 +83,10 @@ export default function ({
 		publishURL,
 		redirectURL,
 		saveDraftURL,
+		sortFrontendTokenValues: getFrontendTokenValuesSorter({
+			defaultPriority: defaultTokenDefinitionPriority,
+			frontendTokenDefinitions: filteredFrontendTokenDefinitions,
+		}),
 		styleBookEntryId,
 		themeFrontendTokenDefinitionId,
 		themeName,

@@ -8,6 +8,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {
 	useLoading,
@@ -34,14 +35,12 @@ export default React.memo(function LayoutPreview() {
 			if (root) {
 				root.removeAttribute('style');
 
-				Object.values(frontendTokensValues).forEach(
-					({cssVariableMapping, value}) => {
-						root.style.setProperty(
-							`--${cssVariableMapping}`,
-							value
-						);
-					}
-				);
+				for (const {
+					cssVariableMapping,
+					value,
+				} of config.sortFrontendTokenValues(frontendTokensValues)) {
+					root.style.setProperty(`--${cssVariableMapping}`, value);
+				}
 
 				setLoading(false);
 			}

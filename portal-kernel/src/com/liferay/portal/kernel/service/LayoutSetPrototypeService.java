@@ -84,9 +84,17 @@ public interface LayoutSetPrototypeService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutSetPrototype> search(
+		long companyId, Boolean active, int start, int end,
+		OrderByComparator<LayoutSetPrototype> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutSetPrototype> search(
 			long companyId, Boolean active,
 			OrderByComparator<LayoutSetPrototype> orderByComparator)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, Boolean active);
 
 	public LayoutSetPrototype updateLayoutSetPrototype(
 			long layoutSetPrototypeId, Map<Locale, String> nameMap,
@@ -99,4 +107,4 @@ public interface LayoutSetPrototypeService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:890507146
+// LIFERAY-SERVICE-BUILDER-HASH:66517459

@@ -378,6 +378,76 @@ public class LayoutSetPrototypeServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.portal.kernel.model.LayoutSetPrototype> search(
+			HttpPrincipal httpPrincipal, long companyId, Boolean active,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.LayoutSetPrototype>
+					orderByComparator) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutSetPrototypeServiceUtil.class, "search",
+				_searchParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, active, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.portal.kernel.model.LayoutSetPrototype>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int searchCount(
+		HttpPrincipal httpPrincipal, long companyId, Boolean active) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutSetPrototypeServiceUtil.class, "searchCount",
+				_searchCountParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype
 			updateLayoutSetPrototype(
 				HttpPrincipal httpPrincipal, long layoutSetPrototypeId,
@@ -390,7 +460,7 @@ public class LayoutSetPrototypeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetPrototypeServiceUtil.class, "updateLayoutSetPrototype",
-				_updateLayoutSetPrototypeParameterTypes8);
+				_updateLayoutSetPrototypeParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutSetPrototypeId, nameMap, descriptionMap,
@@ -434,7 +504,7 @@ public class LayoutSetPrototypeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetPrototypeServiceUtil.class, "updateLayoutSetPrototype",
-				_updateLayoutSetPrototypeParameterTypes9);
+				_updateLayoutSetPrototypeParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutSetPrototypeId, settings);
@@ -498,14 +568,21 @@ public class LayoutSetPrototypeServiceHttp {
 		long.class, Boolean.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _updateLayoutSetPrototypeParameterTypes8 =
+	private static final Class<?>[] _searchParameterTypes8 = new Class[] {
+		long.class, Boolean.class, int.class, int.class,
+		com.liferay.portal.kernel.util.OrderByComparator.class
+	};
+	private static final Class<?>[] _searchCountParameterTypes9 = new Class[] {
+		long.class, Boolean.class
+	};
+	private static final Class<?>[] _updateLayoutSetPrototypeParameterTypes10 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLayoutSetPrototypeParameterTypes9 =
+	private static final Class<?>[] _updateLayoutSetPrototypeParameterTypes11 =
 		new Class[] {long.class, String.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1653062143
+// LIFERAY-SERVICE-BUILDER-HASH:-2138032268

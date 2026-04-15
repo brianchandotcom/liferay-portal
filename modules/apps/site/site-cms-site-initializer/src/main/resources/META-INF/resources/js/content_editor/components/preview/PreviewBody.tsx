@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Option, Picker} from '@clayui/core';
 import React, {useCallback, useId, useMemo, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
@@ -26,8 +27,11 @@ export default function PreviewBody({
 	getPreviewDataURL: string;
 }) {
 	const [selectedChannelKey, setSelectedChannelKey] = useState<React.Key>('');
+	const [selectedDisplayPageKey, setSelectedDisplayPageKey] =
+		useState<React.Key>('');
 
 	const channelPickerId = useId();
+	const displayPageTemplatePickerId = useId();
 
 	const getSites = useCallback(async () => {
 		const {data, error} = await ApiHelper.get<Site[]>(getPreviewDataURL);
@@ -61,24 +65,59 @@ export default function PreviewBody({
 		[sites]
 	);
 
-	return (
-		<div className="align-items-center border-bottom d-flex mb-0 p-3">
-			<label className="mb-0 mr-3" htmlFor={channelPickerId}>
-				{Liferay.Language.get('Channel')}
-			</label>
+	const displayPageTemplates = useMemo(
+		() =>
+			sites.find(({groupId}) => selectedChannelKey === groupId)
+				?.displayPageTemplates,
+		[selectedChannelKey, sites]
+	);
 
-			<AsyncPicker
-				aria-label={Liferay.Language.get('select-channel')}
-				id={channelPickerId}
-				items={channels}
-				loader={loadSites}
-				onSelectionChange={setSelectedChannelKey}
-				placeholder={Liferay.Language.get('select-channel')}
-				selectedKey={selectedChannelKey}
-				small
-				status={status}
-				width={240}
-			/>
+	return (
+		<div className="border-bottom c-gap-3 d-flex flex-wrap mb-0 p-3">
+			<div className="align-items-center c-gap-3 d-flex">
+				<label className="flex-shrink-0 mb-0" htmlFor={channelPickerId}>
+					{Liferay.Language.get('Channel')}
+				</label>
+
+				<AsyncPicker
+					aria-label={Liferay.Language.get('select-channel')}
+					id={channelPickerId}
+					items={channels}
+					loader={loadSites}
+					onSelectionChange={setSelectedChannelKey}
+					placeholder={Liferay.Language.get('select-channel')}
+					selectedKey={selectedChannelKey}
+					small
+					status={status}
+					width={240}
+				/>
+			</div>
+
+			{selectedChannelKey ? (
+				<div className="align-items-center c-gap-3 d-flex">
+					<label
+						className="flex-shrink-0 mb-0"
+						htmlFor={displayPageTemplatePickerId}
+					>
+						{Liferay.Language.get('display-page')}
+					</label>
+
+					<Picker
+						aria-label={Liferay.Language.get('select-display-page')}
+						className="form-control-sm"
+						id={displayPageTemplatePickerId}
+						items={displayPageTemplates}
+						onSelectionChange={setSelectedDisplayPageKey}
+						placeholder={Liferay.Language.get(
+							'select-display-page'
+						)}
+						selectedKey={selectedDisplayPageKey}
+						width={240}
+					>
+						{({name, plid}) => <Option key={plid}>{name}</Option>}
+					</Picker>
+				</div>
+			) : null}
 		</div>
 	);
 }

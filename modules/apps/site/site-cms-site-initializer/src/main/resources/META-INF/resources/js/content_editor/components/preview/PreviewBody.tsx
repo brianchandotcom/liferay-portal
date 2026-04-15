@@ -69,6 +69,7 @@ export default function PreviewBody({
 				onSelectionChange={setSelectedChannelKey}
 				placeholder={Liferay.Language.get('select-channel')}
 				selectedKey={selectedChannelKey}
+				small
 				status={status}
 			/>
 		</div>

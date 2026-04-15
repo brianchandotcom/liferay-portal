@@ -135,7 +135,7 @@ public class ImportProcessResourceTest
 		};
 	}
 
-	private File _exportGroupToLar(long groupId) throws Exception {
+	private File _exportLayoutAsFile(long groupId) throws Exception {
 		Map<String, Serializable> parameterMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportLayoutSettingsMap(
@@ -155,7 +155,7 @@ public class ImportProcessResourceTest
 			exportImportConfiguration);
 	}
 
-	private File _exportInstanceToLar() throws Exception {
+	private File _exportLayoutAsFile() throws Exception {
 		long companyGroupId = _getCompanyGroupId();
 
 		Map<String, Serializable> parameterMap =
@@ -185,7 +185,7 @@ public class ImportProcessResourceTest
 	private void _testPostScopeScopeKeyValidateWithInstanceLar()
 		throws Exception {
 
-		File larFile = _exportInstanceToLar();
+		File larFile = _exportLayoutAsFile();
 
 		try {
 			ValidationResponse validationResponse =
@@ -206,7 +206,7 @@ public class ImportProcessResourceTest
 	}
 
 	private void _testPostScopeScopeKeyValidateWithSiteLar() throws Exception {
-		File larFile = _exportGroupToLar(testGroup.getGroupId());
+		File larFile = _exportLayoutAsFile(testGroup.getGroupId());
 
 		try {
 			ValidationResponse validationResponse =
@@ -226,7 +226,7 @@ public class ImportProcessResourceTest
 	}
 
 	private void _testPostValidateWithInstanceLar() throws Exception {
-		File larFile = _exportInstanceToLar();
+		File larFile = _exportLayoutAsFile();
 
 		try {
 			ValidationResponse validationResponse =
@@ -246,7 +246,7 @@ public class ImportProcessResourceTest
 	}
 
 	private void _testPostValidateWithSiteLar() throws Exception {
-		File larFile = _exportGroupToLar(testGroup.getGroupId());
+		File larFile = _exportLayoutAsFile(testGroup.getGroupId());
 
 		try {
 			ValidationResponse validationResponse =

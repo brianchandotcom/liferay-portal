@@ -182,6 +182,50 @@ export class StructureBuilderPage {
 		});
 	}
 
+	async addRelatedContent(name: string, relatedContent: string) {
+		const hasFields = !(await this.page
+			.getByText('No Fields Yet')
+			.isVisible());
+
+		let trigger: Locator;
+
+		if (hasFields) {
+			trigger = this.page.getByLabel('Add Field');
+		}
+		else {
+			trigger = this.page.getByText('Add Field');
+		}
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Select Related Content',
+			}),
+			trigger,
+		});
+
+		await this.page
+			.getByRole('textbox', {exact: true, name: 'Label Mandatory'})
+			.fill(name);
+
+		await expect(async () => {
+			await this.page
+				.getByRole('combobox', {exact: true, name: 'Related Content'})
+				.click();
+
+			await expect(
+				this.page.getByRole('option', {
+					exact: true,
+					name: relatedContent,
+				})
+			).toBeVisible();
+
+			await this.page
+				.getByRole('option', {exact: true, name: relatedContent})
+				.click();
+		}).toPass();
+	}
+
 	async changeFieldSettings({
 		erc,
 		label,

@@ -55,11 +55,13 @@ public interface FragmentSetResource {
 		throws Exception;
 
 	public Page<FragmentSet> getSiteFragmentSetsPage(
-			String siteExternalReferenceCode, Pagination pagination)
+			String siteExternalReferenceCode, String filterString,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteFragmentSetsPageHttpResponse(
-			String siteExternalReferenceCode, Pagination pagination)
+			String siteExternalReferenceCode, String filterString,
+			Pagination pagination)
 		throws Exception;
 
 	public FragmentSet postSiteFragmentSet(
@@ -79,14 +81,14 @@ public interface FragmentSetResource {
 		throws Exception;
 
 	public void postSiteFragmentSetsPageExportBatch(
-			String siteExternalReferenceCode, String callbackURL,
-			String contentType, String fieldNames)
+			String siteExternalReferenceCode, String filterString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postSiteFragmentSetsPageExportBatchHttpResponse(
-				String siteExternalReferenceCode, String callbackURL,
-				String contentType, String fieldNames)
+				String siteExternalReferenceCode, String filterString,
+				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public FragmentSet putSiteFragmentSet(
@@ -436,12 +438,13 @@ public interface FragmentSetResource {
 		}
 
 		public Page<FragmentSet> getSiteFragmentSetsPage(
-				String siteExternalReferenceCode, Pagination pagination)
+				String siteExternalReferenceCode, String filterString,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteFragmentSetsPageHttpResponse(
-					siteExternalReferenceCode, pagination);
+					siteExternalReferenceCode, filterString, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -503,7 +506,8 @@ public interface FragmentSetResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteFragmentSetsPageHttpResponse(
-				String siteExternalReferenceCode, Pagination pagination)
+				String siteExternalReferenceCode, String filterString,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -526,6 +530,10 @@ public interface FragmentSetResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(
@@ -767,14 +775,14 @@ public interface FragmentSetResource {
 		}
 
 		public void postSiteFragmentSetsPageExportBatch(
-				String siteExternalReferenceCode, String callbackURL,
-				String contentType, String fieldNames)
+				String siteExternalReferenceCode, String filterString,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteFragmentSetsPageExportBatchHttpResponse(
-					siteExternalReferenceCode, callbackURL, contentType,
-					fieldNames);
+					siteExternalReferenceCode, filterString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -826,8 +834,8 @@ public interface FragmentSetResource {
 
 		public HttpInvoker.HttpResponse
 				postSiteFragmentSetsPageExportBatchHttpResponse(
-					String siteExternalReferenceCode, String callbackURL,
-					String contentType, String fieldNames)
+					String siteExternalReferenceCode, String filterString,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -852,6 +860,10 @@ public interface FragmentSetResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(
@@ -1013,3 +1025,4 @@ public interface FragmentSetResource {
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:-1113871491

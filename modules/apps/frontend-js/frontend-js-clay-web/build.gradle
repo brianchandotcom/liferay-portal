@@ -11,5 +11,8 @@ dependencies {
 }
 
 packageRunBuild {
-	inputs.dir "clay"
+	inputs.files fileTree("clay") {
+		exclude "clay-css/lib/**"
+	}
+	outputs.dir "clay/clay-css/lib"
 }

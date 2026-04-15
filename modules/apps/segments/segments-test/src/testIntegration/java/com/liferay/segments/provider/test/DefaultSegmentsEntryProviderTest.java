@@ -923,6 +923,42 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86335")
+	public void testGetSegmentsEntryIdsWithSpecialCharactersInCustomFieldName()
+		throws Exception {
+
+		ExpandoTable expandoTable = _expandoTableLocalService.addDefaultTable(
+			TestPropsValues.getCompanyId(), User.class.getName());
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, "custom-field", ExpandoColumnConstants.STRING);
+
+		_expandoValueLocalService.addValue(
+			TestPropsValues.getCompanyId(), User.class.getName(),
+			expandoTable.getName(), expandoColumn.getName(),
+			TestPropsValues.getUserId(), "test");
+
+		Criteria criteria = new Criteria();
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria,
+			StringBundler.concat(
+				"(customField/_", expandoColumn.getColumnId(), "_",
+				Normalizer.normalizeIdentifier(expandoColumn.getName()),
+				" eq 'test')"),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
+
+		Assert.assertArrayEquals(
+			new long[] {segmentsEntry.getSegmentsEntryId()},
+			_segmentsEntryProvider.getSegmentsEntryIds(
+				_group.getGroupId(), User.class.getName(),
+				TestPropsValues.getUserId(), new Context()));
+	}
+
+	@Test
 	public void testGetSegmentsEntryIdsWithUserDateModifiedCriterion()
 		throws Exception {
 

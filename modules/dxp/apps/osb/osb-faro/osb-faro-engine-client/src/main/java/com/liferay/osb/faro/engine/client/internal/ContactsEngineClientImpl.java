@@ -2565,40 +2565,22 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
-	public Results<PageExperience> getPageExperiences(
+	public List<PageExperience> getPageExperiences(
 			FaroProject faroProject, String canonicalUrl, String channelId,
-			int page, String pageTitle, String search, int size,
-			String sortString)
+			String pageTitle)
 		throws Exception {
 
-		Map<String, Object> uriVariables = getUriVariables(
-			faroProject, page, size, null);
+		Map<String, Object> uriVariables = getUriVariables(faroProject);
 
 		uriVariables.put("canonicalUrl", canonicalUrl);
 		uriVariables.put("channelId", channelId);
-
-		if (Validator.isNotNull(search)) {
-			uriVariables.put("keywords", search);
-		}
-
 		uriVariables.put("pageTitle", pageTitle);
 
-		if (Validator.isNotNull(sortString)) {
-			uriVariables.put(
-				"sort",
-				Arrays.asList(
-					StringUtil.replace(
-						sortString, CharPool.COLON, CharPool.COMMA)));
-		}
-
-		PagedModel<?, PageExperience> pagedModel = get(
+		return get(
 			faroProject, Rels.PAGE_EXPERIENCES,
-			new ParameterizedTypeReference
-				<EntityModelPagedModel<PageExperience>>() {
+			new ParameterizedTypeReference<List<PageExperience>>() {
 			},
 			uriVariables);
-
-		return pagedModel.getResults();
 	}
 
 	@Override

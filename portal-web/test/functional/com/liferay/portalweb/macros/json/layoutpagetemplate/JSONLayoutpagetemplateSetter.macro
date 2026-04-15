@@ -38,7 +38,7 @@ definition {
 	macro setClassTypeKey(structureName = null, groupId = null, classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
-		var classTypeKey = JSONDDMstructureAPI._getStructureId(
+		var classTypeKey = JSONDDMstructureAPI._getStructureKey(
 			classNameId = ${classNameId},
 			groupId = ${groupId},
 			structureName = ${structureName});

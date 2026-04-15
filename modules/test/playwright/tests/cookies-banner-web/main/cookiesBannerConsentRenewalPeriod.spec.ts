@@ -212,7 +212,7 @@ test(
 		await test.step('Click Forced Re-Consent and accept the confirmation dialog', async () => {
 			page.once('dialog', async (dialogWindow) => {
 				expect(dialogWindow.message()).toContain(
-					'You are about to force re-consent'
+					'You are about to force the re-consent'
 				);
 
 				await dialogWindow.accept();

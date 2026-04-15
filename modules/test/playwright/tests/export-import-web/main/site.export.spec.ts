@@ -80,9 +80,9 @@ test(
 	'can export twice with the same name without overwriting the original file',
 	{tag: '@LPD-76875'},
 	async ({apiHelpers, exportImportPage}) => {
-		const taskName = 'MyExport-' + getRandomString();
-
 		await exportImportPage.goToExport();
+
+		const taskName = 'MyExport-' + getRandomString();
 
 		const exportFilePath1 = await exportImportPage.export({taskName});
 		const content1 = await readFileFromZip('manifest.xml', exportFilePath1);
@@ -222,7 +222,7 @@ test('Can see deletion counts at site level', async ({
 		type: 'objectDefinition',
 	});
 
-	const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+	const applicationName = normalizeRestPath(objectDefinition.restContextPath);
 
 	const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
 		{textField: objectDefinition.name},

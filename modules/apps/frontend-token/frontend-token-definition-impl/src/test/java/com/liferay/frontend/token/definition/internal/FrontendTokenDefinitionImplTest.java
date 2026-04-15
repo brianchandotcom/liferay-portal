@@ -10,12 +10,14 @@ import com.liferay.frontend.token.definition.FrontendTokenCategory;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.frontend.token.definition.FrontendTokenSet;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -26,6 +28,7 @@ import java.net.URL;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -103,6 +106,35 @@ public class FrontendTokenDefinitionImplTest {
 		_assertCollectionEquals(
 			frontendTokenDefinition.getFrontendTokenMappings(),
 			frontendToken.getFrontendTokenMappings());
+	}
+
+	@Test
+	public void testGetPriority() throws JSONException {
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
+		Map<String, Integer> expectedPriorities = HashMapBuilder.put(
+			FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE,
+			FrontendTokenDefinitionConstants.PRIORITY_THEME
+		).put(
+			FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL,
+			FrontendTokenDefinitionConstants.PRIORITY_GLOBAL
+		).put(
+			FrontendTokenDefinitionConstants.THEME_TYPE_THEME_CSS_CET,
+			FrontendTokenDefinitionConstants.PRIORITY_THEME
+		).build();
+
+		for (Map.Entry<String, Integer> entry : expectedPriorities.entrySet()) {
+			FrontendTokenDefinition frontendTokenDefinition =
+				new FrontendTokenDefinitionImpl(
+					jsonFactory.createJSONObject(
+						_FRONTEND_TOKEN_DEFINITION_JSON),
+					jsonFactory, null, "theme_id",
+					RandomTestUtil.randomString(), entry.getKey());
+
+			Assert.assertEquals(
+				entry.getKey(), (int)entry.getValue(),
+				frontendTokenDefinition.getPriority());
+		}
 	}
 
 	@Test

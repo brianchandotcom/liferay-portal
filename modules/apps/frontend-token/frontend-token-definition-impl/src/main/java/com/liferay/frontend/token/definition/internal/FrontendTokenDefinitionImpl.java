@@ -10,6 +10,7 @@ import com.liferay.frontend.token.definition.FrontendTokenCategory;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.frontend.token.definition.FrontendTokenSet;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.frontend.token.definition.internal.json.JSONLocalizer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Iván Zaera
@@ -87,6 +89,18 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 	@Override
 	public JSONObject getJSONObject(Locale locale) {
 		return _jsonLocalizer.getJSONObject(locale);
+	}
+
+	@Override
+	public int getPriority() {
+		if (Objects.equals(
+				_themeType,
+				FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL)) {
+
+			return FrontendTokenDefinitionConstants.PRIORITY_GLOBAL;
+		}
+
+		return FrontendTokenDefinitionConstants.PRIORITY_THEME;
 	}
 
 	@Override

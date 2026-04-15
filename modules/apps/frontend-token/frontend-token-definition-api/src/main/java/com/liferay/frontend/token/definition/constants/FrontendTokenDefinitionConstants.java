@@ -10,6 +10,13 @@ package com.liferay.frontend.token.definition.constants;
  */
 public class FrontendTokenDefinitionConstants {
 
+	public static final int PRIORITY_GLOBAL = 100;
+
+	public static final int PRIORITY_LEGACY =
+		FrontendTokenDefinitionConstants.PRIORITY_THEME;
+
+	public static final int PRIORITY_THEME = 300;
+
 	public static final String THEME_TYPE_BUNDLE = "bundle";
 
 	public static final String THEME_TYPE_GLOBAL = "global";

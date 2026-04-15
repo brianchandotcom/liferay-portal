@@ -18,6 +18,7 @@ import {
 	useDisplayPageRecentPreviewItemList,
 	useSelectDisplayPagePreviewItem,
 } from '../contexts/DisplayPagePreviewItemContext';
+import {deepEqual} from '../utils/checkDeepEqual';
 import itemSelectorValueToInfoItem from '../utils/item_selector_value/itemSelectorValueToInfoItem';
 
 const NO_ITEM_LABEL = `-- ${Liferay.Language.get('not-selected')} --`;
@@ -121,7 +122,9 @@ export function DisplayPagePreviewItemSelectorContent() {
 						key={recentPreviewItem.label}
 						onClick={() => selectItem(recentPreviewItem)}
 						symbolRight={
-							previewItem === recentPreviewItem ? 'check' : ''
+							deepEqual(previewItem, recentPreviewItem)
+								? 'check'
+								: ''
 						}
 					>
 						<span className="page-editor__display-page-preview-item-selector-dropdown-item-label">

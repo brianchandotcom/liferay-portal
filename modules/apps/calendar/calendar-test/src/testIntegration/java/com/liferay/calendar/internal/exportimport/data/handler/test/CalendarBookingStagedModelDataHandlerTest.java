@@ -118,6 +118,59 @@ public class CalendarBookingStagedModelDataHandlerTest
 		}
 	}
 
+	@Test
+	public void testImportWithExistingExternalReferenceCode() throws Exception {
+		initExport();
+
+		Calendar calendar = CalendarTestUtil.getDefaultCalendar(stagingGroup);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addRegularCalendarBooking(
+				TestPropsValues.getUser(), calendar,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, calendarBooking);
+
+		Calendar liveCalendar = CalendarTestUtil.addCalendarResourceCalendar(
+			liveGroup);
+
+		CalendarBooking existingCalendarBooking =
+			CalendarBookingTestUtil.addRegularCalendarBooking(
+				TestPropsValues.getUser(), liveCalendar,
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		existingCalendarBooking.setExternalReferenceCode(
+			calendarBooking.getExternalReferenceCode());
+
+		existingCalendarBooking =
+			_calendarBookingLocalService.updateCalendarBooking(
+				existingCalendarBooking);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			CalendarBooking exportedCalendarBooking =
+				(CalendarBooking)readExportedStagedModel(calendarBooking);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedCalendarBooking);
+
+			CalendarBooking importedCalendarBooking =
+				_calendarBookingLocalService.
+					fetchCalendarBookingByExternalReferenceCode(
+						calendarBooking.getExternalReferenceCode(),
+						liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				existingCalendarBooking.getCalendarBookingId(),
+				importedCalendarBooking.getCalendarBookingId());
+			Assert.assertEquals(
+				calendarBooking.getTitleCurrentValue(),
+				importedCalendarBooking.getTitleCurrentValue());
+		}
+	}
+
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
 			Group group)

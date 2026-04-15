@@ -9,6 +9,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.license.util.App;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +37,7 @@ public class CMPFeatureFlagListener implements FeatureFlagListener {
 		long companyId, String featureFlagKey, boolean enabled) {
 
 		if (!enabled || !Objects.equals(featureFlagKey, "LPD-58677") ||
-			!LicenseManagerUtil.isCMPEnabled()) {
+			!LicenseManagerUtil.isAppEnabled(App.CMP)) {
 
 			return;
 		}

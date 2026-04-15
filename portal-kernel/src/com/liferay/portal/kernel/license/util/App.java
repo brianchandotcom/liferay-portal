@@ -10,6 +10,6 @@ package com.liferay.portal.kernel.license.util;
  */
 public enum App {
 
-	CMP
+	CMP, DSR
 
 }

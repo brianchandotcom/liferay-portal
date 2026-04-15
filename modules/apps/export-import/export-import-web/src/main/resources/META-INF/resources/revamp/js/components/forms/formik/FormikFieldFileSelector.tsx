@@ -67,11 +67,7 @@ export function FormikFieldFileSelector({
 			}, STATUS_CHANGE_DELAY);
 		}
 
-		return () => {
-			if (timeout) {
-				clearTimeout(timeout);
-			}
-		};
+		return () => clearTimeout(timeout);
 	}, [status]);
 
 	const validate = useCallback(

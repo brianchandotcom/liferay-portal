@@ -309,18 +309,6 @@ public class PageTemplateSetResourceTest
 	}
 
 	@Override
-	protected PageTemplateSet
-			testGetSitePageTemplateSetsPage_addPageTemplateSet(
-				String siteExternalReferenceCode,
-				PageTemplateSet pageTemplateSet)
-		throws Exception {
-
-		return pageTemplateSetResource.putSitePageTemplateSet(
-			siteExternalReferenceCode,
-			pageTemplateSet.getExternalReferenceCode(), pageTemplateSet);
-	}
-
-	@Override
 	protected Map<String, Map<String, String>>
 		testGetSitePageTemplateSetsPage_getExpectedActions(
 			String siteExternalReferenceCode) {
@@ -333,9 +321,8 @@ public class PageTemplateSetResourceTest
 			PageTemplateSet pageTemplateSet)
 		throws Exception {
 
-		return pageTemplateSetResource.putSitePageTemplateSet(
-			testGroup.getExternalReferenceCode(),
-			pageTemplateSet.getExternalReferenceCode(), pageTemplateSet);
+		return pageTemplateSetResource.postSitePageTemplateSet(
+			testGroup.getExternalReferenceCode(), pageTemplateSet);
 	}
 
 	private void _assertProblemException(

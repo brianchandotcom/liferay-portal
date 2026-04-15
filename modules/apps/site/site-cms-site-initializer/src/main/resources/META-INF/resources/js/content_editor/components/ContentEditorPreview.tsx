@@ -9,10 +9,12 @@ import classNames from 'classnames';
 import {useSessionState} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
+import CacheContextProvider from '../../structure_builder/contexts/CacheContext';
 import {
 	EVENT_CLOSE_PREVIEW,
 	EVENT_HANDLE_PREVIEW,
 } from './ContentEditorToolbar';
+import PreviewBody from './preview/PreviewBody';
 import PreviewHeader from './preview/PreviewHeader';
 
 import '../../../css/content_editor/ContentEditorPreview.scss';
@@ -21,7 +23,13 @@ const BREAKPOINT_LG = 992;
 const PREVIEW_WIDTH_MIN = 500;
 const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';
 
-export default function ContentEditorPreview({title}: {title: string}) {
+export default function ContentEditorPreview({
+	getPreviewDataURL,
+	title,
+}: {
+	getPreviewDataURL: string;
+	title: string;
+}) {
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const [resizeWidth, setResizeWidth] = useSessionState(
 		PREVIEW_WIDTH_SESSION_KEY,
@@ -105,15 +113,20 @@ export default function ContentEditorPreview({title}: {title: string}) {
 			tabIndex={-1}
 		>
 			{isVisible ? (
-				<PreviewHeader
-					onClosePreview={() => {
-						Liferay.fire(EVENT_CLOSE_PREVIEW);
+				<>
+					<PreviewHeader
+						onClosePreview={() => {
+							Liferay.fire(EVENT_CLOSE_PREVIEW);
 
-						setIsVisible(false);
-					}}
-					title={title}
-					titleId={titleId}
-				/>
+							setIsVisible(false);
+						}}
+						title={title}
+						titleId={titleId}
+					/>
+					<CacheContextProvider initialData={{}}>
+						<PreviewBody getPreviewDataURL={getPreviewDataURL} />
+					</CacheContextProvider>
+				</>
 			) : null}
 
 			<Resizer

@@ -164,7 +164,17 @@ export default function propsTransformer({
 
 			return {
 				...action,
-				isVisible: (selectedItems: Array<any>) => {
+				isVisible: ({
+					allItemsSelectedActive,
+					selectedItems
+				}: {
+					allItemsSelectedActive: boolean;
+					selectedItems: Array<any>;
+				}) => {
+					if (allItemsSelectedActive) {
+						return true;
+					}
+
 					return selectedItems.every((item: any) => {
 						return item.color === 'Green';
 					});

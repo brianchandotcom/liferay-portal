@@ -178,16 +178,6 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 	}
 
 	@Override
-	protected FragmentSet testGetSiteFragmentSetsPage_addFragmentSet(
-			String siteExternalReferenceCode, FragmentSet fragmentSet)
-		throws Exception {
-
-		return fragmentSetResource.putSiteFragmentSet(
-			siteExternalReferenceCode, fragmentSet.getExternalReferenceCode(),
-			fragmentSet);
-	}
-
-	@Override
 	protected Map<String, Map<String, String>>
 			testGetSiteFragmentSetsPage_getExpectedActions(
 				String siteExternalReferenceCode)

@@ -529,73 +529,79 @@ public class OpenAPIParserUtil {
 	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
 		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(yamlString);
 
-		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+		return _openAPIYAMLs.computeIfAbsent(
+			openAPIYAML,
+			keyOpenAPIYAML -> {
+				Map<String, PathItem> pathItems = keyOpenAPIYAML.getPathItems();
 
-		if (pathItems == null) {
-			return openAPIYAML;
-		}
+				if (pathItems == null) {
+					return keyOpenAPIYAML;
+				}
 
-		Components components = openAPIYAML.getComponents();
+				Components components = keyOpenAPIYAML.getComponents();
 
-		if (components == null) {
-			return openAPIYAML;
-		}
+				if (components == null) {
+					return keyOpenAPIYAML;
+				}
 
-		Map<String, Parameter> parameterMap = components.getParameters();
+				Map<String, Parameter> parameterMap =
+					components.getParameters();
 
-		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
-			PathItem pathItem = entry.getValue();
+				for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+					PathItem pathItem = entry.getValue();
 
-			List<Operation> operations = new ArrayList<>();
+					List<Operation> operations = new ArrayList<>();
 
-			if (pathItem.getDelete() != null) {
-				operations.add(pathItem.getDelete());
-			}
-
-			if (pathItem.getGet() != null) {
-				operations.add(pathItem.getGet());
-			}
-
-			if (pathItem.getHead() != null) {
-				operations.add(pathItem.getHead());
-			}
-
-			if (pathItem.getOptions() != null) {
-				operations.add(pathItem.getOptions());
-			}
-
-			if (pathItem.getPatch() != null) {
-				operations.add(pathItem.getPatch());
-			}
-
-			if (pathItem.getPost() != null) {
-				operations.add(pathItem.getPost());
-			}
-
-			if (pathItem.getPut() != null) {
-				operations.add(pathItem.getPut());
-			}
-
-			for (Operation operation : operations) {
-				List<Parameter> parameters = operation.getParameters();
-
-				for (int i = 0; i < parameters.size(); i++) {
-					Parameter parameter = parameters.get(i);
-
-					if (Validator.isNull(parameter.getReference())) {
-						continue;
+					if (pathItem.getDelete() != null) {
+						operations.add(pathItem.getDelete());
 					}
 
-					String key = getReferenceName(parameter.getReference());
+					if (pathItem.getGet() != null) {
+						operations.add(pathItem.getGet());
+					}
 
-					if (parameterMap.containsKey(key)) {
-						parameters.set(i, parameterMap.get(key));
+					if (pathItem.getHead() != null) {
+						operations.add(pathItem.getHead());
+					}
+
+					if (pathItem.getOptions() != null) {
+						operations.add(pathItem.getOptions());
+					}
+
+					if (pathItem.getPatch() != null) {
+						operations.add(pathItem.getPatch());
+					}
+
+					if (pathItem.getPost() != null) {
+						operations.add(pathItem.getPost());
+					}
+
+					if (pathItem.getPut() != null) {
+						operations.add(pathItem.getPut());
+					}
+
+					for (Operation operation : operations) {
+						List<Parameter> parameters = operation.getParameters();
+
+						for (int i = 0; i < parameters.size(); i++) {
+							Parameter parameter = parameters.get(i);
+
+							if (Validator.isNull(parameter.getReference())) {
+								continue;
+							}
+
+							String key = getReferenceName(
+								parameter.getReference());
+
+							if (parameterMap.containsKey(key)) {
+								parameters.set(i, parameterMap.get(key));
+							}
+						}
 					}
 				}
-			}
-		}
 
-		return openAPIYAML;
+				return keyOpenAPIYAML;
+			});
 	}
 
 	private static void _addExternalReferences(
@@ -834,5 +840,8 @@ public class OpenAPIParserUtil {
 					String.class.getName());
 			}
 		};
+
+	private static final Map<OpenAPIYAML, OpenAPIYAML> _openAPIYAMLs =
+		new ConcurrentHashMap<>();
 
 }

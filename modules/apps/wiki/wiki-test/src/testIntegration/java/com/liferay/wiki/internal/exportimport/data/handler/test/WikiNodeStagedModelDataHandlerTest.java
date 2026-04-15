@@ -6,6 +6,7 @@
 package com.liferay.wiki.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.petra.lang.SafeCloseable;
@@ -19,6 +20,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.test.util.WikiTestUtil;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -118,6 +120,41 @@ public class WikiNodeStagedModelDataHandlerTest
 
 				Assert.assertNull(exportedStagedModel);
 			}
+		}
+	}
+
+	@Test
+	public void testLastPostDate() throws Exception {
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		WikiNode wikiNode = (WikiNode)stagedModel;
+
+		wikiNode.setLastPostDate(new Date());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				stagedModel);
+
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+
+			validateImportedStagedModel(
+				exportedStagedModel,
+				getStagedModel(exportedStagedModel.getUuid(), liveGroup));
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
 		}
 	}
 

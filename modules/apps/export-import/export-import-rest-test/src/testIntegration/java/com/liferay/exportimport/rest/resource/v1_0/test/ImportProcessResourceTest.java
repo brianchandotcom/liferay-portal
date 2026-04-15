@@ -185,14 +185,14 @@ public class ImportProcessResourceTest
 	private void _testPostScopeScopeKeyValidateWithInstanceLar()
 		throws Exception {
 
-		File larFile = _exportLayoutAsFile();
+		File file = _exportLayoutAsFile();
 
 		try {
 			ValidationResponse validationResponse =
 				importProcessResource.postScopeScopeKeyValidate(
 					String.valueOf(testGroup.getGroupId()), null,
 					HashMapBuilder.<String, File>put(
-						"file", larFile
+						"file", file
 					).build());
 
 			String[] errorMessages = validationResponse.getErrorMessages();
@@ -202,26 +202,26 @@ public class ImportProcessResourceTest
 			Assert.assertFalse(validationResponse.getSuccess());
 		}
 		finally {
-			FileUtil.delete(larFile);
+			FileUtil.delete(file);
 		}
 	}
 
 	private void _testPostScopeScopeKeyValidateWithSiteLar() throws Exception {
-		File larFile = _exportLayoutAsFile(testGroup.getGroupId());
+		File file = _exportLayoutAsFile(testGroup.getGroupId());
 
 		try {
 			ValidationResponse validationResponse =
 				importProcessResource.postScopeScopeKeyValidate(
 					String.valueOf(testGroup.getGroupId()), null,
 					HashMapBuilder.<String, File>put(
-						"file", larFile
+						"file", file
 					).build());
 
 			Assert.assertNotNull(validationResponse.getFileEntryId());
 			Assert.assertTrue(validationResponse.getSuccess());
 		}
 		finally {
-			FileUtil.delete(larFile);
+			FileUtil.delete(file);
 		}
 	}
 

@@ -128,6 +128,20 @@ public class LayoutSetPrototypeServiceImpl
 
 	@Override
 	public List<LayoutSetPrototype> search(
+		long companyId, Boolean active, int start, int end,
+		OrderByComparator<LayoutSetPrototype> orderByComparator) {
+
+		if (active != null) {
+			return layoutSetPrototypePersistence.filterFindByC_A(
+				companyId, active, start, end, orderByComparator);
+		}
+
+		return layoutSetPrototypePersistence.filterFindByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutSetPrototype> search(
 			long companyId, Boolean active,
 			OrderByComparator<LayoutSetPrototype> orderByComparator)
 		throws PortalException {
@@ -138,6 +152,16 @@ public class LayoutSetPrototypeServiceImpl
 				orderByComparator);
 
 		return filterLayoutSetPrototypes(layoutSetPrototypes);
+	}
+
+	@Override
+	public int searchCount(long companyId, Boolean active) {
+		if (active != null) {
+			return layoutSetPrototypePersistence.filterCountByC_A(
+				companyId, active);
+		}
+
+		return layoutSetPrototypePersistence.filterCountByCompanyId(companyId);
 	}
 
 	@Override

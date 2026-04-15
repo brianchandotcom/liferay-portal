@@ -49,6 +49,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Peter Shin
@@ -166,60 +167,67 @@ public class OpenAPIParserUtil {
 	}
 
 	public static List<String> getExternalReferences(OpenAPIYAML openAPIYAML) {
-		Set<String> externalReferences = new LinkedHashSet<>();
+		return _externalReferencesMap.computeIfAbsent(
+			openAPIYAML,
+			keyOpenAPIYAML -> {
+				Set<String> externalReferences = new LinkedHashSet<>();
 
-		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+				Map<String, PathItem> pathItems = keyOpenAPIYAML.getPathItems();
 
-		Map<String, Schema> schemas = new LinkedHashMap<>();
+				Map<String, Schema> schemas = new LinkedHashMap<>();
 
-		Components components = openAPIYAML.getComponents();
+				Components components = keyOpenAPIYAML.getComponents();
 
-		if ((components != null) && (components.getSchemas() != null)) {
-			schemas = components.getSchemas();
-		}
+				if ((components != null) && (components.getSchemas() != null)) {
+					schemas = components.getSchemas();
+				}
 
-		if (pathItems != null) {
-			for (PathItem pathItem : pathItems.values()) {
-				List<Operation> operations = getOperations(pathItem);
+				if (pathItems != null) {
+					for (PathItem pathItem : pathItems.values()) {
+						List<Operation> operations = getOperations(pathItem);
 
-				for (Operation operation : operations) {
-					RequestBody requestBody = operation.getRequestBody();
+						for (Operation operation : operations) {
+							RequestBody requestBody =
+								operation.getRequestBody();
 
-					if (requestBody != null) {
-						_addExternalReferences(
-							requestBody.getContent(), externalReferences,
-							schemas);
-					}
+							if (requestBody != null) {
+								_addExternalReferences(
+									requestBody.getContent(),
+									externalReferences, schemas);
+							}
 
-					Map<ResponseCode, Response> responses =
-						operation.getResponses();
+							Map<ResponseCode, Response> responses =
+								operation.getResponses();
 
-					for (Response response : responses.values()) {
-						if (response == null) {
-							continue;
+							for (Response response : responses.values()) {
+								if (response == null) {
+									continue;
+								}
+
+								_addExternalReferences(
+									response.getContent(), externalReferences,
+									schemas);
+							}
 						}
-
-						_addExternalReferences(
-							response.getContent(), externalReferences, schemas);
 					}
 				}
-			}
-		}
 
-		for (Schema schema : schemas.values()) {
-			Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+				for (Schema schema : schemas.values()) {
+					Map<String, Schema> propertySchemas =
+						schema.getPropertySchemas();
 
-			if (propertySchemas == null) {
-				continue;
-			}
+					if (propertySchemas == null) {
+						continue;
+					}
 
-			for (Schema propertySchema : propertySchemas.values()) {
-				_addExternalReferences(
-					externalReferences, propertySchema, schemas);
-			}
-		}
+					for (Schema propertySchema : propertySchemas.values()) {
+						_addExternalReferences(
+							externalReferences, propertySchema, schemas);
+					}
+				}
 
-		return new ArrayList<>(externalReferences);
+				return new ArrayList<>(externalReferences);
+			});
 	}
 
 	public static Map<String, Schema> getExternalSchemas(
@@ -746,6 +754,9 @@ public class OpenAPIParserUtil {
 
 		return externalFile.getCanonicalFile();
 	}
+
+	private static final Map<OpenAPIYAML, List<String>> _externalReferencesMap =
+		new ConcurrentHashMap<>();
 
 	private static final Map<Map.Entry<String, String>, String>
 		_openAPIDataTypeMap = new HashMap<Map.Entry<String, String>, String>() {

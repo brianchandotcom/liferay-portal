@@ -29,7 +29,12 @@ export default function FrontendTokenSet({
 
 	const updateFrontendTokensValues = useCallback(
 		(frontendToken, value) => {
-			const {mappings = [], label, name} = frontendToken;
+			const {
+				label,
+				mappings = [],
+				name,
+				tokenDefinitionId,
+			} = frontendToken;
 
 			const cssVariableMapping = mappings.find(
 				(mapping) => mapping.type === 'cssVariable'
@@ -42,6 +47,7 @@ export default function FrontendTokenSet({
 					value: {
 						cssVariableMapping: cssVariableMapping.value,
 						name: tokenValues[value]?.name,
+						tokenDefinitionId,
 						value: tokenValues[value]?.value || value,
 					},
 				});

@@ -24,9 +24,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,7 +44,7 @@ public class FileUtil {
 		System.out.println("Deleting " + file.getCanonicalPath());
 	}
 
-	public static void deleteFiles(String dirName, List<File> files)
+	public static void deleteFiles(String dirName, Collection<File> files)
 		throws Exception {
 
 		Path path = Paths.get(dirName);

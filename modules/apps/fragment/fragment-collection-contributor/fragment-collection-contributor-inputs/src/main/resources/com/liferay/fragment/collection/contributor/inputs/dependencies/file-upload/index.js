@@ -260,6 +260,7 @@ else {
 					input.attributes.selectFromDocumentLibrary;
 
 				const {onChange} = registerLocalizedInput({
+					availableLanguageIds: input.attributes.availableLanguageIds,
 					changeTextDirection: false,
 					customLocaleChangeHandler: true,
 					defaultLanguageId,

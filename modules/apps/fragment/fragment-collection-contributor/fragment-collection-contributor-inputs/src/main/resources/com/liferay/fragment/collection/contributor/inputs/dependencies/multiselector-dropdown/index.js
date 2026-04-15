@@ -91,6 +91,7 @@ async function main() {
 
 	if (input.localizable) {
 		const {onChange} = registerLocalizedInput({
+			availableLanguageIds: input.attributes.availableLanguageIds,
 			customLocaleChangeHandler: true,
 			defaultLanguageId: input.attributes.defaultLanguageId,
 			hasMultipleValues: true,

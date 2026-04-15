@@ -7,6 +7,8 @@ package com.liferay.commerce.service.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
@@ -14,27 +16,32 @@ import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShipmentService;
-import com.liferay.commerce.shipment.test.util.CommerceShipmentTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -42,9 +49,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
-import org.frutilla.FrutillaRule;
-
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -53,6 +59,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author João Cordeiro
+ * @author Crescenzo Rega
  */
 @RunWith(Arquillian.class)
 public class CommerceShipmentServiceTest {
@@ -68,216 +75,266 @@ public class CommerceShipmentServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_company = CompanyLocalServiceUtil.getCompany(_group.getCompanyId());
+		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
+			_group.getGroupId(), TestPropsValues.getUserId());
 
-		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
+		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			_group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
 
-		_originalName = PrincipalThreadLocal.getName();
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			_group.getGroupId());
+
+		_commerceOrder = CommerceTestUtil.createCommerceOrderForShipping(
+			TestPropsValues.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency.getCommerceCurrencyId(),
+			cpInstance.getCPInstanceId(),
+			BigDecimal.valueOf(RandomTestUtil.nextDouble()), BigDecimal.ONE, 1);
+
+		_commerceShipment = _commerceShipmentService.addCommerceShipment(
+			_commerceOrder.getCommerceOrderId(), _serviceContext);
+
+		_role = _roleLocalService.addRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			RandomTestUtil.randomString(), null, null,
+			RoleConstants.TYPE_REGULAR, null, _serviceContext);
+
 		_user = UserTestUtil.addUser(_company);
+
+		_roleLocalService.addUserRole(_user.getUserId(), _role);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_commerceOrderLocalService.deleteCommerceOrders(
 			_commerceChannel.getGroupId());
-
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-		PrincipalThreadLocal.setName(_originalName);
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddCommerceShipmentByUserWithoutPermission()
-		throws Exception {
+	@Test
+	public void testAddCommerceShipment() throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		frutillaRule.scenario(
-			"Adding a new shipment"
-		).given(
-			"A user"
-		).when(
-			"The user attempts to add a shipment without permission"
-		).then(
-			"an exception should be thrown"
-		);
+			_commerceShipmentService.addCommerceShipment(
+				_commerceOrder.getCommerceOrderId(), _serviceContext);
 
-		User user = _company.getGuestUser();
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				CommerceActionKeys.ADD_COMMERCE_SHIPMENT,
+				exception.getMessage(), _user.getUserId());
+		}
 
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			_group.getGroupId());
+		RoleTestUtil.addResourcePermission(
+			_role, CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_company.getCompanyId()),
+			CommerceActionKeys.ADD_COMMERCE_SHIPMENT);
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		CommerceOrder commerceOrder =
-			CommerceTestUtil.createCommerceOrderForShipping(
-				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				cpInstance.getCPInstanceId(),
-				BigDecimal.valueOf(RandomTestUtil.nextDouble()), BigDecimal.ONE,
-				1);
-
-		_commerceShipmentService.addCommerceShipment(
-			commerceOrder.getCommerceOrderId(), _serviceContext);
+			_commerceShipmentService.addCommerceShipment(
+				_commerceOrder.getCommerceOrderId(), _serviceContext);
+		}
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testDeleteCommerceShipmentByUserWithoutPermission()
-		throws Exception {
+	@Test
+	public void testDeleteCommerceShipment() throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		frutillaRule.scenario(
-			"Deleting a shipment"
-		).given(
-			"A user"
-		).when(
-			"The user attempts to delete a shipment without permission"
-		).then(
-			"an exception should be thrown"
-		);
+			_commerceShipmentService.deleteCommerceShipment(
+				_commerceShipment.getCommerceShipmentId(), false);
 
-		User user = _company.getGuestUser();
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.DELETE, exception.getMessage(), _user.getUserId());
+		}
 
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			_group.getGroupId());
+		_resourcePermissionLocalService.setResourcePermissions(
+			_commerceShipment.getCompanyId(), CommerceShipment.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_commerceShipment.getCommerceShipmentId()),
+			_role.getRoleId(), new String[] {ActionKeys.DELETE});
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		CommerceOrder commerceOrder =
-			CommerceTestUtil.createCommerceOrderForShipping(
-				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				cpInstance.getCPInstanceId(),
-				BigDecimal.valueOf(RandomTestUtil.nextDouble()), BigDecimal.ONE,
-				1);
-
-		CommerceShipment commerceShipment =
-			CommerceShipmentTestUtil.createEmptyOrderShipment(
-				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
-
-		_commerceShipmentService.deleteCommerceShipment(
-			commerceShipment.getCommerceShipmentId(), false);
+			_commerceShipmentService.deleteCommerceShipment(
+				_commerceShipment.getCommerceShipmentId(), false);
+		}
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testGetCommerceShipmentByUserWithoutPermission()
-		throws Exception {
+	@Test
+	public void testGetCommerceShipment() throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		frutillaRule.scenario(
-			"Fetching a shipment"
-		).given(
-			"A user"
-		).when(
-			"The user attempts to fetch a shipment without permission"
-		).then(
-			"an exception should be thrown"
-		);
+			_commerceShipmentService.getCommerceShipment(
+				_commerceShipment.getCommerceShipmentId());
 
-		User user = _company.getGuestUser();
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.VIEW, exception.getMessage(), _user.getUserId());
+		}
 
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			_group.getGroupId());
+		_resourcePermissionLocalService.setResourcePermissions(
+			_commerceShipment.getCompanyId(), CommerceShipment.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_commerceShipment.getCommerceShipmentId()),
+			_role.getRoleId(), new String[] {ActionKeys.VIEW});
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		CommerceOrder commerceOrder =
-			CommerceTestUtil.createCommerceOrderForShipping(
-				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				cpInstance.getCPInstanceId(),
-				BigDecimal.valueOf(RandomTestUtil.nextDouble()), BigDecimal.ONE,
-				1);
-
-		CommerceShipment commerceShipment =
-			CommerceShipmentTestUtil.createEmptyOrderShipment(
-				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
-
-		_commerceShipmentService.getCommerceShipment(
-			commerceShipment.getCommerceShipmentId());
+			_commerceShipmentService.getCommerceShipment(
+				_commerceShipment.getCommerceShipmentId());
+		}
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testUpdateCommerceShipmentByUserWithoutPermission()
-		throws Exception {
+	@Test
+	public void testGetCommerceShipments() throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		frutillaRule.scenario(
-			"Updating a shipment"
-		).given(
-			"A user"
-		).when(
-			"The user attempts to update a shipment without permission"
-		).then(
-			"an exception should be thrown"
-		);
+			_commerceShipmentService.getCommerceShipments(
+				_commerceShipment.getCompanyId(), 0, 0, null);
 
-		User user = _company.getGuestUser();
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				CommerceActionKeys.VIEW_COMMERCE_SHIPMENTS,
+				exception.getMessage(), _user.getUserId());
+		}
 
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			_group.getGroupId());
+		RoleTestUtil.addResourcePermission(
+			_role, CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_company.getCompanyId()),
+			CommerceActionKeys.VIEW_COMMERCE_SHIPMENTS);
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		CommerceOrder commerceOrder =
-			CommerceTestUtil.createCommerceOrderForShipping(
-				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				cpInstance.getCPInstanceId(),
-				BigDecimal.valueOf(RandomTestUtil.nextDouble()), BigDecimal.ONE,
-				1);
-
-		CommerceShipment commerceShipment =
-			CommerceShipmentTestUtil.createEmptyOrderShipment(
-				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
-
-		commerceShipment.setStatus(3);
-
-		_commerceShipmentService.updateCommerceShipment(commerceShipment);
+			_commerceShipmentService.getCommerceShipments(
+				_commerceShipment.getCompanyId(), 0, 0, null);
+		}
 	}
 
-	@Rule
-	public FrutillaRule frutillaRule = new FrutillaRule();
+	@Test
+	public void testGetCommerceShipmentsCount() throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceShipmentService.getCommerceShipmentsCount(
+				_commerceShipment.getCompanyId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				CommerceActionKeys.VIEW_COMMERCE_SHIPMENTS,
+				exception.getMessage(), _user.getUserId());
+		}
+
+		RoleTestUtil.addResourcePermission(
+			_role, CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_company.getCompanyId()),
+			CommerceActionKeys.VIEW_COMMERCE_SHIPMENTS);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceShipmentService.getCommerceShipmentsCount(
+				_commerceShipment.getCompanyId());
+		}
+	}
+
+	@Test
+	public void testUpdateCommerceShipment() throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceShipmentService.updateStatus(
+				_commerceShipment.getCommerceShipmentId(), 1);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.UPDATE, exception.getMessage(), _user.getUserId());
+		}
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_commerceShipment.getCompanyId(), CommerceShipment.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_commerceShipment.getCommerceShipmentId()),
+			_role.getRoleId(), new String[] {ActionKeys.UPDATE});
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceShipmentService.updateStatus(
+				_commerceShipment.getCommerceShipmentId(), 1);
+		}
+	}
+
+	private void _assertMessage(String actionKey, String message, long userId) {
+		Assert.assertTrue(
+			message.contains(
+				StringBundler.concat(
+					"User ", userId, " must have ", actionKey,
+					" permission for")));
+	}
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
-	@DeleteAfterTestRun
+	@Inject
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
 	private CommerceCurrency _commerceCurrency;
+	private CommerceOrder _commerceOrder;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	private CommerceShipment _commerceShipment;
 
 	@Inject
 	private CommerceShipmentService _commerceShipmentService;
 
 	private Company _company;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private String _originalName;
-	private PermissionChecker _originalPermissionChecker;
-	private ServiceContext _serviceContext;
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
-	@DeleteAfterTestRun
+	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	private ServiceContext _serviceContext;
 	private User _user;
 
 }

@@ -8,11 +8,12 @@ import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import ClayMultiSelect from '@clayui/multi-select';
 import ClayPanel from '@clayui/panel';
 import {Provider} from '@clayui/provider';
 import {openToast} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './ChatbotForm.scss';
 import {getAgentDefinitions} from '../agent_definition_form/services/AgentDefinitionService';
@@ -48,6 +49,22 @@ function generateEmbedCode(externalReferenceCode: string) {
 </script>`;
 }
 
+const availableAgentDefinitions = await (async () => {
+	try {
+		const response = await getAgentDefinitions();
+
+		return (
+			(response.items || []).map((item: AgentDefinitionOption) => ({
+				externalReferenceCode: item.externalReferenceCode,
+				title: item.title,
+			})) || []
+		);
+	}
+	catch (error) {
+		console.error(error);
+	}
+})();
+
 export default function ChatbotForm({
 	accountEntryExternalReferenceCode,
 	backURL,
@@ -62,19 +79,13 @@ export default function ChatbotForm({
 		existingChatbotExternalReferenceCode,
 		setExistingChatbotExternalReferenceCode,
 	] = useState(externalReferenceCode);
-	const [availableAgentDefinitions, setAvailableAgentDefinitions] = useState<
-		AgentDefinitionOption[]
-	>([]);
 	const [selectedAgentDefinitions, setSelectedAgentDefinitions] = useState<
 		AgentDefinitionOption[]
 	>([]);
-	const [showAgentDefinitionPicker, setShowAgentDefinitionPicker] =
-		useState(false);
-	const [agentDefinitionSearchQuery, setAgentDefinitionSearchQuery] =
-		useState('');
-
-	const agentDefinitionPickerRef = useRef<HTMLDivElement>(null);
-	const removedAgentDefinitionERCsRef = useRef<Set<string>>(new Set());
+	const [
+		originalSelectedAgentDefinitions,
+		setOriginalSelectedAgentDefinitions,
+	] = useState<AgentDefinitionOption[]>([]);
 
 	const handleInputChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -85,29 +96,6 @@ export default function ChatbotForm({
 			...prev,
 			[name]: value,
 		}));
-	};
-
-	const handleRemoveAgentDefinition = (erc: string) => {
-		removedAgentDefinitionERCsRef.current.add(erc);
-		setSelectedAgentDefinitions((prev) =>
-			prev.filter((agent) => agent.externalReferenceCode !== erc)
-		);
-	};
-
-	const handleAddAgentDefinition = (agent: AgentDefinitionOption) => {
-		if (
-			!selectedAgentDefinitions.some(
-				(a) => a.externalReferenceCode === agent.externalReferenceCode
-			)
-		) {
-			removedAgentDefinitionERCsRef.current.delete(
-				agent.externalReferenceCode
-			);
-			setSelectedAgentDefinitions((prev) => [...prev, agent]);
-		}
-
-		setAgentDefinitionSearchQuery('');
-		setShowAgentDefinitionPicker(false);
 	};
 
 	const handleCopyEmbedCode = () => {
@@ -163,17 +151,29 @@ export default function ChatbotForm({
 				)
 			);
 
+			// Determine removed agents by comparing with original selection
+
+			const removedAgents = originalSelectedAgentDefinitions.filter(
+				(original) =>
+					!selectedAgentDefinitions.some(
+						(current) =>
+							current.externalReferenceCode ===
+							original.externalReferenceCode
+					)
+			);
+
 			await Promise.all(
-				Array.from(removedAgentDefinitionERCsRef.current).map(
-					(agentERC) =>
-						deleteChatbotAgentDefinitionRelationship(
-							chatbotExternalReferenceCode,
-							agentERC
-						)
+				removedAgents.map((agent) =>
+					deleteChatbotAgentDefinitionRelationship(
+						chatbotExternalReferenceCode,
+						agent.externalReferenceCode
+					)
 				)
 			);
 
-			removedAgentDefinitionERCsRef.current.clear();
+			// Update original selection after successful submission
+
+			setOriginalSelectedAgentDefinitions(selectedAgentDefinitions);
 
 			openToast({
 				message: Liferay.Language.get('chatbot-was-saved-successfully'),
@@ -205,6 +205,8 @@ export default function ChatbotForm({
 					showCompanyLogo: true,
 					title_i18n: {},
 				});
+				setSelectedAgentDefinitions([]);
+				setOriginalSelectedAgentDefinitions([]);
 
 				return;
 			}
@@ -225,17 +227,15 @@ export default function ChatbotForm({
 					title_i18n: chatbot.title_i18n,
 				});
 
-				setSelectedAgentDefinitions(
-					(chatbot.agentDefinitionsToChatbots ?? []).map(
-						(a: {
-							externalReferenceCode: string;
-							title: string;
-						}) => ({
-							externalReferenceCode: a.externalReferenceCode,
-							title: a.title,
-						})
-					)
-				);
+				const agentDefinitions = (
+					chatbot.agentDefinitionsToChatbots ?? []
+				).map((a: {externalReferenceCode: string; title: string}) => ({
+					externalReferenceCode: a.externalReferenceCode,
+					title: a.title,
+				}));
+
+				setSelectedAgentDefinitions(agentDefinitions);
+				setOriginalSelectedAgentDefinitions(agentDefinitions);
 			}
 			catch (error) {
 				openToast({
@@ -249,60 +249,6 @@ export default function ChatbotForm({
 
 		fetchFormData();
 	}, [accountEntryExternalReferenceCode, externalReferenceCode]);
-
-	useEffect(() => {
-		async function fetchAgentDefinitions() {
-			try {
-				const response = await getAgentDefinitions();
-
-				setAvailableAgentDefinitions(
-					(response.items || []).map(
-						(item: {
-							externalReferenceCode: string;
-							title: string;
-						}) => ({
-							externalReferenceCode: item.externalReferenceCode,
-							title: item.title,
-						})
-					)
-				);
-			}
-			catch (error) {
-				console.error(error);
-			}
-		}
-
-		fetchAgentDefinitions();
-	}, []);
-
-	useEffect(() => {
-		function handleClickOutside(event: MouseEvent) {
-			if (
-				agentDefinitionPickerRef.current &&
-				!agentDefinitionPickerRef.current.contains(event.target as Node)
-			) {
-				setShowAgentDefinitionPicker(false);
-			}
-		}
-
-		document.addEventListener('mousedown', handleClickOutside);
-
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, []);
-
-	const unselectedAgentDefinitions = availableAgentDefinitions.filter(
-		(agent) =>
-			!selectedAgentDefinitions.some(
-				(agentDefinition) =>
-					agentDefinition.externalReferenceCode ===
-					agent.externalReferenceCode
-			) &&
-			agent.title
-				.toLowerCase()
-				.includes(agentDefinitionSearchQuery.toLowerCase())
-	);
 
 	return (
 		<>
@@ -454,99 +400,25 @@ export default function ChatbotForm({
 											)}
 										</label>
 
-										<div className="chatbot-assigned-agents">
-											{selectedAgentDefinitions.map(
-												(agent) => (
-													<span
-														className="chatbot-agent-tag"
-														key={
-															agent.externalReferenceCode
-														}
-													>
-														{agent.title}
-
-														<button
-															className="chatbot-agent-tag-remove"
-															onClick={() =>
-																handleRemoveAgentDefinition(
-																	agent.externalReferenceCode
-																)
-															}
-															type="button"
-														>
-															<Provider
-																spritemap={
-																	Liferay
-																		.Icons
-																		.spritemap
-																}
-															>
-																<ClayIcon symbol="times" />
-															</Provider>
-														</button>
-													</span>
-												)
-											)}
-
-											<div
-												className="chatbot-agent-picker-wrapper"
-												ref={agentDefinitionPickerRef}
-											>
-												<input
-													className="chatbot-agent-search"
-													onChange={(event) => {
-														setAgentDefinitionSearchQuery(
-															event.target.value
-														);
-														setShowAgentDefinitionPicker(
-															true
-														);
-													}}
-													onFocus={() =>
-														setShowAgentDefinitionPicker(
-															true
-														)
-													}
-													placeholder={
-														!selectedAgentDefinitions.length
-															? Liferay.Language.get(
-																	'search-agents'
-																)
-															: ''
-													}
-													type="text"
-													value={
-														agentDefinitionSearchQuery
-													}
-												/>
-
-												{showAgentDefinitionPicker &&
-													!!unselectedAgentDefinitions.length && (
-														<div className="chatbot-agent-picker">
-															{unselectedAgentDefinitions.map(
-																(agent) => (
-																	<button
-																		className="chatbot-agent-picker-item"
-																		key={
-																			agent.externalReferenceCode
-																		}
-																		onClick={() =>
-																			handleAddAgentDefinition(
-																				agent
-																			)
-																		}
-																		type="button"
-																	>
-																		{
-																			agent.title
-																		}
-																	</button>
-																)
-															)}
-														</div>
-													)}
-											</div>
-										</div>
+										<ClayMultiSelect
+											allowDuplicateValues={false}
+											allowsCustomLabel={false}
+											inputName="assignedAgents"
+											items={selectedAgentDefinitions}
+											locator={{
+												label: 'title',
+												value: 'externalReferenceCode',
+											}}
+											onItemsChange={(items) => {
+												setSelectedAgentDefinitions(
+													items
+												);
+											}}
+											sourceItems={
+												availableAgentDefinitions
+											}
+											spritemap={Liferay.Icons.spritemap}
+										/>
 									</ClayForm.Group>
 
 									<ClayForm.Group>

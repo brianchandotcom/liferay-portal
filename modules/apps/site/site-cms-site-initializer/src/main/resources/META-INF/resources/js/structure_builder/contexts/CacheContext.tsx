@@ -10,6 +10,7 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -23,11 +24,13 @@ import {Space} from '../../common/types/Space';
 import {Workflow} from '../../common/types/Workflow';
 import ObjectDefinitionService from '../services/ObjectDefinitionService';
 
-export type CacheKey =
+export type KnownCacheKey =
 	| 'object-definitions'
 	| 'picklists'
 	| 'spaces'
 	| 'workflows';
+
+export type CacheKey = KnownCacheKey | (string & {});
 
 export type CacheStatus = 'idle' | 'saving' | 'saved' | 'stale';
 
@@ -52,6 +55,7 @@ export type Cache = {
 		fetcher: () => Promise<Workflow[]>;
 		status: CacheStatus;
 	};
+	[key: string]: DynamicCacheEntry<any>;
 };
 
 type Promises = {
@@ -61,6 +65,12 @@ type Promises = {
 type InitialData = Partial<{
 	[K in CacheKey]: Cache[K]['data'];
 }>;
+
+export type DynamicCacheEntry<T> = {
+	data: T;
+	fetcher: () => Promise<T>;
+	status: CacheStatus;
+};
 
 function getInitialCache(initialData: InitialData = {}): Cache {
 	return {
@@ -133,17 +143,32 @@ function CacheContextProvider({
 	);
 }
 
-function useCache<T extends CacheKey>(
+function useCache<T extends KnownCacheKey>(
 	key: T
-): Cache[T] & {load: () => Promise<Cache[T]['data']>} {
+): Cache[T] & {load: () => Promise<Cache[T]['data']>};
+
+function useCache<T>(
+	key: string,
+	externalFetcher: () => Promise<T>
+): DynamicCacheEntry<T> & {load: () => Promise<T>};
+
+function useCache<T>(key: string, externalFetcher?: () => Promise<T>) {
 	const {cache, promisesRef, update} = useContext(CacheContext);
 
-	const item = cache[key];
+	const item = useMemo(
+		() =>
+			cache[key] || {
+				data: [],
+				fetcher: externalFetcher,
+				status: 'idle',
+			},
+		[cache, externalFetcher, key]
+	);
 
 	const promises = promisesRef.current;
 
 	const load = useCallback(async () => {
-		const existingPromise = promises[key] as Promise<Cache[T]['data']>;
+		const existingPromise = promises[key];
 
 		if (existingPromise) {
 			await existingPromise;
@@ -151,20 +176,19 @@ function useCache<T extends CacheKey>(
 			return cache[key].data;
 		}
 
-		const fetchData = async (): Promise<Cache[T]['data']> => {
-			update(key, {status: 'saving'} as Partial<Cache[T]>);
+		const fetchData = async () => {
+			update(key, {status: 'saving'});
 
 			try {
-				const response = await item.fetcher();
+				const fetcher = externalFetcher ?? item.fetcher;
+				const response = await fetcher();
 
-				update(key, {data: response, status: 'saved'} as Partial<
-					Cache[T]
-				>);
+				update(key, {data: response, status: 'saved'});
 
 				return response;
 			}
 			catch (error) {
-				update(key, {status: 'stale'} as Partial<Cache[T]>);
+				update(key, {status: 'stale'});
 
 				return Promise.reject(error);
 			}
@@ -175,10 +199,10 @@ function useCache<T extends CacheKey>(
 
 		const promise = fetchData();
 
-		promises[key] = promise as Promises[T];
+		promises[key] = promise;
 
 		return promise;
-	}, [item, key, promises, update, cache]);
+	}, [item, key, promises, update, cache, externalFetcher]);
 
 	useEffect(() => {
 		if (item.status !== 'idle') {
@@ -196,7 +220,7 @@ function useCache<T extends CacheKey>(
 				return;
 			}
 
-			update(key, {status: 'stale'} as Partial<Cache[T]>);
+			update(key, {status: 'stale'});
 		};
 
 		broadcast?.addEventListener('message', staleCache);

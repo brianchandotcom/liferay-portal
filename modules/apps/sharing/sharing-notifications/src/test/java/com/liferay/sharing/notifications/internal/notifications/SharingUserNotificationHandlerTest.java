@@ -186,15 +186,19 @@ public class SharingUserNotificationHandlerTest {
 		_setUpAssetRendererFactoryRegistryUtil(
 			className, assetRenderer, classPK);
 
-		String mode = "read";
+		String expectedURL = null;
 
 		if (hasUpdatePermission) {
-			mode = "edit";
+			expectedURL = StringBundler.concat(
+				"http://localhost:8080/c/portal/cms",
+				"/edit_content_item?objectEntryId=", classPK,
+				"&p_l_mode=edit&redirect=http://localhost:8080");
 		}
-
-		String expectedURL = StringBundler.concat(
-			"http://localhost:8080/c/portal/cms",
-			"/edit_content_item?objectEntryId=", classPK, "&p_l_mode=", mode);
+		else {
+			expectedURL = StringBundler.concat(
+				"http://localhost:8080/web/cms/view-asset?objectEntryId=",
+				classPK, "&backURL=http://localhost:8080");
+		}
 
 		Mockito.when(
 			assetRenderer.getURLSharingNotification(

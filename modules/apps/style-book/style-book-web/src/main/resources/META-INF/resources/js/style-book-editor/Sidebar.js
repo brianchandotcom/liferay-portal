@@ -12,6 +12,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import FrontendTokenSet from './FrontendTokenSet';
 import {config} from './config';
 import {useFrontendTokensValues} from './contexts/StyleBookEditorContext';
+import {getSortedFrontendTokenValues} from './utils/getSortedFrontendTokenValues';
 
 export default React.memo(function Sidebar() {
 	const sidebarRef = useRef();
@@ -23,7 +24,7 @@ export default React.memo(function Sidebar() {
 		() =>
 			config.frontendTokenDefinitions.find(
 				(definition) => definition.id === activeDefinitionId
-			) || config.frontendTokenDefinitions[0],
+			),
 		[activeDefinitionId]
 	);
 
@@ -92,11 +93,14 @@ function TokenDefinitionSelector({activeDefinitionId, setActiveDefinitionId}) {
 				onActiveChange={setActive}
 				trigger={
 					<button
+						aria-expanded={active}
+						aria-haspopup="listbox"
 						className="btn btn-unstyled p-2 style-book-editor__sidebar-theme-info-trigger text-left w-100"
 						type="button"
 					>
 						<TokenDefinitionInformation
 							activeDefinition={activeDefinition}
+							isDropdownOpen={active}
 						/>
 					</button>
 				}
@@ -127,28 +131,33 @@ function UpdateStyle({sidebarRef}) {
 		if (sidebarRef.current) {
 			sidebarRef.current.removeAttribute('style');
 
-			Object.values(frontendTokensValues).forEach(
-				({cssVariableMapping, value}) => {
-					sidebarRef.current.style.setProperty(
-						`--${cssVariableMapping}`,
-						value
-					);
-				}
-			);
+			for (const {
+				cssVariableMapping,
+				value,
+			} of getSortedFrontendTokenValues(
+				frontendTokensValues,
+				config.frontendTokenDefinitions,
+				config.defaultTokenDefinitionPriority
+			)) {
+				sidebarRef.current.style.setProperty(
+					`--${cssVariableMapping}`,
+					value
+				);
+			}
 		}
 	}, [frontendTokensValues, sidebarRef]);
 
 	return null;
 }
 
-function TokenDefinitionInformation({activeDefinition}) {
+function TokenDefinitionInformation({activeDefinition, isDropdownOpen}) {
 	return (
 		<div className="small text-secondary">
 			<div className="text-dark">
 				<p className="font-weight-bold mb-1">
-					{`${Liferay.Language.get(
+					{Liferay.Language.get(
 						'frontend-token-definition-provided-by'
-					)}`}
+					)}
 				</p>
 
 				<p className="mb-0">
@@ -156,7 +165,13 @@ function TokenDefinitionInformation({activeDefinition}) {
 
 					{config.frontendTokenDefinitions.length > 1 && (
 						<span className="ml-1">
-							<ClayIcon symbol="caret-bottom" />
+							<ClayIcon
+								symbol={
+									isDropdownOpen
+										? 'caret-top'
+										: 'caret-bottom'
+								}
+							/>
 						</span>
 					)}
 				</p>

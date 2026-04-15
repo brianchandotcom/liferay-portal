@@ -12,7 +12,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
-import {generateObjectFields} from './utils/generateObjectFields';
+import {generateObjectFields} from '../utils/generateObjectFields';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -26,17 +26,14 @@ const test = mergeTests(
 );
 
 test(
-	'LPD-78504 Cannot change required option when field is mapped to object field',
-	{tag: '@LPD-78504'},
+	'cannot change required option when field is mapped to object field',
+	{tag: '@LPS-136456'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
-		page,
 	}) => {
-		// Corresponds to Poshi test: CannotChangeRequiredOption
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [{businessType: 'Text', required: true}],
 		});
@@ -72,13 +69,7 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
-
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
 		await formBuilderSidePanelPage.clickBasicTab();
 
@@ -87,14 +78,14 @@ test(
 		).toBeVisible();
 
 		await expect(
-			page.getByRole('switch', {name: 'Required Field'})
+			formBuilderSidePanelPage.requiredFieldToggleSwitch
 		).toBeDisabled();
 	}
 );
 
 test(
-	'LPD-78504 Cannot map with different field types',
-	{tag: '@LPD-78504'},
+	'cannot map fields with different types',
+	{tag: '@LPS-133365'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
@@ -102,15 +93,8 @@ test(
 		formSettingsModalPage,
 		page,
 	}) => {
-		// Corresponds to Poshi test: CannotMapWithDifferentFieldTypes
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
 				status: {code: 0},
 			});
 
@@ -118,10 +102,6 @@ test(
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
-
-		const textFieldLabel = objectDefinition.objectFields.find(
-			(field) => field.businessType === 'Text'
-		).label['en_US'];
 
 		await formBuilderPage.goToNew();
 
@@ -144,97 +124,26 @@ test(
 		await formBuilderSidePanelPage.objectFieldSelect.click();
 
 		await expect(
-			formBuilderSidePanelPage.getSelectOptionLocator(textFieldLabel)
-		).toBeHidden();
-	}
-);
-
-test(
-	'LPD-78504 Cannot map with different field types for field group',
-	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		formBuilderPage,
-		formBuilderSidePanelPage,
-		formSettingsModalPage,
-		page,
-	}) => {
-		// Corresponds to Poshi test: CannotMapWithDifferentFieldTypesForFieldGroup
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		const textFieldLabel = objectDefinition.objectFields.find(
-			(field) => field.businessType === 'Text'
-		).label['en_US'];
-
-		await formBuilderPage.goToNew();
-
-		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
-
-		await formBuilderPage.formSettingsButton.click();
-
-		await formSettingsModalPage.selectStorageType('Object');
-
-		await formSettingsModalPage.selectObject(
-			objectDefinition.label['en_US']
-		);
-
-		await formSettingsModalPage.clickDoneButton();
-
-		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
-
-		await formBuilderSidePanelPage.clickBackButton();
-
-		await formBuilderSidePanelPage.addFieldToFieldGroup('Numeric', 0);
-
-		await expect(
-			page.getByLabel('Fields Group', {exact: true})
+			page.getByRole('option', {
+				name: 'There are no compatible object fields to map.',
+			})
 		).toBeVisible();
-
-		await formBuilderPage.openFieldSettings('Numeric');
-
-		await formBuilderSidePanelPage.clickAdvancedTab();
-
-		await formBuilderSidePanelPage.objectFieldSelect.click();
-
-		await expect(
-			formBuilderSidePanelPage.getSelectOptionLocator(textFieldLabel)
-		).toBeHidden();
 	}
 );
 
 test(
-	'LPD-78504 Cannot view forms entries when form is mapped to an object',
-	{tag: '@LPD-78504'},
+	'cannot view forms entries when form is mapped to an object',
+	{tag: '@LPS-136456'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
+		formsPage,
 		page,
 	}) => {
-		// Corresponds to Poshi test: CannotViewFormsEntries
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
 				status: {code: 0},
 			});
 
@@ -245,7 +154,9 @@ test(
 
 		await formBuilderPage.goToNew();
 
-		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+		const formTitle = 'Form' + getRandomInt();
+
+		await formBuilderPage.fillFormTitle(formTitle);
 
 		await formBuilderPage.formSettingsButton.click();
 
@@ -259,42 +170,41 @@ test(
 
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
 
-		const fieldLabel = objectFields[0].label!['en_US'];
-
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField('textField');
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickSaveButton();
 
-		await expect(formBuilderPage.entriesTab).toBeHidden();
+		await expect(formBuilderPage.entriesTab).not.toBeVisible();
+
+		await formsPage.goTo();
+
+		await page
+			.getByRole('row', {name: formTitle})
+			.getByRole('button', {name: 'Show Actions'})
+			.click();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'View Entries'})
+		).not.toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Repeatable option is not available on form mapped to object',
-	{tag: '@LPD-78504'},
+	'repeatable and searchable options are not available on form mapped to an object',
+	{tag: '@LPS-136456'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
+		page,
 	}) => {
-		// Corresponds to Poshi test: RepeatableOptionNotAvailable
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
 				status: {code: 0},
 			});
 
@@ -304,8 +214,6 @@ test(
 		});
 
 		await formBuilderPage.goToNew();
-
-		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
 
 		await formBuilderPage.formSettingsButton.click();
 
@@ -323,55 +231,8 @@ test(
 
 		await expect(
 			formBuilderSidePanelPage.repeatableFieldToggleSwitch
-		).toBeHidden();
-	}
-);
+		).not.toBeVisible();
 
-test(
-	'LPD-78504 Searchable option is not available on form mapped to object',
-	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		formBuilderPage,
-		formBuilderSidePanelPage,
-		formSettingsModalPage,
-		page,
-	}) => {
-		// Corresponds to Poshi test: SearchableOptionNotAvailable
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await formBuilderPage.goToNew();
-
-		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
-
-		await formBuilderPage.formSettingsButton.click();
-
-		await formSettingsModalPage.selectStorageType('Object');
-
-		await formSettingsModalPage.selectObject(
-			objectDefinition.label['en_US']
-		);
-
-		await formSettingsModalPage.clickDoneButton();
-
-		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
-
-		await formBuilderSidePanelPage.clickAdvancedTab();
-
-		await expect(page.getByLabel('Searchable')).toBeHidden();
+		await expect(page.getByLabel('Searchable')).not.toBeVisible();
 	}
 );

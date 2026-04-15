@@ -13,8 +13,14 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import {generateObjectFields} from './utils/generateObjectFields';
-import {postListTypeDefinitionListTypeEntries} from './utils/postListTypeDefinitionListTypeEntries';
+import {deleteItems} from '../../dynamic-data-mapping-form-web/main/utils/deleteItems';
+import {
+	getFDSDateFormat,
+	getObjectEntryAPIDateTimeFormat,
+	getObjectEntryUIDateTimeFormat,
+} from '../utils/dateFormat';
+import {generateObjectFields} from '../utils/generateObjectFields';
+import {postListTypeDefinitionListTypeEntries} from '../utils/postListTypeDefinitionListTypeEntries';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -28,18 +34,15 @@ const test = mergeTests(
 );
 
 test(
-	'LPD-78504 Can map and view entries for field group',
-	{tag: '@LPD-78504'},
+	'can map and view entries for field group',
+	{tag: '@LPS-133365'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapAndViewEntriesForFieldGroup
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text', 'Text'],
 		});
@@ -56,15 +59,14 @@ test(
 		});
 
 		const fieldLabel1 = objectFields[0].label!['en_US'];
+
 		const fieldLabel2 = objectFields[1].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
-		const formTitle = 'Form' + getRandomInt();
-
-		await formBuilderPage.fillFormTitle(formTitle);
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
 
 		await formBuilderPage.formSettingsButton.click();
 
@@ -76,52 +78,36 @@ test(
 
 		await formSettingsModalPage.clickDoneButton();
 
-		// Add the first Text field
-
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel1);
 
-		await page
-			.getByRole('option', {name: fieldLabel1})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderSidePanelPage.clickBackButton();
-
-		// Add the second Text field into a field group by dragging it onto the first field
 
 		await formBuilderSidePanelPage.addFieldToFieldGroup('Text', 0);
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel2);
 
-		await page
-			.getByRole('option', {name: fieldLabel2})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await expect(
 			page.getByLabel('Fields Group', {exact: true})
 		).toBeVisible();
 
-		await page.waitForTimeout(2000);
-
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
-
-		// Submit entry via the form
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
 		const textValue1 = getRandomString();
+
 		const textValue2 = getRandomString();
 
 		await page.getByLabel('Text', {exact: true}).first().fill(textValue1);
@@ -134,8 +120,6 @@ test(
 			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
-		// Verify entries via API
-
 		const {items} =
 			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 				'c/' + objectDefinition.name.toLowerCase() + 's'
@@ -143,28 +127,26 @@ test(
 
 		expect(items).toHaveLength(1);
 
-		const item = items[0];
 		const fieldName1 = objectFields[0].name;
+
 		const fieldName2 = objectFields[1].name;
 
-		expect(item[fieldName1]).toBe(textValue1);
-		expect(item[fieldName2]).toBe(textValue2);
+		expect(items[0][fieldName1]).toBe(textValue1);
+
+		expect(items[0][fieldName2]).toBe(textValue2);
 	}
 );
 
 test(
-	'LPD-78504 Can map BigDecimal type and view entries',
-	{tag: '@LPD-78504'},
+	'can map object field of PrecisionDecimal type to form and add entries',
+	{tag: '@LPS-133365'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapBigDecimalTypeAndViewEntries
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['PrecisionDecimal'],
 		});
@@ -182,7 +164,7 @@ test(
 
 		const fieldLabel = objectFields[0].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -204,22 +186,17 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		const decimalValue = '123.456';
+		const decimalValue = (getRandomInt() / 100).toFixed(2);
 
 		await page.getByLabel('Numeric').fill(decimalValue);
 
@@ -236,26 +213,22 @@ test(
 
 		expect(items).toHaveLength(1);
 
-		const item = items[0];
 		const fieldName = objectFields[0].name;
 
-		expect(Number(item[fieldName])).toBeCloseTo(123.456);
+		expect(items[0][fieldName]).toBe(Number(decimalValue));
 	}
 );
 
 test(
-	'LPD-78504 Can map Boolean type and view entries',
-	{tag: '@LPD-78504'},
+	'can map object field of Boolean type to form and add entries',
+	{tag: '@LPS-133365'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapBooleanTypeAndViewEntries
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Boolean'],
 		});
@@ -273,7 +246,7 @@ test(
 
 		const fieldLabel = objectFields[0].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -293,18 +266,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
@@ -322,11 +290,15 @@ test(
 			);
 
 		expect(items).toHaveLength(1);
+
+		const fieldName = objectFields[0].name;
+
+		expect(items[0][fieldName]).toBe(true);
 	}
 );
 
 test(
-	'LPD-78504 Can map Date type and view entries',
+	'can map object field of Date type to form and add entries',
 	{tag: '@LPD-78504'},
 	async ({
 		apiHelpers,
@@ -334,10 +306,7 @@ test(
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapDateTypeAndViewEntries
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Date'],
 		});
@@ -355,7 +324,7 @@ test(
 
 		const fieldLabel = objectFields[0].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -375,22 +344,21 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		await page.getByPlaceholder('__/__/____').fill('01/15/2025');
+		const date = new Date();
+
+		const inputDate = getObjectEntryUIDateTimeFormat(date);
+
+		await page.getByRole('textbox', {name: 'Date'}).fill(inputDate);
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
@@ -405,15 +373,16 @@ test(
 
 		expect(items).toHaveLength(1);
 
-		const item = items[0];
+		const apiDate = getObjectEntryAPIDateTimeFormat(date).split('T')[0];
+
 		const fieldName = objectFields[0].name;
 
-		expect(item[fieldName]).toContain('2025-01-15');
+		expect(items[0][fieldName]).toContain(apiDate);
 	}
 );
 
 test(
-	'LPD-78504 Can map Double type and view entries',
+	'can map object field of Decimal type to form and add entries',
 	{tag: '@LPD-78504'},
 	async ({
 		apiHelpers,
@@ -421,10 +390,7 @@ test(
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapDoubleTypeAndViewEntries
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Decimal'],
 		});
@@ -442,7 +408,7 @@ test(
 
 		const fieldLabel = objectFields[0].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -464,24 +430,19 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		const doubleValue = '55.75';
+		const decimalValue = (getRandomInt() / 100).toFixed(2);
 
-		await page.getByLabel('Numeric').fill(doubleValue);
+		await page.getByLabel('Numeric').fill(decimalValue);
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
@@ -496,26 +457,22 @@ test(
 
 		expect(items).toHaveLength(1);
 
-		const item = items[0];
 		const fieldName = objectFields[0].name;
 
-		expect(Number(item[fieldName])).toBeCloseTo(55.75);
+		expect(items[0][fieldName]).toBe(Number(decimalValue));
 	}
 );
 
 test(
-	'LPD-78504 Can map Integer type and view entries',
-	{tag: '@LPD-78504'},
+	'can map object field of Integer type to form and add entries',
+	{tag: '@LPS-133365'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapIntegerTypeAndViewEntries
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Integer'],
 		});
@@ -533,7 +490,7 @@ test(
 
 		const fieldLabel = objectFields[0].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -553,22 +510,17 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		const integerValue = '42';
+		const integerValue = getRandomInt().toString().slice(1, 4);
 
 		await page.getByLabel('Numeric').fill(integerValue);
 
@@ -585,26 +537,22 @@ test(
 
 		expect(items).toHaveLength(1);
 
-		const item = items[0];
 		const fieldName = objectFields[0].name;
 
-		expect(item[fieldName]).toBe(42);
+		expect(items[0][fieldName]).toBe(Number(integerValue));
 	}
 );
 
 test(
-	'LPD-78504 Can map Long type and view entries',
-	{tag: '@LPD-78504'},
+	'can map object field of LongInteger type to form and add entries',
+	{tag: '@LPS-133365'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapLongTypeAndViewEntries
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['LongInteger'],
 		});
@@ -622,7 +570,7 @@ test(
 
 		const fieldLabel = objectFields[0].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -642,24 +590,21 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		const longValue = '9876543210';
+		const longValue = getRandomInt();
 
-		await page.getByLabel('Numeric').fill(longValue);
+		await page.getByLabel('Numeric').fill(String(longValue));
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
@@ -674,31 +619,32 @@ test(
 
 		expect(items).toHaveLength(1);
 
-		const item = items[0];
 		const fieldName = objectFields[0].name;
 
-		expect(Number(item[fieldName])).toBe(9876543210);
+		expect(items[0][fieldName]).toBe(longValue);
 	}
 );
 
 test(
-	'LPD-78504 Can map Picklist type and view entries',
-	{tag: '@LPD-78504'},
+	'can map object field of Picklist type to form and add entries',
+	{tag: '@LPS-138495'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapPicklistTypeAndViewEntries
-
 		const {listTypeDefinition, listTypeEntries} =
 			await postListTypeDefinitionListTypeEntries({
 				apiHelpers,
 				listTypeEntriesLength: 3,
 			});
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
@@ -719,7 +665,7 @@ test(
 
 		const fieldLabel = objectFields[0].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -741,28 +687,21 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		const firstEntryName = listTypeEntries[0].name;
+		const firstListTypeEntry = listTypeEntries[0];
 
 		await page.getByLabel('Select from List').click();
 
-		await page
-			.getByRole('option', {name: firstEntryName})
-			.click();
+		await page.getByRole('option', {name: firstListTypeEntry.name}).click();
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
@@ -777,33 +716,27 @@ test(
 
 		expect(items).toHaveLength(1);
 
-		const item = items[0];
 		const fieldName = objectFields[0].name;
 
-		expect(item[fieldName]).toBeTruthy();
+		expect(items[0][fieldName]).toMatchObject({
+			key: firstListTypeEntry.key,
+			name: firstListTypeEntry.name,
+		});
 	}
 );
 
 test(
-	'LPD-78504 Can map String type and view entries',
-	{tag: '@LPD-78504'},
+	'can map object field of Text type to form and add entries',
+	{tag: '@LPS-133365'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanMapStringTypeAndViewEntries
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
 				status: {code: 0},
 			});
 
@@ -812,9 +745,7 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const fieldLabel = objectFields[0].label!['en_US'];
-
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -834,18 +765,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField('textField');
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
@@ -866,33 +792,22 @@ test(
 
 		expect(items).toHaveLength(1);
 
-		const item = items[0];
-		const fieldName = objectFields[0].name;
-
-		expect(item[fieldName]).toBe(textValue);
+		expect(items[0]['textField']).toBe(textValue);
 	}
 );
 
 test(
-	'LPD-78504 Can submit entry with Double field blank that is not required',
-	{tag: '@LPD-78504'},
+	'can submit blank form entry with object field of Decimal type that is not required',
+	{tag: '@LPS-137865'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: CanSubmitEntryWithDoubleFieldBlank
-
 		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: [
-				{
-					businessType: 'Decimal',
-					required: false,
-				},
-			],
+			objectFieldBusinessTypes: [{businessType: 'Decimal'}],
 		});
 
 		const objectDefinition =
@@ -908,9 +823,7 @@ test(
 
 		const fieldLabel = objectFields[0].label!['en_US'];
 
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
-
-		await expect(formBuilderPage.newFormHeading).toBeVisible();
+		await formBuilderPage.goToNew();
 
 		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
 
@@ -930,20 +843,13 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
 
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
-
-		// Submit the form without filling the Numeric field
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
@@ -963,8 +869,8 @@ test(
 );
 
 test(
-	'LPD-78504 Entries are not deleted when form is deleted',
-	{tag: '@LPD-78504'},
+	'object entries are not deleted when form is deleted',
+	{tag: '@LPS-139902'},
 	async ({
 		apiHelpers,
 		formBuilderPage,
@@ -972,17 +878,9 @@ test(
 		formSettingsModalPage,
 		formsPage,
 		page,
-		site,
 	}) => {
-		// Corresponds to Poshi test: EntriesAreNotDeletedWhenFormIsDeleted
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
 				status: {code: 0},
 			});
 
@@ -991,131 +889,7 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const fieldLabel = objectFields[0].label!['en_US'];
-
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
-
-		await expect(formBuilderPage.newFormHeading).toBeVisible();
-
-		const formTitle = 'Form' + getRandomInt();
-
-		await formBuilderPage.fillFormTitle(formTitle);
-
-		await formBuilderPage.formSettingsButton.click();
-
-		await formSettingsModalPage.selectStorageType('Object');
-
-		await formSettingsModalPage.selectObject(
-			objectDefinition.label['en_US']
-		);
-
-		await formSettingsModalPage.clickDoneButton();
-
-		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
-
-		await formBuilderSidePanelPage.clickAdvancedTab();
-
-		await formBuilderSidePanelPage.objectFieldSelect.click();
-
-		await page
-			.getByRole('option', {name: fieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
-
-		await formBuilderPage.clickPublishFormButton();
-
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
-
-		// Submit an entry
-
-		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
-
-		const textValue = getRandomString();
-
-		await page.getByLabel('Text').fill(textValue);
-
-		await page.getByRole('button', {name: 'Save'}).click();
-
-		await expect(
-			page.getByText('Your request completed successfully.')
-		).toBeVisible();
-
-		// Verify entry exists before deleting the form
-
-		const {items: itemsBefore} =
-			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-				'c/' + objectDefinition.name.toLowerCase() + 's'
-			);
-
-		expect(itemsBefore).toHaveLength(1);
-
-		// Delete the form
-
-		await formsPage.goTo(site.friendlyUrlPath);
-
-		await formsPage.managementToolbarSelectAllItems.click();
-
-		formsPage.page.once('dialog', async (dialog) => {
-			await dialog.accept();
-		});
-
-		await formsPage.managementToolbarDeleteButton.click();
-
-		// Verify entry still exists after form deletion
-
-		const {items: itemsAfter} =
-			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-				'c/' + objectDefinition.name.toLowerCase() + 's'
-			);
-
-		expect(itemsAfter).toHaveLength(1);
-
-		const item = itemsAfter[0];
-		const fieldName = objectFields[0].name;
-
-		expect(item[fieldName]).toBe(textValue);
-	}
-);
-
-test(
-	'LPD-78504 Can see entries of a field with capitalized letters in the name',
-	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		formBuilderPage,
-		formBuilderSidePanelPage,
-		formSettingsModalPage,
-		page,
-		site,
-	}) => {
-		// Corresponds to Poshi test: FieldWithCapitalizedLetters
-
-		const capitalizedFieldLabel = 'MyTextField' + getRandomInt();
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: [
-				{
-					businessType: 'Text',
-					label: {en_US: capitalizedFieldLabel},
-					name: capitalizedFieldLabel.toLowerCase(),
-				},
-			],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
@@ -1135,26 +909,129 @@ test(
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.objectFieldSelect.click();
+		await formBuilderSidePanelPage.selectObjectField('textField');
 
-		await page
-			.getByRole('option', {name: capitalizedFieldLabel})
-			.dispatchEvent('click');
-
-		await page.waitForTimeout(2000);
-
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(1000);
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
-
-		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		const textValue = getRandomString();
 
-		await page.getByLabel('Text').fill(textValue);
+		await test.step('create an object entry through the form', async () => {
+			await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+
+			await page.getByLabel('Text').fill(textValue);
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				page.getByText('Your request completed successfully.')
+			).toBeVisible();
+		});
+
+		await test.step('verify entry exists before deleting the form', async () => {
+			const {items: itemsBefore} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/' + objectDefinition.name.toLowerCase() + 's'
+				);
+
+			expect(itemsBefore).toHaveLength(1);
+		});
+
+		await test.step('delete the form', async () => {
+			await formsPage.goTo();
+
+			await deleteItems(formsPage);
+		});
+
+		await test.step('verify entry still exists after form deletion', async () => {
+			const {items: itemsAfter} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/' + objectDefinition.name.toLowerCase() + 's'
+				);
+
+			expect(itemsAfter).toHaveLength(1);
+
+			const item = itemsAfter[0];
+
+			expect(item['textField']).toBe(textValue);
+		});
+	}
+);
+
+test(
+	'can see entries of a field with capitalized letters in the name',
+	{tag: '@LPS-136451'},
+	async ({
+		apiHelpers,
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		formSettingsModalPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'Date',
+					label: {en_US: 'DueDate' + getRandomInt()},
+					name: 'dueDate' + getRandomInt(),
+				},
+			],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const fieldLabel = objectFields[0].label!['en_US'];
+
+		await formBuilderPage.goToNew();
+
+		await expect(formBuilderPage.newFormHeading).toBeVisible();
+
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+		await formBuilderPage.formSettingsButton.click();
+
+		await formSettingsModalPage.selectStorageType('Object');
+
+		await formSettingsModalPage.selectObject(
+			objectDefinition.label['en_US']
+		);
+
+		await formSettingsModalPage.clickDoneButton();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Date');
+
+		await formBuilderSidePanelPage.clickAdvancedTab();
+
+		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+
+		await page.waitForTimeout(1000);
+
+		await formBuilderPage.clickPublishFormButton();
+
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
+
+		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+
+		const date = new Date();
+
+		const inputDate = getObjectEntryUIDateTimeFormat(date);
+
+		await page
+			.getByRole('textbox', {name: 'Date'})
+			.fill(inputDate);
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
@@ -1162,16 +1039,12 @@ test(
 			page.getByText('Your request completed successfully.')
 		).toBeVisible();
 
-		const {items} =
-			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-				'c/' + objectDefinition.name.toLowerCase() + 's'
-			);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		expect(items).toHaveLength(1);
-
-		const item = items[0];
-		const fieldName = objectFields[0].name;
-
-		expect(item[fieldName]).toBe(textValue);
+		const fdsDate = getFDSDateFormat(date);
+		
+		await expect(
+			page.getByRole('cell', {name: fdsDate})
+		).toBeVisible();
 	}
 );

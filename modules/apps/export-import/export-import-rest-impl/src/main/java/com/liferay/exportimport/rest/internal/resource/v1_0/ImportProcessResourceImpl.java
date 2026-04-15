@@ -310,14 +310,13 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		};
 	}
 
-	private ValidationResponse _toValidationResponse(String messageKey) {
+	private ValidationResponse _toValidationResponse(String message) {
 		return new ValidationResponse() {
 			{
 				setErrorMessages(
 					() -> new String[] {
 						_language.get(
-							contextAcceptLanguage.getPreferredLocale(),
-							messageKey)
+							contextAcceptLanguage.getPreferredLocale(), message)
 					});
 				setSuccess(() -> false);
 			}

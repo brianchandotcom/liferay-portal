@@ -98,6 +98,8 @@ function _download_and_extract_files {
 		exit 1
 	fi
 
+	rm --force "${output_file}"
+
 	curl \
 		--location \
 		--output "${output_file}" \
@@ -106,7 +108,7 @@ function _download_and_extract_files {
 
 	local output_dir="${output_file%.tar.gz}"
 
-	mkdir "${output_dir}"
+	mkdir --parent "${output_dir}"
 
 	tar \
 		--directory "${output_dir}" \

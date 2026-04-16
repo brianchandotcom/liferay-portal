@@ -13,12 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
+import com.liferay.headless.admin.fragment.client.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.client.http.HttpInvoker;
 import com.liferay.headless.admin.fragment.client.pagination.Page;
 import com.liferay.headless.admin.fragment.client.pagination.Pagination;
-import com.liferay.headless.admin.fragment.client.resource.v1_0.FragmentSetResource;
-import com.liferay.headless.admin.fragment.client.serdes.v1_0.FragmentSetSerDes;
+import com.liferay.headless.admin.fragment.client.resource.v1_0.FragmentResource;
+import com.liferay.headless.admin.fragment.client.serdes.v1_0.FragmentSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -79,7 +78,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseFragmentSetResourceTestCase {
+public abstract class BaseFragmentResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -100,12 +99,12 @@ public abstract class BaseFragmentSetResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_fragmentSetResource.setContextCompany(testCompany);
+		_fragmentResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		fragmentSetResource = FragmentSetResource.builder(
+		fragmentResource = FragmentResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -136,23 +135,23 @@ public abstract class BaseFragmentSetResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		FragmentSet fragmentSet1 = randomFragmentSet();
+		Fragment fragment1 = randomFragment();
 
-		String json = objectMapper.writeValueAsString(fragmentSet1);
+		String json = objectMapper.writeValueAsString(fragment1);
 
-		FragmentSet fragmentSet2 = FragmentSetSerDes.toDTO(json);
+		Fragment fragment2 = FragmentSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(fragmentSet1, fragmentSet2));
+		Assert.assertTrue(equals(fragment1, fragment2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		FragmentSet fragmentSet = randomFragmentSet();
+		Fragment fragment = randomFragment();
 
-		String json1 = objectMapper.writeValueAsString(fragmentSet);
-		String json2 = FragmentSetSerDes.toJSON(fragmentSet);
+		String json1 = objectMapper.writeValueAsString(fragment);
+		String json2 = FragmentSerDes.toJSON(fragment);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -180,377 +179,304 @@ public abstract class BaseFragmentSetResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		FragmentSet fragmentSet = randomFragmentSet();
+		Fragment fragment = randomFragment();
 
-		fragmentSet.setDescription(regex);
-		fragmentSet.setExternalReferenceCode(regex);
-		fragmentSet.setKey(regex);
-		fragmentSet.setName(regex);
+		fragment.setExternalReferenceCode(regex);
+		fragment.setFragmentSetExternalReferenceCode(regex);
+		fragment.setIcon(regex);
+		fragment.setKey(regex);
+		fragment.setName(regex);
 
-		String json = FragmentSetSerDes.toJSON(fragmentSet);
+		String json = FragmentSerDes.toJSON(fragment);
 
 		Assert.assertFalse(json.contains(regex));
 
-		fragmentSet = FragmentSetSerDes.toDTO(json);
+		fragment = FragmentSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, fragmentSet.getDescription());
-		Assert.assertEquals(regex, fragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(regex, fragmentSet.getKey());
-		Assert.assertEquals(regex, fragmentSet.getName());
+		Assert.assertEquals(regex, fragment.getExternalReferenceCode());
+		Assert.assertEquals(
+			regex, fragment.getFragmentSetExternalReferenceCode());
+		Assert.assertEquals(regex, fragment.getIcon());
+		Assert.assertEquals(regex, fragment.getKey());
+		Assert.assertEquals(regex, fragment.getName());
 	}
 
 	@Test
-	public void testDeleteSiteFragmentSet() throws Exception {
+	public void testDeleteSiteFragment() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		FragmentSet fragmentSet = testDeleteSiteFragmentSet_addFragmentSet();
+		Fragment fragment = testDeleteSiteFragment_addFragment();
 
 		assertHttpResponseStatusCode(
 			204,
-			fragmentSetResource.deleteSiteFragmentSetHttpResponse(
-				testDeleteSiteFragmentSet_getSiteExternalReferenceCode(),
-				fragmentSet.getExternalReferenceCode()));
+			fragmentResource.deleteSiteFragmentHttpResponse(
+				testDeleteSiteFragment_getSiteExternalReferenceCode(),
+				fragment.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
-			fragmentSetResource.getSiteFragmentSetHttpResponse(
-				testDeleteSiteFragmentSet_getSiteExternalReferenceCode(),
-				fragmentSet.getExternalReferenceCode()));
+			fragmentResource.getSiteFragmentHttpResponse(
+				testDeleteSiteFragment_getSiteExternalReferenceCode(),
+				fragment.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			fragmentSetResource.getSiteFragmentSetHttpResponse(
-				testDeleteSiteFragmentSet_getSiteExternalReferenceCode(), "-"));
+			fragmentResource.getSiteFragmentHttpResponse(
+				testDeleteSiteFragment_getSiteExternalReferenceCode(), "-"));
 	}
 
-	protected FragmentSet testDeleteSiteFragmentSet_addFragmentSet()
-		throws Exception {
-
-		return fragmentSetResource.postSiteFragmentSet(
-			testGroup.getExternalReferenceCode(), randomFragmentSet());
+	protected Fragment testDeleteSiteFragment_addFragment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected String testDeleteSiteFragmentSet_getSiteExternalReferenceCode()
+	protected String testDeleteSiteFragment_getSiteExternalReferenceCode()
 		throws Exception {
 
 		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
-	public void testGetSiteFragmentSet() throws Exception {
-		FragmentSet postFragmentSet = testGetSiteFragmentSet_addFragmentSet();
+	public void testGetSiteFragment() throws Exception {
+		Fragment postFragment = testGetSiteFragment_addFragment();
 
-		FragmentSet getFragmentSet = fragmentSetResource.getSiteFragmentSet(
-			testGetSiteFragmentSet_getSiteExternalReferenceCode(),
-			postFragmentSet.getExternalReferenceCode());
+		Fragment getFragment = fragmentResource.getSiteFragment(
+			testGetSiteFragment_getSiteExternalReferenceCode(),
+			postFragment.getExternalReferenceCode());
 
-		assertEquals(postFragmentSet, getFragmentSet);
-		assertValid(getFragmentSet);
+		assertEquals(postFragment, getFragment);
+		assertValid(getFragment);
 	}
 
-	protected FragmentSet testGetSiteFragmentSet_addFragmentSet()
-		throws Exception {
-
-		return fragmentSetResource.postSiteFragmentSet(
-			testGroup.getExternalReferenceCode(), randomFragmentSet());
+	protected Fragment testGetSiteFragment_addFragment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected String testGetSiteFragmentSet_getSiteExternalReferenceCode()
+	protected String testGetSiteFragment_getSiteExternalReferenceCode()
 		throws Exception {
 
 		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
-	public void testGetSiteFragmentSetsPage() throws Exception {
+	public void testGetSiteFragmentSetFragmentsPage() throws Exception {
 		String siteExternalReferenceCode =
-			testGetSiteFragmentSetsPage_getSiteExternalReferenceCode();
+			testGetSiteFragmentSetFragmentsPage_getSiteExternalReferenceCode();
 		String irrelevantSiteExternalReferenceCode =
-			testGetSiteFragmentSetsPage_getIrrelevantSiteExternalReferenceCode();
+			testGetSiteFragmentSetFragmentsPage_getIrrelevantSiteExternalReferenceCode();
+		String fragmentSetExternalReferenceCode =
+			testGetSiteFragmentSetFragmentsPage_getFragmentSetExternalReferenceCode();
+		String irrelevantFragmentSetExternalReferenceCode =
+			testGetSiteFragmentSetFragmentsPage_getIrrelevantFragmentSetExternalReferenceCode();
 
-		Page<FragmentSet> page = fragmentSetResource.getSiteFragmentSetsPage(
-			siteExternalReferenceCode, null, Pagination.of(1, 10));
+		Page<Fragment> page = fragmentResource.getSiteFragmentSetFragmentsPage(
+			siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+			Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
-		if (irrelevantSiteExternalReferenceCode != null) {
-			FragmentSet irrelevantFragmentSet =
-				testGetSiteFragmentSetsPage_addFragmentSet(
-					irrelevantSiteExternalReferenceCode,
-					randomIrrelevantFragmentSet());
+		if ((irrelevantSiteExternalReferenceCode != null) &&
+			(irrelevantFragmentSetExternalReferenceCode != null)) {
 
-			page = fragmentSetResource.getSiteFragmentSetsPage(
-				irrelevantSiteExternalReferenceCode, null,
+			Fragment irrelevantFragment =
+				testGetSiteFragmentSetFragmentsPage_addFragment(
+					irrelevantSiteExternalReferenceCode,
+					irrelevantFragmentSetExternalReferenceCode,
+					randomIrrelevantFragment());
+
+			page = fragmentResource.getSiteFragmentSetFragmentsPage(
+				irrelevantSiteExternalReferenceCode,
+				irrelevantFragmentSetExternalReferenceCode,
 				Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertContains(
-				irrelevantFragmentSet, (List<FragmentSet>)page.getItems());
+			assertContains(irrelevantFragment, (List<Fragment>)page.getItems());
 			assertValid(
 				page,
-				testGetSiteFragmentSetsPage_getExpectedActions(
-					irrelevantSiteExternalReferenceCode));
+				testGetSiteFragmentSetFragmentsPage_getExpectedActions(
+					irrelevantSiteExternalReferenceCode,
+					irrelevantFragmentSetExternalReferenceCode));
 		}
 
-		FragmentSet fragmentSet1 = testGetSiteFragmentSetsPage_addFragmentSet(
-			siteExternalReferenceCode, randomFragmentSet());
+		Fragment fragment1 = testGetSiteFragmentSetFragmentsPage_addFragment(
+			siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+			randomFragment());
 
-		FragmentSet fragmentSet2 = testGetSiteFragmentSetsPage_addFragmentSet(
-			siteExternalReferenceCode, randomFragmentSet());
+		Fragment fragment2 = testGetSiteFragmentSetFragmentsPage_addFragment(
+			siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+			randomFragment());
 
-		page = fragmentSetResource.getSiteFragmentSetsPage(
-			siteExternalReferenceCode, null, Pagination.of(1, 10));
+		page = fragmentResource.getSiteFragmentSetFragmentsPage(
+			siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+			Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertContains(fragmentSet1, (List<FragmentSet>)page.getItems());
-		assertContains(fragmentSet2, (List<FragmentSet>)page.getItems());
+		assertContains(fragment1, (List<Fragment>)page.getItems());
+		assertContains(fragment2, (List<Fragment>)page.getItems());
 		assertValid(
 			page,
-			testGetSiteFragmentSetsPage_getExpectedActions(
-				siteExternalReferenceCode));
+			testGetSiteFragmentSetFragmentsPage_getExpectedActions(
+				siteExternalReferenceCode, fragmentSetExternalReferenceCode));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetSiteFragmentSetsPage_getExpectedActions(
-				String siteExternalReferenceCode)
+			testGetSiteFragmentSetFragmentsPage_getExpectedActions(
+				String siteExternalReferenceCode,
+				String fragmentSetExternalReferenceCode)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/batch".
-				replace(
-					"{siteExternalReferenceCode}",
-					String.valueOf(siteExternalReferenceCode)));
-
-		expectedActions.put("createBatch", createBatchAction);
 
 		return expectedActions;
 	}
 
 	@Test
-	public void testGetSiteFragmentSetsPageWithFilterDateTimeEquals()
+	public void testGetSiteFragmentSetFragmentsPageWithPagination()
 		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
 
 		String siteExternalReferenceCode =
-			testGetSiteFragmentSetsPage_getSiteExternalReferenceCode();
+			testGetSiteFragmentSetFragmentsPage_getSiteExternalReferenceCode();
+		String fragmentSetExternalReferenceCode =
+			testGetSiteFragmentSetFragmentsPage_getFragmentSetExternalReferenceCode();
 
-		FragmentSet fragmentSet1 = randomFragmentSet();
+		Page<Fragment> fragmentsPage =
+			fragmentResource.getSiteFragmentSetFragmentsPage(
+				siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+				null);
 
-		fragmentSet1 = testGetSiteFragmentSetsPage_addFragmentSet(
-			siteExternalReferenceCode, fragmentSet1);
+		int totalCount = GetterUtil.getInteger(fragmentsPage.getTotalCount());
 
-		for (EntityField entityField : entityFields) {
-			Page<FragmentSet> page =
-				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode,
-					getFilterString(entityField, "between", fragmentSet1),
-					Pagination.of(1, 2));
+		Fragment fragment1 = testGetSiteFragmentSetFragmentsPage_addFragment(
+			siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+			randomFragment());
 
-			assertEquals(
-				Collections.singletonList(fragmentSet1),
-				(List<FragmentSet>)page.getItems());
-		}
-	}
+		Fragment fragment2 = testGetSiteFragmentSetFragmentsPage_addFragment(
+			siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+			randomFragment());
 
-	@Test
-	public void testGetSiteFragmentSetsPageWithFilterDoubleEquals()
-		throws Exception {
-
-		testGetSiteFragmentSetsPageWithFilter("eq", EntityField.Type.DOUBLE);
-	}
-
-	@Test
-	public void testGetSiteFragmentSetsPageWithFilterStringContains()
-		throws Exception {
-
-		testGetSiteFragmentSetsPageWithFilter(
-			"contains", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetSiteFragmentSetsPageWithFilterStringEquals()
-		throws Exception {
-
-		testGetSiteFragmentSetsPageWithFilter("eq", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetSiteFragmentSetsPageWithFilterStringStartsWith()
-		throws Exception {
-
-		testGetSiteFragmentSetsPageWithFilter(
-			"startswith", EntityField.Type.STRING);
-	}
-
-	protected void testGetSiteFragmentSetsPageWithFilter(
-			String operator, EntityField.Type type)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		String siteExternalReferenceCode =
-			testGetSiteFragmentSetsPage_getSiteExternalReferenceCode();
-
-		FragmentSet fragmentSet1 = testGetSiteFragmentSetsPage_addFragmentSet(
-			siteExternalReferenceCode, randomFragmentSet());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		FragmentSet fragmentSet2 = testGetSiteFragmentSetsPage_addFragmentSet(
-			siteExternalReferenceCode, randomFragmentSet());
-
-		for (EntityField entityField : entityFields) {
-			Page<FragmentSet> page =
-				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode,
-					getFilterString(entityField, operator, fragmentSet1),
-					Pagination.of(1, 2));
-
-			assertEquals(
-				Collections.singletonList(fragmentSet1),
-				(List<FragmentSet>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetSiteFragmentSetsPageWithPagination() throws Exception {
-		String siteExternalReferenceCode =
-			testGetSiteFragmentSetsPage_getSiteExternalReferenceCode();
-
-		Page<FragmentSet> fragmentSetsPage =
-			fragmentSetResource.getSiteFragmentSetsPage(
-				siteExternalReferenceCode, null, null);
-
-		int totalCount = GetterUtil.getInteger(
-			fragmentSetsPage.getTotalCount());
-
-		FragmentSet fragmentSet1 = testGetSiteFragmentSetsPage_addFragmentSet(
-			siteExternalReferenceCode, randomFragmentSet());
-
-		FragmentSet fragmentSet2 = testGetSiteFragmentSetsPage_addFragmentSet(
-			siteExternalReferenceCode, randomFragmentSet());
-
-		FragmentSet fragmentSet3 = testGetSiteFragmentSetsPage_addFragmentSet(
-			siteExternalReferenceCode, randomFragmentSet());
+		Fragment fragment3 = testGetSiteFragmentSetFragmentsPage_addFragment(
+			siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+			randomFragment());
 
 		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
 		int pageSizeLimit = 500;
 
 		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<FragmentSet> page1 =
-				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode, null,
+			Page<Fragment> page1 =
+				fragmentResource.getSiteFragmentSetFragmentsPage(
+					siteExternalReferenceCode, fragmentSetExternalReferenceCode,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-			assertContains(fragmentSet1, (List<FragmentSet>)page1.getItems());
+			assertContains(fragment1, (List<Fragment>)page1.getItems());
 
-			Page<FragmentSet> page2 =
-				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode, null,
+			Page<Fragment> page2 =
+				fragmentResource.getSiteFragmentSetFragmentsPage(
+					siteExternalReferenceCode, fragmentSetExternalReferenceCode,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 						pageSizeLimit));
 
-			assertContains(fragmentSet2, (List<FragmentSet>)page2.getItems());
+			assertContains(fragment2, (List<Fragment>)page2.getItems());
 
-			Page<FragmentSet> page3 =
-				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode, null,
+			Page<Fragment> page3 =
+				fragmentResource.getSiteFragmentSetFragmentsPage(
+					siteExternalReferenceCode, fragmentSetExternalReferenceCode,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 						pageSizeLimit));
 
-			assertContains(fragmentSet3, (List<FragmentSet>)page3.getItems());
+			assertContains(fragment3, (List<Fragment>)page3.getItems());
 		}
 		else {
-			Page<FragmentSet> page1 =
-				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode, null,
+			Page<Fragment> page1 =
+				fragmentResource.getSiteFragmentSetFragmentsPage(
+					siteExternalReferenceCode, fragmentSetExternalReferenceCode,
 					Pagination.of(1, totalCount + 2));
 
-			List<FragmentSet> fragmentSets1 =
-				(List<FragmentSet>)page1.getItems();
+			List<Fragment> fragments1 = (List<Fragment>)page1.getItems();
 
 			Assert.assertEquals(
-				fragmentSets1.toString(), totalCount + 2, fragmentSets1.size());
+				fragments1.toString(), totalCount + 2, fragments1.size());
 
-			Page<FragmentSet> page2 =
-				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode, null,
+			Page<Fragment> page2 =
+				fragmentResource.getSiteFragmentSetFragmentsPage(
+					siteExternalReferenceCode, fragmentSetExternalReferenceCode,
 					Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-			List<FragmentSet> fragmentSets2 =
-				(List<FragmentSet>)page2.getItems();
+			List<Fragment> fragments2 = (List<Fragment>)page2.getItems();
 
-			Assert.assertEquals(
-				fragmentSets2.toString(), 1, fragmentSets2.size());
+			Assert.assertEquals(fragments2.toString(), 1, fragments2.size());
 
-			Page<FragmentSet> page3 =
-				fragmentSetResource.getSiteFragmentSetsPage(
-					siteExternalReferenceCode, null,
+			Page<Fragment> page3 =
+				fragmentResource.getSiteFragmentSetFragmentsPage(
+					siteExternalReferenceCode, fragmentSetExternalReferenceCode,
 					Pagination.of(1, (int)totalCount + 3));
 
-			assertContains(fragmentSet1, (List<FragmentSet>)page3.getItems());
-			assertContains(fragmentSet2, (List<FragmentSet>)page3.getItems());
-			assertContains(fragmentSet3, (List<FragmentSet>)page3.getItems());
+			assertContains(fragment1, (List<Fragment>)page3.getItems());
+			assertContains(fragment2, (List<Fragment>)page3.getItems());
+			assertContains(fragment3, (List<Fragment>)page3.getItems());
 		}
 	}
 
-	protected FragmentSet testGetSiteFragmentSetsPage_addFragmentSet(
-			String siteExternalReferenceCode, FragmentSet fragmentSet)
+	protected Fragment testGetSiteFragmentSetFragmentsPage_addFragment(
+			String siteExternalReferenceCode,
+			String fragmentSetExternalReferenceCode, Fragment fragment)
 		throws Exception {
 
-		return fragmentSetResource.postSiteFragmentSet(
-			siteExternalReferenceCode, fragmentSet);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected String testGetSiteFragmentSetsPage_getSiteExternalReferenceCode()
+	protected String
+			testGetSiteFragmentSetFragmentsPage_getSiteExternalReferenceCode()
 		throws Exception {
 
 		return testGroup.getExternalReferenceCode();
 	}
 
 	protected String
-			testGetSiteFragmentSetsPage_getIrrelevantSiteExternalReferenceCode()
+			testGetSiteFragmentSetFragmentsPage_getIrrelevantSiteExternalReferenceCode()
 		throws Exception {
 
 		return irrelevantGroup.getExternalReferenceCode();
 	}
 
-	@Test
-	public void testPostSiteFragmentSet() throws Exception {
-		FragmentSet randomFragmentSet = randomFragmentSet();
+	protected String
+			testGetSiteFragmentSetFragmentsPage_getFragmentSetExternalReferenceCode()
+		throws Exception {
 
-		FragmentSet postFragmentSet = testPostSiteFragmentSet_addFragmentSet(
-			randomFragmentSet);
-
-		assertEquals(randomFragmentSet, postFragmentSet);
-		assertValid(postFragmentSet);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected FragmentSet testPostSiteFragmentSet_addFragmentSet(
-			FragmentSet fragmentSet)
+	protected String
+			testGetSiteFragmentSetFragmentsPage_getIrrelevantFragmentSetExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostSiteFragmentSetFragment() throws Exception {
+		Fragment randomFragment = randomFragment();
+
+		Fragment postFragment = testPostSiteFragmentSetFragment_addFragment(
+			randomFragment);
+
+		assertEquals(randomFragment, postFragment);
+		assertValid(postFragment);
+	}
+
+	protected Fragment testPostSiteFragmentSetFragment_addFragment(
+			Fragment fragment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -558,34 +484,32 @@ public abstract class BaseFragmentSetResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteFragmentSet() throws Exception {
-		FragmentSet postFragmentSet = testPutSiteFragmentSet_addFragmentSet();
+	public void testPutSiteFragment() throws Exception {
+		Fragment postFragment = testPutSiteFragment_addFragment();
 
-		FragmentSet randomFragmentSet = randomFragmentSet();
+		Fragment randomFragment = randomFragment();
 
-		FragmentSet putFragmentSet = fragmentSetResource.putSiteFragmentSet(
-			testPutSiteFragmentSet_getSiteExternalReferenceCode(),
-			postFragmentSet.getExternalReferenceCode(), randomFragmentSet);
+		Fragment putFragment = fragmentResource.putSiteFragment(
+			testPutSiteFragment_getSiteExternalReferenceCode(),
+			postFragment.getExternalReferenceCode(), randomFragment);
 
-		assertEquals(randomFragmentSet, putFragmentSet);
-		assertValid(putFragmentSet);
+		assertEquals(randomFragment, putFragment);
+		assertValid(putFragment);
 
-		FragmentSet getFragmentSet = fragmentSetResource.getSiteFragmentSet(
-			testPutSiteFragmentSet_getSiteExternalReferenceCode(),
-			putFragmentSet.getExternalReferenceCode());
+		Fragment getFragment = fragmentResource.getSiteFragment(
+			testPutSiteFragment_getSiteExternalReferenceCode(),
+			putFragment.getExternalReferenceCode());
 
-		assertEquals(randomFragmentSet, getFragmentSet);
-		assertValid(getFragmentSet);
+		assertEquals(randomFragment, getFragment);
+		assertValid(getFragment);
 	}
 
-	protected FragmentSet testPutSiteFragmentSet_addFragmentSet()
-		throws Exception {
-
-		return fragmentSetResource.postSiteFragmentSet(
-			testGroup.getExternalReferenceCode(), randomFragmentSet());
+	protected Fragment testPutSiteFragment_addFragment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected String testPutSiteFragmentSet_getSiteExternalReferenceCode()
+	protected String testPutSiteFragment_getSiteExternalReferenceCode()
 		throws Exception {
 
 		return testGroup.getExternalReferenceCode();
@@ -593,27 +517,26 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		FragmentSet fragmentSet1 =
-			testBatchEngineDeleteImportTask_addSiteFragmentSet();
+		Fragment fragment1 = testBatchEngineDeleteImportTask_addSiteFragment();
 
-		testBatchEngineDeleteImportTask_deleteFragmentSet(
-			200, fragmentSet1.getExternalReferenceCode(),
+		testBatchEngineDeleteImportTask_deleteFragment(
+			200, fragment1.getExternalReferenceCode(),
 			"siteExternalReferenceCode", testGroup.getExternalReferenceCode());
 
 		assertHttpResponseStatusCode(
 			404,
-			fragmentSetResource.getSiteFragmentSetHttpResponse(
+			fragmentResource.getSiteFragmentHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
-				fragmentSet1.getExternalReferenceCode()));
+				fragment1.getExternalReferenceCode()));
 	}
 
-	protected FragmentSet testBatchEngineDeleteImportTask_addSiteFragmentSet()
+	protected Fragment testBatchEngineDeleteImportTask_addSiteFragment()
 		throws Exception {
 
-		return testDeleteSiteFragmentSet_addFragmentSet();
+		return testDeleteSiteFragment_addFragment();
 	}
 
-	protected void testBatchEngineDeleteImportTask_deleteFragmentSet(
+	protected void testBatchEngineDeleteImportTask_deleteFragment(
 			int expectedStatusCode, String externalReferenceCode,
 			String... parameters)
 		throws Exception {
@@ -630,8 +553,8 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 		HttpResponse httpResponse =
 			importTaskResource.deleteImportTaskHttpResponse(
-				"com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet",
-				null, null, null, null,
+				"com.liferay.headless.admin.fragment.dto.v1_0.Fragment", null,
+				null, null, null,
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"externalReferenceCode", () -> externalReferenceCode)));
@@ -652,16 +575,11 @@ public abstract class BaseFragmentSetResourceTestCase {
 		return testGroup.getExternalReferenceCode();
 	}
 
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	protected void assertContains(
-		FragmentSet fragmentSet, List<FragmentSet> fragmentSets) {
-
+	protected void assertContains(Fragment fragment, List<Fragment> fragments) {
 		boolean contains = false;
 
-		for (FragmentSet item : fragmentSets) {
-			if (equals(fragmentSet, item)) {
+		for (Fragment item : fragments) {
+			if (equals(fragment, item)) {
 				contains = true;
 
 				break;
@@ -669,7 +587,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			fragmentSets + " does not contain " + fragmentSet, contains);
+			fragments + " does not contain " + fragment, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -680,37 +598,35 @@ public abstract class BaseFragmentSetResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(
-		FragmentSet fragmentSet1, FragmentSet fragmentSet2) {
-
+	protected void assertEquals(Fragment fragment1, Fragment fragment2) {
 		Assert.assertTrue(
-			fragmentSet1 + " does not equal " + fragmentSet2,
-			equals(fragmentSet1, fragmentSet2));
+			fragment1 + " does not equal " + fragment2,
+			equals(fragment1, fragment2));
 	}
 
 	protected void assertEquals(
-		List<FragmentSet> fragmentSets1, List<FragmentSet> fragmentSets2) {
+		List<Fragment> fragments1, List<Fragment> fragments2) {
 
-		Assert.assertEquals(fragmentSets1.size(), fragmentSets2.size());
+		Assert.assertEquals(fragments1.size(), fragments2.size());
 
-		for (int i = 0; i < fragmentSets1.size(); i++) {
-			FragmentSet fragmentSet1 = fragmentSets1.get(i);
-			FragmentSet fragmentSet2 = fragmentSets2.get(i);
+		for (int i = 0; i < fragments1.size(); i++) {
+			Fragment fragment1 = fragments1.get(i);
+			Fragment fragment2 = fragments2.get(i);
 
-			assertEquals(fragmentSet1, fragmentSet2);
+			assertEquals(fragment1, fragment2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<FragmentSet> fragmentSets1, List<FragmentSet> fragmentSets2) {
+		List<Fragment> fragments1, List<Fragment> fragments2) {
 
-		Assert.assertEquals(fragmentSets1.size(), fragmentSets2.size());
+		Assert.assertEquals(fragments1.size(), fragments2.size());
 
-		for (FragmentSet fragmentSet1 : fragmentSets1) {
+		for (Fragment fragment1 : fragments1) {
 			boolean contains = false;
 
-			for (FragmentSet fragmentSet2 : fragmentSets2) {
-				if (equals(fragmentSet1, fragmentSet2)) {
+			for (Fragment fragment2 : fragments2) {
+				if (equals(fragment1, fragment2)) {
 					contains = true;
 
 					break;
@@ -718,34 +634,34 @@ public abstract class BaseFragmentSetResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				fragmentSets2 + " does not contain " + fragmentSet1, contains);
+				fragments2 + " does not contain " + fragment1, contains);
 		}
 	}
 
-	protected void assertValid(FragmentSet fragmentSet) throws Exception {
+	protected void assertValid(Fragment fragment) throws Exception {
 		boolean valid = true;
 
-		if (fragmentSet.getDateCreated() == null) {
+		if (fragment.getDateCreated() == null) {
 			valid = false;
 		}
 
-		if (fragmentSet.getDateModified() == null) {
+		if (fragment.getDateModified() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("creator", additionalAssertFieldName)) {
-				if (fragmentSet.getCreator() == null) {
+			if (Objects.equals("cacheable", additionalAssertFieldName)) {
+				if (fragment.getCacheable() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				if (fragmentSet.getDescription() == null) {
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (fragment.getCreator() == null) {
 					valid = false;
 				}
 
@@ -755,7 +671,34 @@ public abstract class BaseFragmentSetResourceTestCase {
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
-				if (fragmentSet.getExternalReferenceCode() == null) {
+				if (fragment.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"fragmentSetExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (fragment.getFragmentSetExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fragmentVersions", additionalAssertFieldName)) {
+				if (fragment.getFragmentVersions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("icon", additionalAssertFieldName)) {
+				if (fragment.getIcon() == null) {
 					valid = false;
 				}
 
@@ -763,7 +706,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 			}
 
 			if (Objects.equals("key", additionalAssertFieldName)) {
-				if (fragmentSet.getKey() == null) {
+				if (fragment.getKey() == null) {
 					valid = false;
 				}
 
@@ -771,7 +714,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 			}
 
 			if (Objects.equals("marketplace", additionalAssertFieldName)) {
-				if (fragmentSet.getMarketplace() == null) {
+				if (fragment.getMarketplace() == null) {
 					valid = false;
 				}
 
@@ -779,7 +722,23 @@ public abstract class BaseFragmentSetResourceTestCase {
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (fragmentSet.getName() == null) {
+				if (fragment.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("readOnly", additionalAssertFieldName)) {
+				if (fragment.getReadOnly() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (fragment.getType() == null) {
 					valid = false;
 				}
 
@@ -794,19 +753,18 @@ public abstract class BaseFragmentSetResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<FragmentSet> page) {
+	protected void assertValid(Page<Fragment> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<FragmentSet> page,
-		Map<String, Map<String, String>> expectedActions) {
+		Page<Fragment> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<FragmentSet> fragmentSets = page.getItems();
+		java.util.Collection<Fragment> fragments = page.getItems();
 
-		int size = fragmentSets.size();
+		int size = fragments.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -848,7 +806,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet.
+					com.liferay.headless.admin.fragment.dto.v1_0.Fragment.
 						class)) {
 
 			if (!ArrayUtil.contains(
@@ -897,19 +855,27 @@ public abstract class BaseFragmentSetResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(
-		FragmentSet fragmentSet1, FragmentSet fragmentSet2) {
-
-		if (fragmentSet1 == fragmentSet2) {
+	protected boolean equals(Fragment fragment1, Fragment fragment2) {
+		if (fragment1 == fragment2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("cacheable", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						fragment1.getCacheable(), fragment2.getCacheable())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						fragmentSet1.getCreator(), fragmentSet2.getCreator())) {
+						fragment1.getCreator(), fragment2.getCreator())) {
 
 					return false;
 				}
@@ -919,8 +885,8 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						fragmentSet1.getDateCreated(),
-						fragmentSet2.getDateCreated())) {
+						fragment1.getDateCreated(),
+						fragment2.getDateCreated())) {
 
 					return false;
 				}
@@ -930,19 +896,8 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						fragmentSet1.getDateModified(),
-						fragmentSet2.getDateModified())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						fragmentSet1.getDescription(),
-						fragmentSet2.getDescription())) {
+						fragment1.getDateModified(),
+						fragment2.getDateModified())) {
 
 					return false;
 				}
@@ -954,8 +909,43 @@ public abstract class BaseFragmentSetResourceTestCase {
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						fragmentSet1.getExternalReferenceCode(),
-						fragmentSet2.getExternalReferenceCode())) {
+						fragment1.getExternalReferenceCode(),
+						fragment2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"fragmentSetExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						fragment1.getFragmentSetExternalReferenceCode(),
+						fragment2.getFragmentSetExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fragmentVersions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						fragment1.getFragmentVersions(),
+						fragment2.getFragmentVersions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("icon", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						fragment1.getIcon(), fragment2.getIcon())) {
 
 					return false;
 				}
@@ -965,7 +955,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						fragmentSet1.getKey(), fragmentSet2.getKey())) {
+						fragment1.getKey(), fragment2.getKey())) {
 
 					return false;
 				}
@@ -975,8 +965,8 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			if (Objects.equals("marketplace", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						fragmentSet1.getMarketplace(),
-						fragmentSet2.getMarketplace())) {
+						fragment1.getMarketplace(),
+						fragment2.getMarketplace())) {
 
 					return false;
 				}
@@ -986,7 +976,27 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						fragmentSet1.getName(), fragmentSet2.getName())) {
+						fragment1.getName(), fragment2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("readOnly", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						fragment1.getReadOnly(), fragment2.getReadOnly())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						fragment1.getType(), fragment2.getType())) {
 
 					return false;
 				}
@@ -1050,13 +1060,13 @@ public abstract class BaseFragmentSetResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_fragmentSetResource instanceof EntityModelResource)) {
+		if (!(_fragmentResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_fragmentSetResource;
+			(EntityModelResource)_fragmentResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -1089,7 +1099,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, FragmentSet fragmentSet) {
+		EntityField entityField, String operator, Fragment fragment) {
 
 		StringBundler sb = new StringBundler();
 
@@ -1101,6 +1111,11 @@ public abstract class BaseFragmentSetResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("cacheable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1108,7 +1123,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
-				Date date = fragmentSet.getDateCreated();
+				Date date = fragment.getDateCreated();
 
 				sb = new StringBundler();
 
@@ -1129,7 +1144,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_format.format(fragmentSet.getDateCreated()));
+				sb.append(_format.format(fragment.getDateCreated()));
 			}
 
 			return sb.toString();
@@ -1137,7 +1152,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 
 		if (entityFieldName.equals("dateModified")) {
 			if (operator.equals("between")) {
-				Date date = fragmentSet.getDateModified();
+				Date date = fragment.getDateModified();
 
 				sb = new StringBundler();
 
@@ -1158,14 +1173,14 @@ public abstract class BaseFragmentSetResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_format.format(fragmentSet.getDateModified()));
+				sb.append(_format.format(fragment.getDateModified()));
 			}
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("description")) {
-			Object object = fragmentSet.getDescription();
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = fragment.getExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -1210,8 +1225,59 @@ public abstract class BaseFragmentSetResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("externalReferenceCode")) {
-			Object object = fragmentSet.getExternalReferenceCode();
+		if (entityFieldName.equals("fragmentSetExternalReferenceCode")) {
+			Object object = fragment.getFragmentSetExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("fragmentVersions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("icon")) {
+			Object object = fragment.getIcon();
 
 			String value = String.valueOf(object);
 
@@ -1257,7 +1323,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 		}
 
 		if (entityFieldName.equals("key")) {
-			Object object = fragmentSet.getKey();
+			Object object = fragment.getKey();
 
 			String value = String.valueOf(object);
 
@@ -1308,7 +1374,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			Object object = fragmentSet.getName();
+			Object object = fragment.getName();
 
 			String value = String.valueOf(object);
 
@@ -1353,6 +1419,16 @@ public abstract class BaseFragmentSetResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("readOnly")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("type")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1395,30 +1471,33 @@ public abstract class BaseFragmentSetResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected FragmentSet randomFragmentSet() throws Exception {
-		return new FragmentSet() {
+	protected Fragment randomFragment() throws Exception {
+		return new Fragment() {
 			{
+				cacheable = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
-				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				fragmentSetExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				icon = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				marketplace = RandomTestUtil.randomBoolean();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				readOnly = RandomTestUtil.randomBoolean();
 			}
 		};
 	}
 
-	protected FragmentSet randomIrrelevantFragmentSet() throws Exception {
-		FragmentSet randomIrrelevantFragmentSet = randomFragmentSet();
+	protected Fragment randomIrrelevantFragment() throws Exception {
+		Fragment randomIrrelevantFragment = randomFragment();
 
-		return randomIrrelevantFragmentSet;
+		return randomIrrelevantFragment;
 	}
 
-	protected FragmentSet randomPatchFragmentSet() throws Exception {
-		return randomFragmentSet();
+	protected Fragment randomPatchFragment() throws Exception {
+		return randomFragment();
 	}
 
 	protected final JSONObject waitForFinish(
@@ -1443,7 +1522,7 @@ public abstract class BaseFragmentSetResourceTestCase {
 		}
 	}
 
-	protected FragmentSetResource fragmentSetResource;
+	protected FragmentResource fragmentResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
@@ -1643,16 +1722,15 @@ public abstract class BaseFragmentSetResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseFragmentSetResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseFragmentResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private
-		com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource
-			_fragmentSetResource;
+	private com.liferay.headless.admin.fragment.resource.v1_0.FragmentResource
+		_fragmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:51960208
+// LIFERAY-REST-BUILDER-HASH:-123194135

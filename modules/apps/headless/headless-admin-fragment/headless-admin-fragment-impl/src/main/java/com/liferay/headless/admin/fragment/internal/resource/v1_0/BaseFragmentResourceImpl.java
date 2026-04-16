@@ -6,8 +6,8 @@
 package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
-import com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource;
+import com.liferay.headless.admin.fragment.dto.v1_0.Fragment;
+import com.liferay.headless.admin.fragment.resource.v1_0.FragmentResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -47,7 +47,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.io.Serializable;
@@ -65,17 +64,17 @@ import java.util.Set;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseFragmentSetResourceImpl
-	implements EntityModelResource, FragmentSetResource,
-			   VulcanBatchEngineTaskItemDelegate<FragmentSet> {
+public abstract class BaseFragmentResourceImpl
+	implements EntityModelResource, FragmentResource,
+			   VulcanBatchEngineTaskItemDelegate<Fragment> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes a specific fragment set of a site."
+		description = "Deletes a specific fragment of a site."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -85,38 +84,38 @@ public abstract class BaseFragmentSetResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "fragmentSetExternalReferenceCode"
+				name = "fragmentExternalReferenceCode"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "FragmentSet")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Fragment")}
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}"
+		"/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteSiteFragmentSet(
+	public void deleteSiteFragment(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("fragmentSetExternalReferenceCode")
-			String fragmentSetExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("fragmentExternalReferenceCode")
+			String fragmentExternalReferenceCode)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves a specific fragment set of a site."
+		description = "Retrieves a specific fragment of a site."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -126,7 +125,7 @@ public abstract class BaseFragmentSetResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "fragmentSetExternalReferenceCode"
+				name = "fragmentExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -139,35 +138,35 @@ public abstract class BaseFragmentSetResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "FragmentSet")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Fragment")}
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}"
+		"/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public FragmentSet getSiteFragmentSet(
+	public Fragment getSiteFragment(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("fragmentSetExternalReferenceCode")
-			String fragmentSetExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("fragmentExternalReferenceCode")
+			String fragmentExternalReferenceCode)
 		throws Exception {
 
-		return new FragmentSet();
+		return new Fragment();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}/fragments'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the fragment sets of the site."
+		description = "Retrieves the fragments of a fragment set."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -176,12 +175,12 @@ public abstract class BaseFragmentSetResourceImpl
 				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "fragmentSetExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
+				name = "fields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -198,19 +197,23 @@ public abstract class BaseFragmentSetResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "FragmentSet")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Fragment")}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/sites/{siteExternalReferenceCode}/fragment-sets")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}/fragments"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<FragmentSet> getSiteFragmentSetsPage(
+	public Page<Fragment> getSiteFragmentSetFragmentsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
-			@jakarta.ws.rs.core.Context
-				com.liferay.portal.kernel.search.filter.Filter filter,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("fragmentSetExternalReferenceCode")
+			String fragmentSetExternalReferenceCode,
 			@jakarta.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -220,176 +223,10 @@ public abstract class BaseFragmentSetResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "marketplace": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}/fragments' -d $'{"cacheable": ___, "dateCreated": ___, "dateModified": ___, "externalReferenceCode": ___, "fragmentSetExternalReferenceCode": ___, "fragmentVersions": ___, "icon": ___, "key": ___, "marketplace": ___, "name": ___, "readOnly": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Adds a new fragment set."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "FragmentSet")}
-	)
-	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/sites/{siteExternalReferenceCode}/fragment-sets")
-	@jakarta.ws.rs.POST
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public FragmentSet postSiteFragmentSet(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode,
-			FragmentSet fragmentSet)
-		throws Exception {
-
-		return new FragmentSet();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "FragmentSet")}
-	)
-	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/fragment-sets/batch"
-	)
-	@jakarta.ws.rs.POST
-	@jakarta.ws.rs.Produces("application/json")
-	@Override
-	public Response postSiteFragmentSetBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.postImportTask(
-				FragmentSet.class.getName(), callbackURL, null, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/export-batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "contentType"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fieldNames"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "FragmentSet")}
-	)
-	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/fragment-sets/export-batch"
-	)
-	@jakarta.ws.rs.POST
-	@jakarta.ws.rs.Produces("application/json")
-	@Override
-	public Response postSiteFragmentSetsPageExportBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode,
-			@jakarta.ws.rs.core.Context
-				com.liferay.portal.kernel.search.filter.Filter filter,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.DefaultValue("JSON")
-			@jakarta.ws.rs.QueryParam("contentType")
-			String contentType,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("fieldNames")
-			String fieldNames)
-		throws Exception {
-
-		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
-		vulcanBatchEngineExportTaskResource.setGroupLocalService(
-			groupLocalService);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineExportTaskResource.postExportTask(
-				FragmentSet.class.getName(), callbackURL, contentType,
-				fieldNames)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "marketplace": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates the fragment set with the given external reference code, or creates it if it does not exist."
+		description = "Adds a new fragment to a fragment set."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -400,6 +237,51 @@ public abstract class BaseFragmentSetResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "fragmentSetExternalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Fragment")}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}/fragments"
+	)
+	@jakarta.ws.rs.POST
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Fragment postSiteFragmentSetFragment(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("fragmentSetExternalReferenceCode")
+			String fragmentSetExternalReferenceCode,
+			Fragment fragment)
+		throws Exception {
+
+		return new Fragment();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}' -d $'{"cacheable": ___, "dateCreated": ___, "dateModified": ___, "externalReferenceCode": ___, "fragmentSetExternalReferenceCode": ___, "fragmentVersions": ___, "icon": ___, "key": ___, "marketplace": ___, "name": ___, "readOnly": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates the fragment with the given external reference code, or creates it if it does not exist."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "fragmentExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -412,114 +294,101 @@ public abstract class BaseFragmentSetResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "FragmentSet")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Fragment")}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}"
+		"/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public FragmentSet putSiteFragmentSet(
+	public Fragment putSiteFragment(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("fragmentSetExternalReferenceCode")
-			String fragmentSetExternalReferenceCode,
-			FragmentSet fragmentSet)
+			@jakarta.ws.rs.PathParam("fragmentExternalReferenceCode")
+			String fragmentExternalReferenceCode,
+			Fragment fragment)
 		throws Exception {
 
-		return new FragmentSet();
+		return new Fragment();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<FragmentSet> fragmentSets,
+			Collection<Fragment> fragments,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<FragmentSet, FragmentSet, Exception>
-			fragmentSetUnsafeFunction = null;
+		UnsafeFunction<Fragment, Fragment, Exception> fragmentUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
-
-		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			if (parameters.containsKey("siteExternalReferenceCode")) {
-				fragmentSetUnsafeFunction = fragmentSet -> postSiteFragmentSet(
-					(String)parameters.get("siteExternalReferenceCode"),
-					fragmentSet);
-			}
-			else {
-				throw new NotSupportedException(
-					"One of the following parameters must be specified: [siteExternalReferenceCode]");
-			}
-		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				fragmentSetUnsafeFunction = fragmentSet -> {
-					FragmentSet persistedFragmentSet = null;
+				fragmentUnsafeFunction = fragment -> {
+					Fragment persistedFragment = null;
 
 					if (parameters.containsKey("siteExternalReferenceCode")) {
-						persistedFragmentSet = putSiteFragmentSet(
+						persistedFragment = putSiteFragment(
 							(String)parameters.get("siteExternalReferenceCode"),
-							fragmentSet.getExternalReferenceCode(),
-							fragmentSet);
+							fragment.getExternalReferenceCode(), fragment);
 					}
 					else {
 						throw new NotSupportedException(
 							"One of the following parameters must be specified: [siteExternalReferenceCode]");
 					}
 
-					return persistedFragmentSet;
+					return persistedFragment;
 				};
 			}
 		}
 
-		if (fragmentSetUnsafeFunction == null) {
+		if (fragmentUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for FragmentSet");
+					"\" is not supported for Fragment");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				fragmentSets, fragmentSetUnsafeFunction);
+				fragments, fragmentUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				fragmentSets, fragmentSetUnsafeFunction::apply);
+				fragments, fragmentUnsafeFunction::apply);
 		}
 		else {
-			for (FragmentSet fragmentSet : fragmentSets) {
-				fragmentSetUnsafeFunction.apply(fragmentSet);
+			for (Fragment fragment : fragments) {
+				fragmentUnsafeFunction.apply(fragment);
 			}
 		}
 	}
 
 	@Override
 	public void delete(
-			Collection<FragmentSet> fragmentSets,
+			Collection<Fragment> fragments,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<FragmentSet, FragmentSet, Exception>
-			fragmentSetUnsafeFunction = fragmentSet -> {
+		UnsafeFunction<Fragment, Fragment, Exception> fragmentUnsafeFunction =
+			fragment -> {
 				if (parameters.containsKey("siteExternalReferenceCode")) {
-					deleteSiteFragmentSet(
+					deleteSiteFragment(
 						(String)parameters.get("siteExternalReferenceCode"),
-						fragmentSet.getExternalReferenceCode());
+						fragment.getExternalReferenceCode());
 
-					return fragmentSet;
+					return fragment;
 				}
 
 				throw new UnsupportedOperationException(
@@ -528,21 +397,21 @@ public abstract class BaseFragmentSetResourceImpl
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				fragmentSets, fragmentSetUnsafeFunction);
+				fragments, fragmentUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				fragmentSets, fragmentSetUnsafeFunction::apply);
+				fragments, fragmentUnsafeFunction::apply);
 		}
 		else {
-			for (FragmentSet fragmentSet : fragmentSets) {
-				fragmentSetUnsafeFunction.apply(fragmentSet);
+			for (Fragment fragment : fragments) {
+				fragmentUnsafeFunction.apply(fragment);
 			}
 		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT", "UPSERT");
+		return SetUtil.fromArray("UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -558,7 +427,7 @@ public abstract class BaseFragmentSetResourceImpl
 	}
 
 	public String getResourceName() {
-		return "FragmentSet";
+		return "Fragment";
 	}
 
 	public String getVersion() {
@@ -566,22 +435,15 @@ public abstract class BaseFragmentSetResourceImpl
 	}
 
 	@Override
-	public Page<FragmentSet> read(
+	public Page<Fragment> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("siteExternalReferenceCode")) {
-			return getSiteFragmentSetsPage(
-				(String)parameters.get("siteExternalReferenceCode"), filter,
-				pagination);
-		}
-		else {
-			throw new NotSupportedException(
-				"One of the following parameters must be specified: [siteExternalReferenceCode]");
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -617,7 +479,7 @@ public abstract class BaseFragmentSetResourceImpl
 
 	@Override
 	public void update(
-			Collection<FragmentSet> fragmentSets,
+			Collection<Fragment> fragments,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -638,8 +500,8 @@ public abstract class BaseFragmentSetResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<FragmentSet>,
-			 UnsafeFunction<FragmentSet, FragmentSet, Exception>, Exception>
+			<Collection<Fragment>,
+			 UnsafeFunction<Fragment, Fragment, Exception>, Exception>
 				contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -647,7 +509,7 @@ public abstract class BaseFragmentSetResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<FragmentSet>, UnsafeConsumer<FragmentSet, Exception>,
+			<Collection<Fragment>, UnsafeConsumer<Fragment, Exception>,
 			 Exception> contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -1157,12 +1019,11 @@ public abstract class BaseFragmentSetResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<FragmentSet>,
-		 UnsafeFunction<FragmentSet, FragmentSet, Exception>, Exception>
-			contextBatchUnsafeBiConsumer;
+		<Collection<Fragment>, UnsafeFunction<Fragment, Fragment, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<FragmentSet>, UnsafeConsumer<FragmentSet, Exception>,
-		 Exception> contextBatchUnsafeConsumer;
+		<Collection<Fragment>, UnsafeConsumer<Fragment, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -1183,7 +1044,7 @@ public abstract class BaseFragmentSetResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseFragmentSetResourceImpl.class);
+		LogFactoryUtil.getLog(BaseFragmentResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:32630017
+// LIFERAY-REST-BUILDER-HASH:1365565325

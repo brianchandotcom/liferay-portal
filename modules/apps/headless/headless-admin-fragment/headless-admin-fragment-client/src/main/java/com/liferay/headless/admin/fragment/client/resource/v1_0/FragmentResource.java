@@ -5,12 +5,12 @@
 
 package com.liferay.headless.admin.fragment.client.resource.v1_0;
 
-import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
+import com.liferay.headless.admin.fragment.client.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.client.http.HttpInvoker;
 import com.liferay.headless.admin.fragment.client.pagination.Page;
 import com.liferay.headless.admin.fragment.client.pagination.Pagination;
 import com.liferay.headless.admin.fragment.client.problem.Problem;
-import com.liferay.headless.admin.fragment.client.serdes.v1_0.FragmentSetSerDes;
+import com.liferay.headless.admin.fragment.client.serdes.v1_0.FragmentSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -28,77 +28,60 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface FragmentSetResource {
+public interface FragmentResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public void deleteSiteFragmentSet(
+	public void deleteSiteFragment(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode)
+			String fragmentExternalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteSiteFragmentSetHttpResponse(
+	public HttpInvoker.HttpResponse deleteSiteFragmentHttpResponse(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode)
+			String fragmentExternalReferenceCode)
 		throws Exception;
 
-	public FragmentSet getSiteFragmentSet(
+	public Fragment getSiteFragment(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode)
+			String fragmentExternalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getSiteFragmentSetHttpResponse(
+	public HttpInvoker.HttpResponse getSiteFragmentHttpResponse(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode)
+			String fragmentExternalReferenceCode)
 		throws Exception;
 
-	public Page<FragmentSet> getSiteFragmentSetsPage(
-			String siteExternalReferenceCode, String filterString,
-			Pagination pagination)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getSiteFragmentSetsPageHttpResponse(
-			String siteExternalReferenceCode, String filterString,
-			Pagination pagination)
-		throws Exception;
-
-	public FragmentSet postSiteFragmentSet(
-			String siteExternalReferenceCode, FragmentSet fragmentSet)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postSiteFragmentSetHttpResponse(
-			String siteExternalReferenceCode, FragmentSet fragmentSet)
-		throws Exception;
-
-	public void postSiteFragmentSetBatch(
-			String siteExternalReferenceCode, String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postSiteFragmentSetBatchHttpResponse(
-			String siteExternalReferenceCode, String callbackURL, Object object)
-		throws Exception;
-
-	public void postSiteFragmentSetsPageExportBatch(
-			String siteExternalReferenceCode, String filterString,
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postSiteFragmentSetsPageExportBatchHttpResponse(
-				String siteExternalReferenceCode, String filterString,
-				String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public FragmentSet putSiteFragmentSet(
+	public Page<Fragment> getSiteFragmentSetFragmentsPage(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode, FragmentSet fragmentSet)
+			String fragmentSetExternalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putSiteFragmentSetHttpResponse(
+	public HttpInvoker.HttpResponse getSiteFragmentSetFragmentsPageHttpResponse(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode, FragmentSet fragmentSet)
+			String fragmentSetExternalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Fragment postSiteFragmentSetFragment(
+			String siteExternalReferenceCode,
+			String fragmentSetExternalReferenceCode, Fragment fragment)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postSiteFragmentSetFragmentHttpResponse(
+			String siteExternalReferenceCode,
+			String fragmentSetExternalReferenceCode, Fragment fragment)
+		throws Exception;
+
+	public Fragment putSiteFragment(
+			String siteExternalReferenceCode,
+			String fragmentExternalReferenceCode, Fragment fragment)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putSiteFragmentHttpResponse(
+			String siteExternalReferenceCode,
+			String fragmentExternalReferenceCode, Fragment fragment)
 		throws Exception;
 
 	public static class Builder {
@@ -114,8 +97,8 @@ public interface FragmentSetResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public FragmentSetResource build() {
-			return new FragmentSetResourceImpl(this);
+		public FragmentResource build() {
+			return new FragmentResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -207,17 +190,16 @@ public interface FragmentSetResource {
 
 	}
 
-	public static class FragmentSetResourceImpl implements FragmentSetResource {
+	public static class FragmentResourceImpl implements FragmentResource {
 
-		public void deleteSiteFragmentSet(
+		public void deleteSiteFragment(
 				String siteExternalReferenceCode,
-				String fragmentSetExternalReferenceCode)
+				String fragmentExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteSiteFragmentSetHttpResponse(
-					siteExternalReferenceCode,
-					fragmentSetExternalReferenceCode);
+				deleteSiteFragmentHttpResponse(
+					siteExternalReferenceCode, fragmentExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -278,9 +260,9 @@ public interface FragmentSetResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse deleteSiteFragmentSetHttpResponse(
+		public HttpInvoker.HttpResponse deleteSiteFragmentHttpResponse(
 				String siteExternalReferenceCode,
-				String fragmentSetExternalReferenceCode)
+				String fragmentExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -307,13 +289,12 @@ public interface FragmentSetResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}");
+						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
 			httpInvoker.path(
-				"fragmentSetExternalReferenceCode",
-				fragmentSetExternalReferenceCode);
+				"fragmentExternalReferenceCode", fragmentExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -323,15 +304,13 @@ public interface FragmentSetResource {
 			return httpInvoker.invoke();
 		}
 
-		public FragmentSet getSiteFragmentSet(
+		public Fragment getSiteFragment(
 				String siteExternalReferenceCode,
-				String fragmentSetExternalReferenceCode)
+				String fragmentExternalReferenceCode)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteFragmentSetHttpResponse(
-					siteExternalReferenceCode,
-					fragmentSetExternalReferenceCode);
+			HttpInvoker.HttpResponse httpResponse = getSiteFragmentHttpResponse(
+				siteExternalReferenceCode, fragmentExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -381,7 +360,7 @@ public interface FragmentSetResource {
 			}
 
 			try {
-				return FragmentSetSerDes.toDTO(content);
+				return FragmentSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -392,9 +371,9 @@ public interface FragmentSetResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getSiteFragmentSetHttpResponse(
+		public HttpInvoker.HttpResponse getSiteFragmentHttpResponse(
 				String siteExternalReferenceCode,
-				String fragmentSetExternalReferenceCode)
+				String fragmentExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -421,13 +400,12 @@ public interface FragmentSetResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}");
+						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
 			httpInvoker.path(
-				"fragmentSetExternalReferenceCode",
-				fragmentSetExternalReferenceCode);
+				"fragmentExternalReferenceCode", fragmentExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -437,14 +415,15 @@ public interface FragmentSetResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<FragmentSet> getSiteFragmentSetsPage(
-				String siteExternalReferenceCode, String filterString,
-				Pagination pagination)
+		public Page<Fragment> getSiteFragmentSetFragmentsPage(
+				String siteExternalReferenceCode,
+				String fragmentSetExternalReferenceCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteFragmentSetsPageHttpResponse(
-					siteExternalReferenceCode, filterString, pagination);
+				getSiteFragmentSetFragmentsPageHttpResponse(
+					siteExternalReferenceCode, fragmentSetExternalReferenceCode,
+					pagination);
 
 			String content = httpResponse.getContent();
 
@@ -494,7 +473,7 @@ public interface FragmentSetResource {
 			}
 
 			try {
-				return Page.of(content, FragmentSetSerDes::toDTO);
+				return Page.of(content, FragmentSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -505,9 +484,11 @@ public interface FragmentSetResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getSiteFragmentSetsPageHttpResponse(
-				String siteExternalReferenceCode, String filterString,
-				Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getSiteFragmentSetFragmentsPageHttpResponse(
+					String siteExternalReferenceCode,
+					String fragmentSetExternalReferenceCode,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -530,10 +511,6 @@ public interface FragmentSetResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(
@@ -545,10 +522,13 @@ public interface FragmentSetResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets");
+						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}/fragments");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"fragmentSetExternalReferenceCode",
+				fragmentSetExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -558,353 +538,15 @@ public interface FragmentSetResource {
 			return httpInvoker.invoke();
 		}
 
-		public FragmentSet postSiteFragmentSet(
-				String siteExternalReferenceCode, FragmentSet fragmentSet)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postSiteFragmentSetHttpResponse(
-					siteExternalReferenceCode, fragmentSet);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return FragmentSetSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse postSiteFragmentSetHttpResponse(
-				String siteExternalReferenceCode, FragmentSet fragmentSet)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(fragmentSet.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void postSiteFragmentSetBatch(
-				String siteExternalReferenceCode, String callbackURL,
-				Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postSiteFragmentSetBatchHttpResponse(
-					siteExternalReferenceCode, callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse postSiteFragmentSetBatchHttpResponse(
-				String siteExternalReferenceCode, String callbackURL,
-				Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/batch");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void postSiteFragmentSetsPageExportBatch(
-				String siteExternalReferenceCode, String filterString,
-				String callbackURL, String contentType, String fieldNames)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postSiteFragmentSetsPageExportBatchHttpResponse(
-					siteExternalReferenceCode, filterString, callbackURL,
-					contentType, fieldNames);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postSiteFragmentSetsPageExportBatchHttpResponse(
-					String siteExternalReferenceCode, String filterString,
-					String callbackURL, String contentType, String fieldNames)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/export-batch");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public FragmentSet putSiteFragmentSet(
+		public Fragment postSiteFragmentSetFragment(
 				String siteExternalReferenceCode,
-				String fragmentSetExternalReferenceCode,
-				FragmentSet fragmentSet)
+				String fragmentSetExternalReferenceCode, Fragment fragment)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteFragmentSetHttpResponse(
+				postSiteFragmentSetFragmentHttpResponse(
 					siteExternalReferenceCode, fragmentSetExternalReferenceCode,
-					fragmentSet);
+					fragment);
 
 			String content = httpResponse.getContent();
 
@@ -954,7 +596,7 @@ public interface FragmentSetResource {
 			}
 
 			try {
-				return FragmentSetSerDes.toDTO(content);
+				return FragmentSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -965,15 +607,129 @@ public interface FragmentSetResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putSiteFragmentSetHttpResponse(
+		public HttpInvoker.HttpResponse postSiteFragmentSetFragmentHttpResponse(
 				String siteExternalReferenceCode,
-				String fragmentSetExternalReferenceCode,
-				FragmentSet fragmentSet)
+				String fragmentSetExternalReferenceCode, Fragment fragment)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(fragmentSet.toString(), "application/json");
+			httpInvoker.body(fragment.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}/fragments");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"fragmentSetExternalReferenceCode",
+				fragmentSetExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Fragment putSiteFragment(
+				String siteExternalReferenceCode,
+				String fragmentExternalReferenceCode, Fragment fragment)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = putSiteFragmentHttpResponse(
+				siteExternalReferenceCode, fragmentExternalReferenceCode,
+				fragment);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return FragmentSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse putSiteFragmentHttpResponse(
+				String siteExternalReferenceCode,
+				String fragmentExternalReferenceCode, Fragment fragment)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(fragment.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -997,13 +753,12 @@ public interface FragmentSetResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}");
+						"/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
 			httpInvoker.path(
-				"fragmentSetExternalReferenceCode",
-				fragmentSetExternalReferenceCode);
+				"fragmentExternalReferenceCode", fragmentExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1013,16 +768,16 @@ public interface FragmentSetResource {
 			return httpInvoker.invoke();
 		}
 
-		private FragmentSetResourceImpl(Builder builder) {
+		private FragmentResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			FragmentSetResource.class.getName());
+			FragmentResource.class.getName());
 
 		private Builder _builder;
 
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1086740515
+// LIFERAY-REST-BUILDER-HASH:75999108

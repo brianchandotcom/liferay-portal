@@ -36,7 +36,7 @@ public class LogEntriesException extends Exception {
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
-		sb.append("Total Log Entries is ");
+		sb.append("Log Entries: ");
 		sb.append(_logEntries.size());
 		sb.append(StringPool.NEW_LINE);
 

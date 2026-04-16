@@ -49,9 +49,8 @@ const DemandbaseEntities: React.FC<IDemandbaseEntities> = ({
 					)}
 				</ClayList.ItemField>
 
-				<ClayList.ItemField className='justify-content-center' expand>
+				<ClayList.ItemField className='justify-content-center'>
 					<Label
-						className='ml-auto'
 						displayType={
 							accountConnectionStatus === 'connected'
 								? 'success'

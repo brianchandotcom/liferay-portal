@@ -426,22 +426,14 @@
 						return yaml.load(inputStream);
 					}
 
+					public getDockerNetworkName() {
+						return project.getProperty("env.DOCKER_NETWORK_NAME");
+					}
+
 					public List getServiceNames(Map dockerComposeMap) {
 						Map servicesMap = dockerComposeMap.get("services");
 
 						return new ArrayList(servicesMap.keySet());
-					}
-
-					public getShortHostname() {
-						String hostname = project.getProperty("env.HOSTNAME");
-
-						String hostnameRegex = "(cloud-[^\\.]+|test-\\d+-\\d+-\\d+)(\\.lax\\.liferay\\.com)?";
-
-						if (!hostname.matches(hostnameRegex)) {
-							return null;
-						}
-
-						return hostname.replaceAll(hostnameRegex, "$1");
 					}
 
 					public Yaml getYaml() {
@@ -469,9 +461,9 @@
 					}
 
 					public void updateDockerNetwork(Map dockerComposeMap) {
-						String shortHostname = getShortHostname();
+						String dockerNetworkName = getDockerNetworkName();
 
-						if (shortHostname == null) {
+						if (dockerNetworkName == null) {
 							return;
 						}
 
@@ -486,7 +478,7 @@
 
 						defaultMap.put("external", externalMap);
 
-						externalMap.put("name", shortHostname);
+						externalMap.put("name", dockerNetworkName);
 					}
 
 					public void updateOSBFaroFrontendService(Map dockerComposeMap) {

@@ -1063,11 +1063,6 @@ public class GroupWrapper
 	}
 
 	@Override
-	public boolean isSystemSite() {
-		return model.isSystemSite();
-	}
-
-	@Override
 	public boolean isUser() {
 		return model.isUser();
 	}
@@ -1523,4 +1518,4 @@ public class GroupWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1611962082
+// LIFERAY-SERVICE-BUILDER-HASH:1875940727

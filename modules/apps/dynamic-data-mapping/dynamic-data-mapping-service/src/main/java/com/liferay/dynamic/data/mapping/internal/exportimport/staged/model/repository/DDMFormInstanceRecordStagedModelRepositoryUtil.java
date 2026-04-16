@@ -37,6 +37,8 @@ public class DDMFormInstanceRecordStagedModelRepositoryUtil {
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ddmFormInstanceRecord);
 
+		serviceContext.setAttribute(
+			"ipAddress", ddmFormInstanceRecord.getIpAddress());
 		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
 
 		if (portletDataContext.isDataStrategyMirror()) {

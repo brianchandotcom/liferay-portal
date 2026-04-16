@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.test.clazz;
 
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
@@ -67,9 +68,19 @@ public class ServiceBuilderAntTargetTestClass extends BaseTestClass {
 
 		super(batchTestClassGroup, testClassFile);
 
-		addTestClassMethod("build-service-counter");
-		addTestClassMethod("build-service-portal");
-		addTestClassMethod("build-service-portlets");
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			batchTestClassGroup.getPortalGitWorkingDirectory();
+
+		if (JenkinsResultsParserUtil.isUnifiedBuilderSupported(
+				portalGitWorkingDirectory.getUpstreamBranchName())) {
+
+			addTestClassMethod("build-services");
+		}
+		else {
+			addTestClassMethod("build-service-counter");
+			addTestClassMethod("build-service-portal");
+			addTestClassMethod("build-service-portlets");
+		}
 
 		File testPropertiesBaseDir = getTestPropertiesBaseDir(
 			getTestClassFile());

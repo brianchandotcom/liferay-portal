@@ -4276,6 +4276,30 @@ public class JenkinsResultsParserUtil {
 		return _topLevelJobNames.contains(jobName);
 	}
 
+	public static boolean isUnifiedBuilderSupported(String upstreamBranchName) {
+		if (Objects.equals(upstreamBranchName, "master")) {
+			return true;
+		}
+
+		if (upstreamBranchName == null) {
+			return false;
+		}
+
+		Matcher matcher = _quarterlyrReleaseYearPattern.matcher(
+			upstreamBranchName);
+
+		if (matcher.matches()) {
+			int year = Integer.parseInt(matcher.group(1));
+			int quarter = Integer.parseInt(matcher.group(2));
+
+			if ((year > 2026) || ((year == 2026) && (quarter >= 2))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean isURL(String urlString) {
 		if (isNullOrEmpty(urlString) || !urlString.matches("https?://.+")) {
 			return false;
@@ -7511,6 +7535,8 @@ public class JenkinsResultsParserUtil {
 		"\\$\\{([^\\}]+)\\}");
 	private static final Pattern _poshiFileNamePattern = Pattern.compile(
 		".*\\.(function|macro|path|prose|testcase)");
+	private static final Pattern _quarterlyrReleaseYearPattern =
+		Pattern.compile("release-(\\d{4})\\.q(\\d+).*");
 	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://(test-[0-9]+-[0])-aws.liferay.com/");

@@ -21,6 +21,7 @@ jest.mock('@ckeditor/ckeditor5-react', () => ({
 	CKEditor: ({onChange, onReady}: any) => {
 		const mockEditor = {
 			getData: jest.fn().mockReturnValue('mocked data'),
+			on: jest.fn(),
 			setData: jest.fn(),
 		};
 		onReady(mockEditor);

@@ -130,89 +130,87 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 	</div>
 </c:if>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-75027") %>'>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="floating-icon" /></h3>
+<h3 class="sheet-subtitle"><liferay-ui:message key="floating-icon" /></h3>
 
-	<clay:row>
-		<clay:col
-			cssClass="form-group"
-			sm="12"
-		>
-			<div class="form-group__inner">
-				<clay:checkbox
-					checked="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingFloatingIconEnabled() %>"
-					disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>"
-					id='<%= liferayPortletResponse.getNamespace() + "floatingIconEnabled" %>'
-					label="floating-icon-enabled"
-					name='<%= liferayPortletResponse.getNamespace() + "floatingIconEnabled" %>'
-				/>
+<clay:row>
+	<clay:col
+		cssClass="form-group"
+		sm="12"
+	>
+		<div class="form-group__inner">
+			<clay:checkbox
+				checked="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingFloatingIconEnabled() %>"
+				disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>"
+				id='<%= liferayPortletResponse.getNamespace() + "floatingIconEnabled" %>'
+				label="floating-icon-enabled"
+				name='<%= liferayPortletResponse.getNamespace() + "floatingIconEnabled" %>'
+			/>
 
-				<div aria-hidden="true" class="form-feedback-group">
-					<div class="form-text text-weight-normal"><liferay-ui:message key="floating-icon-enabled-help" /></div>
+			<div aria-hidden="true" class="form-feedback-group">
+				<div class="form-text text-weight-normal"><liferay-ui:message key="floating-icon-enabled-help" /></div>
+			</div>
+		</div>
+	</clay:col>
+</clay:row>
+
+<clay:row>
+	<clay:col
+		cssClass="form-group"
+		sm="12"
+	>
+		<h4><liferay-ui:message key="icon" /></h4>
+
+		<div class="align-items-center d-flex flex-wrap">
+
+			<%
+			for (String icon : new String[] {"cookie", "shield-check", "unlock", "control-panel", "custom"}) {
+			%>
+
+				<div class="align-items-center d-flex mb-3 mr-4">
+					<aui:input checked="<%= Objects.equals(cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingFloatingIcon(), icon) %>" disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id="<%= icon %>" label="" name="floatingIcon" type="radio" value="<%= icon %>" wrapperCssClass="mb-0" />
+
+					<c:choose>
+						<c:when test='<%= Objects.equals("custom", icon) %>'>
+							<label class="align-items-center cursor-pointer d-inline-flex justify-content-center mb-0 ml-3" for="<portlet:namespace /><%= icon %>">
+								<liferay-ui:message key="custom" />
+							</label>
+						</c:when>
+						<c:otherwise>
+							<label class="align-items-center cursor-pointer d-inline-flex floating-icon-custom justify-content-center mb-0 ml-3 rounded-circle text-white" for="<portlet:namespace /><%= icon %>">
+								<clay:icon
+									symbol="<%= icon %>"
+								/>
+							</label>
+						</c:otherwise>
+					</c:choose>
 				</div>
-			</div>
-		</clay:col>
-	</clay:row>
 
-	<clay:row>
-		<clay:col
-			cssClass="form-group"
-			sm="12"
-		>
-			<h4><liferay-ui:message key="icon" /></h4>
+			<%
+			}
+			%>
 
-			<div class="align-items-center d-flex flex-wrap">
+		</div>
 
-				<%
-				for (String icon : new String[] {"cookie", "shield-check", "unlock", "control-panel", "custom"}) {
-				%>
+		<div id="<portlet:namespace />logoSelectorContainer">
 
-					<div class="align-items-center d-flex mb-3 mr-4">
-						<aui:input checked="<%= Objects.equals(cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingFloatingIcon(), icon) %>" disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id="<%= icon %>" label="" name="floatingIcon" type="radio" value="<%= icon %>" wrapperCssClass="mb-0" />
+			<%
+			long customFloatingIconImageId = cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingCustomFloatingIconImageId();
+			%>
 
-						<c:choose>
-							<c:when test='<%= Objects.equals("custom", icon) %>'>
-								<label class="align-items-center cursor-pointer d-inline-flex justify-content-center mb-0 ml-3" for="<portlet:namespace /><%= icon %>">
-									<liferay-ui:message key="custom" />
-								</label>
-							</c:when>
-							<c:otherwise>
-								<label class="align-items-center cursor-pointer d-inline-flex floating-icon-custom justify-content-center mb-0 ml-3 rounded-circle text-white" for="<portlet:namespace /><%= icon %>">
-									<clay:icon
-										symbol="<%= icon %>"
-									/>
-								</label>
-							</c:otherwise>
-						</c:choose>
-					</div>
+			<liferay-frontend:logo-selector
+				aspectRatio="<%= 1 %>"
+				currentLogoURL='<%= (customFloatingIconImageId == 0) ? themeDisplay.getPathThemeImages() + "/spacer.png" : themeDisplay.getPathImage() + "/floating_icon?img_id=" + customFloatingIconImageId %>'
+				defaultLogoURL='<%= themeDisplay.getPathThemeImages() + "/spacer.png" %>'
+				label='<%= LanguageUtil.get(request, "custom-icon") %>'
+				type="floating_icon"
+			/>
+		</div>
 
-				<%
-				}
-				%>
-
-			</div>
-
-			<div id="<portlet:namespace />logoSelectorContainer">
-
-				<%
-				long customFloatingIconImageId = cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingCustomFloatingIconImageId();
-				%>
-
-				<liferay-frontend:logo-selector
-					aspectRatio="<%= 1 %>"
-					currentLogoURL='<%= (customFloatingIconImageId == 0) ? themeDisplay.getPathThemeImages() + "/spacer.png" : themeDisplay.getPathImage() + "/floating_icon?img_id=" + customFloatingIconImageId %>'
-					defaultLogoURL='<%= themeDisplay.getPathThemeImages() + "/spacer.png" %>'
-					label='<%= LanguageUtil.get(request, "custom-icon") %>'
-					type="floating_icon"
-				/>
-			</div>
-
-			<div aria-hidden="true" class="form-feedback-group mt-2">
-				<div class="form-text text-weight-normal"><liferay-ui:message key="floating-icon-help" /></div>
-			</div>
-		</clay:col>
-	</clay:row>
-</c:if>
+		<div aria-hidden="true" class="form-feedback-group mt-2">
+			<div class="form-text text-weight-normal"><liferay-ui:message key="floating-icon-help" /></div>
+		</div>
+	</clay:col>
+</clay:row>
 
 <liferay-frontend:component
 	module="{ConfigurationFormEventHandler} from cookies-banner-web"
@@ -233,9 +231,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 		}
 	}
 
-	if (Liferay.FeatureFlags['LPD-75027']) {
-		toggleLogoSelector();
-	}
+	toggleLogoSelector();
 
 	var floatingIcons = document.querySelectorAll(
 		'input[name="<portlet:namespace />floatingIcon"]'

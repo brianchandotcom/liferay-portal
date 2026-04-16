@@ -131,71 +131,76 @@ export default async function handlePublishStructure({
 
 	const objectDefinition = objectDefinitions[erc];
 
-	const removedSpaces = getRemovedSpaces(
-		objectDefinition,
-		structureSpaces,
-		allSpaces
-	);
+	const spaces = structureSpaces === 'all' ? 'all' : [...structureSpaces];
 
-	const spaces = [...structureSpaces];
-	const restoredSpaceNames = [];
+	if (spaces !== 'all') {
+		const removedSpaces = getRemovedSpaces(
+			objectDefinition,
+			structureSpaces,
+			allSpaces
+		);
 
-	for (const removedSpace of removedSpaces) {
-		const {data, error} = await SpaceService.getSpaceContents({
-			path,
-			siteId: removedSpace.siteId,
-		});
+		const restoredSpaceNames = [];
 
-		if (!data || error) {
-			openToast({
-				message: Liferay.Language.get('an-unexpected-error-occurred'),
-				type: 'danger',
+		for (const removedSpace of removedSpaces) {
+			const {data, error} = await SpaceService.getSpaceContents({
+				path,
+				siteId: removedSpace.siteId,
 			});
 
-			return;
+			if (!data || error) {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+
+				return;
+			}
+
+			const contents = data.totalCount;
+
+			if (contents > 0) {
+				spaces.push(removedSpace.externalReferenceCode);
+
+				restoredSpaceNames.push(removedSpace.name);
+			}
 		}
 
-		const contents = data.totalCount;
+		if (restoredSpaceNames.length) {
+			const text =
+				restoredSpaceNames.length === 1
+					? sub(
+							Liferay.Language.get(
+								'the-space-x-cannot-be-removed-because-it-has-content-created-from-this-structure.-when-publishing-this-space-will-still-be-available-for-this-structure'
+							),
+							restoredSpaceNames[0]
+						)
+					: sub(
+							Liferay.Language.get(
+								'the-spaces-x-cannot-be-removed-because-they-have-content-created-from-this-structure'
+							),
+							restoredSpaceNames.join(', ')
+						);
 
-		if (contents > 0) {
-			spaces.push(removedSpace.externalReferenceCode);
+			const confirm = await openConfirmModal({
+				buttonLabel: Liferay.Language.get('publish'),
+				center: true,
+				status: 'warning',
+				text,
+				title: Liferay.Language.get('space-availability'),
+			});
 
-			restoredSpaceNames.push(removedSpace.name);
+			if (!confirm) {
+				return;
+			}
+
+			dispatch({
+				spaces,
+				type: 'update-structure',
+			});
 		}
-	}
-
-	if (restoredSpaceNames.length) {
-		const text =
-			restoredSpaceNames.length === 1
-				? sub(
-						Liferay.Language.get(
-							'the-space-x-cannot-be-removed-because-it-has-content-created-from-this-structure.-when-publishing-this-space-will-still-be-available-for-this-structure'
-						),
-						restoredSpaceNames[0]
-					)
-				: sub(
-						Liferay.Language.get(
-							'the-spaces-x-cannot-be-removed-because-they-have-content-created-from-this-structure'
-						),
-						restoredSpaceNames.join(', ')
-					);
-
-		const confirm = await openConfirmModal({
-			buttonLabel: Liferay.Language.get('publish'),
-			center: true,
-			status: 'warning',
-			text,
-			title: Liferay.Language.get('space-availability'),
-		});
-
-		if (!confirm) {
-			return;
-		}
-
-		dispatch({
-			spaces,
-			type: 'update-structure',
-		});
 	}
 
 	const onSuccess = async () => {

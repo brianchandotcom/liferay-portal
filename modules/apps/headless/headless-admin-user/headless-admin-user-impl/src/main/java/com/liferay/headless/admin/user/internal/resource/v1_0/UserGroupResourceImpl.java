@@ -5,16 +5,24 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
+import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserGroupEntityModel;
+import com.liferay.headless.admin.user.internal.util.v1_0.ResourcePermissionUtil;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -30,9 +38,12 @@ import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
+import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,9 +55,12 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/user-group.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = UserGroupResource.class
 )
-public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
+public class UserGroupResourceImpl
+	extends BaseUserGroupResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<UserGroup> {
 
 	@Override
 	public void deleteUserGroup(Long userGroupId) throws PortalException {
@@ -88,6 +102,47 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 		throws Exception {
 
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor<com.liferay.portal.kernel.model.UserGroup>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
+
+			@Override
+			public String getKey() {
+				return UserGroupResourceImpl.class.getName();
+			}
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "user-groups";
+			}
+
+			@Override
+			public Class<com.liferay.portal.kernel.model.UserGroup>
+				getModelClass() {
+
+				return com.liferay.portal.kernel.model.UserGroup.class;
+			}
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of("creator", "roleBriefs");
+			}
+
+			@Override
+			public String getPortletId() {
+				return UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+		};
 	}
 
 	@Override
@@ -157,18 +212,20 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
 			_userGroupService.getUserGroup(userGroupId);
 
+		serviceBuilderUserGroup = _userGroupService.updateUserGroup(
+			GetterUtil.getString(
+				userGroup.getExternalReferenceCode(),
+				serviceBuilderUserGroup.getExternalReferenceCode()),
+			userGroupId,
+			GetterUtil.getString(
+				userGroup.getName(), serviceBuilderUserGroup.getName()),
+			GetterUtil.getString(
+				userGroup.getDescription(),
+				serviceBuilderUserGroup.getDescription()),
+			null);
+
 		return _toUserGroup(
-			_userGroupService.updateUserGroup(
-				GetterUtil.getString(
-					userGroup.getExternalReferenceCode(),
-					serviceBuilderUserGroup.getExternalReferenceCode()),
-				userGroupId,
-				GetterUtil.getString(
-					userGroup.getName(), serviceBuilderUserGroup.getName()),
-				GetterUtil.getString(
-					userGroup.getDescription(),
-					serviceBuilderUserGroup.getDescription()),
-				null));
+			_updateNestedResources(userGroup, serviceBuilderUserGroup));
 	}
 
 	@Override
@@ -186,10 +243,13 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 
 	@Override
 	public UserGroup postUserGroup(UserGroup userGroup) throws Exception {
-		return _toUserGroup(
+		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
 			_userGroupService.addUserGroup(
 				userGroup.getExternalReferenceCode(), userGroup.getName(),
-				userGroup.getDescription(), null));
+				userGroup.getDescription(), null);
+
+		return _toUserGroup(
+			_updateNestedResources(userGroup, serviceBuilderUserGroup));
 	}
 
 	@Override
@@ -219,10 +279,13 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			return postUserGroup(userGroup);
 		}
 
-		return _toUserGroup(
+		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
 			_userGroupService.updateUserGroup(
 				userGroup.getExternalReferenceCode(), userGroupId,
-				userGroup.getName(), userGroup.getDescription(), null));
+				userGroup.getName(), userGroup.getDescription(), null);
+
+		return _toUserGroup(
+			_updateNestedResources(userGroup, serviceBuilderUserGroup));
 	}
 
 	@Override
@@ -230,10 +293,44 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			String externalReferenceCode, UserGroup userGroup)
 		throws Exception {
 
+		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
+			_userGroupService.fetchUserGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (serviceBuilderUserGroup == null) {
+			userGroup.setExternalReferenceCode(() -> externalReferenceCode);
+
+			return postUserGroup(userGroup);
+		}
+
+		serviceBuilderUserGroup = _userGroupService.updateUserGroup(
+			externalReferenceCode, serviceBuilderUserGroup.getUserGroupId(),
+			userGroup.getName(), userGroup.getDescription(), null);
+
 		return _toUserGroup(
-			_userGroupService.addOrUpdateUserGroup(
-				externalReferenceCode, userGroup.getName(),
-				userGroup.getDescription(), null));
+			_updateNestedResources(userGroup, serviceBuilderUserGroup));
+	}
+
+	private com.liferay.portal.kernel.model.UserGroup _addGroupRole(
+			com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup,
+			RoleBrief roleBrief)
+		throws Exception {
+
+		String externalReferenceCode = roleBrief.getExternalReferenceCode();
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return serviceBuilderUserGroup;
+		}
+
+		Role role = _roleService.getOrAddEmptyRole(
+			externalReferenceCode, Role.class.getName(), 0, roleBrief.getName(),
+			GetterUtil.getInteger(
+				roleBrief.getRoleType(), RoleConstants.TYPE_REGULAR));
+
+		_roleLocalService.addGroupRole(
+			serviceBuilderUserGroup.getGroupId(), role.getRoleId());
+
+		return serviceBuilderUserGroup;
 	}
 
 	private DTOConverterContext _getDTOConverterContext(long userGroupId) {
@@ -307,7 +404,39 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			_getDTOConverterContext(userGroup.getUserGroupId()), userGroup);
 	}
 
+	private com.liferay.portal.kernel.model.UserGroup _updateNestedResources(
+			UserGroup userGroup,
+			com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup)
+		throws Exception {
+
+		RoleBrief[] roleBriefs = userGroup.getRoleBriefs();
+
+		if (ArrayUtil.isNotEmpty(roleBriefs)) {
+			for (RoleBrief roleBrief : roleBriefs) {
+				serviceBuilderUserGroup = _addGroupRole(
+					serviceBuilderUserGroup, roleBrief);
+			}
+		}
+
+		return ResourcePermissionUtil.setResourcePermissions(
+			serviceBuilderUserGroup, serviceBuilderUserGroup.getCompanyId(),
+			userGroup.getPermissions(), _resourcePermissionLocalService,
+			_roleService, _roleTypeContributorProvider);
+	}
+
 	private static final EntityModel _entityModel = new UserGroupEntityModel();
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private RoleService _roleService;
+
+	@Reference
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.UserGroup)"

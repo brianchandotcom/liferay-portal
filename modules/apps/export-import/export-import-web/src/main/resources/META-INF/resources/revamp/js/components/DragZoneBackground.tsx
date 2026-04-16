@@ -11,23 +11,24 @@ export default function DragZoneBackground({maxSize}: {maxSize: number}) {
 		<div className="align-items-center d-flex flex-column">
 			<img
 				alt=""
-				className="mb-3"
 				src={`${Liferay.ThemeDisplay.getPathContext()}/o/exportimport-web/revamp/images/drag_and_drop.svg`}
 			/>
 
-			<p className="font-weight-semi-bold mb-3">
+			<p className="font-weight-semi-bold mb-2">
 				{Liferay.Language.get('drag-and-drop-your-file-or')}
 			</p>
 
-			<span className="btn btn-secondary mb-3">
+			<span className="btn btn-secondary mb-2">
 				{Liferay.Language.get('select-files')}
 			</span>
 
 			<p className="mb-0 small">
+				{Liferay.Language.get('only-lar-files-are-allowed')}
+			</p>
+
+			<p className="mb-0 small">
 				{sub(
-					Liferay.Language.get(
-						'only-lar-files-are-allowed-max-file-size-is-x'
-					),
+					Liferay.Language.get('max-file-size-is-x'),
 					formatStorage(maxSize, {
 						addSpaceBeforeSuffix: true,
 					})

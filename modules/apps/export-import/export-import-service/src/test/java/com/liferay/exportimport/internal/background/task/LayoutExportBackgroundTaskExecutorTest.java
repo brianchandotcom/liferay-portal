@@ -7,6 +7,8 @@ package com.liferay.exportimport.internal.background.task;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -44,6 +46,9 @@ public class LayoutExportBackgroundTaskExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_timestamp = RandomTestUtil.nextTimestamp(
+		).getNanos();
+
 		ReflectionTestUtil.setFieldValue(
 			_layoutExportBackgroundTaskExecutor, "_backgroundTaskManager",
 			_backgroundTaskManager);
@@ -54,7 +59,7 @@ public class LayoutExportBackgroundTaskExecutorTest {
 		_timeMockedStatic.when(
 			Time::getTimestamp
 		).thenReturn(
-			"999988887777"
+			_timestamp
 		);
 	}
 
@@ -90,10 +95,12 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			settingsMap
 		);
 
+		String title = RandomTestUtil.randomString();
+
 		Mockito.when(
 			exportImportConfiguration.getName()
 		).thenReturn(
-			"My Test Layout Export"
+			title
 		);
 
 		LayoutExportBackgroundTaskExecutor layoutExportBackgroundTaskExecutor =
@@ -107,7 +114,9 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			backgroundTask
 		);
 
-		File larFile = new File("file.lar");
+		File larFile = new File(
+			StringBundler.concat(
+				RandomTestUtil.randomString(), StringPool.PERIOD, _PROTOCOL));
 
 		Mockito.when(
 			_exportImportLocalService.exportLayoutsAsFile(
@@ -120,26 +129,31 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			BackgroundTaskResult.SUCCESS,
 			layoutExportBackgroundTaskExecutor.execute(backgroundTask));
 
-		ArgumentCaptor<String> sourceFileNameCaptor = ArgumentCaptor.forClass(
+		ArgumentCaptor<String> argumentCaptor1 = ArgumentCaptor.forClass(
 			String.class);
-		ArgumentCaptor<String> titleCaptor = ArgumentCaptor.forClass(
+		ArgumentCaptor<String> argumentCaptor2 = ArgumentCaptor.forClass(
 			String.class);
 
 		Mockito.verify(
 			_backgroundTaskManager
 		).addBackgroundTaskAttachment(
 			Mockito.eq(userId), Mockito.eq(backgroundTaskId),
-			sourceFileNameCaptor.capture(), titleCaptor.capture(),
+			argumentCaptor1.capture(), argumentCaptor2.capture(),
 			Mockito.eq(larFile)
 		);
 
 		Assert.assertEquals(
-			"My_Test_Layout_Export.lar", titleCaptor.getValue());
+			StringBundler.concat(title, StringPool.PERIOD, _PROTOCOL),
+			argumentCaptor1.getValue());
 
 		Assert.assertEquals(
-			"My_Test_Layout_Export-999988887777.lar",
-			sourceFileNameCaptor.getValue());
+			StringBundler.concat(
+				title, StringPool.DASH, _timestamp, StringPool.PERIOD,
+				_PROTOCOL),
+			argumentCaptor2.getValue());
 	}
+
+	private static final String _PROTOCOL = "lar";
 
 	private final BackgroundTaskManager _backgroundTaskManager = Mockito.mock(
 		BackgroundTaskManager.class);
@@ -150,5 +164,6 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			new LayoutExportBackgroundTaskExecutor();
 	private final MockedStatic<Time> _timeMockedStatic = Mockito.mockStatic(
 		Time.class);
+	private int _timestamp;
 
 }

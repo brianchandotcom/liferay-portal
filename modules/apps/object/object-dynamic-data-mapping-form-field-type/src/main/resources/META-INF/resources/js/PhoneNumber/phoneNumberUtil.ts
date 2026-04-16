@@ -7,7 +7,6 @@ export interface CountryInfo {
 	a2: string;
 	idd: string;
 	name: string;
-	symbol?: string;
 }
 
 export const DEFAULT_COUNTRIES: CountryInfo[] = [

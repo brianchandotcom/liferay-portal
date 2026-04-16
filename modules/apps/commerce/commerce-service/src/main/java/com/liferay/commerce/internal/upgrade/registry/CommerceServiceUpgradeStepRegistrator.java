@@ -11,6 +11,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.helper.CommerceAccountHelper;
 import com.liferay.commerce.internal.upgrade.v11_5_1.SupplierRoleUpgradeProcess;
@@ -836,7 +837,8 @@ public class CommerceServiceUpgradeStepRegistrator
 			"13.0.2", "13.0.3",
 			new CPConfigurationUpgradeProcess(
 				_classNameLocalService, _cpConfigurationEntryLocalService,
-				_cpConfigurationListLocalService, _language));
+				_cpConfigurationListLocalService, _ctCollectionLocalService,
+				_language));
 
 		registry.register("13.0.3", "13.0.4", new DummyUpgradeProcess());
 
@@ -954,6 +956,9 @@ public class CommerceServiceUpgradeStepRegistrator
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private EmailAddressLocalService _emailAddressLocalService;

@@ -49,7 +49,8 @@ public class GroovyScriptingValidator implements ScriptingValidator {
 		Thread currentThread = Thread.currentThread();
 
 		return AggregateClassLoader.getAggregateClassLoader(
-			classLoader, currentThread.getContextClassLoader());
+			GroovyShell.class.getClassLoader(), classLoader,
+			currentThread.getContextClassLoader());
 	}
 
 }

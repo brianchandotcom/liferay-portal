@@ -7,21 +7,38 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {ManagementToolbar} from 'frontend-js-components-web';
+
+// @ts-ignore
+
 import {postForm, sub} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import filterBulkActions from '../../utils/actionItems/filterBulkActions';
 import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
+
+// @ts-ignore
+
 import {getOpenedSidePanel} from '../../utils/sidePanels';
+import {IBaseFilterState, IBulkActionItem} from '../../utils/types';
 import InfoPanelToggleButton from './InfoPanelToggleButton';
 
-function getQueryString(key, values = []) {
+interface IRichPayload {
+	baseURL: string | undefined;
+	id: string | undefined;
+	onAfterSubmit: () => void;
+	slug: string | null;
+}
+
+function getQueryString(key: string, values: Array<any> = []) {
 	return `?${key}=${values.join(',')}`;
 }
 
-function getRichPayload(payload, key, values = []) {
+function getRichPayload(
+	payload: IRichPayload,
+	key: string,
+	values: Array<any> = []
+) {
 	const richPayload = {
 		...payload,
 		url: payload.baseURL + getQueryString(key, values),
@@ -41,6 +58,17 @@ function BulkActions({
 	selectedItemsValue,
 	showSelectAll,
 	total,
+}: {
+	bulkActions: Array<IBulkActionItem>;
+	handleSelectAll: (value: boolean) => void;
+	items: Array<any>;
+	onClear: () => void;
+	pageSelectedItemsValue: Array<any>;
+	selectedItems: Array<any>;
+	selectedItemsKey: string;
+	selectedItemsValue: Array<any>;
+	showSelectAll?: boolean;
+	total: number;
 }) {
 	const {
 		actionParameterName,
@@ -55,9 +83,12 @@ function BulkActions({
 	} = useContext(FrontendDataSetContext);
 
 	const [currentSidePanelActionPayload, setCurrentSidePanelActionPayload] =
-		useState(null);
+		useState<IRichPayload | null>(null);
 
-	function getAdditionalData(filters, searchParam) {
+	function getAdditionalData(
+		filters: Array<IBaseFilterState>,
+		searchParam: string | undefined
+	) {
 		return {
 			filters: filters
 				.filter((item) => item.active)
@@ -74,12 +105,12 @@ function BulkActions({
 	}
 
 	function handleActionClick(
-		actionDefinition,
-		formId,
-		formName,
-		loadData,
-		namespace,
-		sidePanelId
+		actionDefinition: IBulkActionItem,
+		formId: string | undefined,
+		formName: string | undefined,
+		loadData: Function,
+		namespace: string | undefined,
+		sidePanelId: string | undefined
 	) {
 		const {data, href, slug, target} = actionDefinition;
 		if (target === 'sidePanel') {
@@ -121,7 +152,9 @@ function BulkActions({
 		else if (formId || (formName && namespace)) {
 			const namespacedId = formId || `${namespace}${formName}`;
 
-			const form = document.getElementById(namespacedId);
+			const form = document.getElementById(
+				namespacedId
+			) as HTMLFormElement;
 
 			if (form) {
 				postForm(form, {
@@ -144,34 +177,29 @@ function BulkActions({
 		}
 	}
 
-	useEffect(
-		() => {
-			if (!currentSidePanelActionPayload) {
-				return;
-			}
+	useEffect(() => {
+		if (!currentSidePanelActionPayload) {
+			return;
+		}
 
-			const currentOpenedSidePanel = getOpenedSidePanel();
+		const currentOpenedSidePanel = getOpenedSidePanel();
 
-			if (
-				currentOpenedSidePanel?.id ===
-					currentSidePanelActionPayload.id &&
-				currentOpenedSidePanel.url.indexOf(
-					currentSidePanelActionPayload.baseURL
-				) > -1
-			) {
-				Liferay.fire(
-					OPEN_SIDE_PANEL,
-					getRichPayload(
-						currentSidePanelActionPayload,
-						selectedItemsValue
-					)
-				);
-			}
-		},
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[selectedItemsValue]
-	);
+		if (
+			currentOpenedSidePanel?.id === currentSidePanelActionPayload.id &&
+			currentOpenedSidePanel.url.indexOf(
+				currentSidePanelActionPayload.baseURL
+			) > -1
+		) {
+			Liferay.fire(
+				OPEN_SIDE_PANEL,
+				getRichPayload(
+					currentSidePanelActionPayload,
+					selectedItemsKey,
+					selectedItemsValue
+				)
+			);
+		}
+	}, [currentSidePanelActionPayload, selectedItemsKey, selectedItemsValue]);
 
 	const filteredBulkActions = useMemo(
 		() =>
@@ -271,7 +299,8 @@ function BulkActions({
 													<span className="bulk-action-btn-icon inline-item inline-item-before">
 														<ClayIcon
 															symbol={
-																highlightedBulkAction.icon
+																highlightedBulkAction.icon ||
+																''
 															}
 														/>
 													</span>
@@ -347,26 +376,5 @@ function BulkActions({
 		</FrontendDataSetContext.Consumer>
 	) : null;
 }
-
-BulkActions.propTypes = {
-	bulkActions: PropTypes.arrayOf(
-		PropTypes.shape({
-			href: PropTypes.string.isRequired,
-			icon: PropTypes.string.isRequired,
-			label: PropTypes.string.isRequired,
-			method: PropTypes.string,
-			target: PropTypes.oneOf(['sidePanel', 'modal']),
-		})
-	),
-	handleSelectAll: PropTypes.func.isRequired,
-	items: PropTypes.array.isRequired,
-	onClear: PropTypes.func.isRequired,
-	pageSelectedItemsValue: PropTypes.array.isRequired,
-	selectedItems: PropTypes.array.isRequired,
-	selectedItemsKey: PropTypes.string.isRequired,
-	selectedItemsValue: PropTypes.array.isRequired,
-	showSelectAll: PropTypes.bool.isRequired,
-	total: PropTypes.number,
-};
 
 export default BulkActions;

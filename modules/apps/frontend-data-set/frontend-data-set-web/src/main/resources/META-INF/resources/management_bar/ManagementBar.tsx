@@ -30,7 +30,7 @@ function ManagementBar({
 	onBulkActionsClear,
 	onSelectAll,
 	selectItems,
-	selectedItems,
+	selectedItems = [],
 	selectedItemsKey,
 	selectedItemsValue,
 	showNavBarWhenSelected = false,

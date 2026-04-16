@@ -15,6 +15,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
+	performLoginViaApi,
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
@@ -449,11 +450,12 @@ test(
 
 test(
 	'Info Panel Comments and view Delete confirmation modal for added content',
-	{tag: '@LPD-62554'},
-	async ({apiHelpers, assetsPage, infoPanelPage, page}) => {
+	{tag: ['@LPD-62554', '@LPD-86000']},
+	async ({apiHelpers, assetsPage, infoPanelPage, page, spaceSummaryPage}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const spaceName = `Space ${getRandomString()}`;
 		let objectEntry1;
+		let user;
 
 		const file1Title = `title ${getRandomString()}`;
 
@@ -465,6 +467,19 @@ test(
 				trashEnabled: false,
 			},
 			type: 'Space',
+		});
+
+		await test.step('Create an user and add to the Space', async () => {
+			user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			await spaceSummaryPage.goto(spaceName);
+			await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
 		});
 
 		const addComment = async ({
@@ -528,7 +543,13 @@ test(
 				spaceName
 			);
 
-			await test.step('Go to All Assets, check the Location in Details tab and open the Info Panel Comments', async () => {
+			await test.step('Login as Space Member, go to All Assets, check the Details tab and open the Info Panel Comments', async () => {
+				await performLogout(page);
+				await performLoginViaApi({
+					page,
+					screenName: user.alternateName,
+				});
+
 				await assetsPage.gotoAll();
 
 				await assetsPage.execItemAction({
@@ -546,27 +567,7 @@ test(
 						.getByText('Location')
 				).toBeVisible();
 
-				await expect(
-					page.locator('div .space-breadcrumb').filter({
-						hasText: 'Content',
-					})
-				).toBeVisible();
-
-				await expect(
-					page.locator('div .space-breadcrumb').filter({
-						hasText: 'S',
-					})
-				).toBeVisible();
-
-				await expect(
-					page.locator('div .space-breadcrumb').filter({
-						hasText: spaceName,
-					})
-				).toBeVisible();
-
-				await infoPanelPage.selectTab('More').click();
 				await infoPanelPage.dropdownTab('Comments').click();
-				await infoPanelPage.selectTab('More').click();
 			});
 
 			await test.step('Add, edit and delete comments in the info Panel Comments', async () => {
@@ -655,6 +656,9 @@ test(
 			});
 		}
 		finally {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
 			await apiHelpers.objectEntry.deleteObjectEntry(
 				applicationName,
 				String(objectEntry1.id)

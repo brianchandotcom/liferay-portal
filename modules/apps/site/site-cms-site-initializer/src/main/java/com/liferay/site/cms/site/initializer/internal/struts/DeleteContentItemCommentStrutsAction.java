@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.struts;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -46,8 +47,14 @@ public class DeleteContentItemCommentStrutsAction implements StrutsAction {
 		try {
 			long commentId = ParamUtil.getLong(httpServletRequest, "commentId");
 
-			_discussionPermission.checkDeletePermission(
-				themeDisplay.getPermissionChecker(), commentId);
+			Comment comment = _commentManager.fetchComment(commentId);
+
+			if ((comment != null) &&
+				(themeDisplay.getUserId() != comment.getUserId())) {
+
+				_discussionPermission.checkDeletePermission(
+					themeDisplay.getPermissionChecker(), commentId);
+			}
 
 			_commentManager.deleteComment(commentId);
 

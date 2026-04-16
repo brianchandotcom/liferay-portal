@@ -90,7 +90,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -470,7 +469,7 @@ public class AssetPublisherDisplayContext {
 		return String.valueOf(PortalUtil.getControlPanelPortletURL(
 			_httpServletRequest, _themeDisplay.getScopeGroup(),
 			AssetListPortletKeys.ASSET_LIST, 0, 0,
-			PortletRequest.ACTION_PHASE));
+			PortletRequest.RENDER_PHASE));
 	}
 
 	public String getAssetTagName() {

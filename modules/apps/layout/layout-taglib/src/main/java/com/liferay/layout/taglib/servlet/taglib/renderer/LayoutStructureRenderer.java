@@ -1501,9 +1501,8 @@ public class LayoutStructureRenderer {
 
 			jspWriter.write("<div class=\"alert alert-danger\">");
 			jspWriter.write(
-				HtmlUtil.escape(
-					_renderLayoutStructureDisplayContext.getErrorMessage(
-						formStyledLayoutStructureItem, infoForm)));
+				_renderLayoutStructureDisplayContext.getErrorMessage(
+					formStyledLayoutStructureItem, infoForm));
 			jspWriter.write("</div>");
 
 			SessionErrors.remove(

@@ -202,11 +202,10 @@ public class UpdateLanguageAction implements Action {
 			}
 
 			int mappingIndex = layoutURL.indexOf(
-				friendlyURLMapper.getMapping());
+				StringPool.SLASH + friendlyURLMapper.getMapping());
 
 			if (mappingIndex != -1) {
-				mappingPart =
-					StringPool.SLASH + layoutURL.substring(mappingIndex);
+				mappingPart = layoutURL.substring(mappingIndex);
 			}
 		}
 

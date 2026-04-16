@@ -11,7 +11,10 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -58,6 +61,22 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 	}
 
 	@Override
+	public Map<String, Object> getAdditionalProps() {
+		Map<String, Object> additionalProps = super.getAdditionalProps();
+
+		try {
+			additionalProps.put("breadcrumbProps", getBreadcrumbProps());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return additionalProps;
+	}
+
+	@Override
 	public String getAPIURL() {
 		return HttpComponentsUtil.addParameters(
 			super.getAPIURL(), "page", CMSSpaceConstants.SPACE_SUMMARY_PAGE,
@@ -92,6 +111,9 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 	protected String getEmptyStateDescriptionKey() {
 		return "create-and-manage-files-within-this-space";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewSpaceFilesSummarySectionDisplayContext.class);
 
 	private final long _groupId;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;

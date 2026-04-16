@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -42,6 +43,20 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
+				_oAuthClientASLocalMetadataLocalService.
+					getCompanyOAuthClientASLocalMetadata(
+						TestPropsValues.getCompanyId())) {
+
+			_oAuthClientASLocalMetadataLocalService.
+				deleteOAuthClientASLocalMetadata(
+					oAuthClientASLocalMetadata.
+						getOAuthClientASLocalMetadataId());
+		}
+	}
 
 	@Test
 	public void testDoGet() throws Exception {

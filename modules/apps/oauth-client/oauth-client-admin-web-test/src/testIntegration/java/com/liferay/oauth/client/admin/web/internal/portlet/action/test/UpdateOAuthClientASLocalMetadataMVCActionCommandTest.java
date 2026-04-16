@@ -46,6 +46,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -75,6 +76,20 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 			TestPropsValues.getCompanyId());
 
 		_user = UserTestUtil.addUser(_company);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
+				_oAuthClientASLocalMetadataLocalService.
+					getCompanyOAuthClientASLocalMetadata(
+						TestPropsValues.getCompanyId())) {
+
+			_oAuthClientASLocalMetadataLocalService.
+				deleteOAuthClientASLocalMetadata(
+					oAuthClientASLocalMetadata.
+						getOAuthClientASLocalMetadataId());
+		}
 	}
 
 	@Test

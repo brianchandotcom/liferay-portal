@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class InfoFormValidationException extends InfoFormException {
 
 	public String getLocalizedMessage(String fieldLabel, Locale locale) {
 		return LanguageUtil.format(
-			locale, "x-an-error-occurred", fieldLabel, false);
+			locale, "x-an-error-occurred", HtmlUtil.escape(fieldLabel), false);
 	}
 
 	public static class CustomValidation extends InfoFormValidationException {
@@ -69,7 +70,7 @@ public class InfoFormValidationException extends InfoFormException {
 		@Override
 		public String getLocalizedMessage(Locale locale) {
 			return LanguageUtil.format(
-				locale, _messageKey, new String[] {_infoFormLabel}, false);
+				locale, _messageKey, HtmlUtil.escape(_infoFormLabel), false);
 		}
 
 		@Override
@@ -100,7 +101,10 @@ public class InfoFormValidationException extends InfoFormException {
 		public String getLocalizedMessage(String fieldLabel, Locale locale) {
 			return LanguageUtil.format(
 				locale, "value-exceeds-maximum-length-of-x-for-field-x",
-				new String[] {String.valueOf(_maxLength), fieldLabel}, false);
+				new String[] {
+					String.valueOf(_maxLength), HtmlUtil.escape(fieldLabel)
+				},
+				false);
 		}
 
 		private final int _maxLength;
@@ -124,7 +128,10 @@ public class InfoFormValidationException extends InfoFormException {
 		public String getLocalizedMessage(String fieldLabel, Locale locale) {
 			return LanguageUtil.format(
 				locale, "value-exceeds-maximum-value-of-x-for-field-x",
-				new String[] {String.valueOf(_maxValue), fieldLabel}, false);
+				new String[] {
+					String.valueOf(_maxValue), HtmlUtil.escape(fieldLabel)
+				},
+				false);
 		}
 
 		private final long _maxValue;
@@ -149,7 +156,10 @@ public class InfoFormValidationException extends InfoFormException {
 		public String getLocalizedMessage(String fieldLabel, Locale locale) {
 			return LanguageUtil.format(
 				locale, "value-falls-bellow-the-minimum-value-of-x-for-field-x",
-				new String[] {String.valueOf(_minValue), fieldLabel}, false);
+				new String[] {
+					String.valueOf(_minValue), HtmlUtil.escape(fieldLabel)
+				},
+				false);
 		}
 
 		private final long _minValue;
@@ -288,7 +298,7 @@ public class InfoFormValidationException extends InfoFormException {
 		@Override
 		public String getLocalizedMessage(String fieldLabel, Locale locale) {
 			return LanguageUtil.format(
-				locale, "the-x-is-invalid", fieldLabel, false);
+				locale, "the-x-is-invalid", HtmlUtil.escape(fieldLabel), false);
 		}
 
 	}
@@ -316,8 +326,9 @@ public class InfoFormValidationException extends InfoFormException {
 		public String getLocalizedMessage(Locale locale) {
 			return LanguageUtil.format(
 				locale, "please-select-at-least-one-category-for-x",
-				(_assetVocabulary != null) ? _assetVocabulary.getTitle(locale) :
-					StringPool.BLANK);
+				(_assetVocabulary != null) ?
+					HtmlUtil.escape(_assetVocabulary.getTitle(locale)) :
+						StringPool.BLANK);
 		}
 
 		private final AssetCategoryException _assetCategoryException;
@@ -385,9 +396,11 @@ public class InfoFormValidationException extends InfoFormException {
 
 		@Override
 		public String getLocalizedMessage(Locale locale) {
+			String infoFieldLabel = HtmlUtil.escape(_infoFieldLabel);
+
 			return LanguageUtil.format(
 				locale, "the-x-is-already-in-use",
-				new String[] {_infoFieldLabel, _infoFieldLabel}, false);
+				new String[] {infoFieldLabel, infoFieldLabel}, false);
 		}
 
 		@Override

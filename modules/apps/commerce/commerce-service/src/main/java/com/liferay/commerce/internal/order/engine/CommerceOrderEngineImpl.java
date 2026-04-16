@@ -79,12 +79,18 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
+import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
+import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
+
+import java.io.Serializable;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
@@ -547,7 +553,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	}
 
 	private void _sendOrderStatusMessage(
-		CommerceOrder commerceOrder, int orderStatus) {
+		CommerceOrder commerceOrder, int orderStatus, long userId) {
 
 		CommerceOrder originalCommerceOrder =
 			commerceOrder.cloneWithOriginalValues();
@@ -575,6 +581,23 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 						"Liferay.Headless.Commerce.Admin.Order",
 						CommerceOrder.class.getName(), "v1.0");
 
+				EntityExtensionHandler entityExtensionHandler =
+					ExtensionUtil.getEntityExtensionHandler(
+						commerceOrderDTOConverter.getExternalDTOClassName(),
+						commerceOrder.getCompanyId(),
+						_extensionProviderRegistry);
+
+				Map<String, Serializable> extendedProperties = null;
+
+				if (entityExtensionHandler != null) {
+					extendedProperties =
+						entityExtensionHandler.getExtendedProperties(
+							commerceOrder.getCompanyId(), userId,
+							HashMapBuilder.<String, Object>put(
+								"id", commerceOrder.getCommerceOrderId()
+							).build());
+				}
+
 				message.setPayload(
 					JSONUtil.put(
 						"classPK", commerceOrder.getCommerceOrderId()
@@ -584,6 +607,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 							commerceOrder, commerceOrderDTOConverter)
 					).put(
 						"commerceOrderId", commerceOrder.getCommerceOrderId()
+					).put(
+						"extendedProperties", extendedProperties
 					).put(
 						"model" + CommerceOrder.class.getSimpleName(),
 						commerceOrder.getModelAttributes()
@@ -623,7 +648,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			commerceOrderStatus.isTransitionCriteriaMet(commerceOrder)) {
 
 			_sendOrderStatusMessage(
-				commerceOrder, commerceOrderStatus.getKey());
+				commerceOrder, commerceOrderStatus.getKey(), userId);
 
 			return commerceOrderStatus.doTransition(
 				commerceOrder, userId, secure);
@@ -645,7 +670,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			throw new CommerceOrderStatusException();
 		}
 
-		_sendOrderStatusMessage(commerceOrder, commerceOrderStatus.getKey());
+		_sendOrderStatusMessage(
+			commerceOrder, commerceOrderStatus.getKey(), userId);
 
 		return commerceOrderStatus.doTransition(commerceOrder, userId, secure);
 	}
@@ -790,6 +816,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ExtensionProviderRegistry _extensionProviderRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

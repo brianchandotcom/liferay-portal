@@ -40,6 +40,7 @@ export type FolderAction = 'copy' | 'move';
 type Folder = {
 	id: number;
 	title: string;
+	scopeId: string;
 };
 
 type Space = {
@@ -60,6 +61,28 @@ const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 		initialDelta: 20,
 	},
 	selectionType: 'single',
+};
+
+const getDuplicateItemCheckPromise = (item: any, folder: Folder) => {
+	const isFolder = item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
+
+	if (isFolder) {
+		return FolderService.searchFolder(
+			item.embedded.scopeId,
+			item.title,
+			folder.id
+		);
+	}
+	else {
+		const folderURL = item.actions['get-by-scope'].href.replace(
+			item.embedded.scopeId,
+			folder.scopeId
+		);
+
+		return ApiHelper.get(
+			`${folderURL}?filter=title eq '${item.title}' and folderId eq ${folder.id}`
+		);
+	}
 };
 
 const getSpaceFoldersURL = (cmsSection: string, scopeId: number) => {
@@ -339,24 +362,6 @@ function FolderItemSelectorModalContent({
 	};
 
 	const handleOnItemsChange = (folder: Folder, targetName?: string) => {
-		const getDuplicateCheckPromise = (item: any) => {
-			const isFolder =
-				item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
-
-			if (isFolder) {
-				return FolderService.searchFolder(
-					item.embedded.scopeId,
-					item.title,
-					folder.id
-				);
-			}
-			else {
-				return ApiHelper.get(
-					`${item.actions['get-by-scope'].href}?filter=title eq '${(item.title || '').replace(/'/g, "''")}' and folderId eq ${folder.id}`
-				);
-			}
-		};
-
 		if (isBulk) {
 			const actionType = isCopy
 				? 'CopyObjectBulkSelectionAction'
@@ -364,7 +369,7 @@ function FolderItemSelectorModalContent({
 
 			const duplicateCheckPromises = selectedData.items.map(
 				(selectedItem: any) =>
-					getDuplicateCheckPromise(selectedItem).then(
+					getDuplicateItemCheckPromise(selectedItem, folder).then(
 						(result: any) => ({
 							data: result.data,
 							error: result.error,
@@ -393,11 +398,12 @@ function FolderItemSelectorModalContent({
 					if (!hasError) {
 						displayErrorToast(
 							Liferay.Language.get(
-								'assets-could-not-be-moved.-please-ensure-the-name-is-unique-in-the-destination.'
+								'assets-could-not-be-moved.-please-ensure-the-name-is-unique-in-the-destination'
 							)
 						);
 					}
 					onOpenChange(false);
+
 					return;
 				}
 
@@ -415,32 +421,34 @@ function FolderItemSelectorModalContent({
 			return;
 		}
 
-		getDuplicateCheckPromise(itemData).then(({data, error}: any) => {
-			if (error) {
-				displayErrorToast(error);
+		getDuplicateItemCheckPromise(itemData, folder).then(
+			({data, error}: any) => {
+				if (error) {
+					displayErrorToast(error);
 
-				return;
-			}
+					return;
+				}
 
-			if (data?.items.length > 0) {
-				openDuplicatedAssetFolderNamesModal(
-					action,
-					itemData,
-					(operation: Option) => {
-						executeAction({
-							action,
-							folder,
-							itemData,
-							loadData,
-							replace: operation === 'replace',
-						});
-					}
-				);
+				if (data?.items.length > 0) {
+					openDuplicatedAssetFolderNamesModal(
+						action,
+						itemData,
+						(operation: Option) => {
+							executeAction({
+								action,
+								folder,
+								itemData,
+								loadData,
+								replace: operation === 'replace',
+							});
+						}
+					);
+				}
+				else {
+					executeAction({action, folder, itemData, loadData});
+				}
 			}
-			else {
-				executeAction({action, folder, itemData, loadData});
-			}
-		});
+		);
 	};
 
 	useEffect(() => {
@@ -587,6 +595,9 @@ function FolderItemSelectorModalContent({
 								{
 									id: isFolder ? item.embedded.id : item.id,
 									title: name,
+									scopeId: isFolder
+										? item.embedded.scopeId
+										: item.scopeId,
 								},
 								name
 							);

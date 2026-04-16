@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Site SEO Studio Site Initializer
-Bundle-SymbolicName: com.liferay.site.seo.studio.site.initializer
-Bundle-Version: 1.0.0
-Web-ContextPath: /site-seo-studio-site-initializer
--dsannotations-options: inherit

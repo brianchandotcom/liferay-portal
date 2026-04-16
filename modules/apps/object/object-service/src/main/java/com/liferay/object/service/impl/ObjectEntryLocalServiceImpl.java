@@ -787,10 +787,16 @@ public class ObjectEntryLocalServiceImpl
 
 		serviceContext.setAttribute(Constants.ACTION, Constants.COPY);
 
-		return addObjectEntry(
+		ObjectEntry newObjectEntry = addObjectEntry(
 			groupId, userId, objectDefinition.getObjectDefinitionId(),
 			objectEntryFolderId, objectEntry.getDefaultLanguageId(), values,
 			serviceContext);
+
+		_copyRelatedObjectEntries(
+			1, userId, objectEntry, newObjectEntry, objectDefinition,
+			serviceContext);
+
+		return newObjectEntry;
 	}
 
 	@Override
@@ -3276,6 +3282,113 @@ public class ObjectEntryLocalServiceImpl
 				new ObjectEntryContext(
 					groupId, objectDefinition.getObjectDefinitionId(), userId,
 					values));
+		}
+	}
+
+	private void _copyRelatedObjectEntries(
+			int depth, long userId, ObjectEntry sourceObjectEntry,
+			ObjectEntry newObjectEntry, ObjectDefinition objectDefinition,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (depth > 5) {
+			return;
+		}
+
+		ObjectRelationshipLocalService objectRelationshipLocalService =
+			_objectRelationshipLocalServiceSnapshot.get();
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipPersistence.findByObjectDefinitionId1(
+					objectDefinition.getObjectDefinitionId())) {
+
+			String type = objectRelationship.getType();
+
+			if (Objects.equals(
+					type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				if (!objectRelationship.isEdge()) {
+					continue;
+				}
+
+				ObjectDefinition relatedObjectDefinition =
+					_objectDefinitionPersistence.findByPrimaryKey(
+						objectRelationship.getObjectDefinitionId2());
+
+				if (!relatedObjectDefinition.isApproved() ||
+					relatedObjectDefinition.isUnmodifiableSystemObject()) {
+
+					continue;
+				}
+
+				List<ObjectEntry> relatedObjectEntries =
+					getOneToManyObjectEntries(
+						sourceObjectEntry.getGroupId(),
+						objectRelationship.getObjectRelationshipId(), null,
+						false, sourceObjectEntry.getObjectEntryId(), true, null,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+				String relationshipFieldName =
+					ObjectRelationshipUtil.getObjectRelationshipFieldName(
+						objectDefinition, objectRelationship.getName());
+
+				int savedWorkflowAction = serviceContext.getWorkflowAction();
+
+				if (relatedObjectDefinition.isEnableObjectEntryDraft()) {
+					serviceContext.setWorkflowAction(
+						WorkflowConstants.ACTION_SAVE_DRAFT);
+				}
+				else {
+					serviceContext.setWorkflowAction(
+						WorkflowConstants.ACTION_PUBLISH);
+				}
+
+				for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
+					Map<String, Serializable> relatedValues =
+						HashMapBuilder.<String, Serializable>putAll(
+							getValues(relatedObjectEntry.getObjectEntryId())
+						).put(
+							relationshipFieldName,
+							newObjectEntry.getObjectEntryId()
+						).put(
+							"externalReferenceCode", () -> null
+						).build();
+
+					ObjectEntry newRelatedObjectEntry = addObjectEntry(
+						relatedObjectEntry.getGroupId(), userId,
+						relatedObjectDefinition.getObjectDefinitionId(),
+						relatedObjectEntry.getObjectEntryFolderId(),
+						relatedObjectEntry.getDefaultLanguageId(),
+						relatedValues, serviceContext);
+
+					_copyRelatedObjectEntries(
+						depth + 1, userId, relatedObjectEntry,
+						newRelatedObjectEntry, relatedObjectDefinition,
+						serviceContext);
+				}
+
+				serviceContext.setWorkflowAction(savedWorkflowAction);
+			}
+			else if (Objects.equals(
+						type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+				List<ObjectEntry> relatedObjectEntries =
+					getManyToManyObjectEntries(
+						sourceObjectEntry.getGroupId(),
+						objectRelationship.getObjectRelationshipId(),
+						sourceObjectEntry.getObjectEntryId(), true, false, null,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
+					objectRelationshipLocalService.
+						addObjectRelationshipMappingTableValues(
+							userId,
+							objectRelationship.getObjectRelationshipId(),
+							newObjectEntry.getObjectEntryId(),
+							relatedObjectEntry.getObjectEntryId(),
+							serviceContext);
+				}
+			}
 		}
 	}
 

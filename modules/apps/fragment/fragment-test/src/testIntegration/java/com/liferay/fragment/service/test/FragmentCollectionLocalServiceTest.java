@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -360,20 +361,21 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		Folder subfolder = _portletFileRepository.addPortletFolder(
-			TestPropsValues.getUserId(),
-			PortletFileRepositoryUtil.getPortletRepository(
-				_group.getGroupId(), FragmentPortletKeys.FRAGMENT
-			).getRepositoryId(),
+		Repository repository = _portletFileRepository.addPortletRepository(
+			_group.getGroupId(), FragmentPortletKeys.FRAGMENT,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Folder folder = _portletFileRepository.addPortletFolder(
+			TestPropsValues.getUserId(), repository.getRepositoryId(),
 			fragmentCollection.getResourcesFolderId(),
 			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			ServiceContextTestUtil.getServiceContext());
 
 		_portletFileRepository.addPortletFileEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(),
 			FragmentCollection.class.getName(),
 			fragmentCollection.getFragmentCollectionId(),
-			FragmentPortletKeys.FRAGMENT, subfolder.getFolderId(), new byte[0],
+			FragmentPortletKeys.FRAGMENT, folder.getFolderId(), new byte[0],
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
 
 		Assert.assertEquals(
@@ -383,9 +385,10 @@ public class FragmentCollectionLocalServiceTest {
 					new long[] {_group.getGroupId()}));
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(fragmentCollections.contains(fragmentCollection));
 		Assert.assertEquals(
@@ -533,9 +536,10 @@ public class FragmentCollectionLocalServiceTest {
 			fragmentCollection2.getFragmentCollectionId());
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(fragmentCollections.contains(fragmentCollection1));
 		Assert.assertTrue(fragmentCollections.contains(fragmentCollection2));
@@ -570,9 +574,10 @@ public class FragmentCollectionLocalServiceTest {
 			fragmentCollection3.getFragmentCollectionId());
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, keyword, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, keyword,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(fragmentCollections.contains(fragmentCollection1));
 		Assert.assertTrue(fragmentCollections.contains(fragmentCollection3));
@@ -598,9 +603,10 @@ public class FragmentCollectionLocalServiceTest {
 			exportableFragmentCollection.getFragmentCollectionId());
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, keyword, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, keyword,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
 			fragmentCollections.toString(), 0, fragmentCollections.size());
@@ -632,9 +638,11 @@ public class FragmentCollectionLocalServiceTest {
 			FragmentCollectionNameComparator.getInstance(true);
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, keyword, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, keyword,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					fragmentCollectionNameComparator);
 
 		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
 
@@ -651,9 +659,10 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
 			fragmentCollections.toString(), 0, fragmentCollections.size());
@@ -681,9 +690,10 @@ public class FragmentCollectionLocalServiceTest {
 			FragmentCollectionNameComparator.getInstance(true);
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, fragmentCollectionNameComparator);
 
 		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
 
@@ -713,9 +723,10 @@ public class FragmentCollectionLocalServiceTest {
 			FragmentCollectionNameComparator.getInstance(false);
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, fragmentCollectionNameComparator);
 
 		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
 
@@ -745,8 +756,9 @@ public class FragmentCollectionLocalServiceTest {
 			fragmentCollection3.getFragmentCollectionId());
 
 		List<FragmentCollection> fragmentCollections =
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				new long[] {_group.getGroupId()}, 0, 2, null);
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					new long[] {_group.getGroupId()}, 0, 2, null);
 
 		Assert.assertEquals(
 			fragmentCollections.toString(), 2, fragmentCollections.size());

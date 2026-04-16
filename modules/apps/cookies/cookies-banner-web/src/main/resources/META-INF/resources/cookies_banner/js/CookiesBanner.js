@@ -356,7 +356,7 @@ function checkFloatingIcon(cookieBanner, namespace) {
 			floatingIconButton.classList.remove('d-inline-flex');
 			floatingIconButton.classList.add('d-none');
 		}
-		else if (Liferay.FeatureFlags['LPD-75027']) {
+		else {
 			floatingIconButton.classList.remove('d-none');
 			floatingIconButton.classList.add('d-inline-flex');
 		}

@@ -8,7 +8,7 @@ import {Option, Picker} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {CountryInfo, getFlagSymbol, parsePhoneValue} from './phoneNumberUtil';
 
@@ -29,15 +29,21 @@ const PickerTrigger = React.forwardRef<
 	{selectedCountry: CountryInfo & {symbol?: string}} & React.ComponentProps<
 		typeof ClayButton
 	>
->(({selectedCountry, ...otherProps}, ref) => (
-	<div {...(otherProps as any)} ref={ref}>
-		{selectedCountry.symbol && (
-			<ClayIcon className="mr-2" symbol={selectedCountry.symbol} />
-		)}
+>(({selectedCountry, ...otherProps}, ref) => {
+	const flagSymbol = getFlagSymbol(selectedCountry.a2);
 
-		<span>+{selectedCountry.idd}</span>
-	</div>
-));
+	return (
+		<div {...(otherProps as any)} ref={ref}>
+			{flagSymbol && (
+				<span className="inline-item inline-item-before">
+					<ClayIcon symbol={flagSymbol} />
+				</span>
+			)}
+
+			<span>+{selectedCountry.idd}</span>
+		</div>
+	);
+});
 
 const PhoneNumber = ({
 	countries = [],
@@ -59,15 +65,6 @@ const PhoneNumber = ({
 
 	const disabled = readOnly || (otherProps.disabled as boolean);
 
-	const countriesWithFlagSymbol = useMemo(() => {
-		return countries.map((country) => {
-			return {
-				...country,
-				symbol: getFlagSymbol(country.a2),
-			};
-		});
-	}, [countries]);
-
 	const handleValueChange = (country: CountryInfo, number: string) => {
 		if (onChange) {
 			onChange({
@@ -85,11 +82,11 @@ const PhoneNumber = ({
 			countries
 		);
 
-		const country = countriesWithFlagSymbol.find(
+		const selectedCountry = countries.find(
 			(country) => country.a2 === countryA2
 		);
 
-		setSelectedCountry(country || countriesWithFlagSymbol[0]);
+		setSelectedCountry(selectedCountry || countries[0]);
 		setLocalNumber(localNumber);
 
 		// eslint-disable-next-line react-compiler/react-compiler
@@ -103,46 +100,50 @@ const PhoneNumber = ({
 					<Picker
 						as={PickerTrigger}
 						disabled={disabled}
-						items={countriesWithFlagSymbol}
+						items={countries}
 						onSelectionChange={(key) => {
-							const country = countriesWithFlagSymbol.find(
-								(c) => c.a2 === key
+							const selectedCountry = countries.find(
+								(country) => country.a2 === key
 							);
 
-							if (country) {
-								setSelectedCountry(country);
-								handleValueChange(country, localNumber);
+							if (selectedCountry) {
+								setSelectedCountry(selectedCountry);
+								handleValueChange(selectedCountry, localNumber);
 							}
 						}}
 						searchable
 						selectedCountry={selectedCountry}
 						selectedKey={selectedCountry.a2}
 					>
-						{(country) => (
-							<Option
-								key={country.a2}
-								textValue={`+${country.idd} ${country.name}`}
-							>
-								<div className="autofit-row">
-									<div className="autofit-col">
-										{country.symbol && (
-											<ClayIcon symbol={country.symbol} />
-										)}
-									</div>
+						{(country) => {
+							const flagSymbol = getFlagSymbol(country.a2);
 
-									<div
-										className="autofit-col"
-										style={{minWidth: '30px'}}
-									>
-										{`+${country.idd}`}
-									</div>
+							return (
+								<Option
+									key={country.a2}
+									textValue={`+${country.idd} ${country.name}`}
+								>
+									<div className="autofit-row">
+										<div className="autofit-col">
+											{flagSymbol && (
+												<ClayIcon symbol={flagSymbol} />
+											)}
+										</div>
 
-									<div className="autofit-col autofit-col-expand">
-										{country.name}
+										<div
+											className="autofit-col"
+											style={{minWidth: '45px'}}
+										>
+											{`+${country.idd}`}
+										</div>
+
+										<div className="autofit-col autofit-col-expand">
+											{country.name}
+										</div>
 									</div>
-								</div>
-							</Option>
-						)}
+								</Option>
+							);
+						}}
 					</Picker>
 				</ClayInput.GroupItem>
 

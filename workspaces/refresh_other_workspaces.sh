@@ -13,8 +13,10 @@ function main {
 
 		rsync \
 			-a --delete \
+			--exclude "build.gradle" \
 			--exclude "package.json" \
 			--exclude "README.md" \
+			--exclude "test.properties" \
 			--exclude "client-extensions" \
 			--exclude "language" \
 			--exclude "modules" \

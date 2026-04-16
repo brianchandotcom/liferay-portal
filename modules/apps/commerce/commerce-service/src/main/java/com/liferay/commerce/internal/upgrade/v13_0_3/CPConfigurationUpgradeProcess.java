@@ -5,12 +5,16 @@
 
 package com.liferay.commerce.internal.upgrade.v13_0_3;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -34,11 +38,12 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 		ClassNameLocalService classNameLocalService,
 		CPConfigurationEntryLocalService cpConfigurationEntryLocalService,
 		CPConfigurationListLocalService cpConfigurationListLocalService,
-		Language language) {
+		CTCollectionLocalService ctCollectionLocalService, Language language) {
 
 		_classNameLocalService = classNameLocalService;
 		_cpConfigurationEntryLocalService = cpConfigurationEntryLocalService;
 		_cpConfigurationListLocalService = cpConfigurationListLocalService;
+		_ctCollectionLocalService = ctCollectionLocalService;
 		_language = language;
 	}
 
@@ -62,7 +67,8 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 			PreparedStatement configurationEntryPreparedStatement =
 				connection.prepareStatement(
 					StringBundler.concat(
-						"select CPDefinition.CPDefinitionId, ",
+						"select CPDefinition.ctCollectionId, ",
+						"CPDefinition.CPDefinitionId, ",
 						"CPDefinition.CPTaxCategoryId, CPDefinition.depth, ",
 						"CPDefinition.height, CPDefinition.freeShipping, ",
 						"CPDefinition.shippable, ",
@@ -148,47 +154,79 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 					configurationEntryPreparedStatement.executeQuery();
 
 				while (configurationEntryResultSet.next()) {
-					_cpConfigurationEntryLocalService.addCPConfigurationEntry(
-						null, userId, groupId, cpDefinitionClassNameId,
-						configurationEntryResultSet.getLong("CpDefinitionId"),
-						cpConfigurationListId,
-						configurationEntryResultSet.getLong("CPTaxCategoryId"),
-						configurationEntryResultSet.getString(
-							"allowedOrderQuantities"),
-						configurationEntryResultSet.getBoolean("backOrders"),
-						configurationEntryResultSet.getLong(
-							"commerceAvailabilityEstimateId"),
-						configurationEntryResultSet.getString(
-							"CPDefinitionInventoryEngine"),
-						configurationEntryResultSet.getDouble("depth"),
-						configurationEntryResultSet.getBoolean(
-							"displayAvailability"),
-						configurationEntryResultSet.getBoolean(
-							"displayStockQuantity"),
-						configurationEntryResultSet.getBoolean("freeShipping"),
-						configurationEntryResultSet.getDouble("height"),
-						configurationEntryResultSet.getString(
-							"lowStockActivity"),
-						configurationEntryResultSet.getBigDecimal(
-							"maxOrderQuantity"),
-						configurationEntryResultSet.getBigDecimal(
-							"minOrderQuantity"),
-						configurationEntryResultSet.getBigDecimal(
-							"minStockQuantity"),
-						configurationEntryResultSet.getBigDecimal(
-							"multipleOrderQuantity"),
-						true,
-						configurationEntryResultSet.getBoolean("shippable"),
-						configurationEntryResultSet.getDouble(
-							"shippingExtraPrice"),
-						configurationEntryResultSet.getBoolean(
-							"shipSeparately"),
-						configurationEntryResultSet.getBoolean("taxExempt"),
-						configurationEntryResultSet.getDouble("weight"),
-						configurationEntryResultSet.getDouble("width"));
+					long ctCollectionId = configurationEntryResultSet.getLong(
+						"ctCollectionId");
+
+					CTCollection ctCollection =
+						_ctCollectionLocalService.fetchCTCollection(
+							ctCollectionId);
+
+					if (_isCTCollectionReadOnly(ctCollection)) {
+						continue;
+					}
+
+					try (SafeCloseable safeCloseable =
+							CTCollectionThreadLocal.
+								setCTCollectionIdWithSafeCloseable(
+									ctCollectionId)) {
+
+						_cpConfigurationEntryLocalService.
+							addCPConfigurationEntry(
+								null, userId, groupId, cpDefinitionClassNameId,
+								configurationEntryResultSet.getLong(
+									"CpDefinitionId"),
+								cpConfigurationListId,
+								configurationEntryResultSet.getLong(
+									"CPTaxCategoryId"),
+								configurationEntryResultSet.getString(
+									"allowedOrderQuantities"),
+								configurationEntryResultSet.getBoolean(
+									"backOrders"),
+								configurationEntryResultSet.getLong(
+									"commerceAvailabilityEstimateId"),
+								configurationEntryResultSet.getString(
+									"CPDefinitionInventoryEngine"),
+								configurationEntryResultSet.getDouble("depth"),
+								configurationEntryResultSet.getBoolean(
+									"displayAvailability"),
+								configurationEntryResultSet.getBoolean(
+									"displayStockQuantity"),
+								configurationEntryResultSet.getBoolean(
+									"freeShipping"),
+								configurationEntryResultSet.getDouble("height"),
+								configurationEntryResultSet.getString(
+									"lowStockActivity"),
+								configurationEntryResultSet.getBigDecimal(
+									"maxOrderQuantity"),
+								configurationEntryResultSet.getBigDecimal(
+									"minOrderQuantity"),
+								configurationEntryResultSet.getBigDecimal(
+									"minStockQuantity"),
+								configurationEntryResultSet.getBigDecimal(
+									"multipleOrderQuantity"),
+								true,
+								configurationEntryResultSet.getBoolean(
+									"shippable"),
+								configurationEntryResultSet.getDouble(
+									"shippingExtraPrice"),
+								configurationEntryResultSet.getBoolean(
+									"shipSeparately"),
+								configurationEntryResultSet.getBoolean(
+									"taxExempt"),
+								configurationEntryResultSet.getDouble("weight"),
+								configurationEntryResultSet.getDouble("width"));
+					}
 				}
 			}
 		}
+	}
+
+	private boolean _isCTCollectionReadOnly(CTCollection ctCollection) {
+		if ((ctCollection != null) && ctCollection.isReadOnly()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final ClassNameLocalService _classNameLocalService;
@@ -196,6 +234,7 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 		_cpConfigurationEntryLocalService;
 	private final CPConfigurationListLocalService
 		_cpConfigurationListLocalService;
+	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final Language _language;
 
 }

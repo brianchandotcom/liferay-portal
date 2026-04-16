@@ -37,10 +37,19 @@ import java.util.Map;
 public class SideNavigationDisplayContext {
 
 	public SideNavigationDisplayContext(HttpServletRequest httpServletRequest) {
+		this(
+			httpServletRequest,
+			(PanelAppRegistry)httpServletRequest.getAttribute(
+				ApplicationListWebKeys.PANEL_APP_REGISTRY));
+	}
+
+	public SideNavigationDisplayContext(
+		HttpServletRequest httpServletRequest,
+		PanelAppRegistry panelAppRegistry) {
+
 		_httpServletRequest = httpServletRequest;
 
-		_panelAppRegistry = (PanelAppRegistry)httpServletRequest.getAttribute(
-			ApplicationListWebKeys.PANEL_APP_REGISTRY);
+		_panelAppRegistry = panelAppRegistry;
 
 		_panelCategoryHelper = new PanelCategoryHelper(_panelAppRegistry);
 
@@ -79,7 +88,9 @@ public class SideNavigationDisplayContext {
 		).put(
 			"label", _panelCategory.getLabel(_themeDisplay.getLocale())
 		).put(
-			"portletId", _portletId
+			"portletId", StringPool.BLANK
+		).put(
+			"selectedPortletId", _portletId
 		).put(
 			"siteAdministrationItemSelectedEventName", itemSelectedEventName
 		).put(

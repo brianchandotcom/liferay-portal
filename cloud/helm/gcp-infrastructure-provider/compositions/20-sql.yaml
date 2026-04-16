@@ -20,11 +20,6 @@ spec:
         encryptionKmsKeyName: {{ $cmkKeyName }}
         {{- end }}
         region: {{ $region }}
-        {{- if and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) $databaseSpec.restoreBackupContext }}
-        restoreBackupContext:
-            backupRunId: {{ $databaseSpec.snapshotUuid }}
-            project: {{ $databaseSpec.restoreBackupContext.project | default $env.projectId }}
-        {{- end }}
         rootPasswordSecretRef:
             key: password
             name: {{ $databaseSpec.rootPasswordSecretName }}

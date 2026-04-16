@@ -60,9 +60,6 @@ spec:
                                             type: string
                                         rootPasswordSecretName:
                                             type: string
-                                        snapshotUuid:
-                                            nullable: true
-                                            type: string
                                         storageGB:
                                             type: integer
                                     type: object

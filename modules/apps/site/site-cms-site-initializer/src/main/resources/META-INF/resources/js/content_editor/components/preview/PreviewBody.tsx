@@ -160,7 +160,10 @@ export default function PreviewBody({
 				) : null}
 			</div>
 
-			<div className="align-items-center content-editor__preview__content d-flex position-relative">
+			<div
+				className="align-items-center content-editor__preview__content d-flex position-relative"
+				{...(previewURL && {inert: ''})}
+			>
 				{selectedChannelKey &&
 				displayPageTemplates !== undefined &&
 				!displayPageTemplates.length ? (
@@ -179,6 +182,7 @@ export default function PreviewBody({
 					<iframe
 						className="border-0 d-block h-100 w-100"
 						src={previewURL}
+						tabIndex={-1}
 						title={Liferay.Language.get('preview')}
 					/>
 				) : (

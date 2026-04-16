@@ -164,7 +164,7 @@ const PhoneNumber = ({
 							handleValueChange(selectedCountry, newNumber);
 						}}
 						onFocus={onFocus}
-						pattern="[0-9\s\-().]*"
+						pattern="[0-9\s\-\(\).]*"
 						type="tel"
 						value={localNumber}
 					/>

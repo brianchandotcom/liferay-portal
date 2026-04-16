@@ -8,21 +8,22 @@ import React from 'react';
 
 export default function DragZoneBackground({maxSize}: {maxSize: number}) {
 	return (
-		<>
+		<div className="align-items-center d-flex flex-column">
 			<img
 				alt=""
+				className="mb-3"
 				src={`${Liferay.ThemeDisplay.getPathContext()}/o/exportimport-web/revamp/images/drag_and_drop.svg`}
 			/>
 
-			<p className="my-2 text-weight-semi-bold">
+			<p className="font-weight-semi-bold mb-3">
 				{Liferay.Language.get('drag-and-drop-your-file-or')}
 			</p>
 
-			<span className="btn btn-secondary">
+			<span className="btn btn-secondary mb-3">
 				{Liferay.Language.get('select-files')}
 			</span>
 
-			<p className="my-2">
+			<p className="mb-0 small">
 				{sub(
 					Liferay.Language.get(
 						'only-lar-files-are-allowed-max-file-size-is-x'
@@ -32,6 +33,6 @@ export default function DragZoneBackground({maxSize}: {maxSize: number}) {
 					})
 				)}
 			</p>
-		</>
+		</div>
 	);
 }

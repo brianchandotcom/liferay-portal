@@ -8,6 +8,7 @@ package com.liferay.portal.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -118,11 +120,13 @@ public class UpdateLanguageActionTest {
 	}
 
 	@Test
+	@TestInfo("LPD-73762")
 	public void testGetRedirect() throws Exception {
 		_testGetRedirectWithControlPanelURL(false);
 		_testGetRedirectWithControlPanelURL(true);
 		_testGetRedirectWithFriendlyURL(false);
 		_testGetRedirectWithFriendlyURL(true);
+		_testGetRedirectWithLayoutFriendlyURLWithPortletURLMapping();
 		_testGetRedirectWithPortletFriendlyURL(_sourceLocale);
 		_testGetRedirectWithPortletFriendlyURL(null);
 		_testGetRedirectWithPortletURLMapping(_sourceLocale);
@@ -484,6 +488,55 @@ public class UpdateLanguageActionTest {
 
 		_testGetRedirect(
 			sourceLocale, sourceURL, targetLocale, targetURL, virtualHost);
+	}
+
+	private void _testGetRedirectWithLayoutFriendlyURLWithPortletURLMapping()
+		throws Exception {
+
+		_testGetRedirectWithLayoutFriendlyURLWithPortletURLMapping(
+			"questions", _sourceLocale);
+		_testGetRedirectWithLayoutFriendlyURLWithPortletURLMapping(
+			"questions", null);
+		_testGetRedirectWithLayoutFriendlyURLWithPortletURLMapping(
+			"tags", _sourceLocale);
+		_testGetRedirectWithLayoutFriendlyURLWithPortletURLMapping(
+			"tags", null);
+	}
+
+	private void _testGetRedirectWithLayoutFriendlyURLWithPortletURLMapping(
+			String mapping, Locale sourceLocale)
+		throws Exception {
+
+		String layoutFriendlyURL = StringBundler.concat(
+			StringUtil.toLowerCase(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE)),
+			StringPool.DASH, mapping, StringPool.DASH,
+			StringUtil.toLowerCase(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE)));
+
+		String languageId = "en_US";
+
+		if (sourceLocale != null) {
+			languageId = LocaleUtil.toLanguageId(sourceLocale);
+		}
+
+		_layout = _layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), _layout.getPlid(),
+			StringPool.SLASH + layoutFriendlyURL, languageId);
+
+		String sourceURL = StringBundler.concat(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			_group.getFriendlyURL(), layoutFriendlyURL, "?queryString");
+
+		String targetURL = StringBundler.concat(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			_group.getFriendlyURL(), _layout.getFriendlyURL(_targetLocale),
+			"?queryString");
+
+		_testGetRedirect(
+			sourceLocale, sourceURL, _targetLocale, targetURL, false);
 	}
 
 	private void _testGetRedirectWithPortletFriendlyURL(Locale sourceLocale)

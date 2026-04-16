@@ -713,16 +713,30 @@ public class SharepointExtRepository implements ExtRepository {
 					sharepointRepositoryTokenBroker.requestAccessTokenSilently(
 						token);
 
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_tokenStore.save(
-						_sharepointRepositoryConfiguration.name(),
-						PrincipalThreadLocal.getUserId(),
-						sharepointRepositoryAuthenticationResult.getToken());
+			Token newToken =
+				sharepointRepositoryAuthenticationResult.getToken();
 
-					return null;
-				});
+			if (newToken != null) {
+				Token storedToken = _tokenStore.get(
+					_sharepointRepositoryConfiguration.name(),
+					PrincipalThreadLocal.getUserId());
+
+				if ((storedToken == null) ||
+					!StringUtil.equals(
+						newToken.getAccessToken(),
+						storedToken.getAccessToken())) {
+
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> {
+							_tokenStore.save(
+								_sharepointRepositoryConfiguration.name(),
+								PrincipalThreadLocal.getUserId(), newToken);
+
+							return null;
+						});
+				}
+			}
 
 			return sharepointRepositoryAuthenticationResult.getAccessToken();
 		}

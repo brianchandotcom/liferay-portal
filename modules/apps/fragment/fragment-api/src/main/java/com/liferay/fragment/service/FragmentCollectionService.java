@@ -74,6 +74,27 @@ public interface FragmentCollectionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentCollection> getExportableFragmentCollections(
+		long[] fragmentCollectionIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentCollection> getExportableFragmentCollectionsByGroupId(
+		long[] groupIds, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentCollection> getExportableFragmentCollectionsByGroupId(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExportableFragmentCollectionsCount(long[] groupIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExportableFragmentCollectionsCount(
+		long[] groupIds, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentCollection getFragmentCollectionByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException;
@@ -180,4 +201,4 @@ public interface FragmentCollectionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-860931514
+// LIFERAY-SERVICE-BUILDER-HASH:1758484869

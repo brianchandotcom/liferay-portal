@@ -14,6 +14,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import FolderService from '../../common/services/FolderService';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
+import {IBulkActionFDSData} from '../../common/types/BulkActionTask';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
 import {openCMSModal} from '../../common/utils/openCMSModal';
 import {displayErrorToast} from '../../common/utils/toastUtil';
@@ -32,7 +33,7 @@ export type TFolderItemSelectorModalContent = {
 	loadData: () => {};
 	objectEntryFolderExternalReferenceCode: string | undefined;
 	rootObjectEntryFolderExternalReferenceCode: string;
-	selectedData?: any;
+	selectedData: IBulkActionFDSData;
 };
 
 export type FolderAction = 'copy' | 'move';
@@ -63,7 +64,7 @@ const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 	selectionType: 'single',
 };
 
-const getDuplicateItemCheckPromise = (item: any, folder: Folder) => {
+const getDuplicateItemCheckPromise = (item: ItemData, folder: Folder) => {
 	const isFolder = item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
 
 	if (isFolder) {
@@ -75,7 +76,7 @@ const getDuplicateItemCheckPromise = (item: any, folder: Folder) => {
 	}
 	else {
 		const folderURL = item.actions['get-by-scope'].href.replace(
-			item.embedded.scopeId,
+			String(item.embedded.scopeId),
 			folder.scopeId
 		);
 
@@ -362,7 +363,7 @@ function FolderItemSelectorModalContent({
 	};
 
 	const handleOnItemsChange = (folder: Folder, targetName?: string) => {
-		if (isBulk) {
+		if (isBulk && selectedData.items) {
 			const actionType = isCopy
 				? 'CopyObjectBulkSelectionAction'
 				: 'MoveObjectBulkSelectionAction';

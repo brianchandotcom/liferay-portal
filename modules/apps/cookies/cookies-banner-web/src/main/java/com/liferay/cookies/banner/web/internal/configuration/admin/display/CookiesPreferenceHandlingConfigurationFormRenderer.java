@@ -156,17 +156,7 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			}
 		).put(
 			"storeConsent",
-			() -> {
-				if (FeatureFlagManagerUtil.isEnabled(
-						_portal.getCompanyId(httpServletRequest),
-						"LPD-75032")) {
-
-					return ParamUtil.getBoolean(
-						httpServletRequest, "storeConsent");
-				}
-
-				return null;
-			}
+			ParamUtil.getBoolean(httpServletRequest, "storeConsent")
 		).build();
 	}
 

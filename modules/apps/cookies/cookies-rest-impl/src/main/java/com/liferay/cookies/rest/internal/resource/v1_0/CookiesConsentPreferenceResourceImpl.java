@@ -11,7 +11,6 @@ import com.liferay.cookies.rest.resource.v1_0.CookiesConsentPreferenceResource;
 import com.liferay.cookies.service.CookiesConsentPreferenceLocalService;
 import com.liferay.cookies.service.persistence.CookiesConsentPreferencePersistence;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.net.URI;
 
@@ -34,24 +33,12 @@ public class CookiesConsentPreferenceResourceImpl
 	public void deleteCookiesConsentPreferenceByName(String name)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-75032")) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreference(
 			contextUser.getUserId(), _getDomain(), name);
 	}
 
 	@Override
 	public void deleteCookiesConsentPreferences() throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-75032")) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreferences(
 			contextUser.getUserId(), _getDomain());
 	}
@@ -59,12 +46,6 @@ public class CookiesConsentPreferenceResourceImpl
 	@Override
 	public CookiesConsentPreference getCookiesConsentPreferenceByName(
 		String name) {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-75032")) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		com.liferay.cookies.model.CookiesConsentPreference
 			serviceBuilderCookiesConsentPreference =
@@ -84,12 +65,6 @@ public class CookiesConsentPreferenceResourceImpl
 	public CookiesConsentPreference putCookiesConsentPreference(
 			CookiesConsentPreference cookiesConsentPreference)
 		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-75032")) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		com.liferay.cookies.model.CookiesConsentPreference
 			serviceBuilderCookiesConsentPreference =

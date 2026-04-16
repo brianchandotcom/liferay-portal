@@ -38,7 +38,6 @@ export const test = mergeTests(
 		'LPD-36105': {enabled: true},
 		'LPD-51356': {enabled: true},
 		'LPD-75027': {enabled: true},
-		'LPD-75032': {enabled: true},
 	}),
 	loginTest(),
 	systemSettingsPageTest

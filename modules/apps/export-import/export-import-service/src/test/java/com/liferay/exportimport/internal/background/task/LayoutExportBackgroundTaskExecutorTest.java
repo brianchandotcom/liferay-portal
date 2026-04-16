@@ -46,8 +46,7 @@ public class LayoutExportBackgroundTaskExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_timestamp = RandomTestUtil.nextTimestamp(
-		).getNanos();
+		_timestamp = String.valueOf(System.currentTimeMillis());
 
 		ReflectionTestUtil.setFieldValue(
 			_layoutExportBackgroundTaskExecutor, "_backgroundTaskManager",
@@ -164,6 +163,6 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			new LayoutExportBackgroundTaskExecutor();
 	private final MockedStatic<Time> _timeMockedStatic = Mockito.mockStatic(
 		Time.class);
-	private int _timestamp;
+	private String _timestamp;
 
 }

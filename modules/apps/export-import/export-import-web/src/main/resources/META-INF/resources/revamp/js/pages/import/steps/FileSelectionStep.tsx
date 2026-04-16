@@ -7,17 +7,16 @@ import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
 
 import {getValidateLarFileEndpoint} from '../../../common/utils/getValidateLarFileEndpoint';
-import {useWizard} from '../NewImport';
 import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
+import {useWizard} from '../NewImport';
 
 export default function FileSelectionStep() {
 	const [progress, setProgress] = useState<number>();
-	const {groupId, isCompanyGroup} = useWizard();
+	const {isCompanyGroup} = useWizard();
 
 	const handleUpload = (file: File, signal?: AbortSignal) =>
 		getValidateLarFileEndpoint({
 			file,
-			groupId,
 			isCompanyGroup,
 			onProgress: setProgress,
 			signal,

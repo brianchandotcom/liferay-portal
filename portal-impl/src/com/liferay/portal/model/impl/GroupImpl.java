@@ -1222,19 +1222,6 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public boolean isSystemSite() {
-		String groupKey = getGroupKey();
-
-		if (GroupConstants.DSR.equals(groupKey) ||
-			GroupConstants.SEO_STUDIO.equals(groupKey)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isUser() {
 		return Objects.equals(getClassName(), User.class.getName());
 	}

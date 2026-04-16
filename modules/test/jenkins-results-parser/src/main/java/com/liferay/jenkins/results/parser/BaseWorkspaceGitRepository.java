@@ -881,14 +881,13 @@ public abstract class BaseWorkspaceGitRepository
 		else {
 			sb.append("git clone --depth ");
 
+			LocalGitBranch localGitBranch = getLocalGitBranch();
 			RemoteGitBranch remoteGitBranch =
 				gitWorkingDirectory.getUpstreamRemoteGitBranch();
 
 			int commitCount = 0;
 
 			if (remoteGitBranch != null) {
-				LocalGitBranch localGitBranch = getLocalGitBranch();
-
 				commitCount = gitWorkingDirectory.getCommitCountBetweenBranches(
 					remoteGitBranch.getSHA(), localGitBranch.getSHA());
 

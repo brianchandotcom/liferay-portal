@@ -2594,6 +2594,26 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
+		boolean duplicateFile = false;
+
+		if (StringUtil.equals(
+				GetterUtil.getString(
+					serviceContext.getAttribute(Constants.ACTION)),
+				Constants.COPY)) {
+
+			String showFilesInLibrary = ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				objectField.getObjectFieldSettings());
+
+			if (Validator.isNull(showFilesInLibrary) ||
+				GetterUtil.getBoolean(showFilesInLibrary)) {
+
+				return;
+			}
+
+			duplicateFile = true;
+		}
+
 		DLFolder dlFileEntryFolder = dlFileEntry.getFolder();
 
 		if ((groupId == 0) ||
@@ -2608,7 +2628,8 @@ public class ObjectEntryLocalServiceImpl
 			dlFileEntry.getCompanyId(), groupId, objectField.getObjectFieldId(),
 			serviceContext, userId);
 
-		if (Objects.equals(
+		if (!duplicateFile &&
+			Objects.equals(
 				dlFileEntryFolder.getFolderId(), dlFolder.getFolderId())) {
 
 			if (Validator.isNull(dlFileEntry.getClassName()) ||

@@ -20,12 +20,14 @@
 	}
 
 	.content-editor__preview {
+		--preview-content-offset: 130px;
+
 		@include media-breakpoint-down(md) {
 			display: none;
 		}
 
 		background: white;
-		height: 100%;
+		height: calc(100% - $contentEditorToolbarHeight);
 		max-width: calc(100vw - 500px);
 		position: fixed;
 		right: 0;
@@ -41,6 +43,15 @@
 		&.visible {
 			transform: translateX(0);
 			visibility: visible;
+		}
+
+		.c-empty-state-aspect-ratio {
+			padding-bottom: 48px;
+			padding-top: 48px;
+		}
+
+		.content-editor__preview__content {
+			height: calc(100% - var(--preview-content-offset));
 		}
 	}
 }

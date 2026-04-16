@@ -3,15 +3,16 @@
 
 {{- $backup := $xr.spec.backup | default dict -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled | default false -}}
-{{- $commonTags := $xr.spec.commonTags | default dict -}}
 {{- $databaseInstanceName := printf "%s-db-instance" $xr.metadata.name -}}
 {{- $databaseName := $xr.spec.database.name | default "lportal" -}}
 {{- $databasePort := "5432" -}}
 {{- $databaseSpec := $xr.spec.database -}}
-{{- $deletionProtection := $xr.spec.deletionProtection | default false -}}
+{{- $elasticsearchHealth := "" -}}
 {{- $environmentId := $xr.spec.environmentId -}}
 {{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
 {{- $gsaName := printf "%s-sa" $xr.metadata.name -}}
+{{- $isReady := false -}}
+{{- $isSearchReady := false -}}
 {{- $jobName := printf "%s-db-grant" $xr.metadata.name -}}
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
@@ -19,17 +20,18 @@
 {{- $namespace := $xr.metadata.namespace -}}
 {{- $overlay := $xr.spec.overlay | default dict -}}
 {{- $projectId := $xr.spec.projectId -}}
+{{- $region := $databaseSpec.region | default $xr.spec.region -}}
 {{- $searchName := printf "%s-es" $xr.metadata.name -}}
-{{- $searchNamespace := printf "%s-elasticsearch" $namespace -}}
-{{- $searchSecretName := printf "%s-es-elastic-user" $searchName -}}
 {{- $storage := $xr.spec.storage | default dict -}}
 
 {{- $databaseIamUser := printf "%s@%s.iam" $gsaName $env.projectId -}}
 {{- $gsaEmail := printf "%s@%s.iam.gserviceaccount.com" $gsaName $env.projectId -}}
 {{- $hash := printf "%s-%s" $databaseName $env.projectId | sha256sum | trunc 7 -}}
-{{- $labels := merge $commonTags (dict "app" "liferay" "deployment-name" $env.deploymentName "environment-id" $environmentId "project-id" $projectId) -}}
+{{- $instanceConnectionName := printf "%s:%s:%s" $env.projectId $region $databaseInstanceName -}}
+{{- $labels := merge ($xr.spec.commonTags | default dict) (dict "app" "liferay" "deployment-name" $env.deploymentName "environment-id" $environmentId "project-id" $projectId) -}}
 {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
-{{- $region := $databaseSpec.region | default $xr.spec.region -}}
+{{- $searchNamespace := printf "%s-elasticsearch" $namespace -}}
+{{- $searchSecretName := printf "%s-es-elastic-user" $searchName -}}
 
 {{- $backupTargetLabels := merge (dict) $labels (dict "active" "true" "should-back-up" "true") -}}
 {{- $uidHash := printf "%s-%s" $env.projectNumber $projectIdFull | sha256sum | trunc 6 -}}
@@ -37,8 +39,3 @@
 {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
 {{- $cmkKeyName := printf "projects/%s/locations/%s/keyRings/%s-keyring/cryptoKeys/%s-key" $env.projectId $region $baseName $baseName -}}
-{{- $instanceConnectionName := printf "%s:%s:%s" $env.projectId $region $databaseInstanceName -}}
-
-{{- $elasticsearchHealth := "" -}}
-{{- $isReady := false -}}
-{{- $isSearchReady := false -}}

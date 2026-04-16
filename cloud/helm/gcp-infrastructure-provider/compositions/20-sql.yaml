@@ -9,7 +9,7 @@ metadata:
 spec:
     forProvider:
         databaseVersion: {{ $databaseSpec.databaseVersion | default "POSTGRES_18" }}
-        deletionProtection: {{ $databaseSpec.deletionProtection | default $deletionProtection }}
+        deletionProtection: {{ $databaseSpec.deletionProtection | default ($xr.spec.deletionProtection | default false) }}
         {{- if $cmkEnabled }}
         encryptionKmsKeyName: {{ $cmkKeyName }}
         {{- end }}

@@ -1,8 +1,8 @@
 ---
-name: jira-task
-description: Create a Jira task in the LPD project through the REST API. Use when the user asks to create a Jira task or LPD task ticket.
-argument-hint: "[commit hash or description]"
 allowed-tools: Bash(curl *), Bash(git *), Glob, Grep, Read
+argument-hint: "[commit hash or description]"
+description: Create a Jira task in the LPD project through the REST API. Use when the user asks to create a Jira task or LPD task ticket.
+name: jira-task
 ---
 
 # Create a Jira Task in LPD
@@ -25,10 +25,10 @@ Request any missing details from the user:
 The LPD project requires the following fields. Apply these defaults unless the user specifies otherwise:
 
 - **Component**: Select from the list below, or infer from the code area. Common components include:
-	- `Content Publishing > Resource Importer` (id: `15805`)
-	- `Data Integration > Export/Import` (id: `16131`)
-	- `Headless Batch Engine API` (id: `16022`)
-- **Issue Type**: `Task` (id: `10002`).
+	- `Content Publishing > Resource Importer` (ID: `15805`)
+	- `Data Integration > Export/Import` (ID: `16131`)
+	- `Headless Batch Engine API` (ID: `16022`)
+- **Issue Type**: `Task` (ID: `10002`).
 
 Note: Unlike bugs, tasks do not require the Affects Version or Cross Cutting Properties fields.
 

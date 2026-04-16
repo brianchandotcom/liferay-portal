@@ -1,8 +1,8 @@
 ---
-name: commit
-description: Create a Git commit with a Jira-prefixed message derived from the staged diff. Use when the user asks to commit, wants to commit changes, or invokes /commit.
-argument-hint: "[optional message hint]"
 allowed-tools: [Bash, Glob, Grep, Read]
+argument-hint: "[optional message hint]"
+description: Create a Git commit with a Jira-prefixed message derived from the staged diff. Use when the user asks to commit, wants to commit changes, or invokes /commit.
+name: commit
 ---
 
 # Commit Changes

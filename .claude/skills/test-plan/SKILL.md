@@ -1,7 +1,7 @@
 ---
-name: test-plan
-description: Generate a targeted local test plan for branch changes. Use when the user wants to know which tests to run before merging, asks for a test plan, wants to validate changes locally, or mentions running tests for their branch. This skill analyzes commits on top of master and produces a runnable shell script covering Unit, Integration, Playwright, and Poshi tests within a 20-minute local budget.
 allowed-tools: [Agent, Bash, Glob, Grep, Read]
+description: Generate a targeted local test plan for branch changes. Use when the user wants to know which tests to run before merging, asks for a test plan, wants to validate changes locally, or mentions running tests for their branch. This skill analyzes commits on top of master and produces a runnable shell script covering Unit, Integration, Playwright, and Poshi tests within a 20-minute local budget.
+name: test-plan
 ---
 
 # Test Plan Generator
@@ -45,7 +45,7 @@ The objective is not to "find every test in modules that were touched" — it is
 
 For each area that could regress, search for test files. Use parallel Agent and Glob calls for speed. Consult `${CLAUDE_SKILL_DIR}/references/test-organization.md` for the exact patterns and conventions.
 
-**Verify every test file exists** using Glob before including it in the plan.
+**Verify every test file exists** before including it in the plan.
 
 ### 4. Prioritize Within the 20-Minute Budget
 
@@ -105,5 +105,5 @@ After writing the script, mark it executable with `chmod +x test.sh` and instruc
 
 ## Guidelines
 
-- Verify every test file exists with Glob before adding it to the script.
+- Verify every test file exists before adding it to the script.
 - When the changes are purely cosmetic (formatting, comments), say so and generate a script that exits `0` with a header explaining why.

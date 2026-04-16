@@ -1,8 +1,8 @@
 ---
-name: jira-bug
-description: Create a Jira bug ticket in the LPD project through the REST API. Use when the user asks to create or file a Jira bug or LPD ticket.
-argument-hint: "[commit hash or description]"
 allowed-tools: Bash(curl *), Bash(git *), Glob, Grep, Read
+argument-hint: "[commit hash or description]"
+description: Create a Jira bug ticket in the LPD project through the REST API. Use when the user asks to create or file a Jira bug or LPD ticket.
+name: jira-bug
 ---
 
 # Create a Jira Bug in LPD
@@ -26,12 +26,12 @@ Request any missing details from the user:
 
 The LPD project requires the following fields. Apply these defaults unless the user specifies otherwise:
 
-- **Affects Version**: `Master` (id: `16660`).
+- **Affects Version**: `Master` (ID: `16660`).
 - **Component**: Select from the list below, or infer from the code area. Common components include:
-	- `Content Publishing > Resource Importer` (id: `15805`)
-	- `Data Integration > Export/Import` (id: `16131`)
-	- `Headless Batch Engine API` (id: `16022`)
-- **Cross Cutting Properties** (`customfield_10979`): `None` (id: `14468`).
+	- `Content Publishing > Resource Importer` (ID: `15805`)
+	- `Data Integration > Export/Import` (ID: `16131`)
+	- `Headless Batch Engine API` (ID: `16022`)
+- **Cross Cutting Properties** (`customfield_10979`): `None` (ID: `14468`).
 
 When no listed component matches, search by keyword:
 

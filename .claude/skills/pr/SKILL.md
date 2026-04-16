@@ -1,8 +1,8 @@
 ---
-name: pr
-description: Create a GitHub pull request for the current branch, transition the corresponding Jira ticket to review, and record the PR link on the ticket. Use when the user asks to create a PR, send a PR, or invokes /pr.
-argument-hint: "[optional target-org/repo or message hint]"
 allowed-tools: [Bash, Glob, Grep, Read]
+argument-hint: "[optional target-org/repo or message hint]"
+description: Create a GitHub pull request for the current branch, transition the corresponding Jira ticket to review, and record the PR link on the ticket. Use when the user asks to create a PR, send a PR, or invokes /pr.
+name: pr
 ---
 
 # Create Pull Request
@@ -98,16 +98,16 @@ curl \
 	--user "${JIRA_API_USER}:${JIRA_API_TOKEN}"
 ```
 
-- **Bug** (type id `10004`): Use the bug ticket directly. The transition to **In Review** uses id `71`.
-- **Task** (parent, type id `10002`): Locate its Technical Task subtask and use that subtask's key. Every subsequent operation (transition, PR field, PR title, summary) must reference the **subtask's key**. The transition to **In Peer Review** uses id `31`.
-- **Technical Task** (subtask, type id `10153`): Use it directly. The transition to **In Peer Review** uses id `31`.
+- **Bug** (type ID `10004`): Use the bug ticket directly. The transition to **In Review** uses ID `71`.
+- **Task** (parent, type ID `10002`): Locate its Technical Task subtask and use that subtask's key. Every subsequent operation (transition, PR field, PR title, summary) must reference the **subtask's key**. The transition to **In Peer Review** uses ID `31`.
+- **Technical Task** (subtask, type ID `10153`): Use it directly. The transition to **In Peer Review** uses ID `31`.
 
 ### Ensure the Ticket Is In Progress First
 
 Before transitioning to review, check the ticket's current status. When it is not already "In Progress", transition it to In Progress first. The transition ID depends on the issue type:
 
-- **Bug**: In Progress transition id is `61`.
-- **Technical Task**: In Progress transition id is `41`.
+- **Bug**: In Progress transition ID is `61`.
+- **Technical Task**: In Progress transition ID is `41`.
 
 ```bash
 curl \
@@ -121,7 +121,7 @@ curl \
 
 ### Transition to Review
 
-For **Bug** tickets (In Review, id `71`):
+For **Bug** tickets (In Review, ID `71`):
 
 ```bash
 curl \
@@ -133,7 +133,7 @@ curl \
 	--user "${JIRA_API_USER}:${JIRA_API_TOKEN}"
 ```
 
-For **Technical Task** tickets or a subtask resolved from a Task (In Peer Review, id `31`):
+For **Technical Task** tickets or a subtask resolved from a Task (In Peer Review, ID `31`):
 
 ```bash
 curl \
@@ -145,7 +145,7 @@ curl \
 	--user "${JIRA_API_USER}:${JIRA_API_TOKEN}"
 ```
 
-Then set the Git Pull Request field on the target ticket:
+Then set the **Git Pull Request** field on the target ticket:
 
 ```bash
 curl \

@@ -1134,7 +1134,7 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		gitWorkingDirectory.createLocalGitBranch(
-			_getSenderBranchHeadName(), true, getSenderBranchSHA());
+			_getSenderBranchHeadName(), true, senderBranchSHA);
 
 		String baseBranchSHA = getBaseBranchSHA();
 
@@ -1226,10 +1226,10 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		gitWorkingDirectory.createLocalGitBranch(
-			_getSenderBranchHeadName(), true, getSenderBranchSHA());
+			_getSenderBranchHeadName(), true, senderBranchSHA);
 
 		return gitWorkingDirectory.createLocalGitBranch(
-			getBranchName(), true, getSenderBranchSHA());
+			getBranchName(), true, senderBranchSHA);
 	}
 
 	private void _deleteGitRepository() {

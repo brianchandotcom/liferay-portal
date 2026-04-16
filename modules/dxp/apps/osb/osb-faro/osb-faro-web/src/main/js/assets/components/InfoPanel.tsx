@@ -15,7 +15,7 @@ interface IInfoPanelProps {
 	data: {
 		itemData: {
 			assetCategories?: {id: string; name: string}[];
-			assetMimeType?: string;
+			mimeType?: string;
 			assetTags?: {id: string; name: string}[];
 			assetTitle: string;
 			assetType: string;
@@ -31,7 +31,7 @@ const InfoPanel: React.FC<IInfoPanelProps> = ({data, onClose}) => {
 
 	const mimeType = getMimeType({
 		assetType: data?.itemData?.assetType,
-		mimeType: data?.itemData?.assetMimeType
+		mimeType: data?.itemData?.mimeType
 	});
 
 	return (

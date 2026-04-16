@@ -16,12 +16,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-    name: backup-cleanup-rolebinding
-    namespace: {{ .Release.Namespace }}
     labels:
         component: backup-cleanup
         environmentId: {{ .Values.environmentId }}
         projectId: {{ .Values.projectId }}
+    name: backup-cleanup-rolebinding
+    namespace: {{ .Release.Namespace }}
 subjects:
     -   kind: ServiceAccount
         name: {{ .Values.backup.cleanup.serviceAccountName }}

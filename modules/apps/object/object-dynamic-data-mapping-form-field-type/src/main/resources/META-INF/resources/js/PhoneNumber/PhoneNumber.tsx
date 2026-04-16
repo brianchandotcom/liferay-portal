@@ -25,30 +25,18 @@ interface PhoneNumberProps {
 }
 
 const PickerTrigger = React.forwardRef<
-	HTMLButtonElement,
+	HTMLDivElement,
 	{selectedCountry: CountryInfo & {symbol?: string}} & React.ComponentProps<
 		typeof ClayButton
 	>
->(({children, selectedCountry, ...otherProps}, ref) => (
-	<ClayButton
-		{...otherProps}
-		className="btn-secondary mr-2"
-		displayType="secondary"
-		ref={ref}
-		style={{minWidth: '90px'}}
-	>
-		<span className="align-items-center d-flex">
-			{selectedCountry.symbol && (
-				<ClayIcon symbol={selectedCountry.symbol} />
-			)}
+>(({selectedCountry, ...otherProps}, ref) => (
+	<div {...(otherProps as any)} ref={ref}>
+		{selectedCountry.symbol && (
+			<ClayIcon className="mr-2" symbol={selectedCountry.symbol} />
+		)}
 
-			<span className="ml-1">+{selectedCountry.idd}</span>
-
-			<span className="inline-item inline-item-after">
-				<ClayIcon symbol="caret-double" />
-			</span>
-		</span>
-	</ClayButton>
+		<span>+{selectedCountry.idd}</span>
+	</div>
 ));
 
 const PhoneNumber = ({
@@ -93,7 +81,8 @@ const PhoneNumber = ({
 	/** Parse the phone value to set the initial states. */
 	useEffect(() => {
 		const {countryA2, localNumber} = parsePhoneValue(
-			initialValue || predefinedValue || ''
+			initialValue || predefinedValue || '',
+			countries
 		);
 
 		const country = countriesWithFlagSymbol.find(
@@ -109,70 +98,77 @@ const PhoneNumber = ({
 
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
-			<div className="d-flex">
-				<Picker
-					as={PickerTrigger}
-					disabled={disabled}
-					items={countriesWithFlagSymbol}
-					onSelectionChange={(key) => {
-						const country = countriesWithFlagSymbol.find(
-							(c) => c.a2 === key
-						);
+			<ClayInput.Group>
+				<ClayInput.GroupItem shrink>
+					<Picker
+						as={PickerTrigger}
+						disabled={disabled}
+						items={countriesWithFlagSymbol}
+						onSelectionChange={(key) => {
+							const country = countriesWithFlagSymbol.find(
+								(c) => c.a2 === key
+							);
 
-						if (country) {
-							setSelectedCountry(country);
-							handleValueChange(country, localNumber);
-						}
-					}}
-					searchable
-					selectedCountry={selectedCountry}
-					selectedKey={selectedCountry.a2}
-				>
-					{(country) => (
-						<Option key={country.a2} textValue={country.name}>
-							<div className="autofit-row">
-								<div className="autofit-col">
-									{country.symbol && (
-										<ClayIcon symbol={country.symbol} />
-									)}
+							if (country) {
+								setSelectedCountry(country);
+								handleValueChange(country, localNumber);
+							}
+						}}
+						searchable
+						selectedCountry={selectedCountry}
+						selectedKey={selectedCountry.a2}
+					>
+						{(country) => (
+							<Option
+								key={country.a2}
+								textValue={`+${country.idd} ${country.name}`}
+							>
+								<div className="autofit-row">
+									<div className="autofit-col">
+										{country.symbol && (
+											<ClayIcon symbol={country.symbol} />
+										)}
+									</div>
+
+									<div
+										className="autofit-col"
+										style={{minWidth: '30px'}}
+									>
+										{`+${country.idd}`}
+									</div>
+
+									<div className="autofit-col autofit-col-expand">
+										{country.name}
+									</div>
 								</div>
+							</Option>
+						)}
+					</Picker>
+				</ClayInput.GroupItem>
 
-								<div
-									className="autofit-col"
-									style={{minWidth: '30px'}}
-								>
-									{`+${country.idd}`}
-								</div>
+				<ClayInput.GroupItem>
+					<ClayInput
+						className="ddm-field-text form-control"
+						disabled={disabled}
+						id={(otherProps.id as string) ?? name}
+						name={`${name}_localNumber`}
+						onBlur={onBlur}
+						onChange={(event) => {
+							const newNumber = event.target.value.replace(
+								/[^0-9\s\-().]/g,
+								''
+							);
 
-								<div className="autofit-col autofit-col-expand">
-									{country.name}
-								</div>
-							</div>
-						</Option>
-					)}
-				</Picker>
-
-				<ClayInput
-					className="ddm-field-text form-control"
-					disabled={disabled}
-					id={(otherProps.id as string) ?? name}
-					name={`${name}_localNumber`}
-					onBlur={onBlur}
-					onChange={(event) => {
-						const newNumber = event.target.value.replace(
-							/[^0-9\s\-().]/g,
-							''
-						);
-
-						setLocalNumber(newNumber);
-						handleValueChange(selectedCountry, newNumber);
-					}}
-					onFocus={onFocus}
-					pattern="[0-9\s\-().]*"
-					type="tel"
-					value={localNumber}
-				/>
-			</div>
+							setLocalNumber(newNumber);
+							handleValueChange(selectedCountry, newNumber);
+						}}
+						onFocus={onFocus}
+						pattern="[0-9\s\-().]*"
+						type="tel"
+						value={localNumber}
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 
 			<input name={name} type="hidden" value={combinedValue} />
 		</FieldBase>

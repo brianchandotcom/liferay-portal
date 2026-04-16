@@ -9,7 +9,7 @@
 	},
 	"active": true,
 	"defaultLanguageId": "en_US",
-	"enableCategorization": true,
+	"enableCategorization": false,
 	"enableComments": false,
 	"enableObjectEntryHistory": false,
 	"label": {

@@ -541,7 +541,7 @@ public class FragmentConfigurationFieldValuesUtil {
 			if (Objects.equals(
 					defaultFragmentReference.getDefaultFragmentKey(),
 					FragmentRendererConstants.
-						COLLECTION_FILTER_FRAGMENT_RENDERER_KEY)) {
+						FRAGMENT_RENDERER_CLASS_NAME_COLLECTION_FILTER)) {
 
 				String filterKey = null;
 

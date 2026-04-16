@@ -90,7 +90,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getKey() {
-		return FragmentRendererConstants.FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY;
+		return FragmentRendererConstants.FRAGMENT_RENDERER_KEY_FRAGMENT_ENTRY;
 	}
 
 	@Override

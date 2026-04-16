@@ -80,7 +80,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getKey() {
 		return FragmentRendererConstants.
-			COLLECTION_FILTER_FRAGMENT_RENDERER_KEY;
+			FRAGMENT_RENDERER_CLASS_NAME_COLLECTION_FILTER;
 	}
 
 	@Override

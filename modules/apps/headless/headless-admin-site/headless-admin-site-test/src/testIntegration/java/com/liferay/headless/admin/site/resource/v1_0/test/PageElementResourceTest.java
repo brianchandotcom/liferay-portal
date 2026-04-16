@@ -2721,7 +2721,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 													{
 														setDefaultFragmentKey(
 															() ->
-																FragmentRendererConstants.COLLECTION_FILTER_FRAGMENT_RENDERER_KEY);
+																FragmentRendererConstants.FRAGMENT_RENDERER_CLASS_NAME_COLLECTION_FILTER);
 														setFragmentReferenceType(
 															() ->
 																FragmentReference.FragmentReferenceType.DEFAULT_FRAGMENT_REFERENCE);

@@ -65,7 +65,7 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 
 	@Test
 	@TestInfo("LPD-85617")
-	public void testExportImportPreservesIpAddress() throws Exception {
+	public void testExportImportPreservesIPAddress() throws Exception {
 		String fieldName = RandomTestUtil.randomString();
 
 		DDMFormInstance ddmFormInstance = addFormInstanceWithTextField(

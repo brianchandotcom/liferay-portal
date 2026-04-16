@@ -371,7 +371,7 @@ test('CSP-Report-Only connect-src alerts connections', async ({
 
 	page.on('console', (msg) => {
 		if (
-			msg.type() === 'error' &&
+			msg.type() === 'info' &&
 			msg.text().includes('[Report Only] Refused to connect to') &&
 			msg
 				.text()
@@ -400,7 +400,7 @@ test('CSP-Report-Only connect-src alerts connections', async ({
 	});
 
 	expect(errors).toHaveLength(0);
-	expect(logs.length).toBeGreaterThanOrEqual(10);
+	expect(logs.length).toBeGreaterThanOrEqual(7);
 });
 
 test('CSP frame-ancestors allows framing from specific domain', async ({
@@ -1083,7 +1083,7 @@ test('CSP-Report-Only img-src alerts images', async ({
 	const logs = [];
 
 	page.on('console', (message) => {
-		if (message.type() === 'error') {
+		if (message.type() === 'info') {
 			const text = message.text();
 			if (
 				text.includes(

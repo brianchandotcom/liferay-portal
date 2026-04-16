@@ -9,10 +9,16 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.web.internal.search.EntriesChecker;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,6 +30,9 @@ import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Stefan Tanasie
@@ -45,7 +54,9 @@ public class AssetTagsDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public SearchContainer<AssetTag> getTagSearchContainer() {
+	public SearchContainer<AssetTag> getTagSearchContainer()
+		throws PortalException {
+
 		if (_tagsSearchContainer != null) {
 			return _tagsSearchContainer;
 		}
@@ -87,22 +98,49 @@ public class AssetTagsDisplayContext {
 		return _tagsSearchContainer;
 	}
 
-	private long[] _getGroupIds() {
+	private long[] _getGroupIds() throws PortalException {
 		if (_groupIds != null) {
 			return _groupIds;
 		}
 
-		if (_assetTagsItemSelectorCriterion.isAllGroupIds()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
+		if (_assetTagsItemSelectorCriterion.isAllGroupIds()) {
 			_groupIds = ArrayUtil.toLongArray(
 				_groupLocalService.getGroupIds(
 					themeDisplay.getCompanyId(), true));
 		}
-		else {
+		else if (!FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "LPD-17564")) {
+
 			_groupIds = _assetTagsItemSelectorCriterion.getGroupIds();
+		}
+		else {
+			List<Long> groupIdsList = new ArrayList<>();
+
+			Group cmsGroup = _groupLocalService.getGroup(
+				themeDisplay.getCompanyId(), GroupConstants.CMS);
+
+			for (long groupId : _assetTagsItemSelectorCriterion.getGroupIds()) {
+				Group group = _groupLocalService.getGroup(groupId);
+
+				int depotEntryType = GetterUtil.getInteger(
+					group.getTypeSettingsProperty("depotEntryType"));
+
+				if (depotEntryType != DepotConstants.TYPE_SPACE) {
+					groupIdsList.add(group.getGroupId());
+
+					continue;
+				}
+
+				if (!groupIdsList.contains(cmsGroup.getGroupId())) {
+					groupIdsList.add(cmsGroup.getGroupId());
+				}
+			}
+
+			_groupIds = ArrayUtil.toLongArray(groupIdsList);
 		}
 
 		return _groupIds;

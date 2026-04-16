@@ -902,6 +902,8 @@ public class MarketplaceCommandLineRunner
 						"accountExternalReferenceCode",
 						accountExternalReferenceCode
 					).put(
+						"createDate", order.getCreateDate()
+					).put(
 						"creatorEmailAddress", order.getCreatorEmailAddress()
 					).put(
 						"id", order.getId()

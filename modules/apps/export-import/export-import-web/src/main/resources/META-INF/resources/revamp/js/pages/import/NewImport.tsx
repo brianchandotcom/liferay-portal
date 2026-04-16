@@ -13,7 +13,6 @@ import FileSelectionStep from './steps/FileSelectionStep';
 import SettingsStep from './steps/SettingsStep';
 
 export const WizardContext = createContext({
-	groupId: -1,
 	isCompanyGroup: false,
 });
 
@@ -23,15 +22,13 @@ export function useWizard() {
 
 export function NewImport({
 	backURL,
-	groupId,
 	isCompanyGroup,
 }: {
 	backURL: string;
-	groupId: number;
 	isCompanyGroup: boolean;
 }) {
 	return (
-		<WizardContext.Provider value={{groupId, isCompanyGroup}}>
+		<WizardContext.Provider value={{isCompanyGroup}}>
 			<Wizard backURL={backURL}>
 				<WizardStep
 					description={Liferay.Language.get(

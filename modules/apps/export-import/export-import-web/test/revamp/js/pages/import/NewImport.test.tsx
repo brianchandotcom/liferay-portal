@@ -12,11 +12,7 @@ import {NewImport} from '../../../../../src/main/resources/META-INF/resources/re
 
 const renderComponent = () => {
 	return render(
-		<NewImport
-			backURL="/some/back/url"
-			groupId={20120}
-			isCompanyGroup={false}
-		/>
+		<NewImport backURL="/some/back/url" isCompanyGroup={false} />
 	);
 };
 

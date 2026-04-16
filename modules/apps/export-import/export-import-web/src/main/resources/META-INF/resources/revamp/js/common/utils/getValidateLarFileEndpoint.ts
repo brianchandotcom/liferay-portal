@@ -5,21 +5,19 @@
 
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 
-const getEndpointByScope = (isCompanyGroup: boolean, groupId?: number) => {
+const getEndpointByScope = (isCompanyGroup: boolean) => {
 	return isCompanyGroup
 		? '/o/export-import/v1.0/validate'
-		: `/o/export-import/v1.0/scopes/${groupId ?? 0}/validate`;
+		: `/o/export-import/v1.0/scopes/${Liferay.ThemeDisplay.getScopeGroupId() ?? 0}/validate`;
 };
 
 export async function getValidateLarFileEndpoint({
 	file,
-	groupId,
 	isCompanyGroup,
 	onProgress,
 	signal,
 }: {
 	file: File;
-	groupId?: number;
 	isCompanyGroup: boolean;
 	onProgress: (progressEvent: number) => void;
 	signal?: AbortSignal;
@@ -35,7 +33,7 @@ export async function getValidateLarFileEndpoint({
 		success: boolean;
 		tempFilePath: string;
 	}>(
-		getEndpointByScope(isCompanyGroup, groupId),
+		getEndpointByScope(isCompanyGroup),
 		Liferay.Util.objectToFormData({file}),
 		(progressEvent) => {
 			onProgress(progressEvent);

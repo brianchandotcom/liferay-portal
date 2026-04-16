@@ -73,13 +73,13 @@ public class ServerScriptingUtil {
 			Map<String, Object> inputObjects, String script)
 		throws Exception {
 
-		Class<?> clazz = ServerScriptingUtil.class;
-
 		Thread currentThread = Thread.currentThread();
 
 		GroovyShell groovyShell = new GroovyShell(
 			AggregateClassLoader.getAggregateClassLoader(
-				clazz.getClassLoader(), currentThread.getContextClassLoader()));
+				GroovyShell.class.getClassLoader(),
+				ServerScriptingUtil.class.getClassLoader(),
+				currentThread.getContextClassLoader()));
 
 		Script compiledScript = groovyShell.parse(script);
 

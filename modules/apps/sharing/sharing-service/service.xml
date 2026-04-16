@@ -23,6 +23,7 @@
 
 		<!-- Other fields -->
 
+		<column name="toTicketId" type="long" />
 		<column name="toUserGroupId" type="long" />
 		<column name="toUserId" type="long" />
 		<column name="classNameId" type="long" />
@@ -61,7 +62,8 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="TUG_TU_C_C" return-type="SharingEntry" unique="true">
+		<finder name="TT_TUG_TU_C_C" return-type="SharingEntry" unique="true">
+			<finder-column name="toTicketId" />
 			<finder-column name="toUserGroupId" />
 			<finder-column name="toUserId" />
 			<finder-column name="classNameId" />

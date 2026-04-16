@@ -154,6 +154,8 @@ export default function SharedWithMeFDSPropsTransformer({
 
 				shareAction({
 					autocompleteURL,
+					canManageCollaborators:
+						itemData?.actionIds?.includes('UPDATE'),
 					collaboratorURL: collaboratorURLs[itemData.className],
 					creator: itemData.creator,
 					entryClassName: itemData.className,

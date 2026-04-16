@@ -8,6 +8,9 @@ package com.liferay.oauth.client.admin.web.internal.servlet.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -64,9 +67,12 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 
 		options.setFollowRedirects(false);
 
-		String urlString =
-			TestPropsValues.PORTAL_URL +
-				"/o/.well-known/oauth-authorization-server";
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		String urlString = StringBundler.concat(
+			Http.HTTP_WITH_SLASH, company.getVirtualHostname(),
+			":8080/o/.well-known/oauth-authorization-server/");
 
 		options.setLocation(urlString);
 
@@ -179,10 +185,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 			responseJSON, oAuthClientASLocalMetadata1.getOAuthASMetadataJSON());
 
 		options.setFollowRedirects(false);
-		options.setLocation(
-			TestPropsValues.PORTAL_URL +
-				"/o/.well-known/oauth-authorization-server/" +
-					RandomTestUtil.randomString());
+		options.setLocation(urlString + RandomTestUtil.randomString());
 
 		HttpUtil.URLtoString(options);
 
@@ -191,9 +194,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_NOT_FOUND, response.getResponseCode());
 
-		options.setLocation(
-			TestPropsValues.PORTAL_URL +
-				"/o/.well-known/oauth-authorization-server/" + issuer1);
+		options.setLocation(urlString + issuer1);
 
 		HttpUtil.URLtoString(options);
 
@@ -205,9 +206,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		String issuerSegment = URLEncoder.encode(
 			issuer2.trim(), StandardCharsets.UTF_8);
 
-		options.setLocation(
-			TestPropsValues.PORTAL_URL +
-				"/o/.well-known/oauth-authorization-server/" + issuerSegment);
+		options.setLocation(urlString + issuerSegment);
 
 		responseJSON = HttpUtil.URLtoString(options);
 
@@ -220,6 +219,9 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		Assert.assertEquals(
 			responseJSON, oAuthClientASLocalMetadata2.getOAuthASMetadataJSON());
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OAuthClientASLocalMetadataLocalService

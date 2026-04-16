@@ -6,6 +6,9 @@
 import ClayAlert from '@clayui/alert';
 import {Option, Picker} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
+import {sub} from 'frontend-js-web';
 import React, {useCallback, useId, useMemo, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
@@ -74,6 +77,14 @@ export default function PreviewBody({
 		[selectedChannelKey, sites]
 	);
 
+	const previewURL = useMemo(
+		() =>
+			displayPageTemplates?.find(
+				({plid}) => plid === selectedDisplayPageKey
+			)?.url,
+		[displayPageTemplates, selectedDisplayPageKey]
+	);
+
 	return (
 		<>
 			<div className="border-bottom c-gap-3 d-flex flex-wrap mb-0 p-3">
@@ -126,6 +137,25 @@ export default function PreviewBody({
 								<Option key={plid}>{name}</Option>
 							)}
 						</Picker>
+
+						{previewURL ? (
+							<ClayLink
+								borderless
+								className="flex-shrink-0"
+								displayType="primary"
+								href={previewURL}
+								monospaced
+								outline
+								rel="noopener noreferrer"
+								target="_blank"
+								title={sub(
+									Liferay.Language.get('open-x-in-a-new-tab'),
+									Liferay.Language.get('preview')
+								)}
+							>
+								<ClayIcon symbol="shortcut" />
+							</ClayLink>
+						) : null}
 					</div>
 				) : null}
 			</div>
@@ -145,15 +175,23 @@ export default function PreviewBody({
 					</ClayAlert>
 				) : null}
 
-				<ClayEmptyState
-					className="mt-0"
-					description={Liferay.Language.get(
-						'select-a-channel-and-save-as-draft-or-publish-to-see-your-changes-here'
-					)}
-					imgSrc={`${Liferay.ThemeDisplay.getPathContext()}/o/fragment-collection-contributor-inputs/drag_drop_illustration.svg`}
-					small
-					title={Liferay.Language.get('nothing-to-show-yet')}
-				/>
+				{previewURL ? (
+					<iframe
+						className="border-0 d-block h-100 w-100"
+						src={previewURL}
+						title={Liferay.Language.get('preview')}
+					/>
+				) : (
+					<ClayEmptyState
+						className="mt-0"
+						description={Liferay.Language.get(
+							'select-a-channel-and-save-as-draft-or-publish-to-see-your-changes-here'
+						)}
+						imgSrc={`${Liferay.ThemeDisplay.getPathContext()}/o/fragment-collection-contributor-inputs/drag_drop_illustration.svg`}
+						small
+						title={Liferay.Language.get('nothing-to-show-yet')}
+					/>
+				)}
 			</div>
 		</>
 	);

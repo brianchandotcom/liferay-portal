@@ -6,7 +6,6 @@
 package com.liferay.application.list.taglib.navigation;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.taglib.internal.display.context.SideNavigationDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
@@ -62,7 +61,8 @@ public class SideNavigationControlMenuEntry
 		throws IOException {
 
 		SideNavigationDisplayContext sideNavigationDisplayContext =
-			new SideNavigationDisplayContext(httpServletRequest);
+			new SideNavigationDisplayContext(
+				httpServletRequest, _panelAppRegistry);
 
 		try {
 			PrintWriter printWriter = httpServletResponse.getWriter();
@@ -103,7 +103,8 @@ public class SideNavigationControlMenuEntry
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
-					"{SideNavigationToggler} from application-list-taglib"),
+					"{SideNavigationToggler} from application-list-taglib",
+					null, null, true),
 				HashMapBuilder.<String, Object>put(
 					"visible", sideNavigationDisplayContext.isVisible()
 				).build(),
@@ -127,12 +128,8 @@ public class SideNavigationControlMenuEntry
 		if (FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPD-36105")) {
 
-			PanelAppRegistry panelAppRegistry =
-				(PanelAppRegistry)httpServletRequest.getAttribute(
-					ApplicationListWebKeys.PANEL_APP_REGISTRY);
-
 			PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-				panelAppRegistry);
+				_panelAppRegistry);
 
 			return panelCategoryHelper.containsPortlet(
 				themeDisplay.getPpid(), "applications_menu");
@@ -140,6 +137,9 @@ public class SideNavigationControlMenuEntry
 
 		return false;
 	}
+
+	@Reference
+	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference
 	private ReactRenderer _reactRenderer;

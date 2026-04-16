@@ -49,11 +49,19 @@ export function FormikFieldFileSelector({
 	const [serverError, setServerError] = useState<string | undefined>();
 
 	const abortControllerRef = useRef<AbortController | null>(null);
+	const isMountedRef = useRef(true);
+	const uploadTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
 		return () => {
+			isMountedRef.current = false;
+
 			if (abortControllerRef.current) {
 				abortControllerRef.current.abort();
+			}
+
+			if (uploadTimeoutRef.current) {
+				clearTimeout(uploadTimeoutRef.current);
 			}
 		};
 	}, []);
@@ -63,7 +71,9 @@ export function FormikFieldFileSelector({
 
 		if (status === 'SUCCESS') {
 			timeout = setTimeout(() => {
-				setStatus('STABLE_SUCCESS');
+				if (isMountedRef.current) {
+					setStatus('STABLE_SUCCESS');
+				}
 			}, STATUS_CHANGE_DELAY);
 		}
 
@@ -106,7 +116,13 @@ export function FormikFieldFileSelector({
 			abortControllerRef.current.abort();
 		}
 
-		abortControllerRef.current = new AbortController();
+		if (uploadTimeoutRef.current) {
+			clearTimeout(uploadTimeoutRef.current);
+		}
+
+		const controller = new AbortController();
+
+		abortControllerRef.current = controller;
 
 		setStatus('UPLOADING');
 		setServerError(undefined);
@@ -114,10 +130,11 @@ export function FormikFieldFileSelector({
 		setValue(undefined);
 
 		try {
-			const result = await uploadRequest(
-				file,
-				abortControllerRef.current.signal
-			);
+			const result = await uploadRequest(file, controller.signal);
+
+			if (!isMountedRef.current || controller.signal.aborted) {
+				return;
+			}
 
 			if (result.error === 'Aborted') {
 				return;
@@ -140,13 +157,19 @@ export function FormikFieldFileSelector({
 
 			setStatus('VALIDATING');
 
-			setTimeout(() => {
-				setStatus('SUCCESS');
-				setValue(file);
-				setTouched(true);
+			uploadTimeoutRef.current = setTimeout(() => {
+				if (isMountedRef.current && !controller.signal.aborted) {
+					setStatus('SUCCESS');
+					setValue(file);
+					setTouched(true);
+				}
 			}, STATUS_CHANGE_DELAY);
 		}
 		catch (error: any) {
+			if (!isMountedRef.current || controller.signal.aborted) {
+				return;
+			}
+
 			if (error.name === 'AbortError') {
 				return;
 			}
@@ -174,6 +197,11 @@ export function FormikFieldFileSelector({
 		if (abortControllerRef.current) {
 			abortControllerRef.current.abort();
 			abortControllerRef.current = null;
+		}
+
+		if (uploadTimeoutRef.current) {
+			clearTimeout(uploadTimeoutRef.current);
+			uploadTimeoutRef.current = null;
 		}
 
 		setStatus('IDLE');

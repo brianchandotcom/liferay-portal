@@ -432,9 +432,6 @@ public interface FragmentEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryVersion> getVersions(FragmentEntry fragmentEntry);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasExportableFragmentEntries(long fragmentCollectionId);
-
 	public FragmentEntry moveFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId)
 		throws PortalException;
@@ -508,4 +505,4 @@ public interface FragmentEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:882194460
+// LIFERAY-SERVICE-BUILDER-HASH:775167175

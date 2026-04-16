@@ -81,6 +81,52 @@ public class FragmentCollectionServiceUtil {
 		return getService().fetchFragmentCollection(fragmentCollectionId);
 	}
 
+	public static List<FragmentCollection> getExportableFragmentCollections(
+		long[] fragmentCollectionIds) {
+
+		return getService().getExportableFragmentCollections(
+			fragmentCollectionIds);
+	}
+
+	public static List<FragmentCollection>
+		getExportableFragmentCollectionsByGroupId(
+			long[] groupIds, int start, int end,
+			OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getExportableFragmentCollectionsByGroupId(
+			groupIds, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection>
+		getExportableFragmentCollectionsByGroupId(
+			long[] groupIds, String name, int start, int end,
+			OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getExportableFragmentCollectionsByGroupId(
+			groupIds, name, start, end, orderByComparator);
+	}
+
+	public static int getExportableFragmentCollectionsCount(
+		long[] fragmentCollectionIds) {
+
+		return getService().getExportableFragmentCollectionsCount(
+			fragmentCollectionIds);
+	}
+
+	public static int getExportableFragmentCollectionsCountByGroupId(
+		long[] groupIds) {
+
+		return getService().getExportableFragmentCollectionsCountByGroupId(
+			groupIds);
+	}
+
+	public static int getExportableFragmentCollectionsCountByGroupId(
+		long[] groupIds, String name) {
+
+		return getService().getExportableFragmentCollectionsCountByGroupId(
+			groupIds, name);
+	}
+
 	public static FragmentCollection
 			getFragmentCollectionByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
@@ -263,4 +309,4 @@ public class FragmentCollectionServiceUtil {
 			FragmentCollectionService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2100464947
+// LIFERAY-SERVICE-BUILDER-HASH:929293634

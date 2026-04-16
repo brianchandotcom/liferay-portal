@@ -380,9 +380,6 @@ public interface FragmentCompositionLocalService
 	public String getUniqueFragmentCompositionName(
 		long groupId, long fragmentCollectionId, String name);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasExportableFragmentCompositions(long fragmentCollectionId);
-
 	public FragmentComposition moveFragmentComposition(
 			long fragmentCompositionId, long fragmentCollectionId)
 		throws PortalException;
@@ -431,4 +428,4 @@ public interface FragmentCompositionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1261531300
+// LIFERAY-SERVICE-BUILDER-HASH:472596782

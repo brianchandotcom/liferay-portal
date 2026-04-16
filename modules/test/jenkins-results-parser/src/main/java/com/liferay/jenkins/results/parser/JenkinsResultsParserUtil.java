@@ -4285,7 +4285,7 @@ public class JenkinsResultsParserUtil {
 			return false;
 		}
 
-		Matcher matcher = _quarterlyrReleaseYearPattern.matcher(
+		Matcher matcher = _quarterlyReleaseYearPattern.matcher(
 			upstreamBranchName);
 
 		if (matcher.matches()) {
@@ -7535,8 +7535,8 @@ public class JenkinsResultsParserUtil {
 		"\\$\\{([^\\}]+)\\}");
 	private static final Pattern _poshiFileNamePattern = Pattern.compile(
 		".*\\.(function|macro|path|prose|testcase)");
-	private static final Pattern _quarterlyrReleaseYearPattern =
-		Pattern.compile("release-(\\d{4})\\.q(\\d+).*");
+	private static final Pattern _quarterlyReleaseYearPattern = Pattern.compile(
+		"release-(\\d{4})\\.q(\\d+).*");
 	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://(test-[0-9]+-[0])-aws.liferay.com/");

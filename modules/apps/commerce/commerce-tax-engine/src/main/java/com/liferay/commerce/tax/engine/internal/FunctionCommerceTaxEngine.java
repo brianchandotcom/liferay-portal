@@ -146,6 +146,34 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 		}
 	}
 
+	protected JSONObject getPayloadJSONObject(
+			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
+		throws Exception {
+
+		JSONObject typeSettingsJSONObject = _jsonFactory.createJSONObject();
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceTaxCalculateRequest.getCommerceChannelGroupId());
+
+		CommerceTaxMethod commerceTaxMethod =
+			_commerceTaxMethodLocalService.fetchCommerceTaxMethod(
+				commerceChannel.getGroupId(), getKey());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			commerceTaxMethod.getTypeSettingsUnicodeProperties();
+
+		typeSettingsUnicodeProperties.forEach(typeSettingsJSONObject::put);
+
+		return JSONUtil.put(
+			"commerceTaxCalculateRequest",
+			_getCommerceTaxCalculateRequestJSONObject(
+				commerceChannel, commerceTaxCalculateRequest)
+		).put(
+			"typeSettings", typeSettingsJSONObject
+		);
+	}
+
 	@Modified
 	protected void modified(Map<String, Object> properties)
 		throws PortalException {
@@ -261,34 +289,6 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 				).get()));
 	}
 
-	private JSONObject _getPayloadJSONObject(
-			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
-		throws Exception {
-
-		JSONObject typeSettingsJSONObject = _jsonFactory.createJSONObject();
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByGroupId(
-				commerceTaxCalculateRequest.getCommerceChannelGroupId());
-
-		CommerceTaxMethod commerceTaxMethod =
-			_commerceTaxMethodLocalService.fetchCommerceTaxMethod(
-				commerceChannel.getGroupId(), getKey());
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			commerceTaxMethod.getTypeSettingsUnicodeProperties();
-
-		typeSettingsUnicodeProperties.forEach(typeSettingsJSONObject::put);
-
-		return JSONUtil.put(
-			"commerceTaxCalculateRequest",
-			_getCommerceTaxCalculateRequestJSONObject(
-				commerceChannel, commerceTaxCalculateRequest)
-		).put(
-			"typeSettings", typeSettingsJSONObject
-		);
-	}
-
 	private CommerceTaxValue _setCommerceTaxCalculateRequest(
 		CommerceTaxCalculateRequest commerceTaxCalculateRequest) {
 
@@ -296,7 +296,7 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 
 		try {
 			JSONObject jsonObject = _getJSONObject(
-				_getPayloadJSONObject(commerceTaxCalculateRequest),
+				getPayloadJSONObject(commerceTaxCalculateRequest),
 				"/calculate-tax");
 
 			BigDecimal rate = BigDecimal.valueOf(

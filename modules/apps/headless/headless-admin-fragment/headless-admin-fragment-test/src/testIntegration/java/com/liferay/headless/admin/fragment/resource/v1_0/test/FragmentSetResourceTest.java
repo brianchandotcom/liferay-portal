@@ -60,6 +60,37 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 
 	@Override
 	@Test
+	public void testPostSiteFragmentSet() throws Exception {
+		FragmentSet randomFragmentSet = randomFragmentSet();
+
+		FragmentSet postFragmentSet = testPostSiteFragmentSet_addFragmentSet(
+			randomFragmentSet);
+
+		assertEquals(randomFragmentSet, postFragmentSet);
+		assertValid(postFragmentSet);
+
+		FragmentSet duplicateERCFragmentSet = randomFragmentSet();
+
+		duplicateERCFragmentSet.setExternalReferenceCode(
+			postFragmentSet.getExternalReferenceCode());
+
+		_assertProblemException(
+			"BAD_REQUEST", "This external reference code is already in use.",
+			() -> fragmentSetResource.postSiteFragmentSet(
+				testGroup.getExternalReferenceCode(), duplicateERCFragmentSet));
+
+		FragmentSet duplicateKeyFragmentSet = randomFragmentSet();
+
+		duplicateKeyFragmentSet.setKey(postFragmentSet.getKey());
+
+		_assertProblemException(
+			"CONFLICT", "A fragment set with the same key already exists",
+			() -> fragmentSetResource.postSiteFragmentSet(
+				testGroup.getExternalReferenceCode(), duplicateKeyFragmentSet));
+	}
+
+	@Override
+	@Test
 	public void testPutSiteFragmentSet() throws Exception {
 		FragmentSet fragmentSet = randomFragmentSet();
 

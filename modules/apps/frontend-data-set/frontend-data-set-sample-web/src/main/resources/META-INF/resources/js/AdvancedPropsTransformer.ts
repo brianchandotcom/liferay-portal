@@ -166,7 +166,7 @@ export default function propsTransformer({
 				...action,
 				isVisible: ({
 					allItemsSelectedActive,
-					selectedItems
+					selectedItems,
 				}: {
 					allItemsSelectedActive: boolean;
 					selectedItems: Array<any>;

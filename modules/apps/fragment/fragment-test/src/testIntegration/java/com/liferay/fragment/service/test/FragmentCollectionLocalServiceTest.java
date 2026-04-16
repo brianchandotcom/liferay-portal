@@ -558,18 +558,20 @@ public class FragmentCollectionLocalServiceTest {
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), RandomTestUtil.randomString() + keyword);
 
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
 
 		FragmentCollection fragmentCollection3 =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), keyword + RandomTestUtil.randomString());
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection2.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection3.getFragmentCollectionId());
 
@@ -624,13 +626,14 @@ public class FragmentCollectionLocalServiceTest {
 				_group.getGroupId(),
 				"AA" + keyword + RandomTestUtil.randomString());
 
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(),
 				"BB" + keyword + RandomTestUtil.randomString());
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection2.getFragmentCollectionId());
 
@@ -677,12 +680,13 @@ public class FragmentCollectionLocalServiceTest {
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), "AA Exportable Collection");
 
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), "BB Exportable Collection");
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection2.getFragmentCollectionId());
 
@@ -710,12 +714,13 @@ public class FragmentCollectionLocalServiceTest {
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), "AA Exportable Collection");
 
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), "BB Exportable Collection");
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection2.getFragmentCollectionId());
 
@@ -742,16 +747,18 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentCollection fragmentCollection1 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection2.getFragmentCollectionId());
 
 		FragmentCollection fragmentCollection3 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection2.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection3.getFragmentCollectionId());
 

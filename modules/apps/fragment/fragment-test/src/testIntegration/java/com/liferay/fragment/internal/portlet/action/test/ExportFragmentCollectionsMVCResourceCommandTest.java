@@ -49,8 +49,6 @@ import java.io.File;
 
 import java.nio.file.Files;
 
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -179,32 +177,30 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 			(ByteArrayOutputStream)
 				mockLiferayResourceResponse.getPortletOutputStream();
 
-		byte[] zipBytes = byteArrayOutputStream.toByteArray();
+		byte[] bytes = byteArrayOutputStream.toByteArray();
 
-		Assert.assertTrue(zipBytes.length > 0);
+		Assert.assertTrue(bytes.length > 0);
 
 		File tempFile = FileUtil.createTempFile(
 			RandomTestUtil.randomString(), ".zip");
 
 		try {
-			Files.write(tempFile.toPath(), zipBytes);
+			Files.write(tempFile.toPath(), bytes);
 
 			try (ZipReader zipReader = _zipReaderFactory.getZipReader(
 					tempFile)) {
 
-				List<String> entries = zipReader.getEntries();
+				boolean found = false;
 
-				boolean resourceFound = false;
-
-				for (String entry : entries) {
+				for (String entry : zipReader.getEntries()) {
 					if (entry.contains("/resources/" + resourceFileName)) {
-						resourceFound = true;
+						found = true;
 
 						break;
 					}
 				}
 
-				Assert.assertTrue(resourceFound);
+				Assert.assertTrue(found);
 			}
 		}
 		finally {

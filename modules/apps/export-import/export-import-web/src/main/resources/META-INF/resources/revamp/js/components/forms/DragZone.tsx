@@ -57,7 +57,7 @@ const DragZone = ({
 						'drag-and-drop-to-upload'
 					),
 					'className': classNames(
-						'dropzone p-4 rounded text-center text-secondary',
+						'dropzone p-5 rounded text-center text-secondary',
 						{
 							'dropzone-drag-active': isDragActive,
 						}

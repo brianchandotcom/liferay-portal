@@ -13,6 +13,7 @@ function main {
 
 		rsync \
 			-a --delete \
+			--exclude "package.json" \
 			--exclude "README.md" \
 			--exclude "client-extensions" \
 			--exclude "language" \

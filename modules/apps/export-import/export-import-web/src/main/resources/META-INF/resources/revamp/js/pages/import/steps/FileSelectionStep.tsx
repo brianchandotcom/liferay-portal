@@ -7,7 +7,7 @@ import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
 
 import {getValidateLarFileEndpoint} from '../../../common/utils/getValidateLarFileEndpoint';
-import {useWizard} from '../../../components/Wizard';
+import {useWizard} from '../NewImport';
 import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
 
 export default function FileSelectionStep() {

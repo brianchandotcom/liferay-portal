@@ -13,6 +13,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -84,6 +85,48 @@ public class WikiNodeStagedModelDataHandlerTest
 		}
 	}
 
+	@Test
+	@TestInfo("LPD-85488")
+	public void testExportImportPreservesLastPostDate() throws Exception {
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		WikiNode wikiNode = (WikiNode)stagedModel;
+
+		wikiNode.setLastPostDate(new Date());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				stagedModel);
+
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+
+			StagedModel importedStagedModel = getStagedModel(
+				exportedStagedModel.getUuid(), liveGroup);
+
+			WikiNode exportedWikiNode = (WikiNode)exportedStagedModel;
+			WikiNode importedWikiNode = (WikiNode)importedStagedModel;
+
+			Assert.assertEquals(
+				exportedWikiNode.getLastPostDate(),
+				importedWikiNode.getLastPostDate());
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
+	}
+
 	@Override
 	@Test
 	public void testExportImportWithDefaultData() throws Exception {
@@ -123,41 +166,6 @@ public class WikiNodeStagedModelDataHandlerTest
 
 				Assert.assertNull(exportedStagedModel);
 			}
-		}
-	}
-
-	@Test
-	public void testLastPostDate() throws Exception {
-		initExport();
-
-		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			addDependentStagedModelsMap(stagingGroup);
-
-		StagedModel stagedModel = addStagedModel(
-			stagingGroup, dependentStagedModelsMap);
-
-		WikiNode wikiNode = (WikiNode)stagedModel;
-
-		wikiNode.setLastPostDate(new Date());
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			StagedModel exportedStagedModel = readExportedStagedModel(
-				stagedModel);
-
-			ExportImportThreadLocal.setLayoutImportInProcess(true);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStagedModel);
-
-			validateImportedStagedModel(
-				exportedStagedModel,
-				getStagedModel(exportedStagedModel.getUuid(), liveGroup));
-		}
-		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
 		}
 	}
 

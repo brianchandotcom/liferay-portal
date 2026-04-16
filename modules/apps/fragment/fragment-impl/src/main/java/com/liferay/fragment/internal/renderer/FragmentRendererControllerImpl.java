@@ -175,7 +175,7 @@ public class FragmentRendererControllerImpl
 		if ((fragmentRenderer == null) && fragmentEntryLink.isTypeReact()) {
 			fragmentRenderer = _fragmentRendererRegistry.getFragmentRenderer(
 				FragmentRendererConstants.
-					FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT);
+					FRAGMENT_ENTRY_FRAGMENT_RENDERER_REACT_KEY);
 		}
 
 		if (fragmentRenderer == null) {

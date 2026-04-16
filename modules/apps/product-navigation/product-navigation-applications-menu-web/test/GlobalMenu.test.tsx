@@ -68,13 +68,7 @@ jest.mock('frontend-js-web', () => ({
 }));
 
 describe('GlobalMenu', () => {
-	afterEach(() => {
-		Liferay.FeatureFlags['LPD-36105'] = false;
-	});
-
 	beforeEach(() => {
-		Liferay.FeatureFlags['LPD-36105'] = true;
-
 		global.Liferay.Browser = {
 			...(global as any).Liferay,
 			isMac: () => false,

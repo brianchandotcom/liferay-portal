@@ -6,36 +6,50 @@
 package com.liferay.headless.admin.fragment.internal.jaxrs.exception.mapper;
 
 import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+import com.liferay.portal.vulcan.problem.Problem;
+import com.liferay.portal.vulcan.problem.ProblemMapper;
 
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.ExceptionMapper;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Rubén Pulido
  */
-@Component(
-	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Admin.Fragment)",
-		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Admin.Fragment.DuplicateFragmentCollectionKeyExceptionMapper"
-	},
-	service = ExceptionMapper.class
-)
+@Component(service = ProblemMapper.class)
 public class DuplicateFragmentCollectionKeyExceptionMapper
-	extends BaseExceptionMapper<DuplicateFragmentCollectionKeyException> {
+	implements ProblemMapper<DuplicateFragmentCollectionKeyException> {
 
 	@Override
-	protected Problem getProblem(
+	public Problem getProblem(
 		DuplicateFragmentCollectionKeyException
 			duplicateFragmentCollectionKeyException) {
 
-		return new Problem(
-			Response.Status.CONFLICT,
-			"A fragment set with the same key already exists");
+		String message = "A fragment set with the same key already exists";
+
+		return new Problem() {
+
+			@Override
+			public String getDetail(Locale locale) {
+				return message;
+			}
+
+			@Override
+			public Status getStatus() {
+				return Status.CONFLICT;
+			}
+
+			@Override
+			public String getTitle(Locale locale) {
+				return message;
+			}
+
+			@Override
+			public String getType() {
+				return DuplicateFragmentCollectionKeyException.class.getName();
+			}
+
+		};
 	}
 
 }

@@ -70,14 +70,18 @@ public class LayoutExportBackgroundTaskExecutorTest {
 
 	@Test
 	public void test() throws Exception {
-		BackgroundTask backgroundTask = Mockito.mock(BackgroundTask.class);
+		LayoutExportBackgroundTaskExecutor layoutExportBackgroundTaskExecutor =
+			Mockito.spy(_layoutExportBackgroundTaskExecutor);
 
-		long backgroundTaskId = RandomTestUtil.randomLong();
+		ExportImportConfiguration exportImportConfiguration = Mockito.mock(
+			ExportImportConfiguration.class);
 
-		Mockito.when(
-			backgroundTask.getBackgroundTaskId()
-		).thenReturn(
-			backgroundTaskId
+		Mockito.doReturn(
+			exportImportConfiguration
+		).when(
+			layoutExportBackgroundTaskExecutor
+		).getExportImportConfiguration(
+			Mockito.any(BackgroundTask.class)
 		);
 
 		long userId = RandomTestUtil.randomLong();
@@ -86,9 +90,6 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			HashMapBuilder.<String, Serializable>put(
 				"userId", userId
 			).build();
-
-		ExportImportConfiguration exportImportConfiguration = Mockito.mock(
-			ExportImportConfiguration.class);
 
 		Mockito.when(
 			exportImportConfiguration.getSettingsMap()
@@ -104,15 +105,14 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			title
 		);
 
-		LayoutExportBackgroundTaskExecutor layoutExportBackgroundTaskExecutor =
-			Mockito.spy(_layoutExportBackgroundTaskExecutor);
+		BackgroundTask backgroundTask = Mockito.mock(BackgroundTask.class);
 
-		Mockito.doReturn(
-			exportImportConfiguration
-		).when(
-			layoutExportBackgroundTaskExecutor
-		).getExportImportConfiguration(
-			backgroundTask
+		long backgroundTaskId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			backgroundTask.getBackgroundTaskId()
+		).thenReturn(
+			backgroundTaskId
 		);
 
 		File larFile = new File(

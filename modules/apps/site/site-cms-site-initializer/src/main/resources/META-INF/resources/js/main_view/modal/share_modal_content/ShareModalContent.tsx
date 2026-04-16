@@ -43,6 +43,7 @@ export interface Collaborator {
 
 function CollaboratorListItem({
 	actionIds,
+	canManageCollaborators = true,
 	dateExpired,
 	entryClassName,
 	error,
@@ -54,6 +55,7 @@ function CollaboratorListItem({
 	user,
 }: {
 	actionIds: string;
+	canManageCollaborators?: boolean;
 	dateExpired?: string;
 	entryClassName: string;
 	error?: string;
@@ -148,63 +150,66 @@ function CollaboratorListItem({
 				)}
 			</div>
 
-			<div className="autofit-col p-0">
-				<div className="d-flex">
-					<ExpirationDateSelector
-						dateExpired={dateExpired}
-						onChange={handleChangeUserProperties}
-					/>
+			{canManageCollaborators && (
+				<div className="autofit-col p-0">
+					<div className="d-flex">
+						<ExpirationDateSelector
+							dateExpired={dateExpired}
+							onChange={handleChangeUserProperties}
+						/>
 
-					<ClayDropDown
-						hasLeftSymbols={true}
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'more-options'
-								)}
-								borderless
-								displayType="secondary"
-								monospaced
-								size="xs"
-								symbol="ellipsis-v"
-							/>
-						}
-					>
-						<ClayDropDown.ItemList>
-							<ClayDropDown.Item
-								aria-label={Liferay.Language.get(
-									'allow-resharing'
-								)}
-								key={`share-${user.id}`}
-								onClick={() =>
-									handleChangeUserProperties({
-										share: !share,
-									})
-								}
-								symbolLeft={share ? 'check-small' : ''}
-							>
-								{Liferay.Language.get('allow-resharing')}
-							</ClayDropDown.Item>
+						<ClayDropDown
+							hasLeftSymbols={true}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'more-options'
+									)}
+									borderless
+									displayType="secondary"
+									monospaced
+									size="xs"
+									symbol="ellipsis-v"
+								/>
+							}
+						>
+							<ClayDropDown.ItemList>
+								<ClayDropDown.Item
+									aria-label={Liferay.Language.get(
+										'allow-resharing'
+									)}
+									key={`share-${user.id}`}
+									onClick={() =>
+										handleChangeUserProperties({
+											share: !share,
+										})
+									}
+									symbolLeft={share ? 'check-small' : ''}
+								>
+									{Liferay.Language.get('allow-resharing')}
+								</ClayDropDown.Item>
 
-							<ClayDropDown.Item
-								aria-label={Liferay.Language.get(
-									'remove-access'
-								)}
-								key={`remove-${user.id}`}
-								onClick={() => onRemoveUser(user)}
-							>
-								{Liferay.Language.get('remove-access')}
-							</ClayDropDown.Item>
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
+								<ClayDropDown.Item
+									aria-label={Liferay.Language.get(
+										'remove-access'
+									)}
+									key={`remove-${user.id}`}
+									onClick={() => onRemoveUser(user)}
+								>
+									{Liferay.Language.get('remove-access')}
+								</ClayDropDown.Item>
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					</div>
 				</div>
-			</div>
+			)}
 		</li>
 	);
 }
 
 export default function ShareModalContent({
 	autocompleteURL = '',
+	canManageCollaborators = true,
 	closeModal,
 	collaboratorURL = '',
 	creator,
@@ -214,6 +219,7 @@ export default function ShareModalContent({
 	title = '',
 }: {
 	autocompleteURL: string;
+	canManageCollaborators?: boolean;
 	closeModal: () => void;
 	collaboratorURL: string;
 	creator: {
@@ -493,6 +499,9 @@ export default function ShareModalContent({
 							<ul className="c-mb-0 list-group">
 								{collaborators.map((item) => (
 									<CollaboratorListItem
+										canManageCollaborators={
+											canManageCollaborators
+										}
 										entryClassName={entryClassName}
 										key={`listItem-${item.type}-${item.user.id}`}
 										onChangeUser={handleChangeUser}

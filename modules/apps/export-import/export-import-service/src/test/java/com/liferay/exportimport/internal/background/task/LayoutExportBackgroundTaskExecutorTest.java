@@ -71,6 +71,7 @@ public class LayoutExportBackgroundTaskExecutorTest {
 	@Test
 	public void test() throws Exception {
 		BackgroundTask backgroundTask = Mockito.mock(BackgroundTask.class);
+
 		long backgroundTaskId = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -147,7 +148,6 @@ public class LayoutExportBackgroundTaskExecutorTest {
 				title, StringPool.DASH, _timestamp, StringPool.PERIOD,
 				_PROTOCOL),
 			argumentCaptor1.getValue());
-
 		Assert.assertEquals(
 			StringBundler.concat(title, StringPool.PERIOD, _PROTOCOL),
 			argumentCaptor2.getValue());

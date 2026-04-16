@@ -2,16 +2,11 @@
 
 .dropzone {
 	background-color: $light;
-	border-radius: 4px;
 	outline: 2px dashed $secondary-l2;
-	padding: 0.75rem;
 
-	color: $secondary;
-	text-align: center;
-
-	transition-duration: 0.2s;
-	transition-property: background-color, outline;
-	transition-timing-function: ease-in-out;
+	transition:
+		background-color 0.2s ease-in-out,
+		outline-color 0.2s ease-in-out;
 
 	&-drag-active {
 		background-color: $primary-l3;

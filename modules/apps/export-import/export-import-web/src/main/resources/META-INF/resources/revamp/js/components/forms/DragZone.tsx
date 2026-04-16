@@ -56,9 +56,12 @@ const DragZone = ({
 					'aria-label': Liferay.Language.get(
 						'drag-and-drop-to-upload'
 					),
-					'className': classNames('dropzone', {
-						'dropzone-drag-active': isDragActive,
-					}),
+					'className': classNames(
+						'dropzone p-4 rounded text-center text-secondary',
+						{
+							'dropzone-drag-active': isDragActive,
+						}
+					),
 					'role': 'button',
 				})}
 			>

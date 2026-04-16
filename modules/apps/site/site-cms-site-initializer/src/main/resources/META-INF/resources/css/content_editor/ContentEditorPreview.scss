@@ -45,6 +45,16 @@
 			visibility: visible;
 		}
 
+		&.resizing .content-editor__preview__content::after {
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
+
 		.content-editor__preview__content {
 			height: calc(100% - var(--preview-content-offset));
 		}

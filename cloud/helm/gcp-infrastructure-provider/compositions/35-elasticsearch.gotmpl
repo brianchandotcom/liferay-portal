@@ -34,8 +34,9 @@ spec:
 {{- $elasticsearchObjectAtProvider := ($elasticsearchObject.status | default dict).atProvider | default dict -}}
 {{- $elasticsearchObjectAtProviderManifest := (index $elasticsearchObjectAtProvider "manifest" | default dict) -}}
 {{- $elasticsearchObjectAtProviderManifestStatus := (index $elasticsearchObjectAtProviderManifest "status" | default dict) -}}
-{{- $health := (index $elasticsearchObjectAtProviderManifestStatus "health" | default "") -}}
-{{- $isSearchReady := or (eq $health "green") (eq $health "yellow") -}}
+
+{{- $elasticsearchHealth = (index $elasticsearchObjectAtProviderManifestStatus "health" | default "") -}}
+{{- $isSearchReady = or (eq $elasticsearchHealth "green") (eq $elasticsearchHealth "yellow") -}}
 
 {{- $secretObject := (index .observed.resources "elasticsearch-secret-observer" | default dict).resource | default dict -}}
 {{- $secretObjectAtProvider := ($secretObject.status | default dict).atProvider | default dict -}}

@@ -118,7 +118,7 @@ spec:
         celQuery: object.status.succeeded == 1
         policy: DeriveFromCelQuery
 ---
-{{- $isReady := false -}}
+{{- $isReady = false -}}
 {{- if .observed.resources -}}
     {{- if (index .observed.resources "liferay-db-grant-job") -}}
         {{- $job := index .observed.resources "liferay-db-grant-job" -}}

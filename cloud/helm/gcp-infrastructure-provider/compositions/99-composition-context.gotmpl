@@ -1,0 +1,53 @@
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: composition-context
+    name: {{ $xr.metadata.name }}-composition-context
+spec:
+    forProvider:
+        manifest:
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+                name: composition-context
+                namespace: {{ $namespace }}
+            data:
+                variables: |
+                    backup: {{ $backup | toJson }}
+                    backupTargetLabels: {{ $backupTargetLabels | toJson }}
+                    baseName: {{ $baseName | toJson }}
+                    cmkEnabled: {{ $cmkEnabled | toJson }}
+                    cmkKeyName: {{ $cmkKeyName | toJson }}
+                    commonTags: {{ $commonTags | toJson }}
+                    databaseIamUser: {{ $databaseIamUser | toJson }}
+                    databaseInstanceName: {{ $databaseInstanceName | toJson }}
+                    databaseName: {{ $databaseName | toJson }}
+                    databasePort: {{ $databasePort | toJson }}
+                    databaseSpec: {{ $databaseSpec | toJson }}
+                    deletionProtection: {{ $deletionProtection | toJson }}
+                    elasticsearchHealth: {{ $elasticsearchHealth | toJson }}
+                    environmentId: {{ $environmentId | toJson }}
+                    forceDestroy: {{ $forceDestroy | toJson }}
+                    gsaEmail: {{ $gsaEmail | toJson }}
+                    gsaName: {{ $gsaName | toJson }}
+                    hash: {{ $hash | toJson }}
+                    instanceConnectionName: {{ $instanceConnectionName | toJson }}
+                    isReady: {{ $isReady | toJson }}
+                    isSearchReady: {{ $isSearchReady | toJson }}
+                    jobName: {{ $jobName | toJson }}
+                    labels: {{ $labels | toJson }}
+                    managementPolicies: {{ $managementPolicies | toJson }}
+                    managementPoliciesNoUpdate: {{ $managementPoliciesNoUpdate | toJson }}
+                    managementPoliciesOnce: {{ $managementPoliciesOnce | toJson }}
+                    namespace: {{ $namespace | toJson }}
+                    overlay: {{ $overlay | toJson }}
+                    projectId: {{ $projectId | toJson }}
+                    projectIdFull: {{ $projectIdFull | toJson }}
+                    region: {{ $region | toJson }}
+                    searchName: {{ $searchName | toJson }}
+                    searchNamespace: {{ $searchNamespace | toJson }}
+                    searchSecretName: {{ $searchSecretName | toJson }}
+                    storage: {{ $storage | toJson }}
+                    uidHash: {{ $uidHash | toJson }}
+    managementPolicies: {{ $managementPolicies }}

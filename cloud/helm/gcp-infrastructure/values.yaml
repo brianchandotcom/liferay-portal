@@ -1,5 +1,8 @@
 backup:
-    cleanupSchedule: "0 2 * * *"
+    cleanup:
+        retentionDays: 30
+        schedule: "0 2 * * *"
+        serviceAccountName: backup-cleanup
     enabled: false
     region: ""
     retentionDays: 30

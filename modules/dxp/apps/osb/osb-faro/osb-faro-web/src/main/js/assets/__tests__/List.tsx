@@ -1,4 +1,4 @@
-import List from '../pages/List';
+import List from 'assets/pages/List';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ChannelContext} from 'shared/context/channel';
@@ -14,24 +14,28 @@ jest.unmock('react-dom');
 jest.mock('shared/hooks/useFrontendDataSet', () => ({
 	useFrontendDataSet: () => {
 		const FakeDataSet = ({
+			filters,
 			id,
 			itemsActions
 		}: {
+			filters?: any[];
 			id: string;
 			itemsActions?: Array<{onClick?: (item: any) => void}>;
 		}) => (
 			<div data-testid='fds-component' id={id}>
+				<div data-testid='fds-filters'>{JSON.stringify(filters)}</div>
+
 				<button
 					data-testid='trigger-info-panel'
 					onClick={() =>
 						itemsActions?.[0]?.onClick?.({
 							itemData: {
 								assetCategories: [],
-								assetMimeType: 'blog',
 								assetTags: [],
 								assetTitle: 'Test Asset Title',
 								assetType: 'blog',
-								id: 'asset-id-1'
+								id: 'asset-id-1',
+								mimeType: 'blog'
 							}
 						})
 					}
@@ -62,10 +66,10 @@ jest.mock('shared/hooks/useFrontendDataSet', () => ({
 						itemsActions?.[0]?.onClick?.({
 							itemData: {
 								assetCategories: [],
-								assetMimeType: 'folder',
 								assetTags: [],
 								assetType: 'folder',
-								id: 'fallback-id-3'
+								id: 'fallback-id-3',
+								mimeType: 'folder'
 							}
 						})
 					}
@@ -82,11 +86,11 @@ jest.mock('shared/hooks/useFrontendDataSet', () => ({
 									{id: 'cat-1', name: 'Category One'},
 									{id: 'cat-2', name: 'Category Two'}
 								],
-								assetMimeType: 'basic-web-content',
 								assetTags: [{id: 'tag-1', name: 'Tag One'}],
 								assetTitle: 'Rich Asset',
 								assetType: 'webContent',
-								id: 'asset-id-4'
+								id: 'asset-id-4',
+								mimeType: 'basic-web-content'
 							}
 						})
 					}
@@ -231,6 +235,22 @@ describe('List', () => {
 				'id',
 				'assetTable'
 			);
+		});
+
+		it('should pass the mimeType filter to FrontendDataSet', () => {
+			renderList();
+
+			const filters = JSON.parse(
+				screen.getByTestId('fds-filters').textContent
+			);
+
+			const mimeTypeFilter = filters.find(
+				filter => filter.id === 'mimeType'
+			);
+
+			expect(mimeTypeFilter).toBeDefined();
+			expect(mimeTypeFilter.label).toBe('MIME Type');
+			expect(mimeTypeFilter.apiURL).toContain('asset-summary-mime-types');
 		});
 
 		it('should render the DropdownRangeKey', () => {

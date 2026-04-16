@@ -40,6 +40,9 @@ resource "helm_release" "argocd" {
 						"resource.customizations.ignoreDifferences.aws.liferay.com_LiferayInfrastructure"=yamlencode(
 							{
 								jsonPointers=[
+									"/spec/database/snapshotIdentifier",
+									"/spec/restorePhase",
+									"/spec/targetActiveDataPlane",
 									"/status/atProvider",
 									"/status/internalMetadata",
 								]

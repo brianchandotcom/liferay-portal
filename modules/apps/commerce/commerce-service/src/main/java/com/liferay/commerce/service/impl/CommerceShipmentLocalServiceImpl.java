@@ -14,10 +14,7 @@ import com.liferay.commerce.exception.CommerceShipmentStatusException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceOrderItemTable;
 import com.liferay.commerce.model.CommerceShipment;
-import com.liferay.commerce.model.CommerceShipmentItemTable;
-import com.liferay.commerce.model.CommerceShipmentTable;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.attributes.provider.CommerceModelAttributesProvider;
 import com.liferay.commerce.service.CommerceAddressLocalService;
@@ -27,7 +24,6 @@ import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -249,27 +245,8 @@ public class CommerceShipmentLocalServiceImpl
 	public List<CommerceShipment> getCommerceShipments(
 		long commerceOrderId, int start, int end) {
 
-		return dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				CommerceShipmentTable.INSTANCE
-			).from(
-				CommerceShipmentTable.INSTANCE
-			).leftJoinOn(
-				CommerceShipmentItemTable.INSTANCE,
-				CommerceShipmentTable.INSTANCE.commerceShipmentId.eq(
-					CommerceShipmentItemTable.INSTANCE.commerceShipmentId)
-			).innerJoinON(
-				CommerceOrderItemTable.INSTANCE,
-				CommerceOrderItemTable.INSTANCE.commerceOrderItemId.eq(
-					CommerceShipmentItemTable.INSTANCE.commerceOrderItemId)
-			).where(
-				CommerceOrderItemTable.INSTANCE.commerceOrderId.eq(
-					commerceOrderId)
-			).orderBy(
-				CommerceShipmentTable.INSTANCE.createDate.descending()
-			).limit(
-				start, end
-			));
+		return commerceShipmentFinder.findByCommerceOrderId(
+			commerceOrderId, start, end);
 	}
 
 	@Override
@@ -318,23 +295,7 @@ public class CommerceShipmentLocalServiceImpl
 
 	@Override
 	public int getCommerceShipmentsCount(long commerceOrderId) {
-		return dslQueryCount(
-			DSLQueryFactoryUtil.countDistinct(
-				CommerceShipmentTable.INSTANCE.commerceShipmentId
-			).from(
-				CommerceShipmentTable.INSTANCE
-			).leftJoinOn(
-				CommerceShipmentItemTable.INSTANCE,
-				CommerceShipmentTable.INSTANCE.commerceShipmentId.eq(
-					CommerceShipmentItemTable.INSTANCE.commerceShipmentId)
-			).innerJoinON(
-				CommerceOrderItemTable.INSTANCE,
-				CommerceOrderItemTable.INSTANCE.commerceOrderItemId.eq(
-					CommerceShipmentItemTable.INSTANCE.commerceOrderItemId)
-			).where(
-				CommerceOrderItemTable.INSTANCE.commerceOrderId.eq(
-					commerceOrderId)
-			));
+		return commerceShipmentFinder.countByCommerceOrderId(commerceOrderId);
 	}
 
 	@Override
@@ -377,25 +338,8 @@ public class CommerceShipmentLocalServiceImpl
 	public int[] getCommerceShipmentStatusesByCommerceOrderId(
 		long commerceOrderId) {
 
-		List<Integer> commerceShipmentStatuses = dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				CommerceShipmentTable.INSTANCE.status
-			).from(
-				CommerceShipmentTable.INSTANCE
-			).leftJoinOn(
-				CommerceShipmentItemTable.INSTANCE,
-				CommerceShipmentTable.INSTANCE.commerceShipmentId.eq(
-					CommerceShipmentItemTable.INSTANCE.commerceShipmentId)
-			).innerJoinON(
-				CommerceOrderItemTable.INSTANCE,
-				CommerceOrderItemTable.INSTANCE.commerceOrderItemId.eq(
-					CommerceShipmentItemTable.INSTANCE.commerceOrderItemId)
-			).where(
-				CommerceOrderItemTable.INSTANCE.commerceOrderId.eq(
-					commerceOrderId)
-			));
-
-		return ArrayUtil.toIntArray(commerceShipmentStatuses);
+		return commerceShipmentFinder.
+			findCommerceShipmentStatusesByCommerceOrderId(commerceOrderId);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

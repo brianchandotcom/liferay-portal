@@ -30,6 +30,7 @@ import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -51,6 +52,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -60,6 +62,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -923,7 +926,35 @@ public class EditAssetListDisplayContext {
 			return Collections.singletonList(_themeDisplay.getScopeGroup());
 		}
 
-		return GroupLocalServiceUtil.getGroups(groupIds);
+		List<Group> groups = GroupLocalServiceUtil.getGroups(groupIds);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-17564")) {
+
+			return groups;
+		}
+
+		List<Group> selectedGroups = ListUtil.filter(
+			groups,
+			group -> {
+				int depotEntryType = GetterUtil.getInteger(
+					group.getTypeSettingsProperty("depotEntryType"));
+
+				return depotEntryType != DepotConstants.TYPE_SPACE;
+			});
+
+		if (selectedGroups.size() == groups.size()) {
+			return selectedGroups;
+		}
+
+		Group cmsGroup = GroupLocalServiceUtil.getGroup(
+			_themeDisplay.getCompanyId(), GroupConstants.CMS);
+
+		if (!selectedGroups.contains(cmsGroup)) {
+			selectedGroups.add(cmsGroup);
+		}
+
+		return selectedGroups;
 	}
 
 	public long[] getSelectedSegmentsEntryIds() {

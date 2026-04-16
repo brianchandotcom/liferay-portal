@@ -343,6 +343,27 @@ const Details = ({
 						/>
 					</ClayForm.Group>
 
+					<ClayForm.Group>
+						<label htmlFor={`${namespace}dataSetFDSNameInput`}>
+							{Liferay.Language.get('data-set-name')}
+
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								title={Liferay.Language.get(
+									'data-set-name-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
+
+						<ClayInput
+							id={`${namespace}dataSetFDSNameInput`}
+							readOnly
+							value={dataSet.externalReferenceCode}
+						/>
+					</ClayForm.Group>
+
 					<LearnMessage
 						className="single-link text-3"
 						resource="frontend-data-set-admin-web"

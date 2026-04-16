@@ -281,15 +281,14 @@ public abstract class BasePermissionFilteredPaginationTestCase
 			defaultSearchResultPermissionFilterConfiguration = Mockito.mock(
 				DefaultSearchResultPermissionFilterConfiguration.class);
 
-		ServiceTrackerMap<String, ModelResourcePermission<?>>
-			serviceTrackerMap = Mockito.mock(ServiceTrackerMap.class);
-
 		setUpSearchResultPermissionFilterMocks(
 			indexerRegistry, permissionChecker,
 			defaultSearchResultPermissionFilterConfiguration);
 
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
 			_getSearchRequestBuilderFactory();
+		ServiceTrackerMap<String, ModelResourcePermission<?>>
+			serviceTrackerMap = Mockito.mock(ServiceTrackerMap.class);
 
 		return new DefaultSearchResultPermissionFilter(
 			defaultSearchResultPermissionFilterConfiguration,

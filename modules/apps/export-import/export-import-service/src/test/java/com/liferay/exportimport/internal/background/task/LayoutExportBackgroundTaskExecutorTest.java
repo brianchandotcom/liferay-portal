@@ -143,13 +143,13 @@ public class LayoutExportBackgroundTaskExecutorTest {
 		);
 
 		Assert.assertEquals(
-			StringBundler.concat(title, StringPool.PERIOD, _PROTOCOL),
-			argumentCaptor1.getValue());
-
-		Assert.assertEquals(
 			StringBundler.concat(
 				title, StringPool.DASH, _timestamp, StringPool.PERIOD,
 				_PROTOCOL),
+			argumentCaptor1.getValue());
+
+		Assert.assertEquals(
+			StringBundler.concat(title, StringPool.PERIOD, _PROTOCOL),
 			argumentCaptor2.getValue());
 	}
 

@@ -3,23 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.dao.jdbc;
+package com.liferay.portal.kernel.dao.jdbc;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.FileImpl;
 
-import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.sql.Connection;
 
@@ -36,8 +36,6 @@ import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -46,29 +44,39 @@ import org.junit.Test;
  */
 public class DataSourceFactoryTest {
 
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
-
 	@Before
 	public void setUp() throws Exception {
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
-		_tempDir = FileUtil.createTempFolder();
+		_path = Files.createTempDirectory(
+			DataSourceFactoryTest.class.getName());
 	}
 
 	@After
-	public void tearDown() {
-		FileUtil.deltree(_tempDir);
+	public void tearDown() throws Exception {
+		Files.walkFileTree(
+			_path,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path path, IOException ioException)
+					throws IOException {
+
+					Files.delete(path);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Files.delete(path);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	@Test
@@ -78,7 +86,7 @@ public class DataSourceFactoryTest {
 
 		DataSource dataSource1 = DataSourceFactoryUtil.initDataSource(
 			"org.hsqldb.jdbc.JDBCDriver",
-			"jdbc:hsqldb:" + _tempDir.getAbsolutePath() + "/lportal;", "sa",
+			"jdbc:hsqldb:" + _path.toAbsolutePath() + "/lportal;", "sa",
 			StringPool.BLANK, StringPool.BLANK);
 
 		NamingManager.setInitialContextFactoryBuilder(
@@ -266,6 +274,6 @@ public class DataSourceFactoryTest {
 			new Class<?>[] {String.class}, jdbcURL);
 	}
 
-	private File _tempDir;
+	private Path _path;
 
 }

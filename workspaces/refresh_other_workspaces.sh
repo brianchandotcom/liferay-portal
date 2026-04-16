@@ -23,9 +23,7 @@ function main {
 			--exclude "node_modules" \
 			--exclude "node_modules_cache" \
 			--exclude "quickstart" \
-			--exclude "poshi/build.gradle" \
-			--exclude "poshi/poshi-ext.properties" \
-			--exclude "poshi/src" \
+			--exclude "poshi" \
 			--exclude "themes" \
 			liferay-sample-workspace/ "${dir}"
 	done

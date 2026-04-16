@@ -187,7 +187,7 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 			contactsEngineClient.addIndividualSegment(
 				faroProject, user.getUserId(), channelId,
 				individualSegment.getValue(), false, individualSegment.getKey(),
-				IndividualSegment.Type.BATCH.name(),
+				IndividualSegment.Type.BATCH.name(), false,
 				IndividualSegment.Status.ACTIVE.name());
 		}
 	}
@@ -405,6 +405,8 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 					).put(
 						"includeAnonymousUsers",
 						individualSegment.isIncludeAnonymousUsers()
+					).put(
+						"sequential", individualSegment.isSequential()
 					).build()
 				).build());
 		}

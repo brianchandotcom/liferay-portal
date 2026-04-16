@@ -137,6 +137,7 @@ public class IndividualSegmentDisplay implements FaroEntityDisplay {
 			individualSegment.getLastMembershipUpdateDate();
 		_name = individualSegment.getName();
 		_segmentType = individualSegment.getSegmentType();
+		_sequential = individualSegment.isSequential();
 		_state = individualSegment.getState();
 		_status = individualSegment.getStatus();
 		_type = FaroConstants.TYPE_SEGMENT_INDIVIDUALS;
@@ -248,6 +249,7 @@ public class IndividualSegmentDisplay implements FaroEntityDisplay {
 	private String _name;
 	private final Map<String, Object> _referencedObjects = new HashMap<>();
 	private String _segmentType;
+	private boolean _sequential;
 	private String _state;
 	private String _status;
 	private int _type;

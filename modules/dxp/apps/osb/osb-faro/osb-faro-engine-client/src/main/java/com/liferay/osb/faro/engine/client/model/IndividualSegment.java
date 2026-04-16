@@ -122,6 +122,10 @@ public class IndividualSegment {
 		return _includeAnonymousUsers;
 	}
 
+	public boolean isSequential() {
+		return _sequential;
+	}
+
 	public void setActiveIndividualCount(long activeIndividualCount) {
 		_activeIndividualCount = activeIndividualCount;
 	}
@@ -211,6 +215,10 @@ public class IndividualSegment {
 		_segmentType = segmentType;
 	}
 
+	public void setSequential(boolean sequential) {
+		_sequential = sequential;
+	}
+
 	public void setState(String state) {
 		_state = state;
 	}
@@ -263,6 +271,7 @@ public class IndividualSegment {
 	private String _scope = Scope.PROJECT.name();
 	private SegmentActivation _segmentActivation;
 	private String _segmentType = Type.BATCH.name();
+	private boolean _sequential;
 	private String _state = State.READY.name();
 	private String _status = Status.ACTIVE.name();
 

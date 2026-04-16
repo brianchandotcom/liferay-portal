@@ -95,14 +95,12 @@ public class FragmentCollectionServiceImpl
 
 		FragmentCollection fragmentCollection =
 			fragmentCollectionLocalService.
-				fetchFragmentCollectionByExternalReferenceCode(
+				getFragmentCollectionByExternalReferenceCode(
 					externalReferenceCode, groupId);
 
-		if (fragmentCollection != null) {
-			_portletResourcePermission.check(
+		_portletResourcePermission.check(
 				getPermissionChecker(), fragmentCollection.getGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-		}
 
 		return fragmentCollectionLocalService.deleteFragmentCollection(
 			fragmentCollection);

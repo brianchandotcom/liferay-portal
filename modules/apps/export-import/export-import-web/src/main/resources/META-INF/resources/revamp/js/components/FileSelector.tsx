@@ -186,7 +186,7 @@ export default function FileSelector({
 						role="alert"
 						symbol="times-circle-full"
 					>
-						<p>{error}</p>
+						{error}
 					</ClayAlert>
 				</div>
 			)}

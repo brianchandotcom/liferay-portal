@@ -32,7 +32,6 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -200,7 +199,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateDisplayDate() throws Exception {
-		updateServiceContext(
+		resetAndPopulateServiceContext(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -218,7 +217,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateExpando() throws Exception {
-		updateServiceContext(
+		resetAndPopulateServiceContext(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -237,7 +236,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateExpirationDate() throws Exception {
-		updateServiceContext(
+		resetAndPopulateServiceContext(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -256,7 +255,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateFileEntryType() throws Exception {
-		updateServiceContext(
+		resetAndPopulateServiceContext(
 			StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			StringPool.BLANK);
@@ -276,7 +275,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateMetadata() throws Exception {
-		updateServiceContext(
+		resetAndPopulateServiceContext(
 			StringPool.BLANK, _dlFileEntryType.getFileEntryTypeId(),
 			_UPDATE_VALUE);
 
@@ -309,7 +308,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateReviewDate() throws Exception {
-		updateServiceContext(
+		resetAndPopulateServiceContext(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -415,43 +414,11 @@ public class DLFileVersionTest {
 		return serviceContext;
 	}
 
-	protected void setUpParentFolder() throws Exception {
-		try {
-			DLAppServiceUtil.deleteFolder(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				"Test Folder");
-		}
-		catch (NoSuchFolderException noSuchFolderException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFolderException);
-			}
-		}
-
-		_parentFolder = DLAppServiceUtil.addFolder(
-			null, _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-	}
-
-	protected void setUpResourcePermission() throws Exception {
-		RoleTestUtil.addResourcePermission(
-			RoleConstants.GUEST, "com.liferay.document.library",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			ActionKeys.VIEW);
-	}
-
-	protected void tearDownResourcePermission() throws Exception {
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, "com.liferay.document.library",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			ActionKeys.VIEW);
-	}
-
-	protected void updateServiceContext(
+	protected void resetAndPopulateServiceContext(
 			String expando, long fileEntryTypeId, String metadata)
-		throws PortalException {
+		throws Exception {
+
+		_serviceContext = getServiceContext();
 
 		Map<String, Serializable> expandoBridgeAttributes =
 			_serviceContext.getExpandoBridgeAttributes();
@@ -496,6 +463,40 @@ public class DLFileVersionTest {
 					ddmStructure.getStructureId(),
 				ddmFormValues);
 		}
+	}
+
+	protected void setUpParentFolder() throws Exception {
+		try {
+			DLAppServiceUtil.deleteFolder(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"Test Folder");
+		}
+		catch (NoSuchFolderException noSuchFolderException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFolderException);
+			}
+		}
+
+		_parentFolder = DLAppServiceUtil.addFolder(
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	protected void setUpResourcePermission() throws Exception {
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.GUEST, "com.liferay.document.library",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
+	}
+
+	protected void tearDownResourcePermission() throws Exception {
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, "com.liferay.document.library",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
 	}
 
 	private static final int _DATA_SIZE_1 = 512;

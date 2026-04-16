@@ -86,16 +86,16 @@ public class SitemapManagerImpl implements SitemapManager {
 			path = path.substring(contextPath.length());
 		}
 
-		String fullURL = path;
-
-		if (fullURL.startsWith(StringPool.SLASH)) {
-			fullURL = fullURL.substring(1);
-		}
-
 		String friendlyURL = _getFriendlyURL(path, groupId);
 
 		if (friendlyURL.startsWith(StringPool.SLASH)) {
 			friendlyURL = friendlyURL.substring(1);
+		}
+
+		String fullURL = path;
+
+		if (fullURL.startsWith(StringPool.SLASH)) {
+			fullURL = fullURL.substring(1);
 		}
 
 		RedirectProvider.Redirect redirect = _redirectProvider.getRedirect(
@@ -296,20 +296,20 @@ public class SitemapManagerImpl implements SitemapManager {
 			if (path.startsWith(i18nPath + StringPool.SLASH) ||
 				path.equals(i18nPath)) {
 
-				String pathWithoutLocale = path.substring(i18nPath.length());
+				path = path.substring(i18nPath.length());
 
-				int[] tempIndices = _portal.getGroupFriendlyURLIndex(
-					pathWithoutLocale);
+				int[] groupFriendlyURLIndex = _portal.getGroupFriendlyURLIndex(
+					path);
 
-				if (tempIndices != null) {
-					if (tempIndices[1] < pathWithoutLocale.length()) {
-						return pathWithoutLocale.substring(tempIndices[1]);
+				if (groupFriendlyURLIndex != null) {
+					if (groupFriendlyURLIndex[1] < path.length()) {
+						return path.substring(groupFriendlyURLIndex[1]);
 					}
 
 					return StringPool.BLANK;
 				}
 
-				return pathWithoutLocale;
+				return path;
 			}
 		}
 

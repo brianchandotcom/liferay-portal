@@ -53,37 +53,44 @@ export const DEFAULT_COUNTRIES: CountryInfo[] = [
 	{a2: 'MY', idd: '60', name: 'Malaysia'},
 ];
 
-// Pre-sorted by IDD length descending for longest-match parsing
-
-const COUNTRIES_BY_IDD_LENGTH = [...DEFAULT_COUNTRIES].sort(
-	(a, b) => b.idd.length - a.idd.length
-);
-
 const FLAG_ICON_MAP: Record<string, string> = {
+	AD: 'ca-ad',
 	AE: 'ar-sa',
 	AR: 'es-ar',
 	AT: 'de-at',
 	AU: 'en-au',
 	BE: 'nl-be',
+	BG: 'bg-bg',
 	BR: 'pt-br',
 	CA: 'en-ca',
 	CH: 'de-ch',
 	CL: 'es-es',
 	CN: 'zh-cn',
 	CO: 'es-co',
+	CZ: 'cs-cz',
 	DE: 'de-de',
 	DK: 'da-dk',
+	EE: 'et-ee',
 	ES: 'es-es',
 	FI: 'fi-fi',
 	FR: 'fr-fr',
 	GB: 'en-gb',
+	GR: 'el-gr',
+	HK: 'zh-cn',
+	HR: 'hr-hr',
+	HU: 'hu-hu',
 	ID: 'in-id',
 	IE: 'en-ie',
 	IL: 'iw-il',
 	IN: 'hi-in',
+	IR: 'fa-ir',
 	IT: 'it-it',
 	JP: 'ja-jp',
+	KH: 'km-kh',
 	KR: 'ko-kr',
+	KZ: 'kk-kz',
+	LA: 'lo-la',
+	LT: 'lt-lt',
 	MX: 'es-mx',
 	MY: 'ms-my',
 	NL: 'nl-nl',
@@ -92,13 +99,20 @@ const FLAG_ICON_MAP: Record<string, string> = {
 	PH: 'en-us',
 	PL: 'pl-pl',
 	PT: 'pt-pt',
+	RO: 'ro-ro',
+	RS: 'sr-rs',
 	RU: 'ru-ru',
 	SA: 'ar-sa',
 	SE: 'sv-se',
 	SG: 'en-us',
+	SI: 'sl-si',
+	SK: 'sk-sk',
 	TH: 'th-th',
 	TR: 'tr-tr',
+	TW: 'zh-tw',
+	UA: 'uk-ua',
 	US: 'en-us',
+	VN: 'vi-vn',
 	ZA: 'en-gb',
 };
 
@@ -106,17 +120,27 @@ export function getFlagSymbol(a2: string): string {
 	return FLAG_ICON_MAP[a2.toUpperCase()] || '';
 }
 
-export function parsePhoneValue(value: string): {
+export function parsePhoneValue(
+	value: string,
+	countries: CountryInfo[] = DEFAULT_COUNTRIES
+): {
 	countryA2: string;
 	localNumber: string;
 } {
-	if (!value || !value.startsWith('+')) {
-		return {countryA2: '', localNumber: value || ''};
-	}
-
 	const digits = value.slice(1);
 
-	for (const country of COUNTRIES_BY_IDD_LENGTH) {
+	if (!value || !value.startsWith('+')) {
+		return {countryA2: '', localNumber: digits || ''};
+	}
+
+	// Including DEFAULT_COUNTRIES to match the more common countries first.
+	// This will be re-adjusted once we can identify the country using the NDC.
+
+	const countriesByIddLength = [...DEFAULT_COUNTRIES, ...countries].sort(
+		(a, b) => b.idd.length - a.idd.length
+	);
+
+	for (const country of countriesByIddLength) {
 		if (digits.startsWith(country.idd)) {
 			return {
 				countryA2: country.a2,

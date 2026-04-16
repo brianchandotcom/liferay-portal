@@ -503,6 +503,11 @@ components:
                             items:
                                 $ref: "#/components/schemas/CustomMetaTag"
                             type: array
+                        defaultAssetPublisherPortletId:
+                            # @review
+                            description:
+                                The portlet ID of the asset publisher configured as the default for this page, if any.
+                            type: string
                         openGraphSettings:
                             $ref: "#/components/schemas/OpenGraphSettings"
                             # @review
@@ -4729,6 +4734,11 @@ components:
                             items:
                                 type: string
                             type: array
+                        defaultAssetPublisherPortletId:
+                            # @review
+                            description:
+                                The portlet ID of the asset publisher configured as the default for this page, if any.
+                            type: string
                         inheritChanges:
                             # @review
                             description:

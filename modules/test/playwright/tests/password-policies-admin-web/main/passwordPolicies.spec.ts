@@ -6,7 +6,6 @@
 import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {passwordPoliciesAdminPageTest} from '../../../fixtures/passwordPoliciesAdminConfigPageTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
@@ -19,9 +18,6 @@ import performLoginViaApi from '../../../utils/performLogin';
 
 export const test = mergeTests(
 	captchaConfigPageTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	loginTest(),
 	passwordPoliciesAdminPageTest,
 	systemSettingsPageTest

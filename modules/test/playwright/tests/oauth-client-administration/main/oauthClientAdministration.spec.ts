@@ -20,7 +20,6 @@ const test = mergeTests(
 	customFieldsPagesTest,
 	oauthClientAdminPagesTest,
 	featureFlagsTest({
-		'LPD-36105': {enabled: true},
 		'LPD-49855': {enabled: true},
 		'LPD-63415': {enabled: true},
 	}),

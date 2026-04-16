@@ -5,17 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 
-const test = mergeTests(
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
-	loginTest(),
-	usersAndOrganizationsPagesTest
-);
+const test = mergeTests(loginTest(), usersAndOrganizationsPagesTest);
 
 test(
 	'Can export users with direct servlet context disabled',

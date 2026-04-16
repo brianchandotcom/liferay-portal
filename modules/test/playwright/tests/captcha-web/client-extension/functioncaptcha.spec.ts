@@ -6,18 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import {performLogout} from '../../../utils/performLogin';
 
-export const test = mergeTests(
-	loginTest(),
-	captchaConfigPageTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	})
-);
+export const test = mergeTests(loginTest(), captchaConfigPageTest);
 
 test('LPD-44395: Test sample captcha works', async ({
 	captchaConfigPage,

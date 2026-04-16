@@ -5,17 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 
-export const test = mergeTests(
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
-	loginTest(),
-	systemSettingsPageTest
-);
+export const test = mergeTests(loginTest(), systemSettingsPageTest);
 
 test(
 	'Configuration admin UI can autogenerate a doc link',

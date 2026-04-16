@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
@@ -23,9 +22,6 @@ export const test = mergeTests(
 	blogsPagesTest,
 	changeTrackingPagesTest,
 	customFieldsPagesTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	journalPagesTest,
 	pageEditorPagesTest
 );

@@ -27,7 +27,6 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'COMMERCE-8087': {enabled: true},
-		'LPD-36105': {enabled: true},
 	}),
 	loginTest(),
 	dataMigrationCenterPagesTest,

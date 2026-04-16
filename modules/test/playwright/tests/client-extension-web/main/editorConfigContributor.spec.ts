@@ -21,7 +21,6 @@ const test = mergeTests(
 	editEditorConfigContributorPageTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
-		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),

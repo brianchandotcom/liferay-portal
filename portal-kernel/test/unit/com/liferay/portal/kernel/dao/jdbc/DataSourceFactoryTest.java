@@ -22,6 +22,9 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import java.util.Properties;
 
@@ -38,6 +41,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
 /**
  * @author Tina Tian
  * @author Eric Yan
@@ -52,6 +58,10 @@ public class DataSourceFactoryTest {
 
 	@After
 	public void tearDown() throws Exception {
+		if (_path == null) {
+			return;
+		}
+
 		Files.walkFileTree(
 			_path,
 			new SimpleFileVisitor<Path>() {
@@ -180,7 +190,51 @@ public class DataSourceFactoryTest {
 			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
 				"useBulkCopyForBatchInsert=true",
 			_rewriteJDBCURL(
-				"jdbc:sqlserver://localhost;databaseName=lportal3"));
+				"jdbc:sqlserver://localhost;databaseName=lportal3", 12, 4));
+
+		Assert.assertEquals(
+			"jdbc:sqlserver://localhost;databaseName=lportal3",
+			_rewriteJDBCURL(
+				"jdbc:sqlserver://localhost;databaseName=lportal3", 11, 4));
+
+		Assert.assertEquals(
+			"jdbc:sqlserver://localhost;databaseName=lportal3",
+			_rewriteJDBCURL(
+				"jdbc:sqlserver://localhost;databaseName=lportal3", 12, 3));
+
+		Assert.assertEquals(
+			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
+				"useBulkCopyForBatchInsert=true",
+			_rewriteJDBCURL(
+				"jdbc:sqlserver://localhost;databaseName=lportal3", 12, 5));
+
+		Assert.assertEquals(
+			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
+				"useBulkCopyForBatchInsert=true",
+			_rewriteJDBCURL(
+				"jdbc:sqlserver://localhost;databaseName=lportal3", 13, 0));
+	}
+
+	@Test
+	public void testRewriteJDBCURLForSQLServerWithUnregisteredDriver()
+		throws Exception {
+
+		SQLException sqlException = new SQLException("No suitable driver");
+
+		try (MockedStatic<DriverManager> driverManagerMockedStatic =
+				Mockito.mockStatic(DriverManager.class)) {
+
+			driverManagerMockedStatic.when(
+				() -> DriverManager.getDriver(Mockito.anyString())
+			).thenThrow(
+				sqlException
+			);
+
+			Assert.assertEquals(
+				"jdbc:sqlserver://localhost;databaseName=lportal3",
+				_rewriteJDBCURL(
+					"jdbc:sqlserver://localhost;databaseName=lportal3"));
+		}
 	}
 
 	@Test
@@ -205,11 +259,23 @@ public class DataSourceFactoryTest {
 
 		String rewrittenSQLServerJDBCURL = _rewriteJDBCURL(
 			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-				"customParam=customValue");
+				"customParam=customValue",
+			12, 4);
 
 		Assert.assertTrue(
 			rewrittenSQLServerJDBCURL.contains("customParam=customValue"));
 		Assert.assertTrue(
+			rewrittenSQLServerJDBCURL.contains(
+				"useBulkCopyForBatchInsert=true"));
+
+		rewrittenSQLServerJDBCURL = _rewriteJDBCURL(
+			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
+				"customParam=customValue",
+			11, 4);
+
+		Assert.assertTrue(
+			rewrittenSQLServerJDBCURL.contains("customParam=customValue"));
+		Assert.assertFalse(
 			rewrittenSQLServerJDBCURL.contains(
 				"useBulkCopyForBatchInsert=true"));
 	}
@@ -239,7 +305,16 @@ public class DataSourceFactoryTest {
 				"useBulkCopyForBatchInsert=false",
 			_rewriteJDBCURL(
 				"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-					"useBulkCopyForBatchInsert=false"));
+					"useBulkCopyForBatchInsert=false",
+				12, 4));
+
+		Assert.assertEquals(
+			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
+				"useBulkCopyForBatchInsert=false",
+			_rewriteJDBCURL(
+				"jdbc:sqlserver://localhost;databaseName=lportal3;" +
+					"useBulkCopyForBatchInsert=false",
+				11, 4));
 	}
 
 	@Test
@@ -260,10 +335,20 @@ public class DataSourceFactoryTest {
 			rewrittenPostgreSQLJDBCURL.contains("reWriteBatchedInserts=true"));
 
 		String rewrittenSQLServerJDBCURL = _rewriteJDBCURL(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;malformedParam");
+			"jdbc:sqlserver://localhost;databaseName=lportal3;malformedParam",
+			12, 4);
 
 		Assert.assertTrue(rewrittenSQLServerJDBCURL.contains("malformedParam"));
 		Assert.assertTrue(
+			rewrittenSQLServerJDBCURL.contains(
+				"useBulkCopyForBatchInsert=true"));
+
+		rewrittenSQLServerJDBCURL = _rewriteJDBCURL(
+			"jdbc:sqlserver://localhost;databaseName=lportal3;malformedParam",
+			11, 4);
+
+		Assert.assertTrue(rewrittenSQLServerJDBCURL.contains("malformedParam"));
+		Assert.assertFalse(
 			rewrittenSQLServerJDBCURL.contains(
 				"useBulkCopyForBatchInsert=true"));
 	}
@@ -272,6 +357,37 @@ public class DataSourceFactoryTest {
 		return ReflectionTestUtil.invoke(
 			DataSourceFactoryUtil.class, "_rewriteJDBCURL",
 			new Class<?>[] {String.class}, jdbcURL);
+	}
+
+	private String _rewriteJDBCURL(
+			String jdbcURL, int majorVersion, int minorVersion)
+		throws Exception {
+
+		try (MockedStatic<DriverManager> driverManagerMockedStatic =
+				Mockito.mockStatic(DriverManager.class)) {
+
+			Driver mockDriver = Mockito.mock(Driver.class);
+
+			driverManagerMockedStatic.when(
+				() -> DriverManager.getDriver(Mockito.anyString())
+			).thenReturn(
+				mockDriver
+			);
+
+			Mockito.when(
+				mockDriver.getMajorVersion()
+			).thenReturn(
+				majorVersion
+			);
+
+			Mockito.when(
+				mockDriver.getMinorVersion()
+			).thenReturn(
+				minorVersion
+			);
+
+			return _rewriteJDBCURL(jdbcURL);
+		}
 	}
 
 	private Path _path;

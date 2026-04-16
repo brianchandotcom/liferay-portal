@@ -146,7 +146,7 @@ public abstract class BaseTestCase {
 		companyIdCounter.add(0);
 
 		Mockito.when(
-			resultSet.getLong(1)
+			resultSet.getLong("companyId")
 		).thenAnswer(
 			(Answer<Long>)invocationOnMock -> {
 				int counter = companyIdCounter.get(0);
@@ -168,7 +168,7 @@ public abstract class BaseTestCase {
 		webIdCounter.add(0);
 
 		Mockito.when(
-			resultSet.getString(2)
+			resultSet.getString("webId")
 		).thenAnswer(
 			(Answer<String>)invocationOnMock -> {
 				int counter = webIdCounter.get(0);
@@ -190,7 +190,7 @@ public abstract class BaseTestCase {
 		companyNameCounter.add(0);
 
 		Mockito.when(
-			resultSet.getString(3)
+			resultSet.getString("name")
 		).thenAnswer(
 			(Answer<String>)invocationOnMock -> {
 				int counter = companyNameCounter.get(0);
@@ -212,7 +212,7 @@ public abstract class BaseTestCase {
 		virtualHostnameCounter.add(0);
 
 		Mockito.when(
-			resultSet.getString(4)
+			resultSet.getString("hostname")
 		).thenAnswer(
 			(Answer<String>)invocationOnMock -> {
 				int counter = virtualHostnameCounter.get(0);
@@ -336,7 +336,7 @@ public abstract class BaseTestCase {
 		companyIdCounter.add(0);
 
 		Mockito.when(
-			resultSet.getLong(1)
+			resultSet.getLong("companyId")
 		).thenAnswer(
 			(Answer<Long>)invocationOnMock -> {
 				int counter = companyIdCounter.get(0);
@@ -422,7 +422,7 @@ public abstract class BaseTestCase {
 		servletContextNameCounter.add(0);
 
 		Mockito.when(
-			resultSet.getString(1)
+			resultSet.getString("servletContextName")
 		).thenAnswer(
 			(Answer<String>)invocationOnMock -> {
 				int counter = servletContextNameCounter.get(0);
@@ -444,7 +444,7 @@ public abstract class BaseTestCase {
 		schemaVersionCounter.add(0);
 
 		Mockito.when(
-			resultSet.getString(2)
+			resultSet.getString("schemaVersion")
 		).thenAnswer(
 			(Answer<String>)invocationOnMock -> {
 				int counter = schemaVersionCounter.get(0);
@@ -468,7 +468,7 @@ public abstract class BaseTestCase {
 		stateCounter.add(0);
 
 		Mockito.when(
-			resultSet.getInt(3)
+			resultSet.getInt("state_")
 		).thenAnswer(
 			(Answer<Integer>)invocationOnMock -> {
 				int counter = stateCounter.get(0);
@@ -490,7 +490,7 @@ public abstract class BaseTestCase {
 		verifiedCounter.add(0);
 
 		Mockito.when(
-			resultSet.getBoolean(4)
+			resultSet.getBoolean("verified")
 		).thenAnswer(
 			(Answer<Boolean>)invocationOnMock -> {
 				int counter = verifiedCounter.get(0);

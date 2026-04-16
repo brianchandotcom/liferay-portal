@@ -8,6 +8,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
@@ -307,6 +308,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setDescription(description);
 		userGroup.setAddedByLDAPImport(
 			UserGroupImportTransactionThreadLocal.isOriginatesFromImport());
+		userGroup.setStatus(WorkflowConstants.STATUS_APPROVED);
 		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		userGroup = userGroupPersistence.update(userGroup);
@@ -510,6 +512,32 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		return userGroups;
+	}
+
+	@Override
+	public UserGroup getOrAddEmptyUserGroup(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws PortalException {
+
+		return EmptyModelManagerUtil.getOrAddEmptyModel(
+			UserGroup.class, companyId, externalReferenceCode,
+			this::fetchUserGroupByExternalReferenceCode,
+			this::getUserGroupByExternalReferenceCode,
+			() -> {
+				String userGroupName =
+					(fetchUserGroup(companyId, name) != null) ?
+						externalReferenceCode : name;
+
+				UserGroup userGroup = userGroupLocalService.addUserGroup(
+					externalReferenceCode, userId, companyId, userGroupName,
+					null, new ServiceContext());
+
+				userGroup.setStatus(WorkflowConstants.STATUS_EMPTY);
+
+				return userGroupPersistence.update(userGroup);
+			},
+			"user-group");
 	}
 
 	/**
@@ -1089,6 +1117,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setName(name);
 		userGroup.setDescription(description);
 		userGroup.setExpandoBridgeAttributes(serviceContext);
+
+		if (userGroup.getStatus() == WorkflowConstants.STATUS_EMPTY) {
+			userGroup.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
 
 		userGroup = userGroupPersistence.update(userGroup);
 

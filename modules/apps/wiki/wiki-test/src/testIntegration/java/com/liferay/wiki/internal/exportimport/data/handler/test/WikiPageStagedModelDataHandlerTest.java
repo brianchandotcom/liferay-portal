@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.attachments.test.WikiAttachmentsTest;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
@@ -60,41 +62,6 @@ public class WikiPageStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Test
-	public void testAtImportWikiNodePreservesLastPostDateWhenWikiPagesAdded()
-		throws Exception {
-
-		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			addDependentStagedModelsMap(stagingGroup);
-
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			WikiNode.class.getSimpleName());
-
-		WikiNode wikiNode1 = (WikiNode)dependentStagedModels.get(0);
-
-		WikiPage wikiPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), wikiNode1.getNodeId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId()));
-
-		try {
-			ExportImportThreadLocal.setLayoutImportInProcess(true);
-
-			exportImportStagedModel(wikiPage);
-		}
-		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
-		}
-
-		WikiNode wikiNode2 =
-			WikiNodeLocalServiceUtil.getWikiNodeByUuidAndGroupId(
-				wikiNode1.getUuid(), liveGroup.getGroupId());
-
-		Assert.assertEquals(
-			wikiNode1.getLastPostDate(), wikiNode2.getLastPostDate());
-	}
 
 	@Test
 	public void testDeleteAttachmentsFileEntry() throws Exception {
@@ -161,6 +128,41 @@ public class WikiPageStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			1, importedWikiPage.getAttachmentsFileEntriesCount());
+	}
+
+	@Test
+	public void testWikiNodePreservesLastPostDateOnImport() throws Exception {
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			WikiNode.class.getSimpleName());
+
+		WikiNode wikiNode1 = (WikiNode)dependentStagedModels.get(0);
+
+		WikiPage wikiPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), wikiNode1.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId()));
+
+		wikiNode1 = _wikiNodeLocalService.getWikiNode(wikiNode1.getNodeId());
+
+		try {
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+			exportImportStagedModel(wikiPage);
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
+
+		WikiNode wikiNode2 =
+			WikiNodeLocalServiceUtil.getWikiNodeByUuidAndGroupId(
+				wikiNode1.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			wikiNode1.getLastPostDate(), wikiNode2.getLastPostDate());
 	}
 
 	@Override
@@ -402,5 +404,8 @@ public class WikiPageStagedModelDataHandlerTest
 		Assert.assertEquals(
 			page.getRedirectTitle(), importedPage.getRedirectTitle());
 	}
+
+	@Inject
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

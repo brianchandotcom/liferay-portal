@@ -94,6 +94,11 @@ exports[`List rendering should match the snapshot 1`] = `
           data-testid="fds-component"
           id="assetTable"
         >
+          <div
+            data-testid="fds-filters"
+          >
+            [{"apiURL":"/o/faro/contacts/23/asset-summary-types?channelId=123&rangeKey=30","entityFieldType":"string","id":"assetType","itemKey":"name","itemLabel":"name","label":"Type","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-tags?channelId=123&rangeKey=30","entityFieldType":"string","id":"tags/id","itemKey":"id","itemLabel":"name","label":"Tags","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-categories?channelId=123&rangeKey=30","entityFieldType":"string","id":"categories/id","itemKey":"id","itemLabel":"name","label":"Categories","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-mime-types?channelId=123&rangeKey=30","entityFieldType":"string","id":"mimeType","itemKey":"id","itemLabel":"name","label":"MIME Type","multiple":true,"searchable":true,"type":"selection"}]
+          </div>
           <button
             data-testid="trigger-info-panel"
           >

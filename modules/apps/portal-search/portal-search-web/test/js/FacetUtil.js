@@ -134,7 +134,21 @@ describe('FacetUtil', () => {
 				['key2=sel2']
 			);
 
-			expect(parameters).toEqual(['key2=sel2', 'key1=sel1']);
+			expect(parameters).toEqual(['key1=sel1', 'key2=sel2']);
+		});
+
+		it('sorts parameters alphabetically', () => {
+			const parameters = FacetUtil.setURLParameters(
+				'paramB',
+				['valB'],
+				['paramC=valC', 'paramA=valA']
+			);
+
+			expect(parameters).toEqual([
+				'paramA=valA',
+				'paramB=valB',
+				'paramC=valC',
+			]);
 		});
 	});
 
@@ -156,7 +170,7 @@ describe('FacetUtil', () => {
 				'?key2=sel2'
 			);
 
-			expect(queryString).toEqual('?key2=sel2&key1=sel1');
+			expect(queryString).toEqual('?key1=sel1&key2=sel2');
 		});
 
 		it('accepts query string without question mark', () => {
@@ -166,7 +180,7 @@ describe('FacetUtil', () => {
 				'key2=sel2'
 			);
 
-			expect(queryString).toEqual('key2=sel2&key1=sel1');
+			expect(queryString).toEqual('key1=sel1&key2=sel2');
 		});
 
 		it('does not prefix with ampersand', () => {
@@ -177,6 +191,58 @@ describe('FacetUtil', () => {
 			);
 
 			expect(queryString).toEqual('?key=sel1&key=sel2');
+		});
+
+		it('sorts parameters alphabetically', () => {
+			const queryString = FacetUtil.updateQueryString(
+				'paramB',
+				['valB'],
+				'?paramC=valC&paramA=valA'
+			);
+
+			expect(queryString).toEqual('?paramA=valA&paramB=valB&paramC=valC');
+		});
+	});
+
+	describe('queryParameterAndUpdateValue()', () => {
+		let originalQuerySelector;
+
+		beforeEach(() => {
+			originalQuerySelector = document.querySelector;
+
+			document.querySelector = (selector) => {
+				if (selector === '#fm input.facet-parameter-name') {
+					return {
+						value: 'q',
+					};
+				}
+
+				if (selector === '#fm input.start-parameter-name') {
+					return {
+						value: 'start',
+					};
+				}
+
+				return null;
+			};
+		});
+
+		afterEach(() => {
+			document.querySelector = originalQuerySelector;
+		});
+
+		it('sorts parameters alphabetically when updating value', () => {
+			const mockForm = {
+				id: 'fm',
+			};
+
+			const queryString = FacetUtil.queryParameterAndUpdateValue(
+				mockForm,
+				'?start=10&paramC=valC&q=initial&paramA=valA',
+				['newQuery']
+			);
+
+			expect(queryString).toEqual('paramA=valA&paramC=valC&q=newQuery');
 		});
 	});
 });

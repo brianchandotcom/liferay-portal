@@ -425,3 +425,123 @@ test.describe('Search Paginator', () => {
 		});
 	});
 });
+
+test.describe('URL Parameters Are Sorted', () => {
+	test('Facet selection, modified range, pagination, and sort links on the page have alphabetically sorted URL parameters @LPD-86163', async ({
+		apiHelpers,
+		page,
+		searchPage,
+		site,
+	}) => {
+		let siteLayout: Layout;
+
+		await test.step('Create web content for search results', async () => {
+			const basicWebContentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			for (let count = 0; count < 21; count++) {
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					ddmStructureId: basicWebContentStructureId,
+					groupId: site.id,
+					titleMap: {en_US: `Test Web Content ${count}`},
+				});
+			}
+		});
+
+		await test.step('Create a portlet page associated to site', async () => {
+			siteLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				options: {type: 'portlet'},
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Navigate to the site page', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${siteLayout.friendlyURL}`
+			);
+		});
+
+		await test.step('Add search portlets to new page', async () => {
+			await searchPage.addPortlet('Modified Facet', 'Search');
+			await searchPage.addPortlet('Search Bar', 'Search');
+			await searchPage.addPortlet('Search Results', 'Search');
+			await searchPage.addPortlet('Sort', 'Search');
+			await searchPage.addPortlet('Type Facet', 'Search');
+		});
+
+		await test.step('Perform a search', async () => {
+			await searchPage.searchKeywordInMainContent('test');
+
+			await expect(searchPage.searchResultsTotalLabel).toHaveText(
+				/\d+ Results for test/
+			);
+		});
+
+		await test.step('Verify URL parameters are sorted after clicking facet checkbox', async () => {
+			const typeFacetCheckbox = await searchPage.getSearchFacetCheckbox(
+				/Web Content\s/,
+				'Type'
+			);
+
+			await searchPage.selectSearchFacetCheckbox(typeFacetCheckbox);
+
+			const facetKeys = Array.from(
+				new URL(page.url()).searchParams.keys()
+			);
+
+			expect(facetKeys).toEqual([...facetKeys].sort());
+		});
+
+		await test.step('Verify URL parameters are sorted after clicking modified facet link', async () => {
+			const pastYearFacetLink = await searchPage.getSearchFacetLink(
+				'Past Year',
+				'Last Modified'
+			);
+
+			await searchPage.selectSearchFacetLink(pastYearFacetLink);
+
+			const modifiedKeys = Array.from(
+				new URL(page.url()).searchParams.keys()
+			);
+
+			expect(modifiedKeys).toEqual([...modifiedKeys].sort());
+		});
+
+		await test.step('Verify URL parameters are sorted after changing items per page', async () => {
+			await searchPage.selectPaginationItemsPerPage(40);
+
+			const deltaKeys = Array.from(
+				new URL(page.url()).searchParams.keys()
+			);
+
+			expect(deltaKeys).toEqual([...deltaKeys].sort());
+		});
+		
+		await test.step('Verify URL parameters are sorted after clicking pagination page number', async () => {
+			await searchPage.selectPaginationPageNumber(2);
+
+			const paginationKeys = Array.from(
+				new URL(page.url()).searchParams.keys()
+			);
+
+			expect(paginationKeys).toEqual([...paginationKeys].sort());
+		});
+
+		await test.step('Verify URL parameters are sorted after clicking sort option', async () => {
+			const sortPortlet = page.locator('.portlet-sort');
+
+			await sortPortlet
+				.getByRole('button', {name: 'Sort By'})
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Title'}).click();
+
+			const sortKeys = Array.from(
+				new URL(page.url()).searchParams.keys()
+			);
+
+			expect(sortKeys).toEqual([...sortKeys].sort());
+		});
+	});
+});

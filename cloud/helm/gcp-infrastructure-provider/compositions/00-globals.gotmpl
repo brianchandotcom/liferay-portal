@@ -13,6 +13,8 @@
 {{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
 {{- $gsaName := printf "%s-sa" $xr.metadata.name -}}
 {{- $jobName := printf "%s-db-grant" $xr.metadata.name -}}
+{{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
+{{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
 {{- $managementPoliciesOnce := (list "Create" "Observe" "Delete") | toJson -}}
 {{- $namespace := $xr.metadata.namespace -}}
 {{- $overlay := $xr.spec.overlay | default dict -}}
@@ -26,11 +28,10 @@
 {{- $gsaEmail := printf "%s@%s.iam.gserviceaccount.com" $gsaName $env.projectId -}}
 {{- $hash := printf "%s-%s" $databaseName $env.projectId | sha256sum | trunc 7 -}}
 {{- $labels := merge $commonTags (dict "app" "liferay" "deployment-name" $env.deploymentName "environment-id" $environmentId "project-id" $projectId) -}}
-{{- $backupTargetLabels := merge (dict) $labels (dict "active" "true" "should-back-up" "true") -}}
-{{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
-{{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
 {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
 {{- $region := $databaseSpec.region | default $xr.spec.region -}}
+
+{{- $backupTargetLabels := merge (dict) $labels (dict "active" "true" "should-back-up" "true") -}}
 {{- $uidHash := printf "%s-%s" $env.projectNumber $projectIdFull | sha256sum | trunc 6 -}}
 
 {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}

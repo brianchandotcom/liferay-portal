@@ -198,6 +198,32 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 			UserGroupIdComparator.getInstance(true));
 	}
 
+	@Override
+	public UserGroup getOrAddEmptyUserGroup(
+			String externalReferenceCode, String name)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		UserGroup userGroup =
+			userGroupLocalService.fetchUserGroupByExternalReferenceCode(
+				externalReferenceCode, permissionChecker.getCompanyId());
+
+		if (userGroup != null) {
+			UserGroupPermissionUtil.check(
+				permissionChecker, userGroup.getUserGroupId(), ActionKeys.VIEW);
+
+			return userGroup;
+		}
+
+		PortalPermissionUtil.check(
+			permissionChecker, ActionKeys.ADD_USER_GROUP);
+
+		return userGroupLocalService.getOrAddEmptyUserGroup(
+			externalReferenceCode, permissionChecker.getCompanyId(),
+			permissionChecker.getUserId(), name);
+	}
+
 	/**
 	 * Returns the user group with the primary key.
 	 *

@@ -45,6 +45,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -83,6 +84,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -588,12 +590,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstance.getVersion());
 		ddmFormInstanceRecord.setVersion(_VERSION_DEFAULT);
 
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		if (httpServletRequest != null) {
-			ddmFormInstanceRecord.setIpAddress(
-				httpServletRequest.getRemoteAddr());
-		}
+		_setIpAddress(ddmFormInstanceRecord, serviceContext);
 
 		ddmFormInstanceRecord = ddmFormInstanceRecordPersistence.update(
 			ddmFormInstanceRecord);
@@ -964,6 +961,27 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return lastAttributes.equals(latestAttributes);
 	}
 
+	private void _setIpAddress(
+		DDMFormInstanceRecord ddmFormInstanceRecord,
+		ServiceContext serviceContext) {
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest != null) {
+			ddmFormInstanceRecord.setIpAddress(
+				httpServletRequest.getRemoteAddr());
+
+			return;
+		}
+
+		String ipAddress = GetterUtil.getString(
+			serviceContext.getAttribute("ipAddress"));
+
+		if (!Validator.isBlank(ipAddress)) {
+			ddmFormInstanceRecord.setIpAddress(ipAddress);
+		}
+	}
+
 	private void _startWorkflowInstance(
 			long companyId, DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord,
@@ -991,7 +1009,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				"entryTitleXML", ddmFormInstance.getName()
 			).build());
 
-		if (_isEmailNotificationEnabled(ddmFormInstance)) {
+		if (_isEmailNotificationEnabled(ddmFormInstance) &&
+			!ExportImportThreadLocal.isImportInProcess() &&
+			!ExportImportThreadLocal.isStagingInProcess()) {
+
 			_ddmFormEmailNotificationSender.sendEmailNotification(
 				ddmFormInstanceRecord, serviceContext);
 		}

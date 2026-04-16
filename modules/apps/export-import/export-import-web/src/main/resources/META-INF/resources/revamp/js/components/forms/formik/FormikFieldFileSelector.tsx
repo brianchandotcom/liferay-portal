@@ -95,7 +95,7 @@ export function FormikFieldFileSelector({
 
 	useEffect(() => {
 		setError(validate(field.value));
-	}, [validate, field.value, setError]);
+	}, [field.value]);
 
 	const handleUpload = async (file: File) => {
 		if (abortControllerRef.current) {

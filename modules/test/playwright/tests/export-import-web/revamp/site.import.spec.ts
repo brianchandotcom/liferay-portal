@@ -32,7 +32,7 @@ test('Can upload valid lar', async ({
 	await exportImportPage.newImport.click();
 
 	await exportImportPage.selectFile(
-		path.join(__dirname, 'dependencies', 'site.lar')
+		path.join(__dirname, '../main/dependencies', 'site.lar')
 	);
 
 	await exportImportPage.completedLabel.waitFor();
@@ -53,7 +53,7 @@ test('Should show error on invalid lar upload (extension .lar)', async ({
 	await exportImportPage.newImport.click();
 
 	await exportImportPage.import(
-		path.join(__dirname, 'dependencies', 'folder.portlet.lar'),
+		path.join(__dirname, '../main/dependencies', 'folder.portlet.lar'),
 		'Uploaded LAR file type Portlet does not match layout-prototype, layout-set, layout-set-prototype.'
 	);
 	await expect(exportImportPage.continueButton).toBeDisabled();
@@ -70,7 +70,7 @@ test('Should show error on invalid lar upload (extension not .lar)', async ({
 	await exportImportPage.newImport.click();
 
 	await exportImportPage.import(
-		path.join(__dirname, 'dependencies', 'invalid.json'),
+		path.join(__dirname, '../main/dependencies', 'Document.jpg'),
 		'File type must be .lar'
 	);
 

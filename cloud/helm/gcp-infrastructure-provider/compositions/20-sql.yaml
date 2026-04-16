@@ -22,8 +22,7 @@ spec:
         region: {{ $region }}
         {{- if and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) $databaseSpec.restoreBackupContext }}
         restoreBackupContext:
-            backupRunId: {{ $databaseSpec.restoreBackupContext.backupRunId }}
-            instanceId: {{ $databaseSpec.restoreBackupContext.instanceId }}
+            backupRunId: {{ $databaseSpec.snapshotUuid }}
             project: {{ $databaseSpec.restoreBackupContext.project | default $env.projectId }}
         {{- end }}
         rootPasswordSecretRef:
@@ -42,6 +41,7 @@ spec:
                 ipv4Enabled: false
                 privateNetwork: projects/{{ $env.projectId }}/global/networks/{{ $env.vpcName }}
                 sslMode: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+            retainBackupsOnDelete: true
             tier: {{ $databaseSpec.instanceType | default "db-custom-1-3840" }}
             userLabels:
                 {{- $backupTargetLabels | toYaml | nindent 16 }}

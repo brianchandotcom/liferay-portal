@@ -58,18 +58,10 @@ spec:
                                             type: boolean
                                         region:
                                             type: string
-                                        restoreBackupContext:
-                                            nullable: true
-                                            properties:
-                                                backupRunId:
-                                                    format: int64
-                                                    type: integer
-                                                instanceId:
-                                                    type: string
-                                                project:
-                                                    type: string
-                                            type: object
                                         rootPasswordSecretName:
+                                            type: string
+                                        snapshotUuid:
+                                            nullable: true
                                             type: string
                                         storageGB:
                                             type: integer

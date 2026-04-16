@@ -10,10 +10,12 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
@@ -58,11 +60,20 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 
 	@Override
 	public Map<String, Object> getAdditionalProps() {
-		return new HashMapBuilder<>().putAll(
-			super.getAdditionalProps()
-		).put(
-			"showAdditionalItemInfo", true
-		).build();
+		Map<String, Object> additionalProps = super.getAdditionalProps();
+
+		try {
+			additionalProps.put("breadcrumbProps", getBreadcrumbProps());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		additionalProps.put("showAdditionalItemInfo", true);
+
+		return additionalProps;
 	}
 
 	@Override
@@ -100,6 +111,9 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 	protected String getEmptyStateDescriptionKey() {
 		return "create-and-manage-content-within-this-space";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewSpaceContentsSummarySectionDisplayContext.class);
 
 	private final long _groupId;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;

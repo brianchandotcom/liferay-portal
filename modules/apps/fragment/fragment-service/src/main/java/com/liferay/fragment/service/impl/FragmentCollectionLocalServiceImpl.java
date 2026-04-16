@@ -257,7 +257,7 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public List<FragmentCollection> getExportableFragmentCollections(
+	public List<FragmentCollection> getExportableFragmentCollectionsByGroupId(
 		long[] groupIds, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
@@ -276,7 +276,7 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public List<FragmentCollection> getExportableFragmentCollections(
+	public List<FragmentCollection> getExportableFragmentCollectionsByGroupId(
 		long[] groupIds, String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 

@@ -14,11 +14,11 @@ import React, {useEffect, useMemo, useState} from 'react';
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import FolderService from '../../common/services/FolderService';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
-import {ObjectDefinition} from '../../common/types/ObjectDefinition';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
 import {openCMSModal} from '../../common/utils/openCMSModal';
 import {displayErrorToast} from '../../common/utils/toastUtil';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
+import {isContentStructureMoveInvalid} from '../utils/ContentStructureUtil';
 import DuplicatedAssetFolderNamesModalContent, {
 	Option,
 } from './DuplicatedAssetFolderNamesModalContent';
@@ -122,79 +122,6 @@ const displayToast = (
 			`${Liferay.Util.escapeHTML(itemData.embedded.title)}`,
 			`<strong>${Liferay.Util.escapeHTML(folder.title)}</strong>`
 		);
-	}
-};
-
-const isContentStructureMoveInvalid = async (
-	item: any,
-	destinationSpaceScopeId: number | undefined,
-	assetLibraries: AssetLibrary[]
-): Promise<boolean> => {
-	const {embedded} = item;
-
-	const objectFolderERC =
-		embedded?.systemProperties?.objectDefinitionBrief
-			?.objectFolderExternalReferenceCode;
-	const entryFolderERC = embedded?.objectEntryFolderExternalReferenceCode;
-
-	const isContentStructureItem =
-		objectFolderERC === 'L_CMS_CONTENT_STRUCTURES' ||
-		entryFolderERC === 'L_CONTENTS';
-
-	if (!isContentStructureItem) {
-		return false;
-	}
-
-	const structureExternalReferenceCode =
-		embedded?.systemProperties?.objectDefinitionBrief
-			?.externalReferenceCode;
-
-	if (!structureExternalReferenceCode || !destinationSpaceScopeId) {
-		return true;
-	}
-
-	try {
-		const response = await ApiHelper.get(
-			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${structureExternalReferenceCode}`
-		);
-
-		if (response.error || !response.data) {
-			return true;
-		}
-
-		const objectDefinition = response.data as ObjectDefinition;
-		const acceptedGroupSettings =
-			objectDefinition.objectDefinitionSettings?.find(
-				(setting) =>
-					setting.name === 'acceptedGroupExternalReferenceCodes'
-			);
-
-		if (!acceptedGroupSettings || !acceptedGroupSettings.value) {
-			return false;
-		}
-
-		const acceptedGroupERCs = acceptedGroupSettings.value.split(',');
-
-		const destinationAssetLibrary = assetLibraries.find(
-			(lib) => lib.groupId === destinationSpaceScopeId
-		);
-
-		if (
-			!destinationAssetLibrary ||
-			!destinationAssetLibrary.externalReferenceCode
-		) {
-			return true;
-		}
-
-		const destinationSpaceERC =
-			destinationAssetLibrary.externalReferenceCode;
-		const isStructureAvailableInDestination =
-			acceptedGroupERCs.includes(destinationSpaceERC);
-
-		return !isStructureAvailableInDestination;
-	}
-	catch (error) {
-		return true;
 	}
 };
 
@@ -425,7 +352,7 @@ function FolderItemSelectorModalContent({
 			const invalidMovesPromises = selectedData.items.map(
 				async (item: any) =>
 					await isContentStructureMoveInvalid(
-						item,
+						item.embedded,
 						currentSpace?.scopeId,
 						assetLibraries
 					)
@@ -433,7 +360,7 @@ function FolderItemSelectorModalContent({
 
 			const invalidMovesResults = await Promise.all(invalidMovesPromises);
 			const hasContentStructureInDifferentSpace =
-				invalidMovesResults.some((result: boolean) => result === true);
+				invalidMovesResults.some(Boolean);
 
 			if (hasContentStructureInDifferentSpace) {
 				displayErrorToast(invalidContentActionMessage);
@@ -460,7 +387,7 @@ function FolderItemSelectorModalContent({
 		}
 
 		const isInvalidSingleMove = await isContentStructureMoveInvalid(
-			itemData,
+			itemData.embedded,
 			currentSpace?.scopeId,
 			assetLibraries
 		);

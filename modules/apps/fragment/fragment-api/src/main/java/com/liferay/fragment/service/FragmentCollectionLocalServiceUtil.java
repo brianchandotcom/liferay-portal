@@ -284,6 +284,42 @@ public class FragmentCollectionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<FragmentCollection> getExportableFragmentCollections(
+		long[] fragmentCollectionIds) {
+
+		return getService().getExportableFragmentCollections(
+			fragmentCollectionIds);
+	}
+
+	public static List<FragmentCollection>
+		getExportableFragmentCollectionsByGroupId(
+			long[] groupIds, int start, int end,
+			OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getExportableFragmentCollectionsByGroupId(
+			groupIds, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection>
+		getExportableFragmentCollectionsByGroupId(
+			long[] groupIds, String name, int start, int end,
+			OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getExportableFragmentCollectionsByGroupId(
+			groupIds, name, start, end, orderByComparator);
+	}
+
+	public static int getExportableFragmentCollectionsCount(long[] groupIds) {
+		return getService().getExportableFragmentCollectionsCount(groupIds);
+	}
+
+	public static int getExportableFragmentCollectionsCount(
+		long[] groupIds, String name) {
+
+		return getService().getExportableFragmentCollectionsCount(
+			groupIds, name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -349,6 +385,26 @@ public class FragmentCollectionLocalServiceUtil {
 	}
 
 	public static List<FragmentCollection> getFragmentCollections(
+		long groupId) {
+
+		return getService().getFragmentCollections(groupId);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
+		long groupId, boolean includeSystem) {
+
+		return getService().getFragmentCollections(groupId, includeSystem);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
+		long groupId, boolean includeSystem, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupId, includeSystem, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end) {
 
 		return getService().getFragmentCollections(groupId, start, end);
@@ -363,11 +419,57 @@ public class FragmentCollectionLocalServiceUtil {
 	}
 
 	public static List<FragmentCollection> getFragmentCollections(
+		long groupId, String name, boolean includeSystem, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupId, name, includeSystem, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
 		long groupId, String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return getService().getFragmentCollections(
 			groupId, name, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
+		long[] groupIds) {
+
+		return getService().getFragmentCollections(groupIds);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupIds, marketplace, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupIds, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupIds, name, marketplace, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupIds, name, start, end, orderByComparator);
 	}
 
 	/**
@@ -410,6 +512,46 @@ public class FragmentCollectionLocalServiceUtil {
 	 */
 	public static int getFragmentCollectionsCount() {
 		return getService().getFragmentCollectionsCount();
+	}
+
+	public static int getFragmentCollectionsCount(long groupId) {
+		return getService().getFragmentCollectionsCount(groupId);
+	}
+
+	public static int getFragmentCollectionsCount(
+		long groupId, boolean includeSystem) {
+
+		return getService().getFragmentCollectionsCount(groupId, includeSystem);
+	}
+
+	public static int getFragmentCollectionsCount(
+		long groupId, String name, boolean includeSystem) {
+
+		return getService().getFragmentCollectionsCount(
+			groupId, name, includeSystem);
+	}
+
+	public static int getFragmentCollectionsCount(long[] groupIds) {
+		return getService().getFragmentCollectionsCount(groupIds);
+	}
+
+	public static int getFragmentCollectionsCount(
+		long[] groupIds, boolean marketplace) {
+
+		return getService().getFragmentCollectionsCount(groupIds, marketplace);
+	}
+
+	public static int getFragmentCollectionsCount(
+		long[] groupIds, String name) {
+
+		return getService().getFragmentCollectionsCount(groupIds, name);
+	}
+
+	public static int getFragmentCollectionsCount(
+		long[] groupIds, String name, boolean marketplace) {
+
+		return getService().getFragmentCollectionsCount(
+			groupIds, name, marketplace);
 	}
 
 	public static
@@ -484,4 +626,4 @@ public class FragmentCollectionLocalServiceUtil {
 			FragmentCollectionLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-188320846
+// LIFERAY-SERVICE-BUILDER-HASH:-1326154317

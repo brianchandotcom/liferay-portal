@@ -95,6 +95,19 @@ public class ServiceBuilderModulesBatchTestClassGroup
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
+		File portalImplBuildFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			"portal-impl/build.xml");
+
+		if (JenkinsResultsParserUtil.isUnifiedBuilderSupported(
+				portalGitWorkingDirectory.getUpstreamBranchName())) {
+
+			addTestClass(
+				TestClassFactory.newTestClass(this, portalImplBuildFile));
+
+			return;
+		}
+
 		File portalModulesBaseDir = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
@@ -158,10 +171,6 @@ public class ServiceBuilderModulesBatchTestClassGroup
 		}
 
 		if (_buildType != null) {
-			File portalImplBuildFile = new File(
-				portalGitWorkingDirectory.getWorkingDirectory(),
-				"portal-impl/build.xml");
-
 			addTestClass(
 				TestClassFactory.newTestClass(this, portalImplBuildFile));
 		}

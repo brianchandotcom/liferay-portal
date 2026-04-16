@@ -30,18 +30,20 @@ spec:
                 namespace: {{ $searchNamespace }}
     managementPolicies: ["Observe"]
 ---
-{{- $esObj := (index .observed.resources "elasticsearch-observer" | default dict).resource | default dict -}}
-{{- $esAtProvider := ($esObj.status | default dict).atProvider | default dict -}}
-{{- $esManifest := (index $esAtProvider "manifest" | default dict) -}}
-{{- $esStatus := (index $esManifest "status" | default dict) -}}
-{{- $health := (index $esStatus "health" | default "") -}}
+{{- $elasticsearchObject := (index .observed.resources "elasticsearch-observer" | default dict).resource | default dict -}}
+{{- $elasticsearchObjectAtProvider := ($elasticsearchObject.status | default dict).atProvider | default dict -}}
+{{- $elasticsearchObjectAtProviderManifest := (index $elasticsearchObjectAtProvider "manifest" | default dict) -}}
+{{- $elasticsearchObjectAtProviderManifestStatus := (index $elasticsearchObjectAtProviderManifest "status" | default dict) -}}
+{{- $health := (index $elasticsearchObjectAtProviderManifestStatus "health" | default "") -}}
 {{- $isSearchReady := or (eq $health "green") (eq $health "yellow") -}}
-{{- $secretObj := (index .observed.resources "elasticsearch-secret-observer" | default dict).resource | default dict -}}
-{{- $secretAtProvider := ($secretObj.status | default dict).atProvider | default dict -}}
-{{- $secretManifest := (index $secretAtProvider "manifest" | default dict) -}}
-{{- $secretData := (index $secretManifest "data" | default dict) -}}
-{{- $password := (index $secretData "elastic" | default "") -}}
-{{- if and $isSearchReady $password }}
+
+{{- $secretObject := (index .observed.resources "elasticsearch-secret-observer" | default dict).resource | default dict -}}
+{{- $secretObjectAtProvider := ($secretObject.status | default dict).atProvider | default dict -}}
+{{- $secretObjectAtProviderManifest := (index $secretObjectAtProvider "manifest" | default dict) -}}
+{{- $secretObjectAtProviderManifestData := (index $secretObjectAtProviderManifest "data" | default dict) -}}
+{{- $secretObjectAtProviderManifestDataPassword := (index $secretObjectAtProviderManifestData "elastic" | default "") -}}
+
+{{- if and $isSearchReady $secretObjectAtProviderManifestDataPassword }}
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
 metadata:
@@ -56,7 +58,7 @@ spec:
         manifest:
             apiVersion: v1
             data:
-                ELASTICSEARCH_PASSWORD: {{ $password }}
+                ELASTICSEARCH_PASSWORD: {{ $secretObjectAtProviderManifestDataPassword }}
             kind: Secret
             metadata:
                 labels:

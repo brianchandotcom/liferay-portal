@@ -39,6 +39,8 @@ import jakarta.ws.rs.core.UriInfo;
 
 import java.net.URI;
 
+import java.util.Arrays;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -283,7 +285,17 @@ public class RelatedObjectEntryResourceImpl
 
 		String path = uri.getPath();
 
-		String restContextPath = path.split("/")[2] + "/v1.0/" + previousPath;
+		String[] parts = path.split("/");
+
+		int index = Arrays.asList(
+			parts
+		).indexOf(
+			"o"
+		);
+
+		String applicationPath = parts[index + 1];
+
+		String restContextPath = applicationPath + "/v1.0/" + previousPath;
 
 		for (ObjectDefinition systemObjectDefinition :
 				_objectDefinitionLocalService.

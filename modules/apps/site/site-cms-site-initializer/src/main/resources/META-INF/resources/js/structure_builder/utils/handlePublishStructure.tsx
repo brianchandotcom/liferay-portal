@@ -291,29 +291,7 @@ export default async function handlePublishStructure({
 			dispatch({id: data.id, type: 'publish-structure'});
 		}
 	}
-	else if (status === 'draft') {
-		const {error} = await StructureService.updateStructure({
-			children,
-			erc,
-			history,
-			id,
-			label,
-			name,
-			spaces,
-			status: 'published',
-			workflows,
-		});
-
-		if (error) {
-			onError();
-
-			return;
-		}
-		else {
-			dispatch({type: 'publish-structure'});
-		}
-	}
-	else if (status === 'published') {
+	else if (status === 'draft' || status === 'published') {
 		const {error} = await StructureService.updateStructure({
 			children,
 			erc,

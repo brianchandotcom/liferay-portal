@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -59,11 +62,8 @@ import com.mashape.unirest.request.HttpRequestWithBody;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.MalformedURLException;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author Adolfo Pérez
@@ -713,17 +713,24 @@ public class SharepointExtRepository implements ExtRepository {
 					sharepointRepositoryTokenBroker.requestAccessTokenSilently(
 						token);
 
-			_tokenStore.save(
-				_sharepointRepositoryConfiguration.name(),
-				PrincipalThreadLocal.getUserId(),
-				sharepointRepositoryAuthenticationResult.getToken());
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_tokenStore.save(
+						_sharepointRepositoryConfiguration.name(),
+						PrincipalThreadLocal.getUserId(),
+						sharepointRepositoryAuthenticationResult.getToken());
+
+					return null;
+				});
 
 			return sharepointRepositoryAuthenticationResult.getAccessToken();
 		}
-		catch (ExecutionException | InterruptedException | MalformedURLException
-					exception) {
-
-			throw new PortalException(exception);
+		catch (PortalException portalException) {
+			throw portalException;
+		}
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
 		}
 	}
 
@@ -926,6 +933,10 @@ public class SharepointExtRepository implements ExtRepository {
 
 	private static final String _RESULTS_SOURCE_ID =
 		"8413cd39-2156-4e00-b54d-11efd9abdb89";
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	private String _libraryPath;
 	private ExtRepositoryFolder _rootFolder;

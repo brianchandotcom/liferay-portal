@@ -66,9 +66,10 @@ public class FragmentCollectionsDisplayContextTest {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		Mockito.when(
-			_fragmentCollectionLocalService.getExportableFragmentCollections(
-				Mockito.any(long[].class), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.any())
+			_fragmentCollectionLocalService.
+				getExportableFragmentCollectionsByGroupId(
+					Mockito.any(long[].class), Mockito.anyInt(),
+					Mockito.anyInt(), Mockito.any())
 		).thenReturn(
 			List.of()
 		);
@@ -107,7 +108,7 @@ public class FragmentCollectionsDisplayContextTest {
 
 		Mockito.verify(
 			_fragmentCollectionLocalService
-		).getExportableFragmentCollections(
+		).getExportableFragmentCollectionsByGroupId(
 			Mockito.any(long[].class), Mockito.anyInt(), Mockito.anyInt(),
 			Mockito.any()
 		);
@@ -128,7 +129,7 @@ public class FragmentCollectionsDisplayContextTest {
 
 		Mockito.verify(
 			_fragmentCollectionLocalService
-		).getExportableFragmentCollections(
+		).getExportableFragmentCollectionsByGroupId(
 			Mockito.any(long[].class), Mockito.eq("Banner"), Mockito.eq(0),
 			Mockito.eq(20), Mockito.any()
 		);

@@ -5,6 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import {Option, Picker} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import React, {useCallback, useId, useMemo, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
@@ -129,17 +130,31 @@ export default function PreviewBody({
 				) : null}
 			</div>
 
-			{selectedChannelKey && !displayPageTemplates?.length ? (
-				<ClayAlert
-					className="m-3"
-					displayType="info"
-					title={Liferay.Language.get('info')}
-				>
-					{Liferay.Language.get(
-						'no-display-page-templates-available-for-preview-in-this-channel'
+			<div className="align-items-center content-editor__preview__content d-flex position-relative">
+				{selectedChannelKey &&
+				displayPageTemplates !== undefined &&
+				!displayPageTemplates.length ? (
+					<ClayAlert
+						className="fixed-top m-3 position-absolute"
+						displayType="info"
+						title={Liferay.Language.get('info')}
+					>
+						{Liferay.Language.get(
+							'no-display-page-templates-available-for-preview-in-this-channel'
+						)}
+					</ClayAlert>
+				) : null}
+
+				<ClayEmptyState
+					className="mt-0"
+					description={Liferay.Language.get(
+						'select-a-channel-and-save-as-draft-or-publish-to-see-your-changes-here'
 					)}
-				</ClayAlert>
-			) : null}
+					imgSrc={`${Liferay.ThemeDisplay.getPathContext()}/o/fragment-collection-contributor-inputs/drag_drop_illustration.svg`}
+					small
+					title={Liferay.Language.get('nothing-to-show-yet')}
+				/>
+			</div>
 		</>
 	);
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -337,12 +338,15 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected Connection getConnection() throws Exception {
-		return UpgradeSQLRecorder.getConnectionWrapper(
-			(Connection)ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(),
-				new Class<?>[] {Connection.class},
-				new ConnectionThreadProxyInvocationHandler()),
-			ClassUtil.getClassName(this));
+		Connection connection = (Connection)ProxyUtil.newProxyInstance(
+			ClassLoader.getSystemClassLoader(),
+			new Class<?>[] {Connection.class},
+			new ConnectionThreadProxyInvocationHandler());
+
+		connection = UpgradeSQLRecorder.getConnectionWrapper(
+			connection, ClassUtil.getClassName(this));
+
+		return UpgradeLogProgressTracker.getConnectionWrapper(connection);
 	}
 
 	protected String[] getPrimaryKeyColumnNames(

@@ -51,17 +51,6 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 						namespace="liferay-${var.infrastructure_git_repo_config.target.namespaceSuffix}"
 						server="https://kubernetes.default.svc"
 					}
-					ignoreDifferences=[
-						{
-							group="aws.liferay.com"
-							jsonPointers=[
-								"/spec/database/snapshotIdentifier",
-								"/spec/restorePhase",
-								"/spec/targetActiveDataPlane",
-							]
-							kind="LiferayInfrastructure"
-						},
-					]
 					project=local.infrastructure_appproject_name
 					sources=[
 						merge(

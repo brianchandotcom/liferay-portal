@@ -15,7 +15,6 @@ import com.liferay.cookies.internal.configuration.admin.service.CookiesPreferenc
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -411,16 +410,7 @@ public class CookiesConfigurationProviderImpl
 			new Date(
 			).getTime()
 		).put(
-			"storeConsent",
-			() -> {
-				if (FeatureFlagManagerUtil.isEnabled(
-						CompanyThreadLocal.getCompanyId(), "LPD-75032")) {
-
-					return storeConsent;
-				}
-
-				return null;
-			}
+			"storeConsent", storeConsent
 		).build();
 	}
 

@@ -79,10 +79,7 @@ export function declineAllCookies(
 }
 
 export function deleteStoredCookies() {
-	if (
-		Liferay.FeatureFlags['LPD-75032'] &&
-		Liferay.ThemeDisplay.isSignedIn()
-	) {
+	if (Liferay.ThemeDisplay.isSignedIn()) {
 		fetch('/o/cookies/v1.0/cookies-consent-preferences/', {
 			headers: HEADERS,
 			method: 'DELETE',
@@ -142,11 +139,7 @@ async function fetchStoredCookie(name) {
 export async function getCookie(name) {
 	const cookie = getCookieUtil(name, COOKIE_TYPES.NECESSARY);
 
-	if (
-		cookie !== undefined ||
-		!Liferay.FeatureFlags['LPD-75032'] ||
-		!Liferay.ThemeDisplay.isSignedIn()
-	) {
+	if (cookie !== undefined || !Liferay.ThemeDisplay.isSignedIn()) {
 		return cookie;
 	}
 
@@ -231,11 +224,7 @@ export function setCookie(
 		'path': themeDisplay.getPathContext() || '/',
 	});
 
-	if (
-		Liferay.FeatureFlags['LPD-75032'] &&
-		Liferay.ThemeDisplay.isSignedIn() &&
-		storeConsent
-	) {
+	if (Liferay.ThemeDisplay.isSignedIn() && storeConsent) {
 		const expirationDate = new Date();
 		expirationDate.setSeconds(
 			expirationDate.getSeconds() + Math.floor(maxAge)
@@ -262,10 +251,7 @@ export function setUserConfigCookie(
 	storeConsent,
 	timeUnit
 ) {
-	if (
-		Liferay.FeatureFlags['LPD-75032'] &&
-		!Liferay.ThemeDisplay.isSignedIn()
-	) {
+	if (!Liferay.ThemeDisplay.isSignedIn()) {
 		setCookie(
 			consentRenewalPeriod,
 			guestUserConfigCookieName,

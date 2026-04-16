@@ -36,7 +36,6 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 		'LPD-51356': {enabled: true},
-		'LPD-75032': {enabled: true},
 	}),
 	instanceSettingsPagesTest,
 	loginTest(),

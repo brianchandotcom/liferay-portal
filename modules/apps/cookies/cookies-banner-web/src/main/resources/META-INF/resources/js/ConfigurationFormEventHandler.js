@@ -70,6 +70,7 @@ export default function ({namespace}) {
 					dissentRenewalPeriodTimeUnit.classList.remove('disabled');
 					dissentRenewalPeriodTimeUnit.removeAttribute('disabled');
 					explicitConsentMode.removeAttribute('disabled');
+					storeConsent.removeAttribute('disabled');
 
 					if (Liferay.FeatureFlags['LPD-75027']) {
 						floatingIconEnabled.removeAttribute('disabled');
@@ -94,10 +95,6 @@ export default function ({namespace}) {
 								});
 						}
 					}
-
-					if (Liferay.FeatureFlags['LPD-75032']) {
-						storeConsent.removeAttribute('disabled');
-					}
 				}
 				else {
 					consentRenewalPeriod.classList.add('disabled');
@@ -113,6 +110,8 @@ export default function ({namespace}) {
 					dissentRenewalPeriodTimeUnit.classList.add('disabled');
 					dissentRenewalPeriodTimeUnit.setAttribute('disabled', '');
 					explicitConsentMode.setAttribute('disabled', '');
+					storeConsent.checked = false;
+					storeConsent.setAttribute('disabled', '');
 
 					if (Liferay.FeatureFlags['LPD-75027']) {
 						floatingIconEnabled.setAttribute('disabled', '');
@@ -136,11 +135,6 @@ export default function ({namespace}) {
 									element.setAttribute('disabled', '');
 								});
 						}
-					}
-
-					if (Liferay.FeatureFlags['LPD-75032']) {
-						storeConsent.checked = false;
-						storeConsent.setAttribute('disabled', '');
 					}
 				}
 			}

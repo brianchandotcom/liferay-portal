@@ -30,7 +30,7 @@ public class SegmentsEntryCacheUtil {
 			_generateCacheKey(userId));
 
 		if (userIdSegmentsEntryIds == null) {
-			return new long[0];
+			return null;
 		}
 
 		return userIdSegmentsEntryIds.get(key);

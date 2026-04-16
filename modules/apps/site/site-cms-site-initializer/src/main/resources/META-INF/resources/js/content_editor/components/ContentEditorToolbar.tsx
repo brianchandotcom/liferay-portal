@@ -180,8 +180,8 @@ export default function ContentEditorToolbar({
 								: Liferay.Language.get('open-preview')
 						}
 						aria-pressed={showPreview}
-						borderless={showPreview}
-						className={classNames('c-mr-3 d-lg-block d-none', {
+						borderless
+						className={classNames('c-mr-2 d-lg-block d-none', {
 							active: showPreview,
 						})}
 						displayType="secondary"

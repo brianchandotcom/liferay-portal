@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -187,6 +188,79 @@ public class JournalArticleLocalServiceTest {
 		_journalFolderFixture = new JournalFolderFixture(
 			_journalFolderLocalService);
 		_themeDisplay = _getThemeDisplay();
+	}
+
+	@Test
+	@TestInfo("LPD-84195")
+	public void testAddArticleDefaultValuesWithFieldSetAndMultipleLocales()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(
+				LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.US);
+
+		ddmForm.setDefinitionSchemaVersion("2.0");
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createLocalizedTextDDMFormField(
+				"name", false, false, LocaleUtil.BRAZIL, LocaleUtil.US));
+
+		DDMFormField fieldsetDDMFormField = new DDMFormField(
+			"Fieldset", "fieldset");
+
+		LocalizedValue fieldsetTip = new LocalizedValue(LocaleUtil.US);
+
+		fieldsetTip.addString(LocaleUtil.US, "Tip");
+
+		fieldsetDDMFormField.setTip(fieldsetTip);
+
+		ddmForm.addDDMFormField(fieldsetDDMFormField);
+
+		ddmForm.setAllowInvalidAvailableLocalesForProperty(true);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		String brContent = RandomTestUtil.randomString();
+		String enContent = RandomTestUtil.randomString();
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL, brContent
+			).put(
+				LocaleUtil.US, enContent
+			).build(),
+			LocaleUtil.US.toString());
+
+		Assert.assertNotNull(
+			_journalArticleLocalService.addArticleDefaultValues(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_classNameLocalService.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, content, ddmStructure.getStructureId(), null, null, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
+				0, 0, null, null, serviceContext));
+
+		DDMStructure updatedDDMStructure =
+			_ddmStructureLocalService.getStructure(
+				ddmStructure.getStructureId());
+
+		LocalizedValue updatedNamePredefinedValue =
+			updatedDDMStructure.getDDMFormField(
+				"name"
+			).getPredefinedValue();
+
+		Assert.assertEquals(
+			brContent, updatedNamePredefinedValue.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			enContent, updatedNamePredefinedValue.getString(LocaleUtil.US));
 	}
 
 	@Test(expected = AssetCategoryException.class)

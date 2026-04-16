@@ -37,8 +37,8 @@ const AIHubDetails = () => {
 					type="info"
 				>
 					Our team is currently reviewing your request. An
-					administrator will approve your access shortly, and you will
-					receive a notification via email as soon as your account is
+					administrator will approve your access, and you will receive
+					a notification via email as soon as your account is
 					activated.
 				</ActivationKeyAlert>
 			)}

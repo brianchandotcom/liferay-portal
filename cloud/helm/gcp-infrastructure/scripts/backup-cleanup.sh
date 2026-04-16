@@ -10,7 +10,7 @@ function main {
     retention_days={{ .Values.backup.cleanup.retentionDays | default 30 }}
     retention_seconds=$((retention_days * 24 * 60 * 60))
 
-    echo "Cleaning up backups older than ${retention_days} days"
+    echo "Cleaning up backups older than ${retention_days} days."
 
     local backups_to_cleanup
 
@@ -20,8 +20,10 @@ function main {
             --output json 
         | jq --argjson retention "${retention_seconds}" --raw-output '
             .items[]
-            | select(.status.completionTime != null)
-            | select((now - (.status.completionTime | fromdateiso8601)) > $retention)
+            | select(
+                (.status.completionTime != null and (now - (.status.completionTime | fromdateiso8601)) > $retention) or
+                (any(.status.conditions[]; .status == "False" and .type == "Succeeded"))
+            )
             | .metadata.name
         ')
 
@@ -34,12 +36,12 @@ function main {
 
     echo "${backups_to_cleanup}" | while read -r name
     do
-        echo "Deleting backup ${name}"
+        echo "Deleting backup ${name}."
 
         kubectl delete liferaybackup "${name}" --namespace {{ .Release.Namespace }}
     done
 
-    echo "Cleanup done"
+    echo "Cleanup done."
 }
 
 main

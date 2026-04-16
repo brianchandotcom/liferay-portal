@@ -19,13 +19,11 @@ spec:
                     baseName: {{ $baseName | toJson }}
                     cmkEnabled: {{ $cmkEnabled | toJson }}
                     cmkKeyName: {{ $cmkKeyName | toJson }}
-                    commonTags: {{ $commonTags | toJson }}
                     databaseIamUser: {{ $databaseIamUser | toJson }}
                     databaseInstanceName: {{ $databaseInstanceName | toJson }}
                     databaseName: {{ $databaseName | toJson }}
                     databasePort: {{ $databasePort | toJson }}
                     databaseSpec: {{ $databaseSpec | toJson }}
-                    deletionProtection: {{ $deletionProtection | toJson }}
                     elasticsearchHealth: {{ $elasticsearchHealth | toJson }}
                     environmentId: {{ $environmentId | toJson }}
                     forceDestroy: {{ $forceDestroy | toJson }}
@@ -38,7 +36,6 @@ spec:
                     jobName: {{ $jobName | toJson }}
                     labels: {{ $labels | toJson }}
                     managementPolicies: {{ $managementPolicies | toJson }}
-                    managementPoliciesNoUpdate: {{ $managementPoliciesNoUpdate | toJson }}
                     managementPoliciesOnce: {{ $managementPoliciesOnce | toJson }}
                     namespace: {{ $namespace | toJson }}
                     overlay: {{ $overlay | toJson }}

@@ -49,7 +49,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 				getFdsFilters(), getId(), getRequest());
 			_groupedFiltersJSONArray = fdsSerializer.serializeGroupedFilters(
 				getId(), getRequest());
-
 		}
 		catch (Exception exception) {
 			_log.error(exception);

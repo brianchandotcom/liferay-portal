@@ -260,16 +260,17 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentCollection fragmentCollection1 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		FragmentCollection fragmentCollection3 =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection2.getFragmentCollectionId());
+
+		FragmentCollection fragmentCollection3 =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getExportableFragmentCollections(
@@ -315,7 +316,6 @@ public class FragmentCollectionLocalServiceTest {
 
 		FragmentCollection fragmentCollection1 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
@@ -333,16 +333,17 @@ public class FragmentCollectionLocalServiceTest {
 	@Test
 	@TestInfo("LPD-83557")
 	public void testGetExportableFragmentCollectionsCount() throws Exception {
+		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
 		FragmentCollection fragmentCollection1 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
 
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection2.getFragmentCollectionId());
 
@@ -443,19 +444,20 @@ public class FragmentCollectionLocalServiceTest {
 
 		String keyword = RandomTestUtil.randomString();
 
+		FragmentTestUtil.addFragmentCollection(
+			_group.getGroupId(), keyword + RandomTestUtil.randomString());
+
 		FragmentCollection fragmentCollection1 =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), RandomTestUtil.randomString() + keyword);
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
 
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), RandomTestUtil.randomString());
 
-		FragmentTestUtil.addFragmentCollection(
-			_group.getGroupId(), keyword + RandomTestUtil.randomString());
-
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection2.getFragmentCollectionId());
 

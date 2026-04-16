@@ -97,7 +97,7 @@ public class FragmentCollectionsDisplayContext {
 				searchContainer.setResultsAndTotal(
 					() ->
 						_fragmentCollectionLocalService.
-							getExportableFragmentCollections(
+							getExportableFragmentCollectionsByGroupId(
 								allGroupIds, _getKeywords(),
 								searchContainer.getStart(),
 								searchContainer.getEnd(),
@@ -110,7 +110,7 @@ public class FragmentCollectionsDisplayContext {
 				searchContainer.setResultsAndTotal(
 					() ->
 						_fragmentCollectionLocalService.
-							getExportableFragmentCollections(
+							getExportableFragmentCollectionsByGroupId(
 								allGroupIds, searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),

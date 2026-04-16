@@ -460,13 +460,6 @@ public class FragmentCompositionLocalServiceUtil {
 			groupId, fragmentCollectionId, name);
 	}
 
-	public static boolean hasExportableFragmentCompositions(
-		long fragmentCollectionId) {
-
-		return getService().hasExportableFragmentCompositions(
-			fragmentCollectionId);
-	}
-
 	public static FragmentComposition moveFragmentComposition(
 			long fragmentCompositionId, long fragmentCollectionId)
 		throws PortalException {
@@ -528,4 +521,4 @@ public class FragmentCompositionLocalServiceUtil {
 			FragmentCompositionLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:102359497
+// LIFERAY-SERVICE-BUILDER-HASH:823944975

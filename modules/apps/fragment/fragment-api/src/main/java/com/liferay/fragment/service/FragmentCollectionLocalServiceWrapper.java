@@ -319,6 +319,60 @@ public class FragmentCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<FragmentCollection> getExportableFragmentCollections(
+		long[] fragmentCollectionIds) {
+
+		return _fragmentCollectionLocalService.getExportableFragmentCollections(
+			fragmentCollectionIds);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection>
+		getExportableFragmentCollectionsByGroupId(
+			long[] groupIds, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+				orderByComparator) {
+
+		return _fragmentCollectionLocalService.
+			getExportableFragmentCollectionsByGroupId(
+				groupIds, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection>
+		getExportableFragmentCollectionsByGroupId(
+			long[] groupIds, String name, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+				orderByComparator) {
+
+		return _fragmentCollectionLocalService.
+			getExportableFragmentCollectionsByGroupId(
+				groupIds, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCount(
+		long[] fragmentCollectionIds) {
+
+		return _fragmentCollectionLocalService.
+			getExportableFragmentCollectionsCount(fragmentCollectionIds);
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCountByGroupId(long[] groupIds) {
+		return _fragmentCollectionLocalService.
+			getExportableFragmentCollectionsCountByGroupId(groupIds);
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCountByGroupId(
+		long[] groupIds, String name) {
+
+		return _fragmentCollectionLocalService.
+			getExportableFragmentCollectionsCountByGroupId(groupIds, name);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -391,6 +445,31 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public java.util.List<FragmentCollection> getFragmentCollections(
+		long groupId) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(groupId);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
+		long groupId, boolean includeSystem) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(
+			groupId, includeSystem);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
+		long groupId, boolean includeSystem, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(
+			groupId, includeSystem, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end) {
 
 		return _fragmentCollectionLocalService.getFragmentCollections(
@@ -409,12 +488,69 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public java.util.List<FragmentCollection> getFragmentCollections(
+		long groupId, String name, boolean includeSystem, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(
+			groupId, name, includeSystem, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
 		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
 			orderByComparator) {
 
 		return _fragmentCollectionLocalService.getFragmentCollections(
 			groupId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
+		long[] groupIds) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(groupIds);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(
+			groupIds, marketplace, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(
+			groupIds, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(
+			groupIds, name, marketplace, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator) {
+
+		return _fragmentCollectionLocalService.getFragmentCollections(
+			groupIds, name, start, end, orderByComparator);
 	}
 
 	/**
@@ -462,6 +598,56 @@ public class FragmentCollectionLocalServiceWrapper
 	@Override
 	public int getFragmentCollectionsCount() {
 		return _fragmentCollectionLocalService.getFragmentCollectionsCount();
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long groupId) {
+		return _fragmentCollectionLocalService.getFragmentCollectionsCount(
+			groupId);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long groupId, boolean includeSystem) {
+
+		return _fragmentCollectionLocalService.getFragmentCollectionsCount(
+			groupId, includeSystem);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long groupId, String name, boolean includeSystem) {
+
+		return _fragmentCollectionLocalService.getFragmentCollectionsCount(
+			groupId, name, includeSystem);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long[] groupIds) {
+		return _fragmentCollectionLocalService.getFragmentCollectionsCount(
+			groupIds);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long[] groupIds, boolean marketplace) {
+
+		return _fragmentCollectionLocalService.getFragmentCollectionsCount(
+			groupIds, marketplace);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long[] groupIds, String name) {
+		return _fragmentCollectionLocalService.getFragmentCollectionsCount(
+			groupIds, name);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long[] groupIds, String name, boolean marketplace) {
+
+		return _fragmentCollectionLocalService.getFragmentCollectionsCount(
+			groupIds, name, marketplace);
 	}
 
 	@Override
@@ -575,4 +761,4 @@ public class FragmentCollectionLocalServiceWrapper
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1790850097
+// LIFERAY-SERVICE-BUILDER-HASH:-590302089

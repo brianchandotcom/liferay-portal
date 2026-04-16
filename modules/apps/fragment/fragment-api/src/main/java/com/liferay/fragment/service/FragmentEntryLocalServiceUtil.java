@@ -533,12 +533,6 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().getVersions(fragmentEntry);
 	}
 
-	public static boolean hasExportableFragmentEntries(
-		long fragmentCollectionId) {
-
-		return getService().hasExportableFragmentEntries(fragmentCollectionId);
-	}
-
 	public static FragmentEntry moveFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId)
 		throws PortalException {
@@ -638,4 +632,4 @@ public class FragmentEntryLocalServiceUtil {
 			FragmentEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1144222
+// LIFERAY-SERVICE-BUILDER-HASH:1358558076

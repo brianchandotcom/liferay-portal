@@ -37,7 +37,7 @@ export function FormikFieldFileSelector({
 }) {
 	const STATUS_CHANGE_DELAY = 1000;
 
-	const [field, , helpers] = useField(name);
+	const [field, meta, helpers] = useField(name);
 	const {setError, setTouched, setValue} = helpers;
 
 	const [status, setStatus] = useState<FileSelectorStatus>(
@@ -94,8 +94,12 @@ export function FormikFieldFileSelector({
 	);
 
 	useEffect(() => {
-		setError(validate(field.value));
-	}, [field.value]);
+		const error = validate(field.value);
+
+		if (error !== meta.error) {
+			setError(error);
+		}
+	}, [validate, field.value, setError, meta.error]);
 
 	const handleUpload = async (file: File) => {
 		if (abortControllerRef.current) {

@@ -4592,7 +4592,9 @@ public class ServiceBuilder {
 
 			if (_optimizeDBIndexes && (indexMetadatas != null)) {
 				indexMetadatasMap.put(
-					tableName, _optimizeForBTreeIndexes(indexMetadatas));
+					tableName,
+					_optimizeForBTreeIndexes(
+						indexMetadatas, entity.isChangeTrackingEnabled()));
 			}
 
 			for (EntityFinder indexOnlyEntityFinder :
@@ -6546,7 +6548,7 @@ public class ServiceBuilder {
 	}
 
 	private List<IndexMetadata> _optimizeForBTreeIndexes(
-		List<IndexMetadata> indexMetadatas) {
+		List<IndexMetadata> indexMetadatas, boolean changeTrackingEnabled) {
 
 		Map<String, IntegerWrapper> frequencyMap = new HashMap<>();
 
@@ -6556,6 +6558,11 @@ public class ServiceBuilder {
 					columnName, key -> new IntegerWrapper());
 
 				if (columnName.endsWith("Date")) {
+					count.setValue(-1);
+				}
+				else if (changeTrackingEnabled &&
+						 columnName.equals("ctCollectionId")) {
+
 					count.setValue(0);
 				}
 				else {

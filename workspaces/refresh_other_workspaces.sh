@@ -5,8 +5,8 @@ cd "$(dirname "${0}")" || exit
 function main {
 	for dir in "./"*
 	do
-		if [ ${dir} = "./liferay-sample-workspace" ] ||
-		   [ -f ${dir} ]
+		if [ "${dir}" = "./liferay-sample-workspace" ] ||
+		   [ -f "${dir}" ]
 		then
 			continue
 		fi
@@ -27,7 +27,7 @@ function main {
 			--exclude "poshi/poshi-ext.properties" \
 			--exclude "poshi/src" \
 			--exclude "themes" \
-			liferay-sample-workspace/ ${dir}
+			liferay-sample-workspace/ "${dir}"
 	done
 }
 

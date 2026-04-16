@@ -1,5 +1,69 @@
 components:
     schemas:
+        Fragment:
+            description:
+                A fragment entry.
+            properties:
+                cacheable:
+                    description:
+                        A flag that indicates whether the fragment output is cacheable.
+                    type: boolean
+                creator:
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
+                    description:
+                        The fragment's creator.
+                    readOnly: true
+                dateCreated:
+                    description:
+                        The fragment's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    description:
+                        The last time the fragment changed.
+                    format: date-time
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The fragment's external reference code.
+                    type: string
+                fragmentSetExternalReferenceCode:
+                    description:
+                        The external reference code of the fragment set this fragment belongs to.
+                    type: string
+                fragmentVersions:
+                    description:
+                        The fragment's versions. A fragment can have up to 2 versions, one draft and one published
+                        (approved).
+                    items:
+                        $ref: "#/components/schemas/FragmentVersion"
+                    type: array
+                icon:
+                    description:
+                        The fragment's icon identifier.
+                    type: string
+                key:
+                    description:
+                        The fragment's unique key within the group.
+                    type: string
+                marketplace:
+                    description:
+                        A flag that indicates whether the fragment is from the marketplace.
+                    type: boolean
+                name:
+                    description:
+                        The fragment's name.
+                    type: string
+                readOnly:
+                    description:
+                        A flag that indicates whether the fragment is read-only.
+                    type: boolean
+                type:
+                    description:
+                        The fragment's type.
+                    enum: [Component]
+                    type: string
+            type: object
         FragmentSet:
             description:
                 A fragment set (also known as fragment collection).
@@ -38,6 +102,32 @@ components:
                 name:
                     description:
                         The fragment set's name.
+                    type: string
+            type: object
+        FragmentVersion:
+            description:
+                A version of a fragment (draft or published).
+            properties:
+                configuration:
+                    description:
+                        The fragment version's JSON configuration.
+                    type: string
+                css:
+                    description:
+                        The fragment version's CSS code.
+                    type: string
+                html:
+                    description:
+                        The fragment version's HTML code.
+                    type: string
+                js:
+                    description:
+                        The fragment version's JavaScript code.
+                    type: string
+                status:
+                    description:
+                        The fragment version's status (Approved or Draft).
+                    enum: [Approved, Draft]
                     type: string
             type: object
 info:
@@ -220,3 +310,178 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/FragmentSet"
             tags: ["FragmentSet"]
+    "/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}/fragments":
+        get:
+            description:
+                Retrieves the fragments of a fragment set.
+            operationId: getSiteFragmentSetFragmentsPage
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: fragmentSetExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Fragment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Fragment"
+                                type: array
+            tags: ["Fragment"]
+        post:
+            description:
+                Adds a new fragment to a fragment set.
+            operationId: postSiteFragmentSetFragment
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: fragmentSetExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Fragment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Fragment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Fragment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Fragment"
+            tags: ["Fragment"]
+    "/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}":
+        delete:
+            description:
+                Deletes a specific fragment of a site.
+            operationId: deleteSiteFragment
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: fragmentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Fragment"]
+        get:
+            description:
+                Retrieves a specific fragment of a site.
+            operationId: getSiteFragment
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: fragmentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Fragment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Fragment"
+            tags: ["Fragment"]
+        put:
+            description:
+                Updates the fragment with the given external reference code, or creates it if it does not exist.
+            operationId: putSiteFragment
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: fragmentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Fragment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Fragment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Fragment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Fragment"
+            tags: ["Fragment"]

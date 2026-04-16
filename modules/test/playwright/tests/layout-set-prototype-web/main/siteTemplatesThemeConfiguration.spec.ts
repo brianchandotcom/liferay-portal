@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -16,9 +15,6 @@ import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest'
 
 const test = mergeTests(
 	displayPageTemplatesPagesTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	globalMenuPagesTest,
 	layoutSetPrototypePageTest,
 	pageEditorPagesTest,

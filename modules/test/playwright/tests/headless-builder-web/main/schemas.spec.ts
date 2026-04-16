@@ -20,7 +20,6 @@ export const testFeatureFlagsEnabled = mergeTests(
 	dataApiHelpersTest,
 	headlessBuilderPagesTest({
 		'LPD-21414': {enabled: true},
-		'LPD-36105': {enabled: true},
 	}),
 	headlessDiscoveryPagesTest,
 	loginTest(),
@@ -31,7 +30,6 @@ export const testFeatureFlagsDisabled = mergeTests(
 	dataApiHelpersTest,
 	headlessBuilderPagesTest({
 		'LPD-21414': {enabled: false},
-		'LPD-36105': {enabled: true},
 	}),
 	loginTest()
 );

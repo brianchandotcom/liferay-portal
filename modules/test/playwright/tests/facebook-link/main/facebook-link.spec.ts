@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import {FacebookInstanceSettingsPage} from '../../../pages/portal-settings-authentication-facebook-connect-web/FacebookInstanceSettingsPage';
@@ -19,9 +18,6 @@ let markAsDefault: boolean;
 
 const test = mergeTests(
 	facebookSettingsPagesTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	loginTest(),
 	utilityPagesPage,
 	pagesPagesTest

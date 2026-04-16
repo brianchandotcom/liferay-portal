@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
@@ -14,13 +13,7 @@ import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 
 let userAccount;
 
-export const test = mergeTests(
-	apiHelpersTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
-	loginTest()
-);
+export const test = mergeTests(apiHelpersTest, loginTest());
 
 test.beforeEach(async ({apiHelpers, page}) => {
 	userAccount = await apiHelpers.headlessAdminUser.postUserAccount();

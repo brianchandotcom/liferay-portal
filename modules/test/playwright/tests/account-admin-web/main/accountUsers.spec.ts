@@ -22,7 +22,6 @@ import getRandomString from '../../../utils/getRandomString';
 import {nextPage, setItemsPerPage} from '../../../utils/pagination';
 import performLogin from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {enableGlobalMenuFeatureFlag} from '../../roles-admin-web/main/utils/featureFlag';
 
 export const test = mergeTests(
 	accountsPagesTest,
@@ -30,7 +29,6 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
-		'LPD-36105': {enabled: true},
 	}),
 	loginTest(),
 	serverAdministrationPageTest,
@@ -1653,8 +1651,6 @@ test(
 				'',
 				`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
 			);
-
-			await enableGlobalMenuFeatureFlag(newPage);
 
 			await accountsPage.goto(false);
 

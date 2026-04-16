@@ -6,19 +6,13 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {TRole} from '../../../helpers/HeadlessAdminUserApiHelper';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi, userData} from '../../../utils/performLogin';
 
-const test = mergeTests(
-	apiHelpersTest,
-	featureFlagsTest({'LPD-36105': {enabled: true}}),
-	globalMenuPagesTest,
-	loginTest()
-);
+const test = mergeTests(apiHelpersTest, globalMenuPagesTest, loginTest());
 
 let userAccount: TUserAccount;
 let role: TRole;

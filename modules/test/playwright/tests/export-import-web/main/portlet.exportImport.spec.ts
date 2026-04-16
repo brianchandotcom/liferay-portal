@@ -7,7 +7,6 @@ import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
@@ -20,9 +19,6 @@ import {portletExportImportPageTest} from './fixtures/portletExportImportPageTes
 
 export const test = mergeTests(
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	globalMenuPagesTest,
 	loginTest(),
 	objectPagesTest,
@@ -31,7 +27,6 @@ export const test = mergeTests(
 
 test('Can import object with different classname via portlet', async ({
 	apiHelpers,
-	featureFlags,
 	globalMenuPage,
 	page,
 	portletExportImportPage,
@@ -117,14 +112,6 @@ test('Can import object with different classname via portlet', async ({
 			page,
 			'http://www.able.com:8080'
 		);
-
-		for (const featureFlag of featureFlags) {
-			await virtualInstanceApiHelpers.featureFlag.updateFeatureFlag(
-				featureFlag.key,
-				featureFlag.enabled,
-				'http://www.able.com:8080'
-			);
-		}
 	});
 
 	await test.step('Object Definition into Virtual Instance', async () => {

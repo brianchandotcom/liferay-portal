@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {accountsPagesTest} from '../../../../fixtures/accountsPagesTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
 import getRandomString from '../../../../utils/getRandomString';
@@ -22,9 +21,6 @@ export const test = mergeTests(
 	accountsPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	loginTest()
 );
 

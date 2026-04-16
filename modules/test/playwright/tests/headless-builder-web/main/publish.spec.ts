@@ -13,9 +13,7 @@ import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
-	headlessBuilderPagesTest({
-		'LPD-36105': {enabled: true},
-	}),
+	headlessBuilderPagesTest({}),
 	headlessDiscoveryPagesTest,
 	loginTest(),
 	uiElementsPageTest

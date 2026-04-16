@@ -25,7 +25,6 @@ const cookieKeys = [
 
 export const test = mergeTests(
 	featureFlagsTest({
-		'LPD-36105': {enabled: true},
 		'LPD-51356': {enabled: true},
 	}),
 	loginTest(),

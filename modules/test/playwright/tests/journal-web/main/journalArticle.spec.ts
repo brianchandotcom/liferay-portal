@@ -51,9 +51,6 @@ const translateNameAndMetadataFields = async (
 
 const baseTest = mergeTests(
 	apiHelpersTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
@@ -297,7 +294,6 @@ baseTest(
 	{
 		tag: '@LPD-66008',
 	},
-
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const structureName = 'Test Structure';
 

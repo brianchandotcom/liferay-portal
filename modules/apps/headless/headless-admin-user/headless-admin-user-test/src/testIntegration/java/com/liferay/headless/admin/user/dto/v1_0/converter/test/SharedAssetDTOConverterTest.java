@@ -116,7 +116,7 @@ public class SharedAssetDTOConverterTest {
 		Assert.assertNotNull(sharedAsset);
 
 		Assert.assertArrayEquals(
-			new String[] {"VIEW"}, sharedAsset.getActionIds());
+			new String[] {"VIEW", "UPDATE"}, sharedAsset.getActionIds());
 		Assert.assertNull(sharedAsset.getActions());
 		Assert.assertEquals("Document", sharedAsset.getAssetType());
 		Assert.assertEquals(

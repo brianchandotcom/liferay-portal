@@ -6,7 +6,7 @@ function main {
 	for dir in "./"*
 	do
 		if [ "${dir}" = "./liferay-sample-workspace" ] ||
-		   [ -f "${dir}" ]
+		   [ ! -d "${dir}" ]
 		then
 			continue
 		fi

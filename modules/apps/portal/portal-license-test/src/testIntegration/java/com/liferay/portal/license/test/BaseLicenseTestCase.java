@@ -10,6 +10,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.license.util.App;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -171,18 +172,20 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		Assert.assertFalse(response.contains(_LICENSE_PAGE_KEY));
 	}
 
-	public File deployCMPLicense(long validityPeriod) throws Exception {
+	public File deployAppLicense(App app, long validityPeriod)
+		throws Exception {
+
 		long currentTimeMillis = System.currentTimeMillis();
 
 		StringBundler sb = new StringBundler(19);
 
 		sb.append("<?xml version=\"1.0\"?><license><product-id>");
-		sb.append(getCMPProductId());
+		sb.append(getProductId(app));
 		sb.append("</product-id><product-name>");
-		sb.append(_CMP_PRODUCT_NAME);
+		sb.append(app);
 		sb.append("</product-name><product-version>2026.Q1</product-version>");
 		sb.append("<license-type>");
-		sb.append(_CMP_LICENSE_TYPE);
+		sb.append(_APP_LICENSE_TYPE);
 		sb.append("</license-type><license-version>3</license-version>");
 		sb.append("<start-date>");
 		sb.append(_DATE_FORMAT.format(new Date(currentTimeMillis)));
@@ -212,8 +215,8 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		_registerLicense(sb.toString());
 
 		return _buildBinaryFile(
-			getCMPProductId(), StringPool.BLANK, _CMP_PRODUCT_NAME,
-			_CMP_LICENSE_TYPE);
+			getProductId(app), StringPool.BLANK, app.toString(),
+			_APP_LICENSE_TYPE);
 	}
 
 	public File deployEnterprisePortalLicense(long validityPeriod)
@@ -305,12 +308,23 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 	public void resetCheckInterval() throws Exception {
 		for (Field field : _lifecycleActionClass.getDeclaredFields()) {
+			field.setAccessible(true);
+
 			if (!Modifier.isFinal(field.getModifiers()) &&
 				Objects.equals(field.getType(), long.class)) {
 
-				field.setAccessible(true);
-
 				field.set(_lifecycleAction, 0L);
+			}
+			else if (Objects.equals(field.getType(), Map.class)) {
+				Map<?, ?> map = (Map<?, ?>)field.get(_lifecycleAction);
+
+				for (Object object : map.values()) {
+					if (Long.class.isAssignableFrom(object.getClass())) {
+						map.clear();
+
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -327,7 +341,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 
 		checkLicense(getPortalProductId());
-		checkLicense(getCMPProductId());
+
+		for (App app : App.values()) {
+			checkLicense(getProductId(app));
+		}
 
 		resetLifecycleAction();
 
@@ -349,7 +366,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 			try {
 				checkLicense(getPortalProductId());
-				checkLicense(getCMPProductId());
+
+				for (App app : App.values()) {
+					checkLicense(getProductId(app));
+				}
 
 				resetLifecycleAction();
 			}
@@ -378,14 +398,32 @@ public abstract class BaseLicenseTestCase implements Serializable {
 						if (Map.class.isAssignableFrom(field.getType())) {
 							field.setAccessible(true);
 
-							Object bundleData = field.get(_lifecycleAction);
+							if (!Modifier.isFinal(field.getModifiers())) {
+								Object bundleData = field.get(_lifecycleAction);
 
-							if (bundleData != null) {
-								method.invoke(
-									_lifecycleAction,
-									SystemBundleUtil.getBundleContext(),
-									bundleData,
-									ModuleFrameworkUtil.getFramework());
+								if (bundleData != null) {
+									method.invoke(
+										_lifecycleAction,
+										SystemBundleUtil.getBundleContext(),
+										bundleData,
+										ModuleFrameworkUtil.getFramework());
+								}
+							}
+							else {
+								Map<?, ?> map = (Map<?, ?>)field.get(
+									_lifecycleAction);
+
+								for (Object object : map.values()) {
+									if (Map.class.isAssignableFrom(
+											object.getClass())) {
+
+										method.invoke(
+											_lifecycleAction,
+											SystemBundleUtil.getBundleContext(),
+											object,
+											ModuleFrameworkUtil.getFramework());
+									}
+								}
 							}
 						}
 					}
@@ -395,9 +433,9 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			}
 
 			for (Field field : _lifecycleActionClass.getDeclaredFields()) {
-				if (!Modifier.isFinal(field.getModifiers())) {
-					field.setAccessible(true);
+				field.setAccessible(true);
 
+				if (!Modifier.isFinal(field.getModifiers())) {
 					if (Objects.equals(field.getType(), long.class)) {
 						field.set(_lifecycleAction, 0L);
 					}
@@ -407,6 +445,11 @@ public abstract class BaseLicenseTestCase implements Serializable {
 					else {
 						field.set(_lifecycleAction, null);
 					}
+				}
+				else if (Objects.equals(field.getType(), Map.class)) {
+					Map<?, ?> map = (Map<?, ?>)field.get(_lifecycleAction);
+
+					map.clear();
 				}
 			}
 
@@ -502,10 +545,6 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 	}
 
-	protected String getCMPProductId() {
-		return getProperty("product.id.cmp");
-	}
-
 	protected String getCurrentVersion() throws Exception {
 		Method versionMethod = ReflectionsHolder._versionMethod;
 
@@ -524,6 +563,11 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 	protected String getPortalProductId() {
 		return getProperty("product.id.portal");
+	}
+
+	protected String getProductId(App app) {
+		return getProperty(
+			"product.id." + StringUtil.toLowerCase(app.toString()));
 	}
 
 	protected String hitHomePage(String host, int port) throws Exception {
@@ -667,13 +711,10 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 	}
 
+	private static final String _APP_LICENSE_TYPE = "production";
+
 	private static final String _BUNDLE_START_STOP_LOGGER =
 		"com.liferay.portal.bootstrap.log.BundleStartStopLogger";
-
-	private static final String _CMP_LICENSE_TYPE = "production";
-
-	private static final String _CMP_PRODUCT_NAME =
-		"Liferay Content Marketing Platform";
 
 	private static final DateFormat _DATE_FORMAT = new SimpleDateFormat(
 		"EEEE, MMMM d, yyyy hh:mm:ss a z", LocaleUtil.US);

@@ -7,6 +7,7 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.license.util.App;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.Time;
 
@@ -47,20 +48,10 @@ public class ExpiredLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
-	public void testCMPLicenseExpired() throws Exception {
-		assertLicensePropertiesNotExisted(getCMPProductId());
-
-		deployCMPLicense(_GRACE_PEIROD + _VALIDTY_PERIOD);
-
-		assertLicensePropertiesExisted(getCMPProductId());
-
-		Assert.assertTrue(LicenseManagerUtil.isCMPEnabled());
-
-		Thread.sleep(_VALIDTY_PERIOD);
-
-		assertLicensePropertiesExisted(getCMPProductId());
-
-		Assert.assertFalse(LicenseManagerUtil.isCMPEnabled());
+	public void testAppLicenseExpired() throws Exception {
+		for (App app : App.values()) {
+			_testAppLicenseExpired(app);
+		}
 	}
 
 	@Test
@@ -138,6 +129,22 @@ public class ExpiredLicenseTest extends BaseLicenseTestCase {
 		assertLicensePropertiesExisted(getPortalProductId());
 
 		assertPortalLicenseExpired();
+	}
+
+	private void _testAppLicenseExpired(App app) throws Exception {
+		assertLicensePropertiesNotExisted(getProductId(app));
+
+		deployAppLicense(app, _GRACE_PEIROD + _VALIDTY_PERIOD);
+
+		assertLicensePropertiesExisted(getProductId(app));
+
+		Assert.assertTrue(LicenseManagerUtil.isAppEnabled(app));
+
+		Thread.sleep(_VALIDTY_PERIOD);
+
+		assertLicensePropertiesExisted(getProductId(app));
+
+		Assert.assertFalse(LicenseManagerUtil.isAppEnabled(app));
 	}
 
 	private static final long _GRACE_PEIROD = -2 * Time.DAY;

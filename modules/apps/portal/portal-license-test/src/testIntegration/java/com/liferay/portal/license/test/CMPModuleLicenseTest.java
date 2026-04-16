@@ -7,8 +7,10 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.license.util.App;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.io.File;
@@ -16,9 +18,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,10 +45,21 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 		_setVersionSafeCloseable.close();
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		_safeCloseable = resetLicenseDataWithSafeCloseble();
+	@Test
+	public void testEnterpriseLicense() throws Exception {
+		for (App app : App.values()) {
+			_testEnterpriseLicense(app);
+		}
+	}
 
+	@Test
+	public void testFreeTierLicense() throws Exception {
+		for (App app : App.values()) {
+			_testFreeTierLicense(app);
+		}
+	}
+
+	private String[] _getAppSymbolicNames(App app) {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		List<String> symbolicNames = new ArrayList<>();
@@ -55,107 +67,109 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String symbolicName = bundle.getSymbolicName();
 
-			if (symbolicName.contains(".cmp.")) {
+			if (symbolicName.contains(
+					"." + StringUtil.toLowerCase(app.toString()) + ".")) {
+
 				symbolicNames.add(symbolicName);
 			}
 		}
 
-		_cmpSymbolicNames = ArrayUtil.toStringArray(symbolicNames);
+		return ArrayUtil.toStringArray(symbolicNames);
 	}
 
-	@After
-	public void tearDown() {
-		_safeCloseable.close();
+	private void _testEnterpriseLicense(App app) throws Exception {
+		try (SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
+			String[] appSymbolicNames = _getAppSymbolicNames(app);
+
+			Assert.assertFalse(
+				appSymbolicNames.toString(),
+				ArrayUtil.isEmpty(appSymbolicNames));
+
+			assertLicensePropertiesNotExisted(getProductId(app));
+
+			assertBundlesExisted(appSymbolicNames);
+
+			assertPortalLicenseNotRegistered();
+
+			assertBundlesExisted(appSymbolicNames);
+
+			deployEnterprisePortalLicense(Time.HOUR);
+
+			assertLicensePropertiesNotExisted(getProductId(app));
+
+			assertPortalLicenseRegistered();
+
+			assertBundlesNotExisted(appSymbolicNames);
+
+			File binaryFile = deployAppLicense(app, Time.HOUR);
+
+			assertLicensePropertiesExisted(getProductId(app));
+
+			assertPortalLicenseRegistered();
+
+			assertBundlesExisted(appSymbolicNames);
+
+			binaryFile.delete();
+
+			checkLicense(getProductId(app));
+
+			assertLicensePropertiesNotExisted(getProductId(app));
+
+			resetLifecycleAction();
+
+			assertPortalLicenseRegistered();
+
+			assertBundlesNotExisted(appSymbolicNames);
+		}
 	}
 
-	@Test
-	public void testBrokenCMPFile() throws Exception {
-		assertPortalInvalidatedWithBrokenFile(
-			"CMP", "CMP bundle list is corrupted");
+	private void _testFreeTierLicense(App app) throws Exception {
+		try (SafeCloseable safeCloseable = resetLicenseDataWithSafeCloseble()) {
+			String[] appSymbolicNames = _getAppSymbolicNames(app);
+
+			Assert.assertFalse(
+				appSymbolicNames.toString(),
+				ArrayUtil.isEmpty(appSymbolicNames));
+
+			assertLicensePropertiesNotExisted(getProductId(app));
+
+			assertBundlesExisted(appSymbolicNames);
+
+			assertPortalLicenseNotRegistered();
+
+			assertBundlesExisted(appSymbolicNames);
+
+			deployFreeTierPortalLicense(Time.HOUR);
+
+			assertLicensePropertiesNotExisted(getProductId(app));
+
+			assertPortalLicenseRegistered();
+
+			assertBundlesNotExisted(appSymbolicNames);
+
+			File binaryFile = deployAppLicense(app, Time.HOUR);
+
+			assertLicensePropertiesExisted(getProductId(app));
+
+			assertPortalLicenseRegistered();
+
+			assertBundlesNotExisted(appSymbolicNames);
+
+			binaryFile.delete();
+
+			checkLicense(getProductId(app));
+
+			assertLicensePropertiesNotExisted(getProductId(app));
+
+			resetLifecycleAction();
+
+			assertPortalLicenseRegistered();
+
+			assertBundlesNotExisted(appSymbolicNames);
+		}
 	}
 
-	@Test
-	public void testEnterpriseLicense() throws Exception {
-		assertLicensePropertiesNotExisted(getCMPProductId());
-
-		assertBundlesExisted(_cmpSymbolicNames);
-
-		assertPortalLicenseNotRegistered();
-
-		assertBundlesExisted(_cmpSymbolicNames);
-
-		deployEnterprisePortalLicense(Time.HOUR);
-
-		assertLicensePropertiesNotExisted(getCMPProductId());
-
-		assertPortalLicenseRegistered();
-
-		assertBundlesNotExisted(_cmpSymbolicNames);
-
-		File binaryFile = deployCMPLicense(Time.HOUR);
-
-		assertLicensePropertiesExisted(getCMPProductId());
-
-		assertPortalLicenseRegistered();
-
-		assertBundlesExisted(_cmpSymbolicNames);
-
-		binaryFile.delete();
-
-		checkLicense(getCMPProductId());
-
-		assertLicensePropertiesNotExisted(getCMPProductId());
-
-		resetLifecycleAction();
-
-		assertPortalLicenseRegistered();
-
-		assertBundlesNotExisted(_cmpSymbolicNames);
-	}
-
-	@Test
-	public void testFreeTierLicense() throws Exception {
-		assertLicensePropertiesNotExisted(getCMPProductId());
-
-		assertBundlesExisted(_cmpSymbolicNames);
-
-		assertPortalLicenseNotRegistered();
-
-		assertBundlesExisted(_cmpSymbolicNames);
-
-		deployFreeTierPortalLicense(Time.HOUR);
-
-		assertLicensePropertiesNotExisted(getCMPProductId());
-
-		assertPortalLicenseRegistered();
-
-		assertBundlesNotExisted(_cmpSymbolicNames);
-
-		File binaryFile = deployCMPLicense(Time.HOUR);
-
-		assertLicensePropertiesExisted(getCMPProductId());
-
-		assertPortalLicenseRegistered();
-
-		assertBundlesNotExisted(_cmpSymbolicNames);
-
-		binaryFile.delete();
-
-		checkLicense(getCMPProductId());
-
-		assertLicensePropertiesNotExisted(getCMPProductId());
-
-		resetLifecycleAction();
-
-		assertPortalLicenseRegistered();
-
-		assertBundlesNotExisted(_cmpSymbolicNames);
-	}
-
-	private static String[] _cmpSymbolicNames;
 	private static SafeCloseable _disableKeyValidatorSafeCloseable;
 	private static SafeCloseable _setVersionSafeCloseable;
-
-	private SafeCloseable _safeCloseable;
 
 }

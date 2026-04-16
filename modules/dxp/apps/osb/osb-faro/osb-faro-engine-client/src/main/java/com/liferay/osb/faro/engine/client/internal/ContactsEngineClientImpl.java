@@ -300,7 +300,7 @@ public class ContactsEngineClientImpl
 	public IndividualSegment addIndividualSegment(
 		FaroProject faroProject, long userId, String channelId,
 		String filterString, boolean includeAnonymousUsers, String name,
-		String segmentType, String status) {
+		String segmentType, boolean sequential, String status) {
 
 		IndividualSegment individualSegment = new IndividualSegment();
 
@@ -311,6 +311,7 @@ public class ContactsEngineClientImpl
 		individualSegment.setIncludeAnonymousUsers(includeAnonymousUsers);
 		individualSegment.setName(name);
 		individualSegment.setSegmentType(segmentType);
+		individualSegment.setSequential(sequential);
 		individualSegment.setStatus(status);
 
 		return post(
@@ -3081,7 +3082,7 @@ public class ContactsEngineClientImpl
 	public IndividualSegment updateIndividualSegment(
 		FaroProject faroProject, String id, long userId, String channelId,
 		String filterString, boolean includeAnonymousUsers, String name,
-		String segmentType) {
+		String segmentType, boolean sequential) {
 
 		IndividualSegment individualSegment = new IndividualSegment();
 
@@ -3092,6 +3093,7 @@ public class ContactsEngineClientImpl
 		individualSegment.setIncludeAnonymousUsers(includeAnonymousUsers);
 		individualSegment.setName(name);
 		individualSegment.setSegmentType(segmentType);
+		individualSegment.setSequential(sequential);
 		individualSegment.setStatus(IndividualSegment.Status.ACTIVE.name());
 
 		return put(

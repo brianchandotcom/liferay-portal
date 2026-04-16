@@ -99,14 +99,15 @@ public class IndividualSegmentController extends BaseFaroController {
 			@FormParam("filter") String filterString,
 			@FormParam("includeAnonymousUsers") boolean includeAnonymousUsers,
 			@FormParam("name") String name,
-			@FormParam("segmentType") String segmentType)
+			@FormParam("segmentType") String segmentType,
+			@FormParam("sequential") boolean sequential)
 		throws Exception {
 
 		validateCreate(channelId, segmentType);
 
 		return createIndividualSegment(
 			channelId, groupId, filterString, includeAnonymousUsers, name,
-			segmentType);
+			segmentType, sequential);
 	}
 
 	@DELETE
@@ -368,7 +369,8 @@ public class IndividualSegmentController extends BaseFaroController {
 			@FormParam("includeAnonymousUsers") boolean includeAnonymousUsers,
 			@DefaultValue(StringPool.BLANK) @FormParam("individualIds")
 				FaroParam<List<String>> individualIdsFaroParam,
-			@FormParam("name") String name)
+			@FormParam("name") String name,
+			@FormParam("sequential") boolean sequential)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -381,12 +383,13 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		return updateIndividualSegment(
 			groupId, individualSegment, filterString, includeAnonymousUsers,
-			name);
+			name, sequential);
 	}
 
 	protected IndividualSegmentDisplay createIndividualSegment(
 			String channelId, long groupId, String filterString,
-			boolean includeAnonymousUsers, String name, String segmentType)
+			boolean includeAnonymousUsers, String name, String segmentType,
+			boolean sequential)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -395,7 +398,7 @@ public class IndividualSegmentController extends BaseFaroController {
 		return new IndividualSegmentDisplay(
 			contactsEngineClient.addIndividualSegment(
 				faroProject, getUserId(), channelId, filterString,
-				includeAnonymousUsers, name, segmentType,
+				includeAnonymousUsers, name, segmentType, sequential,
 				IndividualSegment.Status.ACTIVE.name()));
 	}
 
@@ -441,7 +444,8 @@ public class IndividualSegmentController extends BaseFaroController {
 
 	protected IndividualSegmentDisplay updateIndividualSegment(
 			long groupId, IndividualSegment individualSegment,
-			String filterString, boolean includeAnonymousUsers, String name)
+			String filterString, boolean includeAnonymousUsers, String name,
+			boolean sequential)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -451,8 +455,8 @@ public class IndividualSegmentController extends BaseFaroController {
 			contactsEngineClient.updateIndividualSegment(
 				faroProject, individualSegment.getId(), getUserId(),
 				individualSegment.getChannelId(), filterString,
-				includeAnonymousUsers, name,
-				individualSegment.getSegmentType()));
+				includeAnonymousUsers, name, individualSegment.getSegmentType(),
+				sequential));
 	}
 
 	protected void updateMembership(
@@ -506,7 +510,7 @@ public class IndividualSegmentController extends BaseFaroController {
 		individualSegment = contactsEngineClient.updateIndividualSegment(
 			faroProject, individualSegment.getId(), getUserId(),
 			individualSegment.getChannelId(), null, false, name,
-			individualSegment.getSegmentType());
+			individualSegment.getSegmentType(), false);
 
 		updateMembership(faroProject, individualSegment.getId(), individualIds);
 

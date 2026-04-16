@@ -145,11 +145,11 @@ public abstract class BaseMockContactsEngineClientImpl
 	public IndividualSegment addIndividualSegment(
 		FaroProject faroProject, long userId, String channelId,
 		String filterString, boolean includeAnonymousUsers, String name,
-		String segmentType, String status) {
+		String segmentType, boolean sequential, String status) {
 
 		return contactsEngineClient.addIndividualSegment(
 			faroProject, userId, channelId, filterString, includeAnonymousUsers,
-			name, segmentType, status);
+			name, segmentType, sequential, status);
 	}
 
 	@Override
@@ -1161,11 +1161,11 @@ public abstract class BaseMockContactsEngineClientImpl
 	public IndividualSegment updateIndividualSegment(
 		FaroProject faroProject, String id, long userId, String channelId,
 		String filterString, boolean includeAnonymousUsers, String name,
-		String segmentType) {
+		String segmentType, boolean sequential) {
 
 		return contactsEngineClient.updateIndividualSegment(
 			faroProject, id, userId, channelId, filterString,
-			includeAnonymousUsers, name, segmentType);
+			includeAnonymousUsers, name, segmentType, sequential);
 	}
 
 	@Override

@@ -28,7 +28,8 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 		id,
 		includeAnonymousUsers,
 		individualCount,
-		knownIndividualCount
+		knownIndividualCount,
+		sequential
 	} = segment;
 	const {timeZoneId} = useTimeZone();
 
@@ -88,6 +89,7 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 						criteriaString={criteriaString}
 						includeAnonymousUsers={includeAnonymousUsers}
 						segmentType={SegmentTypes.Batch}
+						sequential={sequential}
 						timeZoneId={timeZoneId}
 					/>
 				</ReferencedObjectsProvider>

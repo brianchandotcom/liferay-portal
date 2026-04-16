@@ -53,6 +53,7 @@ const CriteriaBuilderForm = withField(
 		field: {name, value},
 		groupId,
 		segmentType,
+		sequential,
 		...fieldProps
 	}) => {
 		const handleChange = criteria => {
@@ -71,6 +72,7 @@ const CriteriaBuilderForm = withField(
 				groupId={groupId}
 				onChange={handleChange}
 				segmentType={segmentType}
+				sequential={sequential}
 			/>
 		);
 	}
@@ -80,6 +82,7 @@ type FormValues = {
 	criteria: CriterionGroup;
 	includeAnonymousUsers: boolean;
 	name: string;
+	sequential: boolean;
 };
 
 interface ISegmentEditorProps {
@@ -104,14 +107,10 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 		segment: new Segment()
 	};
 
-	state = {
-		enabledSequentialSegment: false
-	};
-
 	_formRef = React.createRef<Formik>();
 
 	@autobind
-	createSegment({criteria, includeAnonymousUsers, name}) {
+	createSegment({criteria, includeAnonymousUsers, name, sequential}) {
 		const {
 			channelId,
 			groupId,
@@ -128,22 +127,29 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 			description: '',
 			includeAnonymousUsers,
 			name: name.trim(),
-			segmentType: type
+			segmentType: type,
+			sequential
 		};
 
 		return request({...requestData, channelId, groupId, id});
 	}
 
 	@autobind
-	hasChanges(newIncludeAnonymousUsers, newName, newCriteriaString) {
+	hasChanges(
+		newIncludeAnonymousUsers,
+		newName,
+		newCriteriaString,
+		newSequential
+	) {
 		const {
-			segment: {criteriaString, includeAnonymousUsers, name}
+			segment: {criteriaString, includeAnonymousUsers, name, sequential}
 		} = this.props;
 
 		return (
 			newIncludeAnonymousUsers !== includeAnonymousUsers ||
 			name !== newName ||
-			criteriaString !== newCriteriaString
+			criteriaString !== newCriteriaString ||
+			sequential !== newSequential
 		);
 	}
 
@@ -167,6 +173,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 					criteriaString,
 					includeAnonymousUsers,
 					name,
+					sequential,
 					state: segmentState
 				},
 				type
@@ -188,7 +195,8 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 									  )
 									: wrapInCriteriaGroup([]),
 							includeAnonymousUsers,
-							name
+							name,
+							sequential
 						}}
 						onSubmit={this.handleSubmit}
 						ref={this._formRef}
@@ -197,7 +205,12 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 							handleSubmit,
 							isSubmitting,
 							isValid,
-							values: {criteria, includeAnonymousUsers, name}
+							values: {
+								criteria,
+								includeAnonymousUsers,
+								name,
+								sequential
+							}
 						}) => {
 							const newCriteriaString = buildQueryString([
 								criteria
@@ -205,7 +218,8 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 							const hasChanges = this.hasChanges(
 								includeAnonymousUsers,
 								name,
-								newCriteriaString
+								newCriteriaString,
+								sequential
 							);
 
 							return (
@@ -250,16 +264,8 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 														{type ===
 															SegmentTypes.RealTime && (
 															<SegmentEnabledSequentialCard
-																onToggle={value =>
-																	this.setState(
-																		{
-																			enabledSequentialSegment: value
-																		}
-																	)
-																}
-																toggled={
-																	this.state
-																		.enabledSequentialSegment
+																sequential={
+																	sequential
 																}
 															/>
 														)}
@@ -288,14 +294,13 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 															channelId={
 																channelId
 															}
-															enabledSequentialSegment={
-																this.state
-																	.enabledSequentialSegment
-															}
 															groupId={groupId}
 															id={id}
 															name='criteria'
 															segmentType={type}
+															sequential={
+																sequential
+															}
 															validate={
 																validateSegmentEditor
 															}

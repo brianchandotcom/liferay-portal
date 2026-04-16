@@ -20,6 +20,7 @@ interface ISegment {
 	properties: Map<string, any>;
 	referencedObjects?: Map<string, any>;
 	segmentType: null;
+	sequential: false;
 	state: string;
 	status: string;
 	type: EntityTypes.IndividualsSegment;
@@ -50,6 +51,7 @@ export default class Segment
 			fieldMappings: Map()
 		}),
 		segmentType: null,
+		sequential: false,
 		state: '',
 		status: null,
 		type: EntityTypes.IndividualsSegment,
@@ -73,6 +75,7 @@ export default class Segment
 	properties: Map<string, any>;
 	referencedObjects?: Map<string, any>;
 	segmentType: null;
+	sequential: false;
 	state: string;
 	status: string;
 	type: EntityTypes.IndividualsSegment;

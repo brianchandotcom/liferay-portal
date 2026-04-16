@@ -61,14 +61,16 @@ export function create({
 	groupId,
 	includeAnonymousUsers = false,
 	name,
-	segmentType
+	segmentType,
+	sequential = false
 }) {
 	const data = {
 		channelId,
 		filter: criteriaString,
 		includeAnonymousUsers,
 		name,
-		segmentType
+		segmentType,
+		sequential
 	};
 
 	return sendRequest({
@@ -85,14 +87,16 @@ export function update({
 	id,
 	includeAnonymousUsers = false,
 	name,
-	segmentType
+	segmentType,
+	sequential = false
 }) {
 	const data = {
 		channelId,
 		filter: criteriaString,
 		includeAnonymousUsers,
 		name,
-		segmentType
+		segmentType,
+		sequential
 	};
 
 	return sendRequest({

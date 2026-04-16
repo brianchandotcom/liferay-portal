@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.admin.fragment.internal.jaxrs.exception.mapper;
+package com.liferay.headless.admin.fragment.internal.vulcan.problem;
 
 import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.portal.vulcan.problem.Problem;
@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Rubén Pulido
  */
 @Component(service = ProblemMapper.class)
-public class DuplicateFragmentCollectionKeyExceptionMapper
+public class DuplicateFragmentCollectionKeyExceptionProblemMapper
 	implements ProblemMapper<DuplicateFragmentCollectionKeyException> {
 
 	@Override

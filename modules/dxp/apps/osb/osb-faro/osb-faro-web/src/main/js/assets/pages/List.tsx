@@ -83,7 +83,7 @@ const columns = {
 
 		const mimeType = getMimeType({
 			assetType: itemData?.assetType,
-			mimeType: itemData?.assetMimeType
+			mimeType: itemData?.mimeType
 		});
 
 		return (
@@ -143,6 +143,7 @@ const List = () => {
 				itemLabel: 'name',
 				label: Liferay.Language.get('type'),
 				multiple: true,
+				searchable: true,
 				type: 'selection'
 			},
 			{
@@ -153,6 +154,7 @@ const List = () => {
 				itemLabel: 'name',
 				label: Liferay.Language.get('tags'),
 				multiple: true,
+				searchable: true,
 				type: 'selection'
 			},
 			{
@@ -163,6 +165,18 @@ const List = () => {
 				itemLabel: 'name',
 				label: Liferay.Language.get('categories'),
 				multiple: true,
+				searchable: true,
+				type: 'selection'
+			},
+			{
+				apiURL: `/o/faro/contacts/${groupId}/asset-summary-mime-types?channelId=${channelId}&${rangeSelectorParams}`,
+				entityFieldType: 'string',
+				id: 'mimeType',
+				itemKey: 'id',
+				itemLabel: 'name',
+				label: Liferay.Language.get('mime-type'),
+				multiple: true,
+				searchable: true,
 				type: 'selection'
 			}
 		],

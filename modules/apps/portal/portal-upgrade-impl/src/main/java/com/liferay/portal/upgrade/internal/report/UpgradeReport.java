@@ -73,6 +73,10 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
@@ -346,23 +350,27 @@ public class UpgradeReport {
 							"\"rootDir\" was not set";
 					}
 
-					_dlSize = 0;
+					FutureTask<Long> dlSizeFutureTask = new FutureTask<>(
+						() -> FileUtils.sizeOfDirectory(new File(_rootDir)));
 
 					try {
-						_dlSizeThread.start();
-						_dlSizeThread.join(
-							PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT *
-								Time.SECOND);
-					}
-					catch (Exception exception) {
-						_log.error(
-							"Unable to determine the document library size",
-							exception);
+						Thread dlSizeThread = new Thread(
+							dlSizeFutureTask, "Liferay DL Size Thread");
 
-						return "Unable to determine";
-					}
+						dlSizeThread.setDaemon(true);
 
-					if (_dlSizeThread.isAlive()) {
+						dlSizeThread.start();
+
+						long dlSize = dlSizeFutureTask.get(
+							PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT,
+							TimeUnit.SECONDS);
+
+						return LanguageUtil.formatStorageSize(
+							dlSize, LocaleUtil.US);
+					}
+					catch (TimeoutException timeoutException) {
+						dlSizeFutureTask.cancel(true);
+
 						if (_log.isInfoEnabled()) {
 							_log.info(
 								"Unable to determine the document library " +
@@ -370,11 +378,22 @@ public class UpgradeReport {
 										"manually.");
 						}
 
-						return "Unable to determine";
+						if (_log.isDebugEnabled()) {
+							_log.debug(timeoutException);
+						}
+					}
+					catch (ExecutionException executionException) {
+						_log.error(
+							"Unable to determine the document library size",
+							executionException.getCause());
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to determine the document library size",
+							exception);
 					}
 
-					return LanguageUtil.formatStorageSize(
-						_dlSize, LocaleUtil.US);
+					return "Unable to determine";
 				}
 			).build()
 		).put(
@@ -1007,22 +1026,11 @@ public class UpgradeReport {
 	private static final Snapshot<ReleaseManager> _releaseManagerSnapshot =
 		new Snapshot<>(UpgradeReport.class, ReleaseManager.class);
 
-	private double _dlSize;
-	private final Thread _dlSizeThread = new DLSizeThread();
 	private String _executionDateString;
 	private String _executionTimeString;
 	private final int _initialBuildNumber;
 	private Map<String, Long> _initialTableCounts;
 	private String _rootDir;
-
-	private class DLSizeThread extends Thread {
-
-		@Override
-		public void run() {
-			_dlSize = FileUtils.sizeOfDirectory(new File(_rootDir));
-		}
-
-	}
 
 	private class MessagesPrinter {
 

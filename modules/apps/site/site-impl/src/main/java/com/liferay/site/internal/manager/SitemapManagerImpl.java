@@ -298,8 +298,7 @@ public class SitemapManagerImpl implements SitemapManager {
 
 				path = path.substring(i18nPath.length());
 
-				int[] groupFriendlyURLIndex = _portal.getGroupFriendlyURLIndex(
-					path);
+				groupFriendlyURLIndex = _portal.getGroupFriendlyURLIndex(path);
 
 				if (groupFriendlyURLIndex != null) {
 					if (groupFriendlyURLIndex[1] < path.length()) {

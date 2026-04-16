@@ -55,7 +55,7 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 						{
 							group="gcp.liferay.com"
 							jsonPointers=[
-								"/spec/database/snapshotIdentifier",
+								"/spec/database/snapshotUuid",
 								"/spec/restorePhase",
 								"/spec/targetActiveDataPlane",
 							]

@@ -7,6 +7,7 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.license.util.App;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
@@ -68,15 +69,9 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
-	public void testCheckLicenseForCMP() throws Exception {
-		try (SafeCloseable safeCloseable = disableValidateWithSafeCloseable()) {
-			assertLicensePropertiesNotExisted(getCMPProductId());
-
-			deployCMPLicense(Time.HOUR);
-
-			assertLicensePropertiesExisted(getCMPProductId());
-
-			Assert.assertTrue(LicenseManagerUtil.isCMPEnabled());
+	public void testCheckLicenseForApp() throws Exception {
+		for (App app : App.values()) {
+			_testCheckLicenseForApp(app);
 		}
 	}
 
@@ -135,6 +130,20 @@ public class CheckLicenseTest extends BaseLicenseTestCase {
 		assertLicensePropertiesExisted(getPortalProductId());
 
 		assertPortalLicenseRegistered();
+	}
+
+	private void _testCheckLicenseForApp(App app) throws Exception {
+		try (SafeCloseable safeCloseable1 = disableValidateWithSafeCloseable();
+			SafeCloseable safeCloseable2 = resetLicenseDataWithSafeCloseble()) {
+
+			assertLicensePropertiesNotExisted(getProductId(app));
+
+			deployAppLicense(app, Time.HOUR);
+
+			assertLicensePropertiesExisted(getProductId(app));
+
+			Assert.assertTrue(LicenseManagerUtil.isAppEnabled(app));
+		}
 	}
 
 	private static SafeCloseable _setVersionSafeCloseable;

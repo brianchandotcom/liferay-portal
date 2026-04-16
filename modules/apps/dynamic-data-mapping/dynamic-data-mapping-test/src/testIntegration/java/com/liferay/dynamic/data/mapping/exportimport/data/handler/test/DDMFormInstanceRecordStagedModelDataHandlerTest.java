@@ -32,7 +32,9 @@ import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -60,6 +62,46 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	@TestInfo("LPD-85617")
+	public void testExportImportPreservesIpAddress() throws Exception {
+		String fieldName = RandomTestUtil.randomString();
+
+		DDMFormInstance ddmFormInstance = addFormInstanceWithTextField(
+			fieldName);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmFormInstance.getDDMForm());
+
+		DDMFormFieldValue ddmFormFieldValue = createTextDDMFormFieldValue(
+			ddmFormValues.getDefaultLocale(), fieldName,
+			RandomTestUtil.randomString());
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
+				ddmFormInstance, ddmFormValues, stagingGroup,
+				TestPropsValues.getUserId());
+
+		ddmFormInstanceRecord.setIpAddress("1.2.3.4");
+
+		ddmFormInstanceRecord =
+			DDMFormInstanceRecordLocalServiceUtil.updateDDMFormInstanceRecord(
+				ddmFormInstanceRecord);
+
+		exportImportStagedModel(ddmFormInstanceRecord);
+
+		DDMFormInstanceRecord importedDDMFormInstanceRecord =
+			DDMFormInstanceRecordLocalServiceUtil.
+				getDDMFormInstanceRecordByUuidAndGroupId(
+					ddmFormInstanceRecord.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			ddmFormInstanceRecord.getIpAddress(),
+			importedDDMFormInstanceRecord.getIpAddress());
+	}
 
 	@Test
 	public void testVersionMatchingAfterExportImport() throws Exception {

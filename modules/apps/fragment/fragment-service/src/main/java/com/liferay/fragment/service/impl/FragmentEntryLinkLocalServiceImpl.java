@@ -766,9 +766,14 @@ public class FragmentEntryLinkLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
 
 		if (fragmentEntry == null) {
-			throw new UnsupportedOperationException(
-				"Unable to propagate fragment entry link " +
-					fragmentEntryLinkId);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to propagate fragment entry link " +
+						fragmentEntryLinkId +
+							" because its fragment entry is missing");
+			}
+
+			return;
 		}
 
 		updateLatestChanges(

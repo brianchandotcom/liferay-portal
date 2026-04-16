@@ -217,7 +217,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 		if (Objects.equals(
 				fragmentEntryLink.getRendererKey(),
 				FragmentRendererConstants.
-					COLLECTION_FILTER_FRAGMENT_RENDERER_KEY)) {
+					FRAGMENT_RENDERER_CLASS_NAME_COLLECTION_FILTER)) {
 
 			String filterKey = GetterUtil.getString(
 				freeMarkerJSONObject.getString("filterKey"));

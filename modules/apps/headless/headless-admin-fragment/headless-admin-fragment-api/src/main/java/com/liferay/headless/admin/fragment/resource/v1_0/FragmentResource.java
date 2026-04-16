@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.fragment.resource.v1_0;
 
-import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
+import com.liferay.headless.admin.fragment.dto.v1_0.Fragment;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -24,7 +24,6 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -44,41 +43,31 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface FragmentSetResource {
+public interface FragmentResource {
 
-	public void deleteSiteFragmentSet(
+	public void deleteSiteFragment(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode)
+			String fragmentExternalReferenceCode)
 		throws Exception;
 
-	public FragmentSet getSiteFragmentSet(
+	public Fragment getSiteFragment(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode)
+			String fragmentExternalReferenceCode)
 		throws Exception;
 
-	public Page<FragmentSet> getSiteFragmentSetsPage(
+	public Page<Fragment> getSiteFragmentSetFragmentsPage(
 			String siteExternalReferenceCode,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination)
+			String fragmentSetExternalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public FragmentSet postSiteFragmentSet(
-			String siteExternalReferenceCode, FragmentSet fragmentSet)
-		throws Exception;
-
-	public Response postSiteFragmentSetBatch(
-			String siteExternalReferenceCode, String callbackURL, Object object)
-		throws Exception;
-
-	public Response postSiteFragmentSetsPageExportBatch(
+	public Fragment postSiteFragmentSetFragment(
 			String siteExternalReferenceCode,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			String callbackURL, String contentType, String fieldNames)
+			String fragmentSetExternalReferenceCode, Fragment fragment)
 		throws Exception;
 
-	public FragmentSet putSiteFragmentSet(
+	public Fragment putSiteFragment(
 			String siteExternalReferenceCode,
-			String fragmentSetExternalReferenceCode, FragmentSet fragmentSet)
+			String fragmentExternalReferenceCode, Fragment fragment)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -151,7 +140,7 @@ public interface FragmentSetResource {
 	@ProviderType
 	public interface Builder {
 
-		public FragmentSetResource build();
+		public FragmentResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 
@@ -177,4 +166,4 @@ public interface FragmentSetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:662070970
+// LIFERAY-REST-BUILDER-HASH:1134812387

@@ -22,7 +22,7 @@ export class HeadlessAssetLibraryApiHelper {
 	}: {
 		description?: string;
 		name: string;
-		settings: any;
+		settings?: any;
 		type: string;
 	}) {
 		const data = JSON.stringify({

@@ -14,7 +14,6 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
+import com.liferay.site.cms.site.initializer.internal.util.ExportImportUtil;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.PortletRequest;
@@ -59,12 +59,21 @@ public class ViewStructuresDisplayContext {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES, "')");
 	}
 
-	public Map<String, Object> getBreadcrumbProps() throws PortalException {
+	public Map<String, Object> getBreadcrumbProps() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		_addBreadcrumbItem(jsonArray, false, null, _getLayoutName());
 
 		return HashMapBuilder.<String, Object>put(
+			"actionItems",
+			JSONUtil.putAll(
+				ExportImportUtil.getExportActionItemJSONObject(
+					_httpServletRequest, ObjectPortletKeys.OBJECT_DEFINITIONS,
+					"export-content-structures", _themeDisplay),
+				ExportImportUtil.getImportActionItemJSONObject(
+					_httpServletRequest, ObjectPortletKeys.OBJECT_DEFINITIONS,
+					"import-content-structures", _themeDisplay))
+		).put(
 			"breadcrumbItems", jsonArray
 		).put(
 			"hideSpace", true

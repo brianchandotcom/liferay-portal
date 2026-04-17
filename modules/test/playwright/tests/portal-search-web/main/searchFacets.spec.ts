@@ -37,13 +37,8 @@ test.describe('Category Facet', () => {
 
 		await test.step('Create 21 sites to test listing', async () => {
 			for (let count = 0; count < 21; count++) {
-				const newSite = await apiHelpers.headlessSite.createSite({
+				await apiHelpers.headlessAdminSite.postSite({
 					name: `${siteName}-${count}`,
-				});
-
-				apiHelpers.data.push({
-					id: newSite.externalReferenceCode,
-					type: 'site',
 				});
 			}
 		});

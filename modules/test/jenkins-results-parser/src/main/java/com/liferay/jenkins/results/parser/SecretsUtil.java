@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.BearerHTTPAuthorization;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HTTPAuthorization;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +30,7 @@ import org.json.JSONObject;
 public abstract class SecretsUtil {
 
 	public static String getSecret(String key) {
-		if (_bearerHTTPAuthorization == null) {
+		if (!_isSecretsConfigured()) {
 			return key;
 		}
 
@@ -50,7 +52,7 @@ public abstract class SecretsUtil {
 	public static String getSecret(
 		String vaultName, String itemTitle, String fieldLabel) {
 
-		if (_bearerHTTPAuthorization == null) {
+		if (!_isSecretsConfigured()) {
 			return null;
 		}
 
@@ -102,14 +104,108 @@ public abstract class SecretsUtil {
 		return matcher.matches();
 	}
 
+	private static synchronized String _getAccessToken() {
+		if (_accessToken != null) {
+			return _accessToken;
+		}
+
+		String accessToken;
+
+		try {
+			String accessTokenKey = JenkinsResultsParserUtil.getBuildProperty(
+				"one.password.access.token.key");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(accessTokenKey)) {
+				Process process = JenkinsResultsParserUtil.executeBashCommands(
+					new File("."), true, false, 1000 * 60 * 60,
+					JenkinsResultsParserUtil.combine(
+						"aws ssm get-parameter --name \"", accessTokenKey,
+						"\" --with-decryption | jq -r .Parameter.Value"));
+
+				accessToken = JenkinsResultsParserUtil.readInputStream(
+					process.getInputStream());
+
+				accessToken = accessToken.replace(
+					"Finished executing Bash commands.", "");
+
+				accessToken = accessToken.trim();
+			}
+			else {
+				accessToken = "";
+			}
+		}
+		catch (IOException | TimeoutException exception) {
+			accessToken = "";
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(accessToken)) {
+			JenkinsResultsParserUtil.addRedactToken(accessToken);
+		}
+
+		_accessToken = accessToken;
+
+		return _accessToken;
+	}
+
+	private static synchronized String _getConnectURL() {
+		if (_connectURL != null) {
+			return _connectURL;
+		}
+
+		String connectURL;
+
+		try {
+			connectURL = JenkinsResultsParserUtil.getBuildProperty(
+				"one.password.connect.url");
+
+			if (!JenkinsResultsParserUtil.isURL(connectURL)) {
+				connectURL = "";
+			}
+		}
+		catch (IOException ioException) {
+			connectURL = "";
+		}
+
+		_connectURL = connectURL;
+
+		return _connectURL;
+	}
+
+	private static synchronized HTTPAuthorization _getHTTPAuthorization() {
+		if (_httpAuthorization != null) {
+			return _httpAuthorization;
+		}
+
+		String accessToken = _getAccessToken();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(accessToken)) {
+			return null;
+		}
+
+		_httpAuthorization = new BearerHTTPAuthorization(accessToken);
+
+		return _httpAuthorization;
+	}
+
+	private static boolean _isSecretsConfigured() {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(_getAccessToken()) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(_getConnectURL()) ||
+			(_getHTTPAuthorization() == null)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private static JSONArray _toJSONArray(String path) {
-		if (_bearerHTTPAuthorization == null) {
+		if (!_isSecretsConfigured()) {
 			return new JSONArray();
 		}
 
 		try {
 			return JenkinsResultsParserUtil.toJSONArray(
-				_SERVER_URL + path, null, _bearerHTTPAuthorization);
+				_getConnectURL() + path, null, _getHTTPAuthorization());
 		}
 		catch (IOException ioException) {
 			System.out.println(ioException.getMessage());
@@ -121,13 +217,13 @@ public abstract class SecretsUtil {
 	}
 
 	private static JSONObject _toJSONObject(String path) {
-		if (_bearerHTTPAuthorization == null) {
+		if (!_isSecretsConfigured()) {
 			return new JSONObject();
 		}
 
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
-				_SERVER_URL + path, null, _bearerHTTPAuthorization);
+				_getConnectURL() + path, null, _getHTTPAuthorization());
 		}
 		catch (IOException ioException) {
 			System.out.println(ioException.getMessage());
@@ -139,13 +235,13 @@ public abstract class SecretsUtil {
 	}
 
 	private static String _toString(String path) {
-		if (_bearerHTTPAuthorization == null) {
+		if (_httpAuthorization == null) {
 			return "";
 		}
 
 		try {
 			return JenkinsResultsParserUtil.toString(
-				_SERVER_URL + path, null, _bearerHTTPAuthorization);
+				_getConnectURL() + path, null, _getHTTPAuthorization());
 		}
 		catch (IOException ioException) {
 			System.out.println(ioException.getMessage());
@@ -156,38 +252,11 @@ public abstract class SecretsUtil {
 		}
 	}
 
-	private static final String _SERVER_URL = "https://1password.liferay.com";
-
-	private static final BearerHTTPAuthorization _bearerHTTPAuthorization;
+	private static String _accessToken;
+	private static String _connectURL;
+	private static BearerHTTPAuthorization _httpAuthorization;
 	private static final Pattern _secretReferencePattern = Pattern.compile(
 		"op://(?<vaultName>[^/]*)/(?<itemTitle>[^/]*)/(?<fieldLabel>.*)");
-
-	static {
-		String token = null;
-
-		try {
-			token = JenkinsResultsParserUtil.read(
-				new File(
-					System.getProperty("user.home") + "/.1password.connect"));
-
-			token = token.trim();
-		}
-		catch (IOException ioException) {
-			token = null;
-
-			System.out.println(
-				"Unable to load 1Password connect bearer token.");
-		}
-
-		if (token != null) {
-			JenkinsResultsParserUtil.addRedactToken(token);
-
-			_bearerHTTPAuthorization = new BearerHTTPAuthorization(token);
-		}
-		else {
-			_bearerHTTPAuthorization = null;
-		}
-	}
 
 	private static class Item {
 

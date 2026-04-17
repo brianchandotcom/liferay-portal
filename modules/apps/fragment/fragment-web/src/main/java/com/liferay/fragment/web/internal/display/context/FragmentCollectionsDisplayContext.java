@@ -90,7 +90,7 @@ public class FragmentCollectionsDisplayContext {
 				_getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 
-		long[] allGroupIds = _getGroupIds(themeDisplay);
+		long[] groupIds = _getGroupIds(themeDisplay);
 
 		if (_exporting) {
 			if (_isSearch()) {
@@ -98,45 +98,45 @@ public class FragmentCollectionsDisplayContext {
 					() ->
 						_fragmentCollectionLocalService.
 							getExportableFragmentCollectionsByGroupId(
-								allGroupIds, _getKeywords(),
+								groupIds, _getKeywords(),
 								searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
 					_fragmentCollectionLocalService.
 						getExportableFragmentCollectionsCount(
-							allGroupIds, _getKeywords()));
+							groupIds, _getKeywords()));
 			}
 			else {
 				searchContainer.setResultsAndTotal(
 					() ->
 						_fragmentCollectionLocalService.
 							getExportableFragmentCollectionsByGroupId(
-								allGroupIds, searchContainer.getStart(),
+								groupIds, searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
 					_fragmentCollectionLocalService.
-						getExportableFragmentCollectionsCount(allGroupIds));
+						getExportableFragmentCollectionsCount(groupIds));
 			}
 		}
 		else if (_isSearch()) {
 			searchContainer.setResultsAndTotal(
 				() -> _fragmentCollectionLocalService.getFragmentCollections(
-					allGroupIds, _getKeywords(),
+					groupIds, _getKeywords(),
 					_isIncludeMarketplaceFragmentCollections(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				_fragmentCollectionLocalService.getFragmentCollectionsCount(
-					allGroupIds, _getKeywords(),
+					groupIds, _getKeywords(),
 					_isIncludeMarketplaceFragmentCollections()));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
 				() -> _fragmentCollectionLocalService.getFragmentCollections(
-					allGroupIds, _isIncludeMarketplaceFragmentCollections(),
+					groupIds, _isIncludeMarketplaceFragmentCollections(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				_fragmentCollectionLocalService.getFragmentCollectionsCount(
-					allGroupIds, _isIncludeMarketplaceFragmentCollections()));
+					groupIds, _isIncludeMarketplaceFragmentCollections()));
 		}
 
 		searchContainer.setRowChecker(

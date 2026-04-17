@@ -111,7 +111,7 @@ yarn run lint
 
 ## Releasing Clay (Examples)
 
-Run from `modules/apps/frontend-js/frontend-js-clay-web`:
+* Run from `modules/apps/frontend-js/frontend-js-clay-web`:
 
 ```bash
 # Preview version and dependency changes only
@@ -129,6 +129,14 @@ NPM_TAG=next node clay/publish-clay-packages.mjs --target-version=3.160.0
 # Optional: skip version bump (advanced)
 SKIP_VERSION_BUMP=true node clay/publish-clay-packages.mjs --target-version=3.160.0
 ```
+
+* Review `package.json` version updates in `modules/apps/frontend-js/frontend-js-clay-web`
+
+* Go to `/portal-impl` and run `ant format-source-all -Dsource.check.names=JSONPackageJSONDependencyVersionCheck -Dsource.file.extensions=json`. It should update all `clayui` package references across `liferay-portal`.
+
+* Go to `/modules` and run `yarn && npx yarn-deduplicate yarn.lock && yarn`. Verify the yarn.lock diff to check if it makes sense. If its numbers are considerably off (more + than - or vice versa), review the contents to find an explanation.
+
+* Review and commit changes
 
 Release notes:
 

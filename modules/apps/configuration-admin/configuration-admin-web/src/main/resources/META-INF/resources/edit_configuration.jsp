@@ -199,10 +199,10 @@ renderResponse.setTitle(categoryDisplayName);
 							<aui:button-row>
 								<c:choose>
 									<c:when test="<%= configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
-										<aui:button data-qa-id="submitConfiguration" name="update" type="submit" value="update" />
+										<aui:button cssClass="configuration-submit-button" data-qa-id="submitConfiguration" disabled="<%= true %>" name="update" type="submit" value="update" />
 									</c:when>
 									<c:otherwise>
-										<aui:button data-qa-id="submitConfiguration" name="save" type="submit" value="save" />
+										<aui:button cssClass="configuration-submit-button" data-qa-id="submitConfiguration" disabled="<%= true %>" name="save" type="submit" value="save" />
 									</c:otherwise>
 								</c:choose>
 
@@ -222,3 +222,34 @@ renderResponse.setTitle(categoryDisplayName);
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>
+
+<c:if test="<%= !configurationModel.isReadOnly() %>">
+	<aui:script>
+		var form = document.forms['<portlet:namespace />fm'];
+
+		if (form) {
+			var handleInputs = function () {
+				var inputs = form.querySelectorAll(
+					'input:not([type="hidden"]), select, textarea'
+				);
+
+				if (inputs.length) {
+					observer.disconnect();
+
+					form.querySelectorAll('.configuration-submit-button').forEach(
+						function (button) {
+							button.removeAttribute('disabled');
+							button.classList.remove('disabled');
+						}
+					);
+				}
+			};
+
+			var observer = new MutationObserver(handleInputs);
+
+			observer.observe(form, {childList: true, subtree: true});
+
+			handleInputs();
+		}
+	</aui:script>
+</c:if>

@@ -9,6 +9,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.license.util.App;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -38,7 +40,9 @@ public class DSRFeatureFlagListener implements FeatureFlagListener {
 	public void onValue(
 		long companyId, String featureFlagKey, boolean enabled) {
 
-		if (!enabled || !Objects.equals(featureFlagKey, "LPD-66359")) {
+		if (!enabled || !Objects.equals(featureFlagKey, "LPD-66359") ||
+			!LicenseManagerUtil.isAppEnabled(App.DSR)) {
+
 			return;
 		}
 

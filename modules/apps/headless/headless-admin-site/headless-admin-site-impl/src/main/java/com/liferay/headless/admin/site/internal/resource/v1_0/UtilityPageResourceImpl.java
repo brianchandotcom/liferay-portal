@@ -319,19 +319,22 @@ public class UtilityPageResourceImpl
 			_getServiceContext(groupId, utilityPage),
 			utilityPage.getThumbnailURLReference());
 
+		ServiceContext serviceContext = _getServiceContext(
+			groupId, utilityPage);
+
 		if (previewFileEntryId !=
 				layoutUtilityPageEntry.getPreviewFileEntryId()) {
 
 			layoutUtilityPageEntry =
 				_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 					layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-					previewFileEntryId);
+					previewFileEntryId, serviceContext);
 		}
 
 		return _utilityPageDTOConverter.toDTO(
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-				utilityPage.getName()));
+				utilityPage.getName(), serviceContext));
 	}
 
 	@Override

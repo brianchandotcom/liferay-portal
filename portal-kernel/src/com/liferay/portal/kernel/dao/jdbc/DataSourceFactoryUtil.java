@@ -42,6 +42,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -472,6 +473,35 @@ public class DataSourceFactoryUtil {
 		}
 
 		if (url.startsWith("jdbc:sqlserver://")) {
+			try {
+				Driver driver = DriverManager.getDriver(url);
+
+				int majorVersion = driver.getMajorVersion();
+				int minorVersion = driver.getMinorVersion();
+
+				if ((majorVersion < 12) ||
+					((majorVersion == 12) && (minorVersion < 4))) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Update SQL Server driver version to >= 12.4.0 " +
+								"to support useBulkCopyForBatchInsert");
+					}
+
+					return url;
+				}
+			}
+			catch (SQLException sqlException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to determine SQL Server driver version, " +
+							"skipping useBulkCopyForBatchInsert",
+						sqlException);
+				}
+
+				return url;
+			}
+
 			return _rewriteJDBCURL(
 				HashMapBuilder.put(
 					"useBulkCopyForBatchInsert", "true"

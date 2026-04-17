@@ -15,8 +15,10 @@ public class DuplicateFragmentCollectionKeyException extends PortalException {
 	public DuplicateFragmentCollectionKeyException() {
 	}
 
-	public DuplicateFragmentCollectionKeyException(String msg) {
-		super(msg);
+	public DuplicateFragmentCollectionKeyException(
+		String fragmentCollectionKey) {
+
+		_fragmentCollectionKey = fragmentCollectionKey;
 	}
 
 	public DuplicateFragmentCollectionKeyException(
@@ -28,5 +30,11 @@ public class DuplicateFragmentCollectionKeyException extends PortalException {
 	public DuplicateFragmentCollectionKeyException(Throwable throwable) {
 		super(throwable);
 	}
+
+	public String getFragmentCollectionKey() {
+		return _fragmentCollectionKey;
+	}
+
+	private String _fragmentCollectionKey;
 
 }

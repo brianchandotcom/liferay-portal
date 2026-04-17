@@ -15,7 +15,7 @@ function main {
 
 	local backups_to_cleanup
 
-	backups_to_cleanup=$( \
+	backups_to_cleanup=$(
 		kubectl \
 			get \
 			liferaybackups \

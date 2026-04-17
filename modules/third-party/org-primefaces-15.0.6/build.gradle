@@ -1,0 +1,9 @@
+ext {
+	gitHash = "dd6ba7a8e7f364b37d28a84320c5b127cd1394c0"
+	gitHubOwner = "liferay"
+	gitHubRepository = "primefaces"
+	mvnJARInclude = "primefaces-15.0.6.LIFERAY-PATCHED-2.jar"
+	mvnTargetDir = "primefaces/target"
+}
+
+apply from: "../build-maven.gradle"

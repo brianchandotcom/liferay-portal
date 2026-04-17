@@ -167,7 +167,8 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		return updatePreviewFileEntryId(
-			targetStyleBookEntry.getStyleBookEntryId(), previewFileEntryId);
+			targetStyleBookEntry.getStyleBookEntryId(), previewFileEntryId,
+			serviceContext);
 	}
 
 	@Override
@@ -420,15 +421,6 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry updatePreviewFileEntryId(
-			long styleBookEntryId, long previewFileEntryId)
-		throws PortalException {
-
-		return updatePreviewFileEntryId(
-			styleBookEntryId, previewFileEntryId, new ServiceContext());
-	}
-
-	@Override
-	public StyleBookEntry updatePreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -459,19 +451,6 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		return styleBookEntry;
-	}
-
-	@Override
-	public StyleBookEntry updateStyleBookEntry(
-			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
-			String frontendTokensValues, String name, String styleBookEntryKey,
-			long previewFileEntryId)
-		throws PortalException {
-
-		return updateStyleBookEntry(
-			userId, styleBookEntryId, defaultStylebookEntry,
-			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId,
-			new ServiceContext());
 	}
 
 	@Override
@@ -522,15 +501,6 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		return styleBookEntryPersistence.update(styleBookEntry, serviceContext);
-	}
-
-	@Override
-	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String frontendTokensValues, String name)
-		throws PortalException {
-
-		return updateStyleBookEntry(
-			styleBookEntryId, frontendTokensValues, name, new ServiceContext());
 	}
 
 	@Override

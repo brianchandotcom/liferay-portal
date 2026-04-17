@@ -132,6 +132,24 @@ public abstract class SecretsUtil {
 		}
 	}
 
+	private static String _toString(String path) {
+		if (_bearerHTTPAuthorization == null) {
+			return "";
+		}
+
+		try {
+			return JenkinsResultsParserUtil.toString(
+				_SERVER_URL + path, null, _bearerHTTPAuthorization);
+		}
+		catch (IOException ioException) {
+			System.out.println(ioException.getMessage());
+
+			ioException.printStackTrace();
+
+			return "";
+		}
+	}
+
 	private static final String _SERVER_URL = "https://1password.liferay.com";
 
 	private static final BearerHTTPAuthorization _bearerHTTPAuthorization;

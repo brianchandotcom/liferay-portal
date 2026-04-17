@@ -295,7 +295,20 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public int getExportableFragmentCollectionsCount(long[] groupIds) {
+	public int getExportableFragmentCollectionsCount(
+		long[] fragmentCollectionIds) {
+
+		return fragmentCollectionPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				FragmentCollectionTable.INSTANCE
+			).where(
+				_getPredicate(fragmentCollectionIds, null, null)
+			));
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCountByGroupId(long[] groupIds) {
 		return fragmentCollectionPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
@@ -306,7 +319,7 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public int getExportableFragmentCollectionsCount(
+	public int getExportableFragmentCollectionsCountByGroupId(
 		long[] groupIds, String name) {
 
 		return fragmentCollectionPersistence.dslQueryCount(
@@ -583,12 +596,15 @@ public class FragmentCollectionLocalServiceImpl
 	private Predicate _getPredicate(
 		long[] fragmentCollectionIds, long[] groupIds, String name) {
 
-		return _getFragmentCompositionsPredicate(
-		).or(
-			_getFragmentEntriesPredicate()
-		).or(
-			_getResourcesPredicate()
-		).withParentheses(
+		return FragmentCollectionTable.INSTANCE.marketplace.eq(
+			false
+		).and(
+			_getFragmentCompositionsPredicate(
+			).or(
+				_getFragmentEntriesPredicate()
+			).or(
+				_getResourcesPredicate()
+			).withParentheses()
 		).and(
 			() -> {
 				if (ArrayUtil.isEmpty(fragmentCollectionIds)) {

@@ -103,7 +103,7 @@ public class FragmentCollectionsDisplayContext {
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
 					_fragmentCollectionLocalService.
-						getExportableFragmentCollectionsCount(
+						getExportableFragmentCollectionsCountByGroupId(
 							groupIds, _getKeywords()));
 			}
 			else {
@@ -115,7 +115,8 @@ public class FragmentCollectionsDisplayContext {
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
 					_fragmentCollectionLocalService.
-						getExportableFragmentCollectionsCount(groupIds));
+						getExportableFragmentCollectionsCountByGroupId(
+							groupIds));
 			}
 		}
 		else if (_isSearch()) {

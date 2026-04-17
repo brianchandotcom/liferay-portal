@@ -10,6 +10,7 @@ import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentCompositionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -158,12 +159,16 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
 	public boolean isExportable() throws PortalException {
-		if (FragmentCompositionLocalServiceUtil.
-				hasExportableFragmentCompositions(getFragmentCollectionId()) ||
-			FragmentEntryLocalServiceUtil.hasExportableFragmentEntries(
-				getFragmentCollectionId()) ||
-			hasResources()) {
+		if (isMarketplace()) {
+			return false;
+		}
 
+		int count =
+			FragmentCollectionLocalServiceUtil.
+				getExportableFragmentCollectionsCount(
+					new long[] {getFragmentCollectionId()});
+
+		if (count > 0) {
 			return true;
 		}
 

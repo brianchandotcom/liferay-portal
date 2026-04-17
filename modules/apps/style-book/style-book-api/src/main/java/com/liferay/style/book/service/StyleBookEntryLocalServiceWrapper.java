@@ -614,33 +614,12 @@ public class StyleBookEntryLocalServiceWrapper
 
 	@Override
 	public StyleBookEntry updatePreviewFileEntryId(
-			long styleBookEntryId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryLocalService.updatePreviewFileEntryId(
-			styleBookEntryId, previewFileEntryId);
-	}
-
-	@Override
-	public StyleBookEntry updatePreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.updatePreviewFileEntryId(
 			styleBookEntryId, previewFileEntryId, serviceContext);
-	}
-
-	@Override
-	public StyleBookEntry updateStyleBookEntry(
-			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
-			String frontendTokensValues, String name, String styleBookEntryKey,
-			long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryLocalService.updateStyleBookEntry(
-			userId, styleBookEntryId, defaultStylebookEntry,
-			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId);
 	}
 
 	@Override
@@ -655,15 +634,6 @@ public class StyleBookEntryLocalServiceWrapper
 			userId, styleBookEntryId, defaultStylebookEntry,
 			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId,
 			serviceContext);
-	}
-
-	@Override
-	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String frontendTokensValues, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryLocalService.updateStyleBookEntry(
-			styleBookEntryId, frontendTokensValues, name);
 	}
 
 	@Override
@@ -735,4 +705,4 @@ public class StyleBookEntryLocalServiceWrapper
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-232734910
+// LIFERAY-SERVICE-BUILDER-HASH:-348384131

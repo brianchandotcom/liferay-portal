@@ -275,6 +275,11 @@ public interface CPDefinitionOptionValueRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionValueRel>
+		getApprovedCPInstanceCPDefinitionOptionValueRels(
+			long cpDefinitionOptionRelId);
+
 	/**
 	 * Returns the cp definition option value rel with the primary key.
 	 *
@@ -482,4 +487,4 @@ public interface CPDefinitionOptionValueRelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1558778191
+// LIFERAY-SERVICE-BUILDER-HASH:1310312746

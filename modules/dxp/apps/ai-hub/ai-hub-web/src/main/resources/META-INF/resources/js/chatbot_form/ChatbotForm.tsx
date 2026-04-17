@@ -12,7 +12,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import ClayPanel from '@clayui/panel';
 import {Provider} from '@clayui/provider';
 import {openToast} from '@liferay/object-js-components-web';
-import {InputLocalized} from 'frontend-js-components-web';
+import {InputLocalized, openSelectionModal} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import './ChatbotForm.scss';
@@ -102,11 +102,13 @@ export default function ChatbotForm({
 	accountEntryExternalReferenceCode,
 	backURL,
 	externalReferenceCode,
+	itemSelectorURL,
 	portalURL,
 }: {
 	accountEntryExternalReferenceCode: string;
 	backURL: string;
 	externalReferenceCode: string;
+	itemSelectorURL: string;
 	portalURL: string;
 }) {
 	const [formData, setFormData] = useState<Chatbot>({} as Chatbot);
@@ -117,7 +119,7 @@ export default function ChatbotForm({
 	const [selectedAgentDefinitions, setSelectedAgentDefinitions] = useState<
 		AgentDefinitionOption[]
 	>([]);
-	const [
+		const [
 		originalSelectedAgentDefinitions,
 		setOriginalSelectedAgentDefinitions,
 	] = useState<AgentDefinitionOption[]>([]);
@@ -130,6 +132,44 @@ export default function ChatbotForm({
 		setFormData((prev) => ({
 			...prev,
 			[name]: value,
+		}));
+	};
+
+	const handleSelectCompanyLogo = () => {
+		openSelectionModal({
+			onClose: () => {},
+			onSelect: (selectedItem: any) => {
+				if (selectedItem?.value) {
+					try {
+						const fileEntry = JSON.parse(selectedItem.value);
+
+						setFormData((prev) => ({
+							...prev,
+							companyLogo: fileEntry.fileEntryId,
+							companyLogoFileName: fileEntry.title,
+						}));
+					}
+					catch (error) {
+						openToast({
+							message: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+							type: 'danger',
+						});
+					}
+				}
+			},
+			selectEventName: 'selectDocument',
+			title: Liferay.Language.get('select-company-logo'),
+			url: itemSelectorURL,
+		});
+	};
+
+	const handleClearCompanyLogo = () => {
+		setFormData((prev) => ({
+			...prev,
+			companyLogo: null,
+			companyLogoFileName: undefined,
 		}));
 	};
 
@@ -150,13 +190,21 @@ export default function ChatbotForm({
 	const handleSubmit = async () => {
 		try {
 			const payload = {
-				...formData,
+				active: formData.active,
+				companyLogo: formData.companyLogo,
+				description: formData.description,
+				externalReferenceCode: formData.externalReferenceCode,
+				introMessage_i18n: formData.introMessage_i18n,
+				notificationMessage_i18n: formData.notificationMessage_i18n,
+				placeholderMessage_i18n: formData.placeholderMessage_i18n,
 				r_accountToAIHubChatbots_accountEntryERC:
 					accountEntryExternalReferenceCode,
+				showCompanyLogo: formData.showCompanyLogo,
 				title:
 					formData.title_i18n?.['en_US'] ||
 					Object.values(formData.title_i18n ?? {})[0] ||
 					'',
+				title_i18n: formData.title_i18n,
 			};
 
 			let chatbotExternalReferenceCode =
@@ -233,6 +281,7 @@ export default function ChatbotForm({
 			if (!externalReferenceCode) {
 				setFormData({
 					active: false,
+					companyLogo: undefined,
 					description: '',
 					externalReferenceCode: '',
 					introMessage_i18n: {},
@@ -243,6 +292,7 @@ export default function ChatbotForm({
 					showCompanyLogo: true,
 					title_i18n: {},
 				});
+
 				setSelectedAgentDefinitions([]);
 				setOriginalSelectedAgentDefinitions([]);
 
@@ -252,8 +302,18 @@ export default function ChatbotForm({
 			try {
 				const chatbot = await getChatbot(externalReferenceCode);
 
+				const companyLogoAttachment =
+					chatbot.companyLogo &&
+					typeof chatbot.companyLogo === 'object'
+						? chatbot.companyLogo
+						: null;
+
 				setFormData({
 					active: chatbot.active ?? false,
+					companyLogo: companyLogoAttachment
+						? companyLogoAttachment.id
+						: chatbot.companyLogo,
+					companyLogoFileName: companyLogoAttachment?.name,
 					description: chatbot.description,
 					externalReferenceCode: chatbot.externalReferenceCode,
 					introMessage_i18n: chatbot.introMessage_i18n,
@@ -274,6 +334,7 @@ export default function ChatbotForm({
 
 				setSelectedAgentDefinitions(agentDefinitions);
 				setOriginalSelectedAgentDefinitions(agentDefinitions);
+
 			}
 			catch (error) {
 				openToast({
@@ -432,6 +493,56 @@ export default function ChatbotForm({
 									</ClayForm.Group>
 
 									<ClayForm.Group>
+										<label htmlFor="companyLogo">
+											{Liferay.Language.get(
+												'company-logo'
+											)}
+										</label>
+
+										<div className="chatbot-company-logo">
+											<Button
+												displayType="secondary"
+												onClick={
+													handleSelectCompanyLogo
+												}
+												small
+											>
+												{Liferay.Language.get(
+													'select-file'
+												)}
+											</Button>
+
+											{formData.companyLogo && (
+												<>
+													<span>
+														{Liferay.Language.get(
+															'file-selected'
+														)}
+
+														:{' '}
+
+														{
+															formData.companyLogoFileName
+														}
+													</span>
+
+													<Button
+														displayType="danger"
+														onClick={
+															handleClearCompanyLogo
+														}
+														small
+													>
+														{Liferay.Language.get(
+															'clear'
+														)}
+													</Button>
+												</>
+											)}
+										</div>
+									</ClayForm.Group>
+
+									<ClayForm.Group>
 										<label>
 											{Liferay.Language.get(
 												'assigned-agents'
@@ -457,6 +568,7 @@ export default function ChatbotForm({
 											}
 											spritemap={Liferay.Icons.spritemap}
 										/>
+
 									</ClayForm.Group>
 
 									<ClayForm.Group>

@@ -27,14 +27,16 @@ let site;
 const siteName = getRandomString();
 
 test.beforeEach(async ({apiHelpers}) => {
-	site = await apiHelpers.headlessSite.createSite({
+	site = await apiHelpers.headlessAdminSite.postSite({
 		name: siteName,
 	});
 });
 
 test.afterEach(async ({apiHelpers}) => {
 	await test.step('Delete site on de DXP side', async () => {
-		await apiHelpers.headlessSite.deleteSite(site.id);
+		await apiHelpers.headlessAdminSite.deleteSite(
+			site.externalReferenceCode
+		);
 	});
 });
 

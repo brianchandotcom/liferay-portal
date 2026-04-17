@@ -24,11 +24,7 @@ import {
 } from '../../segment-experiment-web/main/utils/ab-test';
 import {checkEmptyStateOnACSide, clickOnActionButton} from './utils/ab-test';
 import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
-import {
-	createSitePage,
-	navigateToDXPandDeleteSite,
-	navigateToSitePage,
-} from './utils/portal';
+import {createSitePage, navigateToSitePage} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -49,7 +45,7 @@ test(
 	async ({apiHelpers, page}) => {
 		const siteName = getRandomString();
 
-		const site = await apiHelpers.headlessSite.createSite({
+		await apiHelpers.headlessAdminSite.postSite({
 			name: siteName,
 		});
 
@@ -126,10 +122,6 @@ test(
 				project.groupId
 			);
 		});
-
-		await test.step('delete site on DXP side', async () => {
-			await navigateToDXPandDeleteSite({apiHelpers, page, site});
-		});
 	}
 );
 
@@ -141,7 +133,7 @@ test(
 	async ({apiHelpers, page}) => {
 		const siteName = getRandomString();
 
-		const site = await apiHelpers.headlessSite.createSite({
+		await apiHelpers.headlessAdminSite.postSite({
 			name: siteName,
 		});
 
@@ -223,10 +215,6 @@ test(
 				project.groupId
 			);
 		});
-
-		await test.step('delete site on DXP side', async () => {
-			await navigateToDXPandDeleteSite({apiHelpers, page, site});
-		});
 	}
 );
 
@@ -238,7 +226,7 @@ test(
 	async ({apiHelpers, page, pageEditorPage}) => {
 		const siteName = getRandomString();
 
-		await apiHelpers.headlessSite.createSite({
+		await apiHelpers.headlessAdminSite.postSite({
 			name: siteName,
 		});
 
@@ -335,7 +323,7 @@ test(
 	async ({apiHelpers, page, pageEditorPage}) => {
 		const siteName = getRandomString();
 
-		await apiHelpers.headlessSite.createSite({
+		await apiHelpers.headlessAdminSite.postSite({
 			name: siteName,
 		});
 
@@ -442,7 +430,7 @@ test(
 	async ({apiHelpers, page, pageEditorPage}) => {
 		const siteName = getRandomString();
 
-		await apiHelpers.headlessSite.createSite({
+		await apiHelpers.headlessAdminSite.postSite({
 			name: siteName,
 		});
 
@@ -541,7 +529,7 @@ test(
 	async ({apiHelpers, page}) => {
 		const siteName = getRandomString();
 
-		const site = await apiHelpers.headlessSite.createSite({
+		await apiHelpers.headlessAdminSite.postSite({
 			name: siteName,
 		});
 
@@ -627,10 +615,6 @@ test(
 				`[${channel.id}]`,
 				project.groupId
 			);
-		});
-
-		await test.step('delete site on DXP side', async () => {
-			await navigateToDXPandDeleteSite({apiHelpers, page, site});
 		});
 	}
 );

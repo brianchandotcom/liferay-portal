@@ -10,7 +10,6 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {switchChannel} from './utils/channel';
@@ -39,10 +38,9 @@ const siteName = 'My Site ' + randomString;
 
 let channel;
 let project;
-let site;
 
 test.beforeEach(async ({apiHelpers, page}) => {
-	site = await apiHelpers.headlessSite.createSite({
+	await apiHelpers.headlessAdminSite.postSite({
 		name: siteName,
 	});
 
@@ -57,18 +55,12 @@ test.beforeEach(async ({apiHelpers, page}) => {
 	project = result.project;
 });
 
-test.afterEach(async ({apiHelpers, page}) => {
+test.afterEach(async ({apiHelpers}) => {
 	await test.step('Delete channel', async () => {
 		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
 			`[${channel.id}]`,
 			project.groupId
 		);
-	});
-
-	await test.step('Delete site on DXP side', async () => {
-		await page.goto(liferayConfig.environment.baseUrl);
-
-		await apiHelpers.headlessSite.deleteSite(String(site.id));
 	});
 });
 

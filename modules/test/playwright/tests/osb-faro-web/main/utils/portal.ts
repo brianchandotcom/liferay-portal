@@ -61,7 +61,7 @@ export async function navigateToDXPandDeleteSite({
 }) {
 	await page.goto(liferayConfig.environment.baseUrl);
 
-	await apiHelpers.headlessSite.deleteSite(String(site.id));
+	await apiHelpers.headlessAdminSite.deleteSite(site.externalReferenceCode);
 }
 
 export async function navigateToSitePage({

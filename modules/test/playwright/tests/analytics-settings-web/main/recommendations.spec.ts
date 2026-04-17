@@ -10,7 +10,6 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {createChannel} from '../../osb-faro-web/main/utils/channel';
 import {createDataSource} from '../../osb-faro-web/main/utils/data-source';
@@ -59,13 +58,8 @@ test.describe('Test All Recommendation Job', () => {
 			apiHelpers,
 			page,
 		}) => {
-			const site = await apiHelpers.headlessSite.createSite({
+			const site = await apiHelpers.headlessAdminSite.postSite({
 				name: getRandomString(),
-			});
-
-			apiHelpers.data.push({
-				id: site.externalReferenceCode,
-				type: 'site',
 			});
 
 			const channelName = 'My Property - ' + getRandomString();
@@ -158,15 +152,11 @@ test.describe('Test All Recommendation Job', () => {
 
 			expect(await toggleElement.isChecked()).toBeFalsy();
 
-			await test.step('Delete channel and delete site on the DXP side', async () => {
+			await test.step('Delete channel', async () => {
 				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
 					`[${channel.id}]`,
 					project.groupId
 				);
-
-				await page.goto(liferayConfig.environment.baseUrl);
-
-				await apiHelpers.headlessSite.deleteSite(String(site.id));
 			});
 		});
 	});

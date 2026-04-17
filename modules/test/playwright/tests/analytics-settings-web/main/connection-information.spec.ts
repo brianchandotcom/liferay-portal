@@ -40,11 +40,9 @@ test(
 		tag: '@LRAC-11044',
 	},
 	async ({apiHelpers, page}) => {
-		const site1 = await apiHelpers.headlessSite.createSite({
+		const site1 = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site1.externalReferenceCode, type: 'site'});
 
 		const commerceChannel1 =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
@@ -62,11 +60,9 @@ test(
 			siteName: site1.name,
 		});
 
-		const site2 = await apiHelpers.headlessSite.createSite({
+		const site2 = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site2.externalReferenceCode, type: 'site'});
 
 		const commerceChannel2 =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
@@ -127,11 +123,9 @@ test(
 		tag: '@LPD-69652',
 	},
 	async ({apiHelpers, page}) => {
-		const site1 = await apiHelpers.headlessSite.createSite({
+		const site1 = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site1.externalReferenceCode, type: 'site'});
 
 		const channelName1 = getRandomString();
 
@@ -147,11 +141,9 @@ test(
 			stepName: 'Properties',
 		});
 
-		const site2 = await apiHelpers.headlessSite.createSite({
+		const site2 = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site2.externalReferenceCode, type: 'site'});
 
 		const channelName2 = getRandomString();
 

@@ -96,12 +96,12 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			settingsMap
 		);
 
-		String title = RandomTestUtil.randomString();
+		String name = RandomTestUtil.randomString();
 
 		Mockito.when(
 			exportImportConfiguration.getName()
 		).thenReturn(
-			title
+			name
 		);
 
 		BackgroundTask backgroundTask = Mockito.mock(BackgroundTask.class);
@@ -144,11 +144,11 @@ public class LayoutExportBackgroundTaskExecutorTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				title, StringPool.DASH, _timestamp, StringPool.PERIOD,
+				name, StringPool.DASH, _timestamp, StringPool.PERIOD,
 				_PROTOCOL),
 			argumentCaptor1.getValue());
 		Assert.assertEquals(
-			StringBundler.concat(title, StringPool.PERIOD, _PROTOCOL),
+			StringBundler.concat(name, StringPool.PERIOD, _PROTOCOL),
 			argumentCaptor2.getValue());
 	}
 

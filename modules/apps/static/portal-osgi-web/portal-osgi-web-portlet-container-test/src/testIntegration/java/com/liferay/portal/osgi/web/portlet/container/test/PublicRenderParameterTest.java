@@ -109,6 +109,72 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-86498")
+	public void testWithContentLayoutRenderURL() throws Exception {
+		String prpName = "categoryId";
+		String prpValue = RandomTestUtil.randomString(
+			LayoutFriendlyURLRandomizerBumper.INSTANCE,
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		testPortlet = new TestPortlet() {
+
+			@Override
+			public void render(
+					RenderRequest renderRequest, RenderResponse renderResponse)
+				throws IOException {
+
+				PrintWriter printWriter = renderResponse.getWriter();
+
+				printWriter.write(
+					TEST_PORTLET_ID + renderRequest.getParameter(prpName));
+			}
+
+		};
+
+		setUpPortlet(
+			testPortlet,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"jakarta.portlet.supported-public-render-parameter", prpName
+			).put(
+				"jakarta.portlet.version", "3.0"
+			).build(),
+			TEST_PORTLET_ID);
+
+		Layout contentLayout = LayoutTestUtil.addTypeContentLayout(group);
+
+		Layout draftLayout = contentLayout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addPortletToLayout(draftLayout, TEST_PORTLET_ID);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, contentLayout);
+
+		String portletURLString = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				PortletContainerTestUtil.getHttpServletRequest(
+					group, contentLayout),
+				TEST_PORTLET_ID, contentLayout.getPlid(),
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			prpName, prpValue
+		).buildString();
+
+		Assert.assertTrue(
+			portletURLString,
+			portletURLString.contains(
+				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE));
+
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(portletURLString);
+
+		Assert.assertEquals(200, response.getCode());
+
+		String body = response.getBody();
+
+		Assert.assertTrue(body.contains(TEST_PORTLET_ID + prpValue));
+	}
+
+	@Test
 	public void testWithModuleLayoutTypeController() throws Exception {
 		final String prpName = "categoryId";
 		final String prpValue = RandomTestUtil.randomString(

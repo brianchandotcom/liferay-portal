@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClaySticker from '@clayui/sticker';
 import {ClayInput} from '@clayui/form';
+import ClaySticker, {DisplayType} from '@clayui/sticker';
 import {
 	FieldBase,
 	MultipleFileUploader,
@@ -49,7 +49,7 @@ const SpaceInput = React.forwardRef<HTMLInputElement, ISpaceInputProps>(
 					{showSticker && (
 						<ClayInput.GroupInsetItem before>
 							<ClaySticker
-								displayType={selectedLogoColor}
+								displayType={selectedLogoColor as DisplayType}
 								size="sm"
 							>
 								{selectedName.charAt(0).toUpperCase()}
@@ -71,7 +71,9 @@ const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 	maxFileSize,
 	onCloseUploadView,
 }) {
-	const [assetLibrary, setAssetLibrary] = useState<AssetLibrary | undefined>();
+	const [assetLibrary, setAssetLibrary] = useState<
+		AssetLibrary | undefined
+	>();
 	const [groupIdError, setGroupIdError] = useState(false);
 
 	const groupIdInputId = useId();
@@ -189,7 +191,8 @@ const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 										<div className="align-items-center c-gap-2 d-flex">
 											<ClaySticker
 												displayType={
-													item.settings?.logoColor
+													item.settings
+														?.logoColor as DisplayType
 												}
 												size="sm"
 											>

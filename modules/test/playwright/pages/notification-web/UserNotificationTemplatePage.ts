@@ -46,8 +46,7 @@ export class UserNotificationTemplatePage {
 		await this.page.getByRole('combobox').first().click();
 
 		await this.page
-			.getByRole('option')
-			.filter({hasText: recipient})
+			.getByRole('option', {exact: true, name: recipient})
 			.click();
 	}
 

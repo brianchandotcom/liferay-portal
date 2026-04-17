@@ -11,565 +11,27 @@ import {
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import getRandomString from '../../../utils/getRandomString';
 
 const test = mergeTests(
 	dataApiHelpersTest,
+	editObjectDefinitionPagesTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
 	notificationPagesTest,
-	objectPagesTest
-);
-
-test(
-	'LPD-78504 Can add attachment to notification template',
-	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		emailNotificationTemplatePage,
-		notificationTemplatesPage,
-		page,
-		site: _site,
-	}) => {
-		const objectName = 'ObjectAttach' + getRandomInt();
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectDefinitionExternalReferenceCode: objectName,
-				objectFields: [
-					{
-						DBType: 'Long',
-						businessType: 'Attachment',
-						externalReferenceCode: 'attachmentField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'From Computer And Show Files In DM'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'attachmentField',
-						objectFieldSettings: [
-							{
-								name: 'acceptedFileExtensions',
-								value: 'jpeg, jpg, pdf, png' as unknown as object,
-							},
-							{
-								name: 'fileSource',
-								value: 'userComputer' as unknown as object,
-							},
-							{
-								name: 'maximumFileSize',
-								value: 100 as unknown as object,
-							},
-						],
-						required: false,
-						system: false,
-						type: 'Long',
-					},
-				],
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await notificationTemplatesPage.goto();
-
-		await notificationTemplatesPage.newNotificationTemplateButton.click();
-
-		await notificationTemplatesPage.emailNotificationDropdownItem.click();
-
-		const templateName = 'Notification Template ' + getRandomInt();
-
-		await emailNotificationTemplatePage.basicInfoName.fill(templateName);
-		await emailNotificationTemplatePage.senderEmailAddress.fill(
-			'test@liferay.com'
-		);
-		await emailNotificationTemplatePage.senderName.fill('Test Test');
-		await emailNotificationTemplatePage.contentSubject.fill('Subject');
-
-		await page.getByLabel('Data Source').click();
-		await page.getByRole('option', {name: objectName}).click();
-
-		await page.getByPlaceholder('Select a Field').click();
-		await page
-			.getByRole('option', {
-				name: 'From Computer And Show Files In DM',
-			})
-			.click();
-
-		await emailNotificationTemplatePage.saveButton.click();
-
-		await waitForAlert(page);
-
-		apiHelpers.data.push({
-			id: await page
-				.locator('span:has-text("ID:") + strong')
-				.textContent()
-				.then((text) => Number(text)),
-			type: 'notificationTemplate',
-		});
-
-		await notificationTemplatesPage.goto();
-
-		await notificationTemplatesPage
-			.getFrontEndDatasetItemLocator(templateName)
-			.click();
-
-		await expect(page.getByLabel('Data Source')).toContainText(objectName);
-
-		await expect(
-			page.getByText('From Computer And Show Files In DM')
-		).toBeVisible();
-	}
-);
-
-test(
-	'LPD-78504 Can add email notification to queue via API',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers: _apiHelpers, page: _page, site: _site}) => {
-		// This test requires a mock SMTP server which is not available
-		// in the Playwright test infrastructure
-
-		test.fixme();
-	}
-);
-
-test(
-	'LPD-78504 Can change notification template data source',
-	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		emailNotificationTemplatePage: _emailNotificationTemplatePage,
-		notificationTemplatesPage,
-		page,
-		site: _site,
-	}) => {
-		const objectDefinitions: ObjectDefinition[] = [];
-
-		for (const letter of ['A', 'B']) {
-			const objectName = `ObjectDS${letter}${getRandomInt()}`;
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectDefinitionExternalReferenceCode: objectName,
-					objectFields: [
-						{
-							DBType: 'Long',
-							businessType: 'Attachment',
-							externalReferenceCode: `attachmentField${letter}`,
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: '',
-							label: {
-								en_US: `Custom Attachment Field ${letter}`,
-							},
-							listTypeDefinitionId: 0,
-							localized: false,
-							name: `customAttachmentField${letter}`,
-							objectFieldSettings: [
-								{
-									name: 'acceptedFileExtensions',
-									value: 'jpeg, jpg, pdf, png' as unknown as object,
-								},
-								{
-									name: 'fileSource',
-									value: 'userComputer' as unknown as object,
-								},
-								{
-									name: 'maximumFileSize',
-									value: 100 as unknown as object,
-								},
-							],
-							required: false,
-							system: false,
-							type: 'Long',
-						},
-					],
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			objectDefinitions.push(objectDefinition);
-		}
-
-		const objectNameA = objectDefinitions[0].name;
-		const objectNameB = objectDefinitions[1].name;
-
-		await notificationTemplatesPage.goto();
-
-		await notificationTemplatesPage.newNotificationTemplateButton.click();
-
-		await notificationTemplatesPage.emailNotificationDropdownItem.click();
-
-		await page.getByLabel('Data Source').click();
-		await page.getByRole('option', {name: objectNameA}).click();
-
-		await page.getByPlaceholder('Select a Field').click();
-		await page
-			.getByRole('option', {name: 'Custom Attachment Field A'})
-			.click();
-
-		await page.getByLabel('Data Source').click();
-		await page.getByRole('option', {name: objectNameB}).click();
-
-		await page.getByPlaceholder('Select a Field').click();
-
-		await expect(
-			page.getByRole('option', {name: 'Custom Attachment Field B'})
-		).toBeVisible();
-	}
-);
-
-test(
-	'LPD-78504 Can delete attachment from notification template',
-	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		emailNotificationTemplatePage,
-		notificationTemplatesPage,
-		page,
-		site: _site,
-	}) => {
-		const objectName = 'ObjectDelAttach' + getRandomInt();
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectDefinitionExternalReferenceCode: objectName,
-				objectFields: [
-					{
-						DBType: 'Long',
-						businessType: 'Attachment',
-						externalReferenceCode: 'attachmentField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'From Computer And Show Files In DM'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'attachmentField',
-						objectFieldSettings: [
-							{
-								name: 'acceptedFileExtensions',
-								value: 'jpeg, jpg, pdf, png' as unknown as object,
-							},
-							{
-								name: 'fileSource',
-								value: 'userComputer' as unknown as object,
-							},
-							{
-								name: 'maximumFileSize',
-								value: 100 as unknown as object,
-							},
-						],
-						required: false,
-						system: false,
-						type: 'Long',
-					},
-				],
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await notificationTemplatesPage.goto();
-
-		await notificationTemplatesPage.newNotificationTemplateButton.click();
-
-		await notificationTemplatesPage.emailNotificationDropdownItem.click();
-
-		const templateName = 'Notification Template ' + getRandomInt();
-
-		await emailNotificationTemplatePage.basicInfoName.fill(templateName);
-		await emailNotificationTemplatePage.senderEmailAddress.fill(
-			'test@liferay.com'
-		);
-		await emailNotificationTemplatePage.senderName.fill('Test Test');
-		await emailNotificationTemplatePage.contentSubject.fill('Subject');
-
-		await page.getByLabel('Data Source').click();
-		await page.getByRole('option', {name: objectName}).click();
-
-		await page.getByPlaceholder('Select a Field').click();
-		await page
-			.getByRole('option', {
-				name: 'From Computer And Show Files In DM',
-			})
-			.click();
-
-		await emailNotificationTemplatePage.saveButton.click();
-
-		await waitForAlert(page);
-
-		apiHelpers.data.push({
-			id: await page
-				.locator('span:has-text("ID:") + strong')
-				.textContent()
-				.then((text) => Number(text)),
-			type: 'notificationTemplate',
-		});
-
-		await notificationTemplatesPage.goto();
-
-		await notificationTemplatesPage
-			.getFrontEndDatasetItemLocator(templateName)
-			.click();
-
-		await page.getByRole('button', {name: 'Delete'}).last().click();
-
-		await expect(page.getByPlaceholder('Select a Field')).toBeVisible();
-	}
-);
-
-test(
-	'LPD-78504 Can delete email notification template',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, notificationTemplatesPage, page, site: _site}) => {
-		const templateName = 'Notification Template ' + getRandomInt();
-
-		const _notificationTemplate =
-			await apiHelpers.notification.postRandomNotificationTemplate(
-				templateName
-			);
-
-		await notificationTemplatesPage.goto();
-
-		await expect(
-			notificationTemplatesPage.getFrontEndDatasetItemLocator(
-				templateName
-			)
-		).toBeVisible();
-
-		const actionButton = page
-			.getByRole('row', {name: templateName})
-			.getByRole('button', {name: 'Actions'});
-
-		await actionButton.click();
-
-		await notificationTemplatesPage.frontEndDatasetItemActionDelete.click();
-
-		await waitForAlert(page);
-
-		await expect(
-			notificationTemplatesPage.getFrontEndDatasetItemLocator(
-				templateName
-			)
-		).not.toBeVisible();
-	}
-);
-
-test(
-	'LPD-78504 Can delete a notification',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, page: _page, site: _site}) => {
-		const templateName = 'Notification Template ' + getRandomInt();
-
-		const notificationTemplate =
-			await apiHelpers.notification.postRandomNotificationTemplate(
-				templateName,
-				'test@liferay.com'
-			);
-
-		apiHelpers.data.push({
-			id: notificationTemplate.id,
-			type: 'notificationTemplate',
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		const objectActionAPIClient =
-			await apiHelpers.buildRestClient(ObjectActionAPI);
-
-		const objectAction =
-			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-				objectDefinition.externalReferenceCode,
-				{
-					active: true,
-					label: {
-						en_US: 'Custom Action',
-					},
-					name: 'CustomAction',
-					objectActionExecutorKey: 'notification',
-					objectActionTriggerKey: 'onAfterAdd',
-					parameters: {
-						notificationTemplateId: notificationTemplate.id,
-						type: 'email',
-					},
-				}
-			);
-
-		apiHelpers.data.push({
-			id: objectAction.body.id,
-			type: 'objectAction',
-		});
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{textField: 'Trigger'},
-			applicationName
-		);
-
-		const notificationQueueEntries =
-			await apiHelpers.notification.getNotificationQueueEntriesPage(
-				objectDefinition.name
-			);
-
-		expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
-
-		const notificationQueueEntryId =
-			notificationQueueEntries.items[0].id;
-
-		await apiHelpers.notification.deleteNotificationQueueEntry(
-			notificationQueueEntryId
-		);
-
-		const updatedNotificationQueueEntries =
-			await apiHelpers.notification.getNotificationQueueEntriesPage(
-				objectDefinition.name
-			);
-
-		const remainingIds = updatedNotificationQueueEntries.items.map(
-			(item: any) => item.id
-		);
-
-		expect(remainingIds).not.toContain(notificationQueueEntryId);
-	}
-);
-
-test(
-	'LPD-78504 Can delete user notification template',
-	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers: _apiHelpers,
-		notificationTemplatesPage,
-		page,
-		site: _site,
-		userNotificationTemplatePage,
-	}) => {
-		const templateName = 'User Notification Template ' + getRandomInt();
-
-		await userNotificationTemplatePage.goto();
-
-		await userNotificationTemplatePage.basicInfoName.fill(templateName);
-		await userNotificationTemplatePage.contentSubject.fill(
-			'Subject content'
-		);
-
-		await userNotificationTemplatePage.selectNotificationRecipient('User');
-
-		await page.getByPlaceholder('Enter a user.').click();
-		await page.getByLabel('Test Test', {exact: true}).check();
-		await page.keyboard.press('Escape');
-
-		await userNotificationTemplatePage.saveButton.click();
-
-		await notificationTemplatesPage.goto();
-
-		await expect(
-			notificationTemplatesPage.getFrontEndDatasetItemLocator(
-				templateName
-			)
-		).toBeVisible();
-
-		const actionButton = page
-			.getByRole('row', {name: templateName})
-			.getByRole('button', {name: 'Actions'});
-
-		await actionButton.click();
-
-		await notificationTemplatesPage.frontEndDatasetItemActionDelete.click();
-
-		await waitForAlert(page);
-
-		await expect(
-			notificationTemplatesPage.getFrontEndDatasetItemLocator(
-				templateName
-			)
-		).not.toBeVisible();
-	}
-);
-
-test(
-	'LPD-78504 Can search for notifications',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, notificationTemplatesPage, page, site: _site}) => {
-		const templateNames = [];
-
-		for (const suffix of ['Test', 'Liferay', 'Site']) {
-			const name = `Notification ${suffix} ${getRandomInt()}`;
-
-			const notificationTemplate =
-				await apiHelpers.notification.postRandomNotificationTemplate(
-					name
-				);
-
-			apiHelpers.data.push({
-				id: notificationTemplate.id,
-				type: 'notificationTemplate',
-			});
-
-			templateNames.push(name);
-		}
-
-		await notificationTemplatesPage.goto();
-
-		for (const name of templateNames) {
-			await expect(
-				notificationTemplatesPage.getFrontEndDatasetItemLocator(name)
-			).toBeVisible();
-		}
-
-		const searchTerm = templateNames[1].split(' ')[1];
-
-		await page.getByPlaceholder('Search').fill(searchTerm);
-		await page.keyboard.press('Enter');
-
-		await expect(
-			notificationTemplatesPage.getFrontEndDatasetItemLocator(
-				templateNames[1]
-			)
-		).toBeVisible();
-
-		await expect(
-			notificationTemplatesPage.getFrontEndDatasetItemLocator(
-				templateNames[0]
-			)
-		).not.toBeVisible();
-
-		await expect(
-			notificationTemplatesPage.getFrontEndDatasetItemLocator(
-				templateNames[2]
-			)
-		).not.toBeVisible();
-	}
+	objectPagesTest,
+	usersAndOrganizationsPagesTest
 );
 
 test(
@@ -919,5 +381,108 @@ test(
 		const queueEntry = notificationQueueEntries.items[0];
 
 		expect(queueEntry.subject).toContain('Entry Test Edited');
+	}
+);
+
+test(
+	'LPD-78504 can be sent to a regular role',
+	{tag: '@LPD-78504'},
+	async ({
+		apiHelpers,
+		editObjectActionPage,
+		notificationsPage,
+		page,
+		site: _site,
+		userNotificationTemplatePage,
+		viewObjectActionsPage,
+	}) => {
+		const roleName = getRandomString();
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			externalReferenceCode: getRandomString(),
+			name: roleName,
+			name_i18n: {en_US: getRandomString()},
+			roleType: 'regular',
+		});
+
+		apiHelpers.data.push({
+			id: role.id,
+			type: 'role',
+		});
+
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await userNotificationTemplatePage.goto();
+
+		const notificationTemplateName = getRandomString();
+
+		await userNotificationTemplatePage.basicInfoName.fill(
+			notificationTemplateName
+		);
+
+		const contentSubject = getRandomString();
+
+		await userNotificationTemplatePage.contentSubject.fill(contentSubject);
+
+		await userNotificationTemplatePage.selectNotificationRecipient('Role');
+
+		await userNotificationTemplatePage.selectRole(roleName);
+
+		await userNotificationTemplatePage.saveButton.click();
+
+		await page.getByRole('link', {name: notificationTemplateName}).click();
+
+		const notificationTemplateId = await page
+			.locator('span:has-text("ID:") + strong')
+			.textContent();
+
+		apiHelpers.data.push({
+			id: notificationTemplateId,
+			type: 'notificationTemplate',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectActionPage.addNewAction({
+			notificationTemplateName,
+			thenOption: 'Notification',
+			whenOption: 'On After Add',
+		});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const objectFieldValue = getRandomString();
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: objectFieldValue},
+			applicationName
+		);
+
+		await notificationsPage.goto();
+
+		await page.getByText(contentSubject).click();
+
+		await expect(page.getByLabel('textField', {exact: true})).toHaveValue(
+			objectFieldValue
+		);
 	}
 );

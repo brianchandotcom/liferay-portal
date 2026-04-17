@@ -98,7 +98,10 @@ function _download_and_extract_files {
 		exit 1
 	fi
 
-	rm --force "${output_file}"
+	if [ -e "${output_file}" ]
+	then
+		rm "${output_file}"
+	fi
 
 	curl \
 		--location \
@@ -108,13 +111,15 @@ function _download_and_extract_files {
 
 	local output_dir="${output_file%.tar.gz}"
 
-	mkdir --parent "${output_dir}"
+	if [ ! -d "${output_dir}" ]
+	then
+		mkdir "${output_dir}"
+	fi
 
 	tar \
 		--directory "${output_dir}" \
 		--extract \
-		--file "${output_file}" \
-		--ungzip
+		--file "${output_file}"
 
 	echo "${output_dir}"
 }
@@ -181,4 +186,4 @@ function _get_version {
 	echo "${version}"
 }
 
-main "${@}"
+main ${1+"$@"}

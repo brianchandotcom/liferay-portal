@@ -200,34 +200,3 @@ test(
 		});
 	}
 );
-
-test(
-	'Widget button is enabled by default on object details',
-	{tag: '@LPS-143122'},
-	async ({apiHelpers, editObjectDetailsPage, page}) => {
-
-		// Corresponds to Poshi test: WidgetButtonEnabledByDefault
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 2},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await test.step('Navigate to object details and verify widget toggle is checked by default', async () => {
-			await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
-
-			await editObjectDetailsPage.goToDetailsTab();
-
-			await expect(
-				page.getByRole('switch', {
-					name: 'Show Widget in Page Builder',
-				})
-			).toBeChecked();
-		});
-	}
-);

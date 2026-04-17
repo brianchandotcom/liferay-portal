@@ -57,11 +57,11 @@ test('LPD-44395: Test sample captcha works', async ({
 		.frameLocator("iframe[title='reCAPTCHA']")
 		.getByText("I'm not a robot")
 		.click();
-	await page.waitForTimeout(1000);
+	await page.waitForTimeout(2000);
 
 	await page.getByRole('button', {name: 'Send New Password'}).click();
 
 	await expect(
-		await page.getByText('Your request completed successfully')
+		page.getByText('Your request completed successfully')
 	).toBeVisible();
 });

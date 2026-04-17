@@ -500,7 +500,6 @@ com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilder=com.life
 com.liferay.portal.kernel.repository.cmis.search.CMISSimpleExpression=com.liferay.document.library.repository.cmis.search.CMISSimpleExpression
 com.liferay.portal.kernel.repository.cmis.search.CMISSimpleExpressionOperator=com.liferay.document.library.repository.cmis.search.CMISSimpleExpressionOperator
 com.liferay.portal.kernel.scheduler.JobStateSerializeUtil=com.liferay.portal.scheduler.JobStateSerializeUtil
-com.liferay.portal.kernel.scripting.BaseScriptingExecutor=com.liferay.portal.scripting.BaseScriptingExecutor
 com.liferay.portal.kernel.search.FacetedSearcher=com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher
 com.liferay.portal.kernel.search.util.SearchUtil=com.liferay.portal.vulcan.util.SearchUtil
 com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager=com.liferay.portal.security.auth.session.AuthenticatedSessionManagerUtil

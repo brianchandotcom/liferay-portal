@@ -507,11 +507,9 @@ test('Admin users can see all site scopes regardless of site membership', async 
 	let site: Site;
 
 	await test.step('Setup Site, site scoped object and admin user', async () => {
-		site = await apiHelpers.headlessSite.createSite({
+		site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);

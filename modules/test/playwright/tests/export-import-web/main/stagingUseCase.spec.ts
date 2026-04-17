@@ -75,13 +75,8 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
-		});
-
-		apiHelpers.data.push({
-			id: site.externalReferenceCode,
-			type: 'site',
 		});
 
 		await apiHelpers.objectEntry.postObjectEntry(
@@ -104,13 +99,8 @@ test(
 	'Taxonomy Categories can be staged through batch',
 	{tag: ['@LPD-76007']},
 	async ({apiHelpers, stagingPage}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
-		});
-
-		apiHelpers.data.push({
-			id: site.externalReferenceCode,
-			type: 'site',
 		});
 
 		const taxonomyVocabularyAPIClient = await apiHelpers.buildRestClient(
@@ -154,9 +144,10 @@ test(
 			stagedPortlets: [StageableEntities.CATEGORIES],
 		});
 
-		const stagingSite = await apiHelpers.headlessSite.getSite(
-			`${site.key}-staging`
-		);
+		const stagingSite =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				`${site.friendlyUrlPath}-staging`
+			);
 
 		expect(
 			(
@@ -209,13 +200,8 @@ test(
 	'Taxonomy Categories display controls on staging page',
 	{tag: ['@LPD-78848']},
 	async ({apiHelpers, page, stagingPage, uiElementsPage}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
-		});
-
-		apiHelpers.data.push({
-			id: site.externalReferenceCode,
-			type: 'site',
 		});
 
 		await stagingPage.goto(site.key);
@@ -223,9 +209,10 @@ test(
 			stagedPortlets: [StageableEntities.CATEGORIES],
 		});
 
-		const stagingSite = await apiHelpers.headlessSite.getSite(
-			`${site.key}-staging`
-		);
+		const stagingSite =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				`${site.friendlyUrlPath}-staging`
+			);
 
 		const taxonomyVocabularyAPIClient = await apiHelpers.buildRestClient(
 			TaxonomyVocabularyAPI
@@ -278,11 +265,9 @@ test('Staging only approved content goes to live', async ({
 	workflowPage,
 	workflowTasksPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: `site-${getRandomString()}`,
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const layout1 = await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
@@ -438,11 +423,9 @@ test(
 		pageEditorPage,
 		uiElementsPage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: 'site-' + getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -562,11 +545,9 @@ test(
 	'Non modified referred content cannot publish to live when enable include if modified option',
 	{tag: '@LPS-167777'},
 	async ({apiHelpers, stagingConfigurationPage, stagingPage}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: 'site-' + getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -648,11 +629,9 @@ test(
 		page,
 		webContentDisplayPage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const document = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
@@ -702,11 +681,9 @@ test('Staging publish template with smoke', async ({
 	webContentDisplayPage,
 	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
@@ -770,11 +747,9 @@ test('A page created in staging is published to live', async ({
 	page,
 	stagingPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: 'site-' + getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	await stagingPage.goto(site.name);
 	await stagingPage.enableLocalStaging();
@@ -826,11 +801,9 @@ test('Content selection is empty after initial publication to live when using th
 	apiHelpers,
 	stagingPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: 'site-' + getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	await apiHelpers.headlessAdminSite.createPage(site.externalReferenceCode, {
 		name_i18n: {en_US: getRandomString()},

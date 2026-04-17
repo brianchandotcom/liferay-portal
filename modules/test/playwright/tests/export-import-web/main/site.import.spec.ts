@@ -754,9 +754,11 @@ testWithDeprecationFF(
 			);
 		}
 
-		const site = await virtualInstanceApiHelpers.headlessSite.createSite({
-			name: getRandomString(),
-		});
+		const site = await virtualInstanceApiHelpers.headlessAdminSite.postSite(
+			{
+				name: getRandomString(),
+			}
+		);
 
 		await page.goto(
 			`http://www.able.com:8080/group${site.friendlyUrlPath}${PORTLET_URLS.import}`

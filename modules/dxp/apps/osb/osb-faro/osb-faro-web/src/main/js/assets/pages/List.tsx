@@ -293,11 +293,9 @@ const List = () => {
 												contentRenderer:
 													'assetTitleRenderer',
 												fieldName: 'assetTitle',
-												label: `${Liferay.Language.get(
+												label: Liferay.Language.get(
 													'title'
-												)} | ${Liferay.Language.get(
-													'erc'
-												)}`,
+												),
 												sortable: true,
 												truncate: true
 											},

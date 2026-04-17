@@ -527,15 +527,16 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentCollection fragmentCollection1 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection1.getFragmentCollectionId());
+
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection1.getFragmentCollectionId());
 		FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection2.getFragmentCollectionId());
+
+		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.

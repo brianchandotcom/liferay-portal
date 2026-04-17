@@ -620,12 +620,12 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	private Predicate _getResourcesPredicate() {
-		DLFileVersionTable dlFileVersionTable = DLFileVersionTable.INSTANCE.as(
-			"dlFileVersionTable");
 		RepositoryTable repositoryTable = RepositoryTable.INSTANCE.as(
 			"repositoryTable");
 		DLFolderTable rootDLFolderTable = DLFolderTable.INSTANCE.as(
 			"rootDLFolderTable");
+		DLFileVersionTable dlFileVersionTable = DLFileVersionTable.INSTANCE.as(
+			"dlFileVersionTable");
 
 		return FragmentCollectionTable.INSTANCE.fragmentCollectionKey.in(
 			DSLQueryFactoryUtil.selectDistinct(

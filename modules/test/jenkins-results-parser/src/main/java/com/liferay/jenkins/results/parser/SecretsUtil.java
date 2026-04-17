@@ -204,7 +204,9 @@ public abstract class SecretsUtil {
 			}
 
 			for (ItemField itemField : _itemFields) {
-				if (Objects.equals(itemField.getLabel(), label)) {
+				if (Objects.equals(itemField.getId(), label) ||
+					Objects.equals(itemField.getLabel(), label)) {
+
 					return itemField;
 				}
 			}
@@ -280,6 +282,7 @@ public abstract class SecretsUtil {
 
 					_itemFields.add(
 						new ItemField(
+							fieldJSONObject.getString("id"),
 							fieldJSONObject.getString("label"),
 							fieldJSONObject.getString("value")));
 				}
@@ -342,6 +345,10 @@ public abstract class SecretsUtil {
 
 	private static class ItemField {
 
+		public String getId() {
+			return _id;
+		}
+
 		public String getLabel() {
 			return _label;
 		}
@@ -350,7 +357,8 @@ public abstract class SecretsUtil {
 			return _value;
 		}
 
-		private ItemField(String label, String value) {
+		private ItemField(String id, String label, String value) {
+			_id = id;
 			_label = label;
 			_value = value;
 
@@ -359,6 +367,7 @@ public abstract class SecretsUtil {
 			}
 		}
 
+		private final String _id;
 		private final String _label;
 		private final String _value;
 
@@ -415,7 +424,9 @@ public abstract class SecretsUtil {
 			}
 
 			for (Item item : _items) {
-				if (Objects.equals(item.getTitle(), title)) {
+				if (Objects.equals(item.getId(), title) ||
+					Objects.equals(item.getTitle(), title)) {
+
 					return item;
 				}
 			}
@@ -452,9 +463,7 @@ public abstract class SecretsUtil {
 		private static final Map<String, Vault> _vaultsMap = new HashMap<>();
 
 		static {
-			JSONArray vaultsJSONArray = new JSONArray();
-
-			//JSONArray vaultsJSONArray = _toJSONArray("/v1/vaults");
+			JSONArray vaultsJSONArray = _toJSONArray("/v1/vaults");
 
 			for (int i = 0; i < vaultsJSONArray.length(); i++) {
 				JSONObject vaultJSONObject = vaultsJSONArray.getJSONObject(i);

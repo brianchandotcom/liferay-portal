@@ -229,7 +229,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 						new ServiceContext());
 
 					try {
-						_patchChannel(
+						_patchAnalyticsChannel(
 							company.getCompanyId(), objectDefinition,
 							objectEntry.getUserId());
 					}
@@ -278,7 +278,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
-	private void _patchChannel(
+	private void _patchAnalyticsChannel(
 			long companyId, ObjectDefinition objectDefinition, long userId)
 		throws Exception {
 

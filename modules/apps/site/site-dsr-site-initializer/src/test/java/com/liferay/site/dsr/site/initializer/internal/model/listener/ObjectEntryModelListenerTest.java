@@ -79,7 +79,7 @@ public class ObjectEntryModelListenerTest {
 	}
 
 	@Test
-	public void testPatchChannel() throws Exception {
+	public void testPatchAnalyticsChannel() throws Exception {
 		Mockito.when(
 			_analyticsSettingsManager.isAnalyticsEnabled(_COMPANY_ID)
 		).thenReturn(
@@ -87,7 +87,7 @@ public class ObjectEntryModelListenerTest {
 		);
 
 		ReflectionTestUtil.invoke(
-			_objectEntryModelListener, "_patchChannel",
+			_objectEntryModelListener, "_patchAnalyticsChannel",
 			new Class<?>[] {long.class, ObjectDefinition.class, long.class},
 			_COMPANY_ID, _objectDefinition, _USER_ID);
 
@@ -115,7 +115,7 @@ public class ObjectEntryModelListenerTest {
 		);
 
 		ReflectionTestUtil.invoke(
-			_objectEntryModelListener, "_patchChannel",
+			_objectEntryModelListener, "_patchAnalyticsChannel",
 			new Class<?>[] {long.class, ObjectDefinition.class, long.class},
 			_COMPANY_ID, _objectDefinition, _USER_ID);
 
@@ -164,7 +164,7 @@ public class ObjectEntryModelListenerTest {
 		);
 
 		ReflectionTestUtil.invoke(
-			_objectEntryModelListener, "_patchChannel",
+			_objectEntryModelListener, "_patchAnalyticsChannel",
 			new Class<?>[] {long.class, ObjectDefinition.class, long.class},
 			_COMPANY_ID, _objectDefinition, _USER_ID);
 

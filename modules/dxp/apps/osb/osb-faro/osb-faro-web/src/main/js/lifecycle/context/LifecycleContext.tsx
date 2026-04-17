@@ -1,41 +1,69 @@
-import React, {createContext, ReactNode, useState} from 'react';
+import React, {createContext, ReactNode, useContext, useState} from 'react';
 
-interface ILifecycleFilters {
+interface ILifecycleFilterValues {
 	countryFilter: string;
 	industryFilter: string;
-	revenueFilter: {
-		filterString: string;
-		form: any;
-	};
+}
+
+interface ILifecycleFilters extends ILifecycleFilterValues {
+	filterString: string;
 }
 
 interface ILifecycleContext {
 	filters: ILifecycleFilters;
-	updateFilters: (newFilters: Partial<ILifecycleFilters>) => void;
+	updateFilters: (newFilters: Partial<ILifecycleFilterValues>) => void;
 	resetFilters: () => void;
 }
 
-export const LifecycleContext = createContext<ILifecycleContext | undefined>(
+const FILTER_CONFIG: {
+	field: keyof ILifecycleFilterValues;
+	fieldName: string;
+	op: string;
+}[] = [
+	{field: 'countryFilter', fieldName: 'country', op: 'eq'},
+	{field: 'industryFilter', fieldName: 'industry', op: 'eq'}
+];
+
+const buildQueryString = (values: ILifecycleFilterValues): string =>
+	FILTER_CONFIG.map(({field, fieldName, op}) => {
+		const val = values[field];
+		return val !== '' ? `${fieldName} ${op} '${val}'` : null;
+	})
+		.filter(Boolean)
+		.join(' and ');
+
+const LifecycleContext = createContext<ILifecycleContext | undefined>(
 	undefined
 );
 
+export const useLifecycle = (): ILifecycleContext => {
+	const ctx = useContext(LifecycleContext);
+	if (!ctx) {
+		throw new Error('useLifecycle must be used within a LifecycleContextProvider');
+	}
+	return ctx;
+};
+
 export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
-	const initialFilters: ILifecycleFilters = {
+	const initialValues: ILifecycleFilterValues = {
 		countryFilter: '',
-		industryFilter: '',
-		revenueFilter: {
-			filterString: '',
-			form: undefined
-		}
+		industryFilter: ''
 	};
 
-	const [filters, setFilters] = useState<ILifecycleFilters>(initialFilters);
+	const [filters, setFilters] = useState<ILifecycleFilters>({
+		...initialValues,
+		filterString: ''
+	});
 
-	const updateFilters = (newFilters: Partial<ILifecycleFilters>) => {
-		setFilters(prev => ({...prev, ...newFilters}));
+	const updateFilters = (newValues: Partial<ILifecycleFilterValues>) => {
+		setFilters(prev => {
+			const merged = {...prev, ...newValues};
+			return {...merged, filterString: buildQueryString(merged)};
+		});
 	};
 
-	const resetFilters = () => setFilters(initialFilters);
+	const resetFilters = () =>
+		setFilters({...initialValues, filterString: ''});
 
 	return (
 		<LifecycleContext.Provider

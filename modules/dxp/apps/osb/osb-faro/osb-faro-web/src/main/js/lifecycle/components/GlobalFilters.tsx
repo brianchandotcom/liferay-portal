@@ -1,9 +1,12 @@
+import CountryFilter from './CountryFilter';
+import IndustryFilter from './IndustryFilter';
 import React from 'react';
-import RevenueFilter from './RevenueFilter';
 
 const GlobalFilter = () => (
 	<div className='d-flex '>
-		<RevenueFilter />
+		<IndustryFilter />
+
+		<CountryFilter />
 	</div>
 );
 

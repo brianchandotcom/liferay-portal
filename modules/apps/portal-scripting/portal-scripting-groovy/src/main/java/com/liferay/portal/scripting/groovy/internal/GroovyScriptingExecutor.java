@@ -5,7 +5,6 @@
 
 package com.liferay.portal.scripting.groovy.internal;
 
-import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
@@ -36,10 +35,6 @@ import org.osgi.service.component.annotations.Component;
 public class GroovyScriptingExecutor implements ScriptingExecutor {
 
 	public static final String LANGUAGE = "groovy";
-
-	@Override
-	public void clearCache() {
-	}
 
 	@Override
 	public Map<String, Object> eval(
@@ -110,11 +105,6 @@ public class GroovyScriptingExecutor implements ScriptingExecutor {
 	@Override
 	public String getLanguage() {
 		return LANGUAGE;
-	}
-
-	@Override
-	public ScriptingContainer<?> getScriptingContainer() {
-		return null;
 	}
 
 	@Override

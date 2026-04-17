@@ -41,18 +41,6 @@ import org.osgi.service.component.annotations.Deactivate;
 public class ScriptingImpl implements Scripting {
 
 	@Override
-	public void clearCache(String language) throws ScriptingException {
-		ScriptingExecutor scriptingExecutor =
-			_scriptingExecutorsServiceTrackerMap.getService(language);
-
-		if (scriptingExecutor == null) {
-			throw new UnsupportedLanguageException(language);
-		}
-
-		scriptingExecutor.clearCache();
-	}
-
-	@Override
 	public ScriptingExecutor createScriptingExecutor(
 		String language, boolean executeInSeparateThread) {
 

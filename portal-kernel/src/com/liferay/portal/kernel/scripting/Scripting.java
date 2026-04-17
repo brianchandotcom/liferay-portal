@@ -15,8 +15,6 @@ import java.util.Set;
  */
 public interface Scripting {
 
-	public void clearCache(String language) throws ScriptingException;
-
 	public ScriptingExecutor createScriptingExecutor(
 		String language, boolean executeInSeparateThread);
 

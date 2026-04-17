@@ -91,6 +91,12 @@ public class NodePlugin implements Plugin<Project> {
 		final NodeExtension nodeExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, NodeExtension.class);
 
+		File packageJsonFile = project.file("package.json");
+
+		if (!packageJsonFile.exists()) {
+			return;
+		}
+
 		_configureExtensionNode(project, nodeExtension);
 
 		Delete cleanNpmTask = _addTaskCleanNpm(project, nodeExtension);
@@ -101,16 +107,10 @@ public class NodePlugin implements Plugin<Project> {
 		NpmInstallTask npmInstallTask = _addTaskNpmInstall(
 			project, cleanNpmTask);
 
-		Map<String, Object> packageJsonMap = null;
+		JsonSlurper jsonSlurper = new JsonSlurper();
 
-		File packageJsonFile = npmInstallTask.getPackageJsonFile();
-
-		if (packageJsonFile.exists()) {
-			JsonSlurper jsonSlurper = new JsonSlurper();
-
-			packageJsonMap = (Map<String, Object>)jsonSlurper.parse(
-				packageJsonFile);
-		}
+		Map<String, Object> packageJsonMap =
+			(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
 
 		_addTaskNpmPackageLock(project, cleanNpmTask, npmInstallTask);
 		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
@@ -411,10 +411,6 @@ public class NodePlugin implements Plugin<Project> {
 		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap,
 		NodeExtension nodeExtension) {
 
-		if (packageJsonMap == null) {
-			return;
-		}
-
 		Map<String, String> scriptsJsonMap =
 			(Map<String, String>)packageJsonMap.get("scripts");
 
@@ -524,8 +520,7 @@ public class NodePlugin implements Plugin<Project> {
 					File moduleParentDir = moduleDir.getParentFile();
 
 					if (!moduleParentDir.equals(
-							npmInstallTask.getNodeModulesDir()) ||
-						(packageJsonMap == null)) {
+							npmInstallTask.getNodeModulesDir())) {
 
 						return true;
 					}

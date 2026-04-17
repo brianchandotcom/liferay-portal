@@ -9,6 +9,18 @@ import {fetcher} from './fetcher';
 const HEADLESS_DELIVERY_BASE_URL_ = `${window.location.origin}/o/headless-delivery/v1.0`;
 const HEADLESS_BASE_URL = `${window.location.origin}/o/`;
 
+const liferayHeaders = () => ({
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+	'x-csrf-token': Liferay.authToken,
+});
+
+const cacheHeaders = () => ({
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Cache-Control': 'max-age=30, stale-while-revalidate=30',
+	'x-csrf-token': Liferay.authToken,
+});
+
 const fetchHeadless = async ({
 	resolveAsJson = true,
 	url,
@@ -19,11 +31,7 @@ const fetchHeadless = async ({
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${HEADLESS_DELIVERY_BASE_URL_}${url}`, {
-		headers: {
-			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-			'Cache-Control': 'max-age=30, stale-while-revalidate=30',
-			'x-csrf-token': Liferay.authToken,
-		},
+		headers: cacheHeaders(),
 	});
 
 	if (resolveAsJson) {
@@ -33,54 +41,12 @@ const fetchHeadless = async ({
 	return response;
 };
 
-const getBusinessEventById = async (id: string | number) => {
-	return fetcher(`${HEADLESS_BASE_URL}${`c/businessevents/${id}`}`, {
-		headers: {
-			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-			'Content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'GET',
-	});
-};
-
-const getBusinessEvents = async (filters: string) => {
-	return fetcher(`${HEADLESS_BASE_URL}${`c/businessevents?${filters}`}`, {
-		headers: {
-			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-			'Content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'GET',
-	});
-};
-
-const getBusinessEventVersions = async (filters: string) => {
-	return fetcher(
-		`${HEADLESS_BASE_URL}${`c/businesseventversions?${filters}`}`,
-		{
-			headers: {
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Content-Type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'GET',
-		}
-	);
-};
-
 const getHighPriorityContacts = async (filter: string) => {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${HEADLESS_BASE_URL}${`c/highprioritycontacts/?nestedFields=user&filter=${filter}`}`,
-		{
-			headers: {
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Cache-Control': 'max-age=30, stale-while-revalidate=30',
-				'x-csrf-token': Liferay.authToken,
-			},
-		}
+		{headers: cacheHeaders()}
 	);
 
 	return response.json();
@@ -89,53 +55,92 @@ const getHighPriorityContacts = async (filter: string) => {
 const getTicketAttachmentById = async (id: string, fields: string) => {
 	return fetcher(
 		`${HEADLESS_BASE_URL}${`c/ticketattachments/${id}?fields=${fields}`}`,
-		{
-			headers: {
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Cache-Control': 'max-age=30, stale-while-revalidate=30',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'GET',
-		}
+		{headers: cacheHeaders(), method: 'GET'}
 	);
 };
 
 const getTicketAttachments = async (filter: string) => {
 	return fetcher(
 		`${HEADLESS_BASE_URL}${`c/ticketattachments?filter=${filter}`}`,
-		{
-			headers: {
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Cache-Control': 'max-age=30, stale-while-revalidate=30',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'GET',
-		}
+		{headers: cacheHeaders(), method: 'GET'}
 	);
 };
 
-const updateBusinessEventItem = async (
+const createBusinessEventLegacy = async (businessEvent: any) => {
+	return fetcher(`${HEADLESS_BASE_URL}c/businessevents/`, {
+		body: JSON.stringify(businessEvent),
+		headers: liferayHeaders(),
+		method: 'POST',
+	});
+};
+
+const deleteBusinessEventLegacy = async (id: string | number) => {
+	return fetcher(`${HEADLESS_BASE_URL}c/businessevents/${id}`, {
+		headers: liferayHeaders(),
+		method: 'DELETE',
+	});
+};
+
+const getBusinessEventByIdLegacy = async (id: string | number) => {
+	return fetcher(`${HEADLESS_BASE_URL}c/businessevents/${id}`, {
+		headers: liferayHeaders(),
+		method: 'GET',
+	});
+};
+
+const getBusinessEventsLegacy = async (filterQuery: string) => {
+	return fetcher(`${HEADLESS_BASE_URL}c/businessevents?${filterQuery}`, {
+		headers: liferayHeaders(),
+		method: 'GET',
+	});
+};
+
+const getBusinessEventVersionsLegacy = async (filters: string) => {
+	return fetcher(`${HEADLESS_BASE_URL}c/businesseventversions?${filters}`, {
+		headers: liferayHeaders(),
+		method: 'GET',
+	});
+};
+
+const getListTypeEntriesLegacy = async (name: string) => {
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${HEADLESS_BASE_URL}headless-admin-list-type/v1.0/list-type-definitions?filter=${encodeURIComponent(`name eq '${name}'`)}`,
+		{headers: liferayHeaders()}
+	);
+
+	const data = await response.json();
+
+	const entries = data?.items?.[0]?.listTypeEntries ?? [];
+
+	return entries.map((entry: {key: string; name: string}) => ({
+		key: entry.key,
+		name: entry.name,
+	}));
+};
+
+const updateBusinessEventLegacy = async (
 	id: string | number,
 	fieldsToPatch: any
 ) => {
 	return fetcher(`${HEADLESS_BASE_URL}c/businessevents/${id}`, {
 		body: JSON.stringify(fieldsToPatch),
-		headers: {
-			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-			'Content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
+		headers: liferayHeaders(),
 		method: 'PATCH',
 	});
 };
 
 export {
-	getBusinessEventById,
-	getBusinessEvents,
-	getBusinessEventVersions,
+	createBusinessEventLegacy,
+	deleteBusinessEventLegacy,
+	fetchHeadless,
+	getBusinessEventByIdLegacy,
+	getBusinessEventVersionsLegacy,
+	getBusinessEventsLegacy,
 	getHighPriorityContacts,
+	getListTypeEntriesLegacy,
 	getTicketAttachmentById,
 	getTicketAttachments,
-	fetchHeadless,
-	updateBusinessEventItem,
+	updateBusinessEventLegacy,
 };

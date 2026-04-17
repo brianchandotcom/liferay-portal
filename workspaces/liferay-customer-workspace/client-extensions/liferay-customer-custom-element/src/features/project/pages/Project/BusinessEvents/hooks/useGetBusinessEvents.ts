@@ -4,10 +4,14 @@
  */
 
 import {useCallback, useEffect, useState} from 'react';
-import {getBusinessEvents} from '~/services/liferay/api';
+import useAccountKey from '~/hooks/useAccountKey';
+import {getBusinessEventsLegacy} from '~/services/liferay/api';
+import {getBusinessEvents} from '~/services/liferay/rest/jira/Jira';
 import {IBusinessEvent} from '~/utils/types';
 
-export default function useGetBusinessEvents(filterQuery: string): {
+import useIsJiraBackend from './useIsJiraBackend';
+
+export default function useGetBusinessEvents(): {
 	businessEvents: IBusinessEvent[];
 	fetchBusinessEvents: () => Promise<void>;
 	loading: boolean;
@@ -16,11 +20,25 @@ export default function useGetBusinessEvents(filterQuery: string): {
 
 	const [loading, setLoading] = useState(true);
 
-	const fetchBusinessEvents = useCallback(async () => {
-		try {
-			const businessEventsResponse = await getBusinessEvents(filterQuery);
+	const accountKey = useAccountKey();
+	const isJiraBackend = useIsJiraBackend();
 
-			setBusinessEvents(businessEventsResponse.items);
+	const fetchBusinessEvents = useCallback(async () => {
+		if (!accountKey) {
+			return;
+		}
+
+		try {
+			const businessEventsResponse = isJiraBackend
+				? await getBusinessEvents(accountKey)
+				: await getBusinessEventsLegacy(
+						`filter=r_accountEntryToBusinessEvents_accountEntryERC eq '${accountKey}'`
+					);
+
+			const items = (businessEventsResponse.items ||
+				[]) as IBusinessEvent[];
+
+			setBusinessEvents(items);
 		}
 		catch (error) {
 			console.error('Error fetching business events:', error);
@@ -28,7 +46,7 @@ export default function useGetBusinessEvents(filterQuery: string): {
 		finally {
 			setLoading(false);
 		}
-	}, [filterQuery]);
+	}, [accountKey, isJiraBackend]);
 
 	useEffect(() => {
 		fetchBusinessEvents();

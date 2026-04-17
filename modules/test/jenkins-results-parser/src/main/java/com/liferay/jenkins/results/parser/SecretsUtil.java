@@ -117,7 +117,7 @@ public abstract class SecretsUtil {
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(accessTokenKey)) {
 				Process process = JenkinsResultsParserUtil.executeBashCommands(
-					new File("."), true, false, 1000 * 60 * 60,
+					new File("."), true, false, 60000,
 					JenkinsResultsParserUtil.combine(
 						"aws ssm get-parameter --name \"", accessTokenKey,
 						"\" --with-decryption | jq -r .Parameter.Value"));
@@ -189,8 +189,7 @@ public abstract class SecretsUtil {
 
 	private static boolean _isSecretsConfigured() {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(_getAccessToken()) ||
-			JenkinsResultsParserUtil.isNullOrEmpty(_getConnectURL()) ||
-			(_getHTTPAuthorization() == null)) {
+			JenkinsResultsParserUtil.isNullOrEmpty(_getConnectURL())) {
 
 			return false;
 		}
@@ -235,7 +234,7 @@ public abstract class SecretsUtil {
 	}
 
 	private static String _toString(String path) {
-		if (_httpAuthorization == null) {
+		if (!_isSecretsConfigured()) {
 			return "";
 		}
 
@@ -265,8 +264,10 @@ public abstract class SecretsUtil {
 		}
 
 		public ItemField getItemField(String label) {
-			if (_itemFields == null) {
-				_init();
+			synchronized (_vault) {
+				if (_itemFields == null) {
+					_init();
+				}
 			}
 
 			for (ItemField itemField : _itemFields) {
@@ -285,8 +286,10 @@ public abstract class SecretsUtil {
 		}
 
 		public ItemFile getItemFile(String fileName) {
-			if (_itemFiles == null) {
-				_init();
+			synchronized (_vault) {
+				if (_itemFiles == null) {
+					_init();
+				}
 			}
 
 			for (ItemFile itemFile : _itemFiles) {
@@ -485,8 +488,10 @@ public abstract class SecretsUtil {
 		}
 
 		public Item getItem(String title) {
-			if (_items == null) {
-				_init();
+			synchronized (_vaultsMap) {
+				if (_items == null) {
+					_init();
+				}
 			}
 
 			for (Item item : _items) {
@@ -509,7 +514,7 @@ public abstract class SecretsUtil {
 			_name = name;
 		}
 
-		private void _init() {
+		private synchronized void _init() {
 			JSONArray itemsJSONArray = _toJSONArray(
 				JenkinsResultsParserUtil.combine(
 					"/v1/vaults/", getId(), "/items"));
@@ -538,6 +543,7 @@ public abstract class SecretsUtil {
 					vaultJSONObject.getString("id"),
 					vaultJSONObject.getString("name"));
 
+				_vaultsMap.put(vault.getId(), vault);
 				_vaultsMap.put(vault.getName(), vault);
 			}
 		}

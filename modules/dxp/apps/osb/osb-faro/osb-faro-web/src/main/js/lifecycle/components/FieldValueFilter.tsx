@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import classNames from 'classnames';
 import ClayButton from '@clayui/button';
-import Loading from 'shared/components/Loading';
+import Loading, {Align} from 'shared/components/Loading';
 import React from 'react';
 import {Icon, Option, Picker} from '@clayui/core';
 import {sub} from 'shared/util/lang';
@@ -36,16 +36,13 @@ const FieldValueFilter = ({
 		}
 	});
 
-	if (loading) {
-		return <Loading />;
-	}
-
 	return (
 		<Picker
 			as={React.forwardRef((props, ref) => (
 				<ClayButton
 					{...props}
 					className={classNames(className, 'rounded-lg')}
+					disabled={loading}
 					displayType='secondary'
 					ref={ref}
 					searchable
@@ -59,10 +56,14 @@ const FieldValueFilter = ({
 					{filters[filterKey] ||
 						sub(Liferay.Language.get('all-x'), [entityLabel])}
 
-					<Icon
-						className='inline-item inline-item-after'
-						symbol='caret-bottom'
-					/>
+					{loading ? (
+						<Loading align={Align.Right} />
+					) : (
+						<Icon
+							className='inline-item inline-item-after'
+							symbol='caret-bottom'
+						/>
+					)}
 				</ClayButton>
 			))}
 			className='ml-3'
@@ -72,7 +73,7 @@ const FieldValueFilter = ({
 			triggerIcon='caret-bottom'
 			value={filters[filterKey]}
 		>
-			{data?.items?.map((item: string) => (
+			{(data?.items ?? []).map((item: string) => (
 				<Option key={item}>{item}</Option>
 			))}
 		</Picker>

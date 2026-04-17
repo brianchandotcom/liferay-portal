@@ -8,7 +8,6 @@ package com.liferay.fragment.service.impl;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
@@ -17,13 +16,11 @@ import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.model.FragmentEntryTable;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.validator.FragmentEntryValidator;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -574,32 +571,6 @@ public class FragmentEntryLocalServiceImpl
 				return newName;
 			}
 		}
-	}
-
-	@Override
-	public boolean hasExportableFragmentEntries(long fragmentCollectionId) {
-		int count = dslQueryCount(
-			DSLQueryFactoryUtil.count(
-			).from(
-				FragmentEntryTable.INSTANCE
-			).where(
-				FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
-					fragmentCollectionId
-				).and(
-					FragmentEntryTable.INSTANCE.marketplace.eq(false)
-				).and(
-					FragmentEntryTable.INSTANCE.type.neq(
-						FragmentConstants.TYPE_REACT)
-				).and(
-					FragmentEntryTable.INSTANCE.head.eq(true)
-				)
-			));
-
-		if (count > 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

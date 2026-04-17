@@ -384,10 +384,10 @@ public class JiraService extends BaseService {
 					"status: " + businessEvent.getEventStatusKey());
 			}
 
-			if (Validator.isNotNull(businessEvent.getTargetGoLiveDateTime())) {
+			if (Validator.isNotNull(businessEvent.getPlannedEventDate())) {
 				businessEventFieldValues.add(
 					"targetGoLiveDateTime: " +
-						businessEvent.getTargetGoLiveDateTime());
+						businessEvent.getPlannedEventDate());
 			}
 
 			if (!businessEventFieldValues.isEmpty()) {
@@ -1043,7 +1043,7 @@ public class JiraService extends BaseService {
 		attributesJSONObject.put(
 			_getObjectTypeAttributeId(
 				objectTypeAttributesJSONArray, "Actual Go-Live Date"),
-			businessEvent.getActualGoLiveDateTime()
+			businessEvent.getActualEventDate()
 		).put(
 			_getObjectTypeAttributeId(
 				objectTypeAttributesJSONArray, "Associated Tickets"),
@@ -1081,7 +1081,7 @@ public class JiraService extends BaseService {
 		).put(
 			_getObjectTypeAttributeId(
 				objectTypeAttributesJSONArray, "Target Event Date"),
-			businessEvent.getTargetGoLiveDateTime()
+			businessEvent.getPlannedEventDate()
 		).put(
 			_getObjectTypeAttributeId(
 				objectTypeAttributesJSONArray, "Time Zone"),
@@ -1613,7 +1613,7 @@ public class JiraService extends BaseService {
 			return StringPool.BLANK;
 		}
 
-		String targetGoLiveDateTime = businessEvent.getTargetGoLiveDateTime();
+		String targetGoLiveDateTime = businessEvent.getPlannedEventDate();
 
 		if (Validator.isNull(targetGoLiveDateTime)) {
 			return StringPool.BLANK;

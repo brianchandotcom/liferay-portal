@@ -137,7 +137,7 @@ const BusinessEventsItemActivityHistory = () => {
 
 		Liferay.Util.openToast({
 			message: i18n.translate(
-				'business-event-actual-go-live-date-recorded-successfully'
+				'business-event-actual-event-date-recorded-successfully'
 			),
 			type: 'success',
 		});
@@ -186,7 +186,7 @@ const BusinessEventsItemActivityHistory = () => {
 		{
 			customOptionStyle: 'pr-5',
 			icon: <ClayIcon symbol="check-circle" />,
-			label: i18n.translate('record-actual-go-live'),
+			label: i18n.translate('record-actual-event-date'),
 			onClick: () => {
 				setModalType('goLiveEvent');
 				onOpenChange(true);

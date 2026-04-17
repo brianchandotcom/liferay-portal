@@ -5,15 +5,15 @@
 
 import {ITimeInput} from '~/utils/types';
 
-function getFormattedGoLiveDateTime(
-	targetGoLiveDate: string | undefined,
-	targetGoLiveTime: string | ITimeInput | undefined
+function getFormattedEventDateTime(
+	plannedEventDate: string | undefined,
+	plannedEventTime: string | ITimeInput | undefined
 ): string | undefined {
-	if (!targetGoLiveDate || !targetGoLiveTime) {
+	if (!plannedEventDate || !plannedEventTime) {
 		return undefined;
 	}
 
-	const [month, day, year] = targetGoLiveDate.split('-');
+	const [month, day, year] = plannedEventDate.split('-');
 
 	if (!year || !month || !day) {
 		return undefined;
@@ -24,8 +24,8 @@ function getFormattedGoLiveDateTime(
 	let hours: string;
 	let minutes: string;
 
-	if (typeof targetGoLiveTime === 'string') {
-		const splittedTime = targetGoLiveTime.split(':');
+	if (typeof plannedEventTime === 'string') {
+		const splittedTime = plannedEventTime.split(':');
 
 		if (splittedTime.length !== 2) {
 			return undefined;
@@ -34,13 +34,13 @@ function getFormattedGoLiveDateTime(
 		[hours, minutes] = splittedTime;
 	}
 	else {
-		hours = targetGoLiveTime?.hours?.includes('-')
+		hours = plannedEventTime?.hours?.includes('-')
 			? '00'
-			: targetGoLiveTime?.hours ?? '00';
+			: plannedEventTime?.hours ?? '00';
 
-		minutes = targetGoLiveTime?.minutes?.includes('-')
+		minutes = plannedEventTime?.minutes?.includes('-')
 			? '00'
-			: targetGoLiveTime?.minutes ?? '00';
+			: plannedEventTime?.minutes ?? '00';
 	}
 
 	const formattedDateTime = `${formattedDate}T${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00.000`;
@@ -48,4 +48,4 @@ function getFormattedGoLiveDateTime(
 	return formattedDateTime;
 }
 
-export {getFormattedGoLiveDateTime};
+export {getFormattedEventDateTime};

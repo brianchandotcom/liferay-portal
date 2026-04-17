@@ -44,8 +44,8 @@ const ManageEventModal: React.FC<IProps> = ({
 				<Formik
 					initialValues={{
 						businessEvent: {
-							actualGoLiveDate: '',
-							actualGoLiveTime: {
+							actualEventDate: '',
+							actualEventTime: {
 								hours: '--',
 								minutes: '--',
 							},

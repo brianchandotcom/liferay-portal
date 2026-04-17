@@ -31,7 +31,7 @@ import useGetUTCTimeZonesList from '../../hooks/useGetUTCTimeZonesList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
 import useIsJiraBackend from '../../hooks/useIsJiraBackend';
 import {containsOption} from '../../utils/containsOption';
-import {getFormattedGoLiveDateTime} from '../../utils/getFormattedGoLiveDate';
+import {getFormattedEventDateTime} from '../../utils/getFormattedEventDate';
 import useIsSaasOnly from '../../utils/useIsSaasOnly';
 
 interface IProps {
@@ -250,15 +250,15 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		setFieldValue(
-			'businessEvent.targetGoLiveDateTime',
-			getFormattedGoLiveDateTime(
-				businessEvent.targetGoLiveDate,
-				businessEvent.targetGoLiveTime
+			'businessEvent.plannedEventDate',
+			getFormattedEventDateTime(
+				businessEvent.plannedEventDate,
+				businessEvent.plannedEventTime
 			)
 		);
 	}, [
-		businessEvent.targetGoLiveDate,
-		businessEvent.targetGoLiveTime,
+		businessEvent.plannedEventDate,
+		businessEvent.plannedEventTime,
 		setFieldValue,
 	]);
 
@@ -271,13 +271,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		const hasEventName = values.businessEvent.name;
 		const hasEventType = values.businessEvent.eventType.key;
 		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion.key;
-		const hasTargetGoLiveDate = values.businessEvent.targetGoLiveDate;
+		const hasPlannedEventDate = values.businessEvent.plannedEventDate;
 		const hasTouched = Boolean(Object.keys(touched).length);
 
 		let hasAllRequiredFieldsFilled =
 			Boolean(hasEventName) &&
 			Boolean(hasEventType) &&
-			Boolean(hasTargetGoLiveDate);
+			Boolean(hasPlannedEventDate);
 
 		if (isDescriptionRequired) {
 			hasAllRequiredFieldsFilled =
@@ -308,7 +308,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		values.businessEvent.eventType,
 		values.businessEvent.name,
 		values.businessEvent.newLiferayVersion,
-		values.businessEvent.targetGoLiveDate,
+		values.businessEvent.plannedEventDate,
 	]);
 
 	useEffect(() => {
@@ -509,12 +509,12 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 											badgeClassName="mt-1 mx-3"
 											dateFormat="MM-dd-yyyy"
 											label={i18n.translate(
-												'target-go-live-date'
+												'planned-event-date'
 											)}
-											name="businessEvent.targetGoLiveDate"
+											name="businessEvent.plannedEventDate"
 											onChange={(value) =>
 												setFieldValue(
-													'businessEvent.targetGoLiveDate',
+													'businessEvent.plannedEventDate',
 													value
 												)
 											}
@@ -557,10 +557,10 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 									<ClayInput.GroupItem className="m-0">
 										<TimePicker
 											label={i18n.translate('time')}
-											name="businessEvent.targetGoLiveTime"
+											name="businessEvent.plannedEventTime"
 											onChange={(value) =>
 												setFieldValue(
-													'businessEvent.targetGoLiveTime',
+													'businessEvent.plannedEventTime',
 													value
 												)
 											}

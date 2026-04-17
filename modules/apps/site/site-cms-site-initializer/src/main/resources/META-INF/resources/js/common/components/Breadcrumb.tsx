@@ -73,8 +73,9 @@ function ActionDropdownItem({
 	size = 'full-screen',
 	successMessage,
 	target = 'link',
+	title,
 	...props
-}: {label: string} & ActionDropdownItemProps) {
+}: {label: string; title?: string} & ActionDropdownItemProps) {
 	const handleTargetAction = async () => {
 		function handleAsyncTargetAction(error: string | null) {
 			if (!error) {
@@ -147,7 +148,7 @@ function ActionDropdownItem({
 					}
 				},
 				size,
-				title: label,
+				title: title || label,
 				url: href,
 			});
 		}

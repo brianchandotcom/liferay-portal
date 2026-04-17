@@ -7987,7 +7987,7 @@ public class ObjectEntryLocalServiceTest {
 
 			resultSet.next();
 
-			return resultSet.getInt("count");
+			return resultSet.getLong("count");
 		}
 	}
 

@@ -304,7 +304,7 @@ public class IndexUpdaterUtilTest {
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					Assert.assertTrue(resultSet.next());
 
-					Assert.assertEquals(2, resultSet.getInt("count"));
+					Assert.assertEquals(2, resultSet.getLong("count"));
 				}
 			}
 		}

@@ -4,8 +4,12 @@
  */
 
 import {useCallback, useEffect, useState} from 'react';
-import {getBusinessEventVersions} from '~/services/liferay/api';
+import useAccountKey from '~/hooks/useAccountKey';
+import {getBusinessEventVersionsLegacy} from '~/services/liferay/api';
+import {getBusinessEventVersions} from '~/services/liferay/rest/jira/Jira';
 import {IBusinessEventVersion} from '~/utils/types';
+
+import useIsJiraBackend from './useIsJiraBackend';
 
 export default function useGetBusinessEventVersions(filterQuery: string): {
 	businessEventVersions: IBusinessEventVersion[];
@@ -18,12 +22,24 @@ export default function useGetBusinessEventVersions(filterQuery: string): {
 
 	const [loading, setLoading] = useState(true);
 
-	const fetchBusinessEventVersions = useCallback(async () => {
-		try {
-			const businessEventVersionsResponse =
-				await getBusinessEventVersions(filterQuery);
+	const accountKey = useAccountKey();
+	const isJiraBackend = useIsJiraBackend();
 
-			setBusinessEventVersions(businessEventVersionsResponse.items);
+	const fetchBusinessEventVersions = useCallback(async () => {
+		if (!accountKey) {
+			return;
+		}
+
+		setLoading(true);
+
+		try {
+			const response = isJiraBackend
+				? await getBusinessEventVersions(accountKey, filterQuery)
+				: await getBusinessEventVersionsLegacy(filterQuery);
+
+			setBusinessEventVersions(
+				(response.items || []) as IBusinessEventVersion[]
+			);
 		}
 		catch (error) {
 			console.error('Error fetching business event versions:', error);
@@ -31,7 +47,7 @@ export default function useGetBusinessEventVersions(filterQuery: string): {
 		finally {
 			setLoading(false);
 		}
-	}, [filterQuery]);
+	}, [accountKey, filterQuery, isJiraBackend]);
 
 	useEffect(() => {
 		fetchBusinessEventVersions();

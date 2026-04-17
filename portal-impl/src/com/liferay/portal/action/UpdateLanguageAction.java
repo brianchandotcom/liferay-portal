@@ -328,8 +328,16 @@ public class UpdateLanguageAction implements Action {
 		Group group, Layout layout, String layoutURL, Locale locale) {
 
 		if (Validator.isNull(layoutURL) ||
-			Objects.equals(layoutURL, StringPool.SLASH) ||
-			PortalUtil.isGroupFriendlyURL(
+			Objects.equals(layoutURL, StringPool.SLASH)) {
+
+			return true;
+		}
+
+		if ((layoutURL.length() > 1) && layoutURL.endsWith(StringPool.SLASH)) {
+			layoutURL = layoutURL.substring(0, layoutURL.length() - 1);
+		}
+
+		if (PortalUtil.isGroupFriendlyURL(
 				layoutURL, group.getFriendlyURL(),
 				layout.getFriendlyURL(locale))) {
 

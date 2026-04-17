@@ -36,6 +36,7 @@ import com.liferay.object.constants.ObjectActionNameConstants;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
@@ -69,6 +70,7 @@ import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -202,8 +204,24 @@ public class ObjectDefinitionResourceImpl
 			public Map<String, Serializable> getParameters(
 				PortletDataContext portletDataContext) {
 
+				String filter = "modifiable eq true";
+
+				Group group = _groupLocalService.fetchGroup(
+					portletDataContext.getScopeGroupId());
+
+				if ((group != null) && group.isCMS()) {
+					filter += StringBundler.concat(
+						" and (objectFolderExternalReferenceCode eq '",
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+						"' or objectFolderExternalReferenceCode eq '",
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_FILE_TYPES,
+						"')");
+				}
+
 				return HashMapBuilder.<String, Serializable>put(
-					"filter", "modifiable eq true"
+					"filter", filter
 				).build();
 			}
 

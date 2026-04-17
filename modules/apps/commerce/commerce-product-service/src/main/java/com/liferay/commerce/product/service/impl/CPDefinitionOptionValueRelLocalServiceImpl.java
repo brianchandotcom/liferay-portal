@@ -18,6 +18,7 @@ import com.liferay.commerce.product.helper.CPCollectionProviderHelper;
 import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionRelTable;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRelTable;
 import com.liferay.commerce.product.model.CPInstance;
@@ -468,6 +469,48 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 				return null;
 			});
+	}
+
+	@Override
+	public List<CPDefinitionOptionValueRel>
+		getApprovedCPInstanceCPDefinitionOptionValueRels(
+			long cpDefinitionOptionRelId) {
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			cpDefinitionOptionValueRelPersistence.dslQuery(
+				DSLQueryFactoryUtil.select(
+					CPDefinitionOptionValueRelTable.INSTANCE
+				).from(
+					CPDefinitionOptionValueRelTable.INSTANCE
+				).innerJoinON(
+					CPInstanceOptionValueRelTable.INSTANCE,
+					CPInstanceOptionValueRelTable.INSTANCE.
+						CPDefinitionOptionValueRelId.eq(
+							CPDefinitionOptionValueRelTable.INSTANCE.
+								CPDefinitionOptionValueRelId)
+				).innerJoinON(
+					CPInstanceTable.INSTANCE,
+					CPInstanceTable.INSTANCE.CPInstanceId.eq(
+						CPInstanceOptionValueRelTable.INSTANCE.CPInstanceId)
+				).where(
+					CPDefinitionOptionValueRelTable.INSTANCE.
+						CPDefinitionOptionRelId.eq(
+							cpDefinitionOptionRelId
+						).and(
+							CPInstanceTable.INSTANCE.status.eq(
+								WorkflowConstants.STATUS_APPROVED)
+						)
+				).orderBy(
+					CPDefinitionOptionValueRelTable.INSTANCE.priority.ascending(),
+					CPDefinitionOptionValueRelTable.INSTANCE.createDate.ascending()
+				)
+			);
+
+		if (cpDefinitionOptionValueRels.isEmpty()) {
+			return null;
+		}
+
+		return cpDefinitionOptionValueRels;
 	}
 
 	@Override

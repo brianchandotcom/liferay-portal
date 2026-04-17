@@ -188,11 +188,9 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 	const discount =
 		await apiHelpers.headlessCommerceAdminPricing.postDiscount();
 
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
@@ -378,11 +376,9 @@ test('LPD-28220 Can user with account manager role view and manage channel defau
 		surname: userAccount.familyName,
 	};
 
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: 'Site' + getRandomInt(),
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([

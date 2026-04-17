@@ -190,7 +190,7 @@ test(
 			).toBeVisible();
 		}
 
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: `Site${getRandomString()}`,
 		});
 
@@ -270,8 +270,6 @@ test(
 		}
 		finally {
 			await mockMockPage.close();
-
-			await apiHelpers.headlessSite.deleteSite(site.id);
 
 			await emailInstanceSettingsPage.goToEmailSender();
 

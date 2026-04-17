@@ -136,65 +136,57 @@ test(
 		termsOfUseInstanceSettingsPage,
 		userLoginPage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: `Site${getRandomString()}`,
 		});
 
-		try {
-			const temsContent = 'This is a custom terms of use content.';
+		const temsContent = 'This is a custom terms of use content.';
 
-			const ddmStructureId =
-				await getBasicWebContentStructureId(apiHelpers);
+		const ddmStructureId = await getBasicWebContentStructureId(apiHelpers);
 
-			const webContent =
-				await apiHelpers.jsonWebServicesJournal.addWebContent({
-					content: temsContent,
-					ddmStructureId,
-					groupId: Number(site.id),
-					serviceContext: {
-						addGroupPermissions: true,
-						addGuestPermissions: true,
-						workflowAction: 1,
-					},
-					titleMap: {en_US: `ToU WC ${getRandomString()}`},
-				});
-
-			const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-			await termsOfUseInstanceSettingsPage.goto();
-
-			await termsOfUseInstanceSettingsPage.termsOfUseRequiredCheckbox.check();
-
-			await termsOfUseInstanceSettingsPage.groupIdInput.fill(
-				String(site.id)
-			);
-			await termsOfUseInstanceSettingsPage.articleIdInput.fill(
-				String(webContent.articleId)
-			);
-			await termsOfUseInstanceSettingsPage.saveButton.click();
-
-			await waitForAlert(page);
-
-			await performLogout(page);
-
-			await userLoginPage.goto();
-			await userLoginPage.emailAddressInput.fill(user.emailAddress);
-			await userLoginPage.passwordInput.fill(userData['test'].password);
-			await userLoginPage.signInButton.click();
-
-			await expect(page.getByText(temsContent)).toBeVisible({
-				timeout: 10000,
+		const webContent =
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				content: temsContent,
+				ddmStructureId,
+				groupId: Number(site.id),
+				serviceContext: {
+					addGroupPermissions: true,
+					addGuestPermissions: true,
+					workflowAction: 1,
+				},
+				titleMap: {en_US: `ToU WC ${getRandomString()}`},
 			});
 
-			await userLoginPage.iAgreeButton.click();
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-			await expect(userLoginPage.userProfileMenuButton).toBeVisible({
-				timeout: 20000,
-			});
-		}
-		finally {
-			await apiHelpers.headlessSite.deleteSite(site.id);
-		}
+		await termsOfUseInstanceSettingsPage.goto();
+
+		await termsOfUseInstanceSettingsPage.termsOfUseRequiredCheckbox.check();
+
+		await termsOfUseInstanceSettingsPage.groupIdInput.fill(String(site.id));
+		await termsOfUseInstanceSettingsPage.articleIdInput.fill(
+			String(webContent.articleId)
+		);
+		await termsOfUseInstanceSettingsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await performLogout(page);
+
+		await userLoginPage.goto();
+		await userLoginPage.emailAddressInput.fill(user.emailAddress);
+		await userLoginPage.passwordInput.fill(userData['test'].password);
+		await userLoginPage.signInButton.click();
+
+		await expect(page.getByText(temsContent)).toBeVisible({
+			timeout: 10000,
+		});
+
+		await userLoginPage.iAgreeButton.click();
+
+		await expect(userLoginPage.userProfileMenuButton).toBeVisible({
+			timeout: 20000,
+		});
 	}
 );
 

@@ -245,7 +245,7 @@ public class ViewAssetDisplayContextTest extends BaseDisplayContextTestCase {
 			String.valueOf(objectEntry.getObjectEntryId()), role.getRoleId(),
 			objectEntryActionIds.toArray(String[]::new));
 
-		String backURL = "http://backurl";
+		String backURL = RandomTestUtil.randomString();
 
 		mockHttpServletRequest.setParameter("backURL", backURL);
 

@@ -818,7 +818,8 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			updateLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId,
-				String name)
+				long previewFileEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -828,7 +829,53 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_updateLayoutUtilityPageEntryParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutUtilityPageEntryId, name);
+				methodKey, layoutUtilityPageEntryId, previewFileEntryId,
+				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.layout.utility.page.model.
+				LayoutUtilityPageEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			updateLayoutUtilityPageEntry(
+				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId,
+				String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutUtilityPageEntryServiceUtil.class,
+				"updateLayoutUtilityPageEntry",
+				_updateLayoutUtilityPageEntryParameterTypes20);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, layoutUtilityPageEntryId, name, serviceContext);
 
 			Object returnObj = null;
 
@@ -939,8 +986,14 @@ public class LayoutUtilityPageEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateLayoutUtilityPageEntryParameterTypes19 = new Class[] {
-			long.class, String.class
+			long.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[]
+		_updateLayoutUtilityPageEntryParameterTypes20 = new Class[] {
+			long.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:600060082
+// LIFERAY-SERVICE-BUILDER-HASH:855886149

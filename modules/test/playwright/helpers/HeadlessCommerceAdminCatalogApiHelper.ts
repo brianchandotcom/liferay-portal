@@ -189,6 +189,7 @@ type TRelatedProduct = {
 type TSku = {
 	cost: number;
 	discontinued?: boolean;
+	expirationDate?: string;
 	gtin?: string;
 	id?: number;
 	manufacturerPartNumber?: string;
@@ -481,7 +482,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
-	async patchSku(cpInstanceId: string, sku?: TSku) {
+	async patchSku(cpInstanceId: string, sku?: Partial<TSku>) {
 		return this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}/skus/${cpInstanceId}`,
 			{sku: 'Sku' + getRandomInt(), ...(sku || {})}

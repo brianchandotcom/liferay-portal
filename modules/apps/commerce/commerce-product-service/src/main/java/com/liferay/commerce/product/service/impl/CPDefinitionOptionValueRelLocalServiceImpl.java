@@ -40,6 +40,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -89,6 +90,7 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -475,42 +477,38 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		getApprovedCPInstanceCPDefinitionOptionValueRels(
 			long cpDefinitionOptionRelId) {
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			cpDefinitionOptionValueRelPersistence.dslQuery(
-				DSLQueryFactoryUtil.select(
-					CPDefinitionOptionValueRelTable.INSTANCE
-				).from(
-					CPDefinitionOptionValueRelTable.INSTANCE
-				).innerJoinON(
-					CPInstanceOptionValueRelTable.INSTANCE,
-					CPInstanceOptionValueRelTable.INSTANCE.
-						CPDefinitionOptionValueRelId.eq(
-							CPDefinitionOptionValueRelTable.INSTANCE.
-								CPDefinitionOptionValueRelId)
-				).innerJoinON(
-					CPInstanceTable.INSTANCE,
-					CPInstanceTable.INSTANCE.CPInstanceId.eq(
-						CPInstanceOptionValueRelTable.INSTANCE.CPInstanceId)
-				).where(
-					CPDefinitionOptionValueRelTable.INSTANCE.
-						CPDefinitionOptionRelId.eq(
-							cpDefinitionOptionRelId
-						).and(
-							CPInstanceTable.INSTANCE.status.eq(
-								WorkflowConstants.STATUS_APPROVED)
-						)
-				).orderBy(
-					CPDefinitionOptionValueRelTable.INSTANCE.priority.
-						ascending(),
-					CPDefinitionOptionValueRelTable.INSTANCE.createDate.
-						ascending()
-				));
-
-		if (cpDefinitionOptionValueRels.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		return cpDefinitionOptionValueRels;
+		return cpDefinitionOptionValueRelPersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				CPDefinitionOptionValueRelTable.INSTANCE
+			).from(
+				CPDefinitionOptionValueRelTable.INSTANCE
+			).innerJoinON(
+				CPInstanceOptionValueRelTable.INSTANCE,
+				CPInstanceOptionValueRelTable.INSTANCE.
+					CPDefinitionOptionValueRelId.eq(
+						CPDefinitionOptionValueRelTable.INSTANCE.
+							CPDefinitionOptionValueRelId)
+			).innerJoinON(
+				CPInstanceTable.INSTANCE,
+				CPInstanceTable.INSTANCE.CPInstanceId.eq(
+					CPInstanceOptionValueRelTable.INSTANCE.CPInstanceId)
+			).where(
+				CPDefinitionOptionValueRelTable.INSTANCE.
+					CPDefinitionOptionRelId.eq(
+						cpDefinitionOptionRelId
+					).and(
+						CPInstanceTable.INSTANCE.status.eq(
+							WorkflowConstants.STATUS_APPROVED)
+					).and(
+						Predicate.or(
+							CPInstanceTable.INSTANCE.expirationDate.isNull(),
+							CPInstanceTable.INSTANCE.expirationDate.gt(
+								new Date()))
+					)
+			).orderBy(
+				CPDefinitionOptionValueRelTable.INSTANCE.priority.ascending(),
+				CPDefinitionOptionValueRelTable.INSTANCE.createDate.ascending()
+			));
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -50,6 +51,7 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -103,6 +105,170 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		_cpOptionLocalService.deleteCPOptions(_serviceContext.getCompanyId());
 		_serviceContext = null;
+	}
+
+	@Test
+	public void testGetApprovedCPInstanceCPDefinitionOptionValueRelsExcludesExpiredCPInstance()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"An SKU with expirationDate in the past must not be offered as a " +
+				"selectable option value"
+		).given(
+			"A product with one SKU-contributor option and three option values"
+		).and(
+			"Three SKUs generated, one per option value, all APPROVED"
+		).when(
+			"One SKU has its expirationDate set to a past date"
+		).then(
+			"The corresponding option value is excluded from the approved list"
+		);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_buildCPDefinitionWithSKUContributorOption(3);
+
+		List<CPInstance> cpInstances =
+			_cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinitionOptionRel.getCPDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(cpInstances.toString(), 3, cpInstances.size());
+
+		CPInstance cpInstance = cpInstances.get(0);
+
+		cpInstance.setExpirationDate(
+			new Date(System.currentTimeMillis() - 86400000L));
+
+		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			_cpInstanceLocalService.getCPInstance(
+				cpInstance.getCPInstanceId()
+			).getStatus());
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			_cpDefinitionOptionValueRelLocalService.
+				getApprovedCPInstanceCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		Assert.assertEquals(
+			cpDefinitionOptionValueRels.toString(), 2,
+			cpDefinitionOptionValueRels.size());
+	}
+
+	@Test
+	public void testGetApprovedCPInstanceCPDefinitionOptionValueRelsExcludesNonapprovedCPInstance()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"An SKU whose workflow status is not APPROVED must not be offered"
+		).given(
+			"A product with one SKU-contributor option and three option values"
+		).and(
+			"Three SKUs generated, one per option value, all APPROVED"
+		).when(
+			"One SKU is transitioned to DRAFT"
+		).then(
+			"The corresponding option value is excluded from the approved list"
+		);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_buildCPDefinitionWithSKUContributorOption(3);
+
+		List<CPInstance> cpInstances =
+			_cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinitionOptionRel.getCPDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(cpInstances.toString(), 3, cpInstances.size());
+
+		_cpInstanceLocalService.updateStatus(
+			_serviceContext.getUserId(),
+			cpInstances.get(
+				0
+			).getCPInstanceId(),
+			WorkflowConstants.STATUS_DRAFT);
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			_cpDefinitionOptionValueRelLocalService.
+				getApprovedCPInstanceCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		Assert.assertEquals(
+			cpDefinitionOptionValueRels.toString(), 2,
+			cpDefinitionOptionValueRels.size());
+	}
+
+	@Test
+	public void testGetApprovedCPInstanceCPDefinitionOptionValueRelsReturnsAllWhenAllApproved()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"All option values with an APPROVED, non-expired SKU must be " +
+				"returned"
+		).given(
+			"A product with one SKU-contributor option and three option values"
+		).and(
+			"Three SKUs generated, one per option value, all APPROVED"
+		).then(
+			"All three option values are returned"
+		);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_buildCPDefinitionWithSKUContributorOption(3);
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			_cpDefinitionOptionValueRelLocalService.
+				getApprovedCPInstanceCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		Assert.assertEquals(
+			cpDefinitionOptionValueRels.toString(), 3,
+			cpDefinitionOptionValueRels.size());
+	}
+
+	@Test
+	public void testGetApprovedCPInstanceCPDefinitionOptionValueRelsReturnsEmptyListWhenAllNonapproved()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"If no SKU is approved and non-expired the result must be an " +
+				"empty list (not null)"
+		).given(
+			"A product with one SKU-contributor option and two option values"
+		).and(
+			"Two SKUs generated, one per option value"
+		).when(
+			"Both SKUs are transitioned to INACTIVE"
+		).then(
+			"An empty list is returned without throwing NullPointerException"
+		);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_buildCPDefinitionWithSKUContributorOption(2);
+
+		List<CPInstance> cpInstances =
+			_cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinitionOptionRel.getCPDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (CPInstance cpInstance : cpInstances) {
+			_cpInstanceLocalService.updateStatus(
+				_serviceContext.getUserId(), cpInstance.getCPInstanceId(),
+				WorkflowConstants.STATUS_INACTIVE);
+		}
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			_cpDefinitionOptionValueRelLocalService.
+				getApprovedCPInstanceCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		Assert.assertNotNull(cpDefinitionOptionValueRels);
+		Assert.assertTrue(cpDefinitionOptionValueRels.isEmpty());
 	}
 
 	@Test
@@ -1273,6 +1439,27 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			newCPDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
 			newCPDefinitionOptionValueRel.isPreselected(), price,
 			cpDefinitionOptionValueRel.getQuantity());
+	}
+
+	private CPDefinitionOptionRel _buildCPDefinitionWithSKUContributorOption(
+			int optionValuesCount)
+		throws Exception {
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			CPTestUtil.addCPOption(
+				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
+				1, optionValuesCount);
+
+		_cpDefinitionOptionRels.addAll(cpDefinitionOptionRels);
+
+		_cpInstanceLocalService.buildCPInstances(
+			cpDefinition.getCPDefinitionId(), _serviceContext);
+
+		return cpDefinitionOptionRels.get(0);
 	}
 
 	private CPInstance _getCPInstance(long cpDefinitionId) throws Exception {

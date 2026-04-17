@@ -17,12 +17,6 @@ import java.util.Set;
  */
 public class ScriptingUtil {
 
-	public static void clearCache(String language) throws ScriptingException {
-		Scripting scripting = _scriptingSnapshot.get();
-
-		scripting.clearCache(language);
-	}
-
 	public static ScriptingExecutor createScriptingExecutor(
 		String language, boolean executeInSeparateThread) {
 

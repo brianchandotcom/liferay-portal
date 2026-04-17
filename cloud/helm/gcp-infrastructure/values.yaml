@@ -2,7 +2,7 @@ backup:
     enabled: false
     region: ""
     retentionDays: 30
-    schedule: "0 5 * * *"
+    schedule: 0 5 * * *
     storageClass: NEARLINE
 cmk:
     enabled: false

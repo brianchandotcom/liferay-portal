@@ -34,6 +34,33 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ExportImportUtil {
 
 	public static JSONObject getActionItemJSONObject(
+		HttpServletRequest httpServletRequest, String labelKey,
+		String portletResource, String symbolLeft, String tabs2,
+		String titleKey, ThemeDisplay themeDisplay) {
+
+		if (!_hasConfigurationPermission(portletResource, themeDisplay)) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"href",
+			_getControlPanelPortletURL(
+				themeDisplay.getScopeGroup(), httpServletRequest,
+				portletResource, tabs2)
+		).put(
+			"label", LanguageUtil.get(httpServletRequest, labelKey)
+		).put(
+			"redirect", themeDisplay.getURLCurrent()
+		).put(
+			"symbolLeft", symbolLeft
+		).put(
+			"target", "modal"
+		).put(
+			"title", LanguageUtil.get(httpServletRequest, titleKey)
+		);
+	}
+
+	public static JSONObject getActionItemJSONObject(
 		HttpServletRequest httpServletRequest, String languageKey,
 		String portletResource, ThemeDisplay themeDisplay) {
 
@@ -41,33 +68,41 @@ public class ExportImportUtil {
 			return null;
 		}
 
-		try {
-			return JSONUtil.put(
-				"href",
-				_getControlPanelPortletURL(
-					themeDisplay.getScopeGroup(), httpServletRequest,
-					portletResource)
-			).put(
-				"label", LanguageUtil.get(httpServletRequest, languageKey)
-			).put(
-				"redirect", themeDisplay.getURLCurrent()
-			).put(
-				"target", "modal"
-			);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+		return JSONUtil.put(
+			"href",
+			_getControlPanelPortletURL(
+				themeDisplay.getScopeGroup(), httpServletRequest,
+				portletResource, null)
+		).put(
+			"label", LanguageUtil.get(httpServletRequest, languageKey)
+		).put(
+			"redirect", themeDisplay.getURLCurrent()
+		).put(
+			"target", "modal"
+		);
+	}
 
-			return null;
-		}
+	public static JSONObject getExportActionItemJSONObject(
+		HttpServletRequest httpServletRequest, String portletResource,
+		String titleKey, ThemeDisplay themeDisplay) {
+
+		return getActionItemJSONObject(
+			httpServletRequest, "export", portletResource, "export", "export",
+			titleKey, themeDisplay);
+	}
+
+	public static JSONObject getImportActionItemJSONObject(
+		HttpServletRequest httpServletRequest, String portletResource,
+		String titleKey, ThemeDisplay themeDisplay) {
+
+		return getActionItemJSONObject(
+			httpServletRequest, "import", portletResource, "import", "import",
+			titleKey, themeDisplay);
 	}
 
 	private static String _getControlPanelPortletURL(
-			Group group, HttpServletRequest httpServletRequest,
-			String portletResource)
-		throws Exception {
+		Group group, HttpServletRequest httpServletRequest,
+		String portletResource, String tabs2) {
 
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
@@ -80,6 +115,8 @@ public class ExportImportUtil {
 			PortalUtil.getCurrentURL(httpServletRequest)
 		).setPortletResource(
 			portletResource
+		).setTabs2(
+			tabs2
 		).setParameter(
 			"returnToFullPageURL", PortalUtil.getCurrentURL(httpServletRequest)
 		).setWindowState(

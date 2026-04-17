@@ -279,7 +279,8 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
 	@Override
 	public StyleBookEntry updatePreviewFileEntryId(
-			long styleBookEntryId, long previewFileEntryId)
+			long styleBookEntryId, long previewFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
@@ -290,14 +291,14 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
 		return styleBookEntryLocalService.updatePreviewFileEntryId(
-			styleBookEntryId, previewFileEntryId);
+			styleBookEntryId, previewFileEntryId, serviceContext);
 	}
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, boolean defaultStylebookEntry,
 			String frontendTokensValues, String name, String styleBookEntryKey,
-			long previewFileEntryId)
+			long previewFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
@@ -309,12 +310,14 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
 		return styleBookEntryLocalService.updateStyleBookEntry(
 			getUserId(), styleBookEntryId, defaultStylebookEntry,
-			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId);
+			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId,
+			serviceContext);
 	}
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String frontendTokensValues, String name)
+			long styleBookEntryId, String frontendTokensValues, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
@@ -325,7 +328,7 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
 		return styleBookEntryLocalService.updateStyleBookEntry(
-			styleBookEntryId, frontendTokensValues, name);
+			styleBookEntryId, frontendTokensValues, name, serviceContext);
 	}
 
 	@Reference(

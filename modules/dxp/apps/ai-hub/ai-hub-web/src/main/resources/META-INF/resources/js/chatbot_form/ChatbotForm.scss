@@ -6,6 +6,12 @@ $font-size-sm: 0.875rem;
 .chatbot-form {
 	padding: 24px 0;
 
+	.chatbot-company-logo {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+	}
+
 	.chatbot-details {
 		border: 1px solid $border-color;
 		border-radius: 1rem;

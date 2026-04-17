@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
-import com.liferay.sharing.exception.InvalidSharingEntryUserAndUserGroupException;
+import com.liferay.sharing.exception.InvalidSharingEntryTargetException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryTable;
@@ -875,13 +875,13 @@ public class SharingEntryLocalServiceImpl
 		}
 
 		if (targets.isEmpty()) {
-			throw new InvalidSharingEntryUserAndUserGroupException(
+			throw new InvalidSharingEntryTargetException(
 				"A sharing entry must be associated with a user, a user " +
 					"group, or a ticket");
 		}
 
 		if (targets.size() > 1) {
-			throw new InvalidSharingEntryUserAndUserGroupException(
+			throw new InvalidSharingEntryTargetException(
 				"A sharing entry cannot be associated with more than one " +
 					"target at the same time: " + String.join(", ", targets));
 		}

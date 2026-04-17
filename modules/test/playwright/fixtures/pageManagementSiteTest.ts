@@ -28,7 +28,7 @@ const pageManagementSiteTest = test.extend<{
 			let site: Site;
 
 			try {
-				site = await apiHelpers.headlessSite.getSiteByERC(
+				site = await apiHelpers.headlessAdminSite.getSite(
 					PAGE_MANAGEMENT_SITE_ERC
 				);
 

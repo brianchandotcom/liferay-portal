@@ -18,7 +18,7 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 }) => {
 	const apiHelpers = new ApiHelpers(backendPage);
 
-	const {id: siteId} = await apiHelpers.headlessSite.getSiteByERC(
+	const {id: siteId} = await apiHelpers.headlessAdminSite.getSite(
 		PAGE_MANAGEMENT_SITE_ERC
 	);
 
@@ -51,5 +51,5 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 
 	// Delete site
 
-	await apiHelpers.headlessSite.deleteSiteByERC(PAGE_MANAGEMENT_SITE_ERC);
+	await apiHelpers.headlessAdminSite.deleteSite(PAGE_MANAGEMENT_SITE_ERC);
 });

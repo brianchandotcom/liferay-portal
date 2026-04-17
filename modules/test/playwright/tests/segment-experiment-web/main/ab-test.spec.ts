@@ -79,7 +79,7 @@ test(
 
 		const siteName = 'My Site ' + getRandomString();
 
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: siteName,
 		});
 

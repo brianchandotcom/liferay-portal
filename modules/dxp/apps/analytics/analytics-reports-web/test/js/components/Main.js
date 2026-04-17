@@ -160,6 +160,19 @@ const mockTrafficSourcesDataProvider = jest.fn(() =>
 	])
 );
 
+const mockExperiencesDataProvider = jest.fn(() =>
+	Promise.resolve([
+		{
+			id: '35145',
+			name: 'Default Experience',
+		},
+		{
+			id: '35146',
+			name: 'Summer Campaign Experience',
+		},
+	])
+);
+
 const mockTotalViewsDataProvider = jest.fn(() => {
 	return Promise.resolve(9999);
 });
@@ -197,6 +210,7 @@ const mockedProps = {
 	},
 	canonicalURL: 'http://localhost:8080/en/web/guest/-/basic-web-content',
 	chartDataProviders: [mockViewsDataProvider, mockReadsDataProvider],
+	experiencesDataProvider: mockExperiencesDataProvider,
 	onSelectedLanguageClick: () => {},
 	onTrafficSourceClick: () => {},
 	pagePublishDate: mockPublishDate,

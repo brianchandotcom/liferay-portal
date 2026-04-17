@@ -18,7 +18,6 @@ import com.liferay.commerce.product.helper.CPCollectionProviderHelper;
 import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.commerce.product.model.CPDefinitionOptionRelTable;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRelTable;
 import com.liferay.commerce.product.model.CPInstance;
@@ -501,13 +500,14 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 								WorkflowConstants.STATUS_APPROVED)
 						)
 				).orderBy(
-					CPDefinitionOptionValueRelTable.INSTANCE.priority.ascending(),
-					CPDefinitionOptionValueRelTable.INSTANCE.createDate.ascending()
-				)
-			);
+					CPDefinitionOptionValueRelTable.INSTANCE.priority.
+						ascending(),
+					CPDefinitionOptionValueRelTable.INSTANCE.createDate.
+						ascending()
+				));
 
 		if (cpDefinitionOptionValueRels.isEmpty()) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		return cpDefinitionOptionValueRels;

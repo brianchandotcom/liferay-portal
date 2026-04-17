@@ -5,6 +5,7 @@
 
 import React, {createContext, useContext, useReducer} from 'react';
 export type TimeSpan = 'last-7-days' | 'last-30-days' | null;
+export type ExperienceId = string | null;
 type Histogram = Array<Record<string, string | number | null>>;
 
 interface DataSet {
@@ -16,6 +17,7 @@ interface DataSet {
 
 interface State {
 	dataSet: DataSet;
+	experienceId: ExperienceId;
 	lineChartLoading: boolean;
 	pieChartLoading: boolean;
 	previousDataSet?: DataSet;
@@ -48,6 +50,12 @@ type Action =
 			type: 'CHANGE_TIME_SPAN_KEY';
 	  }
 	| {
+			payload: {
+				key: ExperienceId;
+			};
+			type: 'CHANGE_EXPERIENCE_ID_KEY';
+	  }
+	| {
 			type: 'NEXT_TIME_SPAN' | 'PREV_TIME_SPAN';
 	  };
 
@@ -67,6 +75,7 @@ interface Payload {
 
 const INITIAL_STATE: State = {
 	dataSet: {histogram: [], keyList: [], totals: {}},
+	experienceId: null,
 	lineChartLoading: true,
 	pieChartLoading: true,
 	publishDate: null,
@@ -81,6 +90,7 @@ const NEXT_TIME_SPAN = 'NEXT_TIME_SPAN' as const;
 const PREV_TIME_SPAN = 'PREV_TIME_SPAN' as const;
 const SET_LOADING = 'SET_LOADING' as const;
 const SET_PIE_CHART_LOADING = 'SET_PIE_CHART_LOADING' as const;
+const CHANGE_EXPERIENCE_ID_KEY = 'CHANGE_EXPERIENCE_ID_KEY' as const;
 
 const FALLBACK_DATA_SET_ITEM = {histogram: [], value: null};
 
@@ -116,6 +126,13 @@ function reducer(state: State, action: Action): State {
 				}, state);
 			}
 
+			break;
+		case CHANGE_EXPERIENCE_ID_KEY:
+			nextState = {
+				...state,
+				experienceId: action.payload.key,
+				lineChartLoading: true,
+			};
 			break;
 		case CHANGE_TIME_SPAN_KEY:
 			nextState = {

@@ -134,8 +134,14 @@ export default function Chart({dataProviders = [], publishDate}) {
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const {dataSet, lineChartLoading, timeRange, timeSpanKey, timeSpanOffset} =
-		useContext(ChartStateContext);
+	const {
+		dataSet,
+		experienceId,
+		lineChartLoading,
+		timeRange,
+		timeSpanKey,
+		timeSpanOffset,
+	} = useContext(ChartStateContext);
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
@@ -211,7 +217,7 @@ export default function Chart({dataProviders = [], publishDate}) {
 		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [timeSpanKey, timeSpanOffset]);
+	}, [experienceId, timeSpanKey, timeSpanOffset]);
 
 	const {histogram, keyList} = dataSet;
 

@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import {
 	ChartStateContext,
@@ -16,6 +17,7 @@ import {StoreStateContext} from '../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import BasicInformation from './BasicInformation';
 import Chart from './Chart';
+import ExperienceDropdown from './ExperienceDropdown';
 import TimeSpanSelector from './TimeSpanSelector';
 import TotalCount from './TotalCount';
 import TrafficSources from './TrafficSources';
@@ -25,6 +27,7 @@ export default function Main({
 	canonicalURL,
 	chartDataProviders,
 	className,
+	experiencesDataProvider,
 	onSelectedLanguageClick,
 	onTrafficSourceClick,
 	pagePublishDate,
@@ -49,6 +52,8 @@ export default function Main({
 
 	const title = dateFormatters.formatChartTitle([firstDate, lastDate]);
 
+	const [showAlert, setShowAlert] = useState(true);
+
 	return (
 		<div className={`analytics-reports-app-main pb-3 px-3 ${className}`}>
 			<BasicInformation
@@ -60,8 +65,30 @@ export default function Main({
 				viewURLs={viewURLs}
 			/>
 
+			<div>
+				{showAlert && (
+					<ClayAlert
+						displayType="info"
+						onClose={() => setShowAlert(false)}
+						role={null}
+						title={Liferay.Language.get('info')}
+						variant="inline"
+					>
+						{Liferay.Language.get(
+							'the-experience-filter-does-not-affect-the-displayed-page-as-it-uses-historical-data-that-may-include-deleted-experiences'
+						)}
+					</ClayAlert>
+				)}
+			</div>
+
+			<div className="c-mt-2">
+				<ExperienceDropdown
+					experiencesDataProvider={experiencesDataProvider}
+				/>
+			</div>
+
 			{!!timeSpanOptions.length && (
-				<div className="c-mb-2 c-mt-4">
+				<div className="c-mb-2 c-mt-2">
 					<TimeSpanSelector
 						disabledNextTimeSpan={timeSpanOffset === 0}
 						disabledPreviousPeriodButton={
@@ -126,6 +153,7 @@ Main.propTypes = {
 	canonicalURL: PropTypes.string.isRequired,
 	chartDataProviders: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
 	className: PropTypes.string,
+	experiencesDataProvider: PropTypes.func.isRequired,
 	onSelectedLanguageClick: PropTypes.func.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
 	pagePublishDate: PropTypes.string.isRequired,

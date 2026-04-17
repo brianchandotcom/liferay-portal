@@ -12,6 +12,7 @@
 		"@clayui/modal": "^3.159.0",
 		"@clayui/multi-select": "^3.159.0",
 		"@clayui/shared": "^3.159.0",
+		"@clayui/sticker": "^3.159.0",
 		"@clayui/tooltip": "^3.159.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",

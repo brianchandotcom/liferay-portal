@@ -30,7 +30,7 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
-import com.liferay.sharing.exception.InvalidSharingEntryUserAndUserGroupException;
+import com.liferay.sharing.exception.InvalidSharingEntryTargetException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
@@ -289,8 +289,7 @@ public class SharingEntryLocalServiceTest {
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
-				exception instanceof
-					InvalidSharingEntryUserAndUserGroupException);
+				exception instanceof InvalidSharingEntryTargetException);
 		}
 
 		try {

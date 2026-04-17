@@ -72,9 +72,9 @@ public abstract class SecretsUtil {
 			return null;
 		}
 
-		Field field = item.getField(fieldLabel);
+		ItemField itemField = item.getItemField(fieldLabel);
 
-		if (field == null) {
+		if (itemField == null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Field Not Found: ", vaultName, "/", itemTitle, "/",
@@ -83,7 +83,7 @@ public abstract class SecretsUtil {
 			return null;
 		}
 
-		return field.getValue();
+		return itemField.getValue();
 	}
 
 	public static boolean isSecretProperty(String value) {
@@ -168,52 +168,28 @@ public abstract class SecretsUtil {
 		}
 	}
 
-	private static class Field {
-
-		public String getLabel() {
-			return _label;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		private Field(String label, String value) {
-			_label = label;
-			_value = value;
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(value)) {
-				JenkinsResultsParserUtil.addRedactToken(value);
-			}
-		}
-
-		private final String _label;
-		private final String _value;
-
-	}
-
 	private static class Item {
 
-		public Field getField(String label) {
-			if (_fields == null) {
+		public String getId() {
+			return _id;
+		}
+
+		public ItemField getItemField(String label) {
+			if (_itemFields == null) {
 				_init();
 			}
 
-			for (Field field : _fields) {
-				if (Objects.equals(field.getLabel(), label)) {
-					return field;
+			for (ItemField itemField : _itemFields) {
+				if (Objects.equals(itemField.getLabel(), label)) {
+					return itemField;
 				}
 			}
 
 			if (_linkedItem != null) {
-				return _linkedItem.getField(label);
+				return _linkedItem.getItemField(label);
 			}
 
 			return null;
-		}
-
-		public String getId() {
-			return _id;
 		}
 
 		public String getTitle() {
@@ -233,7 +209,7 @@ public abstract class SecretsUtil {
 
 			JSONArray fieldsJSONArray = itemJSONObject.getJSONArray("fields");
 
-			_fields = new ArrayList<>(fieldsJSONArray.length());
+			_itemFields = new ArrayList<>(fieldsJSONArray.length());
 
 			for (int i = 0; i < fieldsJSONArray.length(); i++) {
 				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(i);
@@ -260,8 +236,8 @@ public abstract class SecretsUtil {
 						continue;
 					}
 
-					_fields.add(
-						new Field(
+					_itemFields.add(
+						new ItemField(
 							fieldJSONObject.getString("label"),
 							fieldJSONObject.getString("value")));
 				}
@@ -272,11 +248,35 @@ public abstract class SecretsUtil {
 			}
 		}
 
-		private List<Field> _fields;
 		private final String _id;
+		private List<ItemField> _itemFields;
 		private Item _linkedItem;
 		private final String _title;
 		private final Vault _vault;
+
+	}
+
+	private static class ItemField {
+
+		public String getLabel() {
+			return _label;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		private ItemField(String label, String value) {
+			_label = label;
+			_value = value;
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(value)) {
+				JenkinsResultsParserUtil.addRedactToken(value);
+			}
+		}
+
+		private final String _label;
+		private final String _value;
 
 	}
 

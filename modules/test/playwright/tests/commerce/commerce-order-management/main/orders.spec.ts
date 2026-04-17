@@ -834,13 +834,8 @@ test(
 			type: 'business',
 		});
 
-		const otherSite = await apiHelpers.headlessSite.createSite({
+		const otherSite = await apiHelpers.headlessAdminSite.postSite({
 			name: 'Other ' + getRandomString(),
-		});
-
-		apiHelpers.data.push({
-			id: otherSite.externalReferenceCode,
-			type: 'site',
 		});
 
 		const otherChannel =

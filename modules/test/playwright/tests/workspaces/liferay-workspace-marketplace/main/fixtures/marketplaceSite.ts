@@ -20,7 +20,7 @@ const SITE_NAME = 'Marketplace';
 export const marketplaceSiteFixture = test.extend<Marketplace>({
 	marketplace: [
 		async ({apiHelpers, page}, use) => {
-			const site = await apiHelpers.headlessSite.getSiteByERC(
+			const site = await apiHelpers.headlessAdminSite.getSite(
 				SITE_EXTERNAL_REFERENCE_CODE
 			);
 

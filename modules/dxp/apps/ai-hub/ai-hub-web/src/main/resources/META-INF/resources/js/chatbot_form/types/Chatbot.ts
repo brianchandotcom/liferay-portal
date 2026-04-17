@@ -5,6 +5,8 @@
 
 export type Chatbot = {
 	active: boolean;
+	companyLogo: number | null | undefined;
+	companyLogoFileName?: string;
 	description: string;
 	externalReferenceCode: string;
 	introMessage_i18n: {[key: string]: string};

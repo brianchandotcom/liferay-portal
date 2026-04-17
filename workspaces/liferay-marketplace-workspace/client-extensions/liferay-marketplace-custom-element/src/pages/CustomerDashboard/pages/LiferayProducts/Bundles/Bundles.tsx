@@ -4,10 +4,11 @@
  */
 
 import './Bundles.scss';
+
 import useSWR from 'swr';
-import {Liferay} from '../../../../../liferay/liferay';
-import DownloadTable from '../../Apps/App/Download/DownloadTable';
+
 import fetcher from '../../../../../services/fetcher';
+import DownloadTable from '../../Apps/App/Download/DownloadTable';
 
 type LiferayBundle = {
 	bundleLink: string;

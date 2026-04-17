@@ -82,7 +82,7 @@ public class SharingJavaScriptFactoryImplTest {
 				_createMockHttpServletRequest(_user)));
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, _creatorUser.getUserId(), 0, _user.getUserId(),
+			null, _creatorUser.getUserId(), 0, 0, _user.getUserId(),
 			_classNameLocalService.getClassNameId(DLFolder.class.getName()),
 			_dlFolder.getFolderId(), _group.getGroupId(), true,
 			List.of(SharingEntryAction.VIEW, SharingEntryAction.UPDATE), null,
@@ -104,7 +104,7 @@ public class SharingJavaScriptFactoryImplTest {
 				_createMockHttpServletRequest(_user)));
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, _creatorUser.getUserId(), 0, _user.getUserId(),
+			null, _creatorUser.getUserId(), 0, 0, _user.getUserId(),
 			_classNameLocalService.getClassNameId(DLFolder.class.getName()),
 			_dlFolder.getFolderId(), _group.getGroupId(), true,
 			List.of(SharingEntryAction.VIEW, SharingEntryAction.UPDATE), null,
@@ -128,7 +128,7 @@ public class SharingJavaScriptFactoryImplTest {
 				_createMockHttpServletRequest(_user)));
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, _creatorUser.getUserId(), 0, _user.getUserId(),
+			null, _creatorUser.getUserId(), 0, 0, _user.getUserId(),
 			_classNameLocalService.getClassNameId(DLFolder.class.getName()),
 			_dlFolder.getFolderId(), _group.getGroupId(), true,
 			List.of(SharingEntryAction.VIEW, SharingEntryAction.UPDATE), null,

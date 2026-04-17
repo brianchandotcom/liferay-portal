@@ -4035,7 +4035,7 @@ public class ObjectDefinitionLocalServiceTest {
 		throws Exception {
 
 		_sharingEntryLocalService.addSharingEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0,
 			userGroupId, 0, _classNameLocalService.getClassNameId(className),
 			classPK, TestPropsValues.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null,

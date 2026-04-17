@@ -59,7 +59,7 @@ public class SharingEntryUpgradeProcessTest {
 		User toUser = UserTestUtil.addUser();
 
 		_sharingEntryLocalService.addSharingEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0, 0,
 			toUser.getUserId(),
 			_classNameLocalService.getClassNameId(Group.class.getName()),
 			_group.getGroupId(), _group.getGroupId(), true,

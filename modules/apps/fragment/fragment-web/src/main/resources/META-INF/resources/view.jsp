@@ -31,7 +31,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 	DuplicateFragmentEntryKeyException dfeke = (DuplicateFragmentEntryKeyException)errorException;
 	%>
 
-	<liferay-ui:message arguments='<%= "<em>" + dfeke.getMessage() + "</em>" %>' key="a-fragment-entry-with-the-key-x-already-exists" />
+	<liferay-ui:message arguments='<%= "<em>" + dfeke.getFragmentEntryKey() + "</em>" %>' key="a-fragment-entry-with-the-key-x-already-exists" />
 </liferay-ui:error>
 
 <liferay-ui:error embed="<%= false %>" exception="<%= InvalidFileException.class %>" message="the-selected-file-is-not-a-valid-zip-file" />

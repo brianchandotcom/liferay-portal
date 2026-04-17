@@ -26,6 +26,45 @@
 			"type": "Boolean"
 		},
 		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"defaultValue": "null",
+			"externalReferenceCode": "COMPANY_LOGO",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Company Logo"
+			},
+			"localized": false,
+			"name": "companyLogo",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "jpeg, jpg, png"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": 0
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputerToDocumentsAndMedia"
+				},
+				{
+					"name": "showFilesInLibrary",
+					"value": false
+				}
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Long",
+			"unique": false
+		},
+		{
 			"DBType": "Clob",
 			"businessType": "LongText",
 			"defaultValue": "null",

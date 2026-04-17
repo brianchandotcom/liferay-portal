@@ -25,7 +25,7 @@ export class Segment {
 		this.instance = analytics;
 	}
 
-	getBatchSegmentIds() {
+	getBatchSegmentExternalReferenceCodes() {
 		const individualId = this._getIndividualId();
 
 		const cachedData = getItem<SegmentCachedData>(
@@ -44,37 +44,37 @@ export class Segment {
 			}
 		}
 
-		return this._fetchSegmentIds(individualId, 'batch-segment-ids').then(
-			(data) => {
-				try {
-					const date = new Date();
+		return this._fetchSegmentIds(
+			individualId,
+			'batch-segment-external-reference-code'
+		).then((data) => {
+			try {
+				const date = new Date();
 
-					const allCachedData =
-						getItem<SegmentCachedData>(
-							ANALYTICS_BATCH_SEGMENT_IDS
-						) || {};
+				const allCachedData =
+					getItem<SegmentCachedData>(ANALYTICS_BATCH_SEGMENT_IDS) ||
+					{};
 
-					setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
-						...allCachedData,
-						[individualId]: {
-							createDate: date.getTime(),
-							segmentIds: data,
-						},
-					});
+				setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
+					...allCachedData,
+					[individualId]: {
+						createDate: date.getTime(),
+						segmentIds: data,
+					},
+				});
 
-					return data;
-				}
-				catch (error) {
-					return data;
-				}
+				return data;
 			}
-		);
+			catch (error) {
+				return data;
+			}
+		});
 	}
 
-	getRealTimeSegmentIds() {
+	getRealTimeSegmentExternalReferenceCodes() {
 		return this._fetchSegmentIds(
 			this._getIndividualId(),
-			'real-time-segment-ids'
+			'real-time-segment-external-reference-code'
 		);
 	}
 

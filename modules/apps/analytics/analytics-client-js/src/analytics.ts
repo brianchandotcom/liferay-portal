@@ -180,12 +180,12 @@ class Analytics {
 		].getItems<AnalyticsType.Event>();
 	}
 
-	getBatchSegmentIds() {
-		return this.segment.getBatchSegmentIds();
+	getBatchSegmentExternalReferenceCodes() {
+		return this.segment.getBatchSegmentExternalReferenceCodes();
 	}
 
-	getRealTimeSegmentIds() {
-		return this.segment.getRealTimeSegmentIds();
+	getRealTimeSegmentExternalReferenceCodes() {
+		return this.segment.getRealTimeSegmentExternalReferenceCodes();
 	}
 
 	/**

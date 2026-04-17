@@ -39,6 +39,7 @@ test(
 	'Can map preview URL of image attachment to fragment on content page',
 	{tag: '@LPS-182999'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
 		// Corresponds to Poshi test: MapPreviewURLOfImageAttachmentToFragment
 
 		const objectFields = generateObjectFields({
@@ -107,9 +108,7 @@ test(
 		});
 
 		await test.step('Verify mapped image is shown in editor', async () => {
-			await expect(
-				page.locator('.component-image img')
-			).toBeVisible();
+			await expect(page.locator('.component-image img')).toBeVisible();
 		});
 
 		await test.step('Publish and verify image in view mode', async () => {
@@ -119,9 +118,7 @@ test(
 				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await expect(
-				page.locator('.component-image img')
-			).toBeVisible();
+			await expect(page.locator('.component-image img')).toBeVisible();
 		});
 	}
 );
@@ -130,6 +127,7 @@ test(
 	'Can map preview URL of non-image attachment to fragment showing blank space',
 	{tag: '@LPS-182999'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
 		// Corresponds to Poshi test: MapPreviewURLOfNonImageAttachmentToFragment
 
 		const objectFields = generateObjectFields({
@@ -223,12 +221,8 @@ test(
 test(
 	'Can view image user profile from specific entry on display page',
 	{tag: '@LPD-86436'},
-	async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
 		// Corresponds to Poshi test: ViewImageUserProfileFromSpecificEntry
 
 		const objectFields = generateObjectFields({
@@ -294,9 +288,7 @@ test(
 				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await expect(
-				page.locator('.component-image img')
-			).toBeVisible();
+			await expect(page.locator('.component-image img')).toBeVisible();
 		});
 	}
 );

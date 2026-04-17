@@ -7,6 +7,7 @@ package com.liferay.style.book.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -45,7 +46,8 @@ public class DeleteStyleBookEntryPreviewMVCActionCommand
 
 		if (styleBookEntry != null) {
 			_styleBookEntryService.updatePreviewFileEntryId(
-				styleBookEntryId, 0);
+				styleBookEntryId, 0,
+				ServiceContextFactory.getInstance(actionRequest));
 		}
 	}
 

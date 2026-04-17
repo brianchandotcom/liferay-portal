@@ -138,7 +138,8 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 		FileEntry fileEntry = _addFileEntry(styleBookEntry);
 
 		styleBookEntry = _styleBookEntryLocalService.updatePreviewFileEntryId(
-			styleBookEntry.getStyleBookEntryId(), fileEntry.getFileEntryId());
+			styleBookEntry.getStyleBookEntryId(), fileEntry.getFileEntryId(),
+			_serviceContext);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();

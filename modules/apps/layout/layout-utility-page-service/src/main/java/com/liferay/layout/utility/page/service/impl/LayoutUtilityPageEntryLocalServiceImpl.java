@@ -396,11 +396,22 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			long layoutUtilityPageEntryId, long previewFileEntryId)
 		throws PortalException {
 
+		return updateLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId, previewFileEntryId, new ServiceContext());
+	}
+
+	@Override
+	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId, long previewFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.findByPrimaryKey(
 				layoutUtilityPageEntryId);
 
-		layoutUtilityPageEntry.setModifiedDate(new Date());
+		layoutUtilityPageEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 
 		long previousPreviewFileEntryId =
 			layoutUtilityPageEntry.getPreviewFileEntryId();
@@ -424,6 +435,24 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			long layoutUtilityPageEntryId, String name)
 		throws PortalException {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		return updateLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId, name, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.fetchByPrimaryKey(
 				layoutUtilityPageEntryId);
@@ -431,6 +460,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		_validateName(
 			layoutUtilityPageEntry.getGroupId(), layoutUtilityPageEntryId, name,
 			layoutUtilityPageEntry.getType());
+
+		layoutUtilityPageEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 
 		layoutUtilityPageEntry.setName(name);
 
@@ -442,13 +474,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
 			layoutUtilityPageEntry.getPlid());
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			serviceContext = new ServiceContext();
-		}
 
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);

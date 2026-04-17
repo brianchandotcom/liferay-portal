@@ -191,9 +191,8 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			FragmentSet fragmentSet)
 		throws Exception {
 
-		return fragmentSetResource.putSiteFragmentSet(
-			testGroup.getExternalReferenceCode(),
-			fragmentSet.getExternalReferenceCode(), fragmentSet);
+		return fragmentSetResource.postSiteFragmentSet(
+			testGroup.getExternalReferenceCode(), fragmentSet);
 	}
 
 	private void _assertProblemException(

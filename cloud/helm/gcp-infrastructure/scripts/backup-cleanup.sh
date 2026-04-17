@@ -2,46 +2,46 @@
 
 set -o errexit
 set -o nounset
+set -o pipefail
 
 function main {
-    local retention_days
-    local retention_seconds
+	local retention_days
+	local retention_seconds
 
-    retention_days={{ .Values.backup.cleanup.retentionDays | default 30 }}
-    retention_seconds=$((retention_days * 24 * 60 * 60))
+	retention_days={{ .Values.backup.cleanup.retentionDays | default 30 }}
+	retention_seconds=$((retention_days * 24 * 60 * 60))
 
-    echo "Cleaning up backups older than ${retention_days} days."
+	echo "Cleaning up backups older than ${retention_days} days."
 
-    local backups_to_cleanup
+	local backups_to_cleanup
 
-    backups_to_cleanup=$( 
-        kubectl get liferaybackups 
-            --namespace {{ .Release.Namespace }} 
-            --output json 
-        | jq --argjson retention "${retention_seconds}" --raw-output '
-            .items[]
-            | select(
-                (.status.completionTime != null and (now - (.status.completionTime | fromdateiso8601)) > $retention) or
-                (any(.status.conditions[]; .status == "False" and .type == "Succeeded"))
-            )
-            | .metadata.name
-        ')
+	backups_to_cleanup=$( \
+		kubectl \
+			get \
+			liferaybackups \
+			--namespace {{ .Release.Namespace }} \
+			--output json \
+			| jq --argjson retention "${retention_seconds}" --raw-output '
+			.items[]
+			| select(
+				(.status.completionTime != null and (now - (.status.completionTime | fromdateiso8601)) > $retention) or
+				(any(.status.conditions[]; .status == "False" and .type == "Succeeded"))
+			)
+			| .metadata.name')
 
-    if [ -z "${backups_to_cleanup}" ]
+	if [ -z "${backups_to_cleanup}" ]
 	then
-        echo "No backups to cleanup."
+		echo "There are no backups to cleanup."
 
-        exit 0
-    fi
+		exit 0
+	fi
 
-    echo "${backups_to_cleanup}" | while read -r name
-    do
-        echo "Deleting backup ${name}."
+	echo "${backups_to_cleanup}" | while read -r name
+	do
+		echo "Deleting backup ${name}."
 
-        kubectl delete liferaybackup "${name}" --namespace {{ .Release.Namespace }}
-    done
-
-    echo "Cleanup done."
+		kubectl delete liferaybackup "${name}" --namespace {{ .Release.Namespace }}
+	done
 }
 
 main

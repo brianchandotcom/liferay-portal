@@ -13,6 +13,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
@@ -31,6 +32,7 @@ import {generateObjectFields} from '../utils/generateObjectFields';
 const test = mergeTests(
 	collectionsPagesTest,
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
@@ -1272,6 +1274,56 @@ test.describe('Manage object definitions through a Page', () => {
 				.getByRole('menuitem', {name: objectDefinition.name})
 		).toBeVisible();
 	});
+
+	test(
+		'Cannot select unpublished object for a display page template',
+		{tag: '@LPS-137871'},
+		async ({apiHelpers, displayPageTemplatesPage, page}) => {
+			const objectName = 'CustomObject' + getRandomInt();
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: objectName,
+					status: {code: 2},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await test.step('Create a new blank display page template', async () => {
+				await displayPageTemplatesPage.goto();
+
+				await page
+					.getByRole('button', {name: 'New'})
+					.click();
+
+				await page
+					.getByRole('menuitem', {name: 'Display Page Template'})
+					.click();
+
+				await page.getByRole('button', {name: 'Blank'}).click();
+			});
+
+			await test.step('Verify unpublished object is not in content type options', async () => {
+				const contentTypeSelect = page.getByLabel('Content Type');
+
+				await expect(contentTypeSelect).toBeVisible();
+
+				const options = contentTypeSelect.locator('option');
+
+				const optionTexts = await options.allTextContents();
+
+				expect(
+					optionTexts.some(
+						(text) =>
+							text === objectDefinition.label['en_US']
+					)
+				).toBe(false);
+			});
+		}
+	);
 });
 
 cmsTest.describe('Manage enableFormContainer configuration', () => {

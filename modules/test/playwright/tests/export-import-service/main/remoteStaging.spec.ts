@@ -17,7 +17,11 @@ import {remotePageTest} from '../../../fixtures/remotePageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {createLayoutHierarchy} from '../../../utils/createLayoutHierarchy';
+import {
+	JournalContentPage,
+	PageNode,
+	createLayoutHierarchy,
+} from '../../../utils/createLayoutHierarchy';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -26,6 +30,7 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getDataStructureDefinition from '../../journal-web/main/utils/getDataStructureDefinition';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
 import {safeTeardown} from './utils/safeTeardown';
 
@@ -57,20 +62,87 @@ test(
 	async ({
 		apiHelpers,
 		journalEditTemplatePage,
-		page,
 		pageEditorPage,
 		remoteApiHelpers,
 		remotePage,
 		remoteStagingPage,
-		webContentDisplayPage,
 	}) => {
 		test.slow();
 
-		let layouts = [];
+		const PAGE_HIERARCHY: Array<PageNode<{verify?: boolean}>> = [
+			{
+				children: [
+					{
+						children: [
+							{
+								pageNumber: '111',
+								title: 'Page 111',
+								verify: true,
+							},
+						],
+						pageNumber: '11',
+						title: 'Page 11',
+					},
+					{pageNumber: '12', title: 'Page 12'},
+				],
+				pageNumber: '1',
+				title: 'Page 1',
+			},
+			{
+				children: [
+					{pageNumber: '21', title: 'Page 21', verify: true},
+					{pageNumber: '22', title: 'Page 22'},
+				],
+				pageNumber: '2',
+				title: 'Page 2',
+			},
+			{
+				children: [
+					{pageNumber: '31', title: 'Page 31'},
+					{pageNumber: '32', title: 'Page 32'},
+				],
+				pageNumber: '3',
+				title: 'Page 3',
+				verify: true,
+			},
+		];
+
+		type FlatPage = {
+			contentTitle: string;
+			friendlyUrlPath: string;
+			pageNumber: string;
+			title: string;
+			verify?: boolean;
+		};
+
+		const flattenPageHierarchy = (
+			nodes: Array<PageNode<{verify?: boolean}>>
+		): FlatPage[] => {
+			const result: FlatPage[] = [];
+			for (const node of nodes) {
+				const title = node.title!;
+				result.push({
+					contentTitle:
+						node.contentTitle ?? `Title-${node.pageNumber}`,
+					friendlyUrlPath: title.toLowerCase().replace(/\s+/g, '-'),
+					pageNumber: node.pageNumber,
+					title,
+					verify: node.verify,
+				});
+				if (node.children) {
+					result.push(...flattenPageHierarchy(node.children));
+				}
+			}
+
+			return result;
+		};
+
+		const flatPages = flattenPageHierarchy(PAGE_HIERARCHY);
+
 		let remoteSite: Site;
 		let site: Site;
 
-		await test.step('Setup remote staging and pages', async () => {
+		await test.step('Setup remote staging and sites', async () => {
 			site = await apiHelpers.headlessSite.createSite({
 				name: `site-${getRandomString()}`,
 			});
@@ -96,73 +168,6 @@ test(
 			});
 		});
 
-		const WC_DISPLAY =
-			'com_liferay_journal_content_web_portlet_JournalContentPortlet';
-
-		const widgets = [WC_DISPLAY, WC_DISPLAY];
-
-		await test.step('Create a hierarchy of pages with Web Content Display portlets on the local site', async () => {
-			layouts = await createLayoutHierarchy<{
-				verify?: boolean;
-			}>({
-				apiHelpers,
-				pageNodes: [
-					{
-						children: [
-							{
-								children: [
-									{
-										pageNumber: '111',
-										verify: true,
-										widgets,
-									},
-								],
-								pageNumber: '11',
-								widgets,
-							},
-							{
-								pageNumber: '12',
-								widgets,
-							},
-						],
-						pageNumber: '1',
-						widgets,
-					},
-					{
-						children: [
-							{
-								pageNumber: '21',
-								verify: true,
-								widgets,
-							},
-							{
-								pageNumber: '22',
-								widgets,
-							},
-						],
-						pageNumber: '2',
-						widgets,
-					},
-					{
-						children: [
-							{
-								pageNumber: '31',
-								widgets,
-							},
-							{
-								pageNumber: '32',
-								widgets,
-							},
-						],
-						pageNumber: '3',
-						verify: true,
-						widgets,
-					},
-				],
-				siteId: site.id,
-			});
-		});
-
 		const webContentTitle = getRandomString();
 
 		let structure;
@@ -170,7 +175,7 @@ test(
 
 		await test.step('Create a data structure and template for page links', async () => {
 			const structureName = getRandomString();
-			const fields = layouts.flatMap(({pageNumber}) => [
+			const fields = flatPages.flatMap(({pageNumber}) => [
 				{name: `Openpage${pageNumber}`, repeatable: false},
 				{name: `URL${pageNumber}`, repeatable: false},
 			]);
@@ -186,7 +191,7 @@ test(
 				dataDefinition
 			);
 
-			const templateScript = layouts
+			const templateScript = flatPages
 				.map(({pageNumber}) => {
 					return `<p><a href="\${URL${pageNumber}.getData()}">\${Openpage${pageNumber}.getData()}</a></p>`;
 				})
@@ -203,30 +208,6 @@ test(
 			await journalEditTemplatePage.selectTemplateToEdit(templateName);
 
 			templateKey = await journalEditTemplatePage.getDDMTemplateKey();
-		});
-
-		await test.step('Create a web content article with page links', async () => {
-			const contentFields: Array<{name: string; value: string}> =
-				layouts.flatMap(({friendlyUrlPath, pageNumber, title}) => {
-					return [
-						{
-							name: `Openpage${pageNumber}`,
-							value: title,
-						},
-						{
-							name: `URL${pageNumber}`,
-							value: `/web${site.friendlyUrlPath}${friendlyUrlPath}`,
-						},
-					];
-				});
-
-			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				contentFields,
-				ddmStructureId: structure.id,
-				ddmTemplateKey: templateKey,
-				groupId: site.id,
-				titleMap: {en_US: webContentTitle},
-			});
 		});
 
 		let structure2;
@@ -265,50 +246,102 @@ test(
 			templateKey2 = await journalEditTemplatePage.getDDMTemplateKey();
 		});
 
-		await test.step('Create individual web content articles for each page', async () => {
-			await webContentDisplayPage.gotoWebContentAdmin(site.name);
+		let allLinksArticleId: string;
+		const perPageArticleIds = new Map<string, string>();
 
-			for (const {contentTitle} of layouts) {
+		await test.step('Create the "all links" web content article', async () => {
+			const {articleId} =
 				await apiHelpers.jsonWebServicesJournal.addWebContent({
-					contentFields: [
-						{name: `Content1`, value: contentTitle},
-						{
-							name: `Content2`,
-							value: `Text Content for ${contentTitle}`,
-						},
-					],
-					ddmStructureId: structure2.id,
-					ddmTemplateKey: templateKey2,
+					contentFields: flatPages.flatMap(
+						({friendlyUrlPath, pageNumber, title}) => [
+							{name: `Openpage${pageNumber}`, value: title},
+							{
+								name: `URL${pageNumber}`,
+								value: `/web${site.friendlyUrlPath}/${friendlyUrlPath}`,
+							},
+						]
+					),
+					ddmStructureId: structure.id,
+					ddmTemplateKey: templateKey,
 					groupId: site.id,
-					titleMap: {en_US: contentTitle},
+					titleMap: {en_US: webContentTitle},
 				});
 
-				await reloadUntilVisible({
-					myLocator: page.getByRole('link', {
-						name: contentTitle,
-					}),
-					page,
-				});
+			allLinksArticleId = articleId!;
+		});
+
+		await test.step('Create per-page web content articles', async () => {
+			for (const {contentTitle, pageNumber} of flatPages) {
+				const {articleId} =
+					await apiHelpers.jsonWebServicesJournal.addWebContent({
+						contentFields: [
+							{name: 'Content1', value: contentTitle},
+							{
+								name: 'Content2',
+								value: `Text Content for ${contentTitle}`,
+							},
+						],
+						ddmStructureId: structure2.id,
+						ddmTemplateKey: templateKey2,
+						groupId: site.id,
+						titleMap: {en_US: contentTitle},
+					});
+
+				perPageArticleIds.set(pageNumber, articleId!);
 			}
 		});
 
-		await test.step('Add web content articles to the display portlets on each page of the local site', async () => {
+		const WC_DISPLAY =
+			'com_liferay_journal_content_web_portlet_JournalContentPortlet';
+
+		const buildWidgetsForPage = (pageNumber: string): PageElement[] => [
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetConfig: {
+					articleId: allLinksArticleId,
+					ddmTemplateKey: templateKey,
+				},
+				widgetName: WC_DISPLAY,
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetConfig: {
+					articleId: perPageArticleIds.get(pageNumber)!,
+					ddmTemplateKey: templateKey2,
+				},
+				widgetName: WC_DISPLAY,
+			}),
+		];
+
+		const attachWidgetsToNodes = (
+			nodes: Array<PageNode<{verify?: boolean}>>
+		): Array<PageNode<{verify?: boolean}>> =>
+			nodes.map((node) => ({
+				...node,
+				children: node.children
+					? attachWidgetsToNodes(node.children)
+					: undefined,
+				widgetDefinitions: buildWidgetsForPage(node.pageNumber),
+			}));
+
+		let layouts: Array<JournalContentPage<{verify?: boolean}>> = [];
+
+		await test.step('Create page hierarchy with pre-configured Web Content Display widgets', async () => {
+			layouts = await createLayoutHierarchy<{verify?: boolean}>({
+				apiHelpers,
+				pageNodes: attachWidgetsToNodes(PAGE_HIERARCHY),
+				siteId: site.id,
+			});
+		});
+
+		await test.step('Publish each page so staging picks up the drafts', async () => {
 			for (const layout of layouts) {
 				await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-				await webContentDisplayPage.addWebContentWithDisplay({
-					pageType: 'content',
-					webContentName: webContentTitle,
-				});
-
-				await webContentDisplayPage.addWebContentWithDisplay({
-					pageType: 'content',
-					webContentName: layout.contentTitle,
-				});
 
 				await pageEditorPage.publishPage();
 			}
 		});
+
 		await test.step('Publish to live and verify content and links on the remote site', async () => {
 			await remoteStagingPage.publishToLive({
 				layoutFriendlyURL: layouts[0].friendlyUrlPath,

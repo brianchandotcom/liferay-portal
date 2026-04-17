@@ -27,7 +27,10 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductAccountGroup;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductChannel;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductConfiguration;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductShippingConfiguration;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductTaxConfiguration;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
@@ -366,6 +369,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		assertValid(getProduct);
 
+		_testPostProductProductShippingConfigurationFromProductConfiguration();
+		_testPostProductProductTaxConfigurationFromProductConfiguration();
 		_testPostProductVirtual();
 		_testPostProductWithProductAccountGroupExternalReferenceCode();
 		_testPostProductWithProductChannelExternalReferenceCode();
@@ -472,6 +477,51 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		throws Exception {
 
 		return productResource.postProduct(product);
+	}
+
+	private Product _randomProductWithProductConfiguration() {
+		return new Product() {
+			{
+				active = true;
+				catalogId = _commerceCatalog.getCommerceCatalogId();
+				description = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+				productConfiguration = new ProductConfiguration() {
+					{
+						externalReferenceCode = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						productShippingConfiguration =
+							new ProductShippingConfiguration() {
+								{
+									depth = BigDecimal.valueOf(10D);
+									freeShipping = true;
+									height = BigDecimal.valueOf(10D);
+									shippable = false;
+									shippingExtraPrice = BigDecimal.valueOf(
+										10D);
+									shippingSeparately = true;
+									weight = BigDecimal.valueOf(10D);
+									width = BigDecimal.valueOf(10D);
+								}
+							};
+						productTaxConfiguration =
+							new ProductTaxConfiguration() {
+								{
+									id = 12345L;
+									taxable = false;
+								}
+							};
+					}
+				};
+				productType = SimpleCPTypeConstants.NAME;
+				shortDescription = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+			}
+		};
 	}
 
 	private Product _randomProductWithProductSpecification(
@@ -758,6 +808,38 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			Assert.assertEquals(
 				"Sku " + fieldName + " is invalid", problem.getTitle());
 		}
+	}
+
+	private void _testPostProductProductShippingConfigurationFromProductConfiguration()
+		throws Exception {
+
+		Product postProduct = productResource.postProduct(
+			_randomProductWithProductConfiguration());
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			postProduct.getId());
+
+		Assert.assertEquals(10D, cpDefinition.getDepth(), 0.0);
+		Assert.assertTrue(cpDefinition.isFreeShipping());
+		Assert.assertEquals(10D, cpDefinition.getHeight(), 0.0);
+		Assert.assertFalse(cpDefinition.isShippable());
+		Assert.assertEquals(10D, cpDefinition.getShippingExtraPrice(), 0.0);
+		Assert.assertTrue(cpDefinition.isShipSeparately());
+		Assert.assertEquals(10D, cpDefinition.getWeight(), 0.0);
+		Assert.assertEquals(10D, cpDefinition.getWidth(), 0.0);
+	}
+
+	private void _testPostProductProductTaxConfigurationFromProductConfiguration()
+		throws Exception {
+
+		Product postProduct = productResource.postProduct(
+			_randomProductWithProductConfiguration());
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			postProduct.getId());
+
+		Assert.assertEquals(12345, cpDefinition.getCPTaxCategoryId());
+		Assert.assertTrue(cpDefinition.isTaxExempt());
 	}
 
 	private void _testPostProductVirtual() throws Exception {

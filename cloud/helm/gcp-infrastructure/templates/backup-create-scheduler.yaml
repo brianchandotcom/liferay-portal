@@ -8,7 +8,9 @@ metadata:
     namespace: {{ .Release.Namespace }}
 spec:
     concurrencyPolicy: Forbid
-    schedule: {{ .Values.backup.schedule | quote }}
+    schedules:
+        -   {{ .Values.backup.schedule | quote }}
+    startingDeadlineSeconds: 300
     workflowSpec:
         arguments:
             parameters:
@@ -19,4 +21,6 @@ spec:
         workflowTemplateRef:
             clusterScope: true
             name: backup-create-cluster-workflow-template
+        ttlStrategy:
+            secondsAfterCompletion: 86400
 {{- end -}}

@@ -9,6 +9,7 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 export default function SelectCollection({
+	addCollectionUrl,
 	assetListEntryId: initialAssetListEntryId,
 	clearButtonEnabled: initialClearButtonEnabled,
 	defaultTitle,
@@ -17,7 +18,6 @@ export default function SelectCollection({
 	selectEventName,
 	title: initialTitle,
 	url,
-	addCollectionUrl
 }) {
 	const onChangeCollectionButtonClick = () => {
 		openSelectionModal({

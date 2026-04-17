@@ -466,10 +466,11 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public String getAddCollectionAssetListURL() {
-		return String.valueOf(PortalUtil.getControlPanelPortletURL(
-			_httpServletRequest, _themeDisplay.getScopeGroup(),
-			AssetListPortletKeys.ASSET_LIST, 0, 0,
-			PortletRequest.RENDER_PHASE));
+		return String.valueOf(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, _themeDisplay.getScopeGroup(),
+				AssetListPortletKeys.ASSET_LIST, 0, 0,
+				PortletRequest.RENDER_PHASE));
 	}
 
 	public String getAssetTagName() {
@@ -1373,7 +1374,11 @@ public class AssetPublisherDisplayContext {
 	public Map<String, Object> getSelectCollectionProps() throws Exception {
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
-		return HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>
+		put(
+			"addCollectionUrl", getAddCollectionAssetListURL()
+		)
+		.put(
 			"assetListEntryId",
 			() -> {
 				if (assetListEntry != null) {
@@ -1423,8 +1428,6 @@ public class AssetPublisherDisplayContext {
 			}
 		).put(
 			"url", getAssetListSelectorURL()
-		).put(
-			"addCollectionUrl", getAddCollectionAssetListURL()
 		).build();
 	}
 

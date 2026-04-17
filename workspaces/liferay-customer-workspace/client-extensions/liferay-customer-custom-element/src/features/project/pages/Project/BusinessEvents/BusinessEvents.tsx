@@ -12,12 +12,12 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {useCallback, useMemo, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import Table, {IRow} from '~/components/Table';
 import TableHeader from '~/components/Table/TableHeader';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useAppContext} from '~/features/project/context';
+import useAccountKey from '~/hooks/useAccountKey';
 import {Liferay} from '~/services/liferay';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
@@ -28,6 +28,8 @@ import ManageEventModal from './components/ManageEventModal';
 import useFilters from './hooks/useFilters';
 import useGetBusinessEvents from './hooks/useGetBusinessEvents';
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
+import useIsJiraBackend from './hooks/useIsJiraBackend';
+import parseAssociatedTickets from './utils/parseAssociatedTickets';
 import useIsSaasOnly from './utils/useIsSaasOnly';
 
 const columns = [
@@ -61,14 +63,15 @@ const columns = [
 const BusinessEvents = () => {
 	const [{project, subscriptionGroups}] = useAppContext();
 
-	const {filterQuery, filters, handleFilterChange, handleSearchChange} =
+	const accountKey = useAccountKey();
+
+	const {filters, handleFilterChange, handleSearchChange} =
 		useFilters(project);
 
 	const {businessEvents, fetchBusinessEvents, loading} =
-		useGetBusinessEvents(filterQuery);
+		useGetBusinessEvents();
+	const isJiraBackend = useIsJiraBackend();
 	const [modalType, setModalType] = useState('');
-
-	const {client} = useAppPropertiesContext();
 
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
@@ -106,11 +109,97 @@ const BusinessEvents = () => {
 		});
 	}, [fetchBusinessEvents]);
 
+	const filteredBusinessEvents = useMemo(() => {
+		if (!isJiraBackend) {
+			return businessEvents;
+		}
+
+		const normalize = (value?: string) =>
+			(value || '').toLowerCase().replace(/[\s_-]/g, '');
+
+		const oneYearAgo = new Date();
+
+		oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+		return businessEvents.filter((event) => {
+			const statusKey = event.eventStatus?.key;
+			const normalizedStatus = normalize(statusKey);
+
+			if (normalizedStatus === 'canceled') {
+				const modified = event.targetGoLiveDateTime
+					? new Date(event.targetGoLiveDateTime)
+					: null;
+
+				if (modified && modified < oneYearAgo) {
+					return false;
+				}
+			}
+
+			if (normalizedStatus === 'completed') {
+				const goLive = event.actualGoLiveDateTime
+					? new Date(event.actualGoLiveDateTime)
+					: null;
+
+				if (goLive && goLive < oneYearAgo) {
+					return false;
+				}
+			}
+
+			if (filters.selectedFilters?.length) {
+				const statusFilter = filters.selectedFilters.find(
+					(f) => f.key === 'eventStatus'
+				);
+
+				if (statusFilter?.values?.length) {
+					const selectedKeys = statusFilter.values.map(
+						(v: {key: string}) => normalize(v.key)
+					);
+
+					if (
+						normalizedStatus &&
+						!selectedKeys.includes(normalizedStatus)
+					) {
+						return false;
+					}
+				}
+
+				const typeFilter = filters.selectedFilters.find(
+					(f) => f.key === 'eventType'
+				);
+
+				if (typeFilter?.values?.length) {
+					const selectedKeys = typeFilter.values.map(
+						(v: {key: string}) => normalize(v.key)
+					);
+
+					const normalizedType = normalize(event.eventType?.key);
+
+					if (
+						normalizedType &&
+						!selectedKeys.includes(normalizedType)
+					) {
+						return false;
+					}
+				}
+			}
+
+			if (filters.searchTerm?.trim()) {
+				const search = filters.searchTerm.toLowerCase();
+
+				if (!event.name?.toLowerCase().includes(search)) {
+					return false;
+				}
+			}
+
+			return true;
+		});
+	}, [businessEvents, filters, isJiraBackend]);
+
 	const rows = useMemo(() => {
-		if (businessEvents?.length > 0) {
-			return businessEvents.map((businessEvent) => {
-				const associatedTicketsCount = JSON.parse(
-					businessEvent.associatedTickets!
+		if (filteredBusinessEvents?.length > 0) {
+			return filteredBusinessEvents.map((businessEvent) => {
+				const associatedTicketsCount = parseAssociatedTickets(
+					businessEvent.associatedTickets
 				).length;
 
 				const associatedTicketsString =
@@ -173,7 +262,7 @@ const BusinessEvents = () => {
 						label: i18n.translate('view-details'),
 						onClick: () => {
 							navigate(
-								`/${project?.accountKey}/business-events/${businessEvent.id}`
+								`/${accountKey}/business-events/${businessEvent.id}`
 							);
 						},
 					},
@@ -191,7 +280,7 @@ const BusinessEvents = () => {
 							label: i18n.translate('edit-event'),
 							onClick: () => {
 								navigate(
-									`/${project?.accountKey}/business-events/${businessEvent.id}/edit`
+									`/${accountKey}/business-events/${businessEvent.id}/edit`
 								);
 							},
 						},
@@ -250,7 +339,11 @@ const BusinessEvents = () => {
 					eventName: (
 						<div>
 							<div className="be-event-name font-weight-semi-bold text-neutral-10">
-								{businessEvent?.name}
+								<Link
+									to={`/${accountKey}/business-events/${businessEvent.id}`}
+								>
+									{businessEvent?.name}
+								</Link>
 							</div>
 
 							<div className="be-subtitle text-neutral-7">
@@ -300,12 +393,12 @@ const BusinessEvents = () => {
 
 		return [];
 	}, [
-		businessEvents,
+		accountKey,
+		filteredBusinessEvents,
 		hasAllEventsPermissions,
 		isSaasOnly,
 		navigate,
 		onOpenChange,
-		project?.accountKey,
 	]);
 
 	return loading ? (
@@ -332,14 +425,14 @@ const BusinessEvents = () => {
 					hasCreatePermissions={hasAllEventsPermissions}
 					onFilterChange={handleFilterChange}
 					onSearchChange={handleSearchChange}
-					searchResultsCount={businessEvents.length}
+					searchResultsCount={filteredBusinessEvents.length}
 					searchTerm={filters.searchTerm || ''}
 					selectedFilters={filters.selectedFilters || []}
 				/>
 			</div>
 
 			<div>
-				{businessEvents.length ? (
+				{filteredBusinessEvents.length ? (
 					<>
 						<Table
 							columns={columns}
@@ -348,11 +441,8 @@ const BusinessEvents = () => {
 
 						{selectedBusinessEvent && open && (
 							<ManageEventModal
-								accountExternalReferenceCode={
-									project?.accountKey || ''
-								}
+								accountExternalReferenceCode={accountKey || ''}
 								businessEvent={selectedBusinessEvent}
-								client={client}
 								closeFunction={onOpenChange}
 								modalType={modalType}
 								observer={observer}

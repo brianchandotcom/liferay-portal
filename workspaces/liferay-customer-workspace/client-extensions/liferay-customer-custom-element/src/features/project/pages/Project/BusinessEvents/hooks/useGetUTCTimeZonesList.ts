@@ -3,33 +3,51 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
-import {LIST_TYPES} from '~/features/project/utils/constants';
-import SearchBuilder from '~/lib/SearchBuilder';
-import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-definitions';
+import {useEffect, useState} from 'react';
+import {JSM_FIELDS, LIST_TYPES} from '~/features/project/utils/constants';
+import {getListTypeEntriesLegacy} from '~/services/liferay/api';
+import {getFieldOptions} from '~/services/liferay/rest/jira/Jira';
 import {IOption} from '~/utils/types';
 
-const listTypeUTCTimeZones = LIST_TYPES.utcTimeZones;
+import useIsJiraBackend from './useIsJiraBackend';
 
 export default function useGetUTCTimeZonesList(): {
+	error: boolean;
 	loading: boolean;
 	utcTimeZonesList: IOption[];
 } {
-	const {data, loading} = useGetListTypeDefinitions({
-		filter: SearchBuilder.eq('name', listTypeUTCTimeZones),
-	});
+	const [error, setError] = useState(false);
+	const [utcTimeZonesList, setUTCTimeZonesList] = useState<IOption[]>([]);
+	const [loading, setLoading] = useState(true);
 
-	const utcTimeZonesList = useMemo(
-		() =>
-			(
-				(data?.listTypeDefinitions?.items[0]?.listTypeEntries ??
-					[]) as {
-					key: string;
-					name: string;
-				}[]
-			).map(({key, name}) => ({label: name, value: key})),
-		[data?.listTypeDefinitions?.items]
-	);
+	const isJiraBackend = useIsJiraBackend();
 
-	return {loading, utcTimeZonesList};
+	useEffect(() => {
+		const fetchListTypeEntries = async () => {
+			try {
+				const response = isJiraBackend
+					? await getFieldOptions(JSM_FIELDS.timeZone)
+					: await getListTypeEntriesLegacy(LIST_TYPES.utcTimeZones);
+
+				setUTCTimeZonesList(
+					response.map((entry: any) => ({
+						label: entry.name,
+						value: entry.key,
+					}))
+				);
+			}
+			catch (error) {
+				console.error('Error fetching UTC time zones:', error);
+
+				setError(true);
+			}
+			finally {
+				setLoading(false);
+			}
+		};
+
+		fetchListTypeEntries();
+	}, [isJiraBackend]);
+
+	return {error, loading, utcTimeZonesList};
 }

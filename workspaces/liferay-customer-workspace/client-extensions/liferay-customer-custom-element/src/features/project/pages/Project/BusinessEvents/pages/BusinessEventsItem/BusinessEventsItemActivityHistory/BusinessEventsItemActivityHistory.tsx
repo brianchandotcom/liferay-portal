@@ -12,7 +12,6 @@ import {useCallback, useMemo, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import Table, {IRow} from '~/components/Table';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
@@ -31,8 +30,6 @@ const BusinessEventsItemActivityHistory = () => {
 	const {businessEvent, fetchBusinessEvent, loading} = useGetBusinessEvent(
 		id || ''
 	);
-
-	const {client} = useAppPropertiesContext();
 
 	const generateFilterQuery = useCallback(() => {
 		const queryParams: string[] = [];
@@ -283,7 +280,6 @@ const BusinessEventsItemActivityHistory = () => {
 				<ManageEventModal
 					accountExternalReferenceCode={accountKey || ''}
 					businessEvent={businessEvent}
-					client={client}
 					closeFunction={onOpenChange}
 					modalType={modalType}
 					observer={observer}

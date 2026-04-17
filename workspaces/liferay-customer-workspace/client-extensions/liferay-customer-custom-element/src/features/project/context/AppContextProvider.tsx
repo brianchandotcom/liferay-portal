@@ -5,7 +5,9 @@
 
 import {createContext, useContext, useEffect, useMemo, useReducer} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
+import {getBusinessEventsLegacy} from '~/services/liferay/api';
 import {Liferay} from '~/services/liferay';
+import {getBusinessEvents} from '~/services/liferay/rest/jira/Jira';
 import {fetcher} from '~/services/liferay/fetcher';
 import {
 	getAccountByExternalReferenceCode,
@@ -56,7 +58,7 @@ const AppContext = createContext<[IState, React.Dispatch<IAction>]>([
 ]);
 
 const AppContextProvider = ({children}: {children: React.ReactNode}) => {
-	const {client} = useAppPropertiesContext();
+	const {client, featureFlags} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer<React.Reducer<IState, IAction>>(
 		reducer,
 		{
@@ -79,24 +81,16 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 	const pageRoutes = useMemo(() => routerPath(), []);
 
 	useEffect(() => {
-		const getBusinessEvents = async (filterQuery: string) => {
-			const HEADLESS_BASE_URL = `${window.location.origin}/o/`;
-
+		const fetchBusinessEvents = async (accountKey: string) => {
 			try {
-				const businessEventsResponse = await fetcher(
-					`${HEADLESS_BASE_URL}c/businessevents?${filterQuery}`,
-					{
-						headers: {
-							'Accept-Language':
-								Liferay.ThemeDisplay.getBCP47LanguageId(),
-							'Content-Type': 'application/json',
-							'x-csrf-token': Liferay.authToken,
-						},
-						method: 'GET',
-					}
-				);
+				const businessEventsResponse = featureFlags.includes('LRSD-11821')
+					? await getBusinessEvents(accountKey)
+					: await getBusinessEventsLegacy(
+							`filter=r_accountEntryToBusinessEvents_accountEntryERC eq '${accountKey}'`
+						);
 
-				const items = businessEventsResponse.items as IBusinessEvent[];
+				const items = (businessEventsResponse.items ||
+					[]) as IBusinessEvent[];
 
 				dispatch({
 					payload: items,
@@ -104,7 +98,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 				});
 			}
 			catch (error) {
-				console.error('Error', error);
+				console.error('Error fetching business events', error);
 			}
 		};
 
@@ -401,10 +395,9 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 
 						getStructuredContents();
 
-						const businessEventsFilterQuery = accountBrief?.id
-							? `filter=r_accountEntryToBusinessEvents_accountEntryId eq '${accountBrief.id}'`
-							: '';
-						getBusinessEvents(businessEventsFilterQuery);
+						fetchBusinessEvents(
+							projectExternalReferenceCode as string
+						);
 					}
 				}
 			}

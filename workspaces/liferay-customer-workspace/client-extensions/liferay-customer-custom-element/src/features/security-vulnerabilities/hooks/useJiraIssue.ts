@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import * as OAuth2 from '@liferay/oauth2-provider-web/client';
 import {useCallback, useEffect, useState} from 'react';
+import {getIssue} from '~/services/liferay/rest/jira/Jira';
 
 import {JiraEnum} from '../utils/constants/jiraEnum';
 
@@ -42,13 +42,7 @@ const useJiraIssue = (issueKey?: string) => {
 		setLoading(true);
 
 		try {
-			const oauth2Client = await OAuth2.FromUserAgentApplication(
-				'liferay-customer-etc-spring-boot-oaua'
-			);
-
-			const response: IJiraIssue = await oauth2Client
-				.fetch(`/jira/issue/${issueKey}`)
-				.then((response: {json: () => any}) => response.json());
+			const response: IJiraIssue = await getIssue(issueKey);
 
 			setJiraIssue(response);
 		}

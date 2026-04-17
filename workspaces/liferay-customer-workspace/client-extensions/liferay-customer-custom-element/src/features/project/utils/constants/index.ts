@@ -7,6 +7,7 @@ export * from './alertDownloadType';
 export * from './autoCloseAlertTime';
 export * from './contentTypes';
 export * from './extensionFileTypes';
+export * from './jsmObjectTypes';
 export * from './listTypes';
 export * from './menuTypes';
 export * from './pageTypes';

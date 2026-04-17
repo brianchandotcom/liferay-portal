@@ -3685,6 +3685,8 @@ public class DefaultObjectEntryManagerImplTest
 			depotEntry.getGroupId(), objectDefinitionSetting);
 		_testCopyObjectEntryWithRelatedEntries(
 			depotEntry.getGroupId(), objectEntryFolder1);
+		_testCopyObjectEntryWithAttachmentField(
+			depotEntry.getGroupId(), objectEntryFolder1);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -11463,6 +11465,203 @@ public class DefaultObjectEntryManagerImplTest
 			String.valueOf(objectEntry3.getObjectEntryFolderId()));
 	}
 
+	private void _testCopyObjectEntryWithAttachmentField(
+			long groupId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		_testCopyObjectEntryWithAttachmentFieldShowFilesInLibraryFalse(
+			groupId, objectEntryFolder);
+		_testCopyObjectEntryWithAttachmentFieldShowFilesInLibraryTrue(
+			groupId, objectEntryFolder);
+	}
+
+	private void _testCopyObjectEntryWithAttachmentFieldShowFilesInLibraryFalse(
+			long groupId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			Arrays.asList(
+				new AttachmentObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"attachmentObjectFieldName"
+				).objectFieldSettings(
+					Arrays.asList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS,
+							"txt"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+							ObjectFieldSettingConstants.
+								VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE,
+							"100"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_SHOW_FILES_IN_LIBRARY,
+							"false"))
+				).build()),
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+			String.valueOf(groupId));
+
+		try {
+			String fileName = RandomTestUtil.randomString() + ".txt";
+
+			com.liferay.portal.kernel.repository.model.FileEntry tempFileEntry =
+				TempFileEntryUtil.addTempFileEntry(
+					groupId, adminUser.getUserId(),
+					objectDefinition.getPortletId(),
+					TempFileEntryUtil.getTempFileName(fileName),
+					FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
+					ContentTypes.TEXT_PLAIN);
+
+			ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_createDTOConverterContext(adminUser), objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"attachmentObjectFieldName",
+							tempFileEntry.getFileEntryId()
+						).build();
+
+						setObjectEntryFolderId(
+							objectEntryFolder.getObjectEntryFolderId());
+					}
+				},
+				String.valueOf(groupId));
+
+			ObjectEntry copiedObjectEntry =
+				_defaultObjectEntryManager.copyObjectEntry(
+					_createDTOConverterContext(adminUser), objectEntry.getId(),
+					objectEntryFolder.getObjectEntryFolderId(), false);
+
+			Map<String, Serializable> originalValues =
+				_objectEntryLocalService.getValues(objectEntry.getId());
+
+			Map<String, Serializable> copiedValues =
+				_objectEntryLocalService.getValues(copiedObjectEntry.getId());
+
+			long originalFileEntryId = GetterUtil.getLong(
+				originalValues.get("attachmentObjectFieldName"));
+			long copiedFileEntryId = GetterUtil.getLong(
+				copiedValues.get("attachmentObjectFieldName"));
+
+			Assert.assertTrue(originalFileEntryId > 0);
+			Assert.assertTrue(copiedFileEntryId > 0);
+			Assert.assertNotEquals(originalFileEntryId, copiedFileEntryId);
+		}
+		finally {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
+	}
+
+	private void _testCopyObjectEntryWithAttachmentFieldShowFilesInLibraryTrue(
+			long groupId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			Arrays.asList(
+				new AttachmentObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"attachmentObjectFieldName"
+				).objectFieldSettings(
+					Arrays.asList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS,
+							"txt"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+							ObjectFieldSettingConstants.
+								VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE,
+							"100"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_SHOW_FILES_IN_LIBRARY,
+							"true"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_STORAGE_DEPOT_GROUP,
+							String.valueOf(groupId)),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_STORAGE_DL_FOLDER_PATH,
+							RandomTestUtil.randomString()))
+				).build()),
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+			String.valueOf(groupId));
+
+		try {
+			String fileName = RandomTestUtil.randomString() + ".txt";
+
+			com.liferay.portal.kernel.repository.model.FileEntry tempFileEntry =
+				TempFileEntryUtil.addTempFileEntry(
+					groupId, adminUser.getUserId(),
+					objectDefinition.getPortletId(),
+					TempFileEntryUtil.getTempFileName(fileName),
+					FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
+					ContentTypes.TEXT_PLAIN);
+
+			ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_createDTOConverterContext(adminUser), objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"attachmentObjectFieldName",
+							tempFileEntry.getFileEntryId()
+						).build();
+
+						setObjectEntryFolderId(
+							objectEntryFolder.getObjectEntryFolderId());
+					}
+				},
+				String.valueOf(groupId));
+
+			ObjectEntry copiedObjectEntry =
+				_defaultObjectEntryManager.copyObjectEntry(
+					_createDTOConverterContext(adminUser), objectEntry.getId(),
+					objectEntryFolder.getObjectEntryFolderId(), false);
+
+			Map<String, Serializable> originalValues =
+				_objectEntryLocalService.getValues(objectEntry.getId());
+
+			Map<String, Serializable> copiedValues =
+				_objectEntryLocalService.getValues(copiedObjectEntry.getId());
+
+			long originalFileEntryId = GetterUtil.getLong(
+				originalValues.get("attachmentObjectFieldName"));
+			long copiedFileEntryId = GetterUtil.getLong(
+				copiedValues.get("attachmentObjectFieldName"));
+
+			Assert.assertTrue(originalFileEntryId > 0);
+			Assert.assertEquals(originalFileEntryId, copiedFileEntryId);
+		}
+		finally {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
+	}
+
 	private void _testCopyObjectEntryWithRelatedEntries(
 			long groupId, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
@@ -11573,10 +11772,11 @@ public class DefaultObjectEntryManagerImplTest
 					_simpleDTOConverterContext, copiedParentObjectEntry.getId(),
 					objectRelationship, null);
 
+			List<ObjectEntry> relatedChildEntries =
+				(List<ObjectEntry>)page.getItems();
+
 			Assert.assertEquals(
-				2,
-				page.getItems(
-				).size());
+				relatedChildEntries.toString(), 2, relatedChildEntries.size());
 
 			page = _defaultObjectEntryManager.getRelatedObjectEntries(
 				_simpleDTOConverterContext, parentObjectEntry.getId(),

@@ -1,4 +1,5 @@
 import * as API from 'shared/api';
+import classNames from 'classnames';
 import ClayButton from '@clayui/button';
 import Loading from 'shared/components/Loading';
 import React from 'react';
@@ -9,12 +10,14 @@ import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
 interface IProps {
+	className?: string;
 	entityLabel: string;
 	fieldMappingFieldName: string;
 	filterKey: 'countryFilter' | 'industryFilter';
 }
 
 const FieldValueFilter = ({
+	className,
 	entityLabel,
 	fieldMappingFieldName,
 	filterKey
@@ -42,9 +45,10 @@ const FieldValueFilter = ({
 			as={React.forwardRef((props, ref) => (
 				<ClayButton
 					{...props}
-					className='rounded-lg mx-2'
+					className={classNames(className, 'rounded-lg')}
 					displayType='secondary'
 					ref={ref}
+					searchable
 					size='sm'
 				>
 					<Icon

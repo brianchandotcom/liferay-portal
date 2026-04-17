@@ -14,6 +14,7 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.test.util.FragmentCompositionTestUtil;
@@ -158,6 +159,42 @@ public class FragmentCollectionImplTest {
 	}
 
 	@Test
+	@TestInfo("LPD-83557")
+	public void testIsExportableWithMarketplaceFragmentCollection()
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection.getFragmentCollectionId());
+
+		fragmentCollection.setMarketplace(true);
+
+		fragmentCollection =
+			_fragmentCollectionLocalService.updateFragmentCollection(
+				fragmentCollection);
+
+		Assert.assertFalse(fragmentCollection.isExportable());
+	}
+
+	@Test
+	@TestInfo("LPD-83557")
+	public void testIsExportableWithResourceFoldersOnly() throws Exception {
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		PortletFileRepositoryUtil.addPortletFolder(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			FragmentPortletKeys.FRAGMENT,
+			fragmentCollection.getResourcesFolderId(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertFalse(fragmentCollection.isExportable());
+	}
+
+	@Test
 	@TestInfo("LPD-33704")
 	public void testPopulateZipWriter() throws Exception {
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
@@ -242,6 +279,9 @@ public class FragmentCollectionImplTest {
 	private static DLAppService _dlAppService;
 
 	private FragmentCollection _fragmentCollection;
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Inject
 	private FragmentCompositionLocalService _fragmentCompositionLocalService;

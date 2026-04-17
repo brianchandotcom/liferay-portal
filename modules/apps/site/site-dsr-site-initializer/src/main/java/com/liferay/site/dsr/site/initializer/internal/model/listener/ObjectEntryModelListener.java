@@ -5,6 +5,10 @@
 
 package com.liferay.site.dsr.site.initializer.internal.model.listener;
 
+import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
+import com.liferay.analytics.settings.rest.dto.v1_0.DataSource;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -14,6 +18,7 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,6 +28,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
@@ -40,11 +46,14 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.io.Serializable;
@@ -94,9 +103,27 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		return friendlyURL;
 	}
 
-	private ServiceContext _getServiceContext(long companyId, long userId)
-		throws PortalException {
+	private Channel _getOrAddAnalyticsChannel(ChannelResource channelResource)
+		throws Exception {
 
+		Page<Channel> channelsPage = channelResource.getChannelsPage(
+			_DSR_CHANNEL_NAME, Pagination.of(1, 1), null);
+
+		List<Channel> channels = ListUtil.fromCollection(
+			channelsPage.getItems());
+
+		if (!channels.isEmpty()) {
+			return channels.get(0);
+		}
+
+		Channel channel = new Channel();
+
+		channel.setName(() -> _DSR_CHANNEL_NAME);
+
+		return channelResource.postChannel(channel);
+	}
+
+	private ServiceContext _getServiceContext(long companyId, long userId) {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
@@ -199,6 +226,18 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 						).build(),
 						new ServiceContext());
 
+					try {
+						_patchChannel(
+							company.getCompanyId(), objectDefinition,
+							objectEntry.getUserId());
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to connect site " + group.getGroupId() +
+								" to analytics channel",
+							exception);
+					}
+
 					return null;
 				});
 		}
@@ -235,6 +274,40 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		if (group != null) {
 			_groupLocalService.deleteGroup(group);
 		}
+	}
+
+	private void _patchChannel(
+			long companyId, ObjectDefinition objectDefinition, long userId)
+		throws Exception {
+
+		if (!_analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
+			return;
+		}
+
+		ChannelResource channelResource = _channelResourceFactory.create(
+		).checkPermissions(
+			false
+		).user(
+			_userLocalService.getUser(userId)
+		).build();
+
+		Channel channel = new Channel();
+		Channel analyticsChannel = _getOrAddAnalyticsChannel(channelResource);
+
+		channel.setChannelId(analyticsChannel::getChannelId);
+
+		DataSource dataSource = new DataSource();
+
+		dataSource.setSiteIds(
+			() -> TransformUtil.transformToArray(
+				_groupLocalService.getGroups(
+					companyId, objectDefinition.getClassName(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				GroupModel::getGroupId, Long.class));
+
+		channel.setDataSources(() -> new DataSource[] {dataSource});
+
+		channelResource.patchChannel(channel);
 	}
 
 	private void _updateFragmentEntryLink(Group group) {
@@ -282,12 +355,20 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
+	private static final String _DSR_CHANNEL_NAME = "DSR";
+
 	private static final String _RENDERER_KEY =
 		"com.liferay.fragment.renderer.menu.display.internal." +
 			"MenuDisplayFragmentRenderer";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryModelListener.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private ChannelResource.Factory _channelResourceFactory;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

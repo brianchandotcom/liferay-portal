@@ -6,12 +6,14 @@
 package com.liferay.headless.admin.fragment.internal.vulcan.problem;
 
 import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemMapper;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
@@ -25,13 +27,16 @@ public class DuplicateFragmentCollectionKeyExceptionProblemMapper
 		DuplicateFragmentCollectionKeyException
 			duplicateFragmentCollectionKeyException) {
 
-		String message = "A fragment set with the same key already exists";
+		String fragmentCollectionKey =
+			duplicateFragmentCollectionKeyException.getFragmentCollectionKey();
 
 		return new Problem() {
 
 			@Override
 			public String getDetail(Locale locale) {
-				return message;
+				return _language.format(
+					locale, "a-fragment-set-with-the-key-x-already-exists",
+					fragmentCollectionKey);
 			}
 
 			@Override
@@ -41,7 +46,9 @@ public class DuplicateFragmentCollectionKeyExceptionProblemMapper
 
 			@Override
 			public String getTitle(Locale locale) {
-				return message;
+				return _language.format(
+					locale, "a-fragment-set-with-the-key-x-already-exists",
+					fragmentCollectionKey);
 			}
 
 			@Override
@@ -51,5 +58,8 @@ public class DuplicateFragmentCollectionKeyExceptionProblemMapper
 
 		};
 	}
+
+	@Reference
+	private Language _language;
 
 }

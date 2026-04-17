@@ -311,6 +311,14 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<CPDefinitionOptionValueRel>
+		getApprovedCPInstanceCPDefinitionOptionValueRels(
+			long cpDefinitionOptionRelId) {
+
+		return getService().getApprovedCPInstanceCPDefinitionOptionValueRels(
+			cpDefinitionOptionRelId);
+	}
+
 	/**
 	 * Returns the cp definition option value rel with the primary key.
 	 *
@@ -605,4 +613,4 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 			CPDefinitionOptionValueRelLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-855098305
+// LIFERAY-SERVICE-BUILDER-HASH:-1324743478

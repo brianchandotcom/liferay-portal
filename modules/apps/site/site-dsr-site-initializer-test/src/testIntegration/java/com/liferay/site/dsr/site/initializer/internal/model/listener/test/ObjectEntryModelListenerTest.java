@@ -7,6 +7,8 @@ package com.liferay.site.dsr.site.initializer.internal.model.listener.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -51,14 +54,22 @@ import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Stefano Motta
@@ -86,6 +97,29 @@ public class ObjectEntryModelListenerTest {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DSR_ROOM", TestPropsValues.getCompanyId());
+
+		BundleContext bundleContext = FrameworkUtil.getBundle(
+			ObjectEntryModelListenerTest.class
+		).getBundleContext();
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				AnalyticsSettingsManager.class,
+				new TestAnalyticsSettingsManager(_isAnalyticsEnabled),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"service.ranking", Integer.MAX_VALUE
+				).build()));
+	}
+
+	@After
+	public void tearDown() {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
 	}
 
 	@Test
@@ -194,6 +228,8 @@ public class ObjectEntryModelListenerTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
+		Assert.assertTrue(_isAnalyticsEnabled.get());
+
 		group = _groupLocalService.fetchGroup(
 			TestPropsValues.getCompanyId(),
 			_classNameLocalService.getClassNameId(
@@ -301,6 +337,8 @@ public class ObjectEntryModelListenerTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
+	private final AtomicBoolean _isAnalyticsEnabled = new AtomicBoolean();
+
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
 
@@ -327,10 +365,90 @@ public class ObjectEntryModelListenerTest {
 	@Inject
 	private RoleLocalService _roleLocalService;
 
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
+
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	private static class TestAnalyticsSettingsManager
+		implements AnalyticsSettingsManager {
+
+		public TestAnalyticsSettingsManager(AtomicBoolean isAnalyticsEnabled) {
+			_isAnalyticsEnabled = isAnalyticsEnabled;
+		}
+
+		@Override
+		public void deleteCompanyConfiguration(long companyId) {
+		}
+
+		@Override
+		public AnalyticsConfiguration getAnalyticsConfiguration(
+			long companyId) {
+
+			return null;
+		}
+
+		@Override
+		public Long[] getCommerceChannelIds(
+			String analyticsChannelId, long companyId) {
+
+			return new Long[0];
+		}
+
+		@Override
+		public Long[] getSiteIds(String analyticsChannelId, long companyId) {
+			return new Long[0];
+		}
+
+		@Override
+		public boolean isAnalyticsEnabled(long companyId) {
+			_isAnalyticsEnabled.set(true);
+
+			return false;
+		}
+
+		@Override
+		public boolean isSiteIdSynced(long companyId, long groupId) {
+			return false;
+		}
+
+		@Override
+		public boolean syncedAccountSettingsEnabled(long companyId) {
+			return false;
+		}
+
+		@Override
+		public boolean syncedContactSettingsEnabled(long companyId) {
+			return false;
+		}
+
+		@Override
+		public String[] updateCommerceChannelIds(
+			String analyticsChannelId, long companyId,
+			Long[] dataSourceCommerceChannelIds) {
+
+			return new String[0];
+		}
+
+		@Override
+		public void updateCompanyConfiguration(
+			long companyId, Map<String, Object> properties) {
+		}
+
+		@Override
+		public String[] updateSiteIds(
+			String analyticsChannelId, long companyId,
+			Long[] dataSourceSiteIds) {
+
+			return new String[0];
+		}
+
+		private final AtomicBoolean _isAnalyticsEnabled;
+
+	}
 
 }

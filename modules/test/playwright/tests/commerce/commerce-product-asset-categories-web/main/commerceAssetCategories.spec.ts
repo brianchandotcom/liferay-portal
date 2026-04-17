@@ -23,13 +23,11 @@ test('LPD-3381 Error message is shown when saving an existing override category 
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
+	await apiHelpers.headlessAdminSite.postSite({
 		name: 'Minium',
 		templateKey: 'minium-initializer',
 		templateType: 'site-initializer',
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const pageName = 'Placed Orders';
 

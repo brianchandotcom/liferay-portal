@@ -600,12 +600,12 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), keyword + RandomTestUtil.randomString());
 
-		FragmentCollection exportableFragmentCollection =
+		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), RandomTestUtil.randomString());
 
 		FragmentEntryTestUtil.addFragmentEntry(
-			exportableFragmentCollection.getFragmentCollectionId());
+			fragmentCollection.getFragmentCollectionId());
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.

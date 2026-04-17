@@ -121,23 +121,13 @@ test.describe('Site Scope', () => {
 	let site2: any;
 
 	test.beforeEach(async ({apiHelpers}) => {
-		site1 = await apiHelpers.headlessSite.createSite({
+		site1 = await apiHelpers.headlessAdminSite.postSite({
 			name: `Site1 ${getRandomInt()}`,
 		});
 
-		site2 = await apiHelpers.headlessSite.createSite({
+		site2 = await apiHelpers.headlessAdminSite.postSite({
 			name: `Site2 ${getRandomInt()}`,
 		});
-	});
-
-	test.afterEach(async ({apiHelpers}) => {
-		if (site1.id) {
-			await apiHelpers.headlessSite.deleteSite(site1.id);
-		}
-
-		if (site2.id) {
-			await apiHelpers.headlessSite.deleteSite(site2.id);
-		}
 	});
 
 	test('Scope selection persists after saving blueprint', async ({

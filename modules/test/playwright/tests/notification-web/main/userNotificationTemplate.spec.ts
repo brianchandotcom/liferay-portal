@@ -7,13 +7,11 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
-import {objectPagesTest} from '../../../fixtures/objectPagesTest';
-import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 const notificationTemplateInfo = {
 	description: 'This is a description',
@@ -24,11 +22,8 @@ const notificationTemplateInfo = {
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
-	editObjectDefinitionPagesTest,
 	loginTest(),
-	notificationPagesTest,
-	objectPagesTest,
-	usersAndOrganizationsPagesTest
+	notificationPagesTest
 );
 
 test.describe('User notification template', () => {
@@ -75,104 +70,6 @@ test.describe('User notification template', () => {
 
 		await expect(userNotificationTemplatePage.contentSubject).toHaveValue(
 			notificationTemplateInfo.subject
-		);
-	});
-
-	test('can be sent to a regular role', async ({
-		apiHelpers,
-		editObjectActionPage,
-		notificationsPage,
-		page,
-		userNotificationTemplatePage,
-		viewObjectActionsPage,
-	}) => {
-		const roleName = getRandomString();
-
-		const role = await apiHelpers.headlessAdminUser.postRole({
-			externalReferenceCode: getRandomString(),
-			name: roleName,
-			name_i18n: {en_US: getRandomString()},
-			roleType: 'regular',
-		});
-
-		apiHelpers.data.push({
-			id: role.id,
-			type: 'role',
-		});
-
-		const user =
-			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-				'test@liferay.com'
-			);
-
-		await apiHelpers.headlessAdminUser.assignUserToRole(
-			role.externalReferenceCode,
-			user.id
-		);
-
-		await userNotificationTemplatePage.goto();
-
-		const notificationTemplateName = getRandomString();
-
-		await userNotificationTemplatePage.basicInfoName.fill(
-			notificationTemplateName
-		);
-
-		const contentSubject = getRandomString();
-
-		await userNotificationTemplatePage.contentSubject.fill(contentSubject);
-
-		await userNotificationTemplatePage.selectNotificationRecipient('Role');
-
-		await userNotificationTemplatePage.selectRole(roleName);
-
-		await userNotificationTemplatePage.saveButton.click();
-
-		await page.getByRole('link', {name: notificationTemplateName}).click();
-
-		const notificationTemplateId = await page
-			.locator('span:has-text("ID:") + strong')
-			.textContent();
-
-		apiHelpers.data.push({
-			id: notificationTemplateId,
-			type: 'notificationTemplate',
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
-
-		await editObjectActionPage.addNewAction({
-			notificationTemplateName,
-			thenOption: 'Notification',
-			whenOption: 'On After Add',
-		});
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-
-		const objectFieldValue = getRandomString();
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{textField: objectFieldValue},
-			applicationName
-		);
-
-		await notificationsPage.goto();
-
-		await page.getByText(contentSubject).click();
-
-		await expect(page.getByLabel('textField', {exact: true})).toHaveValue(
-			objectFieldValue
 		);
 	});
 
@@ -271,6 +168,56 @@ test.describe('User notification template', () => {
 					).toBeVisible();
 				}
 			});
+		}
+	);
+
+	test(
+		'can delete user notification template',
+		{tag: '@LPD-78504'},
+		async ({
+			notificationTemplatesPage,
+			page,
+			userNotificationTemplatePage,
+		}) => {
+			const templateName =
+				'User Notification Template ' + getRandomInt();
+
+			await userNotificationTemplatePage.goto();
+
+			await userNotificationTemplatePage.basicInfoName.fill(templateName);
+			await userNotificationTemplatePage.contentSubject.fill(
+				'Subject content'
+			);
+
+			await userNotificationTemplatePage.selectNotificationRecipient('User');
+
+			await page.getByPlaceholder('Enter user name.').click();
+			await page.getByLabel('Test', {exact: true}).check();
+			await page.keyboard.press('Escape');
+
+			await userNotificationTemplatePage.saveButton.click();
+
+			await expect(
+				notificationTemplatesPage.getFrontEndDatasetItemLocator(
+					templateName
+				)
+			).toBeVisible();
+
+			const actionButton = page
+				.getByRole('row', {name: templateName})
+				.getByRole('button', {name: 'Actions'});
+
+			await actionButton.click();
+
+			await notificationTemplatesPage.frontEndDatasetItemActionDelete.click();
+
+			await waitForAlert(page);
+
+			await expect(
+				notificationTemplatesPage.getFrontEndDatasetItemLocator(
+					templateName
+				)
+			).not.toBeVisible();
 		}
 	);
 });

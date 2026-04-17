@@ -131,6 +131,7 @@ import {config as objectHierarchyWebConfig} from './tests/object-web/hierarchy/c
 import {config as objectLayoutWebConfig} from './tests/object-web/layout/config';
 import {config as listTypeDefinitionsWebConfig} from './tests/object-web/list-type-definition/config';
 import {config as objectDefinitionWebConfig} from './tests/object-web/main/config';
+import {config as objectNotificationWebConfig} from './tests/object-web/notification/config';
 import {config as objectRelationshipWebConfig} from './tests/object-web/relationship/config';
 import {config as objectSalesforceWebConfig} from './tests/object-web/salesforce/config';
 import {config as objectValidationWebConfig} from './tests/object-web/validation/config';
@@ -354,6 +355,7 @@ export default defineConfig({
 		objectFormsIntegrationWebConfig,
 		objectHierarchyWebConfig,
 		objectLayoutWebConfig,
+		objectNotificationWebConfig,
 		objectRelationshipWebConfig,
 		objectSalesforceWebConfig,
 		objectValidationWebConfig,

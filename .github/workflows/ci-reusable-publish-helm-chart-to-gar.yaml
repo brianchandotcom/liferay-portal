@@ -5,24 +5,64 @@ jobs:
     publish:
         env:
             GITHUB_TOKEN: ${{github.token}}
+            IS_PR: ${{inputs.pr_number != ''}}
+        permissions:
+            contents: write
+            id-token: write
+            packages: write
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+                    filter: blob:none
+                    show-progress: false
+            -   if: ${{env.IS_PR == 'true'}}
+                name: Modify version for pull request
+                run: |
+                    CHART_VERSION=$(cat ./Chart.yaml | yq .version)
+
+                    SHORT_SHA=$(git rev-parse --short HEAD)
+
+                    NEW_VERSION="${CHART_VERSION}-pr-${{inputs.pr_number}}-g${SHORT_SHA}"
+
+                    echo "Modifying chart version from ${CHART_VERSION} to ${NEW_VERSION}"
+
+                    yq -i ".version = \"${NEW_VERSION}\"" Chart.yaml
+                working-directory: ${{inputs.working_directory}}
             -   id: verify_version
                 name: Verify Helm chart version
                 run: |
-                    set -e
+                    set -o errexit
 
                     CHART_VERSION=$(cat ./Chart.yaml | yq .version)
 
-                    echo "Verifying Helm chart version ${CHART_VERSION}."
+                    if [[ "${{env.IS_PR}}" == "true" ]]
+                    then
+                        REGISTRY="ghcr.io/${{github.repository_owner}}/charts-pr/${{inputs.pr_number}}"
+                    else
+                        REGISTRY="${{inputs.registry}}"
+                    fi
 
-                    if ! helm show readme "oci://${{inputs.registry}}/${{inputs.chart_name}}:${CHART_VERSION}" >/dev/null 2>&1
+                    echo "Verifying Helm chart version ${CHART_VERSION} in ${REGISTRY}."
+
+                    if [[ "${{env.IS_PR}}" == "true" ]]
+                    then
+                        echo "Running in PR mode. Overwriting version ${CHART_VERSION} in GHCR if it exists."
+
+                        echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
+
+                        echo "registry=${REGISTRY}" >> ${GITHUB_OUTPUT}
+
+                        echo "should_publish=true" >> ${GITHUB_OUTPUT}
+                    elif ! helm show readme "oci://${REGISTRY}/${{inputs.chart_name}}:${CHART_VERSION}" >/dev/null 2>&1
                     then
                         echo "Verified Helm Chart version ${CHART_VERSION}."
 
                         echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
+
+                        echo "registry=${REGISTRY}" >> ${GITHUB_OUTPUT}
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
@@ -30,28 +70,35 @@ jobs:
                     fi
                 working-directory: ${{inputs.working_directory}}
             -   id: auth
-                if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                if: ${{env.IS_PR == 'false' && steps.verify_version.outputs.should_publish == 'true'}}
                 name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v2
                 with:
                     service_account: ${{secrets.GCP_SA}}
                     token_format: access_token
                     workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
-            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+            -   if: ${{env.IS_PR == 'false' && steps.verify_version.outputs.should_publish == 'true'}}
                 name: Log in to GAR
                 run: |
                     echo "${{steps.auth.outputs.access_token}}" \
                         | helm registry login "${{inputs.registry}}" \
                             --password-stdin \
                             --username oauth2accesstoken
-            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
-                name: Package and push Helm chart
+            -   if: ${{env.IS_PR == 'true' && steps.verify_version.outputs.should_publish == 'true'}}
+                name: Log in to GHCR
                 run: |
-                    set -e
+                    echo "${{github.token}}" \
+                        | helm registry login ghcr.io \
+                            --password-stdin \
+                            --username "${{github.actor}}"
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Package Helm chart
+                run: |
+                    set -o errexit
 
                     DIST_DIR="${{runner.temp}}/${{inputs.chart_name}}/dist"
 
-                    rm -fr "${DIST_DIR}"
+                    rm --force --recursive "${DIST_DIR}"
 
                     mkdir --parents "${DIST_DIR}"
 
@@ -60,12 +107,19 @@ jobs:
                     helm package . \
                         --destination "${DIST_DIR}" \
                         --version "${CHART_VERSION}"
+                working-directory: ${{inputs.working_directory}}
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Publish Helm chart
+                run: |
+                    set -o errexit
+
+                    DIST_DIR="${{runner.temp}}/${{inputs.chart_name}}/dist"
 
                     for file_name in "${DIST_DIR}"/*.tgz
                     do
-                        echo "Pushing ${file_name}."
+                        echo "Pushing ${file_name} to oci://${{steps.verify_version.outputs.registry}}."
 
-                        helm push "${file_name}" "oci://${{inputs.registry}}"
+                        helm push "${file_name}" "oci://${{steps.verify_version.outputs.registry}}"
                     done
                 working-directory: ${{inputs.working_directory}}
 on:
@@ -74,9 +128,17 @@ on:
             chart_name:
                 required: true
                 type: string
+            pr_number:
+                default: ""
+                required: false
+                type: string
             registry:
                 required: true
                 type: string
             working_directory:
                 required: true
                 type: string
+permissions:
+    contents: write
+    id-token: write
+    packages: write

@@ -34,8 +34,8 @@ export class EditObjectDetailsPage {
 		});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.showWidgetToggle = page.getByRole('switch', {
-					name: 'Show Widget in Page Builder',
-				})
+			name: 'Show Widget in Page Builder',
+		});
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}
 

@@ -1295,9 +1295,7 @@ test.describe('Manage object definitions through a Page', () => {
 			await test.step('Create a new blank display page template', async () => {
 				await displayPageTemplatesPage.goto();
 
-				await page
-					.getByRole('button', {name: 'New'})
-					.click();
+				await page.getByRole('button', {name: 'New'}).click();
 
 				await page
 					.getByRole('menuitem', {name: 'Display Page Template'})
@@ -1317,8 +1315,7 @@ test.describe('Manage object definitions through a Page', () => {
 
 				expect(
 					optionTexts.some(
-						(text) =>
-							text === objectDefinition.label['en_US']
+						(text) => text === objectDefinition.label['en_US']
 					)
 				).toBe(false);
 			});

@@ -49,7 +49,7 @@ test('Workflow task view page is accessible', async ({
 		'Blogs Entry'
 	);
 
-	const site = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
+	const site = await apiHelpers.headlessAdminSite.getSite('L_GUEST');
 
 	const blogPost = await apiHelpers.headlessDelivery.postBlog(site.id);
 

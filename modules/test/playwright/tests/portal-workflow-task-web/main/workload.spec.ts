@@ -86,7 +86,7 @@ test('view workload distribution for all assignees', async ({
 		.getRoles('"Portal Content Reviewer"')
 		.then(({items}) => items[0]);
 
-	const site = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
+	const site = await apiHelpers.headlessAdminSite.getSite('L_GUEST');
 
 	for (let index = 0; index < NUMBER_OF_USERS_AND_TASKS; index++) {
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();

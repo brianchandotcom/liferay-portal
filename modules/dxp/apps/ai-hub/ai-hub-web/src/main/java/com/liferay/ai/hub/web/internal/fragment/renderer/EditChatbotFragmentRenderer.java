@@ -7,10 +7,12 @@ package com.liferay.ai.hub.web.internal.fragment.renderer;
 
 import com.liferay.ai.hub.web.internal.display.context.EditChatbotDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.item.selector.ItemSelector;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author José Abelenda
@@ -28,12 +30,15 @@ public class EditChatbotFragmentRenderer
 	protected EditChatbotDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new EditChatbotDisplayContext(httpServletRequest);
+		return new EditChatbotDisplayContext(httpServletRequest, _itemSelector);
 	}
 
 	@Override
 	protected String getJSPPath() {
 		return "/edit_chatbot.jsp";
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

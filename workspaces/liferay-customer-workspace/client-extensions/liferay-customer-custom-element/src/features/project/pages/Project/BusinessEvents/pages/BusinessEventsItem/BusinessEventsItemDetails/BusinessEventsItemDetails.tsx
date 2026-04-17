@@ -11,7 +11,6 @@ import NavigationBar from '@clayui/navigation-bar';
 import {useCallback, useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
@@ -28,6 +27,7 @@ import useAccountsTickets from '../../../hooks/useAccountsTickets';
 import usecanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
+import parseAssociatedTickets from '../../../utils/parseAssociatedTickets';
 
 const BusinessEventsItemDetails = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();
@@ -37,8 +37,6 @@ const BusinessEventsItemDetails = () => {
 		fetchBusinessEvent,
 		loading: loadingBusinessEvents,
 	} = useGetBusinessEvent(id || '');
-
-	const {client} = useAppPropertiesContext();
 
 	const [modalType, setModalType] = useState('');
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
@@ -124,13 +122,13 @@ const BusinessEventsItemDetails = () => {
 
 	useEffect(() => {
 		if (businessEvent && tickets) {
-			const associatedTickets = JSON.parse(
-				businessEvent.associatedTickets!
+			const associatedTickets = parseAssociatedTickets(
+				businessEvent.associatedTickets
 			);
 
 			setTicketOptions([
 				...(tickets?.filter((ticket) =>
-					associatedTickets.includes(ticket.ticketId)
+					associatedTickets.includes(String(ticket.ticketId))
 				) || []),
 			]);
 		}
@@ -378,7 +376,6 @@ const BusinessEventsItemDetails = () => {
 				<ManageEventModal
 					accountExternalReferenceCode={accountKey || ''}
 					businessEvent={businessEvent}
-					client={client}
 					closeFunction={handleCloseModal}
 					modalType={modalType}
 					observer={observer}

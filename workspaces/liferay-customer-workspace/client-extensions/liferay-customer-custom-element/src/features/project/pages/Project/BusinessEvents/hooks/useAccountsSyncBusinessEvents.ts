@@ -5,7 +5,7 @@
 
 import * as OAuth2 from '@liferay/oauth2-provider-web/client';
 import {useMemo} from 'react';
-import {getBusinessEvents} from '~/services/liferay/api';
+import {getBusinessEventsLegacy} from '~/services/liferay/api';
 import {IBusinessEvent} from '~/utils/types';
 
 export default function useAccountsSyncBusinessEvents(
@@ -32,7 +32,7 @@ export default function useAccountsSyncBusinessEvents(
 	]);
 
 	const updateAccountBusinessEvents = async () => {
-		const businessEventsResponse = await getBusinessEvents(
+		const businessEventsResponse = await getBusinessEventsLegacy(
 			encodeURI(filterQuery)
 		);
 

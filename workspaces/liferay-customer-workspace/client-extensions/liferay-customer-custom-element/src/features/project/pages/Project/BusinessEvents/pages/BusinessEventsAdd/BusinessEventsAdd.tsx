@@ -11,10 +11,10 @@ import {useNavigate} from 'react-router-dom';
 import {Button, Input, Select} from '~/components';
 import DatePicker from '~/components/DatePicker/DatePicker';
 import TimePicker from '~/components/TimePicker/TimePicker';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useAppContext} from '~/features/project/context';
 import {Liferay} from '~/services/liferay';
-import {addBusinessEvent} from '~/services/liferay/graphql/queries';
+import {createBusinessEventLegacy} from '~/services/liferay/api';
+import {createBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import getInitialEvent from '~/utils/getInitialEvent';
 import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
@@ -29,6 +29,7 @@ import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesLi
 import useGetLiferayVersions from '../../hooks/useGetLiferayVersions';
 import useGetUTCTimeZonesList from '../../hooks/useGetUTCTimeZonesList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
+import useIsJiraBackend from '../../hooks/useIsJiraBackend';
 import {containsOption} from '../../utils/containsOption';
 import {getFormattedGoLiveDateTime} from '../../utils/getFormattedGoLiveDate';
 import useIsSaasOnly from '../../utils/useIsSaasOnly';
@@ -54,11 +55,17 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	touched,
 	values,
 }) => {
-	const {client} = useAppPropertiesContext();
-
 	const [{project, subscriptionGroups}] = useAppContext();
+	const isJiraBackend = useIsJiraBackend();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
+
+	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
+		project?.accountKey || '',
+		businessEvent,
+		false,
+		false
+	);
 
 	const {businessEventTypesList, loading: loadingBusinessEventTypesList} =
 		useGetBusinessEventTypesList();
@@ -114,17 +121,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		start: now.getFullYear(),
 	};
 
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		project?.accountKey || '',
-		businessEvent,
-		false,
-		false
-	);
-
-	const {
-		dxpMinorVersionsAndPortalMajorVersions,
-		loading: loadingLiferayVersions,
-	} = useGetLiferayVersions();
+	const {loading: loadingLiferayVersions, productVersions} =
+		useGetLiferayVersions();
 
 	const [newLiferayVersionOptions, setNewLiferayVersionOptions] = useState<
 		IOption[]
@@ -184,28 +182,31 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const handleSubmit = async () => {
 		const updatedBusinessEvent = {
 			...businessEvent,
-			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
-			newLiferayVersion: businessEvent.newLiferayVersion?.key,
-			timeZone: businessEvent.timeZone?.key,
+			currentLiferayVersion: isJiraBackend
+				? businessEvent.currentLiferayVersion?.name
+				: businessEvent.currentLiferayVersion?.key,
+			newLiferayVersion: isJiraBackend
+				? businessEvent.newLiferayVersion?.name
+				: businessEvent.newLiferayVersion?.key,
+			timeZone: isJiraBackend
+				? businessEvent.timeZone?.name
+				: businessEvent.timeZone?.key,
 		};
 
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateAccountBusinessEvents();
+			if (isJiraBackend) {
+				await createBusinessEvent(
+					project?.accountKey || '',
+					updatedBusinessEvent
+				);
+			}
+			else {
+				await updateAccountBusinessEvents();
 
-			await client.mutate<{
-				addBusinessEvent: IBusinessEvent;
-			}>({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
-				},
-				mutation: addBusinessEvent,
-				variables: {
-					businessEvent: updatedBusinessEvent,
-				},
-			});
+				await createBusinessEventLegacy(updatedBusinessEvent);
+			}
 
 			navigate(`/${project?.accountKey}/business-events`);
 
@@ -311,30 +312,28 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	]);
 
 	useEffect(() => {
-		if (dxpMinorVersionsAndPortalMajorVersions?.length) {
+		if (productVersions?.length) {
 			setNewLiferayVersionOptions([
-				...dxpMinorVersionsAndPortalMajorVersions.filter(
-					(version, index, versions) => {
-						if (businessEvent.currentLiferayVersion?.key) {
-							return (
-								index <
-								versions.findIndex((version) => {
-									return (
-										version.value ===
-										businessEvent.currentLiferayVersion?.key
-									);
-								})
-							);
-						}
-
-						return true;
+				...productVersions.filter((version, index, versions) => {
+					if (businessEvent.currentLiferayVersion?.key) {
+						return (
+							index <
+							versions.findIndex((version) => {
+								return (
+									version.value ===
+									businessEvent.currentLiferayVersion?.key
+								);
+							})
+						);
 					}
-				),
+
+					return true;
+				}),
 			]);
 		}
 	}, [
 		businessEvent.currentLiferayVersion?.key,
-		dxpMinorVersionsAndPortalMajorVersions,
+		productVersions,
 		emptyOption,
 	]);
 
@@ -457,12 +456,12 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 											handleOptionChange(
 												'businessEvent.currentLiferayVersion.name',
 												value,
-												dxpMinorVersionsAndPortalMajorVersions
+												productVersions
 											)
 										}
 										options={[
 											emptyOption,
-											...dxpMinorVersionsAndPortalMajorVersions,
+											...productVersions,
 										]}
 										required
 									/>

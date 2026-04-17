@@ -3,34 +3,59 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
-import {LIST_TYPES} from '~/features/project/utils/constants';
-import SearchBuilder from '~/lib/SearchBuilder';
-import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-definitions';
+import {useEffect, useState} from 'react';
+import {JSM_FIELDS, LIST_TYPES} from '~/features/project/utils/constants';
+import {getListTypeEntriesLegacy} from '~/services/liferay/api';
+import {getFieldOptions} from '~/services/liferay/rest/jira/Jira';
 import {IOption} from '~/utils/types';
 
-const listTypeBusinessEventTypes = LIST_TYPES.businessEventTypes;
+import useIsJiraBackend from './useIsJiraBackend';
 
 export default function useGetBusinessEventTypesList(): {
 	businessEventTypesList: IOption[];
+	error: boolean;
 	loading: boolean;
 } {
-	const {data, loading} = useGetListTypeDefinitions({
-		filter: SearchBuilder.eq('name', listTypeBusinessEventTypes),
-	});
+	const [businessEventTypesList, setBusinessEventTypesList] = useState<
+		IOption[]
+	>([]);
+	const [error, setError] = useState(false);
+	const [loading, setLoading] = useState(true);
 
-	const businessEventTypesList = useMemo(
-		() =>
-			(
-				(data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
-					key: string;
-					name: string;
-				}[]
-			)
-				.map(({key, name}) => ({label: name, value: key}))
-				.sort((a, b) => a.label.localeCompare(b.label)),
-		[data?.listTypeDefinitions?.items]
-	);
+	const isJiraBackend = useIsJiraBackend();
 
-	return {businessEventTypesList, loading};
+	useEffect(() => {
+		const fetchListTypeEntries = async () => {
+			try {
+				const response = isJiraBackend
+					? await getFieldOptions(JSM_FIELDS.eventType)
+					: await getListTypeEntriesLegacy(
+							LIST_TYPES.businessEventTypes
+						);
+
+				setBusinessEventTypesList(
+					response
+						.map((entry: any) => ({
+							label: entry.name,
+							value: entry.key,
+						}))
+						.sort((a: any, b: any) =>
+							a.label.localeCompare(b.label)
+						)
+				);
+			}
+			catch (error) {
+				console.error('Error fetching business event types:', error);
+
+				setError(true);
+			}
+			finally {
+				setLoading(false);
+			}
+		};
+
+		fetchListTypeEntries();
+	}, [isJiraBackend]);
+
+	return {businessEventTypesList, error, loading};
 }

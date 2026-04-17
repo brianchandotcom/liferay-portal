@@ -3,25 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useApolloClient} from '@apollo/client';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useState} from 'react';
 import {Navigate, Outlet, useParams} from 'react-router-dom';
+import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
-import {getBusinessEvent} from '~/services/liferay/graphql/queries';
+import {getBusinessEventByIdLegacy} from '~/services/liferay/api';
+import {getBusinessEventById} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
-import {IBusinessEvent, IProject} from '~/utils/types';
 
 interface BusinessEventOutletProps {
-	project: IProject | null;
 	skip: boolean;
 }
 
-const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({
-	project,
-	skip,
-}) => {
-	const client = useApolloClient();
+const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({skip}) => {
+	const {featureFlags} = useAppPropertiesContext();
+	const isJiraBackend = featureFlags.includes('LRSD-11821');
 	const {accountKey, id} = useParams();
 	const [isValidBusinessEvent, setIsValidBusinessEvent] = useState<
 		boolean | null
@@ -34,7 +31,7 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({
 				return;
 			}
 
-			if (!id || !project || !project.id) {
+			if (!id || !accountKey) {
 				setIsValidBusinessEvent(false);
 				setIsLoading(false);
 
@@ -42,28 +39,14 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({
 			}
 
 			try {
-				const {data} = await client.query<{
-					businessEvent: IBusinessEvent;
-				}>({
-					context: {
-						type: 'liferay-rest',
-					},
-					query: getBusinessEvent,
-					variables: {
-						businessEventId: id,
-					},
-				});
-
-				if (
-					data?.businessEvent
-						?.r_accountEntryToBusinessEvents_accountEntryId ===
-					project.id
-				) {
-					setIsValidBusinessEvent(true);
+				if (isJiraBackend) {
+					await getBusinessEventById(accountKey, id);
 				}
 				else {
-					setIsValidBusinessEvent(false);
+					await getBusinessEventByIdLegacy(id);
 				}
+
+				setIsValidBusinessEvent(true);
 			}
 			catch (error) {
 				console.error('Error fetching business event:', error);
@@ -81,7 +64,7 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({
 		};
 
 		validateBusinessEvent();
-	}, [client, id, project, skip]);
+	}, [id, accountKey, isJiraBackend, skip]);
 
 	if (isLoading || skip) {
 		return (

@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApolloClient} from '@apollo/client/core/ApolloClient';
 import {ClayInput} from '@clayui/form';
 import {useEffect, useMemo, useState} from 'react';
 import {Badge, Select} from '~/components';
 import DatePicker from '~/components/DatePicker/DatePicker';
 import TimePicker from '~/components/TimePicker/TimePicker';
 import {Liferay} from '~/services/liferay';
-import {patchBusinessEvent} from '~/services/liferay/graphql/queries';
+import {updateBusinessEventLegacy} from '~/services/liferay/api';
+import {updateBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent, IOption} from '~/utils/types';
 
@@ -22,13 +22,13 @@ import {isValidDate} from '~/utils/validations.form';
 
 import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useGetUTCTimeZonesList from '../../../hooks/useGetUTCTimeZonesList';
+import useIsJiraBackend from '../../../hooks/useIsJiraBackend';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
 interface IProps {
 	accountExternalReferenceCode: string;
 	businessEvent: IBusinessEvent;
-	client: ApolloClient<any>;
 	closeFunction?: (value: boolean) => void;
 	errors?: Record<string, any>;
 	modalType: string;
@@ -46,7 +46,6 @@ interface IProps {
 const RecordGoLiveEventPage: React.FC<IProps> = ({
 	accountExternalReferenceCode,
 	businessEvent,
-	client,
 	closeFunction = () => {},
 	errors,
 	modalType,
@@ -59,7 +58,15 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
+	const isJiraBackend = useIsJiraBackend();
 	const [isValidRecordDate, setIsValidRecordDate] = useState<boolean>(false);
+
+	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
+		accountExternalReferenceCode,
+		businessEvent,
+		false,
+		true
+	);
 
 	const emptyOption = useMemo(
 		() => ({
@@ -68,13 +75,6 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 			value: '',
 		}),
 		[]
-	);
-
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		accountExternalReferenceCode,
-		businessEvent,
-		false,
-		true
 	);
 
 	const {utcTimeZonesList} = useGetUTCTimeZonesList();
@@ -127,13 +127,17 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 	const handleSubmit = async () => {
 		const businessEventId = businessEvent.id;
 
+		if (!businessEventId) {
+			return;
+		}
+
 		const updatedBusinessEvent = {...values?.businessEvent};
 		const formattedBusinessEvent = {
 			actualGoLiveDateTime: getFormattedGoLiveDateTime(
 				updatedBusinessEvent.actualGoLiveDate,
 				updatedBusinessEvent.actualGoLiveTime
 			),
-			eventStatus: 'completed',
+			eventStatus: {key: 'completed'},
 			lastComment: updatedBusinessEvent?.lastComment,
 			r_accountEntryToBusinessEvents_accountEntryId:
 				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
@@ -144,21 +148,21 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateAccountBusinessEvents();
-
-			await client.mutate<{
-				patchBusinessEvent: IBusinessEvent;
-			}>({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
-				},
-				mutation: patchBusinessEvent,
-				variables: {
-					businessEvent: formattedBusinessEvent,
+			if (isJiraBackend) {
+				await updateBusinessEvent(
+					accountExternalReferenceCode,
 					businessEventId,
-				},
-			});
+					formattedBusinessEvent
+				);
+			}
+			else {
+				await updateAccountBusinessEvents();
+
+				await updateBusinessEventLegacy(
+					businessEventId,
+					formattedBusinessEvent
+				);
+			}
 
 			closeFunction(false);
 
@@ -171,7 +175,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
 			});
-			console.error('Error canceling business event', error);
+			console.error('Error recording go-live', error);
 		}
 	};
 
@@ -255,7 +259,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 						onChange={handleInputChange}
 						required
 						type="text"
-						value={values?.lastComment}
+						value={values.businessEvent?.lastComment}
 					/>
 
 					<Badge alertType="info" badgeClassName="mt-3">

@@ -15,13 +15,13 @@ import {FieldArray, Formik} from 'formik';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Button, DatePicker, Input, Select, TimePicker} from '~/components';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useAppContext} from '~/features/project/context';
 import useGetBusinessEventTypesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetBusinessEventTypesList';
 import useGetLiferayVersions from '~/features/project/pages/Project/BusinessEvents/hooks/useGetLiferayVersions';
 import useGetUTCTimeZonesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetUTCTimeZonesList';
 import {Liferay} from '~/services/liferay';
-import {patchBusinessEvent} from '~/services/liferay/graphql/queries';
+import {updateBusinessEventLegacy} from '~/services/liferay/api';
+import {updateBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
 import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
@@ -33,8 +33,10 @@ import useAccountsTickets from '../../../hooks/useAccountsTickets';
 import useCanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
+import useIsJiraBackend from '../../../hooks/useIsJiraBackend';
 import {containsOption} from '../../../utils/containsOption';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
+import parseAssociatedTickets from '../../../utils/parseAssociatedTickets';
 import useIsSaasOnly from '../../../utils/useIsSaasOnly';
 import BusinessEventsConfirmationPage from './components/BusinessEventsConfirmationPage';
 
@@ -59,11 +61,17 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	setFieldValue,
 	values,
 }) => {
-	const {client} = useAppPropertiesContext();
-
 	const [{project, subscriptionGroups}] = useAppContext();
+	const isJiraBackend = useIsJiraBackend();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
+
+	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
+		project?.accountKey || '',
+		businessEvent,
+		true,
+		false
+	);
 	const [reason, setReason] = useState('');
 
 	const {businessEventTypesList, loading: loadingBusinessEventTypesList} =
@@ -126,22 +134,13 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		onClose: () => setIsModalOpen(false),
 	});
 
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		project?.accountKey || '',
-		businessEvent,
-		true,
-		false
-	);
-
 	const {
 		canViewTickets: canViewTickets,
 		loading: loadingJiraAccountChecking,
 	} = useCanViewTickets(project?.accountKey || '');
 
-	const {
-		dxpMinorVersionsAndPortalMajorVersions,
-		loading: loadingLiferayVersions,
-	} = useGetLiferayVersions();
+	const {loading: loadingLiferayVersions, productVersions} =
+		useGetLiferayVersions();
 
 	const [newLiferayVersionOptions, setNewLiferayVersionOptions] = useState<
 		IOption[]
@@ -201,42 +200,66 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	}, []);
 
 	const handleSubmit = async () => {
-		const formattedBusinessEvent = {
-			associatedTickets: businessEvent.associatedTickets,
-			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
-			description: businessEvent.description,
-			eventStatus:
-				new Date(businessEvent.targetGoLiveDateTime!) >= now
-					? 'open'
-					: originalBusinessEvent.eventStatus?.key,
-			eventType: businessEvent.eventType?.key,
-			lastComment: reason,
-			name: businessEvent?.name,
-			newLiferayVersion: businessEvent.newLiferayVersion?.key,
-			r_accountEntryToBusinessEvents_accountEntryId:
-				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-			targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
-			timeZone: businessEvent.timeZone?.key,
-		};
+		const formattedBusinessEvent = isJiraBackend
+			? {
+					associatedTickets: businessEvent.associatedTickets,
+					currentLiferayVersion:
+						businessEvent.currentLiferayVersion?.name,
+					description: businessEvent.description,
+					eventStatus:
+						new Date(businessEvent.targetGoLiveDateTime!) >= now
+							? {key: 'open'}
+							: {key: originalBusinessEvent.eventStatus?.key},
+					eventType: businessEvent.eventType,
+					lastComment: reason,
+					name: businessEvent?.name,
+					newLiferayVersion: businessEvent.newLiferayVersion?.name,
+					r_accountEntryToBusinessEvents_accountEntryId:
+						businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
+					targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
+					timeZone: businessEvent.timeZone?.name,
+				}
+			: {
+					associatedTickets: businessEvent.associatedTickets,
+					currentLiferayVersion:
+						businessEvent.currentLiferayVersion?.key,
+					description: businessEvent.description,
+					eventStatus:
+						new Date(businessEvent.targetGoLiveDateTime!) >= now
+							? {key: 'open'}
+							: {key: originalBusinessEvent.eventStatus?.key},
+					eventType: businessEvent.eventType,
+					lastComment: reason,
+					name: businessEvent?.name,
+					newLiferayVersion: businessEvent.newLiferayVersion?.key,
+					r_accountEntryToBusinessEvents_accountEntryId:
+						businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
+					targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
+					timeZone: businessEvent.timeZone?.key,
+				};
 
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateAccountBusinessEvents();
+			if (!businessEvent.id) {
+				throw new Error('Business event ID is missing');
+			}
 
-			await client.mutate<{
-				patchBusinessEvent: IBusinessEvent;
-			}>({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
-				},
-				mutation: patchBusinessEvent,
-				variables: {
-					businessEvent: formattedBusinessEvent,
-					businessEventId: businessEvent.id,
-				},
-			});
+			if (isJiraBackend) {
+				await updateBusinessEvent(
+					project?.accountKey || '',
+					businessEvent.id,
+					formattedBusinessEvent
+				);
+			}
+			else {
+				await updateAccountBusinessEvents();
+
+				await updateBusinessEventLegacy(
+					businessEvent.id!,
+					formattedBusinessEvent
+				);
+			}
 
 			navigate(
 				`/${project?.accountKey}/business-events/${businessEvent.id}`
@@ -359,42 +382,40 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	]);
 
 	useEffect(() => {
-		if (dxpMinorVersionsAndPortalMajorVersions?.length) {
+		if (productVersions?.length) {
 			setNewLiferayVersionOptions([
-				...dxpMinorVersionsAndPortalMajorVersions.filter(
-					(version, index, versions) => {
-						if (businessEvent.currentLiferayVersion?.key) {
-							return (
-								index <
-								versions.findIndex((version) => {
-									return (
-										version.value ===
-										businessEvent.currentLiferayVersion?.key
-									);
-								})
-							);
-						}
-
-						return true;
+				...productVersions.filter((version, index, versions) => {
+					if (businessEvent.currentLiferayVersion?.key) {
+						return (
+							index <
+							versions.findIndex((version) => {
+								return (
+									version.value ===
+									businessEvent.currentLiferayVersion?.key
+								);
+							})
+						);
 					}
-				),
+
+					return true;
+				}),
 			]);
 		}
 	}, [
 		businessEvent.currentLiferayVersion?.key,
-		dxpMinorVersionsAndPortalMajorVersions,
+		productVersions,
 		emptyOption,
 	]);
 
 	useEffect(() => {
 		if (originalBusinessEvent && tickets) {
-			const associatedTickets = JSON.parse(
-				originalBusinessEvent.associatedTickets!
+			const associatedTickets = parseAssociatedTickets(
+				originalBusinessEvent.associatedTickets
 			);
 
 			setTicketOptions([
 				...tickets?.map((ticket) =>
-					associatedTickets.includes(ticket.ticketId)
+					associatedTickets.includes(String(ticket.ticketId))
 						? {...ticket, selected: true}
 						: {...ticket, selected: false}
 				),
@@ -402,7 +423,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 			setSelectedTicketOptions([
 				...tickets.filter((ticket) => {
-					return associatedTickets.includes(ticket.ticketId);
+					return associatedTickets.includes(String(ticket.ticketId));
 				}),
 			]);
 
@@ -622,12 +643,12 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 													handleOptionChange(
 														'businessEvent.currentLiferayVersion.name',
 														value,
-														dxpMinorVersionsAndPortalMajorVersions
+														productVersions
 													)
 												}
 												options={[
 													emptyOption,
-													...dxpMinorVersionsAndPortalMajorVersions,
+													...productVersions,
 												]}
 												required
 											/>
@@ -895,13 +916,11 @@ const BusinessEventsItemEdit: React.FC = () => {
 		return <div>{i18n.translate('no-data-found')}</div>;
 	}
 
-	const targetGoLiveTime = businessEvent.targetGoLiveDateTime
-		?.split('T')[1]
-		.substring(0, 5);
+	const targetGoLiveDateTime = businessEvent.targetGoLiveDateTime || '';
+	const [datePart = '', timePart = ''] = targetGoLiveDateTime.split('T');
+	const targetGoLiveTime = timePart ? timePart.substring(0, 5) : '';
 
-	const [year, month, day] = businessEvent
-		.targetGoLiveDateTime!.split('T')[0]
-		.split('-');
+	const [year = '', month = '', day = ''] = datePart.split('-');
 
 	return (
 		<Formik
@@ -913,10 +932,10 @@ const BusinessEventsItemEdit: React.FC = () => {
 					newLiferayVersion: businessEvent.newLiferayVersion || {
 						key: '',
 					},
-					targetGoLiveDate: `${month}-${day}-${year}`,
+					targetGoLiveDate: datePart ? `${month}-${day}-${year}` : '',
 					targetGoLiveTime: {
-						hours: targetGoLiveTime?.split(':')[0],
-						minutes: targetGoLiveTime?.split(':')[1],
+						hours: targetGoLiveTime?.split(':')[0] || '--',
+						minutes: targetGoLiveTime?.split(':')[1] || '--',
 					},
 					timeZone: businessEvent.timeZone || {key: ''},
 				},

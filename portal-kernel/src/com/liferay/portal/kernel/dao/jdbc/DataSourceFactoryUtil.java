@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.dao.jdbc;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
@@ -42,6 +43,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -472,6 +474,39 @@ public class DataSourceFactoryUtil {
 		}
 
 		if (url.startsWith("jdbc:sqlserver://")) {
+			try {
+				Driver driver = DriverManager.getDriver(url);
+
+				int majorVersion = driver.getMajorVersion();
+				int minorVersion = driver.getMinorVersion();
+
+				if ((majorVersion < 12) ||
+					((majorVersion == 12) && (minorVersion < 4))) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"SQL Server driver version ", majorVersion,
+								StringPool.PERIOD, minorVersion,
+								" is too old to fully support ",
+								"useBulkCopyForBatchInsert, update driver ",
+								"version to >= 12.4.0"));
+					}
+
+					return url;
+				}
+			}
+			catch (SQLException sqlException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to determine SQL Server driver version, " +
+							"skipping useBulkCopyForBatchInsert",
+						sqlException);
+				}
+
+				return url;
+			}
+
 			return _rewriteJDBCURL(
 				HashMapBuilder.put(
 					"useBulkCopyForBatchInsert", "true"

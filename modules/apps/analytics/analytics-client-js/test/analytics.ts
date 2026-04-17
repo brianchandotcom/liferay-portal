@@ -318,9 +318,11 @@ describe('Analytics', () => {
 		});
 	});
 
-	describe('getBatchSegmentIds()', () => {
+	describe('getBatchSegmentExternalReferenceCodes()', () => {
 		it('is exposed as an Analytics method', () => {
-			expect(typeof Analytics.getBatchSegmentIds).toBe('function');
+			expect(typeof Analytics.getBatchSegmentExternalReferenceCodes).toBe(
+				'function'
+			);
 		});
 
 		it('gets batch segment ids for the first time', async () => {
@@ -336,7 +338,8 @@ describe('Analytics', () => {
 
 			expect(analyticsBatchSegmentIds).toBeNull();
 
-			const result = await Analytics.getBatchSegmentIds();
+			const result =
+				await Analytics.getBatchSegmentExternalReferenceCodes();
 
 			expect(result).toEqual([1, 2, 3]);
 
@@ -378,7 +381,8 @@ describe('Analytics', () => {
 				},
 			});
 
-			const result = await Analytics.getBatchSegmentIds();
+			const result =
+				await Analytics.getBatchSegmentExternalReferenceCodes();
 
 			expect(result).toEqual([1, 2, 3]);
 
@@ -416,7 +420,8 @@ describe('Analytics', () => {
 				},
 			});
 
-			const result = await Analytics.getBatchSegmentIds();
+			const result =
+				await Analytics.getBatchSegmentExternalReferenceCodes();
 
 			expect(result).toEqual([1, 2]);
 
@@ -435,9 +440,11 @@ describe('Analytics', () => {
 		});
 	});
 
-	describe('getRealTimeSegmentIds()', () => {
+	describe('getRealTimeSegmentExternalReferenceCodes()', () => {
 		it('is exposed as an Analytics method', () => {
-			expect(typeof Analytics.getRealTimeSegmentIds).toBe('function');
+			expect(
+				typeof Analytics.getRealTimeSegmentExternalReferenceCodes
+			).toBe('function');
 		});
 
 		it('gets real time segment ids and never caches data', async () => {
@@ -447,7 +454,8 @@ describe('Analytics', () => {
 
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			const result1 = await Analytics.getRealTimeSegmentIds();
+			const result1 =
+				await Analytics.getRealTimeSegmentExternalReferenceCodes();
 
 			expect(result1).toEqual([1, 2, 3]);
 
@@ -457,7 +465,8 @@ describe('Analytics', () => {
 				Promise.resolve([4, 5, 6])
 			);
 
-			const result2 = await Analytics.getRealTimeSegmentIds();
+			const result2 =
+				await Analytics.getRealTimeSegmentExternalReferenceCodes();
 
 			expect(result2).toEqual([4, 5, 6]);
 		});

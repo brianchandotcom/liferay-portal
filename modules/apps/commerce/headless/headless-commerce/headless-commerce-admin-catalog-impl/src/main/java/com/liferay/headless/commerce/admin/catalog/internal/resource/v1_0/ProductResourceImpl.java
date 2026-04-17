@@ -906,6 +906,13 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	private ProductShippingConfiguration _getProductShippingConfiguration(
 		Product product) {
 
+		ProductConfiguration productConfiguration =
+			product.getProductConfiguration();
+
+		if (productConfiguration != null) {
+			return _getProductShippingConfiguration(productConfiguration);
+		}
+
 		ProductShippingConfiguration productShippingConfiguration =
 			product.getShippingConfiguration();
 
@@ -967,6 +974,13 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	private ProductTaxConfiguration _getProductTaxConfiguration(
 		Product product) {
+
+		ProductConfiguration productConfiguration =
+			product.getProductConfiguration();
+
+		if (productConfiguration != null) {
+			return _getProductTaxConfiguration(productConfiguration);
+		}
 
 		ProductTaxConfiguration productTaxConfiguration =
 			product.getTaxConfiguration();

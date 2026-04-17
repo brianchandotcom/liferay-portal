@@ -5,9 +5,20 @@
 
 package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.headless.common.spi.util.GroupUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -18,4 +29,74 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = FragmentSetResource.class
 )
 public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
+
+	@Override
+	public FragmentSet getSiteFragmentSet(
+			String siteExternalReferenceCode,
+			String fragmentSetExternalReferenceCode)
+		throws Exception {
+
+		return _toFragmentSet(
+			_fragmentCollectionService.
+				getFragmentCollectionByExternalReferenceCode(
+					fragmentSetExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
+	}
+
+	@Override
+	public FragmentSet postSiteFragmentSet(
+			String siteExternalReferenceCode, FragmentSet fragmentSet)
+		throws Exception {
+
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		return _toFragmentSet(
+			_fragmentCollectionService.addFragmentCollection(
+				fragmentSet.getExternalReferenceCode(), groupId,
+				fragmentSet.getKey(), fragmentSet.getName(),
+				fragmentSet.getDescription(),
+				GetterUtil.getBoolean(fragmentSet.getMarketplace()),
+				_getServiceContext(groupId, fragmentSet)));
+	}
+
+	private ServiceContext _getServiceContext(
+		long groupId, FragmentSet fragmentSet) {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, null
+		).build();
+
+		serviceContext.setCreateDate(fragmentSet.getDateCreated());
+		serviceContext.setModifiedDate(fragmentSet.getDateModified());
+
+		return serviceContext;
+	}
+
+	private FragmentSet _toFragmentSet(FragmentCollection fragmentCollection)
+		throws Exception {
+
+		return _fragmentSetDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				false, null, _dtoConverterRegistry, contextHttpServletRequest,
+				fragmentCollection.getFragmentCollectionId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			fragmentCollection);
+	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private FragmentCollectionService _fragmentCollectionService;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.fragment.internal.dto.v1_0.converter.FragmentSetDTOConverter)"
+	)
+	private DTOConverter<FragmentCollection, FragmentSet>
+		_fragmentSetDTOConverter;
+
 }

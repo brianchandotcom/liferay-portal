@@ -22,14 +22,14 @@ metadata:
         projectId: {{ .Values.projectId }}
     name: backup-cleanup-rolebinding
     namespace: {{ .Release.Namespace }}
-subjects:
-    -   kind: ServiceAccount
-        name: {{ .Values.backup.cleanup.serviceAccountName }}
-        namespace: {{ .Release.Namespace }}
 roleRef:
     apiGroup: rbac.authorization.k8s.io
     kind: Role
     name: backup-cleanup-role
+subjects:
+    -   kind: ServiceAccount
+        name: {{ .Values.backup.cleanup.serviceAccountName }}
+        namespace: {{ .Release.Namespace }}
 ---
 apiVersion: v1
 kind: ServiceAccount

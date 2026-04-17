@@ -120,7 +120,7 @@ public class UpdateLanguageActionTest {
 	}
 
 	@Test
-	@TestInfo("LPD-73762")
+	@TestInfo("LPD-86415")
 	public void testGetRedirect() throws Exception {
 		_testGetRedirectWithControlPanelURL(false);
 		_testGetRedirectWithControlPanelURL(true);

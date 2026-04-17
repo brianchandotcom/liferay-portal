@@ -18,6 +18,8 @@ Import-Package:\
 	\
 	!software.amazon.awssdk.*,\
 	\
+	com.liferay.portal.configuration.module.configuration;version="[0.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.cluster;version="[0.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.exception;version="[0.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.json;version="[0.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.model;version="[0.0.0,9999.0.0)",\

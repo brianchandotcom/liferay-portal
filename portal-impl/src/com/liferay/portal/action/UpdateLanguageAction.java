@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Action;
@@ -192,28 +191,50 @@ public class UpdateLanguageAction implements Action {
 			layoutURL = layoutURL.substring(0, friendlyURLSeparatorIndex);
 		}
 
+		Locale currentLocale = themeDisplay.getLocale();
+
 		String mappingPart = StringPool.BLANK;
 
-		List<FriendlyURLMapper> friendlyURLMappers =
-			PortletLocalServiceUtil.getFriendlyURLMappers();
+		String currentLayoutFriendlyURL = layout.getFriendlyURL(currentLocale);
 
-		for (FriendlyURLMapper friendlyURLMapper : friendlyURLMappers) {
-			if (friendlyURLMapper.isCheckMappingWithPrefix()) {
-				continue;
-			}
+		int currentLayoutFriendlyURLIndex = -1;
 
-			String mappingPath =
-				StringPool.SLASH + friendlyURLMapper.getMapping();
-
-			if (StringUtil.endsWith(layoutURL, mappingPath) ||
-				layoutURL.contains(mappingPath + StringPool.SLASH)) {
-
-				mappingPart = layoutURL.substring(
-					layoutURL.indexOf(mappingPath));
-			}
+		if (Validator.isNotNull(currentLayoutFriendlyURL)) {
+			currentLayoutFriendlyURLIndex = layoutURL.indexOf(
+				currentLayoutFriendlyURL);
 		}
 
-		Locale currentLocale = themeDisplay.getLocale();
+		if (currentLayoutFriendlyURLIndex != -1) {
+			int fromIndex =
+				currentLayoutFriendlyURLIndex +
+					currentLayoutFriendlyURL.length();
+
+			List<FriendlyURLMapper> friendlyURLMappers =
+				PortletLocalServiceUtil.getFriendlyURLMappers();
+
+			for (FriendlyURLMapper friendlyURLMapper : friendlyURLMappers) {
+				if (friendlyURLMapper.isCheckMappingWithPrefix()) {
+					continue;
+				}
+
+				String mappingPath =
+					StringPool.SLASH + friendlyURLMapper.getMapping();
+
+				int mappingIndex = layoutURL.indexOf(mappingPath, fromIndex);
+
+				if (mappingIndex == -1) {
+					continue;
+				}
+
+				int mappingEndIndex = mappingIndex + mappingPath.length();
+
+				if ((mappingEndIndex == layoutURL.length()) ||
+					(layoutURL.charAt(mappingEndIndex) == CharPool.SLASH)) {
+
+					mappingPart = layoutURL.substring(mappingIndex);
+				}
+			}
+		}
 
 		if (themeDisplay.isI18n()) {
 			String i18nPath = themeDisplay.getI18nPath();

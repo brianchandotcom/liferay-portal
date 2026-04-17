@@ -1,3 +1,45 @@
+components:
+    schemas:
+        FragmentSet:
+            description:
+                A fragment set (also known as fragment collection).
+            properties:
+                creator:
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
+                    description:
+                        The fragment set's creator.
+                    readOnly: true
+                dateCreated:
+                    description:
+                        The fragment set's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    description:
+                        The last time the fragment set changed.
+                    format: date-time
+                    type: string
+                description:
+                    description:
+                        The fragment set's description.
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The fragment set's external reference code.
+                    type: string
+                key:
+                    description:
+                        The fragment set's key.
+                    type: string
+                marketplace:
+                    description:
+                        A flag that indicates whether the fragment set is from the marketplace.
+                    type: boolean
+                name:
+                    description:
+                        The fragment set's name.
+                    type: string
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

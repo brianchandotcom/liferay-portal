@@ -32,25 +32,19 @@ public class GroovyScriptingValidator implements ScriptingValidator {
 	@Override
 	public void validate(String script) throws ScriptingException {
 		try {
-			GroovyShell groovyShell = new GroovyShell(getClassLoader());
+			Thread currentThread = Thread.currentThread();
+
+			GroovyShell groovyShell = new GroovyShell(
+				AggregateClassLoader.getAggregateClassLoader(
+					GroovyShell.class.getClassLoader(),
+					getClass().getClassLoader(),
+					currentThread.getContextClassLoader()));
 
 			groovyShell.parse(script);
 		}
 		catch (Exception exception) {
 			throw new ScriptingException(exception);
 		}
-	}
-
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		return AggregateClassLoader.getAggregateClassLoader(
-			GroovyShell.class.getClassLoader(), classLoader,
-			currentThread.getContextClassLoader());
 	}
 
 }

@@ -69,7 +69,13 @@ public class GroovyScriptingExecutor implements ScriptingExecutor {
 		}
 
 		try {
-			GroovyShell groovyShell = new GroovyShell(getClassLoader());
+			Thread currentThread = Thread.currentThread();
+
+			GroovyShell groovyShell = new GroovyShell(
+				AggregateClassLoader.getAggregateClassLoader(
+					GroovyShell.class.getClassLoader(),
+					getClass().getClassLoader(),
+					currentThread.getContextClassLoader()));
 
 			Script compiledScript = groovyShell.parse(script);
 
@@ -114,18 +120,6 @@ public class GroovyScriptingExecutor implements ScriptingExecutor {
 	@Override
 	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
 		return new GroovyScriptingExecutor();
-	}
-
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		return AggregateClassLoader.getAggregateClassLoader(
-			GroovyShell.class.getClassLoader(), classLoader,
-			currentThread.getContextClassLoader());
 	}
 
 }

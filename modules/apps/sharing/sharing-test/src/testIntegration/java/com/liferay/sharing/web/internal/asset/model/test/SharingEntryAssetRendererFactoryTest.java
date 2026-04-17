@@ -61,7 +61,7 @@ public class SharingEntryAssetRendererFactoryTest {
 		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, user.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, user.getUserId(),
 			_classNameLocalService.getClassNameId(Group.class.getName()),
 			_group.getGroupId(), _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null,

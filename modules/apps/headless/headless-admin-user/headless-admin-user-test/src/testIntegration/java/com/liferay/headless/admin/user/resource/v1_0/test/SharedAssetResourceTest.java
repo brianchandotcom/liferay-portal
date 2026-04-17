@@ -161,7 +161,7 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			SharedAsset sharedAsset = randomSharedAsset();
 
 			_sharingEntryLocalService.addSharingEntry(
-				sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0,
+				sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0, 0,
 				TestPropsValues.getUserId(),
 				_classNameLocalService.getClassNameId(
 					depotObjectDefinition.getClassName()),
@@ -230,7 +230,7 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			sharedAsset,
 			_sharingEntryLocalService.addSharingEntry(
 				sharedAsset.getExternalReferenceCode(),
-				TestPropsValues.getUserId(), 0, _user.getUserId(),
+				TestPropsValues.getUserId(), 0, 0, _user.getUserId(),
 				_classNameLocalService.getClassNameId(
 					ObjectEntryFolder.class.getName()),
 				objectEntryFolder.getObjectEntryFolderId(),
@@ -445,7 +445,7 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		return _toObjectEntrySharedAsset(
 			objectEntry, sharedAsset,
 			_sharingEntryLocalService.addSharingEntry(
-				sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0,
+				sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0, 0,
 				TestPropsValues.getUserId(),
 				_classNameLocalService.getClassNameId(
 					objectDefinition.getClassName()),
@@ -482,7 +482,7 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		SharedAsset sharedAsset = randomSharedAsset();
 
 		_sharingEntryLocalService.addSharingEntry(
-			sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0,
+			sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0, 0,
 			TestPropsValues.getUserId(),
 			_classNameLocalService.getClassNameId(
 				ObjectEntryFolder.class.getName()),

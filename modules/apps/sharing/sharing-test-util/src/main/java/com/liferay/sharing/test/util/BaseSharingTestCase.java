@@ -133,7 +133,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
@@ -171,7 +171,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK1 = (Long)model1.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			classNameId1, classPK1, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			null, serviceContext);
@@ -183,7 +183,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK2 = (Long)model2.getPrimaryKeyObj();
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			classNameId2, classPK2, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			null, serviceContext);
@@ -221,7 +221,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 			long classPK = (long)model.getPrimaryKeyObj();
 
 			_sharingEntryLocalService.addSharingEntry(
-				null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+				null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 				_classNameLocalService.getClassNameId(
 					model.getModelClassName()),
 				classPK, _group.getGroupId(), true,
@@ -252,8 +252,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 				_groupUser.getUserId(), userGroup);
 
 			_sharingEntryLocalService.addSharingEntry(
-				null, TestPropsValues.getUserId(), userGroup.getUserGroupId(),
-				0,
+				null, TestPropsValues.getUserId(), 0,
+				userGroup.getUserGroupId(), 0,
 				_classNameLocalService.getClassNameId(
 					model.getModelClassName()),
 				classPK, _group.getGroupId(), true,
@@ -336,7 +336,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
@@ -372,7 +372,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(
@@ -403,7 +403,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(
@@ -603,7 +603,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
@@ -633,7 +633,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
@@ -772,7 +772,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
@@ -801,7 +801,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);

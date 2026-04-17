@@ -300,7 +300,7 @@ public class SharedAssetDTOConverterTest {
 		throws Exception {
 
 		return _sharingEntryLocalService.addSharingEntry(
-			null, _user.getUserId(), 0, TestPropsValues.getUserId(),
+			null, _user.getUserId(), 0, 0, TestPropsValues.getUserId(),
 			_classNameLocalService.getClassNameId(className), classPK, groupId,
 			true, Arrays.asList(SharingEntryAction.VIEW), null,
 			_serviceContext);

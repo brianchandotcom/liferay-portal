@@ -74,7 +74,7 @@ public class GroovyScriptingExecutor implements ScriptingExecutor {
 			GroovyShell groovyShell = new GroovyShell(
 				AggregateClassLoader.getAggregateClassLoader(
 					GroovyShell.class.getClassLoader(),
-					getClass().getClassLoader(),
+					GroovyScriptingExecutor.class.getClassLoader(),
 					currentThread.getContextClassLoader()));
 
 			Script compiledScript = groovyShell.parse(script);

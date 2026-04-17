@@ -37,7 +37,7 @@ public class GroovyScriptingValidator implements ScriptingValidator {
 			GroovyShell groovyShell = new GroovyShell(
 				AggregateClassLoader.getAggregateClassLoader(
 					GroovyShell.class.getClassLoader(),
-					getClass().getClassLoader(),
+					GroovyScriptingValidator.class.getClassLoader(),
 					currentThread.getContextClassLoader()));
 
 			groovyShell.parse(script);

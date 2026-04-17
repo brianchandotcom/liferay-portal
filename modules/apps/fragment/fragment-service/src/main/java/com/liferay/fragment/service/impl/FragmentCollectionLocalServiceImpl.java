@@ -338,7 +338,8 @@ public class FragmentCollectionLocalServiceImpl
 				groupId, fragmentCollectionKey);
 
 		if (fragmentCollection != null) {
-			throw new DuplicateFragmentCollectionKeyException();
+			throw new DuplicateFragmentCollectionKeyException(
+				fragmentCollectionKey);
 		}
 	}
 

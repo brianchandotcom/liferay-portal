@@ -10,8 +10,10 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.client.problem.Problem;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -77,7 +79,7 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			postFragmentSet.getExternalReferenceCode());
 
 		_assertProblemException(
-			"BAD_REQUEST", "This external reference code is already in use.",
+			"BAD_REQUEST", "this-external-reference-code-is-already-in-use",
 			() -> fragmentSetResource.postSiteFragmentSet(
 				testGroup.getExternalReferenceCode(), duplicateERCFragmentSet));
 
@@ -86,9 +88,10 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		duplicateKeyFragmentSet.setKey(postFragmentSet.getKey());
 
 		_assertProblemException(
-			"CONFLICT", "A fragment set with the same key already exists",
+			"CONFLICT", "a-fragment-set-with-the-key-x-already-exists",
 			() -> fragmentSetResource.postSiteFragmentSet(
-				testGroup.getExternalReferenceCode(), duplicateKeyFragmentSet));
+				testGroup.getExternalReferenceCode(), duplicateKeyFragmentSet),
+			duplicateKeyFragmentSet.getKey());
 	}
 
 	@Override
@@ -153,11 +156,12 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		duplicateKeyFragmentSet.setKey(originalKey);
 
 		_assertProblemException(
-			"CONFLICT", "A fragment set with the same key already exists",
+			"CONFLICT", "a-fragment-set-with-the-key-x-already-exists",
 			() -> fragmentSetResource.putSiteFragmentSet(
 				testGroup.getExternalReferenceCode(),
 				duplicateKeyFragmentSet.getExternalReferenceCode(),
-				duplicateKeyFragmentSet));
+				duplicateKeyFragmentSet),
+			duplicateKeyFragmentSet.getKey());
 	}
 
 	@Override
@@ -196,8 +200,8 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 	}
 
 	private void _assertProblemException(
-			String status, String title,
-			UnsafeRunnable<Exception> unsafeRunnable)
+			String status, String titleKey,
+			UnsafeRunnable<Exception> unsafeRunnable, Object... titleArguments)
 		throws Exception {
 
 		try {
@@ -209,11 +213,17 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals(status, problem.getStatus());
-			Assert.assertEquals(title, problem.getTitle());
+			Assert.assertEquals(
+				_language.format(
+					LocaleUtil.getDefault(), titleKey, titleArguments),
+				problem.getTitle());
 		}
 	}
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private Language _language;
 
 }

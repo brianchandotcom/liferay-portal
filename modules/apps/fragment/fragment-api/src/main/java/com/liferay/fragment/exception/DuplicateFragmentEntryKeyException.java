@@ -15,8 +15,8 @@ public class DuplicateFragmentEntryKeyException extends PortalException {
 	public DuplicateFragmentEntryKeyException() {
 	}
 
-	public DuplicateFragmentEntryKeyException(String msg) {
-		super(msg);
+	public DuplicateFragmentEntryKeyException(String fragmentEntryKey) {
+		_fragmentEntryKey = fragmentEntryKey;
 	}
 
 	public DuplicateFragmentEntryKeyException(String msg, Throwable throwable) {
@@ -26,5 +26,11 @@ public class DuplicateFragmentEntryKeyException extends PortalException {
 	public DuplicateFragmentEntryKeyException(Throwable throwable) {
 		super(throwable);
 	}
+
+	public String getFragmentEntryKey() {
+		return _fragmentEntryKey;
+	}
+
+	private String _fragmentEntryKey;
 
 }

@@ -74,16 +74,22 @@ public abstract class SecretsUtil {
 
 		ItemField itemField = item.getItemField(fieldLabel);
 
-		if (itemField == null) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Field Not Found: ", vaultName, "/", itemTitle, "/",
-					fieldLabel));
-
-			return null;
+		if (itemField != null) {
+			return itemField.getValue();
 		}
 
-		return itemField.getValue();
+		ItemFile itemFile = item.getItemFile(fieldLabel);
+
+		if (itemFile != null) {
+			return itemFile.getValue();
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Field Not Found: op://", vaultName, "/", itemTitle, "/",
+				fieldLabel));
+
+		return null;
 	}
 
 	public static boolean isSecretProperty(String value) {
@@ -210,6 +216,24 @@ public abstract class SecretsUtil {
 			return null;
 		}
 
+		public ItemFile getItemFile(String fileName) {
+			if (_itemFiles == null) {
+				_init();
+			}
+
+			for (ItemFile itemFile : _itemFiles) {
+				if (Objects.equals(itemFile.getName(), fileName)) {
+					return itemFile;
+				}
+			}
+
+			if (_linkedItem != null) {
+				return _linkedItem.getItemFile(fileName);
+			}
+
+			return null;
+		}
+
 		public String getTitle() {
 			return _title;
 		}
@@ -264,10 +288,52 @@ public abstract class SecretsUtil {
 					System.out.println(fieldJSONObject.toString(2));
 				}
 			}
+
+			JSONArray filesJSONArray = itemJSONObject.optJSONArray(
+				"files", new JSONArray());
+
+			_itemFiles = new ArrayList<>(filesJSONArray.length());
+
+			for (int i = 0; i < filesJSONArray.length(); i++) {
+				JSONObject fileJSONObject = filesJSONArray.getJSONObject(i);
+
+				try {
+					JSONObject sectionJSONObject = fileJSONObject.optJSONObject(
+						"section");
+
+					if (sectionJSONObject != null) {
+						if (Objects.equals(
+								sectionJSONObject.optString("label"),
+								"Related Items")) {
+
+							_linkedItem = _vault.getItem(
+								fileJSONObject.getString("label"));
+						}
+
+						if (_linkedItem != null) {
+							continue;
+						}
+					}
+
+					if (!fileJSONObject.has("content_path")) {
+						continue;
+					}
+
+					_itemFiles.add(
+						new ItemFile(
+							fileJSONObject.getString("content_path"),
+							fileJSONObject.getString("name")));
+				}
+				catch (JSONException jsonException) {
+					System.err.println(jsonException.toString());
+					System.out.println(fileJSONObject.toString(2));
+				}
+			}
 		}
 
 		private final String _id;
 		private List<ItemField> _itemFields;
+		private List<ItemFile> _itemFiles;
 		private Item _linkedItem;
 		private final String _title;
 		private final Vault _vault;
@@ -295,6 +361,41 @@ public abstract class SecretsUtil {
 
 		private final String _label;
 		private final String _value;
+
+	}
+
+	private static class ItemFile {
+
+		public ItemFile(String contentPath, String name) {
+			_contentPath = contentPath;
+			_name = name;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public String getValue() {
+			if (_value != null) {
+				return _value;
+			}
+
+			String value = _toString(_contentPath);
+
+			value = value.trim();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(value)) {
+				JenkinsResultsParserUtil.addRedactToken(value);
+			}
+
+			_value = value;
+
+			return _value;
+		}
+
+		private final String _contentPath;
+		private final String _name;
+		private String _value;
 
 	}
 

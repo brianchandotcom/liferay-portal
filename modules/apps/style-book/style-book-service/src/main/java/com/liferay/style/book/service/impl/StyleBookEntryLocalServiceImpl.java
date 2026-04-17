@@ -424,13 +424,13 @@ public class StyleBookEntryLocalServiceImpl
 		throws PortalException {
 
 		return updatePreviewFileEntryId(
-			previewFileEntryId, new ServiceContext(), styleBookEntryId);
+			styleBookEntryId, previewFileEntryId, new ServiceContext());
 	}
 
 	@Override
 	public StyleBookEntry updatePreviewFileEntryId(
-			long previewFileEntryId, ServiceContext serviceContext,
-			long styleBookEntryId)
+			long styleBookEntryId, long previewFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
@@ -463,9 +463,22 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
-			boolean defaultStylebookEntry, String frontendTokensValues,
-			String name, long previewFileEntryId, ServiceContext serviceContext,
-			long styleBookEntryId, String styleBookEntryKey, long userId)
+			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			long previewFileEntryId)
+		throws PortalException {
+
+		return updateStyleBookEntry(
+			userId, styleBookEntryId, defaultStylebookEntry,
+			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId,
+			new ServiceContext());
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntry(
+			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			long previewFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
@@ -513,30 +526,17 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
-			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
-			String frontendTokensValues, String name, String styleBookEntryKey,
-			long previewFileEntryId)
-		throws PortalException {
-
-		return updateStyleBookEntry(
-			defaultStylebookEntry, frontendTokensValues, name,
-			previewFileEntryId, new ServiceContext(), styleBookEntryId,
-			styleBookEntryKey, userId);
-	}
-
-	@Override
-	public StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, String frontendTokensValues, String name)
 		throws PortalException {
 
 		return updateStyleBookEntry(
-			frontendTokensValues, name, new ServiceContext(), styleBookEntryId);
+			styleBookEntryId, frontendTokensValues, name, new ServiceContext());
 	}
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
-			String frontendTokensValues, String name,
-			ServiceContext serviceContext, long styleBookEntryId)
+			long styleBookEntryId, String frontendTokensValues, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =

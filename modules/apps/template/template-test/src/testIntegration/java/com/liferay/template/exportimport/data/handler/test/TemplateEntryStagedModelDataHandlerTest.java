@@ -64,6 +64,43 @@ public class TemplateEntryStagedModelDataHandlerTest
 	}
 
 	@Test
+	@TestInfo("LPD-86646")
+	public void testExportImportTemplateEntryPreservesCreationAndModificationDateOnUpdate()
+		throws Exception {
+
+		TemplateEntry templateEntry = _addTemplateEntry(
+			stagingGroup, JournalArticle.class.getName(), StringPool.BLANK);
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(templateEntry);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(templateEntry);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		TemplateEntry importedTemplateEntry = (TemplateEntry)getStagedModel(
+			templateEntry.getUuid(), liveGroup);
+
+		Assert.assertEquals(
+			templateEntry.getCreateDate(),
+			importedTemplateEntry.getCreateDate());
+		Assert.assertEquals(
+			templateEntry.getModifiedDate(),
+			importedTemplateEntry.getModifiedDate());
+	}
+
+	@Test
 	@TestInfo("LPD-32929")
 	public void testExportImportTemplateEntryWithoutVariation()
 		throws Exception {
@@ -192,8 +229,14 @@ public class TemplateEntryStagedModelDataHandlerTest
 			templateEntry.getUuid(), liveGroup);
 
 		Assert.assertEquals(
+			templateEntry.getCreateDate(),
+			importedTemplateEntry.getCreateDate());
+		Assert.assertEquals(
 			expectedInfoItemFormVariationKey,
 			importedTemplateEntry.getInfoItemFormVariationKey());
+		Assert.assertEquals(
+			templateEntry.getModifiedDate(),
+			importedTemplateEntry.getModifiedDate());
 	}
 
 	private long _classNameId;

@@ -64,6 +64,8 @@ import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Stefano Motta
@@ -364,11 +366,17 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryModelListener.class);
 
-	@Reference
-	private AnalyticsSettingsManager _analyticsSettingsManager;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile AnalyticsSettingsManager _analyticsSettingsManager;
 
-	@Reference
-	private ChannelResource.Factory _channelResourceFactory;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ChannelResource.Factory _channelResourceFactory;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

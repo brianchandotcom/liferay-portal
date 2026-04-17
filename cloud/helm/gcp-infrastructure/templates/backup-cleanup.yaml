@@ -21,6 +21,15 @@ spec:
                 script:
                     command: [sh]
                     image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
+                    resources:
+                        limits:
+                            cpu: 250m
+                            memory: 256Mi
+                        requests:
+                            cpu: 100m
+                            memory: 128Mi
                     source: |-
                         {{- tpl (.Files.Get "scripts/backup-cleanup.sh") . | nindent 24 }}
+        ttlStrategy:
+            secondsAfterCompletion: 86400
 {{- end -}}

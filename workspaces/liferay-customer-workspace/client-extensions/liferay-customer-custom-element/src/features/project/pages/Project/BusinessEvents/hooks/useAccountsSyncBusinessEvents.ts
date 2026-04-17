@@ -49,8 +49,8 @@ export default function useAccountsSyncBusinessEvents(
 					newVersion: businessEvent.newLiferayVersion?.key
 						? businessEvent.newLiferayVersion?.name
 						: null,
-					targetGoLiveDateTime:
-						businessEvent.targetGoLiveDateTime?.split('T')[0],
+					plannedEventDate:
+						businessEvent.plannedEventDate?.split('T')[0],
 				};
 			}
 		);
@@ -67,8 +67,7 @@ export default function useAccountsSyncBusinessEvents(
 				newVersion: businessEvent.newLiferayVersion?.key
 					? businessEvent.newLiferayVersion?.name
 					: null,
-				targetGoLiveDateTime:
-					businessEvent.targetGoLiveDateTime?.split('T')[0],
+				plannedEventDate: businessEvent.plannedEventDate?.split('T')[0],
 			});
 		}
 

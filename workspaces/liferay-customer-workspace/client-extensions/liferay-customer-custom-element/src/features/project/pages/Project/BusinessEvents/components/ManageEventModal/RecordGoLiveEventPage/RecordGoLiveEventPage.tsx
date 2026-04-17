@@ -23,7 +23,7 @@ import {isValidDate} from '~/utils/validations.form';
 import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useGetUTCTimeZonesList from '../../../hooks/useGetUTCTimeZonesList';
 import useIsJiraBackend from '../../../hooks/useIsJiraBackend';
-import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
+import {getFormattedEventDateTime} from '../../../utils/getFormattedEventDate';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
 interface IProps {
@@ -97,30 +97,30 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		const hasError = errors && Object.keys(errors).length;
-		const hasActualGoLiveDate = values.businessEvent?.actualGoLiveDate;
-		const hasActualGoLiveTime = values.businessEvent?.actualGoLiveTime;
+		const hasActualEventDate = values.businessEvent?.actualEventDate;
+		const hasActualEventTime = values.businessEvent?.actualEventTime;
 		const hasTimeZone = values.businessEvent?.timeZone?.key;
 
 		const isValidDate = (date: string) => new Date(date) <= new Date();
-		const isActualGoLiveDateValid = isValidDate(hasActualGoLiveDate);
+		const isActualEventDateValid = isValidDate(hasActualEventDate);
 
-		setIsValidRecordDate(isActualGoLiveDateValid);
+		setIsValidRecordDate(isActualEventDateValid);
 
 		const hasAllRequiredFieldsFilled =
-			Boolean(hasActualGoLiveDate) &&
-			Boolean(hasActualGoLiveTime) &&
+			Boolean(hasActualEventDate) &&
+			Boolean(hasActualEventTime) &&
 			Boolean(hasTimeZone);
 
 		setBaseButtonDisabled(
 			!hasAllRequiredFieldsFilled ||
 				Boolean(hasError) ||
-				!isActualGoLiveDateValid
+				!isActualEventDateValid
 		);
 	}, [
 		errors,
 		touched,
-		values.businessEvent?.actualGoLiveDate,
-		values.businessEvent?.actualGoLiveTime,
+		values.businessEvent?.actualEventDate,
+		values.businessEvent?.actualEventTime,
 		values.businessEvent?.timeZone?.key,
 	]);
 
@@ -133,15 +133,15 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 
 		const updatedBusinessEvent = {...values?.businessEvent};
 		const formattedBusinessEvent = {
-			actualGoLiveDateTime: getFormattedGoLiveDateTime(
-				updatedBusinessEvent.actualGoLiveDate,
-				updatedBusinessEvent.actualGoLiveTime
+			actualEventDate: getFormattedEventDateTime(
+				updatedBusinessEvent.actualEventDate,
+				updatedBusinessEvent.actualEventTime
 			),
 			eventStatus: {key: 'completed'},
 			lastComment: updatedBusinessEvent?.lastComment,
+			plannedEventDate: businessEvent.plannedEventDate,
 			r_accountEntryToBusinessEvents_accountEntryId:
 				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-			targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
 			timeZone: updatedBusinessEvent.timeZone?.key,
 		};
 
@@ -192,8 +192,8 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 			modalType={modalType}
 			observer={observer}
 			onClose={() => closeFunction(false)}
-			submitButton={i18n.translate('record-actual-go-live')}
-			title={i18n.translate('record-actual-go-live')}
+			submitButton={i18n.translate('record-actual-event-date')}
+			title={i18n.translate('record-actual-event-date')}
 		>
 			{isEditable ? (
 				<div>
@@ -207,11 +207,11 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 								badgeClassName="mr-4"
 								dateFormat="MM-dd-yyyy"
 								groupStyle="pb-1"
-								label={i18n.translate('actual-go-live-date')}
-								name="businessEvent.actualGoLiveDate"
+								label={i18n.translate('actual-event-date')}
+								name="businessEvent.actualEventDate"
 								onChange={(value) =>
 									setFieldValue(
-										'businessEvent.actualGoLiveDate',
+										'businessEvent.actualEventDate',
 										value
 									)
 								}
@@ -236,10 +236,10 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 							<TimePicker
 								groupStyle="pb-1"
 								label={i18n.translate('time')}
-								name="businessEvent.actualGoLiveTime"
+								name="businessEvent.actualEventTime"
 								onChange={(value) =>
 									setFieldValue(
-										'businessEvent.actualGoLiveTime',
+										'businessEvent.actualEventTime',
 										value
 									)
 								}
@@ -265,17 +265,17 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 					<Badge alertType="info" badgeClassName="mt-3">
 						<span className="pl-1 text-paragraph">
 							{i18n.translate(
-								'entering-an-actual-go-live-date-will-close-this-business-event-no-further-edits-will-be-possible'
+								'entering-an-actual-event-date-will-close-this-business-event-no-further-edits-will-be-possible'
 							)}
 						</span>
 					</Badge>
 
-					{values.businessEvent?.actualGoLiveDate! &&
+					{values.businessEvent?.actualEventDate! &&
 						!isValidRecordDate && (
 							<Badge>
 								<span className="pl-1">
 									{i18n.translate(
-										'please-select-an-actual-go-live-date-that-has-already-occurred-or-is-today'
+										'please-select-an-actual-event-date-that-has-already-occurred-or-is-today'
 									)}
 								</span>
 							</Badge>

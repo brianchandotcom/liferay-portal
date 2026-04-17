@@ -66,9 +66,48 @@ const getTicketAttachments = async (filter: string) => {
 	);
 };
 
+const normalizeLegacyEvent = (event: any) => {
+	if (!event) {
+		return event;
+	}
+
+	const {actualGoLiveDateTime, targetGoLiveDateTime, ...rest} = event;
+
+	return {
+		...rest,
+		actualEventDate: actualGoLiveDateTime ?? rest.actualEventDate,
+		plannedEventDate: targetGoLiveDateTime ?? rest.plannedEventDate,
+	};
+};
+
+const normalizeLegacyResponse = (response: any) => {
+	if (response?.items) {
+		return {
+			...response,
+			items: response.items.map(normalizeLegacyEvent),
+		};
+	}
+
+	return normalizeLegacyEvent(response);
+};
+
+const denormalizeLegacyEvent = (event: any) => {
+	if (!event) {
+		return event;
+	}
+
+	const {actualEventDate, plannedEventDate, ...rest} = event;
+
+	return {
+		...rest,
+		actualGoLiveDateTime: actualEventDate ?? rest.actualGoLiveDateTime,
+		targetGoLiveDateTime: plannedEventDate ?? rest.targetGoLiveDateTime,
+	};
+};
+
 const createBusinessEventLegacy = async (businessEvent: any) => {
 	return fetcher(`${HEADLESS_BASE_URL}c/businessevents/`, {
-		body: JSON.stringify(businessEvent),
+		body: JSON.stringify(denormalizeLegacyEvent(businessEvent)),
 		headers: liferayHeaders(),
 		method: 'POST',
 	});
@@ -82,17 +121,21 @@ const deleteBusinessEventLegacy = async (id: string | number) => {
 };
 
 const getBusinessEventByIdLegacy = async (id: string | number) => {
-	return fetcher(`${HEADLESS_BASE_URL}c/businessevents/${id}`, {
-		headers: liferayHeaders(),
-		method: 'GET',
-	});
+	const response = await fetcher(
+		`${HEADLESS_BASE_URL}c/businessevents/${id}`,
+		{headers: liferayHeaders(), method: 'GET'}
+	);
+
+	return normalizeLegacyEvent(response);
 };
 
 const getBusinessEventsLegacy = async (filterQuery: string) => {
-	return fetcher(`${HEADLESS_BASE_URL}c/businessevents?${filterQuery}`, {
-		headers: liferayHeaders(),
-		method: 'GET',
-	});
+	const response = await fetcher(
+		`${HEADLESS_BASE_URL}c/businessevents?${filterQuery}`,
+		{headers: liferayHeaders(), method: 'GET'}
+	);
+
+	return normalizeLegacyResponse(response);
 };
 
 const getBusinessEventVersionsLegacy = async (filters: string) => {
@@ -125,7 +168,7 @@ const updateBusinessEventLegacy = async (
 	fieldsToPatch: any
 ) => {
 	return fetcher(`${HEADLESS_BASE_URL}c/businessevents/${id}`, {
-		body: JSON.stringify(fieldsToPatch),
+		body: JSON.stringify(denormalizeLegacyEvent(fieldsToPatch)),
 		headers: liferayHeaders(),
 		method: 'PATCH',
 	});

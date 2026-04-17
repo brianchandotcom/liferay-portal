@@ -47,8 +47,7 @@ public class BusinessEvent {
 			_creatorId = 0;
 		}
 
-		_actualGoLiveDateTime = propertiesJSONObject.optString(
-			"actualGoLiveDateTime");
+		_actualEventDate = propertiesJSONObject.optString("actualEventDate");
 		_associatedTickets = propertiesJSONObject.optString(
 			"associatedTickets");
 
@@ -127,8 +126,7 @@ public class BusinessEvent {
 				"newLiferayVersion");
 		}
 
-		_targetGoLiveDateTime = propertiesJSONObject.optString(
-			"targetGoLiveDateTime");
+		_plannedEventDate = propertiesJSONObject.optString("plannedEventDate");
 
 		JSONObject timeZoneJSONObject = propertiesJSONObject.optJSONObject(
 			"timeZone");
@@ -190,7 +188,7 @@ public class BusinessEvent {
 			}
 		}
 
-		_actualGoLiveDateTime = attributes.getOrDefault(
+		_actualEventDate = attributes.getOrDefault(
 			"Actual Go-Live Date", StringPool.BLANK);
 		_associatedTickets = attributes.getOrDefault(
 			"Associated Tickets", StringPool.BLANK);
@@ -207,7 +205,7 @@ public class BusinessEvent {
 		_name = attributes.getOrDefault("Name", StringPool.BLANK);
 		_newLiferayVersionName = attributes.getOrDefault(
 			"New Version", StringPool.BLANK);
-		_targetGoLiveDateTime = attributes.getOrDefault(
+		_plannedEventDate = attributes.getOrDefault(
 			"Target Event Date", StringPool.BLANK);
 		_timeZoneName = attributes.getOrDefault("Time Zone", StringPool.BLANK);
 	}
@@ -224,8 +222,8 @@ public class BusinessEvent {
 		return getURL(customerPortalURL) + "/activity-history";
 	}
 
-	public String getActualGoLiveDateTime() {
-		return _actualGoLiveDateTime;
+	public String getActualEventDate() {
+		return _actualEventDate;
 	}
 
 	public String getAssociatedTickets() {
@@ -276,12 +274,12 @@ public class BusinessEvent {
 		return _newLiferayVersionName;
 	}
 
-	public String getTargetGoLiveDate() {
-		return _targetGoLiveDateTime.split("T")[0];
+	public String getPlannedEventDate() {
+		return _plannedEventDate;
 	}
 
-	public String getTargetGoLiveDateTime() {
-		return _targetGoLiveDateTime;
+	public String getPlannedEventDateOnly() {
+		return _plannedEventDate.split("T")[0];
 	}
 
 	public String getTimeZoneName() {
@@ -316,7 +314,7 @@ public class BusinessEvent {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
-			"actualGoLiveDateTime", _actualGoLiveDateTime
+			"actualEventDate", _actualEventDate
 		).put(
 			"associatedTickets", _associatedTickets
 		).put(
@@ -360,7 +358,7 @@ public class BusinessEvent {
 				"name", _newLiferayVersionName
 			)
 		).put(
-			"targetGoLiveDateTime", _targetGoLiveDateTime
+			"plannedEventDate", _plannedEventDate
 		).put(
 			"timeZone",
 			new JSONObject(
@@ -376,7 +374,7 @@ public class BusinessEvent {
 
 	private final String _accountExternalReferenceCode;
 	private final long _accountId;
-	private final String _actualGoLiveDateTime;
+	private final String _actualEventDate;
 	private final String _associatedTickets;
 	private final String _businessEventId;
 	private final String _creatorGivenName;
@@ -388,7 +386,7 @@ public class BusinessEvent {
 	private final String _lastComment;
 	private final String _name;
 	private final String _newLiferayVersionName;
-	private final String _targetGoLiveDateTime;
+	private final String _plannedEventDate;
 	private final String _timeZoneName;
 
 }

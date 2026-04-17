@@ -12,7 +12,6 @@ exports[`FilterBySegment should render 1`] = `
         class="dropdown"
       >
         <button
-          aria-controls="clay-dropdown-menu-1"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"

@@ -23,7 +23,6 @@ exports[`Event Analysis Builder render 1`] = `
           class="dropdown"
         >
           <button
-            aria-controls="clay-dropdown-menu-1"
             aria-expanded="false"
             aria-haspopup="true"
             aria-label="Add"
@@ -132,7 +131,6 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
           class="dropdown"
         >
           <button
-            aria-controls="clay-dropdown-menu-3"
             aria-expanded="false"
             aria-haspopup="true"
             aria-label="Add"
@@ -169,7 +167,6 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
           class="dropdown"
         >
           <button
-            aria-controls="clay-dropdown-menu-4"
             aria-expanded="false"
             aria-haspopup="true"
             aria-label="Add"

@@ -53,7 +53,6 @@ exports[`SegmentDistribution should render 1`] = `
                     class="dropdown dropdown-root base-select-container"
                   >
                     <div
-                      aria-controls="clay-dropdown-menu-1"
                       aria-expanded="false"
                       aria-haspopup="true"
                       class="dropdown-toggle"

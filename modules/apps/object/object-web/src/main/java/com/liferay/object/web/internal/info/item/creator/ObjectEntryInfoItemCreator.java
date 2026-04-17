@@ -5,6 +5,8 @@
 
 package com.liferay.object.web.internal.info.item.creator;
 
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.RelatedInfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -139,6 +141,15 @@ public class ObjectEntryInfoItemCreator
 
 	private Map<String, Object> _getProperties(
 		InfoItemFieldValues infoItemFieldValues, ThemeDisplay themeDisplay) {
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			if (infoFieldValue.getValue() instanceof RelatedInfoFieldValue) {
+				return ObjectEntryUtil.toProperties(
+					infoItemFieldValues, _objectDefinition, null);
+			}
+		}
 
 		return ObjectEntryUtil.toProperties(
 			themeDisplay.getCompanyId(), infoItemFieldValues, null);

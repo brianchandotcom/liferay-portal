@@ -14,6 +14,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -57,6 +58,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -413,16 +415,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Test
 	public void testFreeMarkerNotificationWithCommerceOrder() throws Exception {
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(
-				TestPropsValues.getCompanyId());
-
-		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			TestPropsValues.getGroupId(), commerceCurrency.getCode());
-
-		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			TestPropsValues.getUserId(), commerceChannel.getGroupId(),
-			commerceCurrency);
+		CommerceOrder commerceOrder = _addCommerceOrder();
 
 		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, TestPropsValues.getUserId(), true, true);
@@ -501,6 +494,57 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			PrincipalThreadLocal.setName(originalName);
 
 			_objectActionLocalService.deleteObjectAction(objectAction);
+		}
+	}
+
+	@Test
+	public void testRichTextNotificationWithCommerceOrder() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).build());
+
+		ObjectAction objectAction = _addNotificationTemplateObjectAction(
+			_getTermName(objectDefinition, objectField.getName()),
+			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+			DestinationNames.COMMERCE_ORDER_STATUS, objectDefinition);
+
+		CommerceOrder commerceOrder = _addCommerceOrder();
+
+		try {
+			String objectFieldValue = RandomTestUtil.randomString();
+
+			_objectEntryLocalService.
+				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+					TestPropsValues.getUserId(), objectDefinition,
+					commerceOrder.getCommerceOrderId(),
+					HashMapBuilder.<String, Serializable>put(
+						objectField.getName(), objectFieldValue
+					).build(),
+					ServiceContextTestUtil.getServiceContext());
+
+			commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
+				TestPropsValues.getUserId(), true);
+
+			_assertNotificationQueueEntryBody(objectFieldValue);
+		}
+		finally {
+			_commerceOrderLocalService.deleteCommerceOrder(
+				commerceOrder.getCommerceOrderId());
+			objectActionLocalService.deleteObjectAction(objectAction);
+			objectFieldLocalService.deleteObjectField(objectField);
 		}
 	}
 
@@ -1714,6 +1758,19 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		return objectDefinition;
+	}
+
+	private CommerceOrder _addCommerceOrder() throws Exception {
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyTestUtil.addCommerceCurrency(
+				TestPropsValues.getCompanyId());
+
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
+			TestPropsValues.getGroupId(), commerceCurrency.getCode());
+
+		return CommerceTestUtil.addB2CCommerceOrder(
+			TestPropsValues.getUserId(), commerceChannel.getGroupId(),
+			commerceCurrency);
 	}
 
 	private NotificationTemplate _addNotificationTemplate(

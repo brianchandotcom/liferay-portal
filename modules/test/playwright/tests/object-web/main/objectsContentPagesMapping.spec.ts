@@ -16,6 +16,7 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import createTempFile from '../../../utils/createTempFile';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -215,6 +216,87 @@ test(
 						)
 				)
 				.toBe(0);
+		});
+	}
+);
+
+test(
+	'Can view image user profile from specific entry on display page',
+	{tag: '@LPD-86436'},
+	async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		// Corresponds to Poshi test: ViewImageUserProfileFromSpecificEntry
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName =
+			'c/' + objectDefinition.name!.toLowerCase() + 's';
+		const textFieldName = objectFields[0].name;
+
+		const entryValue = 'TestEntry_' + getRandomInt();
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{[textFieldName]: entryValue},
+			applicationName
+		);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await test.step('Add Image fragment and map to User Profile Image', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.addFragment('Basic Components', 'Image');
+
+			const imageId = await pageEditorPage.getFragmentId('Image');
+
+			await pageEditorPage.selectEditable(imageId, 'image-square');
+
+			await page.getByLabel('Source Selection').selectOption('Mapping');
+
+			await pageEditorPage.setMappedItem({
+				entity: objectDefinition.label['en_US'],
+				entry: objectEntry.id.toString(),
+				entryLocator: page
+					.frameLocator('iframe[title="Select"]')
+					.getByText(objectEntry.id.toString())
+					.first(),
+				field: 'User Profile Image',
+			});
+
+			await pageEditorPage.waitForChangesSaved();
+		});
+
+		await test.step('Publish and verify user profile image is visible', async () => {
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(
+				page.locator('.component-image img')
+			).toBeVisible();
 		});
 	}
 );

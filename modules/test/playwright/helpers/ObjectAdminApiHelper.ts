@@ -114,6 +114,21 @@ export class ObjectAdminApiHelper {
 		).body;
 	}
 
+	async postObjectDefinitionPublish({
+		objectDefinitionId,
+	}: {
+		objectDefinitionId: number;
+	}): Promise<ObjectDefinition> {
+		const objectDefinitionAPIClient =
+			await this.apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		return (
+			await objectDefinitionAPIClient.postObjectDefinitionPublish(
+				objectDefinitionId
+			)
+		).body;
+	}
+
 	async postRandomObjectFolder(): Promise<ObjectFolder> {
 		const objectFolderExternalReferenceCode =
 			'objectFolder' + getRandomInt();

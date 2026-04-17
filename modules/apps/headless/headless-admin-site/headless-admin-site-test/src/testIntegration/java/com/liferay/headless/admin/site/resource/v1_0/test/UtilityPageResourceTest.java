@@ -432,6 +432,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		_testPutSiteUtilityPageWithPageSpecifications();
 		_testPutSiteUtilityPageWithThumbnail();
+		_testPutSiteUtilityPageUpdateWithModificationDate();
 	}
 
 	@Override
@@ -1070,6 +1071,28 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		Assert.assertEquals(
 			markedAsDefault, putUtilityPage.getMarkedAsDefault());
+	}
+
+	private void _testPutSiteUtilityPageUpdateWithModificationDate()
+		throws Exception {
+
+		UtilityPage utilityPage = _getUtilityPage(
+			null, Boolean.FALSE, RandomTestUtil.randomString());
+
+		UtilityPage putUtilityPage1 = utilityPageResource.putSiteUtilityPage(
+			testGroup.getExternalReferenceCode(),
+			utilityPage.getExternalReferenceCode(), utilityPage);
+
+		UtilityPage putUtilityPage2 = utilityPageResource.putSiteUtilityPage(
+			testGroup.getExternalReferenceCode(),
+			utilityPage.getExternalReferenceCode(), putUtilityPage1);
+
+		Assert.assertEquals(
+			putUtilityPage1.getDateModified(),
+			putUtilityPage2.getDateModified());
+		Assert.assertEquals(
+			putUtilityPage1.getDateModified(),
+			putUtilityPage2.getDateModified());
 	}
 
 	private void _testPutSiteUtilityPageWithPageSpecifications()

@@ -32,7 +32,7 @@ public abstract class SecretsUtil {
 			return key;
 		}
 
-		Matcher matcher = _keyPattern.matcher(key);
+		Matcher matcher = _secretReferencePattern.matcher(key);
 
 		if (matcher.matches()) {
 			String secret = getSecret(
@@ -97,7 +97,7 @@ public abstract class SecretsUtil {
 			return false;
 		}
 
-		Matcher matcher = _secretPropertyPattern.matcher(value);
+		Matcher matcher = _secretReferencePattern.matcher(value);
 
 		return matcher.matches();
 	}
@@ -159,11 +159,8 @@ public abstract class SecretsUtil {
 	private static final String _SERVER_URL = "https://1password.liferay.com";
 
 	private static final BearerHTTPAuthorization _bearerHTTPAuthorization;
-	private static final Pattern _keyPattern = Pattern.compile(
-		"(secret\\:)?(?<vaultName>[^\\/]*)\\/" +
-			"(?<itemTitle>[^\\/]*)\\/(?<fieldLabel>.*)");
-	private static final Pattern _secretPropertyPattern = Pattern.compile(
-		"secret\\:(?<key>.*)");
+	private static final Pattern _secretReferencePattern = Pattern.compile(
+		"op://(?<vaultName>[^/]*)/(?<itemTitle>[^/]*)/(?<fieldLabel>.*)");
 
 	static {
 		String token = null;

@@ -6,8 +6,10 @@
 package com.liferay.headless.admin.fragment.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -15,8 +17,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -31,6 +35,25 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Override
+	@Test
+	public void testDeleteSiteFragmentSet() throws Exception {
+		super.testDeleteSiteFragmentSet();
+
+		FragmentSet fragmentSet = testGetSiteFragmentSetsPage_addFragmentSet(
+			testGroup.getExternalReferenceCode(), randomFragmentSet());
+
+		fragmentSetResource.deleteSiteFragmentSet(
+			testGroup.getExternalReferenceCode(),
+			fragmentSet.getExternalReferenceCode());
+
+		Assert.assertNull(
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					fragmentSet.getExternalReferenceCode(),
+					testGroup.getGroupId()));
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
@@ -75,5 +98,8 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		return fragmentSetResource.postSiteFragmentSet(
 			testGroup.getExternalReferenceCode(), fragmentSet);
 	}
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 }

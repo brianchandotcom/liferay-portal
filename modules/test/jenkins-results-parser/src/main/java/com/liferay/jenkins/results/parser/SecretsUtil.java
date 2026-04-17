@@ -83,7 +83,7 @@ public abstract class SecretsUtil {
 			return null;
 		}
 
-		return field.value;
+		return field.getValue();
 	}
 
 	public static boolean isSecretProperty(String value) {
@@ -170,36 +170,37 @@ public abstract class SecretsUtil {
 
 	private static class Field {
 
-		public Field(String label, String value) {
-			this.label = label;
-			this.value = value;
+		public String getLabel() {
+			return _label;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		private Field(String label, String value) {
+			_label = label;
+			_value = value;
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(value)) {
 				JenkinsResultsParserUtil.addRedactToken(value);
 			}
 		}
 
-		public final String label;
-		public final String value;
+		private final String _label;
+		private final String _value;
 
 	}
 
 	private static class Item {
 
-		public Item(String id, String title, Vault vault) {
-			this.id = id;
-			this.title = title;
-
-			_vault = vault;
-		}
-
 		public Field getField(String label) {
 			if (_fields == null) {
-				init();
+				_init();
 			}
 
 			for (Field field : _fields) {
-				if (Objects.equals(field.label, label)) {
+				if (Objects.equals(field.getLabel(), label)) {
 					return field;
 				}
 			}
@@ -211,10 +212,24 @@ public abstract class SecretsUtil {
 			return null;
 		}
 
-		public void init() {
+		public String getId() {
+			return _id;
+		}
+
+		public String getTitle() {
+			return _title;
+		}
+
+		private Item(String id, String title, Vault vault) {
+			_id = id;
+			_title = title;
+			_vault = vault;
+		}
+
+		private void _init() {
 			JSONObject itemJSONObject = _toJSONObject(
 				JenkinsResultsParserUtil.combine(
-					"/v1/vaults/", _vault.id, "/items/", id));
+					"/v1/vaults/", _vault.getId(), "/items/", getId()));
 
 			JSONArray fieldsJSONArray = itemJSONObject.getJSONArray("fields");
 
@@ -257,11 +272,10 @@ public abstract class SecretsUtil {
 			}
 		}
 
-		public final String id;
-		public final String title;
-
 		private List<Field> _fields;
+		private final String _id;
 		private Item _linkedItem;
+		private final String _title;
 		private final Vault _vault;
 
 	}
@@ -272,13 +286,17 @@ public abstract class SecretsUtil {
 			return _vaultsMap.get(name);
 		}
 
+		public String getId() {
+			return _id;
+		}
+
 		public Item getItem(String title) {
 			if (_items == null) {
-				init();
+				_init();
 			}
 
 			for (Item item : _items) {
-				if (Objects.equals(item.title, title)) {
+				if (Objects.equals(item.getTitle(), title)) {
 					return item;
 				}
 			}
@@ -286,9 +304,19 @@ public abstract class SecretsUtil {
 			return null;
 		}
 
-		public void init() {
+		public String getName() {
+			return _name;
+		}
+
+		private Vault(String id, String name) {
+			_id = id;
+			_name = name;
+		}
+
+		private void _init() {
 			JSONArray itemsJSONArray = _toJSONArray(
-				JenkinsResultsParserUtil.combine("/v1/vaults/", id, "/items"));
+				JenkinsResultsParserUtil.combine(
+					"/v1/vaults/", getId(), "/items"));
 
 			_items = new ArrayList<>(itemsJSONArray.length());
 
@@ -300,14 +328,6 @@ public abstract class SecretsUtil {
 						itemJSONObject.getString("id"),
 						itemJSONObject.getString("title"), this));
 			}
-		}
-
-		public final String id;
-		public final String name;
-
-		private Vault(String id, String name) {
-			this.id = id;
-			this.name = name;
 		}
 
 		private static final Map<String, Vault> _vaultsMap = new HashMap<>();
@@ -324,11 +344,13 @@ public abstract class SecretsUtil {
 					vaultJSONObject.getString("id"),
 					vaultJSONObject.getString("name"));
 
-				_vaultsMap.put(vault.name, vault);
+				_vaultsMap.put(vault.getName(), vault);
 			}
 		}
 
+		private final String _id;
 		private List<Item> _items;
+		private final String _name;
 
 	}
 

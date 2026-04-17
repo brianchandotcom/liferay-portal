@@ -1,0 +1,32 @@
+{
+	"label": {"en_US": "Liferay Bundle"},
+	"name": "LiferayBundle",
+	"objectFields": [
+		{
+			"businessType": "Text",
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {"en_US": "Bundle Name"},
+			"name": "bundleName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"businessType": "Text",
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {"en_US": "Bundle Link"},
+			"name": "bundleLink",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
+	"panelCategoryKey": "applications_menu.applications.content",
+	"pluralLabel": {"en_US": "Liferay Bundles"},
+	"scope": "company"
+}

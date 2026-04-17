@@ -131,7 +131,8 @@ public class AssetListEntryStagedModelRepository
 		throws PortalException {
 
 		return _assetListEntryLocalService.updateAssetListEntry(
-			assetListEntry.getAssetListEntryId(), assetListEntry.getTitle());
+			assetListEntry.getAssetListEntryId(), assetListEntry.getTitle(),
+			portletDataContext.createServiceContext(assetListEntry));
 	}
 
 	@Reference

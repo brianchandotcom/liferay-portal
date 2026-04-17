@@ -103,15 +103,13 @@ public class SchedulerEngineHelperImplTest {
 				SchedulerEngineHelperImplTest.class.getName(),
 				LoggerTestUtil.ERROR)) {
 
-			String jobName =
-				"com.liferay.portal.scheduler.internal." +
-					"SchedulerEngineHelperImpl$1";
 			String message = RandomTestUtil.randomString();
 			Date startDate = new Date();
 
 			_schedulerEngineHelper.addScriptingJob(
 				_triggerFactory.createTrigger(
-					jobName, jobName, startDate,
+					SchedulerEngine.DEFAULT_SCRIPTING_JOB_NAME,
+					SchedulerEngine.DEFAULT_SCRIPTING_JOB_NAME, startDate,
 					new Date(startDate.getTime() + 1000), 1, TimeUnit.DAY),
 				StorageType.MEMORY, null, "groovy",
 				StringBundler.concat(

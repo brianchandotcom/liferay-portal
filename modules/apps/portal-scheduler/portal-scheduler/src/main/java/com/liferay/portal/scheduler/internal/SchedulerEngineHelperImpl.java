@@ -288,6 +288,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					}
 
 					@Override
+					public String getName() {
+						return SchedulerEngine.DEFAULT_SCRIPTING_JOB_NAME;
+					}
+
+					@Override
 					public TriggerConfiguration getTriggerConfiguration() {
 						return null;
 					}

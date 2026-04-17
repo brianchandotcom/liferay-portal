@@ -21,6 +21,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SchedulerEngine {
 
+	public static final String DEFAULT_SCRIPTING_JOB_NAME =
+		"DEFAULT_SCRIPTING_JOB_NAME";
+
 	public static final String DESCRIPTION = "DESCRIPTION";
 
 	public static final String DESTINATION_NAME = "DESTINATION_NAME";

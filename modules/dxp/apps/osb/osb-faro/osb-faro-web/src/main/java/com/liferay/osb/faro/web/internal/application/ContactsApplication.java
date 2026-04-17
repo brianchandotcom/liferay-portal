@@ -7,6 +7,7 @@ package com.liferay.osb.faro.web.internal.application;
 
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.controller.contacts.AccountController;
+import com.liferay.osb.faro.web.internal.controller.contacts.AccountLifecycleController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ActivityController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ActivityGroupController;
 import com.liferay.osb.faro.web.internal.controller.contacts.AssetSummaryCategoryController;
@@ -49,6 +50,7 @@ public class ContactsApplication extends BaseApplication {
 		Set<Object> controllers = new HashSet<>();
 
 		controllers.add(_accountController);
+		controllers.add(_accountLifecycleController);
 		controllers.add(_activityController);
 		controllers.add(_activityGroupController);
 		controllers.add(_assetSummaryCategoryController);
@@ -75,6 +77,9 @@ public class ContactsApplication extends BaseApplication {
 
 	@Reference
 	private AccountController _accountController;
+
+	@Reference
+	private AccountLifecycleController _accountLifecycleController;
 
 	@Reference
 	private ActivityController _activityController;

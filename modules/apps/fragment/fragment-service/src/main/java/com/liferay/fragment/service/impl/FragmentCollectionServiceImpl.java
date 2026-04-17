@@ -156,17 +156,25 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
-	public int getExportableFragmentCollectionsCount(long[] groupIds) {
+	public int getExportableFragmentCollectionsCount(
+		long[] fragmentCollectionIds) {
+
 		return fragmentCollectionLocalService.
-			getExportableFragmentCollectionsCount(groupIds);
+			getExportableFragmentCollectionsCount(fragmentCollectionIds);
 	}
 
 	@Override
-	public int getExportableFragmentCollectionsCount(
+	public int getExportableFragmentCollectionsCountByGroupId(long[] groupIds) {
+		return fragmentCollectionLocalService.
+			getExportableFragmentCollectionsCountByGroupId(groupIds);
+	}
+
+	@Override
+	public int getExportableFragmentCollectionsCountByGroupId(
 		long[] groupIds, String name) {
 
 		return fragmentCollectionLocalService.
-			getExportableFragmentCollectionsCount(groupIds, name);
+			getExportableFragmentCollectionsCountByGroupId(groupIds, name);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import {
 	FormikFieldMultiCheckbox,
 	FormikFieldText,
 } from '../../../components/forms/formik';
-import {mockPorletDataHandlerSections} from '../../../utils/mockPorletDataHandlerSections';
+import {mockPortletDataHandlerSections} from '../../../utils/mockPortletDataHandlerSections';
 
 export default function SetupStep() {
 	return (
@@ -62,7 +62,7 @@ export default function SetupStep() {
 					aria-describedby="selectedSectionIds-description"
 					aria-labelledby="selectedSectionIds-label"
 					name="selectedSectionIds"
-					options={mockPorletDataHandlerSections.map(
+					options={mockPortletDataHandlerSections.map(
 						({name, portletEntries}) => ({
 							description: portletEntries
 								.map(({portletTitle}) => portletTitle)

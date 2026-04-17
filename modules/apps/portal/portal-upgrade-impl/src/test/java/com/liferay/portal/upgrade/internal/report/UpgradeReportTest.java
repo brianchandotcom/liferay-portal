@@ -6,15 +6,22 @@
 package com.liferay.portal.upgrade.internal.report;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -48,11 +55,57 @@ public class UpgradeReportTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_dataAccessMockedStatic = Mockito.mockStatic(DataAccess.class);
+		_dbManagerUtilMockedStatic = Mockito.mockStatic(DBManagerUtil.class);
 		_dbUpgraderMockedStatic = Mockito.mockStatic(DBUpgrader.class);
+
 		_portalUpgradeProcessMockedStatic = Mockito.mockStatic(
 			PortalUpgradeProcess.class);
+
+		Connection connection = Mockito.mock(Connection.class);
+		DatabaseMetaData databaseMetaData = Mockito.mock(
+			DatabaseMetaData.class);
+		ResultSet tablesResultSet = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			connection.getMetaData()
+		).thenReturn(
+			databaseMetaData
+		);
+
+		Mockito.when(
+			databaseMetaData.getTables(
+				Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())
+		).thenReturn(
+			tablesResultSet
+		);
+
+		Mockito.when(
+			tablesResultSet.next()
+		).thenReturn(
+			false
+		);
+
+		_dataAccessMockedStatic.when(
+			DataAccess::getConnection
+		).thenReturn(
+			connection
+		);
+
+		DB db = Mockito.mock(DB.class);
+
+		_dbManagerUtilMockedStatic.when(
+			DBManagerUtil::getDB
+		).thenReturn(
+			db
+		);
+
+		Mockito.when(
+			db.getDBType()
+		).thenReturn(
+			DBType.MYSQL
+		);
 
 		MockitoAnnotations.initMocks(this);
 	}
@@ -60,6 +113,7 @@ public class UpgradeReportTest {
 	@After
 	public void tearDown() {
 		_dataAccessMockedStatic.close();
+		_dbManagerUtilMockedStatic.close();
 		_dbUpgraderMockedStatic.close();
 		_portalUpgradeProcessMockedStatic.close();
 	}
@@ -158,6 +212,36 @@ public class UpgradeReportTest {
 	}
 
 	@Test
+	public void testGetReportDataWhenDLRootDirIsInvalid() throws Exception {
+		Path tempFilePath = Files.createTempFile(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		try {
+			UpgradeReport upgradeReport = new UpgradeReport();
+
+			ReflectionTestUtil.setFieldValue(
+				upgradeReport, "_rootDir",
+				tempFilePath.toAbsolutePath(
+				).toString());
+
+			Map<String, Object> reportData = ReflectionTestUtil.invoke(
+				upgradeReport, "_getReportData",
+				new Class<?>[] {UpgradeRecorder.class}, _upgradeRecorder);
+
+			Map<String, Object> documentLibrary =
+				(Map<String, Object>)reportData.get("document.library");
+
+			Assert.assertNotNull(documentLibrary);
+
+			Assert.assertEquals(
+				"Unable to determine", documentLibrary.get("storage.size"));
+		}
+		finally {
+			Files.deleteIfExists(tempFilePath);
+		}
+	}
+
+	@Test
 	public void testGetTableCounts() throws Exception {
 		Connection connection = Mockito.mock(Connection.class);
 		ResultSet countResultSet = Mockito.mock(ResultSet.class);
@@ -232,6 +316,7 @@ public class UpgradeReportTest {
 	}
 
 	private MockedStatic<DataAccess> _dataAccessMockedStatic;
+	private MockedStatic<DBManagerUtil> _dbManagerUtilMockedStatic;
 	private MockedStatic<DBUpgrader> _dbUpgraderMockedStatic;
 	private MockedStatic<PortalUpgradeProcess>
 		_portalUpgradeProcessMockedStatic;

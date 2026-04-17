@@ -67,6 +67,11 @@ const OPTIONS = [
 			assertBodyClass(page, enabled, /c-prefers-reduced-motion/),
 		label: 'Reduced Motion',
 	},
+	{
+		assert: (page: Page, enabled: boolean) =>
+			assertBodyClass(page, enabled, /c-prefers-focus-ring/),
+		label: 'Focus Ring Animation',
+	},
 ];
 
 test(

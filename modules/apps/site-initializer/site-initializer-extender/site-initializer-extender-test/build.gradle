@@ -35,6 +35,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal-security:portal-security-service-access-policy-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationImplementation project(":apps:segments:segments-api")
+	testIntegrationImplementation project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-api")
 	testIntegrationImplementation project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-test-bundle-1")
 	testIntegrationImplementation project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-test-bundle-2")
 	testIntegrationImplementation project(":apps:site-navigation:site-navigation-api")

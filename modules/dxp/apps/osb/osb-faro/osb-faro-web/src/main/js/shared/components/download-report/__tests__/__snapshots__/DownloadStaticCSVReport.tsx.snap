@@ -73,12 +73,6 @@ exports[`DownloadStaticCSVReport renders component 1`] = `
             class="modal-footer"
           >
             <div
-              class="modal-item-first"
-            />
-            <div
-              class="modal-item"
-            />
-            <div
               class="modal-item-last"
             >
               <div

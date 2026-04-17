@@ -18,7 +18,6 @@ exports[`RoleRenderer should render as being edited 1`] = `
         class="dropdown"
       >
         <button
-          aria-controls="clay-dropdown-menu-1"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle d-flex justify-content-between  align-items-center btn btn-sm btn-secondary"

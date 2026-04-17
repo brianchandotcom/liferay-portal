@@ -176,7 +176,7 @@ public class ObjectEntryFolderModelListenerTest {
 			_sharingEntryLocalService.getSharingEntriesCount();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, user.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, user.getUserId(),
 			_portal.getClassNameId(ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId(), _group.getGroupId(),
 			true, Arrays.asList(SharingEntryAction.VIEW), null,

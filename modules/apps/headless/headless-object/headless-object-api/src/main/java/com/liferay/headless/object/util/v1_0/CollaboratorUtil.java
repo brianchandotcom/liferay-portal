@@ -124,11 +124,11 @@ public class CollaboratorUtil {
 
 		if (StringUtil.equals("User", type)) {
 			sharingEntryService.deleteSharingEntry(
-				0, collaboratorId, classNameId, classPK);
+				0, 0, collaboratorId, classNameId, classPK);
 		}
 		else {
 			sharingEntryService.deleteSharingEntry(
-				collaboratorId, 0, classNameId, classPK);
+				0, collaboratorId, 0, classNameId, classPK);
 		}
 	}
 
@@ -147,14 +147,14 @@ public class CollaboratorUtil {
 			return toCollaborator(
 				acceptLanguage, dtoConverter, dtoConverterRegistry,
 				sharingEntryService.getSharingEntry(
-					0, collaboratorId, classNameId, classPK),
+					0, 0, collaboratorId, classNameId, classPK),
 				uriInfo, user);
 		}
 
 		return toCollaborator(
 			acceptLanguage, dtoConverter, dtoConverterRegistry,
 			sharingEntryService.getSharingEntry(
-				collaboratorId, 0, classNameId, classPK),
+				0, collaboratorId, 0, classNameId, classPK),
 			uriInfo, user);
 	}
 
@@ -249,7 +249,7 @@ public class CollaboratorUtil {
 		}
 
 		return sharingEntryService.addOrUpdateSharingEntry(
-			null, toUserGroupId, toUserId, classNameId, classPK, groupId,
+			null, 0, toUserGroupId, toUserId, classNameId, classPK, groupId,
 			shareable,
 			TransformUtil.transformToList(
 				collaborator.getActionIds(),

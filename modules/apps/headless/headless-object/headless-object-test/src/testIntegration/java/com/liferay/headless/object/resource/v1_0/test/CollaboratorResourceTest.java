@@ -421,7 +421,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 		return _toCollaborator(
 			_sharingEntryLocalService.addSharingEntry(
-				null, TestPropsValues.getUserId(), 0, user.getUserId(),
+				null, TestPropsValues.getUserId(), 0, 0, user.getUserId(),
 				_classNameLocalService.getClassNameId(
 					ObjectEntryFolder.class.getName()),
 				objectEntryFolder.getObjectEntryFolderId(),
@@ -439,8 +439,8 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 		return _toCollaborator(
 			_sharingEntryLocalService.addSharingEntry(
-				null, TestPropsValues.getUserId(), userGroup.getUserGroupId(),
-				0,
+				null, TestPropsValues.getUserId(), 0,
+				userGroup.getUserGroupId(), 0,
 				_classNameLocalService.getClassNameId(
 					ObjectEntryFolder.class.getName()),
 				objectEntryFolder.getObjectEntryFolderId(),

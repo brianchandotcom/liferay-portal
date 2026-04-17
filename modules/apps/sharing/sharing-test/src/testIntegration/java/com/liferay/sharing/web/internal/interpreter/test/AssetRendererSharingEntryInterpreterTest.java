@@ -93,7 +93,7 @@ public class AssetRendererSharingEntryInterpreterTest {
 
 			SharingEntry sharingEntry =
 				_sharingEntryLocalService.addSharingEntry(
-					null, TestPropsValues.getUserId(), 0, user.getUserId(),
+					null, TestPropsValues.getUserId(), 0, 0, user.getUserId(),
 					_classNameLocalService.getClassNameId(
 						objectDefinition.getClassName()),
 					objectEntry.getObjectEntryId(), _group.getGroupId(), true,

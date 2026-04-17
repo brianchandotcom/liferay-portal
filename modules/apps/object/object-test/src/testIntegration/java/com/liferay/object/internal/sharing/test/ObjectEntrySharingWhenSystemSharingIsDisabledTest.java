@@ -154,7 +154,7 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 		throws Exception {
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, toUserId,
+			null, TestPropsValues.getUserId(), 0, 0, toUserId,
 			_classNameLocalService.getClassNameId(
 				objectEntry.getModelClassName()),
 			objectEntry.getObjectEntryId(), _group.getGroupId(), true,

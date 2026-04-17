@@ -3683,6 +3683,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		_testCopyObjectEntryGroup(
 			depotEntry.getGroupId(), objectDefinitionSetting);
+		_testCopyObjectEntryWithRelatedEntries(
+			depotEntry.getGroupId(), objectEntryFolder1);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -11459,6 +11461,302 @@ public class DefaultObjectEntryManagerImplTest
 			String.valueOf(
 				destinationObjectEntryFolder.getObjectEntryFolderId()),
 			String.valueOf(objectEntry3.getObjectEntryFolderId()));
+	}
+
+	private void _testCopyObjectEntryWithRelatedEntries(
+			long groupId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		_testCopyObjectEntryWithRelatedEntriesOneToMany(
+			groupId, objectEntryFolder);
+		_testCopyObjectEntryWithRelatedEntriesManyToMany(
+			groupId, objectEntryFolder);
+	}
+
+	private void _testCopyObjectEntryWithRelatedEntriesManyToMany(
+			long groupId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		ObjectDefinition parentObjectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		ObjectDefinition childObjectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		try {
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+				String.valueOf(groupId));
+
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				TestPropsValues.getUserId(),
+				childObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+				String.valueOf(groupId));
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.addObjectRelationship(
+					null, adminUser.getUserId(),
+					parentObjectDefinition.getObjectDefinitionId(),
+					childObjectDefinition.getObjectDefinitionId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+					false,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					StringUtil.randomId(), false,
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+			ObjectEntry parentObjectEntry =
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, parentObjectDefinition,
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"textObjectFieldName",
+								RandomTestUtil.randomString()
+							).build();
+
+							setObjectEntryFolderId(
+								objectEntryFolder.getObjectEntryFolderId());
+						}
+					},
+					String.valueOf(groupId));
+
+			ObjectEntry childObjectEntry1 =
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, childObjectDefinition,
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"textObjectFieldName",
+								RandomTestUtil.randomString()
+							).build();
+
+							setObjectEntryFolderId(
+								objectEntryFolder.getObjectEntryFolderId());
+						}
+					},
+					String.valueOf(groupId));
+
+			ObjectEntry childObjectEntry2 =
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, childObjectDefinition,
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"textObjectFieldName",
+								RandomTestUtil.randomString()
+							).build();
+
+							setObjectEntryFolderId(
+								objectEntryFolder.getObjectEntryFolderId());
+						}
+					},
+					String.valueOf(groupId));
+
+			ObjectRelationshipTestUtil.relateObjectEntries(
+				parentObjectEntry.getId(), childObjectEntry1.getId(),
+				objectRelationship, adminUser.getUserId());
+			ObjectRelationshipTestUtil.relateObjectEntries(
+				parentObjectEntry.getId(), childObjectEntry2.getId(),
+				objectRelationship, adminUser.getUserId());
+
+			ObjectEntry copiedParentObjectEntry =
+				_defaultObjectEntryManager.copyObjectEntry(
+					_simpleDTOConverterContext, parentObjectEntry.getId(),
+					objectEntryFolder.getObjectEntryFolderId(), false);
+
+			Page<ObjectEntry> page =
+				_defaultObjectEntryManager.getRelatedObjectEntries(
+					_simpleDTOConverterContext, copiedParentObjectEntry.getId(),
+					objectRelationship, null);
+
+			Assert.assertEquals(
+				2,
+				page.getItems(
+				).size());
+
+			page = _defaultObjectEntryManager.getRelatedObjectEntries(
+				_simpleDTOConverterContext, parentObjectEntry.getId(),
+				objectRelationship, null);
+
+			Assert.assertEquals(
+				2,
+				page.getItems(
+				).size());
+		}
+		finally {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				childObjectDefinition.getObjectDefinitionId());
+			objectDefinitionLocalService.deleteObjectDefinition(
+				parentObjectDefinition.getObjectDefinitionId());
+		}
+	}
+
+	private void _testCopyObjectEntryWithRelatedEntriesOneToMany(
+			long groupId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		ObjectDefinition parentObjectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		ObjectDefinition childObjectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		ObjectRelationship objectRelationship = null;
+
+		try {
+			parentObjectDefinition.setEnableObjectEntryDraft(true);
+
+			parentObjectDefinition =
+				objectDefinitionLocalService.updateObjectDefinition(
+					parentObjectDefinition);
+
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+				String.valueOf(groupId));
+
+			childObjectDefinition.setEnableObjectEntryDraft(true);
+
+			childObjectDefinition =
+				objectDefinitionLocalService.updateObjectDefinition(
+					childObjectDefinition);
+
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				TestPropsValues.getUserId(),
+				childObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+				String.valueOf(groupId));
+
+			objectRelationship =
+				_objectRelationshipLocalService.addObjectRelationship(
+					null, adminUser.getUserId(),
+					parentObjectDefinition.getObjectDefinitionId(),
+					childObjectDefinition.getObjectDefinitionId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					StringUtil.randomId(), false,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+			ObjectEntry parentObjectEntry =
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, parentObjectDefinition,
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"textObjectFieldName",
+								RandomTestUtil.randomString()
+							).build();
+
+							setObjectEntryFolderId(
+								objectEntryFolder.getObjectEntryFolderId());
+						}
+					},
+					String.valueOf(groupId));
+
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				parentObjectEntry.getExternalReferenceCode(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+
+						setObjectEntryFolderId(
+							objectEntryFolder.getObjectEntryFolderId());
+					}
+				},
+				objectRelationship, String.valueOf(groupId));
+
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				parentObjectEntry.getExternalReferenceCode(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+
+						setObjectEntryFolderId(
+							objectEntryFolder.getObjectEntryFolderId());
+					}
+				},
+				objectRelationship, String.valueOf(groupId));
+
+			// Relationship edge true
+
+			ObjectEntry copiedParentObjectEntry =
+				_defaultObjectEntryManager.copyObjectEntry(
+					_simpleDTOConverterContext, parentObjectEntry.getId(),
+					objectEntryFolder.getObjectEntryFolderId(), false);
+
+			Page<ObjectEntry> page =
+				_defaultObjectEntryManager.getRelatedObjectEntries(
+					_simpleDTOConverterContext, copiedParentObjectEntry.getId(),
+					objectRelationship, null);
+
+			List<ObjectEntry> copiedChildObjectEntries =
+				(List<ObjectEntry>)page.getItems();
+
+			Assert.assertEquals(
+				copiedChildObjectEntries.toString(), 2,
+				copiedChildObjectEntries.size());
+
+			for (ObjectEntry copiedChildObjectEntry :
+					copiedChildObjectEntries) {
+
+				Status status = copiedChildObjectEntry.getStatus();
+
+				AssertUtils.assertEquals(
+					WorkflowConstants.STATUS_DRAFT, status.getCode());
+			}
+
+			page = _defaultObjectEntryManager.getRelatedObjectEntries(
+				_simpleDTOConverterContext, parentObjectEntry.getId(),
+				objectRelationship, null);
+
+			Assert.assertEquals(
+				2,
+				page.getItems(
+				).size());
+
+			// Relationship edge false
+
+			objectRelationship =
+				_objectRelationshipLocalService.updateObjectRelationship(
+					objectRelationship.getExternalReferenceCode(),
+					objectRelationship.getObjectRelationshipId(), 0,
+					objectRelationship.getDeletionType(), false,
+					objectRelationship.getLabelMap(), null);
+
+			copiedParentObjectEntry =
+				_defaultObjectEntryManager.copyObjectEntry(
+					_simpleDTOConverterContext, parentObjectEntry.getId(),
+					objectEntryFolder.getObjectEntryFolderId(), false);
+
+			page = _defaultObjectEntryManager.getRelatedObjectEntries(
+				_simpleDTOConverterContext, copiedParentObjectEntry.getId(),
+				objectRelationship, null);
+
+			Assert.assertEquals(
+				page.getItems(
+				).toString(),
+				0,
+				page.getItems(
+				).size());
+		}
+		finally {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				childObjectDefinition.getObjectDefinitionId());
+			objectDefinitionLocalService.deleteObjectDefinition(
+				parentObjectDefinition.getObjectDefinitionId());
+		}
 	}
 
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(

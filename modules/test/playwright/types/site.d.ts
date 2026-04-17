@@ -9,6 +9,6 @@ type Site = {
 	id: string;
 	key: string;
 	name?: string;
-	templateKey?: number;
+	templateKey?: string;
 	templateType?: string;
 };

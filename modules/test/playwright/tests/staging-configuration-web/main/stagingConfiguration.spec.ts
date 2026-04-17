@@ -75,11 +75,9 @@ test(
 		page,
 		portletPublishToLivePage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -134,11 +132,9 @@ test(
 		page,
 		portletPublishToLivePage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -191,7 +187,7 @@ test('Check if local staging can be enabled', async ({
 
 	await globalMenuPage.goToControlPanel('Sites');
 
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: siteName,
 	});
 
@@ -214,11 +210,9 @@ test(
 		productMenuPage,
 		stagingConfigurationPage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await globalMenuPage.goToSite(site.name);
 		await productMenuPage.goToPages();
@@ -275,11 +269,9 @@ test(
 		page,
 		portletPublishToLivePage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -394,11 +386,9 @@ testFlagsEnabled(
 		const layoutName = getRandomString();
 		const webContentName = getRandomString();
 
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: siteName,
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,

@@ -1,9 +1,8 @@
 import React, {createContext, ReactNode, useContext, useState} from 'react';
-
-interface ILifecycleFilterValues {
-	countryFilter: string;
-	industryFilter: string;
-}
+import {
+	buildQueryString,
+	ILifecycleFilterValues
+} from '../utils/buildQueryString';
 
 interface ILifecycleFilters extends ILifecycleFilterValues {
 	filterString: string;
@@ -15,34 +14,18 @@ interface ILifecycleContext {
 	resetFilters: () => void;
 }
 
-const FILTER_CONFIG: {
-	field: keyof ILifecycleFilterValues;
-	fieldName: string;
-	op: string;
-}[] = [
-	{field: 'countryFilter', fieldName: 'country', op: 'eq'},
-	{field: 'industryFilter', fieldName: 'industry', op: 'eq'}
-];
+const LifecycleContext = createContext<ILifecycleContext>({
+	filters: {
+		countryFilter: '',
+		filterString: '',
+		industryFilter: ''
+	},
+	resetFilters: () => {},
+	updateFilters: () => {}
+});
 
-const buildQueryString = (values: ILifecycleFilterValues): string =>
-	FILTER_CONFIG.map(({field, fieldName, op}) => {
-		const val = values[field];
-		return val !== '' ? `${fieldName} ${op} '${val}'` : null;
-	})
-		.filter(Boolean)
-		.join(' and ');
-
-const LifecycleContext = createContext<ILifecycleContext | undefined>(
-	undefined
-);
-
-export const useLifecycle = (): ILifecycleContext => {
-	const ctx = useContext(LifecycleContext);
-	if (!ctx) {
-		throw new Error('useLifecycle must be used within a LifecycleContextProvider');
-	}
-	return ctx;
-};
+export const useLifecycle = (): ILifecycleContext =>
+	useContext(LifecycleContext);
 
 export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
 	const initialValues: ILifecycleFilterValues = {
@@ -62,8 +45,7 @@ export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
 		});
 	};
 
-	const resetFilters = () =>
-		setFilters({...initialValues, filterString: ''});
+	const resetFilters = () => setFilters({...initialValues, filterString: ''});
 
 	return (
 		<LifecycleContext.Provider

@@ -586,21 +586,21 @@ public class FragmentCollectionLocalServiceImpl
 		).withParentheses(
 		).and(
 			() -> {
-				if (ArrayUtil.isEmpty(groupIds)) {
-					return null;
-				}
-
-				return FragmentCollectionTable.INSTANCE.groupId.in(
-					ArrayUtil.toLongArray(groupIds));
-			}
-		).and(
-			() -> {
 				if (ArrayUtil.isEmpty(fragmentCollectionIds)) {
 					return null;
 				}
 
 				return FragmentCollectionTable.INSTANCE.fragmentCollectionId.in(
 					ArrayUtil.toLongArray(fragmentCollectionIds));
+			}
+		).and(
+			() -> {
+				if (ArrayUtil.isEmpty(groupIds)) {
+					return null;
+				}
+
+				return FragmentCollectionTable.INSTANCE.groupId.in(
+					ArrayUtil.toLongArray(groupIds));
 			}
 		).and(
 			() -> {

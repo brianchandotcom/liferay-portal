@@ -554,7 +554,10 @@ public class AnalyticsCloudClient {
 							!Objects.equals(
 								group.getClassNameId(),
 								PortalUtil.getClassNameId(
-									Organization.class))) {
+									Organization.class)) &&
+							!StringUtil.startsWith(
+								group.getClassName(),
+								"com.liferay.object.model.ObjectDefinition")) {
 
 							return String.valueOf(group.getClassPK());
 						}

@@ -7,18 +7,23 @@ package com.liferay.sharing.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -45,6 +50,7 @@ import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -141,10 +147,10 @@ public class SharingEntryServiceTest {
 			Collections.singletonList(SharingEntryAction.VIEW), expirationDate,
 			_serviceContext);
 
-		Assert.assertTrue(addSharingEntry.isShareable());
 		Assert.assertEquals(1, addSharingEntry.getActionIds());
 		Assert.assertEquals(
 			expirationDate, addSharingEntry.getExpirationDate());
+		Assert.assertTrue(addSharingEntry.isShareable());
 
 		expirationDate = Date.from(instant.plus(3, ChronoUnit.DAYS));
 
@@ -153,13 +159,13 @@ public class SharingEntryServiceTest {
 				null, 0, 0, _toUser.getUserId(), _classNameId,
 				_group.getGroupId(), _group.getGroupId(), false,
 				Arrays.asList(
-					SharingEntryAction.VIEW, SharingEntryAction.UPDATE),
+					SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 				expirationDate, _serviceContext);
 
-		Assert.assertFalse(updateSharingEntry.isShareable());
 		Assert.assertEquals(3, updateSharingEntry.getActionIds());
 		Assert.assertEquals(
 			expirationDate, updateSharingEntry.getExpirationDate());
+		Assert.assertFalse(updateSharingEntry.isShareable());
 
 		Assert.assertEquals(
 			addSharingEntry.getSharingEntryId(),
@@ -216,6 +222,27 @@ public class SharingEntryServiceTest {
 		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(
 			externalReferenceCode, sharingEntry.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddSharingEntryToTicket() throws Exception {
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		long ticketId = _getTicketId();
+
+		_sharingEntryService.addSharingEntry(
+			externalReferenceCode, ticketId, 0, 0, _classNameId,
+			_group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		SharingEntry sharingEntry =
+			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, _group.getGroupId());
+
+		Assert.assertNotNull(sharingEntry);
+		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
 	}
 
 	@Test(expected = DuplicateSharingEntryException.class)
@@ -551,6 +578,51 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
+	public void testDeleteSharingEntryByTicket() throws Exception {
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		long ticketId = _getTicketId();
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
+			_group.getGroupId(), _group.getGroupId(), false,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			_serviceContext);
+
+		_sharingEntryService.deleteSharingEntry(
+			ticketId, 0, 0, _classNameId, _group.getGroupId());
+
+		Assert.assertNull(
+			_sharingEntryLocalService.fetchSharingEntry(
+				sharingEntry.getSharingEntryId()));
+	}
+
+	@Test
+	public void testFetchSharingEntry() throws Exception {
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		_sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, 0, _toUser.getUserId(),
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		SharingEntry sharingEntry = _sharingEntryService.fetchSharingEntry(
+			0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId());
+
+		Assert.assertNotNull(sharingEntry);
+		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
+	}
+
+	@Test
+	public void testFetchSharingEntryReturnsNullWhenNotFound()
+		throws Exception {
+
+		Assert.assertNull(
+			_sharingEntryService.fetchSharingEntry(
+				0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId()));
+	}
+
+	@Test
 	public void testGetSharingEntries() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
@@ -586,6 +658,25 @@ public class SharingEntryServiceTest {
 
 		Assert.assertEquals(
 			Arrays.asList(sharingEntry2, sharingEntry1), sharingEntries);
+	}
+
+	@Test
+	public void testGetSharingEntryByTicket() throws Exception {
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		long ticketId = _getTicketId();
+
+		_sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
+			_group.getGroupId(), _group.getGroupId(), true,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			_serviceContext);
+
+		SharingEntry sharingEntry = _sharingEntryService.getSharingEntry(
+			ticketId, 0, 0, _classNameId, _group.getGroupId());
+
+		Assert.assertNotNull(sharingEntry);
+		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -749,6 +840,19 @@ public class SharingEntryServiceTest {
 			true, null, _serviceContext);
 	}
 
+	private long _getTicketId() throws Exception {
+		Ticket ticket = _ticketLocalService.addTicket(
+			TestPropsValues.getCompanyId(), Group.class.getName(),
+			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS,
+			JSONUtil.put(
+				"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
+			).toString(),
+			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
+			new ServiceContext());
+
+		return ticket.getTicketId();
+	}
+
 	private void _registerSharingPermissionChecker(
 		SharingEntryAction... sharingEntryActions) {
 
@@ -781,6 +885,9 @@ public class SharingEntryServiceTest {
 
 	@Inject
 	private SharingEntryService _sharingEntryService;
+
+	@Inject
+	private TicketLocalService _ticketLocalService;
 
 	@DeleteAfterTestRun
 	private User _toUser;

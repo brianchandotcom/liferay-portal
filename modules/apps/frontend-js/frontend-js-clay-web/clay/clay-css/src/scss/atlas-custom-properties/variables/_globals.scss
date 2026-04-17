@@ -843,4 +843,11 @@
 
 	$print-body-min-width: map-get($grid-breakpoints, 'lg');
 	$print-page-size: a3;
+
+	$focus-ring-animation-from-box-shadow: var(
+		--focus-ring-animation-from-box-shadow
+	);
+	$focus-ring-animation-to-box-shadow: var(
+		--focus-ring-animation-to-box-shadow
+	);
 }

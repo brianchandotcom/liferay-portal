@@ -68,11 +68,6 @@ public class DesignLibrarySettingsDisplayContext {
 				group.getName(_getThemeDisplay().getLocale()), false));
 	}
 
-	private ThemeDisplay _getThemeDisplay() {
-		return (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
 	private String _getBackURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
@@ -95,6 +90,11 @@ public class DesignLibrarySettingsDisplayContext {
 		_group = depotEntry.getGroup();
 
 		return _group;
+	}
+
+	private ThemeDisplay _getThemeDisplay() {
+		return (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	private final long _designLibraryEntryId;

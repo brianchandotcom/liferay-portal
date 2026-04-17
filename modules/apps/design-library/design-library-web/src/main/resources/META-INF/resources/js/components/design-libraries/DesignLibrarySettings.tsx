@@ -27,7 +27,7 @@ export default function DesignLibrarySettings({
 	backURL,
 	externalReferenceCode,
 	groupId,
-	portletId
+	portletId,
 }: DesignLibrarySettingsProps) {
 	const id = useId();
 
@@ -82,7 +82,6 @@ export default function DesignLibrarySettings({
 				if (name !== designLibrary?.name) {
 					Liferay.Portlet.refresh(`#p_p_id_${portletId}_`);
 				}
-
 			}
 			catch (error: any) {
 				const errorMessage =

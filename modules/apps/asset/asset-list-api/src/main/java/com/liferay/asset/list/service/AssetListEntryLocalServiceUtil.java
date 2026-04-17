@@ -495,6 +495,15 @@ public class AssetListEntryLocalServiceUtil {
 		return getService().updateAssetListEntry(assetListEntryId, title);
 	}
 
+	public static AssetListEntry updateAssetListEntry(
+			long assetListEntryId, String title,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateAssetListEntry(
+			assetListEntryId, title, serviceContext);
+	}
+
 	public static void updateAssetListEntryTypeSettings(
 			long companyId, long classNameId)
 		throws PortalException {
@@ -520,4 +529,4 @@ public class AssetListEntryLocalServiceUtil {
 			AssetListEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1431026533
+// LIFERAY-SERVICE-BUILDER-HASH:349960329

@@ -22,6 +22,7 @@ export class ObjectFieldsPage {
 	readonly fieldsTabItem: Locator;
 	readonly maximumFileSize: Locator;
 	readonly objectFieldLabelInput: Locator;
+	readonly objectFieldNameInput: Locator;
 	readonly objectFieldOptionsDropdown: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
@@ -58,6 +59,7 @@ export class ObjectFieldsPage {
 			.frameLocator('iframe')
 			.getByLabel('Maximum File Size' + 'Mandatory');
 		this.objectFieldLabelInput = page.locator('input[name="label"]');
+		this.objectFieldNameInput = page.locator('input[name="name"]');
 		this.objectFieldOptionsDropdown = page.getByText('Select an Option');
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
@@ -205,6 +207,36 @@ export class ObjectFieldsPage {
 				// won't click again if the side panel is already open.
 
 				await trigger.click();
+
+				// Check that the side panel is opened after clicking.
+
+				await clickAndExpectToBeVisible({
+					target: this.page.locator('.fds-side-panel.is-visible'),
+					trigger,
+				});
+
+				// Check that the correct field was opened.
+
+				await expect(
+					this.iframeLocator.locator('#objectFieldLabelInput')
+				).toHaveValue(fieldLabel);
+			}).toPass();
+
+			await this.page.waitForLoadState('networkidle');
+		});
+	}
+
+	async openObjectFieldByDropdownAction(fieldLabel: string) {
+		await test.step(`Open object field '${fieldLabel}'`, async () => {
+			await expect(async () => {
+				await this.page
+					.getByRole('button')
+					.filter({hasText: fieldLabel + ' Actions'})
+					.click();
+
+				const trigger = this.page
+					.getByRole('menuitem')
+					.filter({hasText: 'Edit'});
 
 				// Check that the side panel is opened after clicking.
 

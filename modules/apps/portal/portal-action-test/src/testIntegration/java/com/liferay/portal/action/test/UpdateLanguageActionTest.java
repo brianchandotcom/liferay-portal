@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -126,6 +127,7 @@ public class UpdateLanguageActionTest {
 		_testGetRedirectWithControlPanelURL(true);
 		_testGetRedirectWithFriendlyURL(false);
 		_testGetRedirectWithFriendlyURL(true);
+		_testGetRedirectWithGroupFriendlyURLWithPortletURLMapping();
 		_testGetRedirectWithLayoutFriendlyURLWithPortletURLMapping();
 		_testGetRedirectWithPortletFriendlyURL(_sourceLocale);
 		_testGetRedirectWithPortletFriendlyURL(null);
@@ -452,6 +454,64 @@ public class UpdateLanguageActionTest {
 			"/" + _sourceLocale.getLanguage() + sourceURL);
 	}
 
+	private void _testGetRedirectWithGroupFriendlyURLWithPortletURLMapping()
+		throws Exception {
+
+		_testGetRedirectWithGroupFriendlyURLWithPortletURLMapping(
+			"questions", _sourceLocale);
+		_testGetRedirectWithGroupFriendlyURLWithPortletURLMapping(
+			"questions", null);
+		_testGetRedirectWithGroupFriendlyURLWithPortletURLMapping(
+			"tags", _sourceLocale);
+		_testGetRedirectWithGroupFriendlyURLWithPortletURLMapping("tags", null);
+	}
+
+	private void _testGetRedirectWithGroupFriendlyURLWithPortletURLMapping(
+			String mapping, Locale sourceLocale)
+		throws Exception {
+
+		String originalGroupFriendlyURL = _group.getFriendlyURL();
+
+		try {
+			_group = _groupLocalService.updateFriendlyURL(
+				_group.getGroupId(), StringPool.SLASH + mapping);
+
+			String layoutFriendlyURL = StringUtil.toLowerCase(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE));
+
+			Locale locale = sourceLocale;
+
+			if (locale == null) {
+				locale = _defaultLocale;
+			}
+
+			for (Locale curLocale : Arrays.asList(locale, _targetLocale)) {
+				_layout = _layoutLocalService.updateFriendlyURL(
+					TestPropsValues.getUserId(), _layout.getPlid(),
+					StringPool.SLASH + layoutFriendlyURL,
+					LocaleUtil.toLanguageId(curLocale));
+			}
+
+			String sourceURL = StringBundler.concat(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				_group.getFriendlyURL(), _layout.getFriendlyURL(locale),
+				"?queryString");
+
+			String targetURL = StringBundler.concat(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				_group.getFriendlyURL(), _layout.getFriendlyURL(_targetLocale),
+				"?queryString");
+
+			_testGetRedirect(
+				sourceLocale, sourceURL, _targetLocale, targetURL, false);
+		}
+		finally {
+			_group = _groupLocalService.updateFriendlyURL(
+				_group.getGroupId(), originalGroupFriendlyURL);
+		}
+	}
+
 	private void _testGetRedirectWithLayoutFriendlyURL(boolean virtualHost)
 		throws Exception {
 
@@ -585,6 +645,10 @@ public class UpdateLanguageActionTest {
 	private CompanyLocalService _companyLocalService;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private JournalArticle _journalArticle;
 	private Layout _layout;
 

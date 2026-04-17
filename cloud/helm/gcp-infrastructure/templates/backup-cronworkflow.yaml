@@ -1,0 +1,23 @@
+{{- if and .Values.backup.enabled .Values.backup.schedule -}}
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+    labels:
+        component: backup-create-platform
+    name: backup-create-cron-workflow
+    namespace: {{ .Release.Namespace }}
+spec:
+    concurrencyPolicy: Forbid
+    schedule: {{ .Values.backup.schedule | quote }}
+    timezone: UTC
+    workflowSpec:
+        arguments:
+            parameters:
+                -   name: environment-id
+                    value: {{ .Values.environmentId | quote }}
+                -   name: project-id
+                    value: {{ .Values.projectId | quote }}
+        workflowTemplateRef:
+            clusterScope: true
+            name: backup-create-cluster-workflow-template
+{{- end -}}

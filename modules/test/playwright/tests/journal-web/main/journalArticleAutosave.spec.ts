@@ -841,6 +841,85 @@ autosaveWithoutPermissionsTest(
 );
 
 autoSaveTest(
+	'Resizing the browser does not trigger autosave for an unmodified article',
+	{
+		tag: '@LPD-86516',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.propertiesTab.waitFor();
+
+		let autosaveRequestCount = 0;
+
+		page.on('request', (request) => {
+			if (request.url().includes('auto_save_article')) {
+				autosaveRequestCount++;
+			}
+		});
+
+		const viewportSizes = [
+			{height: 800, width: 1600},
+			{height: 800, width: 900},
+			{height: 800, width: 480},
+			{height: 800, width: 1600},
+		];
+
+		for (const size of viewportSizes) {
+			await page.setViewportSize(size);
+
+			// Wait past AUTO_SAVE_DELAY (1500 ms) so any spurious debounced
+			// save would have fired before we assert.
+
+			await page.waitForTimeout(2000);
+		}
+
+		expect(autosaveRequestCount).toBe(0);
+
+		await expect(journalEditArticlePage.changesSavedIndicator).toBeHidden();
+	}
+);
+
+autoSaveTest(
+	'Resizing the browser does not trigger autosave after the article has already been saved',
+	{
+		tag: '@LPD-86516',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.fillTitle(getRandomString());
+
+		await expect(
+			journalEditArticlePage.changesSavedIndicator
+		).toBeVisible();
+
+		let autosaveRequestCount = 0;
+
+		page.on('request', (request) => {
+			if (request.url().includes('auto_save_article')) {
+				autosaveRequestCount++;
+			}
+		});
+
+		const viewportSizes = [
+			{height: 800, width: 900},
+			{height: 800, width: 1600},
+			{height: 800, width: 480},
+			{height: 800, width: 1600},
+		];
+
+		for (const size of viewportSizes) {
+			await page.setViewportSize(size);
+
+			await page.waitForTimeout(2000);
+		}
+
+		expect(autosaveRequestCount).toBe(0);
+	}
+);
+
+autoSaveTest(
 	'Preview button is disabled until first autosave',
 	{
 		tag: '@LPD-72082',

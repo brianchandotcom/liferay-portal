@@ -16,13 +16,13 @@ import {
 	ItemSelectorModal,
 	getCMSItemSelectorFilters,
 	getCMSItemSelectorGroupedFilters,
+	CMSFileUploaderComponent,
 } from '@liferay/frontend-js-item-selector-web';
 import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-import {FileUploaderComponentExample} from './FilesUploaderComponentExample';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -342,7 +342,7 @@ function CMSFilesItemSelectorModal({
 					},
 				] as IView[],
 			}}
-			filesUploaderComponent={FileUploaderComponentExample}
+			filesUploaderComponent={CMSFileUploaderComponent}
 			itemTypeLabel={Liferay.Language.get('files')}
 			locator={{
 				id: 'embedded.id',

@@ -104,9 +104,10 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (ArrayUtil.contains(
-							_SKIP_DIR_NAMES,
-							String.valueOf(dirPath.getFileName()))) {
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (ArrayUtil.contains(_SKIP_DIR_NAMES, dirName) ||
+						dirName.contains("-test-")) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}

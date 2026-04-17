@@ -78,7 +78,8 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 		Group group = _groupLocalService.getGroup(
 			assetListEntrySegmentsEntryRel.getGroupId());
 
-		if (ExportImportThreadLocal.isStagingInProcess() &&
+		if ((ExportImportThreadLocal.isExportInProcess() ||
+			 ExportImportThreadLocal.isStagingInProcess()) &&
 			group.isStagedPortlet(SegmentsPortletKeys.SEGMENTS) &&
 			(assetListEntrySegmentsEntryRel.getSegmentsEntryId() !=
 				SegmentsEntryConstants.ID_DEFAULT)) {

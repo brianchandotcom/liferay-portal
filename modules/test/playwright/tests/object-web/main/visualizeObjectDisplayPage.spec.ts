@@ -15,7 +15,7 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import { generateObjectEntryValues } from '../utils/generateObjectEntry';
+import {generateObjectEntryValues} from '../utils/generateObjectEntry';
 import {generateObjectFields} from '../utils/generateObjectFields';
 import {postListTypeDefinitionListTypeEntries} from '../utils/postListTypeDefinitionListTypeEntries';
 
@@ -36,6 +36,7 @@ test(
 	'Can define fixed filter for picklist type on display page',
 	{tag: '@LPS-135004'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
 		// Corresponds to Poshi test: CanDefineFixedFilterForPicklistType
 
 		const {listTypeDefinition, listTypeEntries} =
@@ -43,14 +44,14 @@ test(
 				apiHelpers,
 			});
 
-		const picklistEntryNames = listTypeEntries.map(
-			(entry) => entry.name
-		);
+		const picklistEntryNames = listTypeEntries.map((entry) => entry.name);
 
 		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
-			objectFieldBusinessTypes: [{businessType: 'Picklist', indexed: true}],
+			objectFieldBusinessTypes: [
+				{businessType: 'Picklist', indexed: true},
+			],
 		});
 
 		const objectDefinition =
@@ -160,6 +161,7 @@ test(
 	'Can set pagination as numeric on display page',
 	{tag: '@LPS-135004'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
 		// Corresponds to Poshi test: CanSetPaginationNumeric
 
 		const objectFields = generateObjectFields({
@@ -177,96 +179,6 @@ test(
 			type: 'objectDefinition',
 		});
 
-
-		const objectEntries = [];
-
-		for (let i = 0; i < 2; i++) {
-						const {objectEntry} = await generateObjectEntryValues({
-							objectEntryFormat: 'API',
-							objectFields,
-						});
-						objectEntries.push(objectEntry);
-					}
-
-		await apiHelpers.objectEntry.postObjectEntriesBatch(
-				'c/' + objectDefinition.name.toLowerCase() + 's',
-				objectEntries
-			);
-
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition(),
-			siteId: site.id,
-			title: getRandomString(),
-		});
-
-		await test.step('Add Collection Display with object as provider', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			await pageEditorPage.addFragment(
-				'Content Display',
-				'Collection Display'
-			);
-
-			await pageEditorPage.selectFragment(
-				await pageEditorPage.getFragmentId('Collection Display')
-			);
-
-			await pageEditorPage.chooseCollectionDisplayCollection(
-				'Collection Providers',
-				objectDefinition.label['en_US'],
-				{search: true}
-			);
-
-			await pageEditorPage.waitForChangesSaved();
-
-			await pageEditorPage.addFragment(
-				'Basic Components',
-				'Heading',
-			);
-		});
-
-		await test.step('Set pagination to Numeric and verify', async () => {
-			const collectionId =
-				await pageEditorPage.getFragmentId('Collection Display');
-
-			await pageEditorPage.selectFragment(collectionId);
-
-			await pageEditorPage.changeConfiguration({
-				fieldLabel: 'Pagination',
-				tab: 'General',
-				value: 'numeric',
-			});
-
-			await pageEditorPage.waitForChangesSaved();
-
-			await expect(page.getByRole('navigation', { name: 'Pagination' })).toBeVisible();
-
-			await expect(page.getByText('Showing 1 to 2 of 2 entries.')).toBeVisible();
-		});
-	}
-);
-
-test(
-	'Can set pagination as simple on display page',
-	{tag: '@LPS-135004'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
-		// Corresponds to Poshi test: CanSetPaginationSimple
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-		
 		const objectEntries = [];
 
 		for (let i = 0; i < 2; i++) {
@@ -308,10 +220,98 @@ test(
 
 			await pageEditorPage.waitForChangesSaved();
 
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+		});
+
+		await test.step('Set pagination to Numeric and verify', async () => {
+			const collectionId =
+				await pageEditorPage.getFragmentId('Collection Display');
+
+			await pageEditorPage.selectFragment(collectionId);
+
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Pagination',
+				tab: 'General',
+				value: 'numeric',
+			});
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await expect(
+				page.getByRole('navigation', {name: 'Pagination'})
+			).toBeVisible();
+
+			await expect(
+				page.getByText('Showing 1 to 2 of 2 entries.')
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Can set pagination as simple on display page',
+	{tag: '@LPS-135004'},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Corresponds to Poshi test: CanSetPaginationSimple
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectEntries = [];
+
+		for (let i = 0; i < 2; i++) {
+			const {objectEntry} = await generateObjectEntryValues({
+				objectEntryFormat: 'API',
+				objectFields,
+			});
+			objectEntries.push(objectEntry);
+		}
+
+		await apiHelpers.objectEntry.postObjectEntriesBatch(
+			'c/' + objectDefinition.name.toLowerCase() + 's',
+			objectEntries
+		);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await test.step('Add Collection Display with object as provider', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
 			await pageEditorPage.addFragment(
-				'Basic Components',
-				'Heading',
+				'Content Display',
+				'Collection Display'
 			);
+
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Collection Display')
+			);
+
+			await pageEditorPage.chooseCollectionDisplayCollection(
+				'Collection Providers',
+				objectDefinition.label['en_US'],
+				{search: true}
+			);
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
 		});
 
 		await test.step('Set pagination to Simple and verify', async () => {
@@ -329,11 +329,11 @@ test(
 			await pageEditorPage.waitForChangesSaved();
 
 			await expect(
-				page.getByRole('button', { name: 'previous' })
+				page.getByRole('button', {name: 'previous'})
 			).toBeVisible();
 
 			await expect(
-				page.getByRole('button', { name: 'Next' })
+				page.getByRole('button', {name: 'Next'})
 			).toBeVisible();
 		});
 	}

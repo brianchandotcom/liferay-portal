@@ -15,7 +15,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import { generateObjectEntryValues } from '../utils/generateObjectEntry';
+import {generateObjectEntryValues} from '../utils/generateObjectEntry';
 import {generateObjectFields} from '../utils/generateObjectFields';
 
 const test = mergeTests(
@@ -35,6 +35,7 @@ test(
 	'Can display entries on table format in collection display',
 	{tag: '@LPS-135386'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
 		// Corresponds to Poshi test: CanDisplayEntriesOnTableFormat
 
 		const objectFields = generateObjectFields({
@@ -51,22 +52,21 @@ test(
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
-		
+
 		const objectEntries = [];
 
 		for (let i = 0; i < 2; i++) {
-						const {objectEntry} = await generateObjectEntryValues({
-							objectEntryFormat: 'API',
-							objectFields,
-						});
-						objectEntries.push(objectEntry);
-					}
-
+			const {objectEntry} = await generateObjectEntryValues({
+				objectEntryFormat: 'API',
+				objectFields,
+			});
+			objectEntries.push(objectEntry);
+		}
 
 		await apiHelpers.objectEntry.postObjectEntriesBatch(
-				'c/' + objectDefinition.name.toLowerCase() + 's',
-				objectEntries
-			);
+			'c/' + objectDefinition.name.toLowerCase() + 's',
+			objectEntries
+		);
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition(),
@@ -130,12 +130,11 @@ test(
 	'Can search for object entry on search experience in collection providers',
 	{tag: '@LPS-135388'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
 		// Corresponds to Poshi test: CanSearchForObjectEntryOnSearchExperience
 
 		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: [
-				{businessType: 'Text', indexed: true},
-			],
+			objectFieldBusinessTypes: [{businessType: 'Text', indexed: true}],
 		});
 
 		const objectDefinition =
@@ -216,9 +215,7 @@ test(
 
 			await page.getByLabel('Select', {exact: true}).click();
 
-			await page
-				.getByLabel(objectDefinition.label['en_US'])
-				.check();
+			await page.getByLabel(objectDefinition.label['en_US']).check();
 
 			await page
 				.getByLabel('Filter', {exact: true})
@@ -248,8 +245,9 @@ test(
 			);
 
 			await expect(async () => {
-				const searchInput = page
-					.getByPlaceholder('Search', {exact: true});
+				const searchInput = page.getByPlaceholder('Search', {
+					exact: true,
+				});
 
 				await searchInput.fill(entryValueA, {timeout: 1000});
 				await searchInput.press('Enter', {timeout: 1000});
@@ -272,6 +270,7 @@ test(
 	'Object is displayed to be selected as collection provider on collection display fragment',
 	{tag: '@LPS-133865'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
 		// Corresponds to Poshi test: ObjectDisplayedToCollectionProdiver
 
 		const objectFields = generateObjectFields({
@@ -304,14 +303,14 @@ test(
 			);
 
 			await pageEditorPage.selectFragment(
-                await pageEditorPage.getFragmentId('Collection Display')
-            );
+				await pageEditorPage.getFragmentId('Collection Display')
+			);
 
-            await pageEditorPage.chooseCollectionDisplayCollection(
-                'Collection Providers',
-                objectDefinition.label['en_US'],
-                {search: true}
-            );
+			await pageEditorPage.chooseCollectionDisplayCollection(
+				'Collection Providers',
+				objectDefinition.label['en_US'],
+				{search: true}
+			);
 
 			await expect(
 				page.getByLabel('Collection', {exact: true})

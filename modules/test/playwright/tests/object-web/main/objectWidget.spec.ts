@@ -13,7 +13,7 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import { generateObjectFields } from '../utils/generateObjectFields';
+import {generateObjectFields} from '../utils/generateObjectFields';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -29,13 +29,8 @@ const test = mergeTests(
 test(
 	'Can add object portlet as a widget on a page',
 	{tag: '@LPS-143122'},
-	async ({
-		apiHelpers,
-		editObjectDetailsPage,
-		page,
-		site,
-		widgetPagePage,
-	}) => {
+	async ({apiHelpers, editObjectDetailsPage, page, site, widgetPagePage}) => {
+
 		// Corresponds to Poshi test: CanAddObjectPortletWidget
 
 		const objectFields = generateObjectFields({
@@ -58,9 +53,7 @@ test(
 
 			await editObjectDetailsPage.goToDetailsTab();
 
-			await expect(
-				editObjectDetailsPage.showWidgetToggle
-			).toBeChecked();
+			await expect(editObjectDetailsPage.showWidgetToggle).toBeChecked();
 
 			await editObjectDetailsPage.saveObjectDefinition();
 
@@ -73,9 +66,7 @@ test(
 				title: getRandomString(),
 			});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-			);
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 			await widgetPagePage.addPortlet(
 				objectDefinition.pluralLabel['en_US']
@@ -95,13 +86,8 @@ test(
 test(
 	'Cannot add object portlet as widget when widget button is disabled',
 	{tag: '@LPS-143122'},
-	async ({
-		apiHelpers,
-		editObjectDetailsPage,
-		page,
-		site,
-		widgetPagePage,
-	}) => {
+	async ({apiHelpers, editObjectDetailsPage, page, site, widgetPagePage}) => {
+
 		// Corresponds to Poshi test: CannotAddObjectPortletWhenWidgetDisabled
 
 		const objectFields = generateObjectFields({
@@ -129,7 +115,6 @@ test(
 			await editObjectDetailsPage.saveObjectDefinition();
 
 			await waitForAlert(page, 'Success:');
-
 		});
 
 		await test.step('Search for the object portlet on a widget page and verify it is not available', async () => {
@@ -138,9 +123,7 @@ test(
 				title: getRandomString(),
 			});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-			);
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 			await widgetPagePage.openAddPanel();
 
@@ -149,21 +132,21 @@ test(
 			await page
 				.getByRole('textbox', {name: 'Search Form'})
 				.fill(objectDefinition.pluralLabel['en_US']);
-			
-			await expect(page.getByRole('alert').getByText('There are no widgets on this page')).toBeVisible();		});
-    }
+
+			await expect(
+				page
+					.getByRole('alert')
+					.getByText('There are no widgets on this page')
+			).toBeVisible();
+		});
+	}
 );
 
 test(
 	'Object portlet widget disappears from page when widget button is disabled',
 	{tag: '@LPS-143122'},
-	async ({
-		apiHelpers,
-		editObjectDetailsPage,
-		page,
-		site,
-		widgetPagePage,
-	}) => {
+	async ({apiHelpers, editObjectDetailsPage, page, site, widgetPagePage}) => {
+
 		// Corresponds to Poshi test: ObjectPortletWidgetDisappearsWhenWidgetDisabled
 
 		const objectFields = generateObjectFields({
@@ -189,9 +172,7 @@ test(
 				title: getRandomString(),
 			});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-			);
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 			await widgetPagePage.addPortlet(
 				objectDefinition.pluralLabel['en_US']
@@ -211,9 +192,7 @@ test(
 		});
 
 		await test.step('Navigate back to widget page and verify warning message', async () => {
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-			);
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 			await expect(
 				page.getByText('This object is not available.')
@@ -226,6 +205,7 @@ test(
 	'Widget button is enabled by default on object details',
 	{tag: '@LPS-143122'},
 	async ({apiHelpers, editObjectDetailsPage, page}) => {
+
 		// Corresponds to Poshi test: WidgetButtonEnabledByDefault
 
 		const objectDefinition =

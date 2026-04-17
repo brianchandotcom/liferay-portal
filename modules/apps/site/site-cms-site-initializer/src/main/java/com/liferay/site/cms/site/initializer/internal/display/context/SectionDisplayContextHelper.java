@@ -128,6 +128,15 @@ public class SectionDisplayContextHelper {
 			")");
 	}
 
+	public String getAdditionalAPIURLParameters(String filterString) {
+		return StringBundler.concat(
+			"emptySearch=true&filter=", filterString,
+			"&nestedFields=embedded,embeddedTaxonomyCategory,",
+			"file.metadata,file.previewURL,file.thumbnailURL,",
+			"numberOfObjectEntries,numberOfObjectEntryFolders,",
+			"systemProperties.objectDefinitionBrief");
+	}
+
 	public String getAdditionalAPIURLParameters(
 		String filterString, HttpServletRequest httpServletRequest,
 		String rootObjectEntryFolderExternalReferenceCode) {

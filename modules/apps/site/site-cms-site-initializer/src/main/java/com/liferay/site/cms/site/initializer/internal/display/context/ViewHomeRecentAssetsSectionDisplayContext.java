@@ -55,6 +55,11 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 	}
 
 	@Override
+	public String getAdditionalAPIURLParameters() {
+		return getAdditionalAPIURLParameters(getCMSSectionFilterString());
+	}
+
+	@Override
 	public String getAPIURL() {
 		return HttpComponentsUtil.addParameters(
 			super.getAPIURL(), "sort", "dateModified:desc");

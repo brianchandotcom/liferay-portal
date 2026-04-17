@@ -327,6 +327,11 @@ public abstract class BaseSectionDisplayContext {
 		return _sectionDisplayContextHelper.appendStatus(filterString);
 	}
 
+	protected String getAdditionalAPIURLParameters(String filterString) {
+		return _sectionDisplayContextHelper.getAdditionalAPIURLParameters(
+			filterString);
+	}
+
 	protected abstract String getCMSSectionFilterString();
 
 	protected String[] getObjectFolderExternalReferenceCodes() {

@@ -51,8 +51,8 @@ const columns = [
 		label: i18n.translate('associated-tickets'),
 	},
 	{
-		columnKey: 'targetGoLiveDate',
-		label: i18n.translate('target-go-live-date'),
+		columnKey: 'plannedEventDate',
+		label: i18n.translate('planned-event-date'),
 	},
 	{
 		columnKey: 'actions',
@@ -103,7 +103,7 @@ const BusinessEvents = () => {
 
 		Liferay.Util.openToast({
 			message: i18n.translate(
-				'business-event-actual-go-live-date-recorded-successfully'
+				'business-event-actual-event-date-recorded-successfully'
 			),
 			type: 'success',
 		});
@@ -126,8 +126,8 @@ const BusinessEvents = () => {
 			const normalizedStatus = normalize(statusKey);
 
 			if (normalizedStatus === 'canceled') {
-				const modified = event.targetGoLiveDateTime
-					? new Date(event.targetGoLiveDateTime)
+				const modified = event.plannedEventDate
+					? new Date(event.plannedEventDate)
 					: null;
 
 				if (modified && modified < oneYearAgo) {
@@ -136,8 +136,8 @@ const BusinessEvents = () => {
 			}
 
 			if (normalizedStatus === 'completed') {
-				const goLive = event.actualGoLiveDateTime
-					? new Date(event.actualGoLiveDateTime)
+				const goLive = event.actualEventDate
+					? new Date(event.actualEventDate)
 					: null;
 
 				if (goLive && goLive < oneYearAgo) {
@@ -286,7 +286,7 @@ const BusinessEvents = () => {
 						},
 						{
 							customOptionStyle: 'pr-5',
-							label: i18n.translate('record-actual-go-live'),
+							label: i18n.translate('record-actual-event-date'),
 							onClick: () => {
 								setModalType('goLiveEvent');
 								onOpenChange(true);
@@ -355,6 +355,24 @@ const BusinessEvents = () => {
 							</div>
 						</div>
 					),
+					plannedEventDate: (
+						<div>
+							<div className="text-neutral-10">
+								{getFormattedDate(
+									businessEvent?.plannedEventDate,
+									'day2DMonthSYearN',
+									'UTC'
+								)}
+							</div>
+
+							<div className="be-subtitle text-neutral-7">
+								{getFormattedTime(
+									businessEvent?.plannedEventDate,
+									'UTC'
+								)}
+							</div>
+						</div>
+					),
 					status: (
 						<div className="align-items-center d-flex">
 							<div
@@ -365,24 +383,6 @@ const BusinessEvents = () => {
 										businessEvent?.eventStatus
 											?.key as string
 									) as string
-								)}
-							</div>
-						</div>
-					),
-					targetGoLiveDate: (
-						<div>
-							<div className="text-neutral-10">
-								{getFormattedDate(
-									businessEvent?.targetGoLiveDateTime,
-									'day2DMonthSYearN',
-									'UTC'
-								)}
-							</div>
-
-							<div className="be-subtitle text-neutral-7">
-								{getFormattedTime(
-									businessEvent?.targetGoLiveDateTime,
-									'UTC'
 								)}
 							</div>
 						</div>

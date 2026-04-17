@@ -7,8 +7,14 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.constants.RoleConstants;
+import com.liferay.customer.permission.BusinessEventPermission;
 import com.liferay.customer.service.JiraService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +37,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +50,29 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/jira")
 @RestController
 public class JiraRestController extends BaseRestController {
+
+	@DeleteMapping("/accounts/{externalReferenceCode}/business-events/{id}")
+	public ResponseEntity<String> deleteBusinessEvent(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@PathVariable("id") String id)
+		throws Exception {
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.UPDATE);
+
+			_jiraService.deleteBusinessEvent(id);
+
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@DeleteMapping("/cache")
 	public ResponseEntity<String> deleteCache(
@@ -56,6 +87,152 @@ public class JiraRestController extends BaseRestController {
 			_jiraService.scheduledIssuesCacheEviction();
 
 			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/accounts/{externalReferenceCode}/business-events/{id}")
+	public ResponseEntity<String> getBusinessEvent(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@PathVariable("id") String id)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("GET business-event: " + id);
+		}
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			String jsmId = id;
+
+			if (Validator.isNumber(id)) {
+				try {
+					String mappedJSMId = _jiraService.getJSMIdByLiferayId(
+						GetterUtil.getLong(id));
+
+					if (Validator.isNotNull(mappedJSMId)) {
+						jsmId = mappedJSMId;
+					}
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to map Liferay ID " + id +
+								" to JSM ID, using original ID",
+							exception);
+					}
+				}
+			}
+
+			return new ResponseEntity<>(
+				_jiraService.getBusinessEvent(jsmId), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/accounts/{externalReferenceCode}/business-events")
+	public ResponseEntity<String> getBusinessEvents(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("GET business-events for " + externalReferenceCode);
+		}
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			return new ResponseEntity<>(
+				_jiraService.getBusinessEvents(externalReferenceCode),
+				HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/accounts/{externalReferenceCode}/business-events/versions")
+	public ResponseEntity<String> getBusinessEventVersions(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@RequestParam(defaultValue = "", required = false) String filter,
+			@RequestParam(defaultValue = "dateModified:desc", required = false)
+				String sort)
+		throws Exception {
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			String businessEventVersionFilter = filter;
+
+			if (filter.contains(
+					"r_businessEventToBusinessEventVersions_" +
+						"c_businessEventId eq '")) {
+
+				String id = filter.substring(
+					filter.indexOf("'") + 1, filter.lastIndexOf("'"));
+
+				if (Validator.isNumber(id)) {
+					try {
+						String jsmId = _jiraService.getJSMIdByLiferayId(
+							GetterUtil.getLong(id));
+
+						if (Validator.isNotNull(jsmId)) {
+							businessEventVersionFilter = StringUtil.replace(
+								filter, "'" + id + "'", "'" + jsmId + "'");
+						}
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Unable to map Liferay ID " + id +
+									" to JSM ID for version filter",
+								exception);
+						}
+					}
+				}
+			}
+
+			return new ResponseEntity<>(
+				_jiraService.getBusinessEventVersions(
+					businessEventVersionFilter, sort),
+				HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/field-options/{fieldName}")
+	public ResponseEntity<String> getFieldOptions(
+			@PathVariable("fieldName") String fieldName)
+		throws Exception {
+
+		try {
+			return new ResponseEntity<>(
+				_jiraService.getFieldOptions(fieldName), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -90,6 +267,23 @@ public class JiraRestController extends BaseRestController {
 			_log.error(exception, exception);
 
 			return new ResponseEntity<>(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/jsm-objects/{name}")
+	public ResponseEntity<String> getJSMObjects(
+			@PathVariable("name") String name)
+		throws Exception {
+
+		try {
+			return new ResponseEntity<>(
+				_jiraService.getJSMObjects(name), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -147,6 +341,61 @@ public class JiraRestController extends BaseRestController {
 			_log.error(exception, exception);
 
 			return new ResponseEntity<>(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/accounts/{externalReferenceCode}/business-events")
+	public ResponseEntity<String> postBusinessEvent(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@RequestBody String json)
+		throws Exception {
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.UPDATE);
+
+			return new ResponseEntity<>(
+				_jiraService.createBusinessEvent(externalReferenceCode, json),
+				HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/accounts/{externalReferenceCode}/business-events/{id}")
+	public ResponseEntity<String> postBusinessEvent(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@PathVariable("id") String id, @RequestBody String json)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"POST business-event update: id=", id, ", body=", json));
+		}
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.UPDATE);
+
+			return new ResponseEntity<>(
+				_jiraService.updateBusinessEvent(id, json), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(
+				StringBundler.concat(
+					"Error updating business event ", id, ": ",
+					exception.getMessage()),
+				exception);
+
+			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -270,6 +519,9 @@ public class JiraRestController extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(JiraRestController.class);
+
+	@Autowired
+	private BusinessEventPermission _businessEventPermission;
 
 	@Value("${liferay.customer.jira.security.vulnerability.project}")
 	private String _jiraSecurityVulnerabilityProject;

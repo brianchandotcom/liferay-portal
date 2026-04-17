@@ -5,7 +5,7 @@
 
 import Analytics from './analytics';
 import {
-	ANALYTICS_BATCH_SEGMENT_IDS,
+	ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODE,
 	HEADER_PROJECT_ID,
 	THREE_HOURS_IN_MILLISECONDS,
 } from './utils/constants';
@@ -14,7 +14,7 @@ import {getItem, setItem} from './utils/storage';
 export type SegmentCachedData = {
 	[key: string]: {
 		createDate: number;
-		segmentIds: number[];
+		segmentExternalReferenceCodes: string[];
 	};
 };
 
@@ -29,7 +29,7 @@ export class Segment {
 		const individualId = this._getIndividualId();
 
 		const cachedData = getItem<SegmentCachedData>(
-			ANALYTICS_BATCH_SEGMENT_IDS
+			ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODE
 		);
 
 		if (cachedData && cachedData[individualId]) {
@@ -40,26 +40,26 @@ export class Segment {
 				date.getTime() - userData.createDate <
 				THREE_HOURS_IN_MILLISECONDS
 			) {
-				return Promise.resolve(userData.segmentIds);
+				return Promise.resolve(userData.segmentExternalReferenceCodes);
 			}
 		}
 
-		return this._fetchSegmentIds(
+		return this._fetchSegmentExternalReferenceCodes(
 			individualId,
-			'batch-segment-external-reference-code'
+			'batch-segment-external-reference-codes'
 		).then((data) => {
 			try {
 				const date = new Date();
 
 				const allCachedData =
-					getItem<SegmentCachedData>(ANALYTICS_BATCH_SEGMENT_IDS) ||
+					getItem<SegmentCachedData>(ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODE) ||
 					{};
 
-				setItem(ANALYTICS_BATCH_SEGMENT_IDS, {
+				setItem(ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODE, {
 					...allCachedData,
 					[individualId]: {
 						createDate: date.getTime(),
-						segmentIds: data,
+						segmentExternalReferenceCodes: data,
 					},
 				});
 
@@ -72,9 +72,9 @@ export class Segment {
 	}
 
 	getRealTimeSegmentExternalReferenceCodes() {
-		return this._fetchSegmentIds(
+		return this._fetchSegmentExternalReferenceCodes(
 			this._getIndividualId(),
-			'real-time-segment-external-reference-code'
+			'real-time-segment-external-reference-codes'
 		);
 	}
 
@@ -86,7 +86,10 @@ export class Segment {
 		);
 	}
 
-	private _fetchSegmentIds(individualId: string, endpoint: string) {
+	private _fetchSegmentExternalReferenceCodes(
+		individualId: string,
+		endpoint: string
+	) {
 		const {config} = this.instance;
 
 		const headers = {'Content-Type': 'application/json'};

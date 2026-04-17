@@ -377,7 +377,9 @@ test(
 
 			await expect(headerTitle).toBeVisible();
 
-			await expect(headerTitle).toHaveText(`${designLibraryName} Settings`);
+			await expect(headerTitle).toHaveText(
+				`${designLibraryName} Settings`
+			);
 
 			await expect(page.getByRole('textbox', {name: 'Name'})).toHaveValue(
 				designLibraryName

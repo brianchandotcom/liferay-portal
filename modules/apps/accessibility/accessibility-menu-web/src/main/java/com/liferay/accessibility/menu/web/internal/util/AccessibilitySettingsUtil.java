@@ -76,7 +76,17 @@ public class AccessibilitySettingsUtil {
 				_getSessionClicksValue(
 					httpServletRequest,
 					AccessibilitySettingConstants.
-						ACCESSIBILITY_SETTING_REDUCED_MOTION)));
+						ACCESSIBILITY_SETTING_REDUCED_MOTION)),
+			new AccessibilitySetting(
+				"c-prefers-focus-ring", false,
+				LanguageUtil.get(
+					httpServletRequest, "focus-ring-animation-description"),
+				AccessibilitySettingConstants.ACCESSIBILITY_SETTING_FOCUS_RING,
+				LanguageUtil.get(httpServletRequest, "focus-ring-animation"),
+				_getSessionClicksValue(
+					httpServletRequest,
+					AccessibilitySettingConstants.
+						ACCESSIBILITY_SETTING_FOCUS_RING)));
 	}
 
 	public static boolean isAccessibilityMenuEnabled(

@@ -4,12 +4,11 @@ kind: CronWorkflow
 metadata:
     labels:
         component: backup-create-platform
-    name: backup-create-cron-workflow
+    name: backup-create-scheduler-cron-workflow
     namespace: {{ .Release.Namespace }}
 spec:
     concurrencyPolicy: Forbid
     schedule: {{ .Values.backup.schedule | quote }}
-    timezone: UTC
     workflowSpec:
         arguments:
             parameters:

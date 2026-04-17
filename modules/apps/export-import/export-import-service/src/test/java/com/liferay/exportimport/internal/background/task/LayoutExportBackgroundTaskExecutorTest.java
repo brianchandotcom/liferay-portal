@@ -129,27 +129,27 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			BackgroundTaskResult.SUCCESS,
 			layoutExportBackgroundTaskExecutor.execute(backgroundTask));
 
-		ArgumentCaptor<String> argumentCaptor1 = ArgumentCaptor.forClass(
-			String.class);
-		ArgumentCaptor<String> argumentCaptor2 = ArgumentCaptor.forClass(
+		ArgumentCaptor<String> sourceFileNameArgumentCaptor =
+			ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<String> titleArgumentCaptor = ArgumentCaptor.forClass(
 			String.class);
 
 		Mockito.verify(
 			_backgroundTaskManager
 		).addBackgroundTaskAttachment(
 			Mockito.eq(userId), Mockito.eq(backgroundTaskId),
-			argumentCaptor1.capture(), argumentCaptor2.capture(),
-			Mockito.eq(larFile)
+			sourceFileNameArgumentCaptor.capture(),
+			titleArgumentCaptor.capture(), Mockito.eq(larFile)
 		);
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				name, StringPool.DASH, _timestamp, StringPool.PERIOD,
 				_PROTOCOL),
-			argumentCaptor1.getValue());
+			sourceFileNameArgumentCaptor.getValue());
 		Assert.assertEquals(
 			StringBundler.concat(name, StringPool.PERIOD, _PROTOCOL),
-			argumentCaptor2.getValue());
+			titleArgumentCaptor.getValue());
 	}
 
 	private static final String _PROTOCOL = "lar";

@@ -5,6 +5,9 @@
 
 export interface ChatbotConfiguration {
 	active: boolean;
+	companyLogo?: {
+		fileURL: string;
+	};
 	introMessage: string;
 	notificationMessage: string;
 	placeholderMessage: string;

@@ -311,12 +311,14 @@ public class NotificationsSharingEntryLocalServiceWrapper
 				return;
 			}
 
-			List<User> userGroupUsers = _userLocalService.getUserGroupUsers(
-				sharingEntry.getToUserGroupId());
+			if (sharingEntry.getToUserGroupId() > 0) {
+				List<User> userGroupUsers = _userLocalService.getUserGroupUsers(
+					sharingEntry.getToUserGroupId());
 
-			for (User user : userGroupUsers) {
-				_sendNotificationEvent(
-					sharingEntry, notificationType, serviceContext, user);
+				for (User user : userGroupUsers) {
+					_sendNotificationEvent(
+						sharingEntry, notificationType, serviceContext, user);
+				}
 			}
 		}
 		catch (Exception exception) {

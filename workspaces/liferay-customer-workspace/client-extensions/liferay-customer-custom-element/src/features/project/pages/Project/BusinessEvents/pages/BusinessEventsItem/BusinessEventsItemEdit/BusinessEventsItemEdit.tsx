@@ -35,7 +35,7 @@ import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 import useIsJiraBackend from '../../../hooks/useIsJiraBackend';
 import {containsOption} from '../../../utils/containsOption';
-import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
+import {getFormattedEventDateTime} from '../../../utils/getFormattedEventDate';
 import parseAssociatedTickets from '../../../utils/parseAssociatedTickets';
 import useIsSaasOnly from '../../../utils/useIsSaasOnly';
 import BusinessEventsConfirmationPage from './components/BusinessEventsConfirmationPage';
@@ -207,16 +207,16 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 						businessEvent.currentLiferayVersion?.name,
 					description: businessEvent.description,
 					eventStatus:
-						new Date(businessEvent.targetGoLiveDateTime!) >= now
+						new Date(businessEvent.plannedEventDate!) >= now
 							? {key: 'open'}
 							: {key: originalBusinessEvent.eventStatus?.key},
 					eventType: businessEvent.eventType,
 					lastComment: reason,
 					name: businessEvent?.name,
 					newLiferayVersion: businessEvent.newLiferayVersion?.name,
+					plannedEventDate: businessEvent.plannedEventDate,
 					r_accountEntryToBusinessEvents_accountEntryId:
 						businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-					targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
 					timeZone: businessEvent.timeZone?.name,
 				}
 			: {
@@ -225,16 +225,16 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 						businessEvent.currentLiferayVersion?.key,
 					description: businessEvent.description,
 					eventStatus:
-						new Date(businessEvent.targetGoLiveDateTime!) >= now
+						new Date(businessEvent.plannedEventDate!) >= now
 							? {key: 'open'}
 							: {key: originalBusinessEvent.eventStatus?.key},
 					eventType: businessEvent.eventType,
 					lastComment: reason,
 					name: businessEvent?.name,
 					newLiferayVersion: businessEvent.newLiferayVersion?.key,
+					plannedEventDate: businessEvent.plannedEventDate,
 					r_accountEntryToBusinessEvents_accountEntryId:
 						businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-					targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
 					timeZone: businessEvent.timeZone?.key,
 				};
 
@@ -305,15 +305,15 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		setFieldValue(
-			'businessEvent.targetGoLiveDateTime',
-			getFormattedGoLiveDateTime(
-				businessEvent.targetGoLiveDate,
-				businessEvent.targetGoLiveTime
+			'businessEvent.plannedEventDate',
+			getFormattedEventDateTime(
+				businessEvent.plannedEventDate,
+				businessEvent.plannedEventTime
 			)
 		);
 	}, [
-		businessEvent.targetGoLiveDate,
-		businessEvent.targetGoLiveTime,
+		businessEvent.plannedEventDate,
+		businessEvent.plannedEventTime,
 		setFieldValue,
 	]);
 
@@ -442,12 +442,12 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		const hasEventName = values.businessEvent.name;
 		const hasEventType = values.businessEvent.eventType.key;
 		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion.key;
-		const hasTargetGoLiveDate = values.businessEvent.targetGoLiveDate;
+		const hasPlannedEventDate = values.businessEvent.plannedEventDate;
 
 		let hasAllRequiredFieldsFilled =
 			Boolean(hasEventName) &&
 			Boolean(hasEventType) &&
-			Boolean(hasTargetGoLiveDate);
+			Boolean(hasPlannedEventDate);
 
 		if (isDescriptionRequired) {
 			hasAllRequiredFieldsFilled =
@@ -475,7 +475,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		values.businessEvent.eventType,
 		values.businessEvent.name,
 		values.businessEvent.newLiferayVersion,
-		values.businessEvent.targetGoLiveDate,
+		values.businessEvent.plannedEventDate,
 	]);
 
 	return !loading ? (
@@ -537,16 +537,16 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 									isLoading={isLoadingSubmitButton}
 									onClick={() => {
 										const newTargetGoLiveDateTime =
-											getFormattedGoLiveDateTime(
-												businessEvent.targetGoLiveDate,
-												businessEvent.targetGoLiveTime
+											getFormattedEventDateTime(
+												businessEvent.plannedEventDate,
+												businessEvent.plannedEventTime
 											);
 										if (
 											businessEvent.timeZone?.key !==
 												originalBusinessEvent.timeZone
 													?.key ||
 											newTargetGoLiveDateTime !==
-												originalBusinessEvent.targetGoLiveDateTime
+												originalBusinessEvent.plannedEventDate
 										) {
 											setIsModalOpen(true);
 										}
@@ -567,7 +567,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 							headerTitle={businessEvent.name!}
 							isLoadingSubmitButton={isLoadingSubmitButton}
 							message={i18n.translate(
-								'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
+								'we-understand-that-plans-change-please-let-us-know-why-the-planned-event-date-for-this-event-is-being-updated'
 							)}
 							observer={observer}
 							onClose={onClose}
@@ -709,14 +709,14 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 													dateFormat="MM-dd-yyyy"
 													groupStyle="pb-1"
 													label={i18n.translate(
-														'target-go-live-date'
+														'planned-event-date'
 													)}
-													name="businessEvent.targetGoLiveDate"
+													name="businessEvent.plannedEventDate"
 													onChange={(
 														value: string
 													) => {
 														setFieldValue(
-															'businessEvent.targetGoLiveDate',
+															'businessEvent.plannedEventDate',
 															value
 														);
 													}}
@@ -768,10 +768,10 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 													label={i18n.translate(
 														'time'
 													)}
-													name="businessEvent.targetGoLiveTime"
+													name="businessEvent.plannedEventTime"
 													onChange={(value) =>
 														setFieldValue(
-															'businessEvent.targetGoLiveTime',
+															'businessEvent.plannedEventTime',
 															value
 														)
 													}
@@ -916,9 +916,9 @@ const BusinessEventsItemEdit: React.FC = () => {
 		return <div>{i18n.translate('no-data-found')}</div>;
 	}
 
-	const targetGoLiveDateTime = businessEvent.targetGoLiveDateTime || '';
-	const [datePart = '', timePart = ''] = targetGoLiveDateTime.split('T');
-	const targetGoLiveTime = timePart ? timePart.substring(0, 5) : '';
+	const plannedEventDate = businessEvent.plannedEventDate || '';
+	const [datePart = '', timePart = ''] = plannedEventDate.split('T');
+	const plannedEventTime = timePart ? timePart.substring(0, 5) : '';
 
 	const [year = '', month = '', day = ''] = datePart.split('-');
 
@@ -932,10 +932,10 @@ const BusinessEventsItemEdit: React.FC = () => {
 					newLiferayVersion: businessEvent.newLiferayVersion || {
 						key: '',
 					},
-					targetGoLiveDate: datePart ? `${month}-${day}-${year}` : '',
-					targetGoLiveTime: {
-						hours: targetGoLiveTime?.split(':')[0] || '--',
-						minutes: targetGoLiveTime?.split(':')[1] || '--',
+					plannedEventDate: datePart ? `${month}-${day}-${year}` : '',
+					plannedEventTime: {
+						hours: plannedEventTime?.split(':')[0] || '--',
+						minutes: plannedEventTime?.split(':')[1] || '--',
 					},
 					timeZone: businessEvent.timeZone || {key: ''},
 				},

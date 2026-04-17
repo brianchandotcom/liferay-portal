@@ -20,12 +20,12 @@ export default function getInitialEvent() {
 		newLiferayVersion: {
 			key: '',
 		},
-		r_accountEntryToBusinessEvents_accountEntryId: '',
-		targetGoLiveDate: '',
-		targetGoLiveTime: {
+		plannedEventDate: '',
+		plannedEventTime: {
 			hours: '--',
 			minutes: '--',
 		},
+		r_accountEntryToBusinessEvents_accountEntryId: '',
 		timeZone: {
 			key: '',
 		},

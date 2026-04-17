@@ -73,7 +73,7 @@ const BusinessEventsItemDetails = () => {
 		{
 			customOptionStyle: 'pr-5',
 			icon: <ClayIcon symbol="check-circle" />,
-			label: i18n.translate('record-actual-go-live'),
+			label: i18n.translate('record-actual-event-date'),
 			onClick: () => {
 				setModalType('goLiveEvent');
 				onOpenChange(true);
@@ -106,7 +106,7 @@ const BusinessEventsItemDetails = () => {
 
 		Liferay.Util.openToast({
 			message: i18n.translate(
-				'business-event-actual-go-live-date-recorded-successfully'
+				'business-event-actual-event-date-recorded-successfully'
 			),
 			type: 'success',
 		});
@@ -286,16 +286,16 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
-					{businessEvent?.targetGoLiveDateTime && (
+					{businessEvent?.plannedEventDate && (
 						<div className="event-detail-item mb-4">
 							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
-								{i18n.translate('target-go-live-date')}
+								{i18n.translate('planned-event-date')}
 							</div>
 
 							<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
 								<div className="text-neutral-10">
 									{getFormattedDate(
-										businessEvent?.targetGoLiveDateTime,
+										businessEvent?.plannedEventDate,
 										'day2DMonthSYearN',
 										'UTC'
 									)}
@@ -303,7 +303,7 @@ const BusinessEventsItemDetails = () => {
 
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
-										businessEvent?.targetGoLiveDateTime,
+										businessEvent?.plannedEventDate,
 										'UTC'
 									)}
 								</div>
@@ -311,16 +311,16 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
-					{businessEvent?.actualGoLiveDateTime && (
+					{businessEvent?.actualEventDate && (
 						<div className="event-detail-item mb-4">
 							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
-								{i18n.translate('actual-go-live-date')}
+								{i18n.translate('actual-event-date')}
 							</div>
 
 							<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
 								<div className="text-neutral-10">
 									{getFormattedDate(
-										businessEvent?.actualGoLiveDateTime,
+										businessEvent?.actualEventDate,
 										'day2DMonthSYearN',
 										'UTC'
 									)}
@@ -328,7 +328,7 @@ const BusinessEventsItemDetails = () => {
 
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
-										businessEvent?.actualGoLiveDateTime,
+										businessEvent?.actualEventDate,
 										'UTC'
 									)}
 								</div>

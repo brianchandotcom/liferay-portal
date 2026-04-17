@@ -46,7 +46,7 @@ const BusinessEventsConfirmationPage = ({
 			onClose={onClose}
 			reason={reason}
 			submitButton={i18n.translate('save-changes')}
-			title={i18n.translate('change-target-go-live')}
+			title={i18n.translate('change-planned-event-date')}
 		>
 			<p className="mb-3">{message}</p>
 

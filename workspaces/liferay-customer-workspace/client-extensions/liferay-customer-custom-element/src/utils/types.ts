@@ -29,9 +29,8 @@ export interface IAccountSubscriptionGroup {
 }
 
 export interface IBusinessEvent {
-	actualGoLiveDate?: string;
-	actualGoLiveDateTime?: string;
-	actualGoLiveTime?: string;
+	actualEventDate?: string;
+	actualEventTime?: string;
 	associatedTickets?: string;
 	currentLiferayVersion?: {
 		key: string;
@@ -55,10 +54,9 @@ export interface IBusinessEvent {
 		key: string;
 		name: string;
 	};
+	plannedEventDate?: string;
+	plannedEventTime?: string;
 	r_accountEntryToBusinessEvents_accountEntryId?: number;
-	targetGoLiveDate?: string;
-	targetGoLiveDateTime?: string;
-	targetGoLiveTime?: string;
 	timeZone?: {
 		key: string;
 		name: string;

@@ -58,9 +58,9 @@ const CancelEventPage: React.FC<IProps> = ({
 		const formattedBusinessEvent = {
 			eventStatus: {key: 'canceled'},
 			lastComment: reason,
+			plannedEventDate: updatedBusinessEvent.plannedEventDate,
 			r_accountEntryToBusinessEvents_accountEntryId:
 				updatedBusinessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-			targetGoLiveDateTime: updatedBusinessEvent.targetGoLiveDateTime,
 		};
 
 		try {

@@ -6,6 +6,7 @@
 import {fetch} from 'frontend-js-web';
 
 interface Parameters {
+	experienceId?: string | null;
 	namespace: string;
 	plid: number;
 	timeSpanKey?: 'last-7-days' | 'last-30-days';
@@ -19,11 +20,17 @@ export default {
 			method: 'POST',
 		});
 	},
+	getExperiences(analyticsReportsPageExperiencesURL: string, body: object) {
+		return _fetchWithError(analyticsReportsPageExperiencesURL, {
+			body,
+			method: 'POST',
+		});
+	},
 	getHistoricalReads(
 		analyticsReportsHistoricalReadsURL: string,
-		{namespace, plid, timeSpanKey, timeSpanOffset}: Parameters
+		{experienceId, namespace, plid, timeSpanKey, timeSpanOffset}: Parameters
 	) {
-		const body = {plid, timeSpanKey, timeSpanOffset};
+		const body = {experienceId, plid, timeSpanKey, timeSpanOffset};
 
 		return _fetchWithError(analyticsReportsHistoricalReadsURL, {
 			body: _getFormDataRequest(body, namespace),
@@ -33,9 +40,9 @@ export default {
 
 	getHistoricalViews(
 		analyticsReportsHistoricalViewsURL: string,
-		{namespace, plid, timeSpanKey, timeSpanOffset}: Parameters
+		{experienceId, namespace, plid, timeSpanKey, timeSpanOffset}: Parameters
 	) {
-		const body = {plid, timeSpanKey, timeSpanOffset};
+		const body = {experienceId, plid, timeSpanKey, timeSpanOffset};
 
 		return _fetchWithError(analyticsReportsHistoricalViewsURL, {
 			body: _getFormDataRequest(body, namespace),
@@ -69,9 +76,9 @@ export default {
 
 	getTrafficSources(
 		analyticsReportsTrafficSourcesURL: string,
-		{namespace, plid, timeSpanKey, timeSpanOffset}: Parameters
+		{experienceId, namespace, plid, timeSpanKey, timeSpanOffset}: Parameters
 	) {
-		const body = {plid, timeSpanKey, timeSpanOffset};
+		const body = {experienceId, plid, timeSpanKey, timeSpanOffset};
 
 		return _fetchWithError(analyticsReportsTrafficSourcesURL, {
 			body: _getFormDataRequest(body, namespace),

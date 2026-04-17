@@ -8,7 +8,6 @@ package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource;
@@ -82,8 +81,7 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 			transform(
 				_fragmentCollectionService.getFragmentCollections(
 					groupId, pagination.getStartPosition(),
-					pagination.getEndPosition(),
-					FragmentCollectionNameComparator.getInstance(true)),
+					pagination.getEndPosition()),
 				this::_toFragmentSet),
 			pagination,
 			_fragmentCollectionService.getFragmentCollectionsCount(groupId));

@@ -6,17 +6,29 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
+import ChatbotAvatar from './ChatbotAvatar';
 import {StarsIcon} from './Icons';
 
 interface AssistantMessageProps {
+	companyLogo?: string;
 	text: string;
+	title: string;
 }
 
-export default function AssistantMessage({text}: AssistantMessageProps) {
+export default function AssistantMessage({
+	companyLogo,
+	text,
+	title,
+}: AssistantMessageProps) {
 	return (
 		<div className="aihub-msg-assistant">
 			<div className="aihub-msg-assistant-icon">
-				<StarsIcon />
+				<ChatbotAvatar
+					className="aihub-msg-assistant-company-logo"
+					companyLogo={companyLogo}
+					fallback={<StarsIcon />}
+					title={title}
+				/>
 			</div>
 
 			<div className="aihub-msg-assistant-text">

@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	changeTrackingPagesTest,
+	dataApiHelpersTest,
 	journalPagesTest,
 	loginTest()
 );
@@ -34,7 +34,7 @@ test('LPD-29562 Assert popover only appears when context is changed', async ({
 		page.getByText('Keep working in this publication?', {exact: true})
 	).toBeHidden();
 
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
 
@@ -61,7 +61,7 @@ test('LPD-33582 Assert context change popover buttons behavior', async ({
 }) => {
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	const site1 = await apiHelpers.headlessSite.createSite({
+	const site1 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
 
@@ -77,7 +77,7 @@ test('LPD-33582 Assert context change popover buttons behavior', async ({
 
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	const site2 = await apiHelpers.headlessSite.createSite({
+	const site2 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
 
@@ -120,7 +120,7 @@ test('LPD-29693, LPD-29294 Assert silence context change popover behavior', asyn
 }) => {
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	const site1 = await apiHelpers.headlessSite.createSite({
+	const site1 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
 
@@ -138,7 +138,7 @@ test('LPD-29693, LPD-29294 Assert silence context change popover behavior', asyn
 		.getByRole('button', {name: 'Stay in Current Publication'})
 		.click();
 
-	const site2 = await apiHelpers.headlessSite.createSite({
+	const site2 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
 

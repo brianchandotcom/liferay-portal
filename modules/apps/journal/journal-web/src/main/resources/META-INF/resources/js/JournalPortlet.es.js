@@ -331,6 +331,7 @@ export default function _JournalPortlet({
 		});
 	};
 
+	let formChangeListener;
 	let hasUnsavedChanges = false;
 
 	const submitAsyncForm = (
@@ -418,6 +419,8 @@ export default function _JournalPortlet({
 					lockHolder.lock?.unlock();
 					removeAlert();
 
+					formChangeListener?.refreshSnapshot();
+
 					if (hasUnsavedChanges) {
 						hasUnsavedChanges = false;
 
@@ -498,33 +501,33 @@ export default function _JournalPortlet({
 		hasSavePermission &&
 		(!classNameId || classNameId === '0')
 	) {
-		eventHandlers.push(
-			attachFormChangeListener({
-				acceptMutationRecord: (mutationRecord) => {
-					return [
-						mutationRecord.target,
-						...mutationRecord.addedNodes,
-						...mutationRecord.removedNodes,
-					].some(
-						(node) =>
-							node.name &&
-							node.name.startsWith(namespace) &&
-							node.name !== `${namespace}languageId`
-					);
-				},
-				callback: () => {
-					if (lockHolder.lock?.isLocked()) {
-						hasUnsavedChanges = true;
+		formChangeListener = attachFormChangeListener({
+			acceptMutationRecord: (mutationRecord) => {
+				return [
+					mutationRecord.target,
+					...mutationRecord.addedNodes,
+					...mutationRecord.removedNodes,
+				].some(
+					(node) =>
+						node.name &&
+						node.name.startsWith(namespace) &&
+						node.name !== `${namespace}languageId`
+				);
+			},
+			callback: () => {
+				if (lockHolder.lock?.isLocked()) {
+					hasUnsavedChanges = true;
 
-						return;
-					}
+					return;
+				}
 
-					handleAutoSave();
-				},
-				form,
-				namespace,
-			})
-		);
+				handleAutoSave();
+			},
+			form,
+			namespace,
+		});
+
+		eventHandlers.push(formChangeListener);
 	}
 
 	if (window.innerWidth > Liferay.BREAKPOINTS.PHONE) {
@@ -548,7 +551,52 @@ function attachFormChangeListener({
 	form,
 	namespace,
 }) {
+	const excludedSnapshotNames = new Set([
+		`${namespace}formDate`,
+		`${namespace}languageId`,
+	]);
+
+	const snapshotFormValues = () => {
+		const values = new Map();
+
+		for (const element of form.elements) {
+			if (
+				element.name &&
+				element.name.startsWith(namespace) &&
+				!excludedSnapshotNames.has(element.name)
+			) {
+				values.set(element.name, (element.value ?? '').trim());
+			}
+		}
+
+		return values;
+	};
+
+	const snapshotsDiffer = (a, b) => {
+		if (a.size !== b.size) {
+			return true;
+		}
+
+		for (const [name, value] of a) {
+			if (b.get(name) !== value) {
+				return true;
+			}
+		}
+
+		return false;
+	};
+
+	let lastKnownSnapshot = new Map();
+
 	const handleChange = debounce(() => {
+		const current = snapshotFormValues();
+
+		if (!snapshotsDiffer(current, lastKnownSnapshot)) {
+			return;
+		}
+
+		lastKnownSnapshot = current;
+
 		callback();
 	}, AUTO_SAVE_DELAY);
 
@@ -580,6 +628,8 @@ function attachFormChangeListener({
 	});
 
 	Liferay.componentReady(`${namespace}SelectAssetDisplayPage`).then(() => {
+		lastKnownSnapshot = snapshotFormValues();
+
 		mutationObserver.observe(form, {
 			attributeFilter: ['value'],
 			attributeOldValue: true,
@@ -595,6 +645,9 @@ function attachFormChangeListener({
 		detach() {
 			mutationObserver.disconnect();
 			form.removeEventListener('change', handleChange);
+		},
+		refreshSnapshot() {
+			lastKnownSnapshot = snapshotFormValues();
 		},
 	};
 }

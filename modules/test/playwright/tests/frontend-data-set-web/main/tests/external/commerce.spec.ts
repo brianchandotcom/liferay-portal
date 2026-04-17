@@ -42,15 +42,10 @@ test(
 	},
 	async ({apiHelpers, globalMenuPage, page}) => {
 		await test.step('Create commerce site', async () => {
-			const site = await apiHelpers.headlessSite.createSite({
+			await apiHelpers.headlessAdminSite.postSite({
 				name: 'Minium',
 				templateKey: 'minium-initializer',
 				templateType: 'site-initializer',
-			});
-
-			apiHelpers.data.push({
-				id: site.externalReferenceCode,
-				type: 'site',
 			});
 
 			await globalMenuPage.goToSite('Minium');

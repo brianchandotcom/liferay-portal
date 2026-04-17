@@ -61,15 +61,13 @@ const testWithClaritySiteInitializerFF = mergeTests(
 	}, testInfo) => {
 		testInfo.fail(shouldFail);
 
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name,
 			templateKey: name,
 			templateType: 'site-initializer',
 		});
 
 		expect(site.name).toBeDefined();
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await stagingPage.goto(site.name);
 
@@ -118,15 +116,10 @@ const testWithClaritySiteInitializerFF = mergeTests(
 		let site2: Site;
 
 		await test.step('Create the site 1 from the template', async () => {
-			site1 = await apiHelpers.headlessSite.createSite({
+			site1 = await apiHelpers.headlessAdminSite.postSite({
 				name: getRandomString(),
 				templateKey: name,
 				templateType: 'site-initializer',
-			});
-
-			apiHelpers.data.push({
-				id: site1.externalReferenceCode,
-				type: 'site',
 			});
 		});
 
@@ -139,13 +132,8 @@ const testWithClaritySiteInitializerFF = mergeTests(
 		});
 
 		await test.step('Create the site 2', async () => {
-			site2 = await apiHelpers.headlessSite.createSite({
+			site2 = await apiHelpers.headlessAdminSite.postSite({
 				name: getRandomString(),
-			});
-
-			apiHelpers.data.push({
-				id: site2.externalReferenceCode,
-				type: 'site',
 			});
 		});
 
@@ -306,16 +294,11 @@ testWithClaritySiteInitializerFF(
 			await testWithClaritySiteInitializerFF.step(
 				'Create the site 1 from the template',
 				async () => {
-					site1 = await apiHelpers.headlessSite.createSite({
+					site1 = await apiHelpers.headlessAdminSite.postSite({
 						name: getRandomString(),
 						templateKey:
 							'com.liferay.site.initializer.teaser.showcase',
 						templateType: 'site-initializer',
-					});
-
-					apiHelpers.data.push({
-						id: site1.externalReferenceCode,
-						type: 'site',
 					});
 				}
 			);
@@ -373,13 +356,8 @@ testWithClaritySiteInitializerFF(
 			await testWithClaritySiteInitializerFF.step(
 				'Create the site 2',
 				async () => {
-					site2 = await apiHelpers.headlessSite.createSite({
+					site2 = await apiHelpers.headlessAdminSite.postSite({
 						name: getRandomString(),
-					});
-
-					apiHelpers.data.push({
-						id: site2.externalReferenceCode,
-						type: 'site',
 					});
 				}
 			);

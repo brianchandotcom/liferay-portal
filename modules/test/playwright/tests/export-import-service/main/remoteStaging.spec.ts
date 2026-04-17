@@ -60,11 +60,9 @@ test(
 	}) => {
 		test.slow();
 
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: 'Site Name',
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -74,13 +72,8 @@ test(
 			title: 'Staging Test Page',
 		});
 
-		const remoteSite = await remoteApiHelpers.headlessSite.createSite({
+		const remoteSite = await remoteApiHelpers.headlessAdminSite.postSite({
 			name: 'Remote Site Name',
-		});
-
-		remoteApiHelpers.data.push({
-			id: remoteSite.externalReferenceCode,
-			type: 'site',
 		});
 
 		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({

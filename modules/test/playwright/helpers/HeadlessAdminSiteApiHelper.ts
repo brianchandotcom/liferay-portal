@@ -42,7 +42,7 @@ export type TSite = {
 	membershipType?: string;
 	name: string;
 	parentSiteExternalReferenceCode?: string;
-	templateKey?: number;
+	templateKey?: string;
 	templateType?: string;
 };
 

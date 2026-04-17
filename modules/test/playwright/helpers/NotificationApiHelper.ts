@@ -11,6 +11,9 @@ type EmailNotificationRecipients = {
 };
 
 type TNotificationTemplate = {
+	body?: {
+		[key: string]: string;
+	};
 	editorType: string;
 	id?: number;
 	name: string;

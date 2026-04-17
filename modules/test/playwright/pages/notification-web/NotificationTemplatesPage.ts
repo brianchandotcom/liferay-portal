@@ -26,7 +26,7 @@ export class NotificationTemplatesPage {
 			name: 'Delete',
 		});
 		this.newNotificationTemplateButton = page
-			.getByTestId('fdsCreationActionButton')
+			.getByRole('button', {name: 'New'})
 			.first();
 		this.page = page;
 		this.userNotificationDropdownItem = page

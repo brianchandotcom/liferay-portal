@@ -9,9 +9,15 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {smtpPagesTest} from '../../../fixtures/smtpPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 
-const test = mergeTests(apiHelpersTest, dataApiHelpersTest, loginTest());
+const test = mergeTests(
+	apiHelpersTest,
+	dataApiHelpersTest,
+	loginTest(),
+	smtpPagesTest
+);
 
 test.describe('Notification queue entry', () => {
 	test(

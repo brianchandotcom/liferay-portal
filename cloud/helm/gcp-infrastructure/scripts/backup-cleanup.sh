@@ -8,7 +8,7 @@ function main {
 	local retention_days
 	local retention_seconds
 
-	retention_days={{ .Values.backup.cleanup.retentionDays | default 30 }}
+	retention_days={{ .Values.backup.cleanup.retentionDays }}
 	retention_seconds=$((retention_days * 24 * 60 * 60))
 
 	echo "Cleaning up backups older than ${retention_days} days."
@@ -25,7 +25,7 @@ function main {
 			.items[]
 			| select(
 				(.status.completionTime != null and (now - (.status.completionTime | fromdateiso8601)) > $retention) or
-				(any(.status.conditions[]; .status == "False" and .type == "Succeeded"))
+				(any(.status.conditions[]?; .status == "False" and .type == "Succeeded"))
 			)
 			| .metadata.name')
 

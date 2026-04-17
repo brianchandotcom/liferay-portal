@@ -9,7 +9,7 @@ metadata:
     name: backup-cleanup-role
     namespace: {{ .Release.Namespace }}
 rules:
-    -   apiGroups: ["liferay.com"]
+    -   apiGroups: ["backup.liferay.cloud"]
         resources: ["liferaybackups"]
         verbs: ["delete", "get", "list"]
 ---

@@ -259,6 +259,10 @@ public class AnalyticsAttributesUtil {
 				FileEntry fileEntry = DLAppLocalServiceUtil.fetchFileEntry(
 					fileEntryId);
 
+				if (fileEntry == null) {
+					return StringPool.BLANK;
+				}
+
 				return fileEntry.getMimeType();
 			}
 			catch (PortalException portalException) {

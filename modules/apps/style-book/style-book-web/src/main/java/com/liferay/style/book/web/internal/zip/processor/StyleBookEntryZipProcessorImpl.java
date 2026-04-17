@@ -133,7 +133,7 @@ public class StyleBookEntryZipProcessorImpl
 				styleBookEntry =
 					_styleBookEntryEntryService.updateStyleBookEntry(
 						styleBookEntry.getStyleBookEntryId(),
-						frontendTokensValues, name);
+						frontendTokensValues, name, new ServiceContext());
 			}
 
 			_importResultEntries.add(
@@ -355,7 +355,8 @@ public class StyleBookEntryZipProcessorImpl
 						userId, groupId, zipFile,
 						StyleBookEntry.class.getName(),
 						styleBookEntry.getStyleBookEntryId(), fileName,
-						thumbnailPath));
+						thumbnailPath),
+					new ServiceContext());
 			}
 		}
 	}

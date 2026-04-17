@@ -199,7 +199,9 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			_styleBookEntryLocalService.updateStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId(),
 				_read("updated-frontend-tokens-values.json"),
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					_sourceGroup, TestPropsValues.getUserId()));
 
 		ReflectionTestUtil.invoke(
 			_exportStyleBookEntriesMVCResourceCommand,
@@ -246,7 +248,9 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 		StyleBookEntry updatedStyleBookEntry =
 			_styleBookEntryLocalService.updateStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId(),
-				_read("updated-frontend-tokens-values.json"), name);
+				_read("updated-frontend-tokens-values.json"), name,
+				ServiceContextTestUtil.getServiceContext(
+					_sourceGroup, TestPropsValues.getUserId()));
 
 		file = ReflectionTestUtil.invoke(
 			_exportStyleBookEntriesMVCResourceCommand,
@@ -297,7 +301,9 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 		FileEntry fileEntry = _addFileEntry(styleBookEntry);
 
 		_styleBookEntryLocalService.updatePreviewFileEntryId(
-			styleBookEntry.getStyleBookEntryId(), fileEntry.getFileEntryId());
+			styleBookEntry.getStyleBookEntryId(), fileEntry.getFileEntryId(),
+			ServiceContextTestUtil.getServiceContext(
+				_sourceGroup, TestPropsValues.getUserId()));
 
 		File file = ReflectionTestUtil.invoke(
 			_exportStyleBookEntriesMVCResourceCommand,

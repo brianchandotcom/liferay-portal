@@ -88,6 +88,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_themeDisplay.setLayout(layout);
+		_themeDisplay.setLayoutSet(layout.getLayoutSet());
 		_themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)layout.getLayoutType());
 

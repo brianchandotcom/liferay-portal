@@ -146,7 +146,8 @@ public class StyleBookResourceImpl extends BaseStyleBookResourceImpl {
 
 		if (previewFileEntryId != 0) {
 			styleBookEntry = _styleBookEntryService.updatePreviewFileEntryId(
-				styleBookEntry.getStyleBookEntryId(), previewFileEntryId);
+				styleBookEntry.getStyleBookEntryId(), previewFileEntryId,
+				_getServiceContext(groupId));
 		}
 
 		return _toStyleBook(styleBookEntry);
@@ -172,6 +173,8 @@ public class StyleBookResourceImpl extends BaseStyleBookResourceImpl {
 			return postSiteStyleBook(siteExternalReferenceCode, styleBook);
 		}
 
+		long groupId = _getGroupId(siteExternalReferenceCode);
+
 		return _toStyleBook(
 			_styleBookEntryService.updateStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId(),
@@ -179,8 +182,9 @@ public class StyleBookResourceImpl extends BaseStyleBookResourceImpl {
 				styleBook.getFrontendTokensValues(), styleBook.getName(),
 				styleBook.getKey(),
 				_getPreviewFileEntryId(
-					_getGroupId(siteExternalReferenceCode),
-					styleBook.getPreviewFileEntryExternalReferenceCode())));
+					groupId,
+					styleBook.getPreviewFileEntryExternalReferenceCode()),
+				_getServiceContext(groupId)));
 	}
 
 	private void _checkFeatureFlag() {

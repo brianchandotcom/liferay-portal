@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -117,7 +118,8 @@ public class UpdateStyleBookEntryPreviewMVCActionCommand
 				false);
 
 			_styleBookEntryService.updatePreviewFileEntryId(
-				styleBookEntryId, fileEntry.getFileEntryId());
+				styleBookEntryId, fileEntry.getFileEntryId(),
+				ServiceContextFactory.getInstance(actionRequest));
 		}
 
 		TempFileEntryUtil.deleteTempFileEntry(tempFileEntry.getFileEntryId());

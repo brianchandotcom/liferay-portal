@@ -20,7 +20,7 @@ test('Setup: Create site with required data for Page Management tests', async ({
 }) => {
 	const apiHelpers = new ApiHelpers(backendPage);
 
-	const site = await apiHelpers.headlessSite.createSiteFromZip(
+	const site = await apiHelpers.headlessAdminSite.postSiteSiteInitializer(
 		{
 			externalReferenceCode: PAGE_MANAGEMENT_SITE_ERC,
 			name: PAGE_MANAGEMENT_SITE_NAME,

@@ -43,6 +43,8 @@ public class SharingEntryTable extends BaseTable<SharingEntryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SharingEntryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<SharingEntryTable, Long> toTicketId = createColumn(
+		"toTicketId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SharingEntryTable, Long> toUserGroupId = createColumn(
 		"toUserGroupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SharingEntryTable, Long> toUserId = createColumn(
@@ -63,4 +65,4 @@ public class SharingEntryTable extends BaseTable<SharingEntryTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-952874687
+// LIFERAY-SERVICE-BUILDER-HASH:2043471543

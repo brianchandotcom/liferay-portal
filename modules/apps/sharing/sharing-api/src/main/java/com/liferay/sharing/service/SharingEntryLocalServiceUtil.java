@@ -58,9 +58,9 @@ public class SharingEntryLocalServiceUtil {
 	 * @review
 	 */
 	public static SharingEntry addOrUpdateSharingEntry(
-			String externalReferenceCode, long userId, long toUserGroupId,
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
+			String externalReferenceCode, long userId, long toTicketId,
+			long toUserGroupId, long toUserId, long classNameId, long classPK,
+			long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -69,9 +69,9 @@ public class SharingEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addOrUpdateSharingEntry(
-			externalReferenceCode, userId, toUserGroupId, toUserId, classNameId,
-			classPK, groupId, shareable, sharingEntryActions, expirationDate,
-			serviceContext);
+			externalReferenceCode, userId, toTicketId, toUserGroupId, toUserId,
+			classNameId, classPK, groupId, shareable, sharingEntryActions,
+			expirationDate, serviceContext);
 	}
 
 	/**
@@ -110,9 +110,9 @@ public class SharingEntryLocalServiceUtil {
 	 * @review
 	 */
 	public static SharingEntry addSharingEntry(
-			String externalReferenceCode, long userId, long toUserGroupId,
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
+			String externalReferenceCode, long userId, long toTicketId,
+			long toUserGroupId, long toUserId, long classNameId, long classPK,
+			long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -121,9 +121,9 @@ public class SharingEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addSharingEntry(
-			externalReferenceCode, userId, toUserGroupId, toUserId, classNameId,
-			classPK, groupId, shareable, sharingEntryActions, expirationDate,
-			serviceContext);
+			externalReferenceCode, userId, toTicketId, toUserGroupId, toUserId,
+			classNameId, classPK, groupId, shareable, sharingEntryActions,
+			expirationDate, serviceContext);
 	}
 
 	/**
@@ -359,6 +359,14 @@ public class SharingEntryLocalServiceUtil {
 		long toUserId, long classNameId, long classPK) {
 
 		return getService().fetchSharingEntry(toUserId, classNameId, classPK);
+	}
+
+	public static SharingEntry fetchSharingEntry(
+		long toTicketId, long toUserGroupId, long toUserId, long classNameId,
+		long classPK) {
+
+		return getService().fetchSharingEntry(
+			toTicketId, toUserGroupId, toUserId, classNameId, classPK);
 	}
 
 	public static SharingEntry fetchSharingEntryByExternalReferenceCode(
@@ -616,6 +624,15 @@ public class SharingEntryLocalServiceUtil {
 		return getService().getSharingEntry(toUserId, classNameId, classPK);
 	}
 
+	public static SharingEntry getSharingEntry(
+			long toTicketId, long toUserGroupId, long toUserId,
+			long classNameId, long classPK)
+		throws PortalException {
+
+		return getService().getSharingEntry(
+			toTicketId, toUserGroupId, toUserId, classNameId, classPK);
+	}
+
 	public static SharingEntry getSharingEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -854,4 +871,4 @@ public class SharingEntryLocalServiceUtil {
 			SharingEntryLocalServiceUtil.class, SharingEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:920194991
+// LIFERAY-SERVICE-BUILDER-HASH:1712603593

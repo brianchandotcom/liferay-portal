@@ -20,7 +20,6 @@ export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly inventoryTableRowAction: (pageName: string) => Promise<Locator>;
-	readonly neverExpireCheckbox: Locator;
 	readonly page: Page;
 	readonly pricinQuantity: Locator;
 	readonly sidePanelDetailsSkuFieldName: Locator;
@@ -30,7 +29,6 @@ export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 	readonly sidePanelNestedFrame: FrameLocator;
 	readonly sidePanelNestedPriceListPrice: Locator;
 	readonly sidePanelNestedSaveButton: Locator;
-	readonly sidePanelSaveAsDraftButton: Locator;
 	readonly sidePanelSaveButton: Locator;
 	readonly sidePanelSkuInventoryQuantity: Locator;
 	readonly sidePanelSkuPriceTableRowLink: (priceListName: string) => Locator;
@@ -122,8 +120,6 @@ export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 				`Cannot locate table row with name ${warehouseName}`
 			);
 		};
-		this.neverExpireCheckbox =
-			this.sidePanelFrame.getByLabel('Never Expire');
 		this.page = page;
 		this.pricinQuantity = page
 			.frameLocator('iframe')
@@ -146,10 +142,6 @@ export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 		this.sidePanelNestedSaveButton = this.sidePanelNestedFrame.getByRole(
 			'button',
 			{exact: true, name: 'Save'}
-		);
-		this.sidePanelSaveAsDraftButton = this.sidePanelFrame.getByRole(
-			'button',
-			{exact: true, name: 'Save as Draft'}
 		);
 		this.sidePanelSaveButton = this.sidePanelFrame.getByRole('button', {
 			exact: true,

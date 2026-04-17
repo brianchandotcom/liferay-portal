@@ -1749,7 +1749,7 @@ test('LPD-57886: Verify SP initiated SSO redirects to the IdP from a staged site
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 		templateKey: 'com.liferay.site.initializer.welcome',
 		templateType: 'site-initializer',
@@ -2985,13 +2985,13 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 
-	const site1 = await apiHelpers.headlessSite.createSite({
+	const site1 = await apiHelpers.headlessAdminSite.postSite({
 		name: site1Name,
 		templateKey: 'com.liferay.site.initializer.welcome',
 		templateType: 'site-initializer',
 	});
 
-	const site2 = await apiHelpers.headlessSite.createSite({
+	const site2 = await apiHelpers.headlessAdminSite.postSite({
 		name: site2Name,
 		templateKey: 'com.liferay.site.initializer.welcome',
 		templateType: 'site-initializer',
@@ -3283,7 +3283,7 @@ test('Verify the SAML configuration is not applied to the sites when ACS is disa
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 		templateKey: 'com.liferay.site.initializer.welcome',
 		templateType: 'site-initializer',
@@ -3350,7 +3350,7 @@ test('Verify the SAML configuration is not applied to the sites when ACS is disa
 
 	// Remove site from SP instance
 
-	await apiHelpers.headlessSite.deleteSite(String(site.id));
+	await apiHelpers.headlessAdminSite.deleteSite(site.externalReferenceCode);
 });
 
 test('LPD-37323 AC1 TC1: Liferay as both IdP and SP handles the SSO flow by triggering an SP-initiated SSO to the correct external IdP', async ({

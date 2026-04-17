@@ -435,14 +435,8 @@ public interface StyleBookEntryLocalService
 		throws PortalException;
 
 	public StyleBookEntry updatePreviewFileEntryId(
-			long previewFileEntryId, ServiceContext serviceContext,
-			long styleBookEntryId)
-		throws PortalException;
-
-	public StyleBookEntry updateStyleBookEntry(
-			boolean defaultStylebookEntry, String frontendTokensValues,
-			String name, long previewFileEntryId, ServiceContext serviceContext,
-			long styleBookEntryId, String styleBookEntryKey, long userId)
+			long styleBookEntryId, long previewFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public StyleBookEntry updateStyleBookEntry(
@@ -452,12 +446,18 @@ public interface StyleBookEntryLocalService
 		throws PortalException;
 
 	public StyleBookEntry updateStyleBookEntry(
+			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			long previewFileEntryId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, String frontendTokensValues, String name)
 		throws PortalException;
 
 	public StyleBookEntry updateStyleBookEntry(
-			String frontendTokensValues, String name,
-			ServiceContext serviceContext, long styleBookEntryId)
+			long styleBookEntryId, String frontendTokensValues, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -491,4 +491,4 @@ public interface StyleBookEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1913896399
+// LIFERAY-SERVICE-BUILDER-HASH:-774807647

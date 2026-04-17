@@ -541,26 +541,12 @@ public class StyleBookEntryLocalServiceUtil {
 	}
 
 	public static StyleBookEntry updatePreviewFileEntryId(
-			long previewFileEntryId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			long styleBookEntryId)
+			long styleBookEntryId, long previewFileEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updatePreviewFileEntryId(
-			previewFileEntryId, serviceContext, styleBookEntryId);
-	}
-
-	public static StyleBookEntry updateStyleBookEntry(
-			boolean defaultStylebookEntry, String frontendTokensValues,
-			String name, long previewFileEntryId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			long styleBookEntryId, String styleBookEntryKey, long userId)
-		throws PortalException {
-
-		return getService().updateStyleBookEntry(
-			defaultStylebookEntry, frontendTokensValues, name,
-			previewFileEntryId, serviceContext, styleBookEntryId,
-			styleBookEntryKey, userId);
+			styleBookEntryId, previewFileEntryId, serviceContext);
 	}
 
 	public static StyleBookEntry updateStyleBookEntry(
@@ -575,6 +561,19 @@ public class StyleBookEntryLocalServiceUtil {
 	}
 
 	public static StyleBookEntry updateStyleBookEntry(
+			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			long previewFileEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateStyleBookEntry(
+			userId, styleBookEntryId, defaultStylebookEntry,
+			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId,
+			serviceContext);
+	}
+
+	public static StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, String frontendTokensValues, String name)
 		throws PortalException {
 
@@ -583,13 +582,12 @@ public class StyleBookEntryLocalServiceUtil {
 	}
 
 	public static StyleBookEntry updateStyleBookEntry(
-			String frontendTokensValues, String name,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			long styleBookEntryId)
+			long styleBookEntryId, String frontendTokensValues, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateStyleBookEntry(
-			frontendTokensValues, name, serviceContext, styleBookEntryId);
+			styleBookEntryId, frontendTokensValues, name, serviceContext);
 	}
 
 	/**
@@ -619,4 +617,4 @@ public class StyleBookEntryLocalServiceUtil {
 			StyleBookEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1398155145
+// LIFERAY-SERVICE-BUILDER-HASH:-352562835

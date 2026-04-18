@@ -230,8 +230,6 @@ public class UpgradeReportTest {
 			Map<String, Object> documentLibrary =
 				(Map<String, Object>)reportData.get("document.library");
 
-			Assert.assertNotNull(documentLibrary);
-
 			Assert.assertEquals(
 				"Unable to determine", documentLibrary.get("storage.size"));
 		}

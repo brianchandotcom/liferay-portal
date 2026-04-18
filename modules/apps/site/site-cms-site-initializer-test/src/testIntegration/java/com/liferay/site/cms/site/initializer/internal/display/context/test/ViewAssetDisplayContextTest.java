@@ -265,9 +265,8 @@ public class ViewAssetDisplayContextTest extends BaseDisplayContextTestCase {
 	private void _testGetAdditionalPropsWithoutCommentPermission()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		User user = UserTestUtil.addUser();
 
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 
@@ -283,9 +282,8 @@ public class ViewAssetDisplayContextTest extends BaseDisplayContextTestCase {
 	}
 
 	private void _testGetAdditionalPropsWithoutPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
-
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		User user = UserTestUtil.addUser();
 
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 

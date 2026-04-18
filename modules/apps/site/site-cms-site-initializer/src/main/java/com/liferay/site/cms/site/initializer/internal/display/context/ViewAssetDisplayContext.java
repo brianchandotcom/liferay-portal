@@ -39,14 +39,14 @@ public class ViewAssetDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_objectEntry = objectEntryService.getObjectEntry(
 			ParamUtil.getLong(httpServletRequest, "objectEntryId"));
 
 		_objectDefinition = objectDefinitionLocalService.getObjectDefinition(
 			_objectEntry.getObjectDefinitionId());
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public Map<String, Object> getAdditionalProps() throws PortalException {

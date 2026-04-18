@@ -221,8 +221,7 @@ public class UpgradeReportTest {
 
 			ReflectionTestUtil.setFieldValue(
 				upgradeReport, "_rootDir",
-				tempFilePath.toAbsolutePath(
-				).toString());
+				String.valueOf(tempFilePath.toAbsolutePath()));
 
 			Map<String, Object> reportData = ReflectionTestUtil.invoke(
 				upgradeReport, "_getReportData",

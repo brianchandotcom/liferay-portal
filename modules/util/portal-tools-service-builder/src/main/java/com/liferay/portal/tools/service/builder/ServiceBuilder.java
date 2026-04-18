@@ -4594,7 +4594,7 @@ public class ServiceBuilder {
 				indexMetadatasMap.put(
 					tableName,
 					_optimizeForBTreeIndexes(
-						indexMetadatas, entity.isChangeTrackingEnabled()));
+						entity.isChangeTrackingEnabled(), indexMetadatas));
 			}
 
 			for (EntityFinder indexOnlyEntityFinder :
@@ -6548,7 +6548,7 @@ public class ServiceBuilder {
 	}
 
 	private List<IndexMetadata> _optimizeForBTreeIndexes(
-		List<IndexMetadata> indexMetadatas, boolean changeTrackingEnabled) {
+		boolean changeTrackingEnabled, List<IndexMetadata> indexMetadatas) {
 
 		Map<String, IntegerWrapper> frequencyMap = new HashMap<>();
 

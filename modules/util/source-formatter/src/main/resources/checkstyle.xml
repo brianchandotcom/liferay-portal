@@ -931,6 +931,11 @@
 			<property name="description" value="Finds missing LiferayUnitTestRule." />
 			<message key="test.rule.missing" value="Missing test rule &quot;LiferayUnitTestRule&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.TestClassStaticVariableCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds unnecessary static modifiers in test classes." />
+			<message key="modifier.unnecessary" value="Private static variable &quot;{0}&quot; should be an instance variable, as it is not used by any static members" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.TextBlockCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds usage of text block." />

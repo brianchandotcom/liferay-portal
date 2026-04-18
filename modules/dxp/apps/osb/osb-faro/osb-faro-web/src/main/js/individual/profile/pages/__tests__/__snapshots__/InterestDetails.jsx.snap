@@ -33,7 +33,7 @@ exports[`InterestDetails should render 1`] = `
         <span
           class="interest-name"
         >
-          "1"
+          ""
         </span>
       </div>
     </div>

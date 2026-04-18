@@ -50,12 +50,12 @@ public class SiteInitializerUtilTest {
 				"en_US", enUSValue
 			).toString());
 
-		Assert.assertEquals(map.toString(), 2, map.size());
 		Assert.assertEquals(
 			enUSValue, map.get(LocaleUtil.fromLanguageId("en_US", false)));
 		Assert.assertEquals(
 			randomValue,
 			map.get(LocaleUtil.fromLanguageId(randomLanguageId, false)));
+		Assert.assertEquals(map.toString(), 2, map.size());
 	}
 
 }

@@ -109,28 +109,29 @@ public class RoleResourceUpgradeProcessTest {
 			"RoleResourceUpgradeProcess";
 
 	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
-
-	@Inject
-	private static ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-
-	@Inject
-	private static RoleLocalService _roleLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.account.internal.upgrade.registry.AccountServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
 	private EntityCache _entityCache;
 
 	@Inject
 	private FinderCache _finderCache;
 
 	private Group _group;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.account.internal.upgrade.registry.AccountServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
+
 	private User _user;
 
 }

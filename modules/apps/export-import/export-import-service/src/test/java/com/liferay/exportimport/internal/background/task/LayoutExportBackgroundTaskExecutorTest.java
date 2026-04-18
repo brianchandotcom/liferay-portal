@@ -114,7 +114,7 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			backgroundTaskId
 		);
 
-		File larFile = new File(
+		File file = new File(
 			StringBundler.concat(
 				RandomTestUtil.randomString(), StringPool.PERIOD, _PROTOCOL));
 
@@ -122,7 +122,7 @@ public class LayoutExportBackgroundTaskExecutorTest {
 			_exportImportLocalService.exportLayoutsAsFile(
 				exportImportConfiguration)
 		).thenReturn(
-			larFile
+			file
 		);
 
 		Assert.assertEquals(
@@ -139,7 +139,7 @@ public class LayoutExportBackgroundTaskExecutorTest {
 		).addBackgroundTaskAttachment(
 			Mockito.eq(userId), Mockito.eq(backgroundTaskId),
 			sourceFileNameArgumentCaptor.capture(),
-			titleArgumentCaptor.capture(), Mockito.eq(larFile)
+			titleArgumentCaptor.capture(), Mockito.eq(file)
 		);
 
 		Assert.assertEquals(

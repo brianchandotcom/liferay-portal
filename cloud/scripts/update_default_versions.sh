@@ -14,7 +14,7 @@ _VERSIONS_JSON_FILE="${_SCRIPTS_DIR}/versions.json"
 function main {
 	find "${_ROOT_CLOUD_DIR}" -name "Chart.yaml" -type f | while read -r chart_yaml_file;
 	do
-		_check_chart_yaml "$(dirname "${chart_yaml_file}")"
+		_update_default_chart_version "${chart_yaml_file}"
 	done
 
 	_update_versions_tfvars "${_ROOT_CLOUD_DIR}/terraform/aws" "${_VERSIONS_AWS_TFVARS_FILE}"
@@ -71,26 +71,6 @@ function _bump_bootstrap_version {
 		"${_VERSIONS_JSON_FILE}"
 }
 
-function _bump_chart_yaml_version {
-	local helm_chart_yaml="${1}"
-
-	local git_blame_line
-
-	git_blame_line=$(_git_blame_line "^version: .*$" "${helm_chart_yaml}")
-
-	local current_version
-
-	current_version=$(sed --quiet "${git_blame_line}p" "${helm_chart_yaml}" | awk '{print $2}')
-
-	local new_version
-
-	new_version=$(echo "${current_version}" | awk -F"." -v OFS="." '{$NF += 1; print}')
-
-	sed --in-place "${git_blame_line}s/version: .*/version: ${new_version}/" "${helm_chart_yaml}"
-
-	echo "${new_version}"
-}
-
 function _check_bootstrap {
 	local bootstrap_name="${1}"
 
@@ -125,36 +105,6 @@ function _check_bootstrap {
 	done
 }
 
-function _check_chart_yaml {
-	local helm_dir="${1}"
-
-	local helm_chart_yaml="${helm_dir}/Chart.yaml"
-
-	local git_blame_sha
-
-	git_blame_sha=$(_git_blame_sha "^version: .*$" "${helm_chart_yaml}")
-
-	local commit_count
-
-	commit_count=$(git rev-list --count "${git_blame_sha}..HEAD" -- "${helm_dir}")
-
-	if [[ "${commit_count}" -gt 0 ]]
-	then
-		git rev-list --oneline "${git_blame_sha}..HEAD" -- "${helm_dir}"
-
-		echo "The version in ${helm_chart_yaml} is outdated." >&2
-		echo "" >&2
-
-		local new_version
-
-		new_version=$(_bump_chart_yaml_version "${helm_chart_yaml}")
-
-		echo "Updating ${helm_chart_yaml} to new version ${new_version}." >&2
-
-		_update_default_chart_version "${helm_chart_yaml}" "${new_version}"
-	fi
-}
-
 function _git_blame_line {
 	local pattern="${1}"
 	local git_path="${2}"
@@ -183,7 +133,6 @@ function _git_blame_sha {
 
 function _update_default_chart_version {
 	local helm_chart_yaml="${1}"
-	local new_version="${2}"
 
 	local helm_chart_name
 
@@ -216,6 +165,10 @@ function _update_default_chart_version {
 
 	if [ -n "${var_to_update}" ]
 	then
+		local new_version
+
+		new_version=$(yq '.version' "${helm_chart_yaml}")
+
 		sed --in-place "s/\(${var_to_update} *= *\)\".*\"/\1\"${new_version}\"/" "${file_to_update}"
 	fi
 }

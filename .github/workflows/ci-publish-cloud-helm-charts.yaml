@@ -3,7 +3,7 @@ defaults:
         shell: bash
 jobs:
     delete-packages-pr:
-        if: github.event.action == 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
+        if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
         runs-on: ubuntu-latest
         steps:
             -   env:
@@ -41,7 +41,7 @@ jobs:
     delete-releases-pr:
         env:
             PR_NUMBER: ${{github.event.pull_request.number}}
-        if: github.event.action == 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
+        if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
         permissions:
             contents: write
         runs-on: ubuntu-latest
@@ -108,7 +108,7 @@ jobs:
     publish-aws:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
-            (github.event.action != 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
         needs: publish-default
         secrets: inherit
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
@@ -120,7 +120,7 @@ jobs:
     publish-aws-infrastructure:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
-            (github.event.action != 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
         secrets: inherit
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
@@ -131,7 +131,7 @@ jobs:
     publish-aws-infrastructure-provider:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
-            (github.event.action != 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
         secrets: inherit
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
@@ -212,7 +212,7 @@ jobs:
     publish-default:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
-            (github.event.action != 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
         secrets: inherit
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
@@ -223,7 +223,7 @@ jobs:
     publish-gcp:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
-            (github.event.action != 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
         needs: publish-default
         secrets: inherit
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
@@ -235,7 +235,7 @@ jobs:
     publish-gcp-infrastructure:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
-            (github.event.action != 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
         secrets: inherit
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
@@ -246,7 +246,7 @@ jobs:
     publish-gcp-infrastructure-provider:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
-            (github.event.action != 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
         secrets: inherit
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
@@ -257,7 +257,7 @@ jobs:
     release-helm-charts:
         env:
             CR_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        if: github.event.pull_request.number != '' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
+        if: github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event.pull_request.number != '' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
         name: Run chart-releaser
         needs:
             -   publish-aws

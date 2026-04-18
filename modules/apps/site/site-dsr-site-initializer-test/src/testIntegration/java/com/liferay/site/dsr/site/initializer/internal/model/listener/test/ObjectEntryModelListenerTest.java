@@ -377,8 +377,8 @@ public class ObjectEntryModelListenerTest {
 	private static class TestAnalyticsSettingsManager
 		implements AnalyticsSettingsManager {
 
-		public TestAnalyticsSettingsManager(AtomicBoolean isAnalyticsEnabled) {
-			_analyticsEnabled = isAnalyticsEnabled;
+		public TestAnalyticsSettingsManager(AtomicBoolean analyticsEnabled) {
+			_analyticsEnabled = analyticsEnabled;
 		}
 
 		@Override

@@ -48,10 +48,9 @@ public class SideNavigationDisplayContext {
 		PanelAppRegistry panelAppRegistry) {
 
 		_httpServletRequest = httpServletRequest;
-
 		_panelAppRegistry = panelAppRegistry;
 
-		_panelCategoryHelper = new PanelCategoryHelper(_panelAppRegistry);
+		_panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry);
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

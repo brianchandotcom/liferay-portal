@@ -2,7 +2,7 @@ import ClayButton from '@clayui/button';
 import Dropdown from '@clayui/drop-down';
 import Form, {ClayInput} from '@clayui/form';
 import Icon from '@clayui/icon';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {LifecycleContext} from '../context/LifecycleContext';
 import {Option, Picker, Text} from '@clayui/core';
 
@@ -30,54 +30,45 @@ const REVENUE_LABELS = {
 
 const REVENUE_FILTER_KEYS = Object.values(FilterType);
 
-const GlobalFilters = () => {
+const buildODataString = (values, fieldName = 'revenue') => {
+	const {filterType} = values;
+	const config = REVENUE_CONFIG[filterType];
+
+	if (!config?.op) return '';
+
+	const parts = config.fields
+		.map((field, index) => {
+			const val = values[field];
+			const operator = Array.isArray(config.op)
+				? config.op[index]
+				: config.op;
+			return val !== '' ? `${fieldName} ${operator} ${val}` : null;
+		})
+		.filter(Boolean);
+
+	if (parts.length === 0) return '';
+
+	const joined = parts.join(' and ');
+	return Array.isArray(config.op) && parts.length > 1
+		? `(${joined})`
+		: joined;
+};
+
+const GlobalFilter = () => {
 	const {filters, updateFilters} = useContext(LifecycleContext);
 
 	const [dropdownActive, setDropdownActive] = useState(false);
 
-	const [formValue, setFormValue] = useState({
-		filterType: FilterType.ALL,
-		max: '',
-		min: ''
-	});
-
-	const buildODataString = (values, fieldName = 'revenue') => {
-		const {filterType} = values;
-		const config = REVENUE_CONFIG[filterType];
-
-		if (!config?.op) return '';
-
-		const {fields, op} = config;
-
-		const parts = fields
-			.map((field, index) => {
-				const val = values[field];
-				const operator = Array.isArray(op) ? op[index] : op;
-
-				return val !== '' ? `${fieldName} ${operator} ${val}` : null;
-			})
-			.filter(Boolean);
-
-		if (parts.length === 0) return '';
-
-		const joined = parts.join(' and ');
-		return Array.isArray(op) && parts.length > 1 ? `(${joined})` : joined;
-	};
-
-	const handleApply = () => {
-		updateFilters({
-			...filters,
-			revenue: {
-				...formValue,
-				oDataFilterString: buildODataString(formValue)
-			}
-		});
-		setDropdownActive(false);
-	};
+	const [formValue, setFormValue] = useState(
+		filters.revenue || {
+			filterType: FilterType.ALL,
+			max: '',
+			min: ''
+		}
+	);
 
 	const handleSelectionChange = key => {
 		const config = REVENUE_CONFIG[key];
-
 		setFormValue({
 			filterType: key,
 			max: config.fields.includes('max') ? '10' : '',
@@ -85,14 +76,24 @@ const GlobalFilters = () => {
 		});
 	};
 
-	useEffect(() => {
-		console.log(filters);
-	});
+	const handleInputChange = event => {
+		const {name, value} = event.target;
+		if (value !== '' && parseFloat(value) < 0) return;
+
+		setFormValue(prev => ({...prev, [name]: value}));
+	};
+
+	const handleApply = () => {
+		updateFilters({
+			...filters,
+			revenue: {
+				filterString: buildODataString(formValue)
+			}
+		});
+		setDropdownActive(false);
+	};
 
 	const currentConfig = REVENUE_CONFIG[formValue.filterType];
-	const showMin = currentConfig.fields.includes('min');
-	const showMax = currentConfig.fields.includes('max');
-
 	const isInvalid = currentConfig.fields.some(field => !formValue[field]);
 
 	return (
@@ -122,7 +123,7 @@ const GlobalFilters = () => {
 					</div>
 
 					<Form.Group>
-						<label className='text-weight-normal text-secondary'>
+						<label className='text-secondary text-weight-normal'>
 							{Liferay.Language.get('condition')}
 						</label>
 						<Picker
@@ -130,7 +131,7 @@ const GlobalFilters = () => {
 							as={React.forwardRef((props, ref) => (
 								<ClayButton
 									{...props}
-									className='justify-content-between rounded-lg w-100'
+									className='d-flex justify-content-between rounded-lg w-100'
 									displayType='secondary'
 									ref={ref}
 									size='sm'
@@ -142,9 +143,7 @@ const GlobalFilters = () => {
 								</ClayButton>
 							))}
 							items={REVENUE_FILTER_KEYS}
-							onSelectionChange={key =>
-								handleSelectionChange(key)
-							}
+							onSelectionChange={handleSelectionChange}
 						>
 							{key => (
 								<Option key={key}>{REVENUE_LABELS[key]}</Option>
@@ -152,42 +151,28 @@ const GlobalFilters = () => {
 						</Picker>
 					</Form.Group>
 
-					{(showMin || showMax) && (
+					{currentConfig.fields.length > 0 && (
 						<div className='gx-1 mt-3 row'>
-							{showMin && (
-								<div className={showMax ? 'col-6' : 'col-12'}>
+							{currentConfig.fields.map(field => (
+								<div
+									className={
+										currentConfig.fields.length > 1
+											? 'col-6'
+											: 'col-12'
+									}
+									key={field}
+								>
 									<Form.Group className='mb-0' small>
 										<ClayInput
-											name='min'
-											onChange={e =>
-												setFormValue({
-													...formValue,
-													min: e.target.value
-												})
-											}
+											min={0}
+											name={field}
+											onChange={handleInputChange}
 											type='number'
-											value={formValue.min}
+											value={formValue[field]}
 										/>
 									</Form.Group>
 								</div>
-							)}
-							{showMax && (
-								<div className={showMin ? 'col-6' : 'col-12'}>
-									<Form.Group className='mb-0' small>
-										<ClayInput
-											name='max'
-											onChange={e =>
-												setFormValue({
-													...formValue,
-													max: e.target.value
-												})
-											}
-											type='number'
-											value={formValue.max}
-										/>
-									</Form.Group>
-								</div>
-							)}
+							))}
 						</div>
 					)}
 
@@ -207,4 +192,4 @@ const GlobalFilters = () => {
 	);
 };
 
-export default GlobalFilters;
+export default GlobalFilter;

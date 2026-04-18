@@ -1535,8 +1535,8 @@ public abstract class BaseWorkspaceGitRepository
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"SHA ", sha, " was not found in branch '", branchName,
-					"' on ", remoteGitRef.getRemoteURL()));
+					"SHA ", sha, " was not found in branch \"", branchName,
+					"\" on ", remoteGitRef.getRemoteURL()));
 		}
 	}
 

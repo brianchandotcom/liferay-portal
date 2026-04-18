@@ -119,21 +119,20 @@ public class AccountEntryResourcePermissionUpgradeProcessTest {
 			"AccountEntryResourcePermissionUpgradeProcess";
 
 	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
-
-	@Inject
-	private static ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.account.internal.upgrade.registry.AccountServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
 	private EntityCache _entityCache;
 
 	@Inject
 	private FinderCache _finderCache;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.account.internal.upgrade.registry.AccountServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

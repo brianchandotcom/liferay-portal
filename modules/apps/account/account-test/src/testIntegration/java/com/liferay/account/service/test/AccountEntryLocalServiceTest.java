@@ -1769,9 +1769,6 @@ public class AccountEntryLocalServiceTest {
 			return name1.compareToIgnoreCase(name2);
 		};
 
-	@Inject
-	private static ListTypeLocalService _listTypeLocalService;
-
 	private static ServiceRegistration<?> _serviceRegistration;
 	private static final TestAccountEntryModelListener
 		_testAccountEntryModelListener = new TestAccountEntryModelListener();
@@ -1796,6 +1793,9 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Inject
 	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;

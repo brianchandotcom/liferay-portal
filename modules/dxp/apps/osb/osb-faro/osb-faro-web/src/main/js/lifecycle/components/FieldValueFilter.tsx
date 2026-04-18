@@ -2,7 +2,7 @@ import * as API from 'shared/api';
 import classNames from 'classnames';
 import ClayButton from '@clayui/button';
 import Loading, {Align} from 'shared/components/Loading';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Icon, Option, Picker} from '@clayui/core';
 import {sub} from 'shared/util/lang';
 import {useLifecycle} from '../context/LifecycleContext';
@@ -36,16 +36,15 @@ const FieldValueFilter = ({
 		}
 	});
 
-	return (
-		<Picker
-			as={React.forwardRef((props, ref) => (
+	const TriggerButton = useMemo(
+		() =>
+			React.forwardRef<HTMLButtonElement>((props, ref) => (
 				<ClayButton
 					{...props}
 					className={classNames(className, 'rounded-lg')}
 					disabled={loading}
 					displayType='secondary'
 					ref={ref}
-					searchable
 					size='sm'
 				>
 					<Icon
@@ -65,11 +64,18 @@ const FieldValueFilter = ({
 						/>
 					)}
 				</ClayButton>
-			))}
+			)),
+		[className, entityLabel, filterKey, filters, loading]
+	);
+
+	return (
+		<Picker
+			as={TriggerButton}
 			className='ml-3'
 			onSelectionChange={(item: string) =>
 				updateFilters({[filterKey]: item})
 			}
+			searchable
 			triggerIcon='caret-bottom'
 			value={filters[filterKey]}
 		>

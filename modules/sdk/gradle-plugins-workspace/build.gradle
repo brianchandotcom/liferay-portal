@@ -41,7 +41,7 @@ dependencies {
 	implementation group: "com.liferay", name: "com.liferay.gradle.plugins", version: "16.1.130"
 	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "4.0.27"
 	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "4.0.4"
-	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.29"
+	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.30"
 	implementation group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.7"
 
 	implementation(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.7") {

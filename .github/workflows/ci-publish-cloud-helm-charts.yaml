@@ -2,7 +2,7 @@ defaults:
     run:
         shell: bash
 jobs:
-    cleanup-pr:
+    delete-packages-pr:
         if: github.event.action == 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
         runs-on: ubuntu-latest
         steps:
@@ -38,7 +38,7 @@ jobs:
                     -   liferay-gcp
                     -   liferay-gcp-infrastructure
                     -   liferay-gcp-infrastructure-provider
-    cleanup-pr-pages:
+    delete-releases-pr:
         env:
             PR_NUMBER: ${{github.event.pull_request.number}}
         if: github.event.action == 'closed' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'

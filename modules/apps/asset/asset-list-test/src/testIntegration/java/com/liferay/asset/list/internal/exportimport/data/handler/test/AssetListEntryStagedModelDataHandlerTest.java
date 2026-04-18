@@ -183,9 +183,6 @@ public class AssetListEntryStagedModelDataHandlerTest
 			assetListEntry.getAssetListEntryKey(),
 			importedAssetListEntry.getAssetListEntryKey());
 		Assert.assertEquals(
-			assetListEntry.getAssetListEntryKey(),
-			importedAssetListEntry.getAssetListEntryKey());
-		Assert.assertEquals(
 			assetListEntry.getAssetEntrySubtype(),
 			importedAssetListEntry.getAssetEntrySubtype());
 		Assert.assertEquals(

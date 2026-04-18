@@ -105,7 +105,7 @@ public class ObjectEntryModelListenerTest {
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				AnalyticsSettingsManager.class,
-				new TestAnalyticsSettingsManager(_isAnalyticsEnabled),
+				new TestAnalyticsSettingsManager(_analyticsEnabled),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"service.ranking", Integer.MAX_VALUE
 				).build()));
@@ -228,7 +228,7 @@ public class ObjectEntryModelListenerTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertTrue(_isAnalyticsEnabled.get());
+		Assert.assertTrue(_analyticsEnabled.get());
 
 		group = _groupLocalService.fetchGroup(
 			TestPropsValues.getCompanyId(),
@@ -337,7 +337,7 @@ public class ObjectEntryModelListenerTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
-	private final AtomicBoolean _isAnalyticsEnabled = new AtomicBoolean();
+	private final AtomicBoolean _analyticsEnabled = new AtomicBoolean();
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
@@ -378,7 +378,7 @@ public class ObjectEntryModelListenerTest {
 		implements AnalyticsSettingsManager {
 
 		public TestAnalyticsSettingsManager(AtomicBoolean isAnalyticsEnabled) {
-			_isAnalyticsEnabled = isAnalyticsEnabled;
+			_analyticsEnabled = isAnalyticsEnabled;
 		}
 
 		@Override
@@ -406,7 +406,7 @@ public class ObjectEntryModelListenerTest {
 
 		@Override
 		public boolean isAnalyticsEnabled(long companyId) {
-			_isAnalyticsEnabled.set(true);
+			_analyticsEnabled.set(true);
 
 			return false;
 		}
@@ -447,7 +447,7 @@ public class ObjectEntryModelListenerTest {
 			return new String[0];
 		}
 
-		private final AtomicBoolean _isAnalyticsEnabled;
+		private final AtomicBoolean _analyticsEnabled;
 
 	}
 

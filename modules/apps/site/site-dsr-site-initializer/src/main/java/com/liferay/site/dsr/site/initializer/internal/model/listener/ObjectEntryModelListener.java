@@ -286,6 +286,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return;
 		}
 
+		Channel channel = new Channel();
+
 		ChannelResource channelResource = _channelResourceFactory.create(
 		).checkPermissions(
 			false
@@ -293,7 +295,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			_userLocalService.getUser(userId)
 		).build();
 
-		Channel channel = new Channel();
 		Channel analyticsChannel = _getOrAddAnalyticsChannel(channelResource);
 
 		channel.setChannelId(analyticsChannel::getChannelId);

@@ -329,6 +329,8 @@ public class ObjectEntryModelListenerTest {
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
+	private final AtomicBoolean _analyticsEnabled = new AtomicBoolean();
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -336,8 +338,6 @@ public class ObjectEntryModelListenerTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	private final AtomicBoolean _analyticsEnabled = new AtomicBoolean();
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -53,6 +54,8 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import java.text.DateFormat;
 
 import java.util.HashMap;
 import java.util.List;
@@ -432,7 +435,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		_testPutSiteUtilityPageWithPageSpecifications();
 		_testPutSiteUtilityPageWithThumbnail();
-		_testPutSiteUtilityPageUpdateWithModificationDate();
+		_testPutSiteUtilityWithModificationDatePreserved();
 	}
 
 	@Override
@@ -1073,28 +1076,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			markedAsDefault, putUtilityPage.getMarkedAsDefault());
 	}
 
-	private void _testPutSiteUtilityPageUpdateWithModificationDate()
-		throws Exception {
-
-		UtilityPage utilityPage = _getUtilityPage(
-			null, Boolean.FALSE, RandomTestUtil.randomString());
-
-		UtilityPage putUtilityPage1 = utilityPageResource.putSiteUtilityPage(
-			testGroup.getExternalReferenceCode(),
-			utilityPage.getExternalReferenceCode(), utilityPage);
-
-		UtilityPage putUtilityPage2 = utilityPageResource.putSiteUtilityPage(
-			testGroup.getExternalReferenceCode(),
-			utilityPage.getExternalReferenceCode(), putUtilityPage1);
-
-		Assert.assertEquals(
-			putUtilityPage1.getDateModified(),
-			putUtilityPage2.getDateModified());
-		Assert.assertEquals(
-			putUtilityPage1.getDateModified(),
-			putUtilityPage2.getDateModified());
-	}
-
 	private void _testPutSiteUtilityPageWithPageSpecifications()
 		throws Exception {
 
@@ -1269,6 +1250,31 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
+	}
+
+	private void _testPutSiteUtilityWithModificationDatePreserved()
+		throws Exception {
+
+		UtilityPage utilityPage = _getUtilityPage(
+			null, Boolean.FALSE, RandomTestUtil.randomString());
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
+		utilityPage.setDateCreated(dateFormat.parse("2023-01-01"));
+		utilityPage.setDateModified(dateFormat.parse("2023-02-02"));
+
+		UtilityPage putUtilityPage1 = utilityPageResource.putSiteUtilityPage(
+			testGroup.getExternalReferenceCode(),
+			utilityPage.getExternalReferenceCode(), utilityPage);
+
+		UtilityPage putUtilityPage2 = utilityPageResource.putSiteUtilityPage(
+			testGroup.getExternalReferenceCode(),
+			utilityPage.getExternalReferenceCode(), putUtilityPage1);
+
+		Assert.assertEquals(
+			putUtilityPage1.getDateModified(),
+			putUtilityPage2.getDateModified());
 	}
 
 	@Inject

@@ -357,15 +357,15 @@ public class RegionLocalServiceTest {
 	}
 
 	@Inject
-	private static AddressLocalService _addressLocalService;
+	private AddressLocalService _addressLocalService;
 
 	@Inject
-	private static CountryLocalService _countryLocalService;
+	private CountryLocalService _countryLocalService;
 
 	@Inject
-	private static OrganizationLocalService _organizationLocalService;
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
-	private static RegionLocalService _regionLocalService;
+	private RegionLocalService _regionLocalService;
 
 }

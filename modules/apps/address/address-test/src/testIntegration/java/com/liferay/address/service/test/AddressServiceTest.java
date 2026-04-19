@@ -95,6 +95,6 @@ public class AddressServiceTest {
 	}
 
 	@Inject
-	private static AddressService _addressService;
+	private AddressService _addressService;
 
 }

@@ -147,35 +147,35 @@ public class CountryResourcePermissionUpgradeProcessTest {
 		"com.liferay.address.internal.upgrade.v1_0_3." +
 			"CountryResourcePermissionUpgradeProcess";
 
-	@Inject
-	private static CountryLocalService _countryLocalService;
+	private Country _country;
 
 	@Inject
-	private static EntityCache _entityCache;
+	private CountryLocalService _countryLocalService;
 
 	@Inject
-	private static FinderCache _finderCache;
+	private EntityCache _entityCache;
 
 	@Inject
-	private static MultiVMPool _multiVMPool;
+	private FinderCache _finderCache;
 
 	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
+	private MultiVMPool _multiVMPool;
 
 	@Inject
-	private static ResourceLocalService _resourceLocalService;
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
-	private static ResourcePermissionLocalService
-		_resourcePermissionLocalService;
+	private ResourceLocalService _resourceLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private Role _role;
+	private ServiceContext _serviceContext;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.address.internal.upgrade.registry.AddressUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private Country _country;
-	private Role _role;
-	private ServiceContext _serviceContext;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

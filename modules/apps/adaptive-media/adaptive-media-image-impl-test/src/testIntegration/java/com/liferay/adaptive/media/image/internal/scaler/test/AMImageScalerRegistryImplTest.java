@@ -338,9 +338,6 @@ public class AMImageScalerRegistryImplTest {
 			"com.liferay.adaptive.media.image.internal.scaler." +
 				"AMImageScalerRegistryImpl";
 
-	@Inject
-	private static ServiceComponentRuntime _serviceComponentRuntime;
-
 	@Inject(
 		filter = "component.name=com.liferay.adaptive.media.image.internal.scaler.AMDefaultImageScaler"
 	)
@@ -348,6 +345,9 @@ public class AMImageScalerRegistryImplTest {
 
 	@Inject
 	private AMImageScalerRegistry _amImageScalerRegistry;
+
+	@Inject
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 	private class TestAMImageScaler implements AMImageScaler {
 

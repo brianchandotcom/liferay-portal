@@ -935,8 +935,6 @@ public class MediaQueryProviderImplTest {
 
 	private static final long _COMPANY_ID = 1L;
 
-	private static ServiceRegistration<?> _serviceRegistration;
-
 	private final AMImageConfigurationHelper _amImageConfigurationHelper =
 		Mockito.mock(AMImageConfigurationHelper.class);
 	private final AMImageFinder _amImageFinder = Mockito.mock(
@@ -947,5 +945,6 @@ public class MediaQueryProviderImplTest {
 	private final FileVersion _fileVersion = Mockito.mock(FileVersion.class);
 	private final MediaQueryProviderImpl _mediaQueryProviderImpl =
 		new MediaQueryProviderImpl();
+	private ServiceRegistration<?> _serviceRegistration;
 
 }

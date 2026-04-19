@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
@@ -496,9 +497,13 @@ public class FileEntryStagedModelDataHandler
 							portletDataContext.getScopeGroupId(), folderId, 0,
 							fileEntry.getTitle(), fileEntry.getExtension());
 
+					String fileEntryFileName = DLUtil.getUniqueFileName(
+						portletDataContext.getScopeGroupId(), folderId,
+						fileEntry.getFileName(), false);
+
 					importedFileEntry = _dlAppLocalService.addFileEntry(
 						fileEntry.getExternalReferenceCode(), userId,
-						repositoryId, folderId, fileEntry.getFileName(),
+						repositoryId, folderId, fileEntryFileName,
 						fileEntry.getMimeType(), fileEntryTitle,
 						StringPool.BLANK, fileEntry.getDescription(), null,
 						inputStream, fileEntry.getSize(),
@@ -651,9 +656,13 @@ public class FileEntryStagedModelDataHandler
 					portletDataContext.getScopeGroupId(), folderId, 0,
 					fileEntry.getTitle(), fileEntry.getExtension());
 
+				String fileEntryFileName = DLUtil.getUniqueFileName(
+					portletDataContext.getScopeGroupId(), folderId,
+					fileEntry.getFileName(), false);
+
 				importedFileEntry = _dlAppLocalService.addFileEntry(
 					fileEntry.getExternalReferenceCode(), userId, repositoryId,
-					folderId, fileEntry.getFileName(), fileEntry.getMimeType(),
+					folderId, fileEntryFileName, fileEntry.getMimeType(),
 					fileEntryTitle, StringPool.BLANK,
 					fileEntry.getDescription(), null, inputStream,
 					fileEntry.getSize(), fileEntry.getDisplayDate(),

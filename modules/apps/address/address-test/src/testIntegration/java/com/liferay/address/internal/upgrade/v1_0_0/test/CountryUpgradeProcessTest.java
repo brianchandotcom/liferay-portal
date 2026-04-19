@@ -154,21 +154,21 @@ public class CountryUpgradeProcessTest {
 	private static final String _CLASS_NAME =
 		"com.liferay.address.internal.upgrade.v1_0_0.CountryUpgradeProcess";
 
-	@Inject
-	private static CounterLocalService _counterLocalService;
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@Inject
-	private static CountryLocalService _countryLocalService;
+	private CounterLocalService _counterLocalService;
 
 	@Inject
-	private static RegionLocalService _regionLocalService;
+	private CountryLocalService _countryLocalService;
+
+	@Inject
+	private RegionLocalService _regionLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.address.internal.upgrade.registry.AddressUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@DeleteAfterTestRun
-	private Company _company;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

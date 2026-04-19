@@ -527,28 +527,27 @@ public class AddressLocalServiceTest {
 			"AddressModelPreFilterContributor";
 
 	@Inject
-	private static AddressLocalService _addressLocalService;
+	private AddressLocalService _addressLocalService;
 
 	@Inject
-	private static CountryLocalService _countryLocalService;
+	private CountryLocalService _countryLocalService;
 
 	@Inject
-	private static ListTypeDefinitionLocalService
-		_listTypeDefinitionLocalService;
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Inject
-	private static ListTypeEntryLocalService _listTypeEntryLocalService;
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
-	private static ListTypeLocalService _listTypeLocalService;
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Inject
-	private static PhoneLocalService _phoneLocalService;
+	private PhoneLocalService _phoneLocalService;
 
 	@Inject
-	private static RegionLocalService _regionLocalService;
+	private RegionLocalService _regionLocalService;
 
 	@Inject
-	private static UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

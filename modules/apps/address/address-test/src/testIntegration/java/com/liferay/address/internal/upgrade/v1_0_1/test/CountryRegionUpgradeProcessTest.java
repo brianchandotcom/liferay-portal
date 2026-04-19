@@ -116,12 +116,6 @@ public class CountryRegionUpgradeProcessTest {
 			"CountryRegionUpgradeProcess";
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	@Inject
-	private static CounterLocalService _counterLocalService;
-
-	@Inject
 	private static CountryLocalService _countryLocalService;
 
 	@Inject
@@ -129,15 +123,21 @@ public class CountryRegionUpgradeProcessTest {
 
 	private static int _regionsCount;
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.address.internal.upgrade.registry.AddressUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
+
+	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.address.internal.upgrade.registry.AddressUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

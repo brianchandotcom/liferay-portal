@@ -54,6 +54,9 @@ public class ExpandoUtil {
 
 		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
 
+		String siteDefaultLanguageId = LocaleUtil.toLanguageId(
+			siteDefaultLocale);
+
 		for (Map.Entry<String, Serializable> entry :
 				expandoBridgeAttributes.entrySet()) {
 
@@ -90,7 +93,7 @@ public class ExpandoUtil {
 							StringBundler.concat(
 								"Expando attribute \"", entry.getKey(),
 								"\" has no value for default locale ",
-								LocaleUtil.toLanguageId(siteDefaultLocale),
+								siteDefaultLanguageId,
 								"; using value from locale ",
 								LocaleUtil.toLanguageId(localeEntry.getKey())));
 					}
@@ -330,9 +333,9 @@ public class ExpandoUtil {
 			return false;
 		}
 
-		return
-			iterator.next(
-			).getKey() instanceof Locale;
+		Map.Entry<?, ?> entry = iterator.next();
+
+		return entry.getKey() instanceof Locale;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ExpandoUtil.class);

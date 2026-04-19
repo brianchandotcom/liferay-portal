@@ -8,9 +8,11 @@ package com.liferay.portal.tools.service.builder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -158,8 +160,32 @@ public class EntityFinder {
 		return false;
 	}
 
+	public boolean isCollectionPersistenceFinderEnabled() {
+		if (isFinderDelegationEnabled() && isCollection()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isDBIndex() {
 		return _dbIndex;
+	}
+
+	public boolean isFinderDelegationEnabled() {
+		if (!_serviceBuilder.isVersionGTE_7_4_0() || hasArrayableOperator()) {
+			return false;
+		}
+
+		for (EntityColumn entityColumn : _entityColumns) {
+			if (Objects.equals(entityColumn.getType(), "String") &&
+				!entityColumn.isCaseSensitive()) {
+
+				return false;
+			}
+		}
+
+		return Validator.isNull(_where);
 	}
 
 	public boolean isPretouch() {
@@ -168,6 +194,14 @@ public class EntityFinder {
 
 	public boolean isUnique() {
 		return _unique;
+	}
+
+	public boolean isUniquePersistenceFinderEnabled() {
+		if (isFinderDelegationEnabled() && (!isCollection() || isUnique())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final List<EntityColumn> _arrayableColumns = new ArrayList<>();

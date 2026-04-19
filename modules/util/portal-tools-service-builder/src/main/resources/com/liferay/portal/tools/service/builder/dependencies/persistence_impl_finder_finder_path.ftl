@@ -19,3 +19,11 @@
 <#if entityFinder.hasArrayableOperator() || entityFinder.hasCustomComparator()>
 	private FinderPath _finderPathWithPaginationCountBy${entityFinder.name};
 </#if>
+
+<#if entityFinder.collectionPersistenceFinderEnabled>
+	private CollectionPersistenceFinder<${entity.name}> _collectionPersistenceFinderBy${entityFinder.name};
+</#if>
+
+<#if entityFinder.uniquePersistenceFinderEnabled>
+	private UniquePersistenceFinder<${entity.name}> _uniquePersistenceFinderBy${entityFinder.name};
+</#if>

@@ -844,6 +844,16 @@ public class Entity implements Comparable<Entity> {
 		return false;
 	}
 
+	public boolean hasCollectionEntityFinder() {
+		for (EntityFinder entityFinder : _entityFinders) {
+			if (entityFinder.isCollection()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasCompoundPK() {
 		if (_pkEntityColumns.size() > 1) {
 			return true;

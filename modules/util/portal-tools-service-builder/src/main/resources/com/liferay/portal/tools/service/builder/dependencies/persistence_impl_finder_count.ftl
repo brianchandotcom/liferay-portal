@@ -23,7 +23,39 @@ public int countBy${entityFinder.name}(
 </#list>
 
 ) {
-	<#if entityFinder.isCollection() || serviceBuilder.isVersionLTE_7_3_0()>
+	<#if entityFinder.collectionPersistenceFinderEnabled>
+		<#if entity.isChangeTrackingEnabled()>
+			try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
+		</#if>
+
+		return _collectionPersistenceFinderBy${entityFinder.name}.count(
+			${finderCacheInstance},
+			new Object[] {
+				<#list entityColumns as entityColumn>
+					${entityColumn.name}
+
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+			});
+
+		<#if entity.isChangeTrackingEnabled()>
+			}
+		</#if>
+	<#elseif entityFinder.uniquePersistenceFinderEnabled>
+		return _uniquePersistenceFinderBy${entityFinder.name}.count(
+			${finderCacheInstance},
+			new Object[] {
+				<#list entityColumns as entityColumn>
+					${entityColumn.name}
+
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+			});
+	<#elseif entityFinder.isCollection() || serviceBuilder.isVersionLTE_7_3_0()>
 		<#if entity.isChangeTrackingEnabled()>
 			try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
 		</#if>

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -83,6 +84,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_parentContainerModel = parentContainerModel;
 		_uadAnonymizeFieldName = uadAnonymizeFieldName;
 		_uadNonanonymizable = uadNonanonymizable;
+
+		_finderColumnTypeName = _finderColumnTypeNames.get(type);
 
 		_humanName = ServiceBuilder.toHumanName(name);
 
@@ -186,6 +189,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public String getEntityName() {
 		return _entityName;
+	}
+
+	public String getFinderColumnTypeName() {
+		return _finderColumnTypeName;
 	}
 
 	public String getGenericizedType() {
@@ -600,6 +607,26 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			"com.liferay.portal.kernel.model.LayoutFriendlyURL." +
 				"layoutFriendlyURLId",
 			"LAYOUT_FRIENDLY_U_R_L_ID_ACCESSOR");
+	private static final Map<String, String> _finderColumnTypeNames =
+		HashMapBuilder.put(
+			"BigDecimal", "FinderColumn.Type.BIG_DECIMAL"
+		).put(
+			"boolean", "FinderColumn.Type.BOOLEAN"
+		).put(
+			"Date", "FinderColumn.Type.DATE"
+		).put(
+			"double", "FinderColumn.Type.DOUBLE"
+		).put(
+			"float", "FinderColumn.Type.FLOAT"
+		).put(
+			"int", "FinderColumn.Type.INTEGER"
+		).put(
+			"long", "FinderColumn.Type.LONG"
+		).put(
+			"short", "FinderColumn.Type.SHORT"
+		).put(
+			"String", "FinderColumn.Type.STRING"
+		).build();
 
 	private final boolean _accessor;
 	private String _arrayableOperator;
@@ -612,6 +639,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private String _dbName;
 	private final String _entityName;
 	private final boolean _filterPrimary;
+	private final String _finderColumnTypeName;
 	private boolean _finderPath;
 	private final String _humanName;
 	private String _idParam;

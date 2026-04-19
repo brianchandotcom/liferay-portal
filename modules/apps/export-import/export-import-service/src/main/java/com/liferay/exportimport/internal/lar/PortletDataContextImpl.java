@@ -13,6 +13,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.adapter.StagedExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.util.ExpandoUtil;
 import com.liferay.exportimport.internal.util.ExportImportPermissionUtil;
 import com.liferay.exportimport.internal.xstream.ConverterAdapter;
 import com.liferay.exportimport.internal.xstream.XStreamStagedModelTypeHierarchyPermission;
@@ -1953,6 +1954,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 					(Map<String, Serializable>)getZipEntryAsObject(expandoPath);
 
 				if (expandoBridgeAttributes != null) {
+					ExpandoUtil.fillMissingDefaultLocaleValues(
+						expandoBridgeAttributes);
+
 					serviceContext.setExpandoBridgeAttributes(
 						expandoBridgeAttributes);
 				}

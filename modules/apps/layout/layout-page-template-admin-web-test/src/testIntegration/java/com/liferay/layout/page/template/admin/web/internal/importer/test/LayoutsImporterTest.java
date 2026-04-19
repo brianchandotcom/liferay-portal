@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -573,6 +574,11 @@ public class LayoutsImporterTest {
 		Layout childLayout = LayoutTestUtil.addTypeContentLayout(
 			_group1, false, false,
 			masterLayoutPageTemplateEntry.getExternalReferenceCode());
+
+		PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+			childLayout,
+			LayoutPageTemplateAdminWebPortletKeys.
+				LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
 		Assert.assertEquals(
 			1,

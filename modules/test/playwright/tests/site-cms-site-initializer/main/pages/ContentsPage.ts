@@ -42,8 +42,10 @@ export class ContentsPage {
 	readonly page: Page;
 
 	readonly newButton: Locator;
+	readonly previewButton: Locator;
 	readonly publishButton: Locator;
 	readonly apiHelpers: ApiHelpers;
+
 	constructor(page: Page) {
 		this.page = page;
 
@@ -51,6 +53,11 @@ export class ContentsPage {
 		this.newButton = page.locator(
 			'[data-testid="fdsCreationActionButton"]'
 		);
+		this.previewButton = page
+			.locator('.content-editor__toolbar')
+			.getByRole('button', {
+				name: 'Preview',
+			});
 		this.publishButton = page
 			.getByText('Publish', {exact: true})
 			.or(page.getByText('Submit for Workflow', {exact: true}));

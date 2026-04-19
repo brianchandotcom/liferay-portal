@@ -7,8 +7,10 @@ import {Locator, Page, expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
@@ -30,17 +32,20 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {categorizationPagesTest} from './fixtures/categorizationPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
+import {ContentsPage} from './pages/ContentsPage';
 
 const test = mergeTests(
 	categorizationPagesTest,
 	cmsPagesTest,
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: false},
 		'LPD-17564': {enabled: true},
 		'LPD-44507': {enabled: true},
 	}),
 	fragmentsPagesTest,
+	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
 	structureBuilderPagesTest
@@ -2003,6 +2008,28 @@ test(
 	}
 );
 
+const createAndEditContent = async ({
+	contentsPage,
+	page,
+	spaceName,
+	title,
+}: {
+	contentsPage: ContentsPage;
+	page: Page;
+	spaceName?: string;
+	title: string;
+}) => {
+	await contentsPage.goto();
+
+	await contentsPage.createContent('Basic Web Content', spaceName);
+
+	await page.getByLabel('Title').fill(title);
+
+	await contentsPage.saveContent();
+
+	await contentsPage.editContent(title);
+};
+
 test(
 	'The content preview opens and closes correctly, taking focus into account',
 	{tag: '@LPD-84613'},
@@ -2012,23 +2039,10 @@ test(
 
 		try {
 			await test.step('Create a new basic web content and edit it', async () => {
-				await contentsPage.goto();
-
-				await contentsPage.createContent('Basic Web Content');
-
-				await page.getByLabel('Title').fill(title);
-
-				await contentsPage.saveContent();
-
-				await contentsPage.editContent(title);
+				await createAndEditContent({contentsPage, page, title});
 			});
 
 			const preview = page.getByLabel(previewTitle);
-			const previewButton = page
-				.locator('.content-editor__toolbar')
-				.getByRole('button', {
-					name: 'Preview',
-				});
 
 			await test.step('Open the content preview', async () => {
 				await page.getByRole('button', {name: 'Open Preview'}).click();
@@ -2077,7 +2091,7 @@ test(
 					.getByRole('button', {name: 'Close Preview'})
 					.click();
 
-				await expect(previewButton).toBeFocused();
+				await expect(contentsPage.previewButton).toBeFocused();
 				await expect(page.getByText(previewTitle)).not.toBeVisible();
 			});
 
@@ -2091,8 +2105,171 @@ test(
 					.getByRole('button', {name: 'Close Preview'})
 					.click();
 
-				await expect(previewButton).toBeFocused();
+				await expect(contentsPage.previewButton).toBeFocused();
 				await expect(page.getByText(previewTitle)).not.toBeVisible();
+			});
+		}
+		finally {
+			await test.step('Delete content', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.deleteContent(title);
+			});
+		}
+	}
+);
+
+test(
+	'Preview a content',
+	{tag: '@LPD-85584'},
+	async ({
+		apiHelpers,
+		contentsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+		spaceSummaryPage,
+	}) => {
+		const displayPageTemplateName = getRandomString();
+		const title = getRandomString();
+		const previewTitle = `${title} Preview`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		try {
+			await test.step('Create a display page template', async () => {
+				await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+				await displayPageTemplatesPage.createTemplate({
+					contentType: 'Basic Web Content',
+					name: displayPageTemplateName,
+				});
+
+				await displayPageTemplatesPage.editTemplate(
+					displayPageTemplateName
+				);
+
+				await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+				const headingId = await pageEditorPage.getFragmentId('Heading');
+
+				await pageEditorPage.selectEditable(headingId, 'element-text');
+
+				await page
+					.getByRole('combobox', {exact: true, name: 'Field'})
+					.selectOption('Friendly URL');
+
+				await pageEditorPage.waitForChangesSaved();
+
+				await pageEditorPage.publishPage();
+			});
+
+			await test.step('Create a space', async () => {
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
+			});
+
+			await test.step('Create a new basic web content and edit it', async () => {
+				await createAndEditContent({
+					contentsPage,
+					page,
+					spaceName,
+					title,
+				});
+			});
+
+			await test.step('Open the content preview', async () => {
+				await contentsPage.previewButton.click();
+
+				await expect(page.getByText(previewTitle)).toBeVisible();
+			});
+
+			await test.step('Check that the space has no sites', async () => {
+				await page.getByText('Select Channel').click();
+
+				const options = page.getByRole('option');
+
+				await expect(options).toHaveCount(1);
+				await expect(options.first()).toHaveText('External URL');
+			});
+
+			await test.step('Connect sites to the space', async () => {
+				await spaceSummaryPage.goto(spaceName);
+
+				await spaceSummaryPage.connectSite('Global');
+				await spaceSummaryPage.connectSite(site.name);
+			});
+
+			await test.step('Return to the content preview and select a channel that does not have a display page template', async () => {
+				await contentsPage.editContent(title);
+
+				await contentsPage.previewButton.click();
+
+				await expect(page.getByText(previewTitle)).toBeVisible();
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {
+						name: 'Global',
+					}),
+					trigger: page.getByLabel('Select Channel'),
+				});
+
+				await expect(
+					page.getByText(
+						'No display page templates available for preview in this channel'
+					)
+				).toBeVisible();
+			});
+
+			await test.step('Select a channel and a display page template', async () => {
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {
+						name: site.name,
+					}),
+					trigger: page.getByLabel('Select Channel'),
+				});
+
+				await expect(
+					page.getByText(
+						'No display page templates available for preview in this channel'
+					)
+				).not.toBeVisible();
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {
+						name: displayPageTemplateName,
+					}),
+					trigger: page.getByLabel('Select Display Page'),
+				});
+			});
+
+			await test.step('Check that the display page appears in the preview', async () => {
+				const friendlyURL = await page
+					.getByLabel('Friendly URL')
+					.inputValue();
+
+				const iframe = page.frameLocator('iframe');
+
+				await expect(iframe.getByText(friendlyURL)).toBeVisible();
+			});
+
+			await test.step('Check the button to open the preview in another tab', async () => {
+				const openPreviewNewTabButton = page.getByTitle(
+					'Open Preview in a new tab.'
+				);
+
+				await expect(openPreviewNewTabButton).toBeVisible();
+				await expect(openPreviewNewTabButton).toHaveRole('link');
+				await expect(openPreviewNewTabButton).toHaveAttribute(
+					'target',
+					'_blank'
+				);
 			});
 		}
 		finally {

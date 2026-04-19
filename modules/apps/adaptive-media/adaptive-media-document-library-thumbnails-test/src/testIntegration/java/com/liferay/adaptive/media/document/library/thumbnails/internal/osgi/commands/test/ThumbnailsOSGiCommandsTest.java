@@ -417,12 +417,6 @@ public class ThumbnailsOSGiCommandsTest {
 
 	private static final String _THUMBNAIL_CONFIGURATION = "thumbnail";
 
-	@Inject
-	private static AMImageConfigurationHelper _amImageConfigurationHelper;
-
-	@Inject
-	private static AMImageFinder _amImageFinder;
-
 	@Inject(filter = "type=" + DLProcessorConstants.IMAGE_PROCESSOR)
 	private static DLProcessor _dlProcessor;
 
@@ -440,15 +434,22 @@ public class ThumbnailsOSGiCommandsTest {
 	@Inject(filter = "default=true")
 	private static Store _store;
 
-	@Inject(
-		filter = "osgi.command.scope=thumbnails", type = Inject.NoType.class
-	)
-	private static Object _thumbnailsOSGiCommands;
+	@Inject
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
+
+	@Inject
+	private AMImageFinder _amImageFinder;
 
 	private Company _company;
 	private Group _group;
 	private FileEntry _pngFileEntry;
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "osgi.command.scope=thumbnails", type = Inject.NoType.class
+	)
+	private Object _thumbnailsOSGiCommands;
+
 	private User _user;
 
 	private static class ImagePreviewableDLProcessor

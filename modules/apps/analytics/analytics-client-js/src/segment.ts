@@ -5,7 +5,7 @@
 
 import Analytics from './analytics';
 import {
-	ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODE,
+	ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODES,
 	HEADER_PROJECT_ID,
 	THREE_HOURS_IN_MILLISECONDS,
 } from './utils/constants';
@@ -29,7 +29,7 @@ export class Segment {
 		const individualId = this._getIndividualId();
 
 		const cachedData = getItem<SegmentCachedData>(
-			ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODE
+			ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODES
 		);
 
 		if (cachedData && cachedData[individualId]) {
@@ -52,10 +52,11 @@ export class Segment {
 				const date = new Date();
 
 				const allCachedData =
-					getItem<SegmentCachedData>(ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODE) ||
-					{};
+					getItem<SegmentCachedData>(
+						ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODES
+					) || {};
 
-				setItem(ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODE, {
+				setItem(ANALYTICS_BATCH_SEGMENT_EXTERNAL_REFERENCE_CODES, {
 					...allCachedData,
 					[individualId]: {
 						createDate: date.getTime(),

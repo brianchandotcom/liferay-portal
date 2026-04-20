@@ -18,9 +18,9 @@ spec:
                     value: {{ .Values.environmentId | quote }}
                 -   name: project-id
                     value: {{ .Values.projectId | quote }}
+        ttlStrategy:
+            secondsAfterCompletion: 86400
         workflowTemplateRef:
             clusterScope: true
             name: backup-create-cluster-workflow-template
-        ttlStrategy:
-            secondsAfterCompletion: 86400
 {{- end -}}

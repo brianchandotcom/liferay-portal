@@ -177,7 +177,15 @@ public class WebServerServlet extends HttpServlet {
 				return true;
 			}
 			else if (Validator.isNumber(pathArray[0])) {
-				_checkFileEntry(pathArray);
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								ParamUtil.getLong(
+									httpServletRequest,
+									"previewCTCollectionId"))) {
+
+					_checkFileEntry(pathArray);
+				}
 			}
 			else if (_PATH_SEPARATOR_FILE_ENTRY.equals(pathArray[0])) {
 				FileEntry fileEntry = _resolveFileEntry(

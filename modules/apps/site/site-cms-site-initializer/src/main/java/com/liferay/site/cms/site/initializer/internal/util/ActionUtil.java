@@ -805,6 +805,29 @@ public class ActionUtil {
 					editURL, "redirect", backURL);
 			}
 
+			String layoutMode = ParamUtil.getString(
+				httpServletRequest, "p_l_mode");
+
+			if (Objects.equals(layoutMode, Constants.READ)) {
+				editURL = HttpComponentsUtil.addParameter(
+					editURL, "p_l_mode", layoutMode);
+			}
+
+			String windowState = ParamUtil.getString(
+				httpServletRequest, "p_p_state");
+
+			if (Validator.isNotNull(windowState)) {
+				editURL = HttpComponentsUtil.addParameter(
+					editURL, "p_p_state", windowState);
+			}
+
+			int version = ParamUtil.getInteger(httpServletRequest, "version");
+
+			if (version > 0) {
+				editURL = HttpComponentsUtil.addParameter(
+					editURL, "version", version);
+			}
+
 			return editURL;
 		}
 		catch (Exception exception) {

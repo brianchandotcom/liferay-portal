@@ -27,10 +27,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.portlet.DummyPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -44,11 +42,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.constants.CMSSiteInitializerPortletKeys;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
 import jakarta.portlet.PortletURL;
-import jakarta.portlet.WindowState;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -199,34 +197,30 @@ public class ObjectEntryAssetRenderer
 	public PortletURL getURLEdit(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		if (_objectDefinition.isCMS()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (themeDisplay != null) {
-				String cmsEditURL = _getCMSURL(Constants.EDIT, themeDisplay);
-
-				return new PortletURLWrapper(DummyPortletURL.getInstance()) {
-
-					@Override
-					public String toString() {
-						return cmsEditURL;
-					}
-
-				};
-			}
-		}
-
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_objectEntry.getGroupId());
 
-		if ((group != null) && group.isCompany()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
+		if ((group != null) && group.isCompany()) {
 			group = themeDisplay.getScopeGroup();
+		}
+
+		if (_objectDefinition.isCMS()) {
+			return PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					httpServletRequest, group,
+					CMSSiteInitializerPortletKeys.CMS_OBJECT_ENTRY, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"objectEntryId", _objectEntry.getObjectEntryId()
+			).setParameter(
+				"p_l_mode", Constants.EDIT
+			).buildPortletURL();
 		}
 
 		return PortletURLBuilder.create(
@@ -244,42 +238,12 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public PortletURL getURLEdit(
-			HttpServletRequest httpServletRequest, WindowState windowState,
-			String redirect)
-		throws Exception {
-
-		if (_objectDefinition.isCMS()) {
-			return getURLEdit(httpServletRequest);
-		}
-
-		return super.getURLEdit(httpServletRequest, windowState, redirect);
-	}
-
-	@Override
-	public PortletURL getURLEdit(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		return getURLEdit(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest));
-	}
-
-	@Override
-	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			WindowState windowState, String redirect)
-		throws Exception {
-
-		if (_objectDefinition.isCMS()) {
-			return getURLEdit(
-				PortalUtil.getHttpServletRequest(liferayPortletRequest));
-		}
-
-		return super.getURLEdit(
-			liferayPortletRequest, liferayPortletResponse, windowState,
-			redirect);
 	}
 
 	@Override

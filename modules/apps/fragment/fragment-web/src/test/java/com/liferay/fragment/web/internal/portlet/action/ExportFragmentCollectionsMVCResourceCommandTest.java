@@ -164,6 +164,7 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
 		mockLiferayResourceRequest.setParameter(
 			"fragmentCollectionId", String.valueOf(_FRAGMENT_COLLECTION_ID));
 

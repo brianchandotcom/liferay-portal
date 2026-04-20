@@ -199,7 +199,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateDisplayDate() throws Exception {
-		resetAndPopulateServiceContext(
+		_setUp(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -217,7 +217,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateExpando() throws Exception {
-		resetAndPopulateServiceContext(
+		_setUp(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -236,7 +236,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateExpirationDate() throws Exception {
-		resetAndPopulateServiceContext(
+		_setUp(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -255,7 +255,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateFileEntryType() throws Exception {
-		resetAndPopulateServiceContext(
+		_setUp(
 			StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			StringPool.BLANK);
@@ -275,7 +275,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateMetadata() throws Exception {
-		resetAndPopulateServiceContext(
+		_setUp(
 			StringPool.BLANK, _dlFileEntryType.getFileEntryTypeId(),
 			_UPDATE_VALUE);
 
@@ -308,7 +308,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateReviewDate() throws Exception {
-		resetAndPopulateServiceContext(
+		_setUp(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -414,7 +414,7 @@ public class DLFileVersionTest {
 		return serviceContext;
 	}
 
-	protected void resetAndPopulateServiceContext(
+	private void _setUp(
 			String expando, long fileEntryTypeId, String metadata)
 		throws Exception {
 

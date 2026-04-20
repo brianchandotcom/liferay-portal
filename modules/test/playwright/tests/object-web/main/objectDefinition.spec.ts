@@ -1783,11 +1783,9 @@ test.describe('Manage object definitions through a Page', () => {
 
 				const optionTexts = await options.allTextContents();
 
-				expect(
-					optionTexts.some(
-						(text) => text === objectDefinition.label['en_US']
-					)
-				).toBe(false);
+				expect(optionTexts).not.toContain(
+					objectDefinition.label['en_US']
+				);
 			});
 		}
 	);

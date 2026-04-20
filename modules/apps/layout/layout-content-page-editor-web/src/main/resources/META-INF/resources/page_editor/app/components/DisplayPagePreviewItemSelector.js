@@ -99,7 +99,7 @@ export function DisplayPagePreviewItemSelectorContent() {
 						aria-selected={!previewItem}
 						onClick={() => selectItem(null)}
 						role="option"
-						symbolLeft={!previewItem ? 'check' : undefined}
+						symbolLeft={!previewItem ? 'check-small' : undefined}
 					>
 						{NO_ITEM_LABEL}
 					</ClayDropDown.Item>
@@ -115,7 +115,7 @@ export function DisplayPagePreviewItemSelectorContent() {
 							onClick={() => selectItem(recentPreviewItem)}
 							symbolLeft={
 								deepEqual(previewItem, recentPreviewItem)
-									? 'check'
+									? 'check-small'
 									: ''
 							}
 						>

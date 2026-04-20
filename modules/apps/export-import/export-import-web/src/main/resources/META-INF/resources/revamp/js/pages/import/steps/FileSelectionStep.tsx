@@ -4,15 +4,38 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import React, {useState} from 'react';
+import {useFormikContext} from 'formik';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {getValidateLarFileEndpoint} from '../../../common/utils/getValidateLarFileEndpoint';
+import {FormikFieldText} from '../../../components/forms/formik';
 import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
+import {getValidateLarFile} from '../../../utils/getValidateLarFile';
 import {useWizard} from '../NewImport';
+
+interface FileSelectionValues {
+	fileSelector?: File;
+	name: string;
+}
 
 export default function FileSelectionStep() {
 	const [progress, setProgress] = useState<number>();
 	const {groupId} = useWizard();
+
+	const {setFieldValue, values} = useFormikContext<FileSelectionValues>();
+	const autoFilledFileRef = useRef<File | undefined>(undefined);
+
+	useEffect(() => {
+		const currentFile = values.fileSelector;
+
+		if (
+			currentFile instanceof File &&
+			currentFile !== autoFilledFileRef.current &&
+			!values.name
+		) {
+			autoFilledFileRef.current = currentFile;
+			setFieldValue('name', currentFile.name.replace(/\.lar$/i, ''));
+		}
+	}, [values.fileSelector, values.name, setFieldValue]);
 
 	const handleUpload = (file: File, signal?: AbortSignal) =>
 		getValidateLarFileEndpoint({
@@ -29,7 +52,20 @@ export default function FileSelectionStep() {
 					<div className="mb-2 sheet-title">
 						{Liferay.Language.get('import-details')}
 					</div>
+
+					<div className="sheet-text text-3" id="name-description">
+						{Liferay.Language.get(
+							'provide-a-descriptive-name-for-your-import'
+						)}
+					</div>
 				</ClayLayout.SheetHeader>
+
+				<FormikFieldText
+					aria-describedby="name-description"
+					label={Liferay.Language.get('name')}
+					name="name"
+					required
+				/>
 			</ClayLayout.Sheet>
 
 			<ClayLayout.Sheet>

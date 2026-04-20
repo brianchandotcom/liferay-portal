@@ -414,8 +414,41 @@ public class DLFileVersionTest {
 		return serviceContext;
 	}
 
-	private void _setUp(
-			String expando, long fileEntryTypeId, String metadata)
+	protected void setUpParentFolder() throws Exception {
+		try {
+			DLAppServiceUtil.deleteFolder(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"Test Folder");
+		}
+		catch (NoSuchFolderException noSuchFolderException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFolderException);
+			}
+		}
+
+		_parentFolder = DLAppServiceUtil.addFolder(
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	protected void setUpResourcePermission() throws Exception {
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.GUEST, "com.liferay.document.library",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
+	}
+
+	protected void tearDownResourcePermission() throws Exception {
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, "com.liferay.document.library",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
+	}
+
+	private void _setUp(String expando, long fileEntryTypeId, String metadata)
 		throws Exception {
 
 		_serviceContext = getServiceContext();
@@ -463,40 +496,6 @@ public class DLFileVersionTest {
 					ddmStructure.getStructureId(),
 				ddmFormValues);
 		}
-	}
-
-	protected void setUpParentFolder() throws Exception {
-		try {
-			DLAppServiceUtil.deleteFolder(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				"Test Folder");
-		}
-		catch (NoSuchFolderException noSuchFolderException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFolderException);
-			}
-		}
-
-		_parentFolder = DLAppServiceUtil.addFolder(
-			null, _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-	}
-
-	protected void setUpResourcePermission() throws Exception {
-		RoleTestUtil.addResourcePermission(
-			RoleConstants.GUEST, "com.liferay.document.library",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			ActionKeys.VIEW);
-	}
-
-	protected void tearDownResourcePermission() throws Exception {
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, "com.liferay.document.library",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			ActionKeys.VIEW);
 	}
 
 	private static final int _DATA_SIZE_1 = 512;

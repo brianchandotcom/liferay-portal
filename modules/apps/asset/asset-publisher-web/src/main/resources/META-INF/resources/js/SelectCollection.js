@@ -9,7 +9,7 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 export default function SelectCollection({
-	addCollectionUrl,
+	addAssetListEntryURL,
 	assetListEntryId: initialAssetListEntryId,
 	clearButtonEnabled: initialClearButtonEnabled,
 	defaultTitle,
@@ -65,9 +65,9 @@ export default function SelectCollection({
 		openSelectionModal({
 			iframeBodyCssClass: 'hide-control-menu',
 			title: Liferay.Language.get('add-collection'),
-			url: addCollectionUrl.toString()
+			url: addAssetListEntryURL.toString(),
 		});
-	}
+	};
 
 	const [values, setValues] = useState({
 		assetListEntryId: initialAssetListEntryId,
@@ -141,7 +141,6 @@ export default function SelectCollection({
 						symbol="plus"
 						title={Liferay.Language.get('add-collection')}
 					/>
-
 				</div>
 			</ClayForm.Group>
 		</>

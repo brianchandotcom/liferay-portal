@@ -82,9 +82,9 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 			_addLayoutPageTemplateCollection(
 				LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
 
-		File larFile = _exportLayouts(false, _group.getGroupId());
-
-		_importLayouts(false, _importedGroup.getGroupId(), larFile);
+		_importLayouts(
+			false, _importedGroup.getGroupId(),
+			_exportLayouts(false, _group.getGroupId()));
 
 		_assertLayoutPageTemplateCollectionNotNull(
 			basicLayoutPageTemplateCollection1);
@@ -102,9 +102,9 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 			deleteLayoutPageTemplateCollection(
 				displayPageLayoutPageTemplateCollection2);
 
-		larFile = _exportLayouts(true, _group.getGroupId());
-
-		_importLayouts(true, _importedGroup.getGroupId(), larFile);
+		_importLayouts(
+			true, _importedGroup.getGroupId(),
+			_exportLayouts(true, _group.getGroupId()));
 
 		_assertLayoutPageTemplateCollectionNotNull(
 			basicLayoutPageTemplateCollection1);
@@ -167,9 +167,9 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
-		File larFile = _exportLayouts(false, _group.getGroupId());
-
-		_importLayouts(false, _importedGroup.getGroupId(), larFile);
+		_importLayouts(
+			false, _importedGroup.getGroupId(),
+			_exportLayouts(false, _group.getGroupId()));
 
 		_assertLayoutPageTemplateEntryNotNull(basicLayoutPageTemplateEntry1);
 		_assertLayoutPageTemplateEntryNotNull(basicLayoutPageTemplateEntry2);
@@ -187,9 +187,9 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 			masterLayoutPageTemplateEntry2);
 
-		larFile = _exportLayouts(true, _group.getGroupId());
-
-		_importLayouts(true, _importedGroup.getGroupId(), larFile);
+		_importLayouts(
+			true, _importedGroup.getGroupId(),
+			_exportLayouts(true, _group.getGroupId()));
 
 		_assertLayoutPageTemplateEntryNotNull(basicLayoutPageTemplateEntry1);
 		_assertLayoutPageTemplateEntryNotNull(

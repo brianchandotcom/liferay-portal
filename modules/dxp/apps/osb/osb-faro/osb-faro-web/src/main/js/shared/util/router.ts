@@ -230,7 +230,7 @@ export const Routes = buildRoutes({
 								}
 							},
 							LIFECYCLE: {
-								path: '/lifecycles',
+								path: '/lifecycle',
 								routes: {}
 							},
 							SITES: {

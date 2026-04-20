@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
+import {EConfigInURLBehavior} from '@liferay/frontend-data-set-web';
 import {render} from '@liferay/frontend-js-react-web';
+import {mimeTypeUtils} from 'frontend-js-web';
+import React from 'react';
 
 import CMSFileUploaderComponent from '../item_selector_file_uploader/CMSFileUploaderComponent';
 import DetachedCMSFilesItemSelectorModal from './DetachedCMSFilesItemSelectorModal';
@@ -17,6 +21,7 @@ interface CMSFile {
 	description: string;
 	embedded: {
 		file: {
+			mimeType: string;
 			thumbnailURL: string;
 		};
 		id: number;
@@ -56,7 +61,7 @@ function urlBuilder({
 	finalURL.search = new URLSearchParams({
 		emptySearch: 'true',
 		filter,
-		nestedFields: 'description,embedded,file.thumbnailURL',
+		nestedFields: 'description,embedded,file.mimeType,file.thumbnailURL',
 	}).toString();
 
 	return finalURL.toString();
@@ -77,6 +82,7 @@ const FDS_PROPS: Omit<
 	CMSFileItemSelectorModalProps['fdsProps'],
 	'filters' | 'id' | 'items'
 > = {
+	configInURLBehavior: EConfigInURLBehavior.OFF,
 	pagination: {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,
@@ -96,27 +102,36 @@ const FDS_PROPS: Omit<
 				item,
 				props,
 			}: {
-				item: {embedded: {file: {thumbnailURL: string}}};
+				item: {embedded: {file: {mimeType: string; thumbnailURL: string}}};
 				props: object;
 			}) => {
-				const stickerProps = {
+				const fallbackStickerProps = {
 					stickerProps: {
 						className: 'file-icon-color-5',
-						displayType: 'unstyled',
 					},
 				};
 
 				if ('file' in item.embedded) {
+					const mimeType = item.embedded.file.mimeType || '';
+
 					return {
 						...props,
 						imgProps: {src: item.embedded.file.thumbnailURL},
-						...stickerProps,
+						stickerProps: {
+							className:
+								mimeTypeUtils.getClassNameFromMimeType(mimeType),
+							content: React.createElement(ClayIcon, {
+								symbol: mimeTypeUtils.getIconFromMimeType(
+									mimeType
+								),
+							}),
+						},
 					};
 				}
 
 				return {
 					...props,
-					...stickerProps,
+					...fallbackStickerProps,
 				};
 			},
 
@@ -148,16 +163,20 @@ export default function openCMSFileSelectorModal({
 	allowDragAndDrop = false,
 	allowedExtensions,
 	config,
+	createItemURL,
 	fdsProps,
 	groupId,
+	itemTypeLabel,
 	maxFileSize,
 	onSelect,
 }: {
 	allowDragAndDrop: boolean;
 	allowedExtensions?: string;
 	config?: Partial<CMSFileItemSelectorModalConfig>;
+	createItemURL?: string;
 	fdsProps?: Partial<CMSFileItemSelectorModalProps['fdsProps']>;
 	groupId: number;
+	itemTypeLabel?: string;
 	maxFileSize?: number;
 	onSelect: (items: Array<CMSFile>) => void;
 }) {
@@ -179,6 +198,7 @@ export default function openCMSFileSelectorModal({
 		{
 			...finalConfig,
 			allowedExtensions,
+			createItemURL,
 			fdsProps: {
 				...FDS_PROPS,
 				filters: getCMSItemSelectorFilters(groupId),
@@ -190,7 +210,7 @@ export default function openCMSFileSelectorModal({
 				? CMSFileUploaderComponent
 				: undefined,
 			groupId,
-			itemTypeLabel: Liferay.Language.get('files'),
+			itemTypeLabel: itemTypeLabel ?? Liferay.Language.get('files'),
 			maxFileSize,
 			onItemsChange: onSelect,
 		},

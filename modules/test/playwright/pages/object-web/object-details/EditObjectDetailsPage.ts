@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class EditObjectDetailsPage {
+	readonly accountRestrictedFieldCombobox: Locator;
 	readonly accountRestrictionToggle: Locator;
 	readonly detailsTabItem: Locator;
 	readonly friendlyURLSeparator: Locator;
@@ -17,6 +18,9 @@ export class EditObjectDetailsPage {
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
+		this.accountRestrictedFieldCombobox = page.getByRole('combobox', {
+			name: 'Account Restricted Field',
+		});
 		this.accountRestrictionToggle = page.getByLabel(
 			'Enable Account Restriction',
 			{exact: true}
@@ -38,7 +42,7 @@ export class EditObjectDetailsPage {
 	async enableAccountRestriction(fieldName: string) {
 		await this.accountRestrictionToggle.check();
 
-		await this.page.getByText('Select an Option').click();
+		await this.accountRestrictedFieldCombobox.click();
 		await this.page.getByRole('option', {name: fieldName}).click();
 	}
 

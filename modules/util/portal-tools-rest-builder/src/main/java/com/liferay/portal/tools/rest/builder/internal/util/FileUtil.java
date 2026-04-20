@@ -146,6 +146,13 @@ public class FileUtil {
 	}
 
 	public static void write(File file, String content) throws Exception {
+		write(file, content, null);
+	}
+
+	public static void write(
+			File file, String content, Collection<File> modifiedFiles)
+		throws Exception {
+
 		if (!file.exists()) {
 			Path path = file.toPath();
 
@@ -186,6 +193,10 @@ public class FileUtil {
 
 			if (!oldContent.equals(parsedContent)) {
 				System.out.println("Writing " + file.getCanonicalPath());
+
+				if (modifiedFiles != null) {
+					modifiedFiles.add(file);
+				}
 			}
 		}
 		else {
@@ -194,6 +205,10 @@ public class FileUtil {
 
 			if (!oldContent.equals(content)) {
 				System.out.println("Writing " + file.getCanonicalPath());
+
+				if (modifiedFiles != null) {
+					modifiedFiles.add(file);
+				}
 			}
 		}
 	}

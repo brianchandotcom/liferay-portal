@@ -1622,14 +1622,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						LayoutsImportStrategy.OVERWRITE,
 						layoutsImportStrategy)) {
 
-				_fragmentEntryLinkLocalService.
-					deleteLayoutPageTemplateEntryFragmentEntryLinks(
-						layoutPageTemplateEntry.getGroupId(),
-						layoutPageTemplateEntry.getPlid());
-
-				_deleteExistingPortletPreferences(
-					layoutPageTemplateEntry.getPlid());
-
 				layoutPageTemplateEntry =
 					_layoutPageTemplateEntryService.
 						updateLayoutPageTemplateEntry(
@@ -1643,7 +1635,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (added) {
 				Set<String> warningMessages = new HashSet<>();
 
-				_processPageDefinition(
+				_processPageDefinitionViaDraft(
 					layoutPageTemplateEntry.getPlid(), pageDefinition,
 					preserveItemIds, userId, warningMessages);
 
@@ -1807,14 +1799,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						LayoutsImportStrategy.OVERWRITE,
 						layoutsImportStrategy)) {
 
-				_fragmentEntryLinkLocalService.
-					deleteLayoutPageTemplateEntryFragmentEntryLinks(
-						layoutUtilityPageEntry.getGroupId(),
-						layoutUtilityPageEntry.getPlid());
-
-				_deleteExistingPortletPreferences(
-					layoutUtilityPageEntry.getPlid());
-
 				layoutUtilityPageEntry =
 					_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 						layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
@@ -1826,7 +1810,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (added) {
 				Set<String> warningMessages = new HashSet<>();
 
-				_processPageDefinition(
+				_processPageDefinitionViaDraft(
 					layoutUtilityPageEntry.getPlid(), pageDefinition,
 					preserveItemIds, userId, warningMessages);
 
@@ -2011,8 +1995,40 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
+	}
 
-		_updateLayouts(plid, userId);
+	private void _processPageDefinitionViaDraft(
+			long plid, PageDefinition pageDefinition, boolean preserveItemIds,
+			long userId, Set<String> warningMessages)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		Layout draftLayout =
+			(layout == null) ? null : layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			_processPageDefinition(
+				plid, pageDefinition, preserveItemIds, userId, warningMessages);
+
+			_updateLayouts(plid, userId);
+
+			return;
+		}
+
+		_fragmentEntryLinkLocalService.
+			deleteLayoutPageTemplateEntryFragmentEntryLinks(
+				draftLayout.getGroupId(), draftLayout.getPlid());
+
+		_deleteExistingPortletPreferences(draftLayout.getPlid());
+
+		_processPageDefinition(
+			draftLayout.getPlid(), pageDefinition, preserveItemIds, userId,
+			warningMessages);
+
+		_layoutLocalService.copyLayoutContent(
+			_layoutLocalService.fetchLayout(draftLayout.getPlid()),
+			_layoutLocalService.fetchLayout(layout.getPlid()));
 	}
 
 	private boolean _processPageElement(

@@ -505,27 +505,28 @@ public class MergePortalSubrepositoryUtil {
 			"git@github.com:", gitHubURLMatcher.group("userName"), "/",
 			gitHubURLMatcher.group("repositoryName"), ".git");
 
-		Retryable<RemoteGitBranch> retryable =
-			new Retryable<RemoteGitBranch>() {
+		LocalGitBranch currentLocalGitBranch =
+			portalGitWorkingDirectory.getCurrentLocalGitBranch();
+		String remoteGitBranchName = gitHubURLMatcher.group("branchName");
 
-				@Override
-				public RemoteGitBranch execute() {
-					RemoteGitBranch remoteGitBranch =
-						portalGitWorkingDirectory.pushToRemoteGitRepository(
-							false,
-							portalGitWorkingDirectory.
-								getCurrentLocalGitBranch(),
-							gitHubURLMatcher.group("branchName"), remoteURL);
+		Retryable<Void> retryable = new Retryable<Void>() {
 
-					if (remoteGitBranch == null) {
-						throw new RuntimeException(
-							"Unable to push updates to " + remoteURL);
-					}
+			@Override
+			public Void execute() {
+				RemoteGitBranch remoteGitBranch =
+					portalGitWorkingDirectory.pushToRemoteGitRepository(
+						false, currentLocalGitBranch, remoteGitBranchName,
+						remoteURL);
 
-					return remoteGitBranch;
+				if (remoteGitBranch == null) {
+					throw new RuntimeException(
+						"Unable to push updates to " + remoteURL);
 				}
 
-			};
+				return null;
+			}
+
+		};
 
 		try {
 			retryable.executeWithRetries();

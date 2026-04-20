@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApiHelpers} from './ApiHelpers';
+import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 interface postSiteTaxonomyVocabularyProps {
 	assetLibraries?: AssetLibrary[];
@@ -127,7 +127,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 		siteId,
 		visibilityType,
 	}: postSiteTaxonomyVocabularyProps): Promise<TTaxonomyVocabulary> {
-		return this.apiHelpers.post(
+		const taxonomyVocabulary = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/taxonomy-vocabularies`,
 			{
 				data: {
@@ -139,6 +139,15 @@ export class HeadlessAdminTaxonomyApiHelper {
 				},
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: taxonomyVocabulary.id,
+				type: 'taxonomyVocabulary',
+			});
+		}
+
+		return taxonomyVocabulary;
 	}
 
 	/**

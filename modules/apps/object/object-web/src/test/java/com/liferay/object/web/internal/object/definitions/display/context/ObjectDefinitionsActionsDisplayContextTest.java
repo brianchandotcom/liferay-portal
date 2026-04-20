@@ -139,6 +139,9 @@ public class ObjectDefinitionsActionsDisplayContextTest {
 			bundleContext.registerService(
 				ObjectFieldLocalService.class, _objectFieldLocalService, null);
 
+		Map<String, List<Map<String, String>>>
+			objectActionCodeEditorElementsItems = new HashMap<>();
+
 		ObjectDefinitionsActionsDisplayContext
 			objectDefinitionsActionsDisplayContext =
 				new ObjectDefinitionsActionsDisplayContext(
@@ -155,9 +158,6 @@ public class ObjectDefinitionsActionsDisplayContextTest {
 		List<Map<String, Object>> objectActionCodeEditorElements =
 			objectDefinitionsActionsDisplayContext.
 				getObjectActionCodeEditorElements();
-
-		Map<String, List<Map<String, String>>>
-			objectActionCodeEditorElementsItems = new HashMap<>();
 
 		for (Map<String, Object> objectActionCodeEditorElement :
 				objectActionCodeEditorElements) {

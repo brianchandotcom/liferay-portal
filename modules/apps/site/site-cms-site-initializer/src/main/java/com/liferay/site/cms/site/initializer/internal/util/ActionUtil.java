@@ -517,15 +517,6 @@ public class ActionUtil {
 			GroupConstants.CMS_FRIENDLY_URL, "/add-space-members");
 	}
 
-	public static String getBaseBulkActionTaskReportURL(
-		String className, ThemeDisplay themeDisplay) {
-
-		return StringBundler.concat(
-			themeDisplay.getPathFriendlyURLPublic(),
-			GroupConstants.CMS_FRIENDLY_URL, "/e/bulk-action-task/",
-			PortalUtil.getClassNameId(className));
-	}
-
 	public static String getBaseSpaceSettingsURL(ThemeDisplay themeDisplay) {
 		return StringBundler.concat(
 			themeDisplay.getPathFriendlyURLPublic(),
@@ -1201,7 +1192,7 @@ public class ActionUtil {
 			0, contributedRendererKey, fragmentEntry.getType(), serviceContext);
 	}
 
-	private static LayoutStructure _addInputFragmentEntryLink(
+	private static void _addInputFragmentEntryLink(
 			List<FragmentEntryLink> addedFragmentEntryLinks,
 			JSONObject configurationJSONObject, FormManager formManager,
 			String fragmentEntryKey, InfoField<?> infoField, Layout layout,
@@ -1212,7 +1203,7 @@ public class ActionUtil {
 		throws Exception {
 
 		if (infoField == null) {
-			return layoutStructure;
+			return;
 		}
 
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
@@ -1222,7 +1213,7 @@ public class ActionUtil {
 				serviceContext);
 
 		if (fragmentStyledLayoutStructureItem == null) {
-			return layoutStructure;
+			return;
 		}
 
 		fragmentStyledLayoutStructureItem.updateItemConfig(
@@ -1253,8 +1244,6 @@ public class ActionUtil {
 		if (fragmentEntryLink != null) {
 			addedFragmentEntryLinks.add(fragmentEntryLink);
 		}
-
-		return layoutStructure;
 	}
 
 	private static LayoutStructure _addInputFragmentEntryLinks(

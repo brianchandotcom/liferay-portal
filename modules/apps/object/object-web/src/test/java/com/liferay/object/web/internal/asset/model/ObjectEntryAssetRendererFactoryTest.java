@@ -69,7 +69,7 @@ public class ObjectEntryAssetRendererFactoryTest {
 	}
 
 	@Test
-	public void testGetTypeName() throws Exception {
+	public void testGetTypeName() {
 		Mockito.when(
 			_objectDefinition.isCMS()
 		).thenReturn(
@@ -94,7 +94,7 @@ public class ObjectEntryAssetRendererFactoryTest {
 	}
 
 	@Test
-	public void testIsActive() throws Exception {
+	public void testIsActive() {
 		Mockito.when(
 			_objectDefinition.getCompanyId()
 		).thenReturn(
@@ -117,7 +117,7 @@ public class ObjectEntryAssetRendererFactoryTest {
 	}
 
 	@Test
-	public void testIsSelectable() throws Exception {
+	public void testIsSelectable() {
 		Mockito.when(
 			_objectDefinition.getScope()
 		).thenReturn(

@@ -60,14 +60,12 @@ public class ObjectEntryAssetRenderer
 	extends BaseJSPAssetRenderer<ObjectEntry> implements TrashRenderer {
 
 	public ObjectEntryAssetRenderer(
-			AssetDisplayPageFriendlyURLProvider
-				assetDisplayPageFriendlyURLProvider,
-			DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
-			ObjectEntryService objectEntryService,
-			ObjectFieldLocalService objectFieldLocalService)
-		throws PortalException {
+		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
+		ObjectEntryService objectEntryService,
+		ObjectFieldLocalService objectFieldLocalService) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
@@ -194,9 +192,7 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLEdit(HttpServletRequest httpServletRequest)
-		throws Exception {
-
+	public PortletURL getURLEdit(HttpServletRequest httpServletRequest) {
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_objectEntry.getGroupId());
 
@@ -238,9 +234,8 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		return getURLEdit(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest));
@@ -259,13 +254,14 @@ public class ObjectEntryAssetRenderer
 			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
-		String mode = Constants.READ;
+		String mode = editable ? Constants.EDIT : Constants.READ;
 
-		if (editable) {
-			mode = Constants.EDIT;
-		}
-
-		return _getCMSURL(mode, themeDisplay);
+		return StringBundler.concat(
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+			GroupConstants.CMS_FRIENDLY_URL,
+			"/edit_content_item?objectEntryId=",
+			_objectEntry.getObjectEntryId(), "&p_l_mode=", mode, "&redirect=",
+			HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
 	}
 
 	@Override
@@ -324,9 +320,7 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
+	public boolean hasEditPermission(PermissionChecker permissionChecker) {
 		try {
 			return _objectEntryService.hasModelResourcePermission(
 				_objectEntry, ActionKeys.UPDATE);
@@ -341,9 +335,7 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
+	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		try {
 			return _objectEntryService.hasModelResourcePermission(
 				_objectEntry, ActionKeys.VIEW);
@@ -384,15 +376,6 @@ public class ObjectEntryAssetRenderer
 	@Override
 	public boolean isCommentable() {
 		return _objectDefinition.isEnableComments();
-	}
-
-	private String _getCMSURL(String mode, ThemeDisplay themeDisplay) {
-		return StringBundler.concat(
-			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-			GroupConstants.CMS_FRIENDLY_URL,
-			"/edit_content_item?objectEntryId=",
-			_objectEntry.getObjectEntryId(), "&p_l_mode=", mode, "&redirect=",
-			HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
 	}
 
 	private PermissionChecker _getPermissionChecker(ThemeDisplay themeDisplay) {

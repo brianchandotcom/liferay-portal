@@ -103,7 +103,7 @@ public class ObjectEntryAssetRendererTest {
 		);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(Constants.READ, themeDisplay),
+			_getCMSFriendlyURL(themeDisplay),
 			assetRenderer.getSharingEntryRowPortletURL(false, themeDisplay));
 	}
 
@@ -130,7 +130,7 @@ public class ObjectEntryAssetRendererTest {
 	}
 
 	@Test
-	public void testGetURLDownload() throws Exception {
+	public void testGetURLDownload() {
 		Mockito.when(
 			_objectDefinition.isCMS()
 		).thenReturn(
@@ -232,7 +232,7 @@ public class ObjectEntryAssetRendererTest {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(Constants.READ, themeDisplay),
+			_getCMSFriendlyURL(themeDisplay),
 			assetRenderer.getURLSharingNotification(themeDisplay));
 	}
 
@@ -311,7 +311,7 @@ public class ObjectEntryAssetRendererTest {
 		Assert.assertTrue(assetRenderer.hasViewPermission(_permissionChecker));
 	}
 
-	private String _getCMSFriendlyURL(String mode, ThemeDisplay themeDisplay) {
+	private String _getCMSFriendlyURL(ThemeDisplay themeDisplay) {
 		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
 
 		Mockito.when(
@@ -353,7 +353,7 @@ public class ObjectEntryAssetRendererTest {
 		return StringBundler.concat(
 			portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
 			"/edit_content_item?objectEntryId=", objectEntryId, "&p_l_mode=",
-			mode, "&redirect=", HtmlUtil.escapeURL(urlCurrent));
+			Constants.READ, "&redirect=", HtmlUtil.escapeURL(urlCurrent));
 	}
 
 	private String _getFriendlyURL(LiferayPortletRequest liferayPortletRequest)
@@ -391,9 +391,7 @@ public class ObjectEntryAssetRendererTest {
 		return friendlyURL;
 	}
 
-	private AssetRenderer<ObjectEntry> _getObjectEntryAssetRenderer()
-		throws Exception {
-
+	private AssetRenderer<ObjectEntry> _getObjectEntryAssetRenderer() {
 		return new ObjectEntryAssetRenderer(
 			_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
 			_dlURLHelper, _objectDefinition, _objectEntry,
@@ -463,7 +461,7 @@ public class ObjectEntryAssetRendererTest {
 		);
 	}
 
-	private void _setUpObjectFieldUtilMockedStatic() throws Exception {
+	private void _setUpObjectFieldUtilMockedStatic() {
 		_objectFieldUtilMockedStatic.when(
 			() -> ObjectFieldUtil.getAttachmentDownloadURL(
 				Mockito.eq(_dlURLHelper), Mockito.eq(_fileEntry),

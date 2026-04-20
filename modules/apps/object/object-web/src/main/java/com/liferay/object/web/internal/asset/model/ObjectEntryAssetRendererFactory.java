@@ -116,8 +116,7 @@ public class ObjectEntryAssetRendererFactory
 
 	@Override
 	public boolean hasPermission(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws Exception {
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		if (Objects.equals(actionId, ActionKeys.DOWNLOAD) &&
 			_objectDefinition.isCMS()) {

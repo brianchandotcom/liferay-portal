@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -190,7 +189,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			return layoutUtilityPageEntryLocalService.
 				updateLayoutUtilityPageEntry(
 					targetLayoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-					previewFileEntryId);
+					previewFileEntryId, serviceContext);
 		}
 
 		return targetLayoutUtilityPageEntry;
@@ -393,15 +392,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long previewFileEntryId)
-		throws PortalException {
-
-		return updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, previewFileEntryId, new ServiceContext());
-	}
-
-	@Override
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -427,23 +417,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		}
 
 		return layoutUtilityPageEntry;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			serviceContext = new ServiceContext();
-		}
-
-		return updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, name, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

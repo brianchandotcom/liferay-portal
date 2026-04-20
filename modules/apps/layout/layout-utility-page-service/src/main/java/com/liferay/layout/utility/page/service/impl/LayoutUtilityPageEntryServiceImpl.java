@@ -271,19 +271,6 @@ public class LayoutUtilityPageEntryServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long previewFileEntryId)
-		throws PortalException {
-
-		_layoutUtilityPageEntryModelResourcePermission.check(
-			getPermissionChecker(), layoutUtilityPageEntryId,
-			ActionKeys.UPDATE);
-
-		return layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, previewFileEntryId);
-	}
-
-	@Override
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {

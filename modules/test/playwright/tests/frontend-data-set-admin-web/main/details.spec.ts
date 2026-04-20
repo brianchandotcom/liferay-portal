@@ -104,9 +104,7 @@ test(
 		});
 
 		await test.step('Check that the Data Set ERC is shown as part of the Details page', async () => {
-			await expect(detailsPage.dataSetERC).toHaveValue(
-				detailsDataSetERC
-			);
+			await expect(detailsPage.dataSetERC).toHaveValue(detailsDataSetERC);
 		});
 	}
 );

@@ -103,9 +103,6 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentCollectionContributorRegistry.class.getName(),
 			_fragmentCollectionContributorRegistry);
 		renderRequest.setAttribute(
-			FragmentCollectionLocalService.class.getName(),
-			_fragmentCollectionLocalService);
-		renderRequest.setAttribute(
 			FragmentEntryProcessorRegistry.class.getName(),
 			_fragmentEntryProcessorRegistry);
 		renderRequest.setAttribute(

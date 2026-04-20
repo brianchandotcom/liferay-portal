@@ -201,12 +201,18 @@ test(
 			});
 		});
 
+		let destinationFolderId: number;
+
 		await test.step('Create a destination folder in the Space', async () => {
-			await apiHelpers.objectFolder.createObjectEntryFolder({
-				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-				scopeKey: spaceName,
-				title: destinationFolderName,
-			});
+			const folder = await apiHelpers.objectFolder.createObjectEntryFolder(
+				{
+					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					scopeKey: spaceName,
+					title: destinationFolderName,
+				}
+			);
+
+			destinationFolderId = folder.id;
 		});
 
 		await test.step('Create three contents in the Space', async () => {
@@ -254,6 +260,22 @@ test(
 					page,
 					`Success:3 assets were successfully moved to ${destinationFolderName}.`
 				);
+			}
+		);
+
+		await test.step(
+			'The three contents are in the destination folder',
+			async () => {
+				const response = await apiHelpers.get(
+					`${apiHelpers.baseUrl}${applicationName}/scopes/${encodeURIComponent(spaceName)}?pageSize=100`
+				);
+
+				const movedItems = response.items.filter(
+					(item: {objectEntryFolderId: number}) =>
+						item.objectEntryFolderId === destinationFolderId
+				);
+
+				expect(movedItems).toHaveLength(3);
 			}
 		);
 	}

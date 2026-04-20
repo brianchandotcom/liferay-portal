@@ -2,7 +2,7 @@ backup:
     cleanup:
         retentionDays: 30
         schedule: 0 2 * * *
-        serviceAccountName: backup-cleanup
+        serviceAccountName: backup-cleanup-service-account
     enabled: false
     region: ""
     storageClass: NEARLINE

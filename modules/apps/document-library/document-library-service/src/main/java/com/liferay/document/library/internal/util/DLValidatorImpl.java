@@ -87,10 +87,14 @@ public final class DLValidatorImpl implements DLValidator {
 			_min(
 				_getGlobalMaxAllowableSize(companyId, groupId),
 				_min(
-					_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
-						companyId, mimeType),
-					_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
-						companyId, groupId, mimeType))));
+					_dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit(
+						mimeType),
+					_min(
+						_dlSizeLimitConfigurationHelper.
+							getCompanyMimeTypeSizeLimit(companyId, mimeType),
+						_dlSizeLimitConfigurationHelper.
+							getGroupMimeTypeSizeLimit(
+								companyId, groupId, mimeType)))));
 	}
 
 	@Override
@@ -106,6 +110,13 @@ public final class DLValidatorImpl implements DLValidator {
 				companyId);
 
 		companyMimeTypeSizeLimit.forEach(
+			(key, value) -> mimeTypeSizeLimit.merge(
+				key, value, (value1, value2) -> _min(value1, value2)));
+
+		Map<String, Long> systemMimeTypeSizeLimit =
+			_dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit();
+
+		systemMimeTypeSizeLimit.forEach(
 			(key, value) -> mimeTypeSizeLimit.merge(
 				key, value, (value1, value2) -> _min(value1, value2)));
 
@@ -387,10 +398,12 @@ public final class DLValidatorImpl implements DLValidator {
 		return _min(
 			_uploadServletRequestConfigurationProvider.getMaxSize(),
 			_min(
-				_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
-					companyId),
-				_dlSizeLimitConfigurationHelper.getGroupFileMaxSize(
-					companyId, groupId)));
+				_dlSizeLimitConfigurationHelper.getSystemFileMaxSize(),
+				_min(
+					_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
+						companyId),
+					_dlSizeLimitConfigurationHelper.getGroupFileMaxSize(
+						companyId, groupId))));
 	}
 
 	private long _min(long a, long b) {

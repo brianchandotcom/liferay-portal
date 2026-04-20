@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -98,6 +99,12 @@ public interface DB {
 	public ResultSet getIndexResultSet(
 			Connection connection, String tableName, boolean onlyUnique)
 		throws SQLException;
+
+	public default List<RunningQuery> getLockedQueries(Connection connection)
+		throws SQLException {
+
+		return Collections.emptyList();
+	}
 
 	public int getMajorVersion();
 
@@ -239,5 +246,46 @@ public interface DB {
 			Connection connection, String tableName,
 			String[] primaryKeyColumnNames)
 		throws Exception;
+
+	public static class RunningQuery {
+
+		public RunningQuery(
+			long duration, String id, String query, String schema,
+			String state) {
+
+			_duration = duration;
+			_id = id;
+			_query = query;
+			_schema = schema;
+			_state = state;
+		}
+
+		public long getDuration() {
+			return _duration;
+		}
+
+		public String getId() {
+			return _id;
+		}
+
+		public String getQuery() {
+			return _query;
+		}
+
+		public String getSchema() {
+			return _schema;
+		}
+
+		public String getState() {
+			return _state;
+		}
+
+		private final long _duration;
+		private final String _id;
+		private final String _query;
+		private final String _schema;
+		private final String _state;
+
+	}
 
 }

@@ -27,7 +27,7 @@ jobs:
 
                     NEW_VERSION="${CHART_VERSION}-pr-${{inputs.pr_number}}-g${SHORT_SHA}"
 
-                    echo "Modifying chart version from ${CHART_VERSION} to ${NEW_VERSION}"
+                    echo "Modifying chart version from ${CHART_VERSION} to ${NEW_VERSION}."
 
                     yq -i ".version = \"${NEW_VERSION}\"" Chart.yaml
                 working-directory: ${{inputs.working_directory}}
@@ -66,7 +66,7 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "Chart version ${CHART_VERSION} already exists. Skipping publish."
+                        echo "Chart version ${CHART_VERSION} already exists. The publish step will be skipped."
                     fi
                 working-directory: ${{inputs.working_directory}}
             -   id: auth

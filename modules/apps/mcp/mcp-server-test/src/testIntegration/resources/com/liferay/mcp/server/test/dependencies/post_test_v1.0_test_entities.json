@@ -1,0 +1,30 @@
+{
+	"properties": {
+		"body": {
+			"properties": {
+				"documentId": {
+					"format": "int64",
+					"type": "integer"
+				},
+				"name": {
+					"type": "string"
+				},
+				"nestedTestEntity": {
+					"properties": {
+					},
+					"type": "object"
+				},
+				"stringTestEntities": {
+					"items": {
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"required": [
+		"body"
+	],
+	"type": "object"
+}

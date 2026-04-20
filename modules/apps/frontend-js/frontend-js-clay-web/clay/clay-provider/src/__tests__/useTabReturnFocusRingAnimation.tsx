@@ -5,7 +5,26 @@
 
 import {act, cleanup, renderHook} from '@testing-library/react';
 
-import {useTabReturnFocusRingAnimation} from '../useTabReturnFocusRingAnimation';
+import {
+	FOCUS_RING_ANIMATION_CLASS,
+	TAB_RETURNING_CLASS,
+	useTabReturnFocusRingAnimation,
+} from '../useTabReturnFocusRingAnimation';
+
+function enableFocusRing() {
+	document.body.classList.add(FOCUS_RING_ANIMATION_CLASS);
+}
+
+function hasReturningClass() {
+	return document.body.classList.contains(TAB_RETURNING_CLASS);
+}
+
+function clear() {
+	document.body.classList.remove(
+		FOCUS_RING_ANIMATION_CLASS,
+		TAB_RETURNING_CLASS
+	);
+}
 
 function dispatchVisibilityChange(hidden: boolean) {
 	Object.defineProperty(document, 'hidden', {
@@ -30,10 +49,7 @@ describe('useTabReturnFocusRingAnimation', () => {
 	afterEach(() => {
 		cleanup();
 		jest.restoreAllMocks();
-		document.body.classList.remove(
-			'c-prefers-focus-ring',
-			'c-tab-returning'
-		);
+		clear();
 	});
 
 	describe('BasicRendering', () => {
@@ -93,15 +109,13 @@ describe('useTabReturnFocusRingAnimation', () => {
 		});
 
 		it('adds c-tab-returning when tab becomes visible with focus ring active', () => {
-			document.body.classList.add('c-prefers-focus-ring');
+			enableFocusRing();
 
 			renderHook(() => useTabReturnFocusRingAnimation());
 
 			dispatchVisibilityChange(false);
 
-			expect(document.body.classList.contains('c-tab-returning')).toBe(
-				true
-			);
+			expect(hasReturningClass()).toBe(true);
 		});
 
 		it('does not add c-tab-returning when c-prefers-focus-ring is absent', () => {
@@ -109,21 +123,17 @@ describe('useTabReturnFocusRingAnimation', () => {
 
 			dispatchVisibilityChange(false);
 
-			expect(document.body.classList.contains('c-tab-returning')).toBe(
-				false
-			);
+			expect(hasReturningClass()).toBe(false);
 		});
 
 		it('does not add c-tab-returning when tab becomes hidden', () => {
-			document.body.classList.add('c-prefers-focus-ring');
+			enableFocusRing();
 
 			renderHook(() => useTabReturnFocusRingAnimation());
 
 			dispatchVisibilityChange(true);
 
-			expect(document.body.classList.contains('c-tab-returning')).toBe(
-				false
-			);
+			expect(hasReturningClass()).toBe(false);
 		});
 	});
 });

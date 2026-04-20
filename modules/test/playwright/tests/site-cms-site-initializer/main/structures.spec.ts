@@ -431,3 +431,69 @@ test(
 		});
 	}
 );
+
+test(
+	'Export and Import Content Structures actions open the export modal from the breadcrumb',
+	{tag: '@LPD-78381'},
+	async ({page, structuresPage}) => {
+		await structuresPage.openMenuItem('Export');
+
+		await expect(page.locator('.modal-title')).toHaveText(
+			'Export Content Structures'
+		);
+
+		await structuresPage.openMenuItem('Import');
+
+		await expect(page.locator('.modal-title')).toHaveText(
+			'Import Content Structures'
+		);
+	}
+);
+
+test(
+	'Export Content Structures list includes only object definitions from CMS folders',
+	{tag: '@LPD-78381'},
+	async ({apiHelpers, page, structuresPage}) => {
+		const contentCountBadge = page
+			.getByRole('dialog', {name: 'Export Content Structures'})
+			.frameLocator('iframe')
+			.locator(
+				'label[for="_com_liferay_exportimport_web_portlet_ExportImportPortlet_PORTLET_DATA_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet"] .badge-info'
+			);
+
+		await structuresPage.openMenuItem('Export');
+
+		await contentCountBadge.waitFor({state: 'visible'});
+
+		const initialCount = parseInt(
+			(await contentCountBadge.textContent()) ?? '0',
+			10
+		);
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
+				scope: 'depot',
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		await structuresPage.openMenuItem('Export');
+
+		await expect(contentCountBadge).toHaveText(String(initialCount + 1));
+	}
+);

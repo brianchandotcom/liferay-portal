@@ -1027,6 +1027,87 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		).toBeHidden();
 	});
 
+	test('can restrict a previously created object', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await expect(
+			editObjectDetailsPage.accountRestrictionToggle
+		).toBeDisabled();
+
+		await apiHelpers.headlessAdminUser.postAccount();
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: accountObjectDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+				'L_ACCOUNT'
+			);
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_ACCOUNT',
+				{
+					label: {
+						en_US: 'objectRelationshipLabel' + getRandomInt(),
+					},
+					name: 'objectRelationshipName' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1: 'L_ACCOUNT',
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId1: accountObjectDefinition.id,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		await page.reload();
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await editObjectDetailsPage.enableAccountRestriction(
+			objectRelationship.label['en_US']
+		);
+
+		await editObjectDetailsPage.publishButton.click();
+
+		await waitForAlert(page, 'The object was published successfully');
+
+		await page.reload();
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await expect(
+			editObjectDetailsPage.accountRestrictionToggle
+		).toBeDisabled();
+	});
+
 	test('can view the object management toolbar in different tabs.', async ({
 		apiHelpers,
 		editObjectDetailsPage,

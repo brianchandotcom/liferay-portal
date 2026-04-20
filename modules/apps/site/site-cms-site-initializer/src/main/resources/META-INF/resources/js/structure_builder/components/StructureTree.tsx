@@ -75,6 +75,8 @@ type TreeItem = {
 		| RepeatableGroup['type'];
 };
 
+export type SelectionMode = 'multiple' | 'range' | 'single';
+
 export default function StructureTree({search}: {search: string}) {
 	const dispatch = useStateDispatch();
 
@@ -152,6 +154,17 @@ export default function StructureTree({search}: {search: string}) {
 
 		else if (mode === 'single') {
 			nextSelection = [item.id];
+		}
+
+		// Selecting with range selection
+
+		else if (mode === 'range') {
+			nextSelection = getRangeItems({
+				items,
+				rootId: structureUuid,
+				selection,
+				targetId: item.id,
+			});
 		}
 
 		// Selecting with multiple selection
@@ -264,7 +277,7 @@ export default function StructureTree({search}: {search: string}) {
 			onSelect={onSelect}
 			onSelectionChange={setSelectedKeys}
 			selectedKeys={selectedKeys}
-			selectionMode={mode}
+			selectionMode={mode === 'single' ? 'single' : 'multiple'}
 			showExpanderOnHover={false}
 		>
 			{(item, selectedKeys) => (
@@ -493,8 +506,8 @@ function ItemStatus({item: {invalid, locked}}: {item: TreeItem}) {
 	return <span className="sr-only">{messages.join(' ')}</span>;
 }
 
-function useSelectionMode() {
-	const [multiple, setMultiple] = useState(false);
+function useSelectionMode(): SelectionMode {
+	const [mode, setMode] = useState<SelectionMode>('single');
 
 	const isMultiSelectKey = (key: string) => {
 		if (Liferay.Browser.isMac()) {
@@ -509,8 +522,11 @@ function useSelectionMode() {
 		(event) => {
 			const {key} = event as KeyboardEvent;
 
-			if (isMultiSelectKey(key) && !multiple) {
-				setMultiple(true);
+			if (key === 'Shift') {
+				setMode('range');
+			}
+			else if (isMultiSelectKey(key)) {
+				setMode('multiple');
 			}
 		},
 		false,
@@ -525,8 +541,8 @@ function useSelectionMode() {
 		(event) => {
 			const {key} = event as KeyboardEvent;
 
-			if (isMultiSelectKey(key) && multiple) {
-				setMultiple(false);
+			if (key === 'Shift' || isMultiSelectKey(key)) {
+				setMode('single');
 			}
 		},
 		false,
@@ -538,7 +554,7 @@ function useSelectionMode() {
 
 	useEventListener(
 		'blur',
-		() => setMultiple(false),
+		() => setMode('single'),
 		false,
 
 		// @ts-ignore
@@ -546,7 +562,53 @@ function useSelectionMode() {
 		window
 	);
 
-	return multiple ? 'multiple' : 'single';
+	return mode;
+}
+
+export function flatItemIds(
+	items: Array<{children?: any[]; id: Uuid}>
+): Uuid[] {
+	return items.reduce((ids: Uuid[], item) => {
+		ids.push(item.id);
+
+		if (item.children?.length) {
+			ids.push(...flatItemIds(item.children));
+		}
+
+		return ids;
+	}, []);
+}
+
+export function getRangeItems({
+	items,
+	rootId,
+	selection,
+	targetId,
+}: {
+	items: Array<{children?: any[]; id: Uuid}>;
+	rootId: Uuid;
+	selection: State['selection'];
+	targetId: Uuid;
+}): State['selection'] {
+	const ids = flatItemIds(items).filter((id) => id !== rootId);
+
+	if (!ids.includes(targetId)) {
+		return [targetId];
+	}
+
+	const anchorId = selection.at(-1);
+
+	if (!anchorId || anchorId === rootId) {
+		return [targetId];
+	}
+
+	const anchorIndex = ids.indexOf(anchorId);
+	const targetIndex = ids.indexOf(targetId);
+
+	const start = Math.min(anchorIndex, targetIndex);
+	const end = Math.max(anchorIndex, targetIndex);
+
+	return ids.slice(start, end + 1);
 }
 
 function buildItems({

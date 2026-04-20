@@ -64,6 +64,33 @@ public class FolderStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testCompanyScopeDependencies() throws Exception {
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addCompanyDependencies();
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				stagedModel);
+
+			Assert.assertNotNull(exportedStagedModel);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+
+			validateCompanyDependenciesImport(
+				dependentStagedModelsMap, liveGroup);
+		}
+	}
+
+	@Test
 	public void testImportChildFolderWithMissingParentMapping()
 		throws Exception {
 
@@ -111,33 +138,6 @@ public class FolderStagedModelDataHandlerTest
 					"folder should be placed at root level",
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				importedDLFolder.getParentFolderId());
-		}
-	}
-
-	@Test
-	public void testCompanyScopeDependencies() throws Exception {
-		initExport();
-
-		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			addCompanyDependencies();
-
-		StagedModel stagedModel = addStagedModel(
-			stagingGroup, dependentStagedModelsMap);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			StagedModel exportedStagedModel = readExportedStagedModel(
-				stagedModel);
-
-			Assert.assertNotNull(exportedStagedModel);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStagedModel);
-
-			validateCompanyDependenciesImport(
-				dependentStagedModelsMap, liveGroup);
 		}
 	}
 

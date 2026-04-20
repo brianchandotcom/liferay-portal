@@ -159,10 +159,6 @@ function _create_s3_bucket {
 	local bucket_name="${1}"
 	local region="${2}"
 
-	# Due to a legacy behavior on AWS, we must pass extra arguments and have a different retry logic if the
-	# region is different from "us-east-1".
-
-	# https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#:~:text=BucketAlreadyOwnedByYou
 	if [ "${region}" == "us-east-1" ]
 	then
 		aws s3api create-bucket \

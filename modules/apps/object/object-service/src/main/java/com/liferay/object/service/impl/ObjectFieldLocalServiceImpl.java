@@ -764,6 +764,10 @@ public class ObjectFieldLocalServiceImpl
 			_validateObjectRelationshipDeletionType(objectFieldId, required);
 		}
 
+		if (objectField.isRequired() == required) {
+			return objectField;
+		}
+
 		objectField.setRequired(required);
 
 		return objectFieldPersistence.update(objectField);

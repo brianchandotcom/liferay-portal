@@ -176,7 +176,7 @@ public class ObjectDefinitionsActionsDisplayContextTest {
 			objectActionCodeEditorElementsItems.get("fields");
 
 		Assert.assertEquals(fields.toString(), 1, fields.size());
-		Assert.assertTrue(_containsContent(objectFieldName, fields));
+		Assert.assertTrue(_hasContent(objectFieldName, fields));
 
 		List<Map<String, String>> functions =
 			objectActionCodeEditorElementsItems.get("functions");
@@ -189,7 +189,7 @@ public class ObjectDefinitionsActionsDisplayContextTest {
 			functions.size());
 
 		Assert.assertFalse(
-			_containsContent("pow(field_name, parameter)", functions));
+			_hasContent("pow(field_name, parameter)", functions));
 
 		Assert.assertEquals(
 			new HashSet<>(Arrays.asList("currentDate", "currentUserId")),
@@ -290,7 +290,7 @@ public class ObjectDefinitionsActionsDisplayContextTest {
 			JSONUtil.getValue(jsonArray, "JSONObject/1", "Object/value"));
 	}
 
-	private boolean _containsContent(
+	private boolean _hasContent(
 		String content, List<Map<String, String>> items) {
 
 		for (Map<String, String> item : items) {

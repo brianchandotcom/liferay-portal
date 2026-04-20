@@ -21,6 +21,7 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
@@ -1295,6 +1296,102 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 			'Content & Data',
 			{ignoreCase: true}
 		);
+	});
+
+	test('can view and edit its own object with only the add permission', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		modalAddObjectDefinitionPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'ObjRole' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
+					scope: 1,
+				},
+				{
+					actionIds: ['ADD_OBJECT_DEFINITION'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.object',
+					scope: 1,
+				},
+				{
+					actionIds: ['UPDATE', 'VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.object.model.ObjectDefinition',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW_CONTROL_PANEL'],
+					primaryKey: companyId,
+					resourceName: '90',
+					scope: 1,
+				},
+			],
+		});
+
+		apiHelpers.data.push({id: role.id, type: 'role'});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		apiHelpers.data.push({id: user.id, type: 'userAccount'});
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await performUserSwitch(page, user.alternateName);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.createObjectDefinitionButton.click();
+
+		const objectLabel = 'CustomObject' + getRandomInt();
+
+		const objectDefinition =
+			await modalAddObjectDefinitionPage.createObjectDefinition(
+				objectLabel
+			);
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		const label = 'UpdatedLabel' + getRandomInt();
+
+		await editObjectDetailsPage.labelInput.fill(label);
+
+		await editObjectDetailsPage.saveObjectDefinition();
+
+		await waitForAlert(page, 'The object was saved successfully');
+
+		await page.reload();
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await expect(editObjectDetailsPage.labelInput).toHaveValue(label);
 	});
 
 	test('can view the object management toolbar in different tabs.', async ({

@@ -61,12 +61,11 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 				commerceOrder.getCommerceOrderItems()) {
 
 			List<CommerceTaxValue> commerceTaxValues = getCommerceTaxValues(
-				commerceOrder.getGroupId(), commerceOrderItem.getCPInstanceId(),
-				commerceOrder.getBillingAddressId(),
-				commerceOrder.getShippingAddressId(),
-				commerceOrderItem.getFinalPrice(),
+				commerceOrder.getBillingAddressId(), commerceOrder.getGroupId(),
 				commerceOrder.getCommerceCurrencyCode(),
-				false);
+				commerceOrder.getShippingAddressId(),
+				commerceOrderItem.getCPInstanceId(), false,
+				commerceOrderItem.getFinalPrice());
 
 			for (CommerceTaxValue commerceTaxValue : commerceTaxValues) {
 				CommerceTaxValue aggregatedCommerceTaxValue = null;
@@ -94,9 +93,9 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 
 	@Override
 	public List<CommerceTaxValue> getCommerceTaxValues(
-			long groupId, long cpInstanceId, long commerceBillingAddressId,
-			long commerceShippingAddressId, BigDecimal amount,
-			String commerceCurrencyCode, boolean includeTax)
+			long commerceBillingAddressId, long commerceChannelGroupId,
+			String commerceCurrencyCode, long commerceShippingAddressId,
+			long cpInstanceId, boolean includeTax, BigDecimal price)
 		throws PortalException {
 
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
@@ -115,9 +114,9 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		}
 
 		return _getCommerceTaxValues(
-			groupId, commerceBillingAddressId, commerceShippingAddressId,
-			amount, commerceCurrencyCode, includeTax, false,
-			cpDefinition.getCPTaxCategoryId());
+			commerceChannelGroupId, commerceBillingAddressId,
+			commerceShippingAddressId, price, commerceCurrencyCode, includeTax,
+			false, cpDefinition.getCPTaxCategoryId());
 	}
 
 	@Override

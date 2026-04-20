@@ -229,6 +229,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"KnowledgeBase", "/cms/knowledge-bases"
 		).put(
+			"MCPServerProfile", "/mcp/server-profiles"
+		).put(
 			"MCPServerPrompt", "/mcp/server-prompts"
 		).put(
 			"NecessaryCookieEntry", "/necessary-cookies-entries"

@@ -35,22 +35,6 @@ const ALLOWED_VIDEO_FILE_EXTENSIONS = [
 
 const CMS_CREATE_ITEM_URL = `${location.origin}/web/cms/files?com.liferay.site.cms.site.initializer-filesSection_fdsConfig=(view:gallery)`;
 
-interface IImageSelectedItem {
-	embedded?: {
-		file?: {
-			link?: {
-				href?: string;
-			};
-		};
-	};
-}
-
-interface IVideoSelectedItem {
-	embedded?: {
-		videoURL?: string;
-	};
-}
-
 class HeadlessItemSelector extends Plugin {
 	init() {
 		const editor = this.editor;
@@ -74,20 +58,19 @@ class HeadlessItemSelector extends Plugin {
 
 			buttonView.on('execute', () => {
 				openCMSFileSelectorModal({
-					allowDragAndDrop: false,
 					allowedExtensions: ALLOWED_IMAGE_FILE_EXTENSIONS.join(','),
 					createItemURL: CMS_CREATE_ITEM_URL,
 					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
 					itemTypeLabel: Liferay.Language.get('image'),
 					onSelect: (items) => {
-						const item = items[0] as IImageSelectedItem;
+						const href = items[0]?.embedded?.file?.link?.href;
 
-						if (!item?.embedded?.file?.link?.href) {
+						if (!href) {
 							return;
 						}
 
 						const viewFragment = editor.data.processor.toView(
-							`<img src="${item.embedded.file.link.href}">`
+							`<img src="${href}">`
 						);
 
 						const modelFragment = editor.data.toModel(viewFragment);
@@ -113,20 +96,19 @@ class HeadlessItemSelector extends Plugin {
 
 			buttonView.on('execute', () => {
 				openCMSFileSelectorModal({
-					allowDragAndDrop: false,
 					allowedExtensions: ALLOWED_VIDEO_FILE_EXTENSIONS.join(','),
 					createItemURL: CMS_CREATE_ITEM_URL,
 					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
 					itemTypeLabel: Liferay.Language.get('video'),
 					onSelect: (items) => {
-						const item = items[0] as IVideoSelectedItem;
+						const videoURL = items[0]?.embedded?.videoURL;
 
-						if (!item?.embedded?.videoURL) {
+						if (!videoURL) {
 							return;
 						}
 
 						const viewFragment = editor.data.processor.toView(
-							`<oembed url="${item.embedded.videoURL}"></oembed>`
+							`<oembed url="${videoURL}"></oembed>`
 						);
 
 						const modelFragment = editor.data.toModel(viewFragment);

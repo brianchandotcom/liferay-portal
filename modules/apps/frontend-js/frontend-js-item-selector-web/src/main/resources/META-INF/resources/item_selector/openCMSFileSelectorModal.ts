@@ -20,12 +20,16 @@ import {
 interface CMSFile {
 	description: string;
 	embedded: {
-		file: {
+		file?: {
+			link?: {
+				href?: string;
+			};
 			mimeType: string;
 			thumbnailURL: string;
 		};
 		id: number;
 		title: string;
+		videoURL?: string;
 	};
 	title: string;
 }
@@ -102,7 +106,7 @@ const FDS_PROPS: Omit<
 				item,
 				props,
 			}: {
-				item: {embedded: {file: {mimeType: string; thumbnailURL: string}}};
+				item: Pick<CMSFile, 'embedded'>;
 				props: object;
 			}) => {
 				const fallbackStickerProps = {
@@ -170,7 +174,7 @@ export default function openCMSFileSelectorModal({
 	maxFileSize,
 	onSelect,
 }: {
-	allowDragAndDrop: boolean;
+	allowDragAndDrop?: boolean;
 	allowedExtensions?: string;
 	config?: Partial<CMSFileItemSelectorModalConfig>;
 	createItemURL?: string;
@@ -185,7 +189,7 @@ export default function openCMSFileSelectorModal({
 		...config,
 	};
 
-	if (allowedExtensions && allowedExtensions.length) {
+	if (allowedExtensions) {
 		const extensions = normalizeExtensions(allowedExtensions);
 
 		finalConfig.apiURL = urlBuilder({

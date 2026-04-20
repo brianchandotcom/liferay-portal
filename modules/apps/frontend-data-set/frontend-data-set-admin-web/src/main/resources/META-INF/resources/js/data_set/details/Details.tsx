@@ -209,7 +209,9 @@ const Details = ({
 
 					<ClayForm.Group>
 						<label htmlFor={`${namespace}dataSetERCInput`}>
-							{Liferay.Language.get('data-set-external-reference-code')}
+							{Liferay.Language.get(
+								'data-set-external-reference-code'
+							)}
 
 							<span
 								className="label-icon lfr-portal-tooltip ml-2"

@@ -206,6 +206,27 @@ const Details = ({
 							type="text"
 						/>
 					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<label htmlFor={`${namespace}dataSetERCInput`}>
+							{Liferay.Language.get('data-set-external-reference-code')}
+
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								title={Liferay.Language.get(
+									'data-set-external-reference-code-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
+
+						<ClayInput
+							id={`${namespace}dataSetERCInput`}
+							readOnly
+							value={dataSet.externalReferenceCode}
+						/>
+					</ClayForm.Group>
 				</ClayLayout.SheetSection>
 
 				<ClayLayout.SheetSection className="mb-4">
@@ -340,27 +361,6 @@ const Details = ({
 							id={`${namespace}dataSetURLPreviewInput`}
 							readOnly
 							value={urlPreview}
-						/>
-					</ClayForm.Group>
-
-					<ClayForm.Group>
-						<label htmlFor={`${namespace}dataSetFDSNameInput`}>
-							{Liferay.Language.get('data-set-name')}
-
-							<span
-								className="label-icon lfr-portal-tooltip ml-2"
-								title={Liferay.Language.get(
-									'data-set-name-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</label>
-
-						<ClayInput
-							id={`${namespace}dataSetFDSNameInput`}
-							readOnly
-							value={dataSet.externalReferenceCode}
 						/>
 					</ClayForm.Group>
 

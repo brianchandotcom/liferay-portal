@@ -485,89 +485,91 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	}
 
-	/**
-	 * Clears the cache for all ${entity.pluralHumanName}.
-	 *
-	 * <p>
-	 * The <code>com.liferay.portal.kernel.dao.orm.EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		${entityCache}.clearCache(${entity.name}Impl.class);
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * Clears the cache for all ${entity.pluralHumanName}.
+		 *
+		 * <p>
+		 * The <code>com.liferay.portal.kernel.dao.orm.EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+		 * </p>
+		 */
+		@Override
+		public void clearCache() {
+			${entityCache}.clearCache(${entity.name}Impl.class);
 
-		<#if serviceBuilder.isVersionGTE_7_4_0()>
-			${finderCache}.clearCache(${entity.name}Impl.class);
-		<#else>
-			${finderCache}.clearCache(FINDER_CLASS_NAME_ENTITY);
-			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		</#if>
-	}
-
-	/**
-	 * Clears the cache for the ${entity.humanName}.
-	 *
-	 * <p>
-	 * The <code>com.liferay.portal.kernel.dao.orm.EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(${entity.name} ${entity.variableName}) {
-		<#if serviceBuilder.isVersionGTE_7_3_0()>
-			${entityCache}.removeResult(${entity.name}Impl.class, ${entity.variableName});
-		<#else>
-			${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey());
-
-			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-			<#if entity.uniqueEntityFinders?size &gt; 0>
-				clearUniqueFindersCache((${entity.name}ModelImpl)${entity.variableName}, true);
+			<#if serviceBuilder.isVersionGTE_7_4_0()>
+				${finderCache}.clearCache(${entity.name}Impl.class);
+			<#else>
+				${finderCache}.clearCache(FINDER_CLASS_NAME_ENTITY);
+				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 			</#if>
-		</#if>
-	}
+		}
 
-	@Override
-	public void clearCache(List<${entity.name}> ${entity.pluralVariableName}) {
-		<#if serviceBuilder.isVersionLTE_7_2_0()>
-			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		</#if>
-
-		for (${entity.name} ${entity.variableName} : ${entity.pluralVariableName}) {
+		/**
+		 * Clears the cache for the ${entity.humanName}.
+		 *
+		 * <p>
+		 * The <code>com.liferay.portal.kernel.dao.orm.EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+		 * </p>
+		 */
+		@Override
+		public void clearCache(${entity.name} ${entity.variableName}) {
 			<#if serviceBuilder.isVersionGTE_7_3_0()>
 				${entityCache}.removeResult(${entity.name}Impl.class, ${entity.variableName});
 			<#else>
 				${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey());
+
+				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 				<#if entity.uniqueEntityFinders?size &gt; 0>
 					clearUniqueFindersCache((${entity.name}ModelImpl)${entity.variableName}, true);
 				</#if>
 			</#if>
 		}
-	}
 
-	<#if serviceBuilder.isVersionGTE_7_3_0()>
 		@Override
-	</#if>
-	public void clearCache(Set<Serializable> primaryKeys) {
-		<#if serviceBuilder.isVersionGTE_7_4_0()>
-			${finderCache}.clearCache(${entity.name}Impl.class);
-		<#else>
-			${finderCache}.clearCache(FINDER_CLASS_NAME_ENTITY);
-			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		</#if>
+		public void clearCache(List<${entity.name}> ${entity.pluralVariableName}) {
+			<#if serviceBuilder.isVersionLTE_7_2_0()>
+				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			</#if>
 
-		for (Serializable primaryKey : primaryKeys) {
-			${entityCache}.removeResult(
-				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					${entityCacheEnabled},
+			for (${entity.name} ${entity.variableName} : ${entity.pluralVariableName}) {
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					${entityCache}.removeResult(${entity.name}Impl.class, ${entity.variableName});
+				<#else>
+					${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey());
+
+					<#if entity.uniqueEntityFinders?size &gt; 0>
+						clearUniqueFindersCache((${entity.name}ModelImpl)${entity.variableName}, true);
+					</#if>
 				</#if>
-				${entity.name}Impl.class, primaryKey);
+			}
 		}
-	}
+
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			@Override
+		</#if>
+		public void clearCache(Set<Serializable> primaryKeys) {
+			<#if serviceBuilder.isVersionGTE_7_4_0()>
+				${finderCache}.clearCache(${entity.name}Impl.class);
+			<#else>
+				${finderCache}.clearCache(FINDER_CLASS_NAME_ENTITY);
+				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			</#if>
+
+			for (Serializable primaryKey : primaryKeys) {
+				${entityCache}.removeResult(
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${entityCacheEnabled},
+					</#if>
+					${entity.name}Impl.class, primaryKey);
+			}
+		}
+	</#if>
 
 	<#if entity.uniqueEntityFinders?size &gt; 0>
 		protected void cacheUniqueFindersCache(${entity.name}ModelImpl ${entity.variableName}ModelImpl) {

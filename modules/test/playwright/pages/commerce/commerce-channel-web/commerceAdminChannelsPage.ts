@@ -8,6 +8,7 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {searchTableRowByValue} from '../commerceDNDTablePage';
+import {CommerceAdminChannelDetailsPage} from './commerceAdminChannelDetailsPage';
 
 export class CommerceAdminChannelsPage {
 	readonly addButton: Locator;
@@ -135,8 +136,46 @@ export class CommerceAdminChannelsPage {
 		);
 	}
 
-	async goto() {
-		await this.globalMenuPage.goToCommerce('Channels');
+	async addFlatRateDeliveryTermEligibility(
+		commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage,
+		channelName: string,
+		termLabel: string
+	) {
+		await this.goto();
+
+		await (await this.channelsTableRowLink(channelName)).click();
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Flat Rate'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Delivery Terms',
+			termLabel,
+			'Shipping Methods',
+			'Standard Delivery'
+		);
+	}
+
+	async addMoneyOrderPaymentTermEligibility(
+		commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage,
+		channelName: string,
+		termLabel: string
+	) {
+		await this.goto();
+
+		await (await this.channelsTableRowLink(channelName)).click();
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			termLabel,
+			'Payment Methods',
+			'Money Order'
+		);
 	}
 
 	async changeCommerceChannelBuyerOrderApprovalWorkflow(
@@ -211,6 +250,10 @@ export class CommerceAdminChannelsPage {
 				this.page.waitForTimeout(200);
 			})
 		);
+	}
+
+	async goto() {
+		await this.globalMenuPage.goToCommerce('Channels');
 	}
 
 	async setupCommerceChannelShippingMethod(

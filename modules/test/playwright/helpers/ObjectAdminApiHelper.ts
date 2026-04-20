@@ -61,7 +61,7 @@ export class ObjectAdminApiHelper {
 		objectFields?: Partial<ObjectField>[];
 		objectFolderExternalReferenceCode?: string;
 		panelCategoryKey?: string;
-		scope?: 'site' | 'company';
+		scope?: 'company' | 'depot' | 'site';
 		status: {code: number};
 		titleObjectFieldName?: string;
 	}) {

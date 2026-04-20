@@ -54,7 +54,7 @@ function _configure_s3_bucket {
 	local alias_name="alias/tfstate-${bucket_name}"
 	local bucket_name="${1}"
 	local region="${2}"
-	
+
 	local account_id
 
 	account_id="$(aws sts get-caller-identity --output text --query "Account")"
@@ -65,7 +65,7 @@ function _configure_s3_bucket {
 		aws kms describe-key --key-id "${alias_name}" \
 			--output text \
 			--query 'KeyMetadata.KeyId' \
-			--region "${region}"  2>/dev/null)
+			--region "${region}" 2>/dev/null)
 	then
 		_log "Creating KMS key for bucket ${bucket_name}."
 
@@ -108,7 +108,6 @@ function _configure_s3_bucket {
 				}
 			]
 		}"
-
 
 	aws s3api put-object-lock-configuration \
 		--bucket "${bucket_name}" \

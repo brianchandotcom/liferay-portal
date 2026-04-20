@@ -12,7 +12,11 @@ export class EditObjectDetailsPage {
 	readonly accountRestrictionToggle: Locator;
 	readonly detailsTabItem: Locator;
 	readonly friendlyURLSeparator: Locator;
+	readonly labelInput: Locator;
+	readonly labelLocalizationButton: Locator;
 	readonly page: Page;
+	readonly pluralLabelInput: Locator;
+	readonly pluralLabelLocalizationButton: Locator;
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
@@ -30,7 +34,22 @@ export class EditObjectDetailsPage {
 			'Object Entry URL Separator',
 			{exact: true}
 		);
+		this.labelInput = page.getByRole('textbox', {
+			exact: true,
+			name: 'Label Mandatory',
+		});
+		this.labelLocalizationButton = page
+			.locator('div')
+			.filter({hasText: /^LabelMandatory$/})
+			.getByLabel('Open Localizations');
 		this.page = page;
+		this.pluralLabelInput = page.getByRole('textbox', {
+			name: 'Plural Label Mandatory',
+		});
+		this.pluralLabelLocalizationButton = page
+			.locator('div')
+			.filter({hasText: /^Plural LabelMandatory$/})
+			.getByLabel('Open Localizations');
 		this.publishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Publish',
@@ -62,5 +81,27 @@ export class EditObjectDetailsPage {
 
 	async saveObjectDefinition() {
 		await this.saveButton.click();
+	}
+
+	async selectLabelLanguage(language: string) {
+		await this.labelLocalizationButton.click();
+
+		await this.page
+			.getByRole('option', {
+				exact: false,
+				name: `${language} language:`,
+			})
+			.click();
+	}
+
+	async selectPluralLabelLanguage(language: string) {
+		await this.pluralLabelLocalizationButton.click();
+
+		await this.page
+			.getByRole('option', {
+				exact: false,
+				name: `${language} language:`,
+			})
+			.click();
 	}
 }

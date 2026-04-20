@@ -37,7 +37,7 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "Version ${CURRENT_VERSION} already exists. Skipping publish."
+                        echo "Version ${CURRENT_VERSION} already exists. The publish step will be skipped."
                     fi
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Package and push AWS bootstrap scripts
@@ -92,7 +92,7 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "Version ${CURRENT_VERSION} already exists. Skipping publish."
+                        echo "Version ${CURRENT_VERSION} already exists. The publish step will be skipped."
                     fi
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Package and push GCP bootstrap scripts

@@ -26,7 +26,7 @@ jobs:
                             --method DELETE \
                             "/orgs/${ORG}/packages/container/${PACKAGE_ENC}"
                     else
-                        echo "Package ${PACKAGE} not found under ${ORG}. Nothing to delete."
+                        echo "Package ${PACKAGE} was not found under ${ORG}. There is nothing to delete."
                     fi
         strategy:
             matrix:
@@ -81,7 +81,7 @@ jobs:
 
                     if [ ! -f index.yaml ]
                     then
-                        echo "index.yaml not found on gh-pages. Nothing to prune."
+                        echo "No index.yaml was found on gh-pages.  The pruning will be skipped."
 
                         exit 0
                     fi
@@ -103,7 +103,7 @@ jobs:
 
                         git push
                     else
-                        echo "No preview entries found for PR #${PR_NUMBER}."
+                        echo "No preview entries were found for PR #${PR_NUMBER}."
                     fi
     publish-aws:
         if: |
@@ -182,7 +182,7 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "Chart version ${CHART_VERSION} already exists. Skipping publish."
+                        echo "Chart version ${CHART_VERSION} already exists. The publish step will be skipped."
                     fi
                 working-directory: ./cloud/helm/aws-marketplace
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}

@@ -58,35 +58,31 @@ export function DisplayPagePreviewItemSelectorContent() {
 		});
 
 	return (
-		<ClayDropDown
-			active={active}
-			alignmentPosition={Align.BottomRight}
-			aria-labelledby={selectLabelId}
-			hasLeftSymbols
-			menuElementAttrs={{
-				className: 'dropdown-menu-select',
-				containerProps: {
-					className: 'cadmin',
-				},
-			}}
-			onActiveChange={setActive}
-			role="listbox"
-			trigger={
-				<p
+		<div className="align-items-center d-flex mb-0 page-editor__display-page-preview-item-selector-label-wrapper">
+			<label className="mb-0 pr-2 text-secondary" id={selectLabelId}>
+				<strong
 					className={classNames(
-						'align-items-center d-flex flex-row mb-0 page-editor__display-page-preview-item-selector-label-wrapper w-100'
+						'd-block page-editor__display-page-preview-item-selector-label'
 					)}
-					id={selectLabelId}
-					role="label"
 				>
-					<strong
-						className={classNames(
-							'd-block page-editor__display-page-preview-item-selector-label text-secondary'
-						)}
-					>
-						{Liferay.Language.get('preview-with')}:
-					</strong>
+					{Liferay.Language.get('preview-with')}:
+				</strong>
+			</label>
 
+			<ClayDropDown
+				active={active}
+				alignmentPosition={Align.BottomRight}
+				aria-labelledby={selectLabelId}
+				hasLeftSymbols
+				menuElementAttrs={{
+					className: 'dropdown-menu-select',
+					containerProps: {
+						className: 'cadmin',
+					},
+				}}
+				onActiveChange={setActive}
+				role="listbox"
+				trigger={
 					<button
 						className={classNames(
 							'form-control form-control-sm form-control-select form-control-select-secondary page-editor__display-page-preview-item-selector-button'
@@ -94,51 +90,51 @@ export function DisplayPagePreviewItemSelectorContent() {
 						data-qa-id="previewItemSelectorButton"
 						type="button"
 					>
-							{previewItem ? previewItem.label : NO_ITEM_LABEL}
+						{previewItem ? previewItem.label : NO_ITEM_LABEL}
 					</button>
-				</p>
-			}
-		>
-			<ClayDropDown.ItemList>
-				<ClayDropDown.Item
-					aria-selected={!previewItem}
-					onClick={() => selectItem(null)}
-					role="option"
-					symbolLeft={!previewItem ? 'check' : undefined}
-				>
-					{NO_ITEM_LABEL}
-				</ClayDropDown.Item>
-
-				{recentPreviewItemList.map((recentPreviewItem) => (
+				}
+			>
+				<ClayDropDown.ItemList>
 					<ClayDropDown.Item
-						aria-selected={deepEqual(
-							previewItem,
-							recentPreviewItem
-						)}
-						className="page-editor__display-page-preview-item-selector-dropdown-item"
-						key={recentPreviewItem.label}
-						onClick={() => selectItem(recentPreviewItem)}
-						symbolLeft={
-							deepEqual(previewItem, recentPreviewItem)
-								? 'check'
-								: ''
-						}
+						aria-selected={!previewItem}
+						onClick={() => selectItem(null)}
+						role="option"
+						symbolLeft={!previewItem ? 'check' : undefined}
 					>
-						{recentPreviewItem.label}
+						{NO_ITEM_LABEL}
 					</ClayDropDown.Item>
-				))}
-			</ClayDropDown.ItemList>
 
-			<ClayDropDown.Divider />
+					{recentPreviewItemList.map((recentPreviewItem) => (
+						<ClayDropDown.Item
+							aria-selected={deepEqual(
+								previewItem,
+								recentPreviewItem
+							)}
+							className="page-editor__display-page-preview-item-selector-dropdown-item"
+							key={recentPreviewItem.label}
+							onClick={() => selectItem(recentPreviewItem)}
+							symbolLeft={
+								deepEqual(previewItem, recentPreviewItem)
+									? 'check'
+									: ''
+							}
+						>
+							{recentPreviewItem.label}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.ItemList>
 
-			<ClayDropDown.ItemList>
-				<ClayDropDown.Item
-					data-qa-id="selectOtherItemDropdownItem"
-					onClick={selectOtherItem}
-				>
-					{Liferay.Language.get('select-other-item')}...
-				</ClayDropDown.Item>
-			</ClayDropDown.ItemList>
-		</ClayDropDown>
+				<ClayDropDown.Divider />
+
+				<ClayDropDown.ItemList>
+					<ClayDropDown.Item
+						data-qa-id="selectOtherItemDropdownItem"
+						onClick={selectOtherItem}
+					>
+						{Liferay.Language.get('select-other-item')}...
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		</div>
 	);
 }

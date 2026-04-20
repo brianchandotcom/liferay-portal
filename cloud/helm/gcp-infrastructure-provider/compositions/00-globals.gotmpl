@@ -1,51 +1,40 @@
+{{- $databasePort := "5432" -}}
+{{- $elasticsearchHealth := "" -}}
 {{- $env := index .context "apiextensions.crossplane.io/environment" -}}
+{{- $isReady := false -}}
+{{- $isSearchReady := false -}}
+{{- $managementPoliciesOnce := (list "Create" "Observe" "Delete") | toJson -}}
 {{- $xr := .observed.composite.resource -}}
 
 {{- $backup := $xr.spec.backup | default dict -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled | default false -}}
 {{- $databaseName := $xr.spec.database.name | default "lportal" -}}
-{{- $databasePort := "5432" -}}
 {{- $databaseSpec := $xr.spec.database -}}
-{{- $elasticsearchHealth := "" -}}
 {{- $environmentId := $xr.spec.environmentId -}}
 {{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
 {{- $gsaName := printf "%s-sa" $xr.metadata.name -}}
-{{- $isReady := false -}}
-{{- $isSearchReady := false -}}
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
-{{- $managementPoliciesOnce := (list "Create" "Observe" "Delete") | toJson -}}
 {{- $namespace := $xr.metadata.namespace -}}
 {{- $overlay := $xr.spec.overlay | default dict -}}
 {{- $projectId := $xr.spec.projectId -}}
-{{- $region := $databaseSpec.region | default $xr.spec.region -}}
+{{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
 {{- $searchName := printf "%s-es" $xr.metadata.name -}}
 {{- $storage := $xr.spec.storage | default dict -}}
-
-{{- $databaseIamUser := printf "%s@%s.iam" $gsaName $env.projectId -}}
-{{- $gsaEmail := printf "%s@%s.iam.gserviceaccount.com" $gsaName $env.projectId -}}
-{{- $hash := printf "%s-%s" $databaseName $env.projectId | sha256sum | trunc 7 -}}
-{{- $instanceConnectionName := printf "%s:%s:%s" $env.projectId $region $databaseInstanceName -}}
-{{- $labels := merge ($xr.spec.commonTags | default dict) (dict "app" "liferay" "deployment-name" $env.deploymentName "environment-id" $environmentId "project-id" $projectId) -}}
-{{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
-{{- $searchNamespace := printf "%s-elasticsearch" $namespace -}}
-{{- $searchSecretName := printf "%s-es-elastic-user" $searchName -}}
-
-{{- $backupTargetLabels := merge (dict) $labels (dict should-back-up" "true") -}}
-{{- $uidHash := printf "%s-%s" $env.projectNumber $projectIdFull | sha256sum | trunc 6 -}}
-
-{{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
-
-{{- $cmkKeyName := printf "projects/%s/locations/%s/keyRings/%s-keyring/cryptoKeys/%s-key" $env.projectId $region $baseName $baseName -}}
-
-{{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
 {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
 
 {{- $activeDataPlane := $targetActiveDataPlane -}}
-{{- $dataPlanes := list $targetActiveDataPlane -}}
-{{- $targetInactiveDataPlane := (eq $targetActiveDataPlane "blue") | ternary "green" "blue" -}}
-
+{{- $databaseIamUser := printf "%s@%s.iam" $gsaName $env.projectId -}}
 {{- $databaseInstanceManagementPolicies := $backup.enabled | ternary ((list "*") | toJson) $managementPolicies -}}
+{{- $dataPlanes := list $targetActiveDataPlane -}}
+{{- $gsaEmail := printf "%s@%s.iam.gserviceaccount.com" $gsaName $env.projectId -}}
+{{- $hash := printf "%s-%s" $databaseName $env.projectId | sha256sum | trunc 7 -}}
+{{- $labels := merge ($xr.spec.commonTags | default dict) (dict "app" "liferay" "deployment-name" $env.deploymentName "environment-id" $environmentId "project-id" $projectId) -}}
+{{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
+{{- $region := $databaseSpec.region | default $xr.spec.region -}}
+{{- $searchNamespace := printf "%s-elasticsearch" $namespace -}}
+{{- $searchSecretName := printf "%s-es-elastic-user" $searchName -}}
+{{- $targetInactiveDataPlane := (eq $targetActiveDataPlane "blue") | ternary "green" "blue" -}}
 
 {{- if (eq $restorePhase "promoting") -}}
     {{- $dataPlanes = list "blue" "green" -}}
@@ -53,3 +42,11 @@
     {{- $activeDataPlane = $targetInactiveDataPlane -}}
     {{- $dataPlanes = list "blue" "green" -}}
 {{- end }}
+
+{{- $activeInstanceConnectionName := printf "%s:%s:%s-db-instance-%s" $env.projectId $region $xr.metadata.name $activeDataPlane }}
+{{- $backupTargetLabels := merge (dict) $labels (dict "should-back-up" "true") -}}
+{{- $uidHash := printf "%s-%s" $env.projectNumber $projectIdFull | sha256sum | trunc 6 -}}
+
+{{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
+
+{{- $cmkKeyName := printf "projects/%s/locations/%s/keyRings/%s-keyring/cryptoKeys/%s-key" $env.projectId $region $baseName $baseName -}}

@@ -1108,6 +1108,55 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		).toBeDisabled();
 	});
 
+	test('can set a different language value for the label and plural label', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const label = 'Rótulo em Português';
+		const pluralLabel = 'Rótulos em Português';
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await editObjectDetailsPage.selectLabelLanguage('pt_BR');
+
+		await editObjectDetailsPage.labelInput.fill(label);
+
+		await editObjectDetailsPage.selectPluralLabelLanguage('pt_BR');
+
+		await editObjectDetailsPage.pluralLabelInput.fill(pluralLabel);
+
+		await editObjectDetailsPage.saveObjectDefinition();
+
+		await waitForAlert(page, 'The object was saved successfully');
+
+		await page.reload();
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await editObjectDetailsPage.selectLabelLanguage('pt_BR');
+
+		await expect(editObjectDetailsPage.labelInput).toHaveValue(label);
+
+		await editObjectDetailsPage.selectPluralLabelLanguage('pt_BR');
+
+		await expect(editObjectDetailsPage.pluralLabelInput).toHaveValue(
+			pluralLabel
+		);
+	});
+
 	test('can view the object management toolbar in different tabs.', async ({
 		apiHelpers,
 		editObjectDetailsPage,

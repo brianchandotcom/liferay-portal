@@ -63,7 +63,7 @@ Object {
   "EVENT_ANALYSIS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/event-analysis",
   "EVENT_ANALYSIS_CREATE": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/event-analysis/create",
   "EVENT_ANALYSIS_EDIT": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/event-analysis/:id",
-  "LIFECYCLE": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/lifecycles",
+  "LIFECYCLE": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/lifecycle",
   "LOADING": "/loading",
   "LOGOUT": "/c/portal/logout",
   "OAUTH_RECEIVE": "/oauth/receive",

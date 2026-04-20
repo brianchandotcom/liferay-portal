@@ -74,7 +74,7 @@ exports[`Sidebar should render 1`] = `
           >
             <a
               class="link btn btn-unstyled"
-              href="/workspace/23/123/lifecycles"
+              href="/workspace/23/123/lifecycle"
             >
               <span
                 class="link-content-wrapper"

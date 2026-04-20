@@ -108,11 +108,10 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 
 		_assertLayoutPageTemplateCollectionNotNull(
 			basicLayoutPageTemplateCollection1);
-		_assertLayoutPageTemplateCollectionNotNull(
-			displayPageLayoutPageTemplateCollection1);
-
 		_assertLayoutPageTemplateCollectionNull(
 			basicLayoutPageTemplateCollection2);
+		_assertLayoutPageTemplateCollectionNotNull(
+			displayPageLayoutPageTemplateCollection1);
 		_assertLayoutPageTemplateCollectionNull(
 			displayPageLayoutPageTemplateCollection2);
 	}
@@ -192,12 +191,11 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 			_exportLayouts(true, _group.getGroupId()));
 
 		_assertLayoutPageTemplateEntryNotNull(basicLayoutPageTemplateEntry1);
+		_assertLayoutPageTemplateEntryNull(basicLayoutPageTemplateEntry2);
 		_assertLayoutPageTemplateEntryNotNull(
 			displayPageLayoutPageTemplateEntry1);
-		_assertLayoutPageTemplateEntryNotNull(masterLayoutPageTemplateEntry1);
-
-		_assertLayoutPageTemplateEntryNull(basicLayoutPageTemplateEntry2);
 		_assertLayoutPageTemplateEntryNull(displayPageLayoutPageTemplateEntry2);
+		_assertLayoutPageTemplateEntryNotNull(masterLayoutPageTemplateEntry1);
 		_assertLayoutPageTemplateEntryNull(masterLayoutPageTemplateEntry2);
 	}
 

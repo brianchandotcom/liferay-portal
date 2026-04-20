@@ -3,7 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
     labels:
-        component: backup-cleanup
+        component: backup-cleanup-platform
         environmentId: {{ .Values.environmentId }}
         projectId: {{ .Values.projectId }}
     name: backup-cleanup-role
@@ -17,7 +17,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
     labels:
-        component: backup-cleanup
+        component: backup-cleanup-platform
         environmentId: {{ .Values.environmentId }}
         projectId: {{ .Values.projectId }}
     name: backup-cleanup-rolebinding
@@ -35,7 +35,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
     labels:
-        component: backup-cleanup
+        component: backup-cleanup-platform
         environmentId: {{ .Values.environmentId }}
         projectId: {{ .Values.projectId }}
     name: {{ .Values.backup.cleanup.serviceAccountName }}

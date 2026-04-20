@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: CronWorkflow
 metadata:
     labels:
-        component: backup-cleanup
+        component: backup-cleanup-platform
         environmentId: {{ .Values.environmentId }}
         projectId: {{ .Values.projectId }}
     name: backup-cleanup-cron-workflow
@@ -14,10 +14,10 @@ spec:
         -   {{ .Values.backup.cleanup.schedule | quote }}
     startingDeadlineSeconds: 300
     workflowSpec:
-        entrypoint: backup-cleanup
+        entrypoint: clean-up-backups
         serviceAccountName: {{ .Values.backup.cleanup.serviceAccountName }}
         templates:
-            -   name: backup-cleanup
+            -   name: clean-up-backups
                 script:
                     command: [sh]
                     image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"

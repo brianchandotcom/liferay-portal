@@ -1752,6 +1752,16 @@ public class ServiceBuilder {
 		return fieldName;
 	}
 
+	public boolean hasApiModifications() {
+		for (String modifiedFileName : _modifiedFileNames) {
+			if (modifiedFileName.startsWith(_apiDirName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasEntityByGenericsName(String genericsName) {
 		if (Validator.isNull(genericsName) ||
 			!genericsName.contains(".model.") ||
@@ -2350,7 +2360,7 @@ public class ServiceBuilder {
 		try {
 			System.out.println("Processing " + moduleDir.getFileName());
 
-			new ServiceBuilder(
+			ServiceBuilder serviceBuilder = new ServiceBuilder(
 				apiDir.toString(), true, autoNamespaceTables,
 				"com.liferay.util.bean.PortletBeanLocatorUtil", 1, true,
 				databaseNameMaxLength, hbmFile.toString(), implDir.toString(),
@@ -2360,6 +2370,10 @@ public class ServiceBuilder {
 				springFile.toString(), new String[] {"beans"},
 				sqlDir.toString(), "tables.sql", "indexes.sql", "sequences.sql",
 				null, testDirName, null, true);
+
+			if (!serviceBuilder.hasApiModifications()) {
+				return null;
+			}
 
 			Path apiModuleDir = apiDir.getParent(
 			).getParent(
@@ -2371,7 +2385,14 @@ public class ServiceBuilder {
 			String gradleProjectPath = StringUtil.replace(
 				relativePath.toString(), File.separatorChar, ':');
 
-			return ":" + gradleProjectPath + ":baseline";
+			String baselineTask = ":" + gradleProjectPath + ":baseline";
+
+			System.out.println(
+				StringBundler.concat(
+					"Baseline will be invoked for ", moduleDir.getFileName(),
+					" via ", baselineTask));
+
+			return baselineTask;
 		}
 		catch (Exception exception) {
 			System.err.println(

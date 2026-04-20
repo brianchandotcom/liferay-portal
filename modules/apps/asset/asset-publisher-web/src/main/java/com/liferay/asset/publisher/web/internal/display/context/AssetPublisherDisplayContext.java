@@ -244,6 +244,14 @@ public class AssetPublisherDisplayContext {
 		return _abstractLength;
 	}
 
+	public String getAddAssetListEntryURL() {
+		return String.valueOf(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, _themeDisplay.getScopeGroup(),
+				AssetListPortletKeys.ASSET_LIST, 0, 0,
+				PortletRequest.RENDER_PHASE));
+	}
+
 	public long[] getAllAssetCategoryIds() {
 		if (_allAssetCategoryIds != null) {
 			return _allAssetCategoryIds;
@@ -463,14 +471,6 @@ public class AssetPublisherDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
 				getSelectAssetListEventName(),
 				infoCollectionProviderItemSelectorCriterion));
-	}
-
-	public String getAddCollectionAssetListURL() {
-		return String.valueOf(
-			PortalUtil.getControlPanelPortletURL(
-				_httpServletRequest, _themeDisplay.getScopeGroup(),
-				AssetListPortletKeys.ASSET_LIST, 0, 0,
-				PortletRequest.RENDER_PHASE));
 	}
 
 	public String getAssetTagName() {
@@ -1374,11 +1374,9 @@ public class AssetPublisherDisplayContext {
 	public Map<String, Object> getSelectCollectionProps() throws Exception {
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
-		return HashMapBuilder.<String, Object>
-		put(
-			"addCollectionUrl", getAddCollectionAssetListURL()
-		)
-		.put(
+		return HashMapBuilder.<String, Object>put(
+			"addAssetListEntryURL", getAddAssetListEntryURL()
+		).put(
 			"assetListEntryId",
 			() -> {
 				if (assetListEntry != null) {

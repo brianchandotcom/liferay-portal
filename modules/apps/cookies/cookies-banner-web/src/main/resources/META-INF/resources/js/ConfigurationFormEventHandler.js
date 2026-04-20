@@ -47,6 +47,10 @@ export default function ({namespace}) {
 				`input[type='radio'][name='${namespace}floatingIcon']`
 			);
 
+			const globalPrivacyControlEnabled = document.querySelector(
+				`input[type='checkbox'][name='${namespace}globalPrivacyControlEnabled']`
+			);
+
 			const logoSelectorContainer = document.getElementById(
 				`${namespace}logoSelectorContainer`
 			);
@@ -98,6 +102,10 @@ export default function ({namespace}) {
 					if (Liferay.FeatureFlags['LPD-75032']) {
 						storeConsent.removeAttribute('disabled');
 					}
+
+					if (Liferay.FeatureFlags['LPD-75064']) {
+						globalPrivacyControlEnabled.removeAttribute('disabled');
+					}
 				}
 				else {
 					consentRenewalPeriod.classList.add('disabled');
@@ -141,6 +149,13 @@ export default function ({namespace}) {
 					if (Liferay.FeatureFlags['LPD-75032']) {
 						storeConsent.checked = false;
 						storeConsent.setAttribute('disabled', '');
+					}
+
+					if (Liferay.FeatureFlags['LPD-75064']) {
+						globalPrivacyControlEnabled.setAttribute(
+							'disabled',
+							''
+						);
 					}
 				}
 			}

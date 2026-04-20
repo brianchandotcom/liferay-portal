@@ -332,6 +332,16 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	@Override
+	public boolean isCookiesPreferenceHandlingGlobalPrivacyControlEnabled(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
+
+		return _getScopeConfigurationAttribute(
+			scope, scopePK, this::_isCompanyGlobalPrivacyControlEnabled,
+			this::_isGroupGlobalPrivacyControlEnabled,
+			this::_isSystemGlobalPrivacyControlEnabled);
+	}
+
+	@Override
 	public boolean isCookiesPreferenceHandlingStoreConsent(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
 
@@ -813,6 +823,17 @@ public class CookiesConfigurationProviderImpl
 			getCompanyFloatingIconEnabled(companyId);
 	}
 
+	private boolean _isCompanyGlobalPrivacyControlEnabled(long companyId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getCompanyGlobalPrivacyControlEnabled(companyId);
+	}
+
 	private boolean _isGroupCookiesPreferenceHandlingEnabled(long groupId) {
 		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
 			_cookiesPreferenceHandlingManagedServiceFactory =
@@ -861,6 +882,18 @@ public class CookiesConfigurationProviderImpl
 			getGroupFloatingIconEnabled(_getCompanyId(groupId), groupId);
 	}
 
+	private boolean _isGroupGlobalPrivacyControlEnabled(long groupId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getGroupGlobalPrivacyControlEnabled(
+				_getCompanyId(groupId), groupId);
+	}
+
 	private boolean _isSystemCookiesPreferenceHandlingEnabled() {
 		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
 			_cookiesPreferenceHandlingManagedServiceFactory =
@@ -903,6 +936,17 @@ public class CookiesConfigurationProviderImpl
 
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemFloatingIconEnabled();
+	}
+
+	private boolean _isSystemGlobalPrivacyControlEnabled() {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getSystemGlobalPrivacyControlEnabled();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

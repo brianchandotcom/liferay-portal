@@ -78,6 +78,12 @@ public interface CookiesPreferenceHandlingConfiguration {
 	)
 	public boolean floatingIconEnabled();
 
+	@Meta.AD(
+		deflt = "false", description = "global-privacy-control-enabled-help",
+		name = "global-privacy-control-enabled", required = false
+	)
+	public boolean globalPrivacyControlEnabled();
+
 	@Meta.AD(deflt = "0", name = "modified-date", required = false)
 	public long modifiedDate();
 

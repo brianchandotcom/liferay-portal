@@ -143,6 +143,19 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 				return true;
 			}
 		).put(
+			"globalPrivacyControlEnabled",
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled(
+						_portal.getCompanyId(httpServletRequest),
+						"LPD-75064")) {
+
+					return ParamUtil.getBoolean(
+						httpServletRequest, "globalPrivacyControlEnabled");
+				}
+
+				return false;
+			}
+		).put(
 			"modifiedDate",
 			() -> {
 				long modifiedDate = ParamUtil.getLong(

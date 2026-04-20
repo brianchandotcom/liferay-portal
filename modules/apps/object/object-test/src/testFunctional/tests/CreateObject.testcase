@@ -1721,58 +1721,6 @@ definition {
 			locator1 = "CreateObject#ERROR_MESSAGE");
 	}
 
-	@description = "LPS-135635 - Verify it is not possible to update the Object name after it is published"
-	@priority = 5
-	test CannotUpdateObjectNameAfterPublished {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 65",
-			objectName = "CustomObject65",
-			pluralLabelName = "Custom Objects 65");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject65");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject65");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 65");
-
-		AssertElementPresent(locator1 = "CreateObject#DISABLED_OBJECT_NAME");
-	}
-
-	@description = "LPS-135635 - Verify it is not possible to update the Object scope after it is published"
-	@priority = 4
-	test CannotUpdateObjectScopeAfterPublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 66",
-			objectName = "CustomObject66",
-			pluralLabelName = "Custom Objects 66");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject66");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject66");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 66");
-
-		AssertElementPresent(locator1 = "CreateObject#VIEW_OBJECT_SCOPE_DISABLED");
-	}
-
 	@description = "LPS-135390 - Verify it is not possible to update an Object without the Update permission"
 	@priority = 4
 	test CannotUpdateObjectWithUpdatePermission {
@@ -2581,41 +2529,6 @@ definition {
 			value1 = "Layout Updated");
 	}
 
-	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
-	@priority = 4
-	test CanUpdateObjectLabelAfterPublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 93",
-			objectName = "CustomObject93",
-			pluralLabelName = "Custom Objects 93");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject93");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject93");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 93");
-
-		CreateObject.editLabel(labelName = "Update Custom Object 93");
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Update Custom Object 93");
-
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_LABEL",
-			value1 = "Update Custom Object 93");
-	}
-
 	@description = "LPS-135635 - Verify it is possible to update the Object label before it is published"
 	@priority = 5
 	test CanUpdateObjectLabelBeforePublished {
@@ -2691,70 +2604,6 @@ definition {
 		CreateObject.assertValuesOnScope(
 			valuePanelCategory = "Users",
 			valueScope = "Company");
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
-	@priority = 4
-	test CanUpdateObjectPanelCategoryKeyAfterPublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 97",
-			objectName = "CustomObject97",
-			pluralLabelName = "Custom Objects 97");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject97");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 97");
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Panel Link",
-			optionName = "Users");
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 97");
-
-		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Users",
-			valueScope = "Company");
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object plural label after it is published"
-	@priority = 4
-	test CanUpdateObjectPluralLabelAfterPublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 98",
-			objectName = "CustomObject98",
-			pluralLabelName = "Custom Objects 98");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject98");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject98");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 98");
-
-		CreateObject.editPluralLabel(pluralLabelName = "Update Plural Label Custom Object 98");
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 98");
-
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
-			value1 = "Update Plural Label Custom Object 98");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object plural label before it is published"

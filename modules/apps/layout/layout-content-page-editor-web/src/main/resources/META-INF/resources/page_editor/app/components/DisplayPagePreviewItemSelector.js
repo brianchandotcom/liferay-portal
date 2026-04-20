@@ -117,7 +117,10 @@ export function DisplayPagePreviewItemSelectorContent() {
 
 				{recentPreviewItemList.map((recentPreviewItem) => (
 					<ClayDropDown.Item
-						aria-selected={previewItem === recentPreviewItem}
+						aria-selected={deepEqual(
+							previewItem,
+							recentPreviewItem
+						)}
 						className="page-editor__display-page-preview-item-selector-dropdown-item"
 						key={recentPreviewItem.label}
 						onClick={() => selectItem(recentPreviewItem)}

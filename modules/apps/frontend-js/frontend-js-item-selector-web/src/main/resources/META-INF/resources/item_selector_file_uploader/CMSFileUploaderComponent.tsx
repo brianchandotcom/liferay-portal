@@ -67,7 +67,7 @@ const ASSET_LIBRARIES_API_URL = `${location.origin}/o/headless-asset-library/v1.
 const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 	allowedExtensions,
 	files,
-	groupId,
+	groupId: externalGroupId,
 	maxFileSize,
 	onCloseUploadView,
 }) {
@@ -78,9 +78,9 @@ const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 
 	const groupIdInputId = useId();
 
-	const resolvedGroupId = groupId ?? assetLibrary?.siteId;
+	const resolvedGroupId = externalGroupId ?? assetLibrary?.siteId;
 
-	const formValidation = groupId
+	const formValidation = externalGroupId
 		? undefined
 		: async () => {
 				const error = !resolvedGroupId || resolvedGroupId <= 0;
@@ -132,6 +132,69 @@ const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 		}
 	};
 
+	const spaceSelectorElement = externalGroupId ? undefined : (
+		<div className="mt-4">
+			<FieldBase
+				errorMessage={
+					groupIdError
+						? Liferay.Language.get('this-field-is-required')
+						: undefined
+				}
+				helpMessage={Liferay.Language.get(
+					'select-the-space-to-upload-the-file'
+				)}
+				id={groupIdInputId}
+				label={Liferay.Language.get('space')}
+				required
+			>
+				<ItemSelector<AssetLibrary>
+					apiURL={ASSET_LIBRARIES_API_URL}
+					as={SpaceInput}
+					id={groupIdInputId}
+					items={assetLibrary ? [assetLibrary] : []}
+					locator={{
+						id: 'id',
+						label: 'name',
+						value: 'externalReferenceCode',
+					}}
+					onItemsChange={(items) => {
+						setGroupIdError(false);
+						setAssetLibrary(items[0]);
+					}}
+					onKeyDown={(
+						event: React.KeyboardEvent<HTMLInputElement>
+					) => {
+						if (event.key === 'Enter') {
+							event.preventDefault();
+						}
+					}}
+					selectedLogoColor={assetLibrary?.settings?.logoColor}
+					selectedName={assetLibrary?.name}
+				>
+					{(item) => (
+						<ItemSelector.Item
+							key={item.externalReferenceCode}
+							textValue={item.name}
+						>
+							<div className="align-items-center c-gap-2 d-flex">
+								<ClaySticker
+									displayType={
+										item.settings?.logoColor as DisplayType
+									}
+									size="sm"
+								>
+									{item.name.charAt(0).toUpperCase()}
+								</ClaySticker>
+
+								<span>{item.name}</span>
+							</div>
+						</ItemSelector.Item>
+					)}
+				</ItemSelector>
+			</FieldBase>
+		</div>
+	);
+
 	return (
 		<MultipleFileUploader
 			filesToUpload={files}
@@ -139,77 +202,7 @@ const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 			maxFileSize={maxFileSize}
 			onModalClose={onCloseUploadView}
 			onUploadComplete={onUploadComplete}
-			scopeSelectorElement={
-				groupId ? undefined : (
-					<div className="mt-4">
-						<FieldBase
-							errorMessage={
-								groupIdError
-									? Liferay.Language.get(
-											'this-field-is-required'
-										)
-									: undefined
-							}
-							helpMessage={Liferay.Language.get(
-								'select-the-space-to-upload-the-file'
-							)}
-							id={groupIdInputId}
-							label={Liferay.Language.get('space')}
-							required
-						>
-							<ItemSelector<AssetLibrary>
-								apiURL={ASSET_LIBRARIES_API_URL}
-								as={SpaceInput}
-								id={groupIdInputId}
-								items={assetLibrary ? [assetLibrary] : []}
-								locator={{
-									id: 'id',
-									label: 'name',
-									value: 'externalReferenceCode',
-								}}
-								onItemsChange={(items) => {
-									setGroupIdError(false);
-									setAssetLibrary(items[0]);
-								}}
-								onKeyDown={(
-									event: React.KeyboardEvent<HTMLInputElement>
-								) => {
-									if (event.key === 'Enter') {
-										event.preventDefault();
-									}
-								}}
-								selectedLogoColor={
-									assetLibrary?.settings?.logoColor
-								}
-								selectedName={assetLibrary?.name}
-							>
-								{(item) => (
-									<ItemSelector.Item
-										key={item.externalReferenceCode}
-										textValue={item.name}
-									>
-										<div className="align-items-center c-gap-2 d-flex">
-											<ClaySticker
-												displayType={
-													item.settings
-														?.logoColor as DisplayType
-												}
-												size="sm"
-											>
-												{item.name
-													.charAt(0)
-													.toUpperCase()}
-											</ClaySticker>
-
-											<span>{item.name}</span>
-										</div>
-									</ItemSelector.Item>
-								)}
-							</ItemSelector>
-						</FieldBase>
-					</div>
-				)
-			}
+			scopeSelectorElement={spaceSelectorElement}
 			uploadRequest={uploadRequest}
 			validExtensions={allowedExtensions}
 		/>

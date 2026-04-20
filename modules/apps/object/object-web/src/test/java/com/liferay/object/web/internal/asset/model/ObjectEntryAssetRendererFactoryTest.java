@@ -6,7 +6,6 @@
 package com.liferay.object.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -49,8 +48,8 @@ public class ObjectEntryAssetRendererFactoryTest {
 		languageUtil.setLanguage(new LanguageImpl());
 
 		_objectEntryAssetRendererFactory = new ObjectEntryAssetRendererFactory(
-			_assetDisplayPageFriendlyURLProvider, _depotEntryLocalService,
-			_dlAppLocalService, _dlURLHelper, _objectDefinition,
+			_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
+			_dlURLHelper, _objectDefinition,
 			_objectEntryDisplayContextFactoryImpl, _objectEntryLocalService,
 			_objectEntryService, _objectFieldLocalService, _servletContext);
 
@@ -139,8 +138,6 @@ public class ObjectEntryAssetRendererFactoryTest {
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider = Mockito.mock(
 			AssetDisplayPageFriendlyURLProvider.class);
-	private final DepotEntryLocalService _depotEntryLocalService = Mockito.mock(
-		DepotEntryLocalService.class);
 	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
 		DLAppLocalService.class);
 	private final DLURLHelper _dlURLHelper = Mockito.mock(DLURLHelper.class);

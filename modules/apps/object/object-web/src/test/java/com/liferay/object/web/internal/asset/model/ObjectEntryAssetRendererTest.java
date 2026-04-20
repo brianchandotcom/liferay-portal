@@ -7,9 +7,6 @@ package com.liferay.object.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -264,18 +261,10 @@ public class ObjectEntryAssetRendererTest {
 			_objectEntry
 		).getObjectEntryId();
 
-		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
-
-		Mockito.doReturn(
-			DepotConstants.TYPE_SPACE
-		).when(
-			depotEntry
-		).getType();
-
 		Mockito.when(
-			_depotEntryLocalService.fetchGroupDepotEntry(Mockito.anyLong())
+			_objectDefinition.isCMS()
 		).thenReturn(
-			depotEntry
+			true
 		);
 
 		return StringBundler.concat(
@@ -323,8 +312,8 @@ public class ObjectEntryAssetRendererTest {
 		throws Exception {
 
 		return new ObjectEntryAssetRenderer(
-			_assetDisplayPageFriendlyURLProvider, _depotEntryLocalService,
-			_dlAppLocalService, _dlURLHelper, _objectDefinition, _objectEntry,
+			_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
+			_dlURLHelper, _objectDefinition, _objectEntry,
 			_objectEntryDisplayContextFactoryImpl, _objectEntryService,
 			_objectFieldLocalService);
 	}
@@ -428,8 +417,6 @@ public class ObjectEntryAssetRendererTest {
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider = Mockito.mock(
 			AssetDisplayPageFriendlyURLProvider.class);
-	private final DepotEntryLocalService _depotEntryLocalService = Mockito.mock(
-		DepotEntryLocalService.class);
 	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
 		DLAppLocalService.class);
 	private final DLURLHelper _dlURLHelper = Mockito.mock(DLURLHelper.class);

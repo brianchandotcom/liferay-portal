@@ -7,9 +7,6 @@ package com.liferay.object.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -67,7 +64,6 @@ public class ObjectEntryAssetRenderer
 	public ObjectEntryAssetRenderer(
 			AssetDisplayPageFriendlyURLProvider
 				assetDisplayPageFriendlyURLProvider,
-			DepotEntryLocalService depotEntryLocalService,
 			DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
@@ -77,7 +73,6 @@ public class ObjectEntryAssetRenderer
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
-		_depotEntryLocalService = depotEntryLocalService;
 		_dlAppLocalService = dlAppLocalService;
 		_dlURLHelper = dlURLHelper;
 		_objectDefinition = objectDefinition;
@@ -204,7 +199,7 @@ public class ObjectEntryAssetRenderer
 	public PortletURL getURLEdit(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		if (_objectDefinition.isCMS() && _isSpaceDepotEntryObjectEntry()) {
+		if (_objectDefinition.isCMS()) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -253,7 +248,7 @@ public class ObjectEntryAssetRenderer
 			String redirect)
 		throws Exception {
 
-		if (_objectDefinition.isCMS() && _isSpaceDepotEntryObjectEntry()) {
+		if (_objectDefinition.isCMS()) {
 			return getURLEdit(httpServletRequest);
 		}
 
@@ -277,7 +272,7 @@ public class ObjectEntryAssetRenderer
 			WindowState windowState, String redirect)
 		throws Exception {
 
-		if (_objectDefinition.isCMS() && _isSpaceDepotEntryObjectEntry()) {
+		if (_objectDefinition.isCMS()) {
 			return getURLEdit(
 				PortalUtil.getHttpServletRequest(liferayPortletRequest));
 		}
@@ -296,7 +291,7 @@ public class ObjectEntryAssetRenderer
 			return null;
 		}
 
-		if (!_isSpaceDepotEntryObjectEntry()) {
+		if (!_objectDefinition.isCMS()) {
 			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
@@ -447,25 +442,11 @@ public class ObjectEntryAssetRenderer
 		return permissionChecker;
 	}
 
-	private boolean _isSpaceDepotEntryObjectEntry() {
-		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			_objectEntry.getGroupId());
-
-		if ((depotEntry == null) ||
-			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryAssetRenderer.class);
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final DLAppLocalService _dlAppLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final ObjectDefinition _objectDefinition;

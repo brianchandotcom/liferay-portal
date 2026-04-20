@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -17,16 +17,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Vendel Toreki
+ * @author Alejandro Tardín
  */
 @Component(service = RelevantObjectEntryModelListener.class)
-public class ObjectEntryModelListener
+public class MCPServerProfileObjectEntryModelListener
 	extends BaseModelListener<ObjectEntry>
 	implements RelevantObjectEntryModelListener {
 
 	@Override
 	public String getObjectDefinitionExternalReferenceCode() {
-		return MCPServerConstants.EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROMPT;
+		return MCPServerConstants.EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROFILE;
 	}
 
 	@Override

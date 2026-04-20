@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.Inject;
@@ -181,30 +183,35 @@ public class DLFileEntryCTTest {
 	public void testHasFiles() throws Exception {
 		String title = RandomTestUtil.randomString();
 
+		FileEntry fileEntry;
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			_addFileEntry(RandomTestUtil.randomString(), title);
+			fileEntry = _addFileEntry(RandomTestUtil.randomString(), title);
 		}
 
 		String friendlyURL = String.format(
 			"%s%s/%s", FriendlyURLResolverConstants.URL_SEPARATOR_X_FILE_ENTRY,
 			_group.getFriendlyURL(), title);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/documents" + friendlyURL);
+		_assertHasFiles(friendlyURL);
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.USER, TestPropsValues.getUser());
-		mockHttpServletRequest.setContextPath("/documents");
-		mockHttpServletRequest.setParameter(
-			"previewCTCollectionId",
-			String.valueOf(_ctCollection.getCtCollectionId()));
-		mockHttpServletRequest.setPathInfo(friendlyURL);
-		mockHttpServletRequest.setServletPath(StringPool.BLANK);
+		StringBundler sb = new StringBundler(8);
 
-		Assert.assertTrue(WebServerServlet.hasFiles(mockHttpServletRequest));
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getRepositoryId());
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getFolderId());
+		sb.append(StringPool.SLASH);
+		sb.append(URLCodec.encodeURL(fileEntry.getFileName()));
+		sb.append(StringPool.SLASH);
+		sb.append(URLCodec.encodeURL(fileEntry.getUuid()));
+
+		friendlyURL = sb.toString();
+
+		_assertHasFiles(friendlyURL);
 	}
 
 	@Test
@@ -256,6 +263,22 @@ public class DLFileEntryCTTest {
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, "liferay".getBytes(), null, null, null,
 			serviceContext);
+	}
+
+	private void _assertHasFiles(String friendlyURL) throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(Method.GET, "/documents" + friendlyURL);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER, TestPropsValues.getUser());
+		mockHttpServletRequest.setContextPath("/documents");
+		mockHttpServletRequest.setParameter(
+			"previewCTCollectionId",
+			String.valueOf(_ctCollection.getCtCollectionId()));
+		mockHttpServletRequest.setPathInfo(friendlyURL);
+		mockHttpServletRequest.setServletPath(StringPool.BLANK);
+
+		Assert.assertTrue(WebServerServlet.hasFiles(mockHttpServletRequest));
 	}
 
 	@Inject

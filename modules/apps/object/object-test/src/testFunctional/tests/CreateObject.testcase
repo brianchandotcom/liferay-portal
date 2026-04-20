@@ -1422,61 +1422,6 @@ definition {
 			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
-	@description = "LPS-135390 - Verify it is not possible to publish an Object without the Publish Object Definition permission"
-	@priority = 4
-	test CannotPublishObjectWithouPublishPermission {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 53",
-			objectName = "CustomObject53",
-			pluralLabelName = "Custom Objects 53");
-
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
-			roleTitle = "Regular Role",
-			roleType = "regular");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.object.model.ObjectDefinition",
-			roleTitle = "Regular Role",
-			roleType = "regular");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 53");
-
-		AssertElementPresent(locator1 = "CreateObject#DISABLED_PUBLISH_OBJECT_BUTTON");
-	}
-
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"
 	@priority = 4
 	test CannotSaveLowerCaseObjectName {

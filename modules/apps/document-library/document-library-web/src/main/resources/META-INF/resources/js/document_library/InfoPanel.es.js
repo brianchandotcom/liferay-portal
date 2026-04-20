@@ -17,7 +17,17 @@ class InfoPanel extends PortletBase {
 	 * @review
 	 */
 	attached() {
-		this._clipboard = new ClipboardJS('.dm-infopanel-copy-clipboard');
+		this._destroyClipboard();
+
+		const selector = '.dm-infopanel-copy-clipboard';
+
+		const container = this.rootNode;
+
+		if (!container) {
+			return;
+		}
+
+		this._clipboard = new ClipboardJS(container.querySelectorAll(selector));
 
 		this._clipboard.on('success', this._handleClipboardSuccess.bind(this));
 	}
@@ -28,8 +38,14 @@ class InfoPanel extends PortletBase {
 	 */
 	disposeInternal() {
 		super.disposeInternal();
+		this._destroyClipboard();
+	}
 
-		this._clipboard.destroy();
+	_destroyClipboard() {
+		if (this._clipboard) {
+			this._clipboard.destroy();
+			this._clipboard = null;
+		}
 	}
 
 	_handleClipboardSuccess() {

@@ -14,6 +14,7 @@ spec:
                 namespace: {{ $namespace }}
             data:
                 variables: |
+                    activeInstanceConnectionName: {{ $activeInstanceConnectionName | toJson }}
                     backup: {{ $backup | toJson }}
                     backupTargetLabels: {{ $backupTargetLabels | toJson }}
                     baseName: {{ $baseName | toJson }}
@@ -30,7 +31,6 @@ spec:
                     gsaEmail: {{ $gsaEmail | toJson }}
                     gsaName: {{ $gsaName | toJson }}
                     hash: {{ $hash | toJson }}
-                    instanceConnectionName: {{ $instanceConnectionName | toJson }}
                     isReady: {{ $isReady | toJson }}
                     isSearchReady: {{ $isSearchReady | toJson }}
                     jobName: {{ $jobName | toJson }}

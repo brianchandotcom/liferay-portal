@@ -812,7 +812,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition2.setAccountEntryRestricted(true);
 
-		return objectDefinitionPersistence.update(objectDefinition2);
+		objectDefinition2 = objectDefinitionPersistence.update(
+			objectDefinition2);
+
+		_objectFieldLocalService.updateRequired(
+			objectRelationship.getObjectFieldId2(), true);
+
+		return objectDefinition2;
 	}
 
 	@Override

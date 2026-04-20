@@ -137,10 +137,6 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 		throws PortalException;
 
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long previewFileEntryId)
-		throws PortalException;
-
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -151,4 +147,4 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1912081820
+// LIFERAY-SERVICE-BUILDER-HASH:1849515572

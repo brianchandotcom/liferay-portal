@@ -512,28 +512,12 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long previewFileEntryId)
-		throws PortalException {
-
-		return getService().updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, previewFileEntryId);
-	}
-
-	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntryId, previewFileEntryId, serviceContext);
-	}
-
-	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name)
-		throws PortalException {
-
-		return getService().updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, name);
 	}
 
 	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
@@ -555,4 +539,4 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 			LayoutUtilityPageEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1158619279
+// LIFERAY-SERVICE-BUILDER-HASH:-1745766292

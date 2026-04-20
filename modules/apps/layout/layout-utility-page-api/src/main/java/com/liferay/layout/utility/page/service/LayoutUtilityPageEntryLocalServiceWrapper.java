@@ -586,30 +586,12 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, previewFileEntryId);
-	}
-
-	@Override
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntryId, previewFileEntryId, serviceContext);
-	}
-
-	@Override
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, name);
 	}
 
 	@Override
@@ -664,4 +646,4 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 		_layoutUtilityPageEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1997412665
+// LIFERAY-SERVICE-BUILDER-HASH:1785397360

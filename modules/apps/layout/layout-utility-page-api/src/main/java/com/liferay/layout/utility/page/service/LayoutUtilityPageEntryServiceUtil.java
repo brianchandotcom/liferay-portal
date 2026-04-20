@@ -182,14 +182,6 @@ public class LayoutUtilityPageEntryServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long previewFileEntryId)
-		throws PortalException {
-
-		return getService().updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, previewFileEntryId);
-	}
-
-	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -217,4 +209,4 @@ public class LayoutUtilityPageEntryServiceUtil {
 			LayoutUtilityPageEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1833989686
+// LIFERAY-SERVICE-BUILDER-HASH:1090309240

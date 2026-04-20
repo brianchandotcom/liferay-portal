@@ -421,18 +421,10 @@ public interface LayoutUtilityPageEntryLocalService
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 		LayoutUtilityPageEntry layoutUtilityPageEntry);
 
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long previewFileEntryId)
-		throws PortalException;
-
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -457,4 +449,4 @@ public interface LayoutUtilityPageEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2120999174
+// LIFERAY-SERVICE-BUILDER-HASH:1905346277

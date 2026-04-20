@@ -774,50 +774,6 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			updateLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId,
-				long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutUtilityPageEntryServiceUtil.class,
-				"updateLayoutUtilityPageEntry",
-				_updateLayoutUtilityPageEntryParameterTypes18);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutUtilityPageEntryId, previewFileEntryId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.layout.utility.page.model.
-				LayoutUtilityPageEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
-			updateLayoutUtilityPageEntry(
-				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId,
 				long previewFileEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -826,7 +782,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"updateLayoutUtilityPageEntry",
-				_updateLayoutUtilityPageEntryParameterTypes19);
+				_updateLayoutUtilityPageEntryParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutUtilityPageEntryId, previewFileEntryId,
@@ -872,7 +828,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"updateLayoutUtilityPageEntry",
-				_updateLayoutUtilityPageEntryParameterTypes20);
+				_updateLayoutUtilityPageEntryParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutUtilityPageEntryId, name, serviceContext);
@@ -982,18 +938,14 @@ public class LayoutUtilityPageEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateLayoutUtilityPageEntryParameterTypes18 = new Class[] {
-			long.class, long.class
-		};
-	private static final Class<?>[]
-		_updateLayoutUtilityPageEntryParameterTypes19 = new Class[] {
 			long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateLayoutUtilityPageEntryParameterTypes20 = new Class[] {
+		_updateLayoutUtilityPageEntryParameterTypes19 = new Class[] {
 			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:855886149
+// LIFERAY-SERVICE-BUILDER-HASH:272774366

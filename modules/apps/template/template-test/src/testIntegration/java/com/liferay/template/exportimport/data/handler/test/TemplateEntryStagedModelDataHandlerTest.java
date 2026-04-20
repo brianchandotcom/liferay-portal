@@ -67,7 +67,7 @@ public class TemplateEntryStagedModelDataHandlerTest
 
 	@Test
 	@TestInfo("LPD-86646")
-	public void testExportImportTemplateEntryPreservesCreationAndModificationDateOnUpdate()
+	public void testExportImportTemplateEntryPropagatesModifiedDateOnUpdate()
 		throws Exception {
 
 		TemplateEntry templateEntry = _addTemplateEntry(

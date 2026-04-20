@@ -267,11 +267,6 @@ public class UpgradeAssetDisplayPageEntryTest {
 		"com.liferay.asset.display.page.internal.upgrade.v3_0_0." +
 			"UpgradeAssetDisplayPageEntry";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.asset.display.page.internal.upgrade.registry.AssetDisplayPageServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
@@ -302,5 +297,10 @@ public class UpgradeAssetDisplayPageEntryTest {
 	private Portal _portal;
 
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.asset.display.page.internal.upgrade.registry.AssetDisplayPageServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

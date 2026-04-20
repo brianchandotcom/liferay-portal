@@ -501,12 +501,11 @@ public class MergePortalSubrepositoryUtil {
 			return;
 		}
 
+		LocalGitBranch currentLocalGitBranch =
+			portalGitWorkingDirectory.getCurrentLocalGitBranch();
 		String remoteURL = JenkinsResultsParserUtil.combine(
 			"git@github.com:", gitHubURLMatcher.group("userName"), "/",
 			gitHubURLMatcher.group("repositoryName"), ".git");
-
-		LocalGitBranch currentLocalGitBranch =
-			portalGitWorkingDirectory.getCurrentLocalGitBranch();
 		String remoteGitBranchName = gitHubURLMatcher.group("branchName");
 
 		Retryable<Void> retryable = new Retryable<Void>() {

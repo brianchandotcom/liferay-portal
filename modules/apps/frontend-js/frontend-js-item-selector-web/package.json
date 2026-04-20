@@ -7,6 +7,7 @@
 		"@clayui/core": "^3.161.0",
 		"@clayui/data-provider": "^3.161.0",
 		"@clayui/form": "^3.161.0",
+		"@clayui/icon": "^3.161.0",
 		"@clayui/layout": "^3.161.0",
 		"@clayui/link": "^3.161.0",
 		"@clayui/modal": "^3.161.0",

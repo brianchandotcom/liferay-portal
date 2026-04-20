@@ -217,12 +217,12 @@ public class AssetCategoriesSummaryDisplayContextTest {
 	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
-	private static MockedStatic<SiteConnectedGroupGroupProviderUtil>
-		_siteConnectedGroupGroupProviderUtilMockedStatic;
 
 	private AssetVocabulary _assetVocabulary;
 	private long _cmsGroupId;
 	private long _companyId;
 	private long _groupId;
+	private MockedStatic<SiteConnectedGroupGroupProviderUtil>
+		_siteConnectedGroupGroupProviderUtilMockedStatic;
 
 }

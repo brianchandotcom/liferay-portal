@@ -451,16 +451,13 @@ public class UpgradePortletPreferencesTest {
 		return getPortletPreferences(portletId);
 	}
 
-	@Inject
-	private static DDMStructureLinkLocalService _ddmStructureLinkLocalService;
-
-	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private static SAXReader _saxReader;
-
 	private boolean _active;
+
+	@Inject
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -468,6 +465,10 @@ public class UpgradePortletPreferencesTest {
 	private Layout _layout;
 	private DateFormat _newDateFormat;
 	private DateFormat _oldDateFormat;
+
+	@Inject
+	private SAXReader _saxReader;
+
 	private Object _upgradePortletPreferences;
 
 }

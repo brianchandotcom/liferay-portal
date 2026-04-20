@@ -260,11 +260,6 @@ public class AssetPublisherOSGiCommandsTest {
 		return portletPreferences;
 	}
 
-	@Inject(
-		filter = "osgi.command.scope=assetPublisher", type = Inject.NoType.class
-	)
-	private static Object _assetPublisherOSGiCommands;
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -277,6 +272,11 @@ public class AssetPublisherOSGiCommandsTest {
 
 	@Inject
 	private AssetPublisherHelper _assetPublisherHelper;
+
+	@Inject(
+		filter = "osgi.command.scope=assetPublisher", type = Inject.NoType.class
+	)
+	private Object _assetPublisherOSGiCommands;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

@@ -138,11 +138,6 @@ public class UpgradePortletPreferencesTest {
 		"com.liferay.asset.publisher.web.internal.upgrade.v1_0_5." +
 			"UpgradePortletPreferences";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.asset.publisher.web.internal.upgrade.registry.AssetPublisherWebUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -150,5 +145,10 @@ public class UpgradePortletPreferencesTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.asset.publisher.web.internal.upgrade.registry.AssetPublisherWebUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

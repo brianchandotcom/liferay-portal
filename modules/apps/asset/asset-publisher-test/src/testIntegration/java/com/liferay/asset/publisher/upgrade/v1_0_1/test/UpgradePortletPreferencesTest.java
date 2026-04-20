@@ -265,11 +265,6 @@ public class UpgradePortletPreferencesTest {
 			"com.liferay.wiki.model.WikiPage"
 		).build();
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.asset.publisher.web.internal.upgrade.registry.AssetPublisherWebUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private EntityCache _entityCache;
 
@@ -283,5 +278,10 @@ public class UpgradePortletPreferencesTest {
 
 	@Inject
 	private SAXReader _saxReader;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.asset.publisher.web.internal.upgrade.registry.AssetPublisherWebUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

@@ -185,12 +185,12 @@ public class UpgradePortletPreferencesTest
 
 	private static final Version _VERSION = new Version(1, 0, 6);
 
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.asset.publisher.web.internal.upgrade.registry.AssetPublisherWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private AssetListEntryLocalService _assetListEntryLocalService;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

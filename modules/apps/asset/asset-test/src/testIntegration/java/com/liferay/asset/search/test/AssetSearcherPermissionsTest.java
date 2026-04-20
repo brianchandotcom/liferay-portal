@@ -108,12 +108,12 @@ public class AssetSearcherPermissionsTest {
 	}
 
 	@Inject
-	private static AssetSearcherFactory _assetSearcherFactory;
-
-	@Inject
-	private static UserLocalService _userLocalService;
+	private AssetSearcherFactory _assetSearcherFactory;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

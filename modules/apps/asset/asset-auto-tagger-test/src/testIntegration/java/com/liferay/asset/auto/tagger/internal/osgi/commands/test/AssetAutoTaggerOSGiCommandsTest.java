@@ -263,14 +263,14 @@ public class AssetAutoTaggerOSGiCommandsTest
 			classNames);
 	}
 
+	@Inject
+	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
+
 	@Inject(
 		filter = "osgi.command.scope=assetAutoTagger",
 		type = Inject.NoType.class
 	)
-	private static Object _assetAutoTaggerOSGiCommands;
-
-	@Inject
-	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
+	private Object _assetAutoTaggerOSGiCommands;
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

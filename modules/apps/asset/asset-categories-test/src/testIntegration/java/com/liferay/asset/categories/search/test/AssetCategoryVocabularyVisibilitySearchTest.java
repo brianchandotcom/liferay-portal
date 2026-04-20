@@ -301,37 +301,37 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 	private static final String _DELIMITER =
 		StringPool.AMPERSAND + StringPool.AMPERSAND;
 
-	@Inject
-	private static AssetCategoryService _assetCategoryService;
-
-	@Inject
-	private static AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject(
-		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
-	)
-	private static Indexer<JournalArticle> _indexer;
-
-	@Inject
-	private static Portal _portal;
-
 	@DeleteAfterTestRun
 	private List<AssetCategory> _assetCategories = new ArrayList<>();
 
+	@Inject
+	private AssetCategoryService _assetCategoryService;
+
 	@DeleteAfterTestRun
 	private List<AssetVocabulary> _assetVocabularies = new ArrayList<>();
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private GroupSearchFixture _groupSearchFixture;
 
+	@Inject(
+		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
+	)
+	private Indexer<JournalArticle> _indexer;
+
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+
+	@Inject
+	private Portal _portal;
 
 }

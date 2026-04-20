@@ -501,32 +501,40 @@ public class MergePortalSubrepositoryUtil {
 			return;
 		}
 
-		Retryable retryable = new Retryable() {
+		String remoteURL = JenkinsResultsParserUtil.combine(
+			"git@github.com:", gitHubURLMatcher.group("userName"), "/",
+			gitHubURLMatcher.group("repositoryName"), ".git");
 
-			@Override
-			public Object execute() {
-				String remoteURL = JenkinsResultsParserUtil.combine(
-					"git@github.com:", gitHubURLMatcher.group("userName"), "/",
-					gitHubURLMatcher.group("repositoryName"), ".git");
+		Retryable<RemoteGitBranch> retryable =
+			new Retryable<RemoteGitBranch>() {
 
-				RemoteGitBranch remoteGitBranch =
-					portalGitWorkingDirectory.pushToRemoteGitRepository(
-						false,
-						portalGitWorkingDirectory.getCurrentLocalGitBranch(),
-						gitHubURLMatcher.group("branchName"), remoteURL);
+				@Override
+				public RemoteGitBranch execute() {
+					RemoteGitBranch remoteGitBranch =
+						portalGitWorkingDirectory.pushToRemoteGitRepository(
+							false,
+							portalGitWorkingDirectory.
+								getCurrentLocalGitBranch(),
+							gitHubURLMatcher.group("branchName"), remoteURL);
 
-				if (remoteGitBranch == null) {
-					_reportError(
-						"Unable to push updates to " + remoteURL,
-						jenkinsBuildURL, portalPullRequest);
+					if (remoteGitBranch == null) {
+						throw new RuntimeException(
+							"Unable to push updates to " + remoteURL);
+					}
+
+					return remoteGitBranch;
 				}
 
-				return null;
-			}
+			};
 
-		};
-
-		retryable.executeWithRetries();
+		try {
+			retryable.executeWithRetries();
+		}
+		catch (Exception exception) {
+			_reportError(
+				"Unable to push updates to " + remoteURL, jenkinsBuildURL,
+				portalPullRequest);
+		}
 	}
 
 	private static void _reportError(

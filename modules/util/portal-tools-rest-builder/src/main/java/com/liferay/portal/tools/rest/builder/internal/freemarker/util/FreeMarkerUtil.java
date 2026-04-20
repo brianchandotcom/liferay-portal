@@ -10,6 +10,7 @@ import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 
 import java.io.File;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -34,9 +35,20 @@ public class FreeMarkerUtil {
 			Map<String, Object> context, File outputFile)
 		throws Exception {
 
+		processTemplate(
+			copyrightFile, copyrightYear, name, context, outputFile, null);
+	}
+
+	public static void processTemplate(
+			File copyrightFile, String copyrightYear, String name,
+			Map<String, Object> context, File outputFile,
+			Collection<File> modifiedFiles)
+		throws Exception {
+
 		FileUtil.write(
 			outputFile,
-			processTemplate(copyrightFile, copyrightYear, name, context));
+			processTemplate(copyrightFile, copyrightYear, name, context),
+			modifiedFiles);
 	}
 
 	private static final FreeMarker _freeMarker = new FreeMarker();

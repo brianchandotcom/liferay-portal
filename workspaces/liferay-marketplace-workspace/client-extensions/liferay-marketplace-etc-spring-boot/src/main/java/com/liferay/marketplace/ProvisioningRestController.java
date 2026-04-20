@@ -266,8 +266,8 @@ public class ProvisioningRestController extends BaseRestController {
 		if (licenseKeysPage.fetchFirstItem() != null) {
 			throw new ResponseStatusException(
 				HttpStatus.CONFLICT,
-				"A License key already provisioned for the owner with this " +
-					"domain");
+				"A License key was already provisioned for the owner with " +
+					"this domain");
 		}
 	}
 

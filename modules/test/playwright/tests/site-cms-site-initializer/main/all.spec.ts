@@ -415,6 +415,93 @@ test(
 );
 
 test(
+	'Destination picker shows a warning when bulk moving or copying',
+	{tag: '@LPD-86776'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const spaceName = `Space ${getRandomString()}`;
+		const contentTitles = [
+			`Content ${getRandomString()}`,
+			`Content ${getRandomString()}`,
+		];
+
+		await test.step('Create a Space with two contents', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+			for (const title of contentTitles) {
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+						title,
+					},
+					'cms/basic-web-contents',
+					spaceName
+				);
+			}
+		});
+
+		await test.step('Select the two contents', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.selectItems(contentTitles);
+		});
+
+		await test.step(
+			'Move To destination picker shows the warning',
+			async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Move To'})
+					.click();
+
+				const dialog = page.getByRole('dialog', {
+					name: /Move \d+ Items To/,
+				});
+
+				await expect(
+					dialog.getByText(
+						/Only categories and tags also available in the destination will be retained/
+					)
+				).toBeVisible();
+
+				await dialog
+					.getByRole('button', {exact: true, name: 'Cancel'})
+					.click();
+
+				await expect(dialog).toBeHidden();
+			}
+		);
+
+		await test.step(
+			'Copy To destination picker shows the warning',
+			async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Copy To'})
+					.click();
+
+				const dialog = page.getByRole('dialog', {
+					name: /Copy \d+ Items To/,
+				});
+
+				await expect(
+					dialog.getByText(
+						/Only categories and tags also available in the destination will be copied/
+					)
+				).toBeVisible();
+
+				await dialog
+					.getByRole('button', {exact: true, name: 'Cancel'})
+					.click();
+
+				await expect(dialog).toBeHidden();
+			}
+		);
+	}
+);
+
+test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
 	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {

@@ -28,13 +28,22 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.site.cms.site.initializer.constants.CMSSiteInitializerPortletKeys;
+
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
@@ -94,7 +103,7 @@ public class ObjectEntryAssetRendererTest {
 		);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(themeDisplay),
+			_getCMSFriendlyURL(Constants.READ, themeDisplay),
 			assetRenderer.getSharingEntryRowPortletURL(false, themeDisplay));
 	}
 
@@ -142,6 +151,80 @@ public class ObjectEntryAssetRendererTest {
 	}
 
 	@Test
+	public void testGetURLEdit() throws Exception {
+		Mockito.when(
+			_objectDefinition.isCMS()
+		).thenReturn(
+			true
+		);
+
+		String portletId = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_objectDefinition.getPortletId()
+		).thenReturn(
+			portletId
+		);
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			Mockito.mock(ThemeDisplay.class)
+		);
+
+		try (MockedStatic<GroupLocalServiceUtil>
+				groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+					GroupLocalServiceUtil.class);
+			MockedStatic<PortalUtil> portalUtilMockedStatic =
+				Mockito.mockStatic(PortalUtil.class)) {
+
+			PortletURL cmsObjectEntryPortletURL = Mockito.mock(
+				PortletURL.class);
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getControlPanelPortletURL(
+					Mockito.eq(httpServletRequest), Mockito.any(),
+					Mockito.eq(CMSSiteInitializerPortletKeys.CMS_OBJECT_ENTRY),
+					Mockito.anyLong(), Mockito.anyLong(),
+					Mockito.eq(PortletRequest.RENDER_PHASE))
+			).thenReturn(
+				cmsObjectEntryPortletURL
+			);
+
+			PortletURL objectEntryPortletURL = Mockito.mock(PortletURL.class);
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getControlPanelPortletURL(
+					Mockito.eq(httpServletRequest), Mockito.any(),
+					Mockito.eq(portletId), Mockito.anyLong(), Mockito.anyLong(),
+					Mockito.eq(PortletRequest.RENDER_PHASE))
+			).thenReturn(
+				objectEntryPortletURL
+			);
+
+			AssetRenderer<ObjectEntry> assetRenderer =
+				_getObjectEntryAssetRenderer();
+
+			Assert.assertSame(
+				cmsObjectEntryPortletURL,
+				assetRenderer.getURLEdit(httpServletRequest));
+
+			Mockito.when(
+				_objectDefinition.isCMS()
+			).thenReturn(
+				false
+			);
+
+			Assert.assertSame(
+				objectEntryPortletURL,
+				assetRenderer.getURLEdit(httpServletRequest));
+		}
+	}
+
+	@Test
 	public void testGetURLSharingNotification() throws Exception {
 		AssetRenderer<ObjectEntry> assetRenderer =
 			_getObjectEntryAssetRenderer();
@@ -149,7 +232,7 @@ public class ObjectEntryAssetRendererTest {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(themeDisplay),
+			_getCMSFriendlyURL(Constants.READ, themeDisplay),
 			assetRenderer.getURLSharingNotification(themeDisplay));
 	}
 
@@ -228,7 +311,7 @@ public class ObjectEntryAssetRendererTest {
 		Assert.assertTrue(assetRenderer.hasViewPermission(_permissionChecker));
 	}
 
-	private String _getCMSFriendlyURL(ThemeDisplay themeDisplay) {
+	private String _getCMSFriendlyURL(String mode, ThemeDisplay themeDisplay) {
 		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
 
 		Mockito.when(
@@ -269,8 +352,8 @@ public class ObjectEntryAssetRendererTest {
 
 		return StringBundler.concat(
 			portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
-			"/edit_content_item?objectEntryId=", objectEntryId,
-			"&p_l_mode=read&redirect=", HtmlUtil.escapeURL(urlCurrent));
+			"/edit_content_item?objectEntryId=", objectEntryId, "&p_l_mode=",
+			mode, "&redirect=", HtmlUtil.escapeURL(urlCurrent));
 	}
 
 	private String _getFriendlyURL(LiferayPortletRequest liferayPortletRequest)

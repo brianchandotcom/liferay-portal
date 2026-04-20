@@ -1214,6 +1214,89 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		);
 	});
 
+	test('can update fields of a draft object before publishing', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectFieldLabel = objectFields[0].label!['en_US'];
+		const label = 'UpdatedLabel' + getRandomInt();
+		const name = 'UpdatedName' + getRandomInt();
+		const pluralLabel = 'UpdatedPlural' + getRandomInt();
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await editObjectDetailsPage.labelInput.fill(label);
+		await editObjectDetailsPage.pluralLabelInput.fill(pluralLabel);
+		await editObjectDetailsPage.nameInput.fill(name);
+		await editObjectDetailsPage.selectEntryTitleField(objectFieldLabel);
+		await editObjectDetailsPage.selectScope('Company');
+
+		await editObjectDetailsPage.selectPanelLink('Object');
+
+		await editObjectDetailsPage.saveObjectDefinition();
+
+		await waitForAlert(page, 'The object was saved successfully');
+
+		await page.reload();
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await expect(editObjectDetailsPage.labelInput).toHaveValue(label);
+		await expect(editObjectDetailsPage.pluralLabelInput).toHaveValue(
+			pluralLabel
+		);
+		await expect(editObjectDetailsPage.nameInput).toHaveValue(name);
+		await expect(editObjectDetailsPage.entryTitleFieldCombobox).toHaveText(
+			objectFieldLabel
+		);
+		await expect(editObjectDetailsPage.scopeCombobox).toHaveText(
+			'Company',
+			{ignoreCase: true}
+		);
+		await expect(editObjectDetailsPage.panelLinkCombobox).toHaveText(
+			'Object',
+			{ignoreCase: true}
+		);
+
+		await editObjectDetailsPage.selectScope('Site');
+
+		await editObjectDetailsPage.selectPanelLink('Content & Data');
+
+		await editObjectDetailsPage.saveObjectDefinition();
+
+		await waitForAlert(page, 'The object was saved successfully');
+
+		await page.reload();
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await expect(editObjectDetailsPage.scopeCombobox).toHaveText('Site', {
+			ignoreCase: true,
+		});
+		await expect(editObjectDetailsPage.panelLinkCombobox).toHaveText(
+			'Content & Data',
+			{ignoreCase: true}
+		);
+	});
+
 	test('can view the object management toolbar in different tabs.', async ({
 		apiHelpers,
 		editObjectDetailsPage,

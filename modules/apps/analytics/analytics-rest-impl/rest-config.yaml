@@ -1,0 +1,14 @@
+apiDir: ../analytics-rest-api/src/main/java
+apiPackagePath: com.liferay.analytics.rest
+application:
+    baseURI: /analytics-rest
+    className: AnalyticsRESTApplication
+    name: Liferay.Analytics.REST
+author: Ivica Cardic
+clientDir: ../analytics-rest-client/src/main/java
+compatibilityVersion: 15
+forcePredictableOperationId: true
+generateBatch: false
+generateGraphQL: false
+javaEEPackage: jakarta
+testDir: ../analytics-rest-test/src/testIntegration/java

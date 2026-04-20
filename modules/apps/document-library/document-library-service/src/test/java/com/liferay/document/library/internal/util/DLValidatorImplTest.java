@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -77,6 +79,111 @@ public class DLValidatorImplTest {
 				RandomTestUtil.randomInt(), "image/png"));
 	}
 
+	@Test
+	public void testCompanyMimeTypeSizeLimitTakesPrecedenceOverSystemMimeTypeSizeLimit()
+		throws Exception {
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			5L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit(
+				Mockito.anyString())
+		).thenReturn(
+			10L
+		);
+
+		Assert.assertEquals(
+			5,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), "image/png"));
+	}
+
+	@Test
+	public void testGetMimeTypeSizeLimit() {
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
+				Mockito.anyLong())
+		).thenReturn(
+			Map.of("image/png", 10L, "text/plain", 50L)
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyLong())
+		).thenReturn(
+			Map.of("image/png", 15L)
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit()
+		).thenReturn(
+			Map.of("application/pdf", 100L, "image/png", 5L)
+		);
+
+		Map<String, Long> mimeTypeSizeLimit = _dlValidator.getMimeTypeSizeLimit(
+			RandomTestUtil.randomInt());
+
+		Assert.assertEquals(
+			Long.valueOf(100L), mimeTypeSizeLimit.get("application/pdf"));
+		Assert.assertEquals(
+			Long.valueOf(50L), mimeTypeSizeLimit.get("text/plain"));
+		Assert.assertEquals(
+			Long.valueOf(5L), mimeTypeSizeLimit.get("image/png"));
+	}
+
+	@Test
+	public void testGroupMimeTypeSizeLimitTakesPrecedenceOverCompanyMimeTypeSizeLimit()
+		throws Exception {
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			10L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			5L
+		);
+
+		Assert.assertEquals(
+			5,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), "image/png"));
+	}
+
+	@Test
+	public void testGroupMimeTypeSizeLimitTakesPrecedenceOverSystemMimeTypeSizeLimit()
+		throws Exception {
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			5L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit(
+				Mockito.anyString())
+		).thenReturn(
+			10L
+		);
+
+		Assert.assertEquals(
+			5,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), "image/png"));
+	}
+
 	@Test(expected = FileExtensionException.class)
 	public void testInvalidExtension() throws Exception {
 		_validateFileExtension("test.gıf");
@@ -102,6 +209,21 @@ public class DLValidatorImplTest {
 
 		Assert.assertEquals(
 			10,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), "image/png"));
+	}
+
+	@Test
+	public void testMaxAllowableSizeGroupMimeTypeSizeLimit() throws Exception {
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			5L
+		);
+
+		Assert.assertEquals(
+			5,
 			_dlValidator.getMaxAllowableSize(
 				RandomTestUtil.randomInt(), "image/png"));
 	}
@@ -135,6 +257,21 @@ public class DLValidatorImplTest {
 	}
 
 	@Test
+	public void testMaxAllowableSizeSystemMimeTypeSizeLimit() throws Exception {
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit(
+				Mockito.anyString())
+		).thenReturn(
+			5L
+		);
+
+		Assert.assertEquals(
+			5,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), "image/png"));
+	}
+
+	@Test
 	public void testMaxAllowableSizeUploadServletRequestFileMaxSizeTakesPrecedenceOverDLFileMaxSize()
 		throws Exception {
 
@@ -155,6 +292,91 @@ public class DLValidatorImplTest {
 			10,
 			_dlValidator.getMaxAllowableSize(
 				RandomTestUtil.randomInt(), RandomTestUtil.randomString()));
+	}
+
+	@Test
+	public void testSystemFileMaxSizeTakesPrecedenceOverCompanyFileMaxSize()
+		throws Exception {
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
+				Mockito.anyLong())
+		).thenReturn(
+			10L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getGroupFileMaxSize(
+				Mockito.anyLong(), Mockito.anyLong())
+		).thenReturn(
+			15L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getSystemFileMaxSize()
+		).thenReturn(
+			5L
+		);
+
+		Assert.assertEquals(
+			5,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), RandomTestUtil.randomString()));
+	}
+
+	@Test
+	public void testSystemMimeTypeSizeLimitTakesPrecedenceOverCompanyMimeTypeSizeLimit()
+		throws Exception {
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			10L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			15L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit(
+				Mockito.anyString())
+		).thenReturn(
+			5L
+		);
+
+		Assert.assertEquals(
+			5,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), "image/png"));
+	}
+
+	@Test
+	public void testSystemMimeTypeSizeLimitTakesPrecedenceOverGroupMimeTypeSizeLimit()
+		throws Exception {
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			10L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit(
+				Mockito.anyString())
+		).thenReturn(
+			5L
+		);
+
+		Assert.assertEquals(
+			5,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), "image/png"));
 	}
 
 	@Test(expected = FileMimeTypeException.class)

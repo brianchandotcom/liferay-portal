@@ -118,6 +118,12 @@ public class FolderStagedModelDataHandlerTest
 
 			Assert.assertNotNull(exportedChildFolder);
 
+			Folder exportedParentFolder = (Folder)readExportedStagedModel(
+				parentFolder);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedParentFolder);
+
 			Map<Long, Long> folderIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Folder.class);

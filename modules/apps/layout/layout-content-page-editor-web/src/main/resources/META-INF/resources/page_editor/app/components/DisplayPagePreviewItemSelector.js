@@ -4,7 +4,6 @@
  */
 
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
@@ -63,7 +62,9 @@ export function DisplayPagePreviewItemSelectorContent() {
 			active={active}
 			alignmentPosition={Align.BottomRight}
 			aria-labelledby={selectLabelId}
+			hasLeftSymbols
 			menuElementAttrs={{
+				className: 'dropdown-menu-select',
 				containerProps: {
 					className: 'cadmin',
 				},
@@ -88,19 +89,12 @@ export function DisplayPagePreviewItemSelectorContent() {
 
 					<button
 						className={classNames(
-							'align-items-center btn btn-sm d-flex page-editor__display-page-preview-item-selector-button btn-secondary'
+							'form-control form-control-sm form-control-select form-control-select-secondary page-editor__display-page-preview-item-selector-button'
 						)}
 						data-qa-id="previewItemSelectorButton"
 						type="button"
 					>
-						<span className="flex-grow-1 overflow-hidden text-left text-truncate">
 							{previewItem ? previewItem.label : NO_ITEM_LABEL}
-						</span>
-
-						<ClayIcon
-							className="flex-shrink-0 text-secondary"
-							symbol="caret-double"
-						/>
 					</button>
 				</p>
 			}
@@ -110,7 +104,7 @@ export function DisplayPagePreviewItemSelectorContent() {
 					aria-selected={!previewItem}
 					onClick={() => selectItem(null)}
 					role="option"
-					symbolRight={!previewItem ? 'check' : undefined}
+					symbolLeft={!previewItem ? 'check' : undefined}
 				>
 					{NO_ITEM_LABEL}
 				</ClayDropDown.Item>
@@ -124,15 +118,13 @@ export function DisplayPagePreviewItemSelectorContent() {
 						className="page-editor__display-page-preview-item-selector-dropdown-item"
 						key={recentPreviewItem.label}
 						onClick={() => selectItem(recentPreviewItem)}
-						symbolRight={
+						symbolLeft={
 							deepEqual(previewItem, recentPreviewItem)
 								? 'check'
 								: ''
 						}
 					>
-						<span className="page-editor__display-page-preview-item-selector-dropdown-item-label">
-							{recentPreviewItem.label}
-						</span>
+						{recentPreviewItem.label}
 					</ClayDropDown.Item>
 				))}
 			</ClayDropDown.ItemList>

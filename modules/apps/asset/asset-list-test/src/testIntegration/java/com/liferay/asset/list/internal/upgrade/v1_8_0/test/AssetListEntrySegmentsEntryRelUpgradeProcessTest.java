@@ -100,11 +100,6 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcessTest
 		"com.liferay.asset.list.internal.upgrade.v1_8_0." +
 			"AssetListEntrySegmentsEntryRelUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.asset.list.internal.upgrade.registry.AssetListServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private AssetListEntry _assetListEntry;
 
@@ -117,5 +112,10 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcessTest
 
 	@DeleteAfterTestRun
 	private SegmentsEntry _segmentsEntry;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.asset.list.internal.upgrade.registry.AssetListServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

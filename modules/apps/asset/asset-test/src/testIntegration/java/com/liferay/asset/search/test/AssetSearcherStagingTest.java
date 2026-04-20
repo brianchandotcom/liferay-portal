@@ -188,16 +188,16 @@ public class AssetSearcherStagingTest {
 	}
 
 	@Inject
-	private static AssetSearcherFactory _assetSearcherFactory;
-
-	@Inject
-	private static UserGroupRoleLocalService _userGroupRoleLocalService;
+	private AssetSearcherFactory _assetSearcherFactory;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun
 	private final List<Role> _roles = new ArrayList<>();
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@DeleteAfterTestRun
 	private final List<UserGroupRole> _userGroupRoles = new ArrayList<>();

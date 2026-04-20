@@ -381,16 +381,13 @@ public class AssetSearcherTest {
 	}
 
 	@Inject
-	private static AssetSearcherFactory _assetSearcherFactory;
+	private AssetSearcherFactory _assetSearcherFactory;
 
 	@Inject
-	private static AssetVocabularyLocalService _assetVocabularyLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
-	private static BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Inject
-	private static UserLocalService _userLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -398,5 +395,8 @@ public class AssetSearcherTest {
 	private AssetCategory _internalAssetCategory;
 	private AssetCategory _publicAssetCategory1;
 	private AssetCategory _publicAssetCategory2;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -155,13 +155,13 @@ public class AssetSearcherClassNameIdsTest {
 	}
 
 	@Inject
-	private static AssetSearcherFactory _assetSearcherFactory;
+	private AssetSearcherFactory _assetSearcherFactory;
 
 	@Inject
-	private static BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject
-	private static BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

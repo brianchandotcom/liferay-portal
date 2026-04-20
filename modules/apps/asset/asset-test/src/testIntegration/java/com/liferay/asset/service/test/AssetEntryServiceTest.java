@@ -363,28 +363,28 @@ public class AssetEntryServiceTest {
 	}
 
 	@Inject
-	private static AssetEntryLocalService _assetEntryLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
-	private static AssetVocabularyGroupRelLocalService
+	private AssetVocabularyGroupRelLocalService
 		_assetVocabularyGroupRelLocalService;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	@Inject
-	private static DepotEntryLocalService _depotEntryLocalService;
-
-	@Inject
-	private static Portal _portal;
-
-	@Inject
-	private static ViewCountManager _viewCountManager;
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
 
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private ViewCountManager _viewCountManager;
 
 }

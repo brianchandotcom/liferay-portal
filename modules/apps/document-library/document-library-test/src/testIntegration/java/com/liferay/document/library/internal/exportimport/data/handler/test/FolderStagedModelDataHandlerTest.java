@@ -119,8 +119,6 @@ public class FolderStagedModelDataHandlerTest
 
 			Assert.assertNotNull(exportedChildFolder);
 
-			// Clear the parent folder mapping so the parent is "missing"
-
 			Map<Long, Long> folderIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Folder.class);
@@ -135,8 +133,6 @@ public class FolderStagedModelDataHandlerTest
 					childFolder.getUuid(), liveGroup.getGroupId());
 
 			Assert.assertEquals(
-				"When parent folder mapping is missing, the imported child " +
-					"folder should be placed at root level",
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				importedDLFolder.getParentFolderId());
 		}

@@ -79,8 +79,9 @@ public class ProductOptionDTOConverter
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels;
 		List<ProductOptionValue> productOptionValues = new ArrayList<>();
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = null;
 
 		if (cpDefinitionOptionRel.isSkuContributor()) {
 			cpDefinitionOptionValueRels =

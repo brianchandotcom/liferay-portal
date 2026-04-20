@@ -1461,6 +1461,75 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		}
 	});
 
+	test('cannot publish an object without the publish permission', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'ObjRole' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.object.model.ObjectDefinition',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW_CONTROL_PANEL'],
+					primaryKey: companyId,
+					resourceName: '90',
+					scope: 1,
+				},
+			],
+		});
+
+		apiHelpers.data.push({id: role.id, type: 'role'});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		apiHelpers.data.push({id: user.id, type: 'userAccount'});
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await performUserSwitch(page, user.alternateName);
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		await expect(editObjectDetailsPage.publishButton).toBeDisabled();
+		await expect(editObjectDetailsPage.saveButton).toBeDisabled();
+	});
+
 	test('cannot publish definition with duplicate friendlyURL prefix', async ({
 		apiHelpers,
 		editObjectDetailsPage,

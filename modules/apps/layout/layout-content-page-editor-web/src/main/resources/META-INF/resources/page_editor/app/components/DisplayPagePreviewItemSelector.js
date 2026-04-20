@@ -20,7 +20,7 @@ import {
 import {deepEqual} from '../utils/checkDeepEqual';
 import itemSelectorValueToInfoItem from '../utils/item_selector_value/itemSelectorValueToInfoItem';
 
-const NO_ITEM_LABEL = `-- ${Liferay.Language.get('not-selected')} --`;
+const NO_ITEM_LABEL = `${Liferay.Language.get('none')}`;
 
 export function DisplayPagePreviewItemSelector() {
 	const displayPagePreviewItemSelectorWrapper = useMemo(

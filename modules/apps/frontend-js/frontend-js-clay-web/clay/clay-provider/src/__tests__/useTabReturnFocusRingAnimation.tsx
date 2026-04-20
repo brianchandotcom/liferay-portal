@@ -30,7 +30,10 @@ describe('useTabReturnFocusRingAnimation', () => {
 	afterEach(() => {
 		cleanup();
 		jest.restoreAllMocks();
-		document.body.classList.remove('c-prefers-focus-ring', 'c-tab-returning');
+		document.body.classList.remove(
+			'c-prefers-focus-ring',
+			'c-tab-returning'
+		);
 	});
 
 	describe('BasicRendering', () => {
@@ -44,7 +47,9 @@ describe('useTabReturnFocusRingAnimation', () => {
 		});
 
 		it('removes listener on unmount when no other instances remain', () => {
-			const {unmount} = renderHook(() => useTabReturnFocusRingAnimation());
+			const {unmount} = renderHook(() =>
+				useTabReturnFocusRingAnimation()
+			);
 
 			unmount();
 

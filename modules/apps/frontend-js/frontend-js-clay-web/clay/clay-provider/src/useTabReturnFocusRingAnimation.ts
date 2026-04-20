@@ -14,7 +14,9 @@ function onVisibilityChange() {
 		body.classList.add('c-tab-returning');
 
 		requestAnimationFrame(() => {
-			body.classList.remove('c-tab-returning');
+			requestAnimationFrame(() => {
+				body.classList.remove('c-tab-returning');
+			});
 		});
 	}
 }

@@ -100,18 +100,16 @@ $focus-ring-pulse-animation: $focus-ring-pulse-animation-name
 		}
 	}
 
-	@at-root {
-		.c-prefers-reduced-motion & {
-			:focus-visible,
-			.focus {
-				&::after {
-					animation: none;
-				}
-			}
-
-			.custom-control-input:focus-visible ~ .custom-control-label::after {
+	&.c-prefers-reduced-motion {
+		:focus-visible,
+		.focus {
+			&::after {
 				animation: none;
 			}
+		}
+
+		.custom-control-input:focus-visible ~ .custom-control-label::after {
+			animation: none;
 		}
 	}
 }

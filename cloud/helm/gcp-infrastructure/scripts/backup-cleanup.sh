@@ -13,9 +13,9 @@ function main {
 
 	echo "Cleaning up backups older than ${retention_days} days."
 
-	local backups_to_cleanup
+	local backups_to_clean_up
 
-	backups_to_cleanup=$(
+	backups_to_clean_up=$(
 		kubectl \
 			get \
 			liferaybackups \
@@ -29,14 +29,14 @@ function main {
 			)
 			| .metadata.name')
 
-	if [ -z "${backups_to_cleanup}" ]
+	if [ -z "${backups_to_clean_up}" ]
 	then
-		echo "There are no backups to cleanup."
+		echo "There are no backups to clean up."
 
 		exit 0
 	fi
 
-	echo "${backups_to_cleanup}" | while read -r name
+	echo "${backups_to_clean_up}" | while read -r name
 	do
 		echo "Deleting backup ${name}."
 

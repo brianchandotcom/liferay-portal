@@ -1109,6 +1109,40 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		).toBeDisabled();
 	});
 
+	test('can save changes when publishing', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const label = 'UpdatedLabel' + getRandomInt();
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await editObjectDetailsPage.labelInput.fill(label);
+
+		await editObjectDetailsPage.publishButton.click();
+
+		await waitForAlert(page, 'The object was published successfully');
+
+		await page.reload();
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await expect(editObjectDetailsPage.labelInput).toHaveValue(label);
+	});
+
 	test('can set a different language value for the label and plural label', async ({
 		apiHelpers,
 		editObjectDetailsPage,

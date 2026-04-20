@@ -533,7 +533,7 @@ public class MergePortalSubrepositoryUtil {
 		catch (Exception exception) {
 			_reportError(
 				"Unable to push updates to " + remoteURL, jenkinsBuildURL,
-				portalPullRequest);
+				portalPullRequest, exception);
 		}
 	}
 

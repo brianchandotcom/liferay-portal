@@ -1,0 +1,10 @@
+{
+	"properties": {
+		"filter": {
+			"type": "string"
+		}
+	},
+	"required": [
+	],
+	"type": "object"
+}

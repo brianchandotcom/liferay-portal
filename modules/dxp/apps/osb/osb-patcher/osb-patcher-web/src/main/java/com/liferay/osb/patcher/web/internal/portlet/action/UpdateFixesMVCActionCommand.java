@@ -77,6 +77,7 @@ public class UpdateFixesMVCActionCommand extends BaseMVCActionCommand {
 		String committish = ParamUtil.getString(actionRequest, "committish");
 		String gitRemoteURL = ParamUtil.getString(
 			actionRequest, "gitRemoteURL");
+		boolean autoFix = ParamUtil.getBoolean(actionRequest, "autoFix");
 		boolean workaround = ParamUtil.getBoolean(actionRequest, "workaround");
 
 		PatcherFixValidator patcherFixValidator = new PatcherFixValidator(
@@ -156,6 +157,9 @@ public class UpdateFixesMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			type = PatcherFixConstants.TYPE_REBASE;
+		}
+		else if (autoFix) {
+			type = PatcherFixConstants.TYPE_AUTO_FIX;
 		}
 		else if (workaround) {
 			type = PatcherFixConstants.TYPE_WORKAROUND;

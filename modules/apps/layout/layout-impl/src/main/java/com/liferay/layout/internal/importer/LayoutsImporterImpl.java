@@ -2185,23 +2185,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 	}
 
-	private void _updateLayouts(long plid, long userId) throws Exception {
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		draftLayout = _layoutLocalService.copyLayoutContent(
-			layout, draftLayout);
-
-		_layoutLocalService.updateStatus(
-			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
-			ServiceContextThreadLocal.getServiceContext());
-
-		_layoutLocalService.updateStatus(
-			userId, plid, WorkflowConstants.STATUS_APPROVED,
-			ServiceContextThreadLocal.getServiceContext());
-	}
-
 	private Layout _updateLayoutSettings(
 		long userId, Layout layout, Settings settings) {
 

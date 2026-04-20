@@ -1,0 +1,24 @@
+{
+	"properties": {
+		"active": {
+			"description": "Filter by active status",
+			"type": "boolean"
+		},
+		"fields": {
+			"description": "Fields to include",
+			"type": "string"
+		},
+		"itemId": {
+			"description": "The item ID",
+			"type": "string"
+		},
+		"page": {
+			"description": "The page number",
+			"type": "integer"
+		}
+	},
+	"required": [
+		"itemId"
+	],
+	"type": "object"
+}

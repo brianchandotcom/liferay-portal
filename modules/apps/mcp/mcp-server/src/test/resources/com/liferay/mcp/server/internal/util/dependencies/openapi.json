@@ -1,0 +1,180 @@
+{
+	"components": {
+		"schemas": {
+			"Item": {
+				"example": "should be removed",
+				"properties": {
+					"array": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"boolean": {
+						"type": "boolean"
+					},
+					"integer": {
+						"exclusiveMaximum": true,
+						"exclusiveMinimum": true,
+						"type": "integer"
+					},
+					"number": {
+						"type": "number"
+					},
+					"object1": {
+						"$ref": "#/components/schemas/Item"
+					},
+					"object2": {
+						"$ref": "#/components/schemas/Item"
+					},
+					"string": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"string"
+				],
+				"type": "object",
+				"x-custom-extension": "should be removed",
+				"xml": {
+					"name": "Item"
+				}
+			}
+		}
+	},
+	"paths": {
+		"/": {
+			"get": {
+				"operationId": "getItemsPage",
+				"summary": "Get items"
+			}
+		},
+		"/v1.0/items": {
+			"get": {
+				"description": "Returns a list",
+				"operationId": "getItems",
+				"summary": "Get all items"
+			},
+			"post": {
+				"operationId": "postItem",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/items/{itemId}": {
+			"get": {
+				"description": "Get an item by ID",
+				"operationId": "getItem",
+				"parameters": [
+					{
+						"description": "Filter by active status",
+						"in": "query",
+						"name": "active",
+						"schema": {
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "Fields to include",
+						"in": "query",
+						"name": "fields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The item ID",
+						"in": "path",
+						"name": "itemId",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The page number",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "integer"
+						}
+					}
+				]
+			},
+			"parameters": [
+				{
+					"description": "path-level description",
+					"in": "path",
+					"name": "itemId",
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"patch": {
+				"operationId": "patchItem",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "itemId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"operationId": "putItem",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "itemId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/uploads": {
+			"post": {
+				"operationId": "uploadFile",
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

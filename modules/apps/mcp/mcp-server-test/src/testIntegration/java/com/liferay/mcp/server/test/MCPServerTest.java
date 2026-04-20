@@ -5,14 +5,27 @@
 
 package com.liferay.mcp.server.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import io.modelcontextprotocol.client.McpClient;
@@ -20,6 +33,7 @@ import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientStreamableHttpTransport;
 import io.modelcontextprotocol.spec.McpSchema;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
 import java.util.Base64;
@@ -34,6 +48,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+
 /**
  * @author Alejandro Tardín
  */
@@ -47,21 +63,8 @@ public class MCPServerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void test() throws Exception {
-		McpSyncClient mcpSyncClient = McpClient.sync(
-			HttpClientStreamableHttpTransport.builder(
-				"http://localhost:8080/o/"
-			).customizeRequest(
-				builder -> builder.header("Authorization", _getAuthorization())
-			).endpoint(
-				"mcp"
-			).build()
-		).capabilities(
-			McpSchema.ClientCapabilities.builder(
-			).elicitation(
-				true, true
-			).build()
-		).build();
+	public void testWithoutProfile() throws Exception {
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(null);
 
 		mcpSyncClient.initialize();
 
@@ -137,6 +140,183 @@ public class MCPServerTest {
 		mcpSyncClient.closeGracefully();
 	}
 
+	@FeatureFlag("LPD-86164")
+	@Test
+	public void testWithProfile() throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		_addProfileObjectEntry(
+			name, "Test entities agent - can read and create test entities",
+			"GET /test/v1.0/test-entities", "POST /test/v1.0/test-entities");
+
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
+
+		mcpSyncClient.initialize();
+
+		McpSchema.ListToolsResult listToolsResult = mcpSyncClient.listTools();
+
+		List<McpSchema.Tool> tools = listToolsResult.tools();
+
+		Assert.assertEquals(tools.toString(), 2, tools.size());
+
+		_assertTool(
+			tools.get(0), "getTestEntitiesPage",
+			"get_test_v1.0_test_entities.json");
+		_assertTool(
+			tools.get(1), "postTestEntity",
+			"post_test_v1.0_test_entities.json");
+
+		McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(
+			new McpSchema.CallToolRequest(
+				"postTestEntity",
+				HashMapBuilder.<String, Object>put(
+					"body",
+					HashMapBuilder.<String, Object>put(
+						"name", "Test Entity 1"
+					).put(
+						"type", "ChildTestEntity1"
+					).build()
+				).build()));
+
+		List<McpSchema.Content> contents = callToolResult.content();
+
+		McpSchema.TextContent content = (McpSchema.TextContent)contents.get(0);
+
+		Assert.assertFalse(content.text(), callToolResult.isError());
+
+		Assert.assertEquals(
+			"Test Entity 1",
+			JSONFactoryUtil.createJSONObject(
+				content.text()
+			).getString(
+				"name"
+			));
+
+		callToolResult = mcpSyncClient.callTool(
+			new McpSchema.CallToolRequest(
+				"getTestEntitiesPage", Collections.emptyMap()));
+
+		contents = callToolResult.content();
+
+		content = (McpSchema.TextContent)contents.get(0);
+
+		Assert.assertFalse(content.text(), callToolResult.isError());
+
+		Assert.assertTrue(
+			JSONUtil.toStringList(
+				JSONFactoryUtil.createJSONObject(
+					content.text()
+				).getJSONArray(
+					"items"
+				),
+				"name"
+			).contains(
+				"Test Entity 1"
+			));
+
+		mcpSyncClient.closeGracefully();
+	}
+
+	@FeatureFlag("LPD-86164")
+	@Test
+	public void testWithProfileConfigurationChange() throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _addProfileObjectEntry(
+			name, RandomTestUtil.randomString(), "GET /test/v1.0/test-entities",
+			"POST /test/v1.0/test-entities");
+
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
+
+		mcpSyncClient.initialize();
+
+		McpSchema.ListToolsResult listToolsResult = mcpSyncClient.listTools();
+
+		List<McpSchema.Tool> tools = listToolsResult.tools();
+
+		Assert.assertEquals(tools.toString(), 2, tools.size());
+
+		_assertTool(
+			tools.get(0), "getTestEntitiesPage",
+			"get_test_v1.0_test_entities.json");
+		_assertTool(
+			tools.get(1), "postTestEntity",
+			"post_test_v1.0_test_entities.json");
+
+		mcpSyncClient.closeGracefully();
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			HashMapBuilder.<String, Serializable>put(
+				"description",
+				"Test entities agent - can only read test entities"
+			).put(
+				"endpoints", "GET /test/v1.0/test-entities"
+			).put(
+				"name", name
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		mcpSyncClient = _getMcpSyncClient(name);
+
+		mcpSyncClient.initialize();
+
+		listToolsResult = mcpSyncClient.listTools();
+
+		tools = listToolsResult.tools();
+
+		Assert.assertEquals(tools.toString(), 1, tools.size());
+
+		_assertTool(
+			tools.get(0), "getTestEntitiesPage",
+			"get_test_v1.0_test_entities.json");
+
+		mcpSyncClient.closeGracefully();
+	}
+
+	private ObjectEntry _addProfileObjectEntry(
+			String name, String description, String... endpoints)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_MCP_SERVER_PROFILE", TestPropsValues.getCompanyId());
+
+		return _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"description", description
+			).put(
+				"endpoints", StringUtil.merge(endpoints, "\n")
+			).put(
+				"name", name
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertTool(
+			McpSchema.Tool tool, String expectedName,
+			String expectedSchemaFileName)
+		throws Exception {
+
+		Assert.assertEquals(expectedName, tool.name());
+
+		JSONAssert.assertEquals(
+			StringUtil.read(
+				MCPServerTest.class.getResourceAsStream(
+					"dependencies/" + expectedSchemaFileName)),
+			new ObjectMapper(
+			).writeValueAsString(
+				tool.inputSchema()
+			),
+			false);
+	}
+
 	private String _getAuthorization() {
 		try {
 			Base64.Encoder encoder = Base64.getEncoder();
@@ -153,5 +333,28 @@ public class MCPServerTest {
 			throw new RuntimeException(unsupportedEncodingException);
 		}
 	}
+
+	private McpSyncClient _getMcpSyncClient(String profileName) {
+		return McpClient.sync(
+			HttpClientStreamableHttpTransport.builder(
+				"http://localhost:8080/o/"
+			).customizeRequest(
+				builder -> builder.header("Authorization", _getAuthorization())
+			).endpoint(
+				(profileName != null) ? "mcp/" + profileName : "mcp"
+			).build()
+		).capabilities(
+			McpSchema.ClientCapabilities.builder(
+			).elicitation(
+				true, true
+			).build()
+		).build();
+	}
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

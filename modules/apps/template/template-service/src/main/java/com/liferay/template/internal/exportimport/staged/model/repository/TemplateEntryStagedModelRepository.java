@@ -149,11 +149,7 @@ public class TemplateEntryStagedModelRepository
 
 		existingTemplateEntry.setInfoItemFormVariationKey(
 			templateEntry.getInfoItemFormVariationKey());
-
-		if (templateEntry.getModifiedDate() != null) {
-			existingTemplateEntry.setModifiedDate(
-				templateEntry.getModifiedDate());
-		}
+		existingTemplateEntry.setModifiedDate(templateEntry.getModifiedDate());
 
 		return _templateEntryLocalService.updateTemplateEntry(
 			existingTemplateEntry);

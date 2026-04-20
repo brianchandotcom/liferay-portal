@@ -10,6 +10,7 @@ import React from 'react';
 
 import {Wizard, WizardStep} from '../../components/Wizard';
 import {DateFilterValues} from '../../components/date_filter';
+import {flattenContentSelection} from '../../utils/flattenContentSelection';
 import {
 	PortletDataHandlerSection,
 	mockPortletDataHandlerSections,
@@ -88,7 +89,18 @@ export function NewExport({
 				description={Liferay.Language.get(
 					'configure-your-export-settings'
 				)}
-				onSubmit={async () => {
+				onSubmit={async (values) => {
+					const flatValues = flattenContentSelection({
+						contentSelection: values.contentSelection,
+						sections,
+					});
+
+					// eslint-disable-next-line no-console
+					console.log({
+						contentSelection: values.contentSelection,
+						flatValues,
+					});
+
 					alert('Export started!');
 				}}
 				title={Liferay.Language.get('settings')}

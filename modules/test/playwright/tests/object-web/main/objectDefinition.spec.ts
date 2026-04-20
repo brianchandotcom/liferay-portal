@@ -1157,6 +1157,63 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		);
 	});
 
+	test('can update editable fields and cannot update disabled fields after publishing', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectFieldLabel = objectFields[0].label!['en_US'];
+		const label = 'UpdatedLabel' + getRandomInt();
+		const pluralLabel = 'UpdatedPlural' + getRandomInt();
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await expect(editObjectDetailsPage.nameInput).toBeDisabled();
+		await expect(editObjectDetailsPage.scopeCombobox).toBeDisabled();
+
+		await editObjectDetailsPage.labelInput.fill(label);
+		await editObjectDetailsPage.pluralLabelInput.fill(pluralLabel);
+		await editObjectDetailsPage.selectEntryTitleField(objectFieldLabel);
+		await editObjectDetailsPage.selectPanelLink('Object');
+
+		await editObjectDetailsPage.saveObjectDefinition();
+
+		await waitForAlert(page, 'The object was saved successfully');
+
+		await page.reload();
+
+		await editObjectDetailsPage.goToDetailsTab();
+
+		await expect(editObjectDetailsPage.labelInput).toHaveValue(label);
+		await expect(editObjectDetailsPage.pluralLabelInput).toHaveValue(
+			pluralLabel
+		);
+		await expect(editObjectDetailsPage.entryTitleFieldCombobox).toHaveText(
+			objectFieldLabel
+		);
+		await expect(editObjectDetailsPage.panelLinkCombobox).toHaveText(
+			'Object',
+			{ignoreCase: true}
+		);
+	});
+
 	test('can view the object management toolbar in different tabs.', async ({
 		apiHelpers,
 		editObjectDetailsPage,

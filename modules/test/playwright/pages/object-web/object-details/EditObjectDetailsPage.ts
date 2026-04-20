@@ -11,14 +11,18 @@ export class EditObjectDetailsPage {
 	readonly accountRestrictedFieldCombobox: Locator;
 	readonly accountRestrictionToggle: Locator;
 	readonly detailsTabItem: Locator;
+	readonly entryTitleFieldCombobox: Locator;
 	readonly friendlyURLSeparator: Locator;
 	readonly labelInput: Locator;
 	readonly labelLocalizationButton: Locator;
+	readonly nameInput: Locator;
 	readonly page: Page;
+	readonly panelLinkCombobox: Locator;
 	readonly pluralLabelInput: Locator;
 	readonly pluralLabelLocalizationButton: Locator;
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
+	readonly scopeCombobox: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
@@ -30,6 +34,9 @@ export class EditObjectDetailsPage {
 			{exact: true}
 		);
 		this.detailsTabItem = page.getByRole('link', {name: 'Details'});
+		this.entryTitleFieldCombobox = page.getByRole('combobox', {
+			name: 'Entry Title Field',
+		});
 		this.friendlyURLSeparator = page.getByLabel(
 			'Object Entry URL Separator',
 			{exact: true}
@@ -42,7 +49,11 @@ export class EditObjectDetailsPage {
 			.locator('div')
 			.filter({hasText: /^LabelMandatory$/})
 			.getByLabel('Open Localizations');
+		this.nameInput = page.getByRole('textbox', {name: 'Name Mandatory'});
 		this.page = page;
+		this.panelLinkCombobox = page.getByRole('combobox', {
+			name: 'Panel Link',
+		});
 		this.pluralLabelInput = page.getByRole('textbox', {
 			name: 'Plural Label Mandatory',
 		});
@@ -55,6 +66,7 @@ export class EditObjectDetailsPage {
 			name: 'Publish',
 		});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.scopeCombobox = page.getByRole('combobox', {name: 'Scope'});
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}
 
@@ -83,6 +95,12 @@ export class EditObjectDetailsPage {
 		await this.saveButton.click();
 	}
 
+	async selectEntryTitleField(fieldName: string) {
+		await this.entryTitleFieldCombobox.click();
+
+		await this.page.getByRole('option', {name: fieldName}).click();
+	}
+
 	async selectLabelLanguage(language: string) {
 		await this.labelLocalizationButton.click();
 
@@ -92,6 +110,12 @@ export class EditObjectDetailsPage {
 				name: `${language} language:`,
 			})
 			.click();
+	}
+
+	async selectPanelLink(optionName: string) {
+		await this.panelLinkCombobox.click();
+
+		await this.page.getByRole('option', {name: optionName}).click();
 	}
 
 	async selectPluralLabelLanguage(language: string) {

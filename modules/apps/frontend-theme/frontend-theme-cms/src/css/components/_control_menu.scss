@@ -23,8 +23,4 @@
 
 .top-bar {
 	top: var(--control-menu-container-height);
-
-	@include media-breakpoint-down(sm) {
-		position: static;
-	}
 }

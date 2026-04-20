@@ -5,17 +5,20 @@
 
 import {useEffect} from 'react';
 
+export const FOCUS_RING_ANIMATION_CLASS = 'c-prefers-focus-ring';
+export const TAB_RETURNING_CLASS = 'c-tab-returning';
+
 let listenerCount = 0;
 
 function onVisibilityChange() {
-	const body = document.body;
+	const {classList} = document.body;
 
-	if (!document.hidden && body.classList.contains('c-prefers-focus-ring')) {
-		body.classList.add('c-tab-returning');
+	if (!document.hidden && classList.contains(FOCUS_RING_ANIMATION_CLASS)) {
+		classList.add(TAB_RETURNING_CLASS);
 
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
-				body.classList.remove('c-tab-returning');
+				classList.remove(TAB_RETURNING_CLASS);
 			});
 		});
 	}
@@ -27,10 +30,10 @@ export function useTabReturnFocusRingAnimation() {
 			document.addEventListener('visibilitychange', onVisibilityChange);
 		}
 
-		listenerCount++;
+		listenerCount += 1;
 
 		return () => {
-			listenerCount--;
+			listenerCount -= 1;
 
 			if (listenerCount === 0) {
 				document.removeEventListener(

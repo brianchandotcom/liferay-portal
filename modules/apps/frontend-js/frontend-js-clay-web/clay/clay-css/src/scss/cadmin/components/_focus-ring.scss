@@ -96,12 +96,27 @@ $cadmin-focus-ring-pulse-animation: $cadmin-focus-ring-pulse-animation-name
 		}
 	}
 
+	html#{$cadmin-selector} .c-prefers-focus-ring.c-tab-returning .cadmin {
+		:focus-visible,
+		.focus {
+			&::after {
+				animation-name: none;
+			}
+		}
+
+		.custom-control-input:focus-visible ~ .custom-control-label::after {
+			animation-name: none;
+		}
+	}
+
 	html#{$cadmin-selector}
 		.c-prefers-reduced-motion.c-prefers-focus-ring
 		.cadmin {
 		:focus-visible,
 		.focus {
-			animation: none;
+			&::after {
+				animation: none;
+			}
 		}
 
 		.custom-control-input:focus-visible ~ .custom-control-label::after {

@@ -41,8 +41,8 @@ export type FolderAction = 'copy' | 'move';
 
 type Folder = {
 	id: number;
-	title: string;
 	scopeId: string;
+	title: string;
 };
 
 type Space = {
@@ -637,10 +637,10 @@ function FolderItemSelectorModalContent({
 							handleOnItemsChange(
 								{
 									id: isFolder ? item.embedded.id : item.id,
-									title: name,
 									scopeId: isFolder
 										? item.embedded.scopeId
 										: item.scopeId,
+									title: name,
 								},
 								name
 							);

@@ -5,6 +5,7 @@
 			"errorMessage": {
 				"en_US": "Crawling failed. Please try again later or contact support."
 			},
+			"externalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_CRAWL",
 			"label": {
 				"en_US": "Crawl"
 			},

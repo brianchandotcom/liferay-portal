@@ -63,42 +63,6 @@ public class AssetTagStagedModelDataHandlerTest
 			liveGroup.getGroupId(), name + " (Duplicate 1)");
 	}
 
-	@Test
-	public void testImportWithExistingExternalReferenceCode() throws Exception {
-		initExport();
-
-		AssetTag assetTag = AssetTestUtil.addTag(stagingGroup.getGroupId());
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, assetTag);
-
-		AssetTag existingAssetTag = AssetTestUtil.addTag(
-			liveGroup.getGroupId());
-
-		existingAssetTag.setExternalReferenceCode(
-			assetTag.getExternalReferenceCode());
-
-		existingAssetTag = AssetTagLocalServiceUtil.updateAssetTag(
-			existingAssetTag);
-
-		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			AssetTag exportedAssetTag = (AssetTag)readExportedStagedModel(
-				assetTag);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedAssetTag);
-
-			AssetTag importedAssetTag =
-				AssetTagLocalServiceUtil.fetchAssetTagByExternalReferenceCode(
-					assetTag.getExternalReferenceCode(),
-					liveGroup.getGroupId());
-
-			Assert.assertEquals(
-				existingAssetTag.getTagId(), importedAssetTag.getTagId());
-			Assert.assertEquals(assetTag.getUuid(), importedAssetTag.getUuid());
-		}
-	}
-
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,
@@ -107,6 +71,17 @@ public class AssetTagStagedModelDataHandlerTest
 
 		return AssetTestUtil.addTag(
 			RandomTestUtil.randomString(), group.getGroupId(),
+			RandomTestUtil.randomString());
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return AssetTestUtil.addTag(
+			externalReferenceCode, group.getGroupId(),
 			RandomTestUtil.randomString());
 	}
 

@@ -6,13 +6,12 @@
 package com.liferay.site.navigation.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -26,7 +25,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -47,48 +45,6 @@ public class SiteNavigationMenuStagedModelDataHandlerTest
 		super.setUp();
 	}
 
-	@Test
-	public void testImportWithExistingExternalReferenceCode() throws Exception {
-		initExport();
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuTestUtil.addSiteNavigationMenu(stagingGroup);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, siteNavigationMenu);
-
-		SiteNavigationMenu existingSiteNavigationMenu =
-			SiteNavigationMenuTestUtil.addSiteNavigationMenu(liveGroup);
-
-		existingSiteNavigationMenu.setExternalReferenceCode(
-			siteNavigationMenu.getExternalReferenceCode());
-
-		existingSiteNavigationMenu =
-			_siteNavigationMenuLocalService.updateSiteNavigationMenu(
-				existingSiteNavigationMenu);
-
-		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			SiteNavigationMenu exportedSiteNavigationMenu =
-				(SiteNavigationMenu)readExportedStagedModel(siteNavigationMenu);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedSiteNavigationMenu);
-
-			SiteNavigationMenu importedSiteNavigationMenu =
-				_siteNavigationMenuLocalService.
-					fetchSiteNavigationMenuByExternalReferenceCode(
-						siteNavigationMenu.getExternalReferenceCode(),
-						liveGroup.getGroupId());
-
-			Assert.assertEquals(
-				existingSiteNavigationMenu.getSiteNavigationMenuId(),
-				importedSiteNavigationMenu.getSiteNavigationMenuId());
-			Assert.assertEquals(
-				siteNavigationMenu.getUuid(),
-				importedSiteNavigationMenu.getUuid());
-		}
-	}
-
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,
@@ -96,6 +52,16 @@ public class SiteNavigationMenuStagedModelDataHandlerTest
 		throws Exception {
 
 		return SiteNavigationMenuTestUtil.addSiteNavigationMenu(group);
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+			externalReferenceCode, group, RandomTestUtil.randomString());
 	}
 
 	@Override

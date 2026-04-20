@@ -7,12 +7,10 @@ package com.liferay.journal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -81,48 +79,6 @@ public class JournalFolderStagedModelDataHandlerTest
 		Assert.assertNotNull(importedStagedModel);
 	}
 
-	@Test
-	public void testImportWithExistingExternalReferenceCode() throws Exception {
-		initExport();
-
-		JournalFolder journalFolder = JournalFolderLocalServiceUtil.addFolder(
-			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, journalFolder);
-
-		JournalFolder existingJournalFolder =
-			JournalFolderLocalServiceUtil.addFolder(
-				journalFolder.getExternalReferenceCode(),
-				TestPropsValues.getUserId(), liveGroup.getGroupId(), 0,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(
-					liveGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			JournalFolder exportedJournalFolder =
-				(JournalFolder)readExportedStagedModel(journalFolder);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedJournalFolder);
-
-			JournalFolder importedJournalFolder =
-				JournalFolderLocalServiceUtil.
-					fetchJournalFolderByExternalReferenceCode(
-						journalFolder.getExternalReferenceCode(),
-						liveGroup.getGroupId());
-
-			Assert.assertEquals(
-				existingJournalFolder.getFolderId(),
-				importedJournalFolder.getFolderId());
-			Assert.assertEquals(
-				journalFolder.getUuid(), importedJournalFolder.getUuid());
-		}
-	}
-
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
 			Group group)
@@ -154,6 +110,20 @@ public class JournalFolderStagedModelDataHandlerTest
 		return JournalTestUtil.addFolder(
 			group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString());
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return JournalFolderLocalServiceUtil.addFolder(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			group.getGroupId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

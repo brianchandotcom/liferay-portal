@@ -30,6 +30,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -311,6 +312,65 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		}
 	}
 
+	@Test
+	public void testImportStagedModelWithExternalReferenceCode()
+		throws Exception {
+
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		if (!(stagedModel instanceof
+				ExternalReferenceCodeModel externalReferenceCodeModel)) {
+
+			return;
+		}
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		String externalReferenceCode =
+			externalReferenceCodeModel.getExternalReferenceCode();
+
+		StagedModel existingStagedModel =
+			addStagedModelWithExternalReferenceCode(
+				liveGroup, externalReferenceCode,
+				addDependentStagedModelsMap(liveGroup));
+
+		if (existingStagedModel == null) {
+			return;
+		}
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				stagedModel);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+
+			@SuppressWarnings("rawtypes")
+			StagedModelDataHandler stagedModelDataHandler =
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					ExportImportClassedModelUtil.getClassName(stagedModel));
+
+			StagedModel importedStagedModel =
+				(StagedModel)
+					stagedModelDataHandler.
+						fetchStagedModelByExternalReferenceCodeAndGroupId(
+							externalReferenceCode, liveGroup.getGroupId());
+
+			Assert.assertEquals(
+				existingStagedModel.getPrimaryKeyObj(),
+				importedStagedModel.getPrimaryKeyObj());
+			Assert.assertEquals(
+				stagedModel.getUuid(), importedStagedModel.getUuid());
+		}
+	}
+
 	public void testLastPublishDate() throws Exception {
 		if (!supportLastPublishDateUpdate()) {
 			return;
@@ -584,6 +644,14 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception;
+
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return null;
+	}
 
 	protected StagedModel addVersion(StagedModel stagedModel) throws Exception {
 		return null;

@@ -124,39 +124,6 @@ public class WikiNodeStagedModelDataHandlerTest
 		}
 	}
 
-	@Test
-	public void testImportWithExistingExternalReferenceCode() throws Exception {
-		initExport();
-
-		WikiNode wikiNode = WikiTestUtil.addNode(stagingGroup.getGroupId());
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, wikiNode);
-
-		WikiNode existingWikiNode = WikiNodeLocalServiceUtil.addNode(
-			wikiNode.getExternalReferenceCode(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				liveGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			WikiNode exportedWikiNode = (WikiNode)readExportedStagedModel(
-				wikiNode);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedWikiNode);
-
-			WikiNode importedWikiNode =
-				WikiNodeLocalServiceUtil.fetchWikiNodeByExternalReferenceCode(
-					wikiNode.getExternalReferenceCode(),
-					liveGroup.getGroupId());
-
-			Assert.assertEquals(
-				existingWikiNode.getNodeId(), importedWikiNode.getNodeId());
-			Assert.assertEquals(wikiNode.getUuid(), importedWikiNode.getUuid());
-		}
-	}
-
 	@Override
 	@Test
 	public void testStagedModelDataHandler() throws Exception {
@@ -216,6 +183,19 @@ public class WikiNodeStagedModelDataHandlerTest
 		throws Exception {
 
 		return WikiTestUtil.addNode(group.getGroupId());
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return WikiNodeLocalServiceUtil.addNode(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

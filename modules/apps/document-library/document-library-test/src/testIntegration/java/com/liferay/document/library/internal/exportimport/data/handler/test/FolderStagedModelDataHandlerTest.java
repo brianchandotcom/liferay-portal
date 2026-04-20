@@ -91,43 +91,6 @@ public class FolderStagedModelDataHandlerTest
 		}
 	}
 
-	@Test
-	public void testImportWithExistingExternalReferenceCode() throws Exception {
-		initExport();
-
-		Folder folder = DLAppServiceUtil.addFolder(
-			null, stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, folder);
-
-		Folder existingFolder = DLAppLocalServiceUtil.addFolder(
-			folder.getExternalReferenceCode(), TestPropsValues.getUserId(),
-			liveGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				liveGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			Folder exportedFolder = (Folder)readExportedStagedModel(folder);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedFolder);
-
-			DLFolder importedDLFolder =
-				DLFolderLocalServiceUtil.fetchDLFolderByExternalReferenceCode(
-					folder.getExternalReferenceCode(), liveGroup.getGroupId());
-
-			Assert.assertEquals(
-				existingFolder.getFolderId(), importedDLFolder.getFolderId());
-			Assert.assertEquals(folder.getUuid(), importedDLFolder.getUuid());
-		}
-	}
-
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
 		throws Exception {
 
@@ -265,6 +228,20 @@ public class FolderStagedModelDataHandlerTest
 			dlFileEntryType.getFileEntryTypeId(), serviceContext);
 
 		return folder;
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return DLAppLocalServiceUtil.addFolder(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

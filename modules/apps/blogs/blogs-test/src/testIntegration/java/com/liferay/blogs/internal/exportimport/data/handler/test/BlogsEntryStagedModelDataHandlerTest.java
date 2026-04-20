@@ -328,47 +328,6 @@ public class BlogsEntryStagedModelDataHandlerTest
 		}
 	}
 
-	@Test
-	public void testImportWithExistingExternalReferenceCode() throws Exception {
-		initExport();
-
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, blogsEntry);
-
-		BlogsEntry existingBlogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			blogsEntry.getExternalReferenceCode(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, null, null,
-			ServiceContextTestUtil.getServiceContext(
-				liveGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(
-				blogsEntry);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedEntry);
-
-			BlogsEntry importedEntry =
-				BlogsEntryLocalServiceUtil.
-					fetchBlogsEntryByExternalReferenceCode(
-						blogsEntry.getExternalReferenceCode(),
-						liveGroup.getGroupId());
-
-			Assert.assertEquals(
-				existingBlogsEntry.getEntryId(), importedEntry.getEntryId());
-			Assert.assertEquals(blogsEntry.getUuid(), importedEntry.getUuid());
-		}
-	}
-
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,
@@ -378,6 +337,22 @@ public class BlogsEntryStagedModelDataHandlerTest
 		return BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId()));
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return BlogsEntryLocalServiceUtil.addEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), true, true,
+			new String[0], StringPool.BLANK, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId()));
 	}

@@ -7,12 +7,14 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutUtilityPageEntryPortalExceptionRequestHandlerUtil;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -47,7 +49,9 @@ public class UpdateLayoutUtilityPageEntryMVCActionCommand
 
 		try {
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
-				layoutUtilityPageEntryId, name);
+				layoutUtilityPageEntryId, name,
+				ServiceContextFactory.getInstance(
+					LayoutUtilityPageEntry.class.getName(), actionRequest));
 
 			if (SessionErrors.contains(
 					actionRequest, "layoutUtilityPageEntryNameInvalid")) {

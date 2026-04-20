@@ -8,7 +8,9 @@ package com.liferay.mcp.server.internal.servlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.mcp.server.internal.constants.MCPServerConstants;
+import com.liferay.mcp.server.internal.util.OpenAPIUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -49,13 +51,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -67,7 +70,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.http.whiteboard.context.path=/mcp",
 		"osgi.http.whiteboard.servlet.name=com.liferay.mcp.server.internal.servlet.MCPServerServlet",
-		"osgi.http.whiteboard.servlet.pattern=/mcp"
+		"osgi.http.whiteboard.servlet.pattern=/mcp",
+		"osgi.http.whiteboard.servlet.pattern=/mcp/*"
 	},
 	service = Servlet.class
 )
@@ -75,7 +79,7 @@ public class MCPServerServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		for (Map.Entry<Long, Servlet> entry : _servlets.entrySet()) {
+		for (Map.Entry<String, Servlet> entry : _servlets.entrySet()) {
 			Servlet servlet = entry.getValue();
 
 			servlet.destroy();
@@ -98,22 +102,38 @@ public class MCPServerServlet extends HttpServlet {
 			return;
 		}
 
+		MCPServerProfile mcpServerProfile = null;
+
+		String profileName = _getProfileName(httpServletRequest);
+
+		if (profileName != null) {
+			mcpServerProfile = _getMCPServerProfile(companyId, profileName);
+
+			if (mcpServerProfile == null) {
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				return;
+			}
+		}
+
 		Servlet servlet = _getServlet(
 			_portal.getPortalURL(httpServletRequest) + _portal.getPathModule(),
-			companyId);
+			companyId, httpServletRequest.getHeader("Authorization"),
+			mcpServerProfile);
 
 		servlet.service(httpServletRequest, httpServletResponse);
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		destroy();
-	}
+	private Servlet _buildServlet(
+		String baseURL, long companyId, String authorization,
+		MCPServerProfile mcpServerProfile) {
 
-	private Servlet _buildServlet(String baseURL, long companyId) {
 		HttpServletStreamableServerTransportProvider
 			httpServletStreamableServerTransportProvider =
 				HttpServletStreamableServerTransportProvider.builder(
+				).mcpEndpoint(
+					(mcpServerProfile != null) ?
+						"/mcp/" + mcpServerProfile._name : "/mcp"
 				).contextExtractor(
 					request -> McpTransportContext.create(
 						HashMapBuilder.<String, Object>put(
@@ -125,7 +145,85 @@ public class MCPServerServlet extends HttpServlet {
 						).build())
 				).build();
 
-		JSONObject toolsJSONObject = _getToolsJSONObject(baseURL);
+		List<McpServerFeatures.SyncToolSpecification> toolSpecifications =
+			new ArrayList<>();
+
+		if (mcpServerProfile != null) {
+			Map<String, String> openAPIJSONStringCache = new HashMap<>();
+
+			toolSpecifications.addAll(
+				TransformUtil.transformToList(
+					mcpServerProfile._endpoints,
+					endpoint -> {
+						String openAPIURL = OpenAPIUtil.getOpenAPIURL(endpoint);
+
+						if (openAPIURL == null) {
+							return null;
+						}
+
+						return new McpServerFeatures.SyncToolSpecification(
+							OpenAPIUtil.getTool(
+								endpoint,
+								openAPIJSONStringCache.computeIfAbsent(
+									openAPIURL,
+									key -> _getOpenAPIJSONString(
+										baseURL, authorization, openAPIURL))),
+							(mcpSyncServerExchange, callToolRequest) -> {
+								OpenAPIUtil.HttpCallArguments
+									httpCallArguments =
+										OpenAPIUtil.getHttpCallArguments(
+											callToolRequest.arguments(),
+											baseURL, endpoint);
+
+								return _call(
+									httpCallArguments.getBody(),
+									httpCallArguments.getUrl(),
+									mcpSyncServerExchange,
+									httpCallArguments.getMethod());
+							});
+					}));
+		}
+		else {
+			JSONObject toolsJSONObject = _getToolsJSONObject(baseURL);
+
+			toolSpecifications.add(
+				new McpServerFeatures.SyncToolSpecification(
+					_getTool("call-http-endpoint", toolsJSONObject),
+					(mcpSyncServerExchange, callToolRequest) -> {
+						Map<String, Object> arguments =
+							callToolRequest.arguments();
+
+						String path = String.valueOf(arguments.get("path"));
+
+						if (!path.startsWith("/")) {
+							path = "/" + path;
+						}
+
+						return _call(
+							String.valueOf(arguments.get("payload")),
+							baseURL + path, mcpSyncServerExchange,
+							String.valueOf(arguments.get("method")));
+					}));
+
+			toolSpecifications.add(
+				new McpServerFeatures.SyncToolSpecification(
+					_getTool("get-openapi", toolsJSONObject),
+					(mcpSyncServerExchange, callToolRequest) -> _call(
+						null,
+						String.valueOf(
+							callToolRequest.arguments(
+							).get(
+								"url"
+							)),
+						mcpSyncServerExchange, "GET")));
+
+			toolSpecifications.add(
+				new McpServerFeatures.SyncToolSpecification(
+					_getTool("get-openapis", toolsJSONObject),
+					(mcpSyncServerExchange, callToolRequest) -> _call(
+						null, baseURL + "/openapi", mcpSyncServerExchange,
+						"GET")));
+		}
 
 		McpSyncServer mcpSyncServer = McpServer.sync(
 			httpServletStreamableServerTransportProvider
@@ -136,35 +234,8 @@ public class MCPServerServlet extends HttpServlet {
 			).prompts(
 				true
 			).build()
-		).toolCall(
-			_getTool("call-http-endpoint", toolsJSONObject),
-			(mcpSyncServerExchange, callToolRequest) -> {
-				Map<String, Object> arguments = callToolRequest.arguments();
-
-				String path = String.valueOf(arguments.get("path"));
-
-				if (!path.startsWith("/")) {
-					path = "/" + path;
-				}
-
-				return _call(
-					String.valueOf(arguments.get("payload")), baseURL + path,
-					mcpSyncServerExchange,
-					String.valueOf(arguments.get("method")));
-			}
-		).toolCall(
-			_getTool("get-openapi", toolsJSONObject),
-			(mcpSyncServerExchange, callToolRequest) -> {
-				Map<String, Object> arguments = callToolRequest.arguments();
-
-				return _call(
-					null, String.valueOf(arguments.get("url")),
-					mcpSyncServerExchange, "GET");
-			}
-		).toolCall(
-			_getTool("get-openapis", toolsJSONObject),
-			(mcpSyncServerExchange, callToolRequest) -> _call(
-				null, baseURL + "/openapi", mcpSyncServerExchange, "GET")
+		).tools(
+			toolSpecifications
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();
@@ -276,26 +347,119 @@ public class MCPServerServlet extends HttpServlet {
 		}
 	}
 
-	private Servlet _getServlet(String baseURL, long companyId) {
-		Servlet servlet = _servlets.get(companyId);
+	private MCPServerProfile _getMCPServerProfile(
+		long companyId, String profileName) {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					MCPServerConstants.
+						EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROFILE,
+					companyId);
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
+		for (ObjectEntry objectEntry :
+				_objectEntryLocalService.getObjectEntries(
+					0, objectDefinition.getObjectDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			Map<String, Serializable> values = objectEntry.getValues();
+
+			if (profileName.equals(values.get("name"))) {
+				return new MCPServerProfile(
+					profileName,
+					StringUtil.splitLines((String)values.get("endpoints")));
+			}
+		}
+
+		return null;
+	}
+
+	private String _getOpenAPIJSONString(
+		String baseURL, String authorization, String openAPIURL) {
+
+		Http.Options options = new Http.Options();
+
+		if (authorization != null) {
+			options.setHeaders(
+				HashMapBuilder.put(
+					"Authorization", authorization
+				).build());
+		}
+
+		options.setLocation(baseURL + openAPIURL);
+
+		try {
+			return _http.URLtoString(options);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private String _getProfileName(HttpServletRequest httpServletRequest) {
+		String pathInfo = httpServletRequest.getPathInfo();
+
+		if (Validator.isNull(pathInfo) || pathInfo.equals("/")) {
+			return null;
+		}
+
+		String profileName = pathInfo.substring(1);
+
+		int index = profileName.indexOf('/');
+
+		if (index > 0) {
+			profileName = profileName.substring(0, index);
+		}
+
+		if (profileName.isEmpty()) {
+			return null;
+		}
+
+		return profileName;
+	}
+
+	private Servlet _getServlet(
+		String baseURL, long companyId, String authorization,
+		MCPServerProfile mcpServerProfile) {
+
+		String key = _getServletKey(companyId, mcpServerProfile);
+
+		Servlet servlet = _servlets.get(key);
 
 		if (servlet != null) {
 			return servlet;
 		}
 
 		synchronized (this) {
-			servlet = _servlets.get(companyId);
+			servlet = _servlets.get(key);
 
 			if (servlet != null) {
 				return servlet;
 			}
 
-			servlet = _buildServlet(baseURL, companyId);
+			servlet = _buildServlet(
+				baseURL, companyId, authorization, mcpServerProfile);
 
-			_servlets.put(companyId, servlet);
+			_servlets.put(key, servlet);
 
 			return servlet;
 		}
+	}
+
+	private String _getServletKey(
+		long companyId, MCPServerProfile mcpServerProfile) {
+
+		String key = String.valueOf(companyId);
+
+		if (mcpServerProfile != null) {
+			key = key + StringPool.UNDERLINE + mcpServerProfile._name;
+		}
+
+		return key;
 	}
 
 	private List<McpServerFeatures.SyncPromptSpecification>
@@ -382,6 +546,18 @@ public class MCPServerServlet extends HttpServlet {
 	@Reference
 	private Portal _portal;
 
-	private final Map<Long, Servlet> _servlets = new ConcurrentHashMap<>();
+	private final Map<String, Servlet> _servlets = new ConcurrentHashMap<>();
+
+	private static class MCPServerProfile {
+
+		public MCPServerProfile(String name, String[] endpoints) {
+			_name = name;
+			_endpoints = endpoints;
+		}
+
+		private final String[] _endpoints;
+		private final String _name;
+
+	}
 
 }

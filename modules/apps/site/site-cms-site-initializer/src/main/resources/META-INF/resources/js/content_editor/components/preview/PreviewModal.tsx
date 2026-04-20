@@ -37,7 +37,11 @@ export default function PreviewModal({
 			</ClayModal.Header>
 
 			<ClayModal.Body className="p-4">
-				<PreviewSelectors {...selectorProps} previewURL={previewURL} />
+				<PreviewSelectors
+					{...selectorProps}
+					previewURL={previewURL}
+					vertical
+				/>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

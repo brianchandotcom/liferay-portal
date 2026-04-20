@@ -6,8 +6,9 @@
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {useId} from 'react';
+import React from 'react';
 
 import AsyncPicker from '../../../structure_builder/components/AsyncPicker';
 import {CacheStatus} from '../../../structure_builder/contexts/CacheContext';
@@ -26,6 +27,7 @@ type Props = {
 	setSelectedDisplayPageKey: (key: React.Key) => void;
 	showPreviewInNewTabLink?: boolean;
 	sitesStatus: CacheStatus;
+	vertical?: boolean;
 };
 
 export default function PreviewSelectors({
@@ -39,11 +41,21 @@ export default function PreviewSelectors({
 	setSelectedDisplayPageKey,
 	showPreviewInNewTabLink,
 	sitesStatus,
+	vertical = false,
 }: Props) {
 	return (
 		<>
-			<div className="align-items-center c-gap-3 d-flex">
-				<span className="'font-weight-semi-bold flex-shrink-0 mb-0 text-3'">
+			<div
+				className={classNames({
+					'align-items-center c-gap-3 d-flex': !vertical,
+					'mb-3': vertical,
+				})}
+			>
+				<span
+					className={classNames('font-weight-semi-bold text-3', {
+						'flex-shrink-0 mb-0': !vertical,
+					})}
+				>
 					{Liferay.Language.get('channel')}
 				</span>
 
@@ -54,21 +66,29 @@ export default function PreviewSelectors({
 					onSelectionChange={selectChannel}
 					placeholder={Liferay.Language.get('select-channel')}
 					selectedKey={selectedChannelKey}
-					small
+					small={!vertical}
 					status={sitesStatus}
 					width={240}
 				/>
 			</div>
 
 			{displayPageTemplates?.length ? (
-				<div className="align-items-center c-gap-3 d-flex">
-					<span className="'font-weight-semi-bold flex-shrink-0 mb-0 text-3'">
+				<div
+					className={classNames({
+						'align-items-center c-gap-3 d-flex': !vertical,
+					})}
+				>
+					<span
+						className={classNames('font-weight-semi-bold text-3', {
+							'flex-shrink-0 mb-0': !vertical,
+						})}
+					>
 						{Liferay.Language.get('display-page')}
 					</span>
 
 					<Picker
 						aria-label={Liferay.Language.get('select-display-page')}
-						className="form-control-sm"
+						className={classNames({'form-control-sm': !vertical})}
 						items={displayPageTemplates}
 						onSelectionChange={setSelectedDisplayPageKey}
 						placeholder={Liferay.Language.get(

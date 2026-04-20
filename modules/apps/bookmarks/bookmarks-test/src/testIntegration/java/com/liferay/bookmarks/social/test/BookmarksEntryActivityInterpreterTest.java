@@ -91,16 +91,16 @@ public class BookmarksEntryActivityInterpreterTest
 	}
 
 	@Inject
-	private static BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Inject
-	private static BookmarksEntryService _bookmarksEntryService;
+	private BookmarksEntryService _bookmarksEntryService;
+
+	private BookmarksEntry _entry;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry"
 	)
-	private static SocialActivityInterpreter _socialActivityInterpreter;
-
-	private BookmarksEntry _entry;
+	private SocialActivityInterpreter _socialActivityInterpreter;
 
 }

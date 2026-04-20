@@ -234,7 +234,7 @@ public class BookmarksFolderLocalServiceTest {
 	@Inject(
 		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
 	)
-	private static ModelResourcePermission<BookmarksFolder>
+	private ModelResourcePermission<BookmarksFolder>
 		_bookmarksFolderModelResourcePermission;
 
 	@DeleteAfterTestRun

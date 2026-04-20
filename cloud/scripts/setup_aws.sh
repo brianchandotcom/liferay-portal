@@ -23,34 +23,35 @@ function main {
 	aws sso login
 
 	local terraform_args
+	local bucket_name=""
+	local region=""
+	local deployment_name=""
 
 	terraform_args="$(_get_terraform_apply_args "${1}" "${2}")"
 
-	_create_tfstate_bucket "${1}"
+	if jq --exit-status '.variables.tfstate_bucket_name' "${1}" > /dev/null
+	then
+		bucket_name="$(jq --raw-output '.variables.tfstate_bucket_name' "${1}")"
+		region="$(jq --raw-output '.variables.region' "${1}")"
+		deployment_name="$(jq --raw-output '.variables.deployment_name' "${1}")"
+
+		_create_tfstate_bucket "${bucket_name}" "${region}"
+	fi
 
 	_set_up_aws_service_linked_roles
 
-	_set_up_aws_eks "${terraform_args}"
+	_set_up_aws_eks "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
 
-	_set_up_aws_grafana "${terraform_args}"
+	_set_up_aws_grafana "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
 
-	_set_up_aws_gitops "${terraform_args}"
+	_set_up_aws_gitops "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
 
 	_port_forward_argo_cd
 }
 
 function _create_tfstate_bucket {
-	local configuration_json_file="${1}"
-
-	if ! jq --exit-status '.variables.tfstate_bucket_name' "${configuration_json_file}" > /dev/null
-	then
-		_log "The configuration JSON file must contain property named \"variables.tfstate_bucket_name\"."
-
-		exit 1
-	fi
-
-	local bucket_name="$(jq --raw-output '.variables.tfstate_bucket_name' "${configuration_json_file}")"
-	local region="$(jq --raw-output '.variables.region' "${configuration_json_file}")"
+	local bucket_name="${1}"
+	local region="${2}"
 
 	if ! aws s3api head-bucket --bucket "${bucket_name}" --region "${region}" 1>/dev/null 2>&1
 	then
@@ -99,17 +100,18 @@ function _create_s3_bucket {
 }
 
 function _configure_s3_bucket {
-	local account_id="$(aws sts get-caller-identity --query "Account" --output text)"
 	local bucket_name="${1}"
 	local region="${2}"
+	local account_id="$(aws sts get-caller-identity --query "Account" --output text)"
 
 	local alias_name="alias/tfstate-${bucket_name}"
+	local kms_key_id
 
 	if ! kms_key_id=$(aws kms describe-key --key-id "${alias_name}" --query 'KeyMetadata.KeyId' --output text --region "${region}" 2>/dev/null)
 	then
 		_log "Creating KMS key for bucket ${bucket_name}."
 
-		local kms_key_id=$(aws kms create-key \
+		kms_key_id=$(aws kms create-key \
 		--description "Terraform State Storage Key" \
 		--output text \
 		--policy "{
@@ -286,7 +288,7 @@ function _port_forward_argo_cd {
 			get \
 			secret \
 			argocd-initial-admin-secret \
-			--namespace ${argocd_namespace} \
+			--namespace "${argocd_namespace}" \
 			--output jsonpath="{.data.password}" \
 		| base64 --decode)
 
@@ -298,7 +300,7 @@ function _port_forward_argo_cd {
 
 	kubectl \
 		port-forward \
-		--namespace ${argocd_namespace} \
+		--namespace "${argocd_namespace}" \
 		service/argocd-server \
 		8080:443
 
@@ -310,11 +312,16 @@ function _pushd {
 }
 
 function _set_up_aws_eks {
+	local terraform_args="${1}"
+	local bucket_name="${2}"
+	local region="${3}"
+	local deployment_name="${4}"
+
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 
 	echo "Setting up the AWS EKS cluster."
 
-	_terraform_init_and_apply "." "${1}"
+	_terraform_init_and_apply "." "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
 
 	export KUBE_CONFIG_PATH="${HOME}/.kube/config"
 
@@ -330,13 +337,18 @@ function _set_up_aws_eks {
 }
 
 function _set_up_aws_gitops {
+	local terraform_args="${1}"
+	local bucket_name="${2}"
+	local region="${3}"
+	local deployment_name="${4}"
+
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/gitops"
 
 	echo "Setting up GitOps infrastructure."
 
-	_terraform_init_and_apply "./platform" "${1}"
+	_terraform_init_and_apply "./platform" "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
 
-	_terraform_init_and_apply "./resources" "${1}"
+	_terraform_init_and_apply "./resources" "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
 
 	echo "GitOps infrastructure setup complete."
 
@@ -344,6 +356,11 @@ function _set_up_aws_gitops {
 }
 
 function _set_up_aws_grafana {
+	local terraform_args="${1}"
+	local bucket_name="${2}"
+	local region="${3}"
+	local deployment_name="${4}"
+
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 
 	local grafana_enabled
@@ -365,7 +382,10 @@ function _set_up_aws_grafana {
 
 	_terraform_init_and_apply \
 		"../grafana" \
-		${1} \
+		"${terraform_args}" \
+		"${bucket_name}" \
+		"${region}" \
+		"${deployment_name}" \
 		"-var=grafana_workspace_endpoint=$(terraform output -raw "grafana_workspace_endpoint")" \
 		"-var=grafana_workspace_role_arn=$(terraform output -raw "grafana_workspace_role_arn")" \
 		"-var=prometheus_workspace_endpoint=$(terraform output -raw "prometheus_workspace_endpoint")"
@@ -404,11 +424,27 @@ function _set_up_aws_service_linked_roles {
 }
 
 function _terraform_init_and_apply {
+	local terraform_args="${2}"
+	local bucket_name="${3}"
+	local region="${4}"
+	local deployment_name="${5}"
+
 	_pushd "${1}"
 
-	terraform init -upgrade
+	if [ -n "${bucket_name}" ]
+	then
+		terraform init \
+			-backend-config="bucket=${bucket_name}" \
+			-backend-config="encrypt=true" \
+			-backend-config="region=${region}" \
+			-backend-config="key=${deployment_name}/${region}/${1}/terraform.tfstate" \
+			-backend-config="use-lockfile=true" \
+			-upgrade
+	else
+		terraform init -backend=false -upgrade
+	fi
 
-	terraform apply ${@:2}
+	terraform apply ${terraform_args} "${@:6}"
 
 	_popd
 }

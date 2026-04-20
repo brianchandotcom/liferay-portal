@@ -1635,7 +1635,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (added) {
 				Set<String> warningMessages = new HashSet<>();
 
-				_processPageDefinitionViaDraft(
+				_processPageDefinition(
 					layoutPageTemplateEntry.getPlid(), pageDefinition,
 					preserveItemIds, userId, warningMessages);
 
@@ -1810,7 +1810,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (added) {
 				Set<String> warningMessages = new HashSet<>();
 
-				_processPageDefinitionViaDraft(
+				_processPageDefinition(
 					layoutUtilityPageEntry.getPlid(), pageDefinition,
 					preserveItemIds, userId, warningMessages);
 
@@ -1944,6 +1944,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		Layout layout = _layoutLocalService.getLayout(plid);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_fragmentEntryLinkLocalService.
+			deleteLayoutPageTemplateEntryFragmentEntryLinks(
+				draftLayout.getGroupId(), draftLayout.getPlid());
+
+		_deleteExistingPortletPreferences(draftLayout.getPlid());
+
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		if (pageDefinition != null) {
@@ -1963,13 +1971,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						pageElement.getPageElements()) {
 
 					if (_processPageElement(
-							new ArrayList<>(), layout, layoutStructure,
+							new ArrayList<>(), draftLayout, layoutStructure,
 							pageDefinitionVersion, childPageElement,
 							rootLayoutStructureItem.getItemId(), position,
 							preserveItemIds,
 							_segmentsExperienceLocalService.
 								fetchDefaultSegmentsExperienceId(
-									layout.getPlid()),
+									draftLayout.getPlid()),
 							warningMessages)) {
 
 						position++;
@@ -1986,49 +1994,19 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			Settings settings = pageDefinition.getSettings();
 
-			layout = _layoutLocalService.fetchLayout(layout.getPlid());
+			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
 
-			layout = _updateLayoutSettings(userId, layout, settings);
+			draftLayout = _updateLayoutSettings(userId, draftLayout, settings);
 		}
 		else {
 			layoutStructure.addRootLayoutStructureItem();
 		}
 
-		_updateLayoutPageTemplateStructure(layout, layoutStructure);
-	}
-
-	private void _processPageDefinitionViaDraft(
-			long plid, PageDefinition pageDefinition, boolean preserveItemIds,
-			long userId, Set<String> warningMessages)
-		throws Exception {
-
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
-		Layout draftLayout =
-			(layout == null) ? null : layout.fetchDraftLayout();
-
-		if (draftLayout == null) {
-			_processPageDefinition(
-				plid, pageDefinition, preserveItemIds, userId, warningMessages);
-
-			_updateLayouts(plid, userId);
-
-			return;
-		}
-
-		_fragmentEntryLinkLocalService.
-			deleteLayoutPageTemplateEntryFragmentEntryLinks(
-				draftLayout.getGroupId(), draftLayout.getPlid());
-
-		_deleteExistingPortletPreferences(draftLayout.getPlid());
-
-		_processPageDefinition(
-			draftLayout.getPlid(), pageDefinition, preserveItemIds, userId,
-			warningMessages);
+		_updateLayoutPageTemplateStructure(draftLayout, layoutStructure);
 
 		_layoutLocalService.copyLayoutContent(
-			_layoutLocalService.fetchLayout(draftLayout.getPlid()),
-			_layoutLocalService.fetchLayout(layout.getPlid()));
+			_layoutLocalService.getLayout(draftLayout.getPlid()),
+			_layoutLocalService.getLayout(layout.getPlid()));
 	}
 
 	private boolean _processPageElement(

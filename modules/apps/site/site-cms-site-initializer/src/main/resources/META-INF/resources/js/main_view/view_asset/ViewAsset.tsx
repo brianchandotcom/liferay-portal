@@ -137,7 +137,7 @@ export default function ViewAsset({
 								)}
 								borderless
 								className={classNames({
-									active: 'commentPanel',
+									active: openSidePanel,
 								})}
 								displayType="secondary"
 								onClick={handleClickComments}

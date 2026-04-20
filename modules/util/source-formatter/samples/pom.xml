@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.source.formatter</artifactId>
-				<version>1.0.1582</version>
+				<version>1.0.1583</version>
 				<configuration>
 					<baseDir>src/main</baseDir>
 				</configuration>

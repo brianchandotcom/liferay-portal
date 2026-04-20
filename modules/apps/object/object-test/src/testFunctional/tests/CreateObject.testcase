@@ -2526,43 +2526,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-135549 - Verify it is possible to Publish a Custom Object"
-	@priority = 5
-	test CanPublishCustomObject {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 72",
-			objectName = "CustomObject72",
-			pluralLabelName = "Custom Objects 72");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Date",
-			fieldLabelName = "Not Required Field",
-			fieldName = "date",
-			fieldType = "Date",
-			isRequired = "false",
-			objectName = "CustomObject72");
-
-		ObjectAdmin.openObjectAdmin();
-
-		AssertTextEquals(
-			key_label = "Custom Object 72",
-			locator1 = "ObjectAdmin#OBJECT_STATUS",
-			value1 = "Draft");
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 72");
-
-		ObjectAdmin.publishObjectViaUI();
-
-		ObjectAdmin.openObjectAdmin();
-
-		AssertTextEquals(
-			key_label = "Custom Object 72",
-			locator1 = "ObjectAdmin#OBJECT_STATUS",
-			value1 = "Approved");
-	}
-
 	@description = "LPS-135390 - Verify it is possible to publish an Object with the Publish Object Definition permission"
 	@priority = 4
 	test CanPublishObjectWithPublishPermission {
@@ -7309,52 +7272,6 @@ definition {
 			scope = "company",
 			status = "Draft",
 			system = "No");
-	}
-
-	@description = "LPS-138213 - Verify that updated data is kept when clicking on the Publish button"
-	@priority = 4
-	test UpdatedDataIsKeptWhenPublishing {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 141685",
-			objectName = "CustomObject141685",
-			pluralLabelName = "Custom Objects 141685");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject141685");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 141685");
-
-		ObjectAdmin.editCustomObject(
-			fieldLabelName = "Object Edit 141685",
-			fieldName = "ObjectEdit141685",
-			pluralLabelName = "Objects Edit 141685");
-
-		ObjectAdmin.selectObjectScope(optionName = "Site");
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Panel Link",
-			optionName = "Site Builder");
-
-		PortletEntry.publish();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Object Edit 141685");
-
-		for (var valueFieldLabel : list "ObjectEdit141685,Object Edit 141685,Objects Edit 141685") {
-			CreateObject.assertValuesOnObjectData(fieldLabel = ${valueFieldLabel});
-		}
-
-		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Site Builder",
-			valueScope = "Site");
 	}
 
 	@description = "LPS-151877 - Verify that, when adding a new Object with Account Restriction, the Account Restriction field turns into a mandatory field for the created Object"

@@ -12,7 +12,14 @@ import {
 } from '@liferay/frontend-data-set-web';
 import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 
 import ItemSelectorModal from './ItemSelectorModal';
 import {TDetachedItemSelectorModal} from './types';
@@ -39,6 +46,80 @@ async function checkNewCMSFiles(
 
 	return (await response.json()) as {totalCount: number};
 }
+
+type NotificationContextValue = {
+	newItemsCount: number;
+	setShowInlineNotification: (show: boolean) => void;
+	showInlineNotification: boolean;
+};
+
+const NotificationContext = createContext<NotificationContextValue>({
+	newItemsCount: 0,
+	setShowInlineNotification: () => {},
+	showInlineNotification: false,
+});
+
+const NewItemsNotificationComponent = ({
+	context,
+}: {
+	context: IInlineNotificationComponent['context'];
+}) => {
+	const {newItemsCount, setShowInlineNotification, showInlineNotification} =
+		useContext(NotificationContext);
+
+	if (!showInlineNotification) {
+		return null;
+	}
+
+	return (
+		<ClayAlert
+			className="detached-cms-files-alert mx-n3 pl-5 pr-1"
+			displayType="info"
+			onClose={() => setShowInlineNotification(false)}
+			title={Liferay.Language.get('info')}
+			variant="stripe"
+		>
+			{Liferay.Util.sub(
+				Liferay.Language.get('x-new-items-are-not-visible-in-this-view'),
+				[newItemsCount]
+			)}
+
+			<ClayButton.Group className="pl-3" spaced>
+				<ClayButton
+					displayType="info"
+					onClick={() => {
+						const updatedSorts: TSort[] = (context?.sorts || [])
+							.filter((sort) => sort.key !== 'dateCreated')
+							.map((sort) => ({...sort, active: false}));
+
+						updatedSorts.push({
+							active: true,
+							direction: 'desc',
+							key: 'dateCreated',
+							label: Liferay.Language.get('by-creation-date'),
+						});
+
+						context?.onClearResultsBar();
+						context?.forceSortsUpdate(updatedSorts);
+
+						setShowInlineNotification(false);
+					}}
+					size="sm"
+				>
+					{Liferay.Language.get('reload')}
+				</ClayButton>
+
+				<ClayButton
+					alert
+					onClick={() => setShowInlineNotification(false)}
+					size="sm"
+				>
+					{Liferay.Language.get('dismiss')}
+				</ClayButton>
+			</ClayButton.Group>
+		</ClayAlert>
+	);
+};
 
 const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 	props: TDetachedItemSelectorModal<T>
@@ -69,87 +150,28 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 		}
 	}, [isBrowserTabVisible, open, props.apiURL]);
 
-	const NewItemsNotificationComponent = ({
-		context,
-	}: {
-		context: IInlineNotificationComponent['context'];
-	}) => {
-		if (!showInlineNotification) {
-			return null;
-		}
-
-		return (
-			<ClayAlert
-				className="detached-cms-files-alert mx-n3 pl-5 pr-1"
-				displayType="info"
-				onClose={() => setShowInlineNotification(false)}
-				title={Liferay.Language.get('info')}
-				variant="stripe"
-			>
-				{Liferay.Util.sub(
-					Liferay.Language.get(
-						'x-new-items-are-not-visible-in-this-view'
-					),
-					[newItemsCount]
-				)}
-
-				<ClayButton.Group className="pl-3" spaced>
-					<ClayButton
-						displayType="info"
-						onClick={() => {
-							const updatedSorts: TSort[] = (context?.sorts || [])
-								.filter((sort) => sort.key !== 'dateCreated')
-								.map((sort) => {
-									sort.active = false;
-
-									return sort;
-								});
-
-							updatedSorts.push({
-								active: true,
-								direction: 'desc',
-								key: 'dateCreated',
-								label: Liferay.Language.get('by-creation-date'),
-							});
-
-							context && context.onClearResultsBar();
-							context && context.forceSortsUpdate(updatedSorts);
-
-							setShowInlineNotification(false);
-						}}
-						size="sm"
-					>
-						{Liferay.Language.get('reload')}
-					</ClayButton>
-
-					<ClayButton
-						alert
-						onClick={() => setShowInlineNotification(false)}
-						size="sm"
-					>
-						{Liferay.Language.get('dismiss')}
-					</ClayButton>
-				</ClayButton.Group>
-			</ClayAlert>
-		);
-	};
+	const fdsProps = useMemo(
+		() => ({
+			...props.fdsProps,
+			inlineNotificationComponent: NewItemsNotificationComponent,
+		}),
+		[props.fdsProps]
+	);
 
 	return (
-		<>
+		<NotificationContext.Provider
+			value={{newItemsCount, setShowInlineNotification, showInlineNotification}}
+		>
 			{open && (
 				<ItemSelectorModal
 					{...props}
-					fdsProps={{
-						...props.fdsProps,
-						inlineNotificationComponent:
-							NewItemsNotificationComponent,
-					}}
+					fdsProps={fdsProps}
 					observer={observer}
 					onOpenChange={onOpenChange}
 					open={open}
 				/>
 			)}
-		</>
+		</NotificationContext.Provider>
 	);
 };
 

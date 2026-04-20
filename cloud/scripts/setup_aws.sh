@@ -23,8 +23,8 @@ function main {
 	aws sso login
 
 	local bucket_name=""
-	local region=""
 	local deployment_name=""
+	local region=""
 
 	local terraform_args
 
@@ -33,8 +33,8 @@ function main {
 	if jq --exit-status '.variables.tfstate_bucket_name' "${1}" &> /dev/null
 	then
 		bucket_name="$(jq --raw-output '.variables.tfstate_bucket_name' "${1}")"
-		region="$(jq --raw-output '.variables.region' "${1}")"
 		deployment_name="$(jq --raw-output '.variables.deployment_name' "${1}")"
+		region="$(jq --raw-output '.variables.region' "${1}")"
 
 		_create_tfstate_bucket "${bucket_name}" "${region}"
 	fi
@@ -109,15 +109,6 @@ function _configure_s3_bucket {
 			]
 		}"
 
-	aws s3api put-public-access-block \
-		--bucket "${bucket_name}" \
-		--public-access-block-configuration '{
-				"BlockPublicAcls": true,
-				"BlockPublicPolicy": true,
-				"IgnorePublicAcls": true,
-				"RestrictPublicBuckets": true
-			}' \
-		--region "${region}"
 
 	aws s3api put-object-lock-configuration \
 		--bucket "${bucket_name}" \
@@ -130,6 +121,16 @@ function _configure_s3_bucket {
 					}
 				}
 			}'\
+		--region "${region}"
+
+	aws s3api put-public-access-block \
+		--bucket "${bucket_name}" \
+		--public-access-block-configuration '{
+				"BlockPublicAcls": true,
+				"BlockPublicPolicy": true,
+				"IgnorePublicAcls": true,
+				"RestrictPublicBuckets": true
+			}' \
 		--region "${region}"
 }
 
@@ -317,10 +318,10 @@ function _pushd {
 }
 
 function _set_up_aws_eks {
-	local terraform_args="${1}"
 	local bucket_name="${2}"
-	local region="${3}"
 	local deployment_name="${4}"
+	local region="${3}"
+	local terraform_args="${1}"
 
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 

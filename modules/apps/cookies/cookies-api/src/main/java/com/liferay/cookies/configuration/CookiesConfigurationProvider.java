@@ -77,6 +77,9 @@ public interface CookiesConfigurationProvider {
 	public boolean isCookiesPreferenceHandlingFloatingIconEnabled(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK);
 
+	public boolean isCookiesPreferenceHandlingGlobalPrivacyControlEnabled(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK);
+
 	public boolean isCookiesPreferenceHandlingStoreConsent(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK);
 

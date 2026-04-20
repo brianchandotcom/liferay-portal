@@ -282,6 +282,139 @@ test(
 );
 
 test(
+	'Can copy multiple files across Spaces',
+	{tag: '@LPD-86776'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-documents';
+		const sourceSpaceName = `Space ${getRandomString()}`;
+		const destinationSpaceName = `Space ${getRandomString()}`;
+		const destinationFolderName = `Destination ${getRandomString()}`;
+		const fileTitles = [
+			`File ${getRandomString()}`,
+			`File ${getRandomString()}`,
+			`File ${getRandomString()}`,
+		];
+
+		await test.step('Create source and destination Spaces', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: sourceSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: destinationSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		let destinationFolderId: number;
+
+		await test.step(
+			'Create a destination folder in the destination Space',
+			async () => {
+				const folder =
+					await apiHelpers.objectFolder.createObjectEntryFolder({
+						parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+						scopeKey: destinationSpaceName,
+						title: destinationFolderName,
+					});
+
+				destinationFolderId = folder.id;
+			}
+		);
+
+		await test.step('Create three files in the source Space', async () => {
+			for (const title of fileTitles) {
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						file: {
+							fileBase64: 'R0lGODlhAQABAAAAACw=',
+							name: `file_${getRandomString()}.png`,
+						},
+						objectEntryFolderExternalReferenceCode: 'L_FILES',
+						title,
+					},
+					applicationName,
+					sourceSpaceName
+				);
+			}
+		});
+
+		await test.step(
+			'Select the three files and copy them to the destination folder',
+			async () => {
+				await assetsPage.gotoAll();
+
+				await assetsPage.selectItems(fileTitles);
+
+				await assetsPage.bulkCopyTo({
+					destinationFolder: destinationFolderName,
+					destinationSpace: destinationSpaceName,
+				});
+			}
+		);
+
+		await test.step(
+			'Info alert for the bulk copy is displayed',
+			async () => {
+				await waitForAlert(
+					page,
+					`Info:Copying 3 assets to ${destinationFolderName}.`,
+					{type: 'info'}
+				);
+			}
+		);
+
+		await test.step(
+			'Success alert for the bulk copy is displayed',
+			async () => {
+				await waitForAlert(
+					page,
+					`Success:3 assets were successfully copied to ${destinationFolderName}.`
+				);
+			}
+		);
+
+		await test.step(
+			'The three files are in the destination folder in the destination Space',
+			async () => {
+				const response = await apiHelpers.get(
+					`${apiHelpers.baseUrl}${applicationName}/scopes/${encodeURIComponent(destinationSpaceName)}?pageSize=100`
+				);
+
+				const copiedItems = response.items.filter(
+					(item: {objectEntryFolderId: number}) =>
+						item.objectEntryFolderId === destinationFolderId
+				);
+
+				expect(copiedItems).toHaveLength(3);
+			}
+		);
+
+		await test.step(
+			'The three files are still present in the source Space',
+			async () => {
+				const response = await apiHelpers.get(
+					`${apiHelpers.baseUrl}${applicationName}/scopes/${encodeURIComponent(sourceSpaceName)}?pageSize=100`
+				);
+
+				const sourceItems = response.items.filter(
+					(item: {
+						objectEntryFolderExternalReferenceCode: string;
+					}) =>
+						item.objectEntryFolderExternalReferenceCode ===
+						'L_FILES'
+				);
+
+				expect(sourceItems).toHaveLength(3);
+			}
+		);
+	}
+);
+
+test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
 	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {

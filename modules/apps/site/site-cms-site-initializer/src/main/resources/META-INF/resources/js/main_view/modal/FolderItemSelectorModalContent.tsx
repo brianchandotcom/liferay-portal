@@ -342,10 +342,10 @@ function FolderItemSelectorModalContent({
 	const handleOnItemsChange = async (folder: Folder, targetName?: string) => {
 		const invalidContentActionMessage = isCopy
 			? Liferay.Language.get(
-					'the-asset-cannot-be-copied-because-its-content-type-is-not-available-in-the-destination-space.'
+					'the-asset-cannot-be-copied-because-its-content-type-is-not-available-in-the-destination-space'
 				)
 			: Liferay.Language.get(
-					'the-asset-cannot-be-moved-because-its-content-type-is-not-available-in-the-destination-space.'
+					'the-asset-cannot-be-moved-because-its-content-type-is-not-available-in-the-destination-space'
 				);
 
 		if (isBulk) {

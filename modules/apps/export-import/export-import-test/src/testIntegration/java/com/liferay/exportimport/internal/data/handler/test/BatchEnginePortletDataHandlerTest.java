@@ -1072,10 +1072,17 @@ public class BatchEnginePortletDataHandlerTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testExportImportObjectEntriesWithComments(
-			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testExportImportObjectEntriesWithComments(
+				GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@Test

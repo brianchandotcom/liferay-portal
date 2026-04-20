@@ -1352,10 +1352,17 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testDeleteObjectEntryWithComments(
-			_testGroupId, _siteScopedObjectDefinition1);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testDeleteObjectEntryWithComments(
+				_testGroupId, _siteScopedObjectDefinition1);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@Test
@@ -6157,10 +6164,17 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testGetObjectEntriesPageWithComments(
-			_testGroupId, _siteScopedObjectDefinition1);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testGetObjectEntriesPageWithComments(
+				_testGroupId, _siteScopedObjectDefinition1);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@Test
@@ -9509,14 +9523,21 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_enableComments(_siteScopedObjectDefinition1);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
 
-		_testPatchPutObjectEntryWithComments(
-			_testGroupId, Http.Method.PATCH, _siteScopedObjectDefinition1);
-		_testPatchPutObjectEntryWithComments(
-			_testGroupId, Http.Method.PUT, _siteScopedObjectDefinition1);
+		try {
+			_enableComments(_siteScopedObjectDefinition1);
+
+			_testPatchPutObjectEntryWithComments(
+				_testGroupId, Http.Method.PATCH, _siteScopedObjectDefinition1);
+			_testPatchPutObjectEntryWithComments(
+				_testGroupId, Http.Method.PUT, _siteScopedObjectDefinition1);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@FeatureFlag("LPD-43996")
@@ -11051,10 +11072,17 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testPostObjectEntriesWithComments(
-			_testGroupId, _siteScopedObjectDefinition1);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testPostObjectEntriesWithComments(
+				_testGroupId, _siteScopedObjectDefinition1);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@FeatureFlag("LPD-43996")

@@ -110,10 +110,17 @@ public class CommentResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testDeleteByExternalReferenceCodeComment(
-			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testDeleteByExternalReferenceCodeComment(
+				_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@FeatureFlag("LPD-43996")
@@ -127,10 +134,17 @@ public class CommentResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testGetByExternalReferenceCodeComment(
-			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testGetByExternalReferenceCodeComment(
+				_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@FeatureFlag("LPD-43996")
@@ -145,10 +159,17 @@ public class CommentResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testGetByExternalReferenceCodeCommentChildCommentsPage(
-			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testGetByExternalReferenceCodeCommentChildCommentsPage(
+				_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@FeatureFlag("LPD-43996")
@@ -162,10 +183,17 @@ public class CommentResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testGetByExternalReferenceCodeCommentsPage(
-			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testGetByExternalReferenceCodeCommentsPage(
+				_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@FeatureFlag("LPD-43996")
@@ -179,10 +207,17 @@ public class CommentResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testPostByExternalReferenceCodeComment(
-			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testPostByExternalReferenceCodeComment(
+				_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@FeatureFlag("LPD-43996")
@@ -197,10 +232,17 @@ public class CommentResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testPostByExternalReferenceCodeCommentReplyComment(
-			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testPostByExternalReferenceCodeCommentReplyComment(
+				_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	@FeatureFlag("LPD-43996")
@@ -214,10 +256,17 @@ public class CommentResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		String originalValue = PropsUtil.get("feature.flag.LPD-43996");
 
-		_testPutByExternalReferenceCodeComment(
-			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		PropsUtil.set("feature.flag.LPD-43996", "false");
+
+		try {
+			_testPutByExternalReferenceCodeComment(
+				_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", originalValue);
+		}
 	}
 
 	private void _assertCommentsPageWithAggregation(

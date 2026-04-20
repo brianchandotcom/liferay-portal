@@ -10,11 +10,23 @@ import React from 'react';
 
 import {Wizard, WizardStep} from '../../components/Wizard';
 import {DateFilterValues} from '../../components/date_filter';
+import {
+	PortletDataHandlerSection,
+	mockPortletDataHandlerSections,
+} from '../../utils/mockPortletDataHandlerSections';
 import DataSelectionStep from './steps/DataSelectionStep';
 import SettingsStep from './steps/SettingsStep';
 import SetupStep from './steps/SetupStep';
 
-export function NewExport({backURL}: {backURL: string}) {
+interface NewExportProps {
+	backURL: string;
+	sections?: PortletDataHandlerSection[];
+}
+
+export function NewExport({
+	backURL,
+	sections = mockPortletDataHandlerSections,
+}: NewExportProps) {
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
 
 		// eslint-disable-next-line no-console
@@ -44,7 +56,7 @@ export function NewExport({backURL}: {backURL: string}) {
 					return errors;
 				}}
 			>
-				<SetupStep />
+				<SetupStep sections={sections} />
 			</WizardStep>
 
 			<WizardStep

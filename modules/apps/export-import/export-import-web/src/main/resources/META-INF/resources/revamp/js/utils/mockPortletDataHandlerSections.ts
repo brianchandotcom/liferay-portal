@@ -3,106 +3,167 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export const mockPortletDataHandlerSections: {
+export interface PortletDataControl {
+	controls?: PortletDataControl[];
+	label: string;
 	name: string;
-	portletEntries: {
-		portletDescription: string;
-		portletId: string;
-		portletTitle: string;
-	}[];
-}[] = [
+	options?: {label: string; value: string}[];
+	type: 'boolean' | 'choice';
+}
+
+export interface PortletDataHandler {
+	controls?: PortletDataControl[];
+	label: string;
+	name: string;
+	type: 'boolean';
+}
+
+export interface PortletDataHandlerSection {
+	id: string;
+	key: string;
+	name: string;
+	portletDataHandlers: PortletDataHandler[];
+}
+
+export const mockPortletDataHandlerSections: PortletDataHandlerSection[] = [
 	{
+		id: 'category.site_administration.design',
+		key: 'category.site_administration.design',
 		name: 'Design',
-		portletEntries: [
+		portletDataHandlers: [
 			{
-				portletDescription: 'Configuration for themes',
-				portletId: 'theme-settings',
-				portletTitle: 'Theme Settings',
+				label: 'Theme Settings',
+				name: 'THEME_REFERENCE',
+				type: 'boolean',
 			},
 			{
-				portletDescription: 'Configuration for templates',
-				portletId: 'template-settings',
-				portletTitle: 'Template Settings',
+				label: 'Logo',
+				name: 'LOGO',
+				type: 'boolean',
 			},
 			{
-				portletDescription: 'Site logo settings',
-				portletId: 'logo',
-				portletTitle: 'Logo',
-			},
-			{
-				portletDescription: 'UI fragments',
-				portletId: 'fragments',
-				portletTitle: 'Fragments',
-			},
-			{
-				portletDescription: 'General templates',
-				portletId: 'templates',
-				portletTitle: 'Templates',
-			},
-			{
-				portletDescription: 'Templates for specific pages',
-				portletId: 'page-templates',
-				portletTitle: 'Page Templates',
+				label: 'Fragments',
+				name: 'PORTLET_DATA_com_liferay_fragment_web_portlet_FragmentPortlet',
+				type: 'boolean',
 			},
 		],
 	},
 	{
+		id: 'category.site_administration.build',
+		key: 'category.site_administration.build',
 		name: 'Site Builder',
-		portletEntries: [
+		portletDataHandlers: [
 			{
-				portletDescription: 'Individual page configurations',
-				portletId: 'page-settings',
-				portletTitle: 'Page Settings',
-			},
-			{
-				portletDescription: 'Management of static content pages',
-				portletId: 'static-pages',
-				portletTitle: 'Static Pages',
-			},
-			{
-				portletDescription: '404, login, and other utility pages',
-				portletId: 'utility-pages',
-				portletTitle: 'Utility Pages',
-			},
-			{
-				portletDescription: 'Grouped content collections',
-				portletId: 'collections',
-				portletTitle: 'Collections',
+				label: 'Pages',
+				name: 'PORTLET_DATA_com_liferay_layout_admin_web_portlet_GroupPagesPortlet',
+				type: 'boolean',
 			},
 		],
 	},
 	{
+		id: 'category.site_administration.content',
+		key: 'category.site_administration.content',
 		name: 'Content & Data',
-		portletEntries: [
+		portletDataHandlers: [
 			{
-				portletDescription: 'Articles and web assets',
-				portletId: 'web-content',
-				portletTitle: 'Web Content',
+				controls: [
+					{
+						label: 'Web Content',
+						name: '_journal_web-content',
+						type: 'boolean',
+					},
+					{
+						controls: [
+							{
+								label: 'Referenced Content Behavior',
+								name: '_journal_referenced-content-behavior',
+								options: [
+									{
+										label: 'Include Always',
+										value: 'include-always',
+									},
+									{
+										label: 'Include If Modified',
+										value: 'include-if-modified',
+									},
+								],
+								type: 'choice',
+							},
+						],
+						label: 'Referenced Content',
+						name: '_journal_referenced-content',
+						type: 'boolean',
+					},
+					{
+						label: 'Version History',
+						name: '_journal_version-history',
+						type: 'boolean',
+					},
+				],
+				label: 'Web Content',
+				name: 'PORTLET_DATA_com_liferay_journal_web_portlet_JournalPortlet',
+				type: 'boolean',
 			},
 			{
-				portletDescription: 'Blog posts and entries',
-				portletId: 'blogs',
-				portletTitle: 'Blogs',
-			},
-			{
-				portletDescription: 'File repository and media library',
-				portletId: 'documents-media',
-				portletTitle: 'Documents and Media',
-			},
-			{
-				portletDescription: 'User input forms and surveys',
-				portletId: 'forms',
-				portletTitle: 'Forms',
-			},
-		],
-	},
-	{
-		name: 'Objects',
-		portletEntries: [
-			{
-				portletDescription: 'Custom object data entries',
-				portletId: 'object-entries',
-				portletTitle: 'Object Entries',
+				controls: [
+					{
+						label: 'Repositories',
+						name: '_document_library_repositories',
+						type: 'boolean',
+					},
+					{
+						label: 'Folders',
+						name: '_document_library_folders',
+						type: 'boolean',
+					},
+					{
+						controls: [
+							{
+								label: 'Previews and Thumbnails',
+								name: '_document_library_previews-and-thumbnails',
+								type: 'boolean',
+							},
+							{
+								controls: [
+									{
+										label: 'Referenced Content Behavior',
+										name: '_document_library_referenced-content-behavior',
+										options: [
+											{
+												label: 'Include Always',
+												value: 'include-always',
+											},
+											{
+												label: 'Include If Modified',
+												value: 'include-if-modified',
+											},
+										],
+										type: 'choice',
+									},
+								],
+								label: 'Referenced Content',
+								name: '_document_library_referenced-content',
+								type: 'boolean',
+							},
+						],
+						label: 'Documents',
+						name: '_document_library_documents',
+						type: 'boolean',
+					},
+					{
+						label: 'Document Types',
+						name: '_document_library_document-types',
+						type: 'boolean',
+					},
+					{
+						label: 'Shortcuts',
+						name: '_document_library_shortcuts',
+						type: 'boolean',
+					},
+				],
+				label: 'Documents and Media',
+				name: 'PORTLET_DATA_com_liferay_document_library_web_portlet_DLAdminPortlet',
+				type: 'boolean',
 			},
 		],
 	},

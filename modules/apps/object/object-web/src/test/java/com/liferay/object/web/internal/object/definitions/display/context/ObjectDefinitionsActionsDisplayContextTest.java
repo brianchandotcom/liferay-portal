@@ -290,18 +290,6 @@ public class ObjectDefinitionsActionsDisplayContextTest {
 			JSONUtil.getValue(jsonArray, "JSONObject/1", "Object/value"));
 	}
 
-	private boolean _hasContent(
-		String content, List<Map<String, String>> items) {
-
-		for (Map<String, String> item : items) {
-			if (content.equals(item.get("content"))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private Set<String> _getContents(List<Map<String, String>> items) {
 		Set<String> contents = new HashSet<>();
 
@@ -325,6 +313,18 @@ public class ObjectDefinitionsActionsDisplayContextTest {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return httpServletRequest;
+	}
+
+	private boolean _hasContent(
+		String content, List<Map<String, String>> items) {
+
+		for (Map<String, String> item : items) {
+			if (content.equals(item.get("content"))) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _setUpLanguageUtil() {

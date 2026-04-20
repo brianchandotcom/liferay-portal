@@ -115,14 +115,23 @@ public abstract class BaseSectionDisplayContext {
 
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
+			"additionalAPIURLParameters",
+			() -> {
+				if (isFolderSearchEnabled()) {
+					return getAdditionalAPIURLParameters();
+				}
+
+				return null;
+			}
+		).put(
 			"assetLibraries",
 			_sectionDisplayContextHelper.getDepotEntriesJSONArray(
 				httpServletRequest)
 		).put(
 			"autocompleteURL",
 			() -> StringBundler.concat(
-				"/o/search/v1.0/search?emptySearch=",
-				"true&entryClassNames=com.liferay.portal.kernel.model.User,",
+				"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
+				"com.liferay.portal.kernel.model.User,",
 				"com.liferay.portal.kernel.model.UserGroup&nestedFields=",
 				"embedded")
 		).put(
@@ -262,6 +271,10 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
+		if (isFolderSearchEnabled()) {
+			return "/o/search/v1.0/search";
+		}
+
 		return "/o/search/v1.0/search?" + getAdditionalAPIURLParameters();
 	}
 
@@ -335,6 +348,10 @@ public abstract class BaseSectionDisplayContext {
 
 	protected String getRootObjectEntryFolderExternalReferenceCode() {
 		return null;
+	}
+
+	protected boolean isFolderSearchEnabled() {
+		return false;
 	}
 
 	protected final DepotEntryLocalService depotEntryLocalService;

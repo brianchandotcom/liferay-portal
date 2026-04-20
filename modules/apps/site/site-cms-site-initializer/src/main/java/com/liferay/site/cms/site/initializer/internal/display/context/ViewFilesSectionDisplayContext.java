@@ -113,6 +113,11 @@ public class ViewFilesSectionDisplayContext
 		return "click-new-or-drag-and-drop-your-files-here";
 	}
 
+	@Override
+	protected boolean isFolderSearchEnabled() {
+		return true;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewFilesSectionDisplayContext.class);
 

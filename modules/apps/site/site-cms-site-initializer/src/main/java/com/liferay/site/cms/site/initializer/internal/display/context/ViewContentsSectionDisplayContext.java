@@ -110,6 +110,11 @@ public class ViewContentsSectionDisplayContext
 		return "click-new-to-create-your-first-piece-of-content";
 	}
 
+	@Override
+	protected boolean isFolderSearchEnabled() {
+		return true;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewContentsSectionDisplayContext.class);
 

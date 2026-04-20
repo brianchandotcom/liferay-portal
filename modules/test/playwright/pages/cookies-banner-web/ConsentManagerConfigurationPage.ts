@@ -16,6 +16,7 @@ export class ConsentManagerConfigurationPage {
 	readonly explicitCookieConsentModeCheckbox: Locator;
 	readonly floatingIconEnabledCheckbox: Locator;
 	readonly forcedReconsentButton: Locator;
+	readonly globalPrivacyControlEnabledCheckbox: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly storeConsentCheckbox: Locator;
@@ -66,6 +67,11 @@ export class ConsentManagerConfigurationPage {
 				name: 'Forced Re-Consent',
 			}
 		);
+		this.globalPrivacyControlEnabledCheckbox =
+			this.systemSettingsPortletForm.getByRole('checkbox', {
+				exact: true,
+				name: 'Global Privacy Control (GPC)',
+			});
 		this.page = page;
 		this.saveButton = this.systemSettingsPortletForm.getByRole('button', {
 			exact: true,

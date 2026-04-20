@@ -33,6 +33,39 @@ let channel: {id: number; name: string};
 let setupData: Array<{id: number | string; type: string}>;
 let site: Site;
 
+test.afterAll(async ({browser}) => {
+	const page = await browser.newPage();
+
+	await performLoginViaApi({page, screenName: 'test'});
+
+	const apiHelpers = new DataApiHelpers(page);
+
+	apiHelpers.setData(setupData);
+
+	await apiHelpers.clearData();
+
+	await page.close();
+});
+
+test.afterEach(async ({browser}) => {
+	const page = await browser.newPage();
+
+	await performLoginViaApi({page, screenName: 'test'});
+
+	const apiHelpers = new DataApiHelpers(page);
+
+	const ordersPage =
+		await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+	await Promise.all(
+		(ordersPage.items ?? []).map((order) =>
+			apiHelpers.headlessCommerceAdminOrder.deleteOrder(order.id)
+		)
+	);
+
+	await page.close();
+});
+
 test.beforeAll(async ({browser}) => {
 	const page = await browser.newPage();
 
@@ -46,20 +79,6 @@ test.beforeAll(async ({browser}) => {
 	channel = miniumResult.channel;
 	site = miniumResult.site;
 	setupData = [...apiHelpers.data];
-
-	await page.close();
-});
-
-test.afterAll(async ({browser}) => {
-	const page = await browser.newPage();
-
-	await performLoginViaApi({page, screenName: 'test'});
-
-	const apiHelpers = new DataApiHelpers(page);
-
-	apiHelpers.setData(setupData);
-
-	await apiHelpers.clearData();
 
 	await page.close();
 });
@@ -1312,5 +1331,1184 @@ test(
 				productDetailsPage.priceContainer
 			)
 		).toBeVisible();
+	}
+);
+
+test(
+	'Can add default delivery term with checkout',
+	{tag: ['@COMMERCE-9723', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceChannelDefaultsPage,
+		commerceMiniCartPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+		const term = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Flat Rate',
+			'Shipping Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Flat Rate'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Delivery Terms',
+			term.label['en_US'],
+			'Shipping Methods',
+			'Standard Delivery'
+		);
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesCell(
+					term.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web/${site.name}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: 'Test Name',
+			regionLabel: 'Florida',
+			street: 'Test Street',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(
+			checkoutPage.deliveryTermLink(term.label['en_US'])
+		).toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+	}
+);
+
+test(
+	'Can have all channels linked to a delivery term',
+	{tag: ['@COMMERCE-9729', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		commerceChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
+
+		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+		const term2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+
+		await expect(
+			commerceChannelDefaultsPage.editFrameChannelSelect
+		).toBeVisible();
+
+		const optionsBefore = (
+			await commerceChannelDefaultsPage.editFrameChannelOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(optionsBefore).toContain('All Channels');
+		expect(optionsBefore).toContain(channel.name);
+		expect(optionsBefore).not.toContain('All Other Channels');
+
+		await page.keyboard.press('Escape');
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term1.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesCell(
+					term1.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+
+		await expect(
+			commerceChannelDefaultsPage.editFrameChannelSelect
+		).toBeVisible();
+
+		const optionsAfter = (
+			await commerceChannelDefaultsPage.editFrameChannelOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(optionsAfter).toContain('All Other Channels');
+		expect(optionsAfter).not.toContain('All Channels');
+
+		await page.keyboard.press('Escape');
+
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesActionsButton.click();
+		await commerceChannelDefaultsPage.deleteMenuItem.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term1.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesCell(
+					'All Channels',
+					true
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term2.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesCell(
+					term2.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await expect(
+			commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesCell(
+				'All Other Channels',
+				true
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Cannot use disabled default delivery term',
+	{tag: ['@COMMERCE-9725', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceChannelDefaultsPage,
+		commerceMiniCartPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+		const term2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+		await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Flat Rate',
+			'Shipping Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Flat Rate'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Delivery Terms',
+			term1.label['en_US'],
+			'Shipping Methods',
+			'Standard Delivery'
+		);
+
+		await commerceAdminChannelsPage.addFlatRateDeliveryTermEligibility(
+			commerceAdminChannelDetailsPage,
+			channel.name,
+			term2.label['en_US']
+		);
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term2.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesCell(
+					term2.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await apiHelpers.headlessCommerceAdminOrder.patchTerm(term2.id, {
+			active: false,
+		});
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web/${site.name}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: 'Test Name',
+			regionLabel: 'Florida',
+			street: 'Test Street',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(
+			checkoutPage.deliveryTermLink(term1.label['en_US'])
+		).toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+	}
+);
+
+test(
+	'Default delivery term can override other eligibilities',
+	{tag: ['@COMMERCE-9782', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceChannelDefaultsPage,
+		commerceMiniCartPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+		const term2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+		await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			active: false,
+			type: 'delivery-terms',
+		});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Flat Rate',
+			'Shipping Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Flat Rate'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Delivery Terms',
+			term1.label['en_US'],
+			'Shipping Methods',
+			'Standard Delivery'
+		);
+
+		await commerceAdminChannelsPage.addFlatRateDeliveryTermEligibility(
+			commerceAdminChannelDetailsPage,
+			channel.name,
+			term2.label['en_US']
+		);
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term2.id)
+			);
+			await commerceChannelDefaultsPage.editFrameOverrideCheckbox.check();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesCell(
+					term2.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web/${site.name}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: 'Test Name',
+			regionLabel: 'Florida',
+			street: 'Test Street',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(
+			checkoutPage.deliveryTermLink(term2.label['en_US'])
+		).toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+	}
+);
+
+test(
+	'Delivery eligibility rules can persist at checkout',
+	{tag: ['@COMMERCE-9785']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceChannelDefaultsPage,
+		commerceMiniCartPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+		const term2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'delivery-terms',
+		});
+		const term3 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			active: false,
+			type: 'delivery-terms',
+		});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Flat Rate',
+			'Shipping Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Flat Rate'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Delivery Terms',
+			term1.label['en_US'],
+			'Shipping Methods',
+			'Standard Delivery'
+		);
+
+		await commerceAdminChannelsPage.addFlatRateDeliveryTermEligibility(
+			commerceAdminChannelDetailsPage,
+			channel.name,
+			term2.label['en_US']
+		);
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term1.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesCell(
+					term1.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web/${site.name}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: 'Test Name',
+			regionLabel: 'Florida',
+			street: 'Test Street',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('delivery-terms'));
+
+		await expect(
+			checkoutPage.deliveryTermOption(term1.label['en_US'])
+		).toBeChecked();
+		await expect(
+			checkoutPage.deliveryTermOption(term2.label['en_US'])
+		).toBeVisible();
+		await expect(
+			checkoutPage.deliveryTermOption(term3.label['en_US'])
+		).not.toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+	}
+);
+
+test(
+	'Can add default payment term with checkout',
+	{tag: ['@COMMERCE-9724', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceChannelDefaultsPage,
+		commerceMiniCartPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		const term = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Money Order',
+			'Payment Methods'
+		);
+
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			term.label['en_US'],
+			'Payment Methods',
+			'Money Order'
+		);
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+
+		await expect(
+			commerceChannelDefaultsPage.editFrameChannelSelect
+		).toBeVisible();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesCell(
+					term.label['en_US']
+				)
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: 'Test Name',
+			regionLabel: 'Florida',
+			street: 'Test Street',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(
+			checkoutPage.paymentTermLink(term.label['en_US'])
+		).toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.goToOrderDetailsButton).toBeVisible();
+	}
+);
+
+test(
+	'Can have all channels linked to a payment term',
+	{tag: ['@COMMERCE-9730', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		commerceChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
+
+		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		const term2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+
+		await expect(
+			commerceChannelDefaultsPage.editFrameChannelSelect
+		).toBeVisible();
+
+		const optionsBefore = (
+			await commerceChannelDefaultsPage.editFrameChannelOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(optionsBefore).toContain('All Channels');
+		expect(optionsBefore).toContain(channel.name);
+		expect(optionsBefore).not.toContain('All Other Channels');
+
+		await page.keyboard.press('Escape');
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term1.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesCell(
+					term1.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+
+		await expect(
+			commerceChannelDefaultsPage.editFrameChannelSelect
+		).toBeVisible();
+
+		const optionsAfter = (
+			await commerceChannelDefaultsPage.editFrameChannelOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(optionsAfter).toContain('All Other Channels');
+		expect(optionsAfter).not.toContain('All Channels');
+
+		await page.keyboard.press('Escape');
+
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesActionsButton.click();
+		await commerceChannelDefaultsPage.deleteMenuItem.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term1.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesCell(
+					'All Channels',
+					true
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term2.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesCell(
+					term2.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await expect(
+			commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesCell(
+				'All Other Channels',
+				true
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Cannot use disabled default payment terms',
+	{tag: ['@COMMERCE-9726', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceChannelDefaultsPage,
+		commerceMiniCartPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		const term2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Money Order',
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			term1.label['en_US'],
+			'Payment Methods',
+			'Money Order'
+		);
+
+		await commerceAdminChannelsPage.addMoneyOrderPaymentTermEligibility(
+			commerceAdminChannelDetailsPage,
+			channel.name,
+			term2.label['en_US']
+		);
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term2.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesCell(
+					term2.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await apiHelpers.headlessCommerceAdminOrder.patchTerm(term2.id, {
+			active: false,
+		});
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: 'Test Name',
+			regionLabel: 'Florida',
+			street: 'Test Street',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(
+			checkoutPage.paymentTermLink(term1.label['en_US'])
+		).toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.goToOrderDetailsButton).toBeVisible();
+	}
+);
+
+test(
+	'Default payment term can override other eligibilities',
+	{tag: ['@COMMERCE-9782', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceChannelDefaultsPage,
+		commerceMiniCartPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		const term2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			active: false,
+			type: 'payment-terms',
+		});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Money Order',
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			term1.label['en_US'],
+			'Payment Methods',
+			'Money Order'
+		);
+
+		await commerceAdminChannelsPage.addMoneyOrderPaymentTermEligibility(
+			commerceAdminChannelDetailsPage,
+			channel.name,
+			term2.label['en_US']
+		);
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term2.id)
+			);
+			await commerceChannelDefaultsPage.editFrameOverrideCheckbox.check();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesCell(
+					term2.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: 'Test Name',
+			regionLabel: 'Florida',
+			street: 'Test Street',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(
+			checkoutPage.paymentTermLink(term2.label['en_US'])
+		).toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.goToOrderDetailsButton).toBeVisible();
+	}
+);
+
+test(
+	'Payment eligibility rules can persist at checkout',
+	{tag: ['@COMMERCE-9785', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceChannelDefaultsPage,
+		commerceMiniCartPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		const term2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			type: 'payment-terms',
+		});
+		const term4 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
+			active: false,
+			type: 'payment-terms',
+		});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Money Order',
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			term1.label['en_US'],
+			'Payment Methods',
+			'Money Order'
+		);
+
+		await commerceAdminChannelsPage.addMoneyOrderPaymentTermEligibility(
+			commerceAdminChannelDetailsPage,
+			channel.name,
+			term2.label['en_US']
+		);
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+
+		await expect(async () => {
+			await commerceChannelDefaultsPage.editFrameChannelSelect.selectOption(
+				channel.name
+			);
+			await commerceChannelDefaultsPage.editFrameTermSelect.selectOption(
+				String(term2.id)
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesCell(
+					term2.label['en_US']
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: 'Test Name',
+			regionLabel: 'Florida',
+			street: 'Test Street',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('payment-terms'));
+
+		await expect(
+			checkoutPage.paymentTermOption(term2.label['en_US'])
+		).toBeChecked();
+		await expect(
+			checkoutPage.paymentTermOption(term1.label['en_US'])
+		).toBeVisible();
+		await expect(
+			checkoutPage.paymentTermOption(term4.label['en_US'])
+		).not.toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.goToOrderDetailsButton).toBeVisible();
 	}
 );

@@ -231,8 +231,8 @@ export class DataTablePage {
 		await expect(this.viewStatus(view)).toBeVisible();
 	}
 
-	async search(value: string) {
-		await this.searchInput.fill(value);
+	async search(value?: string) {
+		await this.searchInput.fill(value || '');
 		await this.searchButton.click();
 		await expect(this.searchInput).toBeEditable();
 	}

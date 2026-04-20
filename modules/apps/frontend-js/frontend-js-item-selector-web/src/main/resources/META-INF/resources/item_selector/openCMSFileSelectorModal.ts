@@ -115,7 +115,7 @@ const FDS_PROPS: Omit<
 					},
 				};
 
-				if ('file' in item.embedded) {
+				if (item.embedded.file) {
 					const mimeType = item.embedded.file.mimeType || '';
 
 					return {
@@ -123,7 +123,9 @@ const FDS_PROPS: Omit<
 						imgProps: {src: item.embedded.file.thumbnailURL},
 						stickerProps: {
 							className:
-								mimeTypeUtils.getClassNameFromMimeType(mimeType),
+								mimeTypeUtils.getClassNameFromMimeType(
+									mimeType
+								),
 							content: React.createElement(ClayIcon, {
 								symbol: mimeTypeUtils.getIconFromMimeType(
 									mimeType

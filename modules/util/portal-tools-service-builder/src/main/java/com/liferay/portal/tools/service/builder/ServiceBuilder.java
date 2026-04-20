@@ -2375,9 +2375,10 @@ public class ServiceBuilder {
 				return null;
 			}
 
-			Path apiModuleDir = apiDir.getParent(
-			).getParent(
-			).getParent();
+			Path apiModuleDir = apiDir.getParent();
+
+			apiModuleDir = apiModuleDir.getParent();
+			apiModuleDir = apiModuleDir.getParent();
 
 			Path relativePath = baseDirPath.relativize(
 				apiModuleDir.normalize());

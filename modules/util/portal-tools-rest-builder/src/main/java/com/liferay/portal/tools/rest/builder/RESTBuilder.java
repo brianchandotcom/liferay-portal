@@ -2117,11 +2117,9 @@ public class RESTBuilder {
 		String apiDirName = _configYAML.getApiDir();
 
 		for (File modifiedFile : _modifiedFiles) {
-			if (modifiedFile.getPath(
-				).startsWith(
-					apiDirName
-				)) {
+			String path = modifiedFile.getPath();
 
+			if (path.startsWith(apiDirName)) {
 				return true;
 			}
 		}

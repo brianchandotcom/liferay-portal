@@ -42,7 +42,10 @@ export default async function shareAction({
 		const initialCollaborators: Collaborator[] = items.reverse().map(
 			({actionIds, dateExpired, id, name, portrait, share, type}) =>
 				({
-					actionIds: actionIds.sort().join(','),
+					actionIds: actionIds
+						.filter((actionId) => actionId !== 'DOWNLOAD')
+						.sort()
+						.join(','),
 					dateExpired,
 					share,
 					type,

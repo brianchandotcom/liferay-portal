@@ -73,14 +73,7 @@ public class TemplateEntryStagedModelDataHandlerTest
 		TemplateEntry templateEntry = _addTemplateEntry(
 			stagingGroup, JournalArticle.class.getName(), StringPool.BLANK);
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			exportImportStagedModel(templateEntry);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(templateEntry);
 
 		Date modifiedDate = templateEntry.getModifiedDate();
 
@@ -90,14 +83,7 @@ public class TemplateEntryStagedModelDataHandlerTest
 		templateEntry = _templateEntryLocalService.updateTemplateEntry(
 			templateEntry);
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			exportImportStagedModel(templateEntry);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(templateEntry);
 
 		TemplateEntry importedTemplateEntry = (TemplateEntry)getStagedModel(
 			templateEntry.getUuid(), liveGroup);
@@ -127,14 +113,7 @@ public class TemplateEntryStagedModelDataHandlerTest
 			DDMStructureTestUtil.addStructure(
 				stagingGroup.getGroupId(), JournalArticle.class.getName());
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			exportImportStagedModel(stagingGroupDDMStructure);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(stagingGroupDDMStructure);
 
 		DDMStructure liveGroupDDMStructure =
 			_ddmStructureLocalService.fetchStructure(
@@ -226,14 +205,7 @@ public class TemplateEntryStagedModelDataHandlerTest
 			stagingGroup, JournalArticle.class.getName(),
 			infoItemFormVariationKey);
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			exportImportStagedModel(templateEntry);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(templateEntry);
 
 		TemplateEntry importedTemplateEntry = (TemplateEntry)getStagedModel(
 			templateEntry.getUuid(), liveGroup);
@@ -247,6 +219,19 @@ public class TemplateEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			templateEntry.getModifiedDate(),
 			importedTemplateEntry.getModifiedDate());
+	}
+
+	private void _exportImportStagedModel(StagedModel stagedModel)
+		throws Exception {
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(stagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
 	}
 
 	private long _classNameId;

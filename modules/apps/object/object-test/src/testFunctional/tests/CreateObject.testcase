@@ -664,33 +664,6 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
-	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Field"
-	@priority = 4
-	test CanCancelCreationField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 12",
-			objectName = "CustomObject12",
-			pluralLabelName = "Custom Objects 12");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 12");
-
-		ObjectAdmin.goToFieldsTab();
-
-		LexiconEntry.gotoAdd();
-
-		Type(
-			locator1 = "ObjectField#LABEL_INPUT",
-			value1 = "Custom Field");
-
-		ObjectField.selectType(fieldType = "Text");
-
-		Button.clickCancel();
-
-		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field");
-	}
-
 	@description = "LPS-135400 - Verify it is possible to cancel the creation of a Relationship"
 	@priority = 4
 	test CanCancelRelationshipCreation {
@@ -834,149 +807,6 @@ definition {
 			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
 
-	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"
-	@priority = 4
-	test CanCreateBigDecimalField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 17",
-			objectName = "CustomObject17",
-			pluralLabelName = "Custom Objects17");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 17");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Precision Decimal");
-
-		Refresh();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field",
-			fieldType = "Precision Decimal");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to create a Boolean field"
-	@priority = 4
-	test CanCreateBooleanField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 18",
-			objectName = "CustomObject18",
-			pluralLabelName = "Custom Objects 18");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 18");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Boolean");
-
-		Refresh();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field",
-			fieldType = "Boolean");
-	}
-
-	@description = "LPS-135549 - Verify if it is possible to create a Custom Object"
-	@priority = 5
-	test CanCreateCustomObject {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 19",
-			pluralLabelName = "Custom Objects 19");
-
-		CreateObject.saveObject();
-
-		AssertElementPresent(
-			key_labelName = "Custom Object 19",
-			locator1 = "CreateObject#OBJECT_NAME");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to create a Date field"
-	@priority = 4
-	test CanCreateDateField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 20",
-			objectName = "CustomObject20",
-			pluralLabelName = "Custom Objects 20");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 20");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Date");
-
-		Refresh();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field",
-			fieldType = "Date");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to create a Double field"
-	@priority = 4
-	test CanCreateDoubleField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 21",
-			objectName = "CustomObject21",
-			pluralLabelName = "Custom Objects 21");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 21");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Decimal");
-
-		Refresh();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field",
-			fieldType = "Decimal");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to create an Integer field"
-	@priority = 4
-	test CanCreateIntegerField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 22",
-			objectName = "CustomObject22",
-			pluralLabelName = "Custom Objects 22");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 22");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Integer");
-
-		Refresh();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field",
-			fieldType = "Integer");
-	}
-
 	@description = "LPS-135397 - Verify if it's possible to create a Layout for an Object"
 	@priority = 5
 	test CanCreateLayout {
@@ -996,29 +826,6 @@ definition {
 		ObjectAdmin.addObjectLayoutViaUI(layoutName = "Layout Name");
 
 		ObjectAdmin.assertObjectLayout(layoutLabel = "Layout Name");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to create a Long field"
-	@priority = 4
-	test CanCreateLongField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 24",
-			objectName = "CustomObject24",
-			pluralLabelName = "Custom Objects 24");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 24");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Long Integer");
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field",
-			fieldType = "Long Integer");
 	}
 
 	@description = "LPS-135401 - Verify it is possible to create a Many to Many Relationship"
@@ -1079,128 +886,6 @@ definition {
 		AssertElementPresent(
 			key_label = "Relationship",
 			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
-	}
-
-	@description = "LPS-136595 - Verify it is possible to create a Picklist field"
-	@priority = 4
-	test CanCreatePicklistField {
-		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
-
-		Picklist.addPicklistItemViaAPI(
-			itemKey = 0,
-			itemName = "Item Test",
-			picklistName = "Custom Picklist");
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 29",
-			objectName = "CustomObject29",
-			pluralLabelName = "Custom Objects 29");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 29");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Field Picklist",
-			fieldPicklist = "Custom Picklist",
-			fieldType = "Picklist");
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Field Picklist",
-			fieldType = "Picklist");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to create a String field"
-	@priority = 5
-	test CanCreateStringField {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 30",
-			objectName = "CustomObject30",
-			pluralLabelName = "Custom Objects 30");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 30");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Text");
-
-		Refresh();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field",
-			fieldType = "Text");
-	}
-
-	@description = "LPS-137879 - Verify it is not possible to delete a Custom Object field after the Object is published"
-	@priority = 4
-	test CanDeleteCustomObjectFieldAfterPublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 31",
-			objectName = "CustomObject31",
-			pluralLabelName = "Custom Objects 31");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject31");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject31");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field Delete",
-			fieldName = "customObjectFieldDelete",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject31");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 31");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.deleteObjectField(fieldName = "Custom Field Delete");
-
-		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field Delete");
-	}
-
-	@description = "LPS-137879 - Verify it is possible to delete a Custom Object field before the Object is published"
-	@priority = 4
-	test CanDeleteCustomObjectFieldBeforePublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 32",
-			objectName = "CustomObject32",
-			pluralLabelName = "Custom Objects 32");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject32");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 32");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.deleteObjectField(fieldName = "Custom Field");
-
-		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to delete a Field"
@@ -1564,38 +1249,6 @@ definition {
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_TAB_TYPE_RELATIONSHIPS");
 	}
 
-	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"
-	@priority = 4
-	test CannotCreateDuplicatedFieldName {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 39",
-			objectName = "CustomObject39",
-			pluralLabelName = "Custom Objects 39");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject39");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 39");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "Text");
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "This name is already in use. Try another one.");
-	}
-
 	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"
 	@priority = 4
 	test CannotCreateDuplicatedObjectName {
@@ -1693,54 +1346,6 @@ definition {
 		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Custom Object 42");
 	}
 
-	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
-	@priority = 4
-	test CannotLeaveFieldNameBlank {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 45",
-			objectName = "CustomObject45",
-			pluralLabelName = "Custom Objects 45");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 45");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldName = "",
-			fieldType = "Text");
-
-		AssertElementPresent(
-			key_fieldLabel = "Field Name",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"
-	@priority = 4
-	test CannotLeaveLabelFieldBlank {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 46",
-			objectName = "CustomObject46",
-			pluralLabelName = "Custom Objects 46");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 46");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "",
-			fieldName = "customField",
-			fieldType = "Text");
-
-		AssertElementPresent(
-			key_fieldLabel = "Label",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
 	@priority = 4
 	test CannotLeaveObjectLabelFieldBlank {
@@ -1777,31 +1382,6 @@ definition {
 
 		AssertElementPresent(
 			key_fieldLabel = "Object Name",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-	@description = "LPS-136595 - Verify it is not possible to leave the Picklist field empty when creating an Object Picklist field"
-	@priority = 4
-	test CannotLeavePicklistFieldEmpty {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 48",
-			objectName = "CustomObject48",
-			pluralLabelName = "Custom Objects 48");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 48");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Picklist");
-
-		CreateObject.saveObject();
-
-		AssertElementPresent(
-			key_fieldLabel = "Picklist",
 			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
@@ -1868,27 +1448,6 @@ definition {
 		ObjectAdmin.gotoRelationshipsTab();
 
 		ObjectAdmin.addObjectRelationshipViaUI(label = "Relationship");
-
-		AssertElementPresent(
-			key_fieldLabel = "Type",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"
-	@priority = 4
-	test CannotLeaveTypeFieldBlank {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 52",
-			objectName = "CustomObject52",
-			pluralLabelName = "Custom Objects 52");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 52");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(fieldLabel = "Custom Field");
 
 		AssertElementPresent(
 			key_fieldLabel = "Type",
@@ -1965,54 +1524,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "The first character of a name must be an uppercase letter.");
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"
-	@priority = 4
-	test CannotSaveSpecialCharacterFieldName {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 55",
-			objectName = "CustomObject55",
-			pluralLabelName = "Custom Objects 55");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 55");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldName = "customField#$%",
-			fieldType = "Long Integer");
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "Name must only contain letters and digits.");
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Field Name in upper case"
-	@priority = 4
-	test CannotSaveUpperCaseFieldName {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 56",
-			objectName = "CustomObject56",
-			pluralLabelName = "Custom Objects 56");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 56");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldName = "CustomField",
-			fieldType = "Text");
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "The first character of a name must be a lowercase letter.");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
@@ -2210,95 +1721,6 @@ definition {
 			locator1 = "CreateObject#ERROR_MESSAGE");
 	}
 
-	@description = "LPS-135635 - Verify it is not possible to update the Mandatory of a Field after the Object is published"
-	@priority = 4
-	test CannotUpdateFieldMandatoryAfterPublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 62",
-			objectName = "CustomObject62",
-			pluralLabelName = "Custom Objects 62");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field 62",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject62");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject62");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 62");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field 62");
-
-		AssertElementPresent(locator1 = "ObjectField#MANDATORY_TOGGLE_DISABLED");
-	}
-
-	@description = "LPS-135635 - Verify it is not possible to update the Name of a Field after the Object is published"
-	@priority = 5
-	test CannotUpdateFieldNameAfterPublished {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 63",
-			objectName = "CustomObject63",
-			pluralLabelName = "Custom Objects 63");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject63");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject63");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 63");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
-	}
-
-	@description = "LPS-135635 - Verify it is not possible to update the Type of a Field after the Object is published"
-	@priority = 4
-	test CannotUpdateFieldTypeAfterPublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 64",
-			objectName = "CustomObject64",
-			pluralLabelName = "Custom Objects 64");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject64");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject64");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 64");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
-	}
-
 	@description = "LPS-135635 - Verify it is not possible to update the Object name after it is published"
 	@priority = 5
 	test CannotUpdateObjectNameAfterPublished {
@@ -2399,35 +1821,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 67");
 
 		CreateObject.assertDisabledAllFields();
-	}
-
-	@description = "LPS-135635 - Verify it is not possible to update the Searchable section after the Object is published"
-	@priority = 4
-	test CannotUpdateSearchableSectionAfterPublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 68",
-			objectName = "CustomObject68",
-			pluralLabelName = "Custom Objects 68");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject68");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject68");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 68");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_SEARCHABLE_SECTION_ENABLED");
 	}
 
 	@description = "LPS-135649 - Verify that the Object is not displayed on Process Builder settings before Published"
@@ -3034,57 +2427,6 @@ definition {
 			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
-	@description = "LPS-135547 - Verify it is possible to search for a field from a Custom Object"
-	@priority = 4
-	test CanSearchForFieldCustomObject {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 77",
-			objectName = "CustomObject77",
-			pluralLabelName = "Custom Objects 77");
-
-		for (var letter : list "A,B") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field ${letter}",
-				fieldName = "customObjectField${letter}",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "CustomObject77");
-		}
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 77");
-
-		ObjectAdmin.goToFieldsTab();
-
-		Search.searchCP(searchTerm = "customObjectFieldA");
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field A",
-			fieldType = "Text");
-
-		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field B");
-	}
-
-	@description = "LPS-135547 - Verify it is possible to search for a field from a System Object"
-	@priority = 4
-	test CanSearchForFieldSystemObject {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "User");
-
-		ObjectAdmin.goToFieldsTab();
-
-		Search.searchCP(searchTerm = "GivenName");
-
-		ObjectAdmin.goToFieldsDetails(label = "First Name");
-
-		CreateObject.assertLabelBasicInfo(fieldLabel = "First Name");
-
-		CreateObject.assertLabelBasicInfoNotPresent(fieldLabel = "Email Address");
-	}
-
 	@description = "LPS-135547 - Verify it is possible to search for a System Object"
 	@priority = 4
 	test CanSearchForSystemObject {
@@ -3135,47 +2477,6 @@ definition {
 		Check.checkToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
-	}
-
-	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"
-	@priority = 4
-	test CanSetDifferentLanguageForFieldLabel {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 81",
-			objectName = "CustomObject81",
-			pluralLabelName = "Custom Objects 81");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject81");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 81");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
-
-		ObjectAdmin.changeLabelLanguage(newLanguage = "pt_BR");
-
-		CreateObject.editLabel(labelName = "Campo Customizado");
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject81");
-
-		MyAccount.configureDisplaySettingsLanguage(languageName = "português (Brasil)");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject81");
-
-		LexiconEntry.gotoAdd();
-
-		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Campo Customizado");
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Label"
@@ -3251,30 +2552,6 @@ definition {
 			key_category = "Objeto",
 			key_portlet = "Objetos Customizados 83",
 			locator1 = "ApplicationsMenu#PORTLET");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to set a field as Mandatory"
-	@priority = 4
-	test CanSetFieldMandatory {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 84",
-			objectName = "CustomObject84",
-			pluralLabelName = "Custom Objects 84");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 84");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field 84",
-			fieldType = "Text",
-			isMandatory = "true");
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field 84");
-
-		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}
 
 	@description = "LPS-139005 - Verify that is possible to submit entries in a form with an Object that was reactivated"
@@ -3413,224 +2690,6 @@ definition {
 			key_name = "Layout Updated",
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE",
 			value1 = "Layout Updated");
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"
-	@priority = 5
-	test CanUpdateFieldLabelAfterPublished {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 87",
-			objectName = "CustomObject87",
-			pluralLabelName = "Custom Objects 87");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject87");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject87");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 87");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		ObjectField.typeLabel(content = "Text Update");
-
-		ObjectField.save();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text Update");
-
-		AssertTextEquals(
-			locator1 = "ObjectField#LABEL_LOCALIZED",
-			value1 = "Text Update");
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Label of a Field before the Object is published"
-	@priority = 5
-	test CanUpdateFieldLabelBeforePublished {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 88",
-			objectName = "CustomObject88",
-			pluralLabelName = "Custom Objects 88");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject88");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 88");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		ObjectField.typeLabel(content = "Text Update");
-
-		ObjectField.save();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text Update");
-
-		AssertTextEquals(
-			locator1 = "ObjectField#LABEL_LOCALIZED",
-			value1 = "Text Update");
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Mandatory of a Field before the Object is published"
-	@priority = 4
-	test CanUpdateFieldMandatoryBeforePublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 89",
-			objectName = "CustomObject89",
-			pluralLabelName = "Custom Objects 89");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject89");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 89");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		ObjectField.toggleMandatory();
-
-		ObjectField.save();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		ObjectField.checkToggleMandatory();
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Name of a Field before the Object is published"
-	@priority = 4
-	test CanUpdateFieldNameBeforePublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 90",
-			objectName = "CustomObject90",
-			pluralLabelName = "Custom Objects 90");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject90");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 90");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		ObjectField.typeName(fieldName = "customObjectFieldUpdate");
-
-		ObjectField.save();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		AssertTextEquals(
-			locator1 = "ObjectField#NAME_FIELD",
-			value1 = "customObjectFieldUpdate");
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Searchable section before the Object is published"
-	@priority = 4
-	test CanUpdateFieldSearchableSectionBeforePublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 91",
-			objectName = "CustomObject91",
-			pluralLabelName = "Custom Objects 91");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject91");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 91");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
-
-		ObjectField.save();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		AssertTextEquals(
-			key_labelName = "Language",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
-			value1 = "English (United States)");
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
-	@priority = 4
-	test CanUpdateFieldTypeBeforePublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 92",
-			objectName = "CustomObject92",
-			pluralLabelName = "Custom Objects 92");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject92");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 92");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Type",
-			optionName = "Date");
-
-		ObjectField.save();
-
-		ObjectAdmin.goToFieldsDetails(label = "Text");
-
-		AssertTextEquals(
-			key_labelName = "Type",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
-			value1 = "Date");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
@@ -4254,60 +3313,6 @@ definition {
 			key_fieldColumnNumber = 1,
 			key_fieldLabel = "Custom Field B",
 			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on the eye icon"
-	@priority = 4
-	test CanViewFieldsDetailsByClickingEyeIcon {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 109",
-			objectName = "CustomObject109",
-			pluralLabelName = "Custom Objects 109");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject109");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 109");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
-
-		ObjectAdmin.viewDetails();
-	}
-
-	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on its name"
-	@priority = 4
-	test CanViewFieldsDetailsByClickingName {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 110",
-			objectName = "CustomObject110",
-			pluralLabelName = "Custom Objects 110");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field 110",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject110");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 110");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field 110");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a BigDecimal type is displayed on the Relationship field when adding an entry"
@@ -5227,33 +4232,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Entry C");
 	}
 
-	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"
-	@priority = 4
-	test ColumnsAreDisplayedFieldsTable {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 126",
-			objectName = "CustomObject126",
-			pluralLabelName = "Custom Objects 126");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject126");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 126");
-
-		ObjectAdmin.goToFieldsTab();
-
-		AssertElementPresent(locator1 = "ObjectAdmin#GENERIC_LABEL_COLUMN");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
-	}
-
 	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"
 	@priority = 4
 	test ColumnsAreDisplayedObjectsTable {
@@ -5509,34 +4487,6 @@ definition {
 			value1 = "No Objects Created Yet");
 	}
 
-	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
-	@priority = 3
-	test EmptyStateNoResultObjectField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 130",
-			objectName = "CustomObject130",
-			pluralLabelName = "Custom Objects 130");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject130");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 130");
-
-		ObjectAdmin.goToFieldsTab();
-
-		Search.searchCP(searchTerm = "CustomObject X 130");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Results Found");
-	}
-
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
 	@priority = 3
 	test EmptyStateWhenNoRelationship {
@@ -5554,25 +4504,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_INFO",
 			value1 = "No Results Found");
-	}
-
-	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
-	@priority = 4
-	test FieldNameIsAutofilled {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 132",
-			objectName = "CustomObject132",
-			pluralLabelName = "Custom Objects 132");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 132");
-
-		ObjectAdmin.goToFieldsTab();
-
-		CreateObject.assertObjectFieldNameIsAutofilled(
-			fieldLabel = "Custom Field",
-			fieldName = "customField");
 	}
 
 	@description = "LPS-135397 - Verify if it's not possible to add a Field without Choose an Option Field"
@@ -5663,133 +4594,6 @@ definition {
 
 		// TODO LPS-141684 FormCollectionProvidersDisplayPageDisplayOnlyItsInstanceObjects pending implementation
 
-	}
-
-	@description = "LPS-135635 - Verify that the options Keyword and Text appears under the Searchable section when updating the field type to String"
-	@priority = 4
-	test KeywordAndTextAppearsWhenUpdateFieldType {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 135",
-			objectName = "CustomObject135",
-			pluralLabelName = "Custom Objects 135");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Integer",
-			fieldLabelName = "Custom Field 135",
-			fieldName = "customObjectField",
-			fieldType = "Integer",
-			isRequired = "false",
-			objectName = "CustomObject135");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 135");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field 135");
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Type",
-			optionName = "Text");
-
-		AssertElementPresent(
-			key_radioOption = "Keyword",
-			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
-
-		AssertElementPresent(
-			key_radioOption = "Text",
-			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
-	}
-
-	@description = "LPS-135635 - Verify that the options Keyword and Text disappears under the Searchable section when updating the field type from String to another type"
-	@priority = 4
-	test KeywordAndTextDisappearsWhenUpdateFieldType {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 136",
-			objectName = "CustomObject136",
-			pluralLabelName = "Custom Objects 136");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field 136",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject136");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 136");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field 136");
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Type",
-			optionName = "Integer");
-
-		ObjectAdmin.assertKeywordAndTextNotPresent();
-	}
-
-	@description = "LPS-135549 - Verify that the field with String type has the options Keyword and Text under the Searchable section"
-	@priority = 4
-	test KeywordAndTextDisplayedForStringTypeField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 137",
-			objectName = "CustomObject137",
-			pluralLabelName = "Custom Objects 137");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field 137",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject137");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 137");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field 137");
-
-		ObjectAdmin.assertKeywordAndText();
-	}
-
-	@description = "LPS-135549 - Verify that the field with String type has the option Language when the Text option is selected under the Searchable section"
-	@priority = 4
-	test LanguageDisplayedForTextOption {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 138",
-			objectName = "CustomObject138",
-			pluralLabelName = "Custom Objects 138");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field 138",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject138");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 138");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field 138");
-
-		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
-
-		AssertTextEquals(
-			key_labelName = "Language",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
-			value1 = "English (United States)");
 	}
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Object Admin of the Main Instance and vice versa"
@@ -7159,43 +5963,6 @@ definition {
 			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 	}
 
-	@description = "LPS-135400 - Verify that relationship field is automatically created"
-	@priority = 5
-	test RelationshipFieldAutomaticallyCreated {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object A 168",
-			objectName = "CustomObjectA168",
-			pluralLabelName = "Custom Objects 168");
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object B 168",
-			objectName = "CustomObjectB168",
-			pluralLabelName = "Custom Objects 168");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object A 168");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship Label",
-			object = "Custom Object B 168",
-			type = "One to Many");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object B 168");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Relationship Label",
-			fieldType = "Relationship");
-	}
-
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"
 	@priority = 4
 	test RelationshipFieldCannotBeDisplayedForCollectionDisplayTableWhenInactivated {
@@ -7977,50 +6744,6 @@ definition {
 		CreateObject.assertValuesOnScope(
 			valuePanelCategory = "Site Builder",
 			valueScope = "Site");
-	}
-
-	@description = "LPS-151877 - Verify that, when adding a new Object with Account Restriction, the Account Restriction field turns into a mandatory field for the created Object"
-	@priority = 4
-	test VerifyAccountRestrictionFieldTurnsIntoMandatoryField {
-		task ("Add Custom Object with Relationship related to System Object Account (via API)") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 156823",
-				objectName = "CustomObject156823",
-				pluralLabelName = "Custom Objects 156823");
-
-			ObjectAdmin.addObjectRelationshipViaAPI(
-				objectName_1 = "AccountEntry",
-				objectName_2 = "CustomObject156823",
-				relationshipLabel = "RelationshipAccount",
-				relationshipName = "relationshipAccount",
-				relationshipType = "oneToMany");
-		}
-
-		task ("Add new Account (via API)") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Account Name",
-				accountEntryType = "Business");
-		}
-
-		task ("Go to Custom Object, active account restriction, and select relationship related to Account") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156823");
-
-			CreateObject.activeToogleAccountRestriction();
-
-			CreateObject.selectAccountRestrictedField(accountRestrictedField = "RelationshipAccount");
-
-			PortletEntry.publish();
-		}
-
-		task ("Go to Custom Object entries and assert that the relationship is mandatory") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject156823");
-
-			LexiconEntry.gotoAdd();
-
-			CreateObject.viewAccountRestrictedFieldIsRequiredOnEntries(relationshipName = "RelationshipAccount");
-		}
 	}
 
 	@description = "LPS-135548 - Verify that user can view custom objects"

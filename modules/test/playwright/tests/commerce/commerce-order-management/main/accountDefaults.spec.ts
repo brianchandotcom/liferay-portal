@@ -10,11 +10,13 @@ import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import {
 	performLoginViaApi,
 	performUserSwitch,
 } from '../../../../utils/performLogin';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {createAccountWithBuyerUser, miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
@@ -2506,5 +2508,940 @@ test(
 		await checkoutPage.continueButton.click();
 
 		await expect(checkoutPage.goToOrderDetailsButton).toBeVisible();
+	}
+);
+
+test(
+	'Can set default billing address per channel',
+	{tag: ['@COMMERCE-9733', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceMiniCartPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const billingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Billing Address Entry ' + getRandomInt(),
+					type: 1,
+				}
+			);
+
+		apiHelpers.data.push({id: billingAddress.id, type: 'address'});
+
+		const shippingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Shipping Address Entry ' + getRandomInt(),
+					type: 3,
+				}
+			);
+
+		apiHelpers.data.push({id: shippingAddress.id, type: 'address'});
+
+		const billingAndShippingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name:
+						'Billing and Shipping Address Entry ' + getRandomInt(),
+					type: 2,
+				}
+			);
+
+		apiHelpers.data.push({
+			id: billingAndShippingAddress.id,
+			type: 'address',
+		});
+
+		const testChannel1 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 1 ' + getRandomInt(),
+			});
+		const testChannel2 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 2 ' + getRandomInt(),
+			});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu
+		).toBeVisible();
+
+		const channelOptions = (
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(channelOptions).toContain('All Channels');
+		expect(channelOptions).toContain(channel.name);
+		expect(channelOptions).toContain(testChannel1.name);
+		expect(channelOptions).toContain(testChannel2.name);
+
+		const addressOptions = (
+			await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(addressOptions).toContain(billingAddress.name);
+		expect(addressOptions).toContain(billingAndShippingAddress.name);
+		expect(addressOptions).not.toContain(shippingAddress.name);
+
+		await page.keyboard.press('Escape');
+
+		await expect(async () => {
+			await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+				channel.name
+			);
+			await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
+				billingAddress.name
+			);
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				await editAccountChannelDefaultsPage.addressTableRowColumn(
+					1,
+					'Billing',
+					billingAddress.name
+				)
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu
+		).toBeVisible();
+
+		const remainingOptions = (
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(remainingOptions).toContain('All Other Channels');
+		expect(remainingOptions).toContain(testChannel1.name);
+		expect(remainingOptions).toContain(testChannel2.name);
+		expect(remainingOptions).not.toContain('All Channels');
+
+		await page.keyboard.press('Escape');
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.shippingAddressSelect.selectOption({
+			label: shippingAddress.name,
+		});
+		await checkoutPage.useAsBillingCheckbox.setChecked(false);
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('billing-address'));
+
+		await expect(checkoutPage.nameInput).toBeDisabled();
+		await expect(checkoutPage.nameInput).toHaveValue(billingAddress.name);
+		await expect(checkoutPage.addressInput).toBeDisabled();
+		await expect(checkoutPage.zipInput).toBeDisabled();
+		await expect(checkoutPage.cityInput).toBeDisabled();
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(checkoutPage.commerceBillingAddress).toContainText(
+			billingAddress.name
+		);
+		await expect(checkoutPage.commerceShippingAddress).toContainText(
+			shippingAddress.name
+		);
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+	}
+);
+
+test(
+	'Can set default shipping address per channel',
+	{tag: ['@COMMERCE-9732', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceMiniCartPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const billingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Billing Address Entry ' + getRandomInt(),
+					type: 1,
+				}
+			);
+
+		apiHelpers.data.push({id: billingAddress.id, type: 'address'});
+
+		const shippingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Shipping Address Entry ' + getRandomInt(),
+					type: 3,
+				}
+			);
+
+		apiHelpers.data.push({id: shippingAddress.id, type: 'address'});
+
+		const billingAndShippingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name:
+						'Billing and Shipping Address Entry ' + getRandomInt(),
+					type: 2,
+				}
+			);
+
+		apiHelpers.data.push({
+			id: billingAndShippingAddress.id,
+			type: 'address',
+		});
+
+		const testChannel1 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 1 ' + getRandomInt(),
+			});
+		const testChannel2 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 2 ' + getRandomInt(),
+			});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+		await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu
+		).toBeVisible();
+
+		const channelOptions = (
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(channelOptions).toContain('All Channels');
+		expect(channelOptions).toContain(channel.name);
+		expect(channelOptions).toContain(testChannel1.name);
+		expect(channelOptions).toContain(testChannel2.name);
+
+		const addressOptions = (
+			await editAccountChannelDefaultsPage.setDefaultShippingAddressFrameBillingAddressDropdownOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(addressOptions).toContain(shippingAddress.name);
+		expect(addressOptions).toContain(billingAndShippingAddress.name);
+		expect(addressOptions).not.toContain(billingAddress.name);
+
+		await page.keyboard.press('Escape');
+
+		await expect(async () => {
+			await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+				channel.name
+			);
+			await editAccountChannelDefaultsPage.setDefaultShippingAddressFrameBillingAddressDropdownMenu.selectOption(
+				shippingAddress.name
+			);
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				await editAccountChannelDefaultsPage.addressTableRowColumn(
+					1,
+					'Shipping',
+					shippingAddress.name
+				)
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu
+		).toBeVisible();
+
+		const remainingOptions = (
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownOptions.allTextContents()
+		).map((s) => s.trim());
+
+		expect(remainingOptions).toContain('All Other Channels');
+		expect(remainingOptions).toContain(testChannel1.name);
+		expect(remainingOptions).toContain(testChannel2.name);
+		expect(remainingOptions).not.toContain('All Channels');
+
+		await page.keyboard.press('Escape');
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await expect(checkoutPage.nameInput).toBeDisabled();
+		await expect(checkoutPage.nameInput).toHaveValue(shippingAddress.name);
+		await expect(checkoutPage.addressInput).toBeDisabled();
+		await expect(checkoutPage.zipInput).toBeDisabled();
+		await expect(checkoutPage.cityInput).toBeDisabled();
+
+		await checkoutPage.useAsBillingCheckbox.setChecked(true);
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(checkoutPage.commerceShippingAddress).toContainText(
+			shippingAddress.name
+		);
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+	}
+);
+
+test(
+	'Can select only All Other Channels for default billing address',
+	{tag: ['@COMMERCE-9829', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
+
+		const billingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Billing Address Entry ' + getRandomInt(),
+					type: 1,
+				}
+			);
+
+		apiHelpers.data.push({id: billingAddress.id, type: 'address'});
+
+		const testChannel1 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 1 ' + getRandomInt(),
+			});
+		const testChannel2 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 2 ' + getRandomInt(),
+			});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+
+		for (const channelName of [
+			channel.name,
+			testChannel1.name,
+			testChannel2.name,
+		]) {
+			await expect(async () => {
+				await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+				await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+					channelName
+				);
+				await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
+					billingAddress.name
+				);
+				await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+				await expect(
+					await editAccountChannelDefaultsPage.addressTableRowColumn(
+						0,
+						'Billing',
+						channelName
+					)
+				).toBeVisible({timeout: 5000});
+			}).toPass({timeout: 20000});
+		}
+
+		await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu
+		).toBeVisible();
+
+		const options = (
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownOptions.allTextContents()
+		)
+			.map((s) => s.trim())
+			.filter(Boolean);
+
+		expect(options).toContain('All Other Channels');
+		expect(options).not.toContain('All Channels');
+
+		await page.keyboard.press('Escape');
+	}
+);
+
+test(
+	'Can select only All Other Channels for default shipping address',
+	{tag: ['@COMMERCE-9829', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
+
+		const shippingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Shipping Address Entry ' + getRandomInt(),
+					type: 3,
+				}
+			);
+
+		apiHelpers.data.push({id: shippingAddress.id, type: 'address'});
+
+		const testChannel1 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 1 ' + getRandomInt(),
+			});
+		const testChannel2 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 2 ' + getRandomInt(),
+			});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+
+		for (const channelName of [
+			channel.name,
+			testChannel1.name,
+			testChannel2.name,
+		]) {
+			await expect(async () => {
+				await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
+				await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+					channelName
+				);
+				await editAccountChannelDefaultsPage.setDefaultShippingAddressFrameBillingAddressDropdownMenu.selectOption(
+					shippingAddress.name
+				);
+				await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+				await expect(
+					await editAccountChannelDefaultsPage.addressTableRowColumn(
+						0,
+						'Shipping',
+						channelName
+					)
+				).toBeVisible({timeout: 5000});
+			}).toPass({timeout: 20000});
+		}
+
+		await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu
+		).toBeVisible();
+
+		const options = (
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownOptions.allTextContents()
+		)
+			.map((s) => s.trim())
+			.filter(Boolean);
+
+		expect(options).toContain('All Other Channels');
+		expect(options).not.toContain('All Channels');
+
+		await page.keyboard.press('Escape');
+	}
+);
+
+test(
+	'Cannot assign default addresses to the same channel',
+	{tag: ['@COMMERCE-9885', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+	}) => {
+		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
+
+		const billingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Test Billing Address ' + getRandomInt(),
+					type: 1,
+				}
+			);
+
+		apiHelpers.data.push({id: billingAddress.id, type: 'address'});
+
+		const billingAndShippingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Test Billing and Shipping Address ' + getRandomInt(),
+					type: 2,
+				}
+			);
+
+		apiHelpers.data.push({
+			id: billingAndShippingAddress.id,
+			type: 'address',
+		});
+
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			name: 'Test Channel 1 ' + getRandomInt(),
+		});
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			name: 'Test Channel 2 ' + getRandomInt(),
+		});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+
+		await expect(async () => {
+			await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+				channel.name
+			);
+			await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
+				billingAddress.name
+			);
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				await editAccountChannelDefaultsPage.addressTableRowColumn(
+					0,
+					'Billing',
+					channel.name
+				)
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await expect(async () => {
+			await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+				'All Other Channels'
+			);
+			await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
+				billingAndShippingAddress.name
+			);
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				editAccountChannelDefaultsPage.billingAddressAllOtherChannelsText
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+		await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+			'All Other Channels'
+		);
+		await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
+			billingAddress.name
+		);
+		await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.modalContainer.getByText(
+				'There is already an address defined for the selected channel.'
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can remove default addresses',
+	{tag: ['@COMMERCE-9876', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceMiniCartPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		const billingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Billing Address Entry ' + getRandomInt(),
+					type: 1,
+				}
+			);
+
+		apiHelpers.data.push({id: billingAddress.id, type: 'address'});
+
+		const shippingAddress =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Shipping Address Entry ' + getRandomInt(),
+					type: 3,
+				}
+			);
+
+		apiHelpers.data.push({id: shippingAddress.id, type: 'address'});
+
+		const testChannel1 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 1 ' + getRandomInt(),
+			});
+		const testChannel2 =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Test Channel 2 ' + getRandomInt(),
+			});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+
+		await expect(async () => {
+			await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+				testChannel1.name
+			);
+			await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
+				billingAddress.name
+			);
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				await editAccountChannelDefaultsPage.addressTableRowColumn(
+					0,
+					'Billing',
+					testChannel1.name
+				)
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await expect(async () => {
+			await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+				testChannel2.name
+			);
+			await editAccountChannelDefaultsPage.setDefaultShippingAddressFrameBillingAddressDropdownMenu.selectOption(
+				shippingAddress.name
+			);
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				await editAccountChannelDefaultsPage.addressTableRowColumn(
+					0,
+					'Shipping',
+					testChannel2.name
+				)
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await (
+			await editAccountChannelDefaultsPage.addressTableRowColumn(
+				3,
+				'Billing',
+				billingAddress.name
+			)
+		).click();
+		await editAccountChannelDefaultsPage.deleteMenuItem.click();
+
+		await waitForAlert(page);
+
+		await (
+			await editAccountChannelDefaultsPage.addressTableRowColumn(
+				3,
+				'Shipping',
+				shippingAddress.name
+			)
+		).click();
+		await editAccountChannelDefaultsPage.deleteMenuItem.click();
+
+		await waitForAlert(page);
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await expect(checkoutPage.nameInput).not.toBeDisabled();
+		await expect(checkoutPage.addressInput).not.toBeDisabled();
+		await expect(checkoutPage.zipInput).not.toBeDisabled();
+		await expect(checkoutPage.cityInput).not.toBeDisabled();
+
+		const newAddressName = 'New Address ' + getRandomInt();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: newAddressName,
+			regionLabel: 'Florida',
+			street: 'Test Address',
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(checkoutPage.commerceShippingAddress).toContainText(
+			newAddressName
+		);
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+	}
+);
+
+test(
+	'Cannot use default addresses in a different channel',
+	{tag: ['@COMMERCE-9734', '@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceMiniCartPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		test.setTimeout(180000);
+
+		const minium2 = await miniumSetUp(
+			apiHelpers,
+			'Minium-' + getRandomInt()
+		);
+		const site2 = minium2.site;
+
+		const {account: account1} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+		const {buyerUser: buyer2} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site2.id
+		);
+
+		const billingAddress1 =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account1.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Billing Address Entry ' + getRandomInt(),
+					type: 1,
+				}
+			);
+
+		apiHelpers.data.push({id: billingAddress1.id, type: 'address'});
+
+		const shippingAddress1 =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account1.id,
+				{
+					defaultBilling: false,
+					defaultShipping: false,
+					name: 'Shipping Address Entry ' + getRandomInt(),
+					type: 3,
+				}
+			);
+
+		apiHelpers.data.push({id: shippingAddress1.id, type: 'address'});
+
+		await accountsPage.gotoAccountAdmin();
+
+		await accountsPage.accountsTable.search(account1.name);
+		await accountsPage.accountNameLink(account1.name).click();
+		await editAccountPage.channelDefaultsLink.click();
+
+		await expect(async () => {
+			await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+				channel.name
+			);
+			await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
+				billingAddress1.name
+			);
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				await editAccountChannelDefaultsPage.addressTableRowColumn(
+					1,
+					'Billing',
+					billingAddress1.name
+				)
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await expect(async () => {
+			await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
+			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
+				channel.name
+			);
+			await editAccountChannelDefaultsPage.setDefaultShippingAddressFrameBillingAddressDropdownMenu.selectOption(
+				shippingAddress1.name
+			);
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				await editAccountChannelDefaultsPage.addressTableRowColumn(
+					1,
+					'Shipping',
+					shippingAddress1.name
+				)
+			).toBeVisible({timeout: 5000});
+		}).toPass({timeout: 20000});
+
+		await performUserSwitch(page, buyer2.alternateName);
+
+		await page.goto(`/web${site2.friendlyUrlPath}/catalog`);
+
+		await commerceMiniCartPage.quickAddToCart('MIN55861');
+		await commerceMiniCartPage.submitButton.click();
+
+		await expect(checkoutPage.nameInput).not.toBeDisabled();
+		await expect(checkoutPage.addressInput).not.toBeDisabled();
+		await expect(checkoutPage.zipInput).not.toBeDisabled();
+		await expect(checkoutPage.cityInput).not.toBeDisabled();
+
+		const newShippingName = 'New Shipping Address ' + getRandomInt();
+		const newBillingName = 'New Billing Address ' + getRandomInt();
+
+		await checkoutPage.addAddress({
+			city: 'Test Shipping City',
+			countryLabel: 'United States',
+			name: newShippingName,
+			regionLabel: 'Florida',
+			street: 'Test Shipping Address',
+			useAsBilling: false,
+			zip: '12345',
+		});
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('shipping-method'));
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('billing-address'));
+
+		await checkoutPage.cityInput.fill('Test Billing City');
+		await checkoutPage.countryInput.selectOption({label: 'United States'});
+		await checkoutPage.nameInput.fill(newBillingName);
+		await checkoutPage.regionInput.selectOption({label: 'Florida'});
+		await checkoutPage.addressInput.fill('Test Billing Address');
+		await checkoutPage.zipInput.fill('67890');
+
+		await checkoutPage.continueButton.click();
+
+		await page.waitForURL((url) => url.href.includes('order-summary'));
+
+		await expect(checkoutPage.commerceShippingAddress).toContainText(
+			newShippingName
+		);
+		await expect(checkoutPage.commerceBillingAddress).toContainText(
+			newBillingName
+		);
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
 	}
 );

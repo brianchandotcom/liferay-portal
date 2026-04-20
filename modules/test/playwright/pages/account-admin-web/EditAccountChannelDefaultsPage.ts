@@ -38,9 +38,12 @@ export class EditAccountChannelDefaultsPage {
 	) => Locator;
 	readonly modalOptionCheckbox: (optionName: string) => Locator;
 	readonly page: Page;
-	readonly setDefaultBillingAddressFrameBillingAddressDropdownMenu: Locator;
 	readonly setDefaultAddressFrameChannelDropdownMenu: Locator;
+	readonly setDefaultAddressFrameChannelDropdownOptions: Locator;
+	readonly setDefaultBillingAddressFrameBillingAddressDropdownMenu: Locator;
+	readonly setDefaultBillingAddressFrameBillingAddressDropdownOptions: Locator;
 	readonly setDefaultShippingAddressFrameBillingAddressDropdownMenu: Locator;
+	readonly setDefaultShippingAddressFrameBillingAddressDropdownOptions: Locator;
 	readonly shippingAddressAllChannelsText: Locator;
 	readonly shippingAddressAllOtherChannelsText: Locator;
 
@@ -141,12 +144,22 @@ export class EditAccountChannelDefaultsPage {
 			return this.modalContainer.getByLabel(optionName);
 		};
 		this.page = page;
-		this.setDefaultBillingAddressFrameBillingAddressDropdownMenu =
-			this.modalContainer.getByLabel('Billing Address');
 		this.setDefaultAddressFrameChannelDropdownMenu =
 			this.modalContainer.getByLabel('Channel');
+		this.setDefaultAddressFrameChannelDropdownOptions =
+			this.setDefaultAddressFrameChannelDropdownMenu.locator('option');
+		this.setDefaultBillingAddressFrameBillingAddressDropdownMenu =
+			this.modalContainer.getByLabel('Billing Address');
+		this.setDefaultBillingAddressFrameBillingAddressDropdownOptions =
+			this.setDefaultBillingAddressFrameBillingAddressDropdownMenu.locator(
+				'option'
+			);
 		this.setDefaultShippingAddressFrameBillingAddressDropdownMenu =
 			this.modalContainer.getByLabel('Shipping Address');
+		this.setDefaultShippingAddressFrameBillingAddressDropdownOptions =
+			this.setDefaultShippingAddressFrameBillingAddressDropdownMenu.locator(
+				'option'
+			);
 		this.shippingAddressAllChannelsText =
 			this.defaultShippingAddressesTable.getByRole('cell', {
 				exact: true,

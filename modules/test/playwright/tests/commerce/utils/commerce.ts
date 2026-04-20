@@ -508,17 +508,22 @@ export async function initializerSetUp(
 			catalogName
 		);
 
-	apiHelpers.data.push({id: catalogs.items[0].id, type: 'catalog'});
+	if (catalogs.items?.length) {
+		apiHelpers.data.push({id: catalogs.items[0].id, type: 'catalog'});
 
-	const products =
-		await apiHelpers.headlessCommerceAdminCatalog.getProductsPage(100, '');
+		const products =
+			await apiHelpers.headlessCommerceAdminCatalog.getProductsPage(
+				100,
+				''
+			);
 
-	for (let i = 0; i < products.totalCount; i++) {
-		if (products.items[i].catalogId === catalogs.items[0].id) {
-			apiHelpers.data.push({
-				id: products.items[i].productId,
-				type: 'product',
-			});
+		for (let i = 0; i < products.totalCount; i++) {
+			if (products.items[i].catalogId === catalogs.items[0].id) {
+				apiHelpers.data.push({
+					id: products.items[i].productId,
+					type: 'product',
+				});
+			}
 		}
 	}
 

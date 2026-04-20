@@ -181,6 +181,306 @@ test(
 );
 
 test(
+	'Can move multiple contents to a folder in a Space',
+	{tag: '@LPD-86776'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = `Space ${getRandomString()}`;
+		const destinationFolderName = `Destination ${getRandomString()}`;
+		const contentTitles = [
+			`Content ${getRandomString()}`,
+			`Content ${getRandomString()}`,
+			`Content ${getRandomString()}`,
+		];
+
+		await test.step('Create a new Space', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a destination folder in the Space', async () => {
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: spaceName,
+				title: destinationFolderName,
+			});
+		});
+
+		await test.step('Create three contents in the Space', async () => {
+			for (const title of contentTitles) {
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+						title,
+					},
+					applicationName,
+					spaceName
+				);
+			}
+		});
+
+		await test.step(
+			'Select the three contents and move them to the destination folder',
+			async () => {
+				await assetsPage.gotoAll();
+
+				await assetsPage.selectItems(contentTitles);
+
+				await assetsPage.bulkMoveTo({
+					destinationFolder: destinationFolderName,
+					destinationSpace: spaceName,
+				});
+			}
+		);
+
+		await test.step(
+			'Info alert for the bulk move is displayed',
+			async () => {
+				await waitForAlert(
+					page,
+					`Info:Moving 3 assets to ${destinationFolderName}.`,
+					{type: 'info'}
+				);
+			}
+		);
+
+		await test.step(
+			'Success alert for the bulk move is displayed',
+			async () => {
+				await waitForAlert(
+					page,
+					`Success:3 assets were successfully moved to ${destinationFolderName}.`
+				);
+			}
+		);
+	}
+);
+
+test(
+	'Can delete multiple contents across spaces with and without recycle bin enabled',
+	{tag: '@LPD-62787'},
+	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceNameWithRecycleBin = `Space ${getRandomString()}`;
+		const spaceNameWithoutRecycleBin = `Space ${getRandomString()}`;
+		const file1Title = `title ${getRandomString()}`;
+		const file2Title = `title ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceNameWithRecycleBin,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceNameWithoutRecycleBin,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: false,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			spaceNameWithRecycleBin
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file2Title,
+			},
+			applicationName,
+			spaceNameWithoutRecycleBin
+		);
+
+		await assetsPage.gotoAll();
+
+		await assetsPage.selectItems([file1Title, file2Title]);
+
+		await page
+			.getByTestId(/visualization-mode/)
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await expect(
+			page.getByText('Some of the selected files')
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(page, 'Info:Delete action started for 2 assets.', {
+			type: 'info',
+		});
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).not.toBeVisible();
+		await expect(
+			page.getByRole('cell', {exact: true, name: file2Title})
+		).not.toBeVisible();
+
+		await recycleBinPage.goto();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can delete multiple contents in a space with recycle bin disabled',
+	{tag: '@LPD-62787'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = `Space ${getRandomString()}`;
+		const file1Title = `title ${getRandomString()}`;
+		const file2Title = `title ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: false,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file2Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await assetsPage.gotoAll();
+
+		await assetsPage.selectItems([file1Title, file2Title]);
+
+		await page
+			.getByTestId(/visualization-mode/)
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await expect(
+			page.getByText('You are about to permanently')
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(page, 'Info:Delete action started for 2 assets.', {
+			type: 'info',
+		});
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).not.toBeVisible();
+		await expect(
+			page.getByRole('cell', {exact: true, name: file2Title})
+		).not.toBeVisible();
+	}
+);
+
+test(
+	'Can delete multiple contents in a space with recycle bin enabled',
+	{tag: '@LPD-62787'},
+	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = `Space ${getRandomString()}`;
+		const file1Title = `title ${getRandomString()}`;
+		const file2Title = `title ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file2Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await assetsPage.gotoAll();
+
+		await assetsPage.selectItems([file1Title, file2Title]);
+
+		await page
+			.getByTestId('visualization-mode-table')
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await waitForAlert(page, 'Info:Delete action started for 2 assets.', {
+			type: 'info',
+		});
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).not.toBeVisible();
+		await expect(
+			page.getByRole('cell', {exact: true, name: file2Title})
+		).not.toBeVisible();
+
+		await recycleBinPage.goto();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+		await expect(
+			page.getByRole('cell', {exact: true, name: file2Title})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Can view Share modal for added content',
 	{tag: '@LPD-62554'},
 	async ({apiHelpers, assetsPage}) => {

@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -79,6 +81,14 @@ public class TemplateEntryStagedModelDataHandlerTest
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
+
+		Date modifiedDate = templateEntry.getModifiedDate();
+
+		templateEntry.setModifiedDate(
+			new Date(modifiedDate.getTime() + Time.SECOND));
+
+		templateEntry = _templateEntryLocalService.updateTemplateEntry(
+			templateEntry);
 
 		ExportImportThreadLocal.setPortletImportInProcess(true);
 

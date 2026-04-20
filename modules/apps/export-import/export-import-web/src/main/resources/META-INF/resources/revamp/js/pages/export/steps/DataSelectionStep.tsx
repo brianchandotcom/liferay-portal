@@ -7,13 +7,17 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import DateFilter, {DateFilterValues} from '../../../components/date_filter';
+import {FormikFieldContentSelector} from '../../../components/forms/formik';
+import {PortletDataHandlerSection} from '../../../utils/mockPortletDataHandlerSections';
 
 export default function DataSelectionStep({
 	itemsCount = 0,
 	onApplyFilter,
+	sections,
 }: {
 	itemsCount?: number;
 	onApplyFilter?: (filterValues: DateFilterValues) => void;
+	sections: PortletDataHandlerSection[];
 }) {
 	return (
 		<>
@@ -24,9 +28,10 @@ export default function DataSelectionStep({
 				/>
 			</ClayLayout.Sheet>
 
-			<ClayLayout.Sheet>
-				{Liferay.Language.get('portlets')}
-			</ClayLayout.Sheet>
+			<FormikFieldContentSelector
+				name="contentSelection"
+				sections={sections}
+			/>
 		</>
 	);
 }

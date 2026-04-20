@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.DummyPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
 import jakarta.portlet.PortletURL;
+import jakarta.portlet.WindowState;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -201,6 +204,25 @@ public class ObjectEntryAssetRenderer
 	public PortletURL getURLEdit(HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		if (_objectDefinition.isCMS() && _isSpaceDepotEntryObjectEntry()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay != null) {
+				String cmsEditURL = _getCMSURL(Constants.EDIT, themeDisplay);
+
+				return new PortletURLWrapper(DummyPortletURL.getInstance()) {
+
+					@Override
+					public String toString() {
+						return cmsEditURL;
+					}
+
+				};
+			}
+		}
+
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_objectEntry.getGroupId());
 
@@ -227,12 +249,42 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public PortletURL getURLEdit(
+			HttpServletRequest httpServletRequest, WindowState windowState,
+			String redirect)
+		throws Exception {
+
+		if (_objectDefinition.isCMS() && _isSpaceDepotEntryObjectEntry()) {
+			return getURLEdit(httpServletRequest);
+		}
+
+		return super.getURLEdit(httpServletRequest, windowState, redirect);
+	}
+
+	@Override
+	public PortletURL getURLEdit(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		return getURLEdit(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest));
+	}
+
+	@Override
+	public PortletURL getURLEdit(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState, String redirect)
+		throws Exception {
+
+		if (_objectDefinition.isCMS() && _isSpaceDepotEntryObjectEntry()) {
+			return getURLEdit(
+				PortalUtil.getHttpServletRequest(liferayPortletRequest));
+		}
+
+		return super.getURLEdit(
+			liferayPortletRequest, liferayPortletResponse, windowState,
+			redirect);
 	}
 
 	@Override
@@ -244,12 +296,7 @@ public class ObjectEntryAssetRenderer
 			return null;
 		}
 
-		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			_objectEntry.getGroupId());
-
-		if ((depotEntry == null) ||
-			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
-
+		if (!_isSpaceDepotEntryObjectEntry()) {
 			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
@@ -259,12 +306,7 @@ public class ObjectEntryAssetRenderer
 			mode = Constants.EDIT;
 		}
 
-		return StringBundler.concat(
-			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-			GroupConstants.CMS_FRIENDLY_URL,
-			"/edit_content_item?objectEntryId=",
-			_objectEntry.getObjectEntryId(), "&p_l_mode=", mode, "&redirect=",
-			HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
+		return _getCMSURL(mode, themeDisplay);
 	}
 
 	@Override
@@ -385,6 +427,15 @@ public class ObjectEntryAssetRenderer
 		return _objectDefinition.isEnableComments();
 	}
 
+	private String _getCMSURL(String mode, ThemeDisplay themeDisplay) {
+		return StringBundler.concat(
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+			GroupConstants.CMS_FRIENDLY_URL,
+			"/edit_content_item?objectEntryId=",
+			_objectEntry.getObjectEntryId(), "&p_l_mode=", mode, "&redirect=",
+			HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
+	}
+
 	private PermissionChecker _getPermissionChecker(ThemeDisplay themeDisplay) {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -394,6 +445,19 @@ public class ObjectEntryAssetRenderer
 		}
 
 		return permissionChecker;
+	}
+
+	private boolean _isSpaceDepotEntryObjectEntry() {
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			_objectEntry.getGroupId());
+
+		if ((depotEntry == null) ||
+			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

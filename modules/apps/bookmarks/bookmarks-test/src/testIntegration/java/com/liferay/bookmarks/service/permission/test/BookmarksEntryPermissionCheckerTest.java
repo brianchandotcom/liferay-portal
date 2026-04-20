@@ -86,7 +86,7 @@ public class BookmarksEntryPermissionCheckerTest
 	@Inject(
 		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry"
 	)
-	private static ModelResourcePermission<BookmarksEntry>
+	private ModelResourcePermission<BookmarksEntry>
 		_bookmarksEntryModelResourcePermission;
 
 	private BookmarksEntry _entry;

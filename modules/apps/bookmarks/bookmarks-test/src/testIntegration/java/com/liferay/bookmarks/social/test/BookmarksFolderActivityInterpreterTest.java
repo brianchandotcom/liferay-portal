@@ -89,13 +89,13 @@ public class BookmarksFolderActivityInterpreterTest
 	}
 
 	@Inject
-	private static BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+
+	private BookmarksFolder _folder;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
 	)
-	private static SocialActivityInterpreter _socialActivityInterpreter;
-
-	private BookmarksFolder _folder;
+	private SocialActivityInterpreter _socialActivityInterpreter;
 
 }

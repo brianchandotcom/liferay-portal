@@ -586,17 +586,17 @@ public class UpdateLanguageActionTest {
 			TestPropsValues.getUserId(), _layout.getPlid(),
 			StringPool.SLASH + layoutFriendlyURL, languageId);
 
-		String sourceURL = StringBundler.concat(
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-			_group.getFriendlyURL(), layoutFriendlyURL, "?queryString");
-
-		String targetURL = StringBundler.concat(
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-			_group.getFriendlyURL(), _layout.getFriendlyURL(_targetLocale),
-			"?queryString");
-
 		_testGetRedirect(
-			sourceLocale, sourceURL, _targetLocale, targetURL, false);
+			sourceLocale,
+			StringBundler.concat(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				_group.getFriendlyURL(), layoutFriendlyURL, "?queryString"),
+			_targetLocale,
+			StringBundler.concat(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				_group.getFriendlyURL(), _layout.getFriendlyURL(_targetLocale),
+				"?queryString"),
+			false);
 	}
 
 	private void _testGetRedirectWithPortletFriendlyURL(Locale sourceLocale)

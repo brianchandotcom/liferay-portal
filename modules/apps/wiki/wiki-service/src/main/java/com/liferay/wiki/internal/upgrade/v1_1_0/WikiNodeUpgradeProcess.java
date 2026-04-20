@@ -25,8 +25,10 @@ public class WikiNodeUpgradeProcess extends UpgradeProcess {
 
 	private void _updateWikiNodeName() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select nodeId, name from WikiNode");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

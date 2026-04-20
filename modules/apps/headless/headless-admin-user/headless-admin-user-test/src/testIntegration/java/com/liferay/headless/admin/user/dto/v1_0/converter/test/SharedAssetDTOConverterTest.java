@@ -6,6 +6,8 @@
 package com.liferay.headless.admin.user.dto.v1_0.converter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -13,9 +15,11 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.dto.v1_0.SharedAsset;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -40,6 +44,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -103,7 +108,8 @@ public class SharedAssetDTOConverterTest {
 	@Test
 	public void testToDTO() throws Exception {
 		SharingEntry sharingEntry = _addSharingEntry(
-			DLFileEntry.class.getName(), _fileEntry.getFileEntryId());
+			DLFileEntry.class.getName(), _fileEntry.getFileEntryId(),
+			_group.getGroupId());
 
 		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
@@ -116,7 +122,7 @@ public class SharedAssetDTOConverterTest {
 		Assert.assertNotNull(sharedAsset);
 
 		Assert.assertArrayEquals(
-			new String[] {"VIEW"}, sharedAsset.getActionIds());
+			new String[] {"VIEW", "UPDATE"}, sharedAsset.getActionIds());
 		Assert.assertNull(sharedAsset.getActions());
 		Assert.assertEquals("Document", sharedAsset.getAssetType());
 		Assert.assertEquals(
@@ -154,6 +160,16 @@ public class SharedAssetDTOConverterTest {
 
 	@Test
 	public void testToDTOWithObjectEntry() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), 0, _serviceContext);
+
+		Group depotGroup = depotEntry.getGroup();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				depotGroup.getGroupId(), TestPropsValues.getUserId());
+
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, true, false, null, "file",
@@ -169,7 +185,7 @@ public class SharedAssetDTOConverterTest {
 				).name(
 					ObjectFieldSettingConstants.NAME_FILE_SOURCE
 				).value(
-					ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA
+					ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -200,37 +216,56 @@ public class SharedAssetDTOConverterTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_SITE,
+				true, ObjectDefinitionConstants.SCOPE_DEPOT,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(), Arrays.asList(objectField),
-				Collections.emptyList(), _serviceContext);
+				Arrays.asList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS
+					).value(
+						"true"
+					).build()),
+				Arrays.asList(objectField), Collections.emptyList(),
+				serviceContext);
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
-			FileUtil.getBytes(
-				SharedAssetDTOConverterTest.class, "dependencies/sample.png"),
-			null, null, null, _serviceContext);
-
-		Assert.assertEquals(
-			StringPool.BLANK, _dlURLHelper.getThumbnailSrc(fileEntry, null));
-
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			_group.getGroupId(), TestPropsValues.getUserId(),
+			depotGroup.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), 0,
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 			HashMapBuilder.<String, Serializable>put(
-				"file", fileEntry.getFileEntryId()
+				"file",
+				() -> {
+					FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+						null, TestPropsValues.getUserId(),
+						depotGroup.getGroupId(),
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						RandomTestUtil.randomString() + ".png",
+						ContentTypes.IMAGE_PNG,
+						FileUtil.getBytes(
+							SharedAssetDTOConverterTest.class,
+							"dependencies/sample.png"),
+						null, null, null, serviceContext);
+
+					return fileEntry.getFileEntryId();
+				}
 			).build(),
-			_serviceContext);
+			serviceContext);
+
+		long fileEntryId = GetterUtil.getLong(
+			objectEntry.getValues(
+			).get(
+				"file"
+			));
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
 		SharingEntry sharingEntry = _addSharingEntry(
-			ObjectEntry.class.getName(), objectEntry.getObjectEntryId());
+			ObjectEntry.class.getName(), objectEntry.getObjectEntryId(),
+			depotGroup.getGroupId());
 
 		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
@@ -251,8 +286,8 @@ public class SharedAssetDTOConverterTest {
 			fileEntry.getExternalReferenceCode(),
 			file.getExternalReferenceCode());
 		Assert.assertEquals((Long)fileEntry.getFileEntryId(), file.getId());
-		Assert.assertNotNull(file.getLink());
 		Assert.assertEquals(fileEntry.getFileName(), file.getName());
+		Assert.assertNotNull(file.getLink());
 		Assert.assertEquals(
 			_dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK),
@@ -260,18 +295,22 @@ public class SharedAssetDTOConverterTest {
 		Assert.assertNull(file.getThumbnailURL());
 	}
 
-	private SharingEntry _addSharingEntry(String className, long classPK)
+	private SharingEntry _addSharingEntry(
+			String className, long classPK, long groupId)
 		throws Exception {
 
 		return _sharingEntryLocalService.addSharingEntry(
 			null, _user.getUserId(), 0, TestPropsValues.getUserId(),
-			_classNameLocalService.getClassNameId(className), classPK,
-			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null, _serviceContext);
+			_classNameLocalService.getClassNameId(className), classPK, groupId,
+			true, Arrays.asList(SharingEntryAction.VIEW), null,
+			_serviceContext);
 	}
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private DLURLHelper _dlURLHelper;

@@ -42,8 +42,10 @@ public class WikiPageResourceUpgradeProcess extends UpgradeProcess {
 
 	private void _updateWikiPageResources() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select resourcePrimKey from WikiPageResource");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

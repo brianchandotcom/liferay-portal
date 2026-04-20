@@ -276,6 +276,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 				"select ctCollectionId, lPageTemplateStructureRelId, " +
 					"segmentsExperienceId, data_ from " +
 						"LayoutPageTemplateStructureRel");
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

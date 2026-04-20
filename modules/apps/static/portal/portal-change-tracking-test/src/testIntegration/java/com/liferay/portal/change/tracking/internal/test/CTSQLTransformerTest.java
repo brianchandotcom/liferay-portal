@@ -1092,7 +1092,9 @@ public class CTSQLTransformerTest {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					companyId, ctCollectionId);
+
 			Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_getSQL(
 					inputSQLFileName, expectedOutputSQLFileName,
@@ -1156,7 +1158,9 @@ public class CTSQLTransformerTest {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					companyId, ctCollectionId);
+
 			Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_getSQL(
 					inputSQLFileName, expectedOutputSQLFileName,

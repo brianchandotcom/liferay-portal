@@ -85,8 +85,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.ConfigurationAdmin;
-
 /**
  * @author Eudaldo Alonso
  */
@@ -2118,9 +2116,6 @@ public class AssetListAssetEntryProviderTest {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
-
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;

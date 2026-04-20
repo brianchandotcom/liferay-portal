@@ -12,7 +12,7 @@ exports[`List rendering should match the snapshot 1`] = `
       class="header-root"
     >
       <div
-        class="header-container"
+        class="mx-5"
       >
         <div
           class="row-root align-items-center d-flex justify-content-between"
@@ -57,7 +57,7 @@ exports[`List rendering should match the snapshot 1`] = `
       class="sub-header-root"
     >
       <div
-        class="row-root align-items-center d-flex justify-content-between header-container"
+        class="mx-5"
       >
         <div
           class="d-flex justify-content-end w-100"
@@ -85,180 +85,253 @@ exports[`List rendering should match the snapshot 1`] = `
       </div>
     </div>
     <div
-      class="body-root page-container"
-    >
-      <span
-        class="children-wrapper"
-      >
-        <div
-          class="card card-root"
-        >
-          <div
-            data-testid="fds-component"
-            id="assetTable"
-          >
-            <button
-              data-testid="trigger-info-panel"
-            >
-              Open Info Panel
-            </button>
-            <button
-              data-testid="trigger-info-panel-no-mime"
-            >
-              Open Info Panel No Mime
-            </button>
-            <button
-              data-testid="trigger-info-panel-no-title"
-            >
-              Open Info Panel No Title
-            </button>
-            <button
-              data-testid="trigger-info-panel-with-items"
-            >
-              Open Info Panel With Items
-            </button>
-          </div>
-        </div>
-      </span>
-    </div>
-    <div
-      class="frontend-data-set-side-panel  c-slideout c-slideout-absolute c-slideout-push c-slideout-end"
-      id="infoPanel"
+      class="fluid-body-root"
     >
       <div
-        class="sidebar sidebar-light"
-        style="width: 472px;"
+        class="card card-root"
       >
         <div
-          class="sidebar-header"
+          data-testid="fds-component"
+          id="assetTable"
         >
           <div
-            class="autofit-row"
+            data-testid="fds-filters"
+          >
+            [{"apiURL":"/o/faro/contacts/23/asset-summary-types?channelId=123&rangeKey=30","entityFieldType":"string","id":"assetType","itemKey":"name","itemLabel":"name","label":"Type","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-tags?channelId=123&rangeKey=30","entityFieldType":"string","id":"tags/id","itemKey":"id","itemLabel":"name","label":"Tags","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-categories?channelId=123&rangeKey=30","entityFieldType":"string","id":"categories/id","itemKey":"id","itemLabel":"name","label":"Categories","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-mime-types?channelId=123&rangeKey=30","entityFieldType":"string","id":"mimeType","itemKey":"id","itemLabel":"name","label":"MIME Type","multiple":true,"searchable":true,"type":"selection"}]
+          </div>
+          <button
+            data-testid="trigger-info-panel"
+          >
+            Open Info Panel
+          </button>
+          <button
+            data-testid="trigger-info-panel-no-mime"
+          >
+            Open Info Panel No Mime
+          </button>
+          <button
+            data-testid="trigger-info-panel-no-title"
+          >
+            Open Info Panel No Title
+          </button>
+          <button
+            data-testid="trigger-info-panel-with-items"
+          >
+            Open Info Panel With Items
+          </button>
+        </div>
+      </div>
+      <div
+        class="info-panel-root  c-slideout c-slideout-absolute c-slideout-push c-slideout-end"
+        id="infoPanel"
+      >
+        <div
+          class="sidebar sidebar-light"
+          style="width: 472px;"
+        >
+          <div
+            class="sidebar-header"
           >
             <div
-              class="autofit-col autofit-col-expand"
+              class="autofit-row"
             >
-              <span
-                class="component-title"
+              <div
+                class="autofit-col autofit-col-expand"
               >
-                <div
-                  class="align-items-center d-flex"
+                <span
+                  class="component-title"
                 >
-                  <h4
-                    class="text-7 font-weight-semi-bold"
-                  />
-                </div>
-              </span>
-            </div>
-            <div
-              class="autofit-col"
-            >
-              <button
-                class="close btn btn-monospaced btn-unstyled"
-                type="button"
+                  <div
+                    class="align-items-center d-flex"
+                  >
+                    <span
+                      class="mr-3"
+                    >
+                      <span
+                        class="sticker document-default sticker-dark"
+                      >
+                        <span
+                          class="sticker-overlay"
+                        >
+                          <svg
+                            class="lexicon-icon lexicon-icon-document-default"
+                            role="presentation"
+                          >
+                            <use
+                              href="#document-default"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </span>
+                    <h4
+                      class="text-7 font-weight-semi-bold"
+                    />
+                  </div>
+                </span>
+              </div>
+              <div
+                class="autofit-col"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-times"
-                  role="presentation"
+                <button
+                  class="close btn btn-monospaced btn-unstyled"
+                  type="button"
                 >
-                  <use
-                    href="#times"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    class="lexicon-icon lexicon-icon-times"
+                    role="presentation"
+                  >
+                    <use
+                      href="#times"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <ul
-          class="nav nav-tabs"
-          role="tablist"
-        >
-          <li
-            class="nav-item"
-            role="none"
+          <ul
+            class="nav nav-tabs"
+            role="tablist"
           >
-            <button
-              aria-controls="tabpanel-1"
-              aria-selected="true"
-              class="nav-link active btn btn-unstyled"
-              data-testid="tabItem"
-              role="tab"
-              tabindex="0"
-              type="button"
+            <li
+              class="nav-item"
+              role="none"
             >
-              Categorization
-            </button>
-          </li>
-        </ul>
-        <div
-          class="tab-content"
-        >
+              <button
+                aria-controls="tabpanel-1"
+                aria-selected="true"
+                class="nav-link active btn btn-unstyled"
+                data-testid="tabItem"
+                role="tab"
+                tabindex="0"
+                type="button"
+              >
+                Details
+              </button>
+            </li>
+            <li
+              class="nav-item"
+              role="none"
+            >
+              <button
+                aria-controls="tabpanel-2"
+                aria-selected="false"
+                class="nav-link btn btn-unstyled"
+                data-testid="tabItem"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                Categorization
+              </button>
+            </li>
+          </ul>
           <div
-            aria-labelledby="tab-1"
-            class="tab-pane active fade show"
-            role="tabpanel"
-            tabindex="0"
+            class="tab-content"
           >
             <div
-              class="panel panel-unstyled"
+              aria-labelledby="tab-1"
+              class="tab-pane active fade show"
+              role="tabpanel"
+              tabindex="0"
             >
               <div
-                class="panel-header border-bottom"
+                class="panel panel-unstyled"
               >
                 <div
-                  class="panel-title text-secondary"
+                  class="panel-header border-bottom"
                 >
-                  Categories
-                </div>
-              </div>
-              <div
-                class="panel-body"
-              >
-                <div
-                  class="mb-2"
-                >
-                  <span
-                    class="text-4 font-weight-semi-bold"
+                  <div
+                    class="panel-title text-secondary"
                   >
-                    No Categories were found for this asset.
-                  </span>
+                    Metadata
+                  </div>
                 </div>
-                <span
-                  class="text-3 text-secondary"
+                <div
+                  class="panel-body"
                 >
-                  Go to your content management system to manage Categories.
-                </span>
+                  <div
+                    class="mb-2"
+                  >
+                    <span
+                      class="text-4 font-weight-semi-bold"
+                    >
+                      ERC
+                    </span>
+                  </div>
+                  <span
+                    class="text-3 text-secondary"
+                  />
+                </div>
               </div>
             </div>
             <div
-              class="panel panel-unstyled"
+              aria-labelledby="tab-2"
+              class="tab-pane fade"
+              role="tabpanel"
+              tabindex="0"
             >
               <div
-                class="panel-header border-bottom"
+                class="panel panel-unstyled"
               >
                 <div
-                  class="panel-title text-secondary"
+                  class="panel-header border-bottom"
                 >
-                  Tags
+                  <div
+                    class="panel-title text-secondary"
+                  >
+                    Categories
+                  </div>
+                </div>
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="mb-2"
+                  >
+                    <span
+                      class="text-4 font-weight-semi-bold"
+                    >
+                      No Categories were found for this asset.
+                    </span>
+                  </div>
+                  <span
+                    class="text-3 text-secondary"
+                  >
+                    Go to your content management system to manage Categories.
+                  </span>
                 </div>
               </div>
               <div
-                class="panel-body"
+                class="panel panel-unstyled"
               >
                 <div
-                  class="mb-2"
+                  class="panel-header border-bottom"
                 >
-                  <span
-                    class="text-4 font-weight-semi-bold"
+                  <div
+                    class="panel-title text-secondary"
                   >
-                    No Tags were found for this asset.
+                    Tags
+                  </div>
+                </div>
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="mb-2"
+                  >
+                    <span
+                      class="text-4 font-weight-semi-bold"
+                    >
+                      No Tags were found for this asset.
+                    </span>
+                  </div>
+                  <span
+                    class="text-3 text-secondary"
+                  >
+                    Go to your content management system to manage Tags.
                   </span>
                 </div>
-                <span
-                  class="text-3 text-secondary"
-                >
-                  Go to your content management system to manage Tags.
-                </span>
               </div>
             </div>
           </div>

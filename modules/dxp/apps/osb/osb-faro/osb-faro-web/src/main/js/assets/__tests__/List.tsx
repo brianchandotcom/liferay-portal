@@ -1,4 +1,4 @@
-import List from '../List';
+import List from 'assets/pages/List';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ChannelContext} from 'shared/context/channel';
@@ -14,13 +14,17 @@ jest.unmock('react-dom');
 jest.mock('shared/hooks/useFrontendDataSet', () => ({
 	useFrontendDataSet: () => {
 		const FakeDataSet = ({
+			filters,
 			id,
 			itemsActions
 		}: {
+			filters?: any[];
 			id: string;
 			itemsActions?: Array<{onClick?: (item: any) => void}>;
 		}) => (
 			<div data-testid='fds-component' id={id}>
+				<div data-testid='fds-filters'>{JSON.stringify(filters)}</div>
+
 				<button
 					data-testid='trigger-info-panel'
 					onClick={() =>
@@ -29,6 +33,7 @@ jest.mock('shared/hooks/useFrontendDataSet', () => ({
 								assetCategories: [],
 								assetTags: [],
 								assetTitle: 'Test Asset Title',
+								assetType: 'blog',
 								id: 'asset-id-1',
 								mimeType: 'blog'
 							}
@@ -46,6 +51,7 @@ jest.mock('shared/hooks/useFrontendDataSet', () => ({
 								assetCategories: [],
 								assetTags: [],
 								assetTitle: 'Asset Without Mime',
+								assetType: 'document',
 								id: 'asset-id-2'
 							}
 						})
@@ -61,6 +67,7 @@ jest.mock('shared/hooks/useFrontendDataSet', () => ({
 							itemData: {
 								assetCategories: [],
 								assetTags: [],
+								assetType: 'folder',
 								id: 'fallback-id-3',
 								mimeType: 'folder'
 							}
@@ -81,6 +88,7 @@ jest.mock('shared/hooks/useFrontendDataSet', () => ({
 								],
 								assetTags: [{id: 'tag-1', name: 'Tag One'}],
 								assetTitle: 'Rich Asset',
+								assetType: 'webContent',
 								id: 'asset-id-4',
 								mimeType: 'basic-web-content'
 							}
@@ -211,9 +219,7 @@ describe('List', () => {
 		it('should render the page title "Assets"', () => {
 			renderList();
 
-			expect(
-				screen.getByRole('heading', {level: 1, name: 'Assets'})
-			).toBeInTheDocument();
+			expect(screen.getByText('Assets')).toBeInTheDocument();
 		});
 
 		it('should render the FrontendDataSet component', () => {
@@ -229,6 +235,22 @@ describe('List', () => {
 				'id',
 				'assetTable'
 			);
+		});
+
+		it('should pass the mimeType filter to FrontendDataSet', () => {
+			renderList();
+
+			const filters = JSON.parse(
+				screen.getByTestId('fds-filters').textContent
+			);
+
+			const mimeTypeFilter = filters.find(
+				filter => filter.id === 'mimeType'
+			);
+
+			expect(mimeTypeFilter).toBeDefined();
+			expect(mimeTypeFilter.label).toBe('MIME Type');
+			expect(mimeTypeFilter.apiURL).toContain('asset-summary-mime-types');
 		});
 
 		it('should render the DropdownRangeKey', () => {
@@ -436,7 +458,9 @@ describe('List', () => {
 
 			fireEvent.click(screen.getByTestId('trigger-info-panel-no-title'));
 
-			expect(screen.getByText('fallback-id-3')).toBeInTheDocument();
+			expect(screen.getByRole('heading', {level: 4})).toHaveTextContent(
+				'fallback-id-3'
+			);
 		});
 
 		it('should render AssetIcon when mimeType is present', () => {
@@ -450,52 +474,50 @@ describe('List', () => {
 			expect(container.querySelector('.sticker')).toBeInTheDocument();
 		});
 
-		it('should not render AssetIcon when mimeType is absent', () => {
+		it('should render a default AssetIcon when mimeType is absent', () => {
 			const {container} = renderList();
 
 			fireEvent.click(screen.getByTestId('trigger-info-panel-no-mime'));
 
-			expect(container.querySelector('.sticker')).toBeNull();
+			expect(container.querySelector('.sticker')).toBeInTheDocument();
 		});
 
-		it('should add the info-panel-opened class to the page when the panel is open', () => {
+		it('should add the sidebar-opened class to the page when the panel is open', () => {
 			const {container} = renderList();
 
 			fireEvent.click(screen.getByTestId('trigger-info-panel'));
 
 			expect(
-				container.querySelector('.info-panel-opened')
+				container.querySelector('.sidebar-opened')
 			).toBeInTheDocument();
 		});
 
-		it('should not have the info-panel-opened class before the panel is opened', () => {
+		it('should not have the sidebar-opened class before the panel is opened', () => {
 			const {container} = renderList();
 
-			expect(container.querySelector('.info-panel-opened')).toBeNull();
+			expect(container.querySelector('.sidebar-opened')).toBeNull();
 		});
 
-		it('should remove the info-panel-opened class after the panel is closed via onOpenChange', () => {
+		it('should remove the sidebar-opened class after the panel is closed', () => {
 			const {container} = renderList();
 
 			fireEvent.click(screen.getByTestId('trigger-info-panel'));
 
 			expect(
-				container.querySelector('.info-panel-opened')
+				container.querySelector('.sidebar-opened')
 			).toBeInTheDocument();
 
 			// ClayCore's SidePanel calls onOpenChange when closed; trigger it
 			// via the close button rendered inside the panel.
 
 			const closeButton = container.querySelector(
-				'.side-panel .btn-unstyled'
+				'.info-panel-root .close'
 			);
 
 			if (closeButton) {
 				fireEvent.click(closeButton);
 
-				expect(
-					container.querySelector('.info-panel-opened')
-				).toBeNull();
+				expect(container.querySelector('.sidebar-opened')).toBeNull();
 			}
 		});
 
@@ -508,11 +530,13 @@ describe('List', () => {
 		});
 	});
 
-	describe('InfoPanelItemContent', () => {
+	describe('InfoPanelContent', () => {
 		it('should display the empty state message when categories list is empty', () => {
 			renderList();
 
 			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			fireEvent.click(screen.getByText('Categorization'));
 
 			expect(
 				screen.getByText(/No Categories were found for this asset/i)
@@ -523,6 +547,8 @@ describe('List', () => {
 			renderList();
 
 			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+
+			fireEvent.click(screen.getByText('Categorization'));
 
 			// Tags section uses the 'tags' language key as the title.
 
@@ -538,6 +564,8 @@ describe('List', () => {
 				screen.getByTestId('trigger-info-panel-with-items')
 			);
 
+			fireEvent.click(screen.getByText('Categorization'));
+
 			expect(screen.getByText('Category One')).toBeInTheDocument();
 			expect(screen.getByText('Category Two')).toBeInTheDocument();
 		});
@@ -549,6 +577,8 @@ describe('List', () => {
 				screen.getByTestId('trigger-info-panel-with-items')
 			);
 
+			fireEvent.click(screen.getByText('Categorization'));
+
 			expect(screen.getByText('Tag One')).toBeInTheDocument();
 		});
 
@@ -558,6 +588,8 @@ describe('List', () => {
 			fireEvent.click(
 				screen.getByTestId('trigger-info-panel-with-items')
 			);
+
+			fireEvent.click(screen.getByText('Categorization'));
 
 			expect(
 				screen.queryByText(/No Categories were found for this asset/i)

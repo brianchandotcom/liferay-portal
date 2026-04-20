@@ -22,8 +22,10 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select CProductId from CProduct where CProductId = ?");
+
 			Statement s = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
 			ResultSet resultSet1 = s.executeQuery(
 				"select distinct CProductId from CPDefinitionLink")) {
 

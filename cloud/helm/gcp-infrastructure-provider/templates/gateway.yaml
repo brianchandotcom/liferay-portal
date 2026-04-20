@@ -1,4 +1,4 @@
-{{- if and .Values.gateway.className .Values.gateway.namespace }}
+{{- if and .Values.gateway.enabled .Values.gateway.className .Values.gateway.namespace }}
 {{- $gatewayProxyConfigName := "liferay-proxy-config" }}
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy

@@ -38,8 +38,10 @@ public class UpgradeCompany extends UpgradeProcess {
 
 	protected void upgradeKey() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId, key_ from Company");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

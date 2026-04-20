@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -108,6 +110,20 @@ public class JournalFolderStagedModelDataHandlerTest
 		return JournalTestUtil.addFolder(
 			group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString());
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return JournalFolderLocalServiceUtil.addFolder(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			group.getGroupId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

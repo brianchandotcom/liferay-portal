@@ -118,6 +118,11 @@ const sharingItem = {
 
 const DEFAULT_PROPS = {
 	additionalProps: {
+		breadcrumbProps: {
+			breadcrumbItems: [{label: 'Default'}, {label: 'content'}],
+			displayType: 'outline-0',
+			size: 'sm',
+		},
 		candidateAssetLibraries: [{groupId: 35393, name: 'Default'}],
 		cmsGroupId: 123,
 		commentsProps: {

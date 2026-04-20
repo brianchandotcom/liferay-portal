@@ -42,7 +42,9 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineNumber++;
 
-				if (line.matches("\\s*\\*.*") ||
+				if (isExcludedPath(
+						_LINE_LENGTH_EXCLUDES, absolutePath, lineNumber) ||
+					line.matches("\\s*\\*.*") ||
 					(getLineLength(line) <= getMaxLineLength())) {
 
 					continue;
@@ -50,11 +52,15 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (!isExcludedPath(
-						_LINE_LENGTH_EXCLUDES, absolutePath, lineNumber) &&
-					!_isAnnotationParameter(content, trimmedLine) &&
-					(trimmedLine.startsWith("//") ||
-					 line.contains(StringPool.QUOTE))) {
+				if (_isAnnotationParameter(content, trimmedLine) ||
+					_isInsideTextBlock(
+						content, getLineStartPos(content, lineNumber))) {
+
+					continue;
+				}
+
+				if (line.contains(StringPool.QUOTE) ||
+					trimmedLine.startsWith("//")) {
 
 					addMessage(fileName, "> " + getMaxLineLength(), lineNumber);
 				}
@@ -114,6 +120,20 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 		}
 
 		return false;
+	}
+
+	private boolean _isInsideTextBlock(String content, int pos) {
+		String s = content.substring(pos);
+
+		int x = s.indexOf("\"\"\";");
+
+		if (x == -1) {
+			return false;
+		}
+
+		s = s.substring(0, x);
+
+		return !s.contains("\"\"\"");
 	}
 
 	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";

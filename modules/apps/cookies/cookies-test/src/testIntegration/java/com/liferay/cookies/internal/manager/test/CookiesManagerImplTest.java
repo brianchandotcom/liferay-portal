@@ -13,10 +13,12 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -57,6 +59,9 @@ public class CookiesManagerImplTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"enabled", true
 			).build());
+
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 	}
 
 	@After
@@ -194,7 +199,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testAddCookieWithCustomContextPath() {
+	public void testAddCookieWithCustomContextPath() throws Exception {
 		Cookie cookie = new Cookie(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
@@ -210,6 +215,9 @@ public class CookiesManagerImplTest {
 				}
 
 			};
+
+		customContextMockHttpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 
 		CookiesManagerUtil.addCookie(
 			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,

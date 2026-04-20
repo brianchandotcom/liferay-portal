@@ -23,6 +23,7 @@ interface IExperienceDropdownProps {
 
 const ExperienceDropdown: React.FC<IExperienceDropdownProps> = ({onChange}) => {
 	const {channelId, groupId, title, touchpoint} = useParams();
+
 	const [selectedKey, setSelectedKey] = useState<string>('null');
 
 	const {data} = useRequest({
@@ -45,11 +46,6 @@ const ExperienceDropdown: React.FC<IExperienceDropdownProps> = ({onChange}) => {
 		}));
 	}, [data]);
 
-	const selectedItem = useMemo(
-		() => displayItems.find(item => item.id === selectedKey),
-		[displayItems, selectedKey]
-	);
-
 	const handleSelectionChange = (key: string) => {
 		setSelectedKey(key);
 		const valueForBackend = key === 'null' ? null : key;
@@ -60,23 +56,19 @@ const ExperienceDropdown: React.FC<IExperienceDropdownProps> = ({onChange}) => {
 		<ClayTooltipProvider>
 			<div className='experience-dropdown'>
 				<Picker
-					aria-label={Liferay.Language.get('experiences-dropdown')}
+					aria-label={Liferay.Language.get('all-experiences')}
 					className='border-light form-control-sm'
 					items={displayItems}
 					onSelectionChange={key =>
 						handleSelectionChange(String(key))
 					}
+					searchable
 					selectedKey={selectedKey}
-					triggerValue={selectedItem?.displayName}
 				>
 					{(item: IExperienceItem) => (
 						<Option key={String(item.id)} textValue={item.name}>
 							<div
-								className={`w-100 ${
-									item.id === 'null'
-										? 'border-bottom pb-1'
-										: ''
-								}`}
+								className='w-100'
 								title={
 									item.name.length > 35
 										? item.name

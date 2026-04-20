@@ -41,7 +41,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -355,11 +354,7 @@ public class JavaParser {
 			fileContents, startLineNumber, endLineNumber);
 
 		if (!actualJavaTermContent.startsWith(expectedJavaTermContent) &&
-			!_isExcludedJavaTerm(parsedJavaTerm) &&
-			(!actualJavaTermContent.contains("\n\n") ||
-			 !Objects.equals(
-				 parsedJavaTerm.getClassName(),
-				 JavaTryStatement.class.getName()))) {
+			!_isExcludedJavaTerm(parsedJavaTerm)) {
 
 			contentModifications.addReplaceContent(
 				parsedJavaTerm.getContent(), startPosition.getLineNumber(),

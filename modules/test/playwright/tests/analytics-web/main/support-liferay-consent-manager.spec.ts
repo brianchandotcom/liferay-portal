@@ -7,7 +7,6 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -32,9 +31,6 @@ import {createDataSource} from '../../osb-faro-web/main/utils/data-source';
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	globalMenuPagesTest,
 	loginAnalyticsCloudTest(),
 	loginTest(),

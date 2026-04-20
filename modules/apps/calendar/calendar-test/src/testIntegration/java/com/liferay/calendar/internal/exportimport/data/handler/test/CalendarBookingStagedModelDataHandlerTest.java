@@ -157,6 +157,21 @@ public class CalendarBookingStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		CalendarBooking calendarBooking = (CalendarBooking)addStagedModel(
+			group, dependentStagedModelsMap);
+
+		calendarBooking.setExternalReferenceCode(externalReferenceCode);
+
+		return _calendarBookingLocalService.updateCalendarBooking(
+			calendarBooking);
+	}
+
+	@Override
 	protected List<StagedModel> addWorkflowedStagedModels(Group group)
 		throws Exception {
 

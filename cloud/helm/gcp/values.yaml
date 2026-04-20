@@ -9,16 +9,20 @@ liferay-default:
     configmap:
         data:
             com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config: |
-                authenticationEnabled=B"false"
+                authenticationEnabled=B"true"
                 httpSSLEnabled=B"false"
                 networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
                 operationMode="REMOTE"
+                password="$[env:ELASTICSEARCH_PASSWORD]"
                 productionModeEnabled=B"true"
+                username="$[env:ELASTICSEARCH_USERNAME]"
             com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config: |
-                authenticationEnabled=B"false"
+                authenticationEnabled=B"true"
                 httpSSLEnabled=B"false"
                 networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
+                password="$[env:ELASTICSEARCH_PASSWORD]"
                 productionModeEnabled=B"true"
+                username="$[env:ELASTICSEARCH_USERNAME]"
             com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config: |
                 bucketName="$[env:LIFERAY_GCS_BUCKET_NAME]"
     customEnv:
@@ -74,6 +78,28 @@ liferay-default:
                     runAsNonRoot: true
                     seccompProfile:
                         type: RuntimeDefault
+        x-wait-for-elasticsearch:
+            -   command:
+                    -   sh
+                    -   /liferay-init-scripts/wait-for-elasticsearch.sh
+                envFrom:
+                    -   secretRef:
+                            name: elasticsearch-connection-details
+                image: busybox:1.36
+                name: wait-for-elasticsearch
+                securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                        drop:
+                            -   ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+                    seccompProfile:
+                        type: RuntimeDefault
+                volumeMounts:
+                    -   mountPath: /liferay-init-scripts/wait-for-elasticsearch.sh
+                        name: liferay-init-scripts
+                        subPath: wait-for-elasticsearch.sh
     customLabels:
         origin: liferay-gcp
     customVolumeMounts:
@@ -96,6 +122,11 @@ liferay-default:
             -   name: liferay-license
                 secret:
                     secretName: liferay-license
+        x-liferay-init-scripts:
+            -   configMap:
+                    defaultMode: 0755
+                    name: liferay-init-scripts
+                name: liferay-init-scripts
     network:
         enabled: true
         hostnames: []

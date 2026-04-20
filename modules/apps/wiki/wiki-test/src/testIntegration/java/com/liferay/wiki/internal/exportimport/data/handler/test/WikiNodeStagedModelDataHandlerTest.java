@@ -13,6 +13,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
@@ -180,6 +183,19 @@ public class WikiNodeStagedModelDataHandlerTest
 		throws Exception {
 
 		return WikiTestUtil.addNode(group.getGroupId());
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return WikiNodeLocalServiceUtil.addNode(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

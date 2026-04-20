@@ -63,8 +63,10 @@ public class CommerceOrderItemUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateCommerceOrderItemSQL);
+
 			Statement s = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
 			ResultSet resultSet = s.executeQuery(getCPInstanceSQL)) {
 
 			while (resultSet.next()) {

@@ -47,6 +47,7 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 					connection.prepareStatement(sql1);
 
 				ResultSet resultSet = preparedStatement1.executeQuery();
+
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection, sql2)) {

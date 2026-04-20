@@ -1,4 +1,5 @@
 clusterBootstrap:
+    enabled: true
     image: alpine:3
     resources:
         limits:
@@ -11,7 +12,10 @@ clusterBootstrap:
         sysctl -w vm.max_map_count=1048576
 crossplaneNamespace: crossplane-system
 deploymentName: ""
+eck-operator:
+    enabled: true
 gateway:
+    enabled: true
     internetFacing: true
     namespace: envoy-gateway-system
 gcp:
@@ -21,4 +25,6 @@ liferay-subchart-backup-controller:
     enabled: true
     serviceAccountName: backup-controller
 liferay-subchart-backup-create:
+    enabled: true
+providers:
     enabled: true

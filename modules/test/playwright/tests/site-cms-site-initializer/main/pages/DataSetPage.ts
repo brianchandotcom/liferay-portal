@@ -82,6 +82,7 @@ export class DataSetPage {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {
+				exact: true,
 				name: action,
 			}),
 			timeout,

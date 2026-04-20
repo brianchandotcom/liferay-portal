@@ -37,6 +37,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					"faviconFileEntryId > 0"));
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

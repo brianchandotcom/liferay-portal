@@ -48,22 +48,14 @@ test.beforeEach(
 	}
 );
 
-test.afterEach(async ({apiHelpers, page, workflowPage}) => {
+test.afterEach(async ({apiHelpers, workflowPage}) => {
 	await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
 
 	await workflowPage.goto();
 
-	const row = await page.getByRole('row').filter({hasText: 'Blogs Entry'});
-
-	const workflowEnabled = await row
-		.getByTitle('Workflow Definition')
-		.filter({hasText: 'Single Approver'});
-
-	if (workflowEnabled) {
-		await workflowPage.changeWorkflow('Blogs Entry', 'No Workflow', {
-			disable: true,
-		});
-	}
+	await workflowPage.changeWorkflow('Blogs Entry', 'No Workflow', {
+		disable: true,
+	});
 });
 
 test('LPD-44372 Workflow notification persists after publication is published', async ({

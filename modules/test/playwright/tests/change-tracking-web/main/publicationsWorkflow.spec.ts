@@ -37,32 +37,35 @@ test(
 			'Single Approver'
 		);
 
-		await journalEditArticlePage.goto();
+		try {
+			await journalEditArticlePage.goto();
 
-		const title = getRandomString();
+			const title = getRandomString();
 
-		await journalEditArticlePage.submitArticleForWorkflow(title);
+			await journalEditArticlePage.submitArticleForWorkflow(title);
 
-		await changeTrackingPage.workOnPublication(ctCollection);
+			await changeTrackingPage.workOnPublication(ctCollection);
 
-		await workflowTasksPage.goToAssignedToMyRoles();
+			await workflowTasksPage.goToAssignedToMyRoles();
 
-		const row = await page.getByRole('row').filter({hasText: title});
+			const row = await page.getByRole('row').filter({hasText: title});
 
-		await expect(row).toBeVisible();
+			await expect(row).toBeVisible();
 
-		await expect(row.locator('.dropdown-toggle')).not.toBeVisible();
+			await expect(row.locator('.dropdown-toggle')).not.toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
 
-		await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
+			await workflowPage.goto();
 
-		await workflowPage.goto();
-
-		await workflowPage.changeWorkflow(
-			'Web Content Article',
-			'No Workflow',
-			{
-				disable: true,
-			}
-		);
+			await workflowPage.changeWorkflow(
+				'Web Content Article',
+				'No Workflow',
+				{
+					disable: true,
+				}
+			);
+		}
 	}
 );

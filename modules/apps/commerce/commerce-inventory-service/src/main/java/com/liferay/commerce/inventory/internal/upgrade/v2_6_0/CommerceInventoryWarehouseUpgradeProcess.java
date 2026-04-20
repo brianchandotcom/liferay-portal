@@ -26,7 +26,9 @@ public class CommerceInventoryWarehouseUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CIWarehouse set description = ?, name = ? where " +
 					"CIWarehouseId = ?");
+
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select CIWarehouseId, companyId, description, name from " +
 					"CIWarehouse")) {

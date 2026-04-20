@@ -163,8 +163,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void updateFileEntryTypeDDMStructureLinks() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from DLFileEntryTypes_DDMStructures");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			long classNameId = PortalUtil.getClassNameId(DLFileEntryType.class);

@@ -1,3 +1,4 @@
+{{- if .Values.providers.enabled -}}
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
@@ -76,3 +77,4 @@ spec:
     package: xpkg.upbound.io/upbound/provider-family-gcp:v2.5.0
     runtimeConfigRef:
         name: gcp-family-config
+{{- end -}}

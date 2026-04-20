@@ -42,10 +42,12 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 
 	private void _updateJournalArticleImagesInstanceId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select articleId, elName from JournalArticleImage where " +
 					"(elInstanceId = '' or elInstanceId is null) group by " +
 						"articleId, elName");
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			try (PreparedStatement preparedStatement2 =
@@ -71,8 +73,10 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 
 	private void _updateJournalArticleImagesName() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select articleImageId, elName from JournalArticleImage");
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			try (PreparedStatement preparedStatement2 =

@@ -143,7 +143,6 @@ exports[`GeolocationInput should render 1`] = `
           class="dropdown dropdown-range-key-root"
         >
           <div
-            aria-controls="clay-dropdown-menu-1"
             aria-expanded="false"
             aria-haspopup="true"
             class="dropdown-toggle"

@@ -46,7 +46,8 @@ export default function Navigation({
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
-	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
+	const {experienceId, timeSpanKey, timeSpanOffset} =
+		useContext(ChartStateContext);
 
 	const detailRef = useRef(null);
 
@@ -57,10 +58,17 @@ export default function Navigation({
 	const handleHistoricalReads = useCallback(() => {
 		return APIService.getHistoricalReads(
 			endpoints.analyticsReportsHistoricalReadsURL,
-			{namespace, plid: page.plid, timeSpanKey, timeSpanOffset}
+			{
+				experienceId,
+				namespace,
+				plid: page.plid,
+				timeSpanKey,
+				timeSpanOffset,
+			}
 		).then((response) => response);
 	}, [
 		endpoints.analyticsReportsHistoricalReadsURL,
+		experienceId,
 		namespace,
 		page.plid,
 		timeSpanKey,
@@ -70,10 +78,17 @@ export default function Navigation({
 	const handleHistoricalViews = useCallback(() => {
 		return APIService.getHistoricalReads(
 			endpoints.analyticsReportsHistoricalViewsURL,
-			{namespace, plid: page.plid, timeSpanKey, timeSpanOffset}
+			{
+				experienceId,
+				namespace,
+				plid: page.plid,
+				timeSpanKey,
+				timeSpanOffset,
+			}
 		).then((response) => response);
 	}, [
 		endpoints.analyticsReportsHistoricalViewsURL,
+		experienceId,
 		namespace,
 		page.plid,
 		timeSpanKey,
@@ -87,6 +102,13 @@ export default function Navigation({
 		).then(({analyticsReportsTotalReads}) => analyticsReportsTotalReads);
 	}, [endpoints.analyticsReportsTotalReadsURL, namespace, page.plid]);
 
+	const handleExperiences = useCallback(() => {
+		return APIService.getExperiences(
+			endpoints.analyticsReportsPageExperiencesURL,
+			{namespace, plid: page.plid}
+		).then(({pageExperiences}) => pageExperiences);
+	}, [endpoints.analyticsReportsPageExperiencesURL, namespace, page.plid]);
+
 	const handleTotalViews = useCallback(() => {
 		return APIService.getTotalReads(
 			endpoints.analyticsReportsTotalViewsURL,
@@ -97,10 +119,17 @@ export default function Navigation({
 	const handleTrafficSources = useCallback(() => {
 		return APIService.getTrafficSources(
 			endpoints.analyticsReportsTrafficSourcesURL,
-			{namespace, plid: page.plid, timeSpanKey, timeSpanOffset}
+			{
+				experienceId,
+				namespace,
+				plid: page.plid,
+				timeSpanKey,
+				timeSpanOffset,
+			}
 		).then(({trafficSources}) => trafficSources);
 	}, [
 		endpoints.analyticsReportsTrafficSourcesURL,
+		experienceId,
 		namespace,
 		page.plid,
 		timeSpanKey,
@@ -124,6 +153,7 @@ export default function Navigation({
 				view: trafficSourceName,
 			});
 			APIService.getTrafficSources(trafficSource.endpointURL, {
+				experienceId,
 				namespace,
 				plid: page.plid,
 				timeSpanKey,
@@ -142,7 +172,7 @@ export default function Navigation({
 		},
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[namespace, page.plid, timeSpanKey, timeSpanOffset]
+		[experienceId, namespace, page.plid, timeSpanKey, timeSpanOffset]
 	);
 
 	const handleTrafficSourceName = (trafficSourceName) =>
@@ -218,6 +248,7 @@ export default function Navigation({
 				className={classnames({
 					'analytics-reports-app-main--hide': showDetail,
 				})}
+				experiencesDataProvider={handleExperiences}
 				onSelectedLanguageClick={onSelectedLanguageClick}
 				onTrafficSourceClick={updateTrafficSourcesAndCurrentPage}
 				pagePublishDate={pagePublishDate}

@@ -69,40 +69,36 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 				getCookiesPreferenceHandlingCustomFloatingIconImageId(
 					_scope, companyId);
 
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-75027")) {
-			long fileEntryId = ParamUtil.getLong(
-				httpServletRequest, "fileEntryId");
+		long fileEntryId = ParamUtil.getLong(httpServletRequest, "fileEntryId");
 
-			try {
-				if (ParamUtil.getBoolean(httpServletRequest, "deleteLogo")) {
-					_imageLocalService.deleteImage(customFloatingIconImageId);
+		try {
+			if (ParamUtil.getBoolean(httpServletRequest, "deleteLogo")) {
+				_imageLocalService.deleteImage(customFloatingIconImageId);
 
-					customFloatingIconImageId = 0;
-				}
-				else if (fileEntryId > 0) {
-					FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-						fileEntryId);
-
-					byte[] bytes = FileUtil.getBytes(
-						fileEntry.getContentStream());
-
-					Image image = null;
-
-					if (customFloatingIconImageId > 0) {
-						image = _imageLocalService.moveImage(
-							customFloatingIconImageId, bytes);
-					}
-					else {
-						image = _imageLocalService.updateImage(
-							companyId, _counterLocalService.increment(), bytes);
-					}
-
-					customFloatingIconImageId = image.getImageId();
-				}
+				customFloatingIconImageId = 0;
 			}
-			catch (IOException | PortalException exception) {
-				throw new RuntimeException(exception);
+			else if (fileEntryId > 0) {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					fileEntryId);
+
+				byte[] bytes = FileUtil.getBytes(fileEntry.getContentStream());
+
+				Image image = null;
+
+				if (customFloatingIconImageId > 0) {
+					image = _imageLocalService.moveImage(
+						customFloatingIconImageId, bytes);
+				}
+				else {
+					image = _imageLocalService.updateImage(
+						companyId, _counterLocalService.increment(), bytes);
+				}
+
+				customFloatingIconImageId = image.getImageId();
 			}
+		}
+		catch (IOException | PortalException exception) {
+			throw new RuntimeException(exception);
 		}
 
 		return HashMapBuilder.<String, Object>put(
@@ -131,17 +127,7 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			ParamUtil.getString(httpServletRequest, "floatingIcon", "cookie")
 		).put(
 			"floatingIconEnabled",
-			() -> {
-				if (FeatureFlagManagerUtil.isEnabled(
-						_portal.getCompanyId(httpServletRequest),
-						"LPD-75027")) {
-
-					return ParamUtil.getBoolean(
-						httpServletRequest, "floatingIconEnabled");
-				}
-
-				return true;
-			}
+			ParamUtil.getBoolean(httpServletRequest, "floatingIconEnabled")
 		).put(
 			"modifiedDate",
 			() -> {

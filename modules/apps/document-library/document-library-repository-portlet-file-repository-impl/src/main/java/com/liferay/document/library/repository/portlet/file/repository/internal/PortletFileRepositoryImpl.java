@@ -126,48 +126,59 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			boolean indexingEnabled)
 		throws PortalException {
 
-		if (Validator.isNull(fileName)) {
+		return addPortletFileEntry(
+			externalReferenceCode, groupId, userId, className, classPK,
+			portletId, folderId, file, fileName, fileName, mimeType,
+			indexingEnabled);
+	}
+
+	@Override
+	public FileEntry addPortletFileEntry(
+			String externalReferenceCode, long groupId, long userId,
+			String className, long classPK, String portletId, long folderId,
+			File file, String sourceFileName, String title, String mimeType,
+			boolean indexingEnabled)
+		throws PortalException {
+
+		if (Validator.isNull(sourceFileName) || Validator.isNull(title)) {
 			return null;
 		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Repository repository = addPortletRepository(
-			groupId, portletId, serviceContext);
-
-		if (Validator.isNotNull(className) && (classPK > 0)) {
-			serviceContext.setAttribute("className", className);
-			serviceContext.setAttribute("classPK", String.valueOf(classPK));
-		}
-
-		serviceContext.setIndexingEnabled(indexingEnabled);
 
 		if (Validator.isNull(mimeType) ||
 			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
 
-			mimeType = MimeTypesUtil.getContentType(file, fileName);
+			mimeType = MimeTypesUtil.getContentType(file, sourceFileName);
 		}
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		String finalMimeType = mimeType;
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+		return _run(
+			() -> {
+				ServiceContext serviceContext = new ServiceContext();
 
-			LocalRepository localRepository =
-				_repositoryProvider.getLocalRepository(
-					repository.getRepositoryId());
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
 
-			return localRepository.addFileEntry(
-				externalReferenceCode, userId, folderId, fileName, mimeType,
-				fileName, fileName, StringPool.BLANK, StringPool.BLANK, file,
-				null, null, null, serviceContext);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+				Repository repository = addPortletRepository(
+					groupId, portletId, serviceContext);
+
+				if (Validator.isNotNull(className) && (classPK > 0)) {
+					serviceContext.setAttribute("className", className);
+					serviceContext.setAttribute(
+						"classPK", String.valueOf(classPK));
+				}
+
+				serviceContext.setIndexingEnabled(indexingEnabled);
+
+				LocalRepository localRepository =
+					_repositoryProvider.getLocalRepository(
+						repository.getRepositoryId());
+
+				return localRepository.addFileEntry(
+					externalReferenceCode, userId, folderId, sourceFileName,
+					finalMimeType, title, title, StringPool.BLANK,
+					StringPool.BLANK, file, null, null, null, serviceContext);
+			});
 	}
 
 	@Override

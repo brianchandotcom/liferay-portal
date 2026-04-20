@@ -67,6 +67,7 @@ public class CookiesPreferenceHandlingConfigurationUpgradeProcessTest {
 			).build());
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"insert into Configuration_ (configurationId, dictionary) " +
 					"values(?, ?)")) {
@@ -98,7 +99,9 @@ public class CookiesPreferenceHandlingConfigurationUpgradeProcessTest {
 		upgradeProcess.upgrade();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
 					"select dictionary from Configuration_ where ",

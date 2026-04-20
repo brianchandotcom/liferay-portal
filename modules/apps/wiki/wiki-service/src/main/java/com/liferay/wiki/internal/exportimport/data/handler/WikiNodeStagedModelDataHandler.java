@@ -59,6 +59,14 @@ public class WikiNodeStagedModelDataHandler
 	}
 
 	@Override
+	public WikiNode fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return _wikiNodeLocalService.fetchWikiNodeByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public WikiNode fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -132,8 +140,8 @@ public class WikiNodeStagedModelDataHandler
 
 		WikiNode importedNode = null;
 
-		WikiNode existingNode = fetchStagedModelByUuidAndGroupId(
-			node.getUuid(), portletDataContext.getScopeGroupId());
+		WikiNode existingNode = fetchExistingStagedModel(
+			node, portletDataContext.getScopeGroupId());
 
 		String nodeName = node.getName();
 
@@ -166,6 +174,11 @@ public class WikiNodeStagedModelDataHandler
 				importedNode = _wikiNodeLocalService.updateNode(
 					existingNode.getNodeId(), nodeName, node.getDescription(),
 					serviceContext);
+
+				importedNode.setUuid(node.getUuid());
+
+				importedNode = _wikiNodeLocalService.updateWikiNode(
+					importedNode);
 			}
 		}
 		else {

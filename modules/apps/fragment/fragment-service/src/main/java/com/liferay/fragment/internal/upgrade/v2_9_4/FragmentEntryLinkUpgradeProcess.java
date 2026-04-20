@@ -85,25 +85,26 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 				"select ctCollectionId, fragmentEntryLinkId, " +
 					"fragmentEntryId, editableValues from FragmentEntryLink");
 
-			ResultSet resultSet1 = preparedStatement1.executeQuery();
+			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update FragmentEntryLink set type_ = ? where " +
 						"ctCollectionId = ? and fragmentEntryLinkId = ?")) {
 
-			while (resultSet1.next()) {
-				long ctCollectionId = resultSet1.getLong("ctCollectionId");
+			while (resultSet.next()) {
+				long ctCollectionId = resultSet.getLong("ctCollectionId");
 
 				preparedStatement2.setInt(
 					1,
 					_getFragmentEntryType(
-						ctCollectionId, resultSet1.getString("editableValues"),
-						resultSet1.getLong("fragmentEntryId")));
+						ctCollectionId, resultSet.getString("editableValues"),
+						resultSet.getLong("fragmentEntryId")));
 				preparedStatement2.setLong(2, ctCollectionId);
 
 				preparedStatement2.setLong(
-					3, resultSet1.getLong("fragmentEntryLinkId"));
+					3, resultSet.getLong("fragmentEntryLinkId"));
 
 				preparedStatement2.addBatch();
 			}

@@ -43,6 +43,7 @@ public class LayoutPageTemplateCollectionUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = s.executeQuery(
 				"select layoutPageTemplateCollectionId, name from " +
 					"LayoutPageTemplateCollection");
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

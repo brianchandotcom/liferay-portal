@@ -46,6 +46,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -235,6 +236,23 @@ public class MBMessageStagedModelDataHandlerTest
 				fileEntry.getRepositoryId()));
 
 		return message;
+	}
+
+	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return MBMessageLocalServiceUtil.addMessage(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), group.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, 0, 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
+			0.0, false,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

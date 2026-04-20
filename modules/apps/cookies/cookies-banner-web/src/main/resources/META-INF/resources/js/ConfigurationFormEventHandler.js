@@ -47,6 +47,10 @@ export default function ({namespace}) {
 				`input[type='radio'][name='${namespace}floatingIcon']`
 			);
 
+			const forcedReconsentButton = document.getElementById(
+				`${namespace}forcedReconsentButton`
+			);
+
 			const logoSelectorContainer = document.getElementById(
 				`${namespace}logoSelectorContainer`
 			);
@@ -70,29 +74,28 @@ export default function ({namespace}) {
 					dissentRenewalPeriodTimeUnit.classList.remove('disabled');
 					dissentRenewalPeriodTimeUnit.removeAttribute('disabled');
 					explicitConsentMode.removeAttribute('disabled');
+					floatingIconEnabled.removeAttribute('disabled');
+					forcedReconsentButton.removeAttribute('disabled');
+					forcedReconsentButton.classList.remove('disabled');
 
-					if (Liferay.FeatureFlags['LPD-75027']) {
-						floatingIconEnabled.removeAttribute('disabled');
+					floatingIcons.forEach((iconInput) => {
+						iconInput.removeAttribute('disabled');
 
-						floatingIcons.forEach((iconInput) => {
-							iconInput.removeAttribute('disabled');
-
-							const label = document.querySelector(
-								`label[for='${iconInput.id}']`
-							);
-							if (label) {
-								label.classList.remove('disabled');
-							}
-						});
-
-						if (logoSelectorContainer) {
-							logoSelectorContainer.classList.remove('disabled');
-							logoSelectorContainer
-								.querySelectorAll('input, button')
-								.forEach((element) => {
-									element.removeAttribute('disabled');
-								});
+						const label = document.querySelector(
+							`label[for='${iconInput.id}']`
+						);
+						if (label) {
+							label.classList.remove('disabled');
 						}
+					});
+
+					if (logoSelectorContainer) {
+						logoSelectorContainer.classList.remove('disabled');
+						logoSelectorContainer
+							.querySelectorAll('input, button')
+							.forEach((element) => {
+								element.removeAttribute('disabled');
+							});
 					}
 
 					if (Liferay.FeatureFlags['LPD-75032']) {
@@ -113,29 +116,28 @@ export default function ({namespace}) {
 					dissentRenewalPeriodTimeUnit.classList.add('disabled');
 					dissentRenewalPeriodTimeUnit.setAttribute('disabled', '');
 					explicitConsentMode.setAttribute('disabled', '');
+					floatingIconEnabled.setAttribute('disabled', '');
+					forcedReconsentButton.classList.add('disabled');
+					forcedReconsentButton.setAttribute('disabled', '');
 
-					if (Liferay.FeatureFlags['LPD-75027']) {
-						floatingIconEnabled.setAttribute('disabled', '');
+					floatingIcons.forEach((iconInput) => {
+						iconInput.setAttribute('disabled', '');
 
-						floatingIcons.forEach((iconInput) => {
-							iconInput.setAttribute('disabled', '');
-
-							const label = document.querySelector(
-								`label[for='${iconInput.id}']`
-							);
-							if (label) {
-								label.classList.add('disabled');
-							}
-						});
-
-						if (logoSelectorContainer) {
-							logoSelectorContainer.classList.add('disabled');
-							logoSelectorContainer
-								.querySelectorAll('input, button')
-								.forEach((element) => {
-									element.setAttribute('disabled', '');
-								});
+						const label = document.querySelector(
+							`label[for='${iconInput.id}']`
+						);
+						if (label) {
+							label.classList.add('disabled');
 						}
+					});
+
+					if (logoSelectorContainer) {
+						logoSelectorContainer.classList.add('disabled');
+						logoSelectorContainer
+							.querySelectorAll('input, button')
+							.forEach((element) => {
+								element.setAttribute('disabled', '');
+							});
 					}
 
 					if (Liferay.FeatureFlags['LPD-75032']) {

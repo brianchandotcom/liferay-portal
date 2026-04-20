@@ -20,7 +20,6 @@ const test = mergeTests(
 		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
 		'LPD-34594': {enabled: true},
-		'LPD-36105': {enabled: true},
 		'LPD-57283': {enabled: true},
 	}),
 	loginTest()
@@ -374,6 +373,14 @@ test(
 
 			await settingsMenuItem.click();
 
+			const headerTitle = page.getByTestId('headerTitle');
+
+			await expect(headerTitle).toBeVisible();
+
+			await expect(headerTitle).toHaveText(
+				`${designLibraryName} Settings`
+			);
+
 			await expect(page.getByRole('textbox', {name: 'Name'})).toHaveValue(
 				designLibraryName
 			);
@@ -394,7 +401,10 @@ test(
 
 			await page.getByRole('button', {name: 'Save'}).click();
 
-			await page.waitForLoadState();
+			await waitForAlert(
+				page,
+				`Success:${editedDesignLibraryName} was saved successfully.`
+			);
 
 			await expect(page.getByRole('textbox', {name: 'Name'})).toHaveValue(
 				editedDesignLibraryName

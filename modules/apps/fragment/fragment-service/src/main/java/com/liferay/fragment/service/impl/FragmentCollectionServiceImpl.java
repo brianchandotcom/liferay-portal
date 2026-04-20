@@ -93,16 +93,14 @@ public class FragmentCollectionServiceImpl
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
 		FragmentCollection fragmentCollection =
 			fragmentCollectionLocalService.
-				fetchFragmentCollectionByExternalReferenceCode(
+				getFragmentCollectionByExternalReferenceCode(
 					externalReferenceCode, groupId);
-
-		if (fragmentCollection != null) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), fragmentCollection.getGroupId(),
-				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-		}
 
 		return fragmentCollectionLocalService.deleteFragmentCollection(
 			fragmentCollection);

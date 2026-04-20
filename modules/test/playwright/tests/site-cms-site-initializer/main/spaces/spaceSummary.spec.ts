@@ -119,35 +119,70 @@ test(
 );
 
 test(
+	'View All Files link is not rendered when there are no files',
+	{tag: '@LPD-85991'},
+	async ({apiHelpers, spaceSummaryPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+			},
+			type: 'Space',
+		});
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await expect(spaceSummaryPage.viewAllFilesLink).not.toBeVisible();
+
+		await spaceSummaryPage.createFileFolder('Folder' + getRandomInt());
+
+		await expect(spaceSummaryPage.viewAllFilesLink).toBeVisible();
+	}
+);
+
+test(
 	'Can view added files in the space summary page',
-	{tag: '@LPD-62706'},
+	{tag: ['@LPD-62706', '@LPD-86299']},
 	async ({apiHelpers, page, spaceSummaryPage}) => {
 		const applicationName = 'cms/basic-documents';
 		const spaceName = 'Default';
 
-		const file1Title = `title ${getRandomString()}`;
+		const fileTitle = `title ${getRandomString()}`;
 
-		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				file: {
 					fileBase64: 'R0lGODlhAQABAAAAACw=',
 					name: `file_${getRandomString()}.png`,
 				},
 				objectEntryFolderExternalReferenceCode: 'L_FILES',
-				title: file1Title,
+				title: fileTitle,
 			},
 			applicationName,
 			spaceName
 		);
 
-		await spaceSummaryPage.goto(spaceName);
+		try {
+			await spaceSummaryPage.goto(spaceName);
 
-		expect(page.getByText(file1Title)).toBeVisible();
+			await expect(page.getByText(fileTitle)).toBeVisible();
 
-		await apiHelpers.objectEntry.deleteObjectEntry(
-			applicationName,
-			String(objectEntry1.id)
-		);
+			await page.getByText(fileTitle).click();
+
+			await expect(
+				page.getByRole('textbox', {name: 'Title'})
+			).toBeVisible();
+		}
+		finally {
+			if (objectEntry) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					applicationName,
+					String(objectEntry.id)
+				);
+			}
+		}
 	}
 );
 
@@ -165,6 +200,30 @@ test(
 
 		await expect(page.getByRole('link', {name: spaceName})).toBeVisible();
 		expect(page.getByRole('link', {name: 'Contents'})).toBeVisible();
+	}
+);
+
+test(
+	'View All Content link is not rendered when there is no content',
+	{tag: '@LPD-85991'},
+	async ({apiHelpers, spaceSummaryPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+			},
+			type: 'Space',
+		});
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await expect(spaceSummaryPage.viewAllContentLink).not.toBeVisible();
+
+		await spaceSummaryPage.createContentFolder('Folder' + getRandomInt());
+
+		await expect(spaceSummaryPage.viewAllContentLink).toBeVisible();
 	}
 );
 
@@ -194,30 +253,43 @@ test(
 
 test(
 	'Can view added content in the space summary page',
-	{tag: '@LPD-62706'},
+	{tag: ['@LPD-62706', '@LPD-86299']},
 	async ({apiHelpers, page, spaceSummaryPage}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const spaceName = 'Default';
 
-		const file1Title = `title ${getRandomString()}`;
+		const contentTitle = `title ${getRandomString()}`;
 
-		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-				title: file1Title,
+				title: contentTitle,
 			},
 			applicationName,
 			spaceName
 		);
 
-		await spaceSummaryPage.goto(spaceName);
+		try {
+			await spaceSummaryPage.goto(spaceName);
 
-		expect(page.getByText(file1Title)).toBeVisible();
+			await expect(
+				page.getByRole('link', {name: contentTitle})
+			).toBeVisible();
 
-		await apiHelpers.objectEntry.deleteObjectEntry(
-			applicationName,
-			String(objectEntry1.id)
-		);
+			await page.getByRole('link', {name: contentTitle}).click();
+
+			await expect(
+				page.getByRole('textbox', {name: 'Title'})
+			).toBeVisible();
+		}
+		finally {
+			if (objectEntry) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					applicationName,
+					String(objectEntry.id)
+				);
+			}
+		}
 	}
 );
 

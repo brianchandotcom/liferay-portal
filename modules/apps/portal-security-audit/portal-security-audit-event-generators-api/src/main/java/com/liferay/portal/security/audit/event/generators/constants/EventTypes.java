@@ -15,8 +15,8 @@ public interface EventTypes {
 
 	public static final String ADD = "ADD";
 
-	public static final String AGGREED_TO_TERMS_OF_USE =
-		"AGGREED_TO_TERMS_OF_USE";
+	public static final String AGREED_TO_TERMS_OF_USE =
+		"AGREED_TO_TERMS_OF_USE";
 
 	public static final String ASSIGN = "ASSIGN";
 

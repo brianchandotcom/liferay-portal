@@ -100,7 +100,7 @@ const renderComponent = ({
 	selection?: State['selection'];
 } = {}) => {
 	return render(
-		<MockCacheProvider objectDefinitions={{}}>
+		<MockCacheProvider objectDefinitions={{}} spaces={[]}>
 			<MockStateProvider
 				state={{
 					selection,

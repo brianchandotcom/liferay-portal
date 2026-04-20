@@ -38,8 +38,10 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateAllowedOrderQuantitiesSQL);
+
 			Statement s = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
 			ResultSet resultSet = s.executeQuery(
 				"select distinct CPDefinitionInventoryId, " +
 					"allowedOrderQuantities from CPDefinitionInventory")) {
@@ -48,40 +50,39 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 				String allowedOrderQuantities = resultSet.getString(
 					"allowedOrderQuantities");
 
-				if (Validator.isNotNull(allowedOrderQuantities)) {
-					allowedOrderQuantities = StringUtil.replace(
-						allowedOrderQuantities, CharPool.COMMA, CharPool.SPACE);
-
-					allowedOrderQuantities = StringUtil.replace(
-						allowedOrderQuantities, CharPool.PERIOD,
-						CharPool.SPACE);
-
-					String[] allowedOrderQuantitiesParts =
-						allowedOrderQuantities.split(StringPool.SPACE);
-
-					StringBundler sb = new StringBundler(
-						allowedOrderQuantitiesParts.length * 2);
-
-					for (String allowedOrderQuantitiesPart :
-							allowedOrderQuantitiesParts) {
-
-						sb.append(
-							decimalFormat.format(
-								GetterUtil.getDouble(
-									allowedOrderQuantitiesPart)));
-						sb.append(StringPool.SPACE);
-					}
-
-					allowedOrderQuantities = sb.toString();
-
-					preparedStatement.setString(
-						1, allowedOrderQuantities.trim());
-
-					preparedStatement.setLong(
-						2, resultSet.getLong("CPDefinitionInventoryId"));
-
-					preparedStatement.execute();
+				if (Validator.isNull(allowedOrderQuantities)) {
+					continue;
 				}
+
+				allowedOrderQuantities = StringUtil.replace(
+					allowedOrderQuantities, CharPool.COMMA, CharPool.SPACE);
+
+				allowedOrderQuantities = StringUtil.replace(
+					allowedOrderQuantities, CharPool.PERIOD, CharPool.SPACE);
+
+				String[] allowedOrderQuantitiesParts =
+					allowedOrderQuantities.split(StringPool.SPACE);
+
+				StringBundler sb = new StringBundler(
+					allowedOrderQuantitiesParts.length * 2);
+
+				for (String allowedOrderQuantitiesPart :
+						allowedOrderQuantitiesParts) {
+
+					sb.append(
+						decimalFormat.format(
+							GetterUtil.getDouble(allowedOrderQuantitiesPart)));
+					sb.append(StringPool.SPACE);
+				}
+
+				allowedOrderQuantities = sb.toString();
+
+				preparedStatement.setString(1, allowedOrderQuantities.trim());
+
+				preparedStatement.setLong(
+					2, resultSet.getLong("CPDefinitionInventoryId"));
+
+				preparedStatement.execute();
 			}
 
 			preparedStatement.executeBatch();

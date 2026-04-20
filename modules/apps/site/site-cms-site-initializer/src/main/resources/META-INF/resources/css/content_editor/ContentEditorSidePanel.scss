@@ -5,30 +5,39 @@
 // View mode
 
 #wrapper {
+	--sidebar-bar-width: 0px;
+	--sidebar-content-width: 0px;
+
 	&:not(.page-editor__wrapper--sidebar--hidden):has(
 			.content-editor__side-panel
 		) {
-		margin-right: $contentEditorSidePanelBarWidth;
-		transition: margin-right 0.5s ease;
+		--sidebar-bar-width: #{$contentEditorSidePanelBarWidth};
 	}
+
+	&:has(.content-editor__side-panel > .sidebar) {
+		--sidebar-content-width: #{$contentEditorSidePanelWidth};
+	}
+
+	margin-right: var(--sidebar-bar-width);
+	transition: margin-right 0.5s ease;
 
 	@include media-breakpoint-up(lg) {
 		#content {
-			&:has(.content-editor__side-panel > .sidebar) {
-				padding-right: $contentEditorSidePanelWidth;
-				transition: padding 0.3s ease-in-out;
-			}
-
-			&:has(.content-editor__side-panel > .c-slideout-transition-out) {
-				padding-right: 0;
-				transition: padding 0.2s ease-in;
-			}
+			padding-right: calc(
+				var(--sidebar-content-width) + var(--content-preview-width)
+			);
+			transition: padding 0.3s ease-in-out;
 		}
 	}
 
 	.content-editor__side-panel {
+		@include media-breakpoint-up(lg) {
+			right: var(--content-preview-width);
+			transition: right 0.3s ease-in-out;
+		}
+
 		margin-top: calc(
-			var(--control-menu-container-height) + $contentEditorToolbarHeight
+			var(--control-menu-container-height) + #{$contentEditorToolbarHeight}
 		);
 
 		.form-control.lfr-ck {

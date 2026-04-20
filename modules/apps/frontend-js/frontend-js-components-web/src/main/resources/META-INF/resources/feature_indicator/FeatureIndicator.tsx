@@ -109,6 +109,8 @@ export default function FeatureIndicator({
 		tooltipTitle = Liferay.Language.get('open-maintenance-mode-definition');
 	}
 
+	const showLabel = type !== 'maintenance';
+
 	return (
 		<LearnResourcesContext.Provider value={learnResourceContext}>
 			{interactive ? (
@@ -135,12 +137,18 @@ export default function FeatureIndicator({
 								title={tooltipTitle}
 								translucent
 							>
-								<span className="inline-item text-uppercase">
-									{label}
-								</span>
+								{showLabel && (
+									<span className="inline-item text-uppercase">
+										{label}
+									</span>
+								)}
 
 								{symbol && (
-									<span className="inline-item inline-item-after ml-2">
+									<span
+										className={classNames('inline-item', {
+											'inline-item-after ml-2': showLabel,
+										})}
+									>
 										<ClayIcon symbol={symbol} />
 									</span>
 								)}
@@ -175,7 +183,7 @@ export default function FeatureIndicator({
 					className={classNames('text-uppercase', className)}
 					dark={dark}
 					displayType={displayType}
-					label={label}
+					label={showLabel ? label : undefined}
 					symbol={symbol}
 					translucent
 				/>

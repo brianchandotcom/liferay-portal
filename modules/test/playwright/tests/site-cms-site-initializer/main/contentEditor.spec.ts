@@ -38,6 +38,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPD-11235': {enabled: false},
 		'LPD-17564': {enabled: true},
+		'LPD-44507': {enabled: true},
 	}),
 	fragmentsPagesTest,
 	loginTest(),
@@ -1860,6 +1861,108 @@ test(
 				await expect(
 					page.locator('.label-item', {hasText: tagName})
 				).toBeVisible();
+			});
+		}
+		finally {
+			await test.step('Delete content', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.deleteContent(title);
+			});
+		}
+	}
+);
+
+test(
+	'The content preview opens and closes correctly, taking focus into account',
+	{tag: '@LPD-84613'},
+	async ({contentsPage, page}) => {
+		const title = getRandomString();
+		const previewTitle = `${title} Preview`;
+
+		try {
+			await test.step('Create a new basic web content and edit it', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.createContent('Basic Web Content');
+
+				await page.getByLabel('Title').fill(title);
+
+				await contentsPage.saveContent();
+
+				await contentsPage.editContent(title);
+			});
+
+			const preview = page.getByLabel(previewTitle);
+			const previewButton = page
+				.locator('.content-editor__toolbar')
+				.getByRole('button', {
+					name: 'Preview',
+				});
+
+			await test.step('Open the content preview', async () => {
+				await page.getByRole('button', {name: 'Open Preview'}).click();
+
+				await expect(page.getByText(previewTitle)).toBeVisible();
+				await expect(preview).toBeFocused();
+			});
+
+			await test.step('Resize the content preview', async () => {
+				await page.keyboard.press('Tab');
+
+				await expect(
+					preview.getByRole('button', {name: 'Close Preview'})
+				).toBeFocused();
+
+				await page.keyboard.press('Tab');
+
+				const resizeHandle = preview.getByRole('separator');
+
+				await expect(resizeHandle).toBeFocused();
+
+				const initWidth = (await preview.boundingBox())?.width ?? 0;
+				const resizeHandleBox = await resizeHandle.boundingBox();
+
+				if (resizeHandleBox) {
+					await page.mouse.move(
+						resizeHandleBox.x + resizeHandleBox.width / 2,
+						100
+					);
+					await page.mouse.down();
+					await page.mouse.move(
+						resizeHandleBox.x + resizeHandleBox.width / 2 + 200,
+						100,
+						{steps: 20}
+					);
+					await page.mouse.up();
+				}
+
+				expect((await preview.boundingBox())?.width).toBeLessThan(
+					initWidth
+				);
+			});
+
+			await test.step('Close the content preview from the close button', async () => {
+				await preview
+					.getByRole('button', {name: 'Close Preview'})
+					.click();
+
+				await expect(previewButton).toBeFocused();
+				await expect(page.getByText(previewTitle)).not.toBeVisible();
+			});
+
+			await test.step('Close the content preview from the preview button', async () => {
+				await page.getByRole('button', {name: 'Open Preview'}).click();
+
+				await expect(page.getByText(previewTitle)).toBeVisible();
+
+				await page
+					.locator('.content-editor__toolbar')
+					.getByRole('button', {name: 'Close Preview'})
+					.click();
+
+				await expect(previewButton).toBeFocused();
+				await expect(page.getByText(previewTitle)).not.toBeVisible();
 			});
 		}
 		finally {

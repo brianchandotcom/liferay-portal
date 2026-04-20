@@ -49,9 +49,11 @@ public class MFAFIDO2CredentialUpgradeProcess extends UpgradeProcess {
 
 	private void _updateCredentialKeys() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select MFAFIDO2CredentialEntry.credentialKey from " +
 					"MFAFIDO2CredentialEntry");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

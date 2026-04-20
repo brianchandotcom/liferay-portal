@@ -40,7 +40,9 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 					connection,
 					"update OAuthClientEntry set matcherField = ? WHERE " +
 						"oAuthClientEntryId = ?");
+
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select authServerWellKnownURI, clientId, companyId, " +
 					"oAuthClientEntryId from OAuthClientEntry")) {

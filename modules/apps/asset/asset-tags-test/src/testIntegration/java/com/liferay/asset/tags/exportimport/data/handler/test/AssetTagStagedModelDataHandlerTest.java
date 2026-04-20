@@ -75,6 +75,17 @@ public class AssetTagStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return AssetTestUtil.addTag(
+			externalReferenceCode, group.getGroupId(),
+			RandomTestUtil.randomString());
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 

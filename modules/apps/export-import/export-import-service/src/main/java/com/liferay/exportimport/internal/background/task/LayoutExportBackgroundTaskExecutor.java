@@ -54,18 +54,17 @@ public class LayoutExportBackgroundTaskExecutor
 
 		long userId = MapUtil.getLong(
 			exportImportConfiguration.getSettingsMap(), "userId");
-
+		String name = StringUtil.replace(
+			exportImportConfiguration.getName(), CharPool.SPACE,
+			CharPool.UNDERLINE);
 		File larFile = _exportImportLocalService.exportLayoutsAsFile(
 			exportImportConfiguration);
 
 		_backgroundTaskManager.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(),
 			StringBundler.concat(
-				StringUtil.replace(
-					exportImportConfiguration.getName(), CharPool.SPACE,
-					CharPool.UNDERLINE),
-				StringPool.DASH, Time.getTimestamp(), ".lar"),
-			larFile);
+				name, StringPool.DASH, Time.getTimestamp(), ".lar"),
+			name + ".lar", larFile);
 
 		return BackgroundTaskResult.SUCCESS;
 	}

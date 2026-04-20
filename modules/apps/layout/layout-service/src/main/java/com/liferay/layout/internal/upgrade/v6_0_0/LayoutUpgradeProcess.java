@@ -43,6 +43,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					"layoutPrototypeUuid is not null"));
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

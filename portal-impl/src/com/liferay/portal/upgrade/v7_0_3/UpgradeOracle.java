@@ -24,10 +24,12 @@ public class UpgradeOracle extends UpgradeProcess {
 
 	protected void alterVarchar2Columns() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select table_name, column_name, data_length from " +
 					"user_tab_columns where data_type = 'VARCHAR2' and " +
 						"char_used = 'B'");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

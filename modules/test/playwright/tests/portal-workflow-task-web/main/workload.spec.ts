@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
@@ -19,9 +18,6 @@ export const test = mergeTests(
 	globalMenuPagesTest,
 	apiHelpersTest,
 	blogsPagesTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	loginTest(),
 	notificationPagesTest,
 	workflowPagesTest
@@ -86,7 +82,7 @@ test('view workload distribution for all assignees', async ({
 		.getRoles('"Portal Content Reviewer"')
 		.then(({items}) => items[0]);
 
-	const site = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
+	const site = await apiHelpers.headlessAdminSite.getSite('L_GUEST');
 
 	for (let index = 0; index < NUMBER_OF_USERS_AND_TASKS; index++) {
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();

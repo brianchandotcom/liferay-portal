@@ -9,7 +9,6 @@ exports[`FilterAndOrder should render 1`] = `
       class="dropdown dropdown-root mr-2"
     >
       <button
-        aria-controls="clay-dropdown-menu-1"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
@@ -79,7 +78,6 @@ exports[`FilterAndOrder should render 1`] = `
                 role="presentation"
               >
                 <button
-                  aria-controls="clay-dropdown-menu-2"
                   aria-expanded="false"
                   aria-haspopup="true"
                   class="dropdown-item dropdown-toggle d-flex justify-content-between align-items-center w-100"
@@ -410,7 +408,6 @@ exports[`FilterAndOrder should render with filter by options 1`] = `
                 role="presentation"
               >
                 <button
-                  aria-controls="clay-dropdown-menu-4"
                   aria-expanded="false"
                   aria-haspopup="true"
                   class="dropdown-item dropdown-toggle d-flex justify-content-between align-items-center w-100"
@@ -694,7 +691,6 @@ exports[`FilterAndOrder should render with order by options and filter by option
       data-aria-hidden="true"
     >
       <button
-        aria-controls="clay-dropdown-menu-8"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
@@ -764,7 +760,6 @@ exports[`FilterAndOrder should render with order by options and filter by option
                 role="presentation"
               >
                 <button
-                  aria-controls="clay-dropdown-menu-7"
                   aria-expanded="false"
                   aria-haspopup="true"
                   class="dropdown-item dropdown-toggle d-flex justify-content-between align-items-center w-100"

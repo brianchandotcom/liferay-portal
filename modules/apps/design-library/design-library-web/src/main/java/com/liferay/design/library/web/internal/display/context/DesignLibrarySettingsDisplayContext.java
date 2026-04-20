@@ -48,6 +48,8 @@ public class DesignLibrarySettingsDisplayContext {
 			"externalReferenceCode", group.getExternalReferenceCode()
 		).put(
 			"groupId", group.getGroupId()
+		).put(
+			"portletId", _getThemeDisplay().getPpid()
 		).build();
 	}
 
@@ -59,14 +61,11 @@ public class DesignLibrarySettingsDisplayContext {
 		portletDisplay.setURLBack(_getBackURL());
 
 		Group group = _getGroup();
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		renderResponse.setTitle(
 			LanguageUtil.format(
 				_httpServletRequest, "x-settings",
-				group.getName(themeDisplay.getLocale()), false));
+				group.getName(_getThemeDisplay().getLocale()), false));
 	}
 
 	private String _getBackURL() {
@@ -91,6 +90,11 @@ public class DesignLibrarySettingsDisplayContext {
 		_group = depotEntry.getGroup();
 
 		return _group;
+	}
+
+	private ThemeDisplay _getThemeDisplay() {
+		return (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	private final long _designLibraryEntryId;

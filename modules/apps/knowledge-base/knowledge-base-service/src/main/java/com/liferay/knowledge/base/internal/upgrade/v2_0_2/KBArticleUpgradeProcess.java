@@ -84,8 +84,10 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateSQL);
+
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				selectSQL);
+
 			ResultSet resultSet = preparedStatement2.executeQuery()) {
 
 			int count = 0;

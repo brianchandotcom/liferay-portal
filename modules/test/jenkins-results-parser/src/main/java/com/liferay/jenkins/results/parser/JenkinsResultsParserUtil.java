@@ -580,10 +580,30 @@ public class JenkinsResultsParserUtil {
 			String... commands)
 		throws IOException, TimeoutException {
 
-		System.out.print("Executing commands: ");
+		return executeBashCommands(
+			baseDir, exitOnFirstFail, true, timeout, commands);
+	}
 
-		for (String command : commands) {
-			System.out.println(command);
+	public static Process executeBashCommands(
+			boolean exitOnFirstFail, String... commands)
+		throws IOException, TimeoutException {
+
+		return executeBashCommands(
+			exitOnFirstFail, new File("."),
+			_MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT, commands);
+	}
+
+	public static Process executeBashCommands(
+			File baseDir, boolean exitOnFirstFail, boolean printCommands,
+			long timeout, String... commands)
+		throws IOException, TimeoutException {
+
+		if (printCommands) {
+			System.out.print("Executing commands: ");
+
+			for (String command : commands) {
+				System.out.println(command);
+			}
 		}
 
 		String[] bashCommands = new String[3];
@@ -700,15 +720,6 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return process;
-	}
-
-	public static Process executeBashCommands(
-			boolean exitOnFirstFail, String... commands)
-		throws IOException, TimeoutException {
-
-		return executeBashCommands(
-			exitOnFirstFail, new File("."),
-			_MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT, commands);
 	}
 
 	public static Process executeBashCommands(File baseDir, String... commands)
@@ -3780,6 +3791,7 @@ public class JenkinsResultsParserUtil {
 
 			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
 				fileOutputStream);
+
 			FileInputStream fileInputStream = new FileInputStream(sourceFile)) {
 
 			byte[] bytes = new byte[1024];
@@ -6135,8 +6147,10 @@ public class JenkinsResultsParserUtil {
 	public static void unGzip(File sourceGzipFile, File targetFile) {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
 				targetFile);
+
 			FileInputStream fileInputStream = new FileInputStream(
 				sourceGzipFile);
+
 			GZIPInputStream gzipInputStream = new GZIPInputStream(
 				fileInputStream)) {
 

@@ -14,8 +14,10 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {expandSection} from '../../../utils/expandSection';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {cmsPagesTest} from '../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
 
 // Sample object definitions to test nesting (Food > Fruit Basket > Fruit)
@@ -325,5 +327,229 @@ test(
 
 		await expect(options.first()).toContainText('Unmapped');
 		await expect(options.nth(1)).toContainText('Fruit Title');
+	}
+);
+
+test(
+	'Submitting a published form with nested Form Relationships creates the main entry and its related entries',
+	{tag: '@LPD-81237'},
+	async ({apiHelpers, layout, page, pageEditorPage}) => {
+
+		// Post the three object definitions
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: fruitBasketObjectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				FRUIT_DEFINITION
+			);
+
+		apiHelpers.data.push({
+			id: fruitBasketObjectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const {body: fruitBasketBody} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				FRUIT_BASKET_DEFINITION
+			);
+
+		apiHelpers.data.push({
+			id: fruitBasketBody.id,
+			type: 'objectDefinition',
+		});
+
+		const {body: foodBody} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				FOOD_DEFINITION
+			);
+
+		apiHelpers.data.push({id: foodBody.id, type: 'objectDefinition'});
+
+		const fruitBasketRestPath = normalizeRestPath(
+			fruitBasketBody.restContextPath
+		);
+		const foodRestPath = normalizeRestPath(foodBody.restContextPath);
+
+		const foodRelationshipName =
+			FOOD_DEFINITION.objectRelationships[0].name;
+		const fruitBasketRelationshipName =
+			FRUIT_BASKET_DEFINITION.objectRelationships[0].name;
+
+		// Open the page in edit mode
+
+		await pageEditorPage.goto(layout);
+
+		// Add a Form Container mapped to Food with the required Food Title field
+
+		await pageEditorPage.addFragment('Form Components', 'Form Container');
+
+		const formId = await pageEditorPage.getFragmentId('Form Container');
+
+		await pageEditorPage.mapFormFragment(formId, 'Food', ['Food Title']);
+
+		// Drop a Form Relationship above the Form Button and map it to Fruit Basket
+
+		const formButtonId = await pageEditorPage.getFragmentId('Form Button');
+
+		await pageEditorPage.goToSidebarTab('Components');
+
+		await page.getByRole('tab', {exact: true, name: 'Fragments'}).click();
+
+		await expandSection(
+			page.getByRole('menuitem', {exact: true, name: 'Form Components'})
+		);
+
+		await pageEditorPage.dragToFragment({
+			position: 'top',
+			source: page
+				.getByRole('menuitem', {name: 'Form Relationship'})
+				.first(),
+			targetId: formButtonId,
+		});
+
+		const fruitBasketFormRelationshipId =
+			await pageEditorPage.getFragmentId('Form Relationship');
+
+		await pageEditorPage.mapFormRelationshipFragment(
+			fruitBasketFormRelationshipId,
+			'FruitBasket (Fruit Basket)'
+		);
+
+		// Nest another Form Relationship inside and map it to Fruit
+
+		await pageEditorPage.addFragment(
+			'Form Components',
+			'Form Relationship',
+			page.getByText('Drag and drop fragments or widgets here')
+		);
+
+		const fruitFormRelationshipId = await pageEditorPage.getFragmentId(
+			'Form Relationship',
+			1
+		);
+
+		await pageEditorPage.mapFormRelationshipFragment(
+			fruitFormRelationshipId,
+			'Fruit'
+		);
+
+		// Add an Inline Text inside the innermost Form Relationship and map it to Fruit Title
+
+		await pageEditorPage.addFragment(
+			'Form Components',
+			'Inline Text',
+			page.getByText('Drag and drop fragments or widgets here')
+		);
+
+		const fruitInputId = await pageEditorPage.getFragmentId('Inline Text');
+
+		await pageEditorPage.selectFragment(fruitInputId);
+
+		const fruitFieldSelect = page
+			.getByRole('tabpanel', {name: 'General'})
+			.getByLabel('Field', {exact: true});
+
+		await expect(fruitFieldSelect.locator('option')).toHaveCount(2);
+
+		await fruitFieldSelect.selectOption({index: 1});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		// Drag an Inline Text above the innermost Form Relationship for Fruit Basket Title
+
+		await pageEditorPage.goToSidebarTab('Components');
+
+		await page.getByRole('tab', {exact: true, name: 'Fragments'}).click();
+
+		await expandSection(
+			page.getByRole('menuitem', {exact: true, name: 'Form Components'})
+		);
+
+		await pageEditorPage.dragToFragment({
+			position: 'top',
+			source: page.getByRole('menuitem', {name: 'Inline Text'}).first(),
+			targetId: fruitFormRelationshipId,
+		});
+
+		const fruitBasketInputId = await pageEditorPage.getFragmentId(
+			'Inline Text',
+			0
+		);
+
+		await pageEditorPage.selectFragment(fruitBasketInputId);
+
+		const fruitBasketFieldSelect = page
+			.getByRole('tabpanel', {name: 'General'})
+			.getByLabel('Field', {exact: true});
+
+		await expect(fruitBasketFieldSelect.locator('option')).toHaveCount(2);
+
+		await fruitBasketFieldSelect.selectOption({index: 1});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		// Publish the page
+
+		await pageEditorPage.publishPage();
+
+		// Fill all fields and submit the form
+
+		const foodTitleValue = getRandomString();
+		const fruitBasketTitleValue = getRandomString();
+		const fruitTitleValue = getRandomString();
+
+		await page.goto(
+			`/web/guest${layout.friendlyUrlPath || layout.friendlyURL}`
+		);
+
+		await page.getByLabel('Food Title').fill(foodTitleValue);
+
+		await page.getByLabel('Fruit Basket Title').fill(fruitBasketTitleValue);
+
+		await page.getByLabel('Fruit Title').fill(fruitTitleValue);
+
+		await page.getByRole('button', {name: 'Submit'}).click();
+
+		await expect(
+			page.getByText(
+				'Thank you. Your information was successfully received.'
+			)
+		).toBeVisible();
+
+		// Verify Food entry and its nested Fruit Basket entry were created
+
+		const {items: foodItems} =
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				foodRestPath,
+				new URLSearchParams({nestedFields: foodRelationshipName})
+			);
+
+		expect(foodItems).toHaveLength(1);
+
+		expect(foodItems[0].foodTitle).toBe(foodTitleValue);
+
+		expect(foodItems[0][foodRelationshipName]).toHaveLength(1);
+		expect(foodItems[0][foodRelationshipName][0].fruitBasketTitle).toBe(
+			fruitBasketTitleValue
+		);
+
+		// Verify the Fruit Basket entry's nested Fruit entry was created
+
+		const {items: fruitBasketItems} =
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				fruitBasketRestPath,
+				new URLSearchParams({nestedFields: fruitBasketRelationshipName})
+			);
+
+		expect(fruitBasketItems).toHaveLength(1);
+
+		expect(fruitBasketItems[0][fruitBasketRelationshipName]).toHaveLength(
+			1
+		);
+		expect(
+			fruitBasketItems[0][fruitBasketRelationshipName][0].fruitTitle
+		).toBe(fruitTitleValue);
 	}
 );

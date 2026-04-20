@@ -342,6 +342,22 @@ public class BlogsEntryStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return BlogsEntryLocalServiceUtil.addEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), true, true,
+			new String[0], StringPool.BLANK, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId()));
+	}
+
+	@Override
 	protected List<StagedModel> addWorkflowedStagedModels(Group group)
 		throws Exception {
 

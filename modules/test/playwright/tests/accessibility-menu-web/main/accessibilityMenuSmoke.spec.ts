@@ -25,7 +25,6 @@ const test = mergeTests(
 	siteSettingsPagesTest,
 	systemSettingsPageTest,
 	featureFlagsTest({
-		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	instanceSettingsPagesTest,
@@ -156,7 +155,7 @@ test.describe('Accessibility Menu Configuration Override and Inheritance', () =>
 			[firstSite, secondSite] = await Promise.all(
 				[FIRST_SITE_NAME, SECOND_SITE_NAME].map(
 					async (name) =>
-						await apiHelpers.headlessSite.createSite({name})
+						await apiHelpers.headlessAdminSite.postSite({name})
 				)
 			);
 		});
@@ -183,7 +182,9 @@ test.describe('Accessibility Menu Configuration Override and Inheritance', () =>
 
 			await Promise.all(
 				[firstSite, secondSite].map((site) =>
-					apiHelpers.headlessSite.deleteSite(site.id)
+					apiHelpers.headlessAdminSite.deleteSite(
+						site.externalReferenceCode
+					)
 				)
 			);
 

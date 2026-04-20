@@ -7,7 +7,6 @@ import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
@@ -26,9 +25,6 @@ import {postListTypeDefinitionListTypeEntries} from '../utils/postListTypeDefini
 
 const test = mergeTests(
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	formsPagesTest,
 	loginTest(),
 	objectPagesTest

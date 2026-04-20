@@ -44,6 +44,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 							"WorkflowMetricsSLADefinition");
 
 				ResultSet resultSet = preparedStatement1.executeQuery();
+
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,

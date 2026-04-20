@@ -118,6 +118,16 @@ public class AssetVocabularyStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected StagedModel addStagedModelWithExternalReferenceCode(
+			Group group, String externalReferenceCode,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return AssetTestUtil.addVocabulary(
+			externalReferenceCode, group.getGroupId());
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 

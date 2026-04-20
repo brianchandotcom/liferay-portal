@@ -105,8 +105,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	protected void updateStructures() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select structureId, structureKey, xsd from DDMStructure");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -170,9 +172,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	protected void updateTemplates() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select templateId, templateKey, script from DDMTemplate " +
 					"where language = 'xsd'");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

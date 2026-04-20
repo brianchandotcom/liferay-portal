@@ -3483,3 +3483,76 @@ test(
 		});
 	}
 );
+
+test(
+	'Versions tab should not be visible for Space Member role',
+	{tag: '@LPD-86002'},
+	async ({apiHelpers, assetsPage, infoPanelPage, page, spaceSummaryPage}) => {
+		const contentApplicationName = 'cms/basic-web-contents';
+		let objectEntryContent;
+		const spaceName = 'Default';
+		let user;
+
+		const content = `title ${getRandomString()}`;
+
+		try {
+			objectEntryContent = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: content,
+				},
+				contentApplicationName,
+				spaceName
+			);
+
+			await test.step('Create an user and add to the Space', async () => {
+				user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+				userData[user.alternateName] = {
+					name: user.givenName,
+					password: 'test',
+					surname: user.familyName,
+				};
+
+				await spaceSummaryPage.goto(spaceName);
+				await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
+			});
+
+			await test.step('Login as a space member and open Info Panel', async () => {
+				await performLogout(page);
+
+				await performLogin(page, user.alternateName);
+
+				await assetsPage.gotoAll();
+				await assetsPage.execItemAction({
+					action: 'Show Details',
+					filter: content,
+				});
+
+				await expect(
+					page.getByRole('heading', {name: content})
+				).toBeVisible();
+			});
+
+			await test.step('Check versions tab is not visible', async () => {
+				await expect(infoPanelPage.selectTab('More')).not.toBeVisible();
+				await expect(
+					infoPanelPage.selectTab('Versions')
+				).not.toBeVisible();
+				await expect(infoPanelPage.selectTab('Comments')).toBeVisible();
+			});
+		}
+		finally {
+			await performLogout(page);
+
+			await performLogin(page, 'test');
+
+			if (objectEntryContent) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					contentApplicationName,
+					String(objectEntryContent.id)
+				);
+			}
+		}
+	}
+);

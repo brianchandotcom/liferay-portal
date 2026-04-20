@@ -47,7 +47,9 @@ public class CommerceSubscriptionEntryUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CommerceSubscriptionEntry set CProductId = ?," +
 					"CPInstanceUUID = ? where CPInstanceId = ?");
+
 			Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select distinct CPInstanceId from " +
 					"CommerceSubscriptionEntry")) {

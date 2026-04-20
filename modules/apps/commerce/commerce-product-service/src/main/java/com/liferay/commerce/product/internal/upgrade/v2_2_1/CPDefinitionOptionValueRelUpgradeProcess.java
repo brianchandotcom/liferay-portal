@@ -29,15 +29,17 @@ public class CPDefinitionOptionValueRelUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateCPDefinitionOptionValueRelSQL);
-			Statement s1 = connection.createStatement(
+
+			Statement s = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet resultSet1 = s1.executeQuery(
+
+			ResultSet resultSet = s.executeQuery(
 				selectCPDefinitionOptionRelSQL)) {
 
-			while (resultSet1.next()) {
-				preparedStatement.setLong(1, resultSet1.getLong("groupId"));
+			while (resultSet.next()) {
+				preparedStatement.setLong(1, resultSet.getLong("groupId"));
 				preparedStatement.setLong(
-					2, resultSet1.getLong("CPDefinitionOptionRelId"));
+					2, resultSet.getLong("CPDefinitionOptionRelId"));
 
 				preparedStatement.addBatch();
 			}

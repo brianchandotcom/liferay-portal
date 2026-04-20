@@ -206,9 +206,14 @@ public class IndexUpdaterUtilTest {
 
 			try (AutoCloseable autoCloseable =
 					() -> StartupHelperUtil.setUpgrading(upgrading);
-				LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-					DuplicateUniqueFinderRowsCleaner.class.getName(),
-					LoggerTestUtil.INFO)) {
+				LogCapture duplicateUniqueFinderRowsCleanerLogCapture =
+					LoggerTestUtil.configureLog4JLogger(
+						DuplicateUniqueFinderRowsCleaner.class.getName(),
+						LoggerTestUtil.INFO);
+				LogCapture indexUpdaterUtilLogCapture =
+					LoggerTestUtil.configureLog4JLogger(
+						IndexUpdaterUtil.class.getName(),
+						LoggerTestUtil.WARN)) {
 
 				ReflectionTestUtil.invoke(
 					IndexUpdaterUtil.class, "_updateIndexes",
@@ -216,7 +221,8 @@ public class IndexUpdaterUtilTest {
 					"create unique index IX_TestTable on TestTable(column3" +
 						"[$COLUMN_LENGTH:255$], column4[$COLUMN_LENGTH:255$])");
 
-				List<LogEntry> logEntries = logCapture.getLogEntries();
+				List<LogEntry> logEntries =
+					duplicateUniqueFinderRowsCleanerLogCapture.getLogEntries();
 
 				Assert.assertEquals(
 					logEntries.toString(), 1, logEntries.size());
@@ -228,6 +234,18 @@ public class IndexUpdaterUtilTest {
 						logEntry.getMessage(),
 						"Deleted row from table TestTable due to duplicate " +
 							"values in finder columns column3, column4"));
+
+				logEntries = indexUpdaterUtilLogCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					"Deleted duplicate records from table TestTable before " +
+						"retrying unique index creation",
+					logEntry.getMessage());
 			}
 
 			try (Connection connection = DataAccess.getConnection();
@@ -304,7 +322,7 @@ public class IndexUpdaterUtilTest {
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					Assert.assertTrue(resultSet.next());
 
-					Assert.assertEquals(2, resultSet.getInt("count"));
+					Assert.assertEquals(2, resultSet.getLong("count"));
 				}
 			}
 		}

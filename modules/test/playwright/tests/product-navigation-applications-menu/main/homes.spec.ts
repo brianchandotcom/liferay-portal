@@ -5,19 +5,12 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {openProductMenu} from '../../../utils/productMenu';
 
-const test = mergeTests(
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
-	globalMenuPagesTest,
-	loginTest()
-);
+const test = mergeTests(globalMenuPagesTest, loginTest());
 
 test(
 	'Check accessibility',

@@ -26,6 +26,7 @@ public class LayoutSetPrototypeReadyForPropagationUpgradeProcess
 					"LayoutSetPrototype");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

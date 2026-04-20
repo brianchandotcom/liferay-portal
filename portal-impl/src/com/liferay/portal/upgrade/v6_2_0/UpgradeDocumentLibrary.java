@@ -211,10 +211,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void updateDLFolderUserName() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select distinct userId from DLFolder where userName is null " +
 					"or userName = ''");
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -264,9 +267,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void updateFileEntryTypes() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select fileEntryTypeId, companyId, name, description from " +
 					"DLFileEntryType");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

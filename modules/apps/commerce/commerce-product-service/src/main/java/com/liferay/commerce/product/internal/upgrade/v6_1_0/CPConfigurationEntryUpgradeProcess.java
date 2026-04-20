@@ -37,8 +37,10 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 					"update CPConfigurationEntry set allowedOrderQuantities " +
 						"= ? where ctCollectionId = ? and " +
 							"CPConfigurationEntryId = ?");
+
 			Statement statement = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
 			ResultSet resultSet = statement.executeQuery(
 				"select distinct ctCollectionId, CPConfigurationEntryId, " +
 					"allowedOrderQuantities from CPConfigurationEntry")) {
@@ -47,42 +49,41 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 				String allowedOrderQuantities = resultSet.getString(
 					"allowedOrderQuantities");
 
-				if (Validator.isNotNull(allowedOrderQuantities)) {
-					allowedOrderQuantities = StringUtil.replace(
-						allowedOrderQuantities, CharPool.COMMA, CharPool.SPACE);
-
-					allowedOrderQuantities = StringUtil.replace(
-						allowedOrderQuantities, CharPool.PERIOD,
-						CharPool.SPACE);
-
-					String[] allowedOrderQuantitiesParts =
-						allowedOrderQuantities.split(StringPool.SPACE);
-
-					StringBundler sb = new StringBundler(
-						allowedOrderQuantitiesParts.length * 2);
-
-					for (String allowedOrderQuantitiesPart :
-							allowedOrderQuantitiesParts) {
-
-						sb.append(
-							decimalFormat.format(
-								GetterUtil.getDouble(
-									allowedOrderQuantitiesPart)));
-						sb.append(StringPool.SPACE);
-					}
-
-					allowedOrderQuantities = sb.toString();
-
-					preparedStatement.setString(
-						1, allowedOrderQuantities.trim());
-
-					preparedStatement.setLong(
-						2, resultSet.getLong("ctCollectionId"));
-					preparedStatement.setLong(
-						3, resultSet.getLong("CPConfigurationEntryId"));
-
-					preparedStatement.execute();
+				if (Validator.isNull(allowedOrderQuantities)) {
+					continue;
 				}
+
+				allowedOrderQuantities = StringUtil.replace(
+					allowedOrderQuantities, CharPool.COMMA, CharPool.SPACE);
+
+				allowedOrderQuantities = StringUtil.replace(
+					allowedOrderQuantities, CharPool.PERIOD, CharPool.SPACE);
+
+				String[] allowedOrderQuantitiesParts =
+					allowedOrderQuantities.split(StringPool.SPACE);
+
+				StringBundler sb = new StringBundler(
+					allowedOrderQuantitiesParts.length * 2);
+
+				for (String allowedOrderQuantitiesPart :
+						allowedOrderQuantitiesParts) {
+
+					sb.append(
+						decimalFormat.format(
+							GetterUtil.getDouble(allowedOrderQuantitiesPart)));
+					sb.append(StringPool.SPACE);
+				}
+
+				allowedOrderQuantities = sb.toString();
+
+				preparedStatement.setString(1, allowedOrderQuantities.trim());
+
+				preparedStatement.setLong(
+					2, resultSet.getLong("ctCollectionId"));
+				preparedStatement.setLong(
+					3, resultSet.getLong("CPConfigurationEntryId"));
+
+				preparedStatement.execute();
 			}
 
 			preparedStatement.executeBatch();

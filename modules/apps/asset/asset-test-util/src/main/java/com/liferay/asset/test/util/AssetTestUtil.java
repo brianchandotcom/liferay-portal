@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
@@ -96,6 +97,30 @@ public class AssetTestUtil {
 			serviceContext);
 	}
 
+	public static AssetCategory addCategory(
+			String externalReferenceCode, long groupId, long vocabularyId)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			locale, RandomTestUtil.randomString()
+		).build();
+
+		Map<Locale, String> descriptionMap = HashMapBuilder.put(
+			locale, RandomTestUtil.randomString()
+		).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		return AssetCategoryLocalServiceUtil.addCategory(
+			externalReferenceCode, TestPropsValues.getUserId(), groupId,
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+			descriptionMap, vocabularyId, null, serviceContext);
+	}
+
 	public static AssetTag addTag(long groupId) throws Exception {
 		return addTag(groupId, RandomTestUtil.randomString());
 	}
@@ -177,6 +202,22 @@ public class AssetTestUtil {
 			userId, groupId, name, name,
 			Collections.singletonMap(LocaleUtil.getDefault(), name),
 			Collections.emptyMap(), StringPool.BLANK, serviceContext);
+	}
+
+	public static AssetVocabulary addVocabulary(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		long userId = TestPropsValues.getUserId();
+
+		String name = RandomTestUtil.randomString();
+
+		return AssetVocabularyLocalServiceUtil.addVocabulary(
+			externalReferenceCode, userId, groupId, name, name,
+			Collections.singletonMap(LocaleUtil.getDefault(), name),
+			Collections.emptyMap(), StringPool.BLANK,
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			ServiceContextTestUtil.getServiceContext(groupId, userId));
 	}
 
 }

@@ -16,6 +16,7 @@ import '@testing-library/jest-dom';
 const mockEndpoints = {
 	analyticsReportsHistoricalReadsURL: '/o/analyticsReportsHistoricalReadsURL',
 	analyticsReportsHistoricalViewsURL: '/o/analyticsReportsHistoricalViewsURL',
+	analyticsReportsPageExperiencesURL: '/o/analyticsReportsPageExperiencesURL',
 	analyticsReportsTotalReadsURL: '/o/analyticsReportsTotalReadsURL',
 	analyticsReportsTotalViewsURL: '/o/analyticsReportsTotalViewsURL',
 	analyticsReportsTrafficSourcesURL: '/o/analyticsReportsTrafficSourcesURL',
@@ -59,7 +60,7 @@ const noop = () => {};
 
 describe('Navigation', () => {
 	beforeEach(() => {
-		fetch.mockResponse(Promise.resolve(JSON.stringify({})));
+		fetch.mockResponse(JSON.stringify({}));
 	});
 
 	afterEach(() => {
@@ -75,6 +76,7 @@ describe('Navigation', () => {
 			},
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
+			experienceId: '12345',
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			pageTitle: 'A testing page',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -96,6 +98,7 @@ describe('Navigation', () => {
 					}}
 				>
 					<ChartStateContextProvider
+						experienceId={testProps.experienceId}
 						publishDate={testProps.pagePublishDate}
 						timeRange={testProps.timeRange}
 						timeSpanKey={testProps.timeSpanKey}
@@ -128,6 +131,7 @@ describe('Navigation', () => {
 			},
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
+			experienceId: '12345',
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			pageTitle: 'A testing page',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -145,6 +149,7 @@ describe('Navigation', () => {
 				}}
 			>
 				<ChartStateContextProvider
+					experienceId={testProps.experienceId}
 					publishDate={testProps.publishDate}
 					timeRange={testProps.timeRange}
 					timeSpanKey={testProps.timeSpanKey}
@@ -178,6 +183,7 @@ describe('Navigation', () => {
 			},
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
+			experienceId: '12345',
 			pagePublishDate: 'Thu Feb 02 08:17:57 GMT 2020',
 			pageTitle: 'A testing page',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -195,6 +201,7 @@ describe('Navigation', () => {
 				}}
 			>
 				<ChartStateContextProvider
+					experienceId={testProps.experienceId}
 					publishDate={testProps.pagePublishDate}
 					timeRange={testProps.timeRange}
 					timeSpanKey={testProps.timeSpanKey}

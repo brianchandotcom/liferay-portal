@@ -5,18 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-const test = mergeTests(
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
-	loginTest(),
-	systemSettingsPageTest
-);
+const test = mergeTests(loginTest(), systemSettingsPageTest);
 
 test.beforeEach(async ({systemSettingsPage}) => {
 	await systemSettingsPage.goToSystemSetting('Assets', 'Asset Auto Tagging');

@@ -6,18 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import {performLogout} from '../../../utils/performLogin';
 
-export const test = mergeTests(
-	loginTest(),
-	captchaConfigPageTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	})
-);
+export const test = mergeTests(loginTest(), captchaConfigPageTest);
 
 test('LPD-44395: Test sample captcha works', async ({
 	captchaConfigPage,
@@ -57,11 +50,11 @@ test('LPD-44395: Test sample captcha works', async ({
 		.frameLocator("iframe[title='reCAPTCHA']")
 		.getByText("I'm not a robot")
 		.click();
-	await page.waitForTimeout(1000);
+	await page.waitForTimeout(2000);
 
 	await page.getByRole('button', {name: 'Send New Password'}).click();
 
 	await expect(
-		await page.getByText('Your request completed successfully')
+		page.getByText('Your request completed successfully')
 	).toBeVisible();
 });

@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
@@ -151,9 +150,6 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 
 		return new HotDeployEvent(servletContext, classLoader);
 	}
-
-	@Inject
-	private static PortletInstanceFactory _portletInstanceFactory;
 
 	private boolean _dependencyManagementEnabled;
 

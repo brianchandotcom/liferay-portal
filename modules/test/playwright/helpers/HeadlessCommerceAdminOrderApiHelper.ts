@@ -166,6 +166,13 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		return patchOrder;
 	}
 
+	async patchTerm(termId: number, term: Partial<TTerm>) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/terms/${termId}`,
+			term
+		);
+	}
+
 	async postOrder(order: TOrder): Promise<TOrder> {
 		const postOrder = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/orders?nestedFields=orderItems`,

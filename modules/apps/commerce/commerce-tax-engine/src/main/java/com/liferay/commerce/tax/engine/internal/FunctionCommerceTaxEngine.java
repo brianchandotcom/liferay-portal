@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -145,6 +146,34 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 		}
 	}
 
+	protected JSONObject getPayloadJSONObject(
+			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceTaxCalculateRequest.getCommerceChannelGroupId());
+
+		CommerceTaxMethod commerceTaxMethod =
+			_commerceTaxMethodLocalService.fetchCommerceTaxMethod(
+				commerceChannel.getGroupId(), getKey());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			commerceTaxMethod.getTypeSettingsUnicodeProperties();
+
+		typeSettingsUnicodeProperties.forEach(jsonObject::put);
+
+		return JSONUtil.put(
+			"commerceTaxCalculateRequest",
+			_getCommerceTaxCalculateRequestJSONObject(
+				commerceChannel, commerceTaxCalculateRequest)
+		).put(
+			"typeSettings", jsonObject
+		);
+	}
+
 	@Modified
 	protected void modified(Map<String, Object> properties)
 		throws PortalException {
@@ -191,10 +220,17 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 				_jsonFactory.looseSerializeDeep(
 					billingAddressrDTOConverter.toDTO(dtoConverterContext)));
 
+		String commerceCurrencyCode =
+			commerceTaxCalculateRequest.getCommerceCurrencyCode();
+
+		if (Validator.isNull(commerceCurrencyCode)) {
+			commerceCurrencyCode = commerceChannel.getCommerceCurrencyCode();
+		}
+
 		commerceTaxCalculateRequestJSONObject.put(
 			"billingAddress", commerceBillingAddressJSONObject
 		).put(
-			"currencyCode", commerceChannel.getCommerceCurrencyCode()
+			"currencyCode", commerceCurrencyCode
 		).put(
 			"price", commerceTaxCalculateRequest.getPrice()
 		);
@@ -253,34 +289,6 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 				).get()));
 	}
 
-	private JSONObject _getPayloadJSONObject(
-			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
-		throws Exception {
-
-		JSONObject typeSettingsJSONObject = _jsonFactory.createJSONObject();
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByGroupId(
-				commerceTaxCalculateRequest.getCommerceChannelGroupId());
-
-		CommerceTaxMethod commerceTaxMethod =
-			_commerceTaxMethodLocalService.fetchCommerceTaxMethod(
-				commerceChannel.getGroupId(), getKey());
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			commerceTaxMethod.getTypeSettingsUnicodeProperties();
-
-		typeSettingsUnicodeProperties.forEach(typeSettingsJSONObject::put);
-
-		return JSONUtil.put(
-			"commerceTaxCalculateRequest",
-			_getCommerceTaxCalculateRequestJSONObject(
-				commerceChannel, commerceTaxCalculateRequest)
-		).put(
-			"typeSettings", typeSettingsJSONObject
-		);
-	}
-
 	private CommerceTaxValue _setCommerceTaxCalculateRequest(
 		CommerceTaxCalculateRequest commerceTaxCalculateRequest) {
 
@@ -288,7 +296,7 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 
 		try {
 			JSONObject jsonObject = _getJSONObject(
-				_getPayloadJSONObject(commerceTaxCalculateRequest),
+				getPayloadJSONObject(commerceTaxCalculateRequest),
 				"/calculate-tax");
 
 			BigDecimal rate = BigDecimal.valueOf(

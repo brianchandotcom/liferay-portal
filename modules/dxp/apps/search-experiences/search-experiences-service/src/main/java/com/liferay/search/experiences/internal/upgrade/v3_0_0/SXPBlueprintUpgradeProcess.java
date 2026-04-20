@@ -124,6 +124,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"PortletPreferenceValue.name = 'attributes'"));
 
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
 					"sxpBlueprintId = ?");
@@ -175,6 +176,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"'suggestionsContributorConfigurations'"));
 
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
 					"sxpBlueprintId = ?");
@@ -236,6 +238,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"and PortletPreferenceValue.name = 'sxpBlueprintId'"));
 
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
 					"sxpBlueprintId = ?");

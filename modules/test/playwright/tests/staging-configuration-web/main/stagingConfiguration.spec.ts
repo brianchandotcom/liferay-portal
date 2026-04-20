@@ -35,9 +35,6 @@ import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageT
 export const test = mergeTests(
 	dataApiHelpersTest,
 	exportImportPagesTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	globalMenuPagesTest,
 	loginTest(),
 	instanceSettingsPagesTest,

@@ -37,7 +37,9 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CommerceWishListItem set CProductId = ?," +
 					"CPInstanceUuid = ? where CPInstanceId = ?");
+
 			Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select distinct CPInstanceId from CommerceWishListItem")) {
 

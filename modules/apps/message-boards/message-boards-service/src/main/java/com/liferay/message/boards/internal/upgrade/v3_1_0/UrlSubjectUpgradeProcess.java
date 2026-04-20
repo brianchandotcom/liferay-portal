@@ -74,6 +74,7 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 					"messageId asc");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

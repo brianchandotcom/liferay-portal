@@ -35,7 +35,9 @@ public class OAuthClientASLocalMetadataUpgradeProcess extends UpgradeProcess {
 					connection,
 					"update OAuthClientASLocalMetadata set issuer = ? where " +
 						"oAuthClientASLocalMetadataId = ?");
+
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select oAuthClientASLocalMetadataId, metadataJSON from " +
 					"OAuthClientASLocalMetadata")) {

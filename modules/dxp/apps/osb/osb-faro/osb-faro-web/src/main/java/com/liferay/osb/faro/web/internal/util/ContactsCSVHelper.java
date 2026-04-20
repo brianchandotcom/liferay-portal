@@ -83,8 +83,10 @@ public class ContactsCSVHelper {
 
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader);
+
 			Writer writer = new OutputStreamWriter(
 				new FileOutputStream(tempFile), StandardCharsets.UTF_8);
+
 			UnsyncBufferedWriter unsyncBufferedWriter =
 				new UnsyncBufferedWriter(writer)) {
 

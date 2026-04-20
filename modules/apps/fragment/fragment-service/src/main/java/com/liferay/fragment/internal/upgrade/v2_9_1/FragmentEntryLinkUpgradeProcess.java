@@ -28,6 +28,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 					"from FragmentEntryLink");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

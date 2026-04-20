@@ -8,6 +8,10 @@ import path from 'path';
 
 const DEPENDENCIES_DIR = path.resolve(__dirname, '../dependencies');
 
+export function getFilePath(fileName: string) {
+	return path.join(DEPENDENCIES_DIR, fileName);
+}
+
 export function createFile(fileName: string, fileSize: number) {
 	const filePath = path.join(DEPENDENCIES_DIR, fileName);
 

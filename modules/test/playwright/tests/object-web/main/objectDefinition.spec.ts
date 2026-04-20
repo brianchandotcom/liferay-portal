@@ -32,7 +32,6 @@ const test = mergeTests(
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	fragmentsPagesTest,
@@ -50,40 +49,6 @@ const cmsTest = mergeTests(
 		'LPS-178052': {enabled: true},
 	})
 );
-
-test.describe('Manage export/import object definitions', () => {
-	test('can export data structure from a custom object', async ({
-		apiHelpers,
-		page,
-		viewObjectDefinitionsPage,
-	}) => {
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await viewObjectDefinitionsPage.goto();
-
-		const downloadPromise = page.waitForEvent('download');
-
-		await viewObjectDefinitionsPage.actionsButton.last().click();
-
-		await viewObjectDefinitionsPage.exportObjectDefinitionOption
-			.last()
-			.click();
-
-		const download = await downloadPromise;
-
-		expect(download.suggestedFilename()).toContain(
-			objectDefinition.externalReferenceCode
-		);
-	});
-});
 
 test.describe('Manage object definitions through Model Builder', () => {
 	test.beforeEach(({page}) => {

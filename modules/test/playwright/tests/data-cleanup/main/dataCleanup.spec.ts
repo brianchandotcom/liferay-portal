@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
@@ -17,9 +16,6 @@ const SERVLET_CONTEXT_NAMES = [
 ];
 
 export const test = mergeTests(
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	loginTest(),
 	globalMenuPagesTest,
 	serverAdministrationPageTest

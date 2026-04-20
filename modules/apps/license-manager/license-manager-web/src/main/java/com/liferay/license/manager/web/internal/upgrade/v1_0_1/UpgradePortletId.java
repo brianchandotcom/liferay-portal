@@ -52,6 +52,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 					"where portletId = '176'");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -78,6 +79,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 					"ResourcePermission where name = '176'");
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

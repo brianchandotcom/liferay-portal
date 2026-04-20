@@ -5,22 +5,30 @@
 
 package com.liferay.site.cms.site.initializer.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author Víctor Galán
@@ -84,6 +92,47 @@ public class CommentUtil {
 				return parentComment.isRoot();
 			}
 		);
+	}
+
+	public static Map<String, Object> getCommentsProps(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		return HashMapBuilder.<String, Object>put(
+			"addCommentURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL, "/add_content_item_comment")
+		).put(
+			"deleteCommentURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL, "/delete_content_item_comment")
+		).put(
+			"editCommentURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL, "/edit_content_item_comment")
+		).put(
+			"editorConfig",
+			() -> {
+				EditorConfiguration contentItemCommentEditorConfiguration =
+					EditorConfigurationFactoryUtil.getEditorConfiguration(
+						StringPool.BLANK, "contentItemCommentEditor",
+						StringPool.BLANK, Collections.emptyMap(), themeDisplay,
+						RequestBackedPortletURLFactoryUtil.create(
+							httpServletRequest));
+
+				Map<String, Object> data =
+					contentItemCommentEditorConfiguration.getData();
+
+				return data.get("editorConfig");
+			}
+		).put(
+			"getCommentsURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL, "/get_asset_comments")
+		).build();
 	}
 
 	private static JSONObject _getAuthorJSONObject(

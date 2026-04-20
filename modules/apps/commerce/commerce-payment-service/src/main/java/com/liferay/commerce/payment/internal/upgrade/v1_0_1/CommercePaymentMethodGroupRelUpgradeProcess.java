@@ -38,6 +38,7 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 			ResultSet resultSet = s.executeQuery(
 				"select CPaymentMethodGroupRelId, groupId from " +
 					"CommercePaymentMethodGroupRel");
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

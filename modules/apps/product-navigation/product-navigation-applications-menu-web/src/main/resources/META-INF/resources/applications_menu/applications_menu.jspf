@@ -20,17 +20,7 @@ ApplicationsMenuDisplayContext applicationsMenuDisplayContext = new Applications
 	title="applications-menu"
 />
 
-<c:choose>
-	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-36105") %>'>
-		<react:component
-			module="{GlobalMenu} from product-navigation-applications-menu-web"
-			props="<%= applicationsMenuDisplayContext.getApplicationsMenuComponentData() %>"
-		/>
-	</c:when>
-	<c:otherwise>
-		<react:component
-			module="{ApplicationsMenu} from product-navigation-applications-menu-web"
-			props="<%= applicationsMenuDisplayContext.getApplicationsMenuComponentData() %>"
-		/>
-	</c:otherwise>
-</c:choose>
+<react:component
+	module="{GlobalMenu} from product-navigation-applications-menu-web"
+	props="<%= applicationsMenuDisplayContext.getApplicationsMenuComponentData() %>"
+/>

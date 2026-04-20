@@ -38,6 +38,7 @@ public class CommerceNotificationTemplateGroupIdUpgradeProcess
 			ResultSet resultSet = s.executeQuery(
 				"select commerceNotificationTemplateId, groupId from " +
 					"CommerceNotificationTemplate");
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

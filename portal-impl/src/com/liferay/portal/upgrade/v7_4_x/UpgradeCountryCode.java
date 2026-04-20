@@ -51,6 +51,7 @@ public class UpgradeCountryCode extends UpgradeProcess {
 						"number_, position, shippingAllowed, subjectToVAT, ",
 						"zipRequired) values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
 						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
+
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
@@ -60,6 +61,7 @@ public class UpgradeCountryCode extends UpgradeProcess {
 						"Company.companyId where User_.defaultUser = [$TRUE$] ",
 						"and Company.companyId not in (select companyId from ",
 						"Country where a2 = 'NA')")));
+
 			ResultSet resultSet = preparedStatement2.executeQuery()) {
 
 			if (resultSet.next()) {

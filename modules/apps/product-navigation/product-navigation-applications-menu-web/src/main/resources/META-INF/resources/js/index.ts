@@ -5,8 +5,6 @@
 
 // @ts-ignore
 
-export {default as ApplicationsMenu} from './ApplicationsMenu';
-
 export {default as GlobalMenu} from './GlobalMenu';
 
 export {default as ApplicationsHome} from './homes/ApplicationsHome';

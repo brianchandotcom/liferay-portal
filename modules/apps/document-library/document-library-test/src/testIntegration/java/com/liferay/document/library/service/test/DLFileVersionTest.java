@@ -32,7 +32,6 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -200,7 +199,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateDisplayDate() throws Exception {
-		updateServiceContext(
+		_setUp(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -218,7 +217,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateExpando() throws Exception {
-		updateServiceContext(
+		_setUp(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -237,7 +236,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateExpirationDate() throws Exception {
-		updateServiceContext(
+		_setUp(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -256,7 +255,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateFileEntryType() throws Exception {
-		updateServiceContext(
+		_setUp(
 			StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			StringPool.BLANK);
@@ -276,7 +275,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateMetadata() throws Exception {
-		updateServiceContext(
+		_setUp(
 			StringPool.BLANK, _dlFileEntryType.getFileEntryTypeId(),
 			_UPDATE_VALUE);
 
@@ -309,7 +308,7 @@ public class DLFileVersionTest {
 
 	@Test
 	public void testUpdateReviewDate() throws Exception {
-		updateServiceContext(
+		_setUp(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
 			StringPool.BLANK);
 
@@ -449,9 +448,10 @@ public class DLFileVersionTest {
 			ActionKeys.VIEW);
 	}
 
-	protected void updateServiceContext(
-			String expando, long fileEntryTypeId, String metadata)
-		throws PortalException {
+	private void _setUp(String expando, long fileEntryTypeId, String metadata)
+		throws Exception {
+
+		_serviceContext = getServiceContext();
 
 		Map<String, Serializable> expandoBridgeAttributes =
 			_serviceContext.getExpandoBridgeAttributes();

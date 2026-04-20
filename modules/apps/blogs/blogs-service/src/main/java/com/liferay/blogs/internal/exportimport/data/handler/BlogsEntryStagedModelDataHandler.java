@@ -76,6 +76,14 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	@Override
+	public BlogsEntry fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return _blogsEntryLocalService.fetchBlogsEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public BlogsEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -225,8 +233,8 @@ public class BlogsEntryStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			entry);
 
-		BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
-			entry.getUuid(), portletDataContext.getScopeGroupId());
+		BlogsEntry existingEntry = fetchExistingStagedModel(
+			entry, portletDataContext.getScopeGroupId());
 
 		long existingCoverImageFileEntryId = 0;
 		long existingSmallImageFileEntryId = 0;
@@ -273,6 +281,11 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getDisplayDate(), entry.isAllowPingbacks(),
 				entry.isAllowTrackbacks(), trackbacks,
 				entry.getCoverImageCaption(), null, null, serviceContext);
+
+			importedEntry.setUuid(entry.getUuid());
+
+			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
+				importedEntry);
 		}
 
 		serviceContext.setModifiedDate(importedEntry.getModifiedDate());

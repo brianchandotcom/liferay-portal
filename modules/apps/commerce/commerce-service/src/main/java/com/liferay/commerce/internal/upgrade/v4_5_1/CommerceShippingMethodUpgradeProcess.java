@@ -37,6 +37,7 @@ public class CommerceShippingMethodUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = s.executeQuery(
 				"select commerceShippingMethodId, groupId from " +
 					"CommerceShippingMethod");
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

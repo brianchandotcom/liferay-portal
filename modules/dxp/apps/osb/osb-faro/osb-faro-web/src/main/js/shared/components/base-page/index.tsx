@@ -10,6 +10,7 @@ import SubHeader from './SubHeader';
 
 interface IBasePageProps extends React.HTMLAttributes<HTMLElement> {
 	documentTitle: string;
+	fluid?: boolean;
 }
 
 export const BasePage: React.FC<IBasePageProps> & {

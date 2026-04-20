@@ -30,15 +30,33 @@ public class JavaTryStatement extends BaseJavaTerm {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append(indent);
+		int size = _resourceJavaVariableDefinitions.size();
 
-		indent = "\t" + indent;
+		if (size == 1) {
+			appendNewLine(
+				sb, _resourceJavaVariableDefinitions.get(0), indent,
+				prefix + "try (", ")" + suffix, maxLineLength);
 
-		append(
-			sb, _resourceJavaVariableDefinitions, "; ", indent,
-			prefix + "try (", ")" + suffix, maxLineLength);
+			return sb.toString();
+		}
 
-		return sb.toString();
+		appendNewLine(
+			sb, _resourceJavaVariableDefinitions.get(0), indent,
+			prefix + "try (", ";", maxLineLength);
+
+		for (int i = 1; i < (size - 1); i++) {
+			appendNewLine(
+				sb, _resourceJavaVariableDefinitions.get(i), indent + "\t", "",
+				";", maxLineLength);
+		}
+
+		appendNewLine(
+			sb, _resourceJavaVariableDefinitions.get(size - 1), indent + "\t",
+			"", ")" + suffix, maxLineLength);
+
+		String s = sb.toString();
+
+		return s.replaceAll("(?m)^\\s*// EMPTY_LINE_PLACEHOLDER;$", "");
 	}
 
 	private List<JavaVariableDefinition> _resourceJavaVariableDefinitions;

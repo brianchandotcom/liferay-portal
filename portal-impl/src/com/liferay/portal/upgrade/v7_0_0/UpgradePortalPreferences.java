@@ -67,10 +67,13 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 
 	protected void upgradeStagingPortalPreferences() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select portalPreferencesId, preferences from " +
 					"PortalPreferences");
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
+
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

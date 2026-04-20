@@ -1847,9 +1847,44 @@ public class JavaParserUtil {
 		List<DetailAST> resourceDetailASTs = DetailASTUtil.getAllChildTokens(
 			resourcesDetailAST, false, TokenTypes.RESOURCE);
 
+		DetailAST previousResourceDetailAST = null;
+
 		for (DetailAST resourceDetailAST : resourceDetailASTs) {
+			if (previousResourceDetailAST == null) {
+				resourceJavaVariableDefinitions.add(
+					_parseJavaVariableDefinition(resourceDetailAST));
+
+				previousResourceDetailAST = resourceDetailAST;
+
+				continue;
+			}
+
+			DetailAST nextSiblingDetailAST =
+				previousResourceDetailAST.getNextSibling();
+
+			if ((nextSiblingDetailAST == null) ||
+				(nextSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+
+				return null;
+			}
+
+			int lineNumber = resourceDetailAST.getLineNo();
+			int semiDetailASTLineNumber = nextSiblingDetailAST.getLineNo();
+
+			if (lineNumber > (semiDetailASTLineNumber + 1)) {
+				JavaVariableDefinition javaVariableDefinition =
+					new JavaVariableDefinition(
+						Collections.emptyList(), Collections.emptyList());
+
+				javaVariableDefinition.addVariable("// EMPTY_LINE_PLACEHOLDER");
+
+				resourceJavaVariableDefinitions.add(javaVariableDefinition);
+			}
+
 			resourceJavaVariableDefinitions.add(
 				_parseJavaVariableDefinition(resourceDetailAST));
+
+			previousResourceDetailAST = resourceDetailAST;
 		}
 
 		javaTryStatement.setResourceJavaVariableDefinitions(

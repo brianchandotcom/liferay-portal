@@ -66,7 +66,6 @@ exports[`IndividualAssociatedSegments should render 1`] = `
                   class="dropdown dropdown-root"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-1"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
@@ -278,7 +277,6 @@ exports[`IndividualAssociatedSegments should render 1`] = `
             class="dropdown dropdown-root pagination-items-per-page"
           >
             <button
-              aria-controls="clay-dropdown-menu-2"
               aria-expanded="false"
               aria-haspopup="true"
               class="dropdown-toggle button-root btn btn-sm btn-secondary"

@@ -125,6 +125,12 @@ public class SiteNavigationMenuStagedModelDataHandler
 			importedSiteNavigationMenu =
 				_stagedModelRepository.updateStagedModel(
 					portletDataContext, importedSiteNavigationMenu);
+
+			importedSiteNavigationMenu.setUuid(siteNavigationMenu.getUuid());
+
+			importedSiteNavigationMenu =
+				_siteNavigationMenuLocalService.updateSiteNavigationMenu(
+					importedSiteNavigationMenu);
 		}
 
 		portletDataContext.importClassedModel(

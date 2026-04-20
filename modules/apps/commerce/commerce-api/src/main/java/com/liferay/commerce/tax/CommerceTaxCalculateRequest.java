@@ -20,6 +20,10 @@ public class CommerceTaxCalculateRequest {
 		return _commerceChannelGroupId;
 	}
 
+	public String getCommerceCurrencyCode() {
+		return _commerceCurrencyCode;
+	}
+
 	public long getCommerceShippingAddressId() {
 		return _commerceShippingAddressId;
 	}
@@ -64,6 +68,10 @@ public class CommerceTaxCalculateRequest {
 		_commerceChannelGroupId = commerceChannelGroupId;
 	}
 
+	public void setCommerceCurrencyCode(String commerceCurrencyCode) {
+		_commerceCurrencyCode = commerceCurrencyCode;
+	}
+
 	public void setCommerceShippingAddressId(long commerceShippingAddressId) {
 		_commerceShippingAddressId = commerceShippingAddressId;
 	}
@@ -102,6 +110,7 @@ public class CommerceTaxCalculateRequest {
 
 	private long _commerceBillingAddressId;
 	private long _commerceChannelGroupId;
+	private String _commerceCurrencyCode;
 	private long _commerceShippingAddressId;
 	private long _commerceTaxMethodId;
 	private boolean _includeTax;

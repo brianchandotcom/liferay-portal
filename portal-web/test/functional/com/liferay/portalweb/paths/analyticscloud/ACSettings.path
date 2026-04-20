@@ -115,7 +115,7 @@
 
 <tr>
 	<td>DXP_DATA_SOURCE_OPTION</td>
-	<td>//button[contains(@class,'data-source-item')]</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(text(),'Liferay DXP')]</td>
 	<td></td>
 </tr>
 <tr>

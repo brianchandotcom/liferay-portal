@@ -20,7 +20,6 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true}, // CMS 2.0
-		'LPD-36105': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),

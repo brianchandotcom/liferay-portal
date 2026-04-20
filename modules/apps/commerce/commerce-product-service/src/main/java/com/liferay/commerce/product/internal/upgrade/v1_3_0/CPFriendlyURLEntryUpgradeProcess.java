@@ -52,7 +52,9 @@ public class CPFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateCPFriendlyURLSQL);
+
 			Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(selectCPFriendlyURLEntrySQL)) {
 
 			while (resultSet.next()) {

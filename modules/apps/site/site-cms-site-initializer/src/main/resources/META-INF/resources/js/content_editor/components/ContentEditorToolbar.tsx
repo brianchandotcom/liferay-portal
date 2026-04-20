@@ -8,15 +8,21 @@ import '../../../css/content_editor/ContentEditorToolbar.scss';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
+import classNames from 'classnames';
 import {sessionStorage, sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useId, useState} from 'react';
+import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
 import AIAssistantChat from './AIAssistantChat/AIAssistantChat';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
+
+export const EVENT_CLOSE_PREVIEW = 'contentEditor:closePreview';
+
+export const EVENT_HANDLE_PREVIEW = 'contentEditor:handlePreview';
 
 export const EVENT_VALIDATE_FORM = 'contentEditor:validateForm';
 
@@ -38,6 +44,9 @@ export default function ContentEditorToolbar({
 	const [displayDate, setDisplayDate] = useState<string>('');
 	const [formId, setFormId] = useState<string | undefined>();
 	const [showModal, setShowModal] = useState<boolean>(false);
+	const [showPreview, setShowPreview] = useState<boolean>(false);
+
+	const previewButtonRef = useRef<HTMLButtonElement>(null);
 
 	const optionsTitle = hasWorkflow
 		? Liferay.Language.get('submit-for-workflow-options')
@@ -117,6 +126,18 @@ export default function ContentEditorToolbar({
 		}
 	}, [getForm, handlePublishSuccessMessage]);
 
+	useEffect(() => {
+		const closePreview = () => {
+			setShowPreview(false);
+
+			previewButtonRef.current?.focus();
+		};
+
+		Liferay.on(EVENT_CLOSE_PREVIEW, closePreview);
+
+		return () => Liferay.detach(EVENT_CLOSE_PREVIEW, closePreview);
+	}, []);
+
 	return (
 		<Toolbar
 			backURL={backURL}
@@ -141,11 +162,57 @@ export default function ContentEditorToolbar({
 				</>
 			)}
 
-			<Toolbar.Item>
+			{Liferay.FeatureFlags['LPD-44507'] ? (
+				<Toolbar.Item className="nav-divider-end">
+					<ClayButton
+						aria-label={
+							showPreview
+								? Liferay.Language.get('close-preview')
+								: Liferay.Language.get('open-preview')
+						}
+						aria-pressed={showPreview}
+						borderless={showPreview}
+						className={classNames('c-mr-3 d-lg-block d-none', {
+							active: showPreview,
+						})}
+						displayType="secondary"
+						onClick={() => {
+							const nextShowPreview = !showPreview;
+
+							setShowPreview(nextShowPreview);
+
+							Liferay.fire(EVENT_HANDLE_PREVIEW, {
+								showPreview: nextShowPreview,
+							});
+						}}
+						ref={previewButtonRef}
+						size="sm"
+					>
+						<ClayIcon
+							className="inline-item inline-item-before"
+							symbol="view"
+						/>
+
+						{Liferay.Language.get('preview')}
+					</ClayButton>
+
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('preview')}
+						className="c-mr-3 d-lg-none"
+						displayType="secondary"
+						size="sm"
+						symbol="view"
+						title={Liferay.Language.get('preview')}
+					/>
+				</Toolbar.Item>
+			) : null}
+
+			<Toolbar.Item className="c-pl-0">
 				<ClayLink
 					aria-label={Liferay.Language.get('cancel')}
 					borderless
 					button
+					className="d-none d-sm-flex"
 					displayType="secondary"
 					href={backURL}
 					small
@@ -156,6 +223,7 @@ export default function ContentEditorToolbar({
 
 			<Toolbar.Item>
 				<ClayButton
+					className="d-md-flex d-none"
 					displayType="secondary"
 					form={formId}
 					name="status"
@@ -166,6 +234,15 @@ export default function ContentEditorToolbar({
 				>
 					{Liferay.Language.get('save-as-draft')}
 				</ClayButton>
+
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('save-as-draft')}
+					className="d-md-none"
+					displayType="secondary"
+					size="sm"
+					symbol="disk"
+					title={Liferay.Language.get('save-as-draft')}
+				/>
 			</Toolbar.Item>
 
 			<Toolbar.Item>

@@ -290,6 +290,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 					connection.prepareStatement(sb.toString());
 
 				ResultSet resultSet = preparedStatement1.executeQuery();
+
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection,

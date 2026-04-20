@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
@@ -18,9 +17,6 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-36105': {enabled: true},
-	}),
 	isolatedSiteTest,
 	loginTest(),
 	rolesPagesTest,

@@ -207,7 +207,9 @@ public class PortletContainerTestUtil {
 
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build();
+
 			StringWriter stringWriter = new StringWriter();
+
 			WriterOutputStream writerOutputStream = new WriterOutputStream(
 				stringWriter)) {
 

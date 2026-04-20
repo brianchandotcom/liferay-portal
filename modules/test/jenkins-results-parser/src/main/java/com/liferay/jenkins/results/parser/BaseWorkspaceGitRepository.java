@@ -1120,8 +1120,11 @@ public abstract class BaseWorkspaceGitRepository
 			gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 		}
 
+		_validateSHAInRemoteGitRef(
+			getSenderBranchName(), _getSenderRemoteGitRef(), senderBranchSHA);
+
 		gitWorkingDirectory.createLocalGitBranch(
-			_getSenderBranchHeadName(), true, getSenderBranchSHA());
+			_getSenderBranchHeadName(), true, senderBranchSHA);
 
 		String baseBranchSHA = getBaseBranchSHA();
 
@@ -1129,14 +1132,19 @@ public abstract class BaseWorkspaceGitRepository
 			gitWorkingDirectory.fetch(_getUpstreamRemoteGitRef());
 		}
 
+		String upstreamBranchName = getUpstreamBranchName();
+
+		_validateSHAInRemoteGitRef(
+			upstreamBranchName, _getUpstreamRemoteGitRef(), baseBranchSHA);
+
 		gitWorkingDirectory.createLocalGitBranch(
-			getUpstreamBranchName(), true, baseBranchSHA);
+			upstreamBranchName, true, baseBranchSHA);
 
 		return gitWorkingDirectory.getRebasedLocalGitBranch(
 			getBranchName(), getSenderBranchName(),
 			JenkinsResultsParserUtil.combine(
 				"git@github.com:", getSenderBranchUsername(), "/", getName()),
-			senderBranchSHA, getUpstreamBranchName(), baseBranchSHA);
+			senderBranchSHA, upstreamBranchName, baseBranchSHA);
 	}
 
 	private LocalGitBranch _createRemoteGitRefLocalGitBranch() {
@@ -1186,11 +1194,14 @@ public abstract class BaseWorkspaceGitRepository
 			}
 		}
 
+		_validateSHAInRemoteGitRef(
+			getSenderBranchName(), _getSenderRemoteGitRef(), senderBranchSHA);
+
 		gitWorkingDirectory.createLocalGitBranch(
-			_getSenderBranchHeadName(), true, getSenderBranchSHA());
+			_getSenderBranchHeadName(), true, senderBranchSHA);
 
 		return gitWorkingDirectory.createLocalGitBranch(
-			getBranchName(), true, getSenderBranchSHA());
+			getBranchName(), true, senderBranchSHA);
 	}
 
 	private void _deleteGitRepository() {
@@ -1512,6 +1523,21 @@ public abstract class BaseWorkspaceGitRepository
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
 		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
+	}
+
+	private void _validateSHAInRemoteGitRef(
+		String branchName, RemoteGitRef remoteGitRef, String sha) {
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		if (!gitWorkingDirectory.localSHAExists(sha) ||
+			!gitWorkingDirectory.refContainsSHA(remoteGitRef.getSHA(), sha)) {
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"SHA ", sha, " was not found in branch \"", branchName,
+					"\" on ", remoteGitRef.getRemoteURL()));
+		}
 	}
 
 	private static final int _MAX_BASE_BRANCH_SHA_LENGTH = 7;

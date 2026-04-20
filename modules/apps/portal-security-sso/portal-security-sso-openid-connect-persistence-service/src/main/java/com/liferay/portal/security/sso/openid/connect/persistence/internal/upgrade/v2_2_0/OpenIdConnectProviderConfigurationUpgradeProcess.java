@@ -55,6 +55,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 					"'%com.liferay.portal.security.sso.openid.connect.",
 					"internal.configuration.",
 					"OpenIdConnectProviderConfiguration%'"));
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

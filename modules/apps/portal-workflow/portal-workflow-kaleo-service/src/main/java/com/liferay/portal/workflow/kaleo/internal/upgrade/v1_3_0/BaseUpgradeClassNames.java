@@ -73,10 +73,12 @@ public abstract class BaseUpgradeClassNames extends UpgradeProcess {
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName);
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", primaryKeyName, ", workflowContext from ",
 					tableName, getWhereClause()));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

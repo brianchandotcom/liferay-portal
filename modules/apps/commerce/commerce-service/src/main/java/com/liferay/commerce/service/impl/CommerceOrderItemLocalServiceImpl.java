@@ -1656,10 +1656,10 @@ public class CommerceOrderItemLocalServiceImpl
 		throws PortalException {
 
 		return CommercePriceConverterUtil.getConvertedPrice(
-			commerceOrder.getGroupId(), cpInstanceId,
-			commerceOrder.getBillingAddressId(),
-			commerceOrder.getShippingAddressId(), price, false,
-			_commerceTaxCalculation);
+			commerceOrder.getBillingAddressId(), commerceOrder.getGroupId(),
+			commerceOrder.getCommerceCurrencyCode(),
+			commerceOrder.getShippingAddressId(), _commerceTaxCalculation,
+			cpInstanceId, false, price);
 	}
 
 	private CPConfigurationEntry _getCPConfigurationEntry(

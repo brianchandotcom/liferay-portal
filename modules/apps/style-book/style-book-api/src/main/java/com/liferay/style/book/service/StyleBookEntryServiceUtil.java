@@ -151,6 +151,12 @@ public class StyleBookEntryServiceUtil {
 		return getService().getStyleBookEntriesCount(groupId, name);
 	}
 
+	public static StyleBookEntry getStyleBookEntry(long styleBookEntryId)
+		throws PortalException {
+
+		return getService().getStyleBookEntry(styleBookEntryId);
+	}
+
 	public static StyleBookEntry getStyleBookEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -223,4 +229,4 @@ public class StyleBookEntryServiceUtil {
 			StyleBookEntryServiceUtil.class, StyleBookEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:574895026
+// LIFERAY-SERVICE-BUILDER-HASH:-1784261044

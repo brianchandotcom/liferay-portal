@@ -21,11 +21,17 @@ interface ExecItemActionArgs {
 		| 'Edit'
 		| 'Expire'
 		| 'Export for Translation'
+		| 'Move To'
 		| 'Share'
 		| 'Show Details'
 		| 'View'
 		| 'View History';
 	filter: string;
+}
+
+interface BulkCopyOrMoveArgs {
+	destinationFolder: string;
+	destinationSpace: string;
 }
 
 export class AssetsPage {
@@ -130,6 +136,46 @@ export class AssetsPage {
 
 	async execBulkItemAction(action: string) {
 		await this.dataSetFragmentPage.execBulkItemAction({action});
+	}
+
+	async bulkCopyTo({destinationFolder, destinationSpace}: BulkCopyOrMoveArgs) {
+		await this.page
+			.getByRole('button', {exact: true, name: 'Copy To'})
+			.click();
+
+		await this.selectCopyOrMoveDestination(
+			destinationSpace,
+			destinationFolder
+		);
+	}
+
+	async bulkMoveTo({destinationFolder, destinationSpace}: BulkCopyOrMoveArgs) {
+		await this.page
+			.getByRole('button', {exact: true, name: 'Move To'})
+			.click();
+
+		await this.selectCopyOrMoveDestination(
+			destinationSpace,
+			destinationFolder
+		);
+	}
+
+	async selectCopyOrMoveDestination(space: string, folder: string) {
+		const dialog = this.page
+			.getByRole('dialog')
+			.filter({hasText: 'Items To'});
+
+		await dialog.waitFor();
+
+		await dialog.getByLabel(space).click();
+
+		await dialog
+			.getByRole('radio', {exact: true, name: `Select ${folder}`})
+			.click();
+
+		await dialog
+			.getByRole('button', {exact: true, name: 'Select'})
+			.click();
 	}
 
 	async execItemAction({action, filter}: ExecItemActionArgs) {

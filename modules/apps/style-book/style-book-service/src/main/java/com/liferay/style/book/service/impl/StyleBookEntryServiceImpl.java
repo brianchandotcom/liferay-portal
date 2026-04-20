@@ -204,6 +204,20 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 	}
 
 	@Override
+	public StyleBookEntry getStyleBookEntry(long styleBookEntryId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), styleBookEntry.getGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntry;
+	}
+
+	@Override
 	public StyleBookEntry getStyleBookEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {

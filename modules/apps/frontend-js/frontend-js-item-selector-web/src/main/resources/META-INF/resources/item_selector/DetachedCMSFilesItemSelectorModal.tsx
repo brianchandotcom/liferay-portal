@@ -80,7 +80,9 @@ const NewItemsNotificationComponent = ({
 			variant="stripe"
 		>
 			{Liferay.Util.sub(
-				Liferay.Language.get('x-new-items-are-not-visible-in-this-view'),
+				Liferay.Language.get(
+					'x-new-items-are-not-visible-in-this-view'
+				),
 				[newItemsCount]
 			)}
 
@@ -160,7 +162,11 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 
 	return (
 		<NotificationContext.Provider
-			value={{newItemsCount, setShowInlineNotification, showInlineNotification}}
+			value={{
+				newItemsCount,
+				setShowInlineNotification,
+				showInlineNotification,
+			}}
 		>
 			{open && (
 				<ItemSelectorModal

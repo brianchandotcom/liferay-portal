@@ -1795,11 +1795,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		try {
 			boolean added = false;
 
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
 			if (layoutUtilityPageEntry == null) {
 				layoutUtilityPageEntry =
 					_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 						externalReferenceCode, groupId, 0, 0, false, name, type,
-						null, ServiceContextThreadLocal.getServiceContext());
+						null, serviceContext);
 
 				added = true;
 			}
@@ -1818,7 +1821,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutUtilityPageEntry =
 					_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 						layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-						name);
+						name, serviceContext);
 
 				added = true;
 			}

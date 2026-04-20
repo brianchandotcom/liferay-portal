@@ -5,18 +5,7 @@
 
 import {Command, Plugin} from '@ckeditor/ckeditor5-core/dist/index.js';
 import {ButtonView} from '@ckeditor/ckeditor5-ui/dist/index.js';
-import ClayIcon from '@clayui/icon';
-import {
-	EConfigInURLBehavior,
-	IFrontendDataSetProps,
-} from '@liferay/frontend-data-set-web';
-import {
-	getCMSItemSelectorFilters,
-	getCMSItemSelectorGroupedFilters,
-	openItemSelectorModal,
-} from '@liferay/frontend-js-item-selector-web';
-import {mimeTypeUtils} from 'frontend-js-web';
-import React from 'react';
+import {openCMSFileSelectorModal} from '@liferay/frontend-js-item-selector-web';
 
 import getIcon from '../utils/getIcon';
 
@@ -32,92 +21,19 @@ const ALLOWED_IMAGE_FILE_EXTENSIONS = [
 	'webp',
 ];
 
-const CMS_FILE_ITEM_SELECTOR_CONFIG = {
-	createItemURL: `${location.origin}/web/cms/files?com.liferay.site.cms.site.initializer-filesSection_fdsConfig=(view:gallery)`,
-	items: [],
-	locator: {
-		id: 'embedded.id',
-		label: 'embedded.title',
-		value: 'embedded.id',
-	},
-	multiSelect: false,
-};
+const ALLOWED_VIDEO_FILE_EXTENSIONS = [
+	'avi',
+	'm4v',
+	'mkv',
+	'mov',
+	'mp4',
+	'ogg',
+	'ogv',
+	'webm',
+	'wmv',
+];
 
-const CMS_FILE_SEARCH_API_URL = `${location.origin}/o/search/v1.0/search?${[
-	'emptySearch=true',
-	'nestedFields=embedded,file.thumbnailURL',
-].join('&')}`;
-
-const FDS_PROPS: Omit<IFrontendDataSetProps, 'filters' | 'id'> = {
-	configInURLBehavior: EConfigInURLBehavior.OFF,
-	pagination: {
-		deltas: [{label: 20}, {label: 40}, {label: 60}],
-		initialDelta: 20,
-	},
-	views: [
-		{
-			contentRenderer: 'cards',
-			label: Liferay.Language.get('cards'),
-			name: 'cards',
-			schema: {
-				description: 'description',
-				symbol: '',
-				title: 'title',
-			},
-
-			setItemComponentProps: ({
-				item,
-				props,
-			}: {
-				item: {
-					embedded:
-						| {coverImage: {link: {href: string}}}
-						| {file: {mimeType: string; thumbnailURL: string}};
-				};
-				props: object;
-			}) => {
-				const stickerConfig = {
-					stickerProps: {
-						className: 'file-icon-color-5',
-						displayType: 'unstyled',
-					},
-				};
-
-				if ('file' in item.embedded) {
-					const mimeType = item.embedded?.file?.mimeType || '';
-
-					return {
-						...props,
-						imgProps: {src: item.embedded.file.thumbnailURL},
-						stickerProps: {
-							className:
-								mimeTypeUtils.getClassNameFromMimeType(
-									mimeType
-								),
-							content: React.createElement(ClayIcon, {
-								symbol: mimeTypeUtils.getIconFromMimeType(
-									mimeType
-								),
-							}),
-							displayType: 'unstyled',
-						},
-					};
-				}
-
-				return {
-					...props,
-					...stickerConfig,
-				};
-			},
-
-			thumbnail: 'cards2',
-		},
-	],
-};
-
-function getRandomId(): string {
-	return Math.random().toString(36).substring(2, 9);
-}
+const CMS_CREATE_ITEM_URL = `${location.origin}/web/cms/files?com.liferay.site.cms.site.initializer-filesSection_fdsConfig=(view:gallery)`;
 
 interface IImageSelectedItem {
 	embedded?: {
@@ -157,20 +73,14 @@ class HeadlessItemSelector extends Plugin {
 			buttonView.bind('isEnabled').to(command, 'isEnabled');
 
 			buttonView.on('execute', () => {
-				openItemSelectorModal({
-					...CMS_FILE_ITEM_SELECTOR_CONFIG,
-					apiURL: `${CMS_FILE_SEARCH_API_URL}&filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3) and (extension in ('${ALLOWED_IMAGE_FILE_EXTENSIONS.join("','")}')))`,
-					fdsProps: {
-						...FDS_PROPS,
-						filters: getCMSItemSelectorFilters(
-							Liferay.ThemeDisplay.getSiteGroupId()
-						),
-						groupedFilters: getCMSItemSelectorGroupedFilters(),
-						id: `ImageHeadlessItemSelectorFDS_${getRandomId()}`,
-					},
+				openCMSFileSelectorModal({
+					allowDragAndDrop: false,
+					allowedExtensions: ALLOWED_IMAGE_FILE_EXTENSIONS.join(','),
+					createItemURL: CMS_CREATE_ITEM_URL,
+					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
 					itemTypeLabel: Liferay.Language.get('image'),
-					onItemsChange: (items: Array<IImageSelectedItem>) => {
-						const item = items[0];
+					onSelect: (items) => {
+						const item = items[0] as IImageSelectedItem;
 
 						if (!item?.embedded?.file?.link?.href) {
 							return;
@@ -202,20 +112,14 @@ class HeadlessItemSelector extends Plugin {
 			buttonView.bind('isEnabled').to(command, 'isEnabled');
 
 			buttonView.on('execute', () => {
-				openItemSelectorModal({
-					...CMS_FILE_ITEM_SELECTOR_CONFIG,
-					apiURL: `${CMS_FILE_SEARCH_API_URL}&filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))`,
-					fdsProps: {
-						...FDS_PROPS,
-						filters: getCMSItemSelectorFilters(
-							Liferay.ThemeDisplay.getSiteGroupId()
-						),
-						groupedFilters: getCMSItemSelectorGroupedFilters(),
-						id: `VideoHeadlessItemSelectorFDS_${getRandomId()}`,
-					},
+				openCMSFileSelectorModal({
+					allowDragAndDrop: false,
+					allowedExtensions: ALLOWED_VIDEO_FILE_EXTENSIONS.join(','),
+					createItemURL: CMS_CREATE_ITEM_URL,
+					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
 					itemTypeLabel: Liferay.Language.get('video'),
-					onItemsChange: (items: Array<IVideoSelectedItem>) => {
-						const item = items[0];
+					onSelect: (items) => {
+						const item = items[0] as IVideoSelectedItem;
 
 						if (!item?.embedded?.videoURL) {
 							return;

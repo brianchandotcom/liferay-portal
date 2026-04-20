@@ -70,6 +70,12 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 			isCookiesPreferenceHandlingFloatingIconEnabled(_scope, _scopePK);
 	}
 
+	public boolean getCookiesPreferenceHandlingGlobalPrivacyControlEnabled() {
+		return _cookiesConfigurationProvider.
+			isCookiesPreferenceHandlingGlobalPrivacyControlEnabled(
+				_scope, _scopePK);
+	}
+
 	public boolean getCookiesPreferenceHandlingStoreConsent() {
 		return _cookiesConfigurationProvider.
 			isCookiesPreferenceHandlingStoreConsent(_scope, _scopePK);

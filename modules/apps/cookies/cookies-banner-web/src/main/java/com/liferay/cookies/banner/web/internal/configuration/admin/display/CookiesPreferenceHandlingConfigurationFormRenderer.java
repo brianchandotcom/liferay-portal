@@ -129,6 +129,19 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			"floatingIconEnabled",
 			ParamUtil.getBoolean(httpServletRequest, "floatingIconEnabled")
 		).put(
+			"globalPrivacyControlEnabled",
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled(
+						_portal.getCompanyId(httpServletRequest),
+						"LPD-75064")) {
+
+					return ParamUtil.getBoolean(
+						httpServletRequest, "globalPrivacyControlEnabled");
+				}
+
+				return false;
+			}
+		).put(
 			"modifiedDate",
 			() -> {
 				long modifiedDate = ParamUtil.getLong(

@@ -51,6 +51,10 @@ export default function ({namespace}) {
 				`${namespace}forcedReconsentButton`
 			);
 
+			const globalPrivacyControlEnabled = document.querySelector(
+				`input[type='checkbox'][name='${namespace}globalPrivacyControlEnabled']`
+			);
+
 			const logoSelectorContainer = document.getElementById(
 				`${namespace}logoSelectorContainer`
 			);
@@ -98,6 +102,10 @@ export default function ({namespace}) {
 								element.removeAttribute('disabled');
 							});
 					}
+
+					if (Liferay.FeatureFlags['LPD-75064']) {
+						globalPrivacyControlEnabled.removeAttribute('disabled');
+					}
 				}
 				else {
 					consentRenewalPeriod.classList.add('disabled');
@@ -137,6 +145,13 @@ export default function ({namespace}) {
 							.forEach((element) => {
 								element.setAttribute('disabled', '');
 							});
+					}
+
+					if (Liferay.FeatureFlags['LPD-75064']) {
+						globalPrivacyControlEnabled.setAttribute(
+							'disabled',
+							''
+						);
 					}
 				}
 			}

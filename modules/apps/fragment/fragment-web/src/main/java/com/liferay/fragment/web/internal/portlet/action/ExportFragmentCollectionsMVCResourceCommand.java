@@ -50,10 +50,10 @@ public class ExportFragmentCollectionsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
+		long[] exportFragmentCollectionIds = null;
+
 		long fragmentCollectionId = ParamUtil.getLong(
 			resourceRequest, "fragmentCollectionId");
-
-		long[] exportFragmentCollectionIds = null;
 
 		if (fragmentCollectionId > 0) {
 			exportFragmentCollectionIds = new long[] {fragmentCollectionId};

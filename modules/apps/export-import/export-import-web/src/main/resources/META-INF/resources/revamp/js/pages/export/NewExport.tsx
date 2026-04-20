@@ -63,11 +63,15 @@ export function NewExport({
 				description={Liferay.Language.get(
 					'select-and-filter-the-data-you-want-to-include-in-your-export'
 				)}
+				initialValues={{
+					contentSelection: undefined,
+				}}
 				title={Liferay.Language.get('data-selection')}
 			>
 				<DataSelectionStep
 					itemsCount={0}
 					onApplyFilter={handleApplyFilter}
+					sections={sections}
 				/>
 			</WizardStep>
 

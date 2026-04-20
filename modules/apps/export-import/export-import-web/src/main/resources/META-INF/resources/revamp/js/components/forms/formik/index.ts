@@ -4,6 +4,7 @@
  */
 
 export {FormikDebug} from './FormikDebug';
+export {FormikFieldContentSelector} from './FormikFieldContentSelector';
 export {FormikFieldFileSelector} from './FormikFieldFileSelector';
 export {FormikFieldMultiCheckbox} from './FormikFieldMultiCheckbox';
 export {FormikFieldText} from './FormikFieldText';

@@ -415,7 +415,7 @@ test(
 );
 
 test(
-	'Destination picker shows a warning when bulk moving or copying',
+	'Warn users about limitations when bulk moving or copying',
 	{tag: '@LPD-86776'},
 	async ({apiHelpers, assetsPage, page}) => {
 		const spaceName = `Space ${getRandomString()}`;
@@ -423,25 +423,43 @@ test(
 			`Content ${getRandomString()}`,
 			`Content ${getRandomString()}`,
 		];
+		const fileTitle = `File ${getRandomString()}`;
 
-		await test.step('Create a Space with two contents', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			});
+		await test.step(
+			'Create a Space with two contents and one file',
+			async () => {
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
 
-			for (const title of contentTitles) {
+				for (const title of contentTitles) {
+					await apiHelpers.objectEntry.postObjectEntry(
+						{
+							objectEntryFolderExternalReferenceCode:
+								'L_CONTENTS',
+							title,
+						},
+						'cms/basic-web-contents',
+						spaceName
+					);
+				}
+
 				await apiHelpers.objectEntry.postObjectEntry(
 					{
-						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-						title,
+						file: {
+							fileBase64: 'R0lGODlhAQABAAAAACw=',
+							name: `file_${getRandomString()}.png`,
+						},
+						objectEntryFolderExternalReferenceCode: 'L_FILES',
+						title: fileTitle,
 					},
-					'cms/basic-web-contents',
+					'cms/basic-documents',
 					spaceName
 				);
 			}
-		});
+		);
 
 		await test.step('Select the two contents', async () => {
 			await assetsPage.gotoAll();
@@ -450,7 +468,7 @@ test(
 		});
 
 		await test.step(
-			'Move To destination picker shows the warning',
+			'Move To destination picker shows the warning for same-type selection',
 			async () => {
 				await page
 					.getByRole('button', {exact: true, name: 'Move To'})
@@ -475,7 +493,7 @@ test(
 		);
 
 		await test.step(
-			'Copy To destination picker shows the warning',
+			'Copy To destination picker shows the warning for same-type selection',
 			async () => {
 				await page
 					.getByRole('button', {exact: true, name: 'Copy To'})
@@ -493,6 +511,63 @@ test(
 
 				await dialog
 					.getByRole('button', {exact: true, name: 'Cancel'})
+					.click();
+
+				await expect(dialog).toBeHidden();
+			}
+		);
+
+		await test.step(
+			'Also select the file for a mixed-type selection',
+			async () => {
+				await assetsPage.selectItems([fileTitle]);
+			}
+		);
+
+		await test.step(
+			'Move To blocks a mixed-type selection with a not-allowed modal',
+			async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Move To'})
+					.click();
+
+				const dialog = page.getByRole('dialog', {
+					name: 'Action not allowed',
+				});
+
+				await expect(
+					dialog.getByText(
+						/Assets with different content types cannot be moved together/
+					)
+				).toBeVisible();
+
+				await dialog
+					.getByRole('button', {exact: true, name: 'OK'})
+					.click();
+
+				await expect(dialog).toBeHidden();
+			}
+		);
+
+		await test.step(
+			'Copy To blocks a mixed-type selection with a not-allowed modal',
+			async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Copy To'})
+					.click();
+
+				const dialog = page.getByRole('dialog', {
+					name: 'Action not allowed',
+				});
+
+				await expect(
+					dialog.getByText(
+						/Assets with different content types cannot be copied together/
+					)
+				).toBeVisible();
+
+				await dialog
+					.getByRole('button', {exact: true, name: 'OK'})
 					.click();
 
 				await expect(dialog).toBeHidden();

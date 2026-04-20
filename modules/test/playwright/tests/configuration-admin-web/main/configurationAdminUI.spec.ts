@@ -41,3 +41,56 @@ test(
 		});
 	}
 );
+
+test(
+	'Configuration submit button stays disabled when form has no inputs',
+	{tag: ['@LPD-86166']},
+	async ({page, systemSettingsPage}) => {
+		await page.addInitScript(() => {
+			const OriginalMutationObserver = window.MutationObserver;
+
+			window.MutationObserver = function (callback) {
+				return new OriginalMutationObserver(function (
+					mutations,
+					observer
+				) {
+					document.querySelectorAll('form').forEach((form) => {
+						if (
+							form.querySelector('.configuration-submit-button')
+						) {
+							form.querySelectorAll(
+								'input:not([type="hidden"]), select, textarea'
+							).forEach((input) => input.remove());
+						}
+					});
+
+					callback.call(this, mutations, observer);
+				});
+			} as unknown as typeof MutationObserver;
+		});
+
+		await systemSettingsPage.goToSystemSetting(
+			'Users',
+			'Password Policies'
+		);
+
+		await expect(
+			page.locator('.configuration-submit-button')
+		).toBeDisabled();
+	}
+);
+
+test(
+	'Configuration submit button is enabled once form inputs are loaded',
+	{tag: ['@LPD-86166']},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Users',
+			'Password Policies'
+		);
+
+		await expect(
+			page.locator('.configuration-submit-button')
+		).toBeEnabled();
+	}
+);

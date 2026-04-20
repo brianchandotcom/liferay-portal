@@ -131,6 +131,24 @@ public class DLSizeLimitConfigurationHelper {
 			_computeMimeTypeSizeLimit(_systemDLSizeLimitConfiguration));
 	}
 
+	public long getSystemMimeTypeSizeLimit(String mimeType) {
+		if (Validator.isNull(mimeType)) {
+			return 0;
+		}
+
+		Map<String, Long> map = getSystemMimeTypeSizeLimit();
+
+		long sizeLimit = map.getOrDefault(mimeType, 0L);
+
+		if (sizeLimit != 0) {
+			return sizeLimit;
+		}
+
+		List<String> parts = StringUtil.split(mimeType, CharPool.SLASH);
+
+		return map.getOrDefault(String.format("%s/*", parts.get(0)), 0L);
+	}
+
 	public void unmapPid(String pid) {
 		if (_companyIds.containsKey(pid)) {
 			long companyId = _companyIds.remove(pid);

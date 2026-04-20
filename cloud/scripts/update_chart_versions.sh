@@ -59,18 +59,19 @@ function _check_chart_yaml {
 
 		helm_chart_name=$(grep "^name: " "${helm_chart_yaml}" | awk '{print $2}')
 
-		_update_chart_dependency_version "${helm_chart_name}" "${new_version}" "${helm_chart_yaml}"
+		_update_chart_dependency_version "${helm_chart_name}" "${helm_chart_yaml}" "${new_version}"
 	fi
 }
 
 function _update_chart_dependency_version {
 	local chart_name="${1}"
-	local new_version="${2}"
-	local current_chart_yaml="${3}"
+	local current_chart_yaml="${2}"
+	local new_version="${3}"
 
 	find "${_ROOT_CLOUD_DIR}" -name "Chart.yaml" -type f | while read -r chart_yaml_file;
 	do
-		if [[ "${chart_yaml_file}" == "${current_chart_yaml}" ]]; then
+		if [[ "${chart_yaml_file}" == "${current_chart_yaml}" ]]
+		then
 			continue
 		fi
 

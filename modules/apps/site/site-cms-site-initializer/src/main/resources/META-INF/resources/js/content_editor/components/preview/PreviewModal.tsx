@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
@@ -24,7 +25,12 @@ export default function PreviewModal({
 	onCloseModal,
 	title,
 }: Props) {
-	const {previewURL, ...selectorProps} = usePreviewState(getPreviewDataURL);
+	const {
+		displayPageTemplates,
+		previewURL,
+		showDisplayPageTemplateAlert,
+		...selectorProps
+	} = usePreviewState(getPreviewDataURL);
 
 	const {observer, onClose} = useModal({
 		onClose: onCloseModal,
@@ -39,9 +45,22 @@ export default function PreviewModal({
 			<ClayModal.Body className="p-4">
 				<PreviewSelectors
 					{...selectorProps}
+					displayPageTemplates={displayPageTemplates}
 					previewURL={previewURL}
 					vertical
 				/>
+
+				{showDisplayPageTemplateAlert ? (
+					<ClayAlert
+						className="mb-0 mt-3"
+						displayType="info"
+						title={Liferay.Language.get('info')}
+					>
+						{Liferay.Language.get(
+							'no-display-page-templates-available-for-preview-in-this-channel'
+						)}
+					</ClayAlert>
+				) : null}
 			</ClayModal.Body>
 
 			<ClayModal.Footer

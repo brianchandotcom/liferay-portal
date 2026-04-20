@@ -2,6 +2,10 @@
 
 html#{$cadmin-selector} {
 	.cadmin {
+		.dropdown-menu {
+			max-width: none;
+		}
+
 		.page-editor__display-page-preview-item-selector {
 			&-label-wrapper {
 				&::after {

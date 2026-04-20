@@ -502,6 +502,84 @@ test(
 );
 
 test(
+	'Selected folders are hidden from the destination picker on bulk move',
+	{tag: '@LPD-86776'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const spaceName = `Space ${getRandomString()}`;
+		const folderAName = `Folder A ${getRandomString()}`;
+		const folderBName = `Folder B ${getRandomString()}`;
+
+		await test.step(
+			'Create a Space with two content folders',
+			async () => {
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
+
+				for (const title of [folderAName, folderBName]) {
+					await apiHelpers.objectFolder.createObjectEntryFolder({
+						parentObjectEntryFolderExternalReferenceCode:
+							'L_CONTENTS',
+						scopeKey: spaceName,
+						title,
+					});
+				}
+			}
+		);
+
+		await test.step(
+			"Navigate to the Space's Contents",
+			async () => {
+				await assetsPage.gotoAll();
+
+				await page
+					.getByRole('menuitem', {exact: true, name: spaceName})
+					.click();
+
+				await page
+					.getByRole('menuitem', {exact: true, name: 'Contents'})
+					.click();
+			}
+		);
+
+		await test.step('Select both folders and open Move To', async () => {
+			await assetsPage.selectItems([folderAName, folderBName]);
+
+			await page
+				.getByRole('button', {exact: true, name: 'Move To'})
+				.click();
+		});
+
+		await test.step(
+			'Selected folders are hidden in the destination picker',
+			async () => {
+				const dialog = page.getByRole('dialog', {
+					name: /Move \d+ Items To/,
+				});
+
+				await dialog.getByLabel(spaceName).click();
+
+				await expect(
+					dialog.getByRole('radio', {
+						exact: true,
+						name: `Select ${folderAName}`,
+					})
+				).toBeHidden();
+
+				await expect(
+					dialog.getByRole('radio', {
+						exact: true,
+						name: `Select ${folderBName}`,
+					})
+				).toBeHidden();
+			}
+		);
+	}
+);
+
+test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
 	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {

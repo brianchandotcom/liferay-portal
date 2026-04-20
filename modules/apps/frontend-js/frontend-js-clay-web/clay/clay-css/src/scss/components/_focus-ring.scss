@@ -87,11 +87,26 @@ $focus-ring-pulse-animation: $focus-ring-pulse-animation-name
 		box-shadow: $focus-ring-animation-to-box-shadow;
 	}
 
+	&.c-tab-returning {
+		:focus-visible,
+		.focus {
+			&::after {
+				animation-name: none;
+			}
+		}
+
+		.custom-control-input:focus-visible ~ .custom-control-label::after {
+			animation-name: none;
+		}
+	}
+
 	@at-root {
 		.c-prefers-reduced-motion & {
 			:focus-visible,
 			.focus {
-				animation: none;
+				&::after {
+					animation: none;
+				}
 			}
 
 			.custom-control-input:focus-visible ~ .custom-control-label::after {

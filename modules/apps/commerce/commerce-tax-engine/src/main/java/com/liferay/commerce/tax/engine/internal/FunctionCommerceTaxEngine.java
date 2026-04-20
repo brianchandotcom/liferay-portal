@@ -150,7 +150,7 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws Exception {
 
-		JSONObject typeSettingsJSONObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
@@ -163,14 +163,14 @@ public class FunctionCommerceTaxEngine implements CommerceTaxEngine {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			commerceTaxMethod.getTypeSettingsUnicodeProperties();
 
-		typeSettingsUnicodeProperties.forEach(typeSettingsJSONObject::put);
+		typeSettingsUnicodeProperties.forEach(jsonObject::put);
 
 		return JSONUtil.put(
 			"commerceTaxCalculateRequest",
 			_getCommerceTaxCalculateRequestJSONObject(
 				commerceChannel, commerceTaxCalculateRequest)
 		).put(
-			"typeSettings", typeSettingsJSONObject
+			"typeSettings", jsonObject
 		);
 	}
 

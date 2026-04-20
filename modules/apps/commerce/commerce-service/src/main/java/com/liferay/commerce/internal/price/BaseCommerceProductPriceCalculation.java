@@ -161,11 +161,11 @@ public abstract class BaseCommerceProductPriceCalculation
 			CommerceContext commerceContext)
 		throws PortalException {
 
+		long commerceBillingAddressId = 0;
 		long commerceChannelGroupId =
 			commerceContext.getCommerceChannelGroupId();
-		long commerceBillingAddressId = 0;
-		long commerceShippingAddressId = 0;
 		String commerceCurrencyCode = null;
+		long commerceShippingAddressId = 0;
 
 		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
@@ -212,9 +212,9 @@ public abstract class BaseCommerceProductPriceCalculation
 		}
 
 		return CommercePriceConverterUtil.getConvertedPrice(
-			commerceChannelGroupId, cpInstanceId, commerceBillingAddressId,
-			commerceShippingAddressId, commerceCurrencyCode, price, includeTax,
-			commerceTaxCalculation);
+			commerceBillingAddressId, commerceChannelGroupId,
+			commerceCurrencyCode, commerceShippingAddressId,
+			commerceTaxCalculation, cpInstanceId, includeTax, price);
 	}
 
 	protected BigDecimal[] getUpdatedPrices(

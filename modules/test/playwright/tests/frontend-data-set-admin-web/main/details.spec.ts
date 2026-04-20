@@ -94,7 +94,7 @@ test('URL Preview encodes the parameters input @LPD-25241', async ({
 });
 
 test(
-	'Data Set Name is shown as part of the Details page',
+	'Data Set ERC is shown as part of the Details page',
 	{tag: '@LPD-86377'},
 	async ({detailsPage}) => {
 		await test.step('Navigate to Details section', async () => {
@@ -103,8 +103,8 @@ test(
 			});
 		});
 
-		await test.step('Check that the Data Set Name is shown as part of the Details page', async () => {
-			await expect(detailsPage.dataSetName).toHaveValue(
+		await test.step('Check that the Data Set ERC is shown as part of the Details page', async () => {
+			await expect(detailsPage.dataSetERC).toHaveValue(
 				detailsDataSetERC
 			);
 		});

@@ -9,7 +9,7 @@ import {DataSetPage} from '../DataSetPage';
 
 export class DetailsPage {
 	readonly cancelButton: Locator;
-	readonly dataSetName: Locator;
+	readonly dataSetERC: Locator;
 	readonly dataSetPage: DataSetPage;
 	readonly page: Page;
 	readonly parametersInput: Locator;
@@ -18,8 +18,8 @@ export class DetailsPage {
 
 	constructor(page: Page) {
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
-		this.dataSetName = page.getByLabel(
-			'Data Set Name (External Reference Code)'
+		this.dataSetERC = page.getByLabel(
+			'External Reference Code'
 		);
 		this.dataSetPage = new DataSetPage(page);
 		this.page = page;

@@ -62,7 +62,7 @@ public class ViewAssetDisplayContext {
 			StringBundler.concat(
 				_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
 				GroupConstants.CMS_FRIENDLY_URL,
-				"/edit_content_item?&p_l_mode=read&p_p_state=",
+				"/edit_content_item?p_l_mode=read&p_p_state=",
 				LiferayWindowState.POP_UP, "&redirect=",
 				_themeDisplay.getURLCurrent(), "&objectEntryId=",
 				_objectEntry.getObjectEntryId())

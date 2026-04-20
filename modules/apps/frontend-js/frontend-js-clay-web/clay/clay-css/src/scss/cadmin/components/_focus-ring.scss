@@ -17,7 +17,7 @@ $cadmin-focus-ring-animation-to-box-shadow:
 	0 0 0 2px $cadmin-white,
 	0 0 0 4px $cadmin-primary-l0 !default;
 
-$cadmin-focus-ring-pulse-animation-name: clay-focus-ring-pulse !default;
+$cadmin-focus-ring-pulse-animation-name: clay-cadmin-focus-ring-pulse !default;
 $cadmin-focus-ring-pulse-animation: $cadmin-focus-ring-pulse-animation-name
 	$cadmin-focus-ring-animation-duration
 	$cadmin-focus-ring-animation-timing-function !default;

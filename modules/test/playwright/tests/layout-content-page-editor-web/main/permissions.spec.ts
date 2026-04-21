@@ -164,9 +164,7 @@ test(
 		await pageEditorPage.goToConfigurationTab('Styles');
 
 		await expect(
-			page
-				.getByLabel('Background ColorImage')
-				.getByLabel('Color', {exact: true})
+			page.getByLabel('Text Color', {exact: true})
 		).toBeAttached();
 
 		// Assert advanced tab is not present

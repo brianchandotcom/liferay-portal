@@ -7,7 +7,10 @@ package com.liferay.headless.admin.fragment.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentVersion;
 import com.liferay.headless.admin.fragment.client.pagination.Page;
@@ -55,6 +58,32 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		super.setUp();
 
 		_fragmentCollection = _addFragmentCollection();
+	}
+
+	@Override
+	@Test
+	public void testDeleteSiteFragment() throws Exception {
+		super.testDeleteSiteFragment();
+
+		Fragment postFragment = _postFragment(randomFragment());
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
+				postFragment.getExternalReferenceCode(),
+				testGroup.getGroupId());
+
+		fragmentResource.deleteSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			postFragment.getExternalReferenceCode());
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntry.getFragmentEntryId()));
+
+		List<FragmentEntryVersion> fragmentEntryVersions =
+			_fragmentEntryLocalService.getVersions(fragmentEntry);
+
+		Assert.assertTrue(fragmentEntryVersions.isEmpty());
 	}
 
 	@Override
@@ -160,6 +189,11 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			});
 
 		return fragment;
+	}
+
+	@Override
+	protected Fragment testDeleteSiteFragment_addFragment() throws Exception {
+		return _postFragment(randomFragment());
 	}
 
 	@Override
@@ -615,6 +649,9 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private Language _language;

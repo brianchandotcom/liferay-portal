@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import getRandomString from '../../../utils/getRandomString';
@@ -18,9 +17,6 @@ import {
 } from './utils/consentManagerConfigurationHelper';
 
 export const test = mergeTests(
-	featureFlagsTest({
-		'LPD-75032': {enabled: true},
-	}),
 	journalPagesTest,
 	loginTest(),
 	systemSettingsPageTest

@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {consentManagerConfigurationPageTest} from '../../../fixtures/consentManagerConfigurationPageTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
@@ -35,9 +34,6 @@ export const test = mergeTests(
 	accountSettingsPagesTest,
 	apiHelpersTest,
 	consentManagerConfigurationPageTest,
-	featureFlagsTest({
-		'LPD-75032': {enabled: true},
-	}),
 	loginTest(),
 	systemSettingsPageTest,
 	usersAndOrganizationsPagesTest

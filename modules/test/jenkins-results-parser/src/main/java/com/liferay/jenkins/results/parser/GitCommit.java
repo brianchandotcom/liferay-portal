@@ -29,6 +29,8 @@ public interface GitCommit {
 
 	public String getSHA();
 
+	public String getTicketId();
+
 	public GitCommit.Type getType();
 
 	public JSONObject toJSONObject();

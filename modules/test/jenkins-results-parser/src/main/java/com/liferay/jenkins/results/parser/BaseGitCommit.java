@@ -7,6 +7,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -71,6 +73,23 @@ public abstract class BaseGitCommit implements GitCommit {
 	}
 
 	@Override
+	public String getTicketId() {
+		String commitMessage = getMessage();
+
+		if (commitMessage == null) {
+			return "none";
+		}
+
+		Matcher matcher = _ticketIdPattern.matcher(commitMessage.trim());
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return "none";
+	}
+
+	@Override
 	public GitCommit.Type getType() {
 		return _type;
 	}
@@ -128,6 +147,9 @@ public abstract class BaseGitCommit implements GitCommit {
 	protected Long commitTime;
 	protected String emailAddress;
 	protected String message;
+
+	private static final Pattern _ticketIdPattern = Pattern.compile(
+		"^\"?([A-Z]+-\\d+)");
 
 	private final String _gitRepositoryName;
 	private final String _sha;

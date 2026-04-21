@@ -11,6 +11,7 @@ import dateFormat from '../../../common/utils/dateFormat';
 
 import '../../../../css/props_transformer/TransformViewsItemProps.scss';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
+import {isExpiringSoon} from '../../../common/utils/expirationStatus';
 
 type Card = React.ComponentProps<typeof Card> & {
 	actions: {data: {id: string}; href?: string}[];
@@ -168,7 +169,24 @@ const getLabels = (item: any, props: Card) => {
 		];
 	}
 
-	return props.labels;
+	const labels = props.labels ?? [];
+
+	if (
+		isExpiringSoon(
+			item.embedded?.status?.label,
+			item.embedded?.expirationDate
+		)
+	) {
+		return [
+			...labels,
+			{
+				displayType: 'warning',
+				value: Liferay.Language.get('expiring-soon'),
+			},
+		];
+	}
+
+	return labels;
 };
 
 type ViewsItemsProps = {

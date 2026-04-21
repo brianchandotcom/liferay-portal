@@ -2341,7 +2341,9 @@ public class GitWorkingDirectory {
 		return _log(start, num, null, sha);
 	}
 
-	public List<LocalGitCommit> log(String startingRef, String endingRef) {
+	public List<LocalGitCommit> log(String startingRef, String endingRef)
+		throws IOException {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("git log ");
@@ -2355,8 +2357,7 @@ public class GitWorkingDirectory {
 			5, 1000, 30 * 1000, sb.toString());
 
 		if (result.getExitValue() != 0) {
-			throw new GitWorkingDirectoryRuntimeException(
-				this,
+			throw new IOException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to find log between ", startingRef, " and ",
 					endingRef));

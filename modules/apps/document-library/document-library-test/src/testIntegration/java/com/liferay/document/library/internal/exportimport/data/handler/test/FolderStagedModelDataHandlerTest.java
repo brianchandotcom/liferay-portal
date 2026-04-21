@@ -92,9 +92,7 @@ public class FolderStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testImportChildFolderWithMissingParentMapping()
-		throws Exception {
-
+	public void testFolderWithoutParentFolder() throws Exception {
 		initExport();
 
 		Folder parentFolder = DLAppServiceUtil.addFolder(

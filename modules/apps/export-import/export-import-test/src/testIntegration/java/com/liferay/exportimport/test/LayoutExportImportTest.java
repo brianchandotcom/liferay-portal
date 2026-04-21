@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -804,13 +805,16 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	private void _testExportImportLayoutUtilityPageEntryWithPreviewFileEntry()
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
 				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId()));
+				serviceContext);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			group.getGroupId(), RandomTestUtil.randomString(),
@@ -829,7 +833,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-			previewFileEntry.getFileEntryId());
+			previewFileEntry.getFileEntryId(), serviceContext);
 
 		exportImportLayouts(new long[0], getImportParameterMap(), true);
 

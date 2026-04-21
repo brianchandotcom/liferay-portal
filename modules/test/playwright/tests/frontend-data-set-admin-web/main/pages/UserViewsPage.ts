@@ -15,6 +15,7 @@ export class UserViewsPage {
 		container: Locator;
 		deleteButton: Locator;
 	};
+	readonly dropdownMenu: Locator;
 	readonly emptyStateTitle: Locator;
 	readonly filterActionButton: Locator;
 	readonly filterButton: Locator;
@@ -25,6 +26,7 @@ export class UserViewsPage {
 	readonly managementToolbar: {
 		container: Locator;
 	};
+	readonly orderButton: Locator;
 	readonly page: Page;
 	readonly pageContainer: Locator;
 	readonly table: {
@@ -37,6 +39,7 @@ export class UserViewsPage {
 		this.adminOptionsDropdown = page.locator(
 			'button[data-qa-id="fdsAdminOptionsMenu"]'
 		);
+		this.dropdownMenu = page.locator('.dropdown-menu.show');
 		this.emptyStateTitle = page
 			.getByTestId('visualization-mode-table')
 			.getByText('No Results Found');
@@ -56,6 +59,7 @@ export class UserViewsPage {
 		this.managementToolbar = {
 			container: managementToolbarContainer,
 		};
+		this.orderButton = page.getByRole('button', {name: 'Order'});
 		this.page = page;
 		this.pageContainer = page.locator('.data-sets.manage-user-views');
 		const bulkActionsContainer = page.locator('.bulk-actions');
@@ -75,6 +79,14 @@ export class UserViewsPage {
 			container: tableContainer,
 			headRow: tableContainer.locator('thead tr'),
 		};
+	}
+
+	async sortDropdownItemHasCheck(itemName: string): Promise<boolean> {
+		return this.dropdownMenu
+			.getByRole('menuitem', {exact: true, name: itemName})
+			.locator('svg use[*|href$="#check"]')
+			.count()
+			.then((count) => count > 0);
 	}
 
 	async goto() {

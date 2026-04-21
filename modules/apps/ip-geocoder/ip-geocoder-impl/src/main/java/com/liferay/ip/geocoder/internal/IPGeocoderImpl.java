@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -114,7 +115,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 			Country country = countryResponse.getCountry();
 
-			return country.getIsoCode();
+			return GetterUtil.getString(country.getIsoCode());
 		}
 		catch (AddressNotFoundException addressNotFoundException) {
 			if (_log.isDebugEnabled()) {

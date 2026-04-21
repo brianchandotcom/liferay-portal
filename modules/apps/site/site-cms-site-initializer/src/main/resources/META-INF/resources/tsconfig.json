@@ -1,5 +1,5 @@
 {
-	"@generated": "dd6df828d4b1735c961f6399b33812c26871e97e",
+	"@generated": "051327244fb624e4b3ae184a5fde457bcce4ce1c",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/ai-hub-cell-js-components-web": [
+				"../../../../../../../ai-hub-cell/ai-hub-cell-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
 			"@liferay/analytics-reports-js-components-web": [
 				"../../../../../../../analytics/analytics-reports-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
@@ -70,6 +73,9 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../../ai-hub-cell/ai-hub-cell-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
 		{
 			"path": "../../../../../../../analytics/analytics-reports-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},

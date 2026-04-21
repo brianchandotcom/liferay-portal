@@ -43,8 +43,8 @@ public class ScriptingImpl implements Scripting {
 	public ScriptingExecutor createScriptingExecutor(
 		String language, boolean executeInSeparateThread) {
 
-		ScriptingExecutor scriptingExecutor =
-			_scriptingExecutorsServiceTrackerMap.getService(language);
+		ScriptingExecutor scriptingExecutor = _serviceTrackerMap.getService(
+			language);
 
 		return scriptingExecutor.newInstance(executeInSeparateThread);
 	}
@@ -55,8 +55,8 @@ public class ScriptingImpl implements Scripting {
 			Set<String> outputNames, String language, String script)
 		throws ScriptingException {
 
-		ScriptingExecutor scriptingExecutor =
-			_scriptingExecutorsServiceTrackerMap.getService(language);
+		ScriptingExecutor scriptingExecutor = _serviceTrackerMap.getService(
+			language);
 
 		if (scriptingExecutor == null) {
 			throw new UnsupportedLanguageException(language);
@@ -93,33 +93,32 @@ public class ScriptingImpl implements Scripting {
 
 	@Override
 	public Set<String> getSupportedLanguages() {
-		return _scriptingExecutorsServiceTrackerMap.keySet();
+		return _serviceTrackerMap.keySet();
 	}
 
 	@Override
 	public void validate(String language, String script)
 		throws ScriptingException {
 
-		ScriptingExecutor scriptingExecutor =
-			_scriptingExecutorsServiceTrackerMap.getService(language);
+		ScriptingExecutor scriptingExecutor = _serviceTrackerMap.getService(
+			language);
 
 		scriptingExecutor.validate(script);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_scriptingExecutorsServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ScriptingExecutor.class, null,
-				ServiceReferenceMapperFactory.create(
-					bundleContext,
-					(scriptingExecutor, emitter) -> emitter.emit(
-						scriptingExecutor.getLanguage())));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ScriptingExecutor.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(scriptingExecutor, emitter) -> emitter.emit(
+					scriptingExecutor.getLanguage())));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_scriptingExecutorsServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private String _getErrorMessage(String script, Exception exception) {
@@ -163,7 +162,6 @@ public class ScriptingImpl implements Scripting {
 
 	private static final Log _log = LogFactoryUtil.getLog(ScriptingImpl.class);
 
-	private ServiceTrackerMap<String, ScriptingExecutor>
-		_scriptingExecutorsServiceTrackerMap;
+	private ServiceTrackerMap<String, ScriptingExecutor> _serviceTrackerMap;
 
 }

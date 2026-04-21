@@ -43,6 +43,7 @@ public class ProductConfigurationListDTOConverter
 		return new ProductConfigurationList() {
 			{
 				setActions(dtoConverterContext::getActions);
+				setCreateDate(cpConfigurationList::getCreateDate);
 				setCustomFields(
 					() -> CustomFieldsUtil.toCustomFields(
 						dtoConverterContext.isAcceptAllLanguages(),
@@ -50,6 +51,8 @@ public class ProductConfigurationListDTOConverter
 						cpConfigurationList.getCPConfigurationListId(),
 						cpConfigurationList.getCompanyId(),
 						dtoConverterContext.getLocale()));
+				setDisplayDate(cpConfigurationList::getDisplayDate);
+				setExpirationDate(cpConfigurationList::getExpirationDate);
 				setExternalReferenceCode(
 					cpConfigurationList::getExternalReferenceCode);
 				setId(cpConfigurationList::getCPConfigurationListId);

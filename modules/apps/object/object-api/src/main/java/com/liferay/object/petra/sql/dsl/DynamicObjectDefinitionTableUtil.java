@@ -11,8 +11,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -117,16 +115,6 @@ public class DynamicObjectDefinitionTableUtil {
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
 
 			return 65000;
-		}
-		else if (StringUtil.equals(
-					businessType,
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-			if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
-				return 4000;
-			}
-
-			return 5000;
 		}
 		else if (StringUtil.equals(
 					businessType,

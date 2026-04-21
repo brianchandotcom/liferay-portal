@@ -150,8 +150,7 @@ public class SharingEntryLocalServiceImpl
 
 		_validateSharingEntryActions(sharingEntryActions);
 
-		_validateUsersAndUserGroupAndTicket(
-			userId, toTicketId, toUserGroupId, toUserId);
+		_validateTarget(userId, toTicketId, toUserGroupId, toUserId);
 
 		_validateExpirationDate(expirationDate);
 
@@ -848,7 +847,7 @@ public class SharingEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateUsersAndUserGroupAndTicket(
+	private void _validateTarget(
 			long fromUserId, long toTicketId, long toUserGroupId, long toUserId)
 		throws PortalException {
 
@@ -862,6 +861,10 @@ public class SharingEntryLocalServiceImpl
 
 		List<String> targets = new ArrayList<>();
 
+		if (toTicketId > 0) {
+			targets.add("ticket");
+		}
+
 		if (toUserGroupId > 0) {
 			targets.add("user group");
 		}
@@ -870,14 +873,10 @@ public class SharingEntryLocalServiceImpl
 			targets.add("user");
 		}
 
-		if (toTicketId > 0) {
-			targets.add("ticket");
-		}
-
 		if (targets.isEmpty()) {
 			throw new InvalidSharingEntryTargetException(
-				"A sharing entry must be associated with a user, a user " +
-					"group, or a ticket");
+				"A sharing entry must be associated with a ticket, a user, " +
+					"or a user group");
 		}
 
 		if (targets.size() > 1) {

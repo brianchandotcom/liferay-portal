@@ -52,7 +52,7 @@ public class MultiselectPicklistObjectFieldBusinessType
 
 	@Override
 	public String getDBType() {
-		return ObjectFieldConstants.DB_TYPE_STRING;
+		return ObjectFieldConstants.DB_TYPE_CLOB;
 	}
 
 	@Override

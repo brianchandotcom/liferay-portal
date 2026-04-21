@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,39 +45,50 @@ public class DepotRolesPortalInstanceLifecycleListener
 			company.getCompanyId(),
 			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
 
+		List<String> assetLibraryAdministratorResourceActions =
+			ResourceActionsUtil.getResourceActions(DepotEntry.class.getName());
+
+		assetLibraryAdministratorResourceActions.remove(
+			ActionKeys.ASSIGN_USER_ROLES);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			company.getCompanyId(), DepotEntry.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(company.getCompanyId()),
+			assetLibraryAdministratorRole.getRoleId(),
+			assetLibraryAdministratorResourceActions.toArray(new String[0]));
+
+		_resourcePermissionLocalService.addResourcePermission(
+			company.getCompanyId(), _ASSET_TAGS_RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(company.getCompanyId()),
+			assetLibraryAdministratorRole.getRoleId(), ActionKeys.MANAGE_TAG);
+
+		Role assetLibraryContentReviewerRole = _getOrCreateRole(
+			company.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			company.getCompanyId(), _ASSET_TAGS_RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(company.getCompanyId()),
+			assetLibraryContentReviewerRole.getRoleId(), ActionKeys.MANAGE_TAG);
+
+		Role assetLibraryMemberRole = _getOrCreateRole(
+			company.getCompanyId(), DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			company.getCompanyId(), DepotEntry.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(company.getCompanyId()),
+			assetLibraryMemberRole.getRoleId(), ActionKeys.VIEW);
+
 		for (String name : DepotRolesConstants.DEPOT_ROLE_NAMES) {
 			Role role = _getOrCreateRole(company.getCompanyId(), name);
 
 			_resourceLocalService.addResources(
 				company.getCompanyId(), 0, 0, Role.class.getName(),
 				role.getRoleId(), false, false, false);
-
-			if (Objects.equals(
-					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
-					role.getName())) {
-
-				List<String> resourceActions =
-					ResourceActionsUtil.getResourceActions(
-						DepotEntry.class.getName());
-
-				resourceActions.remove(ActionKeys.ASSIGN_USER_ROLES);
-
-				_resourcePermissionLocalService.setResourcePermissions(
-					company.getCompanyId(), DepotEntry.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(company.getCompanyId()), role.getRoleId(),
-					resourceActions.toArray(new String[0]));
-			}
-			else if (Objects.equals(
-						DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-						role.getName())) {
-
-				_resourcePermissionLocalService.addResourcePermission(
-					company.getCompanyId(), DepotEntry.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(company.getCompanyId()), role.getRoleId(),
-					ActionKeys.VIEW);
-			}
 
 			_resourcePermissionLocalService.setResourcePermissions(
 				company.getCompanyId(), Role.class.getName(),
@@ -116,6 +126,9 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 		return role;
 	}
+
+	private static final String _ASSET_TAGS_RESOURCE_NAME =
+		"com.liferay.asset.tags";
 
 	@Reference
 	private Language _language;

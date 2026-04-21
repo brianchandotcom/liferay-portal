@@ -192,6 +192,7 @@ export default function openCMSFileSelectorModal({
 					: undefined,
 				filters: getCMSItemSelectorFilters(groupId),
 				groupedFilters: getCMSItemSelectorGroupedFilters(),
+				hideManagementBarInEmptyState: true,
 				...fdsProps,
 				id: `CMSItemSelectorFDS_${getRandomId()}`,
 			},

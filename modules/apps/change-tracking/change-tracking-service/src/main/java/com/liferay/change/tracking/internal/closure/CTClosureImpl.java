@@ -49,7 +49,8 @@ public class CTClosureImpl implements CTClosure {
 
 		int nodeCount = _nodeMap.size();
 
-		ArrayDeque<Node> queue = new ArrayDeque<>();
+		ArrayDeque<Node> queue = new ArrayDeque<>(nodeCount);
+		BitSet bitSet = new BitSet(nodeCount);
 
 		for (Map.Entry<Node, Collection<Node>> entry : closureMap.entrySet()) {
 			Node node = _nodeMap.get(entry.getKey());
@@ -64,7 +65,7 @@ public class CTClosureImpl implements CTClosure {
 
 			Collection<Node> childNodes = entry.getValue();
 
-			BitSet bitSet = new BitSet(nodeCount);
+			bitSet.clear();
 
 			queue.addAll(childNodes);
 

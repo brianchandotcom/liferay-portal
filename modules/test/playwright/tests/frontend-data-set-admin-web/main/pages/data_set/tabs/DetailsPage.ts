@@ -18,7 +18,7 @@ export class DetailsPage {
 
 	constructor(page: Page) {
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
-		this.dataSetERC = page.getByLabel('External Reference Code');
+		this.dataSetERC = page.getByLabel('Data Set External Reference Code');
 		this.dataSetPage = new DataSetPage(page);
 		this.page = page;
 		this.parametersInput = page.getByLabel('Parameters', {exact: true});

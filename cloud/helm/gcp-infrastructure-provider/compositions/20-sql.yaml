@@ -57,11 +57,10 @@ spec:
     forProvider:
         charset: UTF8
         collation: en_US.UTF8
-        deletionPolicy: ABANDON
         instanceSelector:
             matchLabels:
                 dataPlane: {{ $dataPlane }}
-    managementPolicies: {{ $managementPolicies }}
+    managementPolicies: ["Create", "Observe", "Update"]
 ---
 apiVersion: sql.gcp.m.upbound.io/v1beta1
 kind: User
@@ -75,12 +74,11 @@ metadata:
     name: {{ $xr.metadata.name }}-db-user-{{ $dataPlane }}
 spec:
     forProvider:
-        deletionPolicy: ABANDON
         instanceSelector:
             matchLabels:
                 dataPlane: {{ $dataPlane }}
         type: CLOUD_IAM_SERVICE_ACCOUNT
-    managementPolicies: {{ $managementPolicies }}
+    managementPolicies: ["Create", "Observe", "Update"]
 {{- end }}
 {{- range $dataPlane := list "blue" "green" }}
 {{- $databaseInstanceName := printf "%s-db-instance-%s" $xr.metadata.name $dataPlane }}

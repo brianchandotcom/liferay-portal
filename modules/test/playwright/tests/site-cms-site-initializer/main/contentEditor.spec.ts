@@ -1245,6 +1245,110 @@ test.describe('Schedule Publication', () => {
 			await contentsPage.deleteContent(title);
 		}
 	);
+
+	test(
+		'Schedule dates are maintained after a failed publication',
+		{tag: '@LPD-68099'},
+		async ({apiHelpers, contentsPage, page}) => {
+
+			// Create a required vocabulary
+
+			const vocabularyName = getRandomString();
+
+			const siteId = await apiHelpers.headlessAdminUser
+				.getSiteByFriendlyUrlPath('cms')
+				.then((response) => response.id);
+
+			await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1}],
+				assetTypes: [
+					{
+						required: true,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name: vocabularyName,
+				siteId,
+				visibilityType: 'PUBLIC',
+			});
+
+			// Create a content
+
+			await contentsPage.goto();
+
+			await contentsPage.createContent('Basic Web Content');
+
+			const title = getRandomString();
+
+			await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+			const nextYear = new Date().getFullYear() + 1;
+
+			const expirationDateValue = `05/12/${nextYear} 12:55 PM`;
+			const reviewDateValue = `05/12/${nextYear} 12:57 PM`;
+
+			// Set expiration and review dates through the Schedule side
+			// panel
+
+			await contentsPage.openSidePanel('Schedule');
+
+			await page.getByLabel('Never Expire').uncheck();
+
+			await page
+				.getByRole('textbox', {name: 'Expiration Date'})
+				.fill(expirationDateValue);
+
+			await page.keyboard.press('Tab');
+
+			await page.getByLabel('Never Review').uncheck();
+
+			await page
+				.getByRole('textbox', {name: 'Review Date'})
+				.fill(reviewDateValue);
+
+			await page.keyboard.press('Tab');
+
+			// Set the display date through the Schedule Publication modal
+
+			await contentsPage.openSchedulePublication();
+
+			const displayDateValue = `10/31/${nextYear} 12:30 PM`;
+
+			await page
+				.getByRole('textbox', {name: 'Date and Time'})
+				.fill(displayDateValue);
+
+			await page.keyboard.press('Tab');
+
+			// Click Schedule. Submission fails on the server because the
+			// required vocabulary has no category selected.
+
+			await page.getByRole('button', {name: 'Schedule'}).click();
+
+			// After the failed submit the side panel is closed. Reopen it
+			// and check that the expiration and review dates are preserved.
+
+			await contentsPage.openSidePanel('Schedule');
+
+			await expect(
+				page.getByRole('textbox', {name: 'Expiration Date'})
+			).toHaveValue(expirationDateValue);
+
+			await expect(
+				page.getByRole('textbox', {name: 'Review Date'})
+			).toHaveValue(reviewDateValue);
+
+			// The modal is also closed. Reopen it and check that the
+			// display date is preserved.
+
+			await contentsPage.openSchedulePublication();
+
+			await expect(
+				page.getByRole('textbox', {name: 'Date and Time'})
+			).toHaveValue(displayDateValue);
+		}
+	);
 });
 
 test(

@@ -193,8 +193,7 @@ public abstract class BaseSectionDisplayContext {
 				return collaboratorURLs;
 			}
 		).put(
-			"commentsProps",
-			CommentUtil.getCommentsProps(httpServletRequest, themeDisplay)
+			"commentsProps", CommentUtil.getCommentsProps(httpServletRequest)
 		).put(
 			"contentViewURL",
 			StringBundler.concat(

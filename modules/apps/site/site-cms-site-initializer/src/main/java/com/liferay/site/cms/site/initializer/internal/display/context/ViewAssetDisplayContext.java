@@ -55,8 +55,7 @@ public class ViewAssetDisplayContext {
 		).put(
 			"className", _objectDefinition.getClassName()
 		).put(
-			"commentsProps",
-			CommentUtil.getCommentsProps(_httpServletRequest, _themeDisplay)
+			"commentsProps", CommentUtil.getCommentsProps(_httpServletRequest)
 		).put(
 			"contentViewURL",
 			StringBundler.concat(

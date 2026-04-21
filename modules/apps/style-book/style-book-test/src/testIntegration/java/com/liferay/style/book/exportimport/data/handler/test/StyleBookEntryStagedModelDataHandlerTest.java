@@ -128,7 +128,6 @@ public class StyleBookEntryStagedModelDataHandlerTest
 			stagingGroup.getGroupId(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
-
 		Class<?> clazz = getClass();
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(

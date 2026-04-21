@@ -12,7 +12,6 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
@@ -89,19 +88,17 @@ test('LPD-82049 Layout content changes side panel is visible for layouts', async
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
-	const pageLink = page.getByRole('link', {name: `${pageTitle}`});
-
-	await pageLink.waitFor();
+	await changeTrackingPage.viewChanges({
+		click: true,
+		title: pageTitle,
+		type: 'Page',
+	});
 
 	const sidePanelLocator = page
 		.getByLabel('Layout Changes Side Panel')
 		.filter({hasText: 'Content Changes (1)'});
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: sidePanelLocator,
-		trigger: pageLink,
-	});
+	await expect(sidePanelLocator).toBeVisible();
 
 	await page.getByLabel('View Content Changes').click();
 
@@ -142,16 +139,17 @@ test('LPD-82049 Can expand and collapse panels', async ({
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
-	const pageLink = page.getByRole('link', {name: `${pageTitle}`});
-
-	await pageLink.waitFor();
-
-	await clickAndExpectToBeVisible({
-		target: page
-			.getByLabel('Layout Changes Side Panel')
-			.filter({hasText: 'Content Changes (4)'}),
-		trigger: pageLink,
+	await changeTrackingPage.viewChanges({
+		click: true,
+		title: pageTitle,
+		type: 'Page',
 	});
+
+	await expect(
+		page
+			.getByLabel('Layout Changes Side Panel')
+			.filter({hasText: 'Content Changes (4)'})
+	).toBeVisible();
 
 	const panels = await page.locator('button.panel-header-link');
 
@@ -195,16 +193,17 @@ test('LPD-82049 Changes are limited to 20 panels and can be expanded to view mor
 
 	await page.getByRole('link', {name: 'Page'}).click();
 
-	const pageLink = page.getByRole('link', {name: `${pageTitle}`});
-
-	await pageLink.waitFor();
-
-	await clickAndExpectToBeVisible({
-		target: page
-			.getByLabel('Layout Changes Side Panel')
-			.filter({hasText: 'Content Changes (25)'}),
-		trigger: pageLink,
+	await changeTrackingPage.viewChanges({
+		click: true,
+		title: pageTitle,
+		type: 'Page',
 	});
+
+	await expect(
+		page
+			.getByLabel('Layout Changes Side Panel')
+			.filter({hasText: 'Content Changes (25)'})
+	).toBeVisible();
 
 	let panelsCount = await page.locator('button.panel-header-link').count();
 
@@ -242,18 +241,17 @@ test('LPD-82049 Can redirect to fragment entry link change view', async ({
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
-	await page.getByRole('link', {name: 'Page'}).click();
-
-	const pageLink = page.getByRole('link', {name: `${pageTitle}`});
-
-	await pageLink.waitFor();
-
-	await clickAndExpectToBeVisible({
-		target: page
-			.getByLabel('Layout Changes Side Panel')
-			.filter({hasText: 'Content Changes'}),
-		trigger: pageLink,
+	await changeTrackingPage.viewChanges({
+		click: true,
+		title: pageTitle,
+		type: 'Page',
 	});
+
+	await expect(
+		page
+			.getByLabel('Layout Changes Side Panel')
+			.filter({hasText: 'Content Changes'})
+	).toBeVisible();
 
 	const viewDetailsButton = page.getByRole('link', {name: 'View Details'});
 

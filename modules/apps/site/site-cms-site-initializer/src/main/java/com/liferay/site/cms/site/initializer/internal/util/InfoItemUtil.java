@@ -93,7 +93,7 @@ public class InfoItemUtil {
 
 		Map<String, Object> cachedMap =
 			(Map<String, Object>)httpServletRequest.getAttribute(
-				_INFO_FORM_PARAMETER_MAP_ATTRIBUTE);
+				_INFO_FORM_PARAMETER_MAP);
 
 		if (cachedMap != null) {
 			return cachedMap;
@@ -108,7 +108,7 @@ public class InfoItemUtil {
 
 			if (value instanceof Map map) {
 				httpServletRequest.setAttribute(
-					_INFO_FORM_PARAMETER_MAP_ATTRIBUTE, map);
+					_INFO_FORM_PARAMETER_MAP, map);
 
 				return map;
 			}
@@ -117,7 +117,7 @@ public class InfoItemUtil {
 		return null;
 	}
 
-	private static final String _INFO_FORM_PARAMETER_MAP_ATTRIBUTE =
+	private static final String _INFO_FORM_PARAMETER_MAP =
 		InfoItemUtil.class.getName() + "#infoFormParameterMap";
 
 }

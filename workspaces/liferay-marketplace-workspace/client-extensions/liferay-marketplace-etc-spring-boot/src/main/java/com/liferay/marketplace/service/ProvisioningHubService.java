@@ -80,8 +80,8 @@ public class ProvisioningHubService extends BaseService {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Missing properties to provision LDP. Account ",
-						koroneikiAccount.getKey(), ", properties: ",
+						"Missing properties to provision LDP for account ",
+						koroneikiAccount.getKey(), ": ",
 						properties));
 			}
 

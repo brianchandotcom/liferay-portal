@@ -60,7 +60,7 @@ public class SalesforceService extends BaseService {
 			_log.error(
 				StringBundler.concat(
 					"Unable to create Salesforce opportunity ",
-					salesforceOpportunity, "\n",
+					salesforceOpportunity, ":\n",
 					webClientResponseException.getResponseBodyAsString()));
 
 			return null;

@@ -234,11 +234,11 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 									value=var.gateway_namespace
 								},
 								{
-									name="gcp.projectId"
+									name="global.gcp.projectId"
 									value=var.project_id
 								},
 								{
-									name="gcp.projectNumber"
+									name="global.gcp.projectNumber"
 									value=data.google_project.project.number
 								},
 							]

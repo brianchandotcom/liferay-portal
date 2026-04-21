@@ -16,7 +16,7 @@ spec:
             envoyDeployment:
                 pod:
                     annotations:
-                        iam.gke.io/gcp-service-account: {{ printf "%s-envoy-proxy@%s.iam.gserviceaccount.com" .Values.deploymentName .Values.gcp.projectId | quote }}
+                        iam.gke.io/gcp-service-account: {{ printf "%s-envoy-proxy@%s.iam.gserviceaccount.com" .Values.deploymentName .Values.global.gcp.projectId | quote }}
                     topologySpreadConstraints:
                         -   labelSelector:
                                 matchLabels:

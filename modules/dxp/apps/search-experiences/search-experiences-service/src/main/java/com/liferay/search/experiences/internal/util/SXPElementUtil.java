@@ -64,7 +64,6 @@ public class SXPElementUtil {
 			}
 
 			User user = company.getGuestUser();
-
 			Map<String, String> descriptionMap =
 				sxpElement.getDescription_i18n();
 			Map<String, String> titleMap = sxpElement.getTitle_i18n();

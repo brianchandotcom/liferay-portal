@@ -37,7 +37,7 @@ const DragZone = ({
 		onDropRejected: (rejectedFiles) => {
 			if (rejectedFiles.length > 1 && maxFiles === 1) {
 				handleRejection(
-					Liferay.Language.get('multiple-files-not-allowed')
+					Liferay.Language.get('multiple-files-are-not-allowed')
 				);
 
 				return;

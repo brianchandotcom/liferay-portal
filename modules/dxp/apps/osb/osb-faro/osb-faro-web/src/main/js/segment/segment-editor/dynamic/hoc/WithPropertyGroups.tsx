@@ -224,12 +224,11 @@ const mapResultToProps = (
 		].filter(Boolean) as PropertyGroup[]
 	);
 
-	if (type === SegmentTypes.Batch) {
-		propertyGroupsIList.push(organizationPropertyGroup);
-	}
-
 	return {
-		propertyGroupsIList
+		propertyGroupsIList:
+			type === SegmentTypes.Batch
+				? propertyGroupsIList.push(organizationPropertyGroup)
+				: propertyGroupsIList
 	};
 };
 

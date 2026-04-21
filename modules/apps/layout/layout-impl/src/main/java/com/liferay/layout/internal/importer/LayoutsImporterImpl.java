@@ -1992,11 +1992,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				}
 			}
 
-			Settings settings = pageDefinition.getSettings();
-
-			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
-
-			draftLayout = _updateLayoutSettings(userId, draftLayout, settings);
+			draftLayout = _updateLayoutSettings(
+				userId, draftLayout, pageDefinition.getSettings());
 		}
 		else {
 			layoutStructure.addRootLayoutStructureItem();
@@ -2004,9 +2001,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		_updateLayoutPageTemplateStructure(draftLayout, layoutStructure);
 
-		_layoutLocalService.copyLayoutContent(
-			_layoutLocalService.getLayout(draftLayout.getPlid()),
-			_layoutLocalService.getLayout(layout.getPlid()));
+		_layoutLocalService.copyLayoutContent(draftLayout, layout);
 	}
 
 	private boolean _processPageElement(

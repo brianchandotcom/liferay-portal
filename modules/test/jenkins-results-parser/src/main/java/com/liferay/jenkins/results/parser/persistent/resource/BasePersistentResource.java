@@ -52,8 +52,6 @@ public abstract class BasePersistentResource implements PersistentResource {
 			CloudBucketUtil.downloadS3File(
 				new File(destinationDir, artifactName),
 				artifact.getS3ObjectPath());
-
-			touch();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -169,8 +167,6 @@ public abstract class BasePersistentResource implements PersistentResource {
 			}
 			else if (status == Status.SUCCESS) {
 				print(statusMessage);
-
-				touch();
 
 				return;
 			}

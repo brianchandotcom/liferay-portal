@@ -2402,7 +2402,8 @@ public class GitWorkingDirectory {
 	}
 
 	public Map<String, List<LocalGitCommit>> logByTicketId(
-		String branch1, String branch2) {
+			String branch1, String branch2)
+		throws IOException {
 
 		return _groupLocalGitCommits(log(branch1, branch2));
 	}

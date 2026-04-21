@@ -123,19 +123,33 @@ public class StyleBookEntryServiceTest {
 
 	@Test
 	public void testGetStyleBookEntry() throws Exception {
+		String name = RandomTestUtil.randomString();
+
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryService.addStyleBookEntry(
-				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), _group.getGroupId(), name, null,
 				RandomTestUtil.randomString(), _serviceContext);
 
-		StyleBookEntry curStyleBookEntry =
+		StyleBookEntry persistedStyleBookEntry =
 			_styleBookEntryService.getStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId());
 
-		Assert.assertEquals(
-			styleBookEntry.getStyleBookEntryId(),
-			curStyleBookEntry.getStyleBookEntryId());
+		Assert.assertEquals(name, persistedStyleBookEntry.getName());
+
+		try {
+			UserTestUtil.setUser(
+				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
+			_styleBookEntryService.getStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId());
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
 	}
 
 	@Test
@@ -186,30 +200,6 @@ public class StyleBookEntryServiceTest {
 			_styleBookEntryService.getStyleBookEntryByExternalReferenceCode(
 				styleBookEntry.getExternalReferenceCode(),
 				styleBookEntry.getGroupId());
-
-			Assert.fail();
-		}
-		catch (PrincipalException principalException) {
-		}
-		finally {
-			UserTestUtil.setUser(TestPropsValues.getUser());
-		}
-	}
-
-	@Test
-	public void testGetStyleBookEntryWithoutViewPermission() throws Exception {
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryService.addStyleBookEntry(
-				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), _serviceContext);
-
-		try {
-			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
-
-			_styleBookEntryService.getStyleBookEntry(
-				styleBookEntry.getStyleBookEntryId());
 
 			Assert.fail();
 		}

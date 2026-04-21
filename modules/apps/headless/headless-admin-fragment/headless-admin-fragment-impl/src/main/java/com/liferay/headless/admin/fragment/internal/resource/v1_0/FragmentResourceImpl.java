@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,6 +77,45 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 
 			return _toFragment(draftFragmentEntry);
 		}
+	}
+
+	@Override
+	public Page<Fragment> getSiteFragmentSetFragmentsPage(
+			String siteExternalReferenceCode,
+			String fragmentSetExternalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		EnabledUtil.checkEnabled(contextCompany);
+
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.
+				getFragmentCollectionByExternalReferenceCode(
+					fragmentSetExternalReferenceCode, groupId);
+
+		long fragmentCollectionId =
+			fragmentCollection.getFragmentCollectionId();
+
+		return Page.of(
+			transform(
+				_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+					groupId, fragmentCollectionId, WorkflowConstants.STATUS_ANY,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				object -> {
+					if (object instanceof FragmentEntry) {
+						return _toFragment((FragmentEntry)object);
+					}
+
+					return null;
+				}),
+			pagination,
+			_fragmentEntryService.
+				getFragmentCompositionsAndFragmentEntriesCount(
+					groupId, fragmentCollectionId,
+					WorkflowConstants.STATUS_ANY));
 	}
 
 	@Override

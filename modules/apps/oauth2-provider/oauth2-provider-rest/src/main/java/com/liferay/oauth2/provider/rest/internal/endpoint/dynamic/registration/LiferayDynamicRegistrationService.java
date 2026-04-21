@@ -12,7 +12,6 @@ import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.remote.cors.annotation.CORS;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -80,7 +79,6 @@ public class LiferayDynamicRegistrationService
 	}
 
 	@Consumes(MediaType.APPLICATION_JSON)
-	@CORS(allowMethods = "POST")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(

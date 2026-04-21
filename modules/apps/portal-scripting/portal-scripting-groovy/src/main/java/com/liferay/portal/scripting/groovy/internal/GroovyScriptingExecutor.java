@@ -112,4 +112,22 @@ public class GroovyScriptingExecutor implements ScriptingExecutor {
 		return new GroovyScriptingExecutor();
 	}
 
+	@Override
+	public void validate(String script) throws ScriptingException {
+		try {
+			Thread currentThread = Thread.currentThread();
+
+			GroovyShell groovyShell = new GroovyShell(
+				AggregateClassLoader.getAggregateClassLoader(
+					GroovyShell.class.getClassLoader(),
+					GroovyScriptingExecutor.class.getClassLoader(),
+					currentThread.getContextClassLoader()));
+
+			groovyShell.parse(script);
+		}
+		catch (Exception exception) {
+			throw new ScriptingException(exception);
+		}
+	}
+
 }

@@ -30,4 +30,6 @@ public interface ScriptingExecutor {
 
 	public ScriptingExecutor newInstance(boolean executeInSeparateThread);
 
+	public void validate(String script) throws ScriptingException;
+
 }

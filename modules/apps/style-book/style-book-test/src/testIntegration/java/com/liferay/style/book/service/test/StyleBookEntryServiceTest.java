@@ -129,13 +129,25 @@ public class StyleBookEntryServiceTest {
 				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomString(), _serviceContext);
 
-		StyleBookEntry curStyleBookEntry =
+		Assert.assertEquals(
+			styleBookEntry,
+			_styleBookEntryService.getStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId()));
+
+		try {
+			UserTestUtil.setUser(
+				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
 			_styleBookEntryService.getStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId());
 
-		Assert.assertEquals(
-			styleBookEntry.getStyleBookEntryId(),
-			curStyleBookEntry.getStyleBookEntryId());
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
 	}
 
 	@Test
@@ -186,30 +198,6 @@ public class StyleBookEntryServiceTest {
 			_styleBookEntryService.getStyleBookEntryByExternalReferenceCode(
 				styleBookEntry.getExternalReferenceCode(),
 				styleBookEntry.getGroupId());
-
-			Assert.fail();
-		}
-		catch (PrincipalException principalException) {
-		}
-		finally {
-			UserTestUtil.setUser(TestPropsValues.getUser());
-		}
-	}
-
-	@Test
-	public void testGetStyleBookEntryWithoutViewPermission() throws Exception {
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryService.addStyleBookEntry(
-				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), _serviceContext);
-
-		try {
-			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
-
-			_styleBookEntryService.getStyleBookEntry(
-				styleBookEntry.getStyleBookEntryId());
 
 			Assert.fail();
 		}

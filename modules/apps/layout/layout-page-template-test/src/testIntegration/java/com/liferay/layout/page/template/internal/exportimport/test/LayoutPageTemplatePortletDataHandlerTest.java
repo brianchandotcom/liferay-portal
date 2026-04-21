@@ -86,14 +86,10 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 			false, _importedGroup.getGroupId(),
 			_exportLayouts(false, _group.getGroupId()));
 
-		_assertLayoutPageTemplateCollectionNotNull(
-			basicLayoutPageTemplateCollection1);
-		_assertLayoutPageTemplateCollectionNotNull(
-			basicLayoutPageTemplateCollection2);
-		_assertLayoutPageTemplateCollectionNotNull(
-			displayPageLayoutPageTemplateCollection1);
-		_assertLayoutPageTemplateCollectionNotNull(
-			displayPageLayoutPageTemplateCollection2);
+		_assertExists(basicLayoutPageTemplateCollection1);
+		_assertExists(basicLayoutPageTemplateCollection2);
+		_assertExists(displayPageLayoutPageTemplateCollection1);
+		_assertExists(displayPageLayoutPageTemplateCollection2);
 
 		_layoutPageTemplateCollectionLocalService.
 			deleteLayoutPageTemplateCollection(
@@ -106,14 +102,10 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 			true, _importedGroup.getGroupId(),
 			_exportLayouts(true, _group.getGroupId()));
 
-		_assertLayoutPageTemplateCollectionNotNull(
-			basicLayoutPageTemplateCollection1);
-		_assertLayoutPageTemplateCollectionNull(
-			basicLayoutPageTemplateCollection2);
-		_assertLayoutPageTemplateCollectionNotNull(
-			displayPageLayoutPageTemplateCollection1);
-		_assertLayoutPageTemplateCollectionNull(
-			displayPageLayoutPageTemplateCollection2);
+		_assertExists(basicLayoutPageTemplateCollection1);
+		_assertDoesNotExist(basicLayoutPageTemplateCollection2);
+		_assertExists(displayPageLayoutPageTemplateCollection1);
+		_assertDoesNotExist(displayPageLayoutPageTemplateCollection2);
 	}
 
 	@Test
@@ -170,14 +162,12 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 			false, _importedGroup.getGroupId(),
 			_exportLayouts(false, _group.getGroupId()));
 
-		_assertLayoutPageTemplateEntryNotNull(basicLayoutPageTemplateEntry1);
-		_assertLayoutPageTemplateEntryNotNull(basicLayoutPageTemplateEntry2);
-		_assertLayoutPageTemplateEntryNotNull(
-			displayPageLayoutPageTemplateEntry1);
-		_assertLayoutPageTemplateEntryNotNull(
-			displayPageLayoutPageTemplateEntry2);
-		_assertLayoutPageTemplateEntryNotNull(masterLayoutPageTemplateEntry1);
-		_assertLayoutPageTemplateEntryNotNull(masterLayoutPageTemplateEntry2);
+		_assertExists(basicLayoutPageTemplateEntry1);
+		_assertExists(basicLayoutPageTemplateEntry2);
+		_assertExists(displayPageLayoutPageTemplateEntry1);
+		_assertExists(displayPageLayoutPageTemplateEntry2);
+		_assertExists(masterLayoutPageTemplateEntry1);
+		_assertExists(masterLayoutPageTemplateEntry2);
 
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 			basicLayoutPageTemplateEntry2);
@@ -190,13 +180,12 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 			true, _importedGroup.getGroupId(),
 			_exportLayouts(true, _group.getGroupId()));
 
-		_assertLayoutPageTemplateEntryNotNull(basicLayoutPageTemplateEntry1);
-		_assertLayoutPageTemplateEntryNull(basicLayoutPageTemplateEntry2);
-		_assertLayoutPageTemplateEntryNotNull(
-			displayPageLayoutPageTemplateEntry1);
-		_assertLayoutPageTemplateEntryNull(displayPageLayoutPageTemplateEntry2);
-		_assertLayoutPageTemplateEntryNotNull(masterLayoutPageTemplateEntry1);
-		_assertLayoutPageTemplateEntryNull(masterLayoutPageTemplateEntry2);
+		_assertExists(basicLayoutPageTemplateEntry1);
+		_assertDoesNotExist(basicLayoutPageTemplateEntry2);
+		_assertExists(displayPageLayoutPageTemplateEntry1);
+		_assertDoesNotExist(displayPageLayoutPageTemplateEntry2);
+		_assertExists(masterLayoutPageTemplateEntry1);
+		_assertDoesNotExist(masterLayoutPageTemplateEntry2);
 	}
 
 	private LayoutPageTemplateCollection _addLayoutPageTemplateCollection(
@@ -227,17 +216,7 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
-	private void _assertLayoutPageTemplateCollectionNotNull(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-
-		Assert.assertNotNull(
-			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
-					layoutPageTemplateCollection.getExternalReferenceCode(),
-					_importedGroup.getGroupId()));
-	}
-
-	private void _assertLayoutPageTemplateCollectionNull(
+	private void _assertDoesNotExist(
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		Assert.assertNull(
@@ -247,20 +226,30 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 					_importedGroup.getGroupId()));
 	}
 
-	private void _assertLayoutPageTemplateEntryNotNull(
+	private void _assertDoesNotExist(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		Assert.assertNotNull(
+		Assert.assertNull(
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
 					layoutPageTemplateEntry.getExternalReferenceCode(),
 					_importedGroup.getGroupId()));
 	}
 
-	private void _assertLayoutPageTemplateEntryNull(
+	private void _assertExists(
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+		Assert.assertNotNull(
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
+					layoutPageTemplateCollection.getExternalReferenceCode(),
+					_importedGroup.getGroupId()));
+	}
+
+	private void _assertExists(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		Assert.assertNull(
+		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
 					layoutPageTemplateEntry.getExternalReferenceCode(),

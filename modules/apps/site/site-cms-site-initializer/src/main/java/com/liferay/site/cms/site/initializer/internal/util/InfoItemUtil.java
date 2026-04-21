@@ -10,8 +10,11 @@ import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 /**
  * @author Roberto Díaz
@@ -65,5 +68,56 @@ public class InfoItemUtil {
 
 		return 0;
 	}
+
+	public static String getRestoredInfoFieldValue(
+		HttpServletRequest httpServletRequest, String infoFieldUniqueId) {
+
+		Map<String, Object> infoFormParameterMap = _getInfoFormParameterMap(
+			httpServletRequest);
+
+		if (infoFormParameterMap == null) {
+			return null;
+		}
+
+		Object restoredValue = infoFormParameterMap.get(infoFieldUniqueId);
+
+		if (restoredValue == null) {
+			return null;
+		}
+
+		return String.valueOf(restoredValue);
+	}
+
+	private static Map<String, Object> _getInfoFormParameterMap(
+		HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> cachedMap =
+			(Map<String, Object>)httpServletRequest.getAttribute(
+				_INFO_FORM_PARAMETER_MAP_ATTRIBUTE);
+
+		if (cachedMap != null) {
+			return cachedMap;
+		}
+
+		for (String key : SessionMessages.keySet(httpServletRequest)) {
+			if (!key.startsWith("infoFormParameterMap")) {
+				continue;
+			}
+
+			Object value = SessionMessages.get(httpServletRequest, key);
+
+			if (value instanceof Map map) {
+				httpServletRequest.setAttribute(
+					_INFO_FORM_PARAMETER_MAP_ATTRIBUTE, map);
+
+				return map;
+			}
+		}
+
+		return null;
+	}
+
+	private static final String _INFO_FORM_PARAMETER_MAP_ATTRIBUTE =
+		InfoItemUtil.class.getName() + "#infoFormParameterMap";
 
 }

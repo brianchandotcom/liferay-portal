@@ -230,6 +230,10 @@ public interface PortletDataHandler {
 	 */
 	public String getSchemaVersion();
 
+	public default String getSectionKey() {
+		return null;
+	}
+
 	public String getServiceName();
 
 	public default PortletDataHandlerControl[]

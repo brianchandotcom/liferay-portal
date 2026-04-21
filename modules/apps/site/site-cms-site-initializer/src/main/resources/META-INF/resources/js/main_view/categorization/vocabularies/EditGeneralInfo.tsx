@@ -36,10 +36,12 @@ const VISIBILITY_OPTIONS = [
 export default function EditGeneralInfo({
 	assetLibraries,
 	defaultLanguageId,
+	externalReferenceCodeInputError,
 	isNew,
 	locales,
 	nameInputError,
 	onChangeVocabulary,
+	setExternalReferenceCodeInputError,
 	setNameInputError,
 	setSpaceChange,
 	setSpaceInputError,
@@ -51,10 +53,12 @@ export default function EditGeneralInfo({
 }: {
 	assetLibraries: AssetLibraryType[];
 	defaultLanguageId: string;
+	externalReferenceCodeInputError: string;
 	isNew: boolean;
 	locales: any[];
 	nameInputError: string;
 	onChangeVocabulary: Function;
+	setExternalReferenceCodeInputError: (value: string) => void;
 	setNameInputError: Function;
 	setSpaceChange: (value: boolean) => void;
 	setSpaceInputError: (value: string) => void;
@@ -201,7 +205,11 @@ export default function EditGeneralInfo({
 						)}
 					</div>
 
-					<div>
+					<div
+						className={
+							externalReferenceCodeInputError ? 'has-error' : ''
+						}
+					>
 						<label>
 							{Liferay.Language.get('external-reference-code')}
 						</label>
@@ -210,15 +218,27 @@ export default function EditGeneralInfo({
 							aria-label={Liferay.Language.get(
 								'external-reference-code'
 							)}
-							onChange={({target: {value}}) =>
-								onChangeVocabulary(() => ({
-									...vocabulary,
-									externalReferenceCode: value,
-								}))
-							}
+							onChange={({target: {value}}) => {
+								if (externalReferenceCodeInputError) {
+									setExternalReferenceCodeInputError('');
+								}
+
+								onChangeVocabulary(
+									(prevVocabulary: IVocabulary) => ({
+										...prevVocabulary,
+										externalReferenceCode: value,
+									})
+								);
+							}}
 							type="text"
 							value={vocabulary.externalReferenceCode || ''}
 						/>
+
+						{externalReferenceCodeInputError && (
+							<ClayAlert displayType="danger" variant="feedback">
+								{externalReferenceCodeInputError}
+							</ClayAlert>
+						)}
 					</div>
 
 					<div>

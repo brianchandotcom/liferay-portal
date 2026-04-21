@@ -57,6 +57,16 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetSiteFragment() throws Exception {
+		super.testGetSiteFragment();
+
+		_testGetSiteFragmentApprovedAndDraft();
+		_testGetSiteFragmentApproved();
+		_testGetSiteFragmentDraft();
+	}
+
+	@Override
+	@Test
 	public void testPostSiteFragmentSetFragment() throws Exception {
 		super.testPostSiteFragmentSetFragment();
 
@@ -126,6 +136,11 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			});
 
 		return fragment;
+	}
+
+	@Override
+	protected Fragment testGetSiteFragment_addFragment() throws Exception {
+		return _postFragment(randomFragment());
 	}
 
 	@Override
@@ -351,6 +366,31 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		fragment.setMarketplace(false);
 
 		return fragment;
+	}
+
+	private void _testGetSiteFragment(boolean approved, boolean draft)
+		throws Exception {
+
+		Fragment postFragment = _postFragment(_randomFragment(approved, draft));
+
+		Fragment getFragment = fragmentResource.getSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			postFragment.getExternalReferenceCode());
+
+		assertEquals(postFragment, getFragment);
+		assertValid(getFragment);
+	}
+
+	private void _testGetSiteFragmentApproved() throws Exception {
+		_testGetSiteFragment(true, false);
+	}
+
+	private void _testGetSiteFragmentApprovedAndDraft() throws Exception {
+		_testGetSiteFragment(true, true);
+	}
+
+	private void _testGetSiteFragmentDraft() throws Exception {
+		_testGetSiteFragment(false, true);
 	}
 
 	private void _testPostSiteFragmentSetFragmentApproved() throws Exception {

@@ -7,16 +7,13 @@ package com.liferay.style.book.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -85,25 +82,6 @@ public class StyleBookEntryServiceTest {
 				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomString(), _serviceContext);
 
-		_styleBookEntryService.deleteStyleBookEntry(
-			styleBookEntry.getExternalReferenceCode(),
-			styleBookEntry.getGroupId());
-
-		Assert.assertNull(
-			_styleBookEntryLocalService.fetchStyleBookEntry(
-				styleBookEntry.getStyleBookEntryId()));
-	}
-
-	@Test
-	public void testDeleteStyleBookEntryByExternalReferenceCodeWithoutDeletePermission()
-		throws Exception {
-
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryService.addStyleBookEntry(
-				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), _serviceContext);
-
 		try {
 			UserTestUtil.setUser(
 				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
@@ -119,6 +97,14 @@ public class StyleBookEntryServiceTest {
 		finally {
 			UserTestUtil.setUser(TestPropsValues.getUser());
 		}
+
+		_styleBookEntryService.deleteStyleBookEntry(
+			styleBookEntry.getExternalReferenceCode(),
+			styleBookEntry.getGroupId());
+
+		Assert.assertNull(
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId()));
 	}
 
 	@Test
@@ -160,36 +146,11 @@ public class StyleBookEntryServiceTest {
 				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomString(), _serviceContext);
 
-		StyleBookEntry curStyleBookEntry =
+		Assert.assertEquals(
+			styleBookEntry,
 			_styleBookEntryService.getStyleBookEntryByExternalReferenceCode(
 				styleBookEntry.getExternalReferenceCode(),
-				styleBookEntry.getGroupId());
-
-		Assert.assertEquals(
-			styleBookEntry.getStyleBookEntryId(),
-			curStyleBookEntry.getStyleBookEntryId());
-	}
-
-	@Test
-	public void testGetStyleBookEntryByExternalReferenceCodeWithoutViewPermission()
-		throws Exception {
-
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryService.addStyleBookEntry(
-				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), _serviceContext);
-
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, StyleBookEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(styleBookEntry.getStyleBookEntryId()),
-			ActionKeys.VIEW);
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.SITE_MEMBER, StyleBookEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(styleBookEntry.getStyleBookEntryId()),
-			ActionKeys.VIEW);
+				styleBookEntry.getGroupId()));
 
 		try {
 			UserTestUtil.setUser(

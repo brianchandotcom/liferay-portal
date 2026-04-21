@@ -11,7 +11,9 @@ import {addParams, navigate, sub} from 'frontend-js-web';
 import React, {Dispatch} from 'react';
 
 import SpaceService from '../../common/services/SpaceService';
-import StructureService from '../../common/services/StructureService';
+import StructureService, {
+	StructureServiceError,
+} from '../../common/services/StructureService';
 import {ObjectDefinitions} from '../../common/types/ObjectDefinition';
 import {Space} from '../../common/types/Space';
 import {config} from '../config';
@@ -30,6 +32,7 @@ import selectStructureStatus from '../selectors/selectStructureStatus';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import selectStructureWorkflows from '../selectors/selectStructureWorkflows';
 import DisplayPageService from '../services/DisplayPageService';
+import buildStructureErrorAction from './buildStructureErrorAction';
 
 type Props = {
 	dispatch: Dispatch<Action>;
@@ -258,14 +261,8 @@ export default async function handlePublishStructure({
 
 	const previousStatus = state.structure.status;
 
-	const onError = () =>
-		dispatch({
-			error: 'unexpected',
-			property: 'global',
-			status: previousStatus,
-			type: 'add-error',
-			uuid,
-		});
+	const onError = (error: StructureServiceError) =>
+		dispatch(buildStructureErrorAction({error, previousStatus, uuid}));
 
 	dispatch({status: 'publishing', type: 'set-structure-status'});
 
@@ -281,7 +278,7 @@ export default async function handlePublishStructure({
 		});
 
 		if (error) {
-			onError();
+			onError(error);
 
 			return;
 		}
@@ -305,7 +302,7 @@ export default async function handlePublishStructure({
 		});
 
 		if (error) {
-			onError();
+			onError(error);
 
 			return;
 		}

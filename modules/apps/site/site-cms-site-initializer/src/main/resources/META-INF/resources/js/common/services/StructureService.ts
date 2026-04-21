@@ -11,6 +11,26 @@ import buildObjectRelationships from '../../structure_builder/utils/buildObjectR
 import getRandomId from '../../structure_builder/utils/getRandomId';
 import ApiHelper from './ApiHelper';
 
+export type StructureServiceError = 'in-use' | 'unexpected';
+
+const NAME_COLLISION_EXCEPTION_TYPES = [
+	'ObjectDefinitionFriendlyURLSeparatorException',
+	'ObjectDefinitionNameException',
+];
+
+function classifyError(type?: string | null): StructureServiceError {
+	if (
+		type &&
+		NAME_COLLISION_EXCEPTION_TYPES.some((collisionType) =>
+			type.startsWith(collisionType)
+		)
+	) {
+		return 'in-use';
+	}
+
+	return 'unexpected';
+}
+
 async function createStructure({
 	children,
 	erc = getRandomId(),
@@ -34,18 +54,13 @@ async function createStructure({
 	const objectDefinitions = buildGroupObjectDefinitions({children});
 
 	for (const objectDefinition of objectDefinitions) {
-		const {error} = await ApiHelper.put(
+		const {error, type} = await ApiHelper.put(
 			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinition.externalReferenceCode}`,
 			objectDefinition
 		);
 
 		if (error) {
-			return {
-				data: null,
-				error: Liferay.Language.get(
-					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
-				),
-			};
+			return {data: null, error: classifyError(type)};
 		}
 	}
 
@@ -61,18 +76,13 @@ async function createStructure({
 		workflows,
 	});
 
-	const {data, error} = await ApiHelper.post<{id: number}>(
+	const {data, error, type} = await ApiHelper.post<{id: number}>(
 		'/o/object-admin/v1.0/object-definitions',
 		mainObjectDefinition
 	);
 
 	if (error) {
-		return {
-			data: null,
-			error: Liferay.Language.get(
-				'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
-			),
-		};
+		return {data: null, error: classifyError(type)};
 	}
 
 	const objectRelationships = buildObjectRelationships({
@@ -81,18 +91,13 @@ async function createStructure({
 	});
 
 	for (const objectRelationship of objectRelationships) {
-		const {error} = await ApiHelper.post(
+		const {error, type} = await ApiHelper.post(
 			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectRelationship.objectDefinitionExternalReferenceCode1}/object-relationships`,
 			objectRelationship
 		);
 
 		if (error) {
-			return {
-				data: null,
-				error: Liferay.Language.get(
-					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
-				),
-			};
+			return {data: null, error: classifyError(type)};
 		}
 	}
 
@@ -174,12 +179,8 @@ async function updateStructure({
 		`${pathMain}/cms/update-structure`
 	);
 
-	if (response?.error) {
-		return {
-			error: Liferay.Language.get(
-				'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
-			),
-		};
+	if (response.error !== null) {
+		return {error: classifyError(response.type)};
 	}
 
 	return response;

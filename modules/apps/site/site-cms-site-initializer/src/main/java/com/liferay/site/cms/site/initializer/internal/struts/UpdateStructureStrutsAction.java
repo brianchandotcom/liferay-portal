@@ -12,6 +12,8 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -91,6 +93,29 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				_language.get(
 					httpServletRequest.getLocale(),
 					"an-unexpected-error-occurred"));
+
+			Throwable throwable = exception;
+
+			while (throwable.getCause() != null) {
+				throwable = throwable.getCause();
+			}
+
+			if (throwable != null) {
+
+				// See com.liferay.portal.vulcan.jaxrs.exception
+				// .mapper.BaseExceptionMapper#toResponse
+
+				Class<?> clazz = throwable.getClass();
+
+				List<String> segments = StringUtil.split(
+					clazz.getName(), CharPool.PERIOD);
+
+				jsonObject.put(
+					"type",
+					StringUtil.replace(
+						segments.get(segments.size() - 1), CharPool.DOLLAR,
+						CharPool.PERIOD));
+			}
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);

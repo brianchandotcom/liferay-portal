@@ -59,6 +59,9 @@ public class ProductConfigurationListResourceTest
 				setCatalogExternalReferenceCode(
 					_commerceCatalog.getExternalReferenceCode());
 				setCatalogId(_commerceCatalog.getCommerceCatalogId());
+				setCreateDate(RandomTestUtil.nextDate());
+				setDisplayDate(RandomTestUtil.nextDate());
+				setExpirationDate(RandomTestUtil.nextDate());
 				setExternalReferenceCode(RandomTestUtil.randomString());
 				setMaster(false);
 				setName(RandomTestUtil.randomString());

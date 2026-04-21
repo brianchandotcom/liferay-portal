@@ -1,0 +1,121 @@
+#!/bin/sh
+
+set -o errexit
+set -o nounset
+
+function main {
+	local liferay_backup_name="{{ "{{" }}workflow.parameters.liferay-backup-name}}"
+	local liferay_backup_namespace="{{ "{{" }}inputs.parameters.liferay-backup-namespace}}"
+
+	local liferay_backup_json
+
+	liferay_backup_json=$( \
+		kubectl \
+			get \
+			liferaybackups.backup.liferay.cloud \
+			"${liferay_backup_name}" \
+			--namespace "${liferay_backup_namespace}" \
+			--output json)
+
+	local database_snapshot_uuid
+
+	database_snapshot_uuid=$(echo "${liferay_backup_json}" | jq --raw-output ".status.databaseSnapshot.uuid // \"\"")
+
+	if [ -z "${database_snapshot_uuid}" ]
+	then
+		echo "The LiferayBackup \"${liferay_backup_name}\" has no status.databaseSnapshot.uuid." >&2
+
+		exit 1
+	fi
+
+	echo "${database_snapshot_uuid}" > /tmp/database-snapshot-uuid.txt
+
+	local dl_vault_bucket
+
+	dl_vault_bucket=$(echo "${liferay_backup_json}" | jq --raw-output ".status.documentLibrary.destinationBucket // \"\"")
+
+	if [ -z "${dl_vault_bucket}" ]
+	then
+		echo "The LiferayBackup \"${liferay_backup_name}\" has no status.documentLibrary.destinationBucket." >&2
+
+		exit 1
+	fi
+
+	echo "${dl_vault_bucket}" > /tmp/dl-vault-bucket.txt
+
+	local dl_vault_path
+
+	dl_vault_path=$(echo "${liferay_backup_json}" | jq --raw-output ".status.documentLibrary.destinationPath // \"\"")
+
+	echo "${dl_vault_path}" > /tmp/dl-vault-path.txt
+
+	local liferay_infrastructure_json
+
+	liferay_infrastructure_json=$( \
+		kubectl \
+			get \
+			liferayinfrastructure \
+			--output json \
+			| jq ".items[0]")
+
+	local restore_phase
+
+	restore_phase=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.restorePhase // \"none\"")
+
+	if [ "${restore_phase}" = "promoting" ] || [ "${restore_phase}" = "provisioning" ]
+	then
+		echo "The LiferayInfrastructure spec.restorePhase is set to ${restore_phase}. A restore is in progress." >&2
+
+		exit 1
+	fi
+
+	local data_plane_active
+
+	data_plane_active=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.targetActiveDataPlane // \"blue\"")
+
+	echo "${data_plane_active}" > /tmp/data-plane-active.txt
+
+	local data_plane_inactive
+
+	if [ "${data_plane_active}" = "blue" ]
+	then
+		data_plane_inactive="green"
+	else
+		data_plane_inactive="blue"
+	fi
+
+	echo "${data_plane_inactive}" > /tmp/data-plane-inactive.txt
+
+	local liferay_infrastructure_name
+
+	liferay_infrastructure_name=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".metadata.name")
+
+	echo "${liferay_infrastructure_name}" > /tmp/liferay-infrastructure-name.txt
+
+	local liferay_workload_name
+
+	liferay_workload_name=$( \
+		kubectl \
+			get \
+			statefulset \
+			--output jsonpath="{.items[0].metadata.name}" \
+			--selector "component=liferay")
+
+	echo "${liferay_workload_name}" > /tmp/liferay-workload-name.txt
+
+	kubectl \
+		get \
+		buckets.storage.gcp.m.upbound.io \
+		--output jsonpath="{.items[0].metadata.name}" \
+		--selector "dataPlane=${data_plane_active}" \
+		> /tmp/dl-bucket-active.txt
+
+	kubectl \
+		get \
+		buckets.storage.gcp.m.upbound.io \
+		--output jsonpath="{.items[0].metadata.name}" \
+		--selector "dataPlane=${data_plane_inactive}" \
+		> /tmp/dl-bucket-inactive.txt
+}
+
+main

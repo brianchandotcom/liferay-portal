@@ -238,7 +238,10 @@ public class SortDisplayContextBuilder {
 		String sortURL = HttpComponentsUtil.removeParameter(
 			_currentURL, _parameterName);
 
-		return HttpComponentsUtil.setParameter(sortURL, _parameterName, field);
+		sortURL = HttpComponentsUtil.setParameter(
+			sortURL, _parameterName, field);
+
+		return HttpComponentsUtil.sortParameters(sortURL);
 	}
 
 	private String _currentURL;

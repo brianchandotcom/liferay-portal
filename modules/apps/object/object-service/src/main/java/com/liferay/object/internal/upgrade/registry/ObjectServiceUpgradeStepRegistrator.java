@@ -698,6 +698,11 @@ public class ObjectServiceUpgradeStepRegistrator
 				"update ObjectFieldSetting set value = " +
 					"'userComputerToDocumentsAndMedia' where name = " +
 						"'fileSource' and value like 'userComputer'"));
+
+		registry.register(
+			"11.0.0", "12.0.0",
+			new com.liferay.object.internal.upgrade.v12_0_0.
+				ObjectFieldUpgradeProcess());
 	}
 
 	@Reference

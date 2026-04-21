@@ -140,7 +140,7 @@ public class LayoutUtilityPageEntryServiceTest {
 		layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-				fileEntry.getFileEntryId());
+				fileEntry.getFileEntryId(), _serviceContext);
 
 		LayoutUtilityPageEntry copiedLayoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.copyLayoutUtilityPageEntry(

@@ -295,6 +295,26 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro enableDXPSegments() {
+		task ("Enable DXP segments deprecation feature flag") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Deprecation",
+				configurationScope = "System Scope");
+
+			FeatureFlag.enableFeatureFlag(
+				configurationScope = "System Scope",
+				featureFlag = "DXP Segments",
+				scope = "Deprecation");
+		}
+	}
+
+	@summary = "Default summary"
 	macro fillProperty(selectEntry = null, dateValue = null, selectCheckbox = null, optionsValue = null, selectCard = null, criterionKey = null, indexNumber = null, criterionValue = null, selectLink = null, selectCategory = null) {
 		if (isSet(criterionKey)) {
 			Type(

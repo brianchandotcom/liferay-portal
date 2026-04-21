@@ -1205,6 +1205,32 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeShowSearch() throws Exception {}
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withShowSearch(
+					false
+				)),
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[1]
+				).withShowSearch(
+					true
+				)));
+
+		Assert.assertFalse(
+			systemFDSSerializer.serializeShowSearch(
+				FDS_NAMES[0], httpServletRequest));
+		Assert.assertTrue(
+			systemFDSSerializer.serializeShowSearch(
+				FDS_NAMES[1], httpServletRequest));
+
+		_unregisterServices();	
+	}
+
+	@Test
 	public void testSerializeSnapshotsEnabled() throws Exception {
 		_registerServices(
 			_registerSystemFDSEntry(
@@ -1980,6 +2006,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					}
 
 					@Override
+					public boolean getShowSearch() {
+						return _showSearch;
+					}
+
+					@Override
 					public boolean getSnapshotsEnabled() {
 						return _snapshotsEnabled;
 					}
@@ -2027,6 +2058,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			return this;
 		}
 
+		public SystemFDSEntryWrapper withShowSearch(
+			boolean showSearch) {
+
+			_showSearch = showSearch;
+
+			return this;
+		}
+
 		public SystemFDSEntryWrapper withSnapshotsEnabled(
 			boolean snapshotsEnabled) {
 
@@ -2041,6 +2080,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		private boolean _hideManagementBarInEmptyState;
 		private int[] _listOfItemsPerPage;
 		private String _propsTransformer;
+		private boolean _showSearch;
 		private boolean _snapshotsEnabled;
 
 	}

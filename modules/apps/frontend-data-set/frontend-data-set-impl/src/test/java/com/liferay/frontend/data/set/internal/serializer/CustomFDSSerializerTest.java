@@ -833,6 +833,26 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeShowSearch() throws Exception {
+		_mockSerializeShowSearch(FDS_NAMES[0], false);
+		_mockSerializeShowSearch(FDS_NAMES[1], true);
+
+		Assert.assertNotEquals(
+			_customFDSSerializer.serializeShowSearch(
+				FDS_NAMES[0], httpServletRequest),
+			_customFDSSerializer.serializeShowSearch(
+				FDS_NAMES[1], httpServletRequest));
+		Assert.assertFalse(
+			_customFDSSerializer.serializeShowSearch(
+				FDS_NAMES[0], httpServletRequest));
+		Assert.assertTrue(
+			_customFDSSerializer.serializeShowSearch(
+				FDS_NAMES[1], httpServletRequest));
+
+		_resetFDSSerializer();
+	}
+
+	@Test
 	public void testSerializeSnapshotsEnabled() throws Exception {
 		_mockSerializeSnapshotsEnabled(FDS_NAMES[0], false);
 		_mockSerializeSnapshotsEnabled(FDS_NAMES[1], true);
@@ -1503,6 +1523,24 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		Mockito.when(
 			_customFDSSerializer.serializePagination(
+				fdsName, httpServletRequest)
+		).thenCallRealMethod();
+	}
+
+	private void _mockSerializeShowSearch(
+		String fdsName, boolean showSearch) {
+
+		Mockito.when(
+			_customFDSSerializer.getDataSetObjectEntryProperties(
+				fdsName, httpServletRequest)
+		).thenReturn(
+			HashMapBuilder.<String, Object>put(
+				"showSearch", showSearch
+			).build()
+		);
+
+		Mockito.when(
+			_customFDSSerializer.serializeShowSearch(
 				fdsName, httpServletRequest)
 		).thenCallRealMethod();
 	}

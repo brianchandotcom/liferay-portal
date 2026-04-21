@@ -12,9 +12,11 @@ import {loginTest} from '../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../utils/getRandomString';
 import {waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
+import {dataSetManagerApiHelpersTest} from '../../../../../fixtures/dataSetManagerApiHelpersTest';
 
 const test = mergeTests(
 	apiHelpersTest,
+	dataSetManagerApiHelpersTest,
 	fdsSamplePageTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
@@ -247,3 +249,33 @@ test(
 		});
 	}
 );
+
+test('Search Bar is shown/hidden according to FDS configuration', async ({
+	dataSetManagerApiHelpers,
+	fdsSamplePage,
+	page,
+}) => {
+	await test.step('Check that the search bar is shown by default', async () => {
+		await expect(fdsSamplePage.managementToolbar.searchInput).toBeVisible();
+	});
+
+	await test.step('Go to FDS configuration, import an Advanced FDS and set "Show Search" to false', async () => {		
+		await dataSetManagerApiHelpers.updateDataSet({
+			erc: 'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-advanced',
+			showSearch: false,
+		});
+	});
+
+	await test.step('Go back to the FDS page and check that the search bar is not shown anymore', async () => {
+		await page.reload();
+
+		await expect(fdsSamplePage.managementToolbar.searchInput).not.toBeVisible();
+	});
+
+	await test.step('Reset FDS configuration', async () => {
+		await dataSetManagerApiHelpers.updateDataSet({
+			erc: 'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-advanced',
+			showSearch: true,
+		});
+	});
+});

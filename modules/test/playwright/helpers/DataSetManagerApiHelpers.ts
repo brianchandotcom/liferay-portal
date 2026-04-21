@@ -32,6 +32,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		restApplication = API_ENDPOINT_PATH,
 		restEndpoint = `/by-external-reference-code/${erc}/dataSetToDataSetTableSections`,
 		restSchema = 'DataSetTableSection',
+		showSearch = true,
 		snapshotsEnabled,
 	}: {
 		additionalAPIURLParameters?: string;
@@ -44,6 +45,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		restApplication?: string;
 		restEndpoint?: string;
 		restSchema?: string;
+		showSearch?: boolean;
 		snapshotsEnabled?: boolean;
 	}) {
 		const url = getDataSetResourceURL({});
@@ -59,6 +61,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			restApplication,
 			restEndpoint,
 			restSchema,
+			showSearch,
 			snapshotsEnabled,
 		};
 
@@ -430,6 +433,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		filtersOrder,
 		label,
 		listOfItemsPerPage,
+		showSearch,
 		snapshotsEnabled,
 	}: {
 		additionalAPIURLParameters?: string;
@@ -439,6 +443,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		filtersOrder?: string;
 		label?: string;
 		listOfItemsPerPage?: string;
+		showSearch?: boolean;
 		snapshotsEnabled?: boolean;
 	}) {
 		const url = getDataSetResourceURL({
@@ -452,6 +457,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			filtersOrder,
 			label,
 			listOfItemsPerPage,
+			showSearch,
 			snapshotsEnabled,
 		};
 

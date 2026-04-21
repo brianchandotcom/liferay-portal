@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2365,6 +2366,16 @@ public class GitWorkingDirectory {
 		return log(Integer.parseInt(result.getStandardOut()));
 	}
 
+	public Map<String, List<LocalGitCommit>> logByTicketId(int number) {
+		return _groupLocalGitCommits(log(number));
+	}
+
+	public Map<String, List<LocalGitCommit>> logByTicketId(
+		String branch1, String branch2) {
+
+		return _groupLocalGitCommits(log(branch1, branch2));
+	}
+
 	public List<RemoteGitBranch> pushBranchesToRemoteGitRepository(
 		boolean force, LocalGitBranch localGitBranch,
 		List<String> remoteGitBranchNames, GitRemote gitRemote) {
@@ -3335,6 +3346,23 @@ public class GitWorkingDirectory {
 		}
 
 		return GitUtil.getPrivateRepositoryName(gitRepositoryName);
+	}
+
+	private Map<String, List<LocalGitCommit>> _groupLocalGitCommits(
+		List<LocalGitCommit> localGitCommits) {
+
+		Map<String, List<LocalGitCommit>> localGitCommitsMap =
+			new LinkedHashMap<>();
+
+		for (LocalGitCommit localGitCommit : localGitCommits) {
+			List<LocalGitCommit> localGitCommitsEntry =
+				localGitCommitsMap.computeIfAbsent(
+					localGitCommit.getTicketId(), k -> new ArrayList<>());
+
+			localGitCommitsEntry.add(localGitCommit);
+		}
+
+		return localGitCommitsMap;
 	}
 
 	private String _loadGitRepositoryName() {

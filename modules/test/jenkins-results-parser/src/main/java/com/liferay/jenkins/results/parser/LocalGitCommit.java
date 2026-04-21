@@ -7,12 +7,18 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
 public interface LocalGitCommit extends GitCommit {
 
+	public List<File> getChangedFiles();
+
 	public GitWorkingDirectory getGitWorkingDirectory();
+
+	public String getPatch();
 
 	public boolean isFileChanged(File file);
 

@@ -28,6 +28,9 @@ resource "helm_release" "envoy_gateway" {
 	version="v1.6.3"
 }
 resource "kubernetes_pod_disruption_budget_v1" "envoy_proxy_pdb" {
+	depends_on=[
+		helm_release.envoy_gateway,
+	]
 	metadata {
 		name="envoy-proxy-pdb"
 		namespace=var.gateway_namespace

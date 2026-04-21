@@ -80,9 +80,9 @@ public abstract class BaseGitCommit implements GitCommit {
 			return "none";
 		}
 
-		Matcher matcher = _ticketIdPattern.matcher(commitMessage.trim());
-
 		String ticketId = null;
+
+		Matcher matcher = _ticketIdPattern.matcher(commitMessage.trim());
 
 		if (matcher.find()) {
 			ticketId = matcher.group("ticketId");

@@ -2350,8 +2350,8 @@ public class GitWorkingDirectory {
 		sb.append(startingRef);
 		sb.append("..");
 		sb.append(endingRef);
-		sb.append(" --pretty=format:'%x00%H %ct %ae %s%n'");
 		sb.append(" --patch --stat");
+		sb.append(" --pretty=format:'%x00%H %ct %ae %s%n'");
 
 		GitUtil.ExecutionResult result = executeBashCommands(
 			5, 1000, 30 * 1000, sb.toString());
@@ -3436,17 +3436,18 @@ public class GitWorkingDirectory {
 
 			int newlineIndex = commitSection.indexOf('\n');
 
-			String gitLogEntity;
-			String patch;
+			String gitLogEntity = null;
+			String patch = null;
 
 			if (newlineIndex == -1) {
 				gitLogEntity = commitSection.trim();
 				patch = "";
 			}
 			else {
-				gitLogEntity = commitSection.substring(
-					0, newlineIndex
-				).trim();
+				gitLogEntity = commitSection.substring(0, newlineIndex);
+
+				gitLogEntity = gitLogEntity.trim();
+
 				patch = commitSection.substring(newlineIndex + 1);
 			}
 
@@ -3482,10 +3483,10 @@ public class GitWorkingDirectory {
 			sb.append(start);
 		}
 
-		sb.append(" --pretty=format:'");
+		sb.append(" --patch --pretty=format:'");
 		sb.append(format);
 		sb.append("'");
-		sb.append(" --patch --stat");
+		sb.append(" --stat");
 
 		if (file != null) {
 			sb.append(" ");

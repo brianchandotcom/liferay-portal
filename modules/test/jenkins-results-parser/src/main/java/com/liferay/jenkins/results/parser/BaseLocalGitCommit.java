@@ -72,10 +72,10 @@ public abstract class BaseLocalGitCommit
 
 		String standardOut = executionResult.getStandardOut();
 
-		int separatorIndex = standardOut.indexOf("\n---\n");
+		int index = standardOut.indexOf("\n---\n");
 
-		if (separatorIndex != -1) {
-			_patch = standardOut.substring(separatorIndex + 1);
+		if (index != -1) {
+			_patch = standardOut.substring(index + 1);
 		}
 		else {
 			_patch = standardOut;
@@ -115,9 +115,6 @@ public abstract class BaseLocalGitCommit
 
 	@Override
 	public String toDisplayString() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"EEE MMM dd HH:mm:ss yyyy Z", Locale.ENGLISH);
-
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("commit ");
@@ -125,7 +122,12 @@ public abstract class BaseLocalGitCommit
 		sb.append("\nAuthor: ");
 		sb.append(getEmailAddress());
 		sb.append("\nDate:   ");
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"EEE MMM dd HH:mm:ss yyyy Z", Locale.ENGLISH);
+
 		sb.append(simpleDateFormat.format(getCommitDate()));
+
 		sb.append("\n\n    ");
 		sb.append(getMessage());
 		sb.append("\n\n");

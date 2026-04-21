@@ -298,6 +298,20 @@ public class SystemFDSSerializer
 	}
 
 	@Override
+	public boolean serializeShowSearch(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		SystemFDSEntry systemFDSEntry =
+			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
+
+		if (systemFDSEntry == null) {
+			return true;
+		}
+
+		return systemFDSEntry.getShowSearch();
+	}
+
+	@Override
 	public JSONArray serializeSnapshots(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

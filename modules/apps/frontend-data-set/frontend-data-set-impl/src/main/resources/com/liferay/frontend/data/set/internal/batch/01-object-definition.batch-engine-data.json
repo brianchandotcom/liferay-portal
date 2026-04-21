@@ -253,6 +253,23 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
+					"defaultValue": true,
+					"externalReferenceCode": "SHOW_SEARCH",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Show Search"
+					},
+					"localized": false,
+					"name": "showSearch",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
 					"defaultValue": false,
 					"externalReferenceCode": "SNAPSHOTS_ENABLED",
 					"indexed": true,

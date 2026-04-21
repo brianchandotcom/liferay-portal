@@ -53,6 +53,7 @@ const Settings = ({
 	const [hideManagementBarInEmptyState, setHideManagementBarInEmptyState] =
 		useState(dataSet.hideManagementBarInEmptyState ?? true);
 	const [loading, setLoading] = useState(true);
+	const [showSearch, setShowSearch] = useState(dataSet.showSearch ?? true);
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
 	>([]);
@@ -96,6 +97,7 @@ const Settings = ({
 		const body = {
 			defaultVisualizationMode,
 			hideManagementBarInEmptyState,
+			showSearch,
 			snapshotsEnabled,
 		};
 
@@ -418,6 +420,26 @@ const Settings = ({
 									toggled={hideManagementBarInEmptyState}
 								/>
 							</div>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+
+					<ClayLayout.Row className="align-items-center justify-content-between mb-4">
+						<ClayLayout.Col size={9}>
+							<div>
+								<label htmlFor="show-search-toggle">
+									{Liferay.Language.get('show-search')}
+								</label>
+							</div>
+
+							<div>{Liferay.Language.get('show-search-help')}</div>
+						</ClayLayout.Col>
+
+						<ClayLayout.Col className="align-self-start" size={1}>
+							<ClayToggle
+								id="show-search-toggle"
+								onToggle={setShowSearch}
+								toggled={showSearch}
+							/>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 

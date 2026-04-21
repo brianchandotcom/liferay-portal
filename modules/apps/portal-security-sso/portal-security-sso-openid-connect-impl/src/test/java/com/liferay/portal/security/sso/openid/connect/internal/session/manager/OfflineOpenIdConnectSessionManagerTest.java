@@ -51,11 +51,6 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 	@Test
 	public void testExtendOpenIdConnectSession() throws Exception {
-		long oAuthClientEntryCompanyId = RandomTestUtil.randomLong();
-		String authServerWellKnownURI =
-			"https://idp.example.com/.well-known/openid-configuration";
-		String clientId = RandomTestUtil.randomString();
-
 		Assert.assertEquals(
 			"Precondition: test thread must have the default (system) " +
 				"companyId to simulate a background thread",
@@ -65,17 +60,24 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		OpenIdConnectSession openIdConnectSession = Mockito.mock(
 			OpenIdConnectSession.class);
 
+		long oAuthClientEntryCompanyId = RandomTestUtil.randomLong();
+
 		Mockito.when(
 			openIdConnectSession.getCompanyId()
 		).thenReturn(
 			oAuthClientEntryCompanyId
 		);
 
+		String authServerWellKnownURI =
+			"https://idp.example.com/.well-known/openid-configuration";
+
 		Mockito.when(
 			openIdConnectSession.getAuthServerWellKnownURI()
 		).thenReturn(
 			authServerWellKnownURI
 		);
+
+		String clientId = RandomTestUtil.randomString();
 
 		Mockito.when(
 			openIdConnectSession.getClientId()

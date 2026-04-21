@@ -6,6 +6,7 @@
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -238,6 +239,11 @@ public class ObjectDefinitionResourceImpl
 			@Override
 			public Scope getScope() {
 				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return ExportImportConstants.SECTION_KEY_OBJECTS;
 			}
 
 		};

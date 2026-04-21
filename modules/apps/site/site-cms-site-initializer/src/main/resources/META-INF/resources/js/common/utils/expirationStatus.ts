@@ -1,0 +1,40 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import dateFormat from './dateFormat';
+
+export const EXPIRING_SOON_THRESHOLD_DAYS = 7;
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+export function isExpiringSoon(
+	status: string | undefined,
+	expirationDate: string | Date | undefined | null
+): boolean {
+	if (status !== 'approved' || !expirationDate) {
+		return false;
+	}
+
+	const expirationTime = new Date(expirationDate).getTime();
+
+	if (Number.isNaN(expirationTime)) {
+		return false;
+	}
+
+	const diff = expirationTime - Date.now();
+
+	return diff > 0 && diff <= EXPIRING_SOON_THRESHOLD_DAYS * MS_PER_DAY;
+}
+
+export function formatExpirationDate(
+	expirationDate: string | Date
+): string | null {
+	return dateFormat(
+		{dateStyle: 'long', timeStyle: 'short'},
+		expirationDate instanceof Date
+			? expirationDate.toISOString()
+			: expirationDate
+	);
+}

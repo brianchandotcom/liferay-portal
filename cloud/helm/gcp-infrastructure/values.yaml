@@ -7,7 +7,6 @@ backup:
     region: ""
     retentionDays: 30
     schedule: 0 5 * * *
-    serviceAccountName: backup-controller
     storageClass: NEARLINE
 cmk:
     enabled: false

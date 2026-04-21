@@ -69,21 +69,24 @@ public class PersistentResourceFactory {
 		List<Callable<Object>> touchCallables = new ArrayList<>();
 
 		for (PersistentResource persistentResource : persistentResources) {
-			if (persistentResource.getStatus() ==
-					PersistentResource.Status.SUCCESS) {
+			if (persistentResource.isTouched() ||
+				(persistentResource.getStatus() !=
+					PersistentResource.Status.SUCCESS)) {
 
-				touchCallables.add(
-					new Callable<Object>() {
-
-						@Override
-						public Object call() {
-							persistentResource.touch();
-
-							return null;
-						}
-
-					});
+				continue;
 			}
+
+			touchCallables.add(
+				new Callable<Object>() {
+
+					@Override
+					public Object call() {
+						persistentResource.touch();
+
+						return null;
+					}
+
+				});
 		}
 
 		if (touchCallables.isEmpty()) {

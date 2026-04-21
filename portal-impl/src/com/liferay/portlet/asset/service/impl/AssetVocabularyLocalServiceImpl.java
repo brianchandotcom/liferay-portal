@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -537,7 +538,12 @@ public class AssetVocabularyLocalServiceImpl
 			vocabulary.setExternalReferenceCode(externalReferenceCode);
 		}
 
-		vocabulary.setTitleMap(_getTrimmedTitleMap(titleMap));
+		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
+
+		vocabulary.setName(
+			_getAssetVocabularyName(trimmedTitleMap, vocabulary));
+		vocabulary.setTitleMap(trimmedTitleMap);
+
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
 		vocabulary.setVisibilityType(visibilityType);
@@ -568,7 +574,11 @@ public class AssetVocabularyLocalServiceImpl
 			vocabulary.setExternalReferenceCode(externalReferenceCode);
 		}
 
-		vocabulary.setTitleMap(_getTrimmedTitleMap(titleMap));
+		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
+
+		vocabulary.setName(
+			_getAssetVocabularyName(trimmedTitleMap, vocabulary));
+		vocabulary.setTitleMap(trimmedTitleMap);
 
 		if (Validator.isNotNull(title)) {
 			vocabulary.setTitle(title);
@@ -683,6 +693,24 @@ public class AssetVocabularyLocalServiceImpl
 
 			curVocabularyName = curVocabularyName + CharPool.DASH + count++;
 		}
+	}
+
+	private String _getAssetVocabularyName(
+			Map<Locale, String> titleMap, AssetVocabulary vocabulary)
+		throws PortalException {
+
+		if (vocabulary.getStatus() != WorkflowConstants.STATUS_EMPTY) {
+			return vocabulary.getName();
+		}
+
+		String title = titleMap.get(
+			PortalUtil.getSiteDefaultLocale(vocabulary.getGroupId()));
+
+		if (Validator.isNull(title)) {
+			return vocabulary.getName();
+		}
+
+		return _generateVocabularyName(vocabulary.getGroupId(), title);
 	}
 
 	private Map<Locale, String> _getTrimmedTitleMap(

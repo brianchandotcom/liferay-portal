@@ -211,7 +211,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 				"returned"
 		).given(
 			"A product with one SKU-contributor option and three option values"
-		).and(
+		).when(
 			"Three SKUs generated, one per option value, all APPROVED"
 		).then(
 			"All three option values are returned"

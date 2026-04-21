@@ -388,7 +388,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo({"LPD-42587", "LPD-48987"})
+	@TestInfo({"LPD-42587", "LPD-48987", "LPD-86647"})
 	public void testPutSiteUtilityPage() throws Exception {
 		_testPutSiteUtilityPage(Boolean.FALSE, randomUtilityPage());
 

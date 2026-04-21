@@ -2341,29 +2341,37 @@ public class GitWorkingDirectory {
 		return _log(start, num, null, sha);
 	}
 
-	public List<LocalGitCommit> log(String branch1, String branch2)
-		throws IOException {
-
+	public List<LocalGitCommit> log(String startingRef, String endingRef) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git log");
-		sb.append(" --oneline ");
-		sb.append(branch1);
-		sb.append(" ^");
-		sb.append(branch2);
-		sb.append(" | wc -l");
+		sb.append("git log ");
+		sb.append(startingRef);
+		sb.append("..");
+		sb.append(endingRef);
+		sb.append(" --pretty=format:'%H %ct %ae %s'");
 
 		GitUtil.ExecutionResult result = executeBashCommands(
 			5, 1000, 30 * 1000, sb.toString());
 
 		if (result.getExitValue() != 0) {
-			throw new IOException(
+			throw new GitWorkingDirectoryRuntimeException(
+				this,
 				JenkinsResultsParserUtil.combine(
-					"Unable to find log between ", branch1, " and ", branch2,
-					":\n\n", result.getStandardError()));
+					"Unable to find log between ", startingRef, " and ",
+					endingRef));
 		}
 
-		return log(Integer.parseInt(result.getStandardOut()));
+		List<LocalGitCommit> localGitCommits = new ArrayList<>();
+
+		String gitLog = result.getStandardOut();
+
+		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
+
+		for (String gitLogEntity : gitLog.split("\n")) {
+			localGitCommits.add(getLocalGitCommit(gitLogEntity));
+		}
+
+		return localGitCommits;
 	}
 
 	public Map<String, List<LocalGitCommit>> logByTicketId(int number) {

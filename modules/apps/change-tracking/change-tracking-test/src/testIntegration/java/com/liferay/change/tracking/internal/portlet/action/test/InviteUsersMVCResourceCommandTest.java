@@ -269,15 +269,13 @@ public class InviteUsersMVCResourceCommandTest {
 		}
 	}
 
-	private static CTCollection _ctCollection;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	private static SafeCloseable _safeCloseable;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private Language _language;
@@ -288,6 +286,7 @@ public class InviteUsersMVCResourceCommandTest {
 	@Inject
 	private Portal _portal;
 
+	private SafeCloseable _safeCloseable;
 	private ServiceContext _serviceContext;
 
 }

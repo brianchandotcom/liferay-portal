@@ -77,9 +77,6 @@ public class CheckCTSchemaVersionPortalInstanceLifecycleListenerTest {
 	}
 
 	@Inject
-	private static ReleaseLocalService _releaseLocalService;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
@@ -92,5 +89,8 @@ public class CheckCTSchemaVersionPortalInstanceLifecycleListenerTest {
 		filter = "component.name=com.liferay.change.tracking.internal.instance.lifecycle.CheckCTSchemaVersionPortalInstanceLifecycleListener"
 	)
 	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
 
 }

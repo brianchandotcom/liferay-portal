@@ -152,10 +152,10 @@ public class AutocompleteUserMVCResourceCommandTest {
 	}
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

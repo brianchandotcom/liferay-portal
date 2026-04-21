@@ -187,16 +187,10 @@ public class CTScoreLocalServiceTest {
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CTScoreLocalService _ctScoreLocalService;
-
-	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection1;
@@ -211,7 +205,13 @@ public class CTScoreLocalServiceTest {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
+	private CTScoreLocalService _ctScoreLocalService;
+
+	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

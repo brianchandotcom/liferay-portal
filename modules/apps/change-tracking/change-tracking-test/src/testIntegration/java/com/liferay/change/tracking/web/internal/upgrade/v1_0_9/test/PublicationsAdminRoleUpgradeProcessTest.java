@@ -92,13 +92,13 @@ public class PublicationsAdminRoleUpgradeProcessTest {
 	@Inject(
 		filter = "model.class.name=com.liferay.change.tracking.model.CTCollection"
 	)
-	private static ModelResourcePermission<CTCollection>
+	private ModelResourcePermission<CTCollection>
 		_ctCollectionModelResourcePermission;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.change.tracking.web.internal.upgrade.registry.PublicationsWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

@@ -1383,13 +1383,6 @@ public class CTStoreTest {
 	private static final Log _log = LogFactoryUtil.getLog(CTStoreTest.class);
 
 	private static long _companyId;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTSContentLocalService _ctsContentLocalService;
-
 	private static Store _ctStore;
 
 	@Inject
@@ -1444,11 +1437,17 @@ public class CTStoreTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
 	@DeleteAfterTestRun
 	private final CTCollection[] _ctCollections = new CTCollection[4];
 
 	@Inject
 	private CTProcessLocalService _ctProcessLocalService;
+
+	@Inject
+	private CTSContentLocalService _ctsContentLocalService;
 
 	private static class RecorderInvocationHandler
 		implements InvocationHandler {

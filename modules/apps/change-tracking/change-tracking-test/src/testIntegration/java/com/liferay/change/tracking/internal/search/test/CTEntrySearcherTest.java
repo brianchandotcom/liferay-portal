@@ -585,7 +585,7 @@ public class CTEntrySearcherTest {
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

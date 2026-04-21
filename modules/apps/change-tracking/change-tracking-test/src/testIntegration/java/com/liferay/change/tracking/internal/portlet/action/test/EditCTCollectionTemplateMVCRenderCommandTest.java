@@ -105,8 +105,7 @@ public class EditCTCollectionTemplateMVCRenderCommandTest {
 	}
 
 	@Inject
-	private static CTCollectionTemplateLocalService
-		_ctCollectionTemplateLocalService;
+	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;
 
 	@Inject(
 		filter = "mvc.command.name=/change_tracking/edit_ct_collection_template",

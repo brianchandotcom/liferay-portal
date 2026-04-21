@@ -126,13 +126,13 @@ public class BackgroundTaskModelListenerTest {
 	}
 
 	@Inject
-	private static BackgroundTaskLocalService _backgroundTaskLocalService;
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
-	private static WorkflowDefinitionLinkLocalService
+	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

@@ -79,9 +79,9 @@ public class CTMessageLocalServiceTest {
 	}
 
 	@Inject
-	private static CTMessageLocalService _ctMessageLocalService;
+	private CTMessageLocalService _ctMessageLocalService;
 
 	@Inject
-	private static JSONFactory _jsonFactory;
+	private JSONFactory _jsonFactory;
 
 }

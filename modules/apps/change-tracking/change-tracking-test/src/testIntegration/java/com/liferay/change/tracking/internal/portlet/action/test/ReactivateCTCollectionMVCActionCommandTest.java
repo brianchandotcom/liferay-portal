@@ -98,13 +98,13 @@ public class ReactivateCTCollectionMVCActionCommandTest {
 			ctCollection.getSchemaVersionId());
 	}
 
-	private static CTCollection _ctCollection;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;

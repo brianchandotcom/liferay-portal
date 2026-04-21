@@ -218,9 +218,6 @@ public class CTCollectionLocalServicePerformanceTest {
 		}
 	}
 
-	@Inject
-	private static LayoutLocalService _layoutLocalService;
-
 	private CTCollection _ctCollection1;
 	private CTCollection _ctCollection2;
 
@@ -231,6 +228,9 @@ public class CTCollectionLocalServicePerformanceTest {
 	private CTProcessLocalService _ctProcessLocalService;
 
 	private Group _group;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private Portal _portal;

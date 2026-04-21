@@ -640,8 +640,6 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 		}
 	}
 
-	private static long _journalArticleClassNameId;
-
 	@Inject
 	private AddressLocalService _addressLocalService;
 
@@ -659,6 +657,8 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 	@Inject
 	private CTEntryLocalService _ctEntryLocalService;
+
+	private long _journalArticleClassNameId;
 
 	@Inject
 	private JournalFolderLocalService _journalFolderLocalService;

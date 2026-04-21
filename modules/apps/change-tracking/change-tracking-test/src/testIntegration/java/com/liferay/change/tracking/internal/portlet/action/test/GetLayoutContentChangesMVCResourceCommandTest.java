@@ -354,9 +354,6 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 	}
 
 	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
-
-	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
@@ -370,6 +367,9 @@ public class GetLayoutContentChangesMVCResourceCommandTest {
 
 	@Inject
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
 
 	private FragmentEntryLink _deletedFragmentEntryLink;
 

@@ -241,31 +241,31 @@ public class CTEntryLocalServiceTest {
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
-
-	@Inject
-	private static CTProcessLocalService _ctProcessLocalService;
-
-	@Inject
-	private static JournalFolderLocalService _journalFolderLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CTCollectionHistoryProviderRegistry
 		_ctCollectionHistoryProviderRegistry;
 
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
 	@DeleteAfterTestRun
 	private final List<CTCollection> _ctCollections = new ArrayList<>();
+
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
+
+	@Inject
+	private CTProcessLocalService _ctProcessLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private long _journalFolderClassNameId;
 	private JournalFolderFixture _journalFolderFixture;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

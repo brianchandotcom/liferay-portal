@@ -127,6 +127,6 @@ public abstract class BaseCTUpgradeProcessTestCase {
 		throws Exception;
 
 	@Inject
-	private static CTCollectionService _ctCollectionService;
+	private CTCollectionService _ctCollectionService;
 
 }

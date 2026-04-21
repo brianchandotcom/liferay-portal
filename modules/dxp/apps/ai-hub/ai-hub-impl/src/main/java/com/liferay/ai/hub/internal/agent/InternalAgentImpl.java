@@ -98,6 +98,8 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 				).put(
 					"memoryId", _agentContext.getSseEventSinkKey()
 				).put(
+					"outBoundEventName", _name
+				).put(
 					"sseEventSinkKey", _agentContext.getSseEventSinkKey()
 				).put(
 					"userToken", _agentContext.getUserToken()

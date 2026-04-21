@@ -177,7 +177,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);
 
-		validateOrganizationUsers(userIds);
+		validateOrganizationUsers(organizationId, userIds);
 
 		OrganizationMembershipPolicyUtil.checkMembership(
 			userIds, new long[] {organizationId}, null);
@@ -3836,13 +3836,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 	}
 
-	protected void validateOrganizationUsers(long[] userIds)
+	protected void validateOrganizationUsers(
+			long organizationId, long[] userIds)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT ||
-			permissionChecker.isCompanyAdmin()) {
+			permissionChecker.isCompanyAdmin() ||
+			OrganizationPermissionUtil.contains(
+				permissionChecker, organizationId, ActionKeys.MANAGE_USERS)) {
 
 			return;
 		}

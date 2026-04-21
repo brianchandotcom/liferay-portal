@@ -21,6 +21,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.RelatedInfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -77,6 +78,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.text.SimpleDateFormat;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -591,6 +595,19 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 				return null;
 			}
+		}
+
+		if (infoField.getInfoFieldType() == DateTimeInfoFieldType.INSTANCE) {
+			Object dateTimeValue = infoFieldValue.getValue();
+
+			if (!(dateTimeValue instanceof LocalDateTime)) {
+				return null;
+			}
+
+			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+				"yyyy-MM-dd'T'HH:mm");
+
+			return dateTimeFormatter.format((LocalDateTime)dateTimeValue);
 		}
 
 		Object value = infoFieldValue.getValue();

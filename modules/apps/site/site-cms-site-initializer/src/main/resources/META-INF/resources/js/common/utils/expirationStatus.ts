@@ -32,7 +32,14 @@ export function formatExpirationDate(
 	expirationDate: string | Date
 ): string | null {
 	return dateFormat(
-		{dateStyle: 'long', timeStyle: 'short'},
+		{
+			day: '2-digit',
+			hour: '2-digit',
+			minute: '2-digit',
+			month: '2-digit',
+			timeZone: Liferay.ThemeDisplay.getTimeZone(),
+			year: 'numeric',
+		},
 		expirationDate instanceof Date
 			? expirationDate.toISOString()
 			: expirationDate

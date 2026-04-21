@@ -16,6 +16,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 	readonly carrierDetailsEditLink: Locator;
 	readonly carrierDetailsSubmitButton: Locator;
 	readonly editProductCloseButton: Locator;
+	readonly editProductFrame: FrameLocator;
 	readonly editProductMenuItem: Locator;
 	readonly editProductSaveButton: Locator;
 	readonly editProductTable: Locator;
@@ -62,9 +63,9 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 			'iframe >> nth=1',
 			'#_com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet_fm .fds table'
 		);
-		this.addQuantityInShipment = page
-			.frameLocator('iframe')
-			.getByRole('spinbutton');
+		this.editProductFrame = page.frameLocator('iframe');
+		this.addQuantityInShipment =
+			this.editProductFrame.getByRole('spinbutton');
 		this.addProductsToShipment = page.getByText(
 			'Add Products to This Shipment'
 		);
@@ -76,17 +77,17 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 			.locator('.modal-item-last')
 			.getByRole('button', {exact: true, name: 'Submit'});
 		this.backLink = page.locator('span[title="Back"]');
-		this.editProductCloseButton = page
-			.frameLocator('iframe')
+		this.editProductCloseButton = this.editProductFrame
 			.getByRole('button')
 			.first();
 		this.editProductMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Edit',
 		});
-		this.editProductSaveButton = page
-			.frameLocator('iframe')
-			.getByRole('button', {exact: true, name: 'Save'});
+		this.editProductSaveButton = this.editProductFrame.getByRole('button', {
+			exact: true,
+			name: 'Save',
+		});
 		this.editProductTable = page.locator(
 			'#_com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet_editShipmentContainer .fds table'
 		);
@@ -122,9 +123,8 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 
 			throw new Error(`Cannot locate row with rowValue: ${rowValue}`);
 		};
-		this.editProductWarehouseAvailabilityTable = page
-			.frameLocator('iframe')
-			.locator(
+		this.editProductWarehouseAvailabilityTable =
+			this.editProductFrame.locator(
 				'#_com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet_fm .fds table'
 			);
 		this.editProductWarehouseAvailabilityTableRow = async (

@@ -1790,6 +1790,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
+			if (serviceContext == null) {
+				serviceContext = new ServiceContext();
+			}
+
 			if (layoutUtilityPageEntry == null) {
 				layoutUtilityPageEntry =
 					_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(

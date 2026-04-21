@@ -95,7 +95,11 @@ public class CommentUtil {
 	}
 
 	public static Map<String, Object> getCommentsProps(
-		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HashMapBuilder.<String, Object>put(
 			"addCommentURL",

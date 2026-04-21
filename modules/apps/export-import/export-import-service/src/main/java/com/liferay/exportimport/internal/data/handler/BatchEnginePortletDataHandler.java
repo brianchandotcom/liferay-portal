@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
@@ -253,6 +254,27 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
+	}
+
+	@Override
+	public String getSectionKey() {
+		Set<String> sections = SetUtil.fromList(
+			TransformUtil.transform(
+				_registrations,
+				registration -> {
+					ExportImportVulcanBatchEngineTaskItemDelegate.
+						ExportImportDescriptor exportImportDescriptor =
+							registration.getExportImportDescriptor();
+
+					return exportImportDescriptor.getSectionKey();
+				}));
+
+		if (sections.isEmpty()) {
+			return super.getSectionKey();
+		}
+
+		return sections.iterator(
+		).next();
 	}
 
 	@Override

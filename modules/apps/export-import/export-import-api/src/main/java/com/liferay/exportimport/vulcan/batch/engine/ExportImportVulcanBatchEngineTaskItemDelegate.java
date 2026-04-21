@@ -69,6 +69,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public Scope getScope();
 
+		public default String getSectionKey() {
+			return null;
+		}
+
 		public default String getTag(Locale locale) {
 			return null;
 		}

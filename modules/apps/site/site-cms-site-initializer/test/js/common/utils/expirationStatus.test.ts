@@ -98,9 +98,7 @@ describe('expirationStatus', () => {
 
 	describe('formatExpirationDateLong', () => {
 		it('formats an ISO string using a long date style for screen readers', () => {
-			const formatted = formatExpirationDateLong(
-				'2026-02-11T10:30:00Z'
-			);
+			const formatted = formatExpirationDateLong('2026-02-11T10:30:00Z');
 
 			expect(formatted).toMatch(/February/);
 			expect(formatted).toMatch(/11/);

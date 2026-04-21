@@ -8,7 +8,7 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import {
-	PortletDataHandler,
+	PortletDataHandlerBoolean,
 	PortletDataHandlerSection as PortletDataHandlerSectionType,
 } from '../../../utils/mockPortletDataHandlerSections';
 import PortletDataControl, {
@@ -32,7 +32,11 @@ export default function ContentSection({
 }: ContentSectionProps) {
 	const portletContextsValue = value || {};
 
-	const selected = section.portletDataHandlers.every((context) =>
+	const controls = section.portletDataHandlers.map<PortletDataHandlerBoolean>(
+		(handler) => ({...handler, type: 'boolean'})
+	);
+
+	const selected = controls.every((context) =>
 		isSelected(portletContextsValue[context.name], context)
 	);
 
@@ -45,7 +49,7 @@ export default function ContentSection({
 		else {
 			const newValue: SectionSelection = {};
 
-			section.portletDataHandlers.forEach((context) => {
+			controls.forEach((context) => {
 				newValue[context.name] = getInitialSelection(context);
 			});
 
@@ -66,7 +70,7 @@ export default function ContentSection({
 
 				<ClayLayout.ContentCol expand>
 					<div className="font-weight-bold h3 mb-0">
-						{section.name}
+						{section.label}
 					</div>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
@@ -77,29 +81,27 @@ export default function ContentSection({
 					maxHeight: '400px',
 				}}
 			>
-				{section.portletDataHandlers.map(
-					(context: PortletDataHandler) => (
-						<PortletDataControl
-							control={context}
-							key={context.name}
-							onChange={(controlValue) => {
-								const {[context.name]: _, ...newEntries} =
-									portletContextsValue;
+				{controls.map((context) => (
+					<PortletDataControl
+						control={context}
+						key={context.name}
+						onChange={(controlValue) => {
+							const {[context.name]: _, ...newEntries} =
+								portletContextsValue;
 
-								if (controlValue) {
-									newEntries[context.name] = controlValue;
-								}
+							if (controlValue) {
+								newEntries[context.name] = controlValue;
+							}
 
-								onChange(
-									Object.keys(newEntries).length
-										? (newEntries as SectionSelection)
-										: undefined
-								);
-							}}
-							value={portletContextsValue[context.name]}
-						/>
-					)
-				)}
+							onChange(
+								Object.keys(newEntries).length
+									? (newEntries as SectionSelection)
+									: undefined
+							);
+						}}
+						value={portletContextsValue[context.name]}
+					/>
+				))}
 			</div>
 		</div>
 	);

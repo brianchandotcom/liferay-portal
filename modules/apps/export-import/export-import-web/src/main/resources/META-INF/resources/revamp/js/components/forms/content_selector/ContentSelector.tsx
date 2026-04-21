@@ -27,12 +27,12 @@ export default function ContentSelector({
 		<div className="mt-4">
 			{sections.map((section: PortletDataHandlerSection) => (
 				<ContentSection
-					key={section.key}
+					key={section.name}
 					onChange={(sectionValue) => {
-						const {[section.key]: _, ...newValue} = currentValue;
+						const {[section.name]: _, ...newValue} = currentValue;
 
 						if (sectionValue) {
-							newValue[section.key] = sectionValue;
+							newValue[section.name] = sectionValue;
 						}
 
 						onChange(
@@ -42,7 +42,7 @@ export default function ContentSelector({
 						);
 					}}
 					section={section}
-					value={currentValue[section.key]}
+					value={currentValue[section.name]}
 				/>
 			))}
 		</div>

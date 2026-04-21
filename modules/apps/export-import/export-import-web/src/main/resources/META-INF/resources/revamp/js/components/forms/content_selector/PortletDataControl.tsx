@@ -7,7 +7,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import {PortletDataControl as PortletDataControlType} from '../../../utils/mockPortletDataHandlerSections';
+import {PortletDataHandlerControl} from '../../../utils/mockPortletDataHandlerSections';
 import PortletDataControlChoice from './PortletDataControlChoice';
 
 export type HandlerSelection =
@@ -19,10 +19,14 @@ export type HandlerSelection =
 
 export function isSelected(
 	value: HandlerSelection | undefined,
-	entry: PortletDataControlType
+	entry: PortletDataHandlerControl
 ): boolean {
 	if (!value) {
 		return false;
+	}
+
+	if (entry.type === 'choice') {
+		return true;
 	}
 
 	if (!entry.controls?.length || typeof value !== 'object') {
@@ -35,10 +39,10 @@ export function isSelected(
 }
 
 export function getInitialSelection(
-	entry: PortletDataControlType
+	entry: PortletDataHandlerControl
 ): HandlerSelection {
-	if (entry.type === 'choice' && entry.options) {
-		return entry.options[0].value;
+	if (entry.type === 'choice') {
+		return entry.choices[0].name;
 	}
 
 	if (!entry.controls?.length) {
@@ -56,7 +60,7 @@ export function getInitialSelection(
 
 interface PortletDataControlProps {
 	className?: string;
-	control: PortletDataControlType;
+	control: PortletDataHandlerControl;
 	level?: number;
 	onChange: (value: HandlerSelection | undefined) => void;
 	value: HandlerSelection | undefined;

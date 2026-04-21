@@ -66,13 +66,15 @@ export default function SetupStep({sections}: SetupStepProps) {
 					aria-describedby="selectedSectionIds-description"
 					aria-labelledby="selectedSectionIds-label"
 					name="selectedSectionIds"
-					options={sections.map(({name, portletDataHandlers}) => ({
-						description: portletDataHandlers
-							.map(({label}) => label)
-							.join(', '),
-						label: name,
-						value: name,
-					}))}
+					options={sections.map(
+						({label: sectionLabel, name, portletDataHandlers}) => ({
+							description: portletDataHandlers
+								.map(({label}) => label)
+								.join(', '),
+							label: sectionLabel,
+							value: name,
+						})
+					)}
 				/>
 			</ClayLayout.Sheet>
 		</>

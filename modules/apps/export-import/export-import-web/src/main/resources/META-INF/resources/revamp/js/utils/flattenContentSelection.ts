@@ -6,7 +6,7 @@
 import {ContentSelection} from '../components/forms/content_selector/ContentSelector';
 import {HandlerSelection} from '../components/forms/content_selector/PortletDataControl';
 import {
-	PortletDataControl,
+	PortletDataHandlerControl,
 	PortletDataHandlerSection,
 } from './mockPortletDataHandlerSections';
 
@@ -24,14 +24,14 @@ export function flattenContentSelection({
 	const flatValues: Record<string, string> = {...additionalFields};
 	const checkboxNames: string[] = [];
 
-	const collectCheckboxNames = (controls: PortletDataControl[]) => {
+	const collectCheckboxNames = (controls: PortletDataHandlerControl[]) => {
 		controls.forEach((control) => {
 			if (control.type === 'boolean') {
 				checkboxNames.push(control.name);
-			}
 
-			if (control.controls) {
-				collectCheckboxNames(control.controls);
+				if (control.controls) {
+					collectCheckboxNames(control.controls);
+				}
 			}
 		});
 	};

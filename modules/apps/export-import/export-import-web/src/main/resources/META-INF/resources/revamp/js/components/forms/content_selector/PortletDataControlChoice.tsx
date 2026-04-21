@@ -6,12 +6,12 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import {PortletDataControl} from '../../../utils/mockPortletDataHandlerSections';
+import {PortletDataHandlerChoice} from '../../../utils/mockPortletDataHandlerSections';
 import FieldSelectWithOption from '../FieldSelectWithOption';
 
 interface PortletDataControlChoiceProps {
 	className?: string;
-	control: NonNullable<PortletDataControl>;
+	control: PortletDataHandlerChoice;
 	onChange: (fieldId: string, value: string) => void;
 	value: string;
 }
@@ -31,7 +31,10 @@ export default function PortletDataControlChoice({
 			onChange={(event) => {
 				onChange(control.name, event.target.value);
 			}}
-			options={control.options || []}
+			options={control.choices.map(({label, name}) => ({
+				label,
+				value: name,
+			}))}
 			value={value}
 		/>
 	);

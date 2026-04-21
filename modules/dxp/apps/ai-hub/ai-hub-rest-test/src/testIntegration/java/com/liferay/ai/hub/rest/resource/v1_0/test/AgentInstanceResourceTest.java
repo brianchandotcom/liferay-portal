@@ -286,6 +286,7 @@ public class AgentInstanceResourceTest
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostAgentInstanceWithTypeLLMNodeWithToolWorkflowDefinition();
 		_testPostAgentInstanceWithTypeMakeShorter();
+		_testPostAgentInstanceWithTypePageBuilder();
 	}
 
 	private static void _addAgentDefinitionObjectEntry(
@@ -957,6 +958,40 @@ public class AgentInstanceResourceTest
 
 				return null;
 			});
+
+		SseUtil.closeAll();
+	}
+
+	private void _testPostAgentInstanceWithTypePageBuilder() throws Exception {
+		CountDownLatch countDownLatch = new CountDownLatch(4);
+		List<String> lines = new ArrayList<>();
+
+		String sseEventSinkKey = SseEventSourceTestUtil.open(
+			List.of(countDownLatch), lines, "agent-instances/subscribe");
+
+		_postAgentInstance(
+			"L_PAGE_BUILDER",
+			"Create a page called \"Hello\" with a heading that says \"Hello " +
+				"World\".",
+			"instruction", sseEventSinkKey);
+
+		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+		Assert.assertEquals("event: L_PAGE_BUILDER", lines.get(2));
+
+		JSONObject outputJSONObject = _jsonFactory.createJSONObject(
+			StringUtil.removeSubstring(lines.get(3), "data: "));
+
+		Assert.assertEquals(
+			"pageBuilder", outputJSONObject.getString("nodeName"));
+
+		String data = outputJSONObject.getString("data");
+
+		Assert.assertTrue(data, data.contains("BASIC_COMPONENT-heading"));
+		Assert.assertTrue(data, data.contains("ContentPage"));
+		Assert.assertTrue(data, data.contains("ContentPageSpecification"));
+		Assert.assertTrue(data, data.contains("Hello World"));
 
 		SseUtil.closeAll();
 	}

@@ -63,8 +63,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 		Response response = tokenInvocationBuilder.post(Entity.form(formData));
 
-		Assert.assertEquals(
-			_TEST_CORS_URI,
+		Assert.assertNull(
 			response.getHeaderString("Access-Control-Allow-Origin"));
 	}
 

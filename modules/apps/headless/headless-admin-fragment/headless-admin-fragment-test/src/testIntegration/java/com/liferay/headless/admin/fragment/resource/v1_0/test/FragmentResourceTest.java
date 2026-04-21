@@ -68,6 +68,27 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSiteFragment() throws Exception {
+		_assertPutSiteFragmentCreateMissingFragmentSetExternalReferenceCodeProblemException();
+		_assertPutSiteFragmentUpdateApprovedAndDraftToEmptyProblemException();
+		_assertPutSiteFragmentUpdateApprovedAndDraftToDraftProblemException();
+		_assertPutSiteFragmentUpdateApprovedToDraftProblemException();
+		_assertPutSiteFragmentUpdateDraftToEmptyProblemException();
+		_testPutSiteFragmentCreateApproved();
+		_testPutSiteFragmentCreateApprovedAndDraft();
+		_testPutSiteFragmentCreateDraft();
+		_testPutSiteFragmentCreateEmpty();
+		_testPutSiteFragmentUpdateApprovedAddDraft();
+		_testPutSiteFragmentUpdateApprovedAddDraftModifyApproved();
+		_testPutSiteFragmentUpdateApprovedModifyApproved();
+		_testPutSiteFragmentUpdateApprovedModifyApprovedAndDraft();
+		_testPutSiteFragmentUpdateApprovedToEmpty();
+		_testPutSiteFragmentUpdateDraft();
+		_testPutSiteFragmentUpdateDraftToApproved();
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"cacheable", "externalReferenceCode",
@@ -113,6 +134,11 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		throws Exception {
 
 		return _postFragment(fragment);
+	}
+
+	@Override
+	protected Fragment testPutSiteFragment_addFragment() throws Exception {
+		return _postFragment(randomFragment());
 	}
 
 	private FragmentCollection _addFragmentCollection() throws Exception {
@@ -166,6 +192,103 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		_assertProblemException(
 			"BAD_REQUEST", titleKey, unsafeRunnable, titleArguments);
+	}
+
+	private void _assertPutSiteFragmentCreateMissingFragmentSetExternalReferenceCodeProblemException()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		Fragment fragment = _randomFragment(
+			true, false, externalReferenceCode, null);
+
+		fragment.setFragmentSetExternalReferenceCode((String)null);
+
+		_assertPutSiteFragmentProblemException(
+			externalReferenceCode, fragment,
+			"a-fragment-set-external-reference-code-is-required-to-create-a-" +
+				"new-fragment");
+	}
+
+	private void _assertPutSiteFragmentProblemException(
+			String externalReferenceCode, Fragment fragment, String titleKey)
+		throws Exception {
+
+		_assertProblemException(
+			titleKey,
+			() -> fragmentResource.putSiteFragment(
+				testGroup.getExternalReferenceCode(), externalReferenceCode,
+				fragment));
+	}
+
+	private void _assertPutSiteFragmentUpdateApprovedAndDraftToDraftProblemException()
+		throws Exception {
+
+		Fragment postFragment = _postFragment(_randomFragment(true, true));
+
+		_assertPutSiteFragmentProblemException(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				false, true, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()),
+			"unpublishing-a-fragment-entry-is-not-supported");
+	}
+
+	private void _assertPutSiteFragmentUpdateApprovedAndDraftToEmptyProblemException()
+		throws Exception {
+
+		Fragment postFragment = _postFragment(_randomFragment(true, true));
+
+		_assertPutSiteFragmentProblemException(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				false, false, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()),
+			"at-least-one-fragment-entry-version-is-required");
+	}
+
+	private void _assertPutSiteFragmentUpdateApprovedToDraftProblemException()
+		throws Exception {
+
+		Fragment postFragment = _postFragment(_randomFragment(true, false));
+
+		_assertPutSiteFragmentProblemException(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				false, true, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()),
+			"unpublishing-a-fragment-entry-is-not-supported");
+	}
+
+	private void _assertPutSiteFragmentUpdateDraftToEmptyProblemException()
+		throws Exception {
+
+		Fragment postFragment = _postFragment(_randomFragment(false, true));
+
+		_assertPutSiteFragmentProblemException(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				false, false, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()),
+			"at-least-one-fragment-entry-version-is-required");
+	}
+
+	private FragmentVersion _getFragmentVersion(
+		Fragment fragment, FragmentVersion.Status status) {
+
+		FragmentVersion[] fragmentVersions = fragment.getFragmentVersions();
+
+		if (fragmentVersions == null) {
+			return null;
+		}
+
+		for (FragmentVersion fragmentVersion : fragmentVersions) {
+			if (status == fragmentVersion.getStatus()) {
+				return fragmentVersion;
+			}
+		}
+
+		return null;
 	}
 
 	private Fragment _postFragment(Fragment fragment) throws Exception {
@@ -260,6 +383,151 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 	private void _testPostSiteFragmentSetFragmentEmpty() throws Exception {
 		_testPostSiteFragmentSetFragmentApproved(false, false);
+	}
+
+	private void _testPutFragment(
+			String externalReferenceCode, Fragment fragment)
+		throws Exception {
+
+		Fragment putFragment = fragmentResource.putSiteFragment(
+			testGroup.getExternalReferenceCode(), externalReferenceCode,
+			fragment);
+
+		assertEquals(fragment, putFragment);
+		assertValid(putFragment);
+
+		Fragment getFragment = fragmentResource.getSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			putFragment.getExternalReferenceCode());
+
+		assertEquals(fragment, getFragment);
+		assertValid(getFragment);
+	}
+
+	private void _testPutSiteFragmentCreateApproved() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_testPutFragment(
+			externalReferenceCode,
+			_randomFragment(true, false, externalReferenceCode, null));
+	}
+
+	private void _testPutSiteFragmentCreateApprovedAndDraft() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_testPutFragment(
+			externalReferenceCode,
+			_randomFragment(true, true, externalReferenceCode, null));
+	}
+
+	private void _testPutSiteFragmentCreateDraft() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_testPutFragment(
+			externalReferenceCode,
+			_randomFragment(false, true, externalReferenceCode, null));
+	}
+
+	private void _testPutSiteFragmentCreateEmpty() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		Fragment fragment = _randomFragment(
+			false, false, externalReferenceCode, null);
+
+		Fragment putFragment = fragmentResource.putSiteFragment(
+			testGroup.getExternalReferenceCode(), externalReferenceCode,
+			fragment);
+
+		Assert.assertNull(
+			_getFragmentVersion(putFragment, FragmentVersion.Status.APPROVED));
+		Assert.assertNotNull(
+			_getFragmentVersion(putFragment, FragmentVersion.Status.DRAFT));
+	}
+
+	private void _testPutSiteFragmentUpdateApprovedAddDraft() throws Exception {
+		Fragment postFragment = _postFragment(_randomFragment(true, false));
+
+		FragmentVersion approvedVersion = _getFragmentVersion(
+			postFragment, FragmentVersion.Status.APPROVED);
+
+		Fragment fragment = _randomFragment(
+			false, true, postFragment.getExternalReferenceCode(),
+			postFragment.getKey());
+
+		FragmentVersion draftVersion = _getFragmentVersion(
+			fragment, FragmentVersion.Status.DRAFT);
+
+		fragment.setFragmentVersions(
+			new FragmentVersion[] {approvedVersion, draftVersion});
+
+		_testPutFragment(postFragment.getExternalReferenceCode(), fragment);
+	}
+
+	private void _testPutSiteFragmentUpdateApprovedAddDraftModifyApproved()
+		throws Exception {
+
+		Fragment postFragment = _postFragment(_randomFragment(true, false));
+
+		_testPutFragment(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				true, true, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()));
+	}
+
+	private void _testPutSiteFragmentUpdateApprovedModifyApproved()
+		throws Exception {
+
+		Fragment postFragment = _postFragment(_randomFragment(true, false));
+
+		_testPutFragment(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				true, false, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()));
+	}
+
+	private void _testPutSiteFragmentUpdateApprovedModifyApprovedAndDraft()
+		throws Exception {
+
+		Fragment postFragment = _postFragment(_randomFragment(true, true));
+
+		_testPutFragment(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				true, true, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()));
+	}
+
+	private void _testPutSiteFragmentUpdateApprovedToEmpty() throws Exception {
+		Fragment postFragment = _postFragment(_randomFragment(true, false));
+
+		_assertPutSiteFragmentProblemException(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				false, false, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()),
+			"at-least-one-fragment-entry-version-is-required");
+	}
+
+	private void _testPutSiteFragmentUpdateDraft() throws Exception {
+		Fragment postFragment = _postFragment(_randomFragment(false, true));
+
+		_testPutFragment(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				false, true, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()));
+	}
+
+	private void _testPutSiteFragmentUpdateDraftToApproved() throws Exception {
+		Fragment postFragment = _postFragment(_randomFragment(false, true));
+
+		_testPutFragment(
+			postFragment.getExternalReferenceCode(),
+			_randomFragment(
+				true, false, postFragment.getExternalReferenceCode(),
+				postFragment.getKey()));
 	}
 
 	private FragmentCollection _fragmentCollection;

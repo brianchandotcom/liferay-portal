@@ -2884,9 +2884,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.password.encryptor.impl.jar!bcprov-jdk18on.jar</file-name>
-				<version>1.78</version>
+				<version>1.84</version>
 				<project-name>Bouncy Castle Provider</project-name>
-				<project-url>https://www.bouncycastle.org/java.html</project-url>
+				<project-url>https://www.bouncycastle.org/download/bouncy-castle-java/</project-url>
 				<licenses>
 					<license>
 						<license-name>Bouncy Castle Licence</license-name>

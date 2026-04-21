@@ -88,6 +88,11 @@ components:
                         The last time the item was changed.
                     format: date-time
                     type: string
+                dateReview:
+                    description:
+                        The time when the item should next be reviewed.
+                    format: date-time
+                    type: string
                 description:
                     description:
                         The item's description.

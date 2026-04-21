@@ -202,6 +202,26 @@ export default function EditGeneralInfo({
 					</div>
 
 					<div>
+						<label>
+							{Liferay.Language.get('external-reference-code')}
+						</label>
+
+						<ClayInput
+							aria-label={Liferay.Language.get(
+								'external-reference-code'
+							)}
+							onChange={({target: {value}}) =>
+								onChangeVocabulary(() => ({
+									...vocabulary,
+									externalReferenceCode: value,
+								}))
+							}
+							type="text"
+							value={vocabulary.externalReferenceCode || ''}
+						/>
+					</div>
+
+					<div>
 						<label>{Liferay.Language.get('description')}</label>
 
 						<ClayInput

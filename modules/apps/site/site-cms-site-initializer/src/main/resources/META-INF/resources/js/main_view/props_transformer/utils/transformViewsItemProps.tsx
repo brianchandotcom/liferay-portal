@@ -14,6 +14,7 @@ import '../../../../css/props_transformer/TransformViewsItemProps.scss';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
 import {
 	formatExpirationDate,
+	formatExpirationDateLong,
 	isExpiringSoon,
 } from '../../../common/utils/expirationStatus';
 
@@ -183,13 +184,15 @@ const getLabels = (item: any, props: Card) => {
 	) {
 		const formattedDate =
 			formatExpirationDate(item.embedded.expirationDate) ?? '';
+		const formattedDateLong =
+			formatExpirationDateLong(item.embedded.expirationDate) ?? '';
 
 		return [
 			...labels,
 			{
 				'aria-label': sub(
 					Liferay.Language.get('expiring-soon.expires-on-x'),
-					formattedDate
+					formattedDateLong
 				),
 				'className': 'lfr-portal-tooltip',
 				'displayType': 'warning',

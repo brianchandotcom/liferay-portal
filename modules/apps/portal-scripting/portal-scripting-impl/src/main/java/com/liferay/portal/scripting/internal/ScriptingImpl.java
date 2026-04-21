@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
-import com.liferay.portal.kernel.scripting.ScriptingValidator;
 import com.liferay.portal.kernel.scripting.UnsupportedLanguageException;
 
 import java.io.IOException;
@@ -101,10 +100,10 @@ public class ScriptingImpl implements Scripting {
 	public void validate(String language, String script)
 		throws ScriptingException {
 
-		ScriptingValidator scriptingValidator =
-			_scriptingValidatorsServiceTrackerMap.getService(language);
+		ScriptingExecutor scriptingExecutor =
+			_scriptingExecutorsServiceTrackerMap.getService(language);
 
-		scriptingValidator.validate(script);
+		scriptingExecutor.validate(script);
 	}
 
 	@Activate
@@ -116,19 +115,11 @@ public class ScriptingImpl implements Scripting {
 					bundleContext,
 					(scriptingExecutor, emitter) -> emitter.emit(
 						scriptingExecutor.getLanguage())));
-		_scriptingValidatorsServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ScriptingValidator.class, null,
-				ServiceReferenceMapperFactory.create(
-					bundleContext,
-					(scriptingValidator, emitter) -> emitter.emit(
-						scriptingValidator.getLanguage())));
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_scriptingExecutorsServiceTrackerMap.close();
-		_scriptingValidatorsServiceTrackerMap.close();
 	}
 
 	private String _getErrorMessage(String script, Exception exception) {
@@ -174,7 +165,5 @@ public class ScriptingImpl implements Scripting {
 
 	private ServiceTrackerMap<String, ScriptingExecutor>
 		_scriptingExecutorsServiceTrackerMap;
-	private ServiceTrackerMap<String, ScriptingValidator>
-		_scriptingValidatorsServiceTrackerMap;
 
 }

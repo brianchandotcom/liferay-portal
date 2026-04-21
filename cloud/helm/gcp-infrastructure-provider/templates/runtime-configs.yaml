@@ -36,7 +36,7 @@ spec:
     serviceAccountTemplate:
         metadata:
             annotations:
-                iam.gke.io/gcp-service-account: {{ printf "%s-cp-iam@%s.iam.gserviceaccount.com" .Values.deploymentName .Values.gcp.projectId }}
+                iam.gke.io/gcp-service-account: {{ printf "%s-cp-iam@%s.iam.gserviceaccount.com" .Values.deploymentName .Values.global.gcp.projectId }}
             name: provider-gcp-cloudplatform
 ---
 apiVersion: pkg.crossplane.io/v1beta1

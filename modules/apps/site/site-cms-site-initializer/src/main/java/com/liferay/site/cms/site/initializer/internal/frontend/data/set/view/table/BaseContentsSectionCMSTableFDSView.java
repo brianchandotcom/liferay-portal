@@ -46,6 +46,13 @@ public abstract class BaseContentsSectionCMSTableFDSView
 		).add(
 			addDateFDSTableSchemaField("dateModified", "modified")
 		).add(
+			"dateReview", "review-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"reviewDateTableCellRenderer"
+			).setSortable(
+				true
+			)
+		).add(
 			"embedded.status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"statusTableCellRenderer")

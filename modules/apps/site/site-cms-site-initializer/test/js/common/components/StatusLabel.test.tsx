@@ -48,9 +48,7 @@ describe('StatusLabel', () => {
 		it('is not shown when no expirationDate is provided', () => {
 			render(<StatusLabel label="approved" />);
 
-			expect(
-				screen.queryByText('expiring-soon')
-			).not.toBeInTheDocument();
+			expect(screen.queryByText('expiring-soon')).not.toBeInTheDocument();
 		});
 
 		it('is not shown when the expiration date is beyond the threshold', () => {
@@ -58,13 +56,9 @@ describe('StatusLabel', () => {
 				NOW.getTime() + 8 * MS_PER_DAY
 			).toISOString();
 
-			render(
-				<StatusLabel expirationDate={beyond} label="approved" />
-			);
+			render(<StatusLabel expirationDate={beyond} label="approved" />);
 
-			expect(
-				screen.queryByText('expiring-soon')
-			).not.toBeInTheDocument();
+			expect(screen.queryByText('expiring-soon')).not.toBeInTheDocument();
 		});
 
 		it('is shown when an approved item is within the threshold', () => {
@@ -72,9 +66,7 @@ describe('StatusLabel', () => {
 				NOW.getTime() + 3 * MS_PER_DAY
 			).toISOString();
 
-			render(
-				<StatusLabel expirationDate={within} label="approved" />
-			);
+			render(<StatusLabel expirationDate={within} label="approved" />);
 
 			expect(screen.getByText('approved')).toBeInTheDocument();
 			expect(screen.getByText('expiring-soon')).toBeInTheDocument();
@@ -85,9 +77,7 @@ describe('StatusLabel', () => {
 				NOW.getTime() + 3 * MS_PER_DAY
 			).toISOString();
 
-			render(
-				<StatusLabel expirationDate={within} label="approved" />
-			);
+			render(<StatusLabel expirationDate={within} label="approved" />);
 
 			const badge = screen
 				.getByText('expiring-soon')
@@ -107,9 +97,20 @@ describe('StatusLabel', () => {
 			render(<StatusLabel expirationDate={within} label="draft" />);
 
 			expect(screen.getByText('draft')).toBeInTheDocument();
-			expect(
-				screen.queryByText('expiring-soon')
-			).not.toBeInTheDocument();
+			expect(screen.queryByText('expiring-soon')).not.toBeInTheDocument();
+		});
+
+		it('renders only the Expired label (no Approved, no Expiring Soon) once the expiration date is reached', () => {
+			const past = new Date(NOW.getTime() - MS_PER_DAY).toISOString();
+
+			const {container} = render(
+				<StatusLabel expirationDate={past} label="expired" />
+			);
+
+			expect(screen.getByText('expired')).toBeInTheDocument();
+			expect(screen.queryByText('approved')).not.toBeInTheDocument();
+			expect(screen.queryByText('expiring-soon')).not.toBeInTheDocument();
+			expect(container.querySelectorAll('.label')).toHaveLength(1);
 		});
 	});
 });

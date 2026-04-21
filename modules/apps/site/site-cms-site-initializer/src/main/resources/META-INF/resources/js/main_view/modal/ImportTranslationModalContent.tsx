@@ -66,26 +66,27 @@ export default function ImportTranslationModalContent({
 				`/o/cms/basic-web-contents/${itemId}/translations`
 			);
 
-		const errors = response.data?.failureMessagesJSON.map((item) => {
-			const jsonItem = JSON.parse(item) as FailedImportMessage;
+		const failureMessagesJSON = response.data?.failureMessagesJSON ?? [];
+		const successFiles = response.data?.successMessages ?? [];
 
+		if (!failureMessagesJSON.length) {
 			return {
-				errorMessage: jsonItem.errorMessage,
-				name: jsonItem.fileName,
+				successFiles,
 			};
-		});
+		}
 
-		const responseObject: {
-			errors?: {errorMessage: string; name: string}[];
-			multipleErrors: boolean;
-			successFiles: string[];
-		} = {
-			errors,
-			multipleErrors: !!errors?.length,
-			successFiles: response.data?.successMessages || [],
+		return {
+			errors: failureMessagesJSON.map((item) => {
+				const jsonItem = JSON.parse(item) as FailedImportMessage;
+
+				return {
+					errorMessage: jsonItem.errorMessage,
+					name: jsonItem.fileName,
+				};
+			}),
+			multipleErrors: true,
+			successFiles,
 		};
-
-		return responseObject;
 	};
 
 	const onUploadComplete = ({

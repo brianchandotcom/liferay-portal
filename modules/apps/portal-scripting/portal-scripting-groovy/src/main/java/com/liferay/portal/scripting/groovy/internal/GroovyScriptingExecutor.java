@@ -64,15 +64,7 @@ public class GroovyScriptingExecutor implements ScriptingExecutor {
 		}
 
 		try {
-			Thread currentThread = Thread.currentThread();
-
-			GroovyShell groovyShell = new GroovyShell(
-				AggregateClassLoader.getAggregateClassLoader(
-					GroovyShell.class.getClassLoader(),
-					GroovyScriptingExecutor.class.getClassLoader(),
-					currentThread.getContextClassLoader()));
-
-			Script compiledScript = groovyShell.parse(script);
+			Script compiledScript = _parse(script);
 
 			Binding binding = new Binding(inputObjects);
 
@@ -115,19 +107,23 @@ public class GroovyScriptingExecutor implements ScriptingExecutor {
 	@Override
 	public void validate(String script) throws ScriptingException {
 		try {
-			Thread currentThread = Thread.currentThread();
-
-			GroovyShell groovyShell = new GroovyShell(
-				AggregateClassLoader.getAggregateClassLoader(
-					GroovyShell.class.getClassLoader(),
-					GroovyScriptingExecutor.class.getClassLoader(),
-					currentThread.getContextClassLoader()));
-
-			groovyShell.parse(script);
+			_parse(script);
 		}
 		catch (Exception exception) {
 			throw new ScriptingException(exception);
 		}
+	}
+
+	private Script _parse(String script) {
+		Thread currentThread = Thread.currentThread();
+
+		GroovyShell groovyShell = new GroovyShell(
+			AggregateClassLoader.getAggregateClassLoader(
+				GroovyShell.class.getClassLoader(),
+				GroovyScriptingExecutor.class.getClassLoader(),
+				currentThread.getContextClassLoader()));
+
+		return groovyShell.parse(script);
 	}
 
 }

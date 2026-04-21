@@ -1165,9 +1165,9 @@ test(
 		await expect(async () => {
 			await expect(usersPage.deleteButton).toBeVisible({timeout: 200});
 			await usersPage.deleteButton.click();
-
-			await waitForAlert(page);
 		}).toPass({timeout: 5000});
+
+		await waitForAlert(page);
 
 		await expect(usersPage.usersTable.cell(user1.name)).toBeVisible();
 		await expect(usersPage.usersTable.cell(user2.name)).toHaveCount(0);

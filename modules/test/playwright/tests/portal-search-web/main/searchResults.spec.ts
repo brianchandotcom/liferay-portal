@@ -354,4 +354,68 @@ test.describe('Search Paginator', () => {
 			).toHaveText(/Showing 1 to 20 of \d+ entries./);
 		});
 	});
+
+	test('Pagination is not available when currentURL is faulty @LPD-83772', async ({
+		apiHelpers,
+		page,
+		searchPage,
+		site,
+	}) => {
+		let siteLayout: Layout;
+
+		await test.step('Create web content for search results', async () => {
+			const basicWebContentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			for (let count = 0; count < 9; count++) {
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					ddmStructureId: basicWebContentStructureId,
+					groupId: site.id,
+					titleMap: {en_US: `Test Web Content ${count}`},
+				});
+			}
+		});
+
+		await test.step('Create a portlet page associated to site', async () => {
+			siteLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				options: {type: 'portlet'},
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Navigate to the site page', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${siteLayout.friendlyURL}`
+			);
+		});
+
+		await test.step('Add search bar and results portlet to new page', async () => {
+			await searchPage.addPortlet('Search Bar', 'Search');
+
+			await searchPage.addPortlet('Search Results', 'Search');
+		});
+
+		await test.step('Perform new search and verify pagination', async () => {
+			await searchPage.searchKeywordInMainContent('test');
+
+			await expect(searchPage.searchResultsTotalLabel).toHaveText(
+				/\d+ Results for test/
+			);
+
+			await expect(searchPage.searchResultsPaginationBar).toBeVisible();
+		});
+
+		await test.step('Navigate to search page with q, currentURL, and delta parameter', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${siteLayout.friendlyURL}?q=test&currentURL=https://www.google.com&delta=5`
+			);
+		});
+
+		await test.step('Verify search results are available but pagination is not', async () => {
+			await expect(searchPage.searchResults).toBeVisible();
+
+			await expect(searchPage.searchResultsPaginationBar).toBeHidden();
+		});
+	});
 });

@@ -2348,7 +2348,8 @@ public class GitWorkingDirectory {
 		sb.append(startingRef);
 		sb.append("..");
 		sb.append(endingRef);
-		sb.append(" --pretty=format:'%H %ct %ae %s'");
+		sb.append(" --pretty=format:'%x00%H %ct %ae %s%n'");
+		sb.append(" --patch --stat");
 
 		GitUtil.ExecutionResult result = executeBashCommands(
 			5, 1000, 30 * 1000, sb.toString());
@@ -2367,8 +2368,29 @@ public class GitWorkingDirectory {
 
 		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
 
-		for (String gitLogEntity : gitLog.split("\n")) {
-			localGitCommits.add(getLocalGitCommit(gitLogEntity));
+		for (String commitSection : gitLog.split(_GIT_COMMIT_LOG_SEPARATOR)) {
+			if (commitSection.isEmpty()) {
+				continue;
+			}
+
+			int newlineIndex = commitSection.indexOf('\n');
+
+			String gitLogEntity;
+			String patch;
+
+			if (newlineIndex == -1) {
+				gitLogEntity = commitSection.trim();
+				patch = "";
+			}
+			else {
+				gitLogEntity = commitSection.substring(0, newlineIndex);
+
+				gitLogEntity = gitLogEntity.trim();
+
+				patch = commitSection.substring(newlineIndex + 1);
+			}
+
+			localGitCommits.add(getLocalGitCommit(gitLogEntity, patch));
 		}
 
 		return localGitCommits;
@@ -2863,6 +2885,12 @@ public class GitWorkingDirectory {
 	}
 
 	protected LocalGitCommit getLocalGitCommit(String gitLogEntity) {
+		return getLocalGitCommit(gitLogEntity, null);
+	}
+
+	protected LocalGitCommit getLocalGitCommit(
+		String gitLogEntity, String patch) {
+
 		Matcher matcher = _gitLogEntityPattern.matcher(gitLogEntity);
 
 		if (!matcher.matches()) {
@@ -2873,6 +2901,12 @@ public class GitWorkingDirectory {
 		int unixTimestamp = Integer.valueOf(matcher.group("commitTime"));
 
 		long epochTimestamp = (long)unixTimestamp * 1000;
+
+		if (patch != null) {
+			return GitCommitFactory.newLocalGitCommit(
+				matcher.group("email"), this, matcher.group("message"), patch,
+				matcher.group("sha"), epochTimestamp);
+		}
 
 		return GitCommitFactory.newLocalGitCommit(
 			matcher.group("email"), this, matcher.group("message"),
@@ -3388,14 +3422,34 @@ public class GitWorkingDirectory {
 
 		List<LocalGitCommit> localGitCommits = new ArrayList<>(num);
 
-		String gitLog = _log(start, num, file, "%H %ct %ae %s", sha);
+		String gitLog = _log(
+			start, num, file,
+			_GIT_COMMIT_LOG_SEPARATOR_FORMAT + "%H %ct %ae %s%n", sha);
 
 		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
 
-		String[] gitLogEntities = gitLog.split("\n");
+		for (String commitSection : gitLog.split(_GIT_COMMIT_LOG_SEPARATOR)) {
+			if (commitSection.isEmpty()) {
+				continue;
+			}
 
-		for (String gitLogEntity : gitLogEntities) {
-			localGitCommits.add(getLocalGitCommit(gitLogEntity));
+			int newlineIndex = commitSection.indexOf('\n');
+
+			String gitLogEntity;
+			String patch;
+
+			if (newlineIndex == -1) {
+				gitLogEntity = commitSection.trim();
+				patch = "";
+			}
+			else {
+				gitLogEntity = commitSection.substring(
+					0, newlineIndex
+				).trim();
+				patch = commitSection.substring(newlineIndex + 1);
+			}
+
+			localGitCommits.add(getLocalGitCommit(gitLogEntity, patch));
 		}
 
 		return localGitCommits;
@@ -3430,6 +3484,7 @@ public class GitWorkingDirectory {
 		sb.append(" --pretty=format:'");
 		sb.append(format);
 		sb.append("'");
+		sb.append(" --patch --stat");
 
 		if (file != null) {
 			sb.append(" ");
@@ -3463,6 +3518,10 @@ public class GitWorkingDirectory {
 	}
 
 	private static final int _BRANCHES_DELETE_BATCH_SIZE = 5;
+
+	private static final String _GIT_COMMIT_LOG_SEPARATOR = "\u0000";
+
+	private static final String _GIT_COMMIT_LOG_SEPARATOR_FORMAT = "%x00";
 
 	private static final Pattern _badRefPattern = Pattern.compile(
 		"fatal: bad object (?<badRef>.+/HEAD)");

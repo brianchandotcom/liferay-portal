@@ -18,4 +18,14 @@ public class DefaultLocalGitCommit extends BaseLocalGitCommit {
 			emailAddress, gitWorkingDirectory, message, sha, type, commitTime);
 	}
 
+	protected DefaultLocalGitCommit(
+		String emailAddress, GitWorkingDirectory gitWorkingDirectory,
+		String message, String patch, String sha, GitCommit.Type type,
+		long commitTime) {
+
+		super(
+			emailAddress, gitWorkingDirectory, message, patch, sha, type,
+			commitTime);
+	}
+
 }

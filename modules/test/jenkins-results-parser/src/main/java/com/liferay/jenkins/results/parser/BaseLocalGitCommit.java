@@ -112,6 +112,16 @@ public abstract class BaseLocalGitCommit
 		_gitWorkingDirectory = gitWorkingDirectory;
 	}
 
+	protected BaseLocalGitCommit(
+		String emailAddress, GitWorkingDirectory gitWorkingDirectory,
+		String message, String patch, String sha, GitCommit.Type type,
+		long commitTime) {
+
+		this(emailAddress, gitWorkingDirectory, message, sha, type, commitTime);
+
+		_patch = patch;
+	}
+
 	@Override
 	protected void initCommitTime() {
 	}

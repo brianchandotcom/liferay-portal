@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -580,12 +581,13 @@ public class LayoutsImporterTest {
 			LayoutPageTemplateAdminWebPortletKeys.
 				LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
-		Assert.assertEquals(
-			1,
+		List<PortletPreferences> portletPreferences =
 			_portletPreferencesLocalService.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, childLayout.getPlid()
-			).size());
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, childLayout.getPlid());
+
+		Assert.assertEquals(
+			portletPreferences.toString(), 1, portletPreferences.size());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
 
@@ -601,12 +603,13 @@ public class LayoutsImporterTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		Assert.assertEquals(
-			0,
+		portletPreferences =
 			_portletPreferencesLocalService.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, childLayout.getPlid()
-			).size());
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, childLayout.getPlid());
+
+		Assert.assertEquals(
+			portletPreferences.toString(), 0, portletPreferences.size());
 	}
 
 	@Test

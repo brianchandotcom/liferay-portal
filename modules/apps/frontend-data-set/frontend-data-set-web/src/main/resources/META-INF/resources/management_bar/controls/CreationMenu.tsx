@@ -216,11 +216,7 @@ function CreationButton({
 			})}
 			title={firstItem.label}
 		>
-			{isMobile ? (
-				<ClayIcon symbol="plus" />
-			) : (
-				Liferay.Language.get('new')
-			)}
+			{isMobile ? <ClayIcon symbol="plus" /> : firstItem.label}
 
 			{newTabIcon}
 		</LinkOrButton>

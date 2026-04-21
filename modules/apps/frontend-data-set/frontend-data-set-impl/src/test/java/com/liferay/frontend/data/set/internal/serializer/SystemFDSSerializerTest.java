@@ -1205,7 +1205,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
-	public void testSerializeShowSearch() throws Exception {}
+	public void testSerializeShowSearch() throws Exception {
 		_registerServices(
 			_registerSystemFDSEntry(
 				SystemFDSEntryFactory.create(
@@ -1227,7 +1227,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			systemFDSSerializer.serializeShowSearch(
 				FDS_NAMES[1], httpServletRequest));
 
-		_unregisterServices();	
+		_unregisterServices();
 	}
 
 	@Test
@@ -2058,9 +2058,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			return this;
 		}
 
-		public SystemFDSEntryWrapper withShowSearch(
-			boolean showSearch) {
-
+		public SystemFDSEntryWrapper withShowSearch(boolean showSearch) {
 			_showSearch = showSearch;
 
 			return this;

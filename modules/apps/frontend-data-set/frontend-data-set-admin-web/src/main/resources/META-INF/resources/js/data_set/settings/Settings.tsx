@@ -431,7 +431,9 @@ const Settings = ({
 								</label>
 							</div>
 
-							<div>{Liferay.Language.get('show-search-help')}</div>
+							<div>
+								{Liferay.Language.get('show-search-help')}
+							</div>
 						</ClayLayout.Col>
 
 						<ClayLayout.Col className="align-self-start" size={1}>

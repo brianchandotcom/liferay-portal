@@ -1527,9 +1527,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		).thenCallRealMethod();
 	}
 
-	private void _mockSerializeShowSearch(
-		String fdsName, boolean showSearch) {
-
+	private void _mockSerializeShowSearch(String fdsName, boolean showSearch) {
 		Mockito.when(
 			_customFDSSerializer.getDataSetObjectEntryProperties(
 				fdsName, httpServletRequest)

@@ -82,7 +82,7 @@ public interface FDSSerializer {
 		String fdsName, HttpServletRequest httpServletRequest);
 
 	public boolean serializeShowSearch(
-		String fdsName, HttpServletRequest httpServletRequest);	
+		String fdsName, HttpServletRequest httpServletRequest);
 
 	public JSONArray serializeSnapshots(
 		String fdsName, HttpServletRequest httpServletRequest);

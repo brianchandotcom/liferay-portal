@@ -5,13 +5,17 @@
 
 import ClayIcon from '@clayui/icon';
 import {Card, IView, replaceTokens} from '@liferay/frontend-data-set-web';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import dateFormat from '../../../common/utils/dateFormat';
 
 import '../../../../css/props_transformer/TransformViewsItemProps.scss';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
-import {isExpiringSoon} from '../../../common/utils/expirationStatus';
+import {
+	formatExpirationDate,
+	isExpiringSoon,
+} from '../../../common/utils/expirationStatus';
 
 type Card = React.ComponentProps<typeof Card> & {
 	actions: {data: {id: string}; href?: string}[];
@@ -177,11 +181,21 @@ const getLabels = (item: any, props: Card) => {
 			item.embedded?.expirationDate
 		)
 	) {
+		const formattedDate =
+			formatExpirationDate(item.embedded.expirationDate) ?? '';
+
 		return [
 			...labels,
 			{
-				displayType: 'warning',
-				value: Liferay.Language.get('expiring-soon'),
+				'aria-label': sub(
+					Liferay.Language.get('expiring-soon.expires-on-x'),
+					formattedDate
+				),
+				'className': 'lfr-portal-tooltip',
+				'displayType': 'warning',
+				'tabIndex': 0,
+				'title': formattedDate,
+				'value': Liferay.Language.get('expiring-soon'),
 			},
 		];
 	}

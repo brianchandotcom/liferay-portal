@@ -1807,3 +1807,64 @@ test(
 		}).toPass();
 	}
 );
+
+test(
+	'Review Date column shows "--" when unset and a date when set',
+	{tag: '@LPD-79678'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = 'Default';
+		const noReviewDateTitle = getRandomString();
+		const reviewDateTitle = getRandomString();
+
+		const toIsoDate = (date: Date) => date.toISOString().slice(0, 10);
+		const tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+
+		let noReviewEntry;
+		let reviewEntry;
+
+		try {
+			noReviewEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: noReviewDateTitle,
+				},
+				applicationName,
+				spaceName
+			);
+
+			reviewEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					reviewDate: toIsoDate(tomorrow),
+					title: reviewDateTitle,
+				},
+				applicationName,
+				spaceName
+			);
+
+			await expect(async () => {
+				await assetsPage.gotoAll();
+
+				await expect(
+					page.getByRole('row').filter({hasText: noReviewDateTitle})
+				).toContainText('--');
+
+				await expect(
+					page.getByRole('row').filter({hasText: reviewDateTitle})
+				).not.toContainText('--');
+			}).toPass();
+		}
+		finally {
+			for (const entry of [noReviewEntry, reviewEntry]) {
+				if (entry) {
+					await apiHelpers.objectEntry.deleteObjectEntry(
+						applicationName,
+						String(entry.id)
+					);
+				}
+			}
+		}
+	}
+);

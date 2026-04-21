@@ -170,7 +170,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		invocationBuilder = authorize(
 			registerWebTarget.request(), _getToken(oAuth2Application));
 
-		invocationBuilder.header("Origin", _TEST_CORS_URI);
+		invocationBuilder.header("Origin", TEST_CORS_URI);
 
 		response = invocationBuilder.get();
 
@@ -289,8 +289,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		return tokenString;
 	}
-
-	private static final String _TEST_CORS_URI = "http://test-cors.com";
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

@@ -20,6 +20,4 @@ public class ScriptingExecutorMessagingConstants {
 
 	public static final String MESSAGE_KEY_URLS = "urls";
 
-	public static final String SCRIPTING_LANGUAGE_DEFAULT = "groovy";
-
 }

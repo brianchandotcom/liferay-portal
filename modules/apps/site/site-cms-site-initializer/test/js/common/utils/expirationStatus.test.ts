@@ -6,6 +6,7 @@
 import {
 	EXPIRING_SOON_THRESHOLD_DAYS,
 	formatExpirationDate,
+	formatExpirationDateLong,
 	isExpiringSoon,
 } from '../../../../src/main/resources/META-INF/resources/js/common/utils/expirationStatus';
 
@@ -92,6 +93,20 @@ describe('expirationStatus', () => {
 			expect(formatted).toMatch(/04\/23\/2026/);
 			expect(formatted).toMatch(/12:00/);
 			expect(formatted).toMatch(/PM/);
+		});
+	});
+
+	describe('formatExpirationDateLong', () => {
+		it('formats an ISO string using a long date style for screen readers', () => {
+			const formatted = formatExpirationDateLong(
+				'2026-02-11T10:30:00Z'
+			);
+
+			expect(formatted).toMatch(/February/);
+			expect(formatted).toMatch(/11/);
+			expect(formatted).toMatch(/2026/);
+			expect(formatted).toMatch(/10:30/);
+			expect(formatted).toMatch(/AM/);
 		});
 	});
 });

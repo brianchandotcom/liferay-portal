@@ -59,9 +59,8 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		Assert.assertEquals(
 			"Precondition: test thread must have the default (system) " +
 				"companyId to simulate a background thread",
-			0L,
-			CompanyThreadLocal.getCompanyId(
-			).longValue());
+			Long.valueOf(0),
+			CompanyThreadLocal.getCompanyId());
 
 		OpenIdConnectSession openIdConnectSession = Mockito.mock(
 			OpenIdConnectSession.class);

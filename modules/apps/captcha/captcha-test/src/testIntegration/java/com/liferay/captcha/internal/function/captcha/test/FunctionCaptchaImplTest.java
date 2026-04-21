@@ -117,6 +117,6 @@ public class FunctionCaptchaImplTest {
 		RandomTestUtil.randomString() + ".localtest.me";
 
 	@Inject
-	private static CETManager _cetManager;
+	private CETManager _cetManager;
 
 }

@@ -30,6 +30,7 @@ export default function ContentEditorPreview({
 	getPreviewDataURL: string;
 	title: string;
 }) {
+	const [isContentEdited, setIsContentEdited] = useState<boolean>(false);
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const [resizeWidth, setResizeWidth] = useSessionState(
 		PREVIEW_WIDTH_SESSION_KEY,
@@ -57,6 +58,24 @@ export default function ContentEditorPreview({
 		Liferay.on(EVENT_HANDLE_PREVIEW, handlePreview);
 
 		return () => Liferay.detach(EVENT_HANDLE_PREVIEW, handlePreview);
+	}, []);
+
+	useEffect(() => {
+		const form = document.querySelector('.lfr-layout-structure-item-form');
+
+		if (!form) {
+			return;
+		}
+
+		const handleChange = () => setIsContentEdited(true);
+
+		form.addEventListener('input', handleChange);
+		form.addEventListener('change', handleChange);
+
+		return () => {
+			form.removeEventListener('input', handleChange);
+			form.removeEventListener('change', handleChange);
+		};
 	}, []);
 
 	useEffect(() => {
@@ -124,7 +143,10 @@ export default function ContentEditorPreview({
 						titleId={titleId}
 					/>
 					<CacheContextProvider initialData={{}}>
-						<PreviewBody getPreviewDataURL={getPreviewDataURL} />
+						<PreviewBody
+							getPreviewDataURL={getPreviewDataURL}
+							isContentEdited={isContentEdited}
+						/>
 					</CacheContextProvider>
 				</>
 			) : null}

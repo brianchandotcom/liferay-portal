@@ -12,8 +12,10 @@ import usePreviewState from './usePreviewState';
 
 export default function PreviewBody({
 	getPreviewDataURL,
+	isContentEdited,
 }: {
 	getPreviewDataURL: string;
+	isContentEdited: boolean;
 }) {
 	const {
 		displayPageTemplates,
@@ -32,6 +34,18 @@ export default function PreviewBody({
 					showPreviewInNewTabLink
 				/>
 			</div>
+
+			{isContentEdited && previewURL ? (
+				<ClayAlert
+					displayType="info"
+					title={Liferay.Language.get('info')}
+					variant="stripe"
+				>
+					{Liferay.Language.get(
+						'you-have-unsaved-changes.-save-as-draft-or-publish-to-update-this-preview'
+					)}
+				</ClayAlert>
+			) : null}
 
 			<div
 				className="align-items-center content-editor__preview__content d-flex position-relative"

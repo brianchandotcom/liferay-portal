@@ -165,6 +165,13 @@ public class StyleBookEntryServiceWrapper
 	}
 
 	@Override
+	public StyleBookEntry getStyleBookEntry(long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.getStyleBookEntry(styleBookEntryId);
+	}
+
+	@Override
 	public StyleBookEntry getStyleBookEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -251,4 +258,4 @@ public class StyleBookEntryServiceWrapper
 	private StyleBookEntryService _styleBookEntryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1596783701
+// LIFERAY-SERVICE-BUILDER-HASH:1842900630

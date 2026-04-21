@@ -92,6 +92,21 @@ public class SearchResultSerDes {
 			sb.append("\"");
 		}
 
+		if (searchResult.getDateReview() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateReview\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(searchResult.getDateReview()));
+
+			sb.append("\"");
+		}
+
 		if (searchResult.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -222,6 +237,15 @@ public class SearchResultSerDes {
 				liferayToJSONDateFormat.format(searchResult.getDateModified()));
 		}
 
+		if (searchResult.getDateReview() == null) {
+			map.put("dateReview", null);
+		}
+		else {
+			map.put(
+				"dateReview",
+				liferayToJSONDateFormat.format(searchResult.getDateReview()));
+		}
+
 		if (searchResult.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -294,6 +318,9 @@ public class SearchResultSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateReview")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
@@ -336,6 +363,12 @@ public class SearchResultSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
 					searchResult.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateReview")) {
+				if (jsonParserFieldValue != null) {
+					searchResult.setDateReview(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
@@ -452,4 +485,4 @@ public class SearchResultSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:731239514
+// LIFERAY-REST-BUILDER-HASH:2431910

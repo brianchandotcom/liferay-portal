@@ -91,6 +91,27 @@ public class SearchResult implements Cloneable, Serializable {
 
 	protected Date dateModified;
 
+	public Date getDateReview() {
+		return dateReview;
+	}
+
+	public void setDateReview(Date dateReview) {
+		this.dateReview = dateReview;
+	}
+
+	public void setDateReview(
+		UnsafeSupplier<Date, Exception> dateReviewUnsafeSupplier) {
+
+		try {
+			dateReview = dateReviewUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateReview;
+
 	public String getDescription() {
 		return description;
 	}
@@ -247,4 +268,4 @@ public class SearchResult implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1397601127
+// LIFERAY-REST-BUILDER-HASH:-1090536072

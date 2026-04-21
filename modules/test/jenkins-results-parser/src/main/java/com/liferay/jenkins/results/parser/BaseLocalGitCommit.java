@@ -7,8 +7,11 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,7 +70,16 @@ public abstract class BaseLocalGitCommit
 			return null;
 		}
 
-		_patch = executionResult.getStandardOut();
+		String standardOut = executionResult.getStandardOut();
+
+		int separatorIndex = standardOut.indexOf("\n---\n");
+
+		if (separatorIndex != -1) {
+			_patch = standardOut.substring(separatorIndex + 1);
+		}
+		else {
+			_patch = standardOut;
+		}
 
 		return _patch;
 	}
@@ -99,6 +111,32 @@ public abstract class BaseLocalGitCommit
 		}
 
 		return false;
+	}
+
+	@Override
+	public String toDisplayString() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"EEE MMM dd HH:mm:ss yyyy Z", Locale.ENGLISH);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("commit ");
+		sb.append(getSHA());
+		sb.append("\nAuthor: ");
+		sb.append(getEmailAddress());
+		sb.append("\nDate:   ");
+		sb.append(simpleDateFormat.format(getCommitDate()));
+		sb.append("\n\n    ");
+		sb.append(getMessage());
+		sb.append("\n\n");
+
+		String patch = getPatch();
+
+		if (patch != null) {
+			sb.append(patch);
+		}
+
+		return sb.toString();
 	}
 
 	protected BaseLocalGitCommit(

@@ -22,4 +22,6 @@ public interface LocalGitCommit extends GitCommit {
 
 	public boolean isFileChanged(File file);
 
+	public String toDisplayString();
+
 }

@@ -534,7 +534,7 @@ public class LayoutsImporterTest {
 
 	@Test
 	@TestInfo("LPD-86505")
-	public void testImportLayoutPageTemplateEntryWithMasterChildLayout()
+	public void testImportLayoutPageTemplateEntryWithMasterLayoutAndChildLayout()
 		throws Exception {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);

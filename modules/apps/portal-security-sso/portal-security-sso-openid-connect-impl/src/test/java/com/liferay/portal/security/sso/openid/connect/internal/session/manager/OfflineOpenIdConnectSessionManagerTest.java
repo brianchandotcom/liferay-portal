@@ -52,10 +52,7 @@ public class OfflineOpenIdConnectSessionManagerTest {
 	@Test
 	public void testExtendOpenIdConnectSession() throws Exception {
 		Assert.assertEquals(
-			"Precondition: test thread must have the default (system) " +
-				"companyId to simulate a background thread",
-			Long.valueOf(0),
-			CompanyThreadLocal.getCompanyId());
+			Long.valueOf(0), CompanyThreadLocal.getCompanyId());
 
 		OpenIdConnectSession openIdConnectSession = Mockito.mock(
 			OpenIdConnectSession.class);
@@ -198,20 +195,10 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 		String filterString = argumentCaptor.getValue();
 
+		Assert.assertFalse(filterString.contains("(companyId=0)"));
 		Assert.assertTrue(
-			StringBundler.concat(
-				"Configuration lookup filter must use the OAuthClientEntry's ",
-				"companyId (", oAuthClientEntryCompanyId, "). Filter was: ",
-				filterString),
 			filterString.contains(
 				"(companyId=" + oAuthClientEntryCompanyId + ")"));
-		Assert.assertFalse(
-			StringBundler.concat(
-				"Configuration lookup filter must not fall back to ",
-				"CompanyThreadLocal's default (0) when ",
-				"_extendOpenIdConnectSession runs in a background thread. ",
-				"Filter was: ", filterString),
-			filterString.contains("(companyId=0)"));
 	}
 
 	@Test

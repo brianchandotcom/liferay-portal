@@ -6,9 +6,12 @@
 package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.exception.RequiredFragmentEntryVersionException;
+import com.liferay.fragment.exception.UnsupportedUnpublishFragmentEntryOperationException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.headless.admin.fragment.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion;
@@ -16,7 +19,10 @@ import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.common.spi.util.GroupUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,6 +59,44 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			GroupUtil.getStagingAwareGroupId(
 				contextCompany.getCompanyId(), siteExternalReferenceCode),
 			fragment);
+	}
+
+	@Override
+	public Fragment putSiteFragment(
+			String siteExternalReferenceCode,
+			String fragmentExternalReferenceCode, Fragment fragment)
+		throws Exception {
+
+		EnabledUtil.checkEnabled(contextCompany);
+
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		try {
+			FragmentEntry fragmentEntry =
+				_fragmentEntryService.getFragmentEntryByExternalReferenceCode(
+					fragmentExternalReferenceCode, groupId);
+
+			return _updateFragmentEntry(fragment, fragmentEntry, groupId);
+		}
+		catch (NoSuchModelException noSuchModelException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchModelException);
+			}
+
+			FragmentEntry draftFragmentEntry =
+				_fragmentEntryLocalService.
+					fetchFragmentEntryByExternalReferenceCode(
+						fragmentExternalReferenceCode, groupId, false);
+
+			if (draftFragmentEntry != null) {
+				return _updateFragmentEntry(
+					fragment, draftFragmentEntry, groupId);
+			}
+
+			return _addFragmentEntry(
+				fragmentExternalReferenceCode, groupId, fragment);
+		}
 	}
 
 	private Fragment _addFragmentEntry(
@@ -184,6 +228,90 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		_fragmentEntryService.updateDraft(draftFragmentEntry);
 	}
 
+	private Fragment _updateFragmentEntry(
+			Fragment fragment, FragmentEntry fragmentEntry, long groupId)
+		throws Exception {
+
+		FragmentVersion approvedFragmentVersion = _getFragmentVersion(
+			fragment, FragmentVersion.Status.APPROVED);
+		FragmentVersion draftFragmentVersion = _getFragmentVersion(
+			fragment, FragmentVersion.Status.DRAFT);
+
+		if ((approvedFragmentVersion == null) &&
+			(draftFragmentVersion == null)) {
+
+			throw new RequiredFragmentEntryVersionException();
+		}
+
+		if ((approvedFragmentVersion == null) && fragmentEntry.isHead()) {
+			throw new UnsupportedUnpublishFragmentEntryOperationException();
+		}
+
+		long fragmentCollectionId = fragmentEntry.getFragmentCollectionId();
+
+		String fragmentSetExternalReferenceCode =
+			fragment.getFragmentSetExternalReferenceCode();
+
+		if (fragmentSetExternalReferenceCode != null) {
+			FragmentCollection fragmentCollection =
+				_fragmentCollectionService.
+					getFragmentCollectionByExternalReferenceCode(
+						fragmentSetExternalReferenceCode, groupId);
+
+			fragmentCollectionId = fragmentCollection.getFragmentCollectionId();
+		}
+
+		long fragmentEntryId = fragmentEntry.getFragmentEntryId();
+
+		if (fragmentEntry.isHead()) {
+			FragmentEntry draftFragmentEntry = _fragmentEntryService.getDraft(
+				fragmentEntry.getFragmentEntryId());
+
+			fragmentEntryId = draftFragmentEntry.getFragmentEntryId();
+		}
+
+		FragmentEntry updatedFragmentEntry;
+
+		if (approvedFragmentVersion != null) {
+			updatedFragmentEntry = _fragmentEntryService.updateFragmentEntry(
+				fragmentEntryId, fragmentCollectionId, fragment.getName(),
+				approvedFragmentVersion.getCss(),
+				approvedFragmentVersion.getHtml(),
+				approvedFragmentVersion.getJs(),
+				GetterUtil.getBoolean(fragment.getCacheable()),
+				approvedFragmentVersion.getConfiguration(), fragment.getIcon(),
+				fragmentEntry.getPreviewFileEntryId(),
+				GetterUtil.getBoolean(fragment.getReadOnly()),
+				fragmentEntry.getTypeOptions(),
+				WorkflowConstants.STATUS_APPROVED);
+
+			if (draftFragmentVersion != null) {
+				_updateDraft(
+					updatedFragmentEntry.getFragmentEntryId(),
+					draftFragmentVersion);
+			}
+		}
+		else {
+			updatedFragmentEntry = _fragmentEntryService.updateFragmentEntry(
+				fragmentEntryId, fragmentCollectionId, fragment.getName(),
+				draftFragmentVersion.getCss(), draftFragmentVersion.getHtml(),
+				draftFragmentVersion.getJs(),
+				GetterUtil.getBoolean(fragment.getCacheable()),
+				draftFragmentVersion.getConfiguration(), fragment.getIcon(),
+				fragmentEntry.getPreviewFileEntryId(),
+				GetterUtil.getBoolean(fragment.getReadOnly()),
+				fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_DRAFT);
+
+			updatedFragmentEntry = _fragmentEntryService.updateDraft(
+				updatedFragmentEntry);
+		}
+
+		return _toFragment(updatedFragmentEntry);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentResourceImpl.class);
+
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
@@ -194,6 +322,9 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		target = "(component.name=com.liferay.headless.admin.fragment.internal.dto.v1_0.converter.FragmentDTOConverter)"
 	)
 	private DTOConverter<FragmentEntry, Fragment> _fragmentDTOConverter;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

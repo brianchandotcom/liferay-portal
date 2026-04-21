@@ -59,7 +59,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		formData.add("password", PropsValues.DEFAULT_ADMIN_PASSWORD);
 		formData.add("username", _user.getEmailAddress());
 
-		tokenInvocationBuilder.header("Origin", _TEST_CORS_URI);
+		tokenInvocationBuilder.header("Origin", TEST_CORS_URI);
 
 		Response response = tokenInvocationBuilder.post(Entity.form(formData));
 
@@ -80,7 +80,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		Invocation.Builder invocationBuilder = authorize(
 			webTarget.request(), tokenString);
 
-		invocationBuilder.header("Origin", _TEST_CORS_URI);
+		invocationBuilder.header("Origin", TEST_CORS_URI);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -97,7 +97,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 			Response response = invocationBuilder.get();
 
 			Assert.assertEquals(
-				_TEST_CORS_URI,
+				TEST_CORS_URI,
 				response.getHeaderString("Access-Control-Allow-Origin"));
 		}
 	}
@@ -111,7 +111,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		Invocation.Builder invocationBuilder = authorize(
 			webTarget.request(), tokenString);
 
-		invocationBuilder.header("Origin", _TEST_CORS_URI);
+		invocationBuilder.header("Origin", TEST_CORS_URI);
 
 		Response response = invocationBuilder.get();
 
@@ -136,7 +136,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 		invocationBuilder.header(
 			"Access-Control-Request-Method", HttpMethod.OPTIONS);
-		invocationBuilder.header("Origin", _TEST_CORS_URI);
+		invocationBuilder.header("Origin", TEST_CORS_URI);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -153,7 +153,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 			Response response = invocationBuilder.options();
 
 			Assert.assertEquals(
-				_TEST_CORS_URI,
+				TEST_CORS_URI,
 				response.getHeaderString("Access-Control-Allow-Origin"));
 		}
 	}
@@ -162,8 +162,6 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 	protected BundleActivator getBundleActivator() {
 		return new CORSApplicationTestPreparatorBundleActivator();
 	}
-
-	private static final String _TEST_CORS_URI = "http://test-cors.com";
 
 	private User _user;
 

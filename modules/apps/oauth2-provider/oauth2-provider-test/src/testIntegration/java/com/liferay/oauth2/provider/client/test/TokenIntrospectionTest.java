@@ -65,7 +65,7 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 		formData.add("client_secret", "oauthTestApplicationSecret");
 		formData.add("token", token);
 
-		invocationBuilder.header("Origin", _TEST_CORS_URI);
+		invocationBuilder.header("Origin", TEST_CORS_URI);
 
 		Response response = invocationBuilder.post(Entity.form(formData));
 
@@ -125,8 +125,6 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 
 		return webTarget;
 	}
-
-	private static final String _TEST_CORS_URI = "http://test-cors.com";
 
 	private User _user;
 

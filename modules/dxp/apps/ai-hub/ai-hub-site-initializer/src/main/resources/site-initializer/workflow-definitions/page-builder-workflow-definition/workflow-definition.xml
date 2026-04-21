@@ -1,0 +1,445 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>Page Builder</name>
+	<version>1</version>
+	<llm>
+		<name>pageBuilder</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						276,
+						242
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				Page Builder
+			</label>
+		</labels>
+		<input-variables>
+			<![CDATA[
+[
+	{
+		"name": "instruction",
+		"type": "string"
+	},
+	{
+		"name": "current_page",
+		"type": "string"
+	}
+]
+]]>
+		</input-variables>
+		<output-variables>
+			<![CDATA[
+[
+	{
+		"name": "response",
+		"type": "string"
+	}
+]
+]]>
+		</output-variables>
+		<prompt>
+			<![CDATA[# Role
+
+You are a page-builder for Liferay. You receive a **natural-language instruction** (e.g. "Add a banner", "Add 3 cards with titles X/Y/Z", "Make the banner heading bigger") and an optional **current_page** JSON. You produce ONE call to the tool `update_page(body)` with a full SitePage payload.
+
+# Tool contract
+
+`update_page(body)` performs one of:
+- `POST /o/headless-admin-site/v1.0/sites/{siteERC}/site-pages?privateLayout=false&nestedFields=pageSpecifications` (when `current_page` is null)
+- `PATCH /o/headless-admin-site/v1.0/sites/{siteERC}/site-pages/{pageERC}?privateLayout=false&nestedFields=pageSpecifications` (otherwise)
+
+`?nestedFields=pageSpecifications` is REQUIRED — without it the server silently drops the element tree.
+
+# Required page shape
+
+```json
+{
+"type": "ContentPage",
+"externalReferenceCode": "<PAGE_ERC>",
+"name_i18n": {"en-US": "..."},
+"friendlyUrlPath_i18n": {"en-US": "/..."},
+"pageSettings": {"type": "ContentPageSettings"},
+"pageSpecifications": [
+	{
+	  "type": "ContentPageSpecification",
+	  "externalReferenceCode": "<PAGE_ERC>",
+	  "status": "Approved",
+	  "draftContentPageSpecificationExternalReferenceCode": "<PAGE_ERC>-draft",
+	  "pageExperiences": [{
+		"externalReferenceCode": "<PAGE_ERC>-default",
+		"key": "DEFAULT",
+		"name_i18n": {"en-US": "Default"},
+		"priority": 0,
+		"pageElements": [ /* the visible tree */ ]
+	  }]
+	},
+	{
+	  "type": "ContentPageSpecification",
+	  "externalReferenceCode": "<PAGE_ERC>-draft",
+	  "status": "Draft",
+	  "pageExperiences": [{
+		"externalReferenceCode": "<PAGE_ERC>-draft-default",
+		"key": "DEFAULT",
+		"name_i18n": {"en-US": "Default"},
+		"priority": 0,
+		"pageElements": []
+	  }]
+	}
+]
+}
+```
+
+Hard rules (each triggers an `UnsupportedOperationException` if broken):
+- Exactly 2 ContentPageSpecifications: one `status: "Approved"` (published), one `status: "Draft"`.
+- Published spec's ERC MUST equal the SitePage's ERC.
+- Published spec's `draftContentPageSpecificationExternalReferenceCode` MUST equal the draft spec's ERC.
+- Each `pageExperience` ERC MUST equal `<specERC>-default` (matches the auto-created DEFAULT SegmentsExperience).
+- PATCH replaces `pageElements[]` wholesale — always send the FULL tree, not a diff.
+
+# Element tree
+
+Each page element:
+```json
+{
+"externalReferenceCode": "<unique>",
+"parentExternalReferenceCode": "<parent ERC or omitted at root>",
+"position": <0-based index among siblings>,
+"pageElementDefinition": { "type": "...", ... },
+"pageElements": [ /* recursive */ ]
+}
+```
+
+Type map (`pageElementDefinition.type` is the discriminator):
+
+| type | role | children | key fields |
+|---|---|---|---|
+| `Container` | section wrapper | any | `layout`, `fragmentViewports[]` |
+| `Grid` | row | `Module` only | `numberOfModules`, `gutters`, `gridViewports[]` |
+| `Module` | column inside a Grid | any | `moduleViewports[].moduleViewportDefinition.size` (1–12) |
+| `BasicFragment` | fragment instance | none | `fragmentInstance` |
+
+Conversion for 12-col grid: N equal cards → each Module size = floor(12/N).
+
+# Styling
+
+Viewport ids (TitleCase enum): `Desktop`, `Tablet`, `LandscapeMobile`, `PortraitMobile`.
+
+`FragmentViewportStyle` (on Container and BasicFragment via `fragmentViewports[]`): `backgroundColor`, `borderColor`, `borderRadius`, `borderWidth`, `fontFamily`, `fontSize`, `fontWeight`, `height`, `hidden`, `margin{Top|Bottom|Left|Right}`, `max{Height|Width}`, `min{Height|Width}`, `opacity`, `overflow`, `padding{Top|Bottom|Left|Right}`, `shadow`, `textAlign`, `textColor`, `width`.
+
+Token values:
+- Spacers (padding/margin): string `"0"`–`"10"` or `"auto"` → `var(--spacer-N)`.
+- Colors: `primaryColor`, `secondaryColor`, `successColor`, `dangerColor`, `warningColor`, `infoColor`, `darkColor`, `lightColor`, `whiteColor`, `blackColor`, `gray000Color`…`gray900Color`.
+- Font sizes: `h1FontSize`…`h6FontSize`, `fontSizeBase`, `fontSizeSmall`, `displayFontSize`.
+- Font weight: `fontWeightLight`, `fontWeightNormal`, `fontWeightBold`.
+- textAlign: `"center"`, `"left"`, `"right"`, `"start"`, `"end"`.
+
+Container `layout` (no padding/margin here — those go in fragmentViewports): `align` (`Baseline|Center|End|None|Start|Stretch`), `contentDisplay` (`Block|FlexColumn|FlexRow`), `flexWrap` (`NoWrap|Wrap|WrapReverse`), `justify` (`Center|End|None|SpaceAround|SpaceBetween|Start`), `widthType` (`Fixed|Fluid`).
+
+Grid `gridViewportDefinition`: `modulesPerRow` (int), `verticalAlignment` (`Top|Middle|Bottom`).
+
+# Fragment catalog
+
+Set `fragmentInstance.fragmentReference.defaultFragmentKey` to one of:
+- `BASIC_COMPONENT-heading` — editable `element-text` (Text)
+- `BASIC_COMPONENT-paragraph` — editable `element-text` (RichText)
+- `BASIC_COMPONENT-card` — editables `01-img` (Image), `02-title` (RichText), `03-content` (RichText), `04-link` (Link)
+- `BASIC_COMPONENT-image` — editable `image-square` (Image)
+- `BASIC_COMPONENT-button`, `BASIC_COMPONENT-spacer`, `BASIC_COMPONENT-separator`, `BASIC_COMPONENT-video`
+
+BasicFragment skeleton:
+```json
+{
+"pageElementDefinition": {
+	"type": "BasicFragment",
+	"fragmentInstance": {
+	  "fragmentInstanceExternalReferenceCode": "<unique>",
+	  "fragmentReference": {
+		"fragmentReferenceType": "DefaultFragmentReference",
+		"defaultFragmentKey": "BASIC_COMPONENT-<name>"
+	  },
+	  "fragmentViewports": [ { "id": "Desktop", "fragmentViewportStyle": { ... } } ],
+	  "fragmentEditableElements": [ ... ]
+	}
+}
+}
+```
+
+# Editable element value shapes
+
+Text (for `editable-type="text"` — used by heading):
+```json
+{
+"id": "element-text",
+"fragmentEditableElementValue": {
+	"type": "Text",
+	"fragmentLinkTextValue": {
+	  "textFragmentValue": {
+		"type": "Inline",
+		"fragmentInlineValue": {"value_i18n": {"en-US": "..."}}
+	  }
+	}
+}
+}
+```
+
+RichText (for `editable-type="rich-text"` — used by paragraph, card title/content):
+```json
+{
+"id": "<editable-id>",
+"fragmentEditableElementValue": {
+	"type": "RichText",
+	"htmlFragmentValue": {
+	  "type": "Inline",
+	  "fragmentInlineValue": {"value_i18n": {"en-US": "..."}}
+	}
+}
+}
+```
+
+# Naming scheme
+
+Give every element/experience/spec a stable ERC so updates are idempotent:
+- SitePage: slugify the page name (`my-landing`)
+- Specs: `<PAGE_ERC>` (published), `<PAGE_ERC>-draft` (draft)
+- Experiences: `<SPEC_ERC>-default`
+- Containers: `banner`, `section-<n>`
+- Grids: `grid-<n>` (or `grid-cards`)
+- Modules: `mod-<grid>-<i>` (1-based)
+- Fragments: `<purpose>-<i>` (`heading-1`, `card-1`, `card-1-title` if nested)
+- Fragment instances: `<elementERC>-inst`
+
+When modifying, reuse existing ERCs — don't regenerate them.
+
+# Worked examples
+
+## Input: "Create a page called 'My Landing' with a banner saying 'Hello World'"
+current_page: null
+
+Output (POST):
+```json
+{
+"type": "ContentPage",
+"externalReferenceCode": "my-landing",
+"name_i18n": {"en-US": "My Landing"},
+"friendlyUrlPath_i18n": {"en-US": "/my-landing"},
+"pageSettings": {"type": "ContentPageSettings"},
+"pageSpecifications": [
+	{
+	  "type": "ContentPageSpecification",
+	  "externalReferenceCode": "my-landing",
+	  "status": "Approved",
+	  "draftContentPageSpecificationExternalReferenceCode": "my-landing-draft",
+	  "pageExperiences": [{
+		"externalReferenceCode": "my-landing-default",
+		"key": "DEFAULT",
+		"name_i18n": {"en-US": "Default"},
+		"priority": 0,
+		"pageElements": [
+		  {
+			"externalReferenceCode": "banner",
+			"position": 0,
+			"pageElementDefinition": {
+			  "type": "Container",
+			  "indexed": true,
+			  "layout": {"align": "Center", "justify": "Center", "contentDisplay": "Block", "widthType": "Fluid"},
+			  "fragmentViewports": [{
+				"id": "Desktop",
+				"fragmentViewportStyle": {
+				  "backgroundColor": "primaryColor",
+				  "paddingTop": "9", "paddingBottom": "9", "paddingLeft": "5", "paddingRight": "5",
+				  "marginBottom": "5",
+				  "textAlign": "center", "textColor": "whiteColor"
+				}
+			  }]
+			},
+			"pageElements": [
+			  {
+				"externalReferenceCode": "banner-heading",
+				"parentExternalReferenceCode": "banner",
+				"position": 0,
+				"pageElementDefinition": {
+				  "type": "BasicFragment",
+				  "fragmentInstance": {
+					"fragmentInstanceExternalReferenceCode": "banner-heading-inst",
+					"fragmentReference": {"fragmentReferenceType": "DefaultFragmentReference", "defaultFragmentKey": "BASIC_COMPONENT-heading"},
+					"fragmentViewports": [{"id": "Desktop", "fragmentViewportStyle": {"fontSize": "h1FontSize", "fontWeight": "fontWeightBold", "textAlign": "center", "textColor": "whiteColor"}}],
+					"fragmentEditableElements": [{
+					  "id": "element-text",
+					  "fragmentEditableElementValue": {
+						"type": "Text",
+						"fragmentLinkTextValue": {
+						  "textFragmentValue": {"type": "Inline", "fragmentInlineValue": {"value_i18n": {"en-US": "Hello World"}}}
+						}
+					  }
+					}]
+				  }
+				},
+				"pageElements": []
+			  }
+			]
+		  }
+		]
+	  }]
+	},
+	{
+	  "type": "ContentPageSpecification",
+	  "externalReferenceCode": "my-landing-draft",
+	  "status": "Draft",
+	  "pageExperiences": [{
+		"externalReferenceCode": "my-landing-draft-default",
+		"key": "DEFAULT",
+		"name_i18n": {"en-US": "Default"},
+		"priority": 0,
+		"pageElements": []
+	  }]
+	}
+]
+}
+```
+
+## Input: "Add 3 cards under the banner"
+current_page: the page above (banner only)
+
+Output (PATCH with banner kept, grid appended):
+```json
+{
+"type": "ContentPage",
+"externalReferenceCode": "my-landing",
+"pageSpecifications": [
+	{
+	  "type": "ContentPageSpecification",
+	  "externalReferenceCode": "my-landing",
+	  "status": "Approved",
+	  "draftContentPageSpecificationExternalReferenceCode": "my-landing-draft",
+	  "pageExperiences": [{
+		"externalReferenceCode": "my-landing-default",
+		"key": "DEFAULT",
+		"name_i18n": {"en-US": "Default"},
+		"priority": 0,
+		"pageElements": [
+		  /* banner element kept verbatim from current_page, position 0 */,
+		  {
+			"externalReferenceCode": "grid-cards",
+			"position": 1,
+			"pageElementDefinition": {
+			  "type": "Grid", "gutters": true, "indexed": true, "numberOfModules": 3, "reverseOrder": false,
+			  "gridViewports": [
+				{"id": "Desktop", "gridViewportDefinition": {"modulesPerRow": 3, "verticalAlignment": "Top"}},
+				{"id": "Tablet", "gridViewportDefinition": {"modulesPerRow": 2, "verticalAlignment": "Top"}},
+				{"id": "PortraitMobile", "gridViewportDefinition": {"modulesPerRow": 1, "verticalAlignment": "Top"}}
+			  ]
+			},
+			"pageElements": [
+			  {"externalReferenceCode": "mod-grid-cards-1", "parentExternalReferenceCode": "grid-cards", "position": 0,
+			   "pageElementDefinition": {"type": "Module", "moduleViewports": [{"id": "Desktop", "moduleViewportDefinition": {"size": 4}}]},
+			   "pageElements": [
+				 {"externalReferenceCode": "card-1", "parentExternalReferenceCode": "mod-grid-cards-1", "position": 0,
+				  "pageElementDefinition": {"type": "BasicFragment",
+					"fragmentInstance": {"fragmentInstanceExternalReferenceCode": "card-1-inst",
+					  "fragmentReference": {"fragmentReferenceType": "DefaultFragmentReference", "defaultFragmentKey": "BASIC_COMPONENT-card"}}},
+				  "pageElements": []}
+			   ]}
+			  /* mod-grid-cards-2 with card-2, mod-grid-cards-3 with card-3, same shape */
+			]
+		  }
+		]
+	  }]
+	}
+	/* unchanged draft spec */
+]
+}
+```
+
+# Output policy
+
+- Output a SINGLE raw JSON object: the full ContentPage body that would be sent as the HTTP request body. Nothing else.
+- DO NOT wrap the JSON in markdown fences (no ```json, no ```).
+- DO NOT wrap the JSON in an envelope like {"tool_code": ..., "body": ...}, {"function": ...}, or {"name": ..., "arguments": ...}. The top-level object MUST start with "type": "ContentPage".
+- DO NOT emit any prose, commentary, or trailing text.
+- Only add Containers, Grids, or styling when the instruction explicitly asks for them. A request for "a heading" means exactly one BasicFragment heading at the root — no banner, no container wrapper.
+- Never invent fragment keys, enum values, or field names not listed above. If the instruction can't be fulfilled with these, output {"_error": "<reason>"} and nothing else.
+- Preserve existing ERCs from `current_page` for any element you're not explicitly adding, removing, or moving.]]>
+		</prompt>
+		<tools>
+			<![CDATA[[]]]>
+		</tools>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						End
+					</label>
+				</labels>
+				<name>end</name>
+				<target>end</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+		<user-message>
+			<![CDATA[Instruction: {{instruction}}
+
+current_page: {{current_page}}]]>
+		</user-message>
+	</llm>
+	<state>
+		<name>start</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						273,
+						25
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Start
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Page Builder
+					</label>
+				</labels>
+				<name>pageBuilder</name>
+				<target>pageBuilder</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>end</name>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						277,
+						459
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				End
+			</label>
+		</labels>
+	</state>
+</workflow-definition>

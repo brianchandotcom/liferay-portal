@@ -445,6 +445,22 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		}
 	}
 
+	private void _setDateReview(
+		Document document, List<String> fields, SearchResult searchResult) {
+
+		if (!_isEmptyOrContains(fields, "dateReview")) {
+			return;
+		}
+
+		String reviewDate = document.getString(
+			com.liferay.portal.kernel.search.Field.REVIEW_DATE);
+
+		if (reviewDate != null) {
+			searchResult.setDateReview(
+				() -> _parseDateStringFieldValue(reviewDate));
+		}
+	}
+
 	private void _setDescription(
 		AssetRenderer<?> assetRenderer, List<String> fields,
 		SearchResult searchResult, Summary summary) {
@@ -643,6 +659,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 				embedded, entryClassName, entryClassPK, fields, searchResult);
 			_setDateCreated(document, fields, searchResult);
 			_setDateModified(document, fields, searchResult);
+			_setDateReview(document, fields, searchResult);
 			_setScore(fields, searchHit, searchResult);
 
 			searchResults.add(searchResult);

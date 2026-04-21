@@ -45,3 +45,18 @@ export function formatExpirationDate(
 			: expirationDate
 	);
 }
+
+export function formatExpirationDateLong(
+	expirationDate: string | Date
+): string | null {
+	return dateFormat(
+		{
+			dateStyle: 'long',
+			timeStyle: 'short',
+			timeZone: Liferay.ThemeDisplay.getTimeZone(),
+		},
+		expirationDate instanceof Date
+			? expirationDate.toISOString()
+			: expirationDate
+	);
+}

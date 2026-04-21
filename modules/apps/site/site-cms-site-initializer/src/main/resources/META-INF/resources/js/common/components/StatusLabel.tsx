@@ -8,7 +8,11 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {formatExpirationDate, isExpiringSoon} from '../utils/expirationStatus';
+import {
+	formatExpirationDate,
+	formatExpirationDateLong,
+	isExpiringSoon,
+} from '../utils/expirationStatus';
 
 declare type LabelDisplayType =
 	| 'secondary'
@@ -48,7 +52,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 	const expiringSoonText = Liferay.Language.get('expiring-soon');
 	const ariaLabel = sub(
 		Liferay.Language.get('expiring-soon.expires-on-x'),
-		formattedDate ?? ''
+		formatExpirationDateLong(expirationDate!) ?? ''
 	);
 
 	return (

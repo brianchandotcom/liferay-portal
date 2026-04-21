@@ -10,6 +10,8 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentVersion;
+import com.liferay.headless.admin.fragment.client.pagination.Page;
+import com.liferay.headless.admin.fragment.client.pagination.Pagination;
 import com.liferay.headless.admin.fragment.client.problem.Problem;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.language.Language;
@@ -63,6 +65,28 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_testGetSiteFragmentApprovedAndDraft();
 		_testGetSiteFragmentApproved();
 		_testGetSiteFragmentDraft();
+	}
+
+	@Override
+	@Test
+	public void testGetSiteFragmentSetFragmentsPage() throws Exception {
+		super.testGetSiteFragmentSetFragmentsPage();
+
+		Fragment approvedAndDraftFragment = _postFragment(
+			_randomFragment(true, true));
+		Fragment approvedFragment = _postFragment(_randomFragment(true, false));
+		Fragment draftFragment = _postFragment(_randomFragment(false, true));
+
+		Page<Fragment> page = fragmentResource.getSiteFragmentSetFragmentsPage(
+			testGroup.getExternalReferenceCode(),
+			_fragmentCollection.getExternalReferenceCode(),
+			Pagination.of(1, 10));
+
+		List<Fragment> items = (List<Fragment>)page.getItems();
+
+		assertContains(approvedAndDraftFragment, items);
+		assertContains(approvedFragment, items);
+		assertContains(draftFragment, items);
 	}
 
 	@Override
@@ -141,6 +165,23 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	@Override
 	protected Fragment testGetSiteFragment_addFragment() throws Exception {
 		return _postFragment(randomFragment());
+	}
+
+	@Override
+	protected Fragment testGetSiteFragmentSetFragmentsPage_addFragment(
+			String siteExternalReferenceCode,
+			String fragmentSetExternalReferenceCode, Fragment fragment)
+		throws Exception {
+
+		return _postFragment(fragment);
+	}
+
+	@Override
+	protected String
+			testGetSiteFragmentSetFragmentsPage_getFragmentSetExternalReferenceCode()
+		throws Exception {
+
+		return _fragmentCollection.getExternalReferenceCode();
 	}
 
 	@Override

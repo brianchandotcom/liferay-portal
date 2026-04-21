@@ -137,33 +137,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-6252. Check that shipment information set at product level are overriden by the shipment info at cpInstance level"
-	@ignore = "true"
-	@priority = 3
-	test AssertProductShipmentInfoOverrideCPInstanceShipmentInfo {
-
-		// TODO COMMERCE-6252 AssertProductShipmentInfoOverrideCPInstanceShipmentInfo Pending Implementation
-
-	}
-
-	@description = "This is a test for COMMERCE-6253. Shipment dimensions should be correctly calculated"
-	@ignore = "true"
-	@priority = 3
-	test AssertShipmentDimensionsIsCorrectlyCalculated {
-
-		// TODO COMMERCE-6253 AssertShipmentDimensionsCorrectlyCalculated Pending Implementation
-
-	}
-
-	@description = "This is a test for COMMERCE-6254. Shipment weight should be correctly calculated"
-	@ignore = "true"
-	@priority = 3
-	test AssertShipmentWeightIsCorrectlyCalculated {
-
-		// TODO COMMERCE-6254 AssertShipmentWeightIsCorrectlyCalculated Pending Implementation
-
-	}
-
 	@description = "This is a test for COMMERCE-9459. CanAddShipmentTrackingURL"
 	@priority = 3
 	test CanAddShipmentTrackingURL {
@@ -1274,15 +1247,6 @@ definition {
 		Click(
 			key_index = "Deliver",
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-	}
-
-	@description = "This is a test for COMMERCE-6255. Filter, Sort shipment from shipment UI"
-	@ignore = "true"
-	@priority = 3
-	test FilterAndSortShipments {
-
-		// TODO COMMERCE-6255 FilterAndSortShipments Pending Implementation
-
 	}
 
 	@description = "This is a test for COMMERCE-6240. Remove shipment items from a shipment"

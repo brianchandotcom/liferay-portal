@@ -39,6 +39,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly orderNote: (note: string) => Promise<Locator>;
 	readonly orderNotesLink: Locator;
 	readonly orderNotesTextArea: Locator;
+	readonly orderStatusProcessing: Locator;
 	readonly orderSummaryFrame: FrameLocator;
 	readonly orderSummaryLink: Locator;
 	readonly orderSummarySaveButton: Locator;
@@ -139,6 +140,9 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 			name: 'Questions and Answers',
 		});
 		this.orderNotesTextArea = page.getByPlaceholder('Type your note here.');
+		this.orderStatusProcessing = page.getByText('Processing', {
+			exact: true,
+		});
 		this.orderSummaryFrame = page.frameLocator(
 			'iframe[title="Order Summary"]'
 		);

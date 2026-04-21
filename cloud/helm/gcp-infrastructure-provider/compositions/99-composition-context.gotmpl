@@ -14,14 +14,12 @@ spec:
                 namespace: {{ $namespace }}
             data:
                 variables: |
-                    activeInstanceConnectionName: {{ $activeInstanceConnectionName | toJson }}
                     backup: {{ $backup | toJson }}
                     backupTargetLabels: {{ $backupTargetLabels | toJson }}
                     baseName: {{ $baseName | toJson }}
                     cmkEnabled: {{ $cmkEnabled | toJson }}
                     cmkKeyName: {{ $cmkKeyName | toJson }}
                     databaseIamUser: {{ $databaseIamUser | toJson }}
-                    databaseInstanceName: {{ $databaseInstanceName | toJson }}
                     databaseName: {{ $databaseName | toJson }}
                     databasePort: {{ $databasePort | toJson }}
                     databaseSpec: {{ $databaseSpec | toJson }}
@@ -33,7 +31,6 @@ spec:
                     hash: {{ $hash | toJson }}
                     isReady: {{ $isReady | toJson }}
                     isSearchReady: {{ $isSearchReady | toJson }}
-                    jobName: {{ $jobName | toJson }}
                     labels: {{ $labels | toJson }}
                     managementPolicies: {{ $managementPolicies | toJson }}
                     managementPoliciesOnce: {{ $managementPoliciesOnce | toJson }}

@@ -8,7 +8,11 @@ metadata:
     name: {{ .Release.Name }}
     namespace: {{ .Release.Namespace }}
 spec:
-    backup: {{ .Values.backup | toYaml | nindent 8 }}
+    backup:
+        enabled: {{ .Values.backup.enabled }}
+        region: {{ .Values.backup.region | quote }}
+        retentionDays: {{ .Values.backup.retentionDays }}
+        storageClass: {{ .Values.backup.storageClass | quote }}
     cmk: {{ .Values.cmk | toYaml | nindent 8 }}
     commonTags:
         environment_id: {{ .Values.environmentId }}

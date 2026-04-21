@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -59,7 +60,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		formData.add("password", PropsValues.DEFAULT_ADMIN_PASSWORD);
 		formData.add("username", _user.getEmailAddress());
 
-		tokenInvocationBuilder.header("Origin", TEST_CORS_URI);
+		tokenInvocationBuilder.header("Origin", RandomTestUtil.randomString());
 
 		Response response = tokenInvocationBuilder.post(Entity.form(formData));
 
@@ -80,7 +81,9 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		Invocation.Builder invocationBuilder = authorize(
 			webTarget.request(), tokenString);
 
-		invocationBuilder.header("Origin", TEST_CORS_URI);
+		String uri = RandomTestUtil.randomString();
+
+		invocationBuilder.header("Origin", uri);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -97,8 +100,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 			Response response = invocationBuilder.get();
 
 			Assert.assertEquals(
-				TEST_CORS_URI,
-				response.getHeaderString("Access-Control-Allow-Origin"));
+				uri, response.getHeaderString("Access-Control-Allow-Origin"));
 		}
 	}
 
@@ -111,7 +113,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		Invocation.Builder invocationBuilder = authorize(
 			webTarget.request(), tokenString);
 
-		invocationBuilder.header("Origin", TEST_CORS_URI);
+		invocationBuilder.header("Origin", RandomTestUtil.randomString());
 
 		Response response = invocationBuilder.get();
 
@@ -136,7 +138,10 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 		invocationBuilder.header(
 			"Access-Control-Request-Method", HttpMethod.OPTIONS);
-		invocationBuilder.header("Origin", TEST_CORS_URI);
+
+		String uri = RandomTestUtil.randomString();
+
+		invocationBuilder.header("Origin", uri);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -153,8 +158,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 			Response response = invocationBuilder.options();
 
 			Assert.assertEquals(
-				TEST_CORS_URI,
-				response.getHeaderString("Access-Control-Allow-Origin"));
+				uri, response.getHeaderString("Access-Control-Allow-Origin"));
 		}
 	}
 

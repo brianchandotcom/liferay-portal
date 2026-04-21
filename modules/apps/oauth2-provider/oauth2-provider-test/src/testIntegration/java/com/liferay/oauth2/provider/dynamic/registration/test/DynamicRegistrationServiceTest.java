@@ -170,7 +170,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		invocationBuilder = authorize(
 			registerWebTarget.request(), _getToken(oAuth2Application));
 
-		invocationBuilder.header("Origin", TEST_CORS_URI);
+		invocationBuilder.header("Origin", RandomTestUtil.randomString());
 
 		response = invocationBuilder.get();
 

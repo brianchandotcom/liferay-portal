@@ -10,6 +10,7 @@ import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -65,7 +66,7 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 		formData.add("client_secret", "oauthTestApplicationSecret");
 		formData.add("token", token);
 
-		invocationBuilder.header("Origin", TEST_CORS_URI);
+		invocationBuilder.header("Origin", RandomTestUtil.randomString());
 
 		Response response = invocationBuilder.post(Entity.form(formData));
 

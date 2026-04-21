@@ -690,8 +690,6 @@ public abstract class BaseClientTestCase {
 			oAuth2Authorization);
 	}
 
-	protected static final String TEST_CORS_URI = "http://test-cors.com";
-
 	private static Set<String> _originalRestrictedHeaderSet;
 	private static final Pattern _pAuthTokenPattern = Pattern.compile(
 		"authToken:\\s*(['\"])(((?!\\1).)*)\\1,");

@@ -88,6 +88,15 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 				DepotRolesConstants.ASSET_LIBRARY_MEMBER,
 				List.of(ActionKeys.VIEW));
 
+			_assertRoleResourcePermissions(
+				company.getCompanyId(), _ASSET_TAGS_RESOURCE_NAME,
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+				List.of(ActionKeys.MANAGE_TAG));
+			_assertRoleResourcePermissions(
+				company.getCompanyId(), _ASSET_TAGS_RESOURCE_NAME,
+				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+				List.of(ActionKeys.MANAGE_TAG));
+
 			for (String name : DepotRolesConstants.DEPOT_ROLE_NAMES) {
 				_assertRoleResourcePermissions(
 					company.getCompanyId(), Role.class.getName(), name,
@@ -147,7 +156,9 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 		Role role = _roleLocalService.getRole(companyId, roleName);
 
 		for (String actionId : actionIds) {
-			if (StringUtil.equals(resourceName, DepotEntry.class.getName())) {
+			if (StringUtil.equals(resourceName, DepotEntry.class.getName()) ||
+				StringUtil.equals(resourceName, _ASSET_TAGS_RESOURCE_NAME)) {
+
 				if (Objects.equals(actionId, ActionKeys.ASSIGN_USER_ROLES)) {
 					continue;
 				}
@@ -168,6 +179,9 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 					administratorRole.getRoleId(), actionId));
 		}
 	}
+
+	private static final String _ASSET_TAGS_RESOURCE_NAME =
+		"com.liferay.asset.tags";
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

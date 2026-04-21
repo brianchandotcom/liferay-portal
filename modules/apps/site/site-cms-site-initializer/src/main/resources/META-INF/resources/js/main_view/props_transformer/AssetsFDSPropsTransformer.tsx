@@ -291,7 +291,14 @@ export default function AssetsFDSPropsTransformer({
 							return '--';
 						}
 
-						return StatusLabel(value);
+						return (
+							<StatusLabel
+								expirationDate={
+									itemData?.embedded?.expirationDate
+								}
+								label={value?.label}
+							/>
+						);
 					},
 					name: 'statusTableCellRenderer',
 					type: 'internal',

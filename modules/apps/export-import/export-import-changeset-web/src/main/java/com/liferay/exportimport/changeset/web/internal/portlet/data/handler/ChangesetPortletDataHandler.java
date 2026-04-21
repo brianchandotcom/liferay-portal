@@ -15,6 +15,7 @@ import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.exportimport.changeset.Changeset;
 import com.liferay.exportimport.changeset.ChangesetManager;
 import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.exception.ExportImportRuntimeException;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
@@ -100,6 +101,11 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
+	}
+
+	@Override
+	public String getSectionKey() {
+		return ExportImportConstants.SECTION_KEY_OTHERS;
 	}
 
 	@Activate

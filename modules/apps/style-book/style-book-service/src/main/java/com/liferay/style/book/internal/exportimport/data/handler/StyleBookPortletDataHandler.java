@@ -5,6 +5,7 @@
 
 package com.liferay.style.book.internal.exportimport.data.handler;
 
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -40,6 +41,11 @@ import org.osgi.service.component.annotations.Reference;
 public class StyleBookPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "style-books";
+
+	@Override
+	public String getSectionKey() {
+		return ExportImportConstants.SECTION_KEY_DESIGN;
+	}
 
 	@Override
 	public boolean isConfigurationEnabled() {

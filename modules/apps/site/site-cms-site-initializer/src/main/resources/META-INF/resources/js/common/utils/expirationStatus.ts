@@ -25,7 +25,7 @@ export function isExpiringSoon(
 
 	const diff = expirationTime - Date.now();
 
-	return diff > 0 && diff <= EXPIRING_SOON_THRESHOLD_DAYS * MS_PER_DAY;
+	return diff <= EXPIRING_SOON_THRESHOLD_DAYS * MS_PER_DAY;
 }
 
 export function formatExpirationDate(

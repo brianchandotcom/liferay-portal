@@ -2,7 +2,7 @@
 
 until curl \
 	--fail \
-	--header "Authorization: Bearer ${GATEWAY_TOKEN}" \
+	--header "Authorization: ${GATEWAY_TOKEN}" \
 	--max-time 5 \
 	--output /dev/null \
 	--silent \

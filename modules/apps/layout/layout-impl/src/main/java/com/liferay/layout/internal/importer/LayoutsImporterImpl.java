@@ -1825,7 +1825,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				if (previewFileEntryId > 0) {
 					_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 						layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-						previewFileEntryId);
+						previewFileEntryId, serviceContext);
 				}
 
 				layoutsImporterResultEntries.add(

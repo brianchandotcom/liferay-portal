@@ -10,6 +10,7 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import jakarta.portlet.ActionRequest;
@@ -47,7 +48,9 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommand
 			(layoutUtilityPageEntry.getPreviewFileEntryId() > 0)) {
 
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
-				layoutUtilityPageEntryId, 0);
+				layoutUtilityPageEntryId, 0,
+				ServiceContextFactory.getInstance(
+					LayoutUtilityPageEntry.class.getName(), actionRequest));
 		}
 	}
 

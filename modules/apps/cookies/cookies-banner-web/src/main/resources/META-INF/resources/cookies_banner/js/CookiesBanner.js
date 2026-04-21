@@ -67,11 +67,7 @@ export default function ({
 			}
 		);
 
-		if (
-			Liferay.FeatureFlags['LPD-75032'] &&
-			Liferay.ThemeDisplay.isSignedIn() &&
-			hasGuestUserConfigCookie()
-		) {
+		if (Liferay.ThemeDisplay.isSignedIn() && hasGuestUserConfigCookie()) {
 			hasPreviouslyStoredConsent().then((hasPreviouslyStoredConsent) => {
 				if (hasPreviouslyStoredConsent) {
 					removeAllCookies(

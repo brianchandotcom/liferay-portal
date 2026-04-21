@@ -182,7 +182,7 @@ describe('ItemSelectorModal component', () => {
 
 		const modal = await findByRole('dialog');
 
-		const newItemLink = await within(modal).findByText('new');
+		const newItemLink = await within(modal).findByText('add-new-item');
 
 		expect(newItemLink).toBeInTheDocument();
 

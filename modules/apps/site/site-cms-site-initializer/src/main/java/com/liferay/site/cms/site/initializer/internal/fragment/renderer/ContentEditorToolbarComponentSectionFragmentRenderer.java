@@ -114,6 +114,14 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 		return hashMapWrapper.put(
 			"displayDate",
 			() -> {
+				String restoredDisplayDate =
+					InfoItemUtil.getRestoredInfoFieldValue(
+						httpServletRequest, "ObjectEntry_displayDate");
+
+				if (restoredDisplayDate != null) {
+					return restoredDisplayDate;
+				}
+
 				Date displayDate = objectEntry.getDisplayDate();
 
 				if (displayDate == null) {

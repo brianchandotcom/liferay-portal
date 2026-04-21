@@ -491,8 +491,7 @@ public class CustomFDSSerializer
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
 
-		return GetterUtil.getBoolean(
-			properties.get("showSearch"), true);
+		return GetterUtil.getBoolean(properties.get("showSearch"), true);
 	}
 
 	@Override

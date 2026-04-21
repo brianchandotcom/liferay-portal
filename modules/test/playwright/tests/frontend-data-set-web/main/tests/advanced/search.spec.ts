@@ -6,13 +6,13 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import {dataSetManagerApiHelpersTest} from '../../../../../fixtures/dataSetManagerApiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../utils/getRandomString';
 import {waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
-import {dataSetManagerApiHelpersTest} from '../../../../../fixtures/dataSetManagerApiHelpersTest';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -259,7 +259,7 @@ test('Search Bar is shown/hidden according to FDS configuration', async ({
 		await expect(fdsSamplePage.managementToolbar.searchInput).toBeVisible();
 	});
 
-	await test.step('Go to FDS configuration, import an Advanced FDS and set "Show Search" to false', async () => {		
+	await test.step('Go to FDS configuration, import an Advanced FDS and set "Show Search" to false', async () => {
 		await dataSetManagerApiHelpers.updateDataSet({
 			erc: 'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-advanced',
 			showSearch: false,
@@ -269,7 +269,9 @@ test('Search Bar is shown/hidden according to FDS configuration', async ({
 	await test.step('Go back to the FDS page and check that the search bar is not shown anymore', async () => {
 		await page.reload();
 
-		await expect(fdsSamplePage.managementToolbar.searchInput).not.toBeVisible();
+		await expect(
+			fdsSamplePage.managementToolbar.searchInput
+		).not.toBeVisible();
 	});
 
 	await test.step('Reset FDS configuration', async () => {

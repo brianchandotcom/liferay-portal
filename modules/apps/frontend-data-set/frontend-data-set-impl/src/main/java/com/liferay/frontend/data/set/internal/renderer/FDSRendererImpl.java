@@ -243,7 +243,7 @@ public class FDSRendererImpl implements FDSRenderer {
 				).put(
 					"showSearch",
 					() -> fdsSerializer.serializeShowSearch(
-							fdsName, httpServletRequest)
+						fdsName, httpServletRequest)
 				).put(
 					"snapshots",
 					() -> {

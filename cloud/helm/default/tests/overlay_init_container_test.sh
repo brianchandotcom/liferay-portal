@@ -3,108 +3,87 @@
 set -o errexit
 set -o nounset
 
+CHART_DIRECTORY="$(cd "$(dirname "${0}")/.." && pwd)"
 pass=0
 fail=0
 
 function main {
-	local chart_directory
+	_run_test _test_init_container_absent_when_overlay_is_disabled
+	_run_test _test_init_container_present_when_overlay_is_enabled
+	_run_test _test_uses_rclone_image_by_default
+	_run_test _test_uses_overridden_aws_cli_image
+	_run_test _test_volume_mount_name_tracks_overlay_init_scripts_volume_name
+	_run_test _test_multiple_copy_blocks_each_generate_a_sync_command
 
-	chart_directory="$(cd "$(dirname "${0}")/.." && pwd)"
+	echo ""
+	echo "Results: ${pass} passed, ${fail} failed."
 
-	local disabled_output
+	[ "${fail}" -eq 0 ]
+}
 
-	disabled_output=$(helm template test "${chart_directory}" --set overlay.enabled=false)
+function _test_init_container_absent_when_overlay_is_disabled {
+	! helm template test "${CHART_DIRECTORY}" \
+		--set overlay.enabled=false \
+		| grep -q "name: liferay-overlay"
+}
 
-	if echo "${disabled_output}" | grep -q "name: liferay-overlay"
-	then
-		_fail "liferay-overlay init container rendered when overlay is disabled"
-	else
-		_pass "liferay-overlay init container absent when overlay is disabled"
-	fi
-
-	local enabled_output
-
-	enabled_output=$(helm template test "${chart_directory}" \
+function _test_init_container_present_when_overlay_is_enabled {
+	helm template test "${CHART_DIRECTORY}" \
 		--set overlay.enabled=true \
-		--set 'overlay.copy[0].into=/dest')
+		--set 'overlay.copy[0].into=/dest' \
+		| grep -q "name: liferay-overlay"
+}
 
-	if echo "${enabled_output}" | grep -q "name: liferay-overlay"
-	then
-		_pass "liferay-overlay init container present when overlay is enabled"
-	else
-		_fail "liferay-overlay init container not rendered when overlay is enabled"
-	fi
+function _test_uses_rclone_image_by_default {
+	helm template test "${CHART_DIRECTORY}" \
+		--set overlay.enabled=true \
+		--set 'overlay.copy[0].into=/dest' \
+		| grep -q "image: rclone/rclone:1.66"
+}
 
-	if echo "${enabled_output}" | grep -q "image: rclone/rclone:1.66"
-	then
-		_pass "liferay-overlay uses rclone image by default"
-	else
-		_fail "liferay-overlay does not use expected rclone image"
-	fi
-
-	local aws_output
-
-	aws_output=$(helm template test "${chart_directory}" \
+function _test_uses_overridden_aws_cli_image {
+	helm template test "${CHART_DIRECTORY}" \
 		--set overlay.enabled=true \
 		--set 'overlay.copy[0].into=/dest' \
 		--set overlay.image.repository=amazon/aws-cli \
-		--set overlay.image.tag=2.27.63)
+		--set overlay.image.tag=2.27.63 \
+		| grep -q "image: amazon/aws-cli:2.27.63"
+}
 
-	if echo "${aws_output}" | grep -q "image: amazon/aws-cli:2.27.63"
-	then
-		_pass "liferay-overlay uses overridden aws-cli image"
-	else
-		_fail "liferay-overlay does not use overridden aws-cli image"
-	fi
-
-	local custom_name_output
-
-	custom_name_output=$(helm template test "${chart_directory}" \
+function _test_volume_mount_name_tracks_overlay_init_scripts_volume_name {
+	helm template test "${CHART_DIRECTORY}" \
 		--set overlay.enabled=true \
 		--set 'overlay.copy[0].into=/dest' \
-		--set overlay.initScriptsVolumeName=custom-init-scripts)
+		--set overlay.initScriptsVolumeName=custom-init-scripts \
+		| grep -q "name: custom-init-scripts"
+}
 
-	if echo "${custom_name_output}" | grep -q "name: custom-init-scripts"
-	then
-		_pass "volumeMount name tracks overlay.initScriptsVolumeName"
-	else
-		_fail "volumeMount name does not reflect overlay.initScriptsVolumeName"
-	fi
+function _test_multiple_copy_blocks_each_generate_a_sync_command {
+	local output
 
-	local multi_copy_output
-
-	multi_copy_output=$(helm template test "${chart_directory}" \
+	output=$(helm template test "${CHART_DIRECTORY}" \
 		--set overlay.enabled=true \
 		--set 'overlay.copy[0].from=overlay-build-1/osgi/*' \
 		--set 'overlay.copy[0].into=osgi/' \
 		--set 'overlay.copy[1].from=overlay-build-1/configs/*.config' \
 		--set 'overlay.copy[1].into=osgi/configs/')
 
-	if echo "${multi_copy_output}" | grep -q '"osgi/"' \
-		&& echo "${multi_copy_output}" | grep -q '"osgi/configs/"'
+	echo "${output}" | grep -q '"osgi/"' \
+		&& echo "${output}" | grep -q '"osgi/configs/"'
+}
+
+function _run_test {
+	local description="${1#_test_}"
+	description="${description//_/ }"
+
+	if "${1}"
 	then
-		_pass "multiple copy blocks each generate a sync command"
+		echo "PASS: ${description}."
+		pass=$((pass + 1))
 	else
-		_fail "multiple copy blocks do not each generate a sync command"
+		echo "FAIL: ${description}."
+		fail=$((fail + 1))
 	fi
-
-	echo ""
-	echo "Results: ${pass} passed, ${fail} failed."
-
-	if [ "${fail}" -gt 0 ]
-	then
-		exit 1
-	fi
-}
-
-function _fail {
-	echo "FAIL: ${1}."
-	fail=$((fail + 1))
-}
-
-function _pass {
-	echo "PASS: ${1}."
-	pass=$((pass + 1))
 }
 
 main "${@}"

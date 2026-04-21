@@ -174,7 +174,6 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 		_setUpCMSContext();
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_depotEntry.getGroupId());
-
 		byte[] bytes = FileUtil.getBytes(getClass(), "dependencies/test.pdf");
 
 		_dlFileEntry = _dlFileEntryLocalService.addFileEntry(

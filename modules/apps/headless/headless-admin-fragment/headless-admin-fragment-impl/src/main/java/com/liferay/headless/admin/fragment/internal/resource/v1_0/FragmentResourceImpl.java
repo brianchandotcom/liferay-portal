@@ -44,6 +44,40 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 
 	@Override
+	public Fragment getSiteFragment(
+			String siteExternalReferenceCode,
+			String fragmentExternalReferenceCode)
+		throws Exception {
+
+		EnabledUtil.checkEnabled(contextCompany);
+
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		try {
+			return _toFragment(
+				_fragmentEntryService.getFragmentEntryByExternalReferenceCode(
+					fragmentExternalReferenceCode, groupId));
+		}
+		catch (NoSuchModelException noSuchModelException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchModelException);
+			}
+
+			FragmentEntry draftFragmentEntry =
+				_fragmentEntryLocalService.
+					fetchFragmentEntryByExternalReferenceCode(
+						fragmentExternalReferenceCode, groupId, false);
+
+			if (draftFragmentEntry == null) {
+				throw noSuchModelException;
+			}
+
+			return _toFragment(draftFragmentEntry);
+		}
+	}
+
+	@Override
 	public Fragment postSiteFragmentSetFragment(
 			String siteExternalReferenceCode,
 			String fragmentSetExternalReferenceCode, Fragment fragment)

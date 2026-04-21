@@ -495,7 +495,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		for (Edge edge : resolvedEdges) {
 			Collection<Node> children = nodeMap.computeIfAbsent(
-				edge.getFromNode(), node -> new ArrayList<>());
+				edge.getFromNode(), node -> new LinkedHashSet<>());
 
 			Node toNode = edge.getToNode();
 

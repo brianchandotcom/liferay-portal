@@ -112,15 +112,12 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				getFragmentCollectionByExternalReferenceCode(
 					fragmentSetExternalReferenceCode, groupId);
 
-		long fragmentCollectionId =
-			fragmentCollection.getFragmentCollectionId();
-
 		return Page.of(
 			transform(
 				_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
-					groupId, fragmentCollectionId, WorkflowConstants.STATUS_ANY,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
+					groupId, fragmentCollection.getFragmentCollectionId(),
+					WorkflowConstants.STATUS_ANY, pagination.getStartPosition(),
+					pagination.getEndPosition(), null),
 				object -> {
 					if (object instanceof FragmentEntry) {
 						return _toFragment((FragmentEntry)object);
@@ -131,7 +128,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			pagination,
 			_fragmentEntryService.
 				getFragmentCompositionsAndFragmentEntriesCount(
-					groupId, fragmentCollectionId,
+					groupId, fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_ANY));
 	}
 
@@ -203,17 +200,16 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 						"create-a-new-fragment"));
 		}
 
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionService.
-				getFragmentCollectionByExternalReferenceCode(
-					fragment.getFragmentSetExternalReferenceCode(), groupId);
+		FragmentEntry fragmentEntry = null;
 
 		FragmentVersion approvedFragmentVersion = _getFragmentVersion(
 			fragment, FragmentVersion.Status.APPROVED);
 		FragmentVersion draftFragmentVersion = _getFragmentVersion(
 			fragment, FragmentVersion.Status.DRAFT);
-
-		FragmentEntry fragmentEntry;
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.
+				getFragmentCollectionByExternalReferenceCode(
+					fragment.getFragmentSetExternalReferenceCode(), groupId);
 
 		if (approvedFragmentVersion != null) {
 			fragmentEntry = _fragmentEntryService.addFragmentEntry(
@@ -339,6 +335,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			throw new UnsupportedUnpublishFragmentEntryOperationException();
 		}
 
+		FragmentEntry updatedFragmentEntry = null;
+
 		long fragmentCollectionId = fragmentEntry.getFragmentCollectionId();
 
 		String fragmentSetExternalReferenceCode =
@@ -361,8 +359,6 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 
 			fragmentEntryId = draftFragmentEntry.getFragmentEntryId();
 		}
-
-		FragmentEntry updatedFragmentEntry;
 
 		if (approvedFragmentVersion != null) {
 			updatedFragmentEntry = _fragmentEntryService.updateFragmentEntry(

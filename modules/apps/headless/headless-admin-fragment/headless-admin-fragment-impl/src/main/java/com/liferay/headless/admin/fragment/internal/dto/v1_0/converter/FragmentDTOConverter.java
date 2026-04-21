@@ -52,9 +52,8 @@ public class FragmentDTOConverter
 			throw new IllegalStateException(
 				StringBundler.concat(
 					"Fragment entry draft with ID ",
-					fragmentEntry.getFragmentEntryId(),
-					" references a head with ID ", fragmentEntry.getHeadId(),
-					" that no longer exists"));
+					fragmentEntry.getFragmentEntryId(), " references head ID ",
+					fragmentEntry.getHeadId(), " that no longer exists"));
 		}
 
 		return _toFragment(draftOnlyOrPublishedFragmentEntry);

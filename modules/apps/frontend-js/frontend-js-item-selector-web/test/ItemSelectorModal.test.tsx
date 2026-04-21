@@ -11,7 +11,14 @@ import userEvent from '@testing-library/user-event';
 import {fetch, loadClientExtensions, sub} from 'frontend-js-web';
 import React from 'react';
 
-import {ItemSelectorModal} from '../src/main/resources/META-INF/resources';
+import {
+	FilesUploaderComponent,
+	ItemSelectorModal,
+} from '../src/main/resources/META-INF/resources';
+
+const MockFilesUploaderComponent: FilesUploaderComponent = () => (
+	<div data-testid="mockFilesUploader" />
+);
 
 type TestItem = {
 	itemId: number;
@@ -63,11 +70,13 @@ const mockedSub = sub as jest.Mock;
 const ItemSelectorModalWrapper = ({
 	createItemURL,
 	defaultOpen,
+	filesUploaderComponent,
 	onItemsChange,
 	selectedItems,
 }: {
 	createItemURL?: string;
 	defaultOpen: boolean;
+	filesUploaderComponent?: FilesUploaderComponent;
 	onItemsChange: (items: TestItem[]) => void;
 	selectedItems: TestItem[];
 }) => {
@@ -99,6 +108,7 @@ const ItemSelectorModalWrapper = ({
 						} as IView,
 					],
 				}}
+				filesUploaderComponent={filesUploaderComponent}
 				itemTypeLabel="Space"
 				items={selectedItems}
 				locator={{
@@ -524,5 +534,30 @@ describe('ItemSelectorModal component', () => {
 			Liferay.Language.get('x-selected'),
 			mockFirstItem.name
 		);
+	});
+
+	it('renders Upload Files button if drag and drop is allowed', async () => {
+		const user = userEvent.setup();
+
+		const {findByRole, findByTestId} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				filesUploaderComponent={MockFilesUploaderComponent}
+				onItemsChange={jest.fn}
+				selectedItems={[]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
+		const uploadFilesButton = await within(modal).findByRole('button', {
+			name: 'upload-files',
+		});
+
+		expect(uploadFilesButton).toBeInTheDocument();
+
+		user.click(uploadFilesButton);
+
+		expect(await findByTestId('mockFilesUploader')).toBeInTheDocument();
 	});
 });

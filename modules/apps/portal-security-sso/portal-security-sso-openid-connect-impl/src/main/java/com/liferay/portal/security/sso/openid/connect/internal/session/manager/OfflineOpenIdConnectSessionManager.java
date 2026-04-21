@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -255,7 +254,7 @@ public class OfflineOpenIdConnectSessionManager {
 					getOpenIdConnectProviderConfigurationProperties(
 						oAuthClientEntry.getAuthServerWellKnownURI(),
 						oAuthClientEntry.getClientId(),
-						CompanyThreadLocal.getCompanyId(), _configurationAdmin,
+						oAuthClientEntry.getCompanyId(), _configurationAdmin,
 						String.valueOf(oidcProviderMetadata.getIssuer()),
 						String.valueOf(
 							oidcProviderMetadata.getTokenEndpointURI()));

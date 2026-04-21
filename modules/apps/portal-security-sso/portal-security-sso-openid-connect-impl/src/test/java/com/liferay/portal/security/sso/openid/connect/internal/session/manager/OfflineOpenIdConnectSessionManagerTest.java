@@ -5,23 +5,39 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.session.manager;
 
+import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
+import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.security.sso.openid.connect.internal.AuthorizationServerMetadataResolver;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.oauth2.sdk.Scope;
+import com.nimbusds.oauth2.sdk.id.Issuer;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.token.AccessTokenType;
 import com.nimbusds.oauth2.sdk.token.RefreshToken;
+import com.nimbusds.openid.connect.sdk.SubjectType;
+import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.token.OIDCTokens;
 
+import java.net.URI;
+
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Manuele Castro
@@ -32,6 +48,171 @@ public class OfflineOpenIdConnectSessionManagerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testExtendOpenIdConnectSessionUsesOAuthClientEntryCompanyId()
+		throws Exception {
+
+		long oAuthClientEntryCompanyId = 1234L;
+		String authServerWellKnownURI =
+			"https://idp.example.com/.well-known/openid-configuration";
+		String clientId = "my-client-id";
+
+		Assert.assertEquals(
+			"Precondition: test thread must have the default (system) " +
+				"companyId to simulate a background thread",
+			0L,
+			CompanyThreadLocal.getCompanyId(
+			).longValue());
+
+		OpenIdConnectSession openIdConnectSession = Mockito.mock(
+			OpenIdConnectSession.class);
+
+		Mockito.when(
+			openIdConnectSession.getRefreshToken()
+		).thenReturn(
+			"some-refresh-token"
+		);
+
+		Mockito.when(
+			openIdConnectSession.getCompanyId()
+		).thenReturn(
+			oAuthClientEntryCompanyId
+		);
+
+		Mockito.when(
+			openIdConnectSession.getAuthServerWellKnownURI()
+		).thenReturn(
+			authServerWellKnownURI
+		);
+
+		Mockito.when(
+			openIdConnectSession.getClientId()
+		).thenReturn(
+			clientId
+		);
+
+		OAuthClientEntry oAuthClientEntry = Mockito.mock(
+			OAuthClientEntry.class);
+
+		Mockito.when(
+			oAuthClientEntry.getCompanyId()
+		).thenReturn(
+			oAuthClientEntryCompanyId
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getAuthServerWellKnownURI()
+		).thenReturn(
+			authServerWellKnownURI
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getClientId()
+		).thenReturn(
+			clientId
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getMetadataCacheInSeconds()
+		).thenReturn(
+			3600
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getOAuthClientEntryId()
+		).thenReturn(
+			99L
+		);
+
+		OAuthClientEntryLocalService oAuthClientEntryLocalService =
+			Mockito.mock(OAuthClientEntryLocalService.class);
+
+		Mockito.when(
+			oAuthClientEntryLocalService.fetchOAuthClientEntry(
+				oAuthClientEntryCompanyId, authServerWellKnownURI, clientId)
+		).thenReturn(
+			oAuthClientEntry
+		);
+
+		OIDCProviderMetadata oidcProviderMetadata = new OIDCProviderMetadata(
+			new Issuer("https://idp.example.com"), List.of(SubjectType.PUBLIC),
+			new URI("https://idp.example.com/jwks"));
+
+		oidcProviderMetadata.setTokenEndpointURI(
+			new URI("https://idp.example.com/token"));
+
+		AuthorizationServerMetadataResolver
+			authorizationServerMetadataResolver = Mockito.mock(
+				AuthorizationServerMetadataResolver.class);
+
+		Mockito.when(
+			authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyInt(),
+				Mockito.anyLong())
+		).thenReturn(
+			oidcProviderMetadata
+		);
+
+		ConfigurationAdmin configurationAdmin = Mockito.mock(
+			ConfigurationAdmin.class);
+
+		Mockito.when(
+			configurationAdmin.listConfigurations(Mockito.anyString())
+		).thenReturn(
+			null
+		);
+
+		OpenIdConnectSessionLocalService openIdConnectSessionLocalService =
+			Mockito.mock(OpenIdConnectSessionLocalService.class);
+
+		OfflineOpenIdConnectSessionManager offlineOpenIdConnectSessionManager =
+			new OfflineOpenIdConnectSessionManager();
+
+		ReflectionTestUtil.setFieldValue(
+			offlineOpenIdConnectSessionManager,
+			"_authorizationServerMetadataResolver",
+			authorizationServerMetadataResolver);
+		ReflectionTestUtil.setFieldValue(
+			offlineOpenIdConnectSessionManager, "_configurationAdmin",
+			configurationAdmin);
+		ReflectionTestUtil.setFieldValue(
+			offlineOpenIdConnectSessionManager, "_oAuthClientEntryLocalService",
+			oAuthClientEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			offlineOpenIdConnectSessionManager,
+			"_openIdConnectSessionLocalService",
+			openIdConnectSessionLocalService);
+
+		ReflectionTestUtil.invoke(
+			offlineOpenIdConnectSessionManager, "_extendOpenIdConnectSession",
+			new Class<?>[] {OpenIdConnectSession.class}, openIdConnectSession);
+
+		ArgumentCaptor<String> filterArgumentCaptor = ArgumentCaptor.forClass(
+			String.class);
+
+		Mockito.verify(
+			configurationAdmin
+		).listConfigurations(
+			filterArgumentCaptor.capture()
+		);
+
+		String filter = filterArgumentCaptor.getValue();
+
+		Assert.assertTrue(
+			StringBundler.concat(
+				"Configuration lookup filter must use the OAuthClientEntry's ",
+				"companyId (", oAuthClientEntryCompanyId, "). Filter was: ",
+				filter),
+			filter.contains("(companyId=" + oAuthClientEntryCompanyId + ")"));
+		Assert.assertFalse(
+			StringBundler.concat(
+				"Configuration lookup filter must not fall back to ",
+				"CompanyThreadLocal's default (0) when ",
+				"_extendOpenIdConnectSession runs in a background thread. ",
+				"Filter was: ", filter),
+			filter.contains("(companyId=0)"));
+	}
 
 	@Test
 	public void testStartOpenIdConnectSession() {

@@ -498,3 +498,92 @@ test(
 		await expect(modal).not.toBeVisible();
 	}
 );
+
+test(
+	'Shows an inline "name in use" error when the backend reports a friendly URL separator conflict',
+	{tag: '@LPD-86255'},
+	async ({page, structureBuilderPage}) => {
+		await page.route(
+			'**/o/object-admin/v1.0/object-definitions',
+			async (route) => {
+				if (route.request().method() !== 'POST') {
+					await route.fallback();
+
+					return;
+				}
+
+				await route.fulfill({
+					body: JSON.stringify({
+						detail: '[{"fieldName":"friendlyURLSeparator","message":"Other asset types may use this prefix."}]',
+						status: 'BAD_REQUEST',
+						title: 'Other asset types may use this prefix.',
+						type: 'ObjectDefinitionFriendlyURLSeparatorException',
+					}),
+					headers: {'Content-Type': 'application/json'},
+					status: 400,
+				});
+			}
+		);
+
+		await structureBuilderPage.goToCreateStructure();
+
+		await structureBuilderPage.enableForAllSpaces();
+
+		await structureBuilderPage.changeStructureSettings({
+			label: `Structure${getRandomInt()}`,
+			name: `Structure${getRandomInt()}`,
+		});
+
+		await structureBuilderPage.addField('Text');
+
+		await structureBuilderPage.selectStructure();
+
+		await structureBuilderPage.publishButton.click();
+
+		await expect(
+			page.getByText('This name is already in use. Try another one.')
+		).toBeVisible();
+
+		await expect(
+			page.getByText('Other asset types may use this prefix.')
+		).not.toBeVisible();
+	}
+);
+
+test(
+	'Shows an inline "name in use" error when updating a structure and the backend reports a friendly URL separator conflict',
+	{tag: '@LPD-86255'},
+	async ({page, structureBuilderPage, structuresPage}) => {
+		const label = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label,
+			page: structureBuilderPage,
+		});
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({action: 'Edit', filter: label});
+
+		await page.route('**/cms/update-structure', async (route) => {
+			await route.fulfill({
+				body: JSON.stringify({
+					error: 'An unexpected error occurred',
+					type: 'ObjectDefinitionFriendlyURLSeparatorException',
+				}),
+				headers: {'Content-Type': 'application/json'},
+				status: 200,
+			});
+		});
+
+		await structureBuilderPage.publishButton.click();
+
+		await expect(
+			page.getByText('This name is already in use. Try another one.')
+		).toBeVisible();
+
+		await expect(
+			page.getByText('Other asset types may use this prefix.')
+		).not.toBeVisible();
+	}
+);

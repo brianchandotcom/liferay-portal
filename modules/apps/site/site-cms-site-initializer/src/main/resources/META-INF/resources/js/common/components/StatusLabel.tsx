@@ -4,7 +4,11 @@
  */
 
 import Label from '@clayui/label';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import {sub} from 'frontend-js-web';
 import React from 'react';
+
+import {formatExpirationDate, isExpiringSoon} from '../utils/expirationStatus';
 
 declare type LabelDisplayType =
 	| 'secondary'
@@ -27,13 +31,43 @@ const mapLabelToLabelDisplayType: {[key: string]: LabelDisplayType} = {
 };
 
 interface StatusLabelProps {
+	expirationDate?: string | null;
 	label: string;
 }
 
-const StatusLabel = ({label}: StatusLabelProps) => (
-	<Label displayType={mapLabelToLabelDisplayType[label]}>
-		{Liferay.Language.get(label)}
-	</Label>
-);
+const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
+	if (!isExpiringSoon(label, expirationDate)) {
+		return (
+			<Label displayType={mapLabelToLabelDisplayType[label]}>
+				{Liferay.Language.get(label)}
+			</Label>
+		);
+	}
+
+	const formattedDate = formatExpirationDate(expirationDate!);
+	const expiringSoonText = Liferay.Language.get('expiring-soon');
+	const ariaLabel = sub(
+		Liferay.Language.get('expiring-soon.expires-on-x'),
+		formattedDate ?? ''
+	);
+
+	return (
+		<span className="align-items-center c-gap-2 d-flex flex-wrap">
+			<Label displayType={mapLabelToLabelDisplayType[label]}>
+				{Liferay.Language.get(label)}
+			</Label>
+
+			<ClayTooltipProvider>
+				<span
+					aria-label={ariaLabel}
+					tabIndex={0}
+					title={formattedDate ?? ''}
+				>
+					<Label displayType="warning">{expiringSoonText}</Label>
+				</span>
+			</ClayTooltipProvider>
+		</span>
+	);
+};
 
 export default StatusLabel;

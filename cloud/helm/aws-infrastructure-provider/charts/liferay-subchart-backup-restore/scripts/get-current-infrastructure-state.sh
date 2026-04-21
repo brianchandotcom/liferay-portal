@@ -46,11 +46,11 @@ function main {
 
 	echo "${backup_vault_name}" > /tmp/backup-vault-name.txt
 
-	local data_active
+	local data_plane_active
 
-	data_active=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.targetActiveDataPlane // \"blue\"")
+	data_plane_active=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.targetActiveDataPlane // \"blue\"")
 
-	echo "${data_active}" > /tmp/data-active.txt
+	echo "${data_plane_active}" > /tmp/data-plane-active.txt
 
 	local liferay_infrastructure_name
 
@@ -73,25 +73,25 @@ function main {
 		get \
 		buckets.s3.aws.m.upbound.io \
 		--output jsonpath="{.items[0].metadata.name}" \
-		--selector "dataPlane=${data_active}" \
+		--selector "dataPlane=${data_plane_active}" \
 		> /tmp/s3-bucket-id-active.txt
 
-	local data_inactive
+	local data_plane_inactive
 
-	if [ "${data_active}" = "blue" ]
+	if [ "${data_plane_active}" = "blue" ]
 	then
-		data_inactive="green"
+		data_plane_inactive="green"
 	else
-		data_inactive="blue"
+		data_plane_inactive="blue"
 	fi
 
-	echo "${data_inactive}" > /tmp/data-inactive.txt
+	echo "${data_plane_inactive}" > /tmp/data-plane-inactive.txt
 
 	kubectl \
 		get \
 		buckets.s3.aws.m.upbound.io \
 		--output jsonpath="{.items[0].metadata.name}" \
-		--selector "dataPlane=${data_inactive}" \
+		--selector "dataPlane=${data_plane_inactive}" \
 		> /tmp/s3-bucket-id-inactive.txt
 }
 

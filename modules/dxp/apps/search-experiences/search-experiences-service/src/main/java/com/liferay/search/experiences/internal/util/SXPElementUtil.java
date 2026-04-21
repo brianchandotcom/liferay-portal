@@ -63,13 +63,16 @@ public class SXPElementUtil {
 				continue;
 			}
 
-			User user = company.getGuestUser();
 			Map<String, String> descriptionMap =
 				sxpElement.getDescription_i18n();
 			Map<String, String> titleMap = sxpElement.getTitle_i18n();
 
+			User user = company.getGuestUser();
+
+			long userId = user.getUserId();
+
 			sxpElementLocalService.addSXPElement(
-				sxpElement.getExternalReferenceCode(), user.getUserId(),
+				sxpElement.getExternalReferenceCode(), userId,
 				LocalizedMapUtil.getLocalizedMap(descriptionMap, true),
 				String.valueOf(sxpElement.getElementDefinition()),
 				descriptionMap.get(LocaleUtil.US.toString()),
@@ -80,7 +83,7 @@ public class SXPElementUtil {
 						setAddGuestPermissions(true);
 						setCompanyId(company.getCompanyId());
 						setScopeGroupId(company.getGroupId());
-						setUserId(user.getUserId());
+						setUserId(userId);
 					}
 				});
 		}

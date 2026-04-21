@@ -89,6 +89,7 @@ export interface IFrontendDataSetContext {
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;
 	showInfoPanel: boolean;
+	showSearch: boolean;
 	sidePanelId?: string;
 	sorts?: Array<TSort>;
 	style?: string;
@@ -131,6 +132,7 @@ const FrontendDataSetContext = React.createContext({
 	selectable: false,
 	selectedItems: [],
 	selectedItemsValue: [],
+	showSearch: true,
 	toggleItemInlineEdit: () => {},
 	updateAdditionalAPIURLParameters: () => {},
 	updateDataSetItems: () => {},

@@ -241,6 +241,10 @@ public class FDSRendererImpl implements FDSRenderer {
 						return paginationJSONObject;
 					}
 				).put(
+					"showSearch",
+					() -> fdsSerializer.serializeShowSearch(
+							fdsName, httpServletRequest)
+				).put(
 					"snapshots",
 					() -> {
 						if (!snapshotsEnabled) {

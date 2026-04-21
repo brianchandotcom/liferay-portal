@@ -131,6 +131,8 @@ public class ImportSystemDataSetMVCResourceCommand
 			).put(
 				"restSchema", systemFDSEntry.getRESTSchema()
 			).put(
+				"showSearch", systemFDSEntry.getShowSearch()
+			).put(
 				"snapshotsEnabled", systemFDSEntry.getSnapshotsEnabled()
 			).build(),
 			new ServiceContext());

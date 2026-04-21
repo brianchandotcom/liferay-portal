@@ -82,8 +82,14 @@ public abstract class BaseGitCommit implements GitCommit {
 
 		Matcher matcher = _ticketIdPattern.matcher(commitMessage.trim());
 
+		String ticketId = null;
+
 		if (matcher.find()) {
-			return matcher.group(1);
+			ticketId = matcher.group("ticketId");
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(ticketId)) {
+			return ticketId;
 		}
 
 		return "none";
@@ -149,7 +155,7 @@ public abstract class BaseGitCommit implements GitCommit {
 	protected String message;
 
 	private static final Pattern _ticketIdPattern = Pattern.compile(
-		"^\"?([A-Z]+-\\d+)");
+		"(Revert \")?(?<ticketId>[A-Z]+-\\d+)\"?");
 
 	private final String _gitRepositoryName;
 	private final String _sha;

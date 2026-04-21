@@ -56,7 +56,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		_fragmentEntryService.deleteFragmentEntry(
 			fragmentExternalReferenceCode,
 			GroupUtil.getStagingAwareGroupId(
-				contextCompany.getCompanyId(), siteExternalReferenceCode));
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -68,7 +69,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getGroupId(
-			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+			true, true, contextCompany.getCompanyId(),
+			siteExternalReferenceCode);
 
 		try {
 			return _toFragment(
@@ -102,7 +104,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getGroupId(
-			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+			true, true, contextCompany.getCompanyId(),
+			siteExternalReferenceCode);
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.
@@ -146,7 +149,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		return _addFragmentEntry(
 			fragment.getExternalReferenceCode(),
 			GroupUtil.getStagingAwareGroupId(
-				contextCompany.getCompanyId(), siteExternalReferenceCode),
+				true, contextCompany.getCompanyId(), siteExternalReferenceCode),
 			fragment);
 	}
 
@@ -159,7 +162,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		try {
 			FragmentEntry fragmentEntry =

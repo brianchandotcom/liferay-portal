@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
@@ -95,18 +97,19 @@ public class FolderStagedModelDataHandlerTest
 	public void testFolderWithoutParentFolder() throws Exception {
 		initExport();
 
-		Folder parentFolder = DLAppServiceUtil.addFolder(
-			null, stagingGroup.getGroupId(),
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(stagingGroup.getGroupId());
+
+		Folder parentFolder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+			serviceContext);
 
-		Folder childFolder = DLAppServiceUtil.addFolder(
-			null, stagingGroup.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+		Folder childFolder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			parentFolder.getFolderId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, childFolder);
@@ -132,13 +135,14 @@ public class FolderStagedModelDataHandlerTest
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedChildFolder);
 
-			DLFolder importedDLFolder =
-				DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
-					childFolder.getUuid(), liveGroup.getGroupId());
+			Folder importedFolder =
+				_dlAppLocalService.getFolderByExternalReferenceCode(
+					childFolder.getExternalReferenceCode(),
+					liveGroup.getGroupId());
 
 			Assert.assertEquals(
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				importedDLFolder.getParentFolderId());
+				importedFolder.getParentFolderId());
 		}
 	}
 
@@ -440,5 +444,8 @@ public class FolderStagedModelDataHandlerTest
 		Assert.assertEquals(
 			folder.getDescription(), importedFolder.getDescription());
 	}
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 }

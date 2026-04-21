@@ -21,44 +21,35 @@ customEnvFrom: {}
 customInitContainers:
     x-liferay-overlay:
         -   containerTemplate: |
+                {{- if and .overlay.enabled .overlay.copy }}
                 -   command:
-                        -   bash
+                        -   sh
                         -   -c
                         -   |
-                            {{- if and .overlay .overlay.enabled }}
-                            {{- $overlay := .overlay -}}
-                            {{- range $overlay.copy }}
-                            mkdir \
-                                --parents \
-                                --verbose \
-                                /temp/{{ .into }}
-
-                            cp \
-                                --recursive \
-                                --verbose \
-                                /mnt/liferay/overlay/{{ .from }} \
-                                /temp/{{ .into }}
+                            {{- range .overlay.copy }}
+                            /liferay-init-scripts/overlay-sync.sh {{ $.overlay.type | quote }} {{ .from | quote }} {{ .into | quote }}
                             {{- end }}
-                            {{- else }}
-                            echo "Overlay is not enabled."
-                            {{- end }}
-                    image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
-                    imagePullPolicy: {{ .image.pullPolicy }}
+                    envFrom:
+                        -   secretRef:
+                                name: managed-service-details
+                    image: {{ printf "%s:%s" .overlay.image.repository (.overlay.image.tag | toString) }}
                     name: liferay-overlay
                     securityContext:
                         allowPrivilegeEscalation: false
                         capabilities:
                             drop:
                                 -   ALL
+                        runAsNonRoot: true
+                        runAsUser: 1000
                         seccompProfile:
                             type: RuntimeDefault
-                    {{- if and .overlay .overlay.enabled }}
                     volumeMounts:
-                        -   mountPath: /mnt/liferay/overlay
-                            name: {{ .overlay.bucketName }}
+                        -   mountPath: /liferay-init-scripts/overlay-sync.sh
+                            name: {{ .overlay.initScriptsVolumeName }}
+                            subPath: overlay-sync.sh
                         -   mountPath: /temp
                             name: liferay-persistent-volume
-                    {{- end }}
+                {{- end }}
     x-liferay-prepopulate-data:
         -   containerTemplate: |
                 -   command:
@@ -188,7 +179,12 @@ customPullSecrets: {}
 customServicePorts: {}
 customVolumeClaimTemplates: {}
 customVolumeMounts: {}
-customVolumes: {}
+customVolumes:
+    x-liferay-init-scripts-default:
+        -   configMap:
+                defaultMode: 0755
+                name: liferay-init-scripts-default
+            name: liferay-init-scripts-default
 dependencies: {}
 env:
     -   name: DNS_MEMBERSHIP_SERVICE_NAME
@@ -273,9 +269,13 @@ network:
     timeouts: {}
 nodeSelector: {}
 overlay:
-    bucketName: ""
     copy: []
     enabled: false
+    image:
+        repository: rclone/rclone
+        tag: "1.66"
+    initScriptsVolumeName: liferay-init-scripts-default
+    type: ""
 podLabels: {}
 podSecurityContext:
     fsGroup: 1000

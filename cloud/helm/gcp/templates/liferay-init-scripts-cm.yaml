@@ -4,5 +4,5 @@ data:
 {{ .Files.Get "scripts/wait-for-elasticsearch.sh" | nindent 8 }}
 kind: ConfigMap
 metadata:
-    name: liferay-init-scripts
+    name: liferay-init-scripts-gcp
     namespace: {{ .Release.Namespace }}

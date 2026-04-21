@@ -27,11 +27,13 @@ export type RequestResult<T> =
 			data: null;
 			error: string;
 			status?: string | null;
+			type?: string | null;
 	  }
 	| {
 			data: T;
 			error: null;
 			status?: string | null;
+			type?: string | null;
 	  };
 
 async function deleteRequest(url: string) {
@@ -54,7 +56,7 @@ async function handleRequest<T>(
 		}
 
 		if (!response.ok) {
-			const {message, status, title} = await response.json();
+			const {message, status, title, type} = await response.json();
 
 			let error = title ?? message ?? UNEXPECTED_ERROR_MESSAGE;
 
@@ -66,6 +68,7 @@ async function handleRequest<T>(
 				data: null,
 				error,
 				status,
+				type,
 			};
 		}
 
@@ -77,13 +80,14 @@ async function handleRequest<T>(
 			};
 		}
 
-		const data: T | {error: string} = await response.json();
+		const data: T | {error: string; type?: string} = await response.json();
 
 		if (data && typeof data === 'object' && 'error' in data) {
 			return {
 				data: null,
 				error: data.error || UNEXPECTED_ERROR_MESSAGE,
 				status: null,
+				type: data.type ?? null,
 			};
 		}
 

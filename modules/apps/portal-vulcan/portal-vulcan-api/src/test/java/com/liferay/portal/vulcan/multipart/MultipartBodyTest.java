@@ -189,7 +189,6 @@ public class MultipartBodyTest {
 			"key", TestClass.class);
 
 		MatcherAssert.assertThat(testClass != null, Is.is(true));
-
 		MatcherAssert.assertThat(testClass.list, Matchers.contains(1, 2, 3));
 		MatcherAssert.assertThat(testClass.number, Is.is(42L));
 		MatcherAssert.assertThat(testClass.string, Is.is("Hello"));

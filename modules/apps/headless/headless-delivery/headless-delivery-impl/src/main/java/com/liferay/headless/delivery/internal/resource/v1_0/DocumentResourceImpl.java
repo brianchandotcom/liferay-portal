@@ -1092,16 +1092,18 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			fileEntry.getFileEntryId(), document, fileEntry);
 
 		String fileName = null;
+
 		String contentType = binaryFile.getContentType();
+
+		if (contentType == null) {
+			contentType = fileEntry.getMimeType();
+		}
+
 		String title = null;
 		String urlTitle = null;
 		String description = fileEntry.getDescription();
 		Date displayDate = fileEntry.getDisplayDate();
 		Date expirationDate = fileEntry.getExpirationDate();
-
-		if (contentType == null) {
-			contentType = fileEntry.getMimeType();
-		}
 
 		if (document != null) {
 			fileName = document.getFileName();

@@ -5,6 +5,7 @@
 
 package com.liferay.oauth.client.rest.internal.resource.v1_0;
 
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.oauth.client.constants.OAuthClientAdminPortletKeys;
@@ -99,6 +100,11 @@ public class OAuthClientASLocalMetadataResourceImpl
 			@Override
 			public Scope getScope() {
 				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return ExportImportConstants.SECTION_KEY_OTHER;
 			}
 
 			@Override

@@ -167,150 +167,157 @@ test(
 	}
 );
 
-test('LPD-33373 assert that overriden translations can be filtered', async ({
-	languageOverridePage,
-}) => {
-	await languageOverridePage.goto();
-
-	const languageKey1 = {
-		key: getRandomString(),
-		translations: [
-			{
-				languageId: 'en-US',
-				value: getRandomString(),
-			},
-			{
-				languageId: 'pt-BR',
-				value: getRandomString(),
-			},
-		],
-	};
-	const languageKey2: TLanguageKey = {
-		key: getRandomString(),
-		translations: [
-			{
-				languageId: 'en-US',
-				value: getRandomString(),
-			},
-		],
-	};
-
-	await languageOverridePage.addLanguageKey(languageKey1);
-
-	await languageOverridePage.addLanguageKey(languageKey2);
-
-	await languageOverridePage.changeFilter('Selected Language');
-
-	await languageOverridePage.changeLocale('en-US', 'pt-BR');
-
-	await languageOverridePage.searchLanguageKey(languageKey1.key);
-
-	await languageOverridePage.assertLanguageKeyInListView(languageKey1);
-
-	await languageOverridePage.searchLanguageKey(languageKey2.key);
-
-	await languageOverridePage.assertLanguageKeyNotInListView(languageKey2.key);
-
-	await languageOverridePage.changeFilter('Any Language');
-
-	await languageOverridePage.changeLocale('pt-BR', 'en-US');
-
-	await languageOverridePage.searchLanguageKey(languageKey1.key);
-
-	await languageOverridePage.assertLanguageKeyInListView(languageKey1);
-
-	await languageOverridePage.searchLanguageKey(languageKey2.key);
-
-	await languageOverridePage.assertLanguageKeyInListView(languageKey2);
-});
-
-test('LPD-33373 assert that default and overriden translations show up when no filters are applied', async ({
-	languageOverridePage,
-}) => {
-	await languageOverridePage.goto();
-
-	const languageKey: TLanguageKey = {
-		key: getRandomString(),
-		translations: [
-			{
-				languageId: 'en-US',
-				value: getRandomString(),
-			},
-			{
-				languageId: 'pt-BR',
-				value: getRandomString(),
-			},
-		],
-	};
-
-	await languageOverridePage.searchLanguageKey(
-		'0-analytics-cloud-connection'
-	);
-
-	await languageOverridePage.assertLanguageKeyInListView({
-		key: '0-analytics-cloud-connection',
-		translations: [],
-	});
-
-	await languageOverridePage.addLanguageKey(languageKey);
-
-	await languageOverridePage.searchLanguageKey(languageKey.key);
-
-	await languageOverridePage.assertLanguageKeyInListView(languageKey);
-});
-
-test('LPD-72281 assert that Language Override is XSS safe', async ({
-	languageOverridePage,
-	page,
-}) => {
-	const originalValue = `"><img/src="x"onerror="alert(1)">`;
-
-	const languageKey: TLanguageKey = {
-		key: originalValue,
-		translations: [
-			{
-				languageId: 'en-US',
-				value: originalValue,
-			},
-		],
-	};
-
-	await test.step('Add listener to fail in case the malicious alert renders', async () => {
-		page.on('dialog', (dialog) => {
-			if (dialog.type() === 'alert') {
-				throw new Error('Malicious code has been executed');
-			}
-		});
-	});
-
-	await test.step('Add a language key with malicious key and value', async () => {
+test(
+	'Assert that overriden translations can be filtered',
+	{tag: '@LPD-33373'},
+	async ({languageOverridePage}) => {
 		await languageOverridePage.goto();
 
-		await languageOverridePage.addLanguageKey(languageKey);
-	});
-
-	await test.step('Assert that the key and value are properly rendered/escaped', async () => {
-		await languageOverridePage.searchLanguageKey(languageKey.key);
-
-		const escapedValue = `&quot;&gt;<img src="x">`;
-
-		await languageOverridePage.assertLanguageKeyInListView({
-			key: languageKey.key,
+		const languageKey1 = {
+			key: getRandomString(),
 			translations: [
 				{
 					languageId: 'en-US',
-					value: escapedValue,
+					value: getRandomString(),
+				},
+				{
+					languageId: 'pt-BR',
+					value: getRandomString(),
 				},
 			],
+		};
+		const languageKey2: TLanguageKey = {
+			key: getRandomString(),
+			translations: [
+				{
+					languageId: 'en-US',
+					value: getRandomString(),
+				},
+			],
+		};
+
+		await languageOverridePage.addLanguageKey(languageKey1);
+
+		await languageOverridePage.addLanguageKey(languageKey2);
+
+		await languageOverridePage.changeFilter('Selected Language');
+
+		await languageOverridePage.changeLocale('en-US', 'pt-BR');
+
+		await languageOverridePage.searchLanguageKey(languageKey1.key);
+
+		await languageOverridePage.assertLanguageKeyInListView(languageKey1);
+
+		await languageOverridePage.searchLanguageKey(languageKey2.key);
+
+		await languageOverridePage.assertLanguageKeyNotInListView(
+			languageKey2.key
+		);
+
+		await languageOverridePage.changeFilter('Any Language');
+
+		await languageOverridePage.changeLocale('pt-BR', 'en-US');
+
+		await languageOverridePage.searchLanguageKey(languageKey1.key);
+
+		await languageOverridePage.assertLanguageKeyInListView(languageKey1);
+
+		await languageOverridePage.searchLanguageKey(languageKey2.key);
+
+		await languageOverridePage.assertLanguageKeyInListView(languageKey2);
+	}
+);
+
+test(
+	'Assert that default and overriden translations show up when no filters are applied',
+	{tag: '@LPD-33373'},
+	async ({languageOverridePage}) => {
+		await languageOverridePage.goto();
+
+		const languageKey: TLanguageKey = {
+			key: getRandomString(),
+			translations: [
+				{
+					languageId: 'en-US',
+					value: getRandomString(),
+				},
+				{
+					languageId: 'pt-BR',
+					value: getRandomString(),
+				},
+			],
+		};
+
+		await languageOverridePage.searchLanguageKey(
+			'0-analytics-cloud-connection'
+		);
+
+		await languageOverridePage.assertLanguageKeyInListView({
+			key: '0-analytics-cloud-connection',
+			translations: [],
 		});
 
-		await languageOverridePage.editLanguageKey(languageKey.key);
+		await languageOverridePage.addLanguageKey(languageKey);
 
-		await page.getByText(originalValue, {exact: true}).waitFor();
+		await languageOverridePage.searchLanguageKey(languageKey.key);
 
-		await languageOverridePage.assertLanguageKeyTranslationValue(
-			'en-US',
-			escapedValue
-		);
-	});
-});
+		await languageOverridePage.assertLanguageKeyInListView(languageKey);
+	}
+);
+
+test(
+	'Assert that Language Override is XSS safe',
+	{tag: '@LPD-72281'},
+	async ({languageOverridePage, page}) => {
+		const originalValue = `"><img/src="x"onerror="alert(1)">`;
+
+		const languageKey: TLanguageKey = {
+			key: originalValue,
+			translations: [
+				{
+					languageId: 'en-US',
+					value: originalValue,
+				},
+			],
+		};
+
+		await test.step('Add listener to fail in case the malicious alert renders', async () => {
+			page.on('dialog', (dialog) => {
+				if (dialog.type() === 'alert') {
+					throw new Error('Malicious code has been executed');
+				}
+			});
+		});
+
+		await test.step('Add a language key with malicious key and value', async () => {
+			await languageOverridePage.goto();
+
+			await languageOverridePage.addLanguageKey(languageKey);
+		});
+
+		await test.step('Assert that the key and value are properly rendered/escaped', async () => {
+			await languageOverridePage.searchLanguageKey(languageKey.key);
+
+			const escapedValue = `&quot;&gt;<img src="x">`;
+
+			await languageOverridePage.assertLanguageKeyInListView({
+				key: languageKey.key,
+				translations: [
+					{
+						languageId: 'en-US',
+						value: escapedValue,
+					},
+				],
+			});
+
+			await languageOverridePage.editLanguageKey(languageKey.key);
+
+			await page.getByText(originalValue, {exact: true}).waitFor();
+
+			await languageOverridePage.assertLanguageKeyTranslationValue(
+				'en-US',
+				escapedValue
+			);
+		});
+	}
+);

@@ -52,10 +52,10 @@ describe('expirationStatus', () => {
 			expect(isExpiringSoon('approved', beyond)).toBe(false);
 		});
 
-		it('returns false when the expiration date is already in the past', () => {
+		it('keeps returning true for approved items whose expiration date has already passed so the badge remains visible until the scheduler flips the status to expired', () => {
 			const past = new Date(NOW.getTime() - MS_PER_DAY).toISOString();
 
-			expect(isExpiringSoon('approved', past)).toBe(false);
+			expect(isExpiringSoon('approved', past)).toBe(true);
 		});
 
 		it('returns true when the expiration date is within the threshold', () => {

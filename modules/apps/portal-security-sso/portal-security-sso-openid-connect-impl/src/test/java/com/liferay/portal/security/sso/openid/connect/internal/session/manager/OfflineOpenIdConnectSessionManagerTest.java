@@ -50,13 +50,11 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testExtendOpenIdConnectSessionUsesOAuthClientEntryCompanyId()
-		throws Exception {
-
-		long oAuthClientEntryCompanyId = 1234L;
+	public void testExtendOpenIdConnectSession() throws Exception {
+		long oAuthClientEntryCompanyId = RandomTestUtil.randomLong();
 		String authServerWellKnownURI =
 			"https://idp.example.com/.well-known/openid-configuration";
-		String clientId = "my-client-id";
+		String clientId = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			"Precondition: test thread must have the default (system) " +
@@ -67,12 +65,6 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 		OpenIdConnectSession openIdConnectSession = Mockito.mock(
 			OpenIdConnectSession.class);
-
-		Mockito.when(
-			openIdConnectSession.getRefreshToken()
-		).thenReturn(
-			"some-refresh-token"
-		);
 
 		Mockito.when(
 			openIdConnectSession.getCompanyId()
@@ -92,8 +84,20 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			clientId
 		);
 
+		Mockito.when(
+			openIdConnectSession.getRefreshToken()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
 		OAuthClientEntry oAuthClientEntry = Mockito.mock(
 			OAuthClientEntry.class);
+
+		Mockito.when(
+			oAuthClientEntry.getOAuthClientEntryId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
 
 		Mockito.when(
 			oAuthClientEntry.getCompanyId()
@@ -117,12 +121,6 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			oAuthClientEntry.getMetadataCacheInSeconds()
 		).thenReturn(
 			3600
-		);
-
-		Mockito.when(
-			oAuthClientEntry.getOAuthClientEntryId()
-		).thenReturn(
-			99L
 		);
 
 		OAuthClientEntryLocalService oAuthClientEntryLocalService =
@@ -188,30 +186,31 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			offlineOpenIdConnectSessionManager, "_extendOpenIdConnectSession",
 			new Class<?>[] {OpenIdConnectSession.class}, openIdConnectSession);
 
-		ArgumentCaptor<String> filterArgumentCaptor = ArgumentCaptor.forClass(
+		ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(
 			String.class);
 
 		Mockito.verify(
 			configurationAdmin
 		).listConfigurations(
-			filterArgumentCaptor.capture()
+			argumentCaptor.capture()
 		);
 
-		String filter = filterArgumentCaptor.getValue();
+		String filterString = argumentCaptor.getValue();
 
 		Assert.assertTrue(
 			StringBundler.concat(
 				"Configuration lookup filter must use the OAuthClientEntry's ",
 				"companyId (", oAuthClientEntryCompanyId, "). Filter was: ",
-				filter),
-			filter.contains("(companyId=" + oAuthClientEntryCompanyId + ")"));
+				filterString),
+			filterString.contains(
+				"(companyId=" + oAuthClientEntryCompanyId + ")"));
 		Assert.assertFalse(
 			StringBundler.concat(
 				"Configuration lookup filter must not fall back to ",
 				"CompanyThreadLocal's default (0) when ",
 				"_extendOpenIdConnectSession runs in a background thread. ",
-				"Filter was: ", filter),
-			filter.contains("(companyId=0)"));
+				"Filter was: ", filterString),
+			filterString.contains("(companyId=0)"));
 	}
 
 	@Test

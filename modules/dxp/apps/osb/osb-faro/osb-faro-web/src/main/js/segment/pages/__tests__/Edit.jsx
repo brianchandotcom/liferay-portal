@@ -14,6 +14,10 @@ jest.mock('shared/apollo/client', () => ({
 	query: jest.fn()
 }));
 
+jest.mock('shared/hooks/useQueryParams', () => ({
+	useQueryParams: () => ({type: 'BATCH'})
+}));
+
 jest.unmock('react-dom');
 
 const DefaultComponent = props => (

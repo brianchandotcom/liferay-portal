@@ -8,6 +8,7 @@ import {Map} from 'immutable';
 import {Property, Segment} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {ReferencedObjectsProvider} from '../../context/referencedObjects';
+import {SegmentTypes} from 'shared/util/constants';
 
 jest.unmock('react-dom');
 
@@ -31,6 +32,7 @@ const defaultProps = {
 	operatorRenderer: () => <div>{'test'}</div>,
 	property: new Property(),
 	referencedAssetsIMap: new Map(),
+	segmentType: SegmentTypes.Batch,
 	touched: {asset: false, occurenceCount: false},
 	valid: {asset: false, occurenceCount: false},
 	value: mockValue

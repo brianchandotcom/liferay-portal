@@ -206,6 +206,23 @@ exports[`Edit should render 1`] = `
                       <div
                         class="btn-group-item"
                       >
+                        <div
+                          class="total-members"
+                        >
+                          Total Members: 
+                          <div
+                            class="total-members-count"
+                          >
+                            <span
+                              aria-hidden="true"
+                              class="loading-root center loading-animation"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="btn-group-item"
+                      >
                         <button
                           aria-label="View Members"
                           class="button-root preview-criteria btn btn-outline-borderless btn-sm btn-outline-secondary"
@@ -215,21 +232,20 @@ exports[`Edit should render 1`] = `
                           title="View Members"
                           type="button"
                         >
-                          <div
+                          <span
                             data-tooltip="true"
                             data-tooltip-align="bottom"
                             title="Some of your criteria are incomplete or invalid."
                           >
                             <svg
-                              class="lexicon-icon lexicon-icon-view icon-root mr-2"
+                              class="lexicon-icon lexicon-icon-view icon-root"
                               role="presentation"
                             >
                               <use
                                 href="#view"
                               />
                             </svg>
-                            View Members
-                          </div>
+                          </span>
                         </button>
                       </div>
                     </div>

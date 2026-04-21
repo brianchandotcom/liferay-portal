@@ -117,6 +117,7 @@ Immutable.Map {
           "fieldMappings": Immutable.Map {},
         },
         "segmentType": null,
+        "sequential": false,
         "state": "",
         "status": null,
         "type": 4,

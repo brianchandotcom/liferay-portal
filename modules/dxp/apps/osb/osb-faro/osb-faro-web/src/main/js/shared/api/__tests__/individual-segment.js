@@ -45,7 +45,8 @@ describe('Individual Segment API', () => {
 					filter: "(name eq 'test test')",
 					includeAnonymousUsers: false,
 					name: createArgs.name,
-					segmentType
+					segmentType,
+					sequential: false
 				}
 			});
 		});
@@ -59,7 +60,8 @@ describe('Individual Segment API', () => {
 				channelId: '123',
 				filter: "(name eq 'test test')",
 				includeAnonymousUsers: false,
-				name: updateArgs.name
+				name: updateArgs.name,
+				sequential: false
 			};
 
 			update({...updateArgs, segmentType});

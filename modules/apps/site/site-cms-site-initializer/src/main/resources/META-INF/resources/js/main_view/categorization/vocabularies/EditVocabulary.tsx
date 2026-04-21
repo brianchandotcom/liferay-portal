@@ -16,6 +16,7 @@ import CategorizationPermissionService from '../../../common/services/Categoriza
 import VocabularyService from '../../../common/services/VocabularyService';
 import {IVocabulary} from '../../../common/types/IVocabulary';
 import {
+	displayErrorToast,
 	displayNameInUseErrorToast,
 	displaySystemErrorToast,
 } from '../../../common/utils/toastUtil';
@@ -57,6 +58,10 @@ export default function EditVocabulary({
 	const [assetTypes, setAssetTypes] = useState<AssetType[]>([]);
 	const [assetTypeChange, setAssetTypeChange] = useState(false);
 	const [assetTypeInputError, setAssetTypeInputError] = useState<string>('');
+	const [
+		externalReferenceCodeInputError,
+		setExternalReferenceCodeInputError,
+	] = useState<string>('');
 	const [nameInputError, setNameInputError] = useState<string>('');
 	const {observer, onOpenChange, open} = useModal();
 	const [spaceChange, setSpaceChange] = useState(false);
@@ -142,6 +147,35 @@ export default function EditVocabulary({
 		return true;
 	};
 
+	const _handleSaveError = (error: string, status?: string | null): never => {
+		if (status === 'CONFLICT') {
+			if (error.toLowerCase().includes('external reference code')) {
+				const ercErrorMessage = Liferay.Language.get(
+					'please-enter-a-unique-external-reference-code'
+				);
+
+				setExternalReferenceCodeInputError(ercErrorMessage);
+				setActiveVerticalNavKey('general');
+
+				displayErrorToast(ercErrorMessage);
+			}
+			else {
+				setNameInputError(
+					Liferay.Language.get(
+						'please-enter-a-unique-name.-this-one-is-already-in-use'
+					)
+				);
+
+				displayNameInUseErrorToast();
+			}
+		}
+		else {
+			displaySystemErrorToast();
+		}
+
+		throw new Error(error);
+	};
+
 	const _handleSave = async () => {
 		if (!_handleValidateInputs()) {
 			return;
@@ -155,20 +189,7 @@ export default function EditVocabulary({
 				);
 
 			if (error) {
-				if (status === 'CONFLICT') {
-					setNameInputError(
-						Liferay.Language.get(
-							'please-enter-a-unique-name.-this-one-is-already-in-use'
-						)
-					);
-
-					displayNameInUseErrorToast();
-				}
-				else {
-					displaySystemErrorToast();
-				}
-
-				throw new Error(error);
+				_handleSaveError(error, status);
 			}
 			else {
 				const vocabularyId: number = data?.id || 0;
@@ -192,13 +213,11 @@ export default function EditVocabulary({
 			}
 		}
 		else {
-			const {error} =
+			const {error, status} =
 				await VocabularyService.updateVocabulary(vocabulary);
 
 			if (error) {
-				displaySystemErrorToast();
-
-				throw new Error(error);
+				_handleSaveError(error, status);
 			}
 		}
 
@@ -319,10 +338,16 @@ export default function EditVocabulary({
 								<EditGeneralInfo
 									assetLibraries={assetLibraries}
 									defaultLanguageId={defaultLanguageId}
+									externalReferenceCodeInputError={
+										externalReferenceCodeInputError
+									}
 									isNew={isNew}
 									locales={locales}
 									nameInputError={nameInputError}
 									onChangeVocabulary={setVocabulary}
+									setExternalReferenceCodeInputError={
+										setExternalReferenceCodeInputError
+									}
 									setNameInputError={setNameInputError}
 									setSpaceChange={setSpaceChange}
 									setSpaceInputError={setSpaceInputError}

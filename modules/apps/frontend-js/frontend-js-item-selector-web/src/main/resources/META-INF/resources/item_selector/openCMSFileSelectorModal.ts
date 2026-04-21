@@ -181,6 +181,15 @@ export default function openCMSFileSelectorModal({
 			allowedExtensions,
 			fdsProps: {
 				...FDS_PROPS,
+				emptyState: allowDragAndDrop
+					? {
+							description: Liferay.Language.get(
+								'drag-and-drop-to-upload'
+							),
+							image: '/states/cms_empty_state_files.svg',
+							title: Liferay.Language.get('no-files-yet'),
+						}
+					: undefined,
 				filters: getCMSItemSelectorFilters(groupId),
 				groupedFilters: getCMSItemSelectorGroupedFilters(),
 				...fdsProps,

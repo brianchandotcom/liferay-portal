@@ -4,8 +4,6 @@ argo:
             strategy: OnWorkflowSuccess
         ttlStrategy:
             secondsAfterCompletion: 86400
-cloudSql:
-    restoreWaitTimeoutSeconds: 7200
 images:
     gcloud:
         repository: google/cloud-sdk

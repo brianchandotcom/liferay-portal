@@ -295,7 +295,6 @@ spec:
                     -   --project={{ .Values.global.gcp.projectId }}
                     -   --restore-instance
                     -   "{{ "{{" }}inputs.parameters.restore-instance}}"
-                    -   --timeout={{ .Values.cloudSql.restoreWaitTimeoutSeconds }}
                     -   --quiet
                 command: [gcloud]
                 env:

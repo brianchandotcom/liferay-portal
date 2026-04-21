@@ -83,7 +83,7 @@ describe('SegmentEditor', () => {
 		);
 
 		expect(screen.getByText('Order')).toBeInTheDocument();
-		expect(screen.getByText('Enable Sequential')).toBeInTheDocument();
+		expect(screen.getByTestId('toggle-switch-input')).toBeInTheDocument();
 		expect(
 			screen.getByText(
 				'When this is enabled, event 2 must occur after event 1, with any number of events in between. When this is disabled, events can be completed in any order. Nested criteria are not supported.'
@@ -118,7 +118,7 @@ describe('SegmentEditor', () => {
 		);
 
 		expect(screen.getByText('Order')).toBeInTheDocument();
-		expect(screen.getByText('Enable Sequential')).toBeInTheDocument();
+		expect(screen.getByTestId('toggle-switch-input')).toBeInTheDocument();
 
 		expect(
 			screen.getByText(
@@ -126,7 +126,7 @@ describe('SegmentEditor', () => {
 			)
 		).toBeInTheDocument();
 
-		fireEvent.click(screen.getByText('Enable Sequential'));
+		fireEvent.click(screen.getByTestId('toggle-switch-input'));
 
 		await waitFor(() => {
 			expect(

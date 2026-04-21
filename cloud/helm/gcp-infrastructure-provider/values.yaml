@@ -26,5 +26,7 @@ liferay-subchart-backup-controller:
     serviceAccountName: backup-controller
 liferay-subchart-backup-create:
     enabled: true
+liferay-subchart-backup-restore:
+    enabled: true
 providers:
     enabled: true

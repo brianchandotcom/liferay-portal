@@ -1,0 +1,54 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    labels:
+        component: backup-restore-platform
+    name: backup-restore-backup-reader-cluster-role
+rules:
+    -   apiGroups: ["backup.liferay.cloud"]
+        resources: ["liferaybackups"]
+        verbs:
+            -   get
+            -   list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    labels:
+        component: backup-restore-platform
+    name: backup-restore-env-cluster-role
+rules:
+    -   apiGroups: [""]
+        resources: ["namespaces"]
+        verbs:
+            -   get
+            -   list
+    -   apiGroups: ["apps"]
+        resources: ["statefulsets"]
+        verbs:
+            -   get
+            -   list
+            -   patch
+            -   watch
+    -   apiGroups: ["argoproj.io"]
+        resources: ["workflowtaskresults"]
+        verbs:
+            -   create
+            -   patch
+    -   apiGroups: ["gcp.liferay.com"]
+        resources: ["liferayinfrastructures"]
+        verbs:
+            -   get
+            -   list
+            -   patch
+            -   watch
+    -   apiGroups: ["storage.gcp.m.upbound.io"]
+        resources: ["buckets"]
+        verbs:
+            -   get
+            -   list
+    -   apiGroups: ["sql.gcp.m.upbound.io"]
+        resources: ["databaseinstances"]
+        verbs:
+            -   get
+            -   list

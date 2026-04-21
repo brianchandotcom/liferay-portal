@@ -225,11 +225,21 @@ export const FacetUtil = {
 			search
 		);
 
-		return search;
+		const searchParams = new URLSearchParams(search);
+
+		searchParams.sort();
+
+		return searchParams.toString();
 	},
 
 	removeAllFacetParameters(queryString) {
 		let search = queryString;
+
+		const hasQuestionMark = search[0] === '?';
+
+		if (hasQuestionMark) {
+			search = search.substr(1);
+		}
 
 		const allForms = document.getElementsByTagName('form');
 
@@ -250,6 +260,10 @@ export const FacetUtil = {
 				selections
 			);
 		});
+
+		if (hasQuestionMark) {
+			search = '?' + search;
+		}
 
 		return search;
 	},
@@ -360,7 +374,7 @@ export const FacetUtil = {
 			}
 		});
 
-		return newParameters;
+		return newParameters.sort();
 	},
 
 	updateQueryString(key, selections, queryString) {

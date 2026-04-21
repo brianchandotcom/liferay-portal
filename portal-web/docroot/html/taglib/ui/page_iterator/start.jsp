@@ -103,6 +103,8 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						}
 
 						String curDeltaURL = HttpComponentsUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
+
+						curDeltaURL = HttpComponentsUtil.sortParameters(curDeltaURL);
 					%>
 
 						<li role="presentation">
@@ -538,7 +540,13 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 <%!
 private String _getHREF(String formName, String curParam, int cur, String jsCall, String url, String urlAnchor) throws Exception {
 	if (Validator.isNotNull(url)) {
-		return HtmlUtil.escapeHREF(HttpComponentsUtil.addParameter(HttpComponentsUtil.removeParameter(url, curParam) + urlAnchor, curParam, cur));
+		url = HttpComponentsUtil.removeParameter(url, curParam);
+
+		url = HttpComponentsUtil.addParameter(url + urlAnchor, curParam, cur);
+
+		url = HttpComponentsUtil.sortParameters(url);
+
+		return HtmlUtil.escapeHREF(url);
 	}
 
 	return "javascript:document." + formName + "." + curParam + ".value = '" + cur + "'; " + jsCall;

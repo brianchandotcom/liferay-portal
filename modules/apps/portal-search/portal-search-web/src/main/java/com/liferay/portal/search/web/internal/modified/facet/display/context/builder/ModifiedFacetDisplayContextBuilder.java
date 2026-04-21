@@ -328,7 +328,9 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		rangeURL = HttpComponentsUtil.setParameter(
 			rangeURL, "modifiedFrom", from);
 
-		return HttpComponentsUtil.setParameter(rangeURL, "modifiedTo", to);
+		rangeURL = HttpComponentsUtil.setParameter(rangeURL, "modifiedTo", to);
+
+		return HttpComponentsUtil.sortParameters(rangeURL);
 	}
 
 	private String _getLabeledRangeURL(String label) {
@@ -340,7 +342,9 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		rangeURL = HttpComponentsUtil.removeParameter(
 			rangeURL, _paginationStartParameterName);
 
-		return HttpComponentsUtil.setParameter(rangeURL, "modified", label);
+		rangeURL = HttpComponentsUtil.setParameter(rangeURL, "modified", label);
+
+		return HttpComponentsUtil.sortParameters(rangeURL);
 	}
 
 	private JSONArray _getRangesJSONArray() {

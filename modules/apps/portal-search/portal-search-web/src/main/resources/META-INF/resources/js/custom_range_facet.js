@@ -326,6 +326,8 @@ AUI.add(
 					parameterArray
 				);
 
+				parameterArray.sort();
+
 				CustomRangeFacetUtil.submitSearch(parameterArray.join('&'));
 			},
 		});

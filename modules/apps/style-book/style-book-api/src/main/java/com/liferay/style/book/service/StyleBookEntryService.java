@@ -116,6 +116,10 @@ public interface StyleBookEntryService extends BaseService {
 		throws PrincipalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public StyleBookEntry getStyleBookEntry(long styleBookEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public StyleBookEntry getStyleBookEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException;
@@ -151,4 +155,4 @@ public interface StyleBookEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1046698996
+// LIFERAY-SERVICE-BUILDER-HASH:-259716701

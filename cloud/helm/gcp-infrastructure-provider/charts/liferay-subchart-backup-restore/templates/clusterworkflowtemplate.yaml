@@ -292,6 +292,7 @@ spec:
                     -   backups
                     -   restore
                     -   "{{ "{{" }}inputs.parameters.database-snapshot-uuid}}"
+                    -   --project={{ .Values.global.gcp.projectId }}
                     -   --restore-instance
                     -   "{{ "{{" }}inputs.parameters.restore-instance}}"
                     -   --timeout={{ .Values.cloudSql.restoreWaitTimeoutSeconds }}

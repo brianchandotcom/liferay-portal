@@ -18,9 +18,10 @@ gateway:
     enabled: true
     internetFacing: true
     namespace: envoy-gateway-system
-gcp:
-    projectId: ""
-    projectNumber: ""
+global:
+    gcp:
+        projectId: ""
+        projectNumber: ""
 liferay-subchart-backup-controller:
     enabled: true
     serviceAccountName: backup-controller

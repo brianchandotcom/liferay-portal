@@ -183,6 +183,51 @@ public class SearchResult implements Serializable {
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The time when the item should next be reviewed."
+	)
+	public Date getDateReview() {
+		if (_dateReviewSupplier != null) {
+			dateReview = _dateReviewSupplier.get();
+
+			_dateReviewSupplier = null;
+		}
+
+		return dateReview;
+	}
+
+	public void setDateReview(Date dateReview) {
+		this.dateReview = dateReview;
+
+		_dateReviewSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDateReview(
+		UnsafeSupplier<Date, Exception> dateReviewUnsafeSupplier) {
+
+		_dateReviewSupplier = () -> {
+			try {
+				return dateReviewUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The time when the item should next be reviewed."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateReview;
+
+	@JsonIgnore
+	private Supplier<Date> _dateReviewSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The item's description."
 	)
 	public String getDescription() {
@@ -512,6 +557,22 @@ public class SearchResult implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateReview = getDateReview();
+
+		if (dateReview != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateReview\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateReview));
+
+			sb.append("\"");
+		}
+
 		String description = getDescription();
 
 		if (description != null) {
@@ -712,4 +773,4 @@ public class SearchResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1012760903
+// LIFERAY-REST-BUILDER-HASH:-613360104

@@ -628,6 +628,14 @@ public abstract class BaseSearchResultResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateReview", additionalAssertFieldName)) {
+				if (searchResult.getDateReview() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (searchResult.getDescription() == null) {
 					valid = false;
@@ -821,6 +829,17 @@ public abstract class BaseSearchResultResourceTestCase {
 				if (!Objects.deepEquals(
 						searchResult1.getDateModified(),
 						searchResult2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateReview", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						searchResult1.getDateReview(),
+						searchResult2.getDateReview())) {
 
 					return false;
 				}
@@ -1057,6 +1076,35 @@ public abstract class BaseSearchResultResourceTestCase {
 				sb.append(" ");
 
 				sb.append(_format.format(searchResult.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateReview")) {
+			if (operator.equals("between")) {
+				Date date = searchResult.getDateReview();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(searchResult.getDateReview()));
 			}
 
 			return sb.toString();
@@ -1303,6 +1351,7 @@ public abstract class BaseSearchResultResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				dateReview = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				entryClassName = StringUtil.toLowerCase(
@@ -1533,4 +1582,4 @@ public abstract class BaseSearchResultResourceTestCase {
 		_searchResultResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1963226699
+// LIFERAY-REST-BUILDER-HASH:1145884918

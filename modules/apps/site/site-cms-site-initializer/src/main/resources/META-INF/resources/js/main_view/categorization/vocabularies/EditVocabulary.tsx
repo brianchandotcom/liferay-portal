@@ -75,6 +75,7 @@ export default function EditVocabulary({
 		description_i18n: {
 			[defaultLanguageId]: '',
 		},
+		externalReferenceCode: '',
 		multiValued: true,
 		name: '',
 		name_i18n: {

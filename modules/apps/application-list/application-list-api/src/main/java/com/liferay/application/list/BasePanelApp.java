@@ -56,7 +56,7 @@ public abstract class BasePanelApp implements PanelApp {
 
 	@Override
 	public String getIcon() {
-		return StringPool.BLANK;
+		return "simulation-menu-closed";
 	}
 
 	@Override

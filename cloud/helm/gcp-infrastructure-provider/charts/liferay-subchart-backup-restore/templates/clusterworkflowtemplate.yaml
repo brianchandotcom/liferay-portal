@@ -91,6 +91,9 @@ spec:
                     -   "--recursive"
                     -   "gs://{{ "{{" }}inputs.parameters.dl-bucket-id}}/**"
                 command: ["gcloud"]
+                env:
+                    -   name: CLOUDSDK_CONFIG
+                        value: /tmp/gcloud
                 image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
@@ -294,6 +297,9 @@ spec:
                     -   --timeout={{ .Values.cloudSql.restoreWaitTimeoutSeconds }}
                     -   --quiet
                 command: [gcloud]
+                env:
+                    -   name: CLOUDSDK_CONFIG
+                        value: /tmp/gcloud
                 image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
@@ -307,12 +313,15 @@ spec:
                     -   transfer
                     -   jobs
                     -   create
-                    -   "gs://{{ "{{" }}inputs.parameters.dl-vault-bucket}}/{{ "{{" }}inputs.parameters.dl-vault-path}}"
-                    -   "gs://{{ "{{" }}inputs.parameters.dl-bucket-inactive}}"
+                    -   "gs://{{ "{{" }}inputs.parameters.dl-vault-bucket}}/{{ "{{" }}inputs.parameters.dl-vault-path}}/"
+                    -   "gs://{{ "{{" }}inputs.parameters.dl-bucket-inactive}}/"
                     -   --delete-from=destination-if-unique
                     -   --no-async
                     -   --overwrite-when=always
                 command: [gcloud]
+                env:
+                    -   name: CLOUDSDK_CONFIG
+                        value: /tmp/gcloud
                 image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}

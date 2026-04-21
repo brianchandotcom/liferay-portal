@@ -10,7 +10,6 @@ import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDa
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
-import com.liferay.portal.remote.cors.annotation.CORS;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -39,7 +38,6 @@ import org.apache.cxf.rs.security.oauth2.services.AccessTokenService;
 public class LiferayAccessTokenService extends AccessTokenService {
 
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@CORS(allowMethods = "POST")
 	@Override
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

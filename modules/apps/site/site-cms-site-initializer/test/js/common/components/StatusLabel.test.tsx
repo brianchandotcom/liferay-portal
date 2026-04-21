@@ -9,6 +9,9 @@ import React from 'react';
 
 import StatusLabel from '../../../../src/main/resources/META-INF/resources/js/common/components/StatusLabel';
 
+const NOW = new Date('2026-04-21T10:00:00Z');
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
 describe('StatusLabel', () => {
 	it.each([
 		['approved', 'success'],
@@ -30,5 +33,83 @@ describe('StatusLabel', () => {
 			'label',
 			`label-${displayType}`
 		);
+	});
+
+	describe('Expiring Soon badge', () => {
+		beforeAll(() => {
+			jest.useFakeTimers();
+			jest.setSystemTime(NOW);
+		});
+
+		afterAll(() => {
+			jest.useRealTimers();
+		});
+
+		it('is not shown when no expirationDate is provided', () => {
+			render(<StatusLabel label="approved" />);
+
+			expect(
+				screen.queryByText('expiring-soon')
+			).not.toBeInTheDocument();
+		});
+
+		it('is not shown when the expiration date is beyond the threshold', () => {
+			const beyond = new Date(
+				NOW.getTime() + 8 * MS_PER_DAY
+			).toISOString();
+
+			render(
+				<StatusLabel expirationDate={beyond} label="approved" />
+			);
+
+			expect(
+				screen.queryByText('expiring-soon')
+			).not.toBeInTheDocument();
+		});
+
+		it('is shown when an approved item is within the threshold', () => {
+			const within = new Date(
+				NOW.getTime() + 3 * MS_PER_DAY
+			).toISOString();
+
+			render(
+				<StatusLabel expirationDate={within} label="approved" />
+			);
+
+			expect(screen.getByText('approved')).toBeInTheDocument();
+			expect(screen.getByText('expiring-soon')).toBeInTheDocument();
+		});
+
+		it('exposes focus, tooltip and aria-label attributes', () => {
+			const within = new Date(
+				NOW.getTime() + 3 * MS_PER_DAY
+			).toISOString();
+
+			render(
+				<StatusLabel expirationDate={within} label="approved" />
+			);
+
+			const badge = screen
+				.getByText('expiring-soon')
+				.closest('span[tabindex]') as HTMLElement;
+
+			expect(badge).not.toBeNull();
+			expect(badge).toHaveAttribute('tabindex', '0');
+			expect(badge.getAttribute('title')).toBeTruthy();
+			expect(badge.getAttribute('aria-label')).toBeTruthy();
+		});
+
+		it('is not shown for non-approved statuses even within the threshold', () => {
+			const within = new Date(
+				NOW.getTime() + 3 * MS_PER_DAY
+			).toISOString();
+
+			render(<StatusLabel expirationDate={within} label="draft" />);
+
+			expect(screen.getByText('draft')).toBeInTheDocument();
+			expect(
+				screen.queryByText('expiring-soon')
+			).not.toBeInTheDocument();
+		});
 	});
 });

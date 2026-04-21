@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -418,6 +419,39 @@ public class KeywordResourceImpl
 		return AssetTagsPermission.RESOURCE_NAME;
 	}
 
+	private AssetTag _addAssetTag(
+			String externalReferenceCode, Group group, Keyword keyword,
+			Long siteId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564") ||
+			!group.isCMS() || ArrayUtil.isEmpty(keyword.getAssetLibraries())) {
+
+			return _assetTagService.addTag(
+				externalReferenceCode, siteId, keyword.getName(),
+				new ServiceContext());
+		}
+
+		long[] assetLibraryGroupIds = TaxonomyGroupUtil.getAssetLibraryGroupIds(
+			keyword.getAssetLibraries(), group.getCompanyId());
+
+		for (long assetLibraryGroupId : assetLibraryGroupIds) {
+			AssetTagsPermission.check(
+				PermissionThreadLocal.getPermissionChecker(),
+				assetLibraryGroupId, ActionKeys.MANAGE_TAG);
+		}
+
+		AssetTag assetTag = _assetTagLocalService.addTag(
+			externalReferenceCode, contextUser.getUserId(), siteId,
+			keyword.getName(), new ServiceContext());
+
+		_assetTagGroupRelLocalService.setAssetTagGroupRels(
+			assetTag.getTagId(), assetLibraryGroupIds);
+
+		return assetTag;
+	}
+
 	private Page<Keyword> _getKeywordsPage(
 			Map<String, Map<String, String>> actions, Long groupId,
 			String search, Aggregation aggregation, Filter filter,
@@ -552,23 +586,10 @@ public class KeywordResourceImpl
 			String externalReferenceCode, Keyword keyword, Long siteId)
 		throws Exception {
 
-		AssetTag assetTag = _assetTagService.addTag(
-			externalReferenceCode, siteId, keyword.getName(),
-			new ServiceContext());
-
-		Group group = _groupLocalService.getGroup(siteId);
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564") &&
-			group.isCMS()) {
-
-			_assetTagGroupRelLocalService.setAssetTagGroupRels(
-				assetTag.getTagId(),
-				TaxonomyGroupUtil.getAssetLibraryGroupIds(
-					keyword.getAssetLibraries(), group.getCompanyId()));
-		}
-
-		return _toKeyword(assetTag);
+		return _toKeyword(
+			_addAssetTag(
+				externalReferenceCode, _groupLocalService.getGroup(siteId),
+				keyword, siteId));
 	}
 
 	private AssetTag _toAssetTag(Object[] assetTags) {

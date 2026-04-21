@@ -264,16 +264,33 @@ function ItemSelectorModal<T extends Record<string, any>>({
 						{...fdsProps}
 						apiURL={apiURL}
 						creationMenu={
-							createItemURL
+							FilesUploaderComponent || createItemURL
 								? {
 										primaryItems: [
-											{
-												href: createItemURL,
-												label: Liferay.Language.get(
-													'add-new-item'
-												),
-												target: ACTION_ITEM_TARGETS.BLANK,
-											},
+											...(FilesUploaderComponent
+												? [
+														{
+															label: Liferay.Language.get(
+																'upload-files'
+															),
+															onClick: () =>
+																setViewType(
+																	'upload'
+																),
+														},
+													]
+												: []),
+											...(createItemURL
+												? [
+														{
+															href: createItemURL,
+															label: Liferay.Language.get(
+																'add-new-item'
+															),
+															target: ACTION_ITEM_TARGETS.BLANK,
+														},
+													]
+												: []),
 										],
 									}
 								: undefined

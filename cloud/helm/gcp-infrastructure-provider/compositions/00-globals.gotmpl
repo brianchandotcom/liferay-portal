@@ -43,7 +43,6 @@
     {{- $dataPlanes = list "blue" "green" -}}
 {{- end }}
 
-{{- $activeInstanceConnectionName := printf "%s:%s:%s-db-instance-%s" $env.projectId $region $xr.metadata.name $activeDataPlane }}
 {{- $backupTargetLabels := merge (dict) $labels (dict "should-back-up" "true") -}}
 {{- $uidHash := printf "%s-%s" $env.projectNumber $projectIdFull | sha256sum | trunc 6 -}}
 

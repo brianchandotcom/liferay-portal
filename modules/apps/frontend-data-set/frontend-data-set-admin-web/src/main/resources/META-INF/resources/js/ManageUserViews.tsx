@@ -332,6 +332,23 @@ export default function ManageUserViews({
 					portletId={portletId}
 					selectedItemsKey="externalReferenceCode"
 					selectionType="multiple"
+					sorts={[
+						{
+							direction: 'asc',
+							key: 'fdsName',
+							label: Liferay.Language.get('data-set'),
+						},
+						{
+							direction: 'asc',
+							key: 'creator',
+							label: Liferay.Language.get('created-by'),
+						},
+						{
+							direction: 'asc',
+							key: 'dateModified',
+							label: Liferay.Language.get('modified-date'),
+						},
+					]}
 					style="fluid"
 					views={[views]}
 				/>

@@ -482,43 +482,43 @@ public class SearchCTTest {
 
 	private static final Class<?>[] _USER_GROUP_CLASS = {UserGroup.class};
 
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTProcessLocalService _ctProcessLocalService;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
-	private static LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private static Searcher _searcher;
-
-	@Inject
-	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Inject
-	private static UIDFactory _uidFactory;
-
-	@Inject
-	private static UserGroupLocalService _userGroupLocalService;
-
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection1;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection2;
 
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private CTProcessLocalService _ctProcessLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@DeleteAfterTestRun
 	private UserGroup _productionUserGroup;
 
+	@Inject
+	private Searcher _searcher;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Inject
+	private UIDFactory _uidFactory;
+
 	@DeleteAfterTestRun
 	private CTCollection _undoCTCollection;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 }

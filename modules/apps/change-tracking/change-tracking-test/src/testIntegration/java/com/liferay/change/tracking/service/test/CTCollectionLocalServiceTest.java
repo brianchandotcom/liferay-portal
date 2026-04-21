@@ -710,38 +710,21 @@ public class CTCollectionLocalServiceTest {
 	}
 
 	@Inject
-	private static AssetEntryLocalService _assetEntryLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
-	private static AssetTagLocalService _assetTagLocalService;
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
-
-	@Inject
-	private static CTProcessLocalService _ctProcessLocalService;
-
-	private static long _journalArticleClassNameId;
-	private static long _journalFolderClassNameId;
-
-	@Inject
-	private static JournalFolderLocalService _journalFolderLocalService;
-
-	private static long _layoutClassNameId;
-
-	@Inject
-	private static LayoutLocalService _layoutLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	private CTCollection _ctCollection1;
 	private CTCollection _ctCollection2;
 	private CTCollection _ctCollection3;
 	private CTCollection _ctCollection4;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@DeleteAfterTestRun
 	private final List<CTCollection> _ctCollections = new ArrayList<>();
@@ -749,9 +732,26 @@ public class CTCollectionLocalServiceTest {
 	@Inject
 	private CTCollectionService _ctCollectionService;
 
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
+
+	@Inject
+	private CTProcessLocalService _ctProcessLocalService;
+
 	private Group _group;
+	private long _journalArticleClassNameId;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	private long _journalFolderClassNameId;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
+
+	private long _layoutClassNameId;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 }

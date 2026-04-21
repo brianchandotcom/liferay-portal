@@ -92,7 +92,7 @@ public class CTPublishMessageBusInterceptorTest {
 		SystemBundleUtil.getBundleContext();
 
 	@Inject
-	private static MessageBus _messageBus;
+	private MessageBus _messageBus;
 
 	private static class TestMessageListener implements MessageListener {
 

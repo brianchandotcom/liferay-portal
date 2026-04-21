@@ -142,25 +142,7 @@ public class CTEntryConflictHelperTest {
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
-
-	@Inject
-	private static CTProcessLocalService _ctProcessLocalService;
-
-	@Inject
-	private static CTSContentLocalService _ctsContentLocalService;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
-	private static Language _language;
+	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection1;
@@ -168,7 +150,25 @@ public class CTEntryConflictHelperTest {
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection2;
 
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
+
+	@Inject
+	private CTProcessLocalService _ctProcessLocalService;
+
+	@Inject
+	private CTSContentLocalService _ctsContentLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private Language _language;
 
 }

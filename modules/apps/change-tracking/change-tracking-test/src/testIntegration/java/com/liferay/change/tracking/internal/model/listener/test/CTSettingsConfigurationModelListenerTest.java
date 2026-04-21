@@ -150,7 +150,7 @@ public class CTSettingsConfigurationModelListenerTest {
 	}
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.change.tracking.model.CTCollection"

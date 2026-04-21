@@ -156,10 +156,9 @@ public class CTCollectionTemplateServiceTest {
 	}
 
 	@Inject
-	private static CTCollectionTemplateLocalService
-		_ctCollectionTemplateLocalService;
+	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;
 
 	@Inject
-	private static CTCollectionTemplateService _ctCollectionTemplateService;
+	private CTCollectionTemplateService _ctCollectionTemplateService;
 
 }

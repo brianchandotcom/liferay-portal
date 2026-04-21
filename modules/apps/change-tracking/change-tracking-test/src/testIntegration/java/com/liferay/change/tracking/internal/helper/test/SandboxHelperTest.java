@@ -106,12 +106,12 @@ public class SandboxHelperTest {
 	}
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
-	private static CTPreferencesLocalService _ctPreferencesLocalService;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Inject
-	private static SandboxHelper _sandboxHelper;
+	private SandboxHelper _sandboxHelper;
 
 }

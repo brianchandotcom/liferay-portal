@@ -91,18 +91,18 @@ public abstract class BaseTableReferenceDefinitionTestCase {
 	protected Group group;
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTCollectionService _ctCollectionService;
-
-	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private CTCollectionService _ctCollectionService;
+
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
 
 }

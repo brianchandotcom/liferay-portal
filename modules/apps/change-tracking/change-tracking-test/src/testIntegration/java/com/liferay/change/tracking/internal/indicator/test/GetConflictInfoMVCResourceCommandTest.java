@@ -210,16 +210,13 @@ public class GetConflictInfoMVCResourceCommandTest {
 	}
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static Portal _portal;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	private CTCollection _ctCollection1;
 	private CTCollection _ctCollection2;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@DeleteAfterTestRun
 	private final List<CTCollection> _ctCollections = new ArrayList<>();
@@ -229,5 +226,8 @@ public class GetConflictInfoMVCResourceCommandTest {
 
 	@Inject(filter = "mvc.command.name=/change_tracking/get_conflict_info")
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private Portal _portal;
 
 }

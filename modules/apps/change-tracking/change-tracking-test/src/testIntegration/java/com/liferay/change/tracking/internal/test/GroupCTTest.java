@@ -123,20 +123,20 @@ public class GroupCTTest {
 		Assert.assertFalse(groups.toString(), groups.contains(group));
 	}
 
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static GroupService _groupService;
-
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private GroupService _groupService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

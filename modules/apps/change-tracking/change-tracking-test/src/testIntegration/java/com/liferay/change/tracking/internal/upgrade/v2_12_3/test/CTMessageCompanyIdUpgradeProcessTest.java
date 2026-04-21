@@ -94,13 +94,13 @@ public class CTMessageCompanyIdUpgradeProcessTest {
 	}
 
 	@Inject
-	private static CTMessageLocalService _ctMessageLocalService;
+	private CTMessageLocalService _ctMessageLocalService;
 
-	private static UpgradeProcess _upgradeProcess;
+	private UpgradeProcess _upgradeProcess;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.change.tracking.internal.upgrade.registry.ChangeTrackingServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

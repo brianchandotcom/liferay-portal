@@ -385,5 +385,7 @@
 		<exception>InvalidFile</exception>
 		<exception>InvalidFragmentCompositionKey</exception>
 		<exception>RequiredFragmentEntry</exception>
+		<exception>RequiredFragmentEntryVersion</exception>
+		<exception>UnsupportedUnpublishFragmentEntryOperation</exception>
 	</exceptions>
 </service-builder>

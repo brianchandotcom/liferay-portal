@@ -89,6 +89,11 @@ public abstract class BasePersistentResource implements PersistentResource {
 	}
 
 	@Override
+	public boolean isTouched() {
+		return _touched;
+	}
+
+	@Override
 	public void touch() {
 		if (_touched) {
 			return;

@@ -408,6 +408,24 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				filteredEnv.put(key, entry.getValue());
 			}
 
+			String antOptsDefault = JenkinsResultsParserUtil.getBuildProperty(
+				"ant.opts.default", getUpstreamBranchName());
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(antOptsDefault)) {
+				filteredEnv.put("ANT_OPTS", antOptsDefault);
+				filteredEnv.put("JAVA_OPTS", antOptsDefault);
+			}
+
+			String javaJDKDefaultRuntime =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"java.jdk.default.runtime", getUpstreamBranchName());
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					javaJDKDefaultRuntime)) {
+
+				filteredEnv.put("JAVA_HOME", javaJDKDefaultRuntime);
+			}
+
 			Properties properties = new Properties();
 
 			String[] propertyNames = {

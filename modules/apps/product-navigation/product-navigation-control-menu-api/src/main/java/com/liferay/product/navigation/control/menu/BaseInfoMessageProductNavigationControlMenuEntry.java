@@ -91,7 +91,7 @@ public abstract class BaseInfoMessageProductNavigationControlMenuEntry
 	protected abstract String getType();
 
 	protected boolean isDark() {
-		return true;
+		return false;
 	}
 
 }

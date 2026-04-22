@@ -4,7 +4,7 @@
  */
 
 import {ContentSelection} from '../components/forms/content_selector/ContentSelector';
-import {HandlerSelection} from '../components/forms/content_selector/PortletDataControl';
+import {HandlerSelection} from './contentSelection';
 import {
 	PortletDataHandlerControl,
 	PortletDataHandlerSection,

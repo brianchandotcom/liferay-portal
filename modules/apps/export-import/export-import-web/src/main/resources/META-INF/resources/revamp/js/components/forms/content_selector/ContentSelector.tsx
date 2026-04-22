@@ -5,6 +5,7 @@
 
 import React from 'react';
 
+import {updateSelection} from '../../../utils/contentSelection';
 import {PortletDataHandlerSection} from '../../../utils/mockPortletDataHandlerSections';
 import ContentSection, {SectionSelection} from './ContentSection';
 
@@ -28,19 +29,15 @@ export default function ContentSelector({
 			{sections.map((section: PortletDataHandlerSection) => (
 				<ContentSection
 					key={section.name}
-					onChange={(sectionValue) => {
-						const {[section.name]: _, ...newValue} = currentValue;
-
-						if (sectionValue) {
-							newValue[section.name] = sectionValue;
-						}
-
+					onChange={(sectionValue) =>
 						onChange(
-							Object.keys(newValue).length
-								? (newValue as ContentSelection)
-								: undefined
-						);
-					}}
+							updateSelection(
+								currentValue,
+								section.name,
+								sectionValue
+							)
+						)
+					}
 					section={section}
 					value={currentValue[section.name]}
 				/>

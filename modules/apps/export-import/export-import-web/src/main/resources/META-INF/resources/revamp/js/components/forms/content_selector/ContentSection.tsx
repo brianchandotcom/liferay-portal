@@ -8,14 +8,16 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import {
-	PortletDataHandlerBoolean,
-	PortletDataHandlerSection as PortletDataHandlerSectionType,
-} from '../../../utils/mockPortletDataHandlerSections';
-import PortletDataControl, {
 	HandlerSelection,
 	getInitialSelection,
 	isSelected,
-} from './PortletDataControl';
+	updateSelection,
+} from '../../../utils/contentSelection';
+import {
+	PortletDataHandlerBoolean,
+	PortletDataHandlerSection as PortletDataHandlerSectionType,
+} from '../../../utils/mockPortletDataHandlerSections';
+import PortletDataControl from './PortletDataControl';
 
 export type SectionSelection = Record<string, HandlerSelection>;
 
@@ -86,20 +88,15 @@ export default function ContentSection({
 					<PortletDataControl
 						control={context}
 						key={context.name}
-						onChange={(controlValue) => {
-							const {[context.name]: _, ...newEntries} =
-								portletContextsValue;
-
-							if (controlValue) {
-								newEntries[context.name] = controlValue;
-							}
-
+						onChange={(controlValue) =>
 							onChange(
-								Object.keys(newEntries).length
-									? (newEntries as SectionSelection)
-									: undefined
-							);
-						}}
+								updateSelection(
+									portletContextsValue,
+									context.name,
+									controlValue
+								)
+							)
+						}
 						value={portletContextsValue[context.name]}
 					/>
 				))}

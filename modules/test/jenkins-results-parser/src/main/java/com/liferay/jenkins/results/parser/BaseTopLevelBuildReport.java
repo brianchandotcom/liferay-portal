@@ -326,8 +326,16 @@ public abstract class BaseTopLevelBuildReport
 		JSONObject controllerJobJSONObject = JenkinsAPIUtil.getAPIJSONObject(
 			controllerJobURL, "builds[description,number]");
 
-		JSONArray buildsJSONArray = controllerJobJSONObject.getJSONArray(
+		if (controllerJobJSONObject == null) {
+			return null;
+		}
+
+		JSONArray buildsJSONArray = controllerJobJSONObject.optJSONArray(
 			"builds");
+
+		if (buildsJSONArray == null) {
+			return null;
+		}
 
 		boolean foundCurrentBuild = false;
 
@@ -336,7 +344,7 @@ public abstract class BaseTopLevelBuildReport
 		for (int i = 0; i < buildsJSONArray.length(); i++) {
 			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-			int buildNumber = buildJSONObject.getInt("number");
+			int buildNumber = buildJSONObject.optInt("number", -1);
 
 			if (buildNumber == currentBuildNumber) {
 				foundCurrentBuild = true;
@@ -349,7 +357,7 @@ public abstract class BaseTopLevelBuildReport
 			}
 
 			Matcher matcher = _controllerBuildDescriptionPattern.matcher(
-				buildJSONObject.getString("description"));
+				buildJSONObject.optString("description"));
 
 			if (!matcher.find()) {
 				continue;
@@ -365,6 +373,8 @@ public abstract class BaseTopLevelBuildReport
 			}
 
 			previousTopLevelBuildURL = matcher.group("buildURL");
+
+			break;
 		}
 
 		if (!JenkinsResultsParserUtil.isURL(previousTopLevelBuildURL)) {
@@ -500,6 +510,47 @@ public abstract class BaseTopLevelBuildReport
 		return buildReportJSONObject.optLong("totalDuration");
 	}
 
+	@Override
+	public List<FailureReport> getUniqueFailureReports() {
+		if (_uniqueFailureReports != null) {
+			return _uniqueFailureReports;
+		}
+
+		TopLevelBuildReport previousTopLevelBuildReport =
+			getPreviousTopLevelBuildReport();
+
+		if (previousTopLevelBuildReport == null) {
+			_uniqueFailureReports = getDistinctFailureReports();
+
+			return _uniqueFailureReports;
+		}
+
+		List<FailureReport> uniqueFailureReports = new ArrayList<>();
+
+		List<FailureReport> previousFailureReports =
+			previousTopLevelBuildReport.getDistinctFailureReports();
+
+		for (FailureReport failureReport : getDistinctFailureReports()) {
+			boolean hasSimilarFailure = false;
+
+			for (FailureReport previousFailureReport : previousFailureReports) {
+				if (failureReport.isSimilar(previousFailureReport)) {
+					hasSimilarFailure = true;
+
+					break;
+				}
+			}
+
+			if (!hasSimilarFailure) {
+				uniqueFailureReports.add(failureReport);
+			}
+		}
+
+		_uniqueFailureReports = uniqueFailureReports;
+
+		return _uniqueFailureReports;
+	}
+
 	public void setControllerBuildReport(
 		ControllerBuildReport controllerBuildReport) {
 
@@ -566,9 +617,8 @@ public abstract class BaseTopLevelBuildReport
 	private static final Pattern _controllerBuildDescriptionPattern =
 		Pattern.compile(
 			JenkinsResultsParserUtil.combine(
-				"<strong[^>]*>(?<status>[A-Z]+)</strong> - <a href=\\\"",
-				"(?<buildURL>https://test-\\d-\\d.liferay.com/job/[^/]+/\\d+/)",
-				"\\\">Build URL</a>.+"));
+				"<strong[^>]*>(?<status>[A-Z]+)<\\/strong> - <a href=\\\"",
+				"(?<buildURL>[^\\\"]+)\\\">Build URL<\\/a>.*"));
 
 	private final Set<DownstreamBuildReport> _cachedDownstreamBuildReports =
 		new HashSet<>();
@@ -579,5 +629,6 @@ public abstract class BaseTopLevelBuildReport
 	private List<FailureReport> _failureReports;
 	private JobReport _jobReport;
 	private TopLevelBuildReport _previousTopLevelBuildReport;
+	private List<FailureReport> _uniqueFailureReports;
 
 }

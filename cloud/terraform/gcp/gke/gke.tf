@@ -1,8 +1,5 @@
 resource "google_container_cluster" "primary" {
 	addons_config {
-		gcs_fuse_csi_driver_config {
-			enabled=true
-		}
 		horizontal_pod_autoscaling {
 			disabled=false
 		}

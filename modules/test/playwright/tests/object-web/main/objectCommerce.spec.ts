@@ -83,29 +83,36 @@ test('can create entry related to Commerce Product Group', async ({
 		}
 	);
 
-	await viewObjectEntriesPage.goto(objectDefinition.className);
+	try {
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-	await viewObjectEntriesPage.clickAddObjectEntry(
-		objectDefinition.label['en_US']
-	);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
-	await viewObjectEntriesPage.selectDropdownItemWithSearch(pricingClassName);
+		await viewObjectEntriesPage.selectDropdownItemWithSearch(
+			pricingClassName
+		);
 
-	await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-	await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-	await viewObjectEntriesPage.backButton.click();
+		await viewObjectEntriesPage.backButton.click();
 
-	await expect(
-		page.locator('table td').getByText(pricingClassName).first()
-	).toBeVisible();
+		await expect(
+			page.locator('table td').getByText(pricingClassName).first()
+		).toBeVisible();
+	}
+	finally {
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}headless-commerce-admin-catalog/v1.0/product-groups/${pricingClass.id}`
+		);
 
-	await apiHelpers.delete(
-		`${apiHelpers.baseUrl}headless-commerce-admin-catalog/v1.0/product-groups/${pricingClass.id}`
-	);
-
-	await objectRelationshipAPIClient.deleteObjectRelationship(relationship.id);
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
+	}
 });
 
 test('can create entry related to Commerce Products', async ({
@@ -160,31 +167,38 @@ test('can create entry related to Commerce Products', async ({
 
 	const productName = 'Simple T-Shirt ' + getRandomInt();
 
-	await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {en_US: productName},
 		productType: 'simple',
 	});
 
-	await viewObjectEntriesPage.goto(objectDefinition.className);
+	try {
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-	await viewObjectEntriesPage.clickAddObjectEntry(
-		objectDefinition.label['en_US']
-	);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
-	await viewObjectEntriesPage.selectDropdownItemWithSearch(productName);
+		await viewObjectEntriesPage.selectDropdownItemWithSearch(productName);
 
-	await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-	await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-	await viewObjectEntriesPage.backButton.click();
+		await viewObjectEntriesPage.backButton.click();
 
-	await expect(
-		page.locator('table td').getByText(productName).first()
-	).toBeVisible();
+		await expect(
+			page.locator('table td').getByText(productName).first()
+		).toBeVisible();
+	}
+	finally {
+		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(product.id);
 
-	await objectRelationshipAPIClient.deleteObjectRelationship(relationship.id);
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
+	}
 });
 
 test('object scoped by company not displayed on site channel notifications', async ({
@@ -220,7 +234,10 @@ test('object scoped by company not displayed on site channel notifications', asy
 
 	await page.waitForLoadState('networkidle');
 
-	await page.getByRole('button', {name: 'Add Notification Template'}).first().click();
+	await page
+		.getByRole('button', {name: 'Add Notification Template'})
+		.first()
+		.click();
 
 	for (const optionType of ['Create', 'Delete', 'Update']) {
 		await expect(

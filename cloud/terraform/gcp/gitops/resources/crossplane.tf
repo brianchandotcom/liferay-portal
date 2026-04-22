@@ -208,3 +208,67 @@ resource "kubernetes_manifest" "function_go_templating_runtime_config" {
 	}
 	provider=kubernetes
 }
+
+resource "kubernetes_manifest" "function_kcl" {
+	manifest={
+		apiVersion="pkg.crossplane.io/v1beta1"
+		kind="Function"
+		metadata={
+			name="function-kcl"
+		}
+		spec={
+			package="xpkg.upbound.io/crossplane-contrib/function-kcl:v0.10.1"
+			runtimeConfigRef={
+				name="function-kcl-runtime-config"
+			}
+		}
+	}
+	provider=kubernetes
+}
+resource "kubernetes_manifest" "function_kcl_runtime_config" {
+	manifest={
+		apiVersion="pkg.crossplane.io/v1beta1"
+		kind="DeploymentRuntimeConfig"
+		metadata={
+			name="function-kcl-runtime-config"
+		}
+		spec={
+			deploymentTemplate={
+				metadata={
+					annotations=local.deploymentruntimeconfig_opentelemetry_annotations
+				}
+				spec={
+					selector={
+						matchLabels={
+							"pkg.crossplane.io/function"="function-kcl"
+						}
+					}
+					template={
+						metadata={
+							annotations=local.deploymentruntimeconfig_opentelemetry_annotations
+						}
+						spec={
+							containers=[
+								{
+									name="package-runtime"
+									resources={
+										limits={
+											memory="512Mi"
+										}
+										requests={
+											cpu="15m"
+											memory="128Mi"
+										}
+									}
+									securityContext=local.default_crossplane_container_security_context
+								},
+							],
+							securityContext=local.default_crossplane_pod_security_context
+						}
+					}
+				}
+			}
+		}
+	}
+	provider=kubernetes
+}

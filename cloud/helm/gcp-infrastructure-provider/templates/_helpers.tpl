@@ -17,3 +17,7 @@ securityContext:
     seccompProfile:
         type: RuntimeDefault
 {{- end -}}
+
+{{- define "kcl.load_layer" -}}
+{{- .root.Files.Get .path | regexReplaceAll "(?m)^import .*\\n" "" -}}
+{{- end -}}

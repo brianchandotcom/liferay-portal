@@ -184,25 +184,11 @@ public class PortletContainerUtil {
 	}
 
 	public static void processPublicRenderParameters(
-		HttpServletRequest httpServletRequest, Layout layout) {
-
-		_portletContainer.processPublicRenderParameters(
-			httpServletRequest, layout);
-	}
-
-	public static void processPublicRenderParameters(
 		HttpServletRequest httpServletRequest, Layout layout,
-		List<Portlet> portlets, boolean lifecycleAction) {
+		List<Portlet> portlets) {
 
 		_portletContainer.processPublicRenderParameters(
-			httpServletRequest, layout, portlets, lifecycleAction);
-	}
-
-	public static void processPublicRenderParameters(
-		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
-
-		_portletContainer.processPublicRenderParameters(
-			httpServletRequest, layout, portlet);
+			httpServletRequest, layout, portlets);
 	}
 
 	public static void render(

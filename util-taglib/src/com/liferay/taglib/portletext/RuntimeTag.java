@@ -360,7 +360,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 				PortletContainerUtil.processPublicRenderParameters(
 					httpServletRequest, layout,
-					Collections.singletonList(portlet), false);
+					Collections.singletonList(portlet));
 
 				PortletContainerUtil.render(
 					httpServletRequest, httpServletResponse, portlet);

@@ -6,6 +6,8 @@
 package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
@@ -99,8 +101,15 @@ public class RenderPortletAction implements Action {
 			httpServletRequest, null, columnId, columnPos, columnCount,
 			boundary, decorate);
 
-		PortletContainerUtil.processPublicRenderParameters(
-			httpServletRequest, themeDisplay.getLayout());
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (layoutType instanceof LayoutTypePortlet) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layoutType;
+
+			PortletContainerUtil.processPublicRenderParameters(
+				httpServletRequest, layout, layoutTypePortlet.getPortlets());
+		}
 
 		PortletContainerUtil.renderHeaders(
 			httpServletRequest, httpServletResponse, portlet);

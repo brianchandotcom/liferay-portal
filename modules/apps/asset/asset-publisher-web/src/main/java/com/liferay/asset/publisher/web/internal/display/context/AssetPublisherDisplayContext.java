@@ -245,17 +245,6 @@ public class AssetPublisherDisplayContext {
 		return _abstractLength;
 	}
 
-	public String getAddAssetListEntryURL() {
-		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				_httpServletRequest, _themeDisplay.getScopeGroup(),
-				AssetListPortletKeys.ASSET_LIST, 0, 0,
-				PortletRequest.RENDER_PHASE)
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
-	}
-
 	public long[] getAllAssetCategoryIds() {
 		if (_allAssetCategoryIds != null) {
 			return _allAssetCategoryIds;
@@ -1379,7 +1368,7 @@ public class AssetPublisherDisplayContext {
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
 		return HashMapBuilder.<String, Object>put(
-			"addAssetListEntryURL", getAddAssetListEntryURL()
+			"addAssetListEntryURL", _getAddAssetListEntryURL()
 		).put(
 			"assetListEntryId",
 			() -> {
@@ -2274,6 +2263,17 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return filteredAssetEntries;
+	}
+
+	private String _getAddAssetListEntryURL() {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, _themeDisplay.getScopeGroup(),
+				AssetListPortletKeys.ASSET_LIST, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private String _getAssetEntryItemSelectorPortletURL(

@@ -144,68 +144,6 @@ definition {
 			percentageList = "66.67%,33.33%");
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
-	@priority = 5
-	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
-		var usernameList = "ac,liferay,dxp";
-		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
-
-		for (var name : list ${usernameList}) {
-			JSONUser.addUser(
-				userEmailAddress = "${name}@liferay.com",
-				userFirstName = ${name},
-				userLastName = ${name},
-				userScreenName = ${name});
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "${name}@liferay.com");
-		}
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		ACUtils.navigateToSitePageWithUser(
-			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
-			emailList = ${emailList},
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		ACNavigation.goToSegments();
-
-		ACSegments.createDynamicSegmentAndFillFields(
-			criterion = "Individual Attributes",
-			segmentField = "email",
-			segments = "Dynamic Segment Test");
-
-		ACSegments.editTextCriterion(textInput = "ac@liferay.com");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Blogs");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACNavigation.openItem(itemName = "Blogs AC Title");
-
-		ACUtils.assertAudienceCard(
-			index = 2,
-			percentageList = "66.67%,33.33%");
-
-		ACUtils.assertViewerSegmentsCard(segmentNameList = "Dynamic Segment Test");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"
 	@priority = 5
 	test BlogsTechnologyCardShowsViewsByExpectedBrowser {

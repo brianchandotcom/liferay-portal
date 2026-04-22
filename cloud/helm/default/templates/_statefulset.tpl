@@ -350,7 +350,6 @@ spec:
                 -   port: http
                     protocol: TCP
         {{- end }}
-        {{- if .statefulset.networkPolicy.allowIntraApp }}
         -   from:
                 -   podSelector:
                         matchLabels:
@@ -360,7 +359,6 @@ spec:
                     protocol: TCP
                 -   port: http
                     protocol: TCP
-        {{- end }}
         {{- with .statefulset.networkPolicy.extraIngress }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

@@ -245,11 +245,15 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public String getAddAssetListEntryURL() {
-		return String.valueOf(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				_httpServletRequest, _themeDisplay.getScopeGroup(),
+				_httpServletRequest, 
+				_themeDisplay.getScopeGroup(),
 				AssetListPortletKeys.ASSET_LIST, 0, 0,
-				PortletRequest.RENDER_PHASE));
+				PortletRequest.RENDER_PHASE)
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString();
 	}
 
 	public long[] getAllAssetCategoryIds() {

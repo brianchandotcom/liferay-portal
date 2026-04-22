@@ -3307,14 +3307,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return page;
 	}
 
-	private void _updateLastPostDate(Date date, long nodeId) {
-		if (!ExportImportThreadLocal.isImportInProcess() &&
-			!ExportImportThreadLocal.isStagingInProcess()) {
-
-			wikiPageLocalService.updateLastPostDate(nodeId, date);
-		}
-	}
-
 	private void _setParameter(
 		String name, StringBundler sb, ServiceContext serviceContext,
 		String value) {
@@ -3342,6 +3334,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getCompanyId(), page.getGroupId(), userId,
 			WikiPage.class.getName(), page.getPageId(), page, serviceContext,
 			workflowContext);
+	}
+
+	private void _updateLastPostDate(Date date, long nodeId) {
+		if (!ExportImportThreadLocal.isImportInProcess() &&
+			!ExportImportThreadLocal.isStagingInProcess()) {
+
+			wikiPageLocalService.updateLastPostDate(nodeId, date);
+		}
 	}
 
 	private WikiPage _updatePage(

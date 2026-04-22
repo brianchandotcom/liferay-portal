@@ -57,7 +57,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_publicRenderParameterName = "categoryId";
+		_publicRenderParameterName = "test_" + RandomTestUtil.randomString();
 		_publicRenderParameterValue = RandomTestUtil.randomString(
 			LayoutFriendlyURLRandomizerBumper.INSTANCE,
 			NumericStringRandomizerBumper.INSTANCE,

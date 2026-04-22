@@ -17,7 +17,6 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.constants.CMSSiteInitializerPortletKeys;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.portlet.Portlet;
@@ -45,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.single-page-application=false",
 		"jakarta.portlet.display-name=CMS Object Entry",
 		"jakarta.portlet.expiration-cache=0",
-		"jakarta.portlet.name=" + CMSSiteInitializerPortletKeys.CMS_OBJECT_ENTRY,
+		"jakarta.portlet.name=com_liferay_site_cms_site_initializer_internal_portlet_CMSObjectEntryPortlet",
 		"jakarta.portlet.resource-bundle=content.Language",
 		"jakarta.portlet.security-role-ref=power-user,user",
 		"jakarta.portlet.version=4.0"

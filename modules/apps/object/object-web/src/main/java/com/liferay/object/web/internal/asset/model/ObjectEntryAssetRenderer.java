@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.web.internal.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.constants.CMSSiteInitializerPortletKeys;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
@@ -208,7 +208,7 @@ public class ObjectEntryAssetRenderer
 			return PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(
 					httpServletRequest, group,
-					CMSSiteInitializerPortletKeys.CMS_OBJECT_ENTRY, 0, 0,
+					ObjectPortletKeys.CMS_OBJECT_ENTRY, 0, 0,
 					PortletRequest.RENDER_PHASE)
 			).setRedirect(
 				themeDisplay.getURLCurrent()

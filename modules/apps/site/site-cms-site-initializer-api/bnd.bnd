@@ -4,5 +4,4 @@ Bundle-Version: 4.1.2
 Export-Package:\
 	com.liferay.site.cms.site.initializer.bulk.selection,\
 	com.liferay.site.cms.site.initializer.configuration,\
-	com.liferay.site.cms.site.initializer.constants,\
 	com.liferay.site.cms.site.initializer.util

@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.web.internal.constants.ObjectPortletKeys;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactoryImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.site.cms.site.initializer.constants.CMSSiteInitializerPortletKeys;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
@@ -187,7 +187,7 @@ public class ObjectEntryAssetRendererTest {
 			portalUtilMockedStatic.when(
 				() -> PortalUtil.getControlPanelPortletURL(
 					Mockito.eq(httpServletRequest), Mockito.any(),
-					Mockito.eq(CMSSiteInitializerPortletKeys.CMS_OBJECT_ENTRY),
+					Mockito.eq(ObjectPortletKeys.CMS_OBJECT_ENTRY),
 					Mockito.anyLong(), Mockito.anyLong(),
 					Mockito.eq(PortletRequest.RENDER_PHASE))
 			).thenReturn(

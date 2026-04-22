@@ -4,12 +4,13 @@
  */
 
 import Alert from '@clayui/alert';
+import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import {IFrontendDataSetProps, IView} from '@liferay/frontend-data-set-web';
 import {ItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import FolderService from '../../common/services/FolderService';
@@ -52,6 +53,27 @@ type Space = {
 
 const SPACES_URL = `${window.location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`;
 
+const ROOT_FOLDER_ERCS = new Set(['L_CONTENTS', 'L_FILES']);
+
+const isRootFolder = (erc: string | undefined) =>
+	!!erc && ROOT_FOLDER_ERCS.has(erc);
+
+const isModifiedClick = (event: React.MouseEvent) =>
+	event.metaKey ||
+	event.ctrlKey ||
+	event.shiftKey ||
+	event.altKey ||
+	event.button !== 0;
+
+type FolderItem = {
+	embedded?: {
+		externalReferenceCode?: string;
+		id?: number;
+	};
+	entryClassName?: string;
+	title?: string;
+};
+
 const SUCCESS_MESSAGES = {
 	copy: Liferay.Language.get('x-was-successfully-copied-to-x'),
 	move: Liferay.Language.get('x-was-successfully-moved-to-x'),
@@ -88,7 +110,11 @@ const getDuplicateItemCheckPromise = (item: ItemData, folder: Folder) => {
 };
 
 const getSpaceFoldersURL = (cmsSection: string, scopeId: number) => {
-	return `${window.location.origin}/o/search/v1.0/search?emptySearch=true&entryClassNames=${OBJECT_ENTRY_FOLDER_CLASS_NAME}&filter=(cmsSection eq '${cmsSection}' or title eq '${cmsSection}') and (status in (0, 2, 3))&nestedFields=description,embedded,file.thumbnailURL&scope=${scopeId}`;
+	return `${window.location.origin}/o/search/v1.0/search?emptySearch=true&entryClassNames=${OBJECT_ENTRY_FOLDER_CLASS_NAME}&filter=((title eq '${cmsSection}' and folderId eq 0) or (cmsRoot eq true and cmsSection eq '${cmsSection}')) and (status in (0, 2, 3))&nestedFields=description,embedded,file.thumbnailURL&scope=${scopeId}`;
+};
+
+const getChildFoldersURL = (folderId: number, scopeId: number) => {
+	return `${window.location.origin}/o/search/v1.0/search?emptySearch=true&entryClassNames=${OBJECT_ENTRY_FOLDER_CLASS_NAME}&filter=folderId eq ${folderId} and (status in (0, 2, 3))&nestedFields=description,embedded,file.thumbnailURL&scope=${scopeId}`;
 };
 
 const displayInfoToast = (
@@ -295,6 +321,7 @@ function FolderItemSelectorModalContent({
 	const [url, setURL] = useState<string>(SPACES_URL);
 	const [schemaKey, setSchemaKey] = useState(0);
 	const [currentSpace, setCurrentSpace] = useState<Space | undefined>();
+	const [folderStructure, setFolderStructure] = useState<Folder[]>([]);
 
 	const {observer, onOpenChange, open} = useModal();
 
@@ -318,50 +345,190 @@ function FolderItemSelectorModalContent({
 		return [];
 	}, [isBulk, itemData, selectedData]);
 
-	function handleSpaceClick(space: Space) {
-		setCurrentSpace(space);
-		setSchemaKey((prev) => prev + 1);
-		setSelectedItemType('folder');
-		setURL(getSpaceFoldersURL(cmsSection, space.scopeId));
-	}
+	const handleSpaceClick = useCallback(
+		(space: Space) => {
+			setCurrentSpace(space);
+			setFolderStructure([]);
+			setSchemaKey((prev) => prev + 1);
+			setSelectedItemType('folder');
+			setURL(getSpaceFoldersURL(cmsSection, space.scopeId));
+		},
+		[cmsSection]
+	);
 
-	const setItemComponentProps = ({item, props}: {item: any; props: any}) => {
-		if (item.type === 'Space') {
-			const assetLibrary = assetLibraries.find(
-				(assetLibrary) =>
-					assetLibrary.externalReferenceCode ===
-					item.externalReferenceCode
+	const navigateToFolders = useCallback(
+		(folders: Folder[]) => {
+			if (!currentSpace) {
+				return;
+			}
+
+			setFolderStructure(folders);
+			setSchemaKey((prev) => prev + 1);
+			setURL(
+				!folders.length
+					? getSpaceFoldersURL(cmsSection, currentSpace.scopeId)
+					: getChildFoldersURL(
+							folders[folders.length - 1].id,
+							currentSpace.scopeId
+						)
 			);
+		},
+		[cmsSection, currentSpace]
+	);
 
-			return {
-				...props,
-				onClick: () => {
-					handleSpaceClick({
-						name: assetLibrary!.name,
-						scopeId: assetLibrary!.groupId,
-					});
-				},
-				onSelectChange: null,
-			};
-		}
+	const handleChildFolderClick = useCallback(
+		(folder: Folder) => {
+			navigateToFolders([...folderStructure, folder]);
+		},
+		[folderStructure, navigateToFolders]
+	);
 
-		if (selectedItemType === 'folder') {
-			const erc = item.embedded?.externalReferenceCode;
+	const setItemComponentProps = useCallback(
+		({item, props}: {item: any; props: any}) => {
+			if (item.type === 'Space') {
+				const assetLibrary = assetLibraries.find(
+					(assetLibrary) =>
+						assetLibrary.externalReferenceCode ===
+						item.externalReferenceCode
+				);
 
-			if (erc && excludedERCs.includes(erc)) {
 				return {
 					...props,
-					className: `${props.className || ''} hidden-item-selector-item`,
+					onClick: () => {
+						handleSpaceClick({
+							name: assetLibrary!.name,
+							scopeId: assetLibrary!.groupId,
+						});
+					},
 					onSelectChange: null,
 				};
 			}
-		}
 
-		return {
-			...props,
-			symbol: 'folder',
-		};
-	};
+			if (selectedItemType === 'folder') {
+				const folderItem = item as FolderItem;
+				const erc = folderItem.embedded?.externalReferenceCode;
+
+				if (erc && excludedERCs.includes(erc)) {
+					return {
+						...props,
+						className: `${props.className || ''} hidden-item-selector-item`,
+						onSelectChange: null,
+					};
+				}
+
+				const folderId = folderItem.embedded?.id;
+
+				if (
+					!isRootFolder(erc) &&
+					folderItem.entryClassName ===
+						OBJECT_ENTRY_FOLDER_CLASS_NAME &&
+					folderId !== undefined
+				) {
+					const originalOnClick = props.onClick;
+
+					return {
+						...props,
+						href: '#',
+						onClick: (event: React.MouseEvent) => {
+							const target = event.nativeEvent
+								.target as HTMLElement;
+							const anchor =
+								target.tagName === 'A'
+									? target
+									: target.closest('a');
+
+							if (anchor) {
+								if (isModifiedClick(event)) {
+									event.preventDefault();
+
+									return;
+								}
+
+								event.preventDefault();
+								handleChildFolderClick({
+									id: folderId,
+									title: folderItem.title ?? '',
+								});
+
+								return;
+							}
+
+							originalOnClick?.(event);
+						},
+						symbol: 'folder',
+					};
+				}
+			}
+
+			return {
+				...props,
+				symbol: 'folder',
+			};
+		},
+		[
+			assetLibraries,
+			excludedERCs,
+			handleChildFolderClick,
+			handleSpaceClick,
+			selectedItemType,
+		]
+	);
+
+	const customRenderers = useMemo(
+		() => ({
+			tableCell: [
+				{
+					component: ({
+						itemData,
+						value,
+					}: {
+						itemData: FolderItem;
+						value: string;
+					}) => {
+						const erc = itemData.embedded?.externalReferenceCode;
+						const folderId = itemData.embedded?.id;
+
+						if (
+							isRootFolder(erc) ||
+							folderId === undefined ||
+							itemData.entryClassName !==
+								OBJECT_ENTRY_FOLDER_CLASS_NAME
+						) {
+							return <>{value}</>;
+						}
+
+						return (
+							<div className="table-list-title">
+								<ClayLink
+									aria-label={value}
+									data-senna-off
+									href="#"
+									onClick={(event: React.MouseEvent) => {
+										if (isModifiedClick(event)) {
+											event.preventDefault();
+
+											return;
+										}
+
+										event.preventDefault();
+										handleChildFolderClick({
+											id: folderId,
+											title: itemData.title ?? '',
+										});
+									}}
+								>
+									{value}
+								</ClayLink>
+							</div>
+						);
+					},
+					name: 'folderTitleCellRenderer',
+					type: 'internal' as const,
+				},
+			],
+		}),
+		[handleChildFolderClick]
+	);
 
 	const handleOnItemsChange = async (folder: Folder, targetName?: string) => {
 		const invalidContentActionMessage = isCopy
@@ -508,6 +675,7 @@ function FolderItemSelectorModalContent({
 							label: Liferay.Language.get('spaces'),
 							onClick: () => {
 								setCurrentSpace(undefined);
+								setFolderStructure([]);
 								setSchemaKey((prev) => prev + 1);
 								setSelectedItemType('space');
 								setURL(SPACES_URL);
@@ -518,15 +686,32 @@ function FolderItemSelectorModalContent({
 									{
 										label: currentSpace.name,
 										onClick: () => {
-											handleSpaceClick(currentSpace);
+											if (!folderStructure.length) {
+												return;
+											}
+
+											navigateToFolders([]);
 										},
 									},
 								]
 							: []),
+						...folderStructure.map((folder, index) => ({
+							label: folder.title,
+							onClick: () => {
+								if (index === folderStructure.length - 1) {
+									return;
+								}
+
+								navigateToFolders(
+									folderStructure.slice(0, index + 1)
+								);
+							},
+						})),
 					]}
 					breadcrumbsLabel={false}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
+						customRenderers,
 						id: `itemSelectorModal-users-${
 							selectedItemType === 'folder'
 								? itemData.embedded.id
@@ -558,6 +743,8 @@ function FolderItemSelectorModalContent({
 									fields: [
 										selectedItemType === 'folder'
 											? {
+													contentRenderer:
+														'folderTitleCellRenderer',
 													fieldName: 'title',
 													label: Liferay.Language.get(
 														'title'
@@ -624,12 +811,12 @@ function FolderItemSelectorModalContent({
 							let name = item.title;
 
 							if (isFolder) {
-								const isRootFolder =
+								const hasNoParent =
 									!item.embedded.parentObjectEntryFolderId ||
 									item.embedded.parentObjectEntryFolderId ===
 										null;
 
-								if (isRootFolder) {
+								if (hasNoParent) {
 									name = currentSpace?.name || item.title;
 								}
 							}

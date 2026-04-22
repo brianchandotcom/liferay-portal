@@ -158,6 +158,8 @@ public abstract class BaseSectionDisplayContextTestCase
 				_portal.getClassNameId(ObjectEntryFolder.class),
 				StringPool.SLASH)
 		).put(
+			"breadcrumbProps", _getBreadcrumbProps(mockHttpServletRequest)
+		).put(
 			"brokenLinksCheckerEnabled",
 			GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.CMS_BROKEN_LINKS_CHECKER_ENABLED))

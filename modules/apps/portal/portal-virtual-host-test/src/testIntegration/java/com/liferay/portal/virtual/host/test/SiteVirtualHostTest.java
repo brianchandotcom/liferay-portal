@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -67,63 +69,63 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 	@Ignore
 	@Test
 	public void testGroupRestrictedViaVirutalHost() throws Exception {
-		_testAccessible(COMPANY_HOST_1, _group1);
-		_testAccessible(COMPANY_HOST_1, _group2);
-		_testAccessible(COMPANY_HOST_1, _group3);
-		_testAccessible(COMPANY_HOST_1, _guestGroup);
+		_assertURLToString(true, _group1, COMPANY_HOST_1);
+		_assertURLToString(true, _group2, COMPANY_HOST_1);
+		_assertURLToString(true, _group3, COMPANY_HOST_1);
+		_assertURLToString(true, _guestGroup, COMPANY_HOST_1);
 
-		_testAccessible(_GROUP_HOST_1, _group1);
-		_testNotAccessible(_GROUP_HOST_1, _group2);
-		_testAccessible(_GROUP_HOST_1, _group3);
-		_testNotAccessible(_GROUP_HOST_1, _guestGroup);
+		_assertURLToString(true, _group1, _GROUP_HOST_1);
+		_assertURLToString(false, _group2, _GROUP_HOST_1);
+		_assertURLToString(true, _group3, _GROUP_HOST_1);
+		_assertURLToString(true, _guestGroup, _GROUP_HOST_1);
 
-		_testNotAccessible(_GROUP_HOST_2, _group1);
-		_testAccessible(_GROUP_HOST_2, _group2);
-		_testAccessible(_GROUP_HOST_2, _group3);
-		_testNotAccessible(_GROUP_HOST_2, _guestGroup);
+		_assertURLToString(true, _group1, _GROUP_HOST_2);
+		_assertURLToString(true, _group2, _GROUP_HOST_2);
+		_assertURLToString(true, _group3, _GROUP_HOST_2);
+		_assertURLToString(true, _guestGroup, _GROUP_HOST_2);
 	}
 
 	@Test
 	public void testGroupsAccessibleViaVirutalHost() throws Exception {
-		_testAccessible(COMPANY_HOST_1, _group1);
-		_testAccessible(COMPANY_HOST_1, _group2);
-		_testAccessible(COMPANY_HOST_1, _group3);
-		_testAccessible(COMPANY_HOST_1, _childGroup1);
-		_testAccessible(COMPANY_HOST_1, _childGroup2);
-		_testAccessible(COMPANY_HOST_1, _childGroup3);
-		_testAccessible(COMPANY_HOST_1, _guestGroup);
+		_assertURLToString(true, _group1, COMPANY_HOST_1);
+		_assertURLToString(true, _group2, COMPANY_HOST_1);
+		_assertURLToString(true, _group3, COMPANY_HOST_1);
+		_assertURLToString(true, _childGroup1, COMPANY_HOST_1);
+		_assertURLToString(true, _childGroup2, COMPANY_HOST_1);
+		_assertURLToString(true, _childGroup3, COMPANY_HOST_1);
+		_assertURLToString(true, _guestGroup, COMPANY_HOST_1);
 
-		_testAccessible(_GROUP_HOST_1, _group1);
-		_testAccessible(_GROUP_HOST_1, _group2);
-		_testAccessible(_GROUP_HOST_1, _group3);
-		_testAccessible(_GROUP_HOST_1, _childGroup1);
-		_testAccessible(_GROUP_HOST_1, _childGroup2);
-		_testAccessible(_GROUP_HOST_1, _childGroup3);
-		_testAccessible(_GROUP_HOST_1, _guestGroup);
+		_assertURLToString(true, _group1, _GROUP_HOST_1);
+		_assertURLToString(true, _group2, _GROUP_HOST_1);
+		_assertURLToString(true, _group3, _GROUP_HOST_1);
+		_assertURLToString(true, _childGroup1, _GROUP_HOST_1);
+		_assertURLToString(true, _childGroup2, _GROUP_HOST_1);
+		_assertURLToString(true, _childGroup3, _GROUP_HOST_1);
+		_assertURLToString(true, _guestGroup, _GROUP_HOST_1);
 
-		_testAccessible(_CHILD_GROUP_HOST_1, _group1);
-		_testAccessible(_CHILD_GROUP_HOST_1, _group2);
-		_testAccessible(_CHILD_GROUP_HOST_1, _group3);
-		_testAccessible(_CHILD_GROUP_HOST_1, _childGroup1);
-		_testAccessible(_CHILD_GROUP_HOST_1, _childGroup2);
-		_testAccessible(_CHILD_GROUP_HOST_1, _childGroup3);
-		_testAccessible(_CHILD_GROUP_HOST_1, _guestGroup);
+		_assertURLToString(true, _group1, _CHILD_GROUP_HOST_1);
+		_assertURLToString(true, _group2, _CHILD_GROUP_HOST_1);
+		_assertURLToString(true, _group3, _CHILD_GROUP_HOST_1);
+		_assertURLToString(true, _childGroup1, _CHILD_GROUP_HOST_1);
+		_assertURLToString(true, _childGroup2, _CHILD_GROUP_HOST_1);
+		_assertURLToString(true, _childGroup3, _CHILD_GROUP_HOST_1);
+		_assertURLToString(true, _guestGroup, _CHILD_GROUP_HOST_1);
 
-		_testAccessible(_GROUP_HOST_2, _group1);
-		_testAccessible(_GROUP_HOST_2, _group2);
-		_testAccessible(_GROUP_HOST_2, _group3);
-		_testAccessible(_GROUP_HOST_2, _childGroup1);
-		_testAccessible(_GROUP_HOST_2, _childGroup2);
-		_testAccessible(_GROUP_HOST_2, _childGroup3);
-		_testAccessible(_GROUP_HOST_2, _guestGroup);
+		_assertURLToString(true, _group1, _GROUP_HOST_2);
+		_assertURLToString(true, _group2, _GROUP_HOST_2);
+		_assertURLToString(true, _group3, _GROUP_HOST_2);
+		_assertURLToString(true, _childGroup1, _GROUP_HOST_2);
+		_assertURLToString(true, _childGroup2, _GROUP_HOST_2);
+		_assertURLToString(true, _childGroup3, _GROUP_HOST_2);
+		_assertURLToString(true, _guestGroup, _GROUP_HOST_2);
 
-		_testAccessible(_CHILD_GROUP_HOST_2, _group1);
-		_testAccessible(_CHILD_GROUP_HOST_2, _group2);
-		_testAccessible(_CHILD_GROUP_HOST_2, _group3);
-		_testAccessible(_CHILD_GROUP_HOST_2, _childGroup1);
-		_testAccessible(_CHILD_GROUP_HOST_2, _childGroup2);
-		_testAccessible(_CHILD_GROUP_HOST_2, _childGroup3);
-		_testAccessible(_CHILD_GROUP_HOST_2, _guestGroup);
+		_assertURLToString(true, _group1, _CHILD_GROUP_HOST_2);
+		_assertURLToString(true, _group2, _CHILD_GROUP_HOST_2);
+		_assertURLToString(true, _group3, _CHILD_GROUP_HOST_2);
+		_assertURLToString(true, _childGroup1, _CHILD_GROUP_HOST_2);
+		_assertURLToString(true, _childGroup2, _CHILD_GROUP_HOST_2);
+		_assertURLToString(true, _childGroup3, _CHILD_GROUP_HOST_2);
+		_assertURLToString(true, _guestGroup, _CHILD_GROUP_HOST_2);
 	}
 
 	private Group _addGroup(
@@ -153,12 +155,20 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 		return group;
 	}
 
-	private void _testAccessible(String host, Group group) throws Exception {
-		testRequest(
-			StringBundler.concat(
-				"http://", host, ":8080/web", group.getFriendlyURL()),
+	private void _assertURLToString(
+			boolean accessible, Group group, String host)
+		throws Exception {
+
+		assertURLtoString(
 			(code, body) -> {
-				Assert.assertEquals(200, (long)code);
+				if (!accessible) {
+					Assert.assertEquals(
+						HttpServletResponse.SC_NOT_FOUND, (long)code);
+
+					return;
+				}
+
+				Assert.assertEquals(HttpServletResponse.SC_OK, (long)code);
 				Assert.assertTrue(body.contains(group.getDescriptiveName()));
 
 				Layout layout = _layoutLocalService.fetchDefaultLayout(
@@ -166,14 +176,9 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 
 				Assert.assertTrue(
 					body.contains(layout.getName(LocaleUtil.getDefault())));
-			});
-	}
-
-	private void _testNotAccessible(String host, Group group) throws Exception {
-		testRequest(
+			},
 			StringBundler.concat(
-				"http://", host, ":8080/web", group.getFriendlyURL()),
-			(code, body) -> Assert.assertEquals(404, (long)code));
+				"http://", host, ":8080/web", group.getFriendlyURL()));
 	}
 
 	private static final String _CHILD_GROUP_HOST_1 = "childgroup1.localhost";

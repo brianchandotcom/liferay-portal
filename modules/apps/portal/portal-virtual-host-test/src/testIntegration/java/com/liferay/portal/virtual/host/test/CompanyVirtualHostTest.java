@@ -47,24 +47,26 @@ public class CompanyVirtualHostTest extends BaseVirtualHostTestCase {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
 
-		testRequest(
-			StringBundler.concat(
-				"http://", COMPANY_HOST_1, ":8080/web", group.getFriendlyURL()),
+		assertURLtoString(
 			(code, body) -> {
 				Assert.assertEquals(200, (long)code);
 				Assert.assertTrue(body.contains(group.getGroupKey()));
 				Assert.assertTrue(
 					body.contains(layout.getName(LocaleUtil.getDefault())));
-			});
-
-		testRequest(
+			},
 			StringBundler.concat(
-				"http://", COMPANY_HOST_2, ":8080/web", group.getFriendlyURL()),
+				"http://", COMPANY_HOST_1, ":8080/web",
+				group.getFriendlyURL()));
+
+		assertURLtoString(
 			(code, body) -> {
 				Assert.assertEquals(404, (long)code);
 				Assert.assertTrue(body.contains(company2.getVirtualHostname()));
 				Assert.assertTrue(body.contains("404"));
-			});
+			},
+			StringBundler.concat(
+				"http://", COMPANY_HOST_2, ":8080/web",
+				group.getFriendlyURL()));
 	}
 
 }

@@ -111,8 +111,8 @@ export default function PortletDataControl({
 					</span>
 				</div>
 
-				{control.controls &&
-					control.controls.map((nestedControl) => (
+				{control.controls?.map((nestedControl) =>
+					nestedControl.type === 'choice' && !selected ? null : (
 						<PortletDataControl
 							className="mt-2"
 							control={nestedControl}
@@ -137,7 +137,8 @@ export default function PortletDataControl({
 							}}
 							value={currentSelection[nestedControl.name]}
 						/>
-					))}
+					)
+				)}
 			</ClayLayout.ContentCol>
 		</ClayLayout.ContentRow>
 	);

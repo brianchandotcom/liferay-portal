@@ -364,6 +364,10 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 				return;
 			}
 
+			if (modifiedDate) {
+				modifiedDate.value = new Date().getTime();
+			}
+
 			var dissentRenewalPeriod = document.getElementById(
 				'<portlet:namespace />dissentRenewalPeriod'
 			);

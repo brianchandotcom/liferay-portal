@@ -95,6 +95,40 @@ export class BlogsPage {
 			.click();
 	}
 
+	async moveEntryToRecycleBin(title: string) {
+		const card = this.page.locator('.card').filter({hasText: title});
+
+		await this.goToBlogEntryAction('Delete', title);
+
+		const okButton = this.page
+			.getByRole('dialog')
+			.getByRole('button', {name: 'OK'});
+
+		try {
+			await okButton.click({timeout: 2000});
+		}
+		catch {
+
+			// This will happen when the recycle bin is disabled.  Let's
+			// ignore it so that tests pass in local installations where
+			// the recycle bin has been disabled.
+
+		}
+
+		await expect(card).toHaveCount(0);
+	}
+
+	async assertEntryPresent(title: string, expected: boolean = true) {
+		const card = this.page.locator('.card').filter({hasText: title});
+
+		if (expected) {
+			await expect(card.first()).toBeVisible();
+		}
+		else {
+			await expect(card).toHaveCount(0);
+		}
+	}
+
 	async deleteAllBlogEntries() {
 		await this.selectAllBlogEntriesCheckBox.check();
 		await this.deleteAllBlogEntriesButton.click();

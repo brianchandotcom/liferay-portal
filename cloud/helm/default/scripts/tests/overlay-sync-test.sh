@@ -4,8 +4,9 @@ set -o errexit
 set -o nounset
 
 SCRIPT="$(cd "$(dirname "${0}")/.." && pwd)/overlay-sync.sh"
-pass=0
+
 fail=0
+pass=0
 
 function main {
 	rclone() { echo "rclone ${*}"; }

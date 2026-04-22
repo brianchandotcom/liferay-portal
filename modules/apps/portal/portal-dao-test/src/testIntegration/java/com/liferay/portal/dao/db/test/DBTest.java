@@ -6,6 +6,7 @@
 package com.liferay.portal.dao.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -14,12 +15,16 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -27,11 +32,14 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -641,6 +649,117 @@ public class DBTest {
 	}
 
 	@Test
+	public void testGetLockedQueries() throws Exception {
+		Assume.assumeTrue(db.getDBType() == DBType.MYSQL);
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD", 0L)) {
+
+			try {
+				db.runSQL(
+					"create table testTable (id int primary key, data " +
+						"varchar(50))");
+
+				db.runSQL("insert into testTable (id, data) values (1, '')");
+
+				try (Connection lockingConnection =
+						DataAccess.getConnection()) {
+
+					lockingConnection.setAutoCommit(false);
+
+					FutureTask<Void> futureTask = null;
+
+					try (Statement statement1 =
+							lockingConnection.createStatement()) {
+
+						statement1.executeUpdate(
+							"update testTable set data='locked' where id=1");
+
+						futureTask = new FutureTask<>(
+							() -> {
+								try (Statement statement2 =
+										connection.createStatement()) {
+
+									statement2.executeUpdate(
+										"update testTable set data='waiting' " +
+											"where id=1");
+								}
+
+								return null;
+							});
+
+						Thread thread = new Thread(futureTask);
+
+						thread.setDaemon(true);
+						thread.start();
+
+						boolean locked = false;
+
+						long endTime = System.currentTimeMillis() + 5000;
+
+						while (!locked &&
+							   (System.currentTimeMillis() < endTime)) {
+
+							List<DB.RunningQuery> lockedQueries =
+								db.getLockedQueries(lockingConnection);
+
+							for (DB.RunningQuery lockedQuery : lockedQueries) {
+								String query = lockedQuery.getQuery();
+
+								if ((query != null) &&
+									query.contains("waiting")) {
+
+									locked = true;
+
+									Assert.assertNotNull(lockedQuery.getId());
+									Assert.assertNotNull(
+										lockedQuery.getSchema());
+									Assert.assertTrue(
+										lockedQuery.getDuration() >= 0);
+
+									String actualState = lockedQuery.getState();
+
+									Assert.assertNotNull(actualState);
+									Assert.assertTrue(
+										actualState,
+										StringUtil.containsIgnoreCase(
+											actualState, "LOCK WAIT"));
+
+									break;
+								}
+							}
+
+							if (!locked) {
+								Thread.sleep(200);
+							}
+						}
+
+						Assert.assertTrue(locked);
+					}
+					finally {
+						try {
+							lockingConnection.rollback();
+
+							if (futureTask != null) {
+								futureTask.get(5, TimeUnit.SECONDS);
+							}
+						}
+						catch (Exception exception) {
+							_log.error(
+								"Unable to clean up locked-query test",
+								exception);
+						}
+					}
+				}
+			}
+			finally {
+				db.runSQL("drop table if exists testTable");
+			}
+		}
+	}
+
+	@Test
 	public void testGetPrimaryKeyColumnNames() throws Exception {
 		db.runSQL(_SQL_CREATE_TABLE_2);
 
@@ -996,5 +1115,7 @@ public class DBTest {
 	private static final String _TABLE_NAME_2 = "DBTest2";
 
 	private static final String _TABLE_NAME_3 = "DBTest3";
+
+	private static final Log _log = LogFactoryUtil.getLog(DBTest.class);
 
 }

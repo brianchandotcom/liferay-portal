@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
@@ -60,6 +60,14 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 	}
 
 	@Override
+	public String getAdditionalAPIURLParameters() {
+		return StringBundler.concat(
+			super.getAdditionalAPIURLParameters(), "&page=",
+			CMSSpaceConstants.SPACE_SUMMARY_PAGE, "&pageSize=",
+			CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
+	}
+
+	@Override
 	public Map<String, Object> getAdditionalProps() {
 		Map<String, Object> additionalProps = super.getAdditionalProps();
 
@@ -75,14 +83,6 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 		additionalProps.put("showAdditionalItemInfo", true);
 
 		return additionalProps;
-	}
-
-	@Override
-	public String getAPIURL() {
-		return HttpComponentsUtil.addParameters(
-			super.getAPIURL(), "page", CMSSpaceConstants.SPACE_SUMMARY_PAGE,
-			"pageSize", CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE, "sort",
-			"dateModified:desc");
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {

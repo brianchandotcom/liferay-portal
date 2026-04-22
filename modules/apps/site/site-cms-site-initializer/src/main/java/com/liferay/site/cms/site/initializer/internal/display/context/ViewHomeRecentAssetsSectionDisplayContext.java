@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
@@ -52,12 +51,6 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal,
 			translationInfoItemFieldValuesExporterRegistry);
-	}
-
-	@Override
-	public String getAPIURL() {
-		return HttpComponentsUtil.addParameters(
-			super.getAPIURL(), "sort", "dateModified:desc");
 	}
 
 	public String getAssetsAllURL() throws PortalException {

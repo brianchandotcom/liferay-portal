@@ -7,7 +7,6 @@ package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
-import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestInfo;
-import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
-import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -58,10 +55,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 		super.setUp();
 
 		_publicRenderParameterName = "test_" + RandomTestUtil.randomString();
-		_publicRenderParameterValue = RandomTestUtil.randomString(
-			LayoutFriendlyURLRandomizerBumper.INSTANCE,
-			NumericStringRandomizerBumper.INSTANCE,
-			UniqueStringRandomizerBumper.INSTANCE);
+		_publicRenderParameterValue = RandomTestUtil.randomString();
 	}
 
 	@Test

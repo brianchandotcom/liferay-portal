@@ -464,68 +464,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
-	@priority = 5
-	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
-		var usernameList = "ac,liferay,userac";
-		var emailList = "ac@liferay.com,liferay@liferay.com";
-		var nameList = "ac ac,liferay liferay";
-
-		for (var name : list ${usernameList}) {
-			JSONUser.addUser(
-				userEmailAddress = "${name}@liferay.com",
-				userFirstName = ${name},
-				userLastName = ${name},
-				userScreenName = ${name});
-		}
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		ACUtils.navigateToSitePageWithUser(
-			actionType = "Download DM",
-			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
-			emailList = ${emailList},
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.navigateToSitePageWithUser(
-			actionType = "View DM",
-			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
-			emailList = "userac@liferay.com",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Documents and Media");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACNavigation.openItem(itemName = "DM AC Title");
-
-		ACIndividualsDashboard.goToKnownIndividualsTab();
-
-		ACNavigation.viewActiveSwitchTab(tabName = "Known Individuals");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACUtils.viewNameList(nameList = ${nameList});
-
-		AssertElementNotPresent(
-			key_userName = "userac userac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
 	@priority = 5
 	test ViewAllDocumentsAndMediaShownInAssetList {

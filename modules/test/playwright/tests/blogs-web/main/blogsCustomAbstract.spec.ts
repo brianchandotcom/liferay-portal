@@ -47,6 +47,39 @@ test(
 );
 
 test(
+	'Defaults the abstract to first-400-characters when no custom abstract is set',
+	{
+		tag: '@LPD-86549',
+	},
+	async ({apiHelpers, blogsEditBlogEntryPage, blogsPage, page, site}) => {
+		const title = getRandomString();
+		const content =
+			'Liferay Portal provides an excellent platform for building web ' +
+			'applications, websites, and portals, but it can additionally be ' +
+			'used for a new category of web applications called social ' +
+			'applications.';
+
+		await apiHelpers.headlessDelivery.postBlog(site.id, {
+			articleBody: content,
+			headline: title,
+		});
+
+		await blogsPage.goto(site.friendlyUrlPath);
+		await blogsPage.goToBlogEntryAction('Edit', title);
+
+		await blogsEditBlogEntryPage.expandPanel('Configuration');
+
+		await expect(
+			page.getByLabel(
+				'Use the first 400 characters of the entry content.'
+			)
+		).toBeChecked();
+
+		await expect(blogsEditBlogEntryPage.abstractDescription).toBeDisabled();
+	}
+);
+
+test(
 	'Can add special characters to the custom abstract',
 	{
 		tag: '@LPS-136761',

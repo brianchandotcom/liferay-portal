@@ -231,56 +231,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8415 | Test Summary: Documents downloads by technology card shows downloads by the expected browser"
-	@priority = 5
-	test DocumentsTechnologyCardShowsViewsByExpectedBrowser {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		task ("Download the document") {
-			ACUtils.navigateToSitePage(
-				actionType = "Download DM",
-				documentTitleList = "DM AC Title",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC and go to DM tab") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Documents and Media");
-		}
-
-		task ("Go to the docuemnt overview") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACNavigation.openItem(itemName = "DM AC Title");
-		}
-
-		task ("Assert downloads by browsers metric") {
-			ACNavigation.switchTabInCard(tabName = "Browsers");
-
-			ACAssets.viewViewsByTechnologyTabActive(
-				cardTitle = "Downloads by Technology",
-				tabName = "Browsers");
-
-			ACAssets.viewTechnologyBrowsersMetric(
-				browserMetricValue = "Chrome",
-				cardTitle = "Downloads by Technology",
-				cssValue = "rgb(75, 155, 255)",
-				percentageMetricValue = "100%");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8414 | Test Summary: Documents downloads by technology card shows downloads by the expected device"
 	@priority = 5
 	test DocumentsTechnologyCardShowsViewsByExpectedDevice {

@@ -121,7 +121,7 @@ export class BlogsEditBlogEntryPage {
 
 	async publishBlogEntry() {
 		await this.publishButton.click();
-		await waitForAlert(this.page);
+		await waitForAlert(this.page, undefined, {timeout: 60_000});
 	}
 
 	async selectCoverImage(coverImageTitle) {

@@ -42,7 +42,11 @@ export class BlogsPage {
 	}
 
 	async goToBlogEntryAction(action: string, title: string) {
-		await this.page.getByLabel('More actions').waitFor();
+		await this.page
+			.locator('.card')
+			.filter({hasText: title})
+			.getByLabel('More actions')
+			.waitFor();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

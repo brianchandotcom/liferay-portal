@@ -514,46 +514,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-126044: When DXP is connected and synced to AC and the user clicks on the metrics icon in a blog display page, the content performance panel displays with the metrics of the content page"
-	@priority = 4
-	test MetricsIconVisibleInBlogDisplayPage {
-		task ("Create a Blog Entry") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add 'Asset Publisher' to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Open Content Performance panel") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check if infomation if from that page") {
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
-				pageName = "Test Widget Page Name");
-
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
-				value1 = "Traffic Channels");
-		}
-	}
-
 	@description = "LPS-127220: When DXP is connected and synced to AC and the user clicks on the metrics icon in a content page, the content performance panel displays with the metrics of the content page"
 	@priority = 4
 	test MetricsIconVisibleInContentPage {
@@ -713,6 +673,12 @@ definition {
 				value1 = "web/test-site-name/test-widget-page-name");
 
 			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
+
+		task ("Assert traffic channels section is present") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
+				value1 = "Traffic Channels");
 		}
 	}
 

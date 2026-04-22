@@ -204,13 +204,13 @@ public class ObjectDefinitionResourceImpl
 			public Map<String, Serializable> getParameters(
 				PortletDataContext portletDataContext) {
 
-				String filter = "modifiable eq true";
+				String filterString = "modifiable eq true";
 
 				Group group = _groupLocalService.fetchGroup(
 					portletDataContext.getScopeGroupId());
 
 				if ((group != null) && group.isCMS()) {
-					filter += StringBundler.concat(
+					filterString += StringBundler.concat(
 						" and (objectFolderExternalReferenceCode eq '",
 						ObjectFolderConstants.
 							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
@@ -221,7 +221,7 @@ public class ObjectDefinitionResourceImpl
 				}
 
 				return HashMapBuilder.<String, Serializable>put(
-					"filter", filter
+					"filter", filterString
 				).build();
 			}
 

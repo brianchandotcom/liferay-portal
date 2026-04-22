@@ -39,6 +39,7 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -202,7 +204,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:url", "http://example.com");
+		_assertMetaTag(document, "property", "og:url", "http://example.com");
 	}
 
 	@Test
@@ -227,7 +229,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:description", "customDescription");
+		_assertMetaTag(
+			document, "property", "og:description", "customDescription");
 	}
 
 	@Test
@@ -245,12 +248,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Arrays.asList(
 				new LayoutSEOEntryCustomMetaTagProperty(
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content1"),
-					"property1"),
+						LocaleUtil.getSiteDefault(), "contentValue1"),
+					"propertyName1"),
 				new LayoutSEOEntryCustomMetaTagProperty(
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content2"),
-					"property2")),
+						LocaleUtil.getSiteDefault(), "contentValue2"),
+					"propertyName2")),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 
@@ -264,8 +267,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "property1", "content1");
-		_assertMetaTag(document, "property2", "content2");
+		_assertMetaTag(document, "property", "propertyName1", "contentValue1");
+		_assertMetaTag(document, "property", "propertyName2", "contentValue2");
 	}
 
 	@Test
@@ -285,12 +288,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Arrays.asList(
 				new LayoutSEOEntryCustomMetaTagProperty(
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content1"),
-					"property1"),
+						LocaleUtil.getSiteDefault(), "contentValue1"),
+					"propertyName1"),
 				new LayoutSEOEntryCustomMetaTagProperty(
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content2"),
-					"property2")),
+						LocaleUtil.getSiteDefault(), "contentValue2"),
+					"propertyName2")),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 
@@ -304,8 +307,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "property1", "content1");
-		_assertMetaTag(document, "property2", "content2");
+		_assertMetaTag(document, "property", "propertyName1", "contentValue1");
+		_assertMetaTag(document, "property", "propertyName2", "contentValue2");
 	}
 
 	@Test
@@ -373,7 +376,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "& property", "& content");
+		_assertMetaTag(document, "property", "& property", "& content");
 	}
 
 	@Test
@@ -451,8 +454,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:description", "defaultMappedDescription");
-		_assertMetaTag(document, "og:title", "defaultMappedTitle");
+		_assertMetaTag(
+			document, "property", "og:description", "defaultMappedDescription");
+		_assertMetaTag(document, "property", "og:title", "defaultMappedTitle");
 	}
 
 	@Test
@@ -473,9 +477,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			TestPropsValues.getCompanyId());
 
 		_assertMetaTag(
-			document, "og:description", _layout.getDescription(LocaleUtil.US));
+			document, "property", "og:description",
+			_layout.getDescription(LocaleUtil.US));
 		_assertMetaTag(
-			document, "og:title",
+			document, "property", "og:title",
 			StringBundler.concat(
 				_layout.getName(LocaleUtil.US), " - ",
 				_group.getDescriptiveName(LocaleUtil.US), " - ",
@@ -523,12 +528,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Arrays.asList(
 				new LayoutSEOEntryCustomMetaTagProperty(
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content1"),
-					"property1"),
+						LocaleUtil.getSiteDefault(), "contentValue1"),
+					"propertyName1"),
 				new LayoutSEOEntryCustomMetaTagProperty(
 					Collections.singletonMap(
 						LocaleUtil.getSiteDefault(), StringPool.BLANK),
-					"property2")),
+					"propertyName2")),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 
@@ -542,9 +547,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "property1", "content1");
-		_assertNoOpenGraphMetaProperty(document, "property2");
-		_assertNoOpenGraphMetaContent(document, "content3");
+		_assertMetaTag(document, "property", "propertyName1", "contentValue1");
+		_assertNoOpenGraphMetaProperty(document, "propertyName2");
+		_assertNoOpenGraphMetaContent(document, "contentValue3");
 	}
 
 	@Test
@@ -601,7 +606,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:image",
+			document, "property", "og:image",
 			_dlurlHelper.getImagePreviewURL(
 				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
 	}
@@ -637,7 +642,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:image",
+			document, "property", "og:image",
 			_dlurlHelper.getImagePreviewURL(
 				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
 
@@ -687,7 +692,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:image",
+			document, "property", "og:image",
 			_dlurlHelper.getImagePreviewURL(
 				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
 	}
@@ -733,12 +738,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:image",
+			document, "property", "og:image",
 			_dlurlHelper.getImagePreviewURL(
 				imageFileEntry, _getThemeDisplay()));
 
 		_assertMetaTag(
-			document, "og:image:alt", "Layout image alternative text");
+			document, "property", "og:image:alt",
+			"Layout image alternative text");
 	}
 
 	@Test
@@ -773,11 +779,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:image",
+			document, "property", "og:image",
 			_dlurlHelper.getImagePreviewURL(
 				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
 
-		_assertMetaTag(document, "og:image:alt", "Image alternative text");
+		_assertMetaTag(
+			document, "property", "og:image:alt", "Image alternative text");
 	}
 
 	@Test
@@ -1081,7 +1088,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertAlternateLocalesTag(
 			document, _language.getAvailableLocales(_group.getGroupId()));
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertMetaTag(
+			document, "property", "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -1102,7 +1110,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertMetaTag(
+			document, "property", "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -1128,7 +1137,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertMetaTag(
+			document, "property", "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -1155,7 +1165,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertMetaTag(
+			document, "property", "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -1180,7 +1191,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertMetaTag(
+			document, "property", "og:locale", _group.getDefaultLanguageId());
 
 		mockHttpServletResponse.reset();
 
@@ -1194,7 +1206,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertAlternateLocalesTag(
 			document, _language.getAvailableLocales(_group.getGroupId()));
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertMetaTag(
+			document, "property", "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -1241,7 +1254,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertMetaTag(
+			document, "property", "og:locale", _group.getDefaultLanguageId());
 
 		Set<Locale> locales = new HashSet<>();
 
@@ -1272,7 +1286,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertMetaTag(
+			document, "property", "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -1305,10 +1320,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:image", "http://localhost:8080/imageURL");
-		_assertMetaTag(document, "og:image:alt", "mappedImageAlt");
 		_assertMetaTag(
-			document, "og:image:url", "http://localhost:8080/imageURL");
+			document, "property", "og:image", "http://localhost:8080/imageURL");
+		_assertMetaTag(document, "property", "og:image:alt", "mappedImageAlt");
+		_assertMetaTag(
+			document, "property", "og:image:url",
+			"http://localhost:8080/imageURL");
 	}
 
 	@Test
@@ -1341,10 +1358,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:image", "http://localhost:8080/imageFileURL");
-		_assertMetaTag(document, "og:image:alt", "mappedImageAlt");
+			document, "property", "og:image",
+			"http://localhost:8080/imageFileURL");
+		_assertMetaTag(document, "property", "og:image:alt", "mappedImageAlt");
 		_assertMetaTag(
-			document, "og:image:url", "http://localhost:8080/imageFileURL");
+			document, "property", "og:image:url",
+			"http://localhost:8080/imageFileURL");
 	}
 
 	@Test
@@ -1378,8 +1397,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:description", "mappedDescriptionFieldName");
-		_assertMetaTag(document, "og:title", "mappedTitleFieldName");
+			document, "property", "og:description",
+			"mappedDescriptionFieldName");
+		_assertMetaTag(
+			document, "property", "og:title", "mappedTitleFieldName");
 	}
 
 	@Test
@@ -1452,7 +1473,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:image:secure_url",
+			document, "property", "og:image:secure_url",
 			_dlurlHelper.getImagePreviewURL(
 				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
 	}
@@ -1470,7 +1491,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:site_name",
+			document, "property", "og:site_name",
 			_group.getDescriptiveName(
 				LocaleUtil.fromLanguageId(_group.getDefaultLanguageId())));
 	}
@@ -1500,7 +1521,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "og:image",
+			document, "property", "og:image",
 			_dlurlHelper.getImagePreviewURL(
 				siteOpenGraphImageFileEntry, _getThemeDisplay()));
 	}
@@ -1548,24 +1569,41 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:type", "website");
+		_assertMetaTag(document, "property", "og:type", "website");
 	}
 
 	@Test
 	public void testIncludeUrl() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
 
-		_dynamicInclude.include(
-			_getHttpServletRequest(), mockHttpServletResponse,
-			RandomTestUtil.randomString());
+		// Default request
 
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertMetaTag(
-			document, "og:url",
+		_assertCanonicalLinkAndSocialTags(
+			_getHttpServletRequest(),
 			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			// Clean URL enabled
+
+			_assertCanonicalLinkAndSocialTags(
+				_getHttpServletRequest(),
+				PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
+
+			// Clean URL enabled with a legacy "/web" request URI
+
+			MockHttpServletRequest mockHttpServletRequest =
+				(MockHttpServletRequest)_getHttpServletRequest();
+
+			mockHttpServletRequest.setRequestURI(
+				"/web" + _group.getFriendlyURL() + _layout.getFriendlyURL());
+
+			_assertCanonicalLinkAndSocialTags(
+				mockHttpServletRequest,
+				PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
+		}
 	}
 
 	@Test
@@ -1713,6 +1751,27 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		}
 	}
 
+	private void _assertCanonicalLinkAndSocialTags(
+			HttpServletRequest httpServletRequest, String canonicalURL)
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_dynamicInclude.include(
+			httpServletRequest, mockHttpServletResponse,
+			RandomTestUtil.randomString());
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertCanonicalLinkTag(document, canonicalURL);
+
+		_assertMetaTag(document, "property", "og:url", canonicalURL);
+
+		_assertMetaTag(document, "name", "twitter:url", canonicalURL);
+	}
+
 	private void _assertCanonicalLinkTag(Document document, String href) {
 		Elements elements = document.select("link[rel='canonical']");
 
@@ -1763,14 +1822,16 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		if (Validator.isNotNull(expectedDescription)) {
-			_assertMetaTag(document, "og:description", expectedDescription);
+			_assertMetaTag(
+				document, "property", "og:description", expectedDescription);
 		}
 		else {
 			_assertMetaTag(
-				document, "og:description", _layout.getDescription(locale));
+				document, "property", "og:description",
+				_layout.getDescription(locale));
 		}
 
-		_assertMetaTag(document, "og:title", expectedTitle);
+		_assertMetaTag(document, "property", "og:title", expectedTitle);
 	}
 
 	private void _assertLinkElements(Document document) {
@@ -1780,10 +1841,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	private void _assertMetaTag(
-		Document document, String property, String content) {
+		Document document, String attributeName, String attributeValue,
+		String content) {
 
 		Elements elements = document.select(
-			"meta[property='" + property + "']");
+			StringBundler.concat(
+				"meta[", attributeName, "='", attributeValue, "']"));
 
 		Assert.assertNotNull(elements);
 		Assert.assertEquals(1, elements.size());

@@ -150,7 +150,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 						layoutSEOEntryCustomMetaTags) {
 
 					printWriter.println(
-						_getOpenGraphTag(
+						_getMetaTag(
+							"property",
 							layoutSEOEntryCustomMetaTag.getProperty(),
 							GetterUtil.get(
 								layoutSEOEntryCustomMetaTag.getContent(
@@ -213,23 +214,25 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			}
 
 			printWriter.println(
-				_getOpenGraphTag(
-					"og:description",
+				_getMetaTag(
+					"property", "og:description",
 					HtmlUtil.unescape(HtmlUtil.stripHtml(description))));
 
 			printWriter.println(
-				_getOpenGraphTag("og:locale", themeDisplay.getLanguageId()));
+				_getMetaTag(
+					"property", "og:locale", themeDisplay.getLanguageId()));
 
 			availableLocales.forEach(
 				availableLocale -> printWriter.println(
-					_getOpenGraphTag(
-						"og:locale:alternate",
+					_getMetaTag(
+						"property", "og:locale:alternate",
 						LocaleUtil.toLanguageId(availableLocale))));
 
 			Group group = layout.getGroup();
 
 			printWriter.println(
-				_getOpenGraphTag("og:site_name", group.getDescriptiveName()));
+				_getMetaTag(
+					"property", "og:site_name", group.getDescriptiveName()));
 
 			String title = _getMappedValue(
 				layout.getTypeSettingsProperty(
@@ -248,9 +251,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				}
 			}
 
-			printWriter.println(_getOpenGraphTag("og:title", title));
+			printWriter.println(_getMetaTag("property", "og:title", title));
 
-			printWriter.println(_getOpenGraphTag("og:type", "website"));
+			printWriter.println(_getMetaTag("property", "og:type", "website"));
 
 			LayoutSEOLink layoutSEOLink =
 				_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
@@ -258,7 +261,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					themeDisplay);
 
 			printWriter.println(
-				_getOpenGraphTag("og:url", layoutSEOLink.getHref()));
+				_getMetaTag("property", "og:url", layoutSEOLink.getHref()));
+
+			printWriter.println(
+				_getMetaTag("name", "twitter:url", layoutSEOLink.getHref()));
 
 			OpenGraphImageProvider.OpenGraphImage openGraphImage =
 				_openGraphImageProvider.getOpenGraphImage(
@@ -266,36 +272,41 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			if (openGraphImage != null) {
 				printWriter.println(
-					_getOpenGraphTag("og:image", openGraphImage.getURL()));
+					_getMetaTag(
+						"property", "og:image", openGraphImage.getURL()));
 
 				String alt = openGraphImage.getAlt();
 
 				if (alt != null) {
-					printWriter.println(_getOpenGraphTag("og:image:alt", alt));
+					printWriter.println(
+						_getMetaTag("property", "og:image:alt", alt));
 				}
 
 				if (themeDisplay.isSecure()) {
 					printWriter.println(
-						_getOpenGraphTag(
-							"og:image:secure_url", openGraphImage.getURL()));
+						_getMetaTag(
+							"property", "og:image:secure_url",
+							openGraphImage.getURL()));
 				}
 
 				String type = openGraphImage.getMimeType();
 
 				if (type != null) {
 					printWriter.println(
-						_getOpenGraphTag("og:image:type", type));
+						_getMetaTag("property", "og:image:type", type));
 				}
 
 				printWriter.println(
-					_getOpenGraphTag("og:image:url", openGraphImage.getURL()));
+					_getMetaTag(
+						"property", "og:image:url", openGraphImage.getURL()));
 
 				for (KeyValuePair keyValuePair :
 						openGraphImage.getMetadataTagKeyValuePairs()) {
 
 					printWriter.println(
-						_getOpenGraphTag(
-							keyValuePair.getKey(), keyValuePair.getValue()));
+						_getMetaTag(
+							"property", keyValuePair.getKey(),
+							keyValuePair.getValue()));
 				}
 			}
 		}
@@ -426,14 +437,17 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			template, infoItemFieldValues, locale);
 	}
 
-	private String _getOpenGraphTag(String property, String content) {
-		if (Validator.isNull(content) || Validator.isNull(property)) {
+	private String _getMetaTag(
+		String attributeName, String attributeValue, String content) {
+
+		if (Validator.isNull(attributeValue) || Validator.isNull(content)) {
 			return StringPool.BLANK;
 		}
 
 		return StringBundler.concat(
-			"<meta property=\"", HtmlUtil.escapeAttribute(property),
-			"\" content=\"", HtmlUtil.escapeAttribute(content), "\">");
+			"<meta ", attributeName, "=\"",
+			HtmlUtil.escapeAttribute(attributeValue), "\" content=\"",
+			HtmlUtil.escapeAttribute(content), "\">");
 	}
 
 	private String _getTitle(HttpServletRequest httpServletRequest) {

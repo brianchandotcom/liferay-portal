@@ -32,6 +32,7 @@ import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -1008,6 +1010,33 @@ public class SitemapManagerTest {
 			_addRedirectEntry(sourceURL.substring(1));
 
 			_assertEmptySitemap(_group.getGroupId(), layout.getUuid());
+		}
+	}
+
+	@Test
+	public void testSitemapWithCleanUrlEnabled() throws Exception {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			Group group = _groupLocalService.getGroup(
+				TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+			_setUpThemeDisplay(
+				group,
+				_layoutLocalService.fetchFirstLayout(
+					group.getGroupId(), false, 0),
+				"localhost");
+
+			String[] guestLayoutURLs = _getSitemapLayoutURLs(
+				group.getGroupId());
+
+			Assert.assertTrue(ArrayUtil.isNotEmpty(guestLayoutURLs));
+
+			for (String guestLayoutURL : guestLayoutURLs) {
+				Assert.assertFalse(guestLayoutURL.contains("/web/"));
+			}
 		}
 	}
 

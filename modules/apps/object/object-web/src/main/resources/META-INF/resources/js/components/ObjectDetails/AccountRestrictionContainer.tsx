@@ -131,6 +131,7 @@ export function AccountRestrictionContainer({
 					isLinkedObjectDefinition
 				}
 				error={errors.accountEntryRestrictedObjectFieldName}
+				id="lfr-objects__account-restriction-container-account-restricted-field"
 				items={accountRelationshipFields}
 				label={Liferay.Language.get(
 					'account-entry-restricted-object-field-id'

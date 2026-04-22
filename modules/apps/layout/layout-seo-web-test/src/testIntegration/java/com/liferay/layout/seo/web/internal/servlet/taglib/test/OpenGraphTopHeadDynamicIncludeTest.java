@@ -39,6 +39,7 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -1553,19 +1555,51 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeUrl() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_dynamicInclude.include(
-			_getHttpServletRequest(), mockHttpServletResponse,
-			RandomTestUtil.randomString());
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertMetaTag(
-			document, "og:url",
+		_assertCanonicalLinkAndSocialTags(
+			_getHttpServletRequest(),
 			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
+	}
+
+	@Test
+	public void testIncludeUrlWithCleanUrlEnabled() throws Exception {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			String canonicalURL = PortalUtil.getCanonicalURL(
+				"", _getThemeDisplay(), _layout);
+
+			Assert.assertFalse(canonicalURL.contains("/web/"));
+
+			_assertCanonicalLinkAndSocialTags(
+				_getHttpServletRequest(), canonicalURL);
+		}
+	}
+
+	@Test
+	public void testIncludeUrlWithCleanUrlEnabledAndLegacyRequestURL()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			MockHttpServletRequest mockHttpServletRequest =
+				(MockHttpServletRequest)_getHttpServletRequest();
+
+			mockHttpServletRequest.setRequestURI(
+				"/web" + _group.getFriendlyURL() + _layout.getFriendlyURL());
+
+			String canonicalURL = PortalUtil.getCanonicalURL(
+				"", _getThemeDisplay(), _layout);
+
+			Assert.assertFalse(canonicalURL.contains("/web/"));
+
+			_assertCanonicalLinkAndSocialTags(
+				mockHttpServletRequest, canonicalURL);
+		}
 	}
 
 	@Test
@@ -1713,6 +1747,27 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		}
 	}
 
+	private void _assertCanonicalLinkAndSocialTags(
+			HttpServletRequest httpServletRequest, String canonicalURL)
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_dynamicInclude.include(
+			httpServletRequest, mockHttpServletResponse,
+			RandomTestUtil.randomString());
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertCanonicalLinkTag(document, canonicalURL);
+
+		_assertMetaTag(document, "og:url", canonicalURL);
+
+		_assertTwitterTag(document, "twitter:url", canonicalURL);
+	}
+
 	private void _assertCanonicalLinkTag(Document document, String href) {
 		Elements elements = document.select("link[rel='canonical']");
 
@@ -1827,6 +1882,19 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Elements elements = document.select("meta[property^='og:']");
 
 		Assert.assertEquals(0, elements.size());
+	}
+
+	private void _assertTwitterTag(
+		Document document, String name, String content) {
+
+		Elements elements = document.select("meta[name='" + name + "']");
+
+		Assert.assertNotNull(elements);
+		Assert.assertEquals(1, elements.size());
+
+		Element element = elements.get(0);
+
+		Assert.assertEquals(content, element.attr("content"));
 	}
 
 	private HttpServletRequest _getAssetDisplayPageHttpServletRequest(

@@ -260,6 +260,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			printWriter.println(
 				_getOpenGraphTag("og:url", layoutSEOLink.getHref()));
 
+			printWriter.println(
+				_getTwitterTag("twitter:url", layoutSEOLink.getHref()));
+
 			OpenGraphImageProvider.OpenGraphImage openGraphImage =
 				_openGraphImageProvider.getOpenGraphImage(
 					infoItemFieldValues, layout, layoutSEOEntry, themeDisplay);
@@ -426,14 +429,21 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			template, infoItemFieldValues, locale);
 	}
 
-	private String _getOpenGraphTag(String property, String content) {
-		if (Validator.isNull(content) || Validator.isNull(property)) {
+	private String _getMetaTag(
+		String attributeName, String attributeValue, String content) {
+
+		if (Validator.isNull(attributeValue) || Validator.isNull(content)) {
 			return StringPool.BLANK;
 		}
 
 		return StringBundler.concat(
-			"<meta property=\"", HtmlUtil.escapeAttribute(property),
-			"\" content=\"", HtmlUtil.escapeAttribute(content), "\">");
+			"<meta ", attributeName, "=\"",
+			HtmlUtil.escapeAttribute(attributeValue), "\" content=\"",
+			HtmlUtil.escapeAttribute(content), "\">");
+	}
+
+	private String _getOpenGraphTag(String property, String content) {
+		return _getMetaTag("property", property, content);
 	}
 
 	private String _getTitle(HttpServletRequest httpServletRequest) {
@@ -443,6 +453,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
 		}
+	}
+
+	private String _getTwitterTag(String name, String content) {
+		return _getMetaTag("name", name, content);
 	}
 
 	@Reference

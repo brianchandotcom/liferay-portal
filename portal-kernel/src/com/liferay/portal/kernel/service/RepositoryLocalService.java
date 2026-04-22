@@ -402,4 +402,4 @@ public interface RepositoryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1336516120
+// LIFERAY-SERVICE-BUILDER-HASH:-819740494

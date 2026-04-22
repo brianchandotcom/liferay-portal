@@ -63,4 +63,4 @@ public interface CTProcessService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-292738438
+// LIFERAY-SERVICE-BUILDER-HASH:1043950773

@@ -401,4 +401,4 @@ public interface CPInstanceOptionValueRelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:635027600
+// LIFERAY-SERVICE-BUILDER-HASH:688508886

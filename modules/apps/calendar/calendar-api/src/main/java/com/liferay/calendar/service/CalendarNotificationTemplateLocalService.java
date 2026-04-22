@@ -377,4 +377,4 @@ public interface CalendarNotificationTemplateLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:585301421
+// LIFERAY-SERVICE-BUILDER-HASH:-40580881

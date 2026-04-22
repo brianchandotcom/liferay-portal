@@ -277,4 +277,4 @@ public interface PortalPreferenceValueLocalService
 		PortalPreferenceValue portalPreferenceValue);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1002436934
+// LIFERAY-SERVICE-BUILDER-HASH:1637012542

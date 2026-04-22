@@ -72,4 +72,4 @@ public interface DispatchLogService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1827764902
+// LIFERAY-SERVICE-BUILDER-HASH:-1498767508

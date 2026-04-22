@@ -73,4 +73,4 @@ public interface ExpandoColumnService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1163889931
+// LIFERAY-SERVICE-BUILDER-HASH:388456398

@@ -394,4 +394,4 @@ public interface ClientExtensionEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:379038910
+// LIFERAY-SERVICE-BUILDER-HASH:1858878630

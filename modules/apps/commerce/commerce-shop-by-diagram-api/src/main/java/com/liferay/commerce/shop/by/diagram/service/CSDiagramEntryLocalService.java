@@ -338,4 +338,4 @@ public interface CSDiagramEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-465142220
+// LIFERAY-SERVICE-BUILDER-HASH:-1025662969

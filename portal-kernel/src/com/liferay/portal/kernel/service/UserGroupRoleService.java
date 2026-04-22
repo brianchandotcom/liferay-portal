@@ -64,4 +64,4 @@ public interface UserGroupRoleService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1945798325
+// LIFERAY-SERVICE-BUILDER-HASH:-327166150

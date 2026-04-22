@@ -87,4 +87,4 @@ public interface SXPBlueprintService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1582790632
+// LIFERAY-SERVICE-BUILDER-HASH:-2122044847

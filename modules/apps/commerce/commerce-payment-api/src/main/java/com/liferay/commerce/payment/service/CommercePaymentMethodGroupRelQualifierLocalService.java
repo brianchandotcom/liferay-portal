@@ -338,4 +338,4 @@ public interface CommercePaymentMethodGroupRelQualifierLocalService
 				commercePaymentMethodGroupRelQualifier);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:839179423
+// LIFERAY-SERVICE-BUILDER-HASH:-2061589377

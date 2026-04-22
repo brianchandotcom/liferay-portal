@@ -64,4 +64,4 @@ public class LayoutRevisionServiceUtil {
 	private static volatile LayoutRevisionService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1139406170
+// LIFERAY-SERVICE-BUILDER-HASH:681688975

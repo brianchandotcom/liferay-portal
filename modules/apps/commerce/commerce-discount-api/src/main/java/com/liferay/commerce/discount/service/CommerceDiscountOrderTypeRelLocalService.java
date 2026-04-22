@@ -331,4 +331,4 @@ public interface CommerceDiscountOrderTypeRelLocalService
 		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-42468039
+// LIFERAY-SERVICE-BUILDER-HASH:1096869370

@@ -55,4 +55,4 @@ public interface DepotEntryPinService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2100557329
+// LIFERAY-SERVICE-BUILDER-HASH:-1668033232

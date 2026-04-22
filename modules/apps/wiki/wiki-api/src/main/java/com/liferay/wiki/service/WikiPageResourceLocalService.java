@@ -355,4 +355,4 @@ public interface WikiPageResourceLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1353503055
+// LIFERAY-SERVICE-BUILDER-HASH:-1405484147

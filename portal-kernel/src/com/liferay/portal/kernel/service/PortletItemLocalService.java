@@ -282,4 +282,4 @@ public interface PortletItemLocalService
 	public PortletItem updatePortletItem(PortletItem portletItem);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1500482236
+// LIFERAY-SERVICE-BUILDER-HASH:795856792

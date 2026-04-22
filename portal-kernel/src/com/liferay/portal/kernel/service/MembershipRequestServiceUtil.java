@@ -77,4 +77,4 @@ public class MembershipRequestServiceUtil {
 	private static volatile MembershipRequestService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-457767635
+// LIFERAY-SERVICE-BUILDER-HASH:1502808141

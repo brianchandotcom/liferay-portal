@@ -317,4 +317,4 @@ public interface AnnouncementsDeliveryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1370505200
+// LIFERAY-SERVICE-BUILDER-HASH:-1611069200

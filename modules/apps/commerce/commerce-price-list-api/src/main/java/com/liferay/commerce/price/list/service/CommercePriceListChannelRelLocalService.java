@@ -358,4 +358,4 @@ public interface CommercePriceListChannelRelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:492550895
+// LIFERAY-SERVICE-BUILDER-HASH:1946844210

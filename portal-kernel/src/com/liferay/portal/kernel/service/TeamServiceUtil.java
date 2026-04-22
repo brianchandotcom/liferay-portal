@@ -116,4 +116,4 @@ public class TeamServiceUtil {
 	private static volatile TeamService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-547095157
+// LIFERAY-SERVICE-BUILDER-HASH:1577626166

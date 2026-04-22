@@ -91,4 +91,4 @@ public interface BatchEngineExportTaskService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:284940678
+// LIFERAY-SERVICE-BUILDER-HASH:-1359724511

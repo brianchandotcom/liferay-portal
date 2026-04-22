@@ -359,4 +359,4 @@ public interface AccountEntryUserRelLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1406858860
+// LIFERAY-SERVICE-BUILDER-HASH:635671757

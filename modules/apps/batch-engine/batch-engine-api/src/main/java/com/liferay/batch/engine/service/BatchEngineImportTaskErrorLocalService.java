@@ -279,4 +279,4 @@ public interface BatchEngineImportTaskErrorLocalService
 		BatchEngineImportTaskError batchEngineImportTaskError);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-633185753
+// LIFERAY-SERVICE-BUILDER-HASH:1155435876

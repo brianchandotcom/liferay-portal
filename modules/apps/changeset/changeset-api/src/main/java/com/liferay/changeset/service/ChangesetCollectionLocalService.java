@@ -285,4 +285,4 @@ public interface ChangesetCollectionLocalService
 		ChangesetCollection changesetCollection);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2053056870
+// LIFERAY-SERVICE-BUILDER-HASH:1924628822

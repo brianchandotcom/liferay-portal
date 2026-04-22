@@ -108,4 +108,4 @@ public class RepositoryServiceWrapper
 	private RepositoryService _repositoryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1984059091
+// LIFERAY-SERVICE-BUILDER-HASH:2088885208

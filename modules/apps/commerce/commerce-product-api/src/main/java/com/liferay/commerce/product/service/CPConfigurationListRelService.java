@@ -147,4 +147,4 @@ public interface CPConfigurationListRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1628827279
+// LIFERAY-SERVICE-BUILDER-HASH:-1112933313

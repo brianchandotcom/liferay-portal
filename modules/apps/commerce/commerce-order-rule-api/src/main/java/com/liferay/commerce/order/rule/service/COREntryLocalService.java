@@ -404,4 +404,4 @@ public interface COREntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-290434023
+// LIFERAY-SERVICE-BUILDER-HASH:-675330681

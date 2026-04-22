@@ -2027,4 +2027,4 @@ public class UserServiceWrapper
 	private UserService _userService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1539689182
+// LIFERAY-SERVICE-BUILDER-HASH:471752895

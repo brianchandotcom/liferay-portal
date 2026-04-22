@@ -292,4 +292,4 @@ public interface ClassNameLocalService
 	public ClassName updateClassName(ClassName className);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-901080911
+// LIFERAY-SERVICE-BUILDER-HASH:1292733893

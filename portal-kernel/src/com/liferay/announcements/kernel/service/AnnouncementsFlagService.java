@@ -58,4 +58,4 @@ public interface AnnouncementsFlagService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1929823477
+// LIFERAY-SERVICE-BUILDER-HASH:-1277436316

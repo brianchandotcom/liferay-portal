@@ -620,4 +620,4 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-601172870
+// LIFERAY-SERVICE-BUILDER-HASH:709473226

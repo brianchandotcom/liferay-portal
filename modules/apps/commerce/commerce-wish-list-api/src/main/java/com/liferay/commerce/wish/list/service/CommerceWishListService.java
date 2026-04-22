@@ -85,4 +85,4 @@ public interface CommerceWishListService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-157194424
+// LIFERAY-SERVICE-BUILDER-HASH:1366833870

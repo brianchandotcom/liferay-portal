@@ -313,4 +313,4 @@ public interface CommerceShippingOptionAccountEntryRelLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1256029539
+// LIFERAY-SERVICE-BUILDER-HASH:738270651

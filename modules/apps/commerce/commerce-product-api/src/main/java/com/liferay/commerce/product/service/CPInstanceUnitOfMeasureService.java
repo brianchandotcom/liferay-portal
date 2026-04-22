@@ -129,4 +129,4 @@ public interface CPInstanceUnitOfMeasureService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1317261070
+// LIFERAY-SERVICE-BUILDER-HASH:1155603371

@@ -420,4 +420,4 @@ public interface OrganizationService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:564504292
+// LIFERAY-SERVICE-BUILDER-HASH:712672538

@@ -36,7 +36,7 @@ public class PasswordPolicyServiceWrapper
 			boolean expireable, long maxAge, long warningTime, int graceLimit,
 			boolean lockout, int maxFailure, long lockoutDuration,
 			long resetFailureCount, long resetTicketMaxAge,
-			ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _passwordPolicyService.addPasswordPolicy(
@@ -101,7 +101,7 @@ public class PasswordPolicyServiceWrapper
 			boolean expireable, long maxAge, long warningTime, int graceLimit,
 			boolean lockout, int maxFailure, long lockoutDuration,
 			long resetFailureCount, long resetTicketMaxAge,
-			ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _passwordPolicyService.updatePasswordPolicy(
@@ -126,4 +126,4 @@ public class PasswordPolicyServiceWrapper
 	private PasswordPolicyService _passwordPolicyService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1292473469
+// LIFERAY-SERVICE-BUILDER-HASH:1841172253

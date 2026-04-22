@@ -77,4 +77,4 @@ public interface ObjectValidationRuleService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1141882422
+// LIFERAY-SERVICE-BUILDER-HASH:-1175887399

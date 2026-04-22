@@ -109,4 +109,4 @@ public interface CPDefinitionGroupedEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-24766602
+// LIFERAY-SERVICE-BUILDER-HASH:1320900980

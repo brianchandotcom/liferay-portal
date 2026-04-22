@@ -3421,4 +3421,4 @@ public class UserLocalServiceWrapper
 	private UserLocalService _userLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-188816055
+// LIFERAY-SERVICE-BUILDER-HASH:566100435

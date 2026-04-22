@@ -793,4 +793,4 @@ public class UserNotificationEventLocalServiceUtil {
 	private static volatile UserNotificationEventLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1363579989
+// LIFERAY-SERVICE-BUILDER-HASH:-38225547

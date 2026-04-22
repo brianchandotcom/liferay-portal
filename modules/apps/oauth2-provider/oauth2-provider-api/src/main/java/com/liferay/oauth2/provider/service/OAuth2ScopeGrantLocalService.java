@@ -359,4 +359,4 @@ public interface OAuth2ScopeGrantLocalService
 		OAuth2ScopeGrant oAuth2ScopeGrant);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1861981709
+// LIFERAY-SERVICE-BUILDER-HASH:359284083

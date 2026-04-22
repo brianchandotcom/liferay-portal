@@ -305,4 +305,4 @@ public interface ObjectValidationRuleSettingLocalService
 		ObjectValidationRuleSetting objectValidationRuleSetting);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1433842715
+// LIFERAY-SERVICE-BUILDER-HASH:1375622921

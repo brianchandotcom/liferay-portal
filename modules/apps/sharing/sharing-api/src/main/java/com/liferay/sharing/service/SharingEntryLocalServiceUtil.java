@@ -854,4 +854,4 @@ public class SharingEntryLocalServiceUtil {
 			SharingEntryLocalServiceUtil.class, SharingEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:920194991
+// LIFERAY-SERVICE-BUILDER-HASH:-1984018393

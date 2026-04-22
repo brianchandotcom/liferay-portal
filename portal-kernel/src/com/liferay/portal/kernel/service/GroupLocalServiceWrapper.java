@@ -2897,4 +2897,4 @@ public class GroupLocalServiceWrapper
 	private GroupLocalService _groupLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:347903877
+// LIFERAY-SERVICE-BUILDER-HASH:484951056

@@ -677,4 +677,4 @@ public class GroupServiceUtil {
 	private static volatile GroupService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1477720194
+// LIFERAY-SERVICE-BUILDER-HASH:1448082115

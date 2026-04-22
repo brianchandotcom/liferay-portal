@@ -140,4 +140,4 @@ public interface DLTrashService extends BaseService {
 	public void restoreFolderFromTrash(long folderId) throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-283371888
+// LIFERAY-SERVICE-BUILDER-HASH:-1846336521

@@ -133,4 +133,4 @@ public interface CommerceCurrencyService extends BaseService {
 	public void updateExchangeRates() throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-519671406
+// LIFERAY-SERVICE-BUILDER-HASH:-1004931751

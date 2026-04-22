@@ -962,4 +962,4 @@ public class SharingEntryLocalServiceWrapper
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1751671215
+// LIFERAY-SERVICE-BUILDER-HASH:1218455351

@@ -85,4 +85,4 @@ public interface ClientExtensionEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1391027446
+// LIFERAY-SERVICE-BUILDER-HASH:-2015187638

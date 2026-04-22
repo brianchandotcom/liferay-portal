@@ -315,4 +315,4 @@ public interface CPDAvailabilityEstimateLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1409530284
+// LIFERAY-SERVICE-BUILDER-HASH:356111326

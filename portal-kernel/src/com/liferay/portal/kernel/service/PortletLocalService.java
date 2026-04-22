@@ -398,4 +398,4 @@ public interface PortletLocalService
 	public void visitPortlets(long companyId, Consumer<Portlet> consumer);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:272704434
+// LIFERAY-SERVICE-BUILDER-HASH:705430672

@@ -370,4 +370,4 @@ public interface ObjectActionLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-432416216
+// LIFERAY-SERVICE-BUILDER-HASH:-1423158912

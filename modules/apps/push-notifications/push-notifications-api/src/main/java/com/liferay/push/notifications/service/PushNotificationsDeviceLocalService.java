@@ -290,4 +290,4 @@ public interface PushNotificationsDeviceLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-61994143
+// LIFERAY-SERVICE-BUILDER-HASH:432866710

@@ -436,4 +436,4 @@ public class PhoneLocalServiceWrapper
 	private PhoneLocalService _phoneLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1247079715
+// LIFERAY-SERVICE-BUILDER-HASH:-1072211448

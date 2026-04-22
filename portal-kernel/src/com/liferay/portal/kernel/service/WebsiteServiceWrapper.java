@@ -27,7 +27,7 @@ public class WebsiteServiceWrapper
 	public com.liferay.portal.kernel.model.Website addWebsite(
 			java.lang.String externalReferenceCode, java.lang.String className,
 			long classPK, java.lang.String url, long typeId, boolean primary,
-			ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _websiteService.addWebsite(
@@ -100,4 +100,4 @@ public class WebsiteServiceWrapper
 	private WebsiteService _websiteService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:972756368
+// LIFERAY-SERVICE-BUILDER-HASH:1686141627

@@ -404,4 +404,4 @@ public interface DepotEntryGroupRelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-140106674
+// LIFERAY-SERVICE-BUILDER-HASH:-1076597209

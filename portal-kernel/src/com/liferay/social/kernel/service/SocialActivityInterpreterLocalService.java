@@ -90,4 +90,4 @@ public interface SocialActivityInterpreterLocalService
 	public void updateActivitySet(long activityId) throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1376182475
+// LIFERAY-SERVICE-BUILDER-HASH:-355131024

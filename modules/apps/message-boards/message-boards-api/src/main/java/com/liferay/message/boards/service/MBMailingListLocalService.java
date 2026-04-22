@@ -375,4 +375,4 @@ public interface MBMailingListLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1156941903
+// LIFERAY-SERVICE-BUILDER-HASH:-1950979962

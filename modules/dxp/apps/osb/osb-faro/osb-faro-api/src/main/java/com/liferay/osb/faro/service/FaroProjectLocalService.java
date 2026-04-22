@@ -315,4 +315,4 @@ public interface FaroProjectLocalService
 		long faroProjectId, String subscription);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1924192358
+// LIFERAY-SERVICE-BUILDER-HASH:-1844417284

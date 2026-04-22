@@ -57,4 +57,4 @@ public interface UserNotificationEventService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-208860207
+// LIFERAY-SERVICE-BUILDER-HASH:553098774

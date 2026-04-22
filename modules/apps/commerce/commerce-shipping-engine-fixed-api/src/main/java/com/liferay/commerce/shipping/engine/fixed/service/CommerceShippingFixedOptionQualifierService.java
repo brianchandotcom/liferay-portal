@@ -126,4 +126,4 @@ public interface CommerceShippingFixedOptionQualifierService
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-869221883
+// LIFERAY-SERVICE-BUILDER-HASH:-61689296

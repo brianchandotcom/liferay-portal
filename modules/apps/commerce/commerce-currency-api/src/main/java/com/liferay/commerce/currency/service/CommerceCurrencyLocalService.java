@@ -390,4 +390,4 @@ public interface CommerceCurrencyLocalService
 	public void updateExchangeRates() throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-252999236
+// LIFERAY-SERVICE-BUILDER-HASH:-1994588031

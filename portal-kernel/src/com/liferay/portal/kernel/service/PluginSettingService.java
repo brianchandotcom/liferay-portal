@@ -52,4 +52,4 @@ public interface PluginSettingService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2018446123
+// LIFERAY-SERVICE-BUILDER-HASH:412753776

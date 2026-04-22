@@ -309,4 +309,4 @@ public interface ListTypeLocalService
 	public void validate(long listTypeId, String type) throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1536508232
+// LIFERAY-SERVICE-BUILDER-HASH:-1797287438

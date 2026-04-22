@@ -649,4 +649,4 @@ public interface BlogsEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1325099954
+// LIFERAY-SERVICE-BUILDER-HASH:1150081546

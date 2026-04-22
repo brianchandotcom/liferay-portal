@@ -93,4 +93,4 @@ public interface CPDVirtualSettingFileEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-780282124
+// LIFERAY-SERVICE-BUILDER-HASH:1442917403

@@ -80,4 +80,4 @@ public interface JournalFeedService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-349714682
+// LIFERAY-SERVICE-BUILDER-HASH:-2072273629

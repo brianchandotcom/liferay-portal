@@ -62,4 +62,4 @@ public interface KaleoDefinitionVersionService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1206086709
+// LIFERAY-SERVICE-BUILDER-HASH:2108470375

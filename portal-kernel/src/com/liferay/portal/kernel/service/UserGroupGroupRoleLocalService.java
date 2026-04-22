@@ -341,4 +341,4 @@ public interface UserGroupGroupRoleLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1608615381
+// LIFERAY-SERVICE-BUILDER-HASH:1219234448

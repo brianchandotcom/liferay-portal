@@ -302,4 +302,4 @@ public interface RatingsStatsLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1774536254
+// LIFERAY-SERVICE-BUILDER-HASH:750036284

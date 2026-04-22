@@ -171,4 +171,4 @@ public interface SharingEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1055087372
+// LIFERAY-SERVICE-BUILDER-HASH:2108305021

@@ -60,4 +60,4 @@ public interface PortletService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1681854685
+// LIFERAY-SERVICE-BUILDER-HASH:370708496

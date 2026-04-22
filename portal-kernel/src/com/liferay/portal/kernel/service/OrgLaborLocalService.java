@@ -275,4 +275,4 @@ public interface OrgLaborLocalService
 	public OrgLabor updateOrgLabor(OrgLabor orgLabor);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1636026769
+// LIFERAY-SERVICE-BUILDER-HASH:896190033

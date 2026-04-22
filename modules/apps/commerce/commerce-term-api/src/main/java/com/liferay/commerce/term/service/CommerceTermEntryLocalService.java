@@ -412,4 +412,4 @@ public interface CommerceTermEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1071642236
+// LIFERAY-SERVICE-BUILDER-HASH:-718948372

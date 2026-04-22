@@ -294,4 +294,4 @@ public interface AssetCategoryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1982578244
+// LIFERAY-SERVICE-BUILDER-HASH:-629663018

@@ -960,4 +960,4 @@ public interface SocialActivityLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1077023012
+// LIFERAY-SERVICE-BUILDER-HASH:-730109236

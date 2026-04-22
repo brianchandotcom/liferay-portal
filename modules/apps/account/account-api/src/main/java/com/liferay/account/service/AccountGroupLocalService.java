@@ -384,4 +384,4 @@ public interface AccountGroupLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-796752675
+// LIFERAY-SERVICE-BUILDER-HASH:-298338204

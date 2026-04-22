@@ -53,4 +53,4 @@ public interface ClassNameService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:278876112
+// LIFERAY-SERVICE-BUILDER-HASH:-35101255

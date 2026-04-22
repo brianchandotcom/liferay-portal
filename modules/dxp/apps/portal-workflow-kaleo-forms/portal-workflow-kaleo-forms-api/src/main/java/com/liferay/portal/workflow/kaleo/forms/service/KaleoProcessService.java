@@ -187,4 +187,4 @@ public interface KaleoProcessService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-372290449
+// LIFERAY-SERVICE-BUILDER-HASH:1575885540

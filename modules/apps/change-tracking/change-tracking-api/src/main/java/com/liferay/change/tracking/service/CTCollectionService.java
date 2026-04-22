@@ -107,4 +107,4 @@ public interface CTCollectionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:304351551
+// LIFERAY-SERVICE-BUILDER-HASH:-1706102840

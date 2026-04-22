@@ -140,4 +140,4 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-439566548
+// LIFERAY-SERVICE-BUILDER-HASH:-482209157

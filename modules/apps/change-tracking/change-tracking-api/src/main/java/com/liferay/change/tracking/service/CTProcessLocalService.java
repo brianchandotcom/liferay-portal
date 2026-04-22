@@ -269,4 +269,4 @@ public interface CTProcessLocalService
 	public CTProcess updateCTProcess(CTProcess ctProcess);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:654151941
+// LIFERAY-SERVICE-BUILDER-HASH:847615245

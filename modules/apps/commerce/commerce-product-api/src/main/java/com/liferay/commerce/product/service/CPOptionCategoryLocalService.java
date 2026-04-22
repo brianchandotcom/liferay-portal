@@ -370,4 +370,4 @@ public interface CPOptionCategoryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:157785854
+// LIFERAY-SERVICE-BUILDER-HASH:-1386971082

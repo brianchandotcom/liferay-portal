@@ -341,4 +341,4 @@ public interface CommerceMLForecastAlertEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-707763007
+// LIFERAY-SERVICE-BUILDER-HASH:74061062

@@ -425,4 +425,4 @@ public interface SiteNavigationMenuLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2050673770
+// LIFERAY-SERVICE-BUILDER-HASH:1657933472

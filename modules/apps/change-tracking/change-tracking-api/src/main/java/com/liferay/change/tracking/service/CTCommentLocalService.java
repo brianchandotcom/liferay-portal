@@ -272,4 +272,4 @@ public interface CTCommentLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1076185129
+// LIFERAY-SERVICE-BUILDER-HASH:-442811677

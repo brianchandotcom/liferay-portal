@@ -132,4 +132,4 @@ public class TeamServiceWrapper
 	private TeamService _teamService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1325233000
+// LIFERAY-SERVICE-BUILDER-HASH:-742117165

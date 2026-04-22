@@ -105,4 +105,4 @@ public interface CommerceQualifierEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-676630990
+// LIFERAY-SERVICE-BUILDER-HASH:1043571798

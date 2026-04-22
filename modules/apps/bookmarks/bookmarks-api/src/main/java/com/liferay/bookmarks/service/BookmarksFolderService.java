@@ -142,4 +142,4 @@ public interface BookmarksFolderService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1397902317
+// LIFERAY-SERVICE-BUILDER-HASH:-1273875600

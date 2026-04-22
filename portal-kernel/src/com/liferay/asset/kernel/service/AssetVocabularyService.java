@@ -219,4 +219,4 @@ public interface AssetVocabularyService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1572181882
+// LIFERAY-SERVICE-BUILDER-HASH:-613196736

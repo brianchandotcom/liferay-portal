@@ -366,4 +366,4 @@ public interface JournalArticleResourceLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-91179453
+// LIFERAY-SERVICE-BUILDER-HASH:-2018651658

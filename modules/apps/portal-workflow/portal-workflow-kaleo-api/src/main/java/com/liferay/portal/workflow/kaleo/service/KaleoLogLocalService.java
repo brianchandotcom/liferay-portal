@@ -397,4 +397,4 @@ public interface KaleoLogLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:546549539
+// LIFERAY-SERVICE-BUILDER-HASH:-1643917422

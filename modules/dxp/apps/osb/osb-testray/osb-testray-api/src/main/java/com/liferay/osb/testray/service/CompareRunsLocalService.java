@@ -44,4 +44,4 @@ public interface CompareRunsLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1559332466
+// LIFERAY-SERVICE-BUILDER-HASH:1685057986

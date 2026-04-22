@@ -1923,4 +1923,4 @@ public class UserServiceUtil {
 	private static volatile UserService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:421856969
+// LIFERAY-SERVICE-BUILDER-HASH:1504031062

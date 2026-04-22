@@ -379,4 +379,4 @@ public interface LayoutRevisionLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1612784092
+// LIFERAY-SERVICE-BUILDER-HASH:752804316

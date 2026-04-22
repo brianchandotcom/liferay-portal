@@ -320,4 +320,4 @@ public interface COREntryRelLocalService
 	public COREntryRel updateCOREntryRel(COREntryRel corEntryRel);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1017140116
+// LIFERAY-SERVICE-BUILDER-HASH:-2018366994

@@ -81,4 +81,4 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelService
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2098941145
+// LIFERAY-SERVICE-BUILDER-HASH:-1612599935

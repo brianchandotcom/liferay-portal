@@ -152,4 +152,4 @@ public interface CommerceInventoryWarehouseRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:602714254
+// LIFERAY-SERVICE-BUILDER-HASH:-43328836

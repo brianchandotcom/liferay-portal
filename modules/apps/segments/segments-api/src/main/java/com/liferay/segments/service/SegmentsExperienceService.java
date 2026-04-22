@@ -150,4 +150,4 @@ public interface SegmentsExperienceService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1082364909
+// LIFERAY-SERVICE-BUILDER-HASH:1675346305

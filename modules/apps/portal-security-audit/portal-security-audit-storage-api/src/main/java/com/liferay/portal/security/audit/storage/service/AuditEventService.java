@@ -93,4 +93,4 @@ public interface AuditEventService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1585830752
+// LIFERAY-SERVICE-BUILDER-HASH:-23106901

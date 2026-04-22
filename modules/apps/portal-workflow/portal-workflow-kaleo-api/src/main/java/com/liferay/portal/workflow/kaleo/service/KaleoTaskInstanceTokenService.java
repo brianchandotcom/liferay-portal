@@ -54,4 +54,4 @@ public interface KaleoTaskInstanceTokenService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1783270948
+// LIFERAY-SERVICE-BUILDER-HASH:-1454329815

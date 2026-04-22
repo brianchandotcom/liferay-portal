@@ -144,4 +144,4 @@ public class AddressServiceWrapper
 	private AddressService _addressService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-349629844
+// LIFERAY-SERVICE-BUILDER-HASH:-1679233065

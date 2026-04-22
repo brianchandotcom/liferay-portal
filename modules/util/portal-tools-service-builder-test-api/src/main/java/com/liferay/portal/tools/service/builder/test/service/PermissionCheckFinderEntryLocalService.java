@@ -282,4 +282,4 @@ public interface PermissionCheckFinderEntryLocalService
 		PermissionCheckFinderEntry permissionCheckFinderEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1438824039
+// LIFERAY-SERVICE-BUILDER-HASH:349459709

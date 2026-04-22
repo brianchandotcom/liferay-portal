@@ -288,4 +288,4 @@ public interface PortalPreferencesLocalService
 		long ownerId, int ownerType, String xml);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1435071458
+// LIFERAY-SERVICE-BUILDER-HASH:82342434

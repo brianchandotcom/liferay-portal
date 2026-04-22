@@ -143,4 +143,4 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1894793653
+// LIFERAY-SERVICE-BUILDER-HASH:2017258172

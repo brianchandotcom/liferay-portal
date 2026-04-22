@@ -70,7 +70,7 @@ public class ResourceLocalServiceWrapper
 	@Override
 	public void addModelResources(
 			com.liferay.portal.kernel.model.AuditedModel auditedModel,
-			ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.addModelResources(auditedModel, serviceContext);
@@ -187,7 +187,8 @@ public class ResourceLocalServiceWrapper
 	@Override
 	public void addResources(
 			long companyId, long groupId, long userId, java.lang.String name,
-			long primKey, boolean portletActions, ServiceContext serviceContext)
+			long primKey, boolean portletActions,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.addResources(
@@ -399,7 +400,7 @@ public class ResourceLocalServiceWrapper
 	@Override
 	public void updateModelResources(
 			com.liferay.portal.kernel.model.AuditedModel auditedModel,
-			ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.updateModelResources(
@@ -534,4 +535,4 @@ public class ResourceLocalServiceWrapper
 	private ResourceLocalService _resourceLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1591200749
+// LIFERAY-SERVICE-BUILDER-HASH:-1846669064

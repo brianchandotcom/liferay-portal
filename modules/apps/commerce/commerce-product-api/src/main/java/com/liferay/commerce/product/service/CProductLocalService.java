@@ -363,4 +363,4 @@ public interface CProductLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1010658560
+// LIFERAY-SERVICE-BUILDER-HASH:-591142694

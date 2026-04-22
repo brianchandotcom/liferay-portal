@@ -348,4 +348,4 @@ public interface DLOpenerFileEntryReferenceLocalService
 		String referenceKey, String referenceType, FileEntry fileEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1370514342
+// LIFERAY-SERVICE-BUILDER-HASH:47023126

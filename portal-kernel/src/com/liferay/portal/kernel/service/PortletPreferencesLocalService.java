@@ -460,4 +460,4 @@ public interface PortletPreferencesLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1719999886
+// LIFERAY-SERVICE-BUILDER-HASH:1178138459

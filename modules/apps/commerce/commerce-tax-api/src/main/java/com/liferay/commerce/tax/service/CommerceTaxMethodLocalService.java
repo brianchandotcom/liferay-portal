@@ -306,4 +306,4 @@ public interface CommerceTaxMethodLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-215445420
+// LIFERAY-SERVICE-BUILDER-HASH:934975460

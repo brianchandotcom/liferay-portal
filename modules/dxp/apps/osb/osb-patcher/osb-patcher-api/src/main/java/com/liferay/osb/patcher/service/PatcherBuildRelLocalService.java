@@ -279,4 +279,4 @@ public interface PatcherBuildRelLocalService
 		PatcherBuildRel patcherBuildRel);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1596219446
+// LIFERAY-SERVICE-BUILDER-HASH:1299202478

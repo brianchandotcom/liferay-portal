@@ -305,4 +305,4 @@ public interface NotificationRecipientLocalService
 		NotificationRecipient notificationRecipient);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:715853991
+// LIFERAY-SERVICE-BUILDER-HASH:1278996706

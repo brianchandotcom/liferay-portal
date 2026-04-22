@@ -137,4 +137,4 @@ public interface CommerceSubscriptionEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1926125796
+// LIFERAY-SERVICE-BUILDER-HASH:-834234507

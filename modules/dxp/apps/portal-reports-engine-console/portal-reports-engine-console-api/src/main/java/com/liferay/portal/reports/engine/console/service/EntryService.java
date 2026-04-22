@@ -87,4 +87,4 @@ public interface EntryService extends BaseService {
 	public void unscheduleEntry(long entryId) throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-269438679
+// LIFERAY-SERVICE-BUILDER-HASH:172732566

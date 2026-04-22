@@ -508,4 +508,4 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	private static volatile LayoutFriendlyURLLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2049095553
+// LIFERAY-SERVICE-BUILDER-HASH:-1532032385

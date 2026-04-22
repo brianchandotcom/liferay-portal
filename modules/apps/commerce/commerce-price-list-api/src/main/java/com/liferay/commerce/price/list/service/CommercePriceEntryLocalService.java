@@ -493,4 +493,4 @@ public interface CommercePriceEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-993138307
+// LIFERAY-SERVICE-BUILDER-HASH:1048979015

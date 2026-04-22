@@ -335,4 +335,4 @@ public interface NotificationTemplateLocalService
 		NotificationTemplate notificationTemplate);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:283385007
+// LIFERAY-SERVICE-BUILDER-HASH:-708424594

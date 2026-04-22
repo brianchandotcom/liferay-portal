@@ -1124,4 +1124,4 @@ public class ResourcePermissionLocalServiceUtil {
 	private static volatile ResourcePermissionLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-573507335
+// LIFERAY-SERVICE-BUILDER-HASH:-1987294269

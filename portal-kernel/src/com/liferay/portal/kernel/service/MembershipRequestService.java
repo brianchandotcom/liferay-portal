@@ -63,4 +63,4 @@ public interface MembershipRequestService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:669157938
+// LIFERAY-SERVICE-BUILDER-HASH:493792203

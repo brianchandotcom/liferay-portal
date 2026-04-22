@@ -501,4 +501,4 @@ public class ResourceLocalServiceUtil {
 	private static volatile ResourceLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1974778828
+// LIFERAY-SERVICE-BUILDER-HASH:56793761

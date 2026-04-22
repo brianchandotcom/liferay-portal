@@ -970,4 +970,4 @@ public class UserNotificationEventLocalServiceWrapper
 		_userNotificationEventLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2073399637
+// LIFERAY-SERVICE-BUILDER-HASH:802442837

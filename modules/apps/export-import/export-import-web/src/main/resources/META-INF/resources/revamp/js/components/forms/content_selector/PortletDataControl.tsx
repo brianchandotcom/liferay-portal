@@ -7,56 +7,14 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
+import {
+	HandlerSelection,
+	getInitialSelection,
+	isSelected,
+	updateSelection,
+} from '../../../utils/contentSelection';
 import {PortletDataHandlerControl} from '../../../utils/mockPortletDataHandlerSections';
 import PortletDataControlChoice from './PortletDataControlChoice';
-
-export type HandlerSelection =
-	| {
-			[key: string]: HandlerSelection;
-	  }
-	| string
-	| true;
-
-export function isSelected(
-	value: HandlerSelection | undefined,
-	entry: PortletDataHandlerControl
-): boolean {
-	if (!value) {
-		return false;
-	}
-
-	if (entry.type === 'choice') {
-		return true;
-	}
-
-	if (!entry.controls?.length || typeof value !== 'object') {
-		return true;
-	}
-
-	return entry.controls.every((control) =>
-		isSelected(value[control.name], control)
-	);
-}
-
-export function getInitialSelection(
-	entry: PortletDataHandlerControl
-): HandlerSelection {
-	if (entry.type === 'choice') {
-		return entry.choices[0].name;
-	}
-
-	if (!entry.controls?.length) {
-		return true;
-	}
-
-	const selection: Record<string, HandlerSelection> = {};
-
-	entry.controls.forEach((control) => {
-		selection[control.name] = getInitialSelection(control);
-	});
-
-	return selection;
-}
 
 interface PortletDataControlProps {
 	className?: string;
@@ -117,23 +75,15 @@ export default function PortletDataControl({
 							control={nestedControl}
 							key={nestedControl.name}
 							level={level + 1}
-							onChange={(controlValue) => {
-								const {
-									[nestedControl.name]: _,
-									...newSelection
-								} = currentSelection;
-
-								if (controlValue) {
-									newSelection[nestedControl.name] =
-										controlValue;
-								}
-
+							onChange={(controlValue) =>
 								onChange(
-									Object.keys(newSelection).length
-										? (newSelection as HandlerSelection)
-										: undefined
-								);
-							}}
+									updateSelection(
+										currentSelection,
+										nestedControl.name,
+										controlValue
+									)
+								)
+							}
 							value={currentSelection[nestedControl.name]}
 						/>
 					)

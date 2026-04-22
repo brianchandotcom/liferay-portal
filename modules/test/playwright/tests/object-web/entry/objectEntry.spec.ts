@@ -2697,6 +2697,55 @@ test.describe('Manage object entries through View Object Entries', () => {
 		).toHaveText('Jun 1, 2023, 12:00:00 PM');
 	});
 
+	test('can create an object entry with special characters on a text field named Name', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'Text',
+					label: {en_US: 'Name'},
+					name: 'name',
+				},
+			],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: 'Name',
+			objectFieldValue: '@~!& ^%$&_-',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.locator('td').getByText('@~!& ^%$&_-', {exact: true})
+		).toBeVisible();
+	});
+
 	test('can delete a custom field when existing entries', async ({
 		apiHelpers,
 		objectFieldsPage,

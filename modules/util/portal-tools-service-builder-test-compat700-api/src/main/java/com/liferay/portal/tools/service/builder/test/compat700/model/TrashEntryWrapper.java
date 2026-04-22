@@ -528,4 +528,4 @@ public class TrashEntryWrapper implements ModelWrapper<TrashEntry>, TrashEntry {
 	private final TrashEntry _trashEntry;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:223942572
+// LIFERAY-SERVICE-BUILDER-HASH:1459836524

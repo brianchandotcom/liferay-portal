@@ -244,4 +244,4 @@ public interface MVCCEntryLocalService
 	public MVCCEntry updateMVCCEntry(MVCCEntry mvccEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:750210283
+// LIFERAY-SERVICE-BUILDER-HASH:-1577175145

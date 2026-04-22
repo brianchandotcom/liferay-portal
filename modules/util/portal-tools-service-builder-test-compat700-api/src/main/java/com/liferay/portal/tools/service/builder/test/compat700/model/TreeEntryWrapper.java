@@ -377,4 +377,4 @@ public class TreeEntryWrapper implements ModelWrapper<TreeEntry>, TreeEntry {
 	private final TreeEntry _treeEntry;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:591939038
+// LIFERAY-SERVICE-BUILDER-HASH:782995550

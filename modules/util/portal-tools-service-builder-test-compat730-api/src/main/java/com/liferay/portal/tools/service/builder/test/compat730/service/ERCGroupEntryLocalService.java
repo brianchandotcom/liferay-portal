@@ -318,4 +318,4 @@ public interface ERCGroupEntryLocalService
 	public ERCGroupEntry updateERCGroupEntry(ERCGroupEntry ercGroupEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1742490446
+// LIFERAY-SERVICE-BUILDER-HASH:1267037815

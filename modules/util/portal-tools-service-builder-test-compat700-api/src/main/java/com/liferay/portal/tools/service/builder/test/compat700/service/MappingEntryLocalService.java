@@ -305,4 +305,4 @@ public interface MappingEntryLocalService
 	public MappingEntry updateMappingEntry(MappingEntry mappingEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-431748793
+// LIFERAY-SERVICE-BUILDER-HASH:1765764883

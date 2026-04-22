@@ -245,4 +245,4 @@ public interface TrashEntryLocalService
 	public TrashEntry updateTrashEntry(TrashEntry trashEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:44117803
+// LIFERAY-SERVICE-BUILDER-HASH:1693595295

@@ -259,4 +259,4 @@ public interface ArrayableEntryLocalService
 	public ArrayableEntry updateArrayableEntry(ArrayableEntry arrayableEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1118862951
+// LIFERAY-SERVICE-BUILDER-HASH:-605338115

@@ -305,4 +305,4 @@ public interface BasicEntryLocalService
 	public BasicEntry updateBasicEntry(BasicEntry basicEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-680668459
+// LIFERAY-SERVICE-BUILDER-HASH:877556169

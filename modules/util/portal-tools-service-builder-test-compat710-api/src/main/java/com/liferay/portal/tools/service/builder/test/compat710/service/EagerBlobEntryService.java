@@ -55,4 +55,4 @@ public interface EagerBlobEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1926080724
+// LIFERAY-SERVICE-BUILDER-HASH:489380052

@@ -22,8 +22,8 @@ test(
 		await expect(productMenu).toHaveCSS('transform', 'none');
 		await expect(productMenu).toHaveCSS('position', 'fixed');
 
-		await expect(
-			page.locator('.lfr-de__form-report-sidebar')
-		).toHaveCount(0);
+		await expect(page.locator('.lfr-de__form-report-sidebar')).toHaveCount(
+			0
+		);
 	}
 );

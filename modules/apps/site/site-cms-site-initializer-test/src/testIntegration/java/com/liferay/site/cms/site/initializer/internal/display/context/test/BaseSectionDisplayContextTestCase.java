@@ -300,6 +300,17 @@ public abstract class BaseSectionDisplayContextTestCase
 	}
 
 	@Test
+	public void testGetAdditionalAPIURLParameters() throws Exception {
+		String additionalAPIURLParameters = ReflectionTestUtil.invoke(
+			getSectionDisplayContext(getMockHttpServletRequest()),
+			"getAdditionalAPIURLParameters", new Class<?>[0]);
+
+		Assert.assertTrue(
+			additionalAPIURLParameters,
+			additionalAPIURLParameters.contains("sort=dateModified:desc"));
+	}
+
+	@Test
 	public void testGetAdditionalProps() throws Exception {
 		DepotEntry depotEntry = addDepotEntry(
 			StringUtil.randomString(), TestPropsValues.getUserId());
@@ -704,7 +715,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			"&nestedFields=embedded,embeddedTaxonomyCategory,",
 			"file.metadata,file.previewURL,file.thumbnailURL,",
 			"numberOfObjectEntries,numberOfObjectEntryFolders,",
-			"systemProperties.objectDefinitionBrief");
+			"systemProperties.objectDefinitionBrief&sort=dateModified:desc");
 	}
 
 	protected String getCMSSectionFilterString(Object displayContext) {

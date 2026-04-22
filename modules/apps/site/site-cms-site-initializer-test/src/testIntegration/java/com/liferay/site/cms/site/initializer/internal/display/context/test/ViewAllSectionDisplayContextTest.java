@@ -11,10 +11,12 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -23,6 +25,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -47,6 +50,28 @@ public class ViewAllSectionDisplayContextTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Override
+	public HashMap<String, Object> getBaseAdditionalProps() throws Exception {
+		return new HashMapBuilder<>().putAll(
+			super.getBaseAdditionalProps()
+		).put(
+			"breadcrumbProps",
+			HashMapBuilder.<String, Object>put(
+				"breadcrumbItems",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"active", false
+					).put(
+						"href", (String)null
+					).put(
+						"label", "test"
+					))
+			).put(
+				"hideSpace", true
+			).build()
+		).build();
+	}
 
 	@Override
 	protected String getCMSSectionFilterString(Object displayContext) {

@@ -219,6 +219,12 @@ definition {
 		task ("Assert default time range selector is visible") {
 			AssertVisible(locator1 = "ContentPerformance#SELECT_DATE_RANGE");
 		}
+
+		task ("Assert number of views is 0") {
+			AssertVisible(
+				locator1 = "ContentPerformance#NUMBER_VIEWS",
+				value1 = 0);
+		}
 	}
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
@@ -264,24 +270,6 @@ definition {
 			AssertVisible(
 				colorHex = "f1f2f5",
 				locator1 = "ContentPerformance#PIE_CHART_WITH_COLOR");
-		}
-	}
-
-	@description = "LPS-108068: When there is no views nor reads in the selected range or in the default view, the line of the graphic will be at 0"
-	@priority = 3
-	test GraphicLineNoViewsReads {
-		task ("Open Content Performance panel") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Assert line equal 0") {
-			AssertVisible(
-				locator1 = "ContentPerformance#NUMBER_VIEWS",
-				value1 = 0);
 		}
 	}
 

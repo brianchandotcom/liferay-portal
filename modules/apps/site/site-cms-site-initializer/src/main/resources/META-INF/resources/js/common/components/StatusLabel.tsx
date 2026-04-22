@@ -41,16 +41,42 @@ interface StatusLabelProps {
 }
 
 const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
-	if (
-		label !== ASSET_STATUS.APPROVED ||
-		!isExpiringSoon(expirationDate ?? undefined)
-	) {
-		return (
-			<Label displayType={mapLabelToLabelDisplayType[label]}>
-				{Liferay.Language.get(label)}
-			</Label>
-		);
+	if (label === 'expired' && expirationDate) {
+		const formattedDate = formatExpirationDate(expirationDate);
+		const formattedDateLong = formatExpirationDateLong(expirationDate);
+
+		if (formattedDate && formattedDateLong) {
+			const ariaLabel = sub(
+				Liferay.Language.get('expired-expired-on-x'),
+				formattedDateLong
+			);
+
+			return (
+				<ClayTooltipProvider>
+					<span
+						aria-label={ariaLabel}
+						tabIndex={0}
+						title={formattedDate}
+					>
+						<Label displayType={mapLabelToLabelDisplayType[label]}>
+							{Liferay.Language.get(label)}
+						</Label>
+					</span>
+				</ClayTooltipProvider>
+			);
+		}
 	}
+
+    if (
+        label !== ASSET_STATUS.APPROVED ||
+        !isExpiringSoon(expirationDate ?? undefined)
+    ) {
+        return (
+            <Label displayType={mapLabelToLabelDisplayType[label]}>
+                {Liferay.Language.get(label)}
+            </Label>
+        );
+    }
 
 	const formattedDate = formatExpirationDate(expirationDate ?? undefined);
 	const expiringSoonText = Liferay.Language.get('expiring-soon');

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -53,8 +53,6 @@ test.describe('Object Widget', () => {
 			site,
 			widgetPagePage,
 		}) => {
-
-			// Corresponds to Poshi test: CanAddObjectPortletWidget
 
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
@@ -116,8 +114,6 @@ test.describe('Object Widget', () => {
 			site,
 			widgetPagePage,
 		}) => {
-
-			// Corresponds to Poshi test: CannotAddObjectPortletWhenWidgetDisabled
 
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
@@ -182,8 +178,6 @@ test.describe('Object Widget', () => {
 			widgetPagePage,
 		}) => {
 
-			// Corresponds to Poshi test: ObjectPortletWidgetDisappearsWhenWidgetDisabled
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -242,8 +236,6 @@ test.describe('Content Pages Mapping', () => {
 		'Can map preview URL of image attachment to fragment on content page',
 		{tag: '@LPS-182999'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
-			// Corresponds to Poshi test: MapPreviewURLOfImageAttachmentToFragment
 
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Attachment'],
@@ -330,8 +322,6 @@ test.describe('Content Pages Mapping', () => {
 		'Can map preview URL of non-image attachment to fragment showing blank space',
 		{tag: '@LPS-182999'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
-			// Corresponds to Poshi test: MapPreviewURLOfNonImageAttachmentToFragment
 
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Attachment'],
@@ -426,8 +416,6 @@ test.describe('Content Pages Mapping', () => {
 		{tag: '@LPD-86436'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 
-			// Corresponds to Poshi test: ViewImageUserProfileFromSpecificEntry
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -502,8 +490,6 @@ test.describe('Collection Display', () => {
 		'Can display entries on table format in collection display',
 		{tag: '@LPS-135386'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
-			// Corresponds to Poshi test: CanDisplayEntriesOnTableFormat
 
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text', 'Text'],
@@ -597,8 +583,6 @@ test.describe('Collection Display', () => {
 		'Can search for object entry on search experience in collection providers',
 		{tag: '@LPS-135388'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
-			// Corresponds to Poshi test: CanSearchForObjectEntryOnSearchExperience
 
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: [{businessType: 'Text', indexed: true}],
@@ -738,8 +722,6 @@ test.describe('Collection Display', () => {
 		{tag: '@LPS-133865'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 
-			// Corresponds to Poshi test: ObjectDisplayedToCollectionProdiver
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -792,8 +774,6 @@ test.describe('Display Page', () => {
 		'Can define fixed filter for picklist type on display page',
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
-			// Corresponds to Poshi test: CanDefineFixedFilterForPicklistType
 
 			const {listTypeDefinition, listTypeEntries} =
 				await postListTypeDefinitionListTypeEntries({
@@ -918,8 +898,6 @@ test.describe('Display Page', () => {
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 
-			// Corresponds to Poshi test: CanSetPaginationNumeric
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -1008,8 +986,6 @@ test.describe('Display Page', () => {
 		'Can set pagination as simple on display page',
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
-			// Corresponds to Poshi test: CanSetPaginationSimple
 
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],

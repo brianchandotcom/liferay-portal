@@ -385,7 +385,7 @@ test('can export new default and custom task name', async ({
 	});
 
 	expect(customExportFilePath).toMatch(
-		new RegExp(`^${getTempDir()}${taskName}-`)
+		new RegExp(`^${getTempDir()}${taskName}\\.lar$`)
 	);
 });
 

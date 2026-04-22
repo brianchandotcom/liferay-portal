@@ -34,7 +34,7 @@ resource "helm_release" "argo_workflows" {
 				}
 				executor={
 					image={
-						tag="v3.7.9-nonroot"
+						tag="v4.0.4-nonroot"
 					}
 					securityContext={
 						allowPrivilegeEscalation=false

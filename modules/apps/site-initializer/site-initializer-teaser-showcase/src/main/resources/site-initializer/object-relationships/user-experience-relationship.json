@@ -1,5 +1,6 @@
 {
 	"deletionType": "cascade",
+	"externalReferenceCode": "USER_TO_USER_EXPERIENCE",
 	"label": {
 		"en_US": "User to User Experience"
 	},

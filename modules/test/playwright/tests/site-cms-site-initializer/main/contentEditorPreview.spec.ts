@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
+import {Locator, Page, expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
@@ -16,10 +17,16 @@ import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
+import {
+	FIELD_TYPES,
+	StructureBuilderPage,
+} from '../structure-builder/pages/StructureBuilderPage';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {ContentsPage} from './pages/ContentsPage';
+import {PicklistBuilderPage} from './pages/PicklistBuilderPage';
 import {SpaceSummaryPage} from './pages/SpaceSummaryPage';
 
 const test = mergeTests(
@@ -60,12 +67,14 @@ const createAndEditContent = async ({
 };
 
 const createDisplayPageTemplate = async ({
+	contentType = 'Basic Web Content',
 	displayPageTemplateName,
 	displayPageTemplatesPage,
 	page,
 	pageEditorPage,
 	site,
 }: {
+	contentType?: string;
 	displayPageTemplateName: string;
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
 	page: Page;
@@ -75,7 +84,7 @@ const createDisplayPageTemplate = async ({
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
 	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Basic Web Content',
+		contentType,
 		name: displayPageTemplateName,
 	});
 
@@ -94,6 +103,52 @@ const createDisplayPageTemplate = async ({
 	await pageEditorPage.waitForChangesSaved();
 
 	await pageEditorPage.publishPage();
+};
+
+const createStructureWithAllFields = async ({
+	apiHelpers,
+	picklistBuilderPage,
+	structureBuilderPage,
+}: {
+	apiHelpers: ApiHelpers;
+	picklistBuilderPage: PicklistBuilderPage;
+	structureBuilderPage: StructureBuilderPage;
+}) => {
+	const structureLabel = `Structure${getRandomInt()}`;
+
+	const picklist = await picklistBuilderPage.createPicklist();
+
+	await apiHelpers.listTypeAdmin.postListTypeEntry({
+		key: 'option',
+		listTypeDefinitionExternalReferenceCode: picklist.externalReferenceCode,
+		name_i18n: {en_US: 'Option'},
+	});
+
+	await structureBuilderPage.createStructureFromData({
+		label: structureLabel,
+		name: structureLabel,
+		page: structureBuilderPage,
+		publish: false,
+	});
+
+	for (const type of FIELD_TYPES) {
+		await structureBuilderPage.addField(type);
+
+		if (type === 'Select from List') {
+			await structureBuilderPage.changeFieldSettings({
+				picklist: picklist.name,
+			});
+		}
+		else if (type === 'Upload') {
+			await structureBuilderPage.changeFieldSettings({
+				requestFile: 'computer',
+			});
+		}
+	}
+
+	await structureBuilderPage.publishStructure();
+
+	return structureLabel;
 };
 
 const createSpaceAndConnectSites = async ({
@@ -446,6 +501,231 @@ test(
 					'_blank'
 				);
 			});
+		}
+		finally {
+			await test.step('Delete content', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.deleteContent(title);
+			});
+		}
+	}
+);
+
+test(
+	'The unsaved changes alert appears when any field type is edited in the preview',
+	{tag: '@LPD-86440'},
+	async ({
+		apiHelpers,
+		contentsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		picklistBuilderPage,
+		site,
+		spaceSummaryPage,
+		structureBuilderPage,
+	}) => {
+		const displayPageTemplateName = getRandomString();
+		const spaceName = `Space ${getRandomString()}`;
+		const title = getRandomString();
+		const unsavedChangesAlert = page.getByText(
+			'You have unsaved changes. Save as draft or publish to update this preview.'
+		);
+
+		let structureLabel = '';
+
+		try {
+			await test.step('Create a structure with all field types', async () => {
+				structureLabel = await createStructureWithAllFields({
+					apiHelpers,
+					picklistBuilderPage,
+					structureBuilderPage,
+				});
+			});
+
+			await test.step('Create a display page template for the new content type', async () => {
+				await createDisplayPageTemplate({
+					contentType: structureLabel,
+					displayPageTemplateName,
+					displayPageTemplatesPage,
+					page,
+					pageEditorPage,
+					site,
+				});
+			});
+
+			await test.step('Create a space and connect sites', async () => {
+				await createSpaceAndConnectSites({
+					apiHelpers,
+					site,
+					spaceName,
+					spaceSummaryPage,
+				});
+			});
+
+			await test.step('Create a content from the new structure', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.createContent(structureLabel, spaceName);
+
+				await page.getByLabel('Title').fill(title);
+
+				await contentsPage.saveContent();
+
+				await contentsPage.editContent(title);
+			});
+
+			const form = page.locator('.lfr-layout-structure-item-form');
+
+			const openPreviewAndSelectDisplayPage = async () => {
+				await contentsPage.previewButton.click();
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {name: site.name}),
+					trigger: page.getByLabel('Select Channel'),
+				});
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {
+						name: displayPageTemplateName,
+					}),
+					trigger: page.getByLabel('Select Display Page'),
+				});
+			};
+
+			const fill = async (input: Locator, value: string) => {
+				await input.waitFor({state: 'visible', timeout: 15000});
+				await input.scrollIntoViewIfNeeded();
+				await input.fill(value);
+			};
+
+			const fieldInteractions: Array<{
+				action: () => Promise<void>;
+				label: string;
+			}> = [
+				{
+					action: () =>
+						fill(
+							form.getByRole('textbox', {
+								exact: true,
+								name: 'Text',
+							}),
+							'text value'
+						),
+					label: 'Title',
+				},
+				{
+					action: () =>
+						fill(form.getByLabel('Long Text'), 'long text value'),
+					label: 'Long Text',
+				},
+				{
+					action: async () => {
+						const editable = form.locator('.ck-editor__editable');
+
+						await editable.scrollIntoViewIfNeeded();
+						await editable.click();
+						await page.keyboard.type('rich text value');
+					},
+					label: 'Rich Text',
+				},
+				{
+					action: () => fill(form.getByLabel('Decimal'), '1.5'),
+					label: 'Decimal',
+				},
+				{
+					action: async () => {
+						const trigger = form.getByLabel('Open Options Menu');
+
+						await trigger.scrollIntoViewIfNeeded();
+
+						await trigger.click();
+
+						await clickAndExpectToBeVisible({
+							autoClick: true,
+							target: page
+								.getByRole('listbox')
+								.getByRole('option')
+								.first(),
+							trigger,
+						});
+					},
+					label: 'Select from List',
+				},
+				{
+					action: () => fill(form.getByLabel('Numeric'), '42'),
+					label: 'Numeric',
+				},
+				{
+					action: () =>
+						fill(form.getByLabel('Date').first(), '2026-05-01'),
+					label: 'Date',
+				},
+				{
+					action: () =>
+						fill(
+							form.getByLabel('Date').nth(1),
+							'2026-05-01T13:30'
+						),
+					label: 'Date and Time',
+				},
+				{
+					action: async () => {
+						const checkbox = form.getByLabel('Boolean');
+
+						await checkbox.scrollIntoViewIfNeeded();
+						await checkbox.click();
+					},
+					label: 'Boolean',
+				},
+
+				{
+					action: async () => {
+						const uploadButton = form.getByRole('button', {
+							exact: true,
+							name: 'Select File',
+						});
+
+						await uploadButton.scrollIntoViewIfNeeded();
+
+						const fileChooserPromise =
+							page.waitForEvent('filechooser');
+
+						await uploadButton.click();
+
+						const fileChooser = await fileChooserPromise;
+
+						await fileChooser.setFiles(
+							path.join(
+								__dirname,
+								'/dependencies/file_upload_image_1.jpg'
+							)
+						);
+
+						await expect(
+							form.getByText('file_upload_image_1.jpg')
+						).toBeVisible();
+					},
+					label: 'Upload',
+				},
+			];
+
+			for (const {action, label} of fieldInteractions) {
+				await test.step(`Editing the ${label} field shows the unsaved changes alert`, async () => {
+					await openPreviewAndSelectDisplayPage();
+
+					await expect(unsavedChangesAlert).not.toBeVisible();
+
+					await action();
+
+					await expect(unsavedChangesAlert).toBeVisible();
+
+					await page.reload();
+				});
+			}
 		}
 		finally {
 			await test.step('Delete content', async () => {

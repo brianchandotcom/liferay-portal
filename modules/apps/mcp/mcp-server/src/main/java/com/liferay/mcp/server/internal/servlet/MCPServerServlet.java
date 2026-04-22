@@ -426,7 +426,9 @@ public class MCPServerServlet extends HttpServlet {
 		String baseURL, long companyId, String authorization,
 		MCPServerProfile mcpServerProfile) {
 
-		String key = _getServletKey(companyId, mcpServerProfile);
+		String key = _getServletKey(
+			companyId,
+			(mcpServerProfile != null) ? mcpServerProfile._name : null);
 
 		Servlet servlet = _servlets.get(key);
 
@@ -450,13 +452,11 @@ public class MCPServerServlet extends HttpServlet {
 		}
 	}
 
-	private String _getServletKey(
-		long companyId, MCPServerProfile mcpServerProfile) {
-
+	private String _getServletKey(long companyId, String profileName) {
 		String key = String.valueOf(companyId);
 
-		if (mcpServerProfile != null) {
-			key = key + StringPool.UNDERLINE + mcpServerProfile._name;
+		if (profileName != null) {
+			key = key + StringPool.UNDERLINE + profileName;
 		}
 
 		return key;

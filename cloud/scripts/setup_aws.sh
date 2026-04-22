@@ -90,7 +90,7 @@ function _configure_s3_bucket {
 			--region "${region}" \
 			--target-key-id "${kms_key_id}"
 
-		_log "KMS key for bucket ${bucket_name} created successfully."
+		_log "KMS key for bucket ${bucket_name} was created successfully."
 	else
 		_log "KMS key for bucket ${bucket_name} already exists. Skipping creation process."
 	fi
@@ -143,7 +143,7 @@ function _create_tfstate_bucket {
 
 		_create_s3_bucket "${bucket_name}" "${region}"
 
-		_log "Bucket ${bucket_name} created successfully."
+		_log "Bucket ${bucket_name} was created successfully."
 	else
 		_log "Bucket ${bucket_name} already exists. Skipping creation process."
 	fi
@@ -152,7 +152,7 @@ function _create_tfstate_bucket {
 
 	_configure_s3_bucket "${bucket_name}" "${region}"
 
-	_log "Bucket ${bucket_name} configured successfully."
+	_log "Bucket ${bucket_name} was configured successfully."
 }
 
 function _create_s3_bucket {

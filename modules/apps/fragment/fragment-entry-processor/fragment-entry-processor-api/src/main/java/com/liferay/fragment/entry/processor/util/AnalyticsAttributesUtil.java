@@ -39,7 +39,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -91,12 +94,43 @@ public class AnalyticsAttributesUtil {
 			).build();
 		}
 
-		return _getAnalyticsAttributes(
-			fragmentEntryProcessorContext, fragmentEntryProcessorHelper,
-			infoDisplaysFieldValues,
+		InfoItemFieldMapped infoItemFieldMapped =
 			fragmentEntryProcessorHelper.getInfoItemFieldMapped(
-				editableValueJSONObject, fragmentEntryProcessorContext),
-			infoItemServiceRegistry);
+				editableValueJSONObject, fragmentEntryProcessorContext);
+
+		if (infoItemFieldMapped == null) {
+			return Collections.emptyMap();
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemFieldMapped.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier)) {
+
+			return Collections.emptyMap();
+		}
+
+		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
+			infoItemFieldMapped.getInfoItemReference());
+
+		return HashMapBuilder.<String, Object>put(
+			"analytics-asset-action",
+			_getAnalyticsAssetAction(infoItemFieldMapped, infoItemFieldValues)
+		).put(
+			"analytics-asset-field", infoItemFieldMapped.getFieldName()
+		).put(
+			"analytics-asset-mime-type",
+			_getAnalyticsAssetMimeType(
+				fragmentEntryProcessorHelper, infoItemFieldMapped,
+				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
+		).putAll(
+			_getAnalyticsAttributes(
+				classPKInfoItemIdentifier, fragmentEntryProcessorContext,
+				infoItemFieldMapped, infoItemFieldValues,
+				infoItemServiceRegistry,
+				fragmentEntryProcessorContext.getLocale())
+		).build();
 	}
 
 	private static String _getAnalyticsAssetAction(
@@ -221,47 +255,53 @@ public class AnalyticsAttributesUtil {
 	}
 
 	private static Map<String, Object> _getAnalyticsAttributes(
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext,
-		FragmentEntryProcessorHelper fragmentEntryProcessorHelper,
-		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
 		InfoItemFieldMapped infoItemFieldMapped,
-		InfoItemServiceRegistry infoItemServiceRegistry) {
+		InfoItemFieldValues infoItemFieldValues,
+		InfoItemServiceRegistry infoItemServiceRegistry, Locale locale) {
 
-		if (infoItemFieldMapped == null) {
-			return Collections.emptyMap();
+		HttpServletRequest httpServletRequest =
+			fragmentEntryProcessorContext.getHttpServletRequest();
+
+		if (httpServletRequest == null) {
+			return _getAnalyticsAttributes(
+				classPKInfoItemIdentifier, infoItemFieldMapped,
+				infoItemFieldValues, infoItemServiceRegistry, locale);
 		}
 
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemFieldMapped.getInfoItemIdentifier();
+		Map<InfoItemReference, Map<String, Object>>
+			assetAnalyticsAttributesMap =
+				(Map<InfoItemReference, Map<String, Object>>)
+					httpServletRequest.getAttribute(_ANALYTICS_ATTRIBUTES_MAP);
 
-		if (!(infoItemIdentifier instanceof
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier)) {
+		if (assetAnalyticsAttributesMap == null) {
+			assetAnalyticsAttributesMap = new HashMap<>();
 
-			return Collections.emptyMap();
+			httpServletRequest.setAttribute(
+				_ANALYTICS_ATTRIBUTES_MAP, assetAnalyticsAttributesMap);
 		}
 
-		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
-			infoItemFieldMapped.getInfoItemReference());
+		return assetAnalyticsAttributesMap.computeIfAbsent(
+			infoItemFieldMapped.getInfoItemReference(),
+			key -> _getAnalyticsAttributes(
+				classPKInfoItemIdentifier, infoItemFieldMapped,
+				infoItemFieldValues, infoItemServiceRegistry, locale));
+	}
+
+	private static Map<String, Object> _getAnalyticsAttributes(
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier,
+		InfoItemFieldMapped infoItemFieldMapped,
+		InfoItemFieldValues infoItemFieldValues,
+		InfoItemServiceRegistry infoItemServiceRegistry, Locale locale) {
 
 		return HashMapBuilder.<String, Object>put(
-			"analytics-asset-action",
-			() -> _getAnalyticsAssetAction(
-				infoItemFieldMapped, infoItemFieldValues)
-		).put(
 			"analytics-asset-categories",
 			() -> _getAnalyticsAssetCategories(
-				classPKInfoItemIdentifier, infoItemFieldMapped,
-				fragmentEntryProcessorContext.getLocale())
-		).put(
-			"analytics-asset-field", infoItemFieldMapped::getFieldName
+				classPKInfoItemIdentifier, infoItemFieldMapped, locale)
 		).put(
 			"analytics-asset-id",
 			String.valueOf(classPKInfoItemIdentifier.getClassPK())
-		).put(
-			"analytics-asset-mime-type",
-			() -> _getAnalyticsAssetMimeType(
-				fragmentEntryProcessorHelper, infoItemFieldMapped,
-				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
 		).put(
 			"analytics-asset-subtype",
 			() -> _getAnalyticsSubtype(
@@ -272,16 +312,14 @@ public class AnalyticsAttributesUtil {
 				classPKInfoItemIdentifier, infoItemFieldMapped)
 		).put(
 			"analytics-asset-title",
-			() -> _getAnalyticsTitle(
-				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
+			() -> _getAnalyticsTitle(infoItemFieldValues, locale)
 		).put(
 			"analytics-asset-type",
 			_getAnalyticsAssetType(infoItemFieldMapped.getClassName())
 		).put(
 			"analytics-external-reference-code",
 			() -> _getAnalyticsExternalReferenceCode(
-				infoItemFieldMapped, infoItemFieldValues,
-				fragmentEntryProcessorContext.getLocale())
+				infoItemFieldMapped, infoItemFieldValues, locale)
 		).put(
 			"analytics-object-definition-name",
 			() -> {
@@ -386,6 +424,9 @@ public class AnalyticsAttributesUtil {
 
 		return String.valueOf(infoFieldValue.getValue(locale));
 	}
+
+	private static final String _ANALYTICS_ATTRIBUTES_MAP =
+		"ANALYTICS_ATTRIBUTES_MAP";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsAttributesUtil.class);

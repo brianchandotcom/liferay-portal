@@ -130,9 +130,17 @@ public class AssetListEntryStagedModelRepository
 			AssetListEntry assetListEntry)
 		throws PortalException {
 
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			assetListEntry);
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setAttribute(
+				"assetListEntryKey", assetListEntry.getAssetListEntryKey());
+		}
+
 		return _assetListEntryLocalService.updateAssetListEntry(
 			assetListEntry.getAssetListEntryId(), assetListEntry.getTitle(),
-			portletDataContext.createServiceContext(assetListEntry));
+			serviceContext);
 	}
 
 	@Reference

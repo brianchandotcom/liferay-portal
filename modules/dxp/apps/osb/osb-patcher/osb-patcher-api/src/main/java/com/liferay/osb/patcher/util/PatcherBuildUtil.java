@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +165,7 @@ public class PatcherBuildUtil {
 		patcherBuild.setType(PatcherBuildConstants.TYPE_FIX_PACK);
 		patcherBuild.setQaStatus(WorkflowConstants.STATUS_PENDING);
 		patcherBuild.setStatus(status);
+		patcherBuild.setStatusDate(new Date());
 
 		workflowParentPatcherBuild(user, patcherBuild);
 

@@ -572,7 +572,7 @@ definition {
 
 	@description = "LPS-126044: When the user accesses to the content performance panel of a document display page, the name, the URL of the page and the language selector are shown in the content performance panel"
 	@priority = 3
-	test PanelInformationInDocumentDisplayPage {
+	test ContentPerformancePanelInDocumentDisplayPage {
 		task ("Create a Document") {
 			JSONDocument.addFile(
 				dmDocumentDescription = "DM Document Description",

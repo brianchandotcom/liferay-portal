@@ -96,9 +96,9 @@ function _configure_s3_bucket {
 	fi
 
 	aws s3api put-bucket-encryption \
-	--bucket "${bucket_name}" \
-	--region "${region}" \
-	--server-side-encryption-configuration "{
+		--bucket "${bucket_name}" \
+		--region "${region}" \
+		--server-side-encryption-configuration "{
 			\"Rules\": [
 				{
 					\"ApplyServerSideEncryptionByDefault\": {

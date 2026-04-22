@@ -6,12 +6,17 @@
 package com.liferay.mcp.server.internal.model.listener;
 
 import com.liferay.mcp.server.internal.constants.MCPServerConstants;
+import com.liferay.mcp.server.internal.servlet.MCPServerServlet;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 
 import jakarta.servlet.Servlet;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,14 +38,20 @@ public class MCPServerProfileObjectEntryModelListener
 	public void onAfterCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_servlet.destroy();
+		MCPServerServlet mcpServerServlet = (MCPServerServlet)_servlet;
+
+		mcpServerServlet.invalidate(
+			objectEntry.getCompanyId(), _getName(objectEntry));
 	}
 
 	@Override
 	public void onAfterRemove(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_servlet.destroy();
+		MCPServerServlet mcpServerServlet = (MCPServerServlet)_servlet;
+
+		mcpServerServlet.invalidate(
+			objectEntry.getCompanyId(), _getName(objectEntry));
 	}
 
 	@Override
@@ -48,7 +59,16 @@ public class MCPServerProfileObjectEntryModelListener
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_servlet.destroy();
+		MCPServerServlet mcpServerServlet = (MCPServerServlet)_servlet;
+
+		mcpServerServlet.invalidate(
+			objectEntry.getCompanyId(), _getName(originalObjectEntry));
+	}
+
+	private String _getName(ObjectEntry objectEntry) {
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		return (String)values.get("name");
 	}
 
 	@Reference(

@@ -104,6 +104,57 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	@Test
+	@TestInfo("LPD-85155")
+	public void testExportBlogPostingsPerformance() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		for (int i = 0; i < 3000; i++) {
+			blogsEntryLocalService.addEntry(
+				user.getUserId(), "headline" + i, "alternativeHeadline" + i,
+				null, "articleBody" + i, new Date(baseDate.getTime()), false,
+				false, null, null, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(), group.getGroupId(),
+					user.getUserId()));
+		}
+
+		batchReadDurations.clear();
+
+		_batchEngineExportTask =
+			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+				null, user.getCompanyId(), user.getUserId(), null,
+				BlogPosting.class.getName(), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				Arrays.asList("headline", "id"),
+				HashMapBuilder.<String, Serializable>put(
+					"siteId", group.getGroupId()
+				).build(),
+				null);
+
+		_batchEngineExportTaskExecutor.execute(_batchEngineExportTask);
+
+		int batchCount = batchReadDurations.size();
+
+		long first5Average = 0;
+
+		for (int i = 0; i < 5; i++) {
+			first5Average += batchReadDurations.get(i);
+		}
+
+		first5Average = first5Average / 5;
+
+		long last5Average = 0;
+
+		for (int i = batchCount - 5; i < batchCount; i++) {
+			last5Average += batchReadDurations.get(i);
+		}
+
+		last5Average = last5Average / 5;
+
+		Assert.assertTrue(last5Average <= (first5Average * 2));
+	}
+
+	@Test
 	public void testExportBlogPostingsToCSVFileWithEmptyFieldNames()
 		throws Exception {
 
@@ -337,57 +388,6 @@ public class BatchEngineExportTaskExecutorTest
 
 				return null;
 			});
-	}
-
-	@Test
-	@TestInfo("LPD-85155")
-	public void testExportBlogPostingsWithMultipleBatches() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		for (int i = 0; i < 3000; i++) {
-			blogsEntryLocalService.addEntry(
-				user.getUserId(), "headline" + i, "alternativeHeadline" + i,
-				null, "articleBody" + i, new Date(baseDate.getTime()), false,
-				false, null, null, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getCompanyId(), group.getGroupId(),
-					user.getUserId()));
-		}
-
-		batchReadDurations.clear();
-
-		_batchEngineExportTask =
-			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
-				null, user.getCompanyId(), user.getUserId(), null,
-				BlogPosting.class.getName(), "JSON",
-				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				Arrays.asList("headline", "id"),
-				HashMapBuilder.<String, Serializable>put(
-					"siteId", group.getGroupId()
-				).build(),
-				null);
-
-		_batchEngineExportTaskExecutor.execute(_batchEngineExportTask);
-
-		int batchCount = batchReadDurations.size();
-
-		long first5Average = 0;
-
-		for (int i = 0; i < 5; i++) {
-			first5Average += batchReadDurations.get(i);
-		}
-
-		first5Average = first5Average / 5;
-
-		long last5Average = 0;
-
-		for (int i = batchCount - 5; i < batchCount; i++) {
-			last5Average += batchReadDurations.get(i);
-		}
-
-		last5Average = last5Average / 5;
-
-		Assert.assertTrue(last5Average <= (first5Average * 2));
 	}
 
 	@Test

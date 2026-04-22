@@ -91,6 +91,9 @@ describe('ContentEditorToolbar', () => {
 					return result;
 				}),
 			},
+			detach: jest.fn(),
+			fire: jest.fn(),
+			on: jest.fn(),
 		};
 	});
 

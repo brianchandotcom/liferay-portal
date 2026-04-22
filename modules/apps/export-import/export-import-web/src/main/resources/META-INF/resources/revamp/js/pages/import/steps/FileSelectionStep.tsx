@@ -38,7 +38,7 @@ export default function FileSelectionStep() {
 	}, [values.fileSelector, values.name, setFieldValue]);
 
 	const handleUpload = (file: File, signal?: AbortSignal) =>
-		getValidateLarFileEndpoint({
+		getValidateLarFile({
 			file,
 			groupId,
 			onProgress: setProgress,

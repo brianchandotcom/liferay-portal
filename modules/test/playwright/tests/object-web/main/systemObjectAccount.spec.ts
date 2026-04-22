@@ -36,65 +36,66 @@ async function getAccountDefinition(apiHelpers: any) {
 	return accountDefinition;
 }
 
-test(
-	'can associate any type of account',
-	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-		const objectRelationshipAPIClient =
-			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+test('can associate any type of account', async ({
+	apiHelpers,
+	page,
+	viewObjectEntriesPage,
+}) => {
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+	const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+		ObjectRelationshipAPI
+	);
 
-		const accountDefinition = await getAccountDefinition(apiHelpers);
+	const accountDefinition = await getAccountDefinition(apiHelpers);
 
-		const businessAccount =
-			await apiHelpers.headlessAdminUser.postAccount({
-				name: 'Business' + getRandomInt(),
-				type: 'business',
-			});
+	const businessAccount = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Business' + getRandomInt(),
+		type: 'business',
+	});
 
-		const personAccount =
-			await apiHelpers.headlessAdminUser.postAccount({
-				name: 'Person' + getRandomInt(),
-				type: 'person',
-			});
+	const personAccount = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Person' + getRandomInt(),
+		type: 'person',
+	});
 
-		const guestAccount =
-			await apiHelpers.headlessAdminUser.postAccount({
-				name: 'Guest' + getRandomInt(),
-				type: 'guest',
-			});
+	const guestAccount = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Guest' + getRandomInt(),
+		type: 'guest',
+	});
 
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
 		});
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+	const relationshipName = 'relationship' + getRandomInt();
 
-		const relationshipName = 'relationship' + getRandomInt();
+	const {body: relationship} =
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			'L_ACCOUNT',
+			{
+				label: {en_US: 'Relationship'},
+				name: relationshipName,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition.externalReferenceCode,
+				objectDefinitionId2: objectDefinition.id,
+				objectDefinitionName2: objectDefinition.name,
+				type: 'oneToMany',
+			}
+		);
 
-		const {body: relationship} =
-			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_ACCOUNT',
-				{
-					label: {en_US: 'Relationship'},
-					name: relationshipName,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition.externalReferenceCode,
-					objectDefinitionId2: objectDefinition.id,
-					objectDefinitionName2: objectDefinition.name,
-					type: 'oneToMany',
-				}
-			);
-
+	try {
 		await objectDefinitionAPIClient.patchObjectDefinition(
 			accountDefinition.id,
 			{titleObjectFieldName: 'type'}
@@ -104,16 +105,11 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 		const fieldName = objectFields[0].name!;
 
-		for (const account of [
-			businessAccount,
-			personAccount,
-			guestAccount,
-		]) {
+		for (const account of [businessAccount, personAccount, guestAccount]) {
 			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					[fieldName]: 'Entry' + getRandomInt(),
-					['r_' + relationshipName + '_accountEntryId']:
-						account.id,
+					['r_' + relationshipName + '_accountEntryId']: account.id,
 				},
 				applicationName
 			);
@@ -127,64 +123,64 @@ test(
 			).toBeVisible();
 		}
 
-		try{
-			await objectDefinitionAPIClient.patchObjectDefinition(
-				accountDefinition.id,
-				{titleObjectFieldName: 'name'}
-			);
-		} finally {
-			await objectRelationshipAPIClient.deleteObjectRelationship(
-				relationship.id
-			);
-		}
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'name'}
+		);
 	}
-);
+	finally {
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
+	}
+});
 
-test(
-	'cannot delete relationship when deletion type is disassociate',
-	async ({apiHelpers, page}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
+test('cannot delete relationship when deletion type is disassociate', async ({
+	apiHelpers,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
 		});
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+	const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+		ObjectRelationshipAPI
+	);
 
-		const objectRelationshipAPIClient =
-			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+	const relationshipName = 'relationship' + getRandomInt();
 
-		const relationshipName = 'relationship' + getRandomInt();
+	const {body: relationship} =
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			'L_ACCOUNT',
+			{
+				deletionType: 'disassociate',
+				label: {en_US: 'DisassociateRel'},
+				name: relationshipName,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition.externalReferenceCode,
+				objectDefinitionId2: objectDefinition.id,
+				objectDefinitionName2: objectDefinition.name,
+				type: 'oneToMany',
+			}
+		);
 
-		const {body: relationship} =
-			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_ACCOUNT',
-				{
-					deletionType: 'disassociate',
-					label: {en_US: 'DisassociateRel'},
-					name: relationshipName,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition.externalReferenceCode,
-					objectDefinitionId2: objectDefinition.id,
-					objectDefinitionName2: objectDefinition.name,
-					type: 'oneToMany',
-				}
-			);
-
+	try {
 		const accountName = 'Account' + getRandomInt();
 
-		const account =
-			await apiHelpers.headlessAdminUser.postAccount({
-				name: accountName,
-				type: 'business',
-			});
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: accountName,
+			type: 'business',
+		});
 
 		apiHelpers.data.push({id: account.id, type: 'account'});
 
@@ -204,8 +200,7 @@ test(
 
 		apiHelpers.data.splice(
 			apiHelpers.data.findIndex(
-				(item) =>
-					item.id === account.id && item.type === 'account'
+				(item) => item.id === account.id && item.type === 'account'
 			),
 			1
 		);
@@ -218,16 +213,15 @@ test(
 		expect(entries.totalCount).toBe(1);
 
 		expect(
-			entries.items[0][
-				'r_' + relationshipName + '_accountEntryId'
-			]
+			entries.items[0]['r_' + relationshipName + '_accountEntryId']
 		).toBeFalsy();
-
+	}
+	finally {
 		await objectRelationshipAPIClient.deleteObjectRelationship(
 			relationship.id
 		);
 	}
-);
+});
 
 test('cannot edit system fields', async ({
 	apiHelpers,
@@ -243,7 +237,10 @@ test('cannot edit system fields', async ({
 	const sidePanel = page.frameLocator('iframe');
 
 	for (const fieldLabel of ['Name', 'Description', 'Type']) {
-		await page.locator('table tbody').getByRole('link', {name: fieldLabel}).click();
+		await page
+			.locator('table tbody')
+			.getByRole('link', {name: fieldLabel})
+			.click();
 
 		await expect(
 			sidePanel.locator('input[name="name"]')
@@ -306,37 +303,42 @@ test('can view description on field entry', async ({
 			}
 		);
 
-	await objectDefinitionAPIClient.patchObjectDefinition(
-		(await accountDefinition).body.id,
-		{titleObjectFieldName: 'description'}
-	);
+	try {
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			(await accountDefinition).body.id,
+			{titleObjectFieldName: 'description'}
+		);
 
-	await viewObjectEntriesPage.goto(objectDefinition.className);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-	await viewObjectEntriesPage.clickAddObjectEntry(
-		objectDefinition.label['en_US']
-	);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
-	await viewObjectEntriesPage.selectDropdownItemWithSearch(
-		accountDescription
-	);
+		await viewObjectEntriesPage.selectDropdownItemWithSearch(
+			accountDescription
+		);
 
-	await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-	await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-	await viewObjectEntriesPage.backButton.click();
+		await viewObjectEntriesPage.backButton.click();
 
-	await expect(
-		page.locator('table').getByText(accountDescription)
-	).toBeVisible();
+		await expect(
+			page.locator('table').getByText(accountDescription)
+		).toBeVisible();
+	}
+	finally {
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			(await accountDefinition).body.id,
+			{titleObjectFieldName: 'name'}
+		);
 
-	await objectDefinitionAPIClient.patchObjectDefinition(
-		(await accountDefinition).body.id,
-		{titleObjectFieldName: 'name'}
-	);
-
-	await objectRelationshipAPIClient.deleteObjectRelationship(relationship.id);
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
+	}
 });
 
 test('can view fields label by default', async ({
@@ -434,25 +436,30 @@ test('can view name on field entry', async ({
 			}
 		);
 
-	await viewObjectEntriesPage.goto(objectDefinition.className);
+	try {
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-	await viewObjectEntriesPage.clickAddObjectEntry(
-		objectDefinition.label['en_US']
-	);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
-	await viewObjectEntriesPage.selectDropdownItemWithSearch(accountName);
+		await viewObjectEntriesPage.selectDropdownItemWithSearch(accountName);
 
-	await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-	await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-	await viewObjectEntriesPage.backButton.click();
+		await viewObjectEntriesPage.backButton.click();
 
-	await expect(
-		page.locator('table td').getByText(accountName).first()
-	).toBeVisible();
-
-	await objectRelationshipAPIClient.deleteObjectRelationship(relationship.id);
+		await expect(
+			page.locator('table td').getByText(accountName).first()
+		).toBeVisible();
+	}
+	finally {
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
+	}
 });
 
 test('can view relationship on custom object entries with custom view', async ({
@@ -510,56 +517,62 @@ test('can view relationship on custom object entries with custom view', async ({
 			}
 		);
 
-	const accountName = 'Account' + getRandomInt();
+	try {
+		const accountName = 'Account' + getRandomInt();
 
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: accountName,
-		type: 'business',
-	});
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: accountName,
+			type: 'business',
+		});
 
-	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
-	const fieldName = objectFields[0].name!;
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+		const fieldName = objectFields[0].name!;
 
-	await apiHelpers.objectEntry.postObjectEntry(
-		{
-			[fieldName]: 'EntryValue',
-			['r_' + relationshipName + '_accountEntryId']: account.id,
-		},
-		applicationName
-	);
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				[fieldName]: 'EntryValue',
+				['r_' + relationshipName + '_accountEntryId']: account.id,
+			},
+			applicationName
+		);
 
-	await objectFieldsPage.goto(objectDefinition.label['en_US']);
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
 
-	await page.getByRole('listitem').filter({hasText: 'Views'}).click();
+		await page.getByRole('listitem').filter({hasText: 'Views'}).click();
 
-	const viewName = 'CustomView' + getRandomInt();
+		const viewName = 'CustomView' + getRandomInt();
 
-	await objectViewPage.createObjectView(viewName);
+		await objectViewPage.createObjectView(viewName);
 
-	await expect(page.getByRole('link', {name: viewName})).toBeVisible();
+		await expect(page.getByRole('link', {name: viewName})).toBeVisible();
 
-	await page.getByRole('link', {name: viewName}).click();
+		await page.getByRole('link', {name: viewName}).click();
 
-	await editObjectViewPage.selectObjectFields(['AccountRel']);
+		await editObjectViewPage.selectObjectFields(['AccountRel']);
 
-	await page
-		.frameLocator('iframe')
-		.getByRole('tab', {name: 'Basic Info'})
-		.click();
+		await page
+			.frameLocator('iframe')
+			.getByRole('tab', {name: 'Basic Info'})
+			.click();
 
-	await editObjectViewPage.markAsDefaultButton.check();
+		await editObjectViewPage.markAsDefaultButton.check();
 
-	await editObjectViewPage.saveButton.click();
+		await editObjectViewPage.saveButton.click();
 
-	await page.waitForLoadState('networkidle');
+		await page.waitForLoadState('networkidle');
 
-	await viewObjectEntriesPage.goto(objectDefinition.className);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-	await expect(
-		page.locator('table td').getByText(accountName).first()
-	).toBeVisible();
-
-	await objectRelationshipAPIClient.deleteObjectRelationship(relationship.id);
+		await expect(
+			page.locator('table td').getByText(accountName).first()
+		).toBeVisible();
+	}
+	finally {
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
+	}
 });
 
 test('can user view system account when allowed', async ({
@@ -672,32 +685,38 @@ test('can view type on field entry', async ({
 			}
 		);
 
-	await objectDefinitionAPIClient.patchObjectDefinition(
-		accountDefinition.id,
-		{titleObjectFieldName: 'type'}
-	);
+	try {
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'type'}
+		);
 
-	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
-	const fieldName = objectFields[0].name!;
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+		const fieldName = objectFields[0].name!;
 
-	await apiHelpers.objectEntry.postObjectEntry(
-		{
-			[fieldName]: 'Entry' + getRandomInt(),
-			['r_' + relationshipName + '_accountEntryId']: account.id,
-		},
-		applicationName
-	);
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				[fieldName]: 'Entry' + getRandomInt(),
+				['r_' + relationshipName + '_accountEntryId']: account.id,
+			},
+			applicationName
+		);
 
-	await viewObjectEntriesPage.goto(objectDefinition.className);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-	await expect(page.locator('table').getByText('business')).toBeVisible();
+		await expect(page.locator('table').getByText('business')).toBeVisible();
+	}
+	finally {
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'name'}
+		);
 
-	await objectDefinitionAPIClient.patchObjectDefinition(
-		accountDefinition.id,
-		{titleObjectFieldName: 'name'}
-	);
-
-	await objectRelationshipAPIClient.deleteObjectRelationship(relationship.id);
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
+	}
 });
 
 test('edit title field on system account', async ({
@@ -706,6 +725,8 @@ test('edit title field on system account', async ({
 	page,
 }) => {
 	const accountDefinition = await getAccountDefinition(apiHelpers);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	await objectDetailsPage.goto(accountDefinition.label['en_US']);
 
@@ -715,21 +736,29 @@ test('edit title field on system account', async ({
 		.locator('.form-group')
 		.filter({hasText: 'Entry Title Field'});
 
-	await titleFieldGroup.getByRole('combobox').click();
+	try {
+		await titleFieldGroup.getByRole('combobox').click();
 
-	await page.getByRole('option', {name: 'Type'}).click();
+		await page.getByRole('option', {name: 'Type'}).click();
 
-	await page.getByRole('button', {name: 'Save'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
-	await page.waitForLoadState('networkidle');
+		await page.waitForLoadState('networkidle');
 
-	await expect(titleFieldGroup.getByRole('combobox')).toHaveText(/Type/);
+		await expect(titleFieldGroup.getByRole('combobox')).toHaveText(/Type/);
 
-	await titleFieldGroup.getByRole('combobox').click();
+		await titleFieldGroup.getByRole('combobox').click();
 
-	await page.getByRole('option', {name: 'Name'}).click();
+		await page.getByRole('option', {name: 'Name'}).click();
 
-	await page.getByRole('button', {name: 'Save'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
-	await page.waitForLoadState('networkidle');
+		await page.waitForLoadState('networkidle');
+	}
+	finally {
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'name'}
+		);
+	}
 });

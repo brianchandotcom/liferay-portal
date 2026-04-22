@@ -215,6 +215,10 @@ definition {
 
 			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
 		}
+
+		task ("Assert default time range selector is visible") {
+			AssertVisible(locator1 = "ContentPerformance#SELECT_DATE_RANGE");
+		}
 	}
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
@@ -237,20 +241,6 @@ definition {
 				key_index = 1,
 				locator1 = "Translation#DROPDOWN_MENU_ITEM_INDEX",
 				value1 = "English");
-		}
-	}
-
-	@description = "LPS-105215: Validate the Content Performance panel default time range is by week"
-	@priority = 5
-	test DefaultTimeRangeWeek {
-		task ("Open Content Performance and Assert") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-
-			AssertVisible(locator1 = "ContentPerformance#SELECT_DATE_RANGE");
 		}
 	}
 

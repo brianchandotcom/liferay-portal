@@ -65,6 +65,12 @@
 						"en_US": "Name"
 					},
 					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
 					"required": true,
 					"state": false,
 					"system": true,

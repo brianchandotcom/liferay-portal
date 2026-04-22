@@ -62,4 +62,6 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public long getTotalDuration();
 
+	public List<FailureReport> getUniqueFailureReports();
+
 }

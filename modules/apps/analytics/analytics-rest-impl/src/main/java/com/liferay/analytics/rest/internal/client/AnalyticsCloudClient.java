@@ -48,14 +48,14 @@ public class AnalyticsCloudClient {
 
 		int responseCode = response.getResponseCode();
 
-		return new Response(responseCode, responseBody);
+		return new Response(responseBody, responseCode);
 	}
 
 	public static class Response {
 
-		public Response(int statusCode, String body) {
-			_statusCode = statusCode;
+		public Response(String body, int statusCode) {
 			_body = body;
+			_statusCode = statusCode;
 		}
 
 		public String getBody() {

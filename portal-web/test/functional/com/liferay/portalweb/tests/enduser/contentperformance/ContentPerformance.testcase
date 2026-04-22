@@ -95,6 +95,70 @@ definition {
 		}
 	}
 
+	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the name, the URL of the page and the language selector are shown in the content performance panel"
+	@priority = 3
+	test ContentPerformancePanelInBlogDisplayPage {
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Open Content Performance panel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Check if the name, the URL of the page and the language selector exists") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+				pageName = "Test Widget Page Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
+				value1 = "web/test-site-name/test-widget-page-name");
+
+			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
+
+		task ("Assert traffic channels section is present") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
+				value1 = "Traffic Channels");
+		}
+
+		task ("Assert default time range is Last 7 Days") {
+			AssertSelectedLabel(
+				locator1 = "ContentPerformance#SELECT_DATE_RANGE",
+				value1 = "Last 7 Days");
+		}
+
+		task ("Assert views graph is present") {
+			AssertVisible(locator1 = "ContentPerformance#GRAPH_ENGAGEMENT");
+		}
+
+		task ("Assert author is not displayed") {
+			AssertElementNotPresent(
+				key_author = "Test Test",
+				locator1 = "ContentPerformance#PAGE_AUTHOR");
+		}
+	}
+
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected and synced, the Content Performance panel display all its functionalities"
 	@priority = 5
 	test ContentPerformancePanelInContentPage {
@@ -175,6 +239,73 @@ definition {
 		}
 	}
 
+	@description = "LPS-126047: When the user accesses to the content performance panel of a widget page, the name, the URL of the page and the language selector are shown in the content performance panel"
+	@priority = 3
+	test ContentPerformancePanelInWidgetPage {
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name");
+		}
+
+		task ("Navigate to Widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Open content performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Check if the name, the URL and the language selector are shown") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+				pageName = "Widget Page Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
+				value1 = "web/test-site-name");
+
+			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
+
+		task ("Assert traffic channels section is present") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
+				value1 = "Traffic Channels");
+		}
+
+		task ("Assert author is NOT displayed") {
+			AssertElementNotPresent(
+				key_author = "Test Test",
+				locator1 = "ContentPerformance#PAGE_AUTHOR");
+		}
+	}
+
+	@description = "LPS-150536 Bug: Traffic sources with link and full pie chart when the content was published today and there is some data for that content in AC side"
+	@priority = 4
+	test EmptyDataAtPieChartPublishedToday {
+		task ("Create and go to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page 2",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
+		}
+
+		task ("Open Content Performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Check that graph is empty (grey/gray)") {
+			AssertVisible(
+				colorHex = "f1f2f5",
+				locator1 = "ContentPerformance#PIE_CHART_WITH_COLOR");
+		}
+	}
+
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
 	@priority = 3
 	test LanguageDropdownInContentPage {
@@ -213,29 +344,6 @@ definition {
 			AssertTextNotEquals(
 				locator1 = "ContentPerformance#LANGUAGE_LABEL",
 				value1 = "Untranslated");
-		}
-	}
-
-	@description = "LPS-150536 Bug: Traffic sources with link and full pie chart when the content was published today and there is some data for that content in AC side"
-	@priority = 4
-	test EmptyDataAtPieChartPublishedToday {
-		task ("Create and go to content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Content Page 2",
-				type = "content");
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
-		}
-
-		task ("Open Content Performance panel") {
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check that graph is empty (grey/gray)") {
-			AssertVisible(
-				colorHex = "f1f2f5",
-				locator1 = "ContentPerformance#PIE_CHART_WITH_COLOR");
 		}
 	}
 
@@ -345,114 +453,6 @@ definition {
 				fragmentName = "heading",
 				id = "element-text",
 				text = "Text in English");
-		}
-	}
-
-	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the name, the URL of the page and the language selector are shown in the content performance panel"
-	@priority = 3
-	test ContentPerformancePanelInBlogDisplayPage {
-		task ("Create a Blog Entry") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add 'Asset Publisher' to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Open Content Performance panel") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check if the name, the URL of the page and the language selector exists") {
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
-				pageName = "Test Widget Page Name");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
-				value1 = "web/test-site-name/test-widget-page-name");
-
-			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
-		}
-
-		task ("Assert traffic channels section is present") {
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
-				value1 = "Traffic Channels");
-		}
-
-		task ("Assert default time range is Last 7 Days") {
-			AssertSelectedLabel(
-				locator1 = "ContentPerformance#SELECT_DATE_RANGE",
-				value1 = "Last 7 Days");
-		}
-
-		task ("Assert views graph is present") {
-			AssertVisible(locator1 = "ContentPerformance#GRAPH_ENGAGEMENT");
-		}
-
-		task ("Assert author is not displayed") {
-			AssertElementNotPresent(
-				key_author = "Test Test",
-				locator1 = "ContentPerformance#PAGE_AUTHOR");
-		}
-	}
-
-	@description = "LPS-126047: When the user accesses to the content performance panel of a widget page, the name, the URL of the page and the language selector are shown in the content performance panel"
-	@priority = 3
-	test ContentPerformancePanelInWidgetPage {
-		task ("Create Widget Page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Widget Page Name");
-		}
-
-		task ("Navigate to Widget page") {
-			Navigator.gotoSitePage(
-				pageName = "Widget Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Open content performance panel") {
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check if the name, the URL and the language selector are shown") {
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
-				pageName = "Widget Page Name");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
-				value1 = "web/test-site-name");
-
-			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
-		}
-
-		task ("Assert traffic channels section is present") {
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
-				value1 = "Traffic Channels");
-		}
-
-		task ("Assert author is NOT displayed") {
-			AssertElementNotPresent(
-				key_author = "Test Test",
-				locator1 = "ContentPerformance#PAGE_AUTHOR");
 		}
 	}
 

@@ -14,20 +14,28 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -54,11 +62,13 @@ public abstract class BaseFDSSerializer {
 		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 		try {
+			long companyId = PortalUtil.getCompanyId(httpServletRequest);
+			long userId = PortalUtil.getUserId(httpServletRequest);
+
 			ObjectDefinition objectDefinition =
 				objectDefinitionLocalService.
 					fetchObjectDefinitionByExternalReferenceCode(
-						"L_DATA_SET_SNAPSHOT",
-						PortalUtil.getCompanyId(httpServletRequest));
+						"L_DATA_SET_SNAPSHOT", companyId);
 
 			ObjectEntryManager objectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
@@ -66,27 +76,48 @@ public abstract class BaseFDSSerializer {
 						objectDefinition.getCompanyId(),
 						objectDefinition.getStorageType()));
 
+			List<SharingEntry> sharingEntries =
+				sharingEntryLocalService.getToUserSharingEntries(
+					userId,
+					classNameLocalService.getClassNameId(
+						objectDefinition.getClassName()));
+
+			Set<Long> sharedClassPKs = SetUtil.fromCollection(
+				TransformUtil.transform(
+					sharingEntries, SharingEntry::getClassPK));
+
+			String sharedClause = "";
+
+			if (!sharedClassPKs.isEmpty()) {
+				sharedClause = StringBundler.concat(
+					" or id in ('",
+					StringUtil.merge(sharedClassPKs, "','"), "')");
+			}
+
 			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
-				PortalUtil.getCompanyId(httpServletRequest), objectDefinition,
-				null, null,
+				companyId, objectDefinition, null, null,
 				new DefaultDTOConverterContext(
 					false, null, null, null, null,
 					LocaleUtil.getMostRelevantLocale(), null, null),
 				StringBundler.concat(
-					"(fdsName eq '", fdsName, "' and creatorId eq ",
-					PortalUtil.getUserId(httpServletRequest), ")"),
+					"(fdsName eq '", fdsName, "' and (creatorId eq ", userId,
+					sharedClause, "))"),
 				null, null, null);
 
-			Collection<ObjectEntry> objectEntries = page.getItems();
-
 			return JSONUtil.toJSONArray(
-				objectEntries,
+				page.getItems(),
 				(ObjectEntry objectEntry) -> {
 					Map<String, Object> properties =
 						objectEntry.getProperties();
 
+					Object viewConfig = properties.get("viewConfig");
+
+					if (Validator.isNull(viewConfig)) {
+						return null;
+					}
+
 					return JSONUtil.put(
-						"configuration", properties.get("viewConfig")
+						"configuration", viewConfig
 					).put(
 						"erc", objectEntry.getExternalReferenceCode()
 					).put(
@@ -107,7 +138,13 @@ public abstract class BaseFDSSerializer {
 	}
 
 	@Reference
+	protected ClassNameLocalService classNameLocalService;
+
+	@Reference
 	protected FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry;
+
+	@Reference
+	protected SharingEntryLocalService sharingEntryLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFDSSerializer.class);

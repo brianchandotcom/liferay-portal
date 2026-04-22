@@ -39,6 +39,14 @@ module "eks" {
 		}
 		vpc-cni={
 			before_compute=true
+			configuration_values=jsonencode(
+				{
+					enableNetworkPolicy="true"
+					nodeAgent={
+						healthProbeBindAddr="8163"
+						metricsBindAddr="8162"
+					}
+				})
 			most_recent=true
 		}
 	}

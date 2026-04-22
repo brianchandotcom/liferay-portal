@@ -741,6 +741,11 @@ export class DataApiHelpers extends ApiHelpers {
 					item.id
 				);
 			}
+			else if (item.type === 'workflowDefinition') {
+				await this.headlessAdminWorkflow.deleteWorkflowDefinition(
+					item.id
+				);
+			}
 		}
 	}
 

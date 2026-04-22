@@ -24,6 +24,7 @@ export interface ISnapshot {
 	configuration?: any;
 	erc: string;
 	label: string;
+	shared?: boolean;
 }
 
 export type TViewsContextDispatch = ({

@@ -345,7 +345,9 @@ spec:
                             kubernetes.io/metadata.name: {{ .statefulset.networkPolicy.gatewayNamespace | quote }}
                     podSelector:
                         matchLabels:
+                            app.kubernetes.io/managed-by: envoy-gateway
                             app.kubernetes.io/name: {{ .statefulset.networkPolicy.gatewayPodLabel | quote }}
+                            gateway.envoyproxy.io/owning-gateway-namespace: {{ include "liferay.namespace" .root | quote }}
             ports:
                 -   port: http
                     protocol: TCP

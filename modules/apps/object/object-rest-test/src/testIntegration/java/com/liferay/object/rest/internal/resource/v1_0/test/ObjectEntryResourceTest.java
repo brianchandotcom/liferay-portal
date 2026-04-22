@@ -11296,57 +11296,14 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testPostScopeScopeKey() throws Exception {
+		Group group1 = _groupLocalService.fetchGroup(_testGroupId);
+		Group group2 = GroupTestUtil.addGroup();
 
-		// Site scope external reference code
-
-		Group group = _groupLocalService.fetchGroup(_testGroupId);
-
-		String objectFieldValue = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			objectFieldValue,
-			JSONUtil.getValueAsString(
-				HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						_OBJECT_FIELD_NAME_1, objectFieldValue
-					).toString(),
-					_getEndpoint(
-						_siteScopedObjectDefinition1,
-						group.getExternalReferenceCode()),
-					Http.Method.POST),
-				"Object/" + _OBJECT_FIELD_NAME_1));
-
-		// Site scope group ID
-
-		objectFieldValue = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			objectFieldValue,
-			JSONUtil.getValueAsString(
-				HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						_OBJECT_FIELD_NAME_1, objectFieldValue
-					).toString(),
-					_getEndpoint(
-						_siteScopedObjectDefinition1, group.getGroupId()),
-					Http.Method.POST),
-				"Object/" + _OBJECT_FIELD_NAME_1));
-
-		// Site scope group key
-
-		objectFieldValue = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			objectFieldValue,
-			JSONUtil.getValueAsString(
-				HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						_OBJECT_FIELD_NAME_1, objectFieldValue
-					).toString(),
-					_getEndpoint(
-						_siteScopedObjectDefinition1, group.getGroupKey()),
-					Http.Method.POST),
-				"Object/" + _OBJECT_FIELD_NAME_1));
+		_testPostScopeScopeKey(
+			group1.getExternalReferenceCode(),
+			group2.getExternalReferenceCode());
+		_testPostScopeScopeKey(group1.getGroupId(), group2.getGroupId());
+		_testPostScopeScopeKey(group1.getGroupKey(), group2.getGroupKey());
 	}
 
 	@Test
@@ -20336,6 +20293,31 @@ public class ObjectEntryResourceTest {
 				commentsJSONArray, groupId, true, objectDefinition
 			).toString(),
 			JSONCompareMode.LENIENT);
+	}
+
+	private void _testPostScopeScopeKey(Object scopeKey1, Object scopeKey2)
+		throws Exception {
+
+		String objectFieldValue = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			objectFieldValue,
+			JSONUtil.getValueAsString(
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, objectFieldValue
+					).toString(),
+					_getEndpoint(_siteScopedObjectDefinition1, scopeKey1),
+					Http.Method.POST),
+				"Object/" + _OBJECT_FIELD_NAME_1));
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, _getEndpoint(_siteScopedObjectDefinition1, scopeKey2),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(0, itemsJSONArray.length());
 	}
 
 	private void _testPostValidate(

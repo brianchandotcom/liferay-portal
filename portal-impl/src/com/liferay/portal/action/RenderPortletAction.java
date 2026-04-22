@@ -104,8 +104,7 @@ public class RenderPortletAction implements Action {
 		LayoutType layoutType = layout.getLayoutType();
 
 		if (layoutType instanceof LayoutTypePortlet) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layoutType;
+			LayoutTypePortlet layoutTypePortlet = (LayoutTypePortlet)layoutType;
 
 			PortletContainerUtil.processPublicRenderParameters(
 				httpServletRequest, layout, layoutTypePortlet.getPortlets());

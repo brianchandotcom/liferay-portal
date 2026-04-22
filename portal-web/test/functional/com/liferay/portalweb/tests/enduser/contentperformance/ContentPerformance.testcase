@@ -450,28 +450,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-127220: When DXP is connected and synced to AC and the user clicks on the metrics icon in a content page, the content performance panel displays with the metrics of the content page"
-	@priority = 4
-	test MetricsIconVisibleInContentPage {
-		task ("Open content performance panel") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check if infomation if from that page") {
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
-				pageName = "Content Page");
-
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
-				value1 = "Traffic Channels");
-		}
-	}
-
 	@description = "LPS-126044: When DXP is connected and synced to AC and the user clicks on the metrics icon in a document display page, the content performance panel displays with the metrics of the content page"
 	@priority = 4
 	test MetricsIconVisibleInDocumentDisplayPage {

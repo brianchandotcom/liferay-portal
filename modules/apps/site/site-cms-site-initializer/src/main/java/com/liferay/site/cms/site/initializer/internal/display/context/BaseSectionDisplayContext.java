@@ -143,6 +143,20 @@ public abstract class BaseSectionDisplayContext {
 		).put(
 			"baseFolderViewURL", ActionUtil.getBaseViewFolderURL(themeDisplay)
 		).put(
+			"breadcrumbProps",
+			() -> {
+				try {
+					return getBreadcrumbProps();
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
+
+				return null;
+			}
+		).put(
 			"brokenLinksCheckerEnabled",
 			GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.CMS_BROKEN_LINKS_CHECKER_ENABLED))

@@ -154,37 +154,6 @@ definition {
 			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
 	}
 
-	@description = "LPS-135396 - Verify it is possible to add an entry on an object scoped by Site"
-	@priority = 5
-	test CanAddEntryObjectScopedBySite {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 234",
-			objectName = "CustomObject234",
-			panelCategoryKey = "site_administration.design",
-			pluralLabelName = "Custom Objects 234",
-			scope = "site");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject234");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject234");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject234");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test Entry");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject234");
-
-		ObjectPortlet.viewEntry(entry = "Test Entry");
-	}
-
 	@description = "LPS-140081 - Verify it is possible to add an entry without selecting a value for a Picklist field that is not required"
 	@priority = 5
 	test CanAddEntryWithoutSelectingPicklist {

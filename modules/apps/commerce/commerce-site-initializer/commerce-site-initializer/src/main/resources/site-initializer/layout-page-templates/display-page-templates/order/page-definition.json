@@ -1648,6 +1648,123 @@
 									}
 								],
 								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+									"fragmentDropZoneId": "4"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"fontFamily": "fontFamilyBase",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"paddingTop": 2,
+												"widthType": "Fixed"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "whiteColor",
+														"borderColor": "gray300Color",
+														"borderRadius": "0.25rem",
+														"borderWidth": "1px",
+														"marginBottom": "4"
+													},
+													"indexed": true,
+													"layout": {
+														"borderColor": "gray300Color",
+														"marginBottom": 2
+													},
+													"name": "Panel"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: 1px solid var(--gray-300);\n}",
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h3"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Attachments"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"backgroundColor": "",
+																"paddingBottom": "3",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "3"
+															},
+															"indexed": true,
+															"name": "Panel Heading"
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": ""
+															},
+															"indexed": true,
+															"layout": {
+															},
+															"name": "Panel Body"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"indexed": true,
+																	"layout": {
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "com.liferay.commerce.order.content.web.internal.fragment.renderer.OrderAttachmentsDataSetFragmentRenderer"
+																			},
+																			"fragmentConfig": {
+																				"displayStyle": "fluid"
+																			},
+																			"fragmentFields": [
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
 							}
 						],
 						"type": "Fragment"

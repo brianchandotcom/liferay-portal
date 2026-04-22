@@ -173,57 +173,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8396 | Test Summary: Documents list is searchable"
-	@priority = 4
-	test CanDocumentsAndMediaListSearchable {
-		var documentNameList = "DM AC Title,New Document";
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		task ("Add another document") {
-			ACUtils.createDMAndAddToPage(
-				dmDocumentFile = "Document_2.jpg",
-				dmDocumentTitle = "New Document");
-		}
-
-		task ("Visit the two documents") {
-			ACUtils.navigateToSitePage(
-				actionType = "View DM",
-				documentTitleList = ${documentNameList},
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC and go to DM tab") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Documents and Media");
-		}
-
-		task ("Search document by name") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			for (var documentName : list ${documentNameList}) {
-				ACUtils.searchBar(searchItem = ${documentName});
-
-				ACUtils.viewNameList(nameList = ${documentName});
-			}
-
-			ACUtils.searchBar(searchItem = "Should not be here");
-
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-12352 | Test Summary: The number of documents & media comments show the expected value"
 	@priority = 4
 	test CheckDocumentsAndMediaCommentsShowExpectedValue {

@@ -10,10 +10,8 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -25,9 +23,7 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -229,17 +225,8 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		Assert.assertFalse(portlet.isUndeployedPortlet());
 
-		String name = RandomTestUtil.randomString(
-			LayoutFriendlyURLRandomizerBumper.INSTANCE,
-			NumericStringRandomizerBumper.INSTANCE,
-			UniqueStringRandomizerBumper.INSTANCE);
-
-		layout = LayoutLocalServiceUtil.addLayout(
-			null, TestPropsValues.getUserId(), group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, null,
-			"full_page_application", false,
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name),
-			ServiceContextTestUtil.getServiceContext());
+		layout = LayoutTestUtil.addTypeFullPageApplicationLayout(
+			group.getGroupId());
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();

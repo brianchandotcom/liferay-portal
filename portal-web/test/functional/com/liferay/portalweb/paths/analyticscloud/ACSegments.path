@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BATCH_SEGMENT</td>
+	<td>//a[contains(@class,'dropdown-item') and contains(text(),'Batch')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BINS_INPUT</td>
 	<td>//input[contains(@id,'numberOfBins')]</td>
 	<td></td>
@@ -50,7 +55,7 @@
 </tr>
 <tr>
 	<td>CREATE_SEGMENT_BUTTON</td>
-	<td>//div//a[contains(text(),'Create Segment')]</td>
+	<td>//nav[contains(@class,'management-bar')]//button[contains(@aria-label, 'Menu')]</td>
 	<td></td>
 </tr>
 <tr>

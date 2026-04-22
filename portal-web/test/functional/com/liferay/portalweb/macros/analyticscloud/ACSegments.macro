@@ -202,6 +202,8 @@ definition {
 	@summary = "Default summary"
 	macro createDynamicSegment() {
 		Click(locator1 = "ACSegments#CREATE_SEGMENT_BUTTON");
+
+		Click(locator1 = "ACSegments#BATCH_SEGMENT");
 	}
 
 	@summary = "Default summary"

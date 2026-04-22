@@ -55,6 +55,7 @@ test(
 		const objectDefinition =
 			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
+				scope: 'depot',
 				status: {code: 2},
 			})) as ObjectDefinition;
 		const structureName = objectDefinition.name;
@@ -80,6 +81,7 @@ test(
 		const objectDefinition =
 			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
+				scope: 'depot',
 				status: {code: 0},
 			})) as ObjectDefinition;
 		const structureName = objectDefinition.name;
@@ -197,6 +199,7 @@ test(
 		const objectDefinition =
 			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
+				scope: 'depot',
 				status: {code: 0},
 			})) as ObjectDefinition;
 

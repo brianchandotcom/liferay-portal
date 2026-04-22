@@ -554,7 +554,7 @@ definition {
 
 	@description = "LPS-126047: When the user accesses to the content performance panel of a widget page, the name, the URL of the page and the language selector are shown in the content performance panel"
 	@priority = 3
-	test PanelInformationInWidgetPage {
+	test ContentPerformancePanelInWidgetPage {
 		task ("Create Widget Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

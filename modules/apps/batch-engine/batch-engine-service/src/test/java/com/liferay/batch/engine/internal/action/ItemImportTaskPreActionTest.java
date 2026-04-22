@@ -54,7 +54,7 @@ public class ItemImportTaskPreActionTest {
 	}
 
 	@Test
-	public void testRunPreserveCTCollectionId() throws Exception {
+	public void testRunPreservesCTCollectionId() throws Exception {
 		long ctCollectionId = RandomTestUtil.randomLong();
 
 		CTCollectionThreadLocal.setCTCollectionId(ctCollectionId);

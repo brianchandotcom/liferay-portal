@@ -149,8 +149,10 @@ public abstract class BaseSectionDisplayContext {
 					return getBreadcrumbProps();
 				}
 				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to resolve breadcrumbProps",
+							portalException);
 					}
 				}
 

@@ -370,6 +370,43 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
 	}
 
+	@Test
+	public void testPostSitePageSpecificationPageExperiencePageElementWithUndeployedWidget()
+		throws Exception {
+
+		String draftWidgetInstanceExternalReferenceCode =
+			RandomTestUtil.randomString();
+		String namespace = RandomTestUtil.randomString();
+
+		_addFragmentEntryLink(
+			draftWidgetInstanceExternalReferenceCode, namespace);
+
+		String undeployedWidgetName =
+			"com_liferay_test_undeployed_NonexistentPortlet_" +
+				RandomTestUtil.randomString();
+
+		PageElement pageElement = _getWidgetPageElement(
+			null, RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+			draftWidgetInstanceExternalReferenceCode, false,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_getWidgetConfig(), RandomTestUtil.randomString(), namespace,
+			undeployedWidgetName, _getWidgetPermissions());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement postPageElement =
+			pageElementResource.
+				postSitePageSpecificationPageExperiencePageElement(
+					testGroup.getExternalReferenceCode(),
+					_draftLayout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(), pageElement);
+
+		assertValid(postPageElement);
+	}
+
 	@Override
 	@Test
 	public void testPutSitePageSpecificationPageExperiencePageElement()

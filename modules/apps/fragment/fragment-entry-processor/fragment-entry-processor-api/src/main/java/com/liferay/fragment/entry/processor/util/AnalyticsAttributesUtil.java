@@ -179,6 +179,8 @@ public class AnalyticsAttributesUtil {
 					"id", assetCategory.getCategoryId()
 				).put(
 					"name", assetCategory.getTitle(locale)
+				).put(
+					"vocabularyId", assetCategory.getVocabularyId()
 				),
 				_log);
 

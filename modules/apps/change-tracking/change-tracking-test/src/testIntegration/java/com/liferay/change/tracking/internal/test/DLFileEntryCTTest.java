@@ -11,13 +11,17 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFolderService;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -34,6 +38,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -208,6 +214,66 @@ public class DLFileEntryCTTest {
 	}
 
 	@Test
+	public void testTwoPublicationsFriendlyURLCollision() throws Exception {
+		long classNameId = _classNameLocalService.getClassNameId(
+			DLFileEntry.class);
+
+		String urlTitle = StringUtil.toLowerCase(
+			"abc" + RandomTestUtil.randomString());
+
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		FriendlyURLEntry friendlyURLEntry1;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			friendlyURLEntry1 =
+				_friendlyURLEntryLocalService.addFriendlyURLEntry(
+					_group.getGroupId(), classNameId,
+					RandomTestUtil.randomLong(), urlTitle, serviceContext);
+		}
+
+		CTCollection ctCollection2 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, "LPD-87156-pub2", null);
+
+		FriendlyURLEntry friendlyURLEntry2;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection2.getCtCollectionId())) {
+
+			friendlyURLEntry2 =
+				_friendlyURLEntryLocalService.addFriendlyURLEntry(
+					_group.getGroupId(), classNameId,
+					RandomTestUtil.randomLong(), urlTitle, serviceContext);
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		_ctProcessLocalService.addCTProcess(
+			ctCollection2.getUserId(), ctCollection2.getCtCollectionId());
+
+		friendlyURLEntry1 = _friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+			friendlyURLEntry1.getFriendlyURLEntryId());
+		friendlyURLEntry2 = _friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+			friendlyURLEntry2.getFriendlyURLEntryId());
+
+		Assert.assertEquals(
+			urlTitle, friendlyURLEntry1.getUrlTitle(languageId));
+		Assert.assertEquals(
+			urlTitle + "-1", friendlyURLEntry2.getUrlTitle(languageId));
+
+		_ctCollectionLocalService.deleteCTCollection(ctCollection2);
+	}
+
+	@Test
 	public void testUpdateFileEntry() throws Exception {
 		FileEntry fileEntry = _addFileEntry();
 
@@ -271,6 +337,9 @@ public class DLFileEntryCTTest {
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Inject
+	private CTProcessLocalService _ctProcessLocalService;
+
+	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
@@ -278,6 +347,9 @@ public class DLFileEntryCTTest {
 
 	@Inject
 	private DLFolderService _dlFolderService;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

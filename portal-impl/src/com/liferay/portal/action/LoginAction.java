@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -140,7 +142,12 @@ public class LoginAction implements Action {
 			}
 		}
 		else {
-			if (Validator.isNull(loginRedirect)) {
+			if (Validator.isNull(loginRedirect) &&
+				Validator.isNull(
+					PrefsPropsUtil.getString(
+						themeDisplay.getCompanyId(),
+						PropsKeys.DEFAULT_LANDING_PAGE_PATH))) {
+
 				loginRedirect = GetterUtil.getString(
 					PortalUtil.getLayoutFullURL(
 						themeDisplay.getLayout(), themeDisplay));

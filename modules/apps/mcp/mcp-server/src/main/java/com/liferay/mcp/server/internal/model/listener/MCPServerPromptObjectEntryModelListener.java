@@ -6,6 +6,7 @@
 package com.liferay.mcp.server.internal.model.listener;
 
 import com.liferay.mcp.server.internal.constants.MCPServerConstants;
+import com.liferay.mcp.server.internal.servlet.MCPServerServlet;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -33,14 +34,18 @@ public class MCPServerPromptObjectEntryModelListener
 	public void onAfterCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_servlet.destroy();
+		MCPServerServlet mcpServerServlet = (MCPServerServlet)_servlet;
+
+		mcpServerServlet.invalidateAll(objectEntry.getCompanyId());
 	}
 
 	@Override
 	public void onAfterRemove(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_servlet.destroy();
+		MCPServerServlet mcpServerServlet = (MCPServerServlet)_servlet;
+
+		mcpServerServlet.invalidateAll(objectEntry.getCompanyId());
 	}
 
 	@Override
@@ -48,7 +53,9 @@ public class MCPServerPromptObjectEntryModelListener
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_servlet.destroy();
+		MCPServerServlet mcpServerServlet = (MCPServerServlet)_servlet;
+
+		mcpServerServlet.invalidateAll(objectEntry.getCompanyId());
 	}
 
 	@Reference(

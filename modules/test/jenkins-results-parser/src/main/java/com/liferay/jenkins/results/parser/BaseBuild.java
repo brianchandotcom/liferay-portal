@@ -440,6 +440,28 @@ public abstract class BaseBuild implements Build {
 
 		if (isFailing()) {
 			buildReportJSONObject.put("failureMessage", getFailureMessage());
+
+			JSONArray failureReportsJSONArray = new JSONArray();
+
+			for (FailureMessageGenerator failureMessageGenerator :
+					getFailureMessageGenerators()) {
+
+				String failureMessage = failureMessageGenerator.getMessage(
+					this);
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(failureMessage)) {
+					JSONObject failureReportJSONObject = new JSONObject();
+
+					failureReportJSONObject.put("message", failureMessage);
+
+					failureReportsJSONArray.put(failureReportJSONObject);
+				}
+			}
+
+			if (failureReportsJSONArray.isEmpty()) {
+				buildReportJSONObject.put(
+					"failureReports", failureReportsJSONArray);
+			}
 		}
 
 		buildReportJSONObject.put(

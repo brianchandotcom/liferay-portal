@@ -10,6 +10,10 @@ package com.liferay.jenkins.results.parser;
  */
 public interface ControllerBuildReport extends BuildReport {
 
+	public String getDescription();
+
+	public String getSHA();
+
 	public String getTestrayBuildDateString();
 
 	public TopLevelBuildReport getTopLevelBuildReport();

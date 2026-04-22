@@ -6,6 +6,7 @@
 		<suppress checks="PersistenceCallCheck" files="asset-service/src/main/java/com/liferay/asset/internal/search/AssetSearcher\.java" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="JavaCompanyThreadLocalCheck" files="asset-auto-tagger-service/src/main/java/com/liferay/asset/auto/tagger/internal/osgi/commands/AssetAutoTaggerOSGiCommands\.java" />
 		<suppress checks="XMLServiceEntityNameCheck" files="asset-category-property-service/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="asset-link-service/service\.xml" />
 	</source-check>

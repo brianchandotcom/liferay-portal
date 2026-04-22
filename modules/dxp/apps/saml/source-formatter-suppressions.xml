@@ -4,4 +4,7 @@
 	<checkstyle>
 		<suppress checks="ReferenceAnnotationCheck" files="saml-opensaml-integration/src/main/java/com/liferay/saml/opensaml/integration/internal/servlet/profile/SingleLogoutProfileImpl\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="JavaCompanyThreadLocalCheck" files="saml-impl/src/main/java/com/liferay/saml/internal/events/SamlSpSessionDestroyAction\.java" />
+	</source-check>
 </suppressions>

@@ -433,9 +433,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			_getUtilityPage(
 				null, null, layoutUtilityPageEntry.getExternalReferenceCode()));
 
+		_testPutSiteUtilityPageWithDateModified();
 		_testPutSiteUtilityPageWithPageSpecifications();
 		_testPutSiteUtilityPageWithThumbnail();
-		_testPutSiteUtilityWithModificationDatePreserved();
 	}
 
 	@Override
@@ -1252,7 +1252,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		}
 	}
 
-	private void _testPutSiteUtilityWithModificationDatePreserved()
+	private void _testPutSiteUtilityPageWithDateModified()
 		throws Exception {
 
 		UtilityPage utilityPage = _getUtilityPage(

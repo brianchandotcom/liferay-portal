@@ -227,30 +227,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This is a test for LPS-136763. It checks that 400 characters can be added to the description."
-	@priority = 3
-	test CanAddDescriptionWith400Characters {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		JSONBlog.addEntry(
-			entryContent = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||||||26||||||||27||||||||28||||||||29||||||||30||||||||31||||||||32||||||||33||||||||34||||||||35||||||||36||||||||37||||||||38||||||||39||||||||40",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewPG(
-			entryContent = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||||||26||||||||27||||||||28||||||||29||||||||30||||||||31||||||||32||||||||33||||||||34||||||||35||||||||36||||||||37||||||||38||||||||39||||||||40",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This test checks that HTML is rendered in the blog content field."
 	@priority = 4
 	@refactordone
@@ -316,27 +292,6 @@ definition {
 			entryAbstractDescription = '''~!@#$%^&*''',
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This is the same case as BlogsPage#CanAddTitleWithoutEscapingCharacters, but due to LPS-130537 we should ensure both contexts are covered."
-	@priority = 4
-	@refactordone
-	test CanAddTitleWithoutEscapingCharacters {
-		property portal.acceptance = "true";
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = '''&amp; &lt; &gt; &quot; > <''');
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
 	}
 
 	@description = "This is a use case for LPS-69240. It checks that a blog entry with custom URL can be added and also that the automatic URL is generated properly in the UI."
@@ -451,38 +406,6 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
 			uploadFileName = "static");
-	}
-
-	@description = "This checks that basic text can be inputted and displayed in the most common fields in a blog entry."
-	@e2etest
-	@priority = 3
-	@refactordone
-	test CanAddWithSubtitle {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This checks that a blog entry with a trackback URL can be added."
@@ -715,35 +638,6 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This checks that blog entries can be deleted through the UI."
-	@priority = 4
-	@refactordone
-	test CanDeleteMultipleEntriesSequentially {
-		property portal.acceptance = "true";
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title");
-
-		for (var entryCount : list "1,2") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			BlogsNavigator.moveToRecycleBinCP(
-				assetType = "Blogs Entry",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		for (var entryCount : list "1,2") {
-			BlogsEntry.viewNoCP(entryTitle = "Blogs Entry${entryCount} Title");
-		}
 	}
 
 	@description = "This is a test for LPS-136771. It checks that the cover image caption can be edited with special characters."
@@ -1060,23 +954,6 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This checks that a blog entry without a title cannot be added."
-	@priority = 4
-	@refactordone
-	test CannotAddWithEmptyTitle {
-		property portal.acceptance = "true";
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addWithInvalidTitle(
-			entryContent = "Blogs Entry Content",
-			entryInvalidTitle = "");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsEntry.viewDefaultCP(entryTitle = "");
 	}
 
 	@description = "This is a test for LPS-147320. It checks that Javascript cannot be executed in the code view."
@@ -1760,70 +1637,6 @@ definition {
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This checks that a string that is over 255 characters in the title will be trimmed to 255."
-	@priority = 3
-	@refactordone
-	test ShouldTrimTitleTo255CharactersWhenOver {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||XX");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "-1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-x",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
-	}
-
-	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."
-	@priority = 3
-	@refactordone
-	test TitleWillNotExecuteXSS {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
-			entryTitle = '''"><img src=xss onerror=alert(1)>''',
-			injectCode = "true");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = '''"><img src=xss onerror=alert(1)>''');
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
-			entryTitle = '''"><img src=xss onerror=alert(1)>''');
 	}
 
 	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."

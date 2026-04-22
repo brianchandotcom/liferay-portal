@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {openFieldset} from '../../../../utils/openFieldset';
@@ -21,9 +21,11 @@ export class BlogsEditBlogEntryPage {
 	readonly page: Page;
 
 	readonly blogsPage: BlogsPage;
-	readonly publishButton: Locator;
 	readonly contentEditor: Locator;
+	readonly publishButton: Locator;
 	readonly submitToWorkflowButton: Locator;
+	readonly subtitleInput: Locator;
+	readonly titleInput: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -36,11 +38,25 @@ export class BlogsEditBlogEntryPage {
 		this.submitToWorkflowButton = page.getByRole('button', {
 			name: 'Submit for Workflow',
 		});
+		this.subtitleInput = page.getByPlaceholder('Subtitle');
+		this.titleInput = page.getByPlaceholder('Title *');
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.blogsPage.goto(siteUrl);
 		await this.blogsPage.goToCreateBlogEntry();
+	}
+
+	async fillTitle(title: string) {
+		await this.titleInput.fill(title);
+	}
+
+	async fillSubtitle(subtitle: string) {
+		await this.subtitleInput.fill(subtitle);
+	}
+
+	async fillContent(content: string) {
+		await this.contentEditor.fill(content);
 	}
 
 	private async editBlogEntryAddCategories({
@@ -90,17 +106,23 @@ export class BlogsEditBlogEntryPage {
 		friendlyUrl,
 		publish = true,
 		submitToWorkflow,
+		subtitle,
 		title,
 	}: {
 		content: string;
 		friendlyUrl?: editBlogEntryAddfriendlyUrlType;
 		publish?: boolean;
 		submitToWorkflow?: boolean;
+		subtitle?: string;
 		title: string;
 	}) {
-		await this.page.getByPlaceholder('Title *').fill(title);
+		await this.fillTitle(title);
 
-		await this.contentEditor.fill(content);
+		if (subtitle !== undefined) {
+			await this.fillSubtitle(subtitle);
+		}
+
+		await this.fillContent(content);
 
 		if (friendlyUrl) {
 			const {categories, vocabularyName} = friendlyUrl;
@@ -124,7 +146,13 @@ export class BlogsEditBlogEntryPage {
 		await waitForAlert(this.page, undefined, {timeout: 60_000});
 	}
 
-	async selectCoverImage(coverImageTitle) {
+	async publishBlogEntryExpectError(partialText: string) {
+		await this.publishButton.click();
+
+		await expect(this.page.getByText(partialText).first()).toBeVisible();
+	}
+
+	async selectCoverImage(coverImageTitle: string) {
 		await this.page
 			.getByRole('button', {name: 'Select File'})
 			.first()

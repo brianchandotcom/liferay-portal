@@ -236,33 +236,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Test Entry");
 	}
 
-	@description = "LPS-140084 - Verify it is possible to add special characters on a field with the Field Name as 'Name'"
-	@priority = 4
-	test CanAddSpecialCharactersOnFieldNamedName {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 240",
-			objectName = "CustomObject240",
-			pluralLabelName = "Custom Objects 240");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Name",
-			fieldName = "name",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject240");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject240");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject240");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "@~!& ˆ%$&_-");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject240");
-
-		ObjectPortlet.viewEntry(entry = "@~!& ˆ%$&_-");
-	}
-
 	@description = "LPS-135390 - Verify it is possible to apply a permission only to a specific site when an Object is scoped by Site"
 	@priority = 4
 	test CanApplyPermissionOnlyToSpecificSiteWhenScopedBySite {

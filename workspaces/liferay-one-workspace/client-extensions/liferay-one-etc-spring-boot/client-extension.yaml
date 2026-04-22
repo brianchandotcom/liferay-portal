@@ -1,0 +1,14 @@
+assemble:
+    -   fromTask: bootJar
+liferay-one-etc-spring-boot-oahs:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay One Etc Spring Boot OAuth Application Headless Server
+    scopes: []
+    type: oAuthApplicationHeadlessServer
+liferay-one-etc-spring-boot-oaua:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay One Etc Spring Boot OAuth Application User Agent
+    scopes: []
+    type: oAuthApplicationUserAgent

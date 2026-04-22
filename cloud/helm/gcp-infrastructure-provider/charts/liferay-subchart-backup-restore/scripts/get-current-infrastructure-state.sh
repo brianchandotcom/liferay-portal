@@ -30,24 +30,24 @@ function main {
 
 	echo "${database_snapshot_uuid}" > /tmp/database-snapshot-uuid.txt
 
-	local dl_vault_bucket
+	local vault_bucket
 
-	dl_vault_bucket=$(echo "${liferay_backup_json}" | jq --raw-output ".status.documentLibrary.destinationBucket // \"\"")
+	vault_bucket=$(echo "${liferay_backup_json}" | jq --raw-output ".status.documentLibrary.destinationBucket // \"\"")
 
-	if [ -z "${dl_vault_bucket}" ]
+	if [ -z "${vault_bucket}" ]
 	then
 		echo "The LiferayBackup \"${liferay_backup_name}\" has no status.documentLibrary.destinationBucket." >&2
 
 		exit 1
 	fi
 
-	echo "${dl_vault_bucket}" > /tmp/dl-vault-bucket.txt
+	echo "${vault_bucket}" > /tmp/vault-bucket.txt
 
-	local dl_vault_path
+	local vault_path
 
-	dl_vault_path=$(echo "${liferay_backup_json}" | jq --raw-output ".status.documentLibrary.destinationPath // \"\"")
+	vault_path=$(echo "${liferay_backup_json}" | jq --raw-output ".status.documentLibrary.destinationPath // \"\"")
 
-	echo "${dl_vault_path}" > /tmp/dl-vault-path.txt
+	echo "${vault_path}" > /tmp/vault-path.txt
 
 	local liferay_infrastructure_json
 

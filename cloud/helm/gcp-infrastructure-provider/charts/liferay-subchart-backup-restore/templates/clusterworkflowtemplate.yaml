@@ -61,6 +61,23 @@ spec:
                                     value: "{{ "{{" }}steps.apply-infrastructure.outputs.parameters.generation}}"
                         name: wait-infrastructure-ready
                         template: wait-infrastructure-ready
+        -   container:
+                args:
+                    -   storage
+                    -   rm
+                    -   --recursive
+                    -   "gs://{{ "{{" }}inputs.parameters.dl-bucket-id}}/**"
+                command: [gcloud]
+                env:
+                    -   name: CLOUDSDK_CONFIG
+                        value: /tmp/gcloud
+                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+            inputs:
+                parameters:
+                    -   name: dl-bucket-id
+            name: clean-up-dl-bucket
         -   inputs:
                 parameters:
                     -   name: dl-bucket-id
@@ -84,56 +101,39 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.dl-bucket-id}}"
                         name: clean-up-dl-bucket
                         template: clean-up-dl-bucket
-        -   container:
-                args:
-                    -   "storage"
-                    -   "rm"
-                    -   "--recursive"
-                    -   "gs://{{ "{{" }}inputs.parameters.dl-bucket-id}}/**"
-                command: ["gcloud"]
-                env:
-                    -   name: CLOUDSDK_CONFIG
-                        value: /tmp/gcloud
-                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-            inputs:
-                parameters:
-                    -   name: dl-bucket-id
-            name: clean-up-dl-bucket
         -   inputs:
                 parameters:
                     -   name: liferay-backup-namespace
             name: get-current-infrastructure-state
             outputs:
                 parameters:
-                    -   name: database-snapshot-uuid
-                        valueFrom:
-                            path: /tmp/database-snapshot-uuid.txt
                     -   name: data-active
                         valueFrom:
                             path: /tmp/data-plane-active.txt
                     -   name: data-inactive
                         valueFrom:
                             path: /tmp/data-plane-inactive.txt
+                    -   name: database-snapshot-uuid
+                        valueFrom:
+                            path: /tmp/database-snapshot-uuid.txt
                     -   name: dl-bucket-active
                         valueFrom:
                             path: /tmp/dl-bucket-active.txt
                     -   name: dl-bucket-inactive
                         valueFrom:
                             path: /tmp/dl-bucket-inactive.txt
-                    -   name: dl-vault-bucket
-                        valueFrom:
-                            path: /tmp/dl-vault-bucket.txt
-                    -   name: dl-vault-path
-                        valueFrom:
-                            path: /tmp/dl-vault-path.txt
                     -   name: liferay-infrastructure-name
                         valueFrom:
                             path: /tmp/liferay-infrastructure-name.txt
                     -   name: liferay-workload-name
                         valueFrom:
                             path: /tmp/liferay-workload-name.txt
+                    -   name: vault-bucket
+                        valueFrom:
+                            path: /tmp/vault-bucket.txt
+                    -   name: vault-path
+                        valueFrom:
+                            path: /tmp/vault-path.txt
             script:
                 command: [sh]
                 image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
@@ -254,10 +254,10 @@ spec:
                             parameters:
                                 -   name: dl-bucket-inactive
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.dl-bucket-inactive}}"
-                                -   name: dl-vault-bucket
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.dl-vault-bucket}}"
-                                -   name: dl-vault-path
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.dl-vault-path}}"
+                                -   name: vault-bucket
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.vault-bucket}}"
+                                -   name: vault-path
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.vault-path}}"
                         depends: get-current-infrastructure-state
                         name: restore-dl-bucket
                         template: restore-dl-bucket
@@ -286,51 +286,6 @@ spec:
                         name: roll-back-restart
                         template: roll-back-restart
             name: main
-        -   container:
-                args:
-                    -   sql
-                    -   backups
-                    -   restore
-                    -   "{{ "{{" }}inputs.parameters.database-snapshot-uuid}}"
-                    -   --project={{ .Values.global.gcp.projectId }}
-                    -   --restore-instance
-                    -   "{{ "{{" }}inputs.parameters.restore-instance}}"
-                    -   --quiet
-                command: [gcloud]
-                env:
-                    -   name: CLOUDSDK_CONFIG
-                        value: /tmp/gcloud
-                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-            inputs:
-                parameters:
-                    -   name: database-snapshot-uuid
-                    -   name: restore-instance
-            name: restore-cloudsql-backup
-        -   container:
-                args:
-                    -   transfer
-                    -   jobs
-                    -   create
-                    -   "gs://{{ "{{" }}inputs.parameters.dl-vault-bucket}}/{{ "{{" }}inputs.parameters.dl-vault-path}}/"
-                    -   "gs://{{ "{{" }}inputs.parameters.dl-bucket-inactive}}/"
-                    -   --delete-from=destination-if-unique
-                    -   --no-async
-                    -   --overwrite-when=always
-                command: [gcloud]
-                env:
-                    -   name: CLOUDSDK_CONFIG
-                        value: /tmp/gcloud
-                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-            inputs:
-                parameters:
-                    -   name: dl-bucket-inactive
-                    -   name: dl-vault-bucket
-                    -   name: dl-vault-path
-            name: restore-dl-bucket
         -   inputs:
                 parameters:
                     -   name: liferay-workload-name
@@ -348,6 +303,51 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.liferay-workload-name}}"
                         name: kubectl-rollout-status
                         template: kubectl-rollout-status
+        -   container:
+                args:
+                    -   sql
+                    -   backups
+                    -   restore
+                    -   "{{ "{{" }}inputs.parameters.database-snapshot-uuid}}"
+                    -   --project={{ .Values.global.gcp.projectId }}
+                    -   --quiet
+                    -   --restore-instance
+                    -   "{{ "{{" }}inputs.parameters.restore-instance}}"
+                command: [gcloud]
+                env:
+                    -   name: CLOUDSDK_CONFIG
+                        value: /tmp/gcloud
+                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+            inputs:
+                parameters:
+                    -   name: database-snapshot-uuid
+                    -   name: restore-instance
+            name: restore-cloudsql-backup
+        -   container:
+                args:
+                    -   transfer
+                    -   jobs
+                    -   create
+                    -   "gs://{{ "{{" }}inputs.parameters.vault-bucket}}/{{ "{{" }}inputs.parameters.vault-path}}/"
+                    -   "gs://{{ "{{" }}inputs.parameters.dl-bucket-inactive}}/"
+                    -   --delete-from=destination-if-unique
+                    -   --no-async
+                    -   --overwrite-when=always
+                command: [gcloud]
+                env:
+                    -   name: CLOUDSDK_CONFIG
+                        value: /tmp/gcloud
+                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+            inputs:
+                parameters:
+                    -   name: dl-bucket-inactive
+                    -   name: vault-bucket
+                    -   name: vault-path
+            name: restore-dl-bucket
         -   inputs:
                 parameters:
                     -   name: dl-bucket-id

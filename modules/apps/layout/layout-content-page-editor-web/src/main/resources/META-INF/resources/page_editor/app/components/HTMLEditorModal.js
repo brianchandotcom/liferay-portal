@@ -7,7 +7,8 @@ import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import {cancelDebounce, debounce} from 'frontend-js-web';
+import React, {useEffect, useRef, useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';
 
@@ -16,6 +17,8 @@ const DISALLOWED_EDITABLE_WORDS = [
 	'data-lfr-editable-type',
 	'lfr-editable',
 ];
+
+const ERROR_GUTTER = 'CodeMirror-error';
 
 const VIEW_TYPES = {
 	columns: 1,
@@ -32,6 +35,27 @@ const HTMLEditorModal = ({
 	const [showError, setShowError] = useState(false);
 	const [viewType, setViewType] = useState(VIEW_TYPES.columns);
 	const [visible, setVisible] = useState(true);
+
+	const editorRef = useRef();
+	const marksRef = useRef([]);
+
+	useEffect(() => {
+		const codeMirror = editorRef.current;
+
+		if (!codeMirror) {
+			return;
+		}
+
+		const gutters = codeMirror.getOption('gutters');
+
+		if (!gutters.includes(ERROR_GUTTER)) {
+			codeMirror.setOption('gutters', [ERROR_GUTTER, ...gutters]);
+		}
+
+		debouncedRefreshMarkers(codeMirror, content, marksRef);
+
+		return () => cancelDebounce(debouncedRefreshMarkers);
+	}, [content]);
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
@@ -130,6 +154,7 @@ const HTMLEditorModal = ({
 									setContent(nextContent);
 									setShowError(false);
 								}}
+								ref={editorRef}
 							/>
 						</div>
 
@@ -189,5 +214,71 @@ const HTMLEditorModal = ({
 		)
 	);
 };
+
+const findDisallowedRanges = (content) => {
+	const ranges = [];
+	const lines = content.split('\n');
+
+	for (let line = 0; line < lines.length; line++) {
+		const text = lines[line];
+
+		DISALLOWED_EDITABLE_WORDS.forEach((word) => {
+			let index = text.indexOf(word);
+
+			while (index !== -1) {
+				ranges.push({
+					from: {ch: index, line},
+					to: {ch: index + word.length, line},
+				});
+
+				index = text.indexOf(word, index + word.length);
+			}
+		});
+	}
+
+	return ranges;
+};
+
+const debouncedRefreshMarkers = debounce((codeMirror, content, marksRef) => {
+	marksRef.current.forEach((mark) => mark.clear());
+	marksRef.current = [];
+
+	codeMirror.clearGutter(ERROR_GUTTER);
+
+	const ranges = findDisallowedRanges(content);
+
+	if (!ranges.length) {
+		return;
+	}
+
+	const errorLabel = Liferay.Language.get(
+		'fragment-editable-elements-are-not-allowed'
+	);
+
+	ranges.forEach((range) => {
+		marksRef.current.push(
+			codeMirror.markText(range.from, range.to, {
+				className: 'text-danger',
+				title: errorLabel,
+			})
+		);
+	});
+
+	const element = document.createElement('div');
+
+	element.className = 'lfr-portal-tooltip ml-1 mt-1 text-danger';
+	element.dataset.title = errorLabel;
+	element.dataset.tooltipAlign = 'right';
+	element.setAttribute('aria-label', errorLabel);
+	element.setAttribute('role', 'img');
+	element.setAttribute('tabindex', '0');
+
+	element.innerHTML = `
+		<svg class="lexicon-icon lexicon-icon-exclamation-full mt-0" focusable="false">
+			<use href="${Liferay.Icons.spritemap}#exclamation-full" />
+		</svg>`;
+
+	codeMirror.setGutterMarker(ranges[0].from.line, ERROR_GUTTER, element);
+}, 200);
 
 export default HTMLEditorModal;

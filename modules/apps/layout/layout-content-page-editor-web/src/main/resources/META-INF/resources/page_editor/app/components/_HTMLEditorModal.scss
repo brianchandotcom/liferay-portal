@@ -14,4 +14,8 @@ html#{$cadmin-selector} {
 			border-top: 2px solid $gray-400;
 		}
 	}
+
+	.CodeMirror-error {
+		width: 20px;
+	}
 }

@@ -1353,10 +1353,15 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		PropsUtil.set("feature.flag.LPD-43996", "false");
 
-		_testDeleteObjectEntryWithComments(
-			_testGroupId, _siteScopedObjectDefinition1);
+		try {
+			_testDeleteObjectEntryWithComments(
+				_testGroupId, _siteScopedObjectDefinition1);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", "true");
+		}
 	}
 
 	@Test
@@ -6158,10 +6163,15 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		PropsUtil.set("feature.flag.LPD-43996", "false");
 
-		_testGetObjectEntriesPageWithComments(
-			_testGroupId, _siteScopedObjectDefinition1);
+		try {
+			_testGetObjectEntriesPageWithComments(
+				_testGroupId, _siteScopedObjectDefinition1);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", "true");
+		}
 	}
 
 	@Test
@@ -9510,14 +9520,19 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		PropsUtil.set("feature.flag.LPD-43996", "false");
 
-		_enableComments(_siteScopedObjectDefinition1);
+		try {
+			_enableComments(_siteScopedObjectDefinition1);
 
-		_testPatchPutObjectEntryWithComments(
-			_testGroupId, Http.Method.PATCH, _siteScopedObjectDefinition1);
-		_testPatchPutObjectEntryWithComments(
-			_testGroupId, Http.Method.PUT, _siteScopedObjectDefinition1);
+			_testPatchPutObjectEntryWithComments(
+				_testGroupId, Http.Method.PATCH, _siteScopedObjectDefinition1);
+			_testPatchPutObjectEntryWithComments(
+				_testGroupId, Http.Method.PUT, _siteScopedObjectDefinition1);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", "true");
+		}
 	}
 
 	@FeatureFlag("LPD-43996")
@@ -11052,10 +11067,15 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		PropsUtil.set("feature.flag.LPD-43996", Boolean.FALSE.toString());
+		PropsUtil.set("feature.flag.LPD-43996", "false");
 
-		_testPostObjectEntriesWithComments(
-			_testGroupId, _siteScopedObjectDefinition1);
+		try {
+			_testPostObjectEntriesWithComments(
+				_testGroupId, _siteScopedObjectDefinition1);
+		}
+		finally {
+			PropsUtil.set("feature.flag.LPD-43996", "true");
+		}
 	}
 
 	@FeatureFlag("LPD-43996")

@@ -91,16 +91,22 @@ If `ant all` fails, stop and surface the full error to the user — do not conti
 #### 4a. Resolve the Bundle Directory
 
 1. Read `app.server.<username>.properties` in the worktree root
-2. Parse `app.server.parent.dir`, replacing `${project.dir}` with the repo root
-3. Fallback: `<REPO_ROOT>/bundle/`
-4. Find the `tomcat-*` directory inside it
+
+1. Parse `app.server.parent.dir`, replacing `${project.dir}` with the repo root
+
+1. Fallback: `<REPO_ROOT>/bundle/`
+
+1. Find the `tomcat-*` directory inside it
 
 #### 4b. Determine the Offset
 
 1. If user specified an offset, use it (reject 0)
-2. If `.worktree-port-offset` exists in the bundle dir, read it
-3. Otherwise, scan ports starting from offset=1: for each candidate offset, check if ports `8080+N`, `8005+N`, `11311+N`, `9201+N`, `9301+N`, `4000+N` are all free using `nc -z localhost <port>`. First offset where ALL are free wins.
-4. Save the chosen offset to `<BUNDLE_DIR>/.worktree-port-offset`
+
+1. If `.worktree-port-offset` exists in the bundle dir, read it
+
+1. Otherwise, scan ports starting from offset=1: for each candidate offset, check if ports `8080+N`, `8005+N`, `11311+N`, `9201+N`, `9301+N`, `4000+N` are all free using `nc -z localhost <port>`. First offset where ALL are free wins.
+
+1. Save the chosen offset to `<BUNDLE_DIR>/.worktree-port-offset`
 
 #### 4c. Patch server.xml
 
@@ -155,6 +161,7 @@ Detect the Elasticsearch version by checking which configuration file already ex
 - Neither exists → default to elasticsearch8
 
 `<BUNDLE>/osgi/configs/com.liferay.portal.search.elasticsearch<VERSION>.configuration.ElasticsearchConfiguration.config`:
+
 ```
 sidecarHttpPort="<9201+N>"
 transportTcpPort="<9301+N>"
@@ -163,11 +170,13 @@ networkPublishHost="127.0.0.1"
 ```
 
 `<BUNDLE>/osgi/configs/com.liferay.arquillian.extension.junit.bridge.connector.ArquillianConnector.config`:
+
 ```
 port="<32763+N>"
 ```
 
 `<BUNDLE>/osgi/configs/com.liferay.data.guard.connector.DataGuardConnector.config`:
+
 ```
 port="<42763+N>"
 ```
@@ -272,9 +281,12 @@ Worktree 3: offset=3
 Show a summary table of all Git worktrees with their port, running status, offset, and database.
 
 1. Run `git worktree list --porcelain` to enumerate all worktrees
-2. For each, resolve the bundle directory (same logic as step 4a)
-3. Read `.worktree-port-offset` to get the offset and derive the HTTP port and DB name
-4. Detect running status by matching `-Dcatalina.base` from running Java processes to each worktree's tomcat directory:
+
+1. For each, resolve the bundle directory (same logic as step 4a)
+
+1. Read `.worktree-port-offset` to get the offset and derive the HTTP port and DB name
+
+1. Detect running status by matching `-Dcatalina.base` from running Java processes to each worktree's tomcat directory:
 
 ```bash
 # Get all running Tomcat catalina.base paths
@@ -284,6 +296,7 @@ ps -eo args | grep --only-matching '\-Dcatalina\.base=[^ ]*' | sed 's/-Dcatalina
 **Use `-Dcatalina.base` process matching, NOT port scanning.** Port scanning cannot distinguish which Tomcat owns which port.
 
 Print a table like:
+
 ```
 Worktree                                 Port     Status     Offset    Database
 liferay-portal                           -        NO TOMCAT  (none)    -

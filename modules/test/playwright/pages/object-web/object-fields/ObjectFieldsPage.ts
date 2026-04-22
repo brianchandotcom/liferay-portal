@@ -226,36 +226,6 @@ export class ObjectFieldsPage {
 		});
 	}
 
-	async openObjectFieldByDropdownAction(fieldLabel: string) {
-		await test.step(`Open object field '${fieldLabel}'`, async () => {
-			await expect(async () => {
-				await this.page
-					.getByRole('button')
-					.filter({hasText: fieldLabel + ' Actions'})
-					.click();
-
-				const trigger = this.page
-					.getByRole('menuitem')
-					.filter({hasText: 'Edit'});
-
-				// Check that the side panel is opened after clicking.
-
-				await clickAndExpectToBeVisible({
-					target: this.page.locator('.fds-side-panel.is-visible'),
-					trigger,
-				});
-
-				// Check that the correct field was opened.
-
-				await expect(
-					this.iframeLocator.locator('#objectFieldLabelInput')
-				).toHaveValue(fieldLabel);
-			}).toPass();
-
-			await this.page.waitForLoadState('networkidle');
-		});
-	}
-
 	async saveObjectField() {
 		await this.editFieldSaveButton.click();
 

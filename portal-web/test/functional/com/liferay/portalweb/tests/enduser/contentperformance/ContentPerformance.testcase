@@ -200,6 +200,20 @@ definition {
 		task ("Check if languages are alphabetically ordered") {
 			ContentPerformance.checkLanguagesOrder();
 		}
+
+		task ("Check that there is not any Translated/Untranslated label") {
+			AssertTextEquals(
+				locator1 = "ContentPerformance#LANGUAGE_LABEL",
+				value1 = "Default");
+
+			AssertTextNotEquals(
+				locator1 = "ContentPerformance#LANGUAGE_LABEL",
+				value1 = "Translated");
+
+			AssertTextNotEquals(
+				locator1 = "ContentPerformance#LANGUAGE_LABEL",
+				value1 = "Untranslated");
+		}
 	}
 
 	@description = "LPS-150536 Bug: Traffic sources with link and full pie chart when the content was published today and there is some data for that content in AC side"
@@ -331,36 +345,6 @@ definition {
 				fragmentName = "heading",
 				id = "element-text",
 				text = "Text in English");
-		}
-	}
-
-	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the Translated/Unstraslated label does not appear"
-	@priority = 3
-	test LanguagesLabel {
-		task ("Open content performance panel") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Open flag selector dropdown") {
-			Click(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
-		}
-
-		task ("Check that there is not any Translated/Unstraslated label") {
-			AssertTextEquals(
-				locator1 = "ContentPerformance#LANGUAGE_LABEL",
-				value1 = "Default");
-
-			AssertTextNotEquals(
-				locator1 = "ContentPerformance#LANGUAGE_LABEL",
-				value1 = "Translated");
-
-			AssertTextNotEquals(
-				locator1 = "ContentPerformance#LANGUAGE_LABEL",
-				value1 = "Untranslated");
 		}
 	}
 

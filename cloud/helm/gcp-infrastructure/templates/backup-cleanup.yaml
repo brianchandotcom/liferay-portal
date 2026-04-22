@@ -15,6 +15,30 @@ spec:
     startingDeadlineSeconds: 300
     workflowSpec:
         entrypoint: clean-up-backups
+        podSpecPatch: |
+            containers:
+                -   name: wait
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        privileged: false
+            initContainers:
+                -   name: init
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        privileged: false
+        securityContext:
+            fsGroup: 1000
+            runAsGroup: 10000
+            runAsNonRoot: true
+            runAsUser: 10000
+            seccompProfile:
+                type: RuntimeDefault
         serviceAccountName: {{ .Values.backup.cleanup.serviceAccountName }}
         templates:
             -   name: clean-up-backups
@@ -28,6 +52,12 @@ spec:
                         requests:
                             cpu: 100m
                             memory: 128Mi
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        privileged: false
                     source: |-
                         {{- tpl (.Files.Get "scripts/backup-cleanup.sh") . | nindent 24 }}
         ttlStrategy:

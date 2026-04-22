@@ -30,6 +30,7 @@ spec:
                 namespace: {{ $searchNamespace }}
     managementPolicies: ["Observe"]
 ---
+{{- if .observed.resources }}
 {{- $elasticsearchObject := (index .observed.resources "elasticsearch-observer" | default dict).resource | default dict -}}
 {{- $elasticsearchObjectAtProvider := ($elasticsearchObject.status | default dict).atProvider | default dict -}}
 {{- $elasticsearchObjectAtProviderManifest := (index $elasticsearchObjectAtProvider "manifest" | default dict) -}}
@@ -71,4 +72,5 @@ spec:
                 ELASTICSEARCH_USERNAME: elastic
             type: Opaque
     managementPolicies: {{ $managementPolicies }}
+{{- end }}
 {{- end }}

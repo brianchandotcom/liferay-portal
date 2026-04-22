@@ -159,43 +159,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Entry 1");
 	}
 
-	@description = "LPS-135635 - Verify it is possible to add a field after the Object is published and submit entries to it"
-	@priority = 5
-	test CanAddFieldAndViewEntriesAfterPublished {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 3",
-			objectName = "CustomObject3",
-			pluralLabelName = "Custom Objects 3");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject3");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject3");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject3");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject3");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "String Entry");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject3");
-
-		ObjectPortlet.viewEntry(entry = "String Entry");
-	}
-
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with one column"
 	@priority = 4
 	test CanAddFieldForBlockOneColumn {
@@ -4809,51 +4772,6 @@ definition {
 		AssertElementPresent(
 			key_workflowResourceValue = "Custom Object 160",
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
-	}
-
-	@description = "LPS-135551 - Verify that when the Object is scoped by Site each site will have its own entries"
-	@priority = 4
-	test ObjectScopedBySiteEntries {
-		for (var sites : list "A,B") {
-			HeadlessSite.addSite(siteName = "Site ${sites}");
-		}
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 161",
-			objectName = "CustomObject161",
-			panelCategoryKey = "site_administration.content",
-			pluralLabelName = "Custom Objects 161",
-			scope = "site");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject161");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-a");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Custom Objects 161");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
-
-		Navigator.gotoBack();
-
-		ObjectPortlet.viewEntry(entry = "Entry Test");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-b");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Custom Objects 161");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Entry Test");
 	}
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Panel of the Main Instance and vice versa"

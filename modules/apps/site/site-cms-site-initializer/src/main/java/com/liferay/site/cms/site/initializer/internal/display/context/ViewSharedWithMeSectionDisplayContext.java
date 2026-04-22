@@ -142,7 +142,7 @@ public class ViewSharedWithMeSectionDisplayContext {
 	public String getAPIURL() {
 		return "/o/headless-admin-user/v1.0/my-user-account/shared-assets" +
 			"/shared-with-me?filter=(spaceDepotEntry eq true)" +
-				"&nestedFields=file";
+				"&nestedFields=file&sort=dateModified:desc";
 	}
 
 	public Map<String, Object> getBreadcrumbProps() throws PortalException {

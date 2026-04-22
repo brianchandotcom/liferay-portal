@@ -1,125 +1,125 @@
 {
-  "ctx": {
-    "apiextensions.crossplane.io/environment": {
-      "deploymentName": "liferay-portal-poc",
-      "projectId": "arz",
-      "projectNumber": "1010819446150",
-      "vpcName": "liferay-portal-poc-vpc"
-    }
-  },
-  "obs": {
-    "resources": {
-      "elasticsearch-observer": {
-        "resource": {
-          "status": {
-            "atProvider": {
-              "manifest": {
-                "status": {
-                  "health": "green"
-                }
-              }
-            }
-          }
-        }
-      },
-      "elasticsearch-secret-observer": {
-        "resource": {
-          "status": {
-            "atProvider": {
-              "manifest": {
-                "data": {
-                  "elastic": "REDACTED"
-                }
-              }
-            }
-          }
-        }
-      },
-      "managed-service-details-configmap": {
-        "resource": {
-          "status": {
-            "atProvider": {
-              "manifest": {
-                "status": {
-                  "conditions": [
-                    {
-                      "status": "True",
-                      "type": "Ready"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "liferay-db-grant-job-blue": {
-        "resource": {
-          "status": {
-            "conditions": [
-              {
-                "status": "True",
-                "type": "Ready"
-              }
-            ]
-          }
-        }
-      },
-      "database-primary-blue": {
-        "resource": {
-          "status": {
-            "conditions": [
-              {
-                "type": "Ready",
-                "status": "True"
-              }
-            ]
-          }
-        }
-      }
-    }
-  },
-  "oxr": {
-    "metadata": {
-      "name": "arz-dev2025-infra",
-      "namespace": "liferay-arz-dev2025"
-    },
-    "spec": {
-      "backup": {
-        "enabled": false,
-        "region": "",
-        "retentionDays": 30,
-        "storageClass": "NEARLINE"
-      },
-      "cmk": {
-        "enabled": false
-      },
-      "commonTags": {
-        "environment_id": "dev2025",
-        "project_id": "arz"
-      },
-      "database": {
-        "databaseVersion": "POSTGRES_18",
-        "deletionProtection": true,
-        "instanceType": "db-custom-1-3840",
-        "queryInsightsEnabled": true,
-        "rootPasswordSecretName": "arz-dev2025-infra-db-root-password",
-        "storageGB": 20
-      },
-      "environmentId": "dev2025",
-      "forceDestroy": false,
-      "orphanOnDelete": false,
-      "overlay": {
-        "enabled": true,
-        "githubRepo": "",
-        "region": "us-south1"
-      },
-      "projectId": "arz",
-      "region": "us-central1",
-      "storage": {
-        "enableVersioning": true,
-        "region": ""
-      }
-    }
-  }
+	"ctx": {
+		"apiextensions.crossplane.io/environment": {
+			"deploymentName": "liferay-portal-poc",
+			"projectId": "arz",
+			"projectNumber": "1010819446150",
+			"vpcName": "liferay-portal-poc-vpc"
+		}
+	},
+	"obs": {
+		"resources": {
+			"database-primary-blue": {
+				"resource": {
+					"status": {
+						"conditions": [
+							{
+								"status": "True",
+								"type": "Ready"
+							}
+						]
+					}
+				}
+			},
+			"elasticsearch-observer": {
+				"resource": {
+					"status": {
+						"atProvider": {
+							"manifest": {
+								"status": {
+									"health": "green"
+								}
+							}
+						}
+					}
+				}
+			},
+			"elasticsearch-secret-observer": {
+				"resource": {
+					"status": {
+						"atProvider": {
+							"manifest": {
+								"data": {
+									"elastic": "REDACTED"
+								}
+							}
+						}
+					}
+				}
+			},
+			"liferay-db-grant-job-blue": {
+				"resource": {
+					"status": {
+						"conditions": [
+							{
+								"status": "True",
+								"type": "Ready"
+							}
+						]
+					}
+				}
+			},
+			"managed-service-details-configmap": {
+				"resource": {
+					"status": {
+						"atProvider": {
+							"manifest": {
+								"status": {
+									"conditions": [
+										{
+											"status": "True",
+											"type": "Ready"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"oxr": {
+		"metadata": {
+			"name": "arz-dev2025-infra",
+			"namespace": "liferay-arz-dev2025"
+		},
+		"spec": {
+			"backup": {
+				"enabled": false,
+				"region": "",
+				"retentionDays": 30,
+				"storageClass": "NEARLINE"
+			},
+			"cmk": {
+				"enabled": false
+			},
+			"commonTags": {
+				"environment_id": "dev2025",
+				"project_id": "arz"
+			},
+			"database": {
+				"databaseVersion": "POSTGRES_18",
+				"deletionProtection": true,
+				"instanceType": "db-custom-1-3840",
+				"queryInsightsEnabled": true,
+				"rootPasswordSecretName": "arz-dev2025-infra-db-root-password",
+				"storageGB": 20
+			},
+			"environmentId": "dev2025",
+			"forceDestroy": false,
+			"orphanOnDelete": false,
+			"overlay": {
+				"enabled": true,
+				"githubRepo": "",
+				"region": "us-south1"
+			},
+			"projectId": "arz",
+			"region": "us-central1",
+			"storage": {
+				"enableVersioning": true,
+				"region": ""
+			}
+		}
+	}
 }

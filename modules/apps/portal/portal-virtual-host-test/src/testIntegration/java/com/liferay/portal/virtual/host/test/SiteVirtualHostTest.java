@@ -69,63 +69,63 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 	@Ignore
 	@Test
 	public void testGroupRestrictedViaVirutalHost() throws Exception {
-		_assertURLToString(true, _group1, COMPANY_HOST_1);
-		_assertURLToString(true, _group2, COMPANY_HOST_1);
-		_assertURLToString(true, _group3, COMPANY_HOST_1);
-		_assertURLToString(true, _guestGroup, COMPANY_HOST_1);
+		_assertURLtoString(true, _group1, COMPANY_HOST_1);
+		_assertURLtoString(true, _group2, COMPANY_HOST_1);
+		_assertURLtoString(true, _group3, COMPANY_HOST_1);
+		_assertURLtoString(true, _guestGroup, COMPANY_HOST_1);
 
-		_assertURLToString(true, _group1, _GROUP_HOST_1);
-		_assertURLToString(false, _group2, _GROUP_HOST_1);
-		_assertURLToString(true, _group3, _GROUP_HOST_1);
-		_assertURLToString(true, _guestGroup, _GROUP_HOST_1);
+		_assertURLtoString(true, _group1, _GROUP_HOST_1);
+		_assertURLtoString(false, _group2, _GROUP_HOST_1);
+		_assertURLtoString(true, _group3, _GROUP_HOST_1);
+		_assertURLtoString(true, _guestGroup, _GROUP_HOST_1);
 
-		_assertURLToString(true, _group1, _GROUP_HOST_2);
-		_assertURLToString(true, _group2, _GROUP_HOST_2);
-		_assertURLToString(true, _group3, _GROUP_HOST_2);
-		_assertURLToString(true, _guestGroup, _GROUP_HOST_2);
+		_assertURLtoString(true, _group1, _GROUP_HOST_2);
+		_assertURLtoString(true, _group2, _GROUP_HOST_2);
+		_assertURLtoString(true, _group3, _GROUP_HOST_2);
+		_assertURLtoString(true, _guestGroup, _GROUP_HOST_2);
 	}
 
 	@Test
 	public void testGroupsAccessibleViaVirutalHost() throws Exception {
-		_assertURLToString(true, _group1, COMPANY_HOST_1);
-		_assertURLToString(true, _group2, COMPANY_HOST_1);
-		_assertURLToString(true, _group3, COMPANY_HOST_1);
-		_assertURLToString(true, _childGroup1, COMPANY_HOST_1);
-		_assertURLToString(true, _childGroup2, COMPANY_HOST_1);
-		_assertURLToString(true, _childGroup3, COMPANY_HOST_1);
-		_assertURLToString(true, _guestGroup, COMPANY_HOST_1);
+		_assertURLtoString(true, _group1, COMPANY_HOST_1);
+		_assertURLtoString(true, _group2, COMPANY_HOST_1);
+		_assertURLtoString(true, _group3, COMPANY_HOST_1);
+		_assertURLtoString(true, _childGroup1, COMPANY_HOST_1);
+		_assertURLtoString(true, _childGroup2, COMPANY_HOST_1);
+		_assertURLtoString(true, _childGroup3, COMPANY_HOST_1);
+		_assertURLtoString(true, _guestGroup, COMPANY_HOST_1);
 
-		_assertURLToString(true, _group1, _GROUP_HOST_1);
-		_assertURLToString(true, _group2, _GROUP_HOST_1);
-		_assertURLToString(true, _group3, _GROUP_HOST_1);
-		_assertURLToString(true, _childGroup1, _GROUP_HOST_1);
-		_assertURLToString(true, _childGroup2, _GROUP_HOST_1);
-		_assertURLToString(true, _childGroup3, _GROUP_HOST_1);
-		_assertURLToString(true, _guestGroup, _GROUP_HOST_1);
+		_assertURLtoString(true, _group1, _GROUP_HOST_1);
+		_assertURLtoString(true, _group2, _GROUP_HOST_1);
+		_assertURLtoString(true, _group3, _GROUP_HOST_1);
+		_assertURLtoString(true, _childGroup1, _GROUP_HOST_1);
+		_assertURLtoString(true, _childGroup2, _GROUP_HOST_1);
+		_assertURLtoString(true, _childGroup3, _GROUP_HOST_1);
+		_assertURLtoString(true, _guestGroup, _GROUP_HOST_1);
 
-		_assertURLToString(true, _group1, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _group2, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _group3, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _childGroup1, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _childGroup2, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _childGroup3, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _guestGroup, _CHILD_GROUP_HOST_1);
+		_assertURLtoString(true, _group1, _CHILD_GROUP_HOST_1);
+		_assertURLtoString(true, _group2, _CHILD_GROUP_HOST_1);
+		_assertURLtoString(true, _group3, _CHILD_GROUP_HOST_1);
+		_assertURLtoString(true, _childGroup1, _CHILD_GROUP_HOST_1);
+		_assertURLtoString(true, _childGroup2, _CHILD_GROUP_HOST_1);
+		_assertURLtoString(true, _childGroup3, _CHILD_GROUP_HOST_1);
+		_assertURLtoString(true, _guestGroup, _CHILD_GROUP_HOST_1);
 
-		_assertURLToString(true, _group1, _GROUP_HOST_2);
-		_assertURLToString(true, _group2, _GROUP_HOST_2);
-		_assertURLToString(true, _group3, _GROUP_HOST_2);
-		_assertURLToString(true, _childGroup1, _GROUP_HOST_2);
-		_assertURLToString(true, _childGroup2, _GROUP_HOST_2);
-		_assertURLToString(true, _childGroup3, _GROUP_HOST_2);
-		_assertURLToString(true, _guestGroup, _GROUP_HOST_2);
+		_assertURLtoString(true, _group1, _GROUP_HOST_2);
+		_assertURLtoString(true, _group2, _GROUP_HOST_2);
+		_assertURLtoString(true, _group3, _GROUP_HOST_2);
+		_assertURLtoString(true, _childGroup1, _GROUP_HOST_2);
+		_assertURLtoString(true, _childGroup2, _GROUP_HOST_2);
+		_assertURLtoString(true, _childGroup3, _GROUP_HOST_2);
+		_assertURLtoString(true, _guestGroup, _GROUP_HOST_2);
 
-		_assertURLToString(true, _group1, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _group2, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _group3, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _childGroup1, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _childGroup2, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _childGroup3, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _guestGroup, _CHILD_GROUP_HOST_2);
+		_assertURLtoString(true, _group1, _CHILD_GROUP_HOST_2);
+		_assertURLtoString(true, _group2, _CHILD_GROUP_HOST_2);
+		_assertURLtoString(true, _group3, _CHILD_GROUP_HOST_2);
+		_assertURLtoString(true, _childGroup1, _CHILD_GROUP_HOST_2);
+		_assertURLtoString(true, _childGroup2, _CHILD_GROUP_HOST_2);
+		_assertURLtoString(true, _childGroup3, _CHILD_GROUP_HOST_2);
+		_assertURLtoString(true, _guestGroup, _CHILD_GROUP_HOST_2);
 	}
 
 	private Group _addGroup(
@@ -155,7 +155,7 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 		return group;
 	}
 
-	private void _assertURLToString(
+	private void _assertURLtoString(
 			boolean accessible, Group group, String host)
 		throws Exception {
 

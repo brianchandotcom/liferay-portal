@@ -106,11 +106,23 @@ If `ant all` fails, stop and surface the full error to the user — do not conti
 
 File: `<TOMCAT>/conf/server.xml`
 
-Read the current HTTP port from the `protocol="HTTP/1.1"` Connector to determine the current offset. Then replace all port attributes:
+Read the current HTTP port from the `protocol="HTTP/1.1"` Connector to determine the current offset. Then replace all port attributes.
+
+**Platform check:** BSD `sed` (macOS) requires an empty-string argument after `-i`, while GNU `sed` (Linux) does not. Detect the platform before any in-place edits:
+
+```bash
+if [[ "$(uname)" == "Darwin" ]]; then
+	SED_INPLACE=(sed -i '')
+else
+	SED_INPLACE=(sed -i)
+fi
+```
+
+Use `"${SED_INPLACE[@]}"` in place of `sed -i` for all subsequent calls:
 
 ```bash
 # Single sed invocation for atomicity
-sed -i \
+"${SED_INPLACE[@]}" \
 	-e 's/port="<CURRENT_SHUTDOWN>"/port="<TARGET_SHUTDOWN>"/g' \
 	-e 's/port="<CURRENT_HTTP>"/port="<TARGET_HTTP>"/g' \
 	-e 's/port="<CURRENT_AJP>"/port="<TARGET_AJP>"/g' \
@@ -131,7 +143,7 @@ Replace the OSGi console port (this file gets **wiped on rebuild**):
 module.framework.properties.osgi.console=<11311+N>
 ```
 
-Use `sed 's/osgi\.console=[0-9]*/osgi.console=<TARGET>/'` to handle any current value.
+Use `"${SED_INPLACE[@]}" 's/osgi\.console=[0-9]*/osgi.console=<TARGET>/'` to handle any current value.
 
 #### 4e. Create OSGi Config Files
 

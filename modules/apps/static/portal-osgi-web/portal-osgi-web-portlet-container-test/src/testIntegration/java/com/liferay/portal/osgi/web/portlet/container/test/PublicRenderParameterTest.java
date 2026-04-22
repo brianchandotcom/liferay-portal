@@ -86,7 +86,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			).put(
 				"jakarta.portlet.version", "3.0"
 			).build(),
-			TEST_PORTLET_ID);
+			TEST_PORTLET_ID, false);
 
 		Layout contentLayout = LayoutTestUtil.addTypeContentLayout(group);
 
@@ -145,7 +145,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			).put(
 				"jakarta.portlet.version", "3.0"
 			).build(),
-			TEST_PORTLET_ID);
+			TEST_PORTLET_ID, false);
 
 		Layout contentLayout = LayoutTestUtil.addTypeContentLayout(group);
 
@@ -291,7 +291,9 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"jakarta.portlet.supported-public-render-parameter", prpName
 			).build(),
-			TEST_PORTLET_ID);
+			TEST_PORTLET_ID, false);
+
+		LayoutTestUtil.addPortletToLayout(layout, TEST_PORTLET_ID);
 
 		String portletURLString = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(

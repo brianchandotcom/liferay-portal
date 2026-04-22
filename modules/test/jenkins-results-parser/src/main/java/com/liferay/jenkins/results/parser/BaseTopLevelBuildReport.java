@@ -175,6 +175,35 @@ public abstract class BaseTopLevelBuildReport
 	}
 
 	@Override
+	public List<FailureReport> getDistinctFailureReports() {
+		if (_distinctFailureReports != null) {
+			return _distinctFailureReports;
+		}
+
+		List<FailureReport> distinctFailureReports = new ArrayList<>();
+
+		for (FailureReport failureReport : getFailureReports()) {
+			boolean hasSimilarFailureReport = false;
+
+			for (FailureReport distinctFailureReport : distinctFailureReports) {
+				if (failureReport.isSimilar(distinctFailureReport)) {
+					hasSimilarFailureReport = true;
+
+					break;
+				}
+			}
+
+			if (!hasSimilarFailureReport) {
+				distinctFailureReports.add(failureReport);
+			}
+		}
+
+		_distinctFailureReports = distinctFailureReports;
+
+		return _distinctFailureReports;
+	}
+
+	@Override
 	public DownstreamBuildReport getDownstreamBuildReport(String axisName) {
 		for (DownstreamBuildReport downstreamBuildReport :
 				_downstreamBuildReports) {
@@ -544,6 +573,7 @@ public abstract class BaseTopLevelBuildReport
 	private final Set<DownstreamBuildReport> _cachedDownstreamBuildReports =
 		new HashSet<>();
 	private ControllerBuildReport _controllerBuildReport;
+	private List<FailureReport> _distinctFailureReports;
 	private final Set<DownstreamBuildReport> _downstreamBuildReports =
 		new HashSet<>();
 	private List<FailureReport> _failureReports;

@@ -34,6 +34,8 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public ControllerBuildReport getControllerBuildReport();
 
+	public List<FailureReport> getDistinctFailureReports();
+
 	public DownstreamBuildReport getDownstreamBuildReport(String axisName);
 
 	public List<DownstreamBuildReport> getDownstreamBuildReports();

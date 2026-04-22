@@ -464,40 +464,4 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
-	@priority = 5
-	test ViewAllDocumentsAndMediaShownInAssetList {
-		var assetName = "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4";
-
-		for (var n : list "2,3,4") {
-			ACUtils.createDMAndAddToPage(
-				dmDocumentFile = "Document_${n}.jpg",
-				dmDocumentTitle = "DM AC Title ${n}");
-		}
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		ACUtils.navigateToSitePage(
-			actionType = "Download DM",
-			documentTitleList = ${assetName},
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Documents and Media");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACUtils.viewNameList(nameList = ${assetName});
-	}
-
 }

@@ -163,61 +163,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10152 | Test Summary: Blocked events are not shown on Segments"
-	@ignore = "true"
-	@priority = 5
-	test CheckBlockedEventsNotShownOnSegments {
-		property test.run.type = "single";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Block custom event") {
-			ACCustomEvents.blockCustomEvent(customEventName = ${customEventName});
-		}
-
-		task ("Navigation to segments") {
-			ACNavigation.exitSettings();
-
-			ACNavigation.goToSegments();
-		}
-
-		task ("Create a new dynamic segment and check that the custom event that has been blocked does not appear") {
-			ACSegments.createDynamicSegment();
-
-			ACUtils.searchBar(searchItem = ${customEventName});
-
-			AssertElementPresent(
-				key_segmentField = "No results were found.",
-				locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
-		}
-	}
-
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10150 | Test Summary: Block/Unblock custom events as non-admin"
 	@priority = 3
 	test CheckCannotBlockOrUnblockCustomEventsAsNonAdmin {

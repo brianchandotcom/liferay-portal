@@ -44,60 +44,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8446 | Test Summary: Assert 180 day time filter in Assets"
-	@ignore = "true"
-	@priority = 3
-	test AssertAssetsPageTimeFilter180Days {
-
-		// AC Refactor: the test needs data from a past date
-		// AC Refactor ticket: LRAC-8860
-
-		task ("Connect DXP to Analytics Cloud and get the property name") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Go to Site Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Navigate to AC workspace") {
-			ACUtils.closeAllSessionsAndWait();
-
-			ACUtils.launchAC();
-		}
-
-		task ("Navigate to Web Content tab in Assets") {
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Web Content");
-		}
-
-		task ("Set time filter to 24hs and Assert WC presence") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACUtils.viewNameList(nameList = "Web Content AC Title");
-		}
-
-		task ("Set time filter use 180Days") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast180Days();
-		}
-
-		// Task ("Assert not present the Web Content when time filter use 180 Days")
-		// It is not possible to perform the assert because this test needs data from the past
-
-		task ("Assert result returns") {
-			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8448 | Test Summary: Web content audience card shows expected amount of known and anonymous individuals"
 	@priority = 5
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInWC {
@@ -226,69 +172,6 @@ definition {
 				percentageList = "66.67%,33.33%");
 
 			ACUtils.assertViewerSegmentsCard(segmentNameList = "Dynamic Segment Test");
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8444 | Test Summary: Custom Range time filter in Web Content assets page"
-	@ignore = "true"
-	@priority = 4
-	test CanAssertWebContentTimeFilterCustom {
-
-		// AC Refactor: It is not possible to perform the assert because this test needs data from the past.
-		// AC Refactor ticket: LRAC-8817
-
-		task ("Connect DXP to Analytics Cloud and get the property name") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Go to Site Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Navigate to AC workspace") {
-			ACUtils.closeAllSessionsAndWait();
-
-			ACUtils.launchAC();
-		}
-
-		task ("Navigate to Web Content tab in Assets") {
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Web Content");
-		}
-
-		task ("Set time filter to 24hs and Assert WC presence") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACUtils.viewNameList(nameList = "Web Content AC Title");
-		}
-
-		task ("Set time filter use Custom Range") {
-			ACTimeFilter.setCustomRange(
-				endDay = 13,
-				endMonth = "July",
-				endYear = 2021,
-				startDay = 1,
-				startMonth = "July",
-				startYear = 2021);
-		}
-
-		task ("Assert result returns") {
-			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2021 - Jul 13, 2021");
-		}
-
-		task ("Assert result returns the Custom Range") {
-
-			// Use a macro to assert time filter return the right data
-			// Create a locator that can be used later
-
-			ACUtils.viewNameList(nameList = "Web Content AC Title Custom Range");
 		}
 	}
 

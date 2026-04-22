@@ -11,9 +11,11 @@
 *.iml
 *.ipr
 *.iws
+*.local.*
 *.swp
 *~
 .DS_Store
+.worktree-port-offset
 .ant-targets-build.xml
 .ant_targets
 .gh.json
@@ -46,6 +48,7 @@
 /bin
 /build
 /build.*.properties
+/bundle
 /classes/Test.class
 /dist
 /intellij

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-cache-impl/src/main/java/com/liferay/portal/cache/internal/dao/orm/EntityCacheImpl\.java" />
+		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-cache-multiple/src/main/java/com/liferay/portal/cache/multiple/internal/cluster/link/messaging/ClusterLinkPortalCacheClusterListener\.java" />
+	</source-check>
+</suppressions>

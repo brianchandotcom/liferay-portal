@@ -11,7 +11,10 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDefinitionKeysCheck" files="portal-tika/bnd\.bnd" />
+		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-instance-lifecycle-api/src/main/java/com/liferay/portal/instance/lifecycle/InitialRequestPortalInstanceLifecycleListener\.java" />
+		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-instance-lifecycle-impl/src/main/java/com/liferay/portal/instance/lifecycle/internal/PortalInstanceLifecycleListenerManagerImpl\.java" />
 		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-messaging/src/main/java/com/liferay/portal/messaging/internal/MessageBusThreadLocalUtil\.java" />
+		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-messaging/src/main/java/com/liferay/portal/messaging/internal/SynchronousDestination\.java" />
 		<suppress checks="JavaUpgradeVersionCheck" files="portal-messaging/src/main/java/com/liferay/portal/messaging/internal/upgrade/registry/PortalMessagingUpgradeStepRegistrator\.java" />
 		<suppress checks="JavaUpgradeVersionCheck" files="portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/upgrade/registry/PortalMonitoringUpgradeStepRegistrator\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="portal-license-test/src/testIntegration/java/com/liferay/portal/license/test/BaseLicenseTestCase\.java" />

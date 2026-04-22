@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaCompanyThreadLocalCheck" files="on-demand-admin-impl/src/main/java/com/liferay/on/demand/admin/internal/ticket/generator/OnDemandAdminTicketGeneratorImpl\.java" />
+	</source-check>
+</suppressions>

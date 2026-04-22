@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaCompanyThreadLocalCheck" files="batch-engine-service/src/main/java/com/liferay/batch/engine/internal/BatchEngineExportTaskExecutorImpl\.java" />
+		<suppress checks="JavaCompanyThreadLocalCheck" files="batch-engine-service/src/main/java/com/liferay/batch/engine/internal/BatchEngineImportTaskExecutorImpl\.java" />
+		<suppress checks="JavaCompanyThreadLocalCheck" files="batch-engine-service/src/main/java/com/liferay/batch/engine/internal/unit/BatchEngineUnitProcessorImpl\.java" />
+	</source-check>
+</suppressions>

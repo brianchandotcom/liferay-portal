@@ -31,8 +31,10 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -71,6 +73,28 @@ public class ViewAllSectionDisplayContextTest
 				"hideSpace", true
 			).build()
 		).build();
+	}
+
+	@Test
+	public void testGetAdditionalAPIURLParametersWithSearchQuery()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			getMockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("q", "test-query");
+
+		String additionalAPIURLParameters = ReflectionTestUtil.invoke(
+			getSectionDisplayContext(mockHttpServletRequest),
+			"getAdditionalAPIURLParameters", new Class<?>[0]);
+
+		Assert.assertFalse(
+			additionalAPIURLParameters,
+			additionalAPIURLParameters.contains(StringPool.QUESTION));
+
+		Assert.assertTrue(
+			additionalAPIURLParameters,
+			additionalAPIURLParameters.contains("&search=test-query"));
 	}
 
 	@Override

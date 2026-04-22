@@ -289,7 +289,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 					@Override
 					public String getName() {
-						return SchedulerEngine.DEFAULT_SCRIPTING_JOB_NAME;
+						return _DEFAULT_SCRIPTING_JOB_NAME;
 					}
 
 					@Override
@@ -367,6 +367,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			bundleContext.registerService(
 				MessageListener.class, messageListener, dictionary));
 	}
+
+	private static final String _DEFAULT_SCRIPTING_JOB_NAME =
+		"DEFAULT_SCRIPTING_JOB_NAME";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEngineHelperImpl.class);

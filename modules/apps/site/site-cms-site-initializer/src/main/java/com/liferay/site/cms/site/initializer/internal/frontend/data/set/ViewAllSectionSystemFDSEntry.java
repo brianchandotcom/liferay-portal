@@ -9,11 +9,12 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 import com.liferay.site.cms.site.initializer.internal.display.context.SectionDisplayContextHelper;
 
@@ -43,15 +44,19 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 					"cmsSection eq 'files')",
 				httpServletRequest));
 
-		if (httpServletRequest.getParameter("q") != null) {
-			return HttpComponentsUtil.addParameters(
-				_sectionDisplayContextHelper.getAdditionalAPIURLParameters(
-					filterString, httpServletRequest, null),
-				"search", httpServletRequest.getParameter("q"));
+		String additionalAPIURLParameters =
+			_sectionDisplayContextHelper.getAdditionalAPIURLParameters(
+				filterString, httpServletRequest, null);
+
+		String searchQuery = httpServletRequest.getParameter("q");
+
+		if (searchQuery != null) {
+			return StringBundler.concat(
+				additionalAPIURLParameters, "&search=",
+				URLCodec.encodeURL(searchQuery));
 		}
 
-		return _sectionDisplayContextHelper.getAdditionalAPIURLParameters(
-			filterString, httpServletRequest, null);
+		return additionalAPIURLParameters;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ export class BlogsPage {
 	readonly deleteAllBlogEntriesButton: Locator;
 	readonly page: Page;
 	readonly permissionsFrameLocator: FrameLocator;
+	readonly searchInput: Locator;
 	readonly selectAllBlogEntriesCheckBox: Locator;
 	readonly successMessage: Locator;
 
@@ -25,6 +26,7 @@ export class BlogsPage {
 		this.permissionsFrameLocator = page.frameLocator(
 			'iframe[title="Permissions"]'
 		);
+		this.searchInput = page.getByPlaceholder('Search');
 		this.selectAllBlogEntriesCheckBox = page.getByLabel(
 			'Select All Items on the Page'
 		);
@@ -93,6 +95,11 @@ export class BlogsPage {
 		await this.permissionsFrameLocator
 			.getByRole('button', {name: 'Cancel'})
 			.click();
+	}
+
+	async searchEntry(term: string) {
+		await this.searchInput.fill(term);
+		await this.searchInput.press('Enter');
 	}
 
 	async moveEntryToRecycleBin(title: string) {

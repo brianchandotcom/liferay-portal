@@ -533,37 +533,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-108029. It ensures that a blog entry can be edited from the search result."
-	@priority = 3
-	@refactorneeded
-	test CanEditViaSearchResults {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.openURL();
-
-		SearchPage.searchEmbedded(searchTerm = "Blogs Entry Title");
-
-		SearchPage.gotoResultDetails(searchAssetTitle = "Blogs Entry Title");
-
-		Blogs.editEntryViaSearchResultDetails(
-			entryContent = "Blogs Entry Content",
-			entryContentEdit = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title",
-			entryTitleEdit = "Blogs Entry Title Edit",
-			searchAssetTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title Edit");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit");
-	}
-
 	@description = "This is a test for LPS-67515. It ensures that a blog entry with a cover image can be exported and imported between different sites."
 	@priority = 4
 	test CanImportEntryWithImageBetweenDifferentSites {
@@ -909,58 +878,6 @@ definition {
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This checks that a blog entry can be searched for by its content."
-	@priority = 4
-	@refactordone
-	test CanSearchByContent {
-		property portal.acceptance = "true";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Search Page");
-
-		JSONBlog.addEntry(
-			entryContent = "Unique Content",
-			entryTitle = "Blogs Entry Title");
-
-		for (var searchTerm : list "Unique,Unique Content") {
-			Navigator.gotoPage(pageName = "Search Page");
-
-			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
-
-			SearchResults.viewSearchResults(
-				searchAssetTitle = "Blogs Entry Title",
-				searchAssetType = "Blogs Entry",
-				searchTerm = ${searchTerm});
-		}
-	}
-
-	@description = "This checks that a blog entry can be searched for by its title."
-	@priority = 4
-	@refactordone
-	test CanSearchByTitle {
-		property portal.acceptance = "true";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Search Page");
-
-		JSONBlog.addEntry(
-			entryContent = "Unique Content",
-			entryTitle = "Blogs Entry Title");
-
-		for (var searchTerm : list "Blogs,Blogs Entry Title") {
-			Navigator.gotoPage(pageName = "Search Page");
-
-			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
-
-			SearchResults.viewSearchResults(
-				searchAssetTitle = "Blogs Entry Title",
-				searchAssetType = "Blogs Entry",
-				searchTerm = ${searchTerm});
-		}
 	}
 
 	@priority = 4

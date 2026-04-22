@@ -8,6 +8,7 @@ package com.liferay.friendly.url.internal.change.tracking.spi.resolver;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -15,6 +16,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -35,7 +37,7 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 
 	@Override
 	public String getResolutionDescriptionKey() {
-		return "duplicate-friendly-url-entry-localization-was-removed";
+		return "duplicate-friendly-url-entry-localization-was-renamed";
 	}
 
 	@Override
@@ -56,7 +58,24 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 				constraintResolverContext)
 		throws PortalException {
 
-		constraintResolverContext.mergeSourceCTModelIntoTargetCTModel();
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			constraintResolverContext.getSourceCTModel();
+
+		String uniqueUrlTitle = constraintResolverContext.getInTarget(
+			() -> _friendlyURLEntryLocalService.getUniqueUrlTitle(
+				friendlyURLEntryLocalization.getGroupId(),
+				friendlyURLEntryLocalization.getClassNameId(),
+				friendlyURLEntryLocalization.getClassPK(),
+				friendlyURLEntryLocalization.getUrlTitle(),
+				friendlyURLEntryLocalization.getLanguageId()));
+
+		friendlyURLEntryLocalization.setUrlTitle(uniqueUrlTitle);
+
+		_friendlyURLEntryLocalService.updateFriendlyURLLocalization(
+			friendlyURLEntryLocalization);
 	}
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }

@@ -79,13 +79,44 @@ public class MCPServerServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		for (Map.Entry<String, Servlet> entry : _servlets.entrySet()) {
-			Servlet servlet = entry.getValue();
+		synchronized (this) {
+			for (Map.Entry<String, Servlet> entry : _servlets.entrySet()) {
+				Servlet servlet = entry.getValue();
 
-			servlet.destroy();
+				servlet.destroy();
+			}
+
+			_servlets.clear();
 		}
+	}
 
-		_servlets.clear();
+	public void invalidate(long companyId, String profileName) {
+		synchronized (this) {
+			Servlet servlet = _servlets.remove(
+				_getServletKey(companyId, profileName));
+
+			if (servlet != null) {
+				servlet.destroy();
+			}
+		}
+	}
+
+	public void invalidateAll(long companyId) {
+		synchronized (this) {
+			String defaultKey = String.valueOf(companyId);
+
+			String prefix = defaultKey + StringPool.UNDERLINE;
+
+			for (String key : new ArrayList<>(_servlets.keySet())) {
+				if (key.equals(defaultKey) || key.startsWith(prefix)) {
+					Servlet servlet = _servlets.remove(key);
+
+					if (servlet != null) {
+						servlet.destroy();
+					}
+				}
+			}
+		}
 	}
 
 	@Override

@@ -177,7 +177,7 @@ definition {
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
 	@priority = 3
-	test DefaultLanguageOnTop {
+	test LanguageDropdownInContentPage {
 		task ("Open content performance panel") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page",

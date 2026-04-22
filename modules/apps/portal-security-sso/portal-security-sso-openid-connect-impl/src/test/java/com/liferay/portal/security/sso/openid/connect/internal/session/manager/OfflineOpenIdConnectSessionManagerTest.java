@@ -7,7 +7,6 @@ package com.liferay.portal.security.sso.openid.connect.internal.session.manager;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -51,8 +50,7 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 	@Test
 	public void testExtendOpenIdConnectSession() throws Exception {
-		Assert.assertEquals(
-			Long.valueOf(0), CompanyThreadLocal.getCompanyId());
+		Assert.assertEquals(Long.valueOf(0), CompanyThreadLocal.getCompanyId());
 
 		OpenIdConnectSession openIdConnectSession = Mockito.mock(
 			OpenIdConnectSession.class);
@@ -65,8 +63,7 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			oAuthClientEntryCompanyId
 		);
 
-		String authServerWellKnownURI =
-			"https://idp.example.com/.well-known/openid-configuration";
+		String authServerWellKnownURI = RandomTestUtil.randomString();
 
 		Mockito.when(
 			openIdConnectSession.getAuthServerWellKnownURI()
@@ -132,11 +129,12 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		);
 
 		OIDCProviderMetadata oidcProviderMetadata = new OIDCProviderMetadata(
-			new Issuer("https://idp.example.com"), List.of(SubjectType.PUBLIC),
-			new URI("https://idp.example.com/jwks"));
+			new Issuer(RandomTestUtil.randomString()),
+			List.of(SubjectType.PUBLIC),
+			new URI(RandomTestUtil.randomString()));
 
 		oidcProviderMetadata.setTokenEndpointURI(
-			new URI("https://idp.example.com/token"));
+			new URI(RandomTestUtil.randomString()));
 
 		AuthorizationServerMetadataResolver
 			authorizationServerMetadataResolver = Mockito.mock(

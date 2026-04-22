@@ -461,26 +461,24 @@ public class MCPServerServlet extends HttpServlet {
 			companyId,
 			(mcpServerProfile != null) ? mcpServerProfile._name : null);
 
-		Servlet servlet = _servlets.get(key);
+		Servlet cachedServlet = _servlets.get(key);
 
-		if (servlet != null) {
-			return servlet;
+		if (cachedServlet != null) {
+			return cachedServlet;
 		}
 
-		synchronized (this) {
-			servlet = _servlets.get(key);
+		Servlet servlet = _buildServlet(
+			baseURL, companyId, authorization, mcpServerProfile);
 
-			if (servlet != null) {
-				return servlet;
-			}
+		cachedServlet = _servlets.putIfAbsent(key, servlet);
 
-			servlet = _buildServlet(
-				baseURL, companyId, authorization, mcpServerProfile);
+		if (cachedServlet != null) {
+			servlet.destroy();
 
-			_servlets.put(key, servlet);
-
-			return servlet;
+			return cachedServlet;
 		}
+
+		return servlet;
 	}
 
 	private String _getServletKey(long companyId, String profileName) {

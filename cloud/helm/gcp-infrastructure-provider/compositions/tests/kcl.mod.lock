@@ -1,0 +1,21 @@
+[dependencies]
+  [dependencies.compositions]
+    name = "compositions"
+    full_name = "compositions_0.0.1"
+    version = "0.0.1"
+  [dependencies.crossplane]
+    name = "crossplane"
+    full_name = "crossplane_v2.0.2"
+    version = "v2.0.2"
+    sum = "j5Cx60fnvlWWp0wQ89JJ618Wyy03YGb7eiftPcvTtEo="
+    reg = "ghcr.io"
+    repo = "kcl-lang/crossplane"
+    oci_tag = "v2.0.2"
+  [dependencies.k8s]
+    name = "k8s"
+    full_name = "k8s_1.32.4"
+    version = "1.32.4"
+    sum = "WrltC/mTXtdzmhBZxlvM71wJL5C/UZ/vW+bF3nFvNbM="
+    reg = "ghcr.io"
+    repo = "kcl-lang/k8s"
+    oci_tag = "1.32.4"

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
@@ -123,6 +124,19 @@ public class ReindexCacheThreadLocal {
 			safeCloseable2.close();
 
 			safeCloseable1.close();
+		};
+	}
+
+	public static <T> Callable<T> wrapCallable(Callable<T> callable) {
+		boolean fullMode = _fullMode.get();
+		Map<String, Object> reindexCacheMap = _reindexCacheMap.get();
+
+		return () -> {
+			try (SafeCloseable safeCloseable = openReindexMode(
+					fullMode, reindexCacheMap)) {
+
+				return callable.call();
+			}
 		};
 	}
 

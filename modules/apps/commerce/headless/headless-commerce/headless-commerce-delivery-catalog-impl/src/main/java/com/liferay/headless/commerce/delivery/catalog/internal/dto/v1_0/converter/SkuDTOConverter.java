@@ -467,7 +467,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					commerceProductPrice::isPriceOnApplication);
 				setPricingQuantityPrice(
 					() -> {
-						if (pricingQuantityUnitPriceCommerceMoney == null) {
+						if ((cpInstanceUnitOfMeasure == null) ||
+							(pricingQuantityUnitPriceCommerceMoney == null)) {
+
 							return null;
 						}
 
@@ -482,8 +484,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					});
 				setPricingQuantityPriceFormatted(
 					() -> {
-						if ((pricingQuantityUnitPriceCommerceMoney == null) ||
-							(cpInstanceUnitOfMeasure == null)) {
+						if ((cpInstanceUnitOfMeasure == null) ||
+							(pricingQuantityUnitPriceCommerceMoney == null)) {
 
 							return null;
 						}
@@ -495,7 +497,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						if (BigDecimalUtil.lte(
 								pricingQuantity, BigDecimal.ZERO)) {
 
-							return null;
+							pricingQuantity = BigDecimal.ONE;
 						}
 
 						return pricingQuantityUnitPriceCommerceMoney.format(
@@ -819,9 +821,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 									});
 								setPricingQuantityPriceFormatted(
 									() -> {
-										if ((pricingQuantityUnitPriceCommerceMoney ==
-												null) ||
-											(cpInstanceUnitOfMeasure == null)) {
+										if (pricingQuantityUnitPriceCommerceMoney ==
+												null) {
 
 											return null;
 										}
@@ -836,7 +837,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 												pricingQuantity,
 												BigDecimal.ZERO)) {
 
-											return null;
+											pricingQuantity = BigDecimal.ONE;
 										}
 
 										return pricingQuantityUnitPriceCommerceMoney.
@@ -914,7 +915,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 				setPricingQuantityPrice(
 					() -> {
-						if (pricingQuantityUnitPriceCommerceMoney == null) {
+						if ((cpInstanceUnitOfMeasure == null) ||
+							(pricingQuantityUnitPriceCommerceMoney == null)) {
+
 							return null;
 						}
 
@@ -942,7 +945,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						if (BigDecimalUtil.lte(
 								pricingQuantity, BigDecimal.ZERO)) {
 
-							return null;
+							pricingQuantity = BigDecimal.ONE;
 						}
 
 						return pricingQuantityUnitPriceCommerceMoney.format(

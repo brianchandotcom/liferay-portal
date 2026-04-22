@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
@@ -1260,12 +1261,16 @@ public class CommerceProductPriceCalculationV2Impl
 				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
 		}
 
+		if (Validator.isNull(commercePriceEntry.getUnitOfMeasureKey())) {
+			return commerceMoneyFactory.emptyCommerceMoney();
+		}
+
 		BigDecimal pricingQuantity = commercePriceEntry.getPricingQuantity();
 
 		if ((pricingQuantity == null) ||
 			BigDecimalUtil.lte(pricingQuantity, BigDecimal.ZERO)) {
 
-			return commerceMoneyFactory.emptyCommerceMoney();
+			pricingQuantity = BigDecimal.ONE;
 		}
 
 		CommerceCurrency commerceCurrency =

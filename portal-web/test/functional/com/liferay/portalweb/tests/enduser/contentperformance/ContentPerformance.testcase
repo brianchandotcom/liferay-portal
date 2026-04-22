@@ -650,6 +650,10 @@ definition {
 				locator1 = "ContentPerformance#SELECT_DATE_RANGE",
 				value1 = "Last 7 Days");
 		}
+
+		task ("Assert views graph is present") {
+			AssertVisible(locator1 = "ContentPerformance#GRAPH_ENGAGEMENT");
+		}
 	}
 
 	@description = "LPS-127220: When the user accesses to the content performance panel of a content page, the name, the URL of the page and the language selector are shown in the content performance panel"
@@ -767,40 +771,6 @@ definition {
 					key_index = ${index},
 					locator1 = "ContentPerformance#DOT_GRAPH_INDEX");
 			}
-		}
-	}
-
-	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the views graph is shown in the content performance panel"
-	@priority = 3
-	test ViewsGraphInBlogDisplayPage {
-		task ("Create a Blog Entry") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add 'Asset Publisher' to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Open Content Performance panel") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check if the graph exist") {
-			AssertVisible(locator1 = "ContentPerformance#GRAPH_ENGAGEMENT");
 		}
 	}
 

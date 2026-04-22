@@ -75,27 +75,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9101 | Test Summary: [AC] It is possible create Properties when no data source is created yet"
-	@ignore = "true"
-	@priority = 3
-	test CanCreatePropertiesWhenNoDataSourceIsCreatedYet {
-
-		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
-
-		task ("Remove all data sources present") {
-			ACUtils.launchAC();
-
-			//ACSettings.deleteAllDataSource();
-
-		}
-
-		task ("Create a new property") {
-			ACSettings.goToProperties();
-
-			ACProperties.addNewProperty(propertyName = "AC Test Property");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9107 | Test Summary: [AC] Canceling a property creation by clicking in Cancel button, x button or clicking outside the modal area"
 	@priority = 3
 	test CanCreatePropertyAndCancel {
@@ -258,107 +237,6 @@ definition {
 			AssertVisible(
 				key_text = "Save",
 				locator1 = "Button#ANY_DISABLED");
-		}
-	}
-
-	@description = "Bug ID: LRAC-8093 | Automation ID: LRAC-11533 | Test Summary: Able to clear property data"
-	@ignore = "true"
-	@priority = 4
-	test ClearPropertyData {
-
-		// AC Refactor: data doesn't appear on time
-		// AC Refactor ticket: LRAC-13994
-
-		task ("Connect the DXP to Analytics Cloud") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Login new user and view page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("Interact with page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			TestUtils.hardRefresh();
-
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Launch AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToSites();
-		}
-
-		task ("Go to Sites overview") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Assert the unique visitors is shown") {
-			ACAssets.viewVisitorsBehaviorMetric(
-				metricTitle = "Unique Visitors",
-				metricValue = 1,
-				timeFilter = "Last 24 hours");
-		}
-
-		task ("Navigate to the Individuals and view individual count") {
-			ACNavigation.goToIndividuals();
-
-			ACCards.viewTotalCount(
-				cardName = "Total Individuals",
-				count = 1);
-		}
-
-		task ("Go to AC Properties") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Clear Property") {
-			ACSettings.clearProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
-
-		task ("Go to Sites overview") {
-			ACNavigation.goToSites();
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Assert the unique visitors is shown") {
-			ACAssets.viewVisitorsBehaviorMetric(
-				metricTitle = "Unique Visitors",
-				metricValue = 0,
-				timeFilter = "Last 24 hours");
-		}
-
-		task ("Navigate to the Individuals and view individual count") {
-			ACNavigation.goToIndividuals();
-
-			ACCards.viewTotalCount(
-				cardName = "Total Individuals",
-				count = 0);
 		}
 	}
 

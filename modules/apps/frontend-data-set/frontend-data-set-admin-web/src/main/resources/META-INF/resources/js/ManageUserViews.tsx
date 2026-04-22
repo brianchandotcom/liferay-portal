@@ -47,15 +47,15 @@ const views = {
 	name: 'table',
 	schema: {
 		fields: [
-			{fieldName: 'label', label: Liferay.Language.get('user-view-name')},
-			{
-				fieldName: 'creator.name',
-				label: Liferay.Language.get('created-by'),
-			},
 			{
 				contentRenderer: 'dataSetNameRenderer',
 				fieldName: 'dataSetName',
 				label: Liferay.Language.get('data-set'),
+			},
+			{fieldName: 'label', label: Liferay.Language.get('user-view-name')},
+			{
+				fieldName: 'creator.name',
+				label: Liferay.Language.get('created-by'),
 			},
 			{
 				contentRenderer: 'dateTime',

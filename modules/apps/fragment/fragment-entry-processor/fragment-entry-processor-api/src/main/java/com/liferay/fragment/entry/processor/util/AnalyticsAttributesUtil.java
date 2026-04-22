@@ -335,15 +335,14 @@ public class AnalyticsAttributesUtil {
 				return null;
 			}
 
-			Object infoItem = infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(
-					objectEntry.getObjectDefinitionId()));
+			ObjectDefinition objectDefinition =
+				infoItemObjectProvider.getInfoItem(
+					new ClassPKInfoItemIdentifier(
+						objectEntry.getObjectDefinitionId()));
 
-			if (infoItem == null) {
+			if (objectDefinition == null) {
 				return null;
 			}
-
-			ObjectDefinition objectDefinition = (ObjectDefinition)infoItem;
 
 			return objectDefinition.getName();
 		}

@@ -121,6 +121,7 @@ import {config as notificationsWebConfig} from './tests/notifications-web/main/c
 import {config as oauthClientAdministrationConfig} from './tests/oauth-client-administration/main/config';
 import {config as objectActionWebConfig} from './tests/object-web/action/config';
 import {config as objectClientExtensionWebConfig} from './tests/object-web/client-extension/config';
+import {config as objectContentPageIntegrationWebConfig} from './tests/object-web/content-page-integration/config';
 import {config as objectEntryWebConfig} from './tests/object-web/entry/config';
 import {config as objectExportImportWebConfig} from './tests/object-web/export-import/config';
 import {config as objectFieldWebConfig} from './tests/object-web/field/config';
@@ -344,6 +345,7 @@ export default defineConfig({
 		listTypeDefinitionsWebConfig,
 		objectActionWebConfig,
 		objectClientExtensionWebConfig,
+		objectContentPageIntegrationWebConfig,
 		objectDefinitionWebConfig,
 		objectEntryWebConfig,
 		objectExportImportWebConfig,

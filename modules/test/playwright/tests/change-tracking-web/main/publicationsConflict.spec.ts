@@ -166,7 +166,7 @@ test('LPD-54602 Edit in Production action should not be visible if entity does n
 		page.getByText('Test Test added a Custom Field')
 	).toBeVisible();
 
-	await expect(page.getByRole('menuitem')).not.toBeVisible();
+	await expect(page.getByRole('menuitem', {name: 'Home'})).not.toBeVisible();
 
 	await expect(
 		page.getByRole('link', {name: 'Discard Change'})

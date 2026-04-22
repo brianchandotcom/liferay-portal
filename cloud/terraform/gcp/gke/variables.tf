@@ -44,7 +44,7 @@ variable "regional_cluster" {
 	type=bool
 }
 variable "spot_instances" {
-	default=true
+	default=false
 	type=bool
 }
 variable "vpc_cidr" {

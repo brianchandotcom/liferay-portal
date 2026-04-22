@@ -269,6 +269,92 @@ public abstract class BaseTopLevelBuildReport
 	}
 
 	@Override
+	public TopLevelBuildReport getPreviousTopLevelBuildReport() {
+		if (_previousTopLevelBuildReport != null) {
+			return _previousTopLevelBuildReport;
+		}
+
+		ControllerBuildReport controllerBuildReport =
+			getControllerBuildReport();
+
+		if (controllerBuildReport == null) {
+			return null;
+		}
+
+		int currentBuildNumber = controllerBuildReport.getBuildNumber();
+
+		if (currentBuildNumber <= 1) {
+			return null;
+		}
+
+		JenkinsMaster controllerJenkinsMaster =
+			controllerBuildReport.getJenkinsMaster();
+
+		String controllerJobURL = JenkinsResultsParserUtil.combine(
+			controllerJenkinsMaster.getRemoteURL(), "job/",
+			controllerBuildReport.getJobName());
+
+		JSONObject controllerJobJSONObject = JenkinsAPIUtil.getAPIJSONObject(
+			controllerJobURL, "builds[description,number]");
+
+		JSONArray buildsJSONArray = controllerJobJSONObject.getJSONArray(
+			"builds");
+
+		boolean foundCurrentBuild = false;
+
+		String previousTopLevelBuildURL = null;
+
+		for (int i = 0; i < buildsJSONArray.length(); i++) {
+			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+
+			int buildNumber = buildJSONObject.getInt("number");
+
+			if (buildNumber == currentBuildNumber) {
+				foundCurrentBuild = true;
+
+				continue;
+			}
+
+			if (!foundCurrentBuild) {
+				continue;
+			}
+
+			Matcher matcher = _controllerBuildDescriptionPattern.matcher(
+				buildJSONObject.getString("description"));
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String status = matcher.group("status");
+
+			if (!Objects.equals(status, "FAILURE") &&
+				!Objects.equals(status, "SUCCESS") &&
+				!Objects.equals(status, "UNSTABLE")) {
+
+				continue;
+			}
+
+			previousTopLevelBuildURL = matcher.group("buildURL");
+		}
+
+		if (!JenkinsResultsParserUtil.isURL(previousTopLevelBuildURL)) {
+			return null;
+		}
+
+		try {
+			_previousTopLevelBuildReport =
+				BuildReportFactory.newTopLevelBuildReport(
+					new URL(previousTopLevelBuildURL));
+
+			return _previousTopLevelBuildReport;
+		}
+		catch (MalformedURLException malformedURLException) {
+			return null;
+		}
+	}
+
+	@Override
 	public String getTestrayBuildDateString() {
 		return JenkinsResultsParserUtil.toDateString(
 			getStartDate(), "yyyy-MM-dd HH:mm:ss", "America/Los_Angeles");
@@ -448,6 +534,12 @@ public abstract class BaseTopLevelBuildReport
 		"(?<jobURL>https?://(?<masterHostname>test-\\d+-\\d+)" +
 			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+))" +
 				"(/AXIS_VARIABLE=(?<axisVariable>\\d+))?/(?<buildNumber>\\d+)");
+	private static final Pattern _controllerBuildDescriptionPattern =
+		Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"<strong[^>]*>(?<status>[A-Z]+)</strong> - <a href=\\\"",
+				"(?<buildURL>https://test-\\d-\\d.liferay.com/job/[^/]+/\\d+/)",
+				"\\\">Build URL</a>.+"));
 
 	private final Set<DownstreamBuildReport> _cachedDownstreamBuildReports =
 		new HashSet<>();
@@ -456,5 +548,6 @@ public abstract class BaseTopLevelBuildReport
 		new HashSet<>();
 	private List<FailureReport> _failureReports;
 	private JobReport _jobReport;
+	private TopLevelBuildReport _previousTopLevelBuildReport;
 
 }

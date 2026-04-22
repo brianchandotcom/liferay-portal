@@ -104,30 +104,51 @@ public abstract class BasePersistentResource implements PersistentResource {
 				return;
 			}
 
-			_touched = true;
-		}
+			if (!isBuildCachingEnabled()) {
+				_touched = true;
 
-		if (!isBuildCachingEnabled()) {
-			return;
-		}
+				return;
+			}
 
-		try {
-			if (CloudBucketUtil.isS3ObjectPathAvailable(
-					_getDataS3ObjectPath())) {
+			boolean allSucceeded = true;
 
-				CloudBucketUtil.touchS3File(_getDataS3ObjectPath());
+			String dataS3ObjectPath = _getDataS3ObjectPath();
+
+			try {
+				if (CloudBucketUtil.isS3ObjectPathAvailable(
+						dataS3ObjectPath)) {
+
+					CloudBucketUtil.touchS3File(dataS3ObjectPath);
+				}
+			}
+			catch (IOException ioException) {
+				allSucceeded = false;
+
+				System.out.println(
+					"WARNING: Failed to touch " + getType() + " S3 resource: " +
+						ioException.getMessage());
 			}
 
 			for (Artifact artifact : getArtifacts()) {
-				if (artifact.isAvailable()) {
+				if (!artifact.isAvailable()) {
+					continue;
+				}
+
+				try {
 					CloudBucketUtil.touchS3File(artifact.getS3ObjectPath());
 				}
+				catch (IOException ioException) {
+					allSucceeded = false;
+
+					System.out.println(
+						"WARNING: Failed to touch " + getType() +
+							" S3 artifact: " + ioException.getMessage());
+				}
 			}
-		}
-		catch (IOException ioException) {
-			System.out.println(
-				"WARNING: Failed to touch " + getType() + " S3 resource: " +
-					ioException.getMessage());
+
+			if (allSucceeded) {
+				_touched = true;
+			}
 		}
 	}
 

@@ -323,7 +323,10 @@ mysql --user root --execute 'DROP DATABASE IF EXISTS <DB_NAME>;'
 
 # 3. Remove the worktree (use absolute path from git worktree list)
 git worktree remove <ABSOLUTE_WORKTREE_PATH>
+```
 
-# 4. Delete the branch
+After removing the worktree, ask the user whether to also delete the Git branch. Only delete when they confirm:
+
+```bash
 git branch --delete --force <BRANCH>
 ```

@@ -237,6 +237,14 @@ definition {
 					trafficChannel = ${channel});
 			}
 		}
+
+		task ("Assert dates before publication date have no dots") {
+			for (var index : list "1,2,3,4,5,6,7") {
+				AssertElementNotPresent(
+					key_index = ${index},
+					locator1 = "ContentPerformance#DOT_GRAPH_INDEX");
+			}
+		}
 	}
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
@@ -645,26 +653,6 @@ definition {
 				value1 = "web/test-site-name");
 
 			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
-		}
-	}
-
-	@description = "LPS-109417: When the graphic shows the publication date, all previous dots will be 0"
-	@priority = 5
-	test PublicationDatePreviousSet0 {
-		task ("Open Content Performance panel") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check that dates before publication date have no dots/0") {
-			for (var index : list "1,2,3,4,5,6,7") {
-				AssertElementNotPresent(
-					key_index = ${index},
-					locator1 = "ContentPerformance#DOT_GRAPH_INDEX");
-			}
 		}
 	}
 

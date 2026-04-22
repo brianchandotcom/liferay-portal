@@ -8609,6 +8609,10 @@ public class ServiceBuilder {
 
 		content = header + "\n\n" + content;
 
+		String fileName = _normalize(file.toString());
+
+		_pendingContents.put(fileName, content);
+
 		if (oldContent != null) {
 			int index = oldContent.lastIndexOf(
 				_LIFERAY_SERVICE_BUILDER_HASH_PREFIX);
@@ -8624,8 +8628,6 @@ public class ServiceBuilder {
 				}
 			}
 		}
-
-		String fileName = _normalize(file.toString());
 
 		int startIndex = 0;
 
@@ -8663,8 +8665,6 @@ public class ServiceBuilder {
 
 		_pendingWrites.add(
 			new Object[] {file, packagePath, content, modifiedFileNames});
-
-		_pendingContents.put(fileName, content);
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;

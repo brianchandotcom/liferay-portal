@@ -99,6 +99,7 @@ export namespace Analytics {
 			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
 			[Analytics.DataSetList.AnalyticsAssetType]?: Analytics.ElementType;
 			[Analytics.DataSetList.AnalyticsAssetVersion]?: string;
+			[Analytics.DataSetList.AnalyticsAssetVocabularies]?: string;
 			[Analytics.DataSetList.AnalyticsExternalReferenceCode]?: string;
 			[Analytics.DataSetList.AnalyticsWebContentResourcePk]?: string;
 		};
@@ -114,6 +115,7 @@ export namespace Analytics {
 			[Analytics.DataSetList.AnalyticsAssetTags]?: string;
 			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
 			[Analytics.DataSetList.AnalyticsAssetType]: Analytics.ElementType;
+			[Analytics.DataSetList.AnalyticsAssetVocabularies]?: string;
 			[Analytics.DataSetList.AnalyticsExternalReferenceCode]: string;
 			[Analytics.DataSetList.AnalyticsObjectDefinitionName]: string;
 		};
@@ -131,6 +133,7 @@ export namespace Analytics {
 		AnalyticsAssetTitle = 'analyticsAssetTitle',
 		AnalyticsAssetType = 'analyticsAssetType',
 		AnalyticsAssetVersion = 'analyticsAssetVersion',
+		AnalyticsAssetVocabularies = 'analyticsAssetVocabularies',
 		AnalyticsExternalReferenceCode = 'analyticsExternalReferenceCode',
 		AnalyticsObjectDefinitionName = 'analyticsObjectDefinitionName',
 		AnalyticsWebContentResourcePk = 'analyticsWebContentResourcePk',

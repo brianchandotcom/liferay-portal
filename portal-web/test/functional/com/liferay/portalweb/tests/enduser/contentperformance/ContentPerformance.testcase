@@ -42,42 +42,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-144031: When the user accesses to the content performance panel of a document's display page, the author's field is NOT shown in the content performance panel"
-	@priority = 3
-	test AuthorNotShowInDocumentDisplayPage {
-		task ("Create a Document") {
-			JSONDocument.addFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add 'Asset Publisher' to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Open Content Performance panel") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Assert author is not displayed") {
-			AssertElementNotPresent(
-				key_author = "Test Test",
-				locator1 = "ContentPerformance#PAGE_AUTHOR");
-		}
-	}
-
 	@description = "LPS-144031: When the user accesses to the content performance panel of a widget page, the author's field is NOT shown in the content performance panel"
 	@priority = 3
 	test AuthorNotShowInWidgetPage {
@@ -579,6 +543,12 @@ definition {
 
 		task ("Assert views graph is present") {
 			AssertVisible(locator1 = "ContentPerformance#GRAPH_ENGAGEMENT");
+		}
+
+		task ("Assert author is NOT displayed") {
+			AssertElementNotPresent(
+				key_author = "Test Test",
+				locator1 = "ContentPerformance#PAGE_AUTHOR");
 		}
 	}
 

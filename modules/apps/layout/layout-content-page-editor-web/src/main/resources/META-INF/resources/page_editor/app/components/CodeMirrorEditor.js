@@ -6,26 +6,28 @@
 import {CodeMirror} from '@liferay/frontend-js-codemirror-web';
 import classNames from 'classnames';
 import {CodeMirrorKeyboardMessage} from 'frontend-js-components-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {forwardRef, useEffect, useRef, useState} from 'react';
 
 const noop = () => {};
 
-const CodeMirrorEditor = ({
-	className,
-	initialContent = '',
-	mode = 'text/html',
-	onChange = noop,
-}) => {
-	const [isEnabled, setIsEnabled] = useState(true);
-	const [isFocused, setIsFocused] = useState(false);
-	const ref = useRef();
+const CodeMirrorEditor = forwardRef(
+	(
+		{className, initialContent = '', mode = 'text/html', onChange = noop},
+		ref
+	) => {
+		const [isEnabled, setIsEnabled] = useState(true);
+		const [isFocused, setIsFocused] = useState(false);
+		const containerRef = useRef();
 
-	useEffect(() => {
-		if (ref.current) {
+		useEffect(() => {
+			if (!containerRef.current) {
+				return;
+			}
+
 			const hasEnabledTabKey = ({state: {keyMaps}}) =>
 				keyMaps.every((key) => key.name !== 'tabKey');
 
-			const codeMirror = CodeMirror(ref.current, {
+			const codeMirror = CodeMirror(containerRef.current, {
 				autoCloseTags: true,
 				autoRefresh: true,
 				extraKeys: {
@@ -78,26 +80,42 @@ const CodeMirrorEditor = ({
 			});
 
 			codeMirror.on('blur', () => setIsFocused(false));
-		}
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+			if (typeof ref === 'function') {
+				ref(codeMirror);
+			}
+			else if (ref) {
+				ref.current = codeMirror;
+			}
 
-	return (
-		<div className="h-100 position-relative">
-			{isFocused ? (
-				<CodeMirrorKeyboardMessage keyIsEnabled={isEnabled} />
-			) : null}
+			return () => {
+				if (typeof ref === 'function') {
+					ref(null);
+				}
+				else if (ref) {
+					ref.current = null;
+				}
+			};
 
-			<div
-				aria-label={Liferay.Language.get(
-					'use-ctrl-m-to-enable-or-disable-the-tab-key'
-				)}
-				className={classNames(className, 'h-100')}
-				ref={ref}
-			/>
-		</div>
-	);
-};
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
+
+		return (
+			<div className="h-100 position-relative">
+				{isFocused ? (
+					<CodeMirrorKeyboardMessage keyIsEnabled={isEnabled} />
+				) : null}
+
+				<div
+					aria-label={Liferay.Language.get(
+						'use-ctrl-m-to-enable-or-disable-the-tab-key'
+					)}
+					className={classNames(className, 'h-100')}
+					ref={containerRef}
+				/>
+			</div>
+		);
+	}
+);
 
 export default CodeMirrorEditor;

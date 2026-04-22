@@ -175,7 +175,7 @@ definition {
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected and synced, the Content Performance panel display all its functionalities"
 	@priority = 5
-	test CheckAllInfoDisplayed {
+	test ContentPerformancePanelInContentPage {
 		task ("Open Content Performance") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page",

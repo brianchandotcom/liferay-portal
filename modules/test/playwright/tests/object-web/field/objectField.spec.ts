@@ -2149,7 +2149,10 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 			await page.getByRole('button', {name: 'Cancel'}).click();
 
-			await page.getByPlaceholder('Search').fill('Cancel Field');
+			await page
+				.getByRole('search')
+				.getByRole('searchbox', {name: 'Search'})
+				.fill('Cancel Field');
 			await page.keyboard.press('Enter');
 
 			await expect(page.getByText('No Results Found')).toBeVisible();
@@ -2273,7 +2276,10 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				);
 
 				await test.step('Verify that Label and Type columns are displayed for the updated field', async () => {
-					await page.getByPlaceholder('Search').fill('Updated Label');
+					await page
+						.getByRole('search')
+						.getByRole('searchbox', {name: 'Search'})
+						.fill('Updated Label');
 					await page.keyboard.press('Enter');
 
 					await expect(

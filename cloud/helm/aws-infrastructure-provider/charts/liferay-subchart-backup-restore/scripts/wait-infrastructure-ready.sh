@@ -8,7 +8,7 @@ function main {
 
 	local timeout
 
-	timeout=$(( $(date +%s) + {{ .Values.liferayInfrastructure.waitTimeoutSeconds }} ))
+	timeout=$(($(date +%s) + {{ .Values.liferayInfrastructure.waitTimeoutSeconds }}))
 
 	while [ $(date +%s) -lt ${timeout} ]
 	do

@@ -207,6 +207,14 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
 				value1 = "Traffic Channels");
 		}
+
+		task ("Assert URL matches page and language selector is present") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
+				value1 = "web/test-site-name");
+
+			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
 	}
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
@@ -623,30 +631,6 @@ definition {
 			AssertElementNotPresent(
 				key_author = "Test Test",
 				locator1 = "ContentPerformance#PAGE_AUTHOR");
-		}
-	}
-
-	@description = "LPS-127220: When the user accesses to the content performance panel of a content page, the name, the URL of the page and the language selector are shown in the content performance panel"
-	@priority = 3
-	test PanelInformationInContentPage {
-		task ("Open content performance panel") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check if the name, the URL of the page and the language selector are present") {
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
-				pageName = "Content Page");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
-				value1 = "web/test-site-name");
-
-			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
 		}
 	}
 

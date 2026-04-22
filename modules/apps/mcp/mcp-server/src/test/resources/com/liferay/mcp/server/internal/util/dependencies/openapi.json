@@ -2,7 +2,7 @@
 	"components": {
 		"schemas": {
 			"Item": {
-				"example": "should be removed",
+				"example": "Should be removed",
 				"properties": {
 					"array": {
 						"items": {
@@ -35,7 +35,7 @@
 					"string"
 				],
 				"type": "object",
-				"x-custom-extension": "should be removed",
+				"x-custom-extension": "Should be removed",
 				"xml": {
 					"name": "Item"
 				}

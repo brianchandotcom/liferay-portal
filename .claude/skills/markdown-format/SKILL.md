@@ -1,8 +1,10 @@
 ---
+
 allowed-tools: [Bash, Edit, Glob, Grep, Read, Write]
 argument-hint: "[path to Markdown file]"
 description: Format a Markdown file to match Liferay conventions — frontmatter order, Title Case headings, braced shell variables, long-form CLI flags, and professional prose. Use when the user asks to format, clean up, polish, or copy-edit a Markdown file destined for the Liferay repository.
 name: markdown-format
+
 ---
 
 # Markdown Formatter

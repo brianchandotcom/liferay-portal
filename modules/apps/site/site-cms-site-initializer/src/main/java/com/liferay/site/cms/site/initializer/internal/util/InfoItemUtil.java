@@ -107,8 +107,7 @@ public class InfoItemUtil {
 			Object value = SessionMessages.get(httpServletRequest, key);
 
 			if (value instanceof Map map) {
-				httpServletRequest.setAttribute(
-					_INFO_FORM_PARAMETER_MAP, map);
+				httpServletRequest.setAttribute(_INFO_FORM_PARAMETER_MAP, map);
 
 				return map;
 			}

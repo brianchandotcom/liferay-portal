@@ -6,7 +6,8 @@
 set -e
 
 function main {
-    local compositions_directory="/home/allenz/liferay/liferay-portal/cloud/helm/gcp-infrastructure-provider/compositions"
+    local compositions_directory
+    compositions_directory="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
     local models_directory="${compositions_directory}/models"
     local temporary_directory
     temporary_directory=$(mktemp -d)
@@ -16,7 +17,7 @@ function main {
     echo "Extracting provider CRDs."
 
     local provider_image_urls
-    provider_image_urls=$(yq -N -r '.spec.package | select(. != null)' "/home/allenz/liferay/liferay-portal/cloud/helm/gcp-infrastructure-provider/templates/providers.yaml")
+    provider_image_urls=$(yq -N -r '.spec.package | select(. != null)' "${compositions_directory}/../templates/providers.yaml")
 
     for provider_image_url in ${provider_image_urls}
     do

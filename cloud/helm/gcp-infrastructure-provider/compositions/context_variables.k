@@ -68,5 +68,4 @@ labels = {
 backupTargetLabels = labels | {"active": "true", "should-back-up": "true"}
 managementPolicies = ["Create", "Observe", "Update"] if orphan else ["*"]
 managementPolicy = "ObserveCreateUpdate" if orphan else "Default"
-managementPoliciesNoUpdate = ["Create", "Observe"] if orphan else ["Create", "Delete", "Observe"]
 managementPoliciesOnce = ["Create", "Observe", "Delete"]

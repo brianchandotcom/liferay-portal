@@ -32,7 +32,7 @@ lint-layers:
 	done
 
 pkg: generate
-	cd dist && /home/allenz/go/bin/kpm pkg
+	cd dist && kpm pkg
 
 # Render the full composite (all layers aggregated via main.k) using MOCK.
 run:

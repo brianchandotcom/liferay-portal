@@ -1,5 +1,10 @@
 #!/bin/bash
-refs=$(kubectl get LiferayInfrastructure arz-dev2025-infra -o json | jq -c '.spec.crossplane.resourceRefs[]')
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+RESOURCE_NAME="${1:-arz-dev2025-infra}"
+
+refs=$(kubectl get LiferayInfrastructure "${RESOURCE_NAME}" -o json | jq -c '.spec.crossplane.resourceRefs[]')
 output="["
 first=true
 for ref in $refs; do
@@ -35,4 +40,4 @@ for ref in $refs; do
   output="$output{\"apiVersion\":\"$apiversion\",\"kind\":\"$kind\",\"name\":\"$comp_name\",\"spec\":$spec,\"metadata\":$metadata}"
 done
 output="$output]"
-echo "$output" | jq . > /home/allenz/liferay/liferay-portal/cloud/helm/gcp-infrastructure-provider/compositions/tests/cluster_extracted_resources.json
+echo "$output" | jq . > "${SCRIPT_DIR}/../tests/cluster_extracted_resources.json"

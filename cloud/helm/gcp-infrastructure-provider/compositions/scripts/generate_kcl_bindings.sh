@@ -9,7 +9,8 @@
 set -e
 
 function main {
-    local compositions_directory="/home/allenz/liferay/liferay-portal/cloud/helm/gcp-infrastructure-provider/compositions"
+    local compositions_directory
+    compositions_directory="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
     local dist_directory="${compositions_directory}/dist"
     local models_directory="${compositions_directory}/models"
 

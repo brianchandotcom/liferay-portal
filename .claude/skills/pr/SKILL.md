@@ -1,8 +1,10 @@
 ---
+
 allowed-tools: [Bash, Glob, Grep, Read]
 argument-hint: "[optional target-org/repo or message hint]"
 description: Create a GitHub pull request for the current branch, transition the corresponding Jira ticket to review, and record the PR link on the ticket. Use when the user asks to create a PR, send a PR, or invokes /pr.
 name: pr
+
 ---
 
 # Create Pull Request
@@ -18,9 +20,12 @@ When uncommitted changes exist, warn the user and stop. They should commit first
 The ticket ID follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and similar forms (uppercase letters, hyphen, digits). Resolve the ticket in this order:
 
 1. **Branch Name** — extract the ticket from the current branch (e.g., branch `LPD-83847` yields ticket `LPD-83847`).
-2. **Recent Commits** — when the branch name lacks a ticket, scan recent commit messages for a ticket prefix.
-3. **User Argument** — when `${ARGUMENTS}` supplies a ticket ID, prefer that value.
-4. **Fallback** — when no ticket surfaces, prompt the user for one.
+
+1. **Recent Commits** — when the branch name lacks a ticket, scan recent commit messages for a ticket prefix.
+
+1. **User Argument** — when `${ARGUMENTS}` supplies a ticket ID, prefer that value.
+
+1. **Fallback** — when no ticket surfaces, prompt the user for one.
 
 ## 3. Determine the Target
 

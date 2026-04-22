@@ -1076,6 +1076,29 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			markedAsDefault, putUtilityPage.getMarkedAsDefault());
 	}
 
+	private void _testPutSiteUtilityPageWithDateModified() throws Exception {
+		UtilityPage utilityPage = _getUtilityPage(
+			null, Boolean.FALSE, RandomTestUtil.randomString());
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
+		utilityPage.setDateCreated(dateFormat.parse("2023-01-01"));
+		utilityPage.setDateModified(dateFormat.parse("2023-02-02"));
+
+		UtilityPage putUtilityPage1 = utilityPageResource.putSiteUtilityPage(
+			testGroup.getExternalReferenceCode(),
+			utilityPage.getExternalReferenceCode(), utilityPage);
+
+		UtilityPage putUtilityPage2 = utilityPageResource.putSiteUtilityPage(
+			testGroup.getExternalReferenceCode(),
+			utilityPage.getExternalReferenceCode(), putUtilityPage1);
+
+		Assert.assertEquals(
+			putUtilityPage1.getDateModified(),
+			putUtilityPage2.getDateModified());
+	}
+
 	private void _testPutSiteUtilityPageWithPageSpecifications()
 		throws Exception {
 
@@ -1250,31 +1273,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
-	}
-
-	private void _testPutSiteUtilityPageWithDateModified()
-		throws Exception {
-
-		UtilityPage utilityPage = _getUtilityPage(
-			null, Boolean.FALSE, RandomTestUtil.randomString());
-
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd");
-
-		utilityPage.setDateCreated(dateFormat.parse("2023-01-01"));
-		utilityPage.setDateModified(dateFormat.parse("2023-02-02"));
-
-		UtilityPage putUtilityPage1 = utilityPageResource.putSiteUtilityPage(
-			testGroup.getExternalReferenceCode(),
-			utilityPage.getExternalReferenceCode(), utilityPage);
-
-		UtilityPage putUtilityPage2 = utilityPageResource.putSiteUtilityPage(
-			testGroup.getExternalReferenceCode(),
-			utilityPage.getExternalReferenceCode(), putUtilityPage1);
-
-		Assert.assertEquals(
-			putUtilityPage1.getDateModified(),
-			putUtilityPage2.getDateModified());
 	}
 
 	@Inject

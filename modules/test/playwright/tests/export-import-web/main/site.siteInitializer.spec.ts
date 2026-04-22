@@ -51,16 +51,14 @@ const testWithClaritySiteInitializerFF = mergeTests(
 );
 
 [
-	{name: 'com.liferay.site.initializer.masterclass', shouldFail: true},
+	{name: 'com.liferay.site.initializer.masterclass'},
 	{name: 'com.liferay.site.initializer.welcome'},
-].forEach(({name, shouldFail}) => {
+].forEach(({name}) => {
 	test(`Local Staging can be enabled with site initializer ${name}`, async ({
 		apiHelpers,
 		page,
 		stagingPage,
-	}, testInfo) => {
-		testInfo.fail(shouldFail);
-
+	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name,
 			templateKey: name,

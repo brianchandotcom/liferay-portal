@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.entry.processor.background.image;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -79,6 +80,9 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 
 		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
 			new HashMap<>();
+
+		boolean analyticsEnabled = _isAnalyticsEnabled(
+			fragmentEntryLink.getCompanyId());
 
 		for (Element element :
 				document.getElementsByAttribute(
@@ -176,7 +180,9 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 				element.removeAttr("data-lfr-background-image-id");
 			}
 
-			if (fragmentEntryProcessorContext.isViewMode()) {
+			if (analyticsEnabled &&
+				fragmentEntryProcessorContext.isViewMode()) {
+
 				AnalyticsAttributesUtil.addAnalyticsAttributes(
 					editableValueJSONObject, element,
 					fragmentEntryProcessorContext,
@@ -252,8 +258,24 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 		return String.valueOf(fieldValue);
 	}
 
+	private boolean _isAnalyticsEnabled(long companyId) {
+		try {
+			return _analyticsSettingsManager.isAnalyticsEnabled(companyId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return false;
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundImageDocumentFragmentEntryProcessor.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

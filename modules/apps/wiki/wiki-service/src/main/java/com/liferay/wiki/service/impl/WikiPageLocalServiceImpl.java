@@ -307,7 +307,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Node
 
-		_setLastPostDate(serviceContext.getModifiedDate(date), nodeId);
+		_updateLastPostDate(serviceContext.getModifiedDate(date), nodeId);
 
 		// Asset
 
@@ -3307,7 +3307,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return page;
 	}
 
-	private void _setLastPostDate(Date date, long nodeId) {
+	private void _updateLastPostDate(Date date, long nodeId) {
 		if (!ExportImportThreadLocal.isImportInProcess() &&
 			!ExportImportThreadLocal.isStagingInProcess()) {
 
@@ -3436,7 +3436,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Node
 
-		_setLastPostDate(serviceContext.getModifiedDate(date), nodeId);
+		_updateLastPostDate(serviceContext.getModifiedDate(date), nodeId);
 
 		// Asset
 

@@ -56,11 +56,12 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 	@Test
 	@TestInfo("LPD-86498")
 	public void testWithContentLayoutDirectURL() throws Exception {
-		String prpName = "categoryId";
-		String prpValue = RandomTestUtil.randomString(
+		final String prpName = "categoryId";
+		final String prpValue = RandomTestUtil.randomString(
 			LayoutFriendlyURLRandomizerBumper.INSTANCE,
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
+		final AtomicBoolean success = new AtomicBoolean(false);
 
 		testPortlet = new TestPortlet() {
 
@@ -71,8 +72,13 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 				PrintWriter printWriter = renderResponse.getWriter();
 
-				printWriter.write(
-					TEST_PORTLET_ID + renderRequest.getParameter(prpName));
+				String value = renderRequest.getParameter(prpName);
+
+				if (prpValue.equals(value)) {
+					success.set(true);
+				}
+
+				printWriter.write(value);
 			}
 
 		};
@@ -103,19 +109,18 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		Assert.assertEquals(200, response.getCode());
 
-		String body = response.getBody();
-
-		Assert.assertTrue(body.contains(TEST_PORTLET_ID + prpValue));
+		Assert.assertTrue(success.get());
 	}
 
 	@Test
 	@TestInfo("LPD-86498")
 	public void testWithContentLayoutRenderURL() throws Exception {
-		String prpName = "categoryId";
-		String prpValue = RandomTestUtil.randomString(
+		final String prpName = "categoryId";
+		final String prpValue = RandomTestUtil.randomString(
 			LayoutFriendlyURLRandomizerBumper.INSTANCE,
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
+		final AtomicBoolean success = new AtomicBoolean(false);
 
 		testPortlet = new TestPortlet() {
 
@@ -126,8 +131,13 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 				PrintWriter printWriter = renderResponse.getWriter();
 
-				printWriter.write(
-					TEST_PORTLET_ID + renderRequest.getParameter(prpName));
+				String value = renderRequest.getParameter(prpName);
+
+				if (prpValue.equals(value)) {
+					success.set(true);
+				}
+
+				printWriter.write(value);
 			}
 
 		};
@@ -169,9 +179,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		Assert.assertEquals(200, response.getCode());
 
-		String body = response.getBody();
-
-		Assert.assertTrue(body.contains(TEST_PORTLET_ID + prpValue));
+		Assert.assertTrue(success.get());
 	}
 
 	@Test

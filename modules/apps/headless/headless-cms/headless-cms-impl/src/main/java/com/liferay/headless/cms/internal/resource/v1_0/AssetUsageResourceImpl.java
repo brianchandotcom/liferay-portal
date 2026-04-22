@@ -380,7 +380,7 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 										contextHttpServletRequest),
 									_portal.getPathMain(),
 									GroupConstants.CMS_FRIENDLY_URL,
-									"/edit_content_item?&p_l_mode=read&",
+									"/edit_content_item?p_l_mode=read&",
 									"p_p_state=", LiferayWindowState.POP_UP,
 									"&objectEntryId=",
 									objectEntry.getObjectEntryId()));

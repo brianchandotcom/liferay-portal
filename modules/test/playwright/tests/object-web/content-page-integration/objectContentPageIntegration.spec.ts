@@ -53,7 +53,6 @@ test.describe('Object Widget', () => {
 			site,
 			widgetPagePage,
 		}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -70,11 +69,15 @@ test.describe('Object Widget', () => {
 			});
 
 			await test.step('Enable "Show Widget in Page Builder" and save', async () => {
-				await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+				await editObjectDetailsPage.goto(
+					objectDefinition.label['en_US']
+				);
 
 				await editObjectDetailsPage.goToDetailsTab();
 
-				await expect(editObjectDetailsPage.showWidgetToggle).toBeChecked();
+				await expect(
+					editObjectDetailsPage.showWidgetToggle
+				).toBeChecked();
 
 				await editObjectDetailsPage.saveObjectDefinition();
 
@@ -82,12 +85,16 @@ test.describe('Object Widget', () => {
 			});
 
 			await test.step('Create a widget page and add the object portlet', async () => {
-				const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-					groupId: site.id,
-					title: getRandomString(),
-				});
+				const layout = await apiHelpers.jsonWebServicesLayout.addLayout(
+					{
+						groupId: site.id,
+						title: getRandomString(),
+					}
+				);
 
-				await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
 
 				await widgetPagePage.addPortlet(
 					objectDefinition.pluralLabel['en_US']
@@ -96,7 +103,9 @@ test.describe('Object Widget', () => {
 
 			await test.step('Verify the portlet is displayed with empty state', async () => {
 				await expect(
-					page.getByText(objectDefinition.pluralLabel['en_US']).first()
+					page
+						.getByText(objectDefinition.pluralLabel['en_US'])
+						.first()
 				).toBeVisible();
 
 				await expect(page.getByText('No Results Found')).toBeVisible();
@@ -114,7 +123,6 @@ test.describe('Object Widget', () => {
 			site,
 			widgetPagePage,
 		}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -131,7 +139,9 @@ test.describe('Object Widget', () => {
 			});
 
 			await test.step('Navigate to object details and untoggle show widget', async () => {
-				await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+				await editObjectDetailsPage.goto(
+					objectDefinition.label['en_US']
+				);
 
 				await editObjectDetailsPage.goToDetailsTab();
 
@@ -143,12 +153,16 @@ test.describe('Object Widget', () => {
 			});
 
 			await test.step('Search for the object portlet on a widget page and verify it is not available', async () => {
-				const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-					groupId: site.id,
-					title: getRandomString(),
-				});
+				const layout = await apiHelpers.jsonWebServicesLayout.addLayout(
+					{
+						groupId: site.id,
+						title: getRandomString(),
+					}
+				);
 
-				await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
 
 				await widgetPagePage.openAddPanel();
 
@@ -177,7 +191,6 @@ test.describe('Object Widget', () => {
 			site,
 			widgetPagePage,
 		}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -201,7 +214,9 @@ test.describe('Object Widget', () => {
 					title: getRandomString(),
 				});
 
-				await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
 
 				await widgetPagePage.addPortlet(
 					objectDefinition.pluralLabel['en_US']
@@ -209,7 +224,9 @@ test.describe('Object Widget', () => {
 			});
 
 			await test.step('Disable "Show Widget in Page Builder" and save', async () => {
-				await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+				await editObjectDetailsPage.goto(
+					objectDefinition.label['en_US']
+				);
 
 				await editObjectDetailsPage.goToDetailsTab();
 
@@ -221,7 +238,9 @@ test.describe('Object Widget', () => {
 			});
 
 			await test.step('Navigate back to widget page and verify warning message', async () => {
-				await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
 
 				await expect(
 					page.getByText('This object is not available.')
@@ -236,7 +255,6 @@ test.describe('Content Pages Mapping', () => {
 		'Can map preview URL of image attachment to fragment on content page',
 		{tag: '@LPS-182999'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Attachment'],
 			});
@@ -287,7 +305,9 @@ test.describe('Content Pages Mapping', () => {
 
 				await pageEditorPage.selectEditable(imageId, 'image-square');
 
-				await page.getByLabel('Source Selection').selectOption('Mapping');
+				await page
+					.getByLabel('Source Selection')
+					.selectOption('Mapping');
 
 				await pageEditorPage.setMappedItem({
 					entity: objectDefinition.label['en_US'],
@@ -303,7 +323,9 @@ test.describe('Content Pages Mapping', () => {
 			});
 
 			await test.step('Verify mapped image is shown in editor', async () => {
-				await expect(page.locator('.component-image img')).toBeVisible();
+				await expect(
+					page.locator('.component-image img')
+				).toBeVisible();
 			});
 
 			await test.step('Publish and verify image in view mode', async () => {
@@ -313,7 +335,9 @@ test.describe('Content Pages Mapping', () => {
 					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 				);
 
-				await expect(page.locator('.component-image img')).toBeVisible();
+				await expect(
+					page.locator('.component-image img')
+				).toBeVisible();
 			});
 		}
 	);
@@ -322,7 +346,6 @@ test.describe('Content Pages Mapping', () => {
 		'Can map preview URL of non-image attachment to fragment showing blank space',
 		{tag: '@LPS-182999'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Attachment'],
 			});
@@ -376,7 +399,9 @@ test.describe('Content Pages Mapping', () => {
 
 				await pageEditorPage.selectEditable(imageId, 'image-square');
 
-				await page.getByLabel('Source Selection').selectOption('Mapping');
+				await page
+					.getByLabel('Source Selection')
+					.selectOption('Mapping');
 
 				await pageEditorPage.setMappedItem({
 					entity: objectDefinition.label['en_US'],
@@ -415,7 +440,6 @@ test.describe('Content Pages Mapping', () => {
 		'Can view image user profile from specific entry on display page',
 		{tag: '@LPD-86436'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -457,7 +481,9 @@ test.describe('Content Pages Mapping', () => {
 
 				await pageEditorPage.selectEditable(imageId, 'image-square');
 
-				await page.getByLabel('Source Selection').selectOption('Mapping');
+				await page
+					.getByLabel('Source Selection')
+					.selectOption('Mapping');
 
 				await pageEditorPage.setMappedItem({
 					entity: objectDefinition.label['en_US'],
@@ -479,7 +505,9 @@ test.describe('Content Pages Mapping', () => {
 					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 				);
 
-				await expect(page.locator('.component-image img')).toBeVisible();
+				await expect(
+					page.locator('.component-image img')
+				).toBeVisible();
 			});
 		}
 	);
@@ -490,7 +518,6 @@ test.describe('Collection Display', () => {
 		'Can display entries on table format in collection display',
 		{tag: '@LPS-135386'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text', 'Text'],
 			});
@@ -572,7 +599,9 @@ test.describe('Collection Display', () => {
 
 				for (const objectEntry of objectEntries) {
 					await expect(
-						collectionTable.getByText(objectEntry[objectFields[0].name])
+						collectionTable.getByText(
+							objectEntry[objectFields[0].name]
+						)
 					).toBeVisible();
 				}
 			});
@@ -583,9 +612,10 @@ test.describe('Collection Display', () => {
 		'Can search for object entry on search experience in collection providers',
 		{tag: '@LPS-135388'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: [{businessType: 'Text', indexed: true}],
+				objectFieldBusinessTypes: [
+					{businessType: 'Text', indexed: true},
+				],
 			});
 
 			const objectDefinition =
@@ -686,8 +716,12 @@ test.describe('Collection Display', () => {
 					'.lfr-layout-structure-item-collection'
 				);
 
-				await expect(collectionTable.getByText(entryValueA)).toBeVisible();
-				await expect(collectionTable.getByText(entryValueB)).toBeVisible();
+				await expect(
+					collectionTable.getByText(entryValueA)
+				).toBeVisible();
+				await expect(
+					collectionTable.getByText(entryValueB)
+				).toBeVisible();
 			});
 
 			await test.step('Search for entry A and verify entry B is filtered out', async () => {
@@ -721,7 +755,6 @@ test.describe('Collection Display', () => {
 		'Object is displayed to be selected as collection provider on collection display fragment',
 		{tag: '@LPS-133865'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -774,13 +807,14 @@ test.describe('Display Page', () => {
 		'Can define fixed filter for picklist type on display page',
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const {listTypeDefinition, listTypeEntries} =
 				await postListTypeDefinitionListTypeEntries({
 					apiHelpers,
 				});
 
-			const picklistEntryNames = listTypeEntries.map((entry) => entry.name);
+			const picklistEntryNames = listTypeEntries.map(
+				(entry) => entry.name
+			);
 
 			const objectFields = generateObjectFields({
 				listTypeDefinitionExternalReferenceCode:
@@ -897,7 +931,6 @@ test.describe('Display Page', () => {
 		'Can set pagination as numeric on display page',
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -986,7 +1019,6 @@ test.describe('Display Page', () => {
 		'Can set pagination as simple on display page',
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});

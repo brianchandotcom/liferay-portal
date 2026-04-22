@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import org.osgi.service.component.annotations.Activate;
@@ -64,6 +66,8 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 				"friendlyURLSeparatorsJSON", friendlyURLSeparatorsJSON
 			).build());
 
+		_waitForPropagation(companyId, friendlyURLSeparatorsJSON);
+
 		_portalCache.remove(companyId);
 	}
 
@@ -79,6 +83,57 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 		_multiVMPool.removePortalCache(
 			FriendlyURLSeparatorProvider.class.getName());
 	}
+
+	private void _waitForPropagation(
+			long companyId, String expectedFriendlyURLSeparatorsJSON)
+		throws PortalException {
+
+		long endTime = System.currentTimeMillis() + _PROPAGATION_TIMEOUT;
+
+		while (true) {
+			FriendlyURLSeparatorCompanyConfiguration
+				friendlyURLSeparatorCompanyConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						FriendlyURLSeparatorCompanyConfiguration.class,
+						companyId);
+
+			if (expectedFriendlyURLSeparatorsJSON.equals(
+					friendlyURLSeparatorCompanyConfiguration.
+						friendlyURLSeparatorsJSON())) {
+
+				return;
+			}
+
+			if (System.currentTimeMillis() > endTime) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Timed out waiting for the friendly URL separator " +
+							"configuration to propagate for companyId=" +
+								companyId);
+				}
+
+				return;
+			}
+
+			try {
+				Thread.sleep(_PROPAGATION_POLL_INTERVAL);
+			}
+			catch (InterruptedException interruptedException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(interruptedException);
+				}
+
+				return;
+			}
+		}
+	}
+
+	private static final long _PROPAGATION_POLL_INTERVAL = 20;
+
+	private static final long _PROPAGATION_TIMEOUT = 10000;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FriendlyURLSeparatorConfigurationManagerImpl.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

@@ -78,11 +78,10 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 			return;
 		}
 
-		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
-			new HashMap<>();
-
 		boolean analyticsEnabled = _isAnalyticsEnabled(
 			fragmentEntryLink.getCompanyId());
+		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
+			new HashMap<>();
 
 		for (Element element :
 				document.getElementsByAttribute(

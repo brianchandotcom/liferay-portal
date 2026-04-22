@@ -254,8 +254,19 @@ public class AnnouncementsEntryLocalServiceImpl
 		long companyId, long classNameId, long classPK, boolean alert,
 		int start, int end) {
 
+		return getEntries(
+			companyId, classNameId, classPK, alert, start, end, null);
+	}
+
+	@Override
+	public List<AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+
 		return announcementsEntryPersistence.findByC_C_C_A(
-			companyId, classNameId, classPK, alert, start, end);
+			companyId, classNameId, classPK, alert, start, end,
+			orderByComparator);
 	}
 
 	@Override

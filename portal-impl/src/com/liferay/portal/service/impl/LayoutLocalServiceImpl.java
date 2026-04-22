@@ -491,7 +491,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				"layoutSetPrototypeLayoutERC",
 				serviceContext.getAttribute(
 					"draftLayoutLayoutSetPrototypeLayoutERC"));
-			serviceContext.setModifiedDate(date);
+			serviceContext.setModifiedDate(
+				serviceContext.getModifiedDate(date));
 
 			addLayout(
 				GetterUtil.getString(

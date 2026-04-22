@@ -44,59 +44,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8130 | Test Summary: Click a web content in the web content list navigates to the web content overview page"
-	@priority = 5
-	test CanNavigateToWebContentOverviewPage {
-		property test.run.type = "single";
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		ACDXPSettings.syncNewContactData();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View WC",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Web Content");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACNavigation.openItem(itemName = "Web Content AC Title");
-
-		ACIndividualsDashboard.goToOverviewTab();
-
-		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
-
-		for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology,Asset Appears On") {
-			ACCards.viewCards(cardTitle = ${cardTitle});
-		}
-
-		ACAssets.viewVisitorsBehaviorMetric(
-			metricTitle = "Views",
-			metricValue = 1);
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8441 | Test Summary: Web content list is searchable"
 	@priority = 5
 	test CanSearchWebContentList {

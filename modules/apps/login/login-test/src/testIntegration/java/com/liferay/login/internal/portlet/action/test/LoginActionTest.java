@@ -128,6 +128,30 @@ public class LoginActionTest {
 	}
 
 	@Test
+	public void testExecuteWithDefaultLandingPagePathSkipsRedirectInjection()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PrefsPropsTestUtil.swapWithSafeCloseable(
+					TestPropsValues.getCompanyId(),
+					PropsKeys.DEFAULT_LANDING_PAGE_PATH,
+					RandomTestUtil.randomString())) {
+
+			HttpURLConnection httpURLConnection = _getHttpURLConnection();
+
+			Assert.assertEquals(200, httpURLConnection.getResponseCode());
+
+			URL url = httpURLConnection.getURL();
+
+			String query = url.getQuery();
+
+			Assert.assertFalse(
+				query.contains(
+					"_com_liferay_login_web_portlet_LoginPortlet_redirect="));
+		}
+	}
+
+	@Test
 	public void testExecuteWithNoDefaultSiteName() throws Exception {
 		try (SafeCloseable safeCloseable =
 				PrefsPropsTestUtil.swapWithSafeCloseable(

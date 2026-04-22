@@ -225,6 +225,18 @@ definition {
 				locator1 = "ContentPerformance#NUMBER_VIEWS",
 				value1 = 0);
 		}
+
+		task ("Assert traffic channels show no incoming traffic and are not clickable") {
+			for (var channel : list "Referral,Social,Paid,Direct,Organic") {
+				ContentPerformance.viewTrafficViews(
+					key_numberViews = "-",
+					trafficChannel = ${channel});
+
+				AssertVisible(
+					locator1 = "ContentPerformance#TRAFFIC_CHANNELS_TEXT",
+					trafficChannel = ${channel});
+			}
+		}
 	}
 
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
@@ -495,34 +507,6 @@ definition {
 			AssertVisible(
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
 				value1 = "Traffic Channels");
-		}
-	}
-
-	@description = "LPS-111042: As a content writer I want to know the keywords driving traffic to my contents by different countries"
-	@priority = 4
-	test NoNavigationWithoutIncomingTraffic {
-		task ("Open Content Performance") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check the value of engagement data") {
-			for (var channel : list "Referral,Social,Paid,Direct,Organic") {
-				ContentPerformance.viewTrafficViews(
-					key_numberViews = "-",
-					trafficChannel = ${channel});
-			}
-		}
-
-		task ("Chech that channels are not clickable") {
-			for (var channel : list "Referral,Social,Paid,Direct,Organic") {
-				AssertVisible(
-					locator1 = "ContentPerformance#TRAFFIC_CHANNELS_TEXT",
-					trafficChannel = ${channel});
-			}
 		}
 	}
 

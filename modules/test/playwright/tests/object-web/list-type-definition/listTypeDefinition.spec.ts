@@ -73,7 +73,9 @@ async function importPicklistFromFile(
 
 	await page.waitForLoadState('networkidle');
 
-	await expect(page.getByText('Picklists')).toBeVisible({timeout: 30000});
+	await expect(page.getByRole('heading', {name: 'Picklists'})).toBeVisible({
+		timeout: 30000,
+	});
 
 	await page.locator('button[aria-haspopup="true"]').first().click();
 

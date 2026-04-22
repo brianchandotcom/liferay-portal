@@ -435,7 +435,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			_getUtilityPage(
 				null, null, layoutUtilityPageEntry.getExternalReferenceCode()));
 
-		_testPutSiteUtilityPageWithDateModified();
+		_testPutSiteUtilityPageWithDates();
 		_testPutSiteUtilityPageWithPageSpecifications();
 		_testPutSiteUtilityPageWithThumbnail();
 	}
@@ -1078,31 +1078,35 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			markedAsDefault, putUtilityPage.getMarkedAsDefault());
 	}
 
-	private void _testPutSiteUtilityPageWithDateModified() throws Exception {
+	private void _testPutSiteUtilityPageWithDates() throws Exception {
 		UtilityPage utilityPage = _getUtilityPage(
 			null, Boolean.FALSE, RandomTestUtil.randomString());
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
 
-		Date modifiedDate = dateFormat.parse("2023-01-01");
+		Date date = dateFormat.parse("2023-01-01");
 
-		utilityPage.setDateModified(modifiedDate);
+		utilityPage.setDateCreated(date);
+		utilityPage.setDateModified(date);
 
 		UtilityPage putUtilityPage = utilityPageResource.putSiteUtilityPage(
 			testGroup.getExternalReferenceCode(),
 			utilityPage.getExternalReferenceCode(), utilityPage);
 
 		Assert.assertEquals(
+			utilityPage.getDateCreated(), putUtilityPage.getDateCreated());
+		Assert.assertEquals(
 			utilityPage.getDateModified(), putUtilityPage.getDateModified());
 
-		utilityPage.setDateModified(
-			new Date(modifiedDate.getTime() + Time.SECOND));
+		utilityPage.setDateCreated(RandomTestUtil.nextDate());
+		utilityPage.setDateModified(new Date(date.getTime() + Time.SECOND));
 
 		putUtilityPage = utilityPageResource.putSiteUtilityPage(
 			testGroup.getExternalReferenceCode(),
 			utilityPage.getExternalReferenceCode(), utilityPage);
 
+		Assert.assertEquals(date, putUtilityPage.getDateCreated());
 		Assert.assertEquals(
 			utilityPage.getDateModified(), putUtilityPage.getDateModified());
 	}

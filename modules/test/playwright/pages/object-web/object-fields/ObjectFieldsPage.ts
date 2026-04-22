@@ -224,6 +224,14 @@ export class ObjectFieldsPage {
 		});
 	}
 
+	async closeObjectFieldSidePanel() {
+		const cancelButton = this.iframeLocator.getByLabel('Cancel');
+
+		await cancelButton.click();
+
+		await cancelButton.waitFor({state: 'hidden'});
+	}
+
 	async saveObjectField() {
 		await this.editFieldSaveButton.click();
 

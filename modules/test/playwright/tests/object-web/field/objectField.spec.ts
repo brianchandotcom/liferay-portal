@@ -2754,6 +2754,8 @@ test.describe('Manage object fields default value properties', () => {
 					'Error:Please fill out all required fields.',
 					{type: 'danger'}
 				);
+
+				await objectFieldsPage.closeObjectFieldSidePanel();
 			}
 		}
 	);

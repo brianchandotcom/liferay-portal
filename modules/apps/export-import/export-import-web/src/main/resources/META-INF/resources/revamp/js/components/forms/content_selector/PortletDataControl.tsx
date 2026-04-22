@@ -78,7 +78,7 @@ export default function PortletDataControl({
 			<PortletDataControlChoice
 				className="mt-2 pl-2"
 				control={control}
-				onChange={(_, newValue) => onChange(newValue)}
+				onChange={onChange}
 				value={typeof value === 'string' ? value : ''}
 			/>
 		);

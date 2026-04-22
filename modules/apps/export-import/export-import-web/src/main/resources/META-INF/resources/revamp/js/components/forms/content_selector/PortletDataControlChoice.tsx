@@ -12,7 +12,7 @@ import FieldSelectWithOption from '../FieldSelectWithOption';
 interface PortletDataControlChoiceProps {
 	className?: string;
 	control: PortletDataHandlerChoice;
-	onChange: (fieldId: string, value: string) => void;
+	onChange: (value: string) => void;
 	value: string;
 }
 
@@ -29,7 +29,7 @@ export default function PortletDataControlChoice({
 			label={control.label}
 			name={control.name}
 			onChange={(event) => {
-				onChange(control.name, event.target.value);
+				onChange(event.target.value);
 			}}
 			options={control.choices.map(({label, name}) => ({
 				label,

@@ -13,7 +13,7 @@ type ContainerProps = {
 };
 
 const Container = ({children, description, footer, title}: ContainerProps) => (
-	<div className="bg-white my-4 pb-4 rounded">
+	<div className="border pb-4 rounded-lg">
 		<div className="pt-4 px-4">
 			<h3>{title}</h3>
 		</div>

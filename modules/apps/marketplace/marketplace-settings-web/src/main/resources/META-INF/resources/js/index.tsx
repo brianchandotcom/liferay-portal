@@ -88,7 +88,7 @@ export function MarketplaceSettings(props: MarketplaceSettingsProps) {
 	}
 
 	return (
-		<div className="my-2 pb-4 sheet-lg">
+		<div className="my-4 pb-4 sheet-lg">
 			{!authorization.authorized && <Step step={step} steps={steps} />}
 
 			<Component

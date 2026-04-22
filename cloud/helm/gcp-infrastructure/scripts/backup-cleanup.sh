@@ -8,7 +8,7 @@ function main {
 	local retention_days
 	local retention_seconds
 
-	retention_days={{ .Values.backup.cleanup.retentionDays }}
+	retention_days={{ .Values.backup.retentionDays }}
 	retention_seconds=$((retention_days * 24 * 60 * 60))
 
 	echo "Cleaning up backups older than ${retention_days} days."

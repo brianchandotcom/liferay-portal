@@ -322,4 +322,53 @@ spec:
         app: {{ include "liferay.name" .root }}{{ $suffix }}
         {{- include "liferay.selectorLabels" .root | nindent 8 }}
     type: ClusterIP
+{{- if and .statefulset.networkPolicy .statefulset.networkPolicy.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    {{- with .statefulset.networkPolicy.annotations }}
+    annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    labels:
+        app: {{ include "liferay.name" .root }}{{ $suffix }}
+        {{- include "liferay.labels" .root | nindent 8 }}
+    name: {{ include "liferay.name" .root }}{{ $suffix }}
+    namespace: {{ include "liferay.namespace" .root }}
+spec:
+    ingress:
+        {{- if and .statefulset.network .statefulset.network.enabled .statefulset.networkPolicy.allowGatewayIngress }}
+        -   from:
+                -   namespaceSelector:
+                        matchLabels:
+                            kubernetes.io/metadata.name: {{ .statefulset.networkPolicy.gatewayNamespace | quote }}
+                    podSelector:
+                        matchLabels:
+                            app.kubernetes.io/name: {{ .statefulset.networkPolicy.gatewayPodLabel | quote }}
+            ports:
+                -   port: http
+                    protocol: TCP
+        {{- end }}
+        {{- if .statefulset.networkPolicy.allowIntraApp }}
+        -   from:
+                -   podSelector:
+                        matchLabels:
+                            {{- include "liferay.selectorLabels" .root | nindent 28 }}
+            ports:
+                -   port: cluster
+                    protocol: TCP
+                -   port: http
+                    protocol: TCP
+        {{- end }}
+        {{- with .statefulset.networkPolicy.extraIngress }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    podSelector:
+        matchLabels:
+            app: {{ include "liferay.name" .root }}{{ $suffix }}
+            {{- include "liferay.selectorLabels" .root | nindent 12 }}
+    policyTypes:
+        -   Ingress
+{{- end }}
 {{- end -}}

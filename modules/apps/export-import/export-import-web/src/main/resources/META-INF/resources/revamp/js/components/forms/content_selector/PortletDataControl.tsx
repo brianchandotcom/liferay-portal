@@ -84,7 +84,6 @@ export default function PortletDataControl({
 		);
 	}
 
-	const isPresent = !!value;
 	const selected = isSelected(value, control);
 	const currentSelection = typeof value === 'object' ? value : {};
 
@@ -93,7 +92,7 @@ export default function PortletDataControl({
 			<ClayLayout.ContentCol className="pr-2" expand={false}>
 				<ClayCheckbox
 					checked={selected}
-					indeterminate={isPresent && !selected}
+					indeterminate={!!value && !selected}
 					onChange={() =>
 						onChange(
 							selected ? undefined : getInitialSelection(control)

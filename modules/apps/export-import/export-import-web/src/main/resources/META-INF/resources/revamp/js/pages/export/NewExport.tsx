@@ -100,8 +100,6 @@ export function NewExport({
 						contentSelection: values.contentSelection,
 						flatValues,
 					});
-
-					alert('Export started!');
 				}}
 				title={Liferay.Language.get('settings')}
 			>

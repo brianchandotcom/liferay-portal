@@ -40,8 +40,6 @@ export default function ContentSection({
 		isSelected(portletContextsValue[context.name], context)
 	);
 
-	const isPresent = !!Object.keys(portletContextsValue).length;
-
 	const handleSelectAll = () => {
 		if (selected) {
 			onChange(undefined);
@@ -63,7 +61,10 @@ export default function ContentSection({
 				<ClayLayout.ContentCol expand={false}>
 					<ClayCheckbox
 						checked={selected}
-						indeterminate={isPresent && !selected}
+						indeterminate={
+							!!Object.keys(portletContextsValue).length &&
+							!selected
+						}
 						onChange={handleSelectAll}
 					/>
 				</ClayLayout.ContentCol>

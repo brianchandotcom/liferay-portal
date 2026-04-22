@@ -61,7 +61,7 @@ public class OpenAPIUtilTest {
 				"pageSize", "20"
 			).build(),
 			"GET /test/v1.0/items", null, "GET",
-			"http://localhost/test/v1.0/items?pageSize=20&page=1&fields=name");
+			"http://localhost/test/v1.0/items?fields=name&page=1&pageSize=20");
 		_testGetHttpCallArguments(
 			HashMapBuilder.<String, Object>put(
 				"itemId", "123"
@@ -90,9 +90,9 @@ public class OpenAPIUtilTest {
 			"http://localhost/test/v1.0/items?filter=name+eq+%27John+Doe%27");
 		_testGetHttpCallArguments(
 			HashMapBuilder.<String, Object>put(
-				"body", "{\"name\":\"Test\"}"
+				"body", "{\"name\": \"Test\"}"
 			).build(),
-			"POST /test/v1.0/items", "{\"name\":\"Test\"}", "POST",
+			"POST /test/v1.0/items", "{\"name\": \"Test\"}", "POST",
 			"http://localhost/test/v1.0/items");
 		_testGetHttpCallArguments(
 			HashMapBuilder.<String, Object>put(
@@ -101,7 +101,7 @@ public class OpenAPIUtilTest {
 					"name", "Test"
 				).build()
 			).build(),
-			"POST /test/v1.0/items", "{\"name\":\"Test\"}", "POST",
+			"POST /test/v1.0/items", "{\"name\": \"Test\"}", "POST",
 			"http://localhost/test/v1.0/items");
 	}
 

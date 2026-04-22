@@ -70,6 +70,7 @@ const createDisplayPageTemplate = async ({
 	contentType = 'Basic Web Content',
 	displayPageTemplateName,
 	displayPageTemplatesPage,
+	field = 'Friendly URL',
 	page,
 	pageEditorPage,
 	site,
@@ -77,6 +78,7 @@ const createDisplayPageTemplate = async ({
 	contentType?: string;
 	displayPageTemplateName: string;
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
+	field?: string;
 	page: Page;
 	pageEditorPage: PageEditorPage;
 	site: Site;
@@ -98,7 +100,7 @@ const createDisplayPageTemplate = async ({
 
 	await page
 		.getByRole('combobox', {exact: true, name: 'Field'})
-		.selectOption('Friendly URL');
+		.selectOption(field);
 
 	await pageEditorPage.waitForChangesSaved();
 
@@ -732,6 +734,105 @@ test(
 				await contentsPage.goto();
 
 				await contentsPage.deleteContent(title);
+			});
+		}
+	}
+);
+
+test(
+	'Switching the editing language updates the content preview',
+	{tag: '@LPD-87037'},
+	async ({
+		apiHelpers,
+		contentsPage,
+		displayPageTemplatesPage,
+		localizationSelectPage,
+		page,
+		pageEditorPage,
+		site,
+		spaceSummaryPage,
+	}) => {
+		const displayPageTemplateName = getRandomString();
+		const englishTitle = `English ${getRandomString()}`;
+		const spanishTitle = `Spanish ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		try {
+			await test.step('Create a display page template that maps the Title field', async () => {
+				await createDisplayPageTemplate({
+					displayPageTemplateName,
+					displayPageTemplatesPage,
+					field: 'Title',
+					page,
+					pageEditorPage,
+					site,
+				});
+			});
+
+			await test.step('Create a space and connect sites', async () => {
+				await createSpaceAndConnectSites({
+					apiHelpers,
+					site,
+					spaceName,
+					spaceSummaryPage,
+				});
+			});
+
+			await test.step('Create a content with the English and Spanish title', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.createContent(
+					'Basic Web Content',
+					spaceName
+				);
+
+				await page.getByLabel('Title').fill(englishTitle);
+
+				await localizationSelectPage.switchLanguage('es-ES');
+
+				await page.getByLabel('Title').fill(spanishTitle);
+
+				await contentsPage.saveContent();
+			});
+
+			await test.step('Open the preview and verify the English title is shown', async () => {
+				await contentsPage.editContent(englishTitle);
+
+				await contentsPage.previewButton.click();
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {name: site.name}),
+					trigger: page.getByLabel('Select Channel'),
+				});
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {
+						name: displayPageTemplateName,
+					}),
+					trigger: page.getByLabel('Select Display Page'),
+				});
+
+				const iframe = page.frameLocator('iframe');
+
+				await expect(iframe.getByText(englishTitle)).toBeVisible();
+			});
+
+			await test.step('Switch to Spanish and verify the preview updates', async () => {
+				await localizationSelectPage.switchLanguage('es-ES');
+
+				const iframe = page.frameLocator('iframe');
+
+				await expect(iframe.getByText(spanishTitle)).toBeVisible();
+				await expect(iframe.getByText(englishTitle)).not.toBeVisible();
+			});
+		}
+		finally {
+			await test.step('Delete content', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.deleteContent(englishTitle);
 			});
 		}
 	}

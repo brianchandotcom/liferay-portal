@@ -108,9 +108,9 @@ public class SchedulerEngineHelperImplTest {
 
 			_schedulerEngineHelper.addScriptingJob(
 				_triggerFactory.createTrigger(
-					SchedulerEngine.DEFAULT_SCRIPTING_JOB_NAME,
-					SchedulerEngine.DEFAULT_SCRIPTING_JOB_NAME, startDate,
-					new Date(startDate.getTime() + 1000), 1, TimeUnit.DAY),
+					"DEFAULT_SCRIPTING_JOB_NAME", "DEFAULT_SCRIPTING_JOB_NAME",
+					startDate, new Date(startDate.getTime() + 1000), 1,
+					TimeUnit.DAY),
 				StorageType.MEMORY, null, "groovy",
 				StringBundler.concat(
 					"com.liferay.portal.kernel.log.LogFactoryUtil.getLog(\"",

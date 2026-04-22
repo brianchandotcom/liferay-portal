@@ -196,6 +196,10 @@ definition {
 				locator1 = "Translation#DROPDOWN_MENU_ITEM_INDEX",
 				value1 = "English");
 		}
+
+		task ("Check if languages are alphabetically ordered") {
+			ContentPerformance.checkLanguagesOrder();
+		}
 	}
 
 	@description = "LPS-150536 Bug: Traffic sources with link and full pie chart when the content was published today and there is some data for that content in AC side"
@@ -218,22 +222,6 @@ definition {
 			AssertVisible(
 				colorHex = "f1f2f5",
 				locator1 = "ContentPerformance#PIE_CHART_WITH_COLOR");
-		}
-	}
-
-	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the languages are alphabetically ordered"
-	@priority = 3
-	test LanguagesAlphabeticallyOrdered {
-		task ("Open content performance panel") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check if languages are alphabetically ordered") {
-			ContentPerformance.checkLanguagesOrder();
 		}
 	}
 

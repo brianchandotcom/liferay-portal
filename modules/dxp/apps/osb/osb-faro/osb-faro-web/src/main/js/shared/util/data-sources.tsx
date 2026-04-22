@@ -203,8 +203,11 @@ export function getDataSourceDisplayObject(dataSource: DataSource) {
 			return STATUS_DISPLAY[DataSourceStates.Disconnected];
 		case DataSourceStates.CredentialsValid:
 			if (
-				(validContactsConfig(dataSource) && active) ||
-				validAnalyticsConfig(dataSource)
+				validAnalyticsConfig(dataSource) ||
+				(active &&
+					(validContactsConfig(dataSource) ||
+						dataSource.sitesSelected ||
+						dataSource.contactsSelected))
 			) {
 				return STATUS_DISPLAY.active;
 			}

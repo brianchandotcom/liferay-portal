@@ -25,34 +25,6 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-106613. It ensures that the custom abstract field cannot be reset to empty after typing in the content field."
-	@priority = 3
-	@refactordone
-	test AbstractDescriptionPersistsWhenTypingInContentField {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
-
-		Blogs.expandPanel(panel = "Configuration");
-
-		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
-
-		Click.clickAt(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
-
-		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
-
-		AssertTextEquals(
-			locator1 = "TextInput#DESCRIPTION",
-			value1 = "Blogs Entry Abstract Description");
-	}
-
 	@description = "This is a use case for LPS-70143."
 	@priority = 3
 	@refactorneeded
@@ -257,40 +229,6 @@ definition {
 			entryContentBold = "Bold Type",
 			entryContentItalics = "Italics",
 			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This is a test for LPS-136761. It checks that special characters can be added to a custom abstract"
-	@priority = 3
-	test CanAddSpecialCharactersToCustomAbstract {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
-
-		Blogs.expandPanel(panel = "Configuration");
-
-		BlogsEntry.addCustomAbstract(entryAbstractDescription = '''~!@#$%^&*''');
-
-		Button.clickPublish();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewAbstractDisplay(
-			entryAbstractDescription = '''~!@#$%^&*''',
-			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 	}
 
@@ -684,69 +622,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-106613. It ensures that the custom abstract can be added and edited."
-	@priority = 4
-	@refactorneeded
-	test CanEditCustomAbstract {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addWithCustomAbstract(
-			entryAbstractDescription = "Blogs Entry Custom Abstract",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewAbstractDisplay(
-			entryAbstractDescription = "Blogs Entry Custom Abstract",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.gotoEntryWithAbstractPG(
-			entryAbstractDescription = "Blogs Entry Custom Abstract",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
-
-		Blogs.expandPanel(panel = "Configuration");
-
-		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Custom AbstractEdit");
-
-		Type(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR",
-			value1 = "Blogs Entry Content Edit");
-
-		PortletEntry.publish();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewAbstractDisplay(
-			entryAbstractDescription = "Blogs Entry Custom AbstractEdit",
-			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This test covers LPS-108029. It ensures that a blog entry can be edited from the search result."
 	@priority = 3
 	@refactorneeded
@@ -920,25 +795,6 @@ definition {
 			value1 = "The URL title is already in use. Please enter a unique URL title.");
 	}
 
-	@description = "This checks that a blog entry cannot be published if the custom abstracted is selected but empty."
-	@priority = 3
-	@refactorneeded
-	test CannotAddWhenCustomAbstractIsSelectedButEmpty {
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Title");
-
-		Blogs.expandPanel(panel = "Configuration");
-
-		Click(locator1 = "Radio#CUSTOM_ABSTRACT");
-
-		Button.clickPublish();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "The Content field is required.");
-	}
-
 	@description = "This checks that a blog entry without content cannot be added."
 	@priority = 4
 	@refactordone
@@ -1050,30 +906,6 @@ definition {
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-
-		AssertAlertNotPresent();
-	}
-
-	@description = "This is a test for LPS-136765. It checks that Javascript cannot be executed in the custom abstract."
-	@priority = 3
-	test CannotExecuteXSSInCustomAbstract {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addWithCustomAbstract(
-			entryAbstractDescription = '''<script>alert(123);</script>''',
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
 
 		AssertAlertNotPresent();
 	}

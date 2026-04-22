@@ -20,8 +20,10 @@ type editBlogEntryAddfriendlyUrlType = {
 export class BlogsEditBlogEntryPage {
 	readonly page: Page;
 
+	readonly abstractDescription: Locator;
 	readonly blogsPage: BlogsPage;
 	readonly contentEditor: Locator;
+	readonly customAbstractRadio: Locator;
 	readonly publishButton: Locator;
 	readonly submitToWorkflowButton: Locator;
 	readonly subtitleInput: Locator;
@@ -30,10 +32,14 @@ export class BlogsEditBlogEntryPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.abstractDescription = page.locator(
+			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_description'
+		);
 		this.blogsPage = new BlogsPage(page);
 		this.contentEditor = page.locator(
 			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_contentEditor.cke_editable'
 		);
+		this.customAbstractRadio = page.getByLabel('Custom Abstract');
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.submitToWorkflowButton = page.getByRole('button', {
 			name: 'Submit for Workflow',
@@ -45,6 +51,26 @@ export class BlogsEditBlogEntryPage {
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.blogsPage.goto(siteUrl);
 		await this.blogsPage.goToCreateBlogEntry();
+	}
+
+	async expandPanel(
+		name:
+			| 'Categorization'
+			| 'Configuration'
+			| 'Display Page'
+			| 'Friendly URL'
+	): Promise<Locator> {
+		return openFieldset(this.page, name);
+	}
+
+	async setCustomAbstract(value: string) {
+		await this.expandPanel('Configuration');
+
+		await this.customAbstractRadio.click();
+
+		await expect(this.abstractDescription).toBeEnabled();
+
+		await this.abstractDescription.fill(value);
 	}
 
 	async fillTitle(title: string) {

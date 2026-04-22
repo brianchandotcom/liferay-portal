@@ -85,7 +85,7 @@ export function DisplayPagePreviewItemSelectorContent() {
 				trigger={
 					<button
 						className={classNames(
-							'form-control form-control-sm form-control-select form-control-select-secondary page-editor__display-page-preview-item-selector-button'
+							'form-control form-control-sm form-control-select form-control-select-secondary page-editor__display-page-preview-item-selector-button text-truncate'
 						)}
 						data-qa-id="previewItemSelectorButton"
 						type="button"

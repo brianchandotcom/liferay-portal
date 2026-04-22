@@ -12,6 +12,9 @@ export const PENDING_ORDER_ITEMS_FDS_NAME =
 export const PLACED_ORDERS_FDS_NAME =
 	'com_liferay_commerce_order_content_web_internal_fragment_renderer_OrdersDataSetFragmentRenderer-placedOrders';
 
+export const PLACED_ORDER_ATTACHMENTS_FDS_NAME =
+	'com_liferay_commerce_order_content_web_internal_fragment_renderer_OrderAttachmentsDataSetFragmentRenderer-placedOrderAttachments';
+
 export const PLACED_ORDER_ITEMS_FDS_NAME =
 	'com_liferay_commerce_order_content_web_internal_fragment_renderer_OrderItemsDataSetFragmentRenderer-placedOrderItems';
 

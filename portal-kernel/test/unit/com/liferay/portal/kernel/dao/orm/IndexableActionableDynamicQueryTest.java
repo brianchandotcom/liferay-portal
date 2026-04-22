@@ -116,16 +116,17 @@ public class IndexableActionableDynamicQueryTest {
 
 	private void _addDocument(Document document) throws Exception {
 		Method method = IndexableActionableDynamicQuery.class.getDeclaredMethod(
-			"_addDocument", Document.class);
+			"_addDocument", Document.class, List.class);
 
 		method.setAccessible(true);
 
-		method.invoke(indexableActionableDynamicQuery, document);
+		method.invoke(indexableActionableDynamicQuery, document, _documents);
 	}
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 
+	private final List<Document> _documents = new ArrayList<>();
 	private ServiceRegistration<IndexerRegistry>
 		_indexerRegistryServiceRegistration;
 	private ServiceRegistration<IndexWriterHelper>

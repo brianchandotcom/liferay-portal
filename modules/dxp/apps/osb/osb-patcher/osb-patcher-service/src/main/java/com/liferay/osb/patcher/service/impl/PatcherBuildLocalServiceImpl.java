@@ -253,11 +253,12 @@ public class PatcherBuildLocalServiceImpl
 		int oldQaStatus = patcherBuild.getQaStatus();
 		int oldStatus = patcherBuild.getStatus();
 
-		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setFileName(fileName);
+		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setQaStatus(qaStatus);
 		patcherBuild.setSourceName(sourceName);
 		patcherBuild.setStatus(status);
+		patcherBuild.setStatusDate(new Date());
 
 		User user = _userLocalService.getUser(userId);
 
@@ -396,6 +397,7 @@ public class PatcherBuildLocalServiceImpl
 
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setStatus(status);
+		patcherBuild.setStatusDate(new Date());
 
 		User user = _userLocalService.getUser(userId);
 

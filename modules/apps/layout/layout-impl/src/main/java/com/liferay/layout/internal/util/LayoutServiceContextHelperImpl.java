@@ -159,22 +159,22 @@ public class LayoutServiceContextHelperImpl
 				PermissionThreadLocal.getPermissionChecker();
 			_originalName = PrincipalThreadLocal.getName();
 
-			_originalServiceContext =
+			ServiceContext originalServiceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			if (_originalServiceContext == null) {
+			if (originalServiceContext == null) {
 				_httpServletRequest = _createMockHttpServletRequest();
 				_httpServletResponse = new DummyHttpServletResponse();
 				_originalHttpServletRequest = null;
 			}
 			else {
 				ThemeDisplay themeDisplay =
-					_originalServiceContext.getThemeDisplay();
+					originalServiceContext.getThemeDisplay();
 
-				if (_originalServiceContext.getRequest() != null) {
-					_httpServletRequest = _originalServiceContext.getRequest();
+				if (originalServiceContext.getRequest() != null) {
+					_httpServletRequest = originalServiceContext.getRequest();
 					_originalHttpServletRequest =
-						_originalServiceContext.getRequest();
+						originalServiceContext.getRequest();
 				}
 				else if ((themeDisplay != null) &&
 						 (themeDisplay.getRequest() != null)) {
@@ -187,9 +187,8 @@ public class LayoutServiceContextHelperImpl
 					_originalHttpServletRequest = null;
 				}
 
-				if (_originalServiceContext.getResponse() != null) {
-					_httpServletResponse =
-						_originalServiceContext.getResponse();
+				if (originalServiceContext.getResponse() != null) {
+					_httpServletResponse = originalServiceContext.getResponse();
 				}
 				else if ((themeDisplay != null) &&
 						 (themeDisplay.getResponse() != null)) {
@@ -257,8 +256,7 @@ public class LayoutServiceContextHelperImpl
 			PermissionThreadLocal.setPermissionChecker(
 				_originalPermissionChecker);
 			PrincipalThreadLocal.setName(_originalName, false);
-			ServiceContextThreadLocal.pushServiceContext(
-				_originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 
 			if (_originalHttpServletRequest == null) {
 				return;
@@ -558,7 +556,6 @@ public class LayoutServiceContextHelperImpl
 			_originalHttpServletRequestAttributesMap;
 		private final String _originalName;
 		private final PermissionChecker _originalPermissionChecker;
-		private final ServiceContext _originalServiceContext;
 		private final PermissionChecker _permissionChecker;
 		private final User _user;
 

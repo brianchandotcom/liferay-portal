@@ -265,7 +265,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 						);
 					}
 				}
-			]}
+			].filter(Boolean)}
 			trigger={
 				<ClayButton displayType='primary' size='sm'>
 					{Liferay.Language.get('add-data-source')}

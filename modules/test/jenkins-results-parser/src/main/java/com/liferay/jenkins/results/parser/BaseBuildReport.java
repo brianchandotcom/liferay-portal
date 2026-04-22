@@ -102,6 +102,39 @@ public abstract class BaseBuildReport implements BuildReport {
 	}
 
 	@Override
+	public List<FailureReport> getFailureReports() {
+		List<FailureReport> failureReports = new ArrayList<>();
+
+		if (!isFailing()) {
+			return failureReports;
+		}
+
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (buildReportJSONObject == null) {
+			return failureReports;
+		}
+
+		JSONArray failureReportsJSONArray = buildReportJSONObject.optJSONArray(
+			"failureReports");
+
+		if (failureReportsJSONArray == null) {
+			return failureReports;
+		}
+
+		for (int i = 0; i < failureReportsJSONArray.length(); i++) {
+			JSONObject failureReportJSONObject =
+				failureReportsJSONArray.getJSONObject(i);
+
+			failureReports.add(
+				FailureReportFactory.newFailureReport(
+					this, failureReportJSONObject.getString("message"), null));
+		}
+
+		return failureReports;
+	}
+
+	@Override
 	public JenkinsMaster getJenkinsMaster() {
 		if (_jenkinsMaster != null) {
 			return _jenkinsMaster;

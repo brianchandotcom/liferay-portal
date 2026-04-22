@@ -30,6 +30,8 @@ public interface BuildReport {
 
 	public String getFailureMessage();
 
+	public List<FailureReport> getFailureReports();
+
 	public JenkinsMaster getJenkinsMaster();
 
 	public String getJobName();

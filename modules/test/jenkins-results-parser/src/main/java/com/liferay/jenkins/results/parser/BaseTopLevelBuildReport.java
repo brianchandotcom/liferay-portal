@@ -208,6 +208,26 @@ public abstract class BaseTopLevelBuildReport
 	}
 
 	@Override
+	public List<FailureReport> getFailureReports() {
+		if (_failureReports != null) {
+			return _failureReports;
+		}
+
+		List<FailureReport> failureReports = new ArrayList<>(
+			super.getFailureReports());
+
+		for (DownstreamBuildReport downstreamBuildReport :
+				getDownstreamBuildReports()) {
+
+			failureReports.addAll(downstreamBuildReport.getFailureReports());
+		}
+
+		_failureReports = failureReports;
+
+		return _failureReports;
+	}
+
+	@Override
 	public URL getJenkinsReportURL() {
 		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
@@ -434,6 +454,7 @@ public abstract class BaseTopLevelBuildReport
 	private ControllerBuildReport _controllerBuildReport;
 	private final Set<DownstreamBuildReport> _downstreamBuildReports =
 		new HashSet<>();
+	private List<FailureReport> _failureReports;
 	private JobReport _jobReport;
 
 }

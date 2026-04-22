@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
@@ -26,8 +27,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -50,6 +53,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -59,6 +63,7 @@ import com.liferay.portlet.test.MockLiferayPortletContext;
 
 import jakarta.portlet.Portlet;
 import jakarta.portlet.PortletPreferences;
+import jakarta.portlet.PortletRequest;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
@@ -67,6 +72,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -279,6 +285,27 @@ public class AssetPublisherDisplayContextTest {
 	}
 
 	@Test
+	public void testGetSelectCollectionProps() throws Exception {
+		Map<String, Object> selectCollectionProps = ReflectionTestUtil.invoke(
+			_getAssetPublisherDisplayContext(
+				LayoutTestUtil.addTypePortletLayout(_group),
+				new PortletPreferencesImpl()),
+			"getSelectCollectionProps", new Class<?>[0]);
+
+		Assert.assertEquals(
+			selectCollectionProps.get("addAssetListEntryURL"),
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					_mockLiferayPortletRenderRequest,
+					_themeDisplay.getScopeGroup(),
+					AssetListPortletKeys.ASSET_LIST, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString());
+	}
+
+	@Test
 	public void testIsEnableSetAsDefaultAssetPublisher() throws Exception {
 		Assert.assertFalse(
 			ReflectionTestUtil.invoke(
@@ -367,7 +394,7 @@ public class AssetPublisherDisplayContextTest {
 			Layout layout, PortletPreferences portletPreferences)
 		throws Exception {
 
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+		_mockLiferayPortletRenderRequest =
 			new TestMockLiferayPortletRenderRequest(
 				new MockHttpServletRequest());
 
@@ -379,33 +406,35 @@ public class AssetPublisherDisplayContextTest {
 			(LiferayPortletConfig)PortletConfigFactoryUtil.create(
 				portlet, null);
 
-		mockLiferayPortletRenderRequest.setAttribute(
+		_mockLiferayPortletRenderRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_CONFIG, liferayPortletConfig);
 
 		String path = "/view.jsp";
 
-		mockLiferayPortletRenderRequest.setAttribute(
+		_mockLiferayPortletRenderRequest.setAttribute(
 			MVCRenderConstants.
 				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
 			new MockLiferayPortletContext(path));
 
-		mockLiferayPortletRenderRequest.setAttribute(
+		_mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.PORTLET_ID, AssetPublisherPortletKeys.ASSET_PUBLISHER);
-		mockLiferayPortletRenderRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(layout, portletPreferences));
 
-		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
-		mockLiferayPortletRenderRequest.setParameter(
+		_themeDisplay = _getThemeDisplay(layout, portletPreferences);
+
+		_mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+
+		_mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
+		_mockLiferayPortletRenderRequest.setParameter(
 			"portletResource", AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
 		ReflectionTestUtil.invoke(
 			_portlet, "doDispatch",
 			new Class<?>[] {RenderRequest.class, RenderResponse.class},
-			mockLiferayPortletRenderRequest,
+			_mockLiferayPortletRenderRequest,
 			new TestMockLiferayPortletRenderResponse());
 
-		return mockLiferayPortletRenderRequest.getAttribute(
+		return _mockLiferayPortletRenderRequest.getAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT);
 	}
 
@@ -423,6 +452,7 @@ public class AssetPublisherDisplayContextTest {
 
 		themeDisplay.setCompany(_company);
 		themeDisplay.setLayout(layout);
+		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRealUser(TestPropsValues.getUser());
@@ -482,6 +512,9 @@ public class AssetPublisherDisplayContextTest {
 	}
 
 	private static Configuration _assetPublisherWebConfiguration;
+	private static MockLiferayPortletRenderRequest
+		_mockLiferayPortletRenderRequest;
+	private static ThemeDisplay _themeDisplay;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
@@ -508,6 +541,9 @@ public class AssetPublisherDisplayContextTest {
 
 	@Inject
 	private Localization _localization;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject(
 		filter = "component.name=com.liferay.asset.publisher.web.internal.portlet.AssetPublisherPortlet"

@@ -318,7 +318,7 @@ test('can send notification email via download action', async ({
 	const fileChooser = await fileChooserPromise;
 
 	await fileChooser.setFiles(
-		path.join(__dirname, '../../dependencies', 'sampleFile.txt')
+		path.join(__dirname, '../dependencies', 'sampleFile.txt')
 	);
 
 	await viewObjectEntriesPage.page

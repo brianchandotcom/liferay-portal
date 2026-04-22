@@ -166,3 +166,51 @@ for (int i = 0; i < 8; i++) {
 	selectedMultiselectItems="<%= multiselectDisplayContext.getSelectedMultiselectItems() %>"
 	sourceMultiselectItems="<%= multiselectDisplayContext.getSourceMultiselectItems() %>"
 />
+
+<h3>FORM GROUP</h3>
+
+<blockquote>
+	<p>Form group variants: default and small. Labels and controls should scale proportionally with the variant.</p>
+</blockquote>
+
+<div class="form-group" id="formGroupDefault">
+	<label class="control-label" for="inputDefault">Default Input</label>
+
+	<input class="form-control" id="inputDefault" type="text" />
+</div>
+
+<div class="form-group form-group-sm" id="formGroupSm">
+	<label class="control-label" for="inputSm">Small Input</label>
+
+	<input class="form-control form-control-sm" id="inputSm" type="text" />
+</div>
+
+<div class="form-group" id="formGroupDefaultTextarea">
+	<label class="control-label" for="textareaDefault">Default Textarea</label>
+
+	<textarea class="form-control" id="textareaDefault"></textarea>
+</div>
+
+<div class="form-group form-group-sm" id="formGroupSmTextarea">
+	<label class="control-label" for="textareaSm">Small Textarea</label>
+
+	<textarea class="form-control form-control-sm" id="textareaSm"></textarea>
+</div>
+
+<div class="form-group" id="formGroupDefaultSelect">
+	<label class="control-label" for="selectDefault">Default Select</label>
+
+	<select class="form-control" id="selectDefault">
+		<option>Option 1</option>
+		<option>Option 2</option>
+	</select>
+</div>
+
+<div class="form-group form-group-sm" id="formGroupSmSelect">
+	<label class="control-label" for="selectSm">Small Select</label>
+
+	<select class="form-control form-control-sm" id="selectSm">
+		<option>Option 1</option>
+		<option>Option 2</option>
+	</select>
+</div>

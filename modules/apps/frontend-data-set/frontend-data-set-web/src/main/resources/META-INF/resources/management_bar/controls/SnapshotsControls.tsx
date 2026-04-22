@@ -207,17 +207,17 @@ const SnapshotsControls = () => {
 		(view: ISnapshot) => view.shared
 	);
 
-	const snapshotGroups = [
-		{items: [defaultSnapshotItem, ...ownedSnapshots]},
-		...(sharedSnapshots.length
-			? [
-					{
-						items: sharedSnapshots,
-						label: Liferay.Language.get('shared-with-me'),
-					},
-			  ]
-			: []),
-	];
+	const hasSharedSnapshots = sharedSnapshots.length > 0;
+
+	const pickerItems = hasSharedSnapshots
+		? [
+				{items: [defaultSnapshotItem, ...ownedSnapshots]},
+				{
+					items: sharedSnapshots,
+					label: Liferay.Language.get('shared-with-me'),
+				},
+		  ]
+		: [defaultSnapshotItem, ...ownedSnapshots];
 
 	const activeSnapshotLabel = activeSnapshot.label ?? '';
 	const initialLabel =
@@ -469,7 +469,7 @@ const SnapshotsControls = () => {
 			<ManagementToolbar.Item>
 				<Picker
 					as={SnapshotsControlsTrigger}
-					items={snapshotGroups}
+					items={pickerItems}
 					messages={{
 						itemDescribedby: Liferay.Language.get(
 							'you-are-currently-on-a-text-element,-inside-of-a-list-box'
@@ -491,16 +491,22 @@ const SnapshotsControls = () => {
 							: Liferay.Language.get('default-view')
 					}
 				>
-					{(group) => (
-						<ClayDropDown.Group
-							header={group.label}
-							items={group.items}
-						>
-							{(view) => (
-								<Option key={view.erc}>{view.label}</Option>
-							)}
-						</ClayDropDown.Group>
-					)}
+					{(itemOrGroup: any) =>
+						hasSharedSnapshots ? (
+							<ClayDropDown.Group
+								header={itemOrGroup.label}
+								items={itemOrGroup.items}
+							>
+								{(view: ISnapshot) => (
+									<Option key={view.erc}>{view.label}</Option>
+								)}
+							</ClayDropDown.Group>
+						) : (
+							<Option key={itemOrGroup.erc}>
+								{itemOrGroup.label}
+							</Option>
+						)
+					}
 				</Picker>
 			</ManagementToolbar.Item>
 

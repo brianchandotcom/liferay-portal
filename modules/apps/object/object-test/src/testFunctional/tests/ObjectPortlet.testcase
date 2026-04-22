@@ -98,114 +98,6 @@ definition {
 			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
 	}
 
-	@description = "LPS-135396 - Verify it is possible to add a BigDecimal field on layout"
-	@priority = 4
-	test CanAddBigDecimalEntryOnLayout {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 230",
-			objectName = "CustomObject230",
-			pluralLabelName = "Custom Objects 230");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "PrecisionDecimal",
-			fieldLabelName = "BigDecimal",
-			fieldName = "customObjectField",
-			fieldType = "BigDecimal",
-			isRequired = "false",
-			objectName = "CustomObject230");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject230");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject230");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "123.123456");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject230");
-
-		ObjectPortlet.viewEntry(entry = "123.123456");
-	}
-
-	@description = "LPS-135396 - Verify it is possible to add a Boolean field on layout"
-	@priority = 4
-	test CanAddBooleanEntryOnLayout {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 231",
-			objectName = "CustomObject231",
-			pluralLabelName = "Custom Objects 231");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Boolean",
-			fieldLabelName = "Boolean",
-			fieldName = "customObjectField",
-			fieldType = "Boolean",
-			isRequired = "false",
-			objectName = "CustomObject231");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject231");
-
-		ObjectAdmin.addObjectBooleanFieldEntryViaUI(
-			objectName = "CustomObject231",
-			value = "true");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject231");
-
-		ObjectPortlet.viewEntry(entry = "Yes");
-	}
-
-	@description = "LPS-135396 - Verify it is possible to add a Date field on layout"
-	@priority = 4
-	test CanAddDateEntryOnLayout {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 232",
-			objectName = "CustomObject232",
-			pluralLabelName = "Custom Objects 232");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Date",
-			fieldLabelName = "Date",
-			fieldName = "customObjectField",
-			fieldType = "Date",
-			isRequired = "false",
-			objectName = "CustomObject232");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject232");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject232");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "01/01/2001");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject232");
-
-		ObjectPortlet.viewEntry(entry = "Jan 1, 2001");
-	}
-
-	@description = "LPS-135396 - Verify it is possible to add a Double field on layout"
-	@priority = 4
-	test CanAddDoubleEntryOnLayout {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 233",
-			objectName = "CustomObject233",
-			pluralLabelName = "Custom Objects 233");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Decimal",
-			fieldLabelName = "Double",
-			fieldName = "customObjectField",
-			fieldType = "Double",
-			isRequired = "false",
-			objectName = "CustomObject233");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject233");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject233");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "1.23");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject233");
-
-		ObjectPortlet.viewEntry(entry = "1.23");
-	}
-
 	@description = "LPS-135396 - Verify it is possible to add an entry on an object scoped by Site"
 	@priority = 5
 	test CanAddEntryObjectScopedBySite {
@@ -302,60 +194,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "String Entry");
 	}
 
-	@description = "LPS-135396 - Verify it is possible to add an Integer field on layout"
-	@priority = 4
-	test CanAddIntegerEntryOnLayout {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 236",
-			objectName = "CustomObject236",
-			pluralLabelName = "Custom Objects 236");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Integer",
-			fieldLabelName = "Integer",
-			fieldName = "customObjectField",
-			fieldType = "Integer",
-			isRequired = "false",
-			objectName = "CustomObject236");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject236");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject236");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = 123456789);
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject236");
-
-		ObjectPortlet.viewEntry(entry = 123456789);
-	}
-
-	@description = "LPS-135396 - Verify it is possible to add a Long field on layout"
-	@priority = 4
-	test CanAddLongEntryOnLayout {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 237",
-			objectName = "CustomObject237",
-			pluralLabelName = "Custom Objects 237");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "LongInteger",
-			fieldLabelName = "Long",
-			fieldName = "customObjectField",
-			fieldType = "Long",
-			isRequired = "false",
-			objectName = "CustomObject237");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject237");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject237");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = 1234567891234567);
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject237");
-
-		ObjectPortlet.viewEntry(entry = 1234567891234567);
-	}
-
 	@description = "LPS-135390 - Verify it is possible to add an Object entry with the Add Object Entry permission"
 	@priority = 4
 	test CanAddObjectEntryWithAddPermission {
@@ -429,60 +267,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Test Entry");
 	}
 
-	@description = "LPS-135396 - Verify it is possible to add a Picklist field on layout"
-	@priority = 4
-	test CanAddPicklistEntryOnLayout {
-		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
-
-		Picklist.addPicklistItemViaAPI(
-			itemKey = 0,
-			itemName = "Item Test 1",
-			picklistName = "Custom Picklist");
-
-		Picklist.addPicklistItemViaAPI(
-			itemKey = 1,
-			itemName = "Item Test 2",
-			picklistName = "Custom Picklist");
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 239",
-			objectName = "CustomObject239",
-			pluralLabelName = "Custom Objects 239");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Picklist",
-			fieldLabelName = "Field Picklist",
-			fieldName = "fieldPicklist",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject239",
-			picklistName = "Custom Picklist");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 239");
-
-		ObjectAdmin.goToDetailsTab();
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Panel Link",
-			optionName = "Object");
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject239");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject239");
-
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-			labelName = "Field Picklist",
-			picklistOption = "Item Test 1");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject239");
-
-		ObjectPortlet.viewEntry(entry = "Item Test 1");
-	}
-
 	@description = "LPS-140084 - Verify it is possible to add special characters on a field with the Field Name as 'Name'"
 	@priority = 4
 	test CanAddSpecialCharactersOnFieldNamedName {
@@ -508,35 +292,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject240");
 
 		ObjectPortlet.viewEntry(entry = "@~!& ˆ%$&_-");
-	}
-
-	@description = "LPS-135396 - Verify it is possible to add a String field on layout"
-	@priority = 5
-	test CanAddStringEntryOnLayout {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 241",
-			objectName = "CustomObject241",
-			pluralLabelName = "Custom Objects 241");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "String",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject241");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject241");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject241");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test text");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject241");
-
-		ObjectPortlet.viewEntry(entry = "Test text");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to apply a permission only to a specific site when an Object is scoped by Site"

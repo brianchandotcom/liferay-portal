@@ -273,7 +273,6 @@ network:
     timeouts: {}
 networkPolicy:
     allowGatewayIngress: true
-    allowIntraApp: true
     annotations: {}
     enabled: false
     extraIngress: []

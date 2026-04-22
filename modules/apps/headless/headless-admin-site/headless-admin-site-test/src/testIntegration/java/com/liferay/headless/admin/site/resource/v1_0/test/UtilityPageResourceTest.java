@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,6 +58,7 @@ import java.net.URL;
 
 import java.text.DateFormat;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -1083,20 +1085,26 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
 
-		utilityPage.setDateCreated(dateFormat.parse("2023-01-01"));
-		utilityPage.setDateModified(dateFormat.parse("2023-02-02"));
+		Date modifiedDate = dateFormat.parse("2023-01-01");
 
-		UtilityPage putUtilityPage1 = utilityPageResource.putSiteUtilityPage(
+		utilityPage.setDateModified(modifiedDate);
+
+		UtilityPage putUtilityPage = utilityPageResource.putSiteUtilityPage(
 			testGroup.getExternalReferenceCode(),
 			utilityPage.getExternalReferenceCode(), utilityPage);
 
-		UtilityPage putUtilityPage2 = utilityPageResource.putSiteUtilityPage(
+		Assert.assertEquals(
+			utilityPage.getDateModified(), putUtilityPage.getDateModified());
+
+		utilityPage.setDateModified(
+			new Date(modifiedDate.getTime() + Time.SECOND));
+
+		putUtilityPage = utilityPageResource.putSiteUtilityPage(
 			testGroup.getExternalReferenceCode(),
-			utilityPage.getExternalReferenceCode(), putUtilityPage1);
+			utilityPage.getExternalReferenceCode(), utilityPage);
 
 		Assert.assertEquals(
-			putUtilityPage1.getDateModified(),
-			putUtilityPage2.getDateModified());
+			utilityPage.getDateModified(), putUtilityPage.getDateModified());
 	}
 
 	private void _testPutSiteUtilityPageWithPageSpecifications()

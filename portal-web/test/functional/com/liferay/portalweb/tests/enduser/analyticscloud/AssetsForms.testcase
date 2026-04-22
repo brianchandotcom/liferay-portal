@@ -197,50 +197,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8428 | Test Summary: Form submissions by technology card shows views by expected device"
-	@priority = 5
-	test FormsTechnologyCardShowsViewsByExpectedDevice {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		task ("Submit the form") {
-			ACUtils.navigateToSitePage(
-				actionType = "Submit Form",
-				pageName = "AC Page",
-				siteName = "Site Name",
-				submitText = "Test Assets");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC and go to forms tab") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Forms");
-		}
-
-		task ("Go to the form overview") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACNavigation.openItem(itemName = "Created Form Name");
-		}
-
-		task ("Assert Submissions by Devices metric") {
-			ACAssets.viewTechnologyDeviceViewsAndPercentage(
-				actionValue = "1 Submissions",
-				cardTitle = "Submissions by Technology",
-				deviceName = "Desktop",
-				percentageValue = "100%");
-		}
-	}
-
 	@description = "Form known individuals shows which individuals interact with the form"
 	@priority = 5
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {

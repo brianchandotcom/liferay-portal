@@ -8,10 +8,17 @@ package com.liferay.headless.object.internal.dto.v1_0.converter;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -42,8 +49,13 @@ public class CollaboratorDTOConverter
 			DTOConverterContext dtoConverterContext, SharingEntry sharingEntry)
 		throws Exception {
 
-		User user = _getUser(sharingEntry);
-		UserGroup userGroup = _getUserGroup(sharingEntry);
+		User user = _fetchUser(sharingEntry);
+		UserGroup userGroup = _fetchUserGroup(sharingEntry);
+
+		String ticketEmailAddress = _fetchEmailAddress(
+			_fetchTicket(sharingEntry));
+
+		boolean hasViewPermission = _hasViewPermission(user);
 
 		return new Collaborator() {
 			{
@@ -57,82 +69,150 @@ public class CollaboratorDTOConverter
 						dtoConverterContext, _portal,
 						_userLocalService.getUser(sharingEntry.getUserId())));
 				setDateExpired(sharingEntry::getExpirationDate);
-				setExternalReferenceCode(
+				setEmailAddress(
 					() -> {
-						if (user != null) {
-							return user.getExternalReferenceCode();
+						if (ticketEmailAddress != null) {
+							return ticketEmailAddress;
 						}
 
-						return userGroup.getExternalReferenceCode();
-					});
-				setId(
-					() -> {
 						if (user != null) {
-							return user.getUserId();
-						}
-
-						return userGroup.getUserGroupId();
-					});
-				setName(
-					() -> {
-						if (user != null) {
-							return user.getFullName();
-						}
-
-						return userGroup.getName();
-					});
-				setPortrait(
-					() -> {
-						if (user != null) {
-							if (user.getPortraitId() == 0) {
-								return null;
-							}
-
-							ThemeDisplay themeDisplay = new ThemeDisplay() {
-								{
-									setPathImage(_portal.getPathImage());
-								}
-							};
-
-							return user.getPortraitURL(themeDisplay);
+							return user.getEmailAddress();
 						}
 
 						return null;
 					});
+				setExternalReferenceCode(
+					() -> {
+						if (user != null) {
+							if (!hasViewPermission) {
+								return null;
+							}
+
+							return user.getExternalReferenceCode();
+						}
+
+						if (userGroup != null) {
+							return userGroup.getExternalReferenceCode();
+						}
+
+						return null;
+					});
+				setId(
+					() -> {
+						if ((user != null) && hasViewPermission) {
+							return user.getUserId();
+						}
+
+						if (userGroup != null) {
+							return userGroup.getUserGroupId();
+						}
+
+						return null;
+					});
+				setName(
+					() -> {
+						if (user != null) {
+							if (!hasViewPermission) {
+								return user.getEmailAddress();
+							}
+
+							return user.getFullName();
+						}
+
+						if (userGroup != null) {
+							return userGroup.getName();
+						}
+
+						return ticketEmailAddress;
+					});
+				setPortrait(
+					() -> {
+						if ((user == null) || !hasViewPermission ||
+							(user.getPortraitId() == 0)) {
+
+							return null;
+						}
+
+						ThemeDisplay themeDisplay = new ThemeDisplay() {
+							{
+								setPathImage(_portal.getPathImage());
+							}
+						};
+
+						return user.getPortraitURL(themeDisplay);
+					});
 				setShare(sharingEntry::isShareable);
 				setType(
 					() -> {
-						if (user != null) {
+						if ((user != null) && hasViewPermission) {
 							return "User";
 						}
 
-						return "UserGroup";
+						if (userGroup != null) {
+							return "UserGroup";
+						}
+
+						return "Email";
 					});
 			}
 		};
 	}
 
-	private User _getUser(SharingEntry sharingEntry) throws Exception {
-		if (sharingEntry.getToUserId() > 0) {
-			return _userLocalService.getUser(sharingEntry.getToUserId());
+	private String _fetchEmailAddress(Ticket ticket) throws Exception {
+		if (ticket == null) {
+			return null;
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			ticket.getExtraInfo());
+
+		return jsonObject.getString("emailAddress");
+	}
+
+	private Ticket _fetchTicket(SharingEntry sharingEntry) {
+		if (sharingEntry.getToTicketId() > 0) {
+			return _ticketLocalService.fetchTicket(
+				sharingEntry.getToTicketId());
 		}
 
 		return null;
 	}
 
-	private UserGroup _getUserGroup(SharingEntry sharingEntry)
-		throws Exception {
+	private User _fetchUser(SharingEntry sharingEntry) {
+		if (sharingEntry.getToUserId() > 0) {
+			return _userLocalService.fetchUser(sharingEntry.getToUserId());
+		}
 
+		return null;
+	}
+
+	private UserGroup _fetchUserGroup(SharingEntry sharingEntry) {
 		if (sharingEntry.getToUserGroupId() > 0) {
-			return _userGroupLocalService.getUserGroup(
+			return _userGroupLocalService.fetchUserGroup(
 				sharingEntry.getToUserGroupId());
 		}
 
 		return null;
 	}
 
+	private boolean _hasViewPermission(User user) throws Exception {
+		if (user == null) {
+			return false;
+		}
+
+		return UserPermissionUtil.contains(
+			GuestOrUserUtil.getPermissionChecker(), user.getUserId(),
+			ActionKeys.VIEW);
+	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

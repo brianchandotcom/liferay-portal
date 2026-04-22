@@ -113,4 +113,38 @@ describe('StatusLabel', () => {
 			expect(container.querySelectorAll('.label')).toHaveLength(1);
 		});
 	});
+
+	describe('Expired tooltip', () => {
+		beforeAll(() => {
+			jest.useFakeTimers();
+			jest.setSystemTime(NOW);
+		});
+
+		afterAll(() => {
+			jest.useRealTimers();
+		});
+
+		it('exposes focus, tooltip and aria-label attributes on the Expired label', () => {
+			const past = new Date(NOW.getTime() - MS_PER_DAY).toISOString();
+
+			render(<StatusLabel expirationDate={past} label="expired" />);
+
+			const badge = screen
+				.getByText('expired')
+				.closest('span[tabindex]') as HTMLElement;
+
+			expect(badge).not.toBeNull();
+			expect(badge).toHaveAttribute('tabindex', '0');
+			expect(badge.getAttribute('title')).toBeTruthy();
+			expect(badge.getAttribute('aria-label')).toBeTruthy();
+		});
+
+		it('falls back to the plain Expired label when no expirationDate is provided', () => {
+			render(<StatusLabel label="expired" />);
+
+			const badge = screen.getByText('expired').closest('span[tabindex]');
+
+			expect(badge).toBeNull();
+		});
+	});
 });

@@ -342,10 +342,10 @@ function _set_up_aws_eks {
 }
 
 function _set_up_aws_gitops {
-	local terraform_args="${1}"
 	local bucket_name="${2}"
-	local region="${3}"
 	local deployment_name="${4}"
+	local region="${3}"
+	local terraform_args="${1}"
 
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/gitops"
 
@@ -361,10 +361,10 @@ function _set_up_aws_gitops {
 }
 
 function _set_up_aws_grafana {
-	local terraform_args="${1}"
 	local bucket_name="${2}"
-	local region="${3}"
 	local deployment_name="${4}"
+	local region="${3}"
+	local terraform_args="${1}"
 
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 

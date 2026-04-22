@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -65,6 +66,16 @@ public class ViewSharedWithMeSectionDisplayContextTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Override
+	@Test
+	public void testGetAdditionalAPIURLParameters() throws Exception {
+		String apiURL = ReflectionTestUtil.invoke(
+			getSectionDisplayContext(getMockHttpServletRequest()), "getAPIURL",
+			new Class<?>[0]);
+
+		Assert.assertTrue(apiURL, apiURL.contains("sort=dateModified:desc"));
+	}
 
 	@Override
 	@Test

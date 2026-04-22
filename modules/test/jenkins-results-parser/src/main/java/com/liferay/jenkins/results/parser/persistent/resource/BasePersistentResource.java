@@ -151,7 +151,9 @@ public abstract class BasePersistentResource implements PersistentResource {
 				}
 			}
 
-			if (allSucceeded) {
+			_attempts++;
+
+			if (allSucceeded || (_attempts >= _MAX_TOUCH_ATTEMPTS)) {
 				_touched = true;
 			}
 		}
@@ -424,12 +426,15 @@ public abstract class BasePersistentResource implements PersistentResource {
 			getBaseS3ObjectPath(), "/data.json.gz");
 	}
 
+	private static final int _MAX_TOUCH_ATTEMPTS = 2;
+
 	private static final long _MAX_WAIT_TIME = 1000 * 60 * 120;
 
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"https?://.+/job/(?<jobName>[^/]+)/(?<buildNumber>\\d+)");
 
 	private final Map<String, Artifact> _artifacts = new HashMap<>();
+	private volatile int _attempts;
 	private Boolean _buildCachingEnabled;
 	private final BuildDatabase _buildDatabase;
 	private String _controllerBuildURL;

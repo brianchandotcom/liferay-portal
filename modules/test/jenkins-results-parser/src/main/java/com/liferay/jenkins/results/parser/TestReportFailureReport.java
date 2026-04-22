@@ -13,8 +13,8 @@ public class TestReportFailureReport extends BaseFailureReport {
 	@Override
 	public String getMessage() {
 		return JenkinsResultsParserUtil.combine(
-			"Error Details: ", _testReport.getErrorDetails(),
-			"\n\nError Stack Trace", _testReport.getErrorStackTrace());
+			"Error Details:\n", _testReport.getErrorDetails(),
+			"\n\nError Stack Trace:\n", _testReport.getErrorStackTrace());
 	}
 
 	protected TestReportFailureReport(

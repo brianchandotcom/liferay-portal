@@ -458,7 +458,7 @@ public abstract class BaseBuild implements Build {
 				}
 			}
 
-			if (failureReportsJSONArray.isEmpty()) {
+			if (!failureReportsJSONArray.isEmpty()) {
 				buildReportJSONObject.put(
 					"failureReports", failureReportsJSONArray);
 			}

@@ -1,8 +1,10 @@
 ---
+
 allowed-tools: Bash(curl *), Bash(git *), Glob, Grep, Read
 argument-hint: "[commit hash or description]"
 description: Create a Jira bug ticket in the LPD project through the REST API. Use when the user asks to create or file a Jira bug or LPD ticket.
 name: jira-bug
+
 ---
 
 # Create a Jira Bug in LPD

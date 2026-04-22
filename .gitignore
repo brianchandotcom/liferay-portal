@@ -16,6 +16,7 @@
 .DS_Store
 .ant-targets-build.xml
 .ant_targets
+.claude/CLAUDE.local.md
 .gh.json
 .sass-cache
 .sass_cache_*.css
@@ -31,6 +32,7 @@
 /.sonar
 /.xmlcatalog
 /ActiveMQ
+/CLAUDE.local.md
 /WEB-INF
 /ant.install.log
 /api

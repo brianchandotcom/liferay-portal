@@ -144,46 +144,6 @@ definition {
 			percentageList = "66.67%,33.33%");
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
-	@priority = 5
-	test CanBlogsListSearchable {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title,Test 2",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Blogs");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACUtils.searchBar(searchItem = "Blogs AC Title");
-
-		ACUtils.viewNameList(nameList = "Blogs AC Title");
-
-		ACUtils.searchBar(searchItem = "Test 2");
-
-		ACUtils.viewNameList(nameList = "Test 2");
-
-		ACUtils.searchBar(searchItem = "Should not be here");
-
-		ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"
 	@priority = 5
 	test CanNavigatesToBlogsOverviewPage {

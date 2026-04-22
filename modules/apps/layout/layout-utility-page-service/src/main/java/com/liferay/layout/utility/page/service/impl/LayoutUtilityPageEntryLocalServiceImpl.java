@@ -390,6 +390,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId,

@@ -395,9 +395,13 @@ function FolderItemSelectorModalContent({
 				return {
 					...props,
 					onClick: () => {
+						if (!assetLibrary) {
+							return;
+						}
+
 						handleSpaceClick({
-							name: assetLibrary!.name,
-							scopeId: assetLibrary!.groupId,
+							name: assetLibrary.name,
+							scopeId: assetLibrary.groupId,
 						});
 					},
 					onSelectChange: null,

@@ -131,14 +131,14 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		DBType dbType = db.getDBType();
 
+		_oracle = dbType == DBType.ORACLE;
+
 		if (dbType == DBType.SQLSERVER) {
 			_sqlParameterLimit = _SQL_SERVER_PARAMETER_LIMIT;
 		}
 		else {
 			_sqlParameterLimit = _SQL_PLACEHOLDER_LIMIT;
 		}
-
-		_oracleDB = dbType == DBType.ORACLE;
 	}
 
 	private Map<Node, Collection<Node>> _buildClosureMap(
@@ -375,7 +375,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 	private Predicate _getChildPKColumnPredicate(
 		Column<?, Long> childPKColumn, Long[] childPrimaryKeysArray) {
 
-		if (!_oracleDB) {
+		if (!_oracle) {
 			return childPKColumn.in(childPrimaryKeysArray);
 		}
 
@@ -548,7 +548,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
-	private boolean _oracleDB;
+	private boolean _oracle;
 	private int _sqlParameterLimit;
 
 	@Reference

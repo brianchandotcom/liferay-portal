@@ -87,9 +87,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -398,12 +400,16 @@ public class CPDefinitionsImporter {
 					cpDefinition.getModelClassName(),
 					cpDefinition.getCPDefinitionId());
 
-			assetCategories.addAll(cpDefinitionAssetCategories);
+			Set<AssetCategory> mergedAssetCategories = new HashSet<>(
+				assetCategories);
+
+			mergedAssetCategories.addAll(cpDefinitionAssetCategories);
 
 			cpDefinition = _updateCPDefinition(
 				cpDefinition,
 				ListUtil.toLongArray(
-					assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR),
+					new ArrayList<>(mergedAssetCategories),
+					AssetCategory.CATEGORY_ID_ACCESSOR),
 				serviceContext);
 
 			Indexer<CPDefinition> indexer =

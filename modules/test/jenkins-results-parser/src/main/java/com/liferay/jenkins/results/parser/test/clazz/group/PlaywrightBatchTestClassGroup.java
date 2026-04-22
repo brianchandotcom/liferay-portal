@@ -364,7 +364,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			new HashMap<>();
 
 		_parsePlaywrightJSONObjects(
-			_playwrightJSONObject.optJSONArray("suites"), rootDir,
+			rootDir, _playwrightJSONObject.optJSONArray("suites"),
 			testClassesByProjectMap);
 
 		for (String projectName : _projectNames) {
@@ -786,7 +786,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _parsePlaywrightJSONObjects(
-		JSONArray suitesJSONArray, File rootDir,
+		File rootDir, JSONArray suitesJSONArray,
 		Map<String, Map<File, TestClass>> testClassesByProjectMap) {
 
 		if (suitesJSONArray == null) {
@@ -801,7 +801,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 			if (subSuitesJSONArray != null) {
 				_parsePlaywrightJSONObjects(
-					subSuitesJSONArray, rootDir, testClassesByProjectMap);
+					rootDir, subSuitesJSONArray, testClassesByProjectMap);
 			}
 
 			JSONArray specsJSONArray = suiteJSONObject.optJSONArray("specs");

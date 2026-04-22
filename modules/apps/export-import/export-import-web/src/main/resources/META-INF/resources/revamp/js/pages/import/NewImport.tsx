@@ -10,7 +10,7 @@ import React, {createContext, useContext} from 'react';
 import {Wizard, WizardStep} from '../../components/Wizard';
 import DataSelectionStep from './steps/DataSelectionStep';
 import FileSelectionStep from './steps/FileSelectionStep';
-import SettingsStep from './steps/SettingsStep';
+import SettingsStep, {SETTINGS_STEP_INITIAL_VALUES} from './steps/SettingsStep';
 
 export const WizardContext = createContext({
 	groupId: 0,
@@ -69,6 +69,7 @@ export function NewImport({
 					description={Liferay.Language.get(
 						'set-up-your-import-configuration'
 					)}
+					initialValues={SETTINGS_STEP_INITIAL_VALUES}
 					onSubmit={async () => {
 						alert('Import started!');
 					}}

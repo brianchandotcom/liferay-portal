@@ -74,14 +74,14 @@ function _configure_s3_bucket {
 				--description "Terraform State Storage Key" \
 				--output text \
 				--policy "{
-						\"Statement\": [{
-							\"Action\": \"kms:*\",
-							\"Effect\": \"Allow\",
-							\"Principal\": {\"AWS\": \"arn:aws:iam::${account_id}:root\"},
-							\"Resource\": \"*\"
-						}],
-						\"Version\": \"2012-10-17\"
-					}" \
+					\"Statement\": [{
+						\"Action\": \"kms:*\",
+						\"Effect\": \"Allow\",
+						\"Principal\": {\"AWS\": \"arn:aws:iam::${account_id}:root\"},
+						\"Resource\": \"*\"
+					}],
+					\"Version\": \"2012-10-17\"
+				}" \
 				--query 'KeyMetadata.KeyId' \
 				--region "${region}")
 
@@ -102,8 +102,8 @@ function _configure_s3_bucket {
 			\"Rules\": [
 				{
 					\"ApplyServerSideEncryptionByDefault\": {
-							\"KMSMasterKeyID\": \"${kms_key_id}\",
-							\"SSEAlgorithm\": \"aws:kms\"
+						\"KMSMasterKeyID\": \"${kms_key_id}\",
+						\"SSEAlgorithm\": \"aws:kms\"
 					}
 				}
 			]
@@ -112,24 +112,24 @@ function _configure_s3_bucket {
 	aws s3api put-object-lock-configuration \
 		--bucket "${bucket_name}" \
 		--object-lock-configuration '{
-				"ObjectLockEnabled": "Enabled",
-				"Rule": {
-					"DefaultRetention": {
-						"Days": 90,
-						"Mode": "GOVERNANCE"
-					}
+			"ObjectLockEnabled": "Enabled",
+			"Rule": {
+				"DefaultRetention": {
+					"Days": 90,
+					"Mode": "GOVERNANCE"
 				}
-			}'\
+			}
+		}'\
 		--region "${region}"
 
 	aws s3api put-public-access-block \
 		--bucket "${bucket_name}" \
 		--public-access-block-configuration '{
-				"BlockPublicAcls": true,
-				"BlockPublicPolicy": true,
-				"IgnorePublicAcls": true,
-				"RestrictPublicBuckets": true
-			}' \
+			"BlockPublicAcls": true,
+			"BlockPublicPolicy": true,
+			"IgnorePublicAcls": true,
+			"RestrictPublicBuckets": true
+		}' \
 		--region "${region}"
 }
 

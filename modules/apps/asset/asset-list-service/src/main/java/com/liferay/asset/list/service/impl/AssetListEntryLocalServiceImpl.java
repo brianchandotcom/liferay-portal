@@ -197,7 +197,11 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 
-		_setAssetListEntryKey(assetListEntry, groupId, title, serviceContext);
+		_setAssetListEntryKey(
+			assetListEntry,
+			GetterUtil.getString(
+				serviceContext.getAttribute("assetListEntryKey")),
+			groupId, title);
 
 		assetListEntry.setTitle(title);
 		assetListEntry.setType(type);
@@ -483,7 +487,14 @@ public class AssetListEntryLocalServiceImpl
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
-		if (Objects.equals(assetListEntry.getTitle(), title)) {
+		String assetListEntryKey = GetterUtil.getString(
+			serviceContext.getAttribute("assetListEntryKey"));
+
+		if (Objects.equals(assetListEntry.getTitle(), title) &&
+			(Validator.isNull(assetListEntryKey) ||
+			 Objects.equals(
+				 assetListEntry.getAssetListEntryKey(), assetListEntryKey))) {
+
 			return assetListEntry;
 		}
 
@@ -491,8 +502,11 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		assetListEntry.setAssetListEntryKey(
-			_generateAssetListEntryKey(assetListEntry.getGroupId(), title));
+
+		_setAssetListEntryKey(
+			assetListEntry, assetListEntryKey, assetListEntry.getGroupId(),
+			title);
+
 		assetListEntry.setTitle(title);
 
 		return assetListEntryPersistence.update(assetListEntry);
@@ -829,22 +843,20 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	private void _setAssetListEntryKey(
-		AssetListEntry assetListEntry, long groupId, String title,
-		ServiceContext serviceContext) {
+		AssetListEntry assetListEntry, String assetListEntryKey, long groupId,
+		String title) {
 
-		String assetListEntryKey = GetterUtil.getString(
-			serviceContext.getAttribute("assetListEntryKey"));
+		if (Validator.isNull(assetListEntryKey) ||
+			!(ExportImportThreadLocal.isImportInProcess() ||
+			  ExportImportThreadLocal.isStagingInProcess())) {
 
-		if (Validator.isNotNull(assetListEntryKey) &&
-			(ExportImportThreadLocal.isImportInProcess() ||
-			 ExportImportThreadLocal.isStagingInProcess())) {
-
-			assetListEntry.setAssetListEntryKey(assetListEntryKey);
-		}
-		else {
 			assetListEntry.setAssetListEntryKey(
 				_generateAssetListEntryKey(groupId, title));
+
+			return;
 		}
+
+		assetListEntry.setAssetListEntryKey(assetListEntryKey);
 	}
 
 	private void _updateAssetListEntryTypeSettings(

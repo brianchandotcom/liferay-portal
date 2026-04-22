@@ -1,0 +1,7 @@
+assemble:
+    -   from: assets
+        into: static
+liferay-one-global-css:
+    name: Liferay One Global CSS
+    type: globalCSS
+    url: global.css

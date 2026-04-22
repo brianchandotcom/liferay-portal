@@ -198,6 +198,15 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	@Override
+	public long getCookiesPreferenceHandlingModifiedDate(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
+
+		return _getScopeConfigurationAttribute(
+			scope, scopePK, this::_getCompanyModifiedDate,
+			this::_getGroupModifiedDate, this::_getSystemModifiedDate);
+	}
+
+	@Override
 	public String getGroupConfigurationURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -514,6 +523,17 @@ public class CookiesConfigurationProviderImpl
 		return companyId;
 	}
 
+	private long _getCompanyModifiedDate(long companyId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getCompanyModifiedDate(companyId);
+	}
+
 	private <T> T _getCookiesConfiguration(
 			Class<T> clazz, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -658,6 +678,17 @@ public class CookiesConfigurationProviderImpl
 			getGroupFloatingIcon(_getCompanyId(groupId), groupId);
 	}
 
+	private long _getGroupModifiedDate(long groupId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getGroupModifiedDate(_getCompanyId(groupId), groupId);
+	}
+
 	private <T> T _getScopeConfigurationAttribute(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK,
 		Function<Long, T> companyFunction, Function<Long, T> groupFunction,
@@ -763,6 +794,17 @@ public class CookiesConfigurationProviderImpl
 
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemFloatingIcon();
+	}
+
+	private long _getSystemModifiedDate() {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getSystemModifiedDate();
 	}
 
 	private boolean _isCompanyCookiesPreferenceHandlingEnabled(long companyId) {

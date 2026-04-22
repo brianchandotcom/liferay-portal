@@ -273,6 +273,14 @@ network:
     gatewayName: ""
     hostnames: []
     timeouts: {}
+networkPolicy:
+    allowGatewayIngress: true
+    allowIntraApp: true
+    annotations: {}
+    enabled: false
+    extraIngress: []
+    gatewayNamespace: envoy-gateway-system
+    gatewayPodLabel: envoy
 nodeSelector: {}
 overlay:
     bucketName: ""

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
@@ -116,6 +117,50 @@ public class UserServiceTest {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 		}
+	}
+
+	@Test
+	public void testAddOrganizationUserWithPermission() throws Exception {
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user1 = UserTestUtil.addUser();
+		User user2 = UserTestUtil.addUser();
+
+		Organization organization = _organizationLocalService.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user1.getUserId());
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), Organization.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			new String[] {
+				ActionKeys.ASSIGN_MEMBERS, ActionKeys.MANAGE_USERS,
+				ActionKeys.VIEW_MEMBERS
+			});
+
+		RoleTestUtil.addResourcePermission(
+			role, User.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.VIEW);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user1));
+
+		_userService.addOrganizationUsers(
+			organization.getOrganizationId(), new long[] {user2.getUserId()});
+
+		long[] userIds = _userService.getOrganizationUserIds(
+			organization.getOrganizationId());
+
+		Assert.assertEquals(user2.getUserId(), userIds[0]);
+
+		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
 	}
 
 	@Test
@@ -331,6 +376,9 @@ public class UserServiceTest {
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

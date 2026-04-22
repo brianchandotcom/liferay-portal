@@ -51,4 +51,4 @@ public interface EntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1187907688
+// LIFERAY-SERVICE-BUILDER-HASH:21572795

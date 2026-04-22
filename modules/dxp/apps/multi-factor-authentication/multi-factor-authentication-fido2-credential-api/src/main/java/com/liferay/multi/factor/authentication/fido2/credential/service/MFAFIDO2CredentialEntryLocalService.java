@@ -288,4 +288,4 @@ public interface MFAFIDO2CredentialEntryLocalService
 		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:135913358
+// LIFERAY-SERVICE-BUILDER-HASH:-1474983685

@@ -271,4 +271,4 @@ public interface PatcherFixRelLocalService
 	public PatcherFixRel updatePatcherFixRel(PatcherFixRel patcherFixRel);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2078372143
+// LIFERAY-SERVICE-BUILDER-HASH:665443440

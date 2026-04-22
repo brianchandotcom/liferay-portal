@@ -353,4 +353,4 @@ public interface CommercePricingClassCPDefinitionRelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1725946049
+// LIFERAY-SERVICE-BUILDER-HASH:-1240369061

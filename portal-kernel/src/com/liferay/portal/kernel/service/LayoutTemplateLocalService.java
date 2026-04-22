@@ -87,4 +87,4 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	public void uninstallLayoutTemplates(String themeId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1526158846
+// LIFERAY-SERVICE-BUILDER-HASH:2088991597

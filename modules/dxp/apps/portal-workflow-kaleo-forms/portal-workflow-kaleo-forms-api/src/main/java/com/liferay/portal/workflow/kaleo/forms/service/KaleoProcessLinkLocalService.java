@@ -363,4 +363,4 @@ public interface KaleoProcessLinkLocalService
 		long kaleoProcessId, String workflowTaskName, long ddmTemplateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:559986465
+// LIFERAY-SERVICE-BUILDER-HASH:-1705502115

@@ -544,4 +544,4 @@ public class RepositoryLocalServiceWrapper
 	private RepositoryLocalService _repositoryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-940450153
+// LIFERAY-SERVICE-BUILDER-HASH:830024770

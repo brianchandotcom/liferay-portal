@@ -116,4 +116,4 @@ public class EmailAddressServiceWrapper
 	private EmailAddressService _emailAddressService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2081205739
+// LIFERAY-SERVICE-BUILDER-HASH:640328448

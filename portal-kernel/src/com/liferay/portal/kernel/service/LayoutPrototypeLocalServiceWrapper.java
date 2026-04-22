@@ -485,4 +485,4 @@ public class LayoutPrototypeLocalServiceWrapper
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1338689498
+// LIFERAY-SERVICE-BUILDER-HASH:1388124474

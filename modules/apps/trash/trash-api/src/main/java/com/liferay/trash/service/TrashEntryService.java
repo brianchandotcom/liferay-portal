@@ -234,4 +234,4 @@ public interface TrashEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1140227402
+// LIFERAY-SERVICE-BUILDER-HASH:-600540147

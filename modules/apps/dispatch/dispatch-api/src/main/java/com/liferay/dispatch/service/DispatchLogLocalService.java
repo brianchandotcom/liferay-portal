@@ -293,4 +293,4 @@ public interface DispatchLogLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1429237154
+// LIFERAY-SERVICE-BUILDER-HASH:-1278523321

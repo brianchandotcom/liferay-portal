@@ -311,4 +311,4 @@ public interface PatcherProjectVersionLocalService
 		PatcherProjectVersion patcherProjectVersion);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2137708532
+// LIFERAY-SERVICE-BUILDER-HASH:1048023036

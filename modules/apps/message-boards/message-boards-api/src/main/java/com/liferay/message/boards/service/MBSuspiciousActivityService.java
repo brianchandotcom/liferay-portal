@@ -79,4 +79,4 @@ public interface MBSuspiciousActivityService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2038191137
+// LIFERAY-SERVICE-BUILDER-HASH:-2142727524

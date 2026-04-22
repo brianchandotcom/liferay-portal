@@ -421,4 +421,4 @@ public interface CommerceChannelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:908612454
+// LIFERAY-SERVICE-BUILDER-HASH:944365550

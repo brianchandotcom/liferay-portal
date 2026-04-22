@@ -100,4 +100,4 @@ public interface CommercePriceListAccountRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:247294482
+// LIFERAY-SERVICE-BUILDER-HASH:183773067

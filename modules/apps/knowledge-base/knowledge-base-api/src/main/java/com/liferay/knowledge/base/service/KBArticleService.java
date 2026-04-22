@@ -287,4 +287,4 @@ public interface KBArticleService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-200909025
+// LIFERAY-SERVICE-BUILDER-HASH:683623458

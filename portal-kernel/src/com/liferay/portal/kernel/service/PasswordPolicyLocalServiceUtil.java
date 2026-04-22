@@ -436,4 +436,4 @@ public class PasswordPolicyLocalServiceUtil {
 	private static volatile PasswordPolicyLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1699548064
+// LIFERAY-SERVICE-BUILDER-HASH:-1635504886

@@ -93,4 +93,4 @@ public interface TeamService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2057508431
+// LIFERAY-SERVICE-BUILDER-HASH:-744995781

@@ -124,4 +124,4 @@ public interface CPConfigurationListService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:743808298
+// LIFERAY-SERVICE-BUILDER-HASH:-856845501

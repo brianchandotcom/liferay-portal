@@ -586,4 +586,4 @@ public class LayoutRevisionLocalServiceWrapper
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1028732926
+// LIFERAY-SERVICE-BUILDER-HASH:-1743254461

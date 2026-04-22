@@ -379,4 +379,4 @@ public interface MBDiscussionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1928899543
+// LIFERAY-SERVICE-BUILDER-HASH:1185644198

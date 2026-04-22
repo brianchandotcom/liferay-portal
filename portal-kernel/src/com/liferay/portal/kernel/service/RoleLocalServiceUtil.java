@@ -1268,4 +1268,4 @@ public class RoleLocalServiceUtil {
 	private static volatile RoleLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1136166111
+// LIFERAY-SERVICE-BUILDER-HASH:-480530326

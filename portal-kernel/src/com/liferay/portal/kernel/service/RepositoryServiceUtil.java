@@ -100,4 +100,4 @@ public class RepositoryServiceUtil {
 	private static volatile RepositoryService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-430404867
+// LIFERAY-SERVICE-BUILDER-HASH:-436972120

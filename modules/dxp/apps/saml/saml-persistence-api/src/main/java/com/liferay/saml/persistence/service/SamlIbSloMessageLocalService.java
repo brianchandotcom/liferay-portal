@@ -271,4 +271,4 @@ public interface SamlIbSloMessageLocalService
 		SamlIbSloMessage samlIbSloMessage);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1446546052
+// LIFERAY-SERVICE-BUILDER-HASH:1029426614

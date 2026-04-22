@@ -229,4 +229,4 @@ public interface CPInstanceService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1754607640
+// LIFERAY-SERVICE-BUILDER-HASH:1767716551

@@ -76,4 +76,4 @@ public interface PLOEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1239857410
+// LIFERAY-SERVICE-BUILDER-HASH:598504023

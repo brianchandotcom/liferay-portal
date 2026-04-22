@@ -408,4 +408,4 @@ public class LayoutPrototypeLocalServiceUtil {
 	private static volatile LayoutPrototypeLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1972190276
+// LIFERAY-SERVICE-BUILDER-HASH:1847249754

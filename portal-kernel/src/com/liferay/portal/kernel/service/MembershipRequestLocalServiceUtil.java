@@ -368,4 +368,4 @@ public class MembershipRequestLocalServiceUtil {
 	private static volatile MembershipRequestLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1829242665
+// LIFERAY-SERVICE-BUILDER-HASH:-1792771693

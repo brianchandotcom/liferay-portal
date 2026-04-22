@@ -445,4 +445,4 @@ public interface KaleoDefinitionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1195255495
+// LIFERAY-SERVICE-BUILDER-HASH:-543657858

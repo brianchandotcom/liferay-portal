@@ -533,4 +533,4 @@ public interface FragmentEntryLinkLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1950730345
+// LIFERAY-SERVICE-BUILDER-HASH:674716423

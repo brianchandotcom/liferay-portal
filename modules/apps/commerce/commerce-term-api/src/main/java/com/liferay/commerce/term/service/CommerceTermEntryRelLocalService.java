@@ -308,4 +308,4 @@ public interface CommerceTermEntryRelLocalService
 		CommerceTermEntryRel commerceTermEntryRel);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:990689550
+// LIFERAY-SERVICE-BUILDER-HASH:1296572951

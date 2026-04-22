@@ -335,4 +335,4 @@ public interface AccountRoleLocalService
 	public AccountRole updateAccountRole(AccountRole accountRole);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1509501261
+// LIFERAY-SERVICE-BUILDER-HASH:1418454245

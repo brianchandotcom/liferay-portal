@@ -304,4 +304,4 @@ public interface DepotAppCustomizationLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:88135225
+// LIFERAY-SERVICE-BUILDER-HASH:540016914

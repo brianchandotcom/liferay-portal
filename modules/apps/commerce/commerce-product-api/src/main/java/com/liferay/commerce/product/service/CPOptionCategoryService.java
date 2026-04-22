@@ -100,4 +100,4 @@ public interface CPOptionCategoryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1636586499
+// LIFERAY-SERVICE-BUILDER-HASH:-547064225

@@ -104,4 +104,4 @@ public interface CommerceDiscountRuleService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-848327988
+// LIFERAY-SERVICE-BUILDER-HASH:-1375582945

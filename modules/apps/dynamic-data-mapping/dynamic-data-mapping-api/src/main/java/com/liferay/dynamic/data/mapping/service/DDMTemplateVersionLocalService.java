@@ -309,4 +309,4 @@ public interface DDMTemplateVersionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:310547269
+// LIFERAY-SERVICE-BUILDER-HASH:-356959104

@@ -365,4 +365,4 @@ public interface ObjectEntryVersionLocalService
 		ObjectEntryVersion objectEntryVersion);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1122493362
+// LIFERAY-SERVICE-BUILDER-HASH:1964991365

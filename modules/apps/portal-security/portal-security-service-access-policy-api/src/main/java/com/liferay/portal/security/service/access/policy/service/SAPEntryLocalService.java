@@ -329,4 +329,4 @@ public interface SAPEntryLocalService
 	public SAPEntry updateSAPEntry(SAPEntry sapEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-355644580
+// LIFERAY-SERVICE-BUILDER-HASH:274824020

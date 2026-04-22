@@ -361,4 +361,4 @@ public class RoleServiceUtil {
 	private static volatile RoleService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-29735624
+// LIFERAY-SERVICE-BUILDER-HASH:190019843

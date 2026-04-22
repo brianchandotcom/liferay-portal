@@ -106,4 +106,4 @@ public interface CommerceOrderNoteService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1088050421
+// LIFERAY-SERVICE-BUILDER-HASH:906006663

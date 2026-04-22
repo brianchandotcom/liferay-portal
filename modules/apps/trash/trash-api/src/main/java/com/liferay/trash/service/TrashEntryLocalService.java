@@ -434,4 +434,4 @@ public interface TrashEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:194201503
+// LIFERAY-SERVICE-BUILDER-HASH:1404665847

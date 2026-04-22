@@ -389,4 +389,4 @@ public interface DLFileVersionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-897722556
+// LIFERAY-SERVICE-BUILDER-HASH:1922430040

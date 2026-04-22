@@ -564,4 +564,4 @@ public interface GroupService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-85258689
+// LIFERAY-SERVICE-BUILDER-HASH:1957156031

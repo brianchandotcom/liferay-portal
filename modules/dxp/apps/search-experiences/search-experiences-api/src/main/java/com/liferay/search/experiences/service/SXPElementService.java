@@ -86,4 +86,4 @@ public interface SXPElementService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:420701440
+// LIFERAY-SERVICE-BUILDER-HASH:149076732

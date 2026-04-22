@@ -991,4 +991,4 @@ public interface ResourcePermissionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1363758634
+// LIFERAY-SERVICE-BUILDER-HASH:-1739565303

@@ -94,4 +94,4 @@ public interface ListTypeDefinitionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-441222635
+// LIFERAY-SERVICE-BUILDER-HASH:-461373700

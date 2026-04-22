@@ -91,4 +91,4 @@ public interface DLFileShortcutService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1397613825
+// LIFERAY-SERVICE-BUILDER-HASH:-474922901

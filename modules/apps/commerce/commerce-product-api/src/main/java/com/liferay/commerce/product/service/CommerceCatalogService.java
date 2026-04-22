@@ -102,4 +102,4 @@ public interface CommerceCatalogService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1602773399
+// LIFERAY-SERVICE-BUILDER-HASH:771870047

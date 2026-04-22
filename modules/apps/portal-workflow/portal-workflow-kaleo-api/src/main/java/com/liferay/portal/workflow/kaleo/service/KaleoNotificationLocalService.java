@@ -304,4 +304,4 @@ public interface KaleoNotificationLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1321704125
+// LIFERAY-SERVICE-BUILDER-HASH:1926879954

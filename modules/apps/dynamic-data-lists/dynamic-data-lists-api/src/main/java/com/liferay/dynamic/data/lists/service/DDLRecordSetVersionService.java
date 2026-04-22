@@ -71,4 +71,4 @@ public interface DDLRecordSetVersionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1512657043
+// LIFERAY-SERVICE-BUILDER-HASH:1009626664

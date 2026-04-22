@@ -485,4 +485,4 @@ public interface CommerceShipmentLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-333580051
+// LIFERAY-SERVICE-BUILDER-HASH:-528163368

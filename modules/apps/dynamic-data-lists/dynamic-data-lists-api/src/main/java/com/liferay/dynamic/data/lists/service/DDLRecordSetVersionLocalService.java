@@ -313,4 +313,4 @@ public interface DDLRecordSetVersionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1540495103
+// LIFERAY-SERVICE-BUILDER-HASH:256921573

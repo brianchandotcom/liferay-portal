@@ -80,4 +80,4 @@ public interface CommerceTaxCategoryMappingService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1470035749
+// LIFERAY-SERVICE-BUILDER-HASH:1948591063

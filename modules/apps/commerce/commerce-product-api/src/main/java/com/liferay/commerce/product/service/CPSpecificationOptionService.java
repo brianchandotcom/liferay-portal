@@ -102,4 +102,4 @@ public interface CPSpecificationOptionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:982155815
+// LIFERAY-SERVICE-BUILDER-HASH:248152198

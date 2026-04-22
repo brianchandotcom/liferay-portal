@@ -88,4 +88,4 @@ public interface DefinitionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:316236139
+// LIFERAY-SERVICE-BUILDER-HASH:414623370

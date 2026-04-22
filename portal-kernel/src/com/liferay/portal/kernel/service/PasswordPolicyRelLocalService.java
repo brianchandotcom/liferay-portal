@@ -299,4 +299,4 @@ public interface PasswordPolicyRelLocalService
 		PasswordPolicyRel passwordPolicyRel);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2013137645
+// LIFERAY-SERVICE-BUILDER-HASH:524470559

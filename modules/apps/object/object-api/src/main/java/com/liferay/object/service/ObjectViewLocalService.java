@@ -325,4 +325,4 @@ public interface ObjectViewLocalService
 	public ObjectView updateObjectView(ObjectView objectView);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1615372242
+// LIFERAY-SERVICE-BUILDER-HASH:1396924335

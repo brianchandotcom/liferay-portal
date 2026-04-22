@@ -309,4 +309,4 @@ public interface ObjectViewFilterColumnLocalService
 		ObjectViewFilterColumn objectViewFilterColumn);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-394983399
+// LIFERAY-SERVICE-BUILDER-HASH:-1073402632

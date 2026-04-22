@@ -82,4 +82,4 @@ public interface CommerceDiscountOrderTypeRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-276159758
+// LIFERAY-SERVICE-BUILDER-HASH:-917468655

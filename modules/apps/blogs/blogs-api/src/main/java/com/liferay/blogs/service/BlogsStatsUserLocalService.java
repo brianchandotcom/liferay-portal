@@ -63,4 +63,4 @@ public interface BlogsStatsUserLocalService extends BaseLocalService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1610905225
+// LIFERAY-SERVICE-BUILDER-HASH:2137339328

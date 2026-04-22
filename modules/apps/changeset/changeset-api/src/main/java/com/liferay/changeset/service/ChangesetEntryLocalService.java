@@ -317,4 +317,4 @@ public interface ChangesetEntryLocalService
 	public ChangesetEntry updateChangesetEntry(ChangesetEntry changesetEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1952593899
+// LIFERAY-SERVICE-BUILDER-HASH:-395475868

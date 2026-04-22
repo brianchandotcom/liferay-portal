@@ -49,4 +49,4 @@ public interface LayoutSEOSiteService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-215766312
+// LIFERAY-SERVICE-BUILDER-HASH:-544952663

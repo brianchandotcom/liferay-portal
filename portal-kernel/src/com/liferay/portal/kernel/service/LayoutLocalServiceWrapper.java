@@ -2325,4 +2325,4 @@ public class LayoutLocalServiceWrapper
 	private LayoutLocalService _layoutLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:76543282
+// LIFERAY-SERVICE-BUILDER-HASH:642695721

@@ -110,4 +110,4 @@ public interface OAuth2ApplicationService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:353725954
+// LIFERAY-SERVICE-BUILDER-HASH:1003406157

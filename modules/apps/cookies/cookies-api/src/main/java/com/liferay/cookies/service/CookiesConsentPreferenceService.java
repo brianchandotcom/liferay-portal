@@ -47,4 +47,4 @@ public interface CookiesConsentPreferenceService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1219631427
+// LIFERAY-SERVICE-BUILDER-HASH:-1874920822

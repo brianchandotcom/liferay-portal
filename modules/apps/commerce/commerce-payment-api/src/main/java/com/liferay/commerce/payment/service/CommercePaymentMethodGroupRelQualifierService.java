@@ -127,4 +127,4 @@ public interface CommercePaymentMethodGroupRelQualifierService
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:375729753
+// LIFERAY-SERVICE-BUILDER-HASH:-164792808

@@ -1211,4 +1211,4 @@ public class LayoutServiceWrapper
 	private LayoutService _layoutService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1134330395
+// LIFERAY-SERVICE-BUILDER-HASH:-1795368686

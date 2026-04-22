@@ -314,4 +314,4 @@ public interface KaleoTransitionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:385466449
+// LIFERAY-SERVICE-BUILDER-HASH:1022010012

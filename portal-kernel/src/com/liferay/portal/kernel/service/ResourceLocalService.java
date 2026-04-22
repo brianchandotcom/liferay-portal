@@ -399,4 +399,4 @@ public interface ResourceLocalService extends BaseLocalService {
 		String newPrimKey);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-329896816
+// LIFERAY-SERVICE-BUILDER-HASH:409201244

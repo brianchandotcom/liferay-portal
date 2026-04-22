@@ -3097,4 +3097,4 @@ public class UserLocalServiceUtil {
 	private static volatile UserLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-719152878
+// LIFERAY-SERVICE-BUILDER-HASH:575660936

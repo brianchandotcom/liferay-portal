@@ -282,4 +282,4 @@ public interface PluginSettingLocalService
 	public PluginSetting updatePluginSetting(PluginSetting pluginSetting);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-771632015
+// LIFERAY-SERVICE-BUILDER-HASH:-170175535

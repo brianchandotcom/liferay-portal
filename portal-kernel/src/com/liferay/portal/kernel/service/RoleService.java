@@ -286,4 +286,4 @@ public interface RoleService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-110187874
+// LIFERAY-SERVICE-BUILDER-HASH:-1579105160

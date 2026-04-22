@@ -49,4 +49,4 @@ public interface CPInstanceOptionValueRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:963919607
+// LIFERAY-SERVICE-BUILDER-HASH:-1847105342

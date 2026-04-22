@@ -178,4 +178,4 @@ public interface CommercePaymentMethodGroupRelService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1843994882
+// LIFERAY-SERVICE-BUILDER-HASH:-228022095

@@ -75,4 +75,4 @@ public interface CommerceInventoryBookedQuantityService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:200793241
+// LIFERAY-SERVICE-BUILDER-HASH:-2049181824

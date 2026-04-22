@@ -1829,4 +1829,4 @@ public class OrganizationLocalServiceWrapper
 	private OrganizationLocalService _organizationLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-93855959
+// LIFERAY-SERVICE-BUILDER-HASH:749667965

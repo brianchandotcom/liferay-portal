@@ -283,4 +283,4 @@ public interface SequenceEntryLocalService
 	public SequenceEntry updateSequenceEntry(SequenceEntry sequenceEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1607904183
+// LIFERAY-SERVICE-BUILDER-HASH:-2022007563

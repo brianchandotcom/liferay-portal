@@ -265,4 +265,4 @@ public interface DataLimitEntryLocalService
 	public DataLimitEntry updateDataLimitEntry(DataLimitEntry dataLimitEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:550118605
+// LIFERAY-SERVICE-BUILDER-HASH:-1015114003

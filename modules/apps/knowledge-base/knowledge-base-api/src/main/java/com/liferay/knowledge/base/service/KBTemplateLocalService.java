@@ -377,4 +377,4 @@ public interface KBTemplateLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2057919214
+// LIFERAY-SERVICE-BUILDER-HASH:-2051288966

@@ -502,4 +502,4 @@ public class RepositoryEntryLocalServiceWrapper
 	private RepositoryEntryLocalService _repositoryEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:160656647
+// LIFERAY-SERVICE-BUILDER-HASH:-1247390350

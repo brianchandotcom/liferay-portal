@@ -278,4 +278,4 @@ public interface UserIdMapperLocalService
 	public UserIdMapper updateUserIdMapper(UserIdMapper userIdMapper);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1798226757
+// LIFERAY-SERVICE-BUILDER-HASH:-2099609593

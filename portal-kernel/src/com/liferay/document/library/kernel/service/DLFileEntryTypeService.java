@@ -137,4 +137,4 @@ public interface DLFileEntryTypeService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:474814721
+// LIFERAY-SERVICE-BUILDER-HASH:141762049

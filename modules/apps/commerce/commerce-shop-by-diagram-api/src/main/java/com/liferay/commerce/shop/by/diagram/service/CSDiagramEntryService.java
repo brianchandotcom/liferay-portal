@@ -105,4 +105,4 @@ public interface CSDiagramEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-88561003
+// LIFERAY-SERVICE-BUILDER-HASH:-1114593277

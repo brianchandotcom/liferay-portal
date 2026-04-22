@@ -266,4 +266,4 @@ public interface PatcherTicketHintLocalService
 		PatcherTicketHint patcherTicketHint);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1256285082
+// LIFERAY-SERVICE-BUILDER-HASH:1750698962

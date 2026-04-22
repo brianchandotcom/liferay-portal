@@ -284,4 +284,4 @@ public interface NotificationQueueEntryAttachmentLocalService
 			NotificationQueueEntryAttachment notificationQueueEntryAttachment);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1994831153
+// LIFERAY-SERVICE-BUILDER-HASH:162233658

@@ -140,4 +140,4 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:462400722
+// LIFERAY-SERVICE-BUILDER-HASH:-383096027

@@ -47,4 +47,4 @@ public interface SequenceEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1700822986
+// LIFERAY-SERVICE-BUILDER-HASH:1541364933

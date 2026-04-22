@@ -47,4 +47,4 @@ public interface ObjectLayoutTabService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:490183583
+// LIFERAY-SERVICE-BUILDER-HASH:1807270438

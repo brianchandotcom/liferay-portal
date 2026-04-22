@@ -282,4 +282,4 @@ public interface SamlIdpSsoSessionLocalService
 		SamlIdpSsoSession samlIdpSsoSession);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1389344070
+// LIFERAY-SERVICE-BUILDER-HASH:792912482

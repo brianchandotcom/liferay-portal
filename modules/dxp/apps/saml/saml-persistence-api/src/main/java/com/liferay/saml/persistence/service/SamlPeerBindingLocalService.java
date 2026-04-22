@@ -284,4 +284,4 @@ public interface SamlPeerBindingLocalService
 		SamlPeerBinding samlPeerBinding);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-164271506
+// LIFERAY-SERVICE-BUILDER-HASH:795068543

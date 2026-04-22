@@ -152,4 +152,4 @@ public interface AccountEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:502648259
+// LIFERAY-SERVICE-BUILDER-HASH:188535456

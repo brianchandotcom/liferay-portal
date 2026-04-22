@@ -815,4 +815,4 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1242267235
+// LIFERAY-SERVICE-BUILDER-HASH:1235902289

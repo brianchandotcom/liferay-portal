@@ -65,4 +65,4 @@ public interface CalendarNotificationTemplateService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:495294038
+// LIFERAY-SERVICE-BUILDER-HASH:-770461049

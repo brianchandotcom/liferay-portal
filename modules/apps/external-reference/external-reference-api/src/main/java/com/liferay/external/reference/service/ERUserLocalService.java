@@ -62,4 +62,4 @@ public interface ERUserLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:549413482
+// LIFERAY-SERVICE-BUILDER-HASH:-265480371

@@ -159,4 +159,4 @@ public interface CommercePriceListService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1210465036
+// LIFERAY-SERVICE-BUILDER-HASH:-832888781

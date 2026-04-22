@@ -77,4 +77,4 @@ public interface ObjectActionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:423675956
+// LIFERAY-SERVICE-BUILDER-HASH:-1292296752

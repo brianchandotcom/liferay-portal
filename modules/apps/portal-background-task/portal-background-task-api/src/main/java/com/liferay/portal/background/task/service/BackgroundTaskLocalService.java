@@ -471,4 +471,4 @@ public interface BackgroundTaskLocalService
 	public BackgroundTask updateBackgroundTask(BackgroundTask backgroundTask);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1706331909
+// LIFERAY-SERVICE-BUILDER-HASH:259198327

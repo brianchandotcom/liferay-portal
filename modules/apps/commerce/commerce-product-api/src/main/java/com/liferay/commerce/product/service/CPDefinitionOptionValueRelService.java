@@ -141,4 +141,4 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:174036909
+// LIFERAY-SERVICE-BUILDER-HASH:-1443227594

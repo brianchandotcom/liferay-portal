@@ -368,4 +368,4 @@ public interface AssetVocabularyGroupRelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2142249179
+// LIFERAY-SERVICE-BUILDER-HASH:-714504042

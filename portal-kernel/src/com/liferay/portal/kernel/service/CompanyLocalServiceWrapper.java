@@ -830,4 +830,4 @@ public class CompanyLocalServiceWrapper
 	private CompanyLocalService _companyLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1976886724
+// LIFERAY-SERVICE-BUILDER-HASH:-1129647879

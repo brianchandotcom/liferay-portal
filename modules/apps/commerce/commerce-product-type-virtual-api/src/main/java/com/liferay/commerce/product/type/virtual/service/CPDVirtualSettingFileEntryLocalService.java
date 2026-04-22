@@ -363,4 +363,4 @@ public interface CPDVirtualSettingFileEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1092662671
+// LIFERAY-SERVICE-BUILDER-HASH:-624230247

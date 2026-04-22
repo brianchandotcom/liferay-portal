@@ -263,4 +263,4 @@ public interface TestEntityLocalService
 	public TestEntity updateTestEntity(TestEntity testEntity);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1175577930
+// LIFERAY-SERVICE-BUILDER-HASH:1366327790

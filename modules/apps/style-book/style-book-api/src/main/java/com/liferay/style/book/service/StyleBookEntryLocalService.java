@@ -477,4 +477,4 @@ public interface StyleBookEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1808840484
+// LIFERAY-SERVICE-BUILDER-HASH:-1191108349

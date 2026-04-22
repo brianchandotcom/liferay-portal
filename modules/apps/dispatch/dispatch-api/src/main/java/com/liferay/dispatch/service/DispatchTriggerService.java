@@ -88,4 +88,4 @@ public interface DispatchTriggerService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1021388732
+// LIFERAY-SERVICE-BUILDER-HASH:-120084972

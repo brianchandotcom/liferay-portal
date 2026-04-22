@@ -370,4 +370,4 @@ public interface CommerceWishListLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1748128345
+// LIFERAY-SERVICE-BUILDER-HASH:1123211494

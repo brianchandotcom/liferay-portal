@@ -110,4 +110,4 @@ public class EmailAddressServiceUtil {
 	private static volatile EmailAddressService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1620641405
+// LIFERAY-SERVICE-BUILDER-HASH:19537704

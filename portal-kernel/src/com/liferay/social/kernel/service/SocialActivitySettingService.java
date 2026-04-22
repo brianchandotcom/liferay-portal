@@ -87,4 +87,4 @@ public interface SocialActivitySettingService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2131817403
+// LIFERAY-SERVICE-BUILDER-HASH:-52337584

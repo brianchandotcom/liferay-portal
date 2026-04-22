@@ -354,4 +354,4 @@ public interface CTEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-268891446
+// LIFERAY-SERVICE-BUILDER-HASH:908398977

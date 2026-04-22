@@ -59,4 +59,4 @@ public interface ExportImportConfigurationService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1431398251
+// LIFERAY-SERVICE-BUILDER-HASH:1804073376

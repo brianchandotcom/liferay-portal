@@ -49,4 +49,4 @@ public interface ReadingTimeEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1267050358
+// LIFERAY-SERVICE-BUILDER-HASH:-1652517384

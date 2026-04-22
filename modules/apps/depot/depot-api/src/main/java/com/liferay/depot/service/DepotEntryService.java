@@ -104,4 +104,4 @@ public interface DepotEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-820401918
+// LIFERAY-SERVICE-BUILDER-HASH:-2012305632

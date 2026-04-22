@@ -178,4 +178,4 @@ public class RegionServiceWrapper
 	private RegionService _regionService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1098319806
+// LIFERAY-SERVICE-BUILDER-HASH:1860298099

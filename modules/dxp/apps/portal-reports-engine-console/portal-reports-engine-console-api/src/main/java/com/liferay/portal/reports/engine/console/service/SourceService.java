@@ -81,4 +81,4 @@ public interface SourceService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1570499778
+// LIFERAY-SERVICE-BUILDER-HASH:-1268781163

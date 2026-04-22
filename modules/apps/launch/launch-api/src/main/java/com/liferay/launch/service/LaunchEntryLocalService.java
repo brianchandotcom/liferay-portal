@@ -307,4 +307,4 @@ public interface LaunchEntryLocalService
 	public LaunchEntry updateLaunchEntry(LaunchEntry launchEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-296715925
+// LIFERAY-SERVICE-BUILDER-HASH:-1206222257

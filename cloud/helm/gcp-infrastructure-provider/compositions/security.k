@@ -11,8 +11,6 @@ get_items = lambda obs: any, vars: {str:any} -> [any] {
     _gsaEmail = str(vars?.gsaEmail or "")
     _gsaName = str(vars?.gsaName or "")
 
-    # KMS resources are global in GCP — use hashedName for uniqueness across
-    # deployments that share a project.
     _kmsName = str(vars?.hashedName or "")
     _labels = vars?.labels or {}
     _managementPolicies = vars?.managementPolicies or ["*"]

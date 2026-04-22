@@ -1,20 +1,23 @@
 import compositions.managed_service_details as msd
 
 _vars: {str:any} = {
-    "baseName": "test-base"
+    "activeDataPlane": "blue"
+    "baseName": "test-infra"
     "databaseIamUser": "test-sa@test.iam"
     "databasePort": "5432"
-    "gsaEmail": "test-sa@test.iam.gserviceaccount.com"
-    "instanceConnectionName": "test:us-central1:test-base-db-instance"
+    "hashedName": "test-hashed"
     "labels": {"app": "liferay"}
+    "managedServiceDetailsExternalName": "test-hashed-managed-service-details-secret"
     "managementPolicies": ["*"]
-    "metadata": {"name": "test-infra"}
     "namespace": "test-ns"
+    "overlayBucketName": "test-hashed-overlay"
+    "projectId": "test-project"
+    "region": "us-central1"
 }
 
 _obs_grant_ready = {
     "resources": {
-        "liferay-db-grant-job": {
+        "liferay-db-grant-job-blue": {
             "resource": {
                 "status": {
                     "conditions": [{"type": "Ready", "status": "True"}]

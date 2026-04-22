@@ -9,18 +9,6 @@
   },
   "obs": {
     "resources": {
-      "liferay-db-grant-job": {
-        "resource": {
-          "status": {
-            "conditions": [
-              {
-                "status": "True",
-                "type": "Ready"
-              }
-            ]
-          }
-        }
-      },
       "elasticsearch-observer": {
         "resource": {
           "status": {
@@ -62,6 +50,30 @@
                 }
               }
             }
+          }
+        }
+      },
+      "liferay-db-grant-job-blue": {
+        "resource": {
+          "status": {
+            "conditions": [
+              {
+                "status": "True",
+                "type": "Ready"
+              }
+            ]
+          }
+        }
+      },
+      "database-primary-blue": {
+        "resource": {
+          "status": {
+            "conditions": [
+              {
+                "type": "Ready",
+                "status": "True"
+              }
+            ]
           }
         }
       }

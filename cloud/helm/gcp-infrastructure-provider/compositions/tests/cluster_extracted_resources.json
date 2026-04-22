@@ -172,10 +172,10 @@
           },
           "stringData": {
             "DATABASE_ENDPOINT": "localhost",
-            "DATABASE_INSTANCE_NAME": "cne-development:us-central1:arz-dev2025-infra-db-instance",
+            "DATABASE_INSTANCE_NAME": "cne-development:us-central1:arz-dev2025-infra-db-instance-blue",
             "DATABASE_PORT": "5432",
             "DATABASE_USERNAME": "arz-dev2025-infra-sa@cne-development.iam",
-            "LIFERAY_GCS_BUCKET_NAME": "arz-dev2025-00d245-dl",
+            "LIFERAY_GCS_BUCKET_NAME": "arz-dev2025-00d245-dl-blue",
             "LIFERAY_OVERLAY_BUCKET_NAME": "arz-dev2025-00d245-overlay"
           },
           "type": "Opaque"
@@ -256,7 +256,7 @@
   {
     "apiVersion": "kubernetes.m.crossplane.io/v1alpha1",
     "kind": "Object",
-    "name": "liferay-db-grant-job",
+    "name": "liferay-db-grant-job-blue",
     "spec": {
       "forProvider": {
         "manifest": {
@@ -269,9 +269,10 @@
               "environment-id": "dev2025",
               "environment_id": "dev2025",
               "project-id": "arz",
-              "project_id": "arz"
+              "project_id": "arz",
+              "dataPlane": "blue"
             },
-            "name": "arz-dev2025-infra-db-grant",
+            "name": "arz-dev2025-infra-db-grant-blue",
             "namespace": "liferay-arz-dev2025"
           },
           "spec": {
@@ -280,7 +281,7 @@
                 "containers": [
                   {
                     "args": [
-                      "set -e\nuntil pg_isready -h 127.0.0.1 -p 5432 -U postgres; do sleep 2; done\npsql -h 127.0.0.1 -v \"ON_ERROR_STOP=1\" -U postgres -d lportal <<EOF\nGRANT ALL PRIVILEGES ON DATABASE \"lportal\" TO \"arz-dev2025-infra-sa@cne-development.iam\";\nGRANT ALL ON ALL TABLES IN SCHEMA public TO \"arz-dev2025-infra-sa@cne-development.iam\";\nGRANT cloudsqlsuperuser TO \"arz-dev2025-infra-sa@cne-development.iam\";\nEOF\n"
+                      "set -e\nuntil pg_isready -h 127.0.0.1 -p 5432 -U postgres; do sleep 2; done\npsql -h 127.0.0.1 -v \"ON_ERROR_STOP=1\" -U postgres -d lportal <<EOF\nGRANT ALL PRIVILEGES ON DATABASE \"lportal\" TO \"arz-dev2025-infra-sa@cne-development.iam\";\nGRANT ALL ON ALL TABLES IN SCHEMA public TO \"arz-dev2025-infra-sa@cne-development.iam\";\nGRANT cloudsqlsuperuser TO \"arz-dev2025-infra-sa@cne-development.iam\";\nGRANT \"arz-dev2025-infra-sa@cne-development.iam\" to postgres;\nEOF\n"
                     ],
                     "command": [
                       "/bin/sh",
@@ -331,7 +332,7 @@
                       "--port=5432",
                       "--private-ip",
                       "--structured-logs",
-                      "cne-development:us-central1:arz-dev2025-infra-db-instance"
+                      "cne-development:us-central1:arz-dev2025-infra-db-instance-blue"
                     ],
                     "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.14.1",
                     "name": "cloud-sql-proxy",
@@ -404,13 +405,14 @@
         "environment-id": "dev2025",
         "environment_id": "dev2025",
         "project-id": "arz",
-        "project_id": "arz"
+        "project_id": "arz",
+        "dataPlane": "blue"
       },
       "annotations": {
-        "crossplane.io/composition-resource-name": "liferay-db-grant-job",
+        "crossplane.io/composition-resource-name": "liferay-db-grant-job-blue",
         "crossplane.io/external-create-pending": "2026-04-16T01:41:57Z",
         "crossplane.io/external-create-succeeded": "2026-04-16T01:41:57Z",
-        "crossplane.io/external-name": "arz-dev2025-infra-db-grant"
+        "crossplane.io/external-name": "arz-dev2025-infra-db-grant-blue"
       }
     }
   },
@@ -608,20 +610,20 @@
   {
     "apiVersion": "protection.crossplane.io/v1beta1",
     "kind": "Usage",
-    "name": "usage-instance-by-database",
+    "name": "usage-instance-by-database-blue",
     "spec": {
       "by": {
         "apiVersion": "sql.gcp.m.upbound.io/v1beta1",
         "kind": "Database",
         "resourceRef": {
-          "name": "arz-dev2025-infra-db"
+          "name": "arz-dev2025-infra-db-blue"
         }
       },
       "of": {
         "apiVersion": "sql.gcp.m.upbound.io/v1beta1",
         "kind": "DatabaseInstance",
         "resourceRef": {
-          "name": "arz-dev2025-infra-db-instance"
+          "name": "arz-dev2025-infra-db-instance-blue"
         }
       }
     },
@@ -630,7 +632,7 @@
         "crossplane.io/composite": "arz-dev2025-infra"
       },
       "annotations": {
-        "crossplane.io/composition-resource-name": "usage-instance-by-database",
+        "crossplane.io/composition-resource-name": "usage-instance-by-database-blue",
         "crossplane.io/usage-details": "Database/arz-dev2025-infra-db uses DatabaseInstance/arz-dev2025-infra-db-instance"
       }
     }
@@ -638,20 +640,20 @@
   {
     "apiVersion": "protection.crossplane.io/v1beta1",
     "kind": "Usage",
-    "name": "usage-instance-by-user",
+    "name": "usage-instance-by-user-blue",
     "spec": {
       "by": {
         "apiVersion": "sql.gcp.m.upbound.io/v1beta1",
         "kind": "User",
         "resourceRef": {
-          "name": "arz-dev2025-infra-db-user"
+          "name": "arz-dev2025-infra-db-user-blue"
         }
       },
       "of": {
         "apiVersion": "sql.gcp.m.upbound.io/v1beta1",
         "kind": "DatabaseInstance",
         "resourceRef": {
-          "name": "arz-dev2025-infra-db-instance"
+          "name": "arz-dev2025-infra-db-instance-blue"
         }
       }
     },
@@ -660,7 +662,7 @@
         "crossplane.io/composite": "arz-dev2025-infra"
       },
       "annotations": {
-        "crossplane.io/composition-resource-name": "usage-instance-by-user",
+        "crossplane.io/composition-resource-name": "usage-instance-by-user-blue",
         "crossplane.io/usage-details": "User/arz-dev2025-infra-db-user uses DatabaseInstance/arz-dev2025-infra-db-instance"
       }
     }
@@ -668,7 +670,7 @@
   {
     "apiVersion": "sql.gcp.m.upbound.io/v1beta1",
     "kind": "DatabaseInstance",
-    "name": "database-primary",
+    "name": "database-primary-blue",
     "spec": {
       "forProvider": {
         "databaseVersion": "POSTGRES_18",
@@ -700,15 +702,17 @@
           },
           "tier": "db-custom-1-3840",
           "userLabels": {
-            "active": "true",
+            "active": "True",
             "app": "liferay",
             "deployment-name": "liferay-portal-poc",
             "environment-id": "dev2025",
             "environment_id": "dev2025",
             "project-id": "arz",
             "project_id": "arz",
-            "should-back-up": "true"
-          }
+            "should-back-up": "true",
+            "dataPlane": "blue"
+          },
+          "retainBackupsOnDelete": true
         }
       },
       "initProvider": {},
@@ -729,32 +733,35 @@
         "environment-id": "dev2025",
         "environment_id": "dev2025",
         "project-id": "arz",
-        "project_id": "arz"
+        "project_id": "arz",
+        "dataPlane": "blue"
       },
       "annotations": {
-        "crossplane.io/composition-resource-name": "database-primary",
+        "crossplane.io/composition-resource-name": "database-primary-blue",
         "crossplane.io/external-create-pending": "2026-04-10T00:30:36Z",
         "crossplane.io/external-create-succeeded": "2026-04-10T00:30:36Z",
-        "crossplane.io/external-name": "arz-dev2025-infra-db-instance"
+        "crossplane.io/external-name": "arz-dev2025-infra-db-instance-blue"
       }
     }
   },
   {
     "apiVersion": "sql.gcp.m.upbound.io/v1beta1",
     "kind": "Database",
-    "name": "liferay-db",
+    "name": "liferay-db-blue",
     "spec": {
       "forProvider": {
         "charset": "UTF8",
         "collation": "en_US.UTF8",
-        "deletionPolicy": "DELETE",
+        "deletionPolicy": "ABANDON",
         "instance": "arz-dev2025-infra-db-instance",
         "instanceRef": {
           "name": "arz-dev2025-infra-db-instance",
           "namespace": "liferay-arz-dev2025"
         },
         "instanceSelector": {
-          "matchControllerRef": true
+          "matchLabels": {
+            "dataPlane": "blue"
+          }
         },
         "project": "cne-development"
       },
@@ -775,10 +782,11 @@
         "environment-id": "dev2025",
         "environment_id": "dev2025",
         "project-id": "arz",
-        "project_id": "arz"
+        "project_id": "arz",
+        "dataPlane": "blue"
       },
       "annotations": {
-        "crossplane.io/composition-resource-name": "liferay-db",
+        "crossplane.io/composition-resource-name": "liferay-db-blue",
         "crossplane.io/external-create-failed": "2026-04-10T00:33:42Z",
         "crossplane.io/external-create-pending": "2026-04-10T00:33:42Z",
         "crossplane.io/external-create-succeeded": "2026-04-10T00:30:41Z",
@@ -789,7 +797,7 @@
   {
     "apiVersion": "sql.gcp.m.upbound.io/v1beta1",
     "kind": "User",
-    "name": "liferay-iam-user",
+    "name": "liferay-iam-user-blue",
     "spec": {
       "forProvider": {
         "instance": "arz-dev2025-infra-db-instance",
@@ -798,10 +806,13 @@
           "namespace": "liferay-arz-dev2025"
         },
         "instanceSelector": {
-          "matchControllerRef": true
+          "matchLabels": {
+            "dataPlane": "blue"
+          }
         },
         "project": "cne-development",
-        "type": "CLOUD_IAM_SERVICE_ACCOUNT"
+        "type": "CLOUD_IAM_SERVICE_ACCOUNT",
+        "deletionPolicy": "ABANDON"
       },
       "initProvider": {},
       "managementPolicies": [
@@ -820,10 +831,11 @@
         "environment-id": "dev2025",
         "environment_id": "dev2025",
         "project-id": "arz",
-        "project_id": "arz"
+        "project_id": "arz",
+        "dataPlane": "blue"
       },
       "annotations": {
-        "crossplane.io/composition-resource-name": "liferay-iam-user",
+        "crossplane.io/composition-resource-name": "liferay-iam-user-blue",
         "crossplane.io/external-create-pending": "2026-04-10T00:34:36Z",
         "crossplane.io/external-create-succeeded": "2026-04-10T00:34:36Z",
         "crossplane.io/external-name": "arz-dev2025-infra-sa@cne-development.iam"
@@ -833,15 +845,20 @@
   {
     "apiVersion": "storage.gcp.m.upbound.io/v1beta1",
     "kind": "BucketIAMMember",
-    "name": "liferay-gcs-iam",
+    "name": "liferay-gcs-iam-blue",
     "spec": {
       "forProvider": {
-        "bucket": "arz-dev2025-00d245-dl",
+        "bucket": "arz-dev2025-00d245-dl-blue",
         "bucketRef": {
-          "name": "arz-dev2025-00d245-dl"
+          "name": "arz-dev2025-00d245-dl-blue"
         },
         "member": "serviceAccount:arz-dev2025-infra-sa@cne-development.iam.gserviceaccount.com",
-        "role": "roles/storage.admin"
+        "role": "roles/storage.admin",
+        "bucketSelector": {
+          "matchLabels": {
+            "dataPlane": "blue"
+          }
+        }
       },
       "initProvider": {},
       "managementPolicies": [
@@ -860,10 +877,58 @@
         "environment-id": "dev2025",
         "environment_id": "dev2025",
         "project-id": "arz",
-        "project_id": "arz"
+        "project_id": "arz",
+        "dataPlane": "blue"
       },
       "annotations": {
-        "crossplane.io/composition-resource-name": "liferay-gcs-iam",
+        "crossplane.io/composition-resource-name": "liferay-gcs-iam-blue",
+        "crossplane.io/external-create-failed": "2026-04-10T00:31:33Z",
+        "crossplane.io/external-create-pending": "2026-04-10T00:31:33Z",
+        "crossplane.io/external-create-succeeded": "2026-04-10T00:30:37Z",
+        "crossplane.io/external-name": "b/arz-dev2025-00d245-dl/roles/storage.admin/serviceAccount:arz-dev2025-infra-sa@cne-development.iam.gserviceaccount.com"
+      }
+    }
+  },
+  {
+    "apiVersion": "storage.gcp.m.upbound.io/v1beta1",
+    "kind": "BucketIAMMember",
+    "name": "liferay-gcs-iam-green",
+    "spec": {
+      "forProvider": {
+        "bucket": "arz-dev2025-00d245-dl-green",
+        "bucketRef": {
+          "name": "arz-dev2025-00d245-dl-green"
+        },
+        "member": "serviceAccount:arz-dev2025-infra-sa@cne-development.iam.gserviceaccount.com",
+        "role": "roles/storage.admin",
+        "bucketSelector": {
+          "matchLabels": {
+            "dataPlane": "green"
+          }
+        }
+      },
+      "initProvider": {},
+      "managementPolicies": [
+        "*"
+      ],
+      "providerConfigRef": {
+        "kind": "ClusterProviderConfig",
+        "name": "default"
+      }
+    },
+    "metadata": {
+      "labels": {
+        "app": "liferay",
+        "crossplane.io/composite": "arz-dev2025-infra",
+        "deployment-name": "liferay-portal-poc",
+        "environment-id": "dev2025",
+        "environment_id": "dev2025",
+        "project-id": "arz",
+        "project_id": "arz",
+        "dataPlane": "green"
+      },
+      "annotations": {
+        "crossplane.io/composition-resource-name": "liferay-gcs-iam-green",
         "crossplane.io/external-create-failed": "2026-04-10T00:31:33Z",
         "crossplane.io/external-create-pending": "2026-04-10T00:31:33Z",
         "crossplane.io/external-create-succeeded": "2026-04-10T00:30:37Z",
@@ -915,7 +980,7 @@
   {
     "apiVersion": "storage.gcp.m.upbound.io/v1beta1",
     "kind": "Bucket",
-    "name": "liferay-gcs-bucket",
+    "name": "liferay-gcs-bucket-blue",
     "spec": {
       "forProvider": {
         "forceDestroy": false,
@@ -923,14 +988,15 @@
           "enabled": false
         },
         "labels": {
-          "active": "true",
+          "active": "True",
           "app": "liferay",
           "deployment-name": "liferay-portal-poc",
           "environment-id": "dev2025",
           "environment_id": "dev2025",
           "project-id": "arz",
           "project_id": "arz",
-          "should-back-up": "true"
+          "should-back-up": "true",
+          "dataPlane": "blue"
         },
         "location": "us-central1",
         "project": "cne-development",
@@ -961,13 +1027,75 @@
         "environment-id": "dev2025",
         "environment_id": "dev2025",
         "project-id": "arz",
-        "project_id": "arz"
+        "project_id": "arz",
+        "dataPlane": "blue"
       },
       "annotations": {
-        "crossplane.io/composition-resource-name": "liferay-gcs-bucket",
+        "crossplane.io/composition-resource-name": "liferay-gcs-bucket-blue",
         "crossplane.io/external-create-pending": "2026-04-10T00:30:36Z",
         "crossplane.io/external-create-succeeded": "2026-04-10T00:30:36Z",
-        "crossplane.io/external-name": "arz-dev2025-00d245-dl"
+        "crossplane.io/external-name": "arz-dev2025-00d245-dl-blue"
+      }
+    }
+  },
+  {
+    "apiVersion": "storage.gcp.m.upbound.io/v1beta1",
+    "kind": "Bucket",
+    "name": "liferay-gcs-bucket-green",
+    "spec": {
+      "forProvider": {
+        "forceDestroy": false,
+        "hierarchicalNamespace": {
+          "enabled": false
+        },
+        "labels": {
+          "active": "False",
+          "app": "liferay",
+          "deployment-name": "liferay-portal-poc",
+          "environment-id": "dev2025",
+          "environment_id": "dev2025",
+          "project-id": "arz",
+          "project_id": "arz",
+          "should-back-up": "true",
+          "dataPlane": "green"
+        },
+        "location": "us-central1",
+        "project": "cne-development",
+        "publicAccessPrevention": "inherited",
+        "softDeletePolicy": {
+          "retentionDurationSeconds": 604800
+        },
+        "storageClass": "STANDARD",
+        "uniformBucketLevelAccess": true,
+        "versioning": {
+          "enabled": true
+        }
+      },
+      "initProvider": {},
+      "managementPolicies": [
+        "*"
+      ],
+      "providerConfigRef": {
+        "kind": "ClusterProviderConfig",
+        "name": "default"
+      }
+    },
+    "metadata": {
+      "labels": {
+        "app": "liferay",
+        "crossplane.io/composite": "arz-dev2025-infra",
+        "deployment-name": "liferay-portal-poc",
+        "environment-id": "dev2025",
+        "environment_id": "dev2025",
+        "project-id": "arz",
+        "project_id": "arz",
+        "dataPlane": "green"
+      },
+      "annotations": {
+        "crossplane.io/composition-resource-name": "liferay-gcs-bucket-green",
+        "crossplane.io/external-create-pending": "2026-04-10T00:30:36Z",
+        "crossplane.io/external-create-succeeded": "2026-04-10T00:30:36Z",
+        "crossplane.io/external-name": "arz-dev2025-00d245-dl-green"
       }
     }
   },

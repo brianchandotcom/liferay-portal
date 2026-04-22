@@ -71,9 +71,6 @@ get_items = lambda obs: any, vars: {str:any} -> [any] {
             }
         }]
 
-        # The ClusterRole 'backup-create-cluster-role' is provisioned out-of-band
-        # (baseline RBAC chart); this composition only creates the per-namespace
-        # RoleBinding + ServiceAccount that use it.
         _backup_sa = k8s_core.ServiceAccount {
             apiVersion = "v1"
             kind = "ServiceAccount"

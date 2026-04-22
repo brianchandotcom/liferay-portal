@@ -39,14 +39,13 @@ test_cluster_refs_match = lambda {
         _projectIdFull = "{}-{}".format(_projectId, _environmentId)
         _uidHash = crypto.sha256("{}-{}".format(_projectNumber, _projectIdFull))[:6:]
         _hashedName = "{}-{}".format(_projectIdFull[:18:], _uidHash)
-        # The cluster uses the composite name as baseName for resources
         _baseName = _oxr["metadata"]["name"]
 
         _vars = {
+            "activeDataPlane": "blue"
             "backup": _backup
             "backupBucketName": "{}-vault".format(_hashedName)
             "baseName": _baseName
-            "bucketName": "{}-dl".format(_hashedName)
             "overlayBucketName": "{}-overlay".format(_hashedName)
             "managedServiceDetailsExternalName": "{}-managed-service-details-secret".format(_hashedName)
             "hashedName": _hashedName
@@ -54,19 +53,15 @@ test_cluster_refs_match = lambda {
             "cmkKeyName": "projects/cne-development/locations/us-central1/keyRings/{}-keyring/cryptoKeys/{}-key".format(_hashedName, _hashedName)
             "database": _db
             "databaseIamUser": "{}-sa@cne-development.iam".format(_baseName)
-            "databaseInstanceName": "{}-db-instance".format(_baseName)
+            "databaseInstanceManagementPolicies": ["*"]
             "databaseName": _db["name"] if "name" in _db else "lportal"
             "databasePort": "5432"
             "databaseSpec": _db
-            "env": _env | {
-                # Override to match cluster actual project
-                "projectId" = "cne-development"
-            }
+            "dataPlanes": ["blue"]
+            "env": _env | {"projectId" = "cne-development"}
             "forceDestroy": _spec["forceDestroy"] if "forceDestroy" in _spec else False
             "gsaEmail": "{}-sa@cne-development.iam.gserviceaccount.com".format(_baseName)
             "gsaName": "{}-sa".format(_baseName)
-            "instanceConnectionName": "cne-development:us-central1:{}-db-instance".format(_baseName)
-            "jobName": "{}-db-grant".format(_baseName)
             "labels": {
                 "app": "liferay"
                 "deployment-name": _env["deploymentName"] if "deploymentName" in _env else ""
@@ -101,9 +96,6 @@ test_cluster_refs_match = lambda {
         _rendered_items += sql.get_items(_obs, _vars)
         _rendered_items += storage.get_items(_obs, _vars)
 
-        # Composite-state-update items (e.g. the LiferayInfrastructure status
-        # emitted by init.k) have no spec — skip them; the cluster fixture
-        # tracks only composed resources.
         _rendered_simplified = [{
             "apiVersion": i?.apiVersion
             "kind": i?.kind
@@ -115,19 +107,10 @@ test_cluster_refs_match = lambda {
             }
         } for i in _rendered_items if i?.spec != Undefined]
 
-        # Remove resourceSelector from Usage objects since Crossplane resolves them to resourceRef
-        # Remove data/stringData from Secrets to avoid password checks
         _rendered_simplified_clean = [r | {
             "spec": {k: v for k, v in r.spec if k != "of" and k != "by" and k != "forProvider"} | ({"of": {k: v for k, v in r.spec.of if k != "resourceSelector"}, "by": {k: v for k, v in r.spec.by if k != "resourceSelector"}} if r.kind == "Usage" else {}) | ({"forProvider": {k: v for k, v in r.spec.forProvider if k != "manifest"} | {"manifest": {k: v for k, v in r.spec.forProvider.manifest if k != "data" and k != "stringData"}}} if r.kind == "Object" and r.spec?.forProvider?.manifest?.kind == "Secret" else ({"forProvider": r.spec.forProvider} if "forProvider" in r.spec else {}))
         } for r in _rendered_simplified]
 
-        # Perform comparison. _is_subset(a, b) returns true iff b ⊆ a, so
-        # _is_subset(c.spec, r.spec) verifies rendered's non-Undefined fields
-        # don't conflict with cluster. This catches "wrong values set" but not
-        # "missing fields" — unset rendered attributes show up as Undefined,
-        # which the subset short-circuits over. Regressions where we stop
-        # setting a required field must be covered by dedicated unit tests
-        # (see sql_required_fields_test.k, overlay_cmk_test.k, etc).
         _filtered_cluster_refs = [c | {
             "spec": {k: v for k, v in c.spec if k != "forProvider"} | ({"forProvider": {k: v for k, v in c.spec.forProvider if k != "manifest"} | {"manifest": {k: v for k, v in c.spec.forProvider.manifest if k != "data" and k != "stringData"}}} if c.kind == "Object" and c.spec?.forProvider?.manifest?.kind == "Secret" else ({"forProvider": c.spec.forProvider} if "forProvider" in c.spec else {}))
         } for c in _cluster_refs if c.name != "composition-context"]
@@ -147,7 +130,6 @@ test_cluster_refs_match = lambda {
 
         _extra_in_rendered = [r for r in _rendered_simplified_clean if not any c in _filtered_cluster_refs {c.apiVersion == r.apiVersion and c.kind == r.kind and c.name == r.name and _is_subset(c.spec, r.spec) and _is_subset(c.metadata, r.metadata)}]
 
-        # If length > 0, it means failure
         assert len(_missing_in_rendered) == 0, "Missing resources in rendered KCL output compared to cluster:\n" + str(_missing_in_rendered)
         assert len(_extra_in_rendered) == 0, "Extra resources in rendered KCL output compared to cluster:\n" + str(_extra_in_rendered)
 

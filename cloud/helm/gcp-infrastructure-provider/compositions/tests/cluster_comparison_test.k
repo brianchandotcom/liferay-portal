@@ -17,17 +17,14 @@ test_arz_dev2025_resource_names = lambda {
     _gsaEmail = "{}-sa@{}.iam.gserviceaccount.com".format(_baseName, _projectId)
 
     _vars: {str:any} = {
+        "activeDataPlane": "blue"
         "backup": {"enabled": False}
         "backupBucketName": "{}-vault".format(_baseName)
         "baseName": _meta_name
-        "bucketName": "{}-dl".format(_baseName)
-        "overlayBucketName": "{}-overlay".format(_baseName)
-        "managedServiceDetailsExternalName": "{}-managed-service-details-secret".format(_baseName)
-        "hashedName": _baseName
         "cmkEnabled": False
         "cmkKeyName": ""
         "databaseIamUser": "{}-sa@{}".format(_baseName, _projectId)
-        "databaseInstanceName": "{}-db-instance".format(_baseName)
+        "databaseInstanceManagementPolicies": ["*"]
         "databaseName": "liferay_db"
         "databasePort": "5432"
         "databaseSpec": {
@@ -37,6 +34,7 @@ test_arz_dev2025_resource_names = lambda {
             "queryInsightsEnabled": True
             "storageGB": 20
         }
+        "dataPlanes": ["blue"]
         "env": {
             "projectId": "arz"
             "projectNumber": _projectNumber
@@ -46,19 +44,20 @@ test_arz_dev2025_resource_names = lambda {
         "forceDestroy": False
         "gsaEmail": _gsaEmail
         "gsaName": "{}-sa".format(_baseName)
-        "instanceConnectionName": "arz:us-central1:{}-db-instance".format(_baseName)
-        "jobName": "{}-db-grant".format(_baseName)
+        "hashedName": _baseName
         "labels": {
             "app": "liferay"
             "deployment-name": "liferay-portal-poc"
             "environment-id": _environmentId
             "project-id": _projectId
         }
+        "managedServiceDetailsExternalName": "{}-managed-service-details-secret".format(_baseName)
         "managementPolicies": ["*"]
         "managementPolicy": "Default"
         "metadata": {"name": _meta_name}
         "namespace": "liferay-arz-dev2025"
         "overlay": {"enabled": True, "region": "us-south1", "data": {}}
+        "overlayBucketName": "{}-overlay".format(_baseName)
         "overlayEnabled": True
         "region": "us-central1"
         "searchName": "{}-es".format(_baseName)
@@ -69,7 +68,7 @@ test_arz_dev2025_resource_names = lambda {
 
     _obs = {
         "resources": {
-            "liferay-db-grant-job": {
+            "liferay-db-grant-job-blue": {
                 "resource": {
                     "status": {
                         "conditions": [{"type": "Ready", "status": "True"}]
@@ -115,16 +114,12 @@ test_arz_dev2025_resource_names = lambda {
     _msd_items = msd.get_items(_obs, _vars)
     assert _find_by_anno(_msd_items, "managed-service-details-secret") != None
 
-    # _sql_items = sql.get_items(_obs, _vars)
-    # assert _sql_items[0].metadata.name == "{}-db-instance".format(_baseName)
-    # assert _sql_items[1].metadata.name == "liferay_db"
-    # assert _sql_items[2].metadata.name == "arz-dev2025-00d245-sa@arz.iam"
     _storage_items = storage.get_items(_obs, _vars)
-    assert _storage_items[0].metadata.name == "{}-dl".format(_baseName)
-    assert _find_by_anno(_storage_items, "liferay-gcs-iam") != None
+    assert _storage_items[0].metadata.name == "{}-dl-blue".format(_baseName)
+    assert _find_by_anno(_storage_items, "liferay-gcs-iam-blue") != None
 
     _overlay_items = overlay.get_items(_obs, _vars)
-    assert len(_overlay_items) == 2, "Should have 2 overlay items"
+    assert len(_overlay_items) == 2
     assert _overlay_items[0].metadata.name == "{}-overlay".format(_baseName)
     assert _find_by_anno(_overlay_items, "liferay-gsa-overlay-bucket-iam") != None
 

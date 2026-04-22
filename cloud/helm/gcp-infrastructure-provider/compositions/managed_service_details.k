@@ -3,17 +3,19 @@ import k8s.api.core.v1 as k8s_core
 import models.v1alpha1.kubernetesm_crossplane_io_v1alpha1_object as kubernetes
 
 get_items = lambda obs: any, vars: {str:any} -> [any] {
-    # Gate on the grant-job Object being Ready. Until the Job has succeeded
-    # the DB user has no privileges, so any downstream consumer reading this
-    # secret would hit a broken DSN.
+    _activeDataPlane = str(vars?.activeDataPlane or "blue")
     _res = obs?.resources or {}
-    _grant_conditions = _res?["liferay-db-grant-job"]?.resource?.status?.conditions or []
+    _grant_conditions = _res?["liferay-db-grant-job-{}".format(_activeDataPlane)]?.resource?.status?.conditions or []
     _is_ready = any c in _grant_conditions {c.type == "Ready" and c.status == "True"}
 
     _externalName = str(vars?.managedServiceDetailsExternalName or "")
+    _hashedName = str(vars?.hashedName or "")
     _labels = vars?.labels or {}
     _managementPolicies = vars?.managementPolicies or ["*"]
     _namespace = str(vars?.namespace or "")
+    _meta_name = str(vars?.baseName or "")
+    _region = str(vars?.region or "")
+    _projectId = str(vars?.projectId or "")
 
     _items: [any] = []
     if _is_ready:
@@ -27,10 +29,10 @@ get_items = lambda obs: any, vars: {str:any} -> [any] {
             }
             stringData = {
                 DATABASE_ENDPOINT = "localhost"
-                DATABASE_INSTANCE_NAME = str(vars?.instanceConnectionName or "")
+                DATABASE_INSTANCE_NAME = "{}:{}:{}-db-instance-{}".format(_projectId, _region, _meta_name, _activeDataPlane)
                 DATABASE_PORT = str(vars?.databasePort or "5432")
                 DATABASE_USERNAME = str(vars?.databaseIamUser or "")
-                LIFERAY_GCS_BUCKET_NAME = str(vars?.bucketName or "")
+                LIFERAY_GCS_BUCKET_NAME = "{}-dl-{}".format(_hashedName, _activeDataPlane)
                 LIFERAY_OVERLAY_BUCKET_NAME = str(vars?.overlayBucketName or "")
             }
             $type = "Opaque"
@@ -57,15 +59,18 @@ get_items = lambda obs: any, vars: {str:any} -> [any] {
 }
 
 _vars = {
-    "bucketName": cv.bucketName
+    "activeDataPlane": cv.activeDataPlane
+    "baseName": cv.baseName
     "databaseIamUser": cv.databaseIamUser
     "databasePort": cv.databasePort
-    "instanceConnectionName": cv.instanceConnectionName
+    "hashedName": cv.hashedName
     "labels": cv.labels
     "managedServiceDetailsExternalName": cv.managedServiceDetailsExternalName
     "managementPolicies": cv.managementPolicies
     "namespace": cv.namespace
     "overlayBucketName": cv.overlayBucketName
+    "projectId": cv.env?.projectId or ""
+    "region": cv.region
 }
 
 items = {"items": get_items(cv.obs, _vars)}

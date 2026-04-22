@@ -323,42 +323,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the date interval selector is shown in the content performance panel, with 7 days selected as default"
-	@priority = 3
-	test IntervalSelectorInBlogDisplayPage {
-		task ("Create a Blog Entry") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add 'Asset Publisher' to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Open Content Performance panel") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Assert if the time range is 7 days") {
-			AssertSelectedLabel(
-				locator1 = "ContentPerformance#SELECT_DATE_RANGE",
-				value1 = "Last 7 Days");
-		}
-	}
-
 	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the languages are alphabetically ordered"
 	@priority = 3
 	test LanguagesAlphabeticallyOrdered {
@@ -679,6 +643,12 @@ definition {
 			AssertVisible(
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
 				value1 = "Traffic Channels");
+		}
+
+		task ("Assert default time range is Last 7 Days") {
+			AssertSelectedLabel(
+				locator1 = "ContentPerformance#SELECT_DATE_RANGE",
+				value1 = "Last 7 Days");
 		}
 	}
 

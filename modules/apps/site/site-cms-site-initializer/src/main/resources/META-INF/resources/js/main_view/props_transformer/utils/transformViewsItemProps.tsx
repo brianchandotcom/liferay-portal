@@ -204,6 +204,37 @@ const getLabels = (item: any, props: Card) => {
 		];
 	}
 
+	if (
+		item.embedded?.status?.label === 'expired' &&
+		item.embedded?.expirationDate
+	) {
+		const formattedDate = formatExpirationDate(
+			item.embedded.expirationDate
+		);
+		const formattedDateLong = formatExpirationDateLong(
+			item.embedded.expirationDate
+		);
+
+		if (formattedDate && formattedDateLong) {
+			const expiredText = Liferay.Language.get('expired');
+
+			return labels.map((label: any) =>
+				label.value === expiredText
+					? {
+							...label,
+							'aria-label': sub(
+								Liferay.Language.get('expired-expired-on-x'),
+								formattedDateLong
+							),
+							'className': 'lfr-portal-tooltip',
+							'tabIndex': 0,
+							'title': formattedDate,
+						}
+					: label
+			);
+		}
+	}
+
 	return labels;
 };
 

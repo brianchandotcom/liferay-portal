@@ -492,19 +492,16 @@ public class FileEntryStagedModelDataHandler
 						"fileVersionUuid", fileVersionUuid);
 					serviceContext.setUuid(fileEntry.getUuid());
 
-					String fileEntryTitle =
-						_dlFileEntryLocalService.getUniqueTitle(
-							portletDataContext.getScopeGroupId(), folderId, 0,
-							fileEntry.getTitle(), fileEntry.getExtension());
-
-					String fileEntryFileName = DLUtil.getUniqueFileName(
-						portletDataContext.getScopeGroupId(), folderId,
-						fileEntry.getFileName(), false);
-
 					importedFileEntry = _dlAppLocalService.addFileEntry(
 						fileEntry.getExternalReferenceCode(), userId,
-						repositoryId, folderId, fileEntryFileName,
-						fileEntry.getMimeType(), fileEntryTitle,
+						repositoryId, folderId,
+						DLUtil.getUniqueFileName(
+							portletDataContext.getScopeGroupId(), folderId,
+							fileEntry.getFileName(), false),
+						fileEntry.getMimeType(),
+						_dlFileEntryLocalService.getUniqueTitle(
+							portletDataContext.getScopeGroupId(), folderId, 0,
+							fileEntry.getTitle(), fileEntry.getExtension()),
 						StringPool.BLANK, fileEntry.getDescription(), null,
 						inputStream, fileEntry.getSize(),
 						fileEntry.getDisplayDate(),
@@ -661,22 +658,20 @@ public class FileEntryStagedModelDataHandler
 				}
 			}
 			else {
-				String fileEntryTitle = _dlFileEntryLocalService.getUniqueTitle(
-					portletDataContext.getScopeGroupId(), folderId, 0,
-					fileEntry.getTitle(), fileEntry.getExtension());
-
-				String fileEntryFileName = DLUtil.getUniqueFileName(
-					portletDataContext.getScopeGroupId(), folderId,
-					fileEntry.getFileName(), false);
-
 				importedFileEntry = _dlAppLocalService.addFileEntry(
 					fileEntry.getExternalReferenceCode(), userId, repositoryId,
-					folderId, fileEntryFileName, fileEntry.getMimeType(),
-					fileEntryTitle, StringPool.BLANK,
-					fileEntry.getDescription(), null, inputStream,
-					fileEntry.getSize(), fileEntry.getDisplayDate(),
-					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-					serviceContext);
+					folderId,
+					DLUtil.getUniqueFileName(
+						portletDataContext.getScopeGroupId(), folderId,
+						fileEntry.getFileName(), false),
+					fileEntry.getMimeType(),
+					_dlFileEntryLocalService.getUniqueTitle(
+						portletDataContext.getScopeGroupId(), folderId, 0,
+						fileEntry.getTitle(), fileEntry.getExtension()),
+					StringPool.BLANK, fileEntry.getDescription(), null,
+					inputStream, fileEntry.getSize(),
+					fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+					fileEntry.getReviewDate(), serviceContext);
 			}
 
 			for (DLPluggableContentDataHandler<?>

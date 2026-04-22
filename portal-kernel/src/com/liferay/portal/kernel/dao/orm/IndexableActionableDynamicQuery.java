@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.util.PropsValues;
 
@@ -28,6 +32,10 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
 /**
@@ -49,41 +57,38 @@ public class IndexableActionableDynamicQuery {
 			_total = performCount();
 		}
 
+		List<Document> documents = new ArrayList<>();
+		List<Future<?>> futures = new ArrayList<>();
+
+		Throwable throwable1 = null;
+
 		try {
-			try {
-				long previousPrimaryKey = -1;
+			long previousPrimaryKey = -1;
 
-				while (true) {
-					long lastPrimaryKey;
+			while (true) {
+				long lastPrimaryKey;
 
-					try {
-						lastPrimaryKey = _performActions(
-							_createPaginatedDynamicQuery(previousPrimaryKey));
-					}
-					finally {
-						_indexInterval();
-					}
-
-					if (lastPrimaryKey < 0) {
-						break;
-					}
-
-					previousPrimaryKey = lastPrimaryKey;
+				try {
+					lastPrimaryKey = _performActions(
+						_createPaginatedDynamicQuery(previousPrimaryKey),
+						documents, futures);
 				}
-			}
-			finally {
-				_actionsCompleted();
+				finally {
+					_indexInterval(documents);
+				}
+
+				if (lastPrimaryKey < 0) {
+					break;
+				}
+
+				previousPrimaryKey = lastPrimaryKey;
 			}
 		}
-		catch (Throwable throwable) {
-			ReflectionUtil.throwException(throwable);
+		catch (Throwable throwable2) {
+			throwable1 = throwable2;
 		}
 		finally {
-			if (_hasBackgroundTask) {
-				_count = _total;
-			}
-
-			_sendStatusMessage();
+			_actionsCompleted(futures, throwable1);
 		}
 	}
 
@@ -157,11 +162,50 @@ public class IndexableActionableDynamicQuery {
 		_primaryKeyPropertyName = primaryKeyPropertyName;
 	}
 
-	private void _actionsCompleted() throws PortalException {
-		IndexWriterHelper indexWriterHelper =
-			_indexWriterHelperProxySnapshot.get();
+	private void _actionsCompleted(
+		List<Future<?>> futures, Throwable throwable) {
 
-		indexWriterHelper.commit(_companyId);
+		for (Future<?> future : futures) {
+			try {
+				future.get();
+			}
+			catch (ExecutionException executionException) {
+				if (throwable == null) {
+					throwable = executionException.getCause();
+				}
+				else {
+					throwable.addSuppressed(executionException.getCause());
+				}
+			}
+			catch (InterruptedException interruptedException) {
+				if (throwable == null) {
+					throwable = interruptedException;
+				}
+				else {
+					throwable.addSuppressed(interruptedException);
+				}
+			}
+		}
+
+		try {
+			if (throwable != null) {
+				ReflectionUtil.throwException(throwable);
+			}
+
+			IndexWriterHelper indexWriterHelper =
+				_indexWriterHelperProxySnapshot.get();
+
+			indexWriterHelper.commit(_companyId);
+		}
+		catch (SearchException searchException) {
+			ReflectionUtil.throwException(searchException);
+		}
+		finally {
+			if (_hasBackgroundTask) {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					_modelClass.getName(), _total, _total);
+			}
+		}
 	}
 
 	private void _addCriteria(DynamicQuery dynamicQuery) {
@@ -178,15 +222,17 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
-	private void _addDocument(Document document) throws PortalException {
+	private void _addDocument(Document document, List<Document> documents)
+		throws PortalException {
+
 		if (document == null) {
 			return;
 		}
 
-		_documents.add(document);
+		documents.add(document);
 
-		if (_documents.size() >= _interval) {
-			_indexInterval();
+		if (documents.size() >= _interval) {
+			_indexInterval(documents);
 		}
 	}
 
@@ -215,26 +261,72 @@ public class IndexableActionableDynamicQuery {
 		return dynamicQuery;
 	}
 
-	private void _indexInterval() throws PortalException {
-		if (_documents.isEmpty()) {
+	private void _dispatchPerformActions(
+		List<Object> objects, List<Future<?>> futures) {
+
+		long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
+		ExecutorService executorService =
+			SearchEngineHelperUtil.getDocumentsProducerExecutorService();
+
+		futures.add(
+			executorService.submit(
+				ReindexCacheThreadLocal.wrapCallable(
+					new CompanyInheritableThreadLocalCallable<>(
+						() -> {
+							try (SafeCloseable safeCloseable1 =
+									BackgroundTaskThreadLocal.
+										setBackgroundTaskIdWithSafeCloseable(
+											backgroundTaskId);
+								SafeCloseable safeCloseable2 =
+									CTCollectionThreadLocal.
+										setCTCollectionIdWithSafeCloseable(
+											ctCollectionId);
+								SafeCloseable safeCloseable3 =
+									SearchContext.openBatchMode(false)) {
+
+								List<Document> documents = new ArrayList<>();
+
+								_performActionsWithDefaultCTSQLMode(
+									objects, documents);
+
+								_indexInterval(documents);
+							}
+							catch (Throwable throwable) {
+								ReflectionUtil.throwException(throwable);
+							}
+
+							return null;
+						}))));
+	}
+
+	private void _indexInterval(List<Document> documents)
+		throws PortalException {
+
+		if (documents.isEmpty()) {
 			return;
 		}
 
 		IndexWriterHelper indexWriterHelper =
 			_indexWriterHelperProxySnapshot.get();
 
-		indexWriterHelper.updateDocuments(_companyId, _documents, false);
+		indexWriterHelper.updateDocuments(_companyId, documents, false);
 
 		if (_hasBackgroundTask) {
-			_count += _documents.size();
+			ReindexStatusMessageSenderUtil.sendStatusMessage(
+				_modelClass.getName(), _count.addAndGet(documents.size()),
+				_total);
 		}
 
-		_documents.clear();
-
-		_sendStatusMessage();
+		documents.clear();
 	}
 
-	private long _performActions(DynamicQuery dynamicQuery) throws Throwable {
+	private long _performActions(
+			DynamicQuery dynamicQuery, List<Document> documents,
+			List<Future<?>> futures)
+		throws Throwable {
+
 		List<Object> objects = (List<Object>)_dynamicQueryMethod.invoke(
 			_baseLocalService, dynamicQuery);
 
@@ -249,27 +341,21 @@ public class IndexableActionableDynamicQuery {
 				objects.size() - 1);
 
 			lastPrimaryKey = (Long)baseModel.getPrimaryKeyObj();
-		}
 
-		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-			CTSQLModeThreadLocal.getCTSQLMode();
+			if (SearchContext.isBatchMode()) {
+				_dispatchPerformActions(objects, futures);
 
-		if (ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT) {
-			_performActionsWithCTCollection(objects);
-		}
-		else {
-			try (SafeCloseable safeCloseable =
-					CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
-						CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
-
-				_performActionsWithCTCollection(objects);
+				return lastPrimaryKey;
 			}
 		}
+
+		_performActionsWithDefaultCTSQLMode(objects, documents);
 
 		return lastPrimaryKey;
 	}
 
-	private void _performActionsWithCTCollection(List<Object> objects)
+	private void _performActionsWithCTCollection(
+			List<Object> objects, List<Document> documents)
 		throws Throwable {
 
 		long currentCTCollectionId =
@@ -286,7 +372,8 @@ public class IndexableActionableDynamicQuery {
 
 			if (ctCollectionId == currentCTCollectionId) {
 				_addDocument(
-					(Document)_performActionUnsafeFunction.apply(object));
+					(Document)_performActionUnsafeFunction.apply(object),
+					documents);
 			}
 			else {
 				try (SafeCloseable safeCloseable =
@@ -295,8 +382,29 @@ public class IndexableActionableDynamicQuery {
 								ctCollectionId)) {
 
 					_addDocument(
-						(Document)_performActionUnsafeFunction.apply(object));
+						(Document)_performActionUnsafeFunction.apply(object),
+						documents);
 				}
+			}
+		}
+	}
+
+	private void _performActionsWithDefaultCTSQLMode(
+			List<Object> objects, List<Document> documents)
+		throws Throwable {
+
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+			CTSQLModeThreadLocal.getCTSQLMode();
+
+		if (ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT) {
+			_performActionsWithCTCollection(objects, documents);
+		}
+		else {
+			try (SafeCloseable safeCloseable =
+					CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
+						CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
+
+				_performActionsWithCTCollection(objects, documents);
 			}
 		}
 	}
@@ -312,15 +420,6 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
-	private void _sendStatusMessage() {
-		if (!_hasBackgroundTask) {
-			return;
-		}
-
-		ReindexStatusMessageSenderUtil.sendStatusMessage(
-			_modelClass.getName(), _count, _total);
-	}
-
 	private static final Snapshot<IndexWriterHelper>
 		_indexWriterHelperProxySnapshot = new Snapshot<>(
 			IndexableActionableDynamicQuery.class, IndexWriterHelper.class);
@@ -330,8 +429,7 @@ public class IndexableActionableDynamicQuery {
 	private String _cacheKeySuffix;
 	private ClassLoader _classLoader;
 	private long _companyId;
-	private long _count;
-	private final List<Document> _documents = new ArrayList<>();
+	private final AtomicLong _count = new AtomicLong();
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
 	private boolean _hasBackgroundTask;

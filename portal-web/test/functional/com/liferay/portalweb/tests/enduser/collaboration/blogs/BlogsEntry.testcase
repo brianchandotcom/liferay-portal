@@ -232,58 +232,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This is a use case for LPS-69240. It checks that a blog entry with custom URL can be added and also that the automatic URL is generated properly in the UI."
-	@priority = 4
-	@refactordone
-	test CanAddWithCustomURL {
-		property portal.acceptance = "true";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.addEntryContent(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		Blogs.expandPanel(panel = "Friendly URL");
-
-		AssertChecked(locator1 = "Radio#DEFAULT_URL");
-
-		AssertTextEquals(
-			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "blogs-entry-title");
-
-		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
-
-		Check(locator1 = "Radio#CUSTOM_URL");
-
-		Type(
-			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "custom-url-here");
-
-		PortletEntry.publish();
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/custom-url-here");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This is a usecase for LPS-75241. It checks that an embedded video can be added to a blog."
 	@priority = 4
 	@refactordone
@@ -756,43 +704,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This this a use case for LPS-69240. It checks that a blog entry with a URL that duplicates an existing one cannot be published."
-	@priority = 3
-	@refactordone
-	test CannotAddDuplicateCustomURLThroughUI {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.addEntryContent(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		Blogs.expandPanel(panel = "Friendly URL");
-
-		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
-
-		Check(locator1 = "Radio#CUSTOM_URL");
-
-		Type(
-			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "blogs-entry-title");
-
-		Button.clickPublish();
-
-		AssertElementPresent(locator1 = "Message#ERROR");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_ENTER_A_UNIQUE_TITLE",
-			value1 = "The URL title is already in use. Please enter a unique URL title.");
 	}
 
 	@description = "This checks that a blog entry without content cannot be added."
@@ -1430,73 +1341,6 @@ definition {
 
 			Notifications.viewBadgeCount(notificationCount = 1);
 		}
-	}
-
-	@description = "This is a use case for LPS-69240. It checks that when blog entries are duplicated their custom URL's are unique."
-	@priority = 3
-	@refactordone
-	test ShouldHaveUniqueURLForDuplicate {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blogs-entry-title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blogs-entry-title-1");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."
-	@priority = 3
-	test URLWithEscapeCharactersWillBeNormalized {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		Blogs.addEntryWithCustomURL(
-			customURL = "blog&entry",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blog-entry");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
 	}
 
 }

@@ -24,6 +24,7 @@ export class BlogsEditBlogEntryPage {
 	readonly blogsPage: BlogsPage;
 	readonly contentEditor: Locator;
 	readonly customAbstractRadio: Locator;
+	readonly customUrlInput: Locator;
 	readonly publishButton: Locator;
 	readonly submitToWorkflowButton: Locator;
 	readonly subtitleInput: Locator;
@@ -40,6 +41,9 @@ export class BlogsEditBlogEntryPage {
 			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_contentEditor.cke_editable'
 		);
 		this.customAbstractRadio = page.getByLabel('Custom Abstract');
+		this.customUrlInput = page.locator(
+			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_urlTitle'
+		);
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.submitToWorkflowButton = page.getByRole('button', {
 			name: 'Submit for Workflow',
@@ -71,6 +75,14 @@ export class BlogsEditBlogEntryPage {
 		await expect(this.abstractDescription).toBeEnabled();
 
 		await this.abstractDescription.fill(value);
+	}
+
+	async setCustomUrl(value: string) {
+		const fieldset = await this.expandPanel('Friendly URL');
+
+		await fieldset.getByText('Use a Customized URL').click();
+
+		await this.customUrlInput.fill(value);
 	}
 
 	async fillTitle(title: string) {

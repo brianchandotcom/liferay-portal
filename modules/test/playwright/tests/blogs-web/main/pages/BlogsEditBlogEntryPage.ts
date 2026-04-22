@@ -26,6 +26,7 @@ export class BlogsEditBlogEntryPage {
 	readonly customAbstractRadio: Locator;
 	readonly customUrlInput: Locator;
 	readonly publishButton: Locator;
+	readonly saveDraftStatus: Locator;
 	readonly submitToWorkflowButton: Locator;
 	readonly subtitleInput: Locator;
 	readonly titleInput: Locator;
@@ -45,6 +46,9 @@ export class BlogsEditBlogEntryPage {
 			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_urlTitle'
 		);
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.saveDraftStatus = page.locator(
+			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_saveStatus'
+		);
 		this.submitToWorkflowButton = page.getByRole('button', {
 			name: 'Submit for Workflow',
 		});
@@ -83,6 +87,12 @@ export class BlogsEditBlogEntryPage {
 		await fieldset.getByText('Use a Customized URL').click();
 
 		await this.customUrlInput.fill(value);
+	}
+
+	async saveAsDraft() {
+		await this.saveDraftStatus.getByText('Draft Saved').waitFor({
+			timeout: 40_000,
+		});
 	}
 
 	async fillTitle(title: string) {

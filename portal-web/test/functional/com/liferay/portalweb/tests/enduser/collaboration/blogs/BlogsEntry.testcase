@@ -489,43 +489,6 @@ definition {
 		AssertElementNotPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
 	}
 
-	@description = "This checks that a blog entry can saved as a draft and then deleted."
-	@priority = 4
-	@refactorneeded
-	test CanDeleteDraft {
-		property portal.acceptance = "true";
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addDraft(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(
-			entryStatus = "Draft",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		BlogsEntry.moveToRecycleBinDraftCP(
-			assetType = "Blogs Entry",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This is a test for LPS-136771. It checks that the cover image caption can be edited with special characters."
 	@priority = 3
 	test CanEditCoverImageCaptionWithSpecialCharacters {
@@ -679,31 +642,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySmallImage = "Document_1",
 			entryTitle = "Blogs Entry with Small Image");
-	}
-
-	@description = "This checks that a blog entry can be manually saved as a draft."
-	@priority = 5
-	@refactordone
-	test CanManuallySaveAsDraft {
-		property portal.acceptance = "true";
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addDraft(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(
-			entryStatus = "Draft",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This checks that a blog entry without content cannot be added."
@@ -935,36 +873,6 @@ definition {
 		}
 	}
 
-	@description = "This checks that a blog draft can be published."
-	@priority = 4
-	@refactordone
-	test CanPublishDraft {
-		property portal.acceptance = "true";
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addDraft(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.publishDraftCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This checks that a blog entry that is scheduled is in a pre-publish status in the UI."
 	@priority = 4
 	@refactordone
@@ -1053,32 +961,6 @@ definition {
 				searchAssetType = "Blogs Entry",
 				searchTerm = ${searchTerm});
 		}
-	}
-
-	@description = "This is a test for LPS-80502. It asserts that user can search a draft blog entry."
-	@priority = 4
-	test CanSearchForDraftEntry {
-		property portal.acceptance = "true";
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			workflowAction = "DRAFT");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		BlogsEntry.searchCP(
-			entrySearchTerm = "Blogs Entry Title",
-			entryTitle = "Blogs Entry Title",
-			position = 2);
 	}
 
 	@priority = 4

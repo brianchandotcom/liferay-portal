@@ -42,24 +42,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-144031: When the user accesses to the content performance panel of a content page, the author's field is NOT shown in the content performance panel"
-	@priority = 3
-	test AuthorNotShowInContentPage {
-		task ("Open Content Performance panel") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Assert author is not displayed") {
-			AssertElementNotPresent(
-				key_author = "Test Test",
-				locator1 = "ContentPerformance#PAGE_AUTHOR");
-		}
-	}
-
 	@description = "LPS-144031: When the user accesses to the content performance panel of a document's display page, the author's field is NOT shown in the content performance panel"
 	@priority = 3
 	test AuthorNotShowInDocumentDisplayPage {
@@ -244,6 +226,12 @@ definition {
 					key_index = ${index},
 					locator1 = "ContentPerformance#DOT_GRAPH_INDEX");
 			}
+		}
+
+		task ("Assert author is NOT displayed") {
+			AssertElementNotPresent(
+				key_author = "Test Test",
+				locator1 = "ContentPerformance#PAGE_AUTHOR");
 		}
 	}
 

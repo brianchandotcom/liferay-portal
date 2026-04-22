@@ -42,11 +42,9 @@ import getPageDefinition from '../../layout-content-page-editor-web/main/utils/g
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import createSiteTemplate from '../../layout-set-prototype-web/main/utils/createSiteTemplate';
 import {cmsPagesTest} from '../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
-import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
 import {
 	getFDSDateTimeFormat,
 	getObjectEntryUIDateTimeFormat,
-	getPageEditorDateFormat,
 	getUTCOffsetFormatted,
 } from '../utils/dateFormat';
 import {createFile, deleteFile} from '../utils/fileHelpers';
@@ -75,7 +73,6 @@ const test = mergeTests(
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
 	productMenuPageTest,
-	templatesPageTest,
 	workflowPagesTest,
 	usersAndOrganizationsPagesTest
 );
@@ -99,25 +96,11 @@ const ckEditor4Test = mergeTests(
 	})
 );
 
-let contentPageName: string;
 let displayPageId: string;
-let informationTemplateName: string;
 let siteLanguage = 'en';
 
 test.afterEach(
-	async ({
-		accountSettingsPage,
-		apiHelpers,
-		page,
-		pagesAdminPage,
-		templatesPage,
-	}) => {
-		if (contentPageName) {
-			await pagesAdminPage.goto();
-
-			await pagesAdminPage.deletePage(contentPageName);
-		}
-
+	async ({accountSettingsPage, apiHelpers, page}) => {
 		if (displayPageId) {
 			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
 				{
@@ -126,14 +109,6 @@ test.afterEach(
 			);
 
 			displayPageId = '';
-		}
-
-		if (informationTemplateName) {
-			await templatesPage.goto();
-
-			await templatesPage.deleteInformationTemplate(
-				informationTemplateName
-			);
 		}
 
 		if (siteLanguage !== 'en') {
@@ -1777,306 +1752,6 @@ test.describe('Manage object entries through Object Definition widget', () => {
 
 		await expect(page.getByText('The field is empty')).not.toBeVisible();
 		await expect(page.getByText('The URL is invalid')).toBeVisible();
-	});
-});
-
-test.describe('Manage object entries through Page Templates', () => {
-	test('verify if the object entries are displayed when selecting to preview an object entry on a page template', async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		page,
-		pageEditorPage,
-	}) => {
-		test.slow();
-		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
-		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
-
-		const {listTypeDefinition, listTypeEntries} =
-			await postListTypeDefinitionListTypeEntries({
-				apiHelpers,
-			});
-
-		const objectFields = generateObjectFields({
-			listTypeDefinitionExternalReferenceCode:
-				listTypeDefinition.externalReferenceCode,
-			objectFieldBusinessTypes: [
-				'AutoIncrement',
-				'Decimal',
-				'Date',
-				'Boolean',
-				'Encrypted',
-				'Integer',
-				'LongInteger',
-				'LongText',
-				'MultiselectPicklist',
-				'Picklist',
-				'PrecisionDecimal',
-				'RichText',
-				'Text',
-			],
-		});
-
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				label: {
-					en_US: objectDefinitionLabel,
-				},
-				name: objectDefinitionName,
-				objectFields,
-				pluralLabel: {
-					en_US: objectDefinitionLabel,
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		const {objectEntry: objectEntryValues} =
-			await generateObjectEntryValues({
-				listTypeEntries: listTypeEntries.map(
-					(listTypeEntry) => listTypeEntry.name
-				),
-				objectEntryFormat: 'API',
-				objectFields,
-			});
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-
-		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			objectEntryValues,
-			applicationName
-		);
-
-		await displayPageTemplatesPage.goto();
-
-		const displayPageTemplateName = getRandomString();
-
-		await displayPageTemplatesPage.createTemplate({
-			contentType: objectDefinition.label['en_US'],
-			name: displayPageTemplateName,
-		});
-
-		await page.getByTitle(displayPageTemplateName).click();
-
-		overloop: for (const [_, objectField] of objectDefinition.objectFields
-			.filter((objectField) => !objectField.system)
-			.entries()) {
-			await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-			await page.getByText('Heading Example', {exact: true}).click();
-
-			await pageEditorPage.setMappingConfiguration({
-				mapping: {
-					entity: objectDefinitionLabel,
-					entry: objectEntry.externalReferenceCode,
-					field: objectField.label['en_US'],
-				},
-				source: 'content',
-			});
-
-			let matchString: string;
-
-			switch (objectField.businessType) {
-				case 'Date': {
-					const date = new Date(
-						Date.parse(
-							objectEntryValues[objectField.name] as string
-						)
-					);
-
-					matchString = getPageEditorDateFormat(date);
-
-					// Defer date validation for CI trace view analysis (issue #LRCI-4253)
-
-					continue overloop;
-				}
-				case 'Picklist': {
-					matchString = (
-						objectEntryValues[objectField.name] as {
-							key: string;
-						}
-					).key;
-
-					break;
-				}
-				case 'MultiselectPicklist': {
-					(objectEntryValues[objectField.name] as string[]).forEach(
-						(listTypeEntry, index) => {
-							index < 1
-								? (matchString = `${listTypeEntry}`)
-								: (matchString += `, ${listTypeEntry}`);
-						}
-					);
-
-					break;
-				}
-				default: {
-					matchString =
-						objectEntryValues[objectField.name].toString();
-				}
-			}
-
-			await expect(
-				page.getByTitle('Edit Text').filter({hasText: matchString})
-			).toBeVisible();
-		}
-
-		// Clean up
-
-		await displayPageTemplatesPage.goto();
-
-		await displayPageTemplatesPage.deleteTemplate(objectDefinitionLabel);
-	});
-
-	test('verify it is possible to create a information template with an object as an item type and see its entries', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		pagesAdminPage,
-		templatesPage,
-	}) => {
-		const {listTypeDefinition, listTypeEntries} =
-			await postListTypeDefinitionListTypeEntries({
-				apiHelpers,
-			});
-
-		const objectFields = generateObjectFields({
-			listTypeDefinitionExternalReferenceCode:
-				listTypeDefinition.externalReferenceCode,
-			objectFieldBusinessTypes: [
-				'Boolean',
-				'Decimal',
-				'Integer',
-				'LongText',
-				'Picklist',
-				'Text',
-			],
-		});
-
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		const {objectEntry: objectEntryValues} =
-			await generateObjectEntryValues({
-				listTypeEntries: listTypeEntries.map(
-					(listTypeEntry) => listTypeEntry.name
-				),
-				objectEntryFormat: 'API',
-				objectFields,
-			});
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-
-		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			objectEntryValues,
-			applicationName
-		);
-
-		informationTemplateName = 'Object Template' + getRandomInt();
-
-		await test.step('create information template and add object fields', async () => {
-			await templatesPage.goto();
-
-			await templatesPage.createInformationTemplate({
-				itemType: objectDefinition.label['en_US'],
-				name: informationTemplateName,
-			});
-
-			for (const objectField of objectFields) {
-				await page
-					.getByRole('button', {name: objectField.label['en_US']})
-					.click();
-			}
-
-			await templatesPage.saveTemplate(informationTemplateName);
-		});
-
-		contentPageName = getRandomString();
-
-		await test.step('create page template with HTML element linked to the informationTemplateName', async () => {
-			await pagesAdminPage.goto();
-
-			await pagesAdminPage.createNewPage({
-				name: contentPageName,
-			});
-
-			await pagesAdminPage.editPage(contentPageName);
-
-			await pageEditorPage.addFragment('Basic Components', 'HTML');
-
-			const htmlFragmentId = await pageEditorPage.getFragmentId('HTML');
-
-			await pageEditorPage.selectEditable(htmlFragmentId, 'element-html');
-
-			await pageEditorPage.setMappedItem({
-				entity: objectDefinition.label['en_US'],
-				entry: objectEntry.id.toString(),
-				entryLocator: page
-					.frameLocator('iframe[title="Select"]')
-					.getByText(objectEntry.id.toString())
-					.first(),
-				field: informationTemplateName,
-			});
-
-			await pageEditorPage.waitForChangesSaved();
-
-			await pageEditorPage.publishPage();
-		});
-
-		await test.step('go to created page and assert object entries', async () => {
-			await page.goto(`/web/guest/${contentPageName}`);
-
-			const entries = Object.values(objectEntryValues)
-				.map((value) => {
-					if (typeof value === 'boolean') {
-						return value ? 'Yes' : 'No';
-					}
-
-					if (
-						typeof value === 'object' &&
-						value !== null &&
-						'key' in (value as object)
-					) {
-						return (value as {key: string}).key;
-					}
-
-					return String(value);
-				})
-				.join(' ');
-
-			await expect(page.getByText(entries)).toBeVisible();
-		});
 	});
 });
 

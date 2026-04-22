@@ -559,70 +559,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-130320: Validate if it's posible to create a segment based on Session > Last sign in date criteria"
-	@ignore = "true"
-	@priority = 5
-	@uitest
-	test AddSegmentBySessionLastSignInDate {
-		property portal.acceptance = "true";
-
-		task ("Add segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Session");
-
-			Segmentation.addProperties(propertyOption = "Last Sign In Date");
-
-			Segmentation.fillTitle(titleField = "AddSegmentBySessionLastSignInDate Test");
-
-			Segmentation.fillProperty(dateValue = "03/31/2021");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentBySessionLastSignInDate Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "2021-03-31");
-		}
-	}
-
-	@description = "Test Automation for LPS-130321: Validate if it's posible to create a segment based on Session > Local date criteria"
-	@ignore = "true"
-	@priority = 5
-	@uitest
-	test AddSegmentBySessionLocalDate {
-		property portal.acceptance = "true";
-
-		task ("Add segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Session");
-
-			Segmentation.addProperties(propertyOption = "Local Date");
-
-			Segmentation.fillTitle(titleField = "AddSegmentBySessionLocalDate Test");
-
-			Segmentation.fillProperty(dateValue = "03/31/2021");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentBySessionLocalDate Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "2021-03-31");
-		}
-	}
-
 	@description = "Test Automation for LPS-130322: Validate if it's posible to create a segment based on Session > Referrer URL criteria"
 	@priority = 5
 	@uitest
@@ -796,51 +732,6 @@ definition {
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = ${currentDate});
-		}
-	}
-
-	@description = "Test Automation for LPS-130285: Validate if it's posible to create a segment based on User > Date of birth criteria"
-	@ignore = "true"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserDateOfBirth {
-		property portal.acceptance = "true";
-
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Date of Birth");
-
-			Segmentation.fillProperty(dateValue = "05/31/1986");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByUserDateOfBirth Test");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentByUserDateOfBirth Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "1986-05-31");
 		}
 	}
 

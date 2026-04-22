@@ -172,15 +172,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-111465 When a non-default virtual instance/company is synced to AC, all the segments created on AC with more than one member are listed in People > Segments"
-	@ignore = "true"
-	@priority = 5
-	test NonDefaultInstanceSynchronizedOnAC {
-
-		// TODO LPS-111464 NonDefaultInstanceSynchronizedOnAC pending implementation
-
-	}
-
 	@description = "LPS-94938 Validate if the user is redirected to the segment page details when he tries to see the detail of the imported segment from Analytics Cloud into DXP	"
 	@priority = 5
 	test RedirectToSegmentPageAC {
@@ -321,15 +312,6 @@ definition {
 				locator1 = "//body",
 				value1 = "The page you are looking for does not exist.");
 		}
-	}
-
-	@description = "LPS-94940 Validate if, The migrated AC segment, it appears in Liferay DXP Segments administration without an edit/delete actions"
-	@ignore = "true"
-	@priority = 4
-	test SegmentsWithoutEditingAndDeletingFromTheSite {
-
-		// TODO LPS-94940 SegmentsWithoutEditingAndDeletingFromTheSite pending implementation
-
 	}
 
 	@description = "LPS-94938 Validate if the user have the text unlinked when he tries to see the detail of the imported segment from Analytics Cloud into DXP, one time that the connection with Analytics Cloud does not exist anymore"

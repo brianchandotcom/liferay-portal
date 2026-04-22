@@ -235,60 +235,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"
-	@ignore = "true"
-	@priority = 5
-	test CanFormsListSearchable {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Empty state no form changed
-		// LRAC-10599 is a dependency of this fix
-
-		var formNameList = "Created Form Name,Created Form Name 1";
-
-		ACUtils.addPage(layoutName = "AC Page 1");
-
-		ACUtils.createFormAndAddToPage(
-			formAcTitle = "Created Form Name 1",
-			layoutName = "AC Page 1");
-
-		Refresh();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		for (var pageName : list "AC Page,AC Page 1") {
-			ACUtils.navigateToSitePage(
-				actionType = "Submit Form",
-				pageName = ${pageName},
-				siteName = "Site Name",
-				submitText = "Test Assets");
-		}
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Forms");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		for (var formName : list ${formNameList}) {
-			ACUtils.searchBar(searchItem = ${formName});
-
-			ACUtils.viewNameList(nameList = ${formName});
-		}
-
-		ACUtils.searchBar(searchItem = "Should not be here");
-
-		ACUtils.viewNoResultsMessage(noResultMessage = "There are no Forms found.");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8121 | Test Summary: Assert clicking a form in the forms list navigates to the form overview page"
 	@priority = 5
 	test CanNavigatesToFormsOverviewPage {
@@ -344,78 +290,6 @@ definition {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = ${metric},
 				metricValue = 3);
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8421 | Test Summary: Assert Assets Forms Custom Range Time Filter in Behaviour Report	"
-	@ignore = "true"
-	@priority = 5
-	test CanTimeFilterUseCustomRangeInFormsBehaviourReport {
-
-		// AC Refactor: Timing issues may happen on this test case
-		// AC Refactor ticket: LRAC-8813
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		task ("Form submit") {
-
-			// This test needs to add data from a past date to work propperly
-
-			ACUtils.navigateToSitePage(
-				actionType = "Submit Form",
-				pageName = "AC Page",
-				siteName = "Site Name",
-				submitText = "Test Assets");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Enter in forms asset page") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Forms");
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACNavigation.openItem(itemName = "Created Form Name");
-		}
-
-		task ("Assert that overview card change behavior when I set a custom range date") {
-
-			// This test needs to assert data from a past date
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setCustomRange(
-				endDay = 8,
-				endMonth = "August",
-				endYear = 2020,
-				startDay = 1,
-				startMonth = "August",
-				startYear = 2020);
-
-			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Aug 1, 2020 - Aug 8, 2020");
-
-			var curr_metricName = "";
-			var curr_metricValue = "";
-
-			for (var current : list "Abandonment-${expectedValue1},Submissions-${expectedValue2},Views-${expectedValue3},Completion Time-${expectedValue4}") {
-				var curr_metricName = StringUtil.extractFirst(${current}, "-");
-				var curr_metricValue = StringUtil.extractLast(${current}, "-");
-
-				ACCards.viewMetricValue(
-					cardTitle = "Visitors Behavior",
-					metricName = ${curr_metricName},
-					metricValue = ${curr_metricValue});
-			}
 		}
 	}
 

@@ -16,10 +16,12 @@ import {
 } from './ContentEditorToolbar';
 import PreviewBody from './preview/PreviewBody';
 import PreviewHeader from './preview/PreviewHeader';
+import useIsContentEdited from './useIsContentEdited';
 
 import '../../../css/content_editor/ContentEditorPreview.scss';
 
 const BREAKPOINT_LG = 992;
+const FORM_SELECTOR = '.lfr-layout-structure-item-form';
 const PREVIEW_WIDTH_MIN = 500;
 const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';
 
@@ -30,7 +32,7 @@ export default function ContentEditorPreview({
 	getPreviewDataURL: string;
 	title: string;
 }) {
-	const [isContentEdited, setIsContentEdited] = useState<boolean>(false);
+	const isContentEdited = useIsContentEdited(FORM_SELECTOR);
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const [resizeWidth, setResizeWidth] = useSessionState(
 		PREVIEW_WIDTH_SESSION_KEY,
@@ -58,24 +60,6 @@ export default function ContentEditorPreview({
 		Liferay.on(EVENT_HANDLE_PREVIEW, handlePreview);
 
 		return () => Liferay.detach(EVENT_HANDLE_PREVIEW, handlePreview);
-	}, []);
-
-	useEffect(() => {
-		const form = document.querySelector('.lfr-layout-structure-item-form');
-
-		if (!form) {
-			return;
-		}
-
-		const handleChange = () => setIsContentEdited(true);
-
-		form.addEventListener('input', handleChange);
-		form.addEventListener('change', handleChange);
-
-		return () => {
-			form.removeEventListener('input', handleChange);
-			form.removeEventListener('change', handleChange);
-		};
 	}, []);
 
 	useEffect(() => {

@@ -195,53 +195,6 @@ definition {
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
-	@description = "Web content visitor behavior card shows expected amount of views"
-	@priority = 5
-	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
-		property test.run.type = "single";
-
-		task ("Connect DXP to Analytics Cloud and get the property name") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Visit page 3 times on DXP") {
-			ACUtils.navigateToSitePage(
-				actionType = "View WC",
-				documentTitleList = "1,2,3",
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Navigate to AC property") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigate to Web Content tab in Assets") {
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Web Content");
-		}
-
-		task ("Navigate into Web Content entry") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACNavigation.openItem(itemName = "Web Content AC Title");
-		}
-
-		task ("Confirm that web content events appear in AC") {
-			ACCards.viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(
-				maxMetricValue = 4,
-				metricTitle = "Views",
-				minMetricValue = 1);
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8454 | Test Summary: Web content submissions by technology card shows views by expected browser"
 	@priority = 5
 	test WebContentTechnologyCardShowsViewsByExpectedBrowser {

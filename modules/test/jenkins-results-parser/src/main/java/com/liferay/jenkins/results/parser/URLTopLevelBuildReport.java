@@ -45,6 +45,10 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 				getBuildReportJSONTestrayURL());
 		}
 
+		if (_buildReportJSONObject == null) {
+			_buildReportJSONObject = new JSONObject();
+		}
+
 		initialize(_buildReportJSONObject);
 
 		return _buildReportJSONObject;

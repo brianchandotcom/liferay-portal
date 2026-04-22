@@ -129,7 +129,7 @@ public abstract class BaseFailureReport implements FailureReport {
 				JenkinsResultsParserUtil.getBuildProperty(
 					"failure.report.similarity.threshold");
 
-			if (!JenkinsResultsParserUtil.isDouble(similarityThreshold)) {
+			if (JenkinsResultsParserUtil.isDouble(similarityThreshold)) {
 				_similarityThreshold = Double.parseDouble(similarityThreshold);
 
 				return _similarityThreshold;

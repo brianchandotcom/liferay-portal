@@ -73,7 +73,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String externalReferenceCode, String commentExternalReferenceCode)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -98,7 +98,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String commentExternalReferenceCode)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -193,7 +193,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String externalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -211,7 +211,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Comment comment)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -238,7 +238,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey, String externalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -256,7 +256,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String commentExternalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -284,7 +284,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Comment comment)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -312,7 +312,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String commentExternalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -419,7 +419,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -445,7 +445,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey, String search, Sort[] sorts)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -497,7 +497,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Pagination pagination, String scopeKey, String search, Sort[] sorts)
 		throws Exception {
 
-		if (!_isCommentsSupported()) {
+		if (!_isEnabled()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -594,7 +594,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			objectEntryExternalReferenceCode, _objectDefinition, scopeKey);
 	}
 
-	private boolean _isCommentsSupported() {
+	private boolean _isEnabled() {
 		if (!_objectDefinition.isEnableComments()) {
 			return false;
 		}

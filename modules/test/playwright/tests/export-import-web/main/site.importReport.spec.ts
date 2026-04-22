@@ -183,7 +183,7 @@ test(
 			const suggestedFilename = download.suggestedFilename();
 
 			expect(suggestedFilename).toMatch(
-				new RegExp(`^${taskName}-(\\d+)_report_entries\\.zip$`)
+				new RegExp(`^${taskName}_report_entries\\.zip$`)
 			);
 
 			const filePath = getTempFile(suggestedFilename);

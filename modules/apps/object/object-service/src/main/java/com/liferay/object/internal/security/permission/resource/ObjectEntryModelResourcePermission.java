@@ -129,6 +129,18 @@ public class ObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (Objects.equals(actionId, ActionKeys.DOWNLOAD) &&
+			Objects.equals(
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+
+			return contains(permissionChecker, objectEntry, "DOWNLOAD_FILE");
+		}
+
 		if ((objectEntry.getRootObjectEntryId() != 0) &&
 			!_isObjectActionName(
 				actionId, objectEntry.getObjectDefinitionId()) &&
@@ -148,18 +160,6 @@ public class ObjectEntryModelResourcePermission
 		}
 
 		User user = permissionChecker.getUser();
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (Objects.equals(actionId, ActionKeys.DOWNLOAD) &&
-			Objects.equals(
-				objectDefinition.getObjectFolderExternalReferenceCode(),
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
-
-			return contains(permissionChecker, objectEntry, "DOWNLOAD_FILE");
-		}
 
 		if (_hasAssigneeUpdatePermission(
 				actionId, objectDefinition, objectEntry, user)) {

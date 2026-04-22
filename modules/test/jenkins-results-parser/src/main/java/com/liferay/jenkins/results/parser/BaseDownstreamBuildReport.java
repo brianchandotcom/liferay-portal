@@ -52,6 +52,23 @@ public abstract class BaseDownstreamBuildReport
 	}
 
 	@Override
+	public List<FailureReport> getFailureReports() {
+		List<FailureReport> failureReports = new ArrayList<>(
+			super.getFailureReports());
+
+		for (TestReport testReport : getTestReports()) {
+			if (!testReport.isFailing()) {
+				continue;
+			}
+
+			failureReports.add(
+				FailureReportFactory.newFailureReport(this, null, testReport));
+		}
+
+		return failureReports;
+	}
+
+	@Override
 	public String getJobVariant() {
 		Map<String, String> buildParameters = getBuildParameters();
 

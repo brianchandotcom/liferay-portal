@@ -347,4 +347,4 @@ public interface VersionedEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-132284413
+// LIFERAY-SERVICE-BUILDER-HASH:-920804029

@@ -299,4 +299,4 @@ public class MappingEntryWrapper
 	private final MappingEntry _mappingEntry;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-38218913
+// LIFERAY-SERVICE-BUILDER-HASH:-1371603233

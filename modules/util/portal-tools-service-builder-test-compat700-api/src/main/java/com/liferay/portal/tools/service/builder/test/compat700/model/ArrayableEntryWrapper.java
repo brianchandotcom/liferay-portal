@@ -431,4 +431,4 @@ public class ArrayableEntryWrapper
 	private final ArrayableEntry _arrayableEntry;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-135712163
+// LIFERAY-SERVICE-BUILDER-HASH:-1160373615

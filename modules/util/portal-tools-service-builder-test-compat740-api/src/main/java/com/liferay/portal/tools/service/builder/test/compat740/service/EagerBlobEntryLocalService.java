@@ -283,4 +283,4 @@ public interface EagerBlobEntryLocalService
 	public EagerBlobEntry updateEagerBlobEntry(EagerBlobEntry eagerBlobEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-401106871
+// LIFERAY-SERVICE-BUILDER-HASH:926372940

@@ -315,4 +315,4 @@ public interface ERCVersionedEntryLocalService
 		ERCVersionedEntry ercVersionedEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2123993286
+// LIFERAY-SERVICE-BUILDER-HASH:-1932174485

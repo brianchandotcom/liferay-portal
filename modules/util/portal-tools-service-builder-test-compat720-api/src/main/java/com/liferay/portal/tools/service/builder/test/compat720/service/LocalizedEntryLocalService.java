@@ -271,4 +271,4 @@ public interface LocalizedEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1179924744
+// LIFERAY-SERVICE-BUILDER-HASH:105919492

@@ -249,4 +249,4 @@ public interface ConvertNullEntryLocalService
 		ConvertNullEntry convertNullEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-85488050
+// LIFERAY-SERVICE-BUILDER-HASH:1159485820

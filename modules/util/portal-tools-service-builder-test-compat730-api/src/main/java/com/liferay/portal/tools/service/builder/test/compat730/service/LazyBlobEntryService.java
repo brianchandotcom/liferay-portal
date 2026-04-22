@@ -55,4 +55,4 @@ public interface LazyBlobEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:162924182
+// LIFERAY-SERVICE-BUILDER-HASH:-1479828268

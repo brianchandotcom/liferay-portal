@@ -1978,4 +1978,4 @@ public class ManyColumnsEntryWrapper
 	private final ManyColumnsEntry _manyColumnsEntry;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-552182272
+// LIFERAY-SERVICE-BUILDER-HASH:-435891328

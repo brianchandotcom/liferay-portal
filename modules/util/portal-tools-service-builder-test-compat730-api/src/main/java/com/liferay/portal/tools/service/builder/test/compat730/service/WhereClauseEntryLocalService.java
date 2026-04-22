@@ -255,4 +255,4 @@ public interface WhereClauseEntryLocalService
 		WhereClauseEntry whereClauseEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1820895011
+// LIFERAY-SERVICE-BUILDER-HASH:-1087995065

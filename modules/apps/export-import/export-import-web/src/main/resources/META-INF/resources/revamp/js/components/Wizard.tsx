@@ -44,15 +44,17 @@ export function Wizard({
 	const totalSteps = steps.length;
 
 	const step = steps[stepNumber] as React.ReactElement<WizardStepProps>;
-	const {
-		actionButton,
-		description,
-		initialValues,
-		isStepValid,
-		onSubmit,
-		title,
-		validate,
-	} = step.props;
+
+	const {actionButton, description, isStepValid, onSubmit, title, validate} =
+		step.props;
+
+	const initialValues = steps.reduce(
+		(accumulator, {props}) => ({
+			...accumulator,
+			...props.initialValues,
+		}),
+		{} as FormikValues
+	);
 
 	const next = () => {
 		setStepNumber((stepNumber) => Math.min(stepNumber + 1, totalSteps - 1));

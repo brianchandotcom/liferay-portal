@@ -1,8 +1,10 @@
 ---
+
 allowed-tools: Bash(curl *), Bash(git *), Glob, Grep, Read
 argument-hint: "[commit hash or description]"
 description: Create a Jira task in the LPD project through the REST API. Use when the user asks to create a Jira task or LPD task ticket.
 name: jira-task
+
 ---
 
 # Create a Jira Task in LPD

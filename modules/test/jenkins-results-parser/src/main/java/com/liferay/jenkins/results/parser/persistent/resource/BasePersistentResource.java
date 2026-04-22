@@ -100,10 +100,14 @@ public abstract class BasePersistentResource implements PersistentResource {
 		}
 
 		synchronized (this) {
-			if (_touched) {
+			if (_touched || _touching) {
 				return;
 			}
 
+			_touching = true;
+		}
+
+		try {
 			if (!isBuildCachingEnabled()) {
 				_touched = true;
 
@@ -142,13 +146,17 @@ public abstract class BasePersistentResource implements PersistentResource {
 
 					System.out.println(
 						"WARNING: Failed to touch " + getType() +
-							" S3 artifact: " + ioException.getMessage());
+							" S3 artifact " + artifact.getName() + ": " +
+								ioException.getMessage());
 				}
 			}
 
 			if (allSucceeded) {
 				_touched = true;
 			}
+		}
+		finally {
+			_touching = false;
 		}
 	}
 
@@ -432,5 +440,6 @@ public abstract class BasePersistentResource implements PersistentResource {
 	private Properties _startProperties;
 	private Status _status;
 	private volatile boolean _touched;
+	private volatile boolean _touching;
 
 }

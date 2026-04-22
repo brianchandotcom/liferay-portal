@@ -92,7 +92,8 @@ test(
 		await page.getByRole('link', {name: viewName}).waitFor();
 
 		await page
-			.getByPlaceholder('Search')
+			.getByRole('search')
+			.getByRole('searchbox', {name: 'Search'})
 			.fill('NonExistentView' + getRandomInt());
 
 		await page.keyboard.press('Enter');
@@ -2321,7 +2322,10 @@ test(
 
 		await page.getByRole('link', {name: viewNameB}).waitFor();
 
-		await page.getByPlaceholder('Search').fill(viewNameA);
+		await page
+			.getByRole('search')
+			.getByRole('searchbox', {name: 'Search'})
+			.fill(viewNameA);
 
 		await page.keyboard.press('Enter');
 

@@ -119,9 +119,7 @@ public abstract class BasePersistentResource implements PersistentResource {
 			String dataS3ObjectPath = _getDataS3ObjectPath();
 
 			try {
-				if (CloudBucketUtil.isS3ObjectPathAvailable(
-						dataS3ObjectPath)) {
-
+				if (CloudBucketUtil.isS3ObjectPathAvailable(dataS3ObjectPath)) {
 					CloudBucketUtil.touchS3File(dataS3ObjectPath);
 				}
 			}

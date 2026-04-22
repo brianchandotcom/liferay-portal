@@ -27,7 +27,6 @@ import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -36,17 +35,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Supplier;
-
-import org.jsoup.nodes.Element;
 
 /**
  * @author Eudaldo Alonso
@@ -59,8 +56,8 @@ public class AnalyticsAttributesUtil {
 
 	public static final String ACTION_VIEW = "view";
 
-	public static void addAnalyticsAttributes(
-		JSONObject editableValueJSONObject, Element element,
+	public static Map<String, Object> getAnalyticsAttributes(
+		JSONObject editableValueJSONObject,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext,
 		FragmentEntryProcessorHelper fragmentEntryProcessorHelper,
 		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
@@ -74,116 +71,32 @@ public class AnalyticsAttributesUtil {
 				configJSONObject.getString("fieldId"),
 				"FileEntry_downloadURL")) {
 
-			ElementAttributeBuilder.of(
-				element
-			).attr(
-				"data-analytics-asset-action", ACTION_DOWNLOAD
-			).attr(
-				"data-analytics-asset-field",
+			return HashMapBuilder.<String, Object>put(
+				"analytics-asset-action", ACTION_DOWNLOAD
+			).put(
+				"analytics-asset-field",
 				() -> configJSONObject.getString("fieldId")
-			).attr(
-				"data-analytics-asset-id",
+			).put(
+				"analytics-asset-id",
 				() -> configJSONObject.getString("classPK")
-			).attr(
-				"data-analytics-asset-subtype",
+			).put(
+				"analytics-asset-subtype",
 				() -> configJSONObject.getString("itemSubtype")
-			).attr(
-				"data-analytics-asset-title",
+			).put(
+				"analytics-asset-title",
 				() -> configJSONObject.getString("title")
-			).attr(
-				"data-analytics-asset-type",
-				() -> _getAnalyticsAssetType(FileEntry.class.getName())
-			);
-
-			return;
+			).put(
+				"analytics-asset-type",
+				_getAnalyticsAssetType(FileEntry.class.getName())
+			).build();
 		}
 
-		_addAnalyticsAttributes(
-			element, fragmentEntryProcessorContext,
-			fragmentEntryProcessorHelper, infoDisplaysFieldValues,
+		return _getAnalyticsAttributes(
+			fragmentEntryProcessorContext, fragmentEntryProcessorHelper,
+			infoDisplaysFieldValues,
 			fragmentEntryProcessorHelper.getInfoItemFieldMapped(
 				editableValueJSONObject, fragmentEntryProcessorContext),
 			infoItemServiceRegistry);
-	}
-
-	private static void _addAnalyticsAttributes(
-		Element element,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext,
-		FragmentEntryProcessorHelper fragmentEntryProcessorHelper,
-		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
-		InfoItemFieldMapped infoItemFieldMapped,
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		if (infoItemFieldMapped == null) {
-			return;
-		}
-
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemFieldMapped.getInfoItemIdentifier();
-
-		if (!(infoItemIdentifier instanceof
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier)) {
-
-			return;
-		}
-
-		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
-			infoItemFieldMapped.getInfoItemReference());
-
-		ElementAttributeBuilder.of(
-			element
-		).attr(
-			"data-analytics-asset-action",
-			() -> _getAnalyticsAssetAction(
-				infoItemFieldMapped, infoItemFieldValues)
-		).attr(
-			"data-analytics-external-reference-code",
-			() -> _getAnalyticsExternalReferenceCode(
-				infoItemFieldMapped, infoItemFieldValues,
-				fragmentEntryProcessorContext.getLocale())
-		).attr(
-			"data-analytics-asset-categories",
-			() -> _getAnalyticsAssetCategories(
-				classPKInfoItemIdentifier, infoItemFieldMapped,
-				fragmentEntryProcessorContext.getLocale())
-		).attr(
-			"data-analytics-asset-field", infoItemFieldMapped.getFieldName()
-		).attr(
-			"data-analytics-asset-id",
-			String.valueOf(classPKInfoItemIdentifier.getClassPK())
-		).attr(
-			"data-analytics-asset-mime-type",
-			() -> _getAnalyticsAssetMimeType(
-				fragmentEntryProcessorHelper, infoItemFieldMapped,
-				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
-		).attr(
-			"data-analytics-asset-subtype",
-			() -> _getAnalyticsSubtype(
-				infoItemFieldMapped, infoItemServiceRegistry)
-		).attr(
-			"data-analytics-asset-tags",
-			() -> _getAnalyticsAssetTags(
-				classPKInfoItemIdentifier, infoItemFieldMapped)
-		).attr(
-			"data-analytics-asset-title",
-			() -> _getAnalyticsTitle(
-				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
-		).attr(
-			"data-analytics-asset-type",
-			() -> _getAnalyticsAssetType(infoItemFieldMapped.getClassName())
-		).attr(
-			"data-analytics-object-definition-name",
-			() -> {
-				Object object = infoItemFieldMapped.getObject();
-
-				if (object instanceof ObjectEntry) {
-					return _getAnalyticsObjectDefinitionName(
-						infoItemServiceRegistry, (ObjectEntry)object);
-				}
-
-				return StringPool.BLANK;
-			}
-		);
 	}
 
 	private static String _getAnalyticsAssetAction(
@@ -233,7 +146,7 @@ public class AnalyticsAttributesUtil {
 			return jsonArray.toString();
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	private static String _getAnalyticsAssetMimeType(
@@ -246,7 +159,7 @@ public class AnalyticsAttributesUtil {
 				infoItemFieldMapped.getFieldName());
 
 		if (infoFieldValue == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		Object value = infoFieldValue.getValue(locale);
@@ -260,7 +173,7 @@ public class AnalyticsAttributesUtil {
 					fileEntryId);
 
 				if (fileEntry == null) {
-					return StringPool.BLANK;
+					return null;
 				}
 
 				return fileEntry.getMimeType();
@@ -272,7 +185,7 @@ public class AnalyticsAttributesUtil {
 			}
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	private static String _getAnalyticsAssetTags(
@@ -296,7 +209,7 @@ public class AnalyticsAttributesUtil {
 			return jsonArray.toString();
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	private static String _getAnalyticsAssetType(String className) {
@@ -305,6 +218,83 @@ public class AnalyticsAttributesUtil {
 		}
 
 		return className;
+	}
+
+	private static Map<String, Object> _getAnalyticsAttributes(
+		FragmentEntryProcessorContext fragmentEntryProcessorContext,
+		FragmentEntryProcessorHelper fragmentEntryProcessorHelper,
+		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
+		InfoItemFieldMapped infoItemFieldMapped,
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		if (infoItemFieldMapped == null) {
+			return Collections.emptyMap();
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemFieldMapped.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier)) {
+
+			return Collections.emptyMap();
+		}
+
+		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
+			infoItemFieldMapped.getInfoItemReference());
+
+		return HashMapBuilder.<String, Object>put(
+			"analytics-asset-action",
+			() -> _getAnalyticsAssetAction(
+				infoItemFieldMapped, infoItemFieldValues)
+		).put(
+			"analytics-asset-categories",
+			() -> _getAnalyticsAssetCategories(
+				classPKInfoItemIdentifier, infoItemFieldMapped,
+				fragmentEntryProcessorContext.getLocale())
+		).put(
+			"analytics-asset-field", infoItemFieldMapped::getFieldName
+		).put(
+			"analytics-asset-id",
+			String.valueOf(classPKInfoItemIdentifier.getClassPK())
+		).put(
+			"analytics-asset-mime-type",
+			() -> _getAnalyticsAssetMimeType(
+				fragmentEntryProcessorHelper, infoItemFieldMapped,
+				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
+		).put(
+			"analytics-asset-subtype",
+			() -> _getAnalyticsSubtype(
+				infoItemFieldMapped, infoItemServiceRegistry)
+		).put(
+			"analytics-asset-tags",
+			() -> _getAnalyticsAssetTags(
+				classPKInfoItemIdentifier, infoItemFieldMapped)
+		).put(
+			"analytics-asset-title",
+			() -> _getAnalyticsTitle(
+				infoItemFieldValues, fragmentEntryProcessorContext.getLocale())
+		).put(
+			"analytics-asset-type",
+			_getAnalyticsAssetType(infoItemFieldMapped.getClassName())
+		).put(
+			"analytics-external-reference-code",
+			() -> _getAnalyticsExternalReferenceCode(
+				infoItemFieldMapped, infoItemFieldValues,
+				fragmentEntryProcessorContext.getLocale())
+		).put(
+			"analytics-object-definition-name",
+			() -> {
+				if (infoItemFieldMapped.getObject() instanceof
+						ObjectEntry objectEntry) {
+
+					return _getAnalyticsObjectDefinitionName(
+						infoItemServiceRegistry, objectEntry);
+				}
+
+				return null;
+			}
+		).build();
 	}
 
 	private static String _getAnalyticsExternalReferenceCode(
@@ -318,14 +308,14 @@ public class AnalyticsAttributesUtil {
 		}
 
 		if (infoItemFieldValues == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		InfoFieldValue<?> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("externalReferenceCode");
 
 		if (infoFieldValue == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		return String.valueOf(infoFieldValue.getValue(locale));
@@ -342,7 +332,7 @@ public class AnalyticsAttributesUtil {
 					ObjectDefinition.class.getName());
 
 			if (infoItemObjectProvider == null) {
-				return StringPool.BLANK;
+				return null;
 			}
 
 			Object infoItem = infoItemObjectProvider.getInfoItem(
@@ -350,7 +340,7 @@ public class AnalyticsAttributesUtil {
 					objectEntry.getObjectDefinitionId()));
 
 			if (infoItem == null) {
-				return StringPool.BLANK;
+				return null;
 			}
 
 			ObjectDefinition objectDefinition = (ObjectDefinition)infoItem;
@@ -361,7 +351,7 @@ public class AnalyticsAttributesUtil {
 			_log.error(exception);
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	private static String _getAnalyticsSubtype(
@@ -374,7 +364,7 @@ public class AnalyticsAttributesUtil {
 				infoItemFieldMapped.getClassName());
 
 		if (infoItemObjectVariationProvider == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		return infoItemObjectVariationProvider.getInfoItemFormVariationKey(
@@ -385,14 +375,14 @@ public class AnalyticsAttributesUtil {
 		InfoItemFieldValues infoItemFieldValues, Locale locale) {
 
 		if (infoItemFieldValues == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		InfoFieldValue<?> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("title");
 
 		if (infoFieldValue == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		return String.valueOf(infoFieldValue.getValue(locale));
@@ -400,39 +390,5 @@ public class AnalyticsAttributesUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsAttributesUtil.class);
-
-	private static class ElementAttributeBuilder {
-
-		public static ElementAttributeBuilder of(Element element) {
-			return new ElementAttributeBuilder(element);
-		}
-
-		public ElementAttributeBuilder attr(String name, String value) {
-			if (Validator.isNotNull(value)) {
-				_element.attr(name, value);
-			}
-
-			return this;
-		}
-
-		public ElementAttributeBuilder attr(
-			String name, Supplier<String> supplier) {
-
-			String value = supplier.get();
-
-			if (Validator.isNotNull(value)) {
-				_element.attr(name, value);
-			}
-
-			return this;
-		}
-
-		private ElementAttributeBuilder(Element element) {
-			_element = element;
-		}
-
-		private final Element _element;
-
-	}
 
 }

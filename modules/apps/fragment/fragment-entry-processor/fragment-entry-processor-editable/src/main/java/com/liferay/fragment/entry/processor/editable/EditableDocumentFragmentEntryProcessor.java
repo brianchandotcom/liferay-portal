@@ -237,11 +237,12 @@ public class EditableDocumentFragmentEntryProcessor
 			if (analyticsEnabled &&
 				fragmentEntryProcessorContext.isViewMode()) {
 
-				AnalyticsAttributesUtil.addAnalyticsAttributes(
-					editableValueJSONObject, element,
-					fragmentEntryProcessorContext,
-					_fragmentEntryProcessorHelper, infoDisplaysFieldValues,
-					_infoItemServiceRegistry);
+				_setAnalyticsAttributes(
+					element,
+					AnalyticsAttributesUtil.getAnalyticsAttributes(
+						editableValueJSONObject, fragmentEntryProcessorContext,
+						_fragmentEntryProcessorHelper, infoDisplaysFieldValues,
+						_infoItemServiceRegistry));
 			}
 		}
 
@@ -327,6 +328,26 @@ public class EditableDocumentFragmentEntryProcessor
 			}
 
 			return false;
+		}
+	}
+
+	private void _setAnalyticsAttributes(
+		Element element, Map<String, Object> analyticsAttributes) {
+
+		for (Map.Entry<String, Object> entry : analyticsAttributes.entrySet()) {
+			Object value = entry.getValue();
+
+			if (value == null) {
+				continue;
+			}
+
+			String stringValue = String.valueOf(value);
+
+			if (Validator.isNull(stringValue)) {
+				continue;
+			}
+
+			element.attr("data-" + entry.getKey(), stringValue);
 		}
 	}
 

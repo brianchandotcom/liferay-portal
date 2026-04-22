@@ -63,7 +63,7 @@ export default function SelectCollection({
 
 	const onAddCollectionButtonClick = () => {
 		openSelectionModal({
-			iframeBodyCssClass: 'hide-control-menu',
+			iframeBodyCssClass: '',
 			title: Liferay.Language.get('add-collection'),
 			url: addAssetListEntryURL.toString(),
 		});

@@ -97,6 +97,21 @@ test(
 			await expect(row.first()).toContainText(snapshotName);
 		});
 
+		await test.step('Check column order: Data Set → User View Name → Created By → Modified Date', async () => {
+			const allHeaders = await userViewsPage.table.headRow
+				.locator('th')
+				.allInnerTexts();
+
+			const dataSetIndex = allHeaders.indexOf('Data Set');
+			const userViewNameIndex = allHeaders.indexOf('User View Name');
+			const createdByIndex = allHeaders.indexOf('Created By');
+			const modifiedDateIndex = allHeaders.indexOf('Modified Date');
+
+			expect(dataSetIndex).toBeLessThan(userViewNameIndex);
+			expect(userViewNameIndex).toBeLessThan(createdByIndex);
+			expect(createdByIndex).toBeLessThan(modifiedDateIndex);
+		});
+
 		await test.step('Use delete action button to delete the User view', async () => {
 			page.once('dialog', async (dialog) => {
 				await dialog.accept();

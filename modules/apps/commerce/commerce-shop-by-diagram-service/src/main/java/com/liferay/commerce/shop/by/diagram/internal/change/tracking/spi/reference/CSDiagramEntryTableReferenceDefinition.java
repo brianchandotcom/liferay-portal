@@ -13,6 +13,7 @@ import com.liferay.commerce.product.model.CPInstanceTable;
 import com.liferay.commerce.product.model.CProductTable;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntryTable;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
+import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,6 +47,10 @@ public class CSDiagramEntryTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<CSDiagramEntryTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			CSDiagramEntryTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

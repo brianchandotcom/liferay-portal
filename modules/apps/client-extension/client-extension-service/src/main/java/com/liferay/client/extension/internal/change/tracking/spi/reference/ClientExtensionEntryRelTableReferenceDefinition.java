@@ -32,6 +32,9 @@ public class ClientExtensionEntryRelTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<ClientExtensionEntryRelTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			ClientExtensionEntryRelTable.INSTANCE);
 	}
 
 	@Override

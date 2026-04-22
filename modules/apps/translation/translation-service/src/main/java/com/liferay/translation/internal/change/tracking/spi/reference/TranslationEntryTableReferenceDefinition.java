@@ -37,6 +37,9 @@ public class TranslationEntryTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<TranslationEntryTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			TranslationEntryTable.INSTANCE);
 	}
 
 	@Override

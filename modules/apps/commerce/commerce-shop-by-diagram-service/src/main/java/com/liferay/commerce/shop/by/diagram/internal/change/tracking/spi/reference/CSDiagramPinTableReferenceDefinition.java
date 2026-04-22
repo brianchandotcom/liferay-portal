@@ -11,6 +11,7 @@ import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInf
 import com.liferay.commerce.product.model.CPDefinitionTable;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPinTable;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinPersistence;
+import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,6 +38,10 @@ public class CSDiagramPinTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<CSDiagramPinTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			CSDiagramPinTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

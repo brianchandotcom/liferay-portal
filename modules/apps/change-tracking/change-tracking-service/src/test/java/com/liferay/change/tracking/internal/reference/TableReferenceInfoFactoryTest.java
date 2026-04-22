@@ -25,6 +25,8 @@ import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ClassNameTable;
+import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -168,6 +170,94 @@ public class TableReferenceInfoFactoryTest {
 		new TableReferenceInfoFactory();
 
 		new TableJoinHolderFactory();
+	}
+
+	@Test
+	public void testGroupedModelAddsCompanyAndGroupParents() {
+		TableReferenceDefinition<GroupedModelExampleTable>
+			tableReferenceDefinition =
+				new TestTableReferenceDefinition<GroupedModelExampleTable>(
+					GroupedModelExampleTable.INSTANCE) {
+
+					@Override
+					public void defineChildTableReferences(
+						ChildTableReferenceInfoBuilder<GroupedModelExampleTable>
+							childTableReferenceInfoBuilder) {
+					}
+
+					@Override
+					public void defineParentTableReferences(
+						ParentTableReferenceInfoBuilder
+							<GroupedModelExampleTable>
+								parentTableReferenceInfoBuilder) {
+
+						parentTableReferenceInfoBuilder.groupedModel(
+							GroupedModelExampleTable.INSTANCE);
+					}
+
+				};
+
+		TableReferenceInfo<GroupedModelExampleTable> tableReferenceInfo =
+			TableReferenceInfoFactory.create(
+				GroupedModelExampleTable.CLASS_NAME_ID,
+				GroupedModelExampleTable.INSTANCE.groupedModelExampleIdColumn,
+				tableReferenceDefinition);
+
+		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
+			tableReferenceInfo.getParentTableJoinHoldersMap();
+
+		Assert.assertEquals(
+			parentTableJoinHoldersMap.toString(), 2,
+			parentTableJoinHoldersMap.size());
+
+		List<TableJoinHolder> groupTableJoinHolders =
+			parentTableJoinHoldersMap.get(GroupTable.INSTANCE);
+
+		Assert.assertEquals(
+			groupTableJoinHolders.toString(), 1, groupTableJoinHolders.size());
+
+		List<TableJoinHolder> companyTableJoinHolders =
+			parentTableJoinHoldersMap.get(CompanyTable.INSTANCE);
+
+		Assert.assertEquals(
+			companyTableJoinHolders.toString(), 1,
+			companyTableJoinHolders.size());
+	}
+
+	@Test
+	public void testGroupedModelOmittedProducesEmptyParents() {
+		TableReferenceDefinition<GroupedModelExampleTable>
+			tableReferenceDefinition =
+				new TestTableReferenceDefinition<GroupedModelExampleTable>(
+					GroupedModelExampleTable.INSTANCE) {
+
+					@Override
+					public void defineChildTableReferences(
+						ChildTableReferenceInfoBuilder<GroupedModelExampleTable>
+							childTableReferenceInfoBuilder) {
+					}
+
+					@Override
+					public void defineParentTableReferences(
+						ParentTableReferenceInfoBuilder
+							<GroupedModelExampleTable>
+								parentTableReferenceInfoBuilder) {
+					}
+
+				};
+
+		TableReferenceInfo<GroupedModelExampleTable> tableReferenceInfo =
+			TableReferenceInfoFactory.create(
+				GroupedModelExampleTable.CLASS_NAME_ID,
+				GroupedModelExampleTable.INSTANCE.groupedModelExampleIdColumn,
+				tableReferenceDefinition);
+
+		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
+			tableReferenceInfo.getParentTableJoinHoldersMap();
+
+		Assert.assertTrue(
+			parentTableJoinHoldersMap.toString(),
+			parentTableJoinHoldersMap.isEmpty());
 	}
 
 	@Test
@@ -915,6 +1005,34 @@ public class TableReferenceInfoFactoryTest {
 
 		private BridgeJoinExampleTable() {
 			super("BridgeJoinExample", BridgeJoinExampleTable::new);
+		}
+
+	}
+
+	private static class GroupedModelExampleTable
+		extends BaseTable<GroupedModelExampleTable> {
+
+		public static final long CLASS_NAME_ID = 3;
+
+		public static final GroupedModelExampleTable INSTANCE =
+			new GroupedModelExampleTable();
+
+		public final Column<GroupedModelExampleTable, Long> companyIdColumn =
+			createColumn(
+				"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+		public final Column<GroupedModelExampleTable, Long>
+			groupedModelExampleIdColumn = createColumn(
+				"groupedModelExampleId", Long.class, Types.BIGINT,
+				Column.FLAG_PRIMARY);
+		public final Column<GroupedModelExampleTable, Long> groupIdColumn =
+			createColumn(
+				"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+		public final Column<GroupedModelExampleTable, Long> mvccVersionColumn =
+			createColumn(
+				"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+
+		private GroupedModelExampleTable() {
+			super("GroupedModelExample", GroupedModelExampleTable::new);
 		}
 
 	}

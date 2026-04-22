@@ -32,6 +32,9 @@ public class LayoutUtilityPageEntryTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<LayoutUtilityPageEntryTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			LayoutUtilityPageEntryTable.INSTANCE);
 	}
 
 	@Override

@@ -32,6 +32,9 @@ public class AssetListEntryUsageTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<AssetListEntryUsageTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			AssetListEntryUsageTable.INSTANCE);
 	}
 
 	@Override

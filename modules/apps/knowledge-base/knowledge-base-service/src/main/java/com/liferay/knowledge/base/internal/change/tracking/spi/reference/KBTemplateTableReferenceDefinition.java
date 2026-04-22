@@ -54,6 +54,8 @@ public class KBTemplateTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<KBTemplateTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(KBTemplateTable.INSTANCE);
 	}
 
 	@Override

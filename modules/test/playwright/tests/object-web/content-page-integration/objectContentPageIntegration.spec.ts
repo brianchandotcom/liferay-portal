@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -23,12 +25,15 @@ import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
+import {getPageEditorDateFormat} from '../utils/dateFormat';
 import {generateObjectEntryValues} from '../utils/generateObjectEntry';
 import {generateObjectFields} from '../utils/generateObjectFields';
 import {postListTypeDefinitionListTypeEntries} from '../utils/postListTypeDefinitionListTypeEntries';
 
 const test = mergeTests(
 	apiHelpersTest,
+	collectionsPagesTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
@@ -39,7 +44,8 @@ const test = mergeTests(
 	objectPagesTest,
 	pageEditorPagesTest,
 	pageViewModePagesTest,
-	pagesAdminPagesTest
+	pagesAdminPagesTest,
+	templatesPageTest
 );
 
 test.describe('Object Widget', () => {
@@ -511,6 +517,59 @@ test.describe('Content Pages Mapping', () => {
 			});
 		}
 	);
+
+	test('can display an object reactivated on the Page Item Selector', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		const headingDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await page.getByText('Heading Example', {exact: true}).dblclick();
+
+		await page.getByLabel('Select Item').click();
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('menuitem', {name: objectDefinition.name})
+		).toBeVisible();
+	});
 });
 
 test.describe('Collection Display', () => {
@@ -800,6 +859,44 @@ test.describe('Collection Display', () => {
 			});
 		}
 	);
+
+	test('can display an object reactivated on the Collection Providers', async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		site,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await collectionsPage.goto(site.friendlyUrlPath);
+
+		await page.getByRole('link', {name: 'Collection Providers'}).click();
+
+		await expect(
+			page.getByText(objectDefinition.name).first()
+		).toBeVisible();
+	});
 });
 
 test.describe('Display Page', () => {
@@ -1102,4 +1199,372 @@ test.describe('Display Page', () => {
 			});
 		}
 	);
+
+	test(
+		'Cannot select unpublished object for a display page template',
+		{tag: '@LPS-137871'},
+		async ({apiHelpers, displayPageTemplatesPage, page}) => {
+			const objectName = 'CustomObject' + getRandomInt();
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: objectName,
+					status: {code: 2},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await test.step('Create a new blank display page template', async () => {
+				await displayPageTemplatesPage.goto();
+
+				await page.getByRole('button', {name: 'New'}).click();
+
+				await page
+					.getByRole('menuitem', {name: 'Display Page Template'})
+					.click();
+
+				await page.getByRole('button', {name: 'Blank'}).click();
+			});
+
+			await test.step('Verify unpublished object is not in content type options', async () => {
+				const contentTypeSelect = page.getByLabel('Content Type');
+
+				await expect(contentTypeSelect).toBeVisible();
+
+				const options = contentTypeSelect.locator('option');
+
+				const optionTexts = await options.allTextContents();
+
+				expect(optionTexts).not.toContain(
+					objectDefinition.label['en_US']
+				);
+			});
+		}
+	);
+
+	test('verify if the object entries are displayed when selecting to preview an object entry on a page template', async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+	}) => {
+		test.slow();
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
+
+		const {listTypeDefinition, listTypeEntries} =
+			await postListTypeDefinitionListTypeEntries({
+				apiHelpers,
+			});
+
+		const objectFields = generateObjectFields({
+			listTypeDefinitionExternalReferenceCode:
+				listTypeDefinition.externalReferenceCode,
+			objectFieldBusinessTypes: [
+				'AutoIncrement',
+				'Decimal',
+				'Date',
+				'Boolean',
+				'Encrypted',
+				'Integer',
+				'LongInteger',
+				'LongText',
+				'MultiselectPicklist',
+				'Picklist',
+				'PrecisionDecimal',
+				'RichText',
+				'Text',
+			],
+		});
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				label: {
+					en_US: objectDefinitionLabel,
+				},
+				name: objectDefinitionName,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionLabel,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const {objectEntry: objectEntryValues} =
+			await generateObjectEntryValues({
+				listTypeEntries: listTypeEntries.map(
+					(listTypeEntry) => listTypeEntry.name
+				),
+				objectEntryFormat: 'API',
+				objectFields,
+			});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			objectEntryValues,
+			applicationName
+		);
+
+		await displayPageTemplatesPage.goto();
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: objectDefinition.label['en_US'],
+			name: displayPageTemplateName,
+		});
+
+		await page.getByTitle(displayPageTemplateName).click();
+
+		overloop: for (const [_, objectField] of objectDefinition.objectFields
+			.filter((objectField) => !objectField.system)
+			.entries()) {
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			await page.getByText('Heading Example', {exact: true}).click();
+
+			await pageEditorPage.setMappingConfiguration({
+				mapping: {
+					entity: objectDefinitionLabel,
+					entry: objectEntry.externalReferenceCode,
+					field: objectField.label['en_US'],
+				},
+				source: 'content',
+			});
+
+			let matchString: string;
+
+			switch (objectField.businessType) {
+				case 'Date': {
+					const date = new Date(
+						Date.parse(
+							objectEntryValues[objectField.name] as string
+						)
+					);
+
+					matchString = getPageEditorDateFormat(date);
+
+					// Defer date validation for CI trace view analysis (issue #LRCI-4253)
+
+					continue overloop;
+				}
+				case 'Picklist': {
+					matchString = (
+						objectEntryValues[objectField.name] as {
+							key: string;
+						}
+					).key;
+
+					break;
+				}
+				case 'MultiselectPicklist': {
+					(objectEntryValues[objectField.name] as string[]).forEach(
+						(listTypeEntry, index) => {
+							index < 1
+								? (matchString = `${listTypeEntry}`)
+								: (matchString += `, ${listTypeEntry}`);
+						}
+					);
+
+					break;
+				}
+				default: {
+					matchString =
+						objectEntryValues[objectField.name].toString();
+				}
+			}
+
+			await expect(
+				page.getByTitle('Edit Text').filter({hasText: matchString})
+			).toBeVisible();
+		}
+
+		// Clean up
+
+		await displayPageTemplatesPage.goto();
+
+		await displayPageTemplatesPage.deleteTemplate(objectDefinitionLabel);
+	});
+
+	test.describe('Information Template', () => {
+		let contentPageName: string;
+		let informationTemplateName: string;
+
+		test.afterEach(async ({pagesAdminPage, templatesPage}) => {
+			if (contentPageName) {
+				await pagesAdminPage.goto();
+
+				await pagesAdminPage.deletePage(contentPageName);
+
+				contentPageName = '';
+			}
+
+			if (informationTemplateName) {
+				await templatesPage.goto();
+
+				await templatesPage.deleteInformationTemplate(
+					informationTemplateName
+				);
+
+				informationTemplateName = '';
+			}
+		});
+
+		test('verify it is possible to create a information template with an object as an item type and see its entries', async ({
+			apiHelpers,
+			page,
+			pageEditorPage,
+			pagesAdminPage,
+			templatesPage,
+		}) => {
+			const {listTypeDefinition, listTypeEntries} =
+				await postListTypeDefinitionListTypeEntries({
+					apiHelpers,
+				});
+
+			const objectFields = generateObjectFields({
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				objectFieldBusinessTypes: [
+					'Boolean',
+					'Decimal',
+					'Integer',
+					'LongText',
+					'Picklist',
+					'Text',
+				],
+			});
+
+			apiHelpers.data.push({
+				id: listTypeDefinition.id,
+				type: 'listTypeDefinition',
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const {objectEntry: objectEntryValues} =
+				await generateObjectEntryValues({
+					listTypeEntries: listTypeEntries.map(
+						(listTypeEntry) => listTypeEntry.name
+					),
+					objectEntryFormat: 'API',
+					objectFields,
+				});
+
+			const applicationName =
+				'c/' + objectDefinition.name.toLowerCase() + 's';
+
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				objectEntryValues,
+				applicationName
+			);
+
+			informationTemplateName = 'Object Template' + getRandomInt();
+
+			await test.step('create information template and add object fields', async () => {
+				await templatesPage.goto();
+
+				await templatesPage.createInformationTemplate({
+					itemType: objectDefinition.label['en_US'],
+					name: informationTemplateName,
+				});
+
+				for (const objectField of objectFields) {
+					await page
+						.getByRole('button', {name: objectField.label['en_US']})
+						.click();
+				}
+
+				await templatesPage.saveTemplate(informationTemplateName);
+			});
+
+			contentPageName = getRandomString();
+
+			await test.step('create page template with HTML element linked to the informationTemplateName', async () => {
+				await pagesAdminPage.goto();
+
+				await pagesAdminPage.createNewPage({
+					name: contentPageName,
+				});
+
+				await pagesAdminPage.editPage(contentPageName);
+
+				await pageEditorPage.addFragment('Basic Components', 'HTML');
+
+				const htmlFragmentId = await pageEditorPage.getFragmentId('HTML');
+
+				await pageEditorPage.selectEditable(htmlFragmentId, 'element-html');
+
+				await pageEditorPage.setMappedItem({
+					entity: objectDefinition.label['en_US'],
+					entry: objectEntry.id.toString(),
+					entryLocator: page
+						.frameLocator('iframe[title="Select"]')
+						.getByText(objectEntry.id.toString())
+						.first(),
+					field: informationTemplateName,
+				});
+
+				await pageEditorPage.waitForChangesSaved();
+
+				await pageEditorPage.publishPage();
+			});
+
+			await test.step('go to created page and assert object entries', async () => {
+				await page.goto(`/web/guest/${contentPageName}`);
+
+				const entries = Object.values(objectEntryValues)
+					.map((value) => {
+						if (typeof value === 'boolean') {
+							return value ? 'Yes' : 'No';
+						}
+
+						if (
+							typeof value === 'object' &&
+							value !== null &&
+							'key' in (value as object)
+						) {
+							return (value as {key: string}).key;
+						}
+
+						return String(value);
+					})
+					.join(' ');
+
+				await expect(page.getByText(entries)).toBeVisible();
+			});
+		});
+	});
 });

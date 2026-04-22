@@ -436,46 +436,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-126044: When DXP is connected and synced to AC and the user clicks on the metrics icon in a document display page, the content performance panel displays with the metrics of the content page"
-	@priority = 4
-	test MetricsIconVisibleInDocumentDisplayPage {
-		task ("Create a Document") {
-			JSONDocument.addFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add 'Asset Publisher' to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Open Content Performance panel") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Check if infomation if from that page") {
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
-				pageName = "Test Widget Page Name");
-
-			AssertVisible(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
-				value1 = "Traffic Channels");
-		}
-	}
-
 	@description = "LPS-126047: When DXP is connected and synced to AC and the user clicks on the metrics icon in a widget page, the content performance panel displays with the metrics of the content page"
 	@priority = 4
 	test MetricsIconVisibleInWidgetPage {
@@ -609,6 +569,12 @@ definition {
 				value1 = "web/test-site-name/test-widget-page-name");
 
 			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
+		}
+
+		task ("Assert traffic channels section is present") {
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
+				value1 = "Traffic Channels");
 		}
 	}
 

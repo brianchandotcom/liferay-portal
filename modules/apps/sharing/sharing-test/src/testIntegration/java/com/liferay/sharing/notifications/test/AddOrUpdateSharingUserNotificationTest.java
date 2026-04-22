@@ -90,7 +90,7 @@ public class AddOrUpdateSharingUserNotificationTest
 			null, sharingEntry.getUserId(), 0, 0, sharingEntry.getToUserId(),
 			sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
 			sharingEntry.getGroupId(), sharingEntry.isShareable(),
-			Arrays.asList(SharingEntryAction.VIEW, SharingEntryAction.UPDATE),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			sharingEntry.getExpirationDate(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));

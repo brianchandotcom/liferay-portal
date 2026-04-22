@@ -129,7 +129,7 @@ public class SharingEntryLocalServiceTest {
 		_sharingEntryLocalService.addOrUpdateSharingEntry(
 			null, _fromUser.getUserId(), 0, 0, _toUser.getUserId(),
 			_classNameId, _group.getGroupId(), _group.getGroupId(), false,
-			Arrays.asList(SharingEntryAction.VIEW, SharingEntryAction.UPDATE),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			Date.from(instant.plus(3, ChronoUnit.DAYS)), _serviceContext);
 
 		Assert.assertEquals(
@@ -154,7 +154,7 @@ public class SharingEntryLocalServiceTest {
 				null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
 				_group.getGroupId(), _group.getGroupId(), false,
 				Arrays.asList(
-					SharingEntryAction.VIEW, SharingEntryAction.UPDATE),
+					SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 				null, _serviceContext);
 
 		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());

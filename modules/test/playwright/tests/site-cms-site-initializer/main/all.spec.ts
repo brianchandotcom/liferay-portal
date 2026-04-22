@@ -3556,3 +3556,66 @@ test(
 		}
 	}
 );
+
+test(
+	'All section places most recently modified content at the top',
+	{tag: '@LPD-85725'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = 'Default';
+		const firstTitle = getRandomString();
+		const secondTitle = getRandomString();
+		const thirdTitle = getRandomString();
+
+		let firstEntry;
+		let secondEntry;
+		let thirdEntry;
+
+		try {
+			firstEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: firstTitle,
+				},
+				applicationName,
+				spaceName
+			);
+
+			secondEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: secondTitle,
+				},
+				applicationName,
+				spaceName
+			);
+
+			thirdEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: thirdTitle,
+				},
+				applicationName,
+				spaceName
+			);
+
+			await expect(async () => {
+				await assetsPage.gotoAll();
+
+				await expect(page.locator('tbody tr').first()).toContainText(
+					thirdTitle
+				);
+			}).toPass();
+		}
+		finally {
+			for (const entry of [firstEntry, secondEntry, thirdEntry]) {
+				if (entry) {
+					await apiHelpers.objectEntry.deleteObjectEntry(
+						applicationName,
+						String(entry.id)
+					);
+				}
+			}
+		}
+	}
+);

@@ -80,7 +80,7 @@ definition {
 
 	@description = "This is a test for LPS-136930. It checks that categories can be viewed in Japanese."
 	@priority = 3
-	test CanViewCategoriesInJapanese {
+	test CanViewCategoriesInArabicAndJapanese {
 		JSONMBMessage.addCategory(
 			categoryDescription = "カテゴリ説明",
 			categoryName = "種別名",

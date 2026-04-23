@@ -1,19 +1,19 @@
 {
 	"properties": {
 		"active": {
-			"description": "Filter by active status",
+			"description": "This is the description",
 			"type": "boolean"
 		},
 		"fields": {
-			"description": "Fields to include",
+			"description": "This is the description",
 			"type": "string"
 		},
 		"itemId": {
-			"description": "The item ID",
+			"description": "This is the description",
 			"type": "string"
 		},
 		"page": {
-			"description": "The page number",
+			"description": "This is the description",
 			"type": "integer"
 		}
 	},

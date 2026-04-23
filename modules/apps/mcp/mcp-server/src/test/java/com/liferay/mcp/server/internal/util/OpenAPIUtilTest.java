@@ -8,6 +8,7 @@ package com.liferay.mcp.server.internal.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -42,7 +43,7 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetHttpCallArguments() {
+	public void testGetHttpCallArguments() throws Exception {
 		_testGetHttpCallArguments(
 			Collections.emptyMap(), "GET /test/v1.0/items", null, "GET",
 			"http://localhost/test/v1.0/items");
@@ -53,7 +54,7 @@ public class OpenAPIUtilTest {
 			"GET /test/v1.0/items", null, "GET",
 			"http://localhost/test/v1.0/items");
 		_testGetHttpCallArguments(
-			HashMapBuilder.<String, Object>put(
+			LinkedHashMapBuilder.<String, Object>put(
 				"fields", "name"
 			).put(
 				"page", "1"
@@ -62,6 +63,20 @@ public class OpenAPIUtilTest {
 			).build(),
 			"GET /test/v1.0/items", null, "GET",
 			"http://localhost/test/v1.0/items?fields=name&page=1&pageSize=20");
+		_testGetHttpCallArguments(
+			HashMapBuilder.<String, Object>put(
+				"filter", "name eq 'John Doe'"
+			).build(),
+			"GET /test/v1.0/items", null, "GET",
+			"http://localhost/test/v1.0/items?filter=name+eq+%27John+Doe%27");
+		_testGetHttpCallArguments(
+			HashMapBuilder.<String, Object>put(
+				"fields", "name"
+			).put(
+				"itemId", "123"
+			).build(),
+			"GET /test/v1.0/items/{itemId}", null, "GET",
+			"http://localhost/test/v1.0/items/123?fields=name");
 		_testGetHttpCallArguments(
 			HashMapBuilder.<String, Object>put(
 				"itemId", "123"
@@ -74,20 +89,6 @@ public class OpenAPIUtilTest {
 			).build(),
 			"GET /test/v1.0/items/{itemId}", null, "GET",
 			"http://localhost/test/v1.0/items/456");
-		_testGetHttpCallArguments(
-			HashMapBuilder.<String, Object>put(
-				"fields", "name"
-			).put(
-				"itemId", "123"
-			).build(),
-			"GET /test/v1.0/items/{itemId}", null, "GET",
-			"http://localhost/test/v1.0/items/123?fields=name");
-		_testGetHttpCallArguments(
-			HashMapBuilder.<String, Object>put(
-				"filter", "name eq 'John Doe'"
-			).build(),
-			"GET /test/v1.0/items", null, "GET",
-			"http://localhost/test/v1.0/items?filter=name+eq+%27John+Doe%27");
 		_testGetHttpCallArguments(
 			HashMapBuilder.<String, Object>put(
 				"body", "{\"name\": \"Test\"}"
@@ -108,9 +109,20 @@ public class OpenAPIUtilTest {
 	@Test
 	public void testGetOpenAPIURL() {
 		Assert.assertNull(OpenAPIUtil.getOpenAPIURL(""));
+		Assert.assertNull(OpenAPIUtil.getOpenAPIURL("GET /single"));
 		Assert.assertNull(OpenAPIUtil.getOpenAPIURL("INVALID"));
 		Assert.assertNull(OpenAPIUtil.getOpenAPIURL("no-space"));
-		Assert.assertNull(OpenAPIUtil.getOpenAPIURL("GET /single"));
+
+		Assert.assertEquals(
+			"/c/test/openapi.json",
+			OpenAPIUtil.getOpenAPIURL("GET /c/test/items"));
+		Assert.assertEquals(
+			"/headless-delivery/v1.0/openapi.json",
+			OpenAPIUtil.getOpenAPIURL(
+				"GET /headless-delivery/v1.0/blog-postings"));
+		Assert.assertEquals(
+			"/test/v1.0/openapi.json",
+			OpenAPIUtil.getOpenAPIURL("DELETE /test/v1.0/items/{itemId}/sub"));
 		Assert.assertEquals(
 			"/test/v1.0/openapi.json",
 			OpenAPIUtil.getOpenAPIURL("GET /test/v1.0"));
@@ -120,59 +132,43 @@ public class OpenAPIUtilTest {
 		Assert.assertEquals(
 			"/test/v1.0/openapi.json",
 			OpenAPIUtil.getOpenAPIURL("POST /test/v1.0/items/{itemId}"));
-		Assert.assertEquals(
-			"/test/v1.0/openapi.json",
-			OpenAPIUtil.getOpenAPIURL("DELETE /test/v1.0/items/{itemId}/sub"));
-		Assert.assertEquals(
-			"/c/test/openapi.json",
-			OpenAPIUtil.getOpenAPIURL("GET /c/test/items"));
-		Assert.assertEquals(
-			"/headless-delivery/v1.0/openapi.json",
-			OpenAPIUtil.getOpenAPIURL(
-				"GET /headless-delivery/v1.0/blog-postings"));
 	}
 
 	@Test
 	public void testGetTool() throws Exception {
-		Assert.assertNull(OpenAPIUtil.getTool("INVALID", _openAPIJSON));
-		Assert.assertNull(OpenAPIUtil.getTool("no-space", _openAPIJSON));
-
-		Assert.assertNull(OpenAPIUtil.getTool("GET /test/v1.0/items", "{}"));
-
 		Assert.assertNull(
 			OpenAPIUtil.getTool("DELETE /test/v1.0/items", _openAPIJSON));
 		Assert.assertNull(OpenAPIUtil.getTool("GET /single", _openAPIJSON));
 		Assert.assertNull(
+			OpenAPIUtil.getTool("GET /test/v1.0/items", "Invalid JSON"));
+		Assert.assertNull(OpenAPIUtil.getTool("GET /test/v1.0/items", "{}"));
+		Assert.assertNull(
 			OpenAPIUtil.getTool("GET /test/v1.0/nonexistent", _openAPIJSON));
+		Assert.assertNull(OpenAPIUtil.getTool("INVALID", _openAPIJSON));
 		Assert.assertNull(
 			OpenAPIUtil.getTool("POST /test/v1.0/uploads", _openAPIJSON));
+		Assert.assertNull(OpenAPIUtil.getTool("no-space", _openAPIJSON));
 
 		_testGetTool(
-			"GET /c/test/", "get_c_test.json", "getItemsPage", "Get items");
+			"GET /c/test/", "This is the summary", "get_c_test.json",
+			"getItemsPage");
 		_testGetTool(
-			"GET /test/v1.0/items", "get_test_v1.0_items.json", "getItems",
-			"Get all items. Returns a list");
+			"GET /test/v1.0/items",
+			"This is the summary. This is the description",
+			"get_test_v1.0_items.json", "getItems");
 		_testGetTool(
-			"GET /test/v1.0/items/{itemId}", "get_test_v1.0_items_itemId.json",
-			"getItem", "Get an item by ID");
+			"GET /test/v1.0/items/{itemId}", "This is the description",
+			"get_test_v1.0_items_itemId.json", "getItem");
 		_testGetTool(
 			"PATCH /test/v1.0/items/{itemId}",
-			"patch_test_v1.0_items_itemId.json", "patchItem",
-			"PATCH /test/v1.0/items/{itemId}");
+			"PATCH /test/v1.0/items/{itemId}",
+			"patch_test_v1.0_items_itemId.json", "patchItem");
 		_testGetTool(
-			"POST /test/v1.0/items", "post_test_v1.0_items.json", "postItem",
-			"POST /test/v1.0/items");
+			"POST /test/v1.0/items", "POST /test/v1.0/items",
+			"post_test_v1.0_items.json", "postItem");
 		_testGetTool(
-			"PUT /test/v1.0/items/{itemId}", "put_test_v1.0_items_itemId.json",
-			"putItem", "PUT /test/v1.0/items/{itemId}");
-
-		try {
-			OpenAPIUtil.getTool("GET /test/v1.0/items", "not valid json");
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-		}
+			"PUT /test/v1.0/items/{itemId}", "PUT /test/v1.0/items/{itemId}",
+			"put_test_v1.0_items_itemId.json", "putItem");
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -181,38 +177,36 @@ public class OpenAPIUtilTest {
 	}
 
 	private void _testGetHttpCallArguments(
-		Map<String, Object> arguments, String endpoint, String expectedBody,
-		String expectedMethod, String expectedUrl) {
+			Map<String, Object> arguments, String endpoint, String expectedBody,
+			String expectedMethod, String expectedUrl)
+		throws Exception {
 
 		OpenAPIUtil.HttpCallArguments httpCallArguments =
 			OpenAPIUtil.getHttpCallArguments(
 				arguments, "http://localhost", endpoint);
 
-		Assert.assertEquals(expectedBody, httpCallArguments.getBody());
+		JSONAssert.assertEquals(
+			expectedBody, httpCallArguments.getBody(), true);
 		Assert.assertEquals(expectedMethod, httpCallArguments.getMethod());
 		Assert.assertEquals(expectedUrl, httpCallArguments.getUrl());
 	}
 
 	private void _testGetTool(
-			String endpoint, String expectedSchemaFileName,
-			String expectedToolName, String expectedDescription)
+			String endpoint, String expectedDescription,
+			String expectedSchemaFileName, String expectedToolName)
 		throws Exception {
 
 		McpSchema.Tool tool = OpenAPIUtil.getTool(endpoint, _openAPIJSON);
 
-		Assert.assertNotNull(tool);
 		Assert.assertEquals(expectedDescription, tool.description());
+		JSONAssert.assertEquals(
+			_read(expectedSchemaFileName),
+			new ObjectMapper(
+			).writeValueAsString(
+				tool.inputSchema()
+			),
+			false);
 		Assert.assertEquals(expectedToolName, tool.name());
-
-		if (expectedSchemaFileName != null) {
-			JSONAssert.assertEquals(
-				_read(expectedSchemaFileName),
-				new ObjectMapper(
-				).writeValueAsString(
-					tool.inputSchema()
-				),
-				false);
-		}
 	}
 
 	private static String _openAPIJSON;

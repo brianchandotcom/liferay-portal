@@ -146,7 +146,7 @@ public class MCPServerTest {
 		String name = RandomTestUtil.randomString();
 
 		_addProfileObjectEntry(
-			name, "Test entities agent - can read and create test entities",
+			"Test entities agent - can read and create test entities", name,
 			"GET /test/v1.0/test-entities", "POST /test/v1.0/test-entities");
 
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
@@ -223,7 +223,7 @@ public class MCPServerTest {
 		String name = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _addProfileObjectEntry(
-			name, RandomTestUtil.randomString(), "GET /test/v1.0/test-entities",
+			RandomTestUtil.randomString(), name, "GET /test/v1.0/test-entities",
 			"POST /test/v1.0/test-entities");
 
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
@@ -276,7 +276,7 @@ public class MCPServerTest {
 	}
 
 	private ObjectEntry _addProfileObjectEntry(
-			String name, String description, String... endpoints)
+			String description, String name, String... endpoints)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =

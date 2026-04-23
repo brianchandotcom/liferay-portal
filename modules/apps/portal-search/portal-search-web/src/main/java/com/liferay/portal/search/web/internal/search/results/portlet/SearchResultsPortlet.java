@@ -329,8 +329,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 			assetRendererFactoryLookup
 		).setClassNameLocalService(
 			_classNameLocalService
-		).setCurrentURL(
-			getCurrentURL(renderRequest)
 		).setDocument(
 			document
 		).setFastDateFormatFactory(

@@ -158,14 +158,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 		return this;
 	}
 
-	public SearchResultSummaryDisplayContextBuilder setCurrentURL(
-		String currentURL) {
-
-		_currentURL = currentURL;
-
-		return this;
-	}
-
 	public SearchResultSummaryDisplayContextBuilder setDocument(
 		com.liferay.portal.kernel.search.Document document) {
 
@@ -460,7 +452,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 
 		return SearchUtil.getSearchResultViewURL(
 			_renderRequest, _renderResponse, className, classPK,
-			_searchResultPreferences.isViewInContext(), _currentURL);
+			_searchResultPreferences.isViewInContext());
 	}
 
 	protected Summary getSummary(
@@ -1134,7 +1126,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 	private AssetEntryLocalService _assetEntryLocalService;
 	private AssetRendererFactoryLookup _assetRendererFactoryLookup;
 	private ClassNameLocalService _classNameLocalService;
-	private String _currentURL;
 	private Document _document;
 	private FastDateFormatFactory _fastDateFormatFactory;
 	private GroupLocalService _groupLocalService;

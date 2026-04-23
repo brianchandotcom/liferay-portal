@@ -6628,7 +6628,12 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		return "http://mirrors-no-cache.lax.liferay.com/github.com/liferay";
+		throw new RuntimeException(
+			combine(
+				"Unable to locate local ", JENKINS_REPOSITORY_NAME,
+				" repository. Set CACHE_DIR or JENKINS_GITHUB_URL to a ",
+				"directory containing a ", JENKINS_REPOSITORY_NAME,
+				" checkout."));
 	}
 
 	protected static String urlDependenciesFile;

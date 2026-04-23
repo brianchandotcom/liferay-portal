@@ -125,10 +125,7 @@ import org.json.JSONObject;
  */
 public class JenkinsResultsParserUtil {
 
-	public static final String[] CACHED_REPOSITORIES = {
-		"liferay-jenkins-ee", "liferay-jenkins-results-parser-samples-ee",
-		"liferay-portal"
-	};
+	public static final String JENKINS_REPOSITORY_NAME = "liferay-jenkins-ee";
 
 	public static final int PAGES_GITHUB_API_PAGES_SIZE_MAX = 10;
 
@@ -138,10 +135,7 @@ public class JenkinsResultsParserUtil {
 
 	public static final String[] URLS_BUILD_PROPERTIES_DEFAULT = {
 		URL_CACHE + "/liferay-jenkins-ee/build.properties",
-		URL_CACHE + "/liferay-jenkins-ee/commands/build.properties",
-		URL_CACHE + "/liferay-portal/build.properties",
-		URL_CACHE + "/liferay-portal/ci.properties",
-		URL_CACHE + "/liferay-portal/test.properties"
+		URL_CACHE + "/liferay-jenkins-ee/commands/build.properties"
 	};
 
 	public static final String[] URLS_GIT_DIRECTORIES_JSON_DEFAULT = {
@@ -6676,19 +6670,15 @@ public class JenkinsResultsParserUtil {
 			File cacheDir = new File(cacheDirPath);
 
 			if (cacheDir.exists()) {
-				for (String cachedRepository : CACHED_REPOSITORIES) {
-					File cacheRepositoryDir = new File(
-						cacheDir, cachedRepository);
+				File cacheRepositoryDir = new File(
+					cacheDir, JENKINS_REPOSITORY_NAME);
 
-					if (!cacheRepositoryDir.exists()) {
-						break;
-					}
+				if (cacheRepositoryDir.exists()) {
+					System.out.println(
+						"Using " + cacheDirPath + " for cached files");
+
+					return "file://" + cacheDirPath;
 				}
-
-				System.out.println(
-					"Using " + cacheDirPath + " for cached files");
-
-				return "file://" + cacheDirPath;
 			}
 		}
 

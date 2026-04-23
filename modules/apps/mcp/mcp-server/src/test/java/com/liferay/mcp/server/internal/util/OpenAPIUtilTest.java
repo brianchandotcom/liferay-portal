@@ -7,6 +7,8 @@ package com.liferay.mcp.server.internal.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -108,10 +110,22 @@ public class OpenAPIUtilTest {
 
 	@Test
 	public void testGetOpenAPIURL() {
-		Assert.assertNull(OpenAPIUtil.getOpenAPIURL(""));
-		Assert.assertNull(OpenAPIUtil.getOpenAPIURL("GET /single"));
-		Assert.assertNull(OpenAPIUtil.getOpenAPIURL("INVALID"));
-		Assert.assertNull(OpenAPIUtil.getOpenAPIURL("no-space"));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Endpoint has no base path: GET /single",
+			() -> OpenAPIUtil.getOpenAPIURL("GET /single"));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Endpoint has no method/path separator: ",
+			() -> OpenAPIUtil.getOpenAPIURL(""));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Endpoint has no method/path separator: INVALID",
+			() -> OpenAPIUtil.getOpenAPIURL("INVALID"));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Endpoint has no method/path separator: no-space",
+			() -> OpenAPIUtil.getOpenAPIURL("no-space"));
 
 		Assert.assertEquals(
 			"/c/test/openapi.json",
@@ -136,18 +150,38 @@ public class OpenAPIUtilTest {
 
 	@Test
 	public void testGetTool() throws Exception {
-		Assert.assertNull(
-			OpenAPIUtil.getTool("DELETE /test/v1.0/items", _openAPIJSON));
-		Assert.assertNull(OpenAPIUtil.getTool("GET /single", _openAPIJSON));
-		Assert.assertNull(
-			OpenAPIUtil.getTool("GET /test/v1.0/items", "Invalid JSON"));
-		Assert.assertNull(OpenAPIUtil.getTool("GET /test/v1.0/items", "{}"));
-		Assert.assertNull(
-			OpenAPIUtil.getTool("GET /test/v1.0/nonexistent", _openAPIJSON));
-		Assert.assertNull(OpenAPIUtil.getTool("INVALID", _openAPIJSON));
-		Assert.assertNull(
-			OpenAPIUtil.getTool("POST /test/v1.0/uploads", _openAPIJSON));
-		Assert.assertNull(OpenAPIUtil.getTool("no-space", _openAPIJSON));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Endpoint has no base path: GET /single",
+			() -> OpenAPIUtil.getTool("GET /single", _openAPIJSON));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Endpoint has no method/path separator: INVALID",
+			() -> OpenAPIUtil.getTool("INVALID", _openAPIJSON));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Endpoint has no method/path separator: no-space",
+			() -> OpenAPIUtil.getTool("no-space", _openAPIJSON));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"OpenAPI document has no 'paths' object",
+			() -> OpenAPIUtil.getTool("GET /test/v1.0/items", "{}"));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"OpenAPI document has no path item for: /nonexistent",
+			() -> OpenAPIUtil.getTool(
+				"GET /test/v1.0/nonexistent", _openAPIJSON));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"OpenAPI path item has no operation for method: DELETE",
+			() -> OpenAPIUtil.getTool("DELETE /test/v1.0/items", _openAPIJSON));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Request body has no application/json content",
+			() -> OpenAPIUtil.getTool("POST /test/v1.0/uploads", _openAPIJSON));
+		Assert.assertThrows(
+			JSONException.class,
+			() -> OpenAPIUtil.getTool("GET /test/v1.0/items", "Invalid JSON"));
 
 		_testGetTool(
 			"GET /c/test/", "This is the summary", "get_c_test.json",

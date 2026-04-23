@@ -185,34 +185,25 @@ public class MCPServerServlet extends HttpServlet {
 			toolSpecifications.addAll(
 				TransformUtil.transformToList(
 					mcpServerProfile._endpoints,
-					endpoint -> {
-						String openAPIURL = OpenAPIUtil.getOpenAPIURL(endpoint);
+					endpoint -> new McpServerFeatures.SyncToolSpecification(
+						OpenAPIUtil.getTool(
+							endpoint,
+							openAPIJSONStringCache.computeIfAbsent(
+								OpenAPIUtil.getOpenAPIURL(endpoint),
+								key -> _getOpenAPIJSONString(
+									baseURL, authorization, key))),
+						(mcpSyncServerExchange, callToolRequest) -> {
+							OpenAPIUtil.HttpCallArguments httpCallArguments =
+								OpenAPIUtil.getHttpCallArguments(
+									callToolRequest.arguments(), baseURL,
+									endpoint);
 
-						if (openAPIURL == null) {
-							return null;
-						}
-
-						return new McpServerFeatures.SyncToolSpecification(
-							OpenAPIUtil.getTool(
-								endpoint,
-								openAPIJSONStringCache.computeIfAbsent(
-									openAPIURL,
-									key -> _getOpenAPIJSONString(
-										baseURL, authorization, openAPIURL))),
-							(mcpSyncServerExchange, callToolRequest) -> {
-								OpenAPIUtil.HttpCallArguments
-									httpCallArguments =
-										OpenAPIUtil.getHttpCallArguments(
-											callToolRequest.arguments(),
-											baseURL, endpoint);
-
-								return _call(
-									httpCallArguments.getBody(),
-									httpCallArguments.getUrl(),
-									mcpSyncServerExchange,
-									httpCallArguments.getMethod());
-							});
-					}));
+							return _call(
+								httpCallArguments.getBody(),
+								httpCallArguments.getUrl(),
+								mcpSyncServerExchange,
+								httpCallArguments.getMethod());
+						})));
 		}
 		else {
 			JSONObject toolsJSONObject = _getToolsJSONObject(baseURL);

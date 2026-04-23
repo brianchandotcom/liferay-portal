@@ -84,23 +84,11 @@ public class OpenAPIUtil {
 	}
 
 	public static String getOpenAPIURL(String endpoint) {
-		String apiBasePath = _getBasePath(endpoint);
-
-		if (apiBasePath == null) {
-			return null;
-		}
-
-		return apiBasePath + "/openapi.json";
+		return _getBasePath(endpoint) + "/openapi.json";
 	}
 
 	public static McpSchema.Tool getTool(String endpoint, String openAPIJSON)
 		throws Exception {
-
-		String basePath = _getBasePath(endpoint);
-
-		if (basePath == null) {
-			return null;
-		}
 
 		JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(
 			openAPIJSON);
@@ -108,8 +96,11 @@ public class OpenAPIUtil {
 		JSONObject pathsJSONObject = rootJSONObject.getJSONObject("paths");
 
 		if (pathsJSONObject == null) {
-			return null;
+			throw new IllegalArgumentException(
+				"OpenAPI document has no 'paths' object");
 		}
+
+		String basePath = _getBasePath(endpoint);
 
 		int spaceIndex = endpoint.indexOf(' ');
 
@@ -135,23 +126,21 @@ public class OpenAPIUtil {
 		}
 
 		if (pathItemJSONObject == null) {
-			return null;
+			throw new IllegalArgumentException(
+				"OpenAPI document has no path item for: " + pathSuffix);
 		}
 
 		JSONObject operationJSONObject = pathItemJSONObject.getJSONObject(
 			StringUtil.toLowerCase(method));
 
 		if (operationJSONObject == null) {
-			return null;
+			throw new IllegalArgumentException(
+				"OpenAPI path item has no operation for method: " + method);
 		}
 
 		McpSchema.JsonSchema inputJsonSchema = _getInputJsonSchema(
 			operationJSONObject, pathItemJSONObject.getJSONArray("parameters"),
 			rootJSONObject);
-
-		if (inputJsonSchema == null) {
-			return null;
-		}
 
 		return McpSchema.Tool.builder(
 		).name(
@@ -240,7 +229,8 @@ public class OpenAPIUtil {
 		int spaceIndex = endpoint.indexOf(' ');
 
 		if (spaceIndex < 0) {
-			return null;
+			throw new IllegalArgumentException(
+				"Endpoint has no method/path separator: " + endpoint);
 		}
 
 		String path = endpoint.substring(spaceIndex + 1);
@@ -248,7 +238,8 @@ public class OpenAPIUtil {
 		int firstSlashIndex = path.indexOf('/', 1);
 
 		if (firstSlashIndex < 0) {
-			return null;
+			throw new IllegalArgumentException(
+				"Endpoint has no base path: " + endpoint);
 		}
 
 		int secondSlashIndex = path.indexOf('/', firstSlashIndex + 1);
@@ -272,10 +263,18 @@ public class OpenAPIUtil {
 		);
 
 		if (jsonObject == null) {
-			return null;
+			throw new IllegalArgumentException(
+				"Request body has no application/json content");
 		}
 
-		return jsonObject.getJSONObject("schema");
+		JSONObject schemaJSONObject = jsonObject.getJSONObject("schema");
+
+		if (schemaJSONObject == null) {
+			throw new IllegalArgumentException(
+				"Request body application/json has no schema");
+		}
+
+		return schemaJSONObject;
 	}
 
 	private static McpSchema.JsonSchema _getInputJsonSchema(
@@ -287,17 +286,12 @@ public class OpenAPIUtil {
 		JSONArray requiredJSONArray = JSONFactoryUtil.createJSONArray();
 
 		if (operationJSONObject.has("requestBody")) {
-			JSONObject bodySchemaJSONObject = _getBodySchemaJSONObject(
-				operationJSONObject);
-
-			if (bodySchemaJSONObject == null) {
-				return null;
-			}
-
 			propertiesJSONObject.put(
 				"body",
 				(JSONObject)_resolveRefs(
-					rootJSONObject, bodySchemaJSONObject, new HashSet<>()));
+					rootJSONObject,
+					_getBodySchemaJSONObject(operationJSONObject),
+					new HashSet<>()));
 
 			requiredJSONArray.put("body");
 		}

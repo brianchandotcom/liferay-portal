@@ -25,9 +25,9 @@ export function getCMSItemSelectorFilters(
 		},
 		{
 			apiURL: "/o/object-admin/v1.0/object-definitions?filter=objectFolderExternalReferenceCode eq 'L_CMS_FILE_TYPES'",
-			entityFieldType: EEntityFieldType.INTEGER,
-			id: 'objectDefinitionId',
-			itemKey: 'id',
+			entityFieldType: EEntityFieldType.STRING,
+			id: 'objectDefinitionExternalReferenceCode',
+			itemKey: 'externalReferenceCode',
 			itemLabel: 'label.LANG',
 			label: Liferay.Language.get('type'),
 			multiple: true,
@@ -140,7 +140,7 @@ export function getCMSItemSelectorGroupedFilters(): IGroupedFilterConfig[] {
 		{
 			filters: [
 				'groupIds',
-				'objectDefinitionId',
+				'objectDefinitionExternalReferenceCode',
 				'taxonomyCategoryIds',
 				'keywords',
 				'creatorId',

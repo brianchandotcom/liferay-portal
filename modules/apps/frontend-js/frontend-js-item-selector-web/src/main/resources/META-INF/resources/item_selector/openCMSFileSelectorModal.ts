@@ -137,6 +137,19 @@ const FDS_PROPS: Omit<
 					};
 				}
 
+				if (item.embedded.videoURL) {
+					return {
+						...props,
+						stickerProps: {
+							className: 'file-icon-color-3',
+							content: React.createElement(ClayIcon, {
+								symbol: 'document-multimedia',
+							}),
+							displayType: 'unstyled',
+						},
+					};
+				}
+
 				return {
 					...props,
 					...fallbackStickerProps,
@@ -173,6 +186,7 @@ export default function openCMSFileSelectorModal({
 	config,
 	createItemURL,
 	fdsProps,
+	filters,
 	groupId,
 	itemTypeLabel,
 	maxFileSize,
@@ -183,6 +197,7 @@ export default function openCMSFileSelectorModal({
 	config?: Partial<CMSFileItemSelectorModalConfig>;
 	createItemURL?: string;
 	fdsProps?: Partial<CMSFileItemSelectorModalProps['fdsProps']>;
+	filters?: string[];
 	groupId: number;
 	itemTypeLabel?: string;
 	maxFileSize?: number;
@@ -193,7 +208,10 @@ export default function openCMSFileSelectorModal({
 		...config,
 	};
 
-	if (allowedExtensions) {
+	if (filters?.length) {
+		finalConfig.apiURL = urlBuilder({filters});
+	}
+	else if (allowedExtensions) {
 		const extensions = normalizeExtensions(allowedExtensions);
 
 		finalConfig.apiURL = urlBuilder({

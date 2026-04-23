@@ -4,16 +4,17 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useModal} from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import {
 	convertToFormData,
 	makeFetch,
 	useConfig,
 } from 'data-engine-js-components-web';
 import {openSelectionModal} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, getFileAsBase64} from 'frontend-js-web';
 import React, {ChangeEventHandler, useEffect, useRef, useState} from 'react';
 
+import CMSUploadModal, {Space} from './CMSFilesUploadModal';
 import FileContainer from './FileContainer';
 import CMSFilesItemSelectorModal, {
 	CMSFile,
@@ -61,10 +62,6 @@ type FolderRef =
 	| {objectEntryFolderExternalReferenceCode: string}
 	| {objectEntryFolderId: number};
 
-interface Space {
-	externalReferenceCode: string;
-}
-
 export interface AttachmentBaseProps<TValue> {
 	acceptedFileExtensions: string;
 	attachment: AttachmentFile | null;
@@ -82,23 +79,6 @@ export interface AttachmentBaseProps<TValue> {
 	url: string;
 	value: TValue;
 }
-
-const getBase64 = (file: File): Promise<string> =>
-	new Promise((resolve, reject) => {
-		const reader = new FileReader();
-
-		reader.onload = () => {
-			if (typeof reader.result === 'string') {
-				resolve(reader.result.split(',')[1]);
-			}
-			else {
-				reject(new Error('Invalid FileReader result'));
-			}
-		};
-
-		reader.onerror = reject;
-		reader.readAsDataURL(file);
-	});
 
 export default function AttachmentBase({
 	acceptedFileExtensions,
@@ -119,13 +99,23 @@ export default function AttachmentBase({
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [cmsFiles, setCMSFiles] = useState<CMSFile[]>([]);
+	const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
 	const [isLoading, setLoading] = useState(false);
+	const [preserveStateOnNextOpen, setPreserveStateOnNextOpen] =
+		useState(false);
+	const [refreshCounter, setRefreshCounter] = useState(0);
 	const [spaces, setSpaces] = useState<Space[]>([]);
 
 	const {
 		observer: spaceItemSelectorObserver,
-		onOpenChange: spaceItemSelectorOpenChange,
+		onOpenChange: onSpaceItemSelectorOpenChange,
 		open: spaceItemSelectorOpen,
+	} = useModal();
+
+	const {
+		observer: uploadModalObserver,
+		onOpenChange: onUploadModalOpenChange,
+		open: uploadModalOpen,
 	} = useModal();
 
 	const DEFAULT_FOLDER_ERC = 'L_FILES';
@@ -144,6 +134,28 @@ export default function AttachmentBase({
 
 	const hasLibraryStorage =
 		isUserComputerToCMSBasicDocument || isUserComputerToDocumentsAndMedia;
+
+	/**
+	 * This ref is used for the cleanup effect so that it only runs when the modal actually closes,
+	 * and prevents it from running on the initial render.
+	 */
+	const uploadModalWasOpenRef = useRef(false);
+
+	const handleCloseUploadModal = () => {
+		onUploadModalOpenChange(false);
+	};
+
+	const handleOpenUploadModal = (files?: File[]) => {
+		setFilesToUpload(files ?? []);
+		setPreserveStateOnNextOpen(true);
+
+		onUploadModalOpenChange(true);
+		onSpaceItemSelectorOpenChange(false);
+	};
+
+	const handleUploadSuccess = () => {
+		setRefreshCounter((prev) => prev + 1);
+	};
 
 	const handleCMSItemsChange = (items: CMSFile[]) => {
 		setCMSFiles(items);
@@ -206,6 +218,23 @@ export default function AttachmentBase({
 				setSpaces(data.items ?? []);
 			});
 	}, []);
+
+	useEffect(() => {
+		if (!attachment) {
+			setCMSFiles([]);
+		}
+	}, [attachment]);
+
+	useEffect(() => {
+		if (uploadModalOpen) {
+			uploadModalWasOpenRef.current = true;
+		}
+		else if (uploadModalWasOpenRef.current) {
+			uploadModalWasOpenRef.current = false;
+			setFilesToUpload([]);
+			onSpaceItemSelectorOpenChange(true);
+		}
+	}, [uploadModalOpen, onSpaceItemSelectorOpenChange]);
 
 	const findOrCreateFolder = async (
 		folderName: string,
@@ -322,7 +351,7 @@ export default function AttachmentBase({
 			);
 		}
 
-		const fileBase64 = await getBase64(file);
+		const fileBase64 = await getFileAsBase64(file);
 
 		const isVisible = !!storageDepotGroup;
 
@@ -475,7 +504,7 @@ export default function AttachmentBase({
 								}
 							}
 							else if (isCMSBasicDocument) {
-								spaceItemSelectorOpenChange(true);
+								onSpaceItemSelectorOpenChange(true);
 							}
 						}}
 					>
@@ -496,9 +525,26 @@ export default function AttachmentBase({
 					items={cmsFiles}
 					observer={spaceItemSelectorObserver}
 					onItemsChange={handleCMSItemsChange}
-					onOpenChange={spaceItemSelectorOpenChange}
+					onOpenChange={onSpaceItemSelectorOpenChange}
+					onOpenUploadModal={handleOpenUploadModal}
+					onPreserveStateConsumed={() =>
+						setPreserveStateOnNextOpen(false)
+					}
 					open={spaceItemSelectorOpen}
+					preserveStateOnOpen={preserveStateOnNextOpen}
+					refreshCounter={refreshCounter}
 				/>
+			)}
+
+			{uploadModalOpen && (
+				<ClayModal observer={uploadModalObserver} size="lg">
+					<CMSUploadModal
+						initialFiles={filesToUpload}
+						onModalClose={handleCloseUploadModal}
+						onUploadSuccess={handleUploadSuccess}
+						spaces={spaces}
+					/>
+				</ClayModal>
 			)}
 
 			<input

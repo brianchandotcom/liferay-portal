@@ -4,7 +4,7 @@ import {
 	GeneralInfoSection
 } from 'shared/components/GeneralInfoSection';
 import {Map} from 'immutable';
-import {SectionHeader} from './SectionHeader';
+import {SectionHeader} from 'shared/components/SectionHeader';
 
 const contextualInfoConfig: DataDrivenConfig = [
 	{

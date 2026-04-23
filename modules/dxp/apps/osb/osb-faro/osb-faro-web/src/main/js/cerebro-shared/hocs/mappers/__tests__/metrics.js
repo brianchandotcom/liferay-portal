@@ -96,26 +96,76 @@ const data = {
 
 describe('Shared HOCs Mappers - Metrics', () => {
 	it('should map metrics information', () => {
-		const mapper = getMetricsMapper(result => result.forms, [
-			{
-				name: 'views',
-				title: 'Views',
-				tooltipTitle: 'Avg. Views',
-				type: 'number'
-			}
-		]);
-
-		expect(
-			mapper.props({
-				data,
-				ownProps: {
-					rangeSelectors: {
-						rangeEnd: null,
-						rangeKey: '7',
-						rangeStart: null
-					}
+		const mapper = getMetricsMapper(
+			result => result.forms,
+			[
+				{
+					name: 'views',
+					title: 'Views',
+					tooltipTitle: 'Avg. Views',
+					type: 'number'
 				}
-			})
-		).toMatchSnapshot();
+			]
+		);
+
+		const result = mapper.props({
+			data,
+			ownProps: {
+				rangeSelectors: {
+					rangeEnd: null,
+					rangeKey: '7',
+					rangeStart: null
+				}
+			}
+		});
+
+		expect(result).toMatchObject({
+			error: null,
+			items: [
+				{
+					asymmetricComparison: false,
+					content: {
+						details: {
+							color: '#DA1414',
+							icon: 'caret-top-l',
+							label: '100%'
+						},
+						name: 'views',
+						title: 'Views',
+						type: 'number',
+						value: '1.08K'
+					},
+					data: [
+						{
+							color: '#4B9BFF',
+							data: [4, 315, 60, 46, 183, 241, 229],
+							id: 'data_1',
+							name: 'Avg. Views',
+							tooltipTitle: 'Avg. Views'
+						},
+						{
+							color: '#7EB7FF',
+							data: [108, 134, 71, 79, 250, 543, 176],
+							id: 'data_previous',
+							name: 'Previous Period'
+						},
+						{
+							data: [
+								1526515200000, 1526601600000, 1526688000000,
+								1526774400000, 1526860800000, 1526947200000,
+								1527033600000
+							],
+							id: 'x'
+						}
+					],
+					intervals: [
+						1526515200000, 1526601600000, 1526688000000,
+						1526774400000, 1526860800000, 1526947200000,
+						1527033600000
+					]
+				}
+			],
+			loading: false
+		});
 	});
 });

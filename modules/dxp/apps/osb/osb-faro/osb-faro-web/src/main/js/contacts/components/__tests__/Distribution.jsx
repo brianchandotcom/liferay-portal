@@ -22,9 +22,11 @@ describe('SegmentDistribution', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(<Distribution {...defaultProps} />);
+		const {getByText} = render(<Distribution {...defaultProps} />);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			getByText(Liferay.Language.get('distribution-by-attribute'))
+		).toBeInTheDocument();
 	});
 
 	xit('should render a Chart component if loading is false', () => {

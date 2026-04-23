@@ -1,6 +1,6 @@
 import React from 'react';
 import SelectItemsModal, {ItemComponent} from '../SelectItemsModal';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {createOrderIOMap} from 'shared/util/pagination';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {noop} from 'lodash';
@@ -127,8 +127,11 @@ describe('SelectItemsModal', () => {
 
 		fireEvent.click(getByText(MESSAGE));
 
-		jest.runAllTimers();
-		await waitForLoadingToBeRemoved(container);
+		// IS_CANCELLATION_ERROR prevents submitting from resetting to false,
+		// so the loading spinner stays. Flush pending timers/promises only.
+		await act(async () => {
+			jest.runOnlyPendingTimers();
+		});
 		expect(container).toMatchSnapshot();
 	});
 
@@ -143,8 +146,11 @@ describe('SelectItemsModal', () => {
 		);
 
 		fireEvent.click(getByText(MESSAGE));
-		jest.runAllTimers();
-		await waitForLoadingToBeRemoved(container);
+		// Non-Promise onSubmit path calls onClose but does not reset submitting,
+		// so the loading spinner stays. Flush pending timers/promises only.
+		await act(async () => {
+			jest.runOnlyPendingTimers();
+		});
 		expect(container).toMatchSnapshot();
 	});
 

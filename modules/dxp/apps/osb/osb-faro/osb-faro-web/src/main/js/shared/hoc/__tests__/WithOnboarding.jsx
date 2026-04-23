@@ -1,33 +1,49 @@
 import 'test/mock-modal';
-
 import * as API from 'shared/api';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import withOnboarding from '../WithOnboarding';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, waitFor} from '@testing-library/react';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
 import {mockDataSourcesReq} from 'test/graphql-data';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockMemberUser} from 'test/data';
 import {OnboardingContext} from 'shared/context/onboarding';
 import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-const WrappedComponent = withOnboarding(() => 'wrapped component text');
+const WrappedComponent = withOnboarding(() => (
+	<div>{'wrapped component text'}</div>
+));
 
 const defaultContext = {
 	onboardingTriggered: false,
 	setOnboardingTriggered: jest.fn()
 };
 
-const DefaultComponent = props => (
-	<Provider store={mockStore()}>
-		<OnboardingContext.Provider value={defaultContext}>
-			<MockedProvider mocks={[mockDataSourcesReq()]}>
-				<WrappedComponent {...props} />
-			</MockedProvider>
-		</OnboardingContext.Provider>
+const Wrapper = ({
+	children,
+	mocks = [mockDataSourcesReq()],
+	onboardingContext = defaultContext,
+	store = mockStore()
+}) => (
+	<Provider store={store}>
+		<MemoryRouter initialEntries={['/']}>
+			<Route path='/'>
+				<OnboardingContext.Provider value={onboardingContext}>
+					<MockedProvider
+						cache={new InMemoryCache({addTypename: false})}
+						mocks={mocks}
+					>
+						{children}
+					</MockedProvider>
+				</OnboardingContext.Provider>
+			</Route>
+		</MemoryRouter>
 	</Provider>
 );
 
@@ -37,37 +53,39 @@ describe('WithOnboarding', () => {
 		jest.clearAllMocks();
 	});
 
-	it('should render the wrapped component', () => {
+	it('should render the wrapped component', async () => {
 		const {container} = render(
-			<Provider store={mockStore()}>
-				<OnboardingContext.Provider value={defaultContext}>
-					<MockedProvider
-						mocks={[
-							mockDataSourcesReq([
-								{
-									__typename: 'DataSource',
-									id: '123',
-									name: 'foo datasource',
-									url: 'foo.url'
-								}
-							])
-						]}
-					>
-						<WrappedComponent />
-					</MockedProvider>
-				</OnboardingContext.Provider>
-			</Provider>
+			<Wrapper
+				mocks={[
+					mockDataSourcesReq([
+						{
+							__typename: 'DataSource',
+							id: '123',
+							name: 'foo datasource',
+							url: 'foo.url'
+						}
+					])
+				]}
+			>
+				<WrappedComponent />
+			</Wrapper>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.textContent).toBe('wrapped component text');
 	});
 
-	it('should trigger the onboarding modal if there are no dxp datasources', () => {
-		render(<DefaultComponent />);
+	it('should trigger the onboarding modal if there are no dxp datasources', async () => {
+		const {container} = render(
+			<Wrapper>
+				<WrappedComponent />
+			</Wrapper>
+		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
-		expect(open).toBeCalled();
+		await waitFor(() => expect(open).toBeCalled());
 	});
 
 	it('should not trigger the onboarding modal for non-admin users', async () => {
@@ -75,46 +93,42 @@ describe('WithOnboarding', () => {
 			Promise.resolve(mockMemberUser('23'))
 		);
 
-		render(<DefaultComponent />);
+		const {container} = render(
+			<Wrapper>
+				<WrappedComponent />
+			</Wrapper>
+		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(open).not.toBeCalled();
 	});
 
-	it('should not trigger the onboarding modal if it has already been triggered', () => {
-		render(
-			<Provider store={mockStore()}>
-				<OnboardingContext.Provider
-					value={{
-						...defaultContext,
-						onboardingTriggered: true
-					}}
-				>
-					<MockedProvider mocks={[mockDataSourcesReq()]}>
-						<WrappedComponent />
-					</MockedProvider>
-				</OnboardingContext.Provider>
-			</Provider>
+	it('should not trigger the onboarding modal if it has already been triggered', async () => {
+		const {container} = render(
+			<Wrapper
+				onboardingContext={{
+					...defaultContext,
+					onboardingTriggered: true
+				}}
+			>
+				<WrappedComponent />
+			</Wrapper>
 		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(open).not.toBeCalled();
 	});
 
-	it('should not trigger the onboarding modal when a prop happens to match a field in the SitesDashboardQuery', () => {
-		render(
-			<Provider store={mockStore()}>
-				<OnboardingContext.Provider value={defaultContext}>
-					<MockedProvider
-						mocks={[mockDataSourcesReq([], {type: 'DYNAMIC'})]}
-					>
-						<WrappedComponent type='DYNAMIC' />
-					</MockedProvider>
-				</OnboardingContext.Provider>
-			</Provider>
+	it('should not trigger the onboarding modal when a prop happens to match a field in the SitesDashboardQuery', async () => {
+		const {container} = render(
+			<Wrapper mocks={[mockDataSourcesReq([], {type: 'DYNAMIC'})]}>
+				<WrappedComponent type='DYNAMIC' />
+			</Wrapper>
 		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(open).not.toBeCalled();
 	});

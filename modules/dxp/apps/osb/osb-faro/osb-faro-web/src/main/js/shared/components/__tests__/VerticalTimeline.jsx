@@ -1,12 +1,7 @@
 import mockDate from 'test/mock-date';
 import React from 'react';
 import VerticalTimeline from '../VerticalTimeline';
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement
-} from '@testing-library/react';
+import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
@@ -204,7 +199,7 @@ describe('VerticalTimeline', () => {
 			)[0]
 		);
 
-		const sessionAttributes = await waitForElement(
+		const sessionAttributes = await waitFor(
 			() => getAllByText('Session Attributes')[0]
 		);
 

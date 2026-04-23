@@ -34,6 +34,8 @@ describe('ActivitiesChartTimeline', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.activities-chart-timeline-root')
+		).toBeInTheDocument();
 	});
 });

@@ -1,10 +1,14 @@
 import InterestsCard from '../InterestsCard';
 import React from 'react';
+import {act, cleanup, render} from '@testing-library/react';
 import {BrowserRouter} from 'react-router-dom';
-import {cleanup, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
-import {mockIndividualInterestsReq} from 'test/graphql-data';
+import {
+	mockCompositionBag,
+	mockIndividualInterestsReq
+} from 'test/graphql-data';
+import {MockedProvider} from '@apollo/client/testing';
 import {omit} from 'lodash';
+import {waitFor} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
@@ -16,37 +20,64 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-const WrappedComponent = ({data}) => (
-	<MockedProvider
-		mocks={[
-			mockIndividualInterestsReq(
-				variables => omit(variables, 'keywords'),
-				data && {data}
-			)
-		]}
-	>
-		<BrowserRouter>
-			<InterestsCard />
-		</BrowserRouter>
-	</MockedProvider>
-);
-
 describe('InterestsCard', () => {
 	afterEach(cleanup);
 
-	it('renders', () => {
-		const {container} = render(<WrappedComponent />);
+	it('renders', async () => {
+		const {getByText} = render(
+			<MockedProvider
+				mocks={[
+					mockIndividualInterestsReq(variables =>
+						omit(variables, 'keywords')
+					)
+				]}
+			>
+				<BrowserRouter>
+					<InterestsCard />
+				</BrowserRouter>
+			</MockedProvider>
+		);
 
-		jest.runAllTimers();
+		await act(async () => {
+			await jest.advanceTimersByTimeAsync(0);
+		});
 
-		expect(container).toMatchSnapshot();
+		await waitFor(() =>
+			expect(
+				getByText('Top Interests as of Yesterday')
+			).toBeInTheDocument()
+		);
 	});
 
-	it('renders with empty data', () => {
-		const {container} = render(<WrappedComponent data={[]} />);
+	it('renders with empty data', async () => {
+		const {getByText} = render(
+			<MockedProvider
+				mocks={[
+					mockIndividualInterestsReq(
+						variables => omit(variables, 'keywords'),
+						{
+							data: mockCompositionBag({
+								compositionBagName: 'individualInterests',
+								compositions: []
+							})
+						}
+					)
+				]}
+			>
+				<BrowserRouter>
+					<InterestsCard />
+				</BrowserRouter>
+			</MockedProvider>
+		);
 
-		jest.runAllTimers();
+		await act(async () => {
+			await jest.advanceTimersByTimeAsync(0);
+		});
 
-		expect(container).toMatchSnapshot();
+		await waitFor(() =>
+			expect(
+				getByText('There are no interests found.')
+			).toBeInTheDocument()
+		);
 	});
 });

@@ -155,13 +155,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	const fetchMembers = (params: Record<string, any>) =>
 		getMembershipChanges(params as Data);
 
-	const {
-		activation,
-		criteriaString,
-		id,
-		includeAnonymousUsers,
-		sequential
-	} = segment;
+	const {activation, criteriaString, id, includeAnonymousUsers, sequential} =
+		segment;
 
 	const {timeZoneId} = useTimeZone();
 

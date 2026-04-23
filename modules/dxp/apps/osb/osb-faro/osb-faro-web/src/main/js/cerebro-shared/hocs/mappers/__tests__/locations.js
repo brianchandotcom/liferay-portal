@@ -104,36 +104,79 @@ describe('Shared HOCs Mappers - Locations', () => {
 			result => result.form.submissionsMetric
 		);
 
-		expect(
-			mapper.props(
-				{
-					data,
-					ownProps: {
-						rangeSelectors: {rangeKey: '0'}
-					}
-				},
-				{
-					filters: {
-						location: ['Any']
-					}
+		const propsResult = mapper.props(
+			{
+				data,
+				ownProps: {
+					rangeSelectors: {rangeKey: '0'}
 				}
-			)
-		).toMatchSnapshot();
-
-		expect(
-			mapper.options({
+			},
+			{
 				filters: {
 					location: ['Any']
-				},
-				rangeSelectors: {rangeKey: '0'},
-				router: {
-					params: {
-						assetId: ASSET_ID,
-						touchpoint: TOUCHPOINT
-					}
 				}
-			})
-		).toMatchSnapshot();
+			}
+		);
+
+		expect(propsResult).toMatchObject({
+			data: {
+				geolocation: [
+					{
+						group: 'Brazil',
+						id: 'Brazil',
+						name: 'Brazil',
+						total: 100,
+						value: '33.3'
+					},
+					{
+						group: 'Spain',
+						id: 'Spain',
+						name: 'Spain',
+						total: 100,
+						value: '33.3'
+					},
+					{
+						group: 'United States',
+						id: 'United States',
+						name: 'United States',
+						total: 100,
+						value: '33.3'
+					}
+				],
+				total: 3
+			},
+			error: null,
+			loading: false,
+			rangeEnd: null,
+			rangeKey: 0,
+			rangeStart: null
+		});
+
+		const optionsResult = mapper.options({
+			filters: {
+				location: ['Any']
+			},
+			rangeSelectors: {rangeKey: '0'},
+			router: {
+				params: {
+					assetId: ASSET_ID,
+					touchpoint: TOUCHPOINT
+				}
+			}
+		});
+
+		expect(optionsResult).toEqual({
+			variables: {
+				assetId: 'formId',
+				devices: 'Any',
+				location: 'Any',
+				rangeEnd: null,
+				rangeKey: 0,
+				rangeStart: null,
+				title: '',
+				touchpoint: null
+			}
+		});
 	});
 
 	it('should map locations information with region Brazil', () => {
@@ -141,36 +184,93 @@ describe('Shared HOCs Mappers - Locations', () => {
 			result => result.form.submissionsMetric
 		);
 
-		expect(
-			mapper.props(
-				{
-					data,
-					ownProps: {
-						rangeSelectors: {rangeKey: '0'}
-					}
-				},
-				{
-					filters: {
-						location: ['Brazil']
-					}
+		const propsResult = mapper.props(
+			{
+				data,
+				ownProps: {
+					rangeSelectors: {rangeKey: '0'}
 				}
-			)
-		).toMatchSnapshot();
-
-		expect(
-			mapper.options({
+			},
+			{
 				filters: {
 					location: ['Brazil']
-				},
-				rangeSelectors: {rangeKey: '0'},
-				router: {
-					params: {
-						assetId: ASSET_ID,
-						touchpoint: TOUCHPOINT
-					}
 				}
-			})
-		).toMatchSnapshot();
+			}
+		);
+
+		expect(propsResult).toMatchObject({
+			data: {
+				geolocation: [
+					{
+						group: 'Unknown',
+						id: 'Unknown',
+						name: 'Unknown',
+						total: 100,
+						value: '20'
+					},
+					{
+						group: 'Pernambuco',
+						id: 'Pernambuco',
+						name: 'Pernambuco',
+						total: 100,
+						value: '20'
+					},
+					{
+						group: 'Sao Paulo',
+						id: 'Sao Paulo',
+						name: 'Sao Paulo',
+						total: 100,
+						value: '20'
+					},
+					{
+						group: 'Parana',
+						id: 'Parana',
+						name: 'Parana',
+						total: 100,
+						value: '20'
+					},
+					{
+						group: 'Rio Grande do Sul',
+						id: 'Rio Grande do Sul',
+						name: 'Rio Grande do Sul',
+						total: 100,
+						value: '20'
+					}
+				],
+				total: 5
+			},
+			error: null,
+			loading: false,
+			rangeEnd: null,
+			rangeKey: 0,
+			rangeStart: null
+		});
+
+		const optionsResult = mapper.options({
+			filters: {
+				location: ['Brazil']
+			},
+			rangeSelectors: {rangeKey: '0'},
+			router: {
+				params: {
+					assetId: ASSET_ID,
+					touchpoint: TOUCHPOINT
+				}
+			}
+		});
+
+		expect(optionsResult).toEqual({
+			variables: {
+				assetId: 'formId',
+				devices: 'Any',
+				location: 'Brazil',
+				rangeEnd: null,
+				rangeKey: 0,
+				rangeStart: null,
+				title: '',
+				touchpoint: null
+			}
+		});
 	});
 
 	it('should map locations information without geolocation', () => {
@@ -178,27 +278,37 @@ describe('Shared HOCs Mappers - Locations', () => {
 			result => result.form.submissionsMetric
 		);
 
-		expect(
-			mapper.props(
-				{
-					data: {
-						form: {
-							submissionsMetric: {
-								geolocation: []
-							}
+		const propsResult = mapper.props(
+			{
+				data: {
+					form: {
+						submissionsMetric: {
+							geolocation: []
 						}
-					},
-					ownProps: {
-						rangeSelectors: {rangeKey: '0'}
 					}
 				},
-				{
-					filters: {
-						location: ['Any']
-					}
+				ownProps: {
+					rangeSelectors: {rangeKey: '0'}
 				}
-			)
-		).toMatchSnapshot();
+			},
+			{
+				filters: {
+					location: ['Any']
+				}
+			}
+		);
+
+		expect(propsResult).toMatchObject({
+			data: {
+				geolocation: [],
+				total: 0
+			},
+			error: null,
+			loading: false,
+			rangeEnd: null,
+			rangeKey: 0,
+			rangeStart: null
+		});
 	});
 });
 
@@ -208,36 +318,76 @@ describe('Shared HOCs Mappers - Locations Countries', () => {
 			result => result.form.submissionsMetric
 		);
 
-		expect(
-			mapper.props(
-				{
-					data,
-					ownProps: {
-						rangeSelectors: {rangeKey: '0'}
-					}
-				},
-				{
-					filters: {
-						location: ['Any']
-					}
+		const propsResult = mapper.props(
+			{
+				data,
+				ownProps: {
+					rangeSelectors: {rangeKey: '0'}
 				}
-			)
-		).toMatchSnapshot();
-
-		expect(
-			mapper.options({
+			},
+			{
 				filters: {
 					location: ['Any']
-				},
-				rangeSelectors: {rangeKey: '0'},
-				router: {
-					params: {
-						assetId: ASSET_ID,
-						touchpoint: TOUCHPOINT
-					}
 				}
-			})
-		).toMatchSnapshot();
+			}
+		);
+
+		expect(propsResult).toMatchObject({
+			data: {
+				countries: [
+					{
+						group: 'Brazil',
+						id: 'Brazil',
+						name: 'Brazil',
+						total: 100,
+						value: '33.3'
+					},
+					{
+						group: 'Spain',
+						id: 'Spain',
+						name: 'Spain',
+						total: 100,
+						value: '33.3'
+					},
+					{
+						group: 'United States',
+						id: 'United States',
+						name: 'United States',
+						total: 100,
+						value: '33.3'
+					}
+				],
+				total: 3
+			},
+			error: null,
+			loading: false
+		});
+
+		const optionsResult = mapper.options({
+			filters: {
+				location: ['Any']
+			},
+			rangeSelectors: {rangeKey: '0'},
+			router: {
+				params: {
+					assetId: ASSET_ID,
+					touchpoint: TOUCHPOINT
+				}
+			}
+		});
+
+		expect(optionsResult).toEqual({
+			variables: {
+				assetId: 'formId',
+				devices: 'Any',
+				location: 'Any',
+				rangeEnd: null,
+				rangeKey: 0,
+				rangeStart: null,
+				title: '',
+				touchpoint: null
+			}
+		});
 	});
 
 	it('should return countries information indepent if Brazil is selected', () => {
@@ -245,35 +395,75 @@ describe('Shared HOCs Mappers - Locations Countries', () => {
 			result => result.form.submissionsMetric
 		);
 
-		expect(
-			mapper.props(
-				{
-					data,
-					ownProps: {
-						rangeSelectors: {rangeKey: '0'}
-					}
-				},
-				{
-					filters: {
-						location: ['Brazil']
-					}
+		const propsResult = mapper.props(
+			{
+				data,
+				ownProps: {
+					rangeSelectors: {rangeKey: '0'}
 				}
-			)
-		).toMatchSnapshot();
-
-		expect(
-			mapper.options({
+			},
+			{
 				filters: {
 					location: ['Brazil']
-				},
-				rangeSelectors: {rangeKey: '0'},
-				router: {
-					params: {
-						assetId: ASSET_ID,
-						touchpoint: TOUCHPOINT
-					}
 				}
-			})
-		).toMatchSnapshot();
+			}
+		);
+
+		expect(propsResult).toMatchObject({
+			data: {
+				countries: [
+					{
+						group: 'Brazil',
+						id: 'Brazil',
+						name: 'Brazil',
+						total: 100,
+						value: '33.3'
+					},
+					{
+						group: 'Spain',
+						id: 'Spain',
+						name: 'Spain',
+						total: 100,
+						value: '33.3'
+					},
+					{
+						group: 'United States',
+						id: 'United States',
+						name: 'United States',
+						total: 100,
+						value: '33.3'
+					}
+				],
+				total: 3
+			},
+			error: null,
+			loading: false
+		});
+
+		const optionsResult = mapper.options({
+			filters: {
+				location: ['Brazil']
+			},
+			rangeSelectors: {rangeKey: '0'},
+			router: {
+				params: {
+					assetId: ASSET_ID,
+					touchpoint: TOUCHPOINT
+				}
+			}
+		});
+
+		expect(optionsResult).toEqual({
+			variables: {
+				assetId: 'formId',
+				devices: 'Any',
+				location: 'Any',
+				rangeEnd: null,
+				rangeKey: 0,
+				rangeStart: null,
+				title: '',
+				touchpoint: null
+			}
+		});
 	});
 });

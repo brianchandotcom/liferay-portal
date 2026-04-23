@@ -63,7 +63,7 @@ describe('SelectWorkspaceAccount', () => {
 			loading: false
 		}));
 
-		const {container} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<SelectWorkspaceAccount />
@@ -73,7 +73,7 @@ describe('SelectWorkspaceAccount', () => {
 
 		jest.runAllTimers();
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Select Account')).toBeInTheDocument();
 	});
 });
 

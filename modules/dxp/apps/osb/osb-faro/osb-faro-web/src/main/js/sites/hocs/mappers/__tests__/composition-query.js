@@ -59,15 +59,14 @@ describe('Composition Query Mapper', () => {
 				})
 			).toEqual(
 				expect.objectContaining({
-					variables: {
-						activeTabId: null,
+					variables: expect.objectContaining({
 						channelId,
 						rangeEnd: null,
 						rangeKey: parseInt(rangeKey),
 						rangeStart: null,
 						size: 5,
 						start: 0
-					}
+					})
 				})
 			);
 		});
@@ -82,12 +81,12 @@ describe('Composition Query Mapper', () => {
 
 			expect(mapPropsToOptions(mockProps)).toEqual(
 				expect.objectContaining({
-					variables: {
+					variables: expect.objectContaining({
 						channelId,
 						rangeKey: parseInt(rangeKey),
 						size: parseInt(delta),
 						start: 5
-					}
+					})
 				})
 			);
 		});

@@ -2,9 +2,9 @@ import client from 'shared/apollo/client';
 import DatePickerInput from '../DatePickerInput';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
-import {cleanup, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {ApolloProvider} from '@apollo/client';
+import {cleanup, render, screen} from '@testing-library/react';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 
@@ -41,13 +41,13 @@ describe('DatePickerInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		render(
 			<WrapperComponent>
 				<DatePickerInput onChange={jest.fn()} value='2020-12-12' />
 			</WrapperComponent>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(screen.getByTestId('date-input')).toBeInTheDocument();
 	});
 
 	it('should render w/ DateRangeInput', () => {

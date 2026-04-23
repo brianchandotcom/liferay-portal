@@ -1,8 +1,8 @@
 import Constants from 'shared/util/constants';
 import React from 'react';
+import {act, render} from '@testing-library/react';
 import {createOrderIOMap} from 'shared/util/pagination';
 import {Map, Set} from 'immutable';
-import {render} from '@testing-library/react';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 const {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA} = Constants.pagination;
@@ -21,7 +21,18 @@ describe('useStatefulPagination', () => {
 
 		render(<Component />);
 
-		expect(result).toMatchSnapshot();
+		expect(result).toMatchObject({
+			delta: DEFAULT_DELTA,
+			filterBy: expect.anything(),
+			page: DEFAULT_PAGE,
+			query: ''
+		});
+		expect(typeof result.onDeltaChange).toBe('function');
+		expect(typeof result.onPageChange).toBe('function');
+		expect(typeof result.onQueryChange).toBe('function');
+		expect(typeof result.onFilterByChange).toBe('function');
+		expect(typeof result.onOrderIOMapChange).toBe('function');
+		expect(typeof result.resetPage).toBe('function');
 	});
 
 	it('should set delta value on onDeltaChange and reset page', () => {
@@ -33,7 +44,7 @@ describe('useStatefulPagination', () => {
 			return null;
 		};
 
-		render(<Component />);
+		const {rerender} = render(<Component />);
 
 		const newDelta = 10;
 		const newPage = 2;
@@ -42,15 +53,19 @@ describe('useStatefulPagination', () => {
 
 		expect(result.delta).toBe(DEFAULT_DELTA);
 
-		result.onPageChange(newPage);
+		act(() => {
+			result.onPageChange(newPage);
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.page).toBe(newPage);
 
-		result.onDeltaChange(newDelta);
+		act(() => {
+			result.onDeltaChange(newDelta);
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.delta).toBe(newDelta);
 		expect(result.page).toBe(DEFAULT_PAGE);
@@ -65,7 +80,7 @@ describe('useStatefulPagination', () => {
 			return null;
 		};
 
-		render(<Component />);
+		const {rerender} = render(<Component />);
 
 		const newPage = 2;
 
@@ -73,15 +88,19 @@ describe('useStatefulPagination', () => {
 
 		expect(result.page).toBe(DEFAULT_PAGE);
 
-		result.onPageChange(newPage);
+		act(() => {
+			result.onPageChange(newPage);
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.page).toBe(newPage);
 
-		result.resetPage();
+		act(() => {
+			result.resetPage();
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.page).toBe(DEFAULT_PAGE);
 	});
@@ -97,7 +116,7 @@ describe('useStatefulPagination', () => {
 			return null;
 		};
 
-		render(<Component />);
+		const {rerender} = render(<Component />);
 
 		const newPage = 2;
 
@@ -105,15 +124,19 @@ describe('useStatefulPagination', () => {
 
 		expect(result.orderIOMap.size).toBe(1);
 
-		result.onPageChange(newPage);
+		act(() => {
+			result.onPageChange(newPage);
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.page).toBe(newPage);
 
-		result.onOrderIOMapChange(createOrderIOMap('dateModified', 'ASC'));
+		act(() => {
+			result.onOrderIOMapChange(createOrderIOMap('dateModified', 'ASC'));
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.orderIOMap.size).toBe(1);
 		expect(result.page).toBe(DEFAULT_PAGE);
@@ -128,7 +151,7 @@ describe('useStatefulPagination', () => {
 			return null;
 		};
 
-		render(<Component />);
+		const {rerender} = render(<Component />);
 
 		const newQuery = 'test';
 		const newPage = 2;
@@ -137,15 +160,19 @@ describe('useStatefulPagination', () => {
 
 		expect(result.query).toBe('');
 
-		result.onPageChange(newPage);
+		act(() => {
+			result.onPageChange(newPage);
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.page).toBe(newPage);
 
-		result.onQueryChange(newQuery);
+		act(() => {
+			result.onQueryChange(newQuery);
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.query).toBe(newQuery);
 		expect(result.page).toBe(DEFAULT_PAGE);
@@ -160,7 +187,7 @@ describe('useStatefulPagination', () => {
 			return null;
 		};
 
-		render(<Component />);
+		const {rerender} = render(<Component />);
 
 		const newPage = 2;
 
@@ -168,19 +195,23 @@ describe('useStatefulPagination', () => {
 
 		expect(result.filterBy.size).toBe(0);
 
-		result.onPageChange(newPage);
+		act(() => {
+			result.onPageChange(newPage);
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.page).toBe(newPage);
 
-		result.onFilterByChange(
-			Map({
-				biz: Set(['buz'])
-			})
-		);
+		act(() => {
+			result.onFilterByChange(
+				Map({
+					biz: Set(['buz'])
+				})
+			);
+		});
 
-		jest.runAllTimers();
+		rerender(<Component />);
 
 		expect(result.filterBy.size).toBe(1);
 		expect(result.page).toBe(DEFAULT_PAGE);

@@ -1,90 +1,101 @@
 import * as data from 'test/data';
-import client from 'shared/apollo/client';
 import EventDropdown from '../EventDropdown';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
 import {DISPLAY_NAME} from 'shared/util/pagination';
-import {fireEvent, render, waitForElement} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {fireEvent, render, waitFor} from '@testing-library/react';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockEventDefinitionsReq} from 'test/graphql-data';
 import {OrderByDirections} from 'shared/util/constants';
 import {Provider} from 'react-redux';
 import {range} from 'lodash';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('EventDropdown', () => {
-	const WrappedComponent = props => (
-		<ApolloProvider client={client}>
-			<Provider store={mockStore()}>
+	const defaultMocks = [
+		mockEventDefinitionsReq(
+			range(10).map(i =>
+				data.mockEventDefinition(i, {
+					__typename: 'EventDefinition'
+				})
+			),
+			{
+				eventType: 'ALL',
+				hidden: false,
+				keyword: '',
+				page: 0,
+				size: 200,
+				sort: {
+					column: DISPLAY_NAME,
+					type: OrderByDirections.Ascending
+				}
+			}
+		)
+	];
+
+	const WrappedComponent = ({mocks = defaultMocks, ...props}) => (
+		<Provider store={mockStore()}>
+			<MemoryRouter>
 				<MockedProvider
-					mocks={[
-						mockEventDefinitionsReq(
-							range(10).map(i =>
-								data.mockEventDefinition(i, {
-									__typename: 'EventDefinition'
-								})
-							),
-							{
-								eventType: 'ALL',
-								hidden: false,
-								keyword: '',
-								size: 200,
-								sort: {
-									column: DISPLAY_NAME,
-									type: OrderByDirections.Ascending
-								}
-							}
-						)
-					]}
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+					mocks={mocks}
 				>
 					<EventDropdown
+						onEventChange={jest.fn()}
 						trigger={
 							<button data-testid='target'>{'click me'}</button>
 						}
 						{...props}
 					/>
 				</MockedProvider>
-			</Provider>
-		</ApolloProvider>
+			</MemoryRouter>
+		</Provider>
 	);
 
 	it('render', async () => {
-		const {container, getByTestId} = render(<WrappedComponent />);
+		const {getByTestId} = render(<WrappedComponent />);
 
 		fireEvent.click(getByTestId('target'));
 
-		jest.runAllTimers();
+		await waitFor(() =>
+			expect(document.body.querySelector('.dropdown-menu')).toBeTruthy()
+		);
 
-		expect(container).toMatchSnapshot();
+		await waitForLoadingToBeRemoved(document.body);
 
-		await waitForElement(() => container.querySelector('.dropdown'));
+		expect(document.body.querySelector('.dropdown-menu')).toMatchSnapshot();
 
-		const dropdownMenu = document.body.getElementsByClassName(
-			'base-dropdown-menu-root'
-		)[0];
-
-		expect(dropdownMenu).toMatchSnapshot();
+		const dropdownMenu = document.body.querySelector(
+			'.base-dropdown-menu-root'
+		);
 
 		expect(
-			dropdownMenu.getElementsByClassName('dropdown-item active')
-		).toBeEmpty();
+			dropdownMenu.querySelectorAll('.dropdown-item.active')
+		).toHaveLength(0);
 	});
 
 	it('render with selected event', async () => {
-		const {container, getByTestId} = render(
-			<WrappedComponent eventId='3' />
-		);
+		const {getByTestId} = render(<WrappedComponent eventId='3' />);
 
 		fireEvent.click(getByTestId('target'));
 
-		jest.runAllTimers();
+		await waitFor(() =>
+			expect(document.body.querySelector('.dropdown-menu')).toBeTruthy()
+		);
 
-		await waitForElement(() => container.querySelector('.dropdown'));
+		await waitForLoadingToBeRemoved(document.body);
 
 		expect(
-			document.body.getElementsByClassName('dropdown-item active').length
-		).toBe(1);
+			document.body.querySelectorAll('.dropdown-item.active')
+		).toHaveLength(1);
 	});
 });

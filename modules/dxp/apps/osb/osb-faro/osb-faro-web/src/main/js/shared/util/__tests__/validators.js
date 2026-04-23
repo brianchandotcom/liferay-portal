@@ -29,12 +29,12 @@ describe('toPromise', () => {
 		return expect(toPromise('')).resolves.toEqual('');
 	});
 
-	it('should reject if the result is not valid', () => {
+	it('should resolve with the error if the result is not valid', () => {
 		expect.assertions(1);
 
 		const result = 'errors';
 
-		return expect(toPromise(result)).rejects.toEqual(result);
+		return expect(toPromise(result)).resolves.toEqual(result);
 	});
 });
 
@@ -62,7 +62,9 @@ describe('validateMinDuration', () => {
 
 		const response = validateMinDuration('00:00:01')('00:00:00');
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual(
+			'Must be greater than 00:00:00.'
+		);
 	});
 
 	it('should validate min duration as valid', () => {
@@ -80,7 +82,7 @@ describe('validateMaxLength', () => {
 
 		const response = validateMaxLength(2)('aaa');
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual('Exceeds maximum length.');
 	});
 
 	it('should validate max length as valid', () => {
@@ -98,7 +100,9 @@ describe('validateMinLength', () => {
 
 		const response = validateMinLength(2)('a');
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual(
+			'Does not meet minimum length required.'
+		);
 	});
 
 	it('should validate min length as valid', () => {
@@ -116,7 +120,7 @@ describe('validateGreaterThanZero', () => {
 
 		const response = validateGreaterThanZero(0);
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual('Must be greater than 0.');
 	});
 
 	it('should validate value as valid', () => {
@@ -134,7 +138,7 @@ describe('validateIsInteger', () => {
 
 		const response = validateIsInteger(1.001);
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual('Must be an integer.');
 	});
 
 	it('should validate value as valid', () => {
@@ -152,7 +156,7 @@ describe('validateMinValue', () => {
 
 		const response = validateMinValue(30)(10);
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual('Must be greater than 29.');
 	});
 
 	it('should validate min value as valid', () => {
@@ -172,7 +176,7 @@ describe('validatePattern', () => {
 
 		const response = validatePattern(/^\d+$/, message)('a');
 
-		return expect(response).rejects.toBe(message);
+		return expect(response).resolves.toBe(message);
 	});
 
 	it('should validate a regex pattern as valid', () => {
@@ -190,7 +194,9 @@ describe('validateProtocol', () => {
 
 		const response = validateProtocol('liferay.com');
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual(
+			'Your URL is missing the protocol. Please include "http://" or "https://".'
+		);
 	});
 
 	it('should validate protocol as valid', () => {
@@ -208,7 +214,7 @@ describe('validateRequired', () => {
 
 		const response = validateRequired('');
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual('Required');
 	});
 
 	it('should validate required as valid', () => {
@@ -216,7 +222,7 @@ describe('validateRequired', () => {
 
 		const response = validateRequired('test');
 
-		return expect(response).resolves.toMatchSnapshot();
+		return expect(response).resolves.toBe('');
 	});
 
 	it('should validate required as valid when validating array with value', () => {
@@ -224,7 +230,7 @@ describe('validateRequired', () => {
 
 		const response = validateRequired(['test']);
 
-		return expect(response).resolves.toMatchSnapshot();
+		return expect(response).resolves.toBe('');
 	});
 
 	it('should validate required as not valid if the value is a string with only spaces', () => {
@@ -232,6 +238,6 @@ describe('validateRequired', () => {
 
 		const response = validateRequired('   ');
 
-		return expect(response).rejects.toMatchSnapshot();
+		return expect(response).resolves.toEqual('Required');
 	});
 });

@@ -239,16 +239,16 @@ exports[`DataTransformation should render 1`] = `
 `;
 
 exports[`processFieldMappings should return fieldMappings 1`] = `
-Array [
-  Object {
+[
+  {
     "dataSourceFieldName": "foo",
     "name": undefined,
   },
-  Object {
+  {
     "dataSourceFieldName": "bar",
     "name": undefined,
   },
-  Object {
+  {
     "dataSourceFieldName": "baz",
     "name": undefined,
   },

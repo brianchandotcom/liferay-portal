@@ -25,7 +25,7 @@ describe('fontMapper', () => {
 
 describe('JSPDFExtension', () => {
 	it('should create a new instance of JSPDFExtension', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -39,7 +39,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should add text to the textList', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -60,7 +60,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should add float text to the floatTextList', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -83,7 +83,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should truncate text if it is too long', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -101,7 +101,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should get the name of the PDF file', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -116,7 +116,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should get the X position of the text', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -131,7 +131,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should set the extra font', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -147,7 +147,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should set the font', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -172,7 +172,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should get the data for the PDF', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -195,7 +195,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should render the containers', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({
@@ -212,7 +212,7 @@ describe('JSPDFExtension', () => {
 	});
 
 	it('should render the PDF', () => {
-		const containers = [];
+		const containers: any[] = [];
 		const fontFamily = 'Helvetica';
 		const name = 'test';
 		const jsPDFExtension = new JSPDFExtension({

@@ -112,7 +112,7 @@ exports[`RequestLog should render 1`] = `
               </a>
             </li>
             <li
-              class="item"
+              class="item active"
             >
               <a
                 class="button-root"
@@ -451,10 +451,25 @@ exports[`RequestLog should render 1`] = `
                   </div>
                 </nav>
               </div>
-              <span
-                aria-hidden="true"
-                class="loading-root spacer loading-animation"
-              />
+              <div
+                class="error-display-root flex-grow-1 error-spacer no-results-root flex-grow-1"
+              >
+                <div
+                  class="no-results-content"
+                >
+                  <div
+                    class="h4 no-results-title"
+                  >
+                    An unexpected error occurred.
+                  </div>
+                  <button
+                    class="button-root btn btn-secondary"
+                    type="button"
+                  >
+                    Reload
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import mockStore from 'test/mock-store';
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {
 	Checkbox,
 	formattedContainers,
@@ -14,7 +14,7 @@ import {createMemoryHistory} from 'history';
 import {CSVType, useDownloadCSV} from '../utils';
 import {DownloadReportButton} from '../DownloadReportButton';
 import {DownloadReportModal, ReportType} from '../DownloadReportModal';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq, mockTimeRangeReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
@@ -86,7 +86,13 @@ const WrapperCSVComponent: React.FC<IWrapperCSVComponentProps> = ({
 	);
 };
 
-const WrapperPDFomponent = ({children, ...otherProps}) => (
+const WrapperPDFomponent = ({
+	children,
+	...otherProps
+}: {
+	children?: React.ReactNode;
+	[key: string]: any;
+}) => (
 	<WrapperComponent
 		alertMessage={
 			sub(
@@ -109,8 +115,9 @@ const WrapperPDFomponent = ({children, ...otherProps}) => (
 
 interface IWrapperComponent {
 	alertMessage: string;
+	children?: React.ReactNode;
 	infoMessage: string;
-	onSubmit: (rangeSelectors: RangeSelectors) => void;
+	onSubmit: (rangeSelectors?: RangeSelectors) => void;
 	type: ReportType;
 }
 

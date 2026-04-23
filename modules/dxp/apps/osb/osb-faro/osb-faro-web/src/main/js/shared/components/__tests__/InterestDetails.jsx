@@ -1,10 +1,10 @@
 import client from 'shared/apollo/client';
 import InterestDetails from '../InterestDetails';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {ApolloProvider} from '@apollo/client';
 import {createMemoryHistory} from 'history';
 import {MemoryRouter, Route, Router} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockPreferenceReq,
 	mockTimeRangeReq,
@@ -87,10 +87,10 @@ const DefaultComponent = () => {
 
 describe('InterestDetails', () => {
 	it('renders', async () => {
-		const {container} = render(<DefaultComponent />);
+		const {container, getByText} = render(<DefaultComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('"test"')).toBeInTheDocument();
 	});
 });

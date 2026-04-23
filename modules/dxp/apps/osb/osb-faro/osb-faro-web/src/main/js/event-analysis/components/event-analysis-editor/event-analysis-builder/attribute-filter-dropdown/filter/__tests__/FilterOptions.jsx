@@ -1,28 +1,31 @@
-import client from 'shared/apollo/client';
 import FilterOptions from '../index';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {withAttributesProvider} from '../../../../context/attributes';
 
 jest.unmock('react-dom');
 
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		channelId: '456'
-	})
-}));
+const WrappedFilterOptions = withAttributesProvider(FilterOptions);
 
-describe('FilterOptions', () => {
-	it('should render', () => {
-		const WrappedFilterOptions = withAttributesProvider(FilterOptions);
-
-		const {container} = render(
-			<ApolloProvider client={client}>
-				<Provider store={mockStore()}>
+const DefaultComponent = props => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={['/workspace/123/456/event-analysis/789']}
+		>
+			<Route path='/workspace/:groupId/:channelId/event-analysis/:id'>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+				>
 					<WrappedFilterOptions
 						attribute={{
 							dataType: 'STRING',
@@ -33,10 +36,17 @@ describe('FilterOptions', () => {
 						onActiveChange={jest.fn()}
 						onAttributeChange={jest.fn()}
 						onEditClick={jest.fn()}
+						{...props}
 					/>
-				</Provider>
-			</ApolloProvider>
-		);
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
+
+describe('FilterOptions', () => {
+	it('should render', () => {
+		const {container} = render(<DefaultComponent />);
 
 		expect(container).toMatchSnapshot();
 	});

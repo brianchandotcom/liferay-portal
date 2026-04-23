@@ -1,19 +1,17 @@
 import AcquisitionsCard from '../AcquisitionsCard';
 import BasePage from 'shared/components/base-page';
-import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
 import {CompositionTypes, RangeKeyTimeRanges} from 'shared/util/constants';
+import {MemoryRouter} from 'react-router-dom';
 import {
 	mockAcquisitionsReq,
 	mockPreferenceReq,
 	mockTimeRangeReq
 } from 'test/graphql-data';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router-dom';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -33,24 +31,23 @@ const MOCK_CONTEXT = {
 
 const DefaultComponent = () => (
 	<Provider store={mockStore()}>
-		<ApolloProvider client={client}>
-			<BasePage.Context.Provider value={MOCK_CONTEXT}>
-				<StaticRouter>
-					<MockedProvider
-						mocks={[
-							mockTimeRangeReq(),
-							mockPreferenceReq(),
-							mockAcquisitionsReq()
-						]}
-					>
-						<AcquisitionsCard
-							compositionBagName={CompositionTypes.Acquisitions}
-							label='card label'
-						/>
-					</MockedProvider>
-				</StaticRouter>
-			</BasePage.Context.Provider>
-		</ApolloProvider>
+		<BasePage.Context.Provider value={MOCK_CONTEXT}>
+			<MemoryRouter>
+				<MockedProvider
+					addTypename={false}
+					mocks={[
+						mockTimeRangeReq(),
+						mockPreferenceReq(),
+						mockAcquisitionsReq()
+					]}
+				>
+					<AcquisitionsCard
+						compositionBagName={CompositionTypes.Acquisitions}
+						label='card label'
+					/>
+				</MockedProvider>
+			</MemoryRouter>
+		</BasePage.Context.Provider>
 	</Provider>
 );
 

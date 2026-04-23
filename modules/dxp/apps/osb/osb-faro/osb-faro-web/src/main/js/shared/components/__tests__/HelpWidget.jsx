@@ -8,12 +8,13 @@ jest.unmock('react-dom');
 
 describe('HelpWidget', () => {
 	it('should render', () => {
-		const {container} = render(
+		const {getByRole} = render(
 			<Provider store={mockStore()}>
 				<HelpWidget />
 			</Provider>
 		);
-		expect(container).toMatchSnapshot();
+
+		expect(getByRole('button', {name: 'Help'})).toBeInTheDocument();
 	});
 
 	it('should render a dropdown', () => {
@@ -22,6 +23,7 @@ describe('HelpWidget', () => {
 				<HelpWidget />
 			</Provider>
 		);
+
 		expect(getByText('Report an Issue')).toBeTruthy();
 	});
 });

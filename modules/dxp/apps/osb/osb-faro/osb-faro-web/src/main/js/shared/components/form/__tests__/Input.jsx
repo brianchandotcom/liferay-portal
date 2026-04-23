@@ -1,37 +1,116 @@
-import Input from '../Input';
-import React from 'react';
-import {mockForm} from 'test/data';
-import {render} from '@testing-library/react';
-
 jest.unmock('react-dom');
 
+import Input from '../Input';
+import mockStore from 'test/mock-store';
+import React from 'react';
+import {Field, Form, Formik} from 'formik';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route, Switch} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
+import {Provider} from 'react-redux';
+import {render} from '@testing-library/react';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
+
 const DefaultComponent = props => (
-	<Input
-		field={{name: 'foo'}}
-		form={mockForm()}
-		label='Input label'
-		mask={[]}
-		{...props}
-	/>
+	<Formik initialValues={{foo: ''}} onSubmit={jest.fn()}>
+		<Form>
+			<Field
+				component={Input}
+				label='Input label'
+				mask={[]}
+				name='foo'
+				{...props}
+			/>
+		</Form>
+	</Formik>
 );
 
 describe('Input', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
-			<Input field={{name: 'foo'}} form={mockForm()} inline />
+			<Provider store={mockStore()}>
+				<MemoryRouter>
+					<Switch>
+						<Route path='*'>
+							<MockedProvider
+								cache={
+									new InMemoryCache({
+										addTypename: false
+									})
+								}
+							>
+								<Formik
+									initialValues={{foo: ''}}
+									onSubmit={jest.fn()}
+								>
+									<Form>
+										<Field
+											component={Input}
+											inline
+											name='foo'
+										/>
+									</Form>
+								</Formik>
+							</MockedProvider>
+						</Route>
+					</Switch>
+				</MemoryRouter>
+			</Provider>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render a labelled input', () => {
-		const {queryByText} = render(<DefaultComponent />);
+	it('should render a labelled input', async () => {
+		const {container, queryByText} = render(
+			<Provider store={mockStore()}>
+				<MemoryRouter>
+					<Switch>
+						<Route path='*'>
+							<MockedProvider
+								cache={
+									new InMemoryCache({
+										addTypename: false
+									})
+								}
+							>
+								<DefaultComponent />
+							</MockedProvider>
+						</Route>
+					</Switch>
+				</MemoryRouter>
+			</Provider>
+		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('Input label')).toBeTruthy();
 	});
 
-	it('should render a required input', () => {
-		const {queryByText} = render(<DefaultComponent required />);
+	it('should render a required input', async () => {
+		const {container, queryByText} = render(
+			<Provider store={mockStore()}>
+				<MemoryRouter>
+					<Switch>
+						<Route path='*'>
+							<MockedProvider
+								cache={
+									new InMemoryCache({
+										addTypename: false
+									})
+								}
+							>
+								<DefaultComponent required />
+							</MockedProvider>
+						</Route>
+					</Switch>
+				</MemoryRouter>
+			</Provider>
+		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('Input label').closest('label')).toHaveClass(
 			'required'

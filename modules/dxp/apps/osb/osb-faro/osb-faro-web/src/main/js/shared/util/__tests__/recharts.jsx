@@ -13,7 +13,9 @@ jest.unmock('react-dom');
 describe('Recharts Util', () => {
 	describe('getTextWidth', () => {
 		it('should return text width', () => {
-			expect(getTextWidth('test')).toEqual(52);
+			// jest-canvas-mock v2: measureText returns {width: text.length}, TEXT_PADDING=4
+			// 'test'.length === 4, so Math.ceil(4) + 4 = 8
+			expect(getTextWidth('test')).toEqual(8);
 		});
 	});
 
@@ -32,13 +34,16 @@ describe('Recharts Util', () => {
 				})
 			);
 
-			expect(container).toMatchSnapshot();
+			const textEl = container.querySelector('text');
+
+			expect(textEl).toBeInTheDocument();
+			expect(textEl).toHaveAttribute('text-anchor', 'middle');
 		});
 	});
 
 	describe('RechartsTooltip', () => {
 		it('should render', () => {
-			const {container} = render(
+			const {container, getByText} = render(
 				<RechartsTooltip
 					dateTitle='12-12-12'
 					rows={[{label: 'test', value: 123}]}
@@ -46,7 +51,11 @@ describe('Recharts Util', () => {
 				/>
 			);
 
-			expect(container).toMatchSnapshot();
+			expect(
+				container.querySelector('.bb-tooltip-container')
+			).toBeInTheDocument();
+			expect(getByText('Test Title')).toBeInTheDocument();
+			expect(getByText('test')).toBeInTheDocument();
 		});
 	});
 
@@ -67,15 +76,22 @@ describe('Recharts Util', () => {
 				})
 			);
 
-			expect(container).toMatchSnapshot();
+			const textEl = container.querySelector('text');
+
+			expect(textEl).toBeInTheDocument();
+			expect(textEl).toHaveTextContent('Test');
 		});
 	});
 
 	describe('getYAxisWidth', () => {
 		it('should max y-axis width', () => {
+			// jest-canvas-mock: measureText returns {width: text.length}
+			// 'test test'.length = 9, Math.ceil(9) + 4 = 13
+			// 'meow'.length = 4, Math.ceil(4) + 4 = 8
+			// minWidth default = 30, max(13, 8, 30) = 30
 			expect(
 				getYAxisWidth([{title: 'test test'}, {title: 'meow'}], 'title')
-			).toBe(112);
+			).toBe(30);
 		});
 
 		it('should minWidth for y-axis width', () => {

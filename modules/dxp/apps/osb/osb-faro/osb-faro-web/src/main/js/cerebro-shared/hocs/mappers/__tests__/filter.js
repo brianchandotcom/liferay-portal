@@ -181,6 +181,71 @@ describe('Shared HOCs Mappers - Filter', () => {
 	it('should map filter information', () => {
 		const mapper = getFiltersMapper(result => result.forms.submissions);
 
-		expect(mapper.props(data)).toMatchSnapshot();
+		const result = mapper.props(data);
+
+		expect(result).toMatchObject({
+			error: null,
+			items: [
+				{
+					hasSearch: false,
+					items: [
+						{
+							category: 'devices',
+							checked: false,
+							inputType: 'radio',
+							label: 'Desktop',
+							value: '8'
+						},
+						{
+							category: 'devices',
+							checked: false,
+							inputType: 'radio',
+							label: 'SmartPhone',
+							value: '5'
+						},
+						{
+							category: 'devices',
+							checked: false,
+							inputType: 'radio',
+							label: 'Tablet',
+							value: '2'
+						}
+					],
+					label: 'Devices',
+					name: 'Devices',
+					value: '3'
+				},
+				{
+					hasSearch: false,
+					items: [
+						{
+							category: 'location',
+							checked: false,
+							inputType: 'radio',
+							label: 'Brazil',
+							value: '5'
+						},
+						{
+							category: 'location',
+							checked: false,
+							inputType: 'radio',
+							label: 'Spain',
+							value: '6'
+						},
+						{
+							category: 'location',
+							checked: false,
+							inputType: 'radio',
+							label: 'United States',
+							value: '6'
+						}
+					],
+					label: 'Location',
+					name: 'Location',
+					value: '3'
+				}
+			],
+			loading: false
+		});
 	});
 });

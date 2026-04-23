@@ -1,22 +1,16 @@
-import * as RequestList from '../RequestList';
 import mockStore from 'test/mock-store';
-import moment from 'moment';
 import React from 'react';
+import RequestList from '../RequestList';
 import RequestListQuery from '../../queries/RequestListQuery';
 import {cleanup, render} from '@testing-library/react';
 import {GDPRRequestStatuses, GDPRRequestTypes} from 'shared/util/constants';
-import {Map, Set} from 'immutable';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {mockDataControlTaskBag} from 'test/graphql-data';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {Routes} from 'shared/util/router';
-import {
-	selectAllAndToggle,
-	selectFilterDropdownItem,
-	waitForLoading
-} from 'test/helpers';
+import {User} from 'shared/util/records';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
+
+jest.unmock('react-dom');
 
 const mockItems = [
 	{
@@ -59,7 +53,7 @@ const mockItems = [
 		batchId: '5',
 		completeDate: null,
 		createDate: '2019-09-09T00:00',
-		emailAddresses: [']lillie.foster@example.com'],
+		emailAddresses: ['lillie.foster@example.com'],
 		id: '50',
 		status: GDPRRequestStatuses.Error,
 		type: GDPRRequestTypes.Access
@@ -84,8 +78,8 @@ const mockItems = [
 	}
 ];
 
-export function mockRequestListReq() {
-	return {
+const mocks = [
+	{
 		request: {
 			query: RequestListQuery,
 			variables: {
@@ -96,152 +90,106 @@ export function mockRequestListReq() {
 			}
 		},
 		result: {
-			data: mockDataControlTaskBag(mockItems)
+			data: {
+				dataControlTasks: {
+					__typename: 'DataControlTaskBag',
+					dataControlTasks: mockItems,
+					total: 7
+				}
+			}
 		}
-	};
-}
+	}
+];
 
-jest.unmock('react-dom');
-
-const defaultProps = {
-	filterBy: new Map({types: Set()}),
-	router: {params: {groupId: '23'}, query: {delta: '10', page: '1'}}
-};
-
-const DefaultComponent = props => (
-	<MockedProvider mocks={[mockRequestListReq()]}>
-		<Provider store={mockStore()}>
-			<MemoryRouter
-				initialEntries={[
-					'/workspace/23/settings/data-privacy/request-log/?delta=10'
-				]}
-			>
-				<Route path={Routes.SETTINGS_DATA_PRIVACY_REQUEST_LOG}>
-					<RequestList.default
-						currentUser={{
-							isAdmin: () => true
-						}}
-						{...defaultProps}
-						{...props}
-					/>
-				</Route>
-			</MemoryRouter>
-		</Provider>
-	</MockedProvider>
+const Wrapper = ({children, store = mockStore()}) => (
+	<Provider store={store}>
+		<MemoryRouter
+			initialEntries={[
+				'/workspace/23/settings/data-privacy/request-log/?delta=10'
+			]}
+		>
+			<Route path='/workspace/:groupId/settings/data-privacy/request-log/'>
+				<MockedProvider addTypename={false} mocks={mocks}>
+					{children}
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
 );
 
 describe('RequestList', () => {
-	beforeAll(() => {
-		RequestList.getTodaysDate = jest.fn(() =>
-			moment(new Date('December 09, 2019'))
-		);
-	});
-
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(
+			<Wrapper>
+				<RequestList
+					currentUser={new User({roleName: 'Site Owner'})}
+					timeZoneId='UTC'
+				/>
+			</Wrapper>
+		);
 
-		await waitForLoading(container);
-
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render a request row as checkable with a download button if the status is "DONE"', async () => {
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(
+			<Wrapper>
+				<RequestList
+					currentUser={new User({roleName: 'Site Owner'})}
+					timeZoneId='UTC'
+				/>
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
-		jest.runAllTimers();
+		const row4 = container.querySelector('tbody tr:nth-child(4)');
 
-		const rowElement = container.querySelector(
-			'.table > tbody > tr:nth-of-type(4)'
+		expect(row4.querySelector('input[type="checkbox"]')).not.toBeDisabled();
+		expect(row4.querySelector('.btn-secondary')).toHaveTextContent(
+			'Download'
 		);
-
-		expect(
-			rowElement.querySelector('input[type=checkbox]').disabled
-		).toBeFalse();
-
-		expect(
-			rowElement.querySelector('.row-inline-actions .button-root')
-		).toHaveTextContent('Download');
 	});
 
 	it('should render a request row as disabled with no download button if the status is not "DONE"', async () => {
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(
+			<Wrapper>
+				<RequestList
+					currentUser={new User({roleName: 'Site Owner'})}
+					timeZoneId='UTC'
+				/>
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
-		jest.runAllTimers();
+		// Row 1 status is Running
+		const row1 = container.querySelector('tbody tr:nth-child(1)');
 
-		const rowElement = container.querySelector(
-			'.table > tbody > tr:nth-of-type(1)'
-		);
-
-		expect(
-			rowElement.querySelector('input[type=checkbox]').disabled
-		).toBeTrue();
-
-		expect(
-			rowElement.querySelector('.row-inline-actions button')
-		).toBeNull();
+		expect(row1.querySelector('input[type="checkbox"]')).toBeDisabled();
+		expect(row1.querySelector('.btn-secondary')).toBeNull();
 	});
 
 	it('should render a request row as disabled with a "download expired" message if the request status is EXPIRED', async () => {
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(
+			<Wrapper>
+				<RequestList
+					currentUser={new User({roleName: 'Site Owner'})}
+					timeZoneId='UTC'
+				/>
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
-		jest.runAllTimers();
+		// Row 3 status is Expired
+		const row3 = container.querySelector('tbody tr:nth-child(3)');
 
-		const rowElement = container.querySelector(
-			'.table > tbody > tr:nth-of-type(3)'
-		);
-
-		expect(
-			rowElement.querySelector('input[type=checkbox]').disabled
-		).toBeTrue();
-
-		expect(
-			rowElement.querySelector('.row-inline-actions')
-		).toHaveTextContent('Download Expired');
-	});
-
-	xit('should filter selected results by request type', async () => {
-		const {container} = render(<DefaultComponent />);
-
-		await waitForLoading(container);
-
-		jest.runAllTimers();
-
-		selectAllAndToggle(container);
-
-		selectFilterDropdownItem(container, 'Access');
-
-		const tableRows = container.querySelectorAll('tbody > tr');
-
-		expect(tableRows.length).toBe(1);
-
-		expect(tableRows[0]).toHaveTextContent('scott.gilbert@example.com');
-	});
-
-	xit('should filter selected results by time period', async () => {
-		const {container} = render(<DefaultComponent />);
-
-		await waitForLoading(container);
-
-		jest.runAllTimers();
-
-		selectAllAndToggle(container);
-
-		selectFilterDropdownItem(container, 'Last 7 days');
-
-		const tableRows = container.querySelectorAll('tbody > tr');
-
-		expect(tableRows.length).toBe(1);
-
-		expect(tableRows[0]).toHaveTextContent('scott.gilbert@example.com');
+		expect(row3.querySelector('input[type="checkbox"]')).toBeDisabled();
+		expect(row3).toHaveTextContent('Download Expired');
 	});
 });

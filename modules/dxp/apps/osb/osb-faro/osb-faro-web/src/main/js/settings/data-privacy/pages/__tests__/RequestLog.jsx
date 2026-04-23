@@ -1,11 +1,12 @@
-import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import RequestLog from '../RequestLog';
-import {ApolloProvider} from '@apollo/react-components';
 import {cleanup, render} from '@testing-library/react';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router-dom';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -15,30 +16,37 @@ jest.mock('shared/hooks/useTimeZone', () => ({
 	})
 }));
 
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		groupId: '23'
-	})
-}));
+const WrappedComponent = props => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={['/workspace/23/settings/data-privacy/request-log']}
+		>
+			<Route path='/workspace/:groupId/settings/data-privacy/request-log'>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+				>
+					<RequestLog
+						router={{params: {groupId: '23'}, query: {}}}
+						{...props}
+					/>
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
 
 describe('RequestLog', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
-		const {container} = render(
-			<ApolloProvider client={client}>
-				<Provider store={mockStore()}>
-					<StaticRouter>
-						<RequestLog
-							router={{params: {groupId: '23'}, query: {}}}
-						/>
-					</StaticRouter>
-				</Provider>
-			</ApolloProvider>
-		);
+	it('should render', async () => {
+		const {container} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

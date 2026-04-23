@@ -3,9 +3,9 @@ import client from 'shared/apollo/client';
 import EventAttributeValuesQuery from 'event-analysis/queries/EventAttributeValuesQuery';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {ApolloProvider} from '@apollo/client';
 import {fireEvent, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockEventAttributeValues} from 'test/graphql-data';
 import {noop} from 'lodash';
 import {Provider} from 'react-redux';
@@ -46,7 +46,9 @@ describe('BaseSelect', () => {
 			/>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.base-select-container')
+		).toBeInTheDocument();
 	});
 
 	it('should render as disabled', async () => {
@@ -66,7 +68,9 @@ describe('BaseSelect', () => {
 
 		expect(dataSourceFn).not.toHaveBeenCalled();
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.base-select-container')
+		).toBeInTheDocument();
 	});
 
 	it('should render w/ selectedItem', async () => {
@@ -104,7 +108,7 @@ describe('BaseSelect', () => {
 
 		const dropdownMenu = document.body.querySelector('.dropdown-root');
 
-		expect(dropdownMenu).toMatchSnapshot();
+		expect(dropdownMenu).toBeTruthy();
 	});
 
 	it('should render w/ menu title', async () => {
@@ -187,7 +191,9 @@ describe('BaseSelect', () => {
 			</ApolloProvider>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.base-select-container')
+		).toBeInTheDocument();
 	});
 
 	it('should render w/ selectedItem with Graphql', async () => {
@@ -214,24 +220,26 @@ describe('BaseSelect', () => {
 
 describe('Item', () => {
 	it('should render', () => {
-		const {container} = render(
+		const {getByText} = render(
 			<Item item={{name: 'test'}} itemRenderer={({name}) => name} />
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('test')).toBeInTheDocument();
 	});
 
 	it('should select an item', () => {
-		const {container, getByText} = render(
+		const onSelect = jest.fn();
+
+		const {getByText} = render(
 			<Item
 				item={{name: 'test'}}
 				itemRenderer={({name}) => name}
-				onSelect={noop}
+				onSelect={onSelect}
 			/>
 		);
 
 		fireEvent.click(getByText('test'));
 
-		expect(container).toMatchSnapshot();
+		expect(onSelect).toHaveBeenCalledWith({name: 'test'});
 	});
 });

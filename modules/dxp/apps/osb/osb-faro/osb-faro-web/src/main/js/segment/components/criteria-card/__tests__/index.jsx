@@ -40,7 +40,7 @@ describe('CriteriaCard', () => {
 		const {container} = render(
 			<ReferencedObjectsProvider segment={mockSegment}>
 				<CriteriaCard
-					criteriaString={"demographics/firstName/value eq 'Test'"}
+					criteriaString="demographics/firstName/value eq 'Test'"
 					segment={mockSegment}
 				/>
 			</ReferencedObjectsProvider>
@@ -53,7 +53,7 @@ describe('CriteriaCard', () => {
 		const {queryByText} = render(
 			<ReferencedObjectsProvider segment={mockSegment}>
 				<CriteriaCard
-					criteriaString={"demographics/name/value eq 'Test'"}
+					criteriaString="demographics/name/value eq 'Test'"
 					includeAnonymousUsers
 					segment={mockSegment}
 				/>

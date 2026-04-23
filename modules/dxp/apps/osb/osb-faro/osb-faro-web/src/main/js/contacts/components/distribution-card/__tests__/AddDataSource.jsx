@@ -9,12 +9,17 @@ describe('DistributionCard AddDataSource', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		const {container} = render(
+		const {getByText} = render(
 			<BrowserRouter>
 				<AddDataSource groupId='123' />
 			</BrowserRouter>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			getByText(Liferay.Language.get('add-data-source'))
+		).toBeInTheDocument();
+		expect(
+			getByText(Liferay.Language.get('distribution'))
+		).toBeInTheDocument();
 	});
 });

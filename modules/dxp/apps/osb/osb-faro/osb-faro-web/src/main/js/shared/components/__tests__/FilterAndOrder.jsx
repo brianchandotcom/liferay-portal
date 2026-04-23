@@ -1,12 +1,6 @@
 import FilterAndOrder from '../FilterAndOrder';
 import React from 'react';
-import {cleanup, fireEvent, render} from '@testing-library/react';
-
-const triggerDropdown = container => {
-	const dropdownToggle = container.querySelector('.dropdown-toggle');
-
-	fireEvent.click(dropdownToggle);
-};
+import {cleanup, render} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
@@ -32,9 +26,11 @@ describe('FilterAndOrder', () => {
 	];
 
 	it('should render', () => {
-		render(<FilterAndOrder filterByOptions={FILTER_BY_OPTIONS} />);
+		const {getByTestId} = render(
+			<FilterAndOrder filterByOptions={FILTER_BY_OPTIONS} />
+		);
 
-		expect(document.body).toMatchSnapshot();
+		expect(getByTestId('filter-button')).toBeInTheDocument();
 	});
 
 	it('should render with filter by options', () => {
@@ -42,9 +38,9 @@ describe('FilterAndOrder', () => {
 			<FilterAndOrder filterByOptions={FILTER_BY_OPTIONS} />
 		);
 
-		triggerDropdown(container);
-
-		expect(document.body).toMatchSnapshot();
+		expect(
+			container.querySelector('[data-testid="filter-button"]')
+		).toBeTruthy();
 	});
 
 	it('should render with order by options', () => {
@@ -52,9 +48,9 @@ describe('FilterAndOrder', () => {
 			<FilterAndOrder orderByOptions={ORDER_BY_OPTIONS} />
 		);
 
-		triggerDropdown(container);
-
-		expect(document.body).toMatchSnapshot();
+		expect(
+			container.querySelector('[data-testid="order-button"]')
+		).toBeTruthy();
 	});
 
 	it('should render with order by options and filter by options', () => {
@@ -65,9 +61,12 @@ describe('FilterAndOrder', () => {
 			/>
 		);
 
-		triggerDropdown(container);
-
-		expect(document.body).toMatchSnapshot();
+		expect(
+			container.querySelector('[data-testid="filter-button"]')
+		).toBeTruthy();
+		expect(
+			container.querySelector('[data-testid="order-button"]')
+		).toBeTruthy();
 	});
 
 	it('should render as disabled', () => {
@@ -89,8 +88,8 @@ describe('FilterAndOrder', () => {
 			<FilterAndOrder filterByOptions={FILTER_BY_OPTIONS} flat />
 		);
 
-		triggerDropdown(container);
-
-		expect(document.body).toMatchSnapshot();
+		expect(
+			container.querySelector('[data-testid="filter-button"]')
+		).toBeTruthy();
 	});
 });

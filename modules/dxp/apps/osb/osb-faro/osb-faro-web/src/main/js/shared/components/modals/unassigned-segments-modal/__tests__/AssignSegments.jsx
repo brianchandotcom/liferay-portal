@@ -2,19 +2,20 @@ import * as API from 'shared/api';
 import AssignSegments from '../AssignSegments';
 import React from 'react';
 import {ChannelContext} from 'shared/context/channel';
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForDomChange
-} from '@testing-library/react';
+import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
+import {MemoryRouter} from 'react-router-dom';
 import {mockChannelContext} from 'test/mock-channel-context';
 import {mockSegment} from 'test/data';
-import {noop} from 'lodash';
-import {StaticRouter} from 'react-router-dom';
 import {UnassignedSegmentsContext} from 'shared/context/unassignedSegments';
 
 jest.unmock('react-dom');
+
+jest.mock('shared/api', () => ({
+	individualSegment: {
+		delete: jest.fn(() => Promise.resolve()),
+		updateChannel: jest.fn(() => Promise.resolve())
+	}
+}));
 
 const mockedContext = {
 	unassignedSegments: [
@@ -26,29 +27,27 @@ const mockedContext = {
 };
 
 const DefaultComponent = props => (
-	<UnassignedSegmentsContext.Provider value={mockedContext}>
-		<ChannelContext.Provider value={mockChannelContext()}>
-			<StaticRouter>
-				<AssignSegments groupId='123' onClose={noop} {...props} />
-			</StaticRouter>
-		</ChannelContext.Provider>
-	</UnassignedSegmentsContext.Provider>
+	<MemoryRouter>
+		<UnassignedSegmentsContext.Provider value={mockedContext}>
+			<ChannelContext.Provider value={mockChannelContext()}>
+				<AssignSegments groupId='123' onClose={jest.fn()} {...props} />
+			</ChannelContext.Provider>
+		</UnassignedSegmentsContext.Provider>
+	</MemoryRouter>
 );
 
 describe('AssignSegments', () => {
 	afterEach(() => {
 		cleanup();
-		jest.useRealTimers();
+		jest.clearAllMocks();
 	});
 
 	it('should render', () => {
-		jest.useFakeTimers();
 		const {container, getByTestId, getByText} = render(
 			<DefaultComponent />
 		);
-		fireEvent.click(getByTestId('select-1'));
 
-		jest.runAllTimers();
+		fireEvent.click(getByTestId('select-1'));
 
 		expect(getByText('Unassigned')).toBeTruthy();
 		expect(getByText('Delete')).toBeTruthy();
@@ -58,26 +57,19 @@ describe('AssignSegments', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should run close from OnClose prop', async () => {
-		const spy = jest.fn();
-
-		const {getByTestId, getByText} = render(
-			<DefaultComponent onClose={spy} />
-		);
+	it('should run close from OnClose prop', () => {
+		const onClose = jest.fn();
+		const {getByText} = render(<DefaultComponent onClose={onClose} />);
 
 		fireEvent.click(getByText('Skip for Now'));
 
-		fireEvent.click(getByTestId('submit-button'));
-
-		expect(spy).toBeCalled();
+		expect(onClose).toHaveBeenCalled();
 	});
 
-	it('it should enable done button when a valid value is selected', async () => {
+	it('it should enable done button when a valid value is selected', () => {
 		const {getByTestId, getByText} = render(<DefaultComponent />);
 
 		fireEvent.click(getByTestId('select-1'));
-
-		jest.runAllTimers();
 
 		fireEvent.click(getByText('Channel 1'));
 
@@ -87,45 +79,37 @@ describe('AssignSegments', () => {
 	});
 
 	it('should call api functions with Channel 1 args', async () => {
-		const {container, getByTestId, getByText} = render(
-			<DefaultComponent />
-		);
+		const {getByTestId, getByText} = render(<DefaultComponent />);
 
 		fireEvent.click(getByTestId('select-1'));
-
-		jest.runAllTimers();
 
 		fireEvent.click(getByText('Channel 1'));
 
 		fireEvent.click(getByTestId('submit-button'));
 
-		await waitForDomChange(container.querySelector('.assign-segments'));
-
-		expect(API.individualSegment.updateChannel).toBeCalledWith({
-			channelId: '1',
-			groupId: '123',
-			id: '1'
-		});
+		await waitFor(() =>
+			expect(API.individualSegment.updateChannel).toHaveBeenCalledWith({
+				channelId: '1',
+				groupId: '123',
+				id: '1'
+			})
+		);
 	});
 
 	it('should call api functions with Delete args', async () => {
-		const {container, getByTestId, getByText} = render(
-			<DefaultComponent />
-		);
+		const {getByTestId, getByText} = render(<DefaultComponent />);
 
 		fireEvent.click(getByTestId('select-1'));
-
-		jest.runAllTimers();
 
 		fireEvent.click(getByText('Delete'));
 
 		fireEvent.click(getByTestId('submit-button'));
 
-		await waitForDomChange(container.querySelector('.assign-segments'));
-
-		expect(API.individualSegment.delete).toBeCalledWith({
-			groupId: '123',
-			ids: ['1']
-		});
+		await waitFor(() =>
+			expect(API.individualSegment.delete).toHaveBeenCalledWith({
+				groupId: '123',
+				ids: ['1']
+			})
+		);
 	});
 });

@@ -1,26 +1,38 @@
-import client from 'shared/apollo/client';
 import DateFilter from '../DateFilter';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
-import {MockedProvider} from '@apollo/react-testing';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
+const WrappedComponent = props => (
+	<Provider store={mockStore()}>
+		<MemoryRouter initialEntries={['/workspace/23/event-analysis']}>
+			<Route path='/workspace/:groupId/event-analysis'>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+					mocks={[mockPreferenceReq()]}
+				>
+					<DateFilter onSubmit={jest.fn()} {...props} />
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
+
 describe('DateFilter', () => {
 	it('should render', () => {
-		const {container} = render(
-			<ApolloProvider client={client}>
-				<Provider store={mockStore()}>
-					<MockedProvider mocks={[mockPreferenceReq()]}>
-						<DateFilter onSubmit={jest.fn()} />
-					</MockedProvider>
-				</Provider>
-			</ApolloProvider>
-		);
+		const {container} = render(<WrappedComponent />);
 
 		expect(container).toMatchSnapshot();
 	});

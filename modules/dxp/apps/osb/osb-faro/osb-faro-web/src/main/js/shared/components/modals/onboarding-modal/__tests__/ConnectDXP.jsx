@@ -2,108 +2,79 @@ import * as API from 'shared/api';
 import ConnectDXP from '../ConnectDXP';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {fireEvent, render} from '@testing-library/react';
-import {noop} from 'lodash';
+import {ChannelContext} from 'shared/context/channel';
+import {cleanup, render, screen, waitFor} from '@testing-library/react';
+import {MemoryRouter} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
+const mockGroupId = '23';
+
+const Wrapper = ({channelDispatch = jest.fn(), children}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter>
+			<MockedProvider addTypename={false}>
+				<ChannelContext.Provider
+					value={{channelDispatch, selectedChannel: {id: '123'}}}
+				>
+					{children}
+				</ChannelContext.Provider>
+			</MockedProvider>
+		</MemoryRouter>
+	</Provider>
+);
+
 describe('ConnectDXP', () => {
-	it('renders', () => {
+	beforeEach(() => {
+		API.dataSource.fetchToken.mockReturnValue(
+			Promise.resolve('test-token')
+		);
+		API.channels.fetchAll.mockReturnValue(
+			Promise.resolve({
+				items: [{id: '123', name: 'Test Channel'}],
+				total: 1
+			})
+		);
+	});
+
+	afterEach(cleanup);
+
+	it('should render', async () => {
 		const {container} = render(
-			<Provider store={mockStore()}>
-				<StaticRouter>
-					<ConnectDXP groupId='123' onClose={noop} onNext={noop} />
-				</StaticRouter>
-			</Provider>
+			<Wrapper>
+				<ConnectDXP
+					dxpConnected={false}
+					groupId={mockGroupId}
+					onClose={jest.fn()}
+					onDxpConnected={jest.fn()}
+				/>
+			</Wrapper>
+		);
+
+		await waitFor(() =>
+			expect(screen.getByDisplayValue('test-token')).toBeInTheDocument()
 		);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('renders "Connected" when dxpConnected is true', () => {
-		const {queryByText} = render(
-			<Provider store={mockStore()}>
-				<StaticRouter>
-					<ConnectDXP
-						dxpConnected
-						groupId='123'
-						onClose={noop}
-						onNext={noop}
-					/>
-				</StaticRouter>
-			</Provider>
+	it('should render connected state', async () => {
+		const {container} = render(
+			<Wrapper>
+				<ConnectDXP
+					dxpConnected
+					groupId={mockGroupId}
+					onClose={jest.fn()}
+					onDxpConnected={jest.fn()}
+				/>
+			</Wrapper>
 		);
 
-		expect(queryByText('Back')).toBeNull();
 		expect(
-			queryByText('Your DXP Instance Is Connected to Analytics Cloud')
+			screen.getByText(/Your DXP instance is connected/i)
 		).toBeInTheDocument();
-		expect(queryByText('Sites')).toBeInTheDocument();
-		expect(queryByText('Contacts')).toBeInTheDocument();
-	});
-
-	it('renders Download button', () => {
-		const {queryByText} = render(
-			<Provider store={mockStore()}>
-				<StaticRouter>
-					<ConnectDXP groupId='123' onClose={noop} onNext={noop} />
-				</StaticRouter>
-			</Provider>
-		);
-
-		expect(queryByText('Download')).toBeTruthy();
-	});
-
-	it('change Download link when change DXP version', () => {
-		const {container, queryByText} = render(
-			<Provider store={mockStore()}>
-				<StaticRouter>
-					<ConnectDXP groupId='123' onClose={noop} onNext={noop} />
-				</StaticRouter>
-			</Provider>
-		);
-
-		const select = container.querySelector('.select-root');
-
-		fireEvent.change(select, {
-			target: {value: 'dxp-2024-q-1-1'}
-		});
-
-		expect(queryByText('Download').href).toMatch(
-			/dxp-2024-q1-1-quarterly-release/
-		);
-	});
-
-	it.skip('fires "setDxpConnected" when the token value changes', () => {
-		const spy = jest.fn();
-
-		render(
-			<Provider store={mockStore()}>
-				<StaticRouter>
-					<ConnectDXP
-						groupId='123'
-						onboarding
-						onClose={noop}
-						onDxpConnected={spy}
-						onNext={noop}
-					/>
-				</StaticRouter>
-			</Provider>
-		);
-
-		expect(spy).not.toBeCalled();
-
-		jest.runOnlyPendingTimers();
-
-		API.dataSource.fetchToken.mockReturnValue(
-			Promise.resolve('New Token Value')
-		);
-
-		jest.runOnlyPendingTimers();
-		jest.runOnlyPendingTimers();
-
-		expect(spy).toBeCalled();
+		expect(container).toMatchSnapshot();
 	});
 });

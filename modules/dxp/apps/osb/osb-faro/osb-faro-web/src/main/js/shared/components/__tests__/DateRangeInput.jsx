@@ -3,9 +3,9 @@ import DateRangeInput from '../DateRangeInput';
 import mockStore from 'test/mock-store';
 import moment from 'moment';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {cleanup, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 
@@ -30,14 +30,14 @@ describe('DateRangeInput', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		const {container} = render(
+		const {getByTestId} = render(
 			<ApolloProvider client={client}>
 				<Provider store={mockStore()}>
 					<MockedProvider mocks={[mockPreferenceReq()]}>
 						<DateRangeInput
 							value={{
-								end: moment(100000000000),
-								start: moment(0)
+								end: moment(100000000000).format('YYYY-MM-DD'),
+								start: moment(0).format('YYYY-MM-DD')
 							}}
 						/>
 					</MockedProvider>
@@ -45,6 +45,6 @@ describe('DateRangeInput', () => {
 			</ApolloProvider>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByTestId('date-range-input')).toBeInTheDocument();
 	});
 });

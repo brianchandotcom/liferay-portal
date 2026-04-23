@@ -2,7 +2,7 @@ import AssetsListCard from '../AssetsListCard';
 import BasePage from 'shared/components/base-page';
 import client from 'shared/apollo/client';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {ApolloProvider} from '@apollo/client';
 import {BrowserRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
 

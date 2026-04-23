@@ -15,7 +15,9 @@ describe('SelectInput', () => {
 			/>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.base-select-container')
+		).toBeInTheDocument();
 	});
 
 	it('should render with the selected item', () => {

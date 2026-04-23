@@ -1,27 +1,16 @@
-import client from 'shared/apollo/client';
 import PagePathCard from '../PagePathCard';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
-import {BrowserRouter} from 'react-router-dom';
 import {CHART_COLORS, MAIN_NODE_COLOR, SECONDARY_NODE_COLOR} from '../utils';
 import {cleanup, fireEvent, getByTestId, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPagePathReq} from 'test/graphql-data';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
+import {RangeSelectors} from 'shared/types';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
-
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		channelId: '123',
-		groupId: '4567',
-		rangeKey: '30',
-		title: 'Liferay DXP - Home',
-		touchpoint: 'https://liferay.com/home'
-	})
-}));
 
 const PREVIOUS_PATH_NODES = [
 	{
@@ -129,14 +118,25 @@ const WrapperComponent = ({
 		rangeStart: ''
 	},
 	reqOptions = {}
+}: {
+	data: any;
+	rangeSelectors?: RangeSelectors;
+	reqOptions?: Record<string, unknown>;
 }) => (
-	<ApolloProvider client={client}>
-		<BrowserRouter>
-			<MockedProvider mocks={[mockPagePathReq(data, reqOptions)]}>
+	<MemoryRouter
+		initialEntries={[
+			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fliferay.com%2Fhome/Liferay%20DXP%20-%20Home?rangeKey=30'
+		]}
+	>
+		<Route path='/workspace/:groupId/:channelId/sites/pages/overview/:touchpoint/:title'>
+			<MockedProvider
+				cache={new InMemoryCache({freezeResults: false} as any)}
+				mocks={[mockPagePathReq(data, reqOptions)]}
+			>
 				<PagePathCard rangeSelectors={rangeSelectors} />
 			</MockedProvider>
-		</BrowserRouter>
-	</ApolloProvider>
+		</Route>
+	</MemoryRouter>
 );
 
 describe('PagePathCard', () => {
@@ -199,8 +199,10 @@ describe('PagePathCard', () => {
 				return;
 			}
 
-			const title = getByTestId(node as HTMLElement, 'sankey-node-title')
-				.textContent;
+			const title = getByTestId(
+				node as HTMLElement,
+				'sankey-node-title'
+			).textContent;
 
 			if (
 				title === 'Drop Offs' ||

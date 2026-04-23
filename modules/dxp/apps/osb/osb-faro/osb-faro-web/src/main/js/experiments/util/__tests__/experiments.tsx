@@ -196,9 +196,9 @@ describe('getVariantLabels', () => {
 			getVariantLabels({
 				bestVariant: mockBestVariant,
 				dxpVariantId: 'DEFAULT',
-				publishedDXPVariantId: null,
+				publishedDXPVariantId: undefined,
 				status: 'FINISHED_NO_WINNER',
-				winnerDXPVariantId: null
+				winnerDXPVariantId: undefined
 			})
 		).toEqual([]);
 
@@ -206,9 +206,9 @@ describe('getVariantLabels', () => {
 			getVariantLabels({
 				bestVariant: mockBestVariant,
 				dxpVariantId: 'DEFAULT',
-				publishedDXPVariantId: null,
+				publishedDXPVariantId: undefined,
 				status: 'TERMINATED',
-				winnerDXPVariantId: null
+				winnerDXPVariantId: undefined
 			})
 		).toEqual([]);
 	});

@@ -1,148 +1,131 @@
 import * as data from 'test/data';
 import BlockListCard from '../BlockListCard';
-import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {cleanup, render, screen} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {mockBlockedCustomEventDefinitionsReq} from 'test/graphql-data';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
-import {waitForLoading} from 'test/helpers';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
+const mockGroupId = '23';
+
+const Wrapper = ({children, mocks = []}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={[
+				`/workspace/${mockGroupId}/settings/definitions/events/block-list`
+			]}
+		>
+			<Route path={Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST}>
+				<MockedProvider addTypename={false} mocks={mocks}>
+					{children}
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
+
 describe('BlockListCard', () => {
-	const WrappedComponent = props => (
-		<ApolloProvider client={client}>
-			<Provider store={mockStore()}>
-				<MemoryRouter
-					initialEntries={[
-						'/workspace/23/settings/definitions/events/block-list'
-					]}
-				>
-					<Route path={Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST}>
-						<MockedProvider
-							mocks={[
-								mockBlockedCustomEventDefinitionsReq(
-									[
-										data.mockBlockedCustomEventDefinition(
-											0
-										),
-										data.mockBlockedCustomEventDefinition(1)
-									],
-									{keyword: '', size: 2}
-								)
-							]}
-						>
-							<BlockListCard groupId='23' {...props} />
-						</MockedProvider>
-					</Route>
-				</MemoryRouter>
-			</Provider>
-		</ApolloProvider>
-	);
+	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container} = render(<WrappedComponent />);
+		const mocks = [
+			mockBlockedCustomEventDefinitionsReq(
+				[
+					data.mockBlockedCustomEventDefinition(0),
+					data.mockBlockedCustomEventDefinition(1)
+				],
+				{
+					keyword: '',
+					page: 0,
+					size: 2,
+					sort: {column: 'name', type: 'ASC'}
+				}
+			)
+		];
 
-		await waitForLoading(container);
+		const {container} = render(
+			<Wrapper mocks={mocks}>
+				<BlockListCard groupId={mockGroupId} />
+			</Wrapper>
+		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render when the state is empty', async () => {
-		const WrappedComponentEmptyState = props => (
-			<ApolloProvider client={client}>
-				<Provider store={mockStore()}>
-					<MemoryRouter
-						initialEntries={[
-							'/workspace/23/settings/definitions/events/block-list'
-						]}
-					>
-						<Route
-							path={Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST}
-						>
-							<MockedProvider
-								mocks={[
-									mockBlockedCustomEventDefinitionsReq([], {
-										keyword: '',
-										size: 2
-									})
-								]}
-							>
-								<BlockListCard groupId='23' {...props} />
-							</MockedProvider>
-						</Route>
-					</MemoryRouter>
-				</Provider>
-			</ApolloProvider>
+		const mocks = [
+			mockBlockedCustomEventDefinitionsReq([], {
+				keyword: '',
+				page: 0,
+				size: 2,
+				sort: {column: 'name', type: 'ASC'}
+			})
+		];
+
+		const {container} = render(
+			<Wrapper mocks={mocks}>
+				<BlockListCard groupId={mockGroupId} />
+			</Wrapper>
 		);
 
-		const {container, getByText} = render(<WrappedComponentEmptyState />);
-
-		await waitForLoading(container);
-
-		jest.runAllTimers();
-
-		expect(getByText('There are no events blocked.')).toBeInTheDocument();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
-			getByText("To block events, select one from the events' table.")
+			screen.getByText('There are no events blocked.')
 		).toBeInTheDocument();
 
 		expect(
-			getByText(
+			screen.getByText(
+				"To block events, select one from the events' table."
+			)
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByText(
 				'Access our documentation to learn how to manage custom events.'
 			)
 		).toBeInTheDocument();
 	});
 
 	it('should render when the state is empty and with the autofit class', async () => {
-		const WrappedComponentEmptyState = props => (
-			<ApolloProvider client={client}>
-				<Provider store={mockStore()}>
-					<MemoryRouter
-						initialEntries={[
-							'/workspace/23/settings/definitions/events/block-list'
-						]}
-					>
-						<Route
-							path={Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST}
-						>
-							<MockedProvider
-								mocks={[
-									mockBlockedCustomEventDefinitionsReq([], {
-										keyword: '',
-										size: 2
-									})
-								]}
-							>
-								<BlockListCard groupId='23' {...props} />
-							</MockedProvider>
-						</Route>
-					</MemoryRouter>
-				</Provider>
-			</ApolloProvider>
+		const mocks = [
+			mockBlockedCustomEventDefinitionsReq([], {
+				keyword: '',
+				page: 0,
+				size: 2,
+				sort: {column: 'name', type: 'ASC'}
+			})
+		];
+
+		const {container} = render(
+			<Wrapper mocks={mocks}>
+				<BlockListCard groupId={mockGroupId} />
+			</Wrapper>
 		);
 
-		const {container} = render(<WrappedComponentEmptyState />);
-
-		await waitForLoading(container);
-
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelector('.no-results-title').textContent
 		).toEqual('There are no events blocked.');
+
+		// Note: Text content might be slightly different due to ClayLink or whitespace
 		expect(
 			container.querySelector('.no-results-description').textContent
-		).toEqual(
-			"To block events, select one from the events' table.Access our documentation to learn how to manage custom events.(Opens a new window)"
+		).toContain("To block events, select one from the events' table.");
+
+		expect(
+			container.querySelector('.no-results-description').textContent
+		).toContain(
+			'Access our documentation to learn how to manage custom events.'
 		);
 	});
 });

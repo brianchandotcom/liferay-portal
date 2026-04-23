@@ -21,9 +21,7 @@ describe('WithQuery', () => {
 
 		const {queryByText} = render(<WrappedComponent />);
 
-		await waitFor(() => {});
-
-		expect(queryByText('pass')).toBeTruthy();
+		await waitFor(() => expect(queryByText('pass')).toBeTruthy());
 	});
 
 	it('should return an error', async () => {
@@ -34,9 +32,7 @@ describe('WithQuery', () => {
 
 		const {queryByText} = render(<WrappedComponent />);
 
-		await waitFor(() => {});
-
-		expect(queryByText('error')).toBeTruthy();
+		await waitFor(() => expect(queryByText('error')).toBeTruthy());
 	});
 
 	it('should return the result mapped to props', async () => {
@@ -48,10 +44,6 @@ describe('WithQuery', () => {
 
 		const {queryByText} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
-
-		await waitFor(() => {});
-
-		expect(queryByText('pass')).toBeTruthy();
+		await waitFor(() => expect(queryByText('pass')).toBeTruthy());
 	});
 });

@@ -134,7 +134,7 @@ exports[`SalesforceOverview should render 1`] = `
               </a>
             </li>
             <li
-              class="item"
+              class="item active"
             >
               <a
                 class="button-root"
@@ -617,6 +617,11 @@ exports[`SalesforceOverview should render 1`] = `
                           >
                             Represents fields from the Account object within Salesforce.
                           </p>
+                          <p
+                            class="list-group-text"
+                          >
+                            10 Items Synced
+                          </p>
                         </div>
                       </li>
                       <li
@@ -671,6 +676,11 @@ exports[`SalesforceOverview should render 1`] = `
                             class="list-group-text"
                           >
                             Represents fields from the Contact or Lead object within Salesforce.
+                          </p>
+                          <p
+                            class="list-group-text"
+                          >
+                            10 Items Synced
                           </p>
                         </div>
                       </li>

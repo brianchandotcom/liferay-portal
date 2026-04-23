@@ -41,14 +41,16 @@ describe('Individuals Dashboard Distribution', () => {
 
 		const {container} = render(<WrappedComponent />);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.individuals-dashboard-distribution-root')
+		).toBeInTheDocument();
 	});
 
 	it('renders with data source empty state', () => {
 		mockUseDataSource.useDataSource = jest.fn(() => mockEmptyState);
 
-		const {container} = render(<WrappedComponent />);
+		const {getByText} = render(<WrappedComponent />);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('No Data Sources Connected')).toBeInTheDocument();
 	});
 });

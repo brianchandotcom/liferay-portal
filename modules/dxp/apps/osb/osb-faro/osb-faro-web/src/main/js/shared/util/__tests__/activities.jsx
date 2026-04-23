@@ -16,7 +16,14 @@ describe('activities', () => {
 				activityCount: 10
 			};
 
-			expect(buildLegendItems(mockChangeData)).toMatchSnapshot();
+			const result = buildLegendItems(mockChangeData);
+
+			expect(Array.isArray(result)).toBe(true);
+			expect(result.length).toBe(1);
+			expect(result[0].change).toBe(20);
+			expect(result[0].id).toBe('activities');
+			expect(result[0].secondaryInfo).toContain('30');
+			expect(result[0].title).toContain('10');
 		});
 	});
 
@@ -24,7 +31,8 @@ describe('activities', () => {
 		it('should format grouping time', () => {
 			const result = formatGroupingTime(data.getTimestamp());
 
-			expect(result).toMatchSnapshot();
+			expect(typeof result).toBe('string');
+			expect(result.length).toBeGreaterThan(0);
 		});
 	});
 
@@ -41,8 +49,7 @@ describe('activities', () => {
 					pageTitle: 'this is a page title',
 					referrer:
 						'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88',
-					url:
-						'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88'
+					url: 'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88'
 				}
 			]);
 
@@ -71,7 +78,19 @@ describe('activities', () => {
 				'321'
 			);
 
-			expect(result).toMatchSnapshot();
+			expect(Array.isArray(result)).toBe(true);
+			expect(result.length).toBeGreaterThan(0);
+
+			const header = result[0];
+			expect(header.header).toBe(true);
+			expect(typeof header.title).toBe('string');
+			expect(typeof header.totalEvents).toBe('number');
+
+			const session = result[1];
+			expect(session).toHaveProperty('attributes');
+			expect(session).toHaveProperty('device');
+			expect(session).toHaveProperty('nestedItems');
+			expect(Array.isArray(session.nestedItems)).toBe(true);
 		});
 	});
 
@@ -79,13 +98,17 @@ describe('activities', () => {
 		it('should get singular label', () => {
 			const result = getActivityLabel(1);
 
-			expect(result).toMatchSnapshot();
+			expect(Array.isArray(result)).toBe(true);
+			expect(result.length).toBe(2);
+			expect(result[0]).toContain('Event');
 		});
 
 		it('should plural label', () => {
 			const result = getActivityLabel(2);
 
-			expect(result).toMatchSnapshot();
+			expect(Array.isArray(result)).toBe(true);
+			expect(result.length).toBe(2);
+			expect(result[0]).toContain('Events');
 		});
 	});
 

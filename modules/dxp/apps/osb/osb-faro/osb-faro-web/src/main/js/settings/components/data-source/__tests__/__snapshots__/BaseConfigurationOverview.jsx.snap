@@ -40,7 +40,6 @@ exports[`BaseConfigurationOverview should render 1`] = `
           >
             foo description
           </div>
-          
         </div>
       </div>
     </div>

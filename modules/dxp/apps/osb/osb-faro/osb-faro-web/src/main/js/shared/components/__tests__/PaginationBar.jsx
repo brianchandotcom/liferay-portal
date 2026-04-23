@@ -22,7 +22,10 @@ describe('PaginationBar', () => {
 
 	it('should render', () => {
 		const {container} = render(<DefaultComponent />);
-		expect(container).toMatchSnapshot();
+
+		expect(
+			container.querySelector('.pagination-bar-root')
+		).toBeInTheDocument();
 	});
 
 	it('should render with small size', () => {
@@ -47,6 +50,9 @@ describe('PaginationBar', () => {
 			/>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(container.querySelector('.pagination-bar-root')).toBeTruthy();
+		expect(
+			container.querySelector('.pagination-items-per-page')
+		).toBeTruthy();
 	});
 });

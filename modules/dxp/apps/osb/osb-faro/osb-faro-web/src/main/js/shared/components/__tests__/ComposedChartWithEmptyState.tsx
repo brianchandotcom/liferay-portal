@@ -48,7 +48,7 @@ describe('CollapsibleOverlay', () => {
 		);
 
 		expect(
-			node.className.includes('composed-chart-with-empty-state--show')
+			node?.className.includes('composed-chart-with-empty-state--show')
 		).toBeTruthy();
 		expect(getByText('this is an empty title')).toBeInTheDocument();
 		expect(getByText('this is an empty description')).toBeInTheDocument();
@@ -76,7 +76,7 @@ describe('CollapsibleOverlay', () => {
 		);
 
 		expect(
-			node.className.includes('composed-chart-with-empty-state--show')
+			node?.className.includes('composed-chart-with-empty-state--show')
 		).toBeTruthy();
 		expect(getByText('this is an empty title')).toBeInTheDocument();
 		expect(getByText('this is an empty description')).toBeInTheDocument();

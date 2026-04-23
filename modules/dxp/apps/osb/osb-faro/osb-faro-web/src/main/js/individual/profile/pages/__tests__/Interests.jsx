@@ -9,7 +9,7 @@ jest.unmock('react-dom');
 
 describe('Interests', () => {
 	it('should render', async () => {
-		const {container} = render(
+		const {getByText} = render(
 			<MemoryRouter
 				initialEntries={[
 					'/workspace/23/123/contacts/individuals/known-individuals/321321/interests?delta=2&page=1&field=count&sortOrder=DESC'
@@ -21,19 +21,26 @@ describe('Interests', () => {
 			</MemoryRouter>
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
 		jest.runAllTimers();
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Contributing Pages')).toBeInTheDocument();
 	});
 });
 
 describe('ContributionsCell', () => {
 	it('should render', () => {
-		const {container} = render(
-			<ContributionsCell data={{relatedPagesCount: 8}} />
+		const {getByText} = render(
+			<table>
+				<tbody>
+					<tr>
+						<ContributionsCell data={{relatedPagesCount: 8}} />
+					</tr>
+				</tbody>
+			</table>
 		);
-		expect(container).toMatchSnapshot();
+
+		expect(getByText('8 Contributing Pages')).toBeInTheDocument();
 	});
 });

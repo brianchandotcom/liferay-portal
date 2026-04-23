@@ -3,7 +3,7 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockTimeRangeReq, mockTouchpointsReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
@@ -45,7 +45,7 @@ describe('Individuals Dashboard Individuals Interest Details', () => {
 	afterEach(cleanup);
 
 	it('renders', async () => {
-		const {container} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<MockedProvider
 					mocks={[
@@ -83,10 +83,8 @@ describe('Individuals Dashboard Individuals Interest Details', () => {
 			</Provider>
 		);
 
-		await waitForLoading(container);
+		await waitForLoading(document.body);
 
-		jest.runAllTimers();
-
-		expect(container).toMatchSnapshot();
+		expect(getByText('Back to Interests')).toBeInTheDocument();
 	});
 });

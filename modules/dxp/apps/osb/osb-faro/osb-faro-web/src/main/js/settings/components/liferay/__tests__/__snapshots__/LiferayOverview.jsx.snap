@@ -134,7 +134,7 @@ exports[`LiferayOverview should render 1`] = `
               </a>
             </li>
             <li
-              class="item"
+              class="item active"
             >
               <a
                 class="button-root"
@@ -307,7 +307,7 @@ exports[`LiferayOverview should render 1`] = `
               <span
                 class="breadcrumb-text-truncate"
               >
-                Salesforce{seed}
+                Liferay1
               </span>
             </li>
           </ol>
@@ -316,12 +316,12 @@ exports[`LiferayOverview should render 1`] = `
               class="mb-5"
             >
               <span
-                class="label mb-2 label-success"
+                class="label mb-2 label-info"
               >
                 <span
                   class="label-item label-item-expand"
                 >
-                  Connected
+                  Authenticated
                 </span>
               </span>
               <div
@@ -333,7 +333,7 @@ exports[`LiferayOverview should render 1`] = `
                   <span
                     class="text-8 font-weight-bold"
                   >
-                    Salesforce{seed}
+                    Liferay1
                   </span>
                   <button
                     aria-label="Edit"
@@ -544,6 +544,11 @@ exports[`LiferayOverview should render 1`] = `
                       >
                         Used to aggregate data on your users, sites and DXP commerce channels.
                       </p>
+                      <p
+                        class="list-group-text"
+                      >
+                        5 properties are connected to this data source.
+                      </p>
                     </div>
                     <div
                       class="justify-content-center autofit-col"
@@ -595,6 +600,11 @@ exports[`LiferayOverview should render 1`] = `
                       >
                         Represents the sites synced from Liferay Portal, under DXP Instance Settings &gt; Analytics Cloud.
                       </p>
+                      <p
+                        class="list-group-text"
+                      >
+                        10 Items Synced
+                      </p>
                     </div>
                     <div
                       class="justify-content-center autofit-col"
@@ -645,6 +655,11 @@ exports[`LiferayOverview should render 1`] = `
                         class="list-group-text"
                       >
                         Represents the fields synced from the Contact object within Liferay Portal, under DXP Instance Settings &gt; Analytics Cloud.
+                      </p>
+                      <p
+                        class="list-group-text"
+                      >
+                        100 Items Synced
                       </p>
                     </div>
                     <div

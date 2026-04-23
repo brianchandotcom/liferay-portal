@@ -5,14 +5,14 @@ import CommerceTotalOrderValueQuery, {
 } from 'commerce/queries/TotalOrderValueQuery';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {cleanup, render} from '@testing-library/react';
 import {
 	mockCommerceTotalOrderValueReq,
 	mockPreferenceReq,
 	mockTimeRangeReq
 } from 'test/graphql-data';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {StaticRouter} from 'react-router-dom';
@@ -91,22 +91,17 @@ describe('CommerceMetricCard', () => {
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container, getByText} = render(
-			<WrappedComponent data={getData({})} />
-		);
+		const {getByText} = render(<WrappedComponent data={getData({})} />);
 
-		await waitForLoadingToBeRemoved(container);
-
-		const dropdownRangeSelector = document.querySelector(
-			'.dropdown-range-key-root'
-		);
+		await waitForLoadingToBeRemoved(document.body);
 
 		expect(getByText('this is the description')).toBeInTheDocument();
 		expect(getByText('this is the label')).toBeInTheDocument();
-		expect(dropdownRangeSelector).toBeInTheDocument();
+		expect(
+			document.querySelector('.dropdown-range-key-root')
+		).toBeInTheDocument();
 		expect(getByText('$10,000,000.00')).toBeInTheDocument();
 		expect(getByText(`${COMMERCE_TREND_PERCENTAGE}%`)).toBeInTheDocument();
-		expect(container).toMatchSnapshot();
 	});
 
 	it('should render with empty state message', async () => {
@@ -135,7 +130,7 @@ describe('CommerceMetricCard Classifications', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const trendElement = container.querySelector('.analytics-trend');
+		const trendElement = container.querySelector('.analytics-trend')!;
 		expect(window.getComputedStyle(trendElement).color).toEqual(
 			'rgb(40, 125, 60)'
 		);
@@ -151,7 +146,7 @@ describe('CommerceMetricCard Classifications', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const trendElement = container.querySelector('.analytics-trend');
+		const trendElement = container.querySelector('.analytics-trend')!;
 		expect(window.getComputedStyle(trendElement).color).toEqual(
 			'rgb(218, 20, 20)'
 		);
@@ -167,7 +162,7 @@ describe('CommerceMetricCard Classifications', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const trendElement = container.querySelector('.analytics-trend');
+		const trendElement = container.querySelector('.analytics-trend')!;
 		expect(window.getComputedStyle(trendElement).color).toEqual(
 			'rgb(107, 108, 126)'
 		);
@@ -189,7 +184,7 @@ describe('CommerceMetricCard Trend', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const trendElement = container.querySelector('.analytics-trend');
+		const trendElement = container.querySelector('.analytics-trend')!;
 		expect(
 			trendElement.querySelector('.lexicon-icon-caret-top-l')
 		).toBeInTheDocument();
@@ -204,7 +199,7 @@ describe('CommerceMetricCard Trend', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const trendElement = container.querySelector('.analytics-trend');
+		const trendElement = container.querySelector('.analytics-trend')!;
 		expect(
 			trendElement.querySelector('.lexicon-icon-caret-bottom-l')
 		).toBeInTheDocument();
@@ -219,7 +214,7 @@ describe('CommerceMetricCard Trend', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const trendElement = container.querySelector('.analytics-trend');
+		const trendElement = container.querySelector('.analytics-trend')!;
 		expect(
 			trendElement.querySelector('.lexicon-icon-caret-top-l')
 		).not.toBeInTheDocument();
@@ -242,9 +237,11 @@ describe('CommerceMetricCard Format Currency', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const currencyValue = document.querySelector('.commerce-card-currency');
+		const currencyValue = document.querySelector(
+			'.commerce-card-currency'
+		)!;
 
-		expect(currencyValue.textContent.includes('R$')).toBeTruthy();
+		expect(currencyValue.textContent!.includes('R$')).toBeTruthy();
 	});
 
 	it('should format currency and display it in USD', async () => {
@@ -257,9 +254,11 @@ describe('CommerceMetricCard Format Currency', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const currencyValue = document.querySelector('.commerce-card-currency');
+		const currencyValue = document.querySelector(
+			'.commerce-card-currency'
+		)!;
 
-		expect(currencyValue.textContent.includes('$')).toBeTruthy();
+		expect(currencyValue.textContent!.includes('$')).toBeTruthy();
 	});
 
 	it('should format currency and display it in EUR', async () => {
@@ -272,8 +271,10 @@ describe('CommerceMetricCard Format Currency', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const currencyValue = document.querySelector('.commerce-card-currency');
+		const currencyValue = document.querySelector(
+			'.commerce-card-currency'
+		)!;
 
-		expect(currencyValue.textContent.includes('€')).toBeTruthy();
+		expect(currencyValue.textContent!.includes('€')).toBeTruthy();
 	});
 });

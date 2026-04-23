@@ -1,12 +1,12 @@
 import * as data from 'test/data';
 import AttributeFilterDropdown from '../index';
-import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
+import {AttributesProvider} from '../../../context/attributes';
 import {DISPLAY_NAME} from 'shared/util/pagination';
-import {fireEvent, render, waitForElement} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockEventAttributeDefinitionsReq} from 'test/graphql-data';
 import {OrderByDirections} from 'shared/util/constants';
 import {Provider} from 'react-redux';
@@ -15,38 +15,48 @@ import {range} from 'lodash';
 jest.unmock('react-dom');
 
 describe('AttributeFilterDropdown', () => {
-	const WrappedComponent = props => (
-		<ApolloProvider client={client}>
-			<Provider store={mockStore()}>
-				<MockedProvider
-					mocks={[
-						mockEventAttributeDefinitionsReq(
-							range(10).map(i =>
-								data.mockEventAttributeDefinition(i, {
-									__typename: 'EventAttributeDefinition'
-								})
-							),
-							{
-								keyword: '',
-								size: 200,
-								sort: {
-									column: DISPLAY_NAME,
-									type: OrderByDirections.Ascending
+	const defaultMocks = [
+		mockEventAttributeDefinitionsReq(
+			range(10).map(i =>
+				data.mockEventAttributeDefinition(i, {
+					__typename: 'EventAttributeDefinition'
+				})
+			),
+			{
+				eventDefinitionId: '3',
+				keyword: '',
+				size: 200,
+				sort: {
+					column: DISPLAY_NAME,
+					type: OrderByDirections.Ascending
+				}
+			}
+		)
+	];
+
+	const WrappedComponent = ({mocks = defaultMocks, ...props}) => (
+		<Provider store={mockStore()}>
+			<MemoryRouter
+				initialEntries={['/workspace/123/456/event-analysis/123']}
+			>
+				<Route path='/workspace/:groupId/:channelId/event-analysis/:id'>
+					<MockedProvider addTypename={false} mocks={mocks}>
+						<AttributesProvider>
+							<AttributeFilterDropdown
+								eventId='3'
+								trigger={
+									<button data-testid='target'>
+										{'click me'}
+									</button>
 								}
-							}
-						)
-					]}
-				>
-					<AttributeFilterDropdown
-						onAttributeSelect={jest.fn()}
-						trigger={
-							<button data-testid='target'>{'click me'}</button>
-						}
-						{...props}
-					/>
-				</MockedProvider>
-			</Provider>
-		</ApolloProvider>
+								uneditableIds={[]}
+								{...props}
+							/>
+						</AttributesProvider>
+					</MockedProvider>
+				</Route>
+			</MemoryRouter>
+		</Provider>
 	);
 
 	it('render', async () => {
@@ -54,25 +64,30 @@ describe('AttributeFilterDropdown', () => {
 
 		fireEvent.click(getByTestId('target'));
 
-		jest.runAllTimers();
+		await waitFor(() =>
+			expect(document.body.querySelector('.loading-root')).toBeNull()
+		);
+
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
 		expect(container).toMatchSnapshot();
 
-		await waitForElement(() => container.querySelector('.dropdown'));
+		const dropdownMenu = document.body.querySelector(
+			'.base-dropdown-menu-root'
+		);
 
-		const dropdownMenu = document.body.getElementsByClassName(
-			'base-dropdown-menu-root'
-		)[0];
-
+		expect(dropdownMenu).toBeTruthy();
 		expect(dropdownMenu).toMatchSnapshot();
 
 		expect(
-			dropdownMenu.getElementsByClassName('dropdown-item active')
-		).toBeEmpty();
+			dropdownMenu.querySelectorAll('.dropdown-item.active')
+		).toHaveLength(0);
 	});
 
 	it('render w/ selected attribute', async () => {
-		const {container, getByTestId} = render(
+		const {getByTestId} = render(
 			<WrappedComponent
 				attribute={{
 					dataType: 'STRING',
@@ -80,34 +95,45 @@ describe('AttributeFilterDropdown', () => {
 					id: '4',
 					name: 'filedTicket'
 				}}
+				filter={{
+					id: '4'
+				}}
 			/>
 		);
 
 		fireEvent.click(getByTestId('target'));
 
-		jest.runAllTimers();
+		await waitFor(() =>
+			expect(document.body.querySelector('.loading-root')).toBeNull()
+		);
 
-		await waitForElement(() => container.querySelector('.dropdown'));
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
+		// When a filter is provided, it should show FilterOptions directly
 		expect(
-			document.body.getElementsByClassName('dropdown-item active').length
-		).toBe(1);
+			document.body.querySelector('.attribute-options')
+		).toBeInTheDocument();
 	});
 
 	it('render w/ disabled attributes', async () => {
-		const {container, getByTestId} = render(
+		const {getByTestId} = render(
 			<WrappedComponent disabledIds={['1', '2']} />
 		);
 
 		fireEvent.click(getByTestId('target'));
 
-		jest.runAllTimers();
+		await waitFor(() =>
+			expect(document.body.querySelector('.loading-root')).toBeNull()
+		);
 
-		await waitForElement(() => container.querySelector('.dropdown'));
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
 		expect(
-			document.body.getElementsByClassName('dropdown-item disabled')
-				.length
-		).toBe(2);
+			document.body.querySelectorAll('.dropdown-item.disabled')
+		).toHaveLength(2);
 	});
 });

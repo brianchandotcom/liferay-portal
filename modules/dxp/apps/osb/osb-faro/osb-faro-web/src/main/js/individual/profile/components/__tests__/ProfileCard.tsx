@@ -1,10 +1,10 @@
 import IndividualProfileCard from '../ProfileCard';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {fireEvent, render} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockEventMetrics,
 	mockPreferenceReq,
@@ -19,7 +19,7 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-const DefaultComponent = ({children}) => (
+const DefaultComponent = ({children}: {children: React.ReactNode}) => (
 	<Provider store={mockStore()}>
 		<MemoryRouter
 			initialEntries={[
@@ -36,7 +36,7 @@ const searchKeyword = {keywords: inputValue};
 
 describe('IndividualProfileCard', () => {
 	it('should render', async () => {
-		const {container} = render(
+		const {getByPlaceholderText} = render(
 			<DefaultComponent>
 				<MockedProvider
 					mocks={[
@@ -64,9 +64,9 @@ describe('IndividualProfileCard', () => {
 						page={1}
 						query=''
 						rangeSelectors={{
-							rangeEnd: null,
+							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: null
+							rangeStart: ''
 						}}
 						resetPage={jest.fn()}
 						tabId=''
@@ -75,9 +75,9 @@ describe('IndividualProfileCard', () => {
 			</DefaultComponent>
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
-		expect(container).toMatchSnapshot();
+		expect(getByPlaceholderText('Search')).toBeInTheDocument();
 	});
 
 	it('should clear search input when clear button is clicked', async () => {
@@ -117,9 +117,9 @@ describe('IndividualProfileCard', () => {
 						page={0}
 						query='add to cart'
 						rangeSelectors={{
-							rangeEnd: null,
+							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: null
+							rangeStart: ''
 						}}
 						resetPage={jest.fn()}
 						tabId=''
@@ -193,9 +193,9 @@ describe('IndividualProfileCard', () => {
 						page={0}
 						query=''
 						rangeSelectors={{
-							rangeEnd: null,
+							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: null
+							rangeStart: ''
 						}}
 						resetPage={jest.fn()}
 						tabId=''
@@ -204,7 +204,9 @@ describe('IndividualProfileCard', () => {
 			</DefaultComponent>
 		);
 
-		jest.runAllTimers();
+		await act(async () => {
+			await jest.advanceTimersByTimeAsync(500);
+		});
 
 		const searchInput = getByPlaceholderText('Search');
 
@@ -216,13 +218,17 @@ describe('IndividualProfileCard', () => {
 			key: 'Enter'
 		});
 
-		jest.runAllTimers();
+		await act(async () => {
+			await jest.advanceTimersByTimeAsync(500);
+		});
 
 		expect(getByPlaceholderText('Search')).toHaveValue(inputValue);
 
-		fireEvent.click(container.querySelector('.lexicon-icon-times'));
+		fireEvent.click(container.querySelector('.lexicon-icon-times')!);
 
-		jest.runAllTimers();
+		await act(async () => {
+			await jest.advanceTimersByTimeAsync(500);
+		});
 
 		expect(getByPlaceholderText('Search')).toHaveValue('');
 	});
@@ -245,9 +251,9 @@ describe('IndividualProfileCard', () => {
 						page={0}
 						query=''
 						rangeSelectors={{
-							rangeEnd: null,
+							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: null
+							rangeStart: ''
 						}}
 						resetPage={jest.fn()}
 						tabId=''
@@ -281,9 +287,9 @@ describe('IndividualProfileCard', () => {
 						page={0}
 						query=''
 						rangeSelectors={{
-							rangeEnd: null,
+							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: null
+							rangeStart: ''
 						}}
 						resetPage={jest.fn()}
 						tabId=''

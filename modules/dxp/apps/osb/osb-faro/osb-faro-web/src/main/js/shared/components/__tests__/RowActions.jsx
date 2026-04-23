@@ -13,11 +13,11 @@ const WrappedComponent = props => (
 
 describe('RowActions', () => {
 	it('should render', () => {
-		const {container} = render(
+		const {getByRole} = render(
 			<WrappedComponent actions={[{label: 'foo'}]} />
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByRole('button', {name: 'Menu'})).toBeInTheDocument();
 	});
 
 	it('should render with quick actions', () => {

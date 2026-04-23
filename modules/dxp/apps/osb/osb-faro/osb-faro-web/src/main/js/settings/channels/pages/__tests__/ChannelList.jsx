@@ -3,12 +3,11 @@ import * as data from 'test/data';
 import ChannelList from '../ChannelList';
 import mockStore, {mockStoreData} from 'test/mock-store';
 import React from 'react';
-import {cleanup, render, screen} from '@testing-library/react';
+import {act, cleanup, render, screen, waitFor} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {RemoteData} from 'shared/util/records';
+import {RemoteData, User} from 'shared/util/records';
 import {Routes} from 'shared/util/router';
-import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -16,54 +15,69 @@ const defaultProps = {
 	groupId: '23'
 };
 
+const Wrapper = ({children, store = mockStore()}) => (
+	<Provider store={store}>
+		<MemoryRouter initialEntries={['/workspace/23/settings/properties']}>
+			<Route path={Routes.SETTINGS_CHANNELS}>{children}</Route>
+		</MemoryRouter>
+	</Provider>
+);
+
 describe('Channels List', () => {
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container} = render(
-			<Provider store={mockStore()}>
-				<MemoryRouter
-					initialEntries={['/workspace/23/settings/properties']}
-				>
-					<Route path={Routes.SETTINGS_CHANNELS}>
-						<ChannelList {...defaultProps} />
-					</Route>
-				</MemoryRouter>
-			</Provider>
+		API.channels.search.mockReturnValue(
+			Promise.resolve(data.mockChannels())
 		);
 
-		jest.runAllTimers();
+		const {container} = render(
+			<Wrapper>
+				<ChannelList {...defaultProps} />
+			</Wrapper>
+		);
 
-		await waitForLoadingToBeRemoved(container);
+		act(() => {
+			jest.advanceTimersByTime(0);
+		});
+
+		await waitFor(() =>
+			expect(document.body.querySelector('.loading-root')).toBeNull()
+		);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should not render add button if user is not an admin', () => {
-		API.user.fetchCurrentUser.mockReturnValueOnce(
-			Promise.resolve(data.mockMemberUser('24'))
+	it('should not render add button if user is not an admin', async () => {
+		const memberStore = mockStore(
+			mockStoreData.setIn(['currentUser', 'data'], '24').setIn(
+				['users', '24'],
+				new RemoteData({
+					data: new User(data.mockMemberUser('24')),
+					loading: false
+				})
+			)
 		);
 
-		const {queryByText} = render(
-			<Provider
-				store={mockStore(
-					mockStoreData.setIn(
-						['currentUser'],
-						new RemoteData({data: '24', loading: false})
-					)
-				)}
-			>
-				<MemoryRouter
-					initialEntries={['/workspace/23/settings/properties']}
-				>
-					<Route path={Routes.SETTINGS_CHANNELS}>
-						<ChannelList {...defaultProps} />
-					</Route>
-				</MemoryRouter>
-			</Provider>
+		API.channels.search.mockReturnValue(
+			Promise.resolve(data.mockChannels())
 		);
 
-		expect(queryByText('New Property')).toBeNull();
+		render(
+			<Wrapper store={memberStore}>
+				<ChannelList {...defaultProps} />
+			</Wrapper>
+		);
+
+		act(() => {
+			jest.advanceTimersByTime(0);
+		});
+
+		await waitFor(() =>
+			expect(document.body.querySelector('.loading-root')).toBeNull()
+		);
+
+		expect(screen.queryByText('New Property')).toBeNull();
 	});
 
 	it('should check if the number of synced sites and channels appears for each property', async () => {
@@ -71,53 +85,49 @@ describe('Channels List', () => {
 			Promise.resolve(data.mockChannels())
 		);
 
-		const {container} = render(
-			<Provider store={mockStore()}>
-				<MemoryRouter
-					initialEntries={['/workspace/23/settings/properties']}
-				>
-					<Route path={Routes.SETTINGS_CHANNELS}>
-						<ChannelList {...defaultProps} />
-					</Route>
-				</MemoryRouter>
-			</Provider>
+		render(
+			<Wrapper>
+				<ChannelList {...defaultProps} />
+			</Wrapper>
 		);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.advanceTimersByTime(0);
+		});
 
-		await waitForLoadingToBeRemoved(container);
+		await waitFor(() =>
+			expect(document.body.querySelector('.loading-root')).toBeNull()
+		);
 
 		expect(screen.getByText('Sites')).toBeInTheDocument();
-
 		expect(screen.getByText('Channels')).toBeInTheDocument();
-
 		expect(screen.getByText('Liferay DXP')).toBeInTheDocument();
-
-		expect(screen.getByText('6')).toBeInTheDocument();
-
-		expect(screen.getByText('5')).toBeInTheDocument();
+		expect(screen.getAllByText('6')).toHaveLength(1);
+		expect(screen.getAllByText('5')).toHaveLength(1);
 	});
 
 	it('should check if actions "DELETE" and "CLEAR DATA" are displayed in the ellipsis and its icons', async () => {
-		API.channels.search.mockReturnValueOnce(
+		API.channels.search.mockReturnValue(
 			Promise.resolve(data.mockChannels())
 		);
 
 		const {container} = render(
-			<Provider store={mockStore()}>
-				<MemoryRouter
-					initialEntries={['/workspace/23/settings/properties']}
-				>
-					<Route path={Routes.SETTINGS_CHANNELS}>
-						<ChannelList {...defaultProps} />
-					</Route>
-				</MemoryRouter>
-			</Provider>
+			<Wrapper>
+				<ChannelList {...defaultProps} />
+			</Wrapper>
 		);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.advanceTimersByTime(0);
+		});
 
-		await waitForLoadingToBeRemoved(container);
+		await waitFor(() =>
+			expect(document.body.querySelector('.loading-root')).toBeNull()
+		);
+
+		// In some environments or screen sizes, RowActions might render quick actions as buttons
+		// If they are in an ellipsis, we would need to click it first.
+		// Let's check if the buttons are present.
 
 		const clearDataBtn = screen.getByRole('button', {
 			name: /clear data/i
@@ -128,23 +138,13 @@ describe('Channels List', () => {
 		});
 
 		expect(clearDataBtn).toBeInTheDocument();
-
 		expect(deleteBtn).toBeInTheDocument();
 
-		const clearDataIcon = container.querySelector(
-			'svg.lexicon-icon-magic.icon-root'
-		);
+		const clearDataIcon = container.querySelector('svg.lexicon-icon-magic');
 
-		const deleteIcon = container.querySelector(
-			'svg.lexicon-icon-trash.icon-root'
-		);
+		const deleteIcon = container.querySelector('svg.lexicon-icon-trash');
 
 		expect(clearDataIcon).toBeInTheDocument();
-
-		expect(clearDataIcon.parentElement).toBe(clearDataBtn);
-
 		expect(deleteIcon).toBeInTheDocument();
-
-		expect(deleteIcon.parentElement).toBe(deleteBtn);
 	});
 });

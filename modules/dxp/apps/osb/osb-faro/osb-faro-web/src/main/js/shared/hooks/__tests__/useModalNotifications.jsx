@@ -17,6 +17,8 @@ import {useModalNotifications} from 'shared/hooks/useModalNotifications';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/components/modals/NewRequestModal', () => () => null);
+
 const WrapperComponent = connect(null, {close, open})(({close, open}) => {
 	useModalNotifications(close, '23', open);
 
@@ -42,20 +44,18 @@ describe('useModalNotifications', () => {
 			)
 		);
 
-		const {container} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<ModalRenderer />
 				<WrapperComponent />
 			</Provider>
 		);
 
-		await waitFor(() => {});
-
 		jest.runAllTimers();
 
-		await waitFor(() => {});
+		await waitFor(() => getByText('Set Timezone'));
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Set Timezone')).toBeInTheDocument();
 	});
 
 	it('should open another notification modal after closing one when having multiple modals', async () => {
@@ -81,7 +81,7 @@ describe('useModalNotifications', () => {
 
 		jest.runAllTimers();
 
-		await waitFor(() => {});
+		await waitFor(() => getByText('Do This Later'));
 
 		fireEvent.click(getByText('Do This Later'));
 

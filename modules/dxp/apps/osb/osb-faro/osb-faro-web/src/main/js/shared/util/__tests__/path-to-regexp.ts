@@ -2,8 +2,11 @@ import {
 	compile,
 	escapeGroup,
 	escapeString,
-	parse
+	parse,
+	PathToken
 } from 'shared/util/path-to-regexp';
+
+type PathTokenObject = Exclude<PathToken, string>;
 
 describe('Escape Functions', () => {
 	it('escapes special group characters', () => {
@@ -61,21 +64,21 @@ describe('parse(str)', () => {
 	it('parses an optional parameter', () => {
 		const route = '/users/:id?';
 
-		expect(parse(route)[1].optional).toBe(true);
+		expect((parse(route)[1] as PathTokenObject).optional).toBe(true);
 	});
 
 	it('parses a repeatable parameter (+)', () => {
 		const route = '/files/:path+';
 
-		expect(parse(route)[1].repeat).toBe(true);
-		expect(parse(route)[1].optional).toBe(false);
+		expect((parse(route)[1] as PathTokenObject).repeat).toBe(true);
+		expect((parse(route)[1] as PathTokenObject).optional).toBe(false);
 	});
 
 	it('parses an optional and repeatable parameter (*)', () => {
 		const route = '/files/:path*';
 
-		expect(parse(route)[1].repeat).toBe(true);
-		expect(parse(route)[1].optional).toBe(true);
+		expect((parse(route)[1] as PathTokenObject).repeat).toBe(true);
+		expect((parse(route)[1] as PathTokenObject).optional).toBe(true);
 	});
 
 	it('parses a parameter with a custom capture pattern', () => {

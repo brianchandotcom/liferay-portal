@@ -1,9 +1,9 @@
 import client from 'shared/apollo/client';
 import DateTimeInput from '../DateTimeInput';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {cleanup, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Property} from 'shared/util/records';
 
@@ -13,7 +13,7 @@ describe('DateTimeInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {getByText} = render(
 			<ApolloProvider client={client}>
 				<MockedProvider mocks={[mockPreferenceReq()]}>
 					<DateTimeInput
@@ -26,6 +26,7 @@ describe('DateTimeInput', () => {
 			</ApolloProvider>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Start Date Time')).toBeInTheDocument();
+		expect(getByText('operator')).toBeInTheDocument();
 	});
 });

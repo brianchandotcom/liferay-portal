@@ -116,7 +116,7 @@ exports[`Data Privacy Overview should render 1`] = `
               </a>
             </li>
             <li
-              class="item"
+              class="item active"
             >
               <a
                 class="button-root"

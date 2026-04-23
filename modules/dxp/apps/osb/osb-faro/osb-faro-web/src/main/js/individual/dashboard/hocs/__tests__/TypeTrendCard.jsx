@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TypeTrendCard from '../TypeTrendCard';
 import {cleanup, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockIndividualMetricsReq} from 'test/graphql-data';
 
 jest.unmock('react-dom');

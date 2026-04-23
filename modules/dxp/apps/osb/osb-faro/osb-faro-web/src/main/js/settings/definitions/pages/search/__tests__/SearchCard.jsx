@@ -1,11 +1,18 @@
 import mockStore from 'test/mock-store';
 import React from 'react';
 import SearchCard from '../SearchCard';
-import {cleanup, fireEvent, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	waitFor
+} from '@testing-library/react';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockSearchStringListReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
@@ -15,21 +22,27 @@ jest.mock('shared/hooks/useCurrentUser', () => ({
 	useCurrentUser: jest.fn()
 }));
 
-const DefaultComponent = props => (
-	<StaticRouter>
-		<MockedProvider mocks={[mockSearchStringListReq()]}>
-			<Provider store={mockStore()}>
-				<SearchCard groupId='23' {...props} />
-			</Provider>
-		</MockedProvider>
-	</StaticRouter>
+const WrappedComponent = props => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={['/workspace/23/settings/definitions/search']}
+		>
+			<Route path='/workspace/:groupId/settings/definitions/search'>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+					mocks={[mockSearchStringListReq()]}
+				>
+					<SearchCard groupId='23' {...props} />
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
 );
-
-const changeInputValue = (input, newValue) => {
-	input.focus();
-	fireEvent.change(input, {target: {value: newValue}});
-	input.blur();
-};
 
 describe('SearchCard', () => {
 	afterEach(cleanup);
@@ -37,7 +50,7 @@ describe('SearchCard', () => {
 	it('should render', async () => {
 		useCurrentUser.mockImplementation(() => ({isAdmin: () => true}));
 
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(<WrappedComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -47,45 +60,47 @@ describe('SearchCard', () => {
 	it('should have a default uneditable field with value of q', async () => {
 		useCurrentUser.mockImplementation(() => ({isAdmin: () => true}));
 
-		const {container, getByDisplayValue} = render(<DefaultComponent />);
+		render(<WrappedComponent />);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved();
 
-		expect(getByDisplayValue('q')).toBeTruthy();
+		expect(screen.getByDisplayValue('q')).toBeDisabled();
 	});
 
 	it('should remove special characters on fields', async () => {
 		useCurrentUser.mockImplementation(() => ({isAdmin: () => true}));
 
-		const {container, getByDisplayValue} = render(<DefaultComponent />);
+		render(<WrappedComponent />);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved();
 
-		const input = getByDisplayValue('jackson');
+		const input = screen.getByDisplayValue('jackson');
 
-		changeInputValue(input, 'jackson@#!');
+		fireEvent.change(input, {target: {value: 'jackson@#!'}});
+		fireEvent.blur(input);
 
-		expect(input.value).toBe('jackson');
+		await waitFor(() => expect(input.value).toBe('jackson'));
 	});
 
 	it('should remove every character after equals sign', async () => {
 		useCurrentUser.mockImplementation(() => ({isAdmin: () => true}));
 
-		const {container, getByDisplayValue} = render(<DefaultComponent />);
+		render(<WrappedComponent />);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved();
 
-		const input = getByDisplayValue('jackson');
+		const input = screen.getByDisplayValue('jackson');
 
-		changeInputValue(input, 'jackson=testvalue');
+		fireEvent.change(input, {target: {value: 'jackson=testvalue'}});
+		fireEvent.blur(input);
 
-		expect(input.value).toBe('jackson');
+		await waitFor(() => expect(input.value).toBe('jackson'));
 	});
 
 	it('should render input as disabled when user is not admin', async () => {
 		useCurrentUser.mockImplementation(() => ({isAdmin: () => false}));
 
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(<WrappedComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -97,12 +112,12 @@ describe('SearchCard', () => {
 	it('should not render buttons when user is not admin', async () => {
 		useCurrentUser.mockImplementation(() => ({isAdmin: () => false}));
 
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(<WrappedComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelectorAll('.query-card-root button')
-		).toBeEmpty();
+		).toHaveLength(0);
 	});
 });

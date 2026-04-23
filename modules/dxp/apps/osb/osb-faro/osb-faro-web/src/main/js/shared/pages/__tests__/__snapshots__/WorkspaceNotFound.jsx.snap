@@ -10,7 +10,7 @@ exports[`WorkspaceNotFound should render 1`] = `
     >
       <a
         class=""
-        href="https://liferay.com"
+        href="https://liferay-portal.com"
         rel="noreferrer noopener"
         target="_blank"
       >

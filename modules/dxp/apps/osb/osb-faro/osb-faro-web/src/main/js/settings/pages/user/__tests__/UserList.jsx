@@ -2,9 +2,11 @@ import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import UserList from '../UserList';
-import {cleanup, render} from '@testing-library/react';
+import {InMemoryCache} from '@apollo/client';
 import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
+import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 import {User} from 'shared/util/records';
 import {UserRoleNames} from 'shared/util/constants';
@@ -21,19 +23,24 @@ const DefaultComponent = props => (
 	<Provider store={mockStore()}>
 		<MemoryRouter initialEntries={['/workspace/23/settings/users']}>
 			<Route path={Routes.SETTINGS_USERS}>
-				<UserList {...defaultProps} {...props} />
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+				>
+					<UserList {...defaultProps} {...props} />
+				</MockedProvider>
 			</Route>
 		</MemoryRouter>
 	</Provider>
 );
 
 describe('UserList', () => {
-	afterEach(cleanup);
-
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -48,8 +55,6 @@ describe('UserList', () => {
 				}
 			/>
 		);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 

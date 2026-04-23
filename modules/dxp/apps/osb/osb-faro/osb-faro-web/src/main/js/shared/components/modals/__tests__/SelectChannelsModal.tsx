@@ -28,7 +28,7 @@ const defaultProps = {
 };
 
 const submitButton = () =>
-	document.querySelector('.modal-footer button[type="submit"]');
+	document.querySelector('.modal-footer button[type="submit"]') as Element;
 
 describe('SelectChannelsModal', () => {
 	beforeEach(() => {

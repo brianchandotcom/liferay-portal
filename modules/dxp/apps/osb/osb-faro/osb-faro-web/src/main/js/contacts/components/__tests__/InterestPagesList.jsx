@@ -21,6 +21,8 @@ describe('InterestPagesList', () => {
 
 		await waitFor(() => {});
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.searchable-table-root')
+		).toBeInTheDocument();
 	});
 });

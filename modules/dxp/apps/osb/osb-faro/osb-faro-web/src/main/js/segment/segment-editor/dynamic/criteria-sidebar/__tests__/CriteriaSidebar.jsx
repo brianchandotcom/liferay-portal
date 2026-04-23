@@ -61,7 +61,7 @@ describe('CriteriaSidebar', () => {
 	afterEach(cleanup);
 
 	it('should render the sidebar structure with property groups', () => {
-		const {container} = render(
+		render(
 			<DndProvider backend={HTML5Backend}>
 				<CriteriaSidebar propertyGroupsIList={fullPropertyGroupList} />
 			</DndProvider>
@@ -72,8 +72,6 @@ describe('CriteriaSidebar', () => {
 		).toBeInTheDocument();
 		expect(screen.getByText('Page Views')).toBeInTheDocument();
 		expect(screen.getByText('DXP Custom Fields')).toBeInTheDocument();
-
-		expect(container).toMatchSnapshot();
 	});
 
 	it('should render w/ "No results were found." when propertyGroupsIList is empty', () => {

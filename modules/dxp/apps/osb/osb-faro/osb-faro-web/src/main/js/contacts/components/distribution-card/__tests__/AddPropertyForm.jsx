@@ -8,9 +8,14 @@ describe('DistributionCard AddPropertyForm', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		const {container} = render(<AddPropertyForm />);
+		const {getByText} = render(<AddPropertyForm />);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			getByText(
+				Liferay.Language.get('add-a-breakdown-by-individual-attribute')
+			)
+		).toBeInTheDocument();
+		expect(getByText(Liferay.Language.get('save'))).toBeInTheDocument();
 	});
 
 	it.skip('renders w/ context dropdown', () => {

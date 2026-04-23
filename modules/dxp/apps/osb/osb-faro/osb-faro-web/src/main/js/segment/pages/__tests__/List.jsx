@@ -3,6 +3,7 @@ import * as data from 'test/data';
 import List from '../List';
 import mockStore from 'test/mock-store';
 import React from 'react';
+import {act} from '@testing-library/react';
 import {ChannelContext} from 'shared/context/channel';
 import {cleanup, render, screen} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
@@ -84,15 +85,14 @@ describe('List', () => {
 
 		render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await act(async () => {
+			jest.runAllTimers();
+		});
 
-		const batchOption = await screen.findByTestId(
-			'batch-segment-dropdown-item'
-		);
-
+		const batchOption = screen.getByTestId('batch-segment-dropdown-item');
 		expect(batchOption.closest('a')).toHaveClass('disabled');
 
-		const realTimeOption = await screen.findByTestId(
+		const realTimeOption = screen.getByTestId(
 			'real-time-segment-dropdown-item'
 		);
 		expect(realTimeOption.closest('a')).not.toHaveClass('disabled');
@@ -118,16 +118,16 @@ describe('List', () => {
 
 		render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await act(async () => {
+			jest.runAllTimers();
+		});
 
-		const realTimeOption = await screen.findByTestId(
+		const realTimeOption = screen.getByTestId(
 			'real-time-segment-dropdown-item'
 		);
 		expect(realTimeOption.closest('a')).toHaveClass('disabled');
 
-		const batchOption = await screen.findByTestId(
-			'batch-segment-dropdown-item'
-		);
+		const batchOption = screen.getByTestId('batch-segment-dropdown-item');
 		expect(batchOption.closest('a')).not.toHaveClass('disabled');
 	});
 
@@ -151,16 +151,16 @@ describe('List', () => {
 
 		render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await act(async () => {
+			jest.runAllTimers();
+		});
 
-		const realTimeOption = await screen.findByTestId(
+		const realTimeOption = screen.getByTestId(
 			'real-time-segment-dropdown-item'
 		);
 		expect(realTimeOption.closest('a')).not.toHaveClass('disabled');
 
-		const batchOption = await screen.findByTestId(
-			'batch-segment-dropdown-item'
-		);
+		const batchOption = screen.getByTestId('batch-segment-dropdown-item');
 		expect(batchOption.closest('a')).not.toHaveClass('disabled');
 	});
 
@@ -184,16 +184,16 @@ describe('List', () => {
 
 		render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await act(async () => {
+			jest.runAllTimers();
+		});
 
-		const realTimeOption = await screen.findByTestId(
+		const realTimeOption = screen.getByTestId(
 			'real-time-segment-dropdown-item'
 		);
 		expect(realTimeOption.closest('a')).not.toHaveClass('disabled');
 
-		const batchOption = await screen.findByTestId(
-			'batch-segment-dropdown-item'
-		);
+		const batchOption = screen.getByTestId('batch-segment-dropdown-item');
 		expect(batchOption.closest('a')).not.toHaveClass('disabled');
 	});
 
@@ -213,10 +213,10 @@ describe('List', () => {
 			}
 		]);
 
-		const {container} = render(<DefaultComponent />);
+		render(<DefaultComponent />);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
-		expect(container).toMatchSnapshot();
+		expect(screen.getByText('Segments')).toBeInTheDocument();
 	});
 });

@@ -12,7 +12,6 @@ exports[`FieldDropDown should render 1`] = `
         class="dropdown-toggle button-root d-flex align-items-center justify-content-between w-100 btn btn-unstyled"
         type="button"
       >
-        
         <svg
           class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
           role="presentation"

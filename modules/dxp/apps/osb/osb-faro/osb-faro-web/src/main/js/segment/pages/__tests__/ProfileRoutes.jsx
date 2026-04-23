@@ -2,7 +2,7 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {ChannelContext} from 'shared/context/channel';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, screen} from '@testing-library/react';
 import {mockChannelContext} from 'test/mock-channel-context';
 import {Provider} from 'react-redux';
 import {SegmentProfileRoutes} from '../ProfileRoutes';
@@ -41,6 +41,6 @@ describe('SegmentProfileRoutes', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(screen.getAllByText('Seattle0').length).toBeGreaterThan(0);
 	});
 });

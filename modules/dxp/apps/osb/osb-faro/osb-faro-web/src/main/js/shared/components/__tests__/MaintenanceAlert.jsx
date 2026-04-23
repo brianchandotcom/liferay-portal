@@ -27,17 +27,22 @@ describe('MaintenanceAlert', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {container, queryByText} = render(
 			<MaintenanceAlert project={new Project()} />
 		);
 
-		expect(container).toMatchSnapshot();
+		// No alert shown when project state is not Scheduled
+		expect(
+			container.querySelector('.maintenance-alert-root')
+		).toBeInTheDocument();
+		expect(queryByText('Scheduled Maintenance')).toBeNull();
 	});
 
 	it('should render w/ maintenance alert', () => {
-		const {container} = render(<MaintenanceAlert project={mockProject} />);
+		const {getByText} = render(<MaintenanceAlert project={mockProject} />);
 
-		expect(container).toMatchSnapshot();
+		// Alert should be shown when project state is Scheduled
+		expect(getByText(/Scheduled Maintenance/)).toBeInTheDocument();
 	});
 });
 
@@ -45,6 +50,10 @@ describe('mapState', () => {
 	it('should map store state to props', () => {
 		const router = {match: {params: {groupId: '23'}}};
 
-		expect(mapState(store, router)).toMatchSnapshot();
+		const result = mapState(store, router);
+
+		expect(result).toHaveProperty('project');
+		expect(result).toHaveProperty('groupId', '23');
+		expect(result).toHaveProperty('alertDismissed');
 	});
 });

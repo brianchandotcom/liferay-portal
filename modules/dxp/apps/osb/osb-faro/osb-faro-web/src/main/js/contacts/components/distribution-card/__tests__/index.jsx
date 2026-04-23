@@ -20,7 +20,7 @@ describe('DistributionCard', () => {
 	it('renders', () => {
 		fetchDistributionTabs.mockReturnValue(() => Promise.resolve({}));
 
-		const {container} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<DistributionCard
@@ -31,13 +31,15 @@ describe('DistributionCard', () => {
 			</Provider>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			getByText(Liferay.Language.get('explore-breakdown'))
+		).toBeInTheDocument();
 	});
 
 	it('renders empty state via props with noResultsRenderer', () => {
 		fetchDistributionTabs.mockReturnValue(() => Promise.resolve({}));
 
-		const {container} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<DistributionCard
@@ -49,13 +51,13 @@ describe('DistributionCard', () => {
 			</Provider>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('empty state')).toBeInTheDocument();
 	});
 
 	it('renders w/ showAddDataSource', () => {
 		fetchDistributionTabs.mockReturnValue(() => Promise.resolve({}));
 
-		const {container} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<DistributionCard
@@ -68,13 +70,18 @@ describe('DistributionCard', () => {
 			</Provider>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			getByText(Liferay.Language.get('add-data-source'))
+		).toBeInTheDocument();
+		expect(
+			getByText(Liferay.Language.get('distribution'))
+		).toBeInTheDocument();
 	});
 
 	it('renders /w AddPropertyForm', () => {
 		fetchDistributionTabs.mockReturnValue(() => Promise.resolve({}));
 
-		const {container} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<DistributionCard
@@ -86,6 +93,11 @@ describe('DistributionCard', () => {
 			</Provider>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			getByText(
+				Liferay.Language.get('add-a-breakdown-by-individual-attribute')
+			)
+		).toBeInTheDocument();
+		expect(getByText(Liferay.Language.get('save'))).toBeInTheDocument();
 	});
 });

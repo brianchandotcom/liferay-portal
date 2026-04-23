@@ -5,7 +5,7 @@ import SegmentGrowthWithList, {
 	SelectedPointInfo
 } from '../Growth';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
@@ -41,23 +41,23 @@ describe('SegmentGrowthWithList', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(screen.getByText('Known Members')).toBeInTheDocument();
 	});
 });
 
 describe('SegmentGrowthChart', () => {
 	it('should render', () => {
-		const {container} = render(
-			<SegmentGrowthChart data={[]} onPointSelect={jest.fn()} />
-		);
+		render(<SegmentGrowthChart data={[]} onPointSelect={jest.fn()} />);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			screen.getByText('There is no data for segment membership.')
+		).toBeInTheDocument();
 	});
 });
 
 describe('SelectedPointInfo', () => {
 	it('should render', () => {
-		const {container} = render(
+		render(
 			<SelectedPointInfo
 				data={[
 					{
@@ -71,6 +71,7 @@ describe('SelectedPointInfo', () => {
 				selectedPoint={0}
 			/>
 		);
-		expect(container).toMatchSnapshot();
+
+		expect(screen.getByText('Known Members')).toBeInTheDocument();
 	});
 });

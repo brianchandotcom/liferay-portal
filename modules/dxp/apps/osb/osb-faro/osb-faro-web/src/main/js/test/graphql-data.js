@@ -533,7 +533,7 @@ export function mockExperimentStatusReq({status}) {
 	};
 }
 
-export function mockBag({items, itemTypeName, name, typeName}) {
+export function mockBag({itemTypeName, items, name, typeName}) {
 	return {
 		[name]: {
 			__typename: typeName,
@@ -665,9 +665,9 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 				devices: 'Any',
 				interval: 'D',
 				location: 'Any',
-				rangeEnd: '',
+				rangeEnd: null,
 				rangeKey,
-				rangeStart: ''
+				rangeStart: null
 			}
 		},
 		result: {
@@ -935,9 +935,9 @@ export function mockSitesTabsReq({rangeKey}) {
 				devices: 'Any',
 				interval: 'D',
 				location: 'Any',
-				rangeEnd: '',
+				rangeEnd: null,
 				rangeKey,
-				rangeStart: ''
+				rangeStart: null
 			}
 		},
 		result: {
@@ -2235,7 +2235,7 @@ export const mockEventMetrics = variables => ({
 	}
 });
 
-export function mockCommerceTotalOrderValueReq({data, Query, variables}) {
+export function mockCommerceTotalOrderValueReq({Query, data, variables}) {
 	return {
 		request: {
 			query: Query,

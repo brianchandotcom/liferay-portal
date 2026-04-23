@@ -1,10 +1,11 @@
 import mockStore from 'test/mock-store';
 import React from 'react';
 import UserRequest from '../UserRequest';
-import {cleanup, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {noop} from 'lodash';
 import {Provider} from 'react-redux';
+import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
@@ -16,15 +17,15 @@ const DefaultComponent = props => (
 			initialEntries={['/workspace/23/settings/users/requests']}
 		>
 			<Route path={Routes.SETTINGS_USERS_REQUESTS}>
-				<UserRequest {...props} onSetUserRequest={noop} />
+				<MockedProvider freezeResults={false}>
+					<UserRequest {...props} onSetUserRequest={noop} />
+				</MockedProvider>
 			</Route>
 		</MemoryRouter>
 	</Provider>
 );
 
 describe('UserRequest', () => {
-	afterEach(cleanup);
-
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 

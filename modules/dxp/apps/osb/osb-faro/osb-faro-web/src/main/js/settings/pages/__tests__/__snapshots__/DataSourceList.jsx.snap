@@ -286,9 +286,6 @@ exports[`DataSourceList should render 1`] = `
           class="settings-base-page-root"
         >
           <div
-            class="embedded-alert-list-root notification-alert-list-root"
-          />
-          <div
             class="maintenance-alert-root"
           />
           <div
@@ -325,7 +322,41 @@ exports[`DataSourceList should render 1`] = `
           <div>
             <div
               class="embedded-alert-list-root"
-            />
+            >
+              <div
+                class="alert alert-warning"
+                role="alert"
+              >
+                <span
+                  class="alert-indicator"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-warning-full icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#warning-full"
+                    />
+                  </svg>
+                </span>
+                <strong
+                  class="lead"
+                >
+                  Warning:
+                </strong>
+                Your authorization token for 
+                <b>
+                  Liferay1
+                </b>
+                 has expired. Please 
+                <a
+                  href="/workspace/23/settings/data-source/1"
+                >
+                  reauthorize
+                </a>
+                 your account credentials.
+              </div>
+            </div>
             <div
               class="card card-root"
             >
@@ -592,38 +623,29 @@ exports[`DataSourceList should render 1`] = `
                           >
                             <a
                               class="text-truncate"
-                              href="/workspace/23/settings/data-source/0"
+                              href="/workspace/23/settings/data-source/1"
                             >
-                              CSV0
+                              Liferay1
                             </a>
                           </div>
                         </td>
                         <td>
-                          .CSV
+                          Liferay Portal
                         </td>
                         <td>
                           <div
-                            class="label label-root label-success label-uppercase"
+                            class="label label-root label-info label-uppercase"
                           >
                             <span
                               class="label-item"
                             >
-                              Active
+                              Authenticated
                             </span>
                           </div>
                         </td>
                         <td
                           class="text-center"
-                        >
-                          <svg
-                            class="lexicon-icon lexicon-icon-check icon-root"
-                            role="presentation"
-                          >
-                            <use
-                              href="#check"
-                            />
-                          </svg>
-                        </td>
+                        />
                         <td
                           class="text-center"
                         />

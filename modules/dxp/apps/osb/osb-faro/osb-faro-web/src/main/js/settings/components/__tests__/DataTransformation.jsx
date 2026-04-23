@@ -2,11 +2,13 @@ import * as API from 'shared/api';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {DataTransformation, processFieldMappings} from '../DataTransformation';
-import {fireEvent, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockFieldMapping, mockMapping} from 'test/data';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
+import {render} from '@testing-library/react';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -17,12 +19,25 @@ const defaultProps = {
 	onSubmit: jest.fn()
 };
 
-const DefaultComponent = props => (
-	<StaticRouter>
-		<Provider store={mockStore()}>
-			<DataTransformation {...defaultProps} {...props} />
-		</Provider>
-	</StaticRouter>
+const WrappedComponent = props => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={['/workspace/23/settings/data-source/123']}
+		>
+			<Route path='/workspace/:groupId/settings/data-source/:id'>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+				>
+					<DataTransformation {...defaultProps} {...props} />
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
 );
 
 describe('processFieldMappings', () => {
@@ -47,11 +62,9 @@ describe('processFieldMappings', () => {
 
 describe('DataTransformation', () => {
 	it('should render', async () => {
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(<WrappedComponent />);
 
 		await waitForLoadingToBeRemoved(container);
-
-		jest.runAllTimers();
 
 		expect(container).toMatchSnapshot();
 	});
@@ -65,74 +78,14 @@ describe('DataTransformation', () => {
 			])
 		);
 
-		const {container, getByText} = render(<DefaultComponent />);
+		const {getByText} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
-
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
 		expect(getByText('Done')).not.toBeDisabled();
 	});
 
-	xit('should render w/ a mapped field', () => {
-		API.dataSource.fetchMappings.mockReturnValue(
-			Promise.resolve([
-				mockMapping('Matched Field', {
-					suggestions: [mockFieldMapping()]
-				}),
-				mockMapping('Unmatched Field')
-			])
-		);
-
-		const {getByText} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
-
-		expect(getByText('TestMatched Field')).toBeTruthy();
-	});
-
-	xit('should hide mapped fields', () => {
-		API.dataSource.fetchMappings.mockReturnValue(
-			Promise.resolve([
-				mockMapping('Matched Field', {
-					suggestions: [mockFieldMapping()]
-				}),
-				mockMapping('Unmatched Field')
-			])
-		);
-
-		const {container, getByText} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
-
-		fireEvent.click(getByText('Unmapped Fields Only'));
-
-		expect(container.querySelector('.hidden')).toBeTruthy();
-	});
-
-	xit('should hide unmatched fields', () => {
-		API.dataSource.fetchMappings.mockReturnValue(
-			Promise.resolve([
-				mockMapping('Has default match 1', {
-					suggestions: [mockFieldMapping(null, {name: 'foo'})]
-				}),
-				mockMapping('Has default match 2', {
-					suggestions: [mockFieldMapping(null, {name: 'bar'})]
-				}),
-				mockMapping('No default match')
-			])
-		);
-
-		const {queryByText} = render(
-			<DefaultComponent showUnmatchedFields={false} />
-		);
-
-		jest.runAllTimers();
-
-		expect(queryByText('TestNo default match')).toBeFalsy();
-	});
-
-	it('should render w/ the done button disabled if there are duplicate CSV field mappings', () => {
+	it('should render w/ the done button disabled if there are duplicate CSV field mappings', async () => {
 		API.dataSource.fetchMappings.mockReturnValue(
 			Promise.resolve([
 				mockMapping('Has default match 1', {
@@ -140,20 +93,22 @@ describe('DataTransformation', () => {
 						mockFieldMapping(null, {name: 'foo'}),
 						mockFieldMapping(null, {name: 'jack', value: 'dupe'})
 					]
+					// eslint-disable-next-line comma-dangle
 				}),
 				mockMapping('Has default match 2', {
 					suggestions: [
 						mockFieldMapping(null, {name: 'bar'}),
 						mockFieldMapping(null, {name: 'jack', value: 'dupe'})
 					]
+					// eslint-disable-next-line comma-dangle
 				}),
 				mockMapping('No default match')
 			])
 		);
 
-		const {getByText} = render(<DefaultComponent />);
+		const {getByText} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(document.body);
 
 		expect(getByText('Done')).toBeDisabled();
 	});

@@ -1,7 +1,7 @@
 import client from 'shared/apollo/client';
 import React from 'react';
 import WebContentMetricCard from '../WebContentMetricCard';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {cleanup, render} from '@testing-library/react';
 import {
 	mockAssetMetricReq,
@@ -9,7 +9,7 @@ import {
 	mockPreferenceReq,
 	mockTimeRangeReq
 } from 'test/graphql-data';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {RangeKeyTimeRanges, THIRTEEN_MONTHS} from 'shared/util/constants';
 import {StaticRouter} from 'react-router-dom';
 import {ViewsMetric} from 'shared/components/metric-card/metrics';
@@ -41,12 +41,12 @@ jest.mock('recharts', () => {
 
 	return {
 		...OriginalModule,
-		ResponsiveContainer: ({children}) => (
+		ResponsiveContainer: ({children}: {children: React.ReactNode}) => (
 			<OriginalModule.ResponsiveContainer height={350} width={800}>
 				{children}
 			</OriginalModule.ResponsiveContainer>
 		),
-		Tooltip: ({children, ...props}) => (
+		Tooltip: ({children, ...props}: {children: React.ReactNode}) => (
 			<OriginalModule.Tooltip {...props} active>
 				{children}
 			</OriginalModule.Tooltip>
@@ -88,11 +88,12 @@ describe('WebContentMetricCard', () => {
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container} = render(<WrappedComponent />);
+		const {getAllByText, getByText} = render(<WrappedComponent />);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Visitors Behavior')).toBeInTheDocument();
+		expect(getAllByText('Views').length).toBeGreaterThan(0);
 	});
 
 	it('should render with empty state', async () => {

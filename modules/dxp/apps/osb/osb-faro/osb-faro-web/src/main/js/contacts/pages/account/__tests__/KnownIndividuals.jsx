@@ -12,7 +12,7 @@ jest.unmock('react-dom');
 
 describe('KnownIndividuals', () => {
 	it('should render', async () => {
-		const {container} = render(
+		const {container, getByText} = render(
 			<StaticRouter>
 				<Provider store={mockStore()}>
 					<KnownIndividuals
@@ -32,6 +32,6 @@ describe('KnownIndividuals', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Foo Bar')).toBeInTheDocument();
 	});
 });

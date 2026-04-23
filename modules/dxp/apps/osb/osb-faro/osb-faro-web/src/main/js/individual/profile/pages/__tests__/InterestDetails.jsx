@@ -18,7 +18,7 @@ jest.unmock('react-dom');
 
 describe('InterestDetails', () => {
 	it('should render', async () => {
-		const {container} = render(
+		const {container, getByText} = render(
 			<StaticRouter>
 				<InterestDetails {...defaultProps} />
 			</StaticRouter>
@@ -26,7 +26,7 @@ describe('InterestDetails', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Back to Interests')).toBeInTheDocument();
 	});
 
 	it('should render an active pages list tab', async () => {

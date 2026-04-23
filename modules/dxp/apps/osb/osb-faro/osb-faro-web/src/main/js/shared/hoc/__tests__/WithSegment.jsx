@@ -4,8 +4,9 @@ import {Segment} from 'shared/util/records';
 
 jest.unmock('react-dom');
 
-jest.mock('shared/hoc/WithAction', () => () => wrappedComponent =>
-	wrappedComponent
+jest.mock(
+	'shared/hoc/WithAction',
+	() => () => wrappedComponent => wrappedComponent
 );
 
 describe('WithSegment', () => {

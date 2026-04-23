@@ -166,6 +166,7 @@ exports[`AccountOverview should render 1`] = `
                     >
                       <div
                         class="bar bar-lg"
+                        style="width: 0%;"
                       />
                       <div
                         class="info-wrapper align-items-center d-flex justify-content-between"

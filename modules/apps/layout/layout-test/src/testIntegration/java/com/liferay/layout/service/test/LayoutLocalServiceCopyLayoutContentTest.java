@@ -365,6 +365,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		_assertSegmentsExperiences(sourceLayout, targetLayout, 3);
 
 		_segmentsExperienceLocalService.updateSegmentsExperiencePriority(
+			TestPropsValues.getUserId(),
 			segmentsExperience2.getSegmentsExperienceId(), 1);
 
 		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);

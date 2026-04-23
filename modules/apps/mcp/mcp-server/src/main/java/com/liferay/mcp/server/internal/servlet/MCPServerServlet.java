@@ -103,12 +103,13 @@ public class MCPServerServlet extends HttpServlet {
 
 	public void invalidateAll(long companyId) {
 		synchronized (this) {
-			String defaultKey = String.valueOf(companyId);
-
-			String prefix = defaultKey + StringPool.UNDERLINE;
+			String companyIdString = String.valueOf(companyId);
 
 			for (String servletKey : new ArrayList<>(_servlets.keySet())) {
-				if (servletKey.equals(defaultKey) || servletKey.startsWith(prefix)) {
+				if (servletKey.equals(companyIdString) ||
+					servletKey.startsWith(
+						companyIdString + StringPool.UNDERLINE)) {
+
 					Servlet servlet = _servlets.remove(servletKey);
 
 					if (servlet != null) {

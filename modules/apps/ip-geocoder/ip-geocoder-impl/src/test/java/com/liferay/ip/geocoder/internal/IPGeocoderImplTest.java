@@ -60,7 +60,6 @@ public class IPGeocoderImplTest {
 
 		IPInfo ipInfo = _ipGeocoderImpl.getIPInfo(_getHttpServletRequest());
 
-		Assert.assertNotNull(ipInfo);
 		Assert.assertEquals(StringPool.BLANK, ipInfo.getCountryCode());
 		Assert.assertEquals("8.8.8.8", ipInfo.getIPAddress());
 	}
@@ -71,7 +70,6 @@ public class IPGeocoderImplTest {
 
 		IPInfo ipInfo = _ipGeocoderImpl.getIPInfo(_getHttpServletRequest());
 
-		Assert.assertNotNull(ipInfo);
 		Assert.assertEquals("US", ipInfo.getCountryCode());
 		Assert.assertEquals("8.8.8.8", ipInfo.getIPAddress());
 	}

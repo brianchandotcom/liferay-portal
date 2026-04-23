@@ -16,9 +16,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.constants.ObjectActionKeys;
-import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
@@ -48,8 +46,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
@@ -61,7 +57,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -427,46 +422,6 @@ public class SectionDisplayContextHelper {
 				null));
 	}
 
-	private List<Long> _getAcceptedDepotEntryGroupIds(
-		List<Long> depotEntryGroupIds, long objectDefinitionId) {
-
-		if (_isAcceptAllGroups(objectDefinitionId)) {
-			return depotEntryGroupIds;
-		}
-
-		List<Long> acceptedGroupIds = _getAcceptedGroupIds(objectDefinitionId);
-
-		if (acceptedGroupIds.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		return new ArrayList<>(
-			SetUtil.intersect(acceptedGroupIds, depotEntryGroupIds));
-	}
-
-	private List<Long> _getAcceptedGroupIds(long objectDefinitionId) {
-		List<Long> acceptedGroupIds = new ArrayList<>();
-
-		ObjectDefinitionSetting objectDefinitionSetting =
-			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				objectDefinitionId,
-				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
-
-		for (String groupId :
-				StringUtil.split(objectDefinitionSetting.getValue())) {
-
-			DepotEntry depotEntry =
-				_depotEntryLocalService.fetchGroupDepotEntry(
-					GetterUtil.getLong(groupId));
-
-			if (depotEntry != null) {
-				acceptedGroupIds.add(depotEntry.getGroupId());
-			}
-		}
-
-		return acceptedGroupIds;
-	}
-
 	private JSONArray _getDepotEntriesJSONArray(
 		List<Long> depotEntryGroupIds, DropdownItem dropdownItem,
 		Locale locale) {
@@ -479,7 +434,7 @@ public class SectionDisplayContextHelper {
 
 		if (objectDefinitionId != 0) {
 			return _getDepotEntriesJSONArray(
-				_getAcceptedDepotEntryGroupIds(
+				ActionUtil.getAcceptedDepotEntryGroupIds(
 					depotEntryGroupIds, objectDefinitionId),
 				locale);
 		}
@@ -703,32 +658,6 @@ public class SectionDisplayContextHelper {
 		}
 
 		return new String[] {rootObjectEntryFolderExternalReferenceCode};
-	}
-
-	private boolean _isAcceptAllGroups(long objectDefinitionId) {
-		ObjectDefinitionSetting objectDefinitionSetting =
-			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				objectDefinitionId,
-				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
-
-		if ((objectDefinitionSetting != null) &&
-			GetterUtil.getBoolean(objectDefinitionSetting.getValue())) {
-
-			return true;
-		}
-
-		objectDefinitionSetting =
-			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				objectDefinitionId,
-				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
-
-		if ((objectDefinitionSetting == null) ||
-			Validator.isNull(objectDefinitionSetting.getValue())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _modelResourcePermissionContains(

@@ -2394,7 +2394,8 @@ public class JenkinsResultsParserUtil {
 			return getBuildProperties();
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
 		}
 	}
 
@@ -6615,16 +6616,14 @@ public class JenkinsResultsParserUtil {
 		if (cacheDirPath != null) {
 			File cacheDir = new File(cacheDirPath);
 
-			if (cacheDir.exists()) {
-				File cacheRepositoryDir = new File(
-					cacheDir, JENKINS_REPOSITORY_NAME);
+			File cacheRepositoryDir = new File(
+				cacheDir, JENKINS_REPOSITORY_NAME);
 
-				if (cacheRepositoryDir.exists()) {
-					System.out.println(
-						"Using " + cacheDirPath + " for cached files");
+			if (cacheDir.exists() && cacheRepositoryDir.exists()) {
+				System.out.println(
+					"Using " + cacheDirPath + " for cached files");
 
-					return "file://" + cacheDirPath;
-				}
+				return "file://" + cacheDirPath;
 			}
 		}
 

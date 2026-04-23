@@ -121,18 +121,9 @@ public class UserServiceTest {
 
 	@Test
 	public void testAddOrganizationUserWithPermission() throws Exception {
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		User user1 = UserTestUtil.addUser();
-		User user2 = UserTestUtil.addUser();
-
-		Organization organization = _organizationLocalService.addOrganization(
-			TestPropsValues.getUserId(),
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			RandomTestUtil.randomString(), false);
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_userLocalService.addRoleUser(role.getRoleId(), user1.getUserId());
 
@@ -149,18 +140,25 @@ public class UserServiceTest {
 			role, User.class.getName(), ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.VIEW);
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user1));
+		Organization organization = _organizationLocalService.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
 
-		_userService.addOrganizationUsers(
-			organization.getOrganizationId(), new long[] {user2.getUserId()});
+		User user2 = UserTestUtil.addUser();
 
-		long[] userIds = _userService.getOrganizationUserIds(
-			organization.getOrganizationId());
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user1, PermissionCheckerFactoryUtil.create(user1))) {
 
-		Assert.assertEquals(user2.getUserId(), userIds[0]);
+			_userService.addOrganizationUsers(
+				organization.getOrganizationId(),
+				new long[] {user2.getUserId()});
 
-		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
+			long[] userIds = _userService.getOrganizationUserIds(
+				organization.getOrganizationId());
+
+			Assert.assertEquals(user2.getUserId(), userIds[0]);
+		}
 	}
 
 	@Test

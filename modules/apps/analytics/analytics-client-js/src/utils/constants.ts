@@ -26,9 +26,17 @@ export const QUEUE_STORAGE_LIMIT = 512;
 
 // Queue priority
 
+export const QUEUE_PRIORITY_ACCOUNT = 10;
+
 export const QUEUE_PRIORITY_DEFAULT = 1;
 
 export const QUEUE_PRIORITY_IDENTITY = 10;
+
+// Demandbase
+
+export const DEMANDBASE_READY_POLL_INTERVAL = 500;
+
+export const DEMANDBASE_READY_TIMEOUT = 5000;
 
 // Request Constants
 

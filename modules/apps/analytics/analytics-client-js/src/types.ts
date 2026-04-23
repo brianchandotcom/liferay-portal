@@ -47,9 +47,17 @@ export namespace Analytics {
 		WebContentViewed = 'webContentViewed',
 	}
 
+	export type AccountMessage = {
+		companyProfile: {[key: string]: unknown};
+		emailAddressHashed: string;
+		id: string;
+		userId: string;
+	};
+
 	export type Config = {
 		channelId: string;
 		dataSourceId: string;
+		demandbaseAccountEndpoint: string;
 		endpointUrl: string;
 		faroBackendUrl: string;
 		flushInterval: number;
@@ -176,6 +184,7 @@ export namespace Analytics {
 	export enum Keys {
 		ChannelId = 'ac_client_channel_id',
 		Contexts = 'ac_client_context',
+		DemandbaseAccount = 'ac_client_demandbase_account',
 		DisableTracking = 'ac_client_disable_tracking',
 		Identity = 'ac_client_identity',
 		PrevEmailAddressHash = 'ac_client_previous_email_address_hash',
@@ -184,10 +193,16 @@ export namespace Analytics {
 	}
 
 	export enum Queues {
+		AccountMessage = 'ac_message_queue_account',
 		Events = 'ac_client_batch',
 		IdentityMessage = 'ac_message_queue_identity',
 		Messages = 'ac_message_queue',
 	}
+
+	export type QueueItem =
+		| Analytics.AccountMessage
+		| Analytics.Event
+		| Analytics.Identity;
 
 	export type FlushResult = {
 		status: string;

@@ -146,11 +146,6 @@ public class JenkinsResultsParserUtil {
 		URL_CACHE + "/liferay-jenkins-ee/git-working-directories.json"
 	};
 
-	public static final String[] URLS_JENKINS_BUILD_PROPERTIES_DEFAULT = {
-		URL_CACHE + "/liferay-jenkins-ee/build.properties",
-		URL_CACHE + "/liferay-jenkins-ee/commands/build.properties"
-	};
-
 	public static final String[] URLS_JENKINS_PROPERTIES_DEFAULT = {
 		URL_CACHE + "/liferay-jenkins-ee/jenkins.properties"
 	};
@@ -2395,41 +2390,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Properties getJenkinsBuildProperties() {
-		Properties properties = new Properties();
-
-		synchronized (_jenkinsBuildProperties) {
-			if (!_jenkinsBuildProperties.isEmpty()) {
-				properties.putAll(_jenkinsBuildProperties);
-
-				return properties;
-			}
-
-			for (String url : URLS_JENKINS_BUILD_PROPERTIES_DEFAULT) {
-				if (url.startsWith("file://")) {
-					properties.putAll(
-						getProperties(new File(url.replace("file://", ""))));
-
-					continue;
-				}
-
-				try {
-					properties.load(
-						new StringReader(
-							toString(
-								getLocalURL(url), false, 0, null, null, 0,
-								_MILLIS_TIMEOUT_DEFAULT, null, true)));
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-			}
-
-			_jenkinsBuildProperties.clear();
-
-			_jenkinsBuildProperties.putAll(properties);
+		try {
+			return getBuildProperties();
 		}
-
-		return new SecureProperties(properties);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public static String getJenkinsBuildResult(String buildURL) {
@@ -7492,7 +7458,6 @@ public class JenkinsResultsParserUtil {
 	private static JSONArray _gitWorkingDirectoriesJSONArray;
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
-	private static final Properties _jenkinsBuildProperties = new Properties();
 	private static final Pattern _jenkinsBuildQueueURLPattern = Pattern.compile(
 		"https?://test-\\d+-\\d+(.liferay.com)?/queue/item/(?<queueId>\\d+)/?");
 	private static final Pattern _jenkinsMasterPattern = Pattern.compile(

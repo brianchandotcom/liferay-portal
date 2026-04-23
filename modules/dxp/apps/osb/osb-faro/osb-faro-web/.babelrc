@@ -26,6 +26,7 @@
 			"@babel/preset-env",
 			{
 				"corejs": "^2.5.7",
+				"loose": true,
 				"useBuiltIns": "usage",
 				"targets": {
 					"ie": "11"

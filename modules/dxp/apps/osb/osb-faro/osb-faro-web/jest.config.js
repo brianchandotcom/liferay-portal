@@ -19,6 +19,9 @@ module.exports = {
 			statements: 70
 		}
 	},
+	fakeTimers: {
+		enableGlobally: true
+	},
 	globals: {
 		CEREBRO_PATHS_GEOMAP_KEY: '',
 		FARO_DEV_MODE: false,
@@ -617,12 +620,11 @@ module.exports = {
 				approved: 0,
 				pending: 1
 			}
-		},
-		'ts-jest': {
-			tsconfig: 'tsconfig.test.json'
 		}
 	},
 	moduleNameMapper: {
+		'^@react-dnd/invariant$':
+			'<rootDir>/src/main/js/test/__mocks__/@react-dnd/invariant.js',
 		'^assets(.*)$': '<rootDir>/src/main/js/assets$1',
 		'^cerebro-shared(.*)$': '<rootDir>/src/main/js/cerebro-shared$1',
 		'^commerce(.*)$': '<rootDir>/src/main/js/commerce$1',
@@ -630,8 +632,9 @@ module.exports = {
 		'^dnd-core$': 'dnd-core/dist/cjs',
 		'^event-analysis(.*)$': '<rootDir>/src/main/js/event-analysis$1',
 		'^experiments(.*)$': '<rootDir>/src/main/js/experiments$1',
-		'^home(.*)$': '<rootDir>/src/main/js/home$1',
 		'^individual(.*)$': '<rootDir>/src/main/js/individual$1',
+		'^jspdf$': '<rootDir>/src/main/js/test/__mocks__/jspdf.js',
+		'^lifecycle(.*)$': '<rootDir>/src/main/js/lifecycle$1',
 		'^react-dnd$': 'react-dnd/dist/cjs',
 		'^react-dnd-html5-backend$': 'react-dnd-html5-backend/dist/cjs',
 		'^route-middleware(.*)$': '<rootDir>/src/main/js/route-middleware$1',
@@ -644,12 +647,14 @@ module.exports = {
 		'^ui-kit(.*)$': '<rootDir>/src/main/js/ui-kit$1'
 	},
 	setupFilesAfterEnv: ['<rootDir>/src/main/js/test/setup.js'],
-	testEnvironment: 'jest-environment-jsdom-fifteen',
+	testEnvironment: 'jsdom',
+	testEnvironmentOptions: {
+		url: 'http://liferay.com'
+	},
 	testResultsProcessor: '@liferay/jest-junit-reporter',
-	testURL: 'http://liferay.com',
-	timers: 'fake',
 	transform: {
 		'^.+\\.jsx?$': 'babel-jest',
-		'^.+\\.tsx?$': 'ts-jest'
-	}
+		'^.+\\.tsx?$': ['ts-jest', {tsconfig: 'tsconfig.test.json'}]
+	},
+	transformIgnorePatterns: ['/node_modules/']
 };

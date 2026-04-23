@@ -5,19 +5,31 @@
 		"baseUrl": "./src/main/js",
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
-		"jsx": "react",
-		"lib": [
-			"DOM",
-			"ES2019"
-		],
+		"jsx": "react-jsx",
 		"module": "esnext",
 		"moduleResolution": "node",
 		"outDir": "build",
+		"paths": {
+			"react": [
+				"../../../node_modules/@types/react/index"
+			],
+			"react-dom": [
+				"../../../node_modules/@types/react-dom/index"
+			],
+			"react-dom/client": [
+				"../../../node_modules/@types/react-dom/client"
+			],
+			"react/jsx-runtime": [
+				"../../../node_modules/@types/react/jsx-runtime"
+			]
+		},
 		"skipLibCheck": true,
 		"sourceMap": true,
+		"strict": true,
 		"target": "ES5"
 	},
 	"include": [
-		"./src/main/js/**/*"
+		"./src/main/js/**/*",
+		"../../../../../global.d.ts"
 	]
 }

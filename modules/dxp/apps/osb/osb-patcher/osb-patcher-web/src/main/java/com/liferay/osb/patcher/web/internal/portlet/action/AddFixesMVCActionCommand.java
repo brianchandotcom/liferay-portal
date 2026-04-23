@@ -73,8 +73,8 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 		String committish = ParamUtil.getString(actionRequest, "committish");
 		String gitRemoteURL = ParamUtil.getString(
 			actionRequest, "gitRemoteURL");
-		boolean workaround = ParamUtil.getBoolean(actionRequest, "workaround");
 		boolean autoFix = ParamUtil.getBoolean(actionRequest, "autoFix");
+		boolean workaround = ParamUtil.getBoolean(actionRequest, "workaround");
 
 		PatcherFixValidator patcherFixValidator = new PatcherFixValidator(
 			_portal.getHttpServletRequest(actionRequest));

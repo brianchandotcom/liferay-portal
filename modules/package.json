@@ -27,6 +27,7 @@
 	"private": true,
 	"resolutions": {
 		"@types/html-minifier-terser": "5.1.0",
+		"prettier": "3.2.5",
 		"ua-parser-js": "^0.7.30"
 	},
 	"scripts": {

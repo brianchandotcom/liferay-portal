@@ -36,6 +36,10 @@ public class AssetSummary {
 		return _assetType;
 	}
 
+	public List<Map<String, Object>> getAssetVocabularies() {
+		return _assetVocabularies;
+	}
+
 	public Metric getDownloadsMetric() {
 		return _downloadsMetric;
 	}
@@ -81,6 +85,12 @@ public class AssetSummary {
 		_assetType = assetType;
 	}
 
+	public void setAssetVocabularies(
+		List<Map<String, Object>> assetVocabularies) {
+
+		_assetVocabularies = assetVocabularies;
+	}
+
 	public void setDownloadsMetric(Metric downloadsMetric) {
 		_downloadsMetric = downloadsMetric;
 	}
@@ -110,6 +120,7 @@ public class AssetSummary {
 	private List<Map<String, Object>> _assetTags;
 	private String _assetTitle;
 	private String _assetType;
+	private List<Map<String, Object>> _assetVocabularies;
 	private Metric _downloadsMetric;
 	private Map<String, Object> _embeddedResources = new HashMap<>();
 	private Metric _impressionsMetric;

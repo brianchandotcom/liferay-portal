@@ -26,7 +26,7 @@ public class StructureSpaceSelectionFDSFilter extends BaseSelectionFDSFilter {
 	@Override
 	public String getAPIURL() {
 		return "/o/headless-asset-library/v1.0/asset-libraries?filter=type " +
-			"eq 'space'";
+			"eq 'Space'";
 	}
 
 	@Override

@@ -14,7 +14,7 @@ export function getCMSItemSelectorFilters(
 ): TFilterConfig[] {
 	return [
 		{
-			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
+			apiURL: "/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'",
 			entityFieldType: EEntityFieldType.COLLECTION,
 			id: 'groupIds',
 			itemKey: 'siteId',

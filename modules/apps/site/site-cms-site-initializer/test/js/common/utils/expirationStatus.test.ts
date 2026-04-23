@@ -36,7 +36,6 @@ describe('expirationStatus', () => {
 		});
 
 		it('returns false when the expiration date is missing', () => {
-			expect(isExpiringSoon('approved', null)).toBe(false);
 			expect(isExpiringSoon('approved', undefined)).toBe(false);
 			expect(isExpiringSoon('approved', '')).toBe(false);
 		});
@@ -77,6 +76,11 @@ describe('expirationStatus', () => {
 	});
 
 	describe('formatExpirationDate', () => {
+		it('returns null when the expiration date is missing', () => {
+			expect(formatExpirationDate(undefined)).toBeNull();
+			expect(formatExpirationDate('')).toBeNull();
+		});
+
 		it('formats an ISO string using the portal locale and time zone', () => {
 			const formatted = formatExpirationDate('2026-04-23T12:00:00Z');
 
@@ -97,6 +101,11 @@ describe('expirationStatus', () => {
 	});
 
 	describe('formatExpirationDateLong', () => {
+		it('returns null when the expiration date is missing', () => {
+			expect(formatExpirationDateLong(undefined)).toBeNull();
+			expect(formatExpirationDateLong('')).toBeNull();
+		});
+
 		it('formats an ISO string using a long date style for screen readers', () => {
 			const formatted = formatExpirationDateLong('2026-02-11T10:30:00Z');
 

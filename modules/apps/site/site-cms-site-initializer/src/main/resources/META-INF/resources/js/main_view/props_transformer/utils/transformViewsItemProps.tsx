@@ -11,7 +11,10 @@ import React from 'react';
 import dateFormat from '../../../common/utils/dateFormat';
 
 import '../../../../css/props_transformer/TransformViewsItemProps.scss';
-import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
+import {
+	ASSET_STATUS,
+	OBJECT_ENTRY_FOLDER_CLASS_NAME,
+} from '../../../common/utils/constants';
 import {
 	formatExpirationDate,
 	formatExpirationDateLong,
@@ -177,10 +180,8 @@ const getLabels = (item: any, props: Card) => {
 	const labels = props.labels ?? [];
 
 	if (
-		isExpiringSoon(
-			item.embedded?.status?.label,
-			item.embedded?.expirationDate
-		)
+		item.embedded?.status?.label === ASSET_STATUS.APPROVED &&
+		isExpiringSoon(item.embedded?.expirationDate)
 	) {
 		const formattedDate =
 			formatExpirationDate(item.embedded.expirationDate) ?? '';

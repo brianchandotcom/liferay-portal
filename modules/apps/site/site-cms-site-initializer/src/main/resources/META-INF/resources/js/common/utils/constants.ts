@@ -13,3 +13,17 @@ export const ENTERPRISE_URL = 'https://www.liferay.com/web/lr/cms-upgrade';
 export const EXPIRING_SOON_THRESHOLD_DAYS = 7;
 
 export const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
+
+export const ASSET_STATUS = {
+	APPROVED: 'approved',
+	DENIED: 'denied',
+	DRAFT: 'draft',
+	EXPIRED: 'expired',
+	INACTIVE: 'inactive',
+	INCOMPLETE: 'incomplete',
+	IN_TRASH: 'in-trash',
+	PENDING: 'pending',
+	SCHEDULED: 'scheduled',
+} as const;
+
+export type AssetStatus = (typeof ASSET_STATUS)[keyof typeof ASSET_STATUS];

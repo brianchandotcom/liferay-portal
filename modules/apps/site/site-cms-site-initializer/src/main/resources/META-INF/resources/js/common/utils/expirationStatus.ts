@@ -8,11 +8,8 @@ import dateFormat from './dateFormat';
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
-export function isExpiringSoon(
-	status: string | undefined,
-	expirationDate?: string | Date
-): boolean {
-	if (status !== 'approved' || !expirationDate) {
+export function isExpiringSoon(expirationDate?: string | Date): boolean {
+	if (!expirationDate) {
 		return false;
 	}
 

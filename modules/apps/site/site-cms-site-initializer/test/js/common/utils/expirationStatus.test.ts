@@ -24,24 +24,13 @@ describe('expirationStatus', () => {
 			jest.useRealTimers();
 		});
 
-		it('returns false when the status is not approved', () => {
-			const threeDays = new Date(
-				NOW.getTime() + 3 * MS_PER_DAY
-			).toISOString();
-
-			expect(isExpiringSoon('draft', threeDays)).toBe(false);
-			expect(isExpiringSoon('pending', threeDays)).toBe(false);
-			expect(isExpiringSoon('expired', threeDays)).toBe(false);
-			expect(isExpiringSoon('scheduled', threeDays)).toBe(false);
-		});
-
 		it('returns false when the expiration date is missing', () => {
-			expect(isExpiringSoon('approved', undefined)).toBe(false);
-			expect(isExpiringSoon('approved', '')).toBe(false);
+			expect(isExpiringSoon(undefined)).toBe(false);
+			expect(isExpiringSoon('')).toBe(false);
 		});
 
 		it('returns false when the expiration date is not parseable', () => {
-			expect(isExpiringSoon('approved', 'not-a-date')).toBe(false);
+			expect(isExpiringSoon('not-a-date')).toBe(false);
 		});
 
 		it('returns false when the expiration date is beyond the threshold', () => {
@@ -49,13 +38,13 @@ describe('expirationStatus', () => {
 				NOW.getTime() + (EXPIRING_SOON_THRESHOLD_DAYS + 1) * MS_PER_DAY
 			).toISOString();
 
-			expect(isExpiringSoon('approved', beyond)).toBe(false);
+			expect(isExpiringSoon(beyond)).toBe(false);
 		});
 
-		it('keeps returning true for approved items whose expiration date has already passed so the badge remains visible until the scheduler flips the status to expired', () => {
+		it('keeps returning true when the expiration date has already passed so the badge remains visible until the scheduler flips the status to expired', () => {
 			const past = new Date(NOW.getTime() - MS_PER_DAY).toISOString();
 
-			expect(isExpiringSoon('approved', past)).toBe(true);
+			expect(isExpiringSoon(past)).toBe(true);
 		});
 
 		it('returns true when the expiration date is within the threshold', () => {
@@ -63,7 +52,7 @@ describe('expirationStatus', () => {
 				NOW.getTime() + 3 * MS_PER_DAY
 			).toISOString();
 
-			expect(isExpiringSoon('approved', within)).toBe(true);
+			expect(isExpiringSoon(within)).toBe(true);
 		});
 
 		it('returns true at the edge of the threshold', () => {
@@ -71,7 +60,7 @@ describe('expirationStatus', () => {
 				NOW.getTime() + EXPIRING_SOON_THRESHOLD_DAYS * MS_PER_DAY - 1000
 			).toISOString();
 
-			expect(isExpiringSoon('approved', edge)).toBe(true);
+			expect(isExpiringSoon(edge)).toBe(true);
 		});
 	});
 

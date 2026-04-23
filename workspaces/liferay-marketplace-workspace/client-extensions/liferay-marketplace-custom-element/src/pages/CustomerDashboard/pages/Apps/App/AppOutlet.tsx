@@ -31,7 +31,7 @@ type BaseOutletProps = {
 	actionButtons?: ReactNode | ((data: ProductAndOrderPayload) => ReactNode);
 	backTitle: string;
 	backURL?: string;
-	description?: string | ((data: ProductAndOrderPayload) => string);
+	description?: ReactNode | ((data: ProductAndOrderPayload) => ReactNode);
 	routes:
 		| NavbarProps['routes']
 		| ((data: ProductAndOrderPayload) => NavbarProps['routes']);

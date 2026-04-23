@@ -60,6 +60,12 @@ export enum PaymentStatus {
 	PENDING = 1,
 }
 
+export const orderTypeDocumentationURL: Partial<Record<OrderTypes, string>> = {
+	[OrderTypes.CMP]: 'https://learn.liferay.com/content-marketing-platform',
+	[OrderTypes.DXP]:
+		'https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/setting-up-liferay/activating-liferay-dxp',
+};
+
 export const orderTypeLabel = {
 	[OrderTypes.ADDONS]: 'Add-Ons',
 	[OrderTypes.AI_HUB]: 'AI Hub',

@@ -130,7 +130,6 @@ public class UpgradeLogProgressTrackerTest {
 					Long.valueOf(1L), lastKnownProgresses.get(registryKey));
 
 				wrappedResultSet.close();
-				wrappedResultSet.close();
 
 				Assert.assertNull(lastKnownProgresses.get(registryKey));
 

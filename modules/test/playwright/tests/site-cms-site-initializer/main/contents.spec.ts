@@ -704,3 +704,66 @@ test(
 		});
 	}
 );
+
+test(
+	'Creation menu for structure restricted to specific spaces lists only those spaces',
+	{tag: '@LPD-87258'},
+	async ({apiHelpers, contentsPage, homePage, page, structureBuilderPage}) => {
+		const allowedSpace =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: `Allowed ${getRandomString()}`,
+				type: 'Space',
+			});
+		const forbiddenSpace =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: `Forbidden ${getRandomString()}`,
+				type: 'Space',
+			});
+
+		const structureLabel = `Restricted${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			page: structureBuilderPage,
+			spaces: ['Default', allowedSpace.name],
+		});
+
+		const expectOnlyAcceptedSpaces = async () => {
+			const dropdown = page.getByRole('listbox');
+
+			await dropdown.waitFor({state: 'visible'});
+
+			await expect(
+				dropdown.getByRole('option', {name: 'Default'})
+			).toBeVisible();
+			await expect(
+				dropdown.getByRole('option', {name: allowedSpace.name})
+			).toBeVisible();
+			await expect(
+				dropdown.getByRole('option', {name: forbiddenSpace.name})
+			).toHaveCount(0);
+		};
+
+		await test.step('From Contents creation menu', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.newButton.click();
+
+			await page.getByRole('menuitem', {name: structureLabel}).click();
+
+			await page.getByRole('dialog').getByLabel('Space').click();
+
+			await expectOnlyAcceptedSpaces();
+		});
+
+		await test.step('From Home Quick Actions', async () => {
+			await homePage.goto();
+
+			await page.getByRole('button', {name: structureLabel}).click();
+
+			await page.getByLabel('SpaceMandatory').click();
+
+			await expectOnlyAcceptedSpaces();
+		});
+	}
+);

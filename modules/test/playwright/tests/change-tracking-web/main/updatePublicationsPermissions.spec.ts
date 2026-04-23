@@ -209,7 +209,7 @@ test.describe('Add Search Bar for the Regular Roles Permissions Tab', () => {
 	test('LPD-57648 Filter Permission Roles with search bar', async ({
 		page,
 	}) => {
-		const searchBar = page.getByLabel('Search');
+		const searchBar = page.getByRole('textbox', {name: 'Search'});
 
 		await expect(searchBar).toBeVisible();
 
@@ -242,7 +242,7 @@ test.describe('Add Search Bar for the Regular Roles Permissions Tab', () => {
 	});
 
 	test('LPD-57648 Show empty search results', async ({page}) => {
-		const searchBar = page.getByLabel('Search');
+		const searchBar = page.getByRole('textbox', {name: 'Search'});
 
 		await expect(searchBar).toBeVisible();
 

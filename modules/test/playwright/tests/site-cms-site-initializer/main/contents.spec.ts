@@ -388,7 +388,18 @@ test(
 	{tag: '@LPD-83177'},
 	async ({contentsPage, page, structureBuilderPage, structuresPage}) => {
 
-		// Create a structure that references Basic Web Content
+		// Create a referenced structure
+
+		const referencedStructureLabel = `ReferencedStructureName${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: referencedStructureLabel,
+			name: referencedStructureLabel,
+			page: structureBuilderPage,
+			publish: true,
+		});
+
+		// Create a structure that references the previous one
 
 		const structureLabel = getRandomString();
 
@@ -400,7 +411,7 @@ test(
 		});
 
 		await structureBuilderPage.addReferencedStructures([
-			'Basic Web Content',
+			referencedStructureLabel,
 		]);
 
 		await structureBuilderPage.publishStructure();
@@ -423,13 +434,13 @@ test(
 
 		await contentsPage.saveContent();
 
-		// Navigate to structures and view usages of Basic Web Content
+		// Navigate to structures and view usages of the referenced structure
 
 		await structuresPage.goto();
 
 		await structuresPage.execItemAction({
 			action: 'View Usages',
-			filter: 'Basic Web Content',
+			filter: referencedStructureLabel,
 		});
 
 		// Assert the nested entry title is not shown
@@ -453,11 +464,6 @@ test(
 			target: page.getByRole('menuitem', {name: 'Delete'}),
 			trigger: card.locator('button'),
 		});
-
-		await page
-			.getByRole('dialog')
-			.getByRole('button', {name: 'Delete Entry'})
-			.click();
 
 		await waitForAlert(page, `Success:${contentTitle} was moved`, {
 			autoClose: false,

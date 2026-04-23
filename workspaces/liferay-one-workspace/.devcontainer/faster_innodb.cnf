@@ -1,0 +1,7 @@
+[mysqld]
+# Sacrifice durability for speed — appropriate for local development only.
+innodb_buffer_pool_size         = 512M
+innodb_doublewrite              = OFF
+innodb_flush_log_at_trx_commit  = 2
+innodb_flush_method             = O_DIRECT
+sync_binlog                     = 0

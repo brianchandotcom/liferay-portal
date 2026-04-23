@@ -1,0 +1,47 @@
+{
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"ms-azuretools.vscode-docker",
+				"redhat.vscode-yaml",
+				"vscjava.vscode-gradle",
+				"vscjava.vscode-java-pack"
+			]
+		}
+	},
+	"dockerComposeFile": "docker-compose.yaml",
+	"forwardPorts": [
+		1080,
+		3306,
+		8000,
+		8080,
+		11311,
+		58081
+	],
+	"name": "liferay-one-workspace",
+	"portsAttributes": {
+		"1080": {
+			"label": "MailDev UI"
+		},
+		"11311": {
+			"label": "Liferay Gogo Shell"
+		},
+		"3306": {
+			"label": "MySQL"
+		},
+		"58081": {
+			"label": "Etc Spring Boot"
+		},
+		"8000": {
+			"label": "Liferay JPDA"
+		},
+		"8080": {
+			"label": "Liferay Portal"
+		}
+	},
+	"remoteUser": "vscode",
+	"service": "dev",
+	"workspaceFolder": "/workspace/workspaces/liferay-one-workspace"
+}

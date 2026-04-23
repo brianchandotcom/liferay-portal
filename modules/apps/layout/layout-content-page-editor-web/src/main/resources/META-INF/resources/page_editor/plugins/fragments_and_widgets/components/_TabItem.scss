@@ -5,17 +5,14 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 		cursor: grab;
 		transition: transform ease 0.3s;
 
-		&:focus-within {
-			transform: translateY(-4px);
-
-			.page-editor__fragments-widgets__tab__highlight-button,
+		&:focus-visible {
 			.page-editor__fragments-widgets__tab__add-button {
 				opacity: 1;
 			}
 		}
 
 		&:hover:not(.disabled),
-		&:focus {
+		&:focus-visible {
 			box-shadow: 0 4px 8px fade_out($cadmin-gray-900, 0.9);
 			outline: none;
 			transform: translateY(-4px);

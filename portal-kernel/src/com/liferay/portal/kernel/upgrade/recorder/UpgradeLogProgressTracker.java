@@ -216,20 +216,20 @@ public class UpgradeLogProgressTracker {
 			return null;
 		}
 
-		Class<?>[] interfaces = null;
+		Class<?>[] classes = null;
 
 		if (statement instanceof CallableStatement) {
-			interfaces = new Class<?>[] {CallableStatement.class};
+			classes = new Class<?>[] {CallableStatement.class};
 		}
 		else if (statement instanceof PreparedStatement) {
-			interfaces = new Class<?>[] {PreparedStatement.class};
+			classes = new Class<?>[] {PreparedStatement.class};
 		}
 		else {
-			interfaces = new Class<?>[] {Statement.class};
+			classes = new Class<?>[] {Statement.class};
 		}
 
 		return (Statement)ProxyUtil.newProxyInstance(
-			UpgradeLogProgressTracker.class.getClassLoader(), interfaces,
+			UpgradeLogProgressTracker.class.getClassLoader(), classes,
 			new StatementInvocationHandler(
 				statement, wrapperConnection, upgradeProcessClassName));
 	}

@@ -22,6 +22,10 @@ public class XMLEmbeddedJSONCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		return _formatJSONInCDATA(content);
+	}
+
+	private String _formatJSONInCDATA(String content) {
 		Matcher matcher = _cdataPattern1.matcher(content);
 
 		while (matcher.find()) {

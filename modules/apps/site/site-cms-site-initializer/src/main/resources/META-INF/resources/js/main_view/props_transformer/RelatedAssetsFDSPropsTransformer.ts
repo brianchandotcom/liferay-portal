@@ -16,7 +16,7 @@ import AssetsFDSPropsTransformer, {
 } from './AssetsFDSPropsTransformer';
 import fileDropAction from './actions/fileDropAction';
 import {MultipleFileUploaderData} from './actions/multipleFilesUploadAction';
-import filterFDSBulkActions from './utils/filterFDSBulkActions';
+import transformFDSBulkActions from './utils/transformFDSBulkActions';
 
 export default function RelatedAssetsFDSPropsTransformer({
 	additionalProps,
@@ -45,7 +45,7 @@ export default function RelatedAssetsFDSPropsTransformer({
 
 	return {
 		...assetsData,
-		bulkActions: filterFDSBulkActions(bulkActions),
+		bulkActions: transformFDSBulkActions(bulkActions),
 		fileDropSettings: {
 			enabled: true,
 			isDropTarget: () => true,

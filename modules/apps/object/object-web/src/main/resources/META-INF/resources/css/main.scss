@@ -8,6 +8,15 @@
 	}
 }
 
+.side-navigation-container.c-slideout-push-start
+	~ .flex-grow-1
+	.lfr-objects__model-builder-custom-vertical-bar.c-slideout-start {
+	@include media-breakpoint-up(md) {
+		inset-inline-start: $c-slideout-sidebar-width;
+		z-index: calc(#{$zindex-c-slideout} - 1);
+	}
+}
+
 .side-panel-content {
 	background-color: $light;
 	display: flex;

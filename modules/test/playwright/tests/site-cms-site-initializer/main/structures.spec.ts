@@ -229,6 +229,28 @@ test(
 			});
 		});
 
+		await test.step('Log in as an CMS Administrator', async () => {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const cmsAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'CMS Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				cmsAdminRole.id,
+				Number(user.id)
+			);
+
+			await performUserSwitch(page, user.alternateName);
+		});
+
 		await test.step('Check if the modal show the correct value default value', async () => {
 			await structuresPage.goto();
 

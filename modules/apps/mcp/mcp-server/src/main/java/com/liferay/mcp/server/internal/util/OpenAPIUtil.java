@@ -367,34 +367,34 @@ public class OpenAPIUtil {
 					currentVisitedRefs);
 			}
 
-			JSONObject resultJSONObject = JSONFactoryUtil.createJSONObject();
+			JSONObject resolvedJSONObject = JSONFactoryUtil.createJSONObject();
 
 			for (String key : jsonObject.keySet()) {
 				if (_excludedSchemaKeys.contains(key) || key.startsWith("x-")) {
 					continue;
 				}
 
-				resultJSONObject.put(
+				resolvedJSONObject.put(
 					key,
 					_resolveRefs(
 						rootJSONObject, jsonObject.get(key), visitedRefs));
 			}
 
-			return resultJSONObject;
+			return resolvedJSONObject;
 		}
 
 		if (value instanceof JSONArray) {
 			JSONArray jsonArray = (JSONArray)value;
 
-			JSONArray resultJSONArray = JSONFactoryUtil.createJSONArray();
+			JSONArray resolvedJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (int i = 0; i < jsonArray.length(); i++) {
-				resultJSONArray.put(
+				resolvedJSONArray.put(
 					_resolveRefs(
 						rootJSONObject, jsonArray.get(i), visitedRefs));
 			}
 
-			return resultJSONArray;
+			return resolvedJSONArray;
 		}
 
 		return value;

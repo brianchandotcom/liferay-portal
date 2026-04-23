@@ -64,7 +64,7 @@ public class MCPServerServletTest {
 
 	@FeatureFlag("LPD-86164")
 	@Test
-	public void testServiceWithChangedProfile() throws Exception {
+	public void testServiceWithModifiedProfile() throws Exception {
 		String name = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _addObjectEntry(

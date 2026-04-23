@@ -675,15 +675,17 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 
 	return tableSections ? (
 		<ClayLayout.ContentCol className="c-gap-4 table-visualization-mode">
-			<ClayAlert
-				displayType="info"
-				title={`${Liferay.Language.get('info')}:`}
-				variant="stripe"
-			>
-				{Liferay.Language.get(
-					'this-visualization-mode-will-not-be-shown-until-you-assign-at-least-one-field'
-				)}
-			</ClayAlert>
+			{tableSections.length === 0 && (
+				<ClayAlert
+					displayType="info"
+					title={`${Liferay.Language.get('info')}:`}
+					variant="stripe"
+				>
+					{Liferay.Language.get(
+						'this-visualization-mode-will-not-be-shown-until-you-assign-at-least-one-field'
+					)}
+				</ClayAlert>
+			)}
 
 			<OrderableTable
 				actions={[

@@ -245,15 +245,17 @@ export default function Cards(props: IDataSetSectionProps) {
 
 	return (
 		<ClayLayout.ContentCol className="c-gap-4 cards-visualization-mode">
-			<ClayAlert
-				displayType="info"
-				title={`${Liferay.Language.get('info')}:`}
-				variant="stripe"
-			>
-				{Liferay.Language.get(
-					'this-visualization-mode-will-not-be-shown-until-you-assign-at-least-one-field-to-a-card-element'
-				)}
-			</ClayAlert>
+			{cardsSections.every((cardsSection) => !cardsSection.field) && (
+				<ClayAlert
+					displayType="info"
+					title={`${Liferay.Language.get('info')}:`}
+					variant="stripe"
+				>
+					{Liferay.Language.get(
+						'this-visualization-mode-will-not-be-shown-until-you-assign-at-least-one-field-to-a-card-element'
+					)}
+				</ClayAlert>
+			)}
 
 			<ClayTable className="mb-0">
 				<ClayTable.Head>

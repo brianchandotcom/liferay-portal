@@ -246,15 +246,17 @@ export default function List(props: IDataSetSectionProps) {
 
 	return (
 		<ClayLayout.ContentCol className="c-gap-4 list-visualization-mode">
-			<ClayAlert
-				displayType="info"
-				title={`${Liferay.Language.get('info')}:`}
-				variant="stripe"
-			>
-				{Liferay.Language.get(
-					'this-visualization-mode-will-not-be-shown-until-you-assign-at-least-one-field-to-a-list-element'
-				)}
-			</ClayAlert>
+			{listSections.every((listSection) => !listSection.field) && (
+				<ClayAlert
+					displayType="info"
+					title={`${Liferay.Language.get('info')}:`}
+					variant="stripe"
+				>
+					{Liferay.Language.get(
+						'this-visualization-mode-will-not-be-shown-until-you-assign-at-least-one-field-to-a-list-element'
+					)}
+				</ClayAlert>
+			)}
 
 			<ClayTable className="mb-0">
 				<ClayTable.Head>

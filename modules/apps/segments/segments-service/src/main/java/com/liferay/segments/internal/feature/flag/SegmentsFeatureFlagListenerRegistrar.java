@@ -78,6 +78,10 @@ public class SegmentsFeatureFlagListenerRegistrar {
 					companyId, GroupConstants.ANY_PARENT_GROUP_ID, true),
 				GroupModel::getGroupId);
 
+			if (groupIds.length == 0) {
+				return;
+			}
+
 			_updateSegmentsEntries(enabled, groupIds);
 			_updateSegmentsExperiences(enabled, groupIds);
 		}

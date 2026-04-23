@@ -265,7 +265,7 @@ definition {
 
 	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
 	@priority = 5
-	test CanViewFriendlyURLs {
+	test CanViewRestoreAndRemoveOldFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(

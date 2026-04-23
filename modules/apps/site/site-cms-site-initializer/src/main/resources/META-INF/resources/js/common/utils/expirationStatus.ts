@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {EXPIRING_SOON_THRESHOLD_DAYS} from './constants';
 import dateFormat from './dateFormat';
-
-export const EXPIRING_SOON_THRESHOLD_DAYS = 7;
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 

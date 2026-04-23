@@ -90,30 +90,28 @@ const cmsTest = mergeTests(
 let displayPageId: string;
 let siteLanguage = 'en';
 
-test.afterEach(
-	async ({accountSettingsPage, apiHelpers, page}) => {
-		if (displayPageId) {
-			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
-				{
-					layoutPageTemplateEntryId: displayPageId,
-				}
-			);
+test.afterEach(async ({accountSettingsPage, apiHelpers, page}) => {
+	if (displayPageId) {
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
+			{
+				layoutPageTemplateEntryId: displayPageId,
+			}
+		);
 
-			displayPageId = '';
-		}
-
-		if (siteLanguage !== 'en') {
-			await accountSettingsPage.selectAccountLanguage({
-				languageId: 'en_US',
-				navigate: true,
-			});
-
-			await page.goto('en');
-
-			siteLanguage = 'en';
-		}
+		displayPageId = '';
 	}
-);
+
+	if (siteLanguage !== 'en') {
+		await accountSettingsPage.selectAccountLanguage({
+			languageId: 'en_US',
+			navigate: true,
+		});
+
+		await page.goto('en');
+
+		siteLanguage = 'en';
+	}
+});
 
 assigneeTest(
 	'can create, read, update and delete an entry with assignee object field',

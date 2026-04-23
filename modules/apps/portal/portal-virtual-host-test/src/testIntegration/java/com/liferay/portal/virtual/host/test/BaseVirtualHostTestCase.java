@@ -6,6 +6,7 @@
 package com.liferay.portal.virtual.host.test;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.Inject;
 
@@ -30,9 +31,9 @@ public abstract class BaseVirtualHostTestCase {
 		unsafeBiConsumer.accept(response.getResponseCode(), body);
 	}
 
-	protected static final String COMPANY_HOST_1 = "company1.localhost";
-
-	protected static final String COMPANY_HOST_2 = "company2.localhost";
+	protected String generateVirtualHostName() {
+		return RandomTestUtil.randomString() + ".localhost";
+	}
 
 	@Inject
 	protected Http http;

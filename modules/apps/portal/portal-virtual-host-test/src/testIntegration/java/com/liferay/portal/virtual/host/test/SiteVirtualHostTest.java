@@ -26,6 +26,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -47,89 +51,113 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompanyWithWebId(true, COMPANY_HOST_1);
+		_company = CompanyTestUtil.addCompanyWithWebId(
+			true, generateVirtualHostName());
 
 		_guestGroup = _groupLocalService.getGroup(
 			_company.getCompanyId(),
 			PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
-		_group1 = _addGroup(_company, null, _GROUP_HOST_1);
+		_group1 = _addGroup(_company, null, generateVirtualHostName());
 
-		_childGroup1 = _addGroup(_company, _group1, _CHILD_GROUP_HOST_1);
+		_childGroup1 = _addGroup(_company, _group1, generateVirtualHostName());
 
-		_group2 = _addGroup(_company, null, _GROUP_HOST_2);
+		_group2 = _addGroup(_company, null, generateVirtualHostName());
 
 		_childGroup2 = _addGroup(_company, _group2, null);
 
 		_group3 = _addGroup(_company, null, null);
 
-		_childGroup3 = _addGroup(_company, _group3, _CHILD_GROUP_HOST_2);
+		_childGroup3 = _addGroup(_company, _group3, generateVirtualHostName());
+	}
+
+	@After
+	public void tearDown() {
+		_groupVirtualHostNames.clear();
 	}
 
 	@Ignore
 	@Test
 	public void testGroupRestrictedViaVirutalHost() throws Exception {
-		_assertURLToString(true, _group1, COMPANY_HOST_1);
-		_assertURLToString(true, _group2, COMPANY_HOST_1);
-		_assertURLToString(true, _group3, COMPANY_HOST_1);
-		_assertURLToString(true, _guestGroup, COMPANY_HOST_1);
+		String companyVirtualHostName = _company.getVirtualHostname();
 
-		_assertURLToString(true, _group1, _GROUP_HOST_1);
-		_assertURLToString(false, _group2, _GROUP_HOST_1);
-		_assertURLToString(true, _group3, _GROUP_HOST_1);
-		_assertURLToString(true, _guestGroup, _GROUP_HOST_1);
+		_assertURLToString(true, _group1, companyVirtualHostName);
+		_assertURLToString(true, _group2, companyVirtualHostName);
+		_assertURLToString(true, _group3, companyVirtualHostName);
+		_assertURLToString(true, _guestGroup, companyVirtualHostName);
 
-		_assertURLToString(true, _group1, _GROUP_HOST_2);
-		_assertURLToString(true, _group2, _GROUP_HOST_2);
-		_assertURLToString(true, _group3, _GROUP_HOST_2);
-		_assertURLToString(true, _guestGroup, _GROUP_HOST_2);
+		String group1VirtualHostName = _groupVirtualHostNames.get(_group1);
+
+		_assertURLToString(true, _group1, group1VirtualHostName);
+		_assertURLToString(false, _group2, group1VirtualHostName);
+		_assertURLToString(true, _group3, group1VirtualHostName);
+		_assertURLToString(false, _guestGroup, group1VirtualHostName);
+
+		String group2VirtualHostName = _groupVirtualHostNames.get(_group2);
+
+		_assertURLToString(false, _group1, group2VirtualHostName);
+		_assertURLToString(true, _group2, group2VirtualHostName);
+		_assertURLToString(true, _group3, group2VirtualHostName);
+		_assertURLToString(false, _guestGroup, group2VirtualHostName);
 	}
 
 	@Test
 	public void testGroupsAccessibleViaVirutalHost() throws Exception {
-		_assertURLToString(true, _group1, COMPANY_HOST_1);
-		_assertURLToString(true, _group2, COMPANY_HOST_1);
-		_assertURLToString(true, _group3, COMPANY_HOST_1);
-		_assertURLToString(true, _childGroup1, COMPANY_HOST_1);
-		_assertURLToString(true, _childGroup2, COMPANY_HOST_1);
-		_assertURLToString(true, _childGroup3, COMPANY_HOST_1);
-		_assertURLToString(true, _guestGroup, COMPANY_HOST_1);
+		String companyVirtualHostName = _company.getVirtualHostname();
 
-		_assertURLToString(true, _group1, _GROUP_HOST_1);
-		_assertURLToString(true, _group2, _GROUP_HOST_1);
-		_assertURLToString(true, _group3, _GROUP_HOST_1);
-		_assertURLToString(true, _childGroup1, _GROUP_HOST_1);
-		_assertURLToString(true, _childGroup2, _GROUP_HOST_1);
-		_assertURLToString(true, _childGroup3, _GROUP_HOST_1);
-		_assertURLToString(true, _guestGroup, _GROUP_HOST_1);
+		_assertURLToString(true, _group1, companyVirtualHostName);
+		_assertURLToString(true, _group2, companyVirtualHostName);
+		_assertURLToString(true, _group3, companyVirtualHostName);
+		_assertURLToString(true, _childGroup1, companyVirtualHostName);
+		_assertURLToString(true, _childGroup2, companyVirtualHostName);
+		_assertURLToString(true, _childGroup3, companyVirtualHostName);
+		_assertURLToString(true, _guestGroup, companyVirtualHostName);
 
-		_assertURLToString(true, _group1, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _group2, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _group3, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _childGroup1, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _childGroup2, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _childGroup3, _CHILD_GROUP_HOST_1);
-		_assertURLToString(true, _guestGroup, _CHILD_GROUP_HOST_1);
+		String group1VirtualHostName = _groupVirtualHostNames.get(_group1);
 
-		_assertURLToString(true, _group1, _GROUP_HOST_2);
-		_assertURLToString(true, _group2, _GROUP_HOST_2);
-		_assertURLToString(true, _group3, _GROUP_HOST_2);
-		_assertURLToString(true, _childGroup1, _GROUP_HOST_2);
-		_assertURLToString(true, _childGroup2, _GROUP_HOST_2);
-		_assertURLToString(true, _childGroup3, _GROUP_HOST_2);
-		_assertURLToString(true, _guestGroup, _GROUP_HOST_2);
+		_assertURLToString(true, _group1, group1VirtualHostName);
+		_assertURLToString(true, _group2, group1VirtualHostName);
+		_assertURLToString(true, _group3, group1VirtualHostName);
+		_assertURLToString(true, _childGroup1, group1VirtualHostName);
+		_assertURLToString(true, _childGroup2, group1VirtualHostName);
+		_assertURLToString(true, _childGroup3, group1VirtualHostName);
+		_assertURLToString(true, _guestGroup, group1VirtualHostName);
 
-		_assertURLToString(true, _group1, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _group2, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _group3, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _childGroup1, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _childGroup2, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _childGroup3, _CHILD_GROUP_HOST_2);
-		_assertURLToString(true, _guestGroup, _CHILD_GROUP_HOST_2);
+		String childGroup1VirtualHostName = _groupVirtualHostNames.get(
+			_childGroup1);
+
+		_assertURLToString(true, _group1, childGroup1VirtualHostName);
+		_assertURLToString(true, _group2, childGroup1VirtualHostName);
+		_assertURLToString(true, _group3, childGroup1VirtualHostName);
+		_assertURLToString(true, _childGroup1, childGroup1VirtualHostName);
+		_assertURLToString(true, _childGroup2, childGroup1VirtualHostName);
+		_assertURLToString(true, _childGroup3, childGroup1VirtualHostName);
+		_assertURLToString(true, _guestGroup, childGroup1VirtualHostName);
+
+		String group2VirtualHostName = _groupVirtualHostNames.get(_group2);
+
+		_assertURLToString(true, _group1, group2VirtualHostName);
+		_assertURLToString(true, _group2, group2VirtualHostName);
+		_assertURLToString(true, _group3, group2VirtualHostName);
+		_assertURLToString(true, _childGroup1, group2VirtualHostName);
+		_assertURLToString(true, _childGroup2, group2VirtualHostName);
+		_assertURLToString(true, _childGroup3, group2VirtualHostName);
+		_assertURLToString(true, _guestGroup, group2VirtualHostName);
+
+		String childGroup3VirtualHostName = _groupVirtualHostNames.get(
+			_childGroup3);
+
+		_assertURLToString(true, _group1, childGroup3VirtualHostName);
+		_assertURLToString(true, _group2, childGroup3VirtualHostName);
+		_assertURLToString(true, _group3, childGroup3VirtualHostName);
+		_assertURLToString(true, _childGroup1, childGroup3VirtualHostName);
+		_assertURLToString(true, _childGroup2, childGroup3VirtualHostName);
+		_assertURLToString(true, _childGroup3, childGroup3VirtualHostName);
+		_assertURLToString(true, _guestGroup, childGroup3VirtualHostName);
 	}
 
 	private Group _addGroup(
-			Company company, Group parentGroup, String virtualHost)
+			Company company, Group parentGroup, String virtualHostName)
 		throws Exception {
 
 		Group group;
@@ -142,12 +170,14 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 				company.getCompanyId(), parentGroup.getGroupId());
 		}
 
-		if (virtualHost != null) {
+		if (virtualHostName != null) {
 			_layoutSetLocalService.updateVirtualHosts(
 				group.getGroupId(), false,
 				TreeMapBuilder.put(
-					virtualHost, StringPool.BLANK
+					virtualHostName, StringPool.BLANK
 				).build());
+
+			_groupVirtualHostNames.put(group, virtualHostName);
 		}
 
 		LayoutTestUtil.addTypePortletLayout(group);
@@ -156,7 +186,7 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 	}
 
 	private void _assertURLToString(
-			boolean accessible, Group group, String host)
+			boolean accessible, Group group, String virtualHostName)
 		throws Exception {
 
 		assertURLtoString(
@@ -178,16 +208,9 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 					body.contains(layout.getName(LocaleUtil.getDefault())));
 			},
 			StringBundler.concat(
-				"http://", host, ":8080/web", group.getFriendlyURL()));
+				"http://", virtualHostName, ":8080/web",
+				group.getFriendlyURL()));
 	}
-
-	private static final String _CHILD_GROUP_HOST_1 = "childgroup1.localhost";
-
-	private static final String _CHILD_GROUP_HOST_2 = "childgroup2.localhost";
-
-	private static final String _GROUP_HOST_1 = "group1.localhost";
-
-	private static final String _GROUP_HOST_2 = "group2.localhost";
 
 	private Group _childGroup1;
 	private Group _childGroup2;
@@ -203,6 +226,7 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
+	private final Map<Group, String> _groupVirtualHostNames = new HashMap<>();
 	private Group _guestGroup;
 
 	@Inject

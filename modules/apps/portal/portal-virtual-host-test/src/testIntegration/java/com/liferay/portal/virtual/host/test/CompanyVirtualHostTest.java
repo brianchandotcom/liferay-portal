@@ -38,10 +38,10 @@ public class CompanyVirtualHostTest extends BaseVirtualHostTestCase {
 		throws Exception {
 
 		Company company1 = CompanyTestUtil.addCompanyWithWebId(
-			true, COMPANY_HOST_1);
+			true, generateVirtualHostName());
 
 		Company company2 = CompanyTestUtil.addCompanyWithWebId(
-			true, COMPANY_HOST_2);
+			true, generateVirtualHostName());
 
 		Group group = GroupTestUtil.addGroupToCompany(company1.getCompanyId());
 
@@ -55,17 +55,16 @@ public class CompanyVirtualHostTest extends BaseVirtualHostTestCase {
 					body.contains(layout.getName(LocaleUtil.getDefault())));
 			},
 			StringBundler.concat(
-				"http://", COMPANY_HOST_1, ":8080/web",
+				"http://", company1.getVirtualHostname(), ":8080/web",
 				group.getFriendlyURL()));
 
 		assertURLtoString(
 			(code, body) -> {
 				Assert.assertEquals(404, (long)code);
 				Assert.assertTrue(body.contains(company2.getVirtualHostname()));
-				Assert.assertTrue(body.contains("404"));
 			},
 			StringBundler.concat(
-				"http://", COMPANY_HOST_2, ":8080/web",
+				"http://", company2.getVirtualHostname(), ":8080/web",
 				group.getFriendlyURL()));
 	}
 

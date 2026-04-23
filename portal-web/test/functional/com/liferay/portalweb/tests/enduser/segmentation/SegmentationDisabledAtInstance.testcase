@@ -138,9 +138,17 @@ definition {
 	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Segments Admin Then should be forwarded to Segments Service at Instance Settings"
 	@priority = 4
 	test ViewAndReEnableAlertAtSegmentsList {
-		task ("Open the Segments List, click at warning with link and confirm Instance Settings is open") {
+		task ("Open the Segments List") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		}
 
+		task ("Check alert shows re-enable instructions") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "To enable, go to Instance Settings.");
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
 			Segmentation.clickToReEnableSegmentsWarningLink();
 
 			AssertVisible(
@@ -534,18 +542,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_3",
 				value1 = "Segmentation is disabled");
-		}
-	}
-
-	@description = "LPS-151362 Given segmentation is disabled at Instance Settings When user navigates to Segments page Then the warning alert explains how to re-enable it"
-	@priority = 4
-	test ViewReEnableAlertAtSegmentsList {
-		task ("Open the Segments List and check if warning appears") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
 		}
 	}
 

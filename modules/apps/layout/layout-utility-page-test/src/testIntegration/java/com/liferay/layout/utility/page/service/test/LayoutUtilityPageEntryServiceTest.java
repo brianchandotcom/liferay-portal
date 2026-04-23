@@ -516,7 +516,7 @@ public class LayoutUtilityPageEntryServiceTest {
 		layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), _serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
 			layoutUtilityPageEntry.getPlid());

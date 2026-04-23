@@ -43,6 +43,7 @@ public class SharingEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("toTicketId", getToTicketId());
 		attributes.put("toUserGroupId", getToUserGroupId());
 		attributes.put("toUserId", getToUserId());
 		attributes.put("classNameId", getClassNameId());
@@ -109,6 +110,12 @@ public class SharingEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long toTicketId = (Long)attributes.get("toTicketId");
+
+		if (toTicketId != null) {
+			setToTicketId(toTicketId);
 		}
 
 		Long toUserGroupId = (Long)attributes.get("toUserGroupId");
@@ -287,6 +294,16 @@ public class SharingEntryWrapper
 	@Override
 	public long getSharingEntryId() {
 		return model.getSharingEntryId();
+	}
+
+	/**
+	 * Returns the to ticket ID of this sharing entry.
+	 *
+	 * @return the to ticket ID of this sharing entry
+	 */
+	@Override
+	public long getToTicketId() {
+		return model.getToTicketId();
 	}
 
 	/**
@@ -516,6 +533,16 @@ public class SharingEntryWrapper
 	}
 
 	/**
+	 * Sets the to ticket ID of this sharing entry.
+	 *
+	 * @param toTicketId the to ticket ID of this sharing entry
+	 */
+	@Override
+	public void setToTicketId(long toTicketId) {
+		model.setToTicketId(toTicketId);
+	}
+
+	/**
 	 * Sets the to user group ID of this sharing entry.
 	 *
 	 * @param toUserGroupId the to user group ID of this sharing entry
@@ -601,4 +628,4 @@ public class SharingEntryWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1521835014
+// LIFERAY-SERVICE-BUILDER-HASH:906755228

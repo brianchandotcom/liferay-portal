@@ -215,6 +215,20 @@ public interface SharingEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the to ticket ID of this sharing entry.
+	 *
+	 * @return the to ticket ID of this sharing entry
+	 */
+	public long getToTicketId();
+
+	/**
+	 * Sets the to ticket ID of this sharing entry.
+	 *
+	 * @param toTicketId the to ticket ID of this sharing entry
+	 */
+	public void setToTicketId(long toTicketId);
+
+	/**
 	 * Returns the to user group ID of this sharing entry.
 	 *
 	 * @return the to user group ID of this sharing entry
@@ -355,4 +369,4 @@ public interface SharingEntryModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1352282567
+// LIFERAY-SERVICE-BUILDER-HASH:-1222225524

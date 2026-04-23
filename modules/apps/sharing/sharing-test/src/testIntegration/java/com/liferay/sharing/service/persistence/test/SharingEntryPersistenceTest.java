@@ -132,6 +132,8 @@ public class SharingEntryPersistenceTest {
 
 		newSharingEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		newSharingEntry.setToTicketId(RandomTestUtil.nextLong());
+
 		newSharingEntry.setToUserGroupId(RandomTestUtil.nextLong());
 
 		newSharingEntry.setToUserId(RandomTestUtil.nextLong());
@@ -174,6 +176,9 @@ public class SharingEntryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingSharingEntry.getModifiedDate()),
 			Time.getShortTimestamp(newSharingEntry.getModifiedDate()));
+		Assert.assertEquals(
+			existingSharingEntry.getToTicketId(),
+			newSharingEntry.getToTicketId());
 		Assert.assertEquals(
 			existingSharingEntry.getToUserGroupId(),
 			newSharingEntry.getToUserGroupId());
@@ -302,12 +307,13 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTUG_TU_C_C() throws Exception {
-		_persistence.countByTUG_TU_C_C(
+	public void testCountByTT_TUG_TU_C_C() throws Exception {
+		_persistence.countByTT_TUG_TU_C_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countByTUG_TU_C_C(0L, 0L, 0L, 0L);
+		_persistence.countByTT_TUG_TU_C_C(0L, 0L, 0L, 0L, 0L);
 	}
 
 	@Test
@@ -347,9 +353,9 @@ public class SharingEntryPersistenceTest {
 			"SharingEntry", "uuid", true, "externalReferenceCode", true,
 			"sharingEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "toUserGroupId", true, "toUserId", true,
-			"classNameId", true, "classPK", true, "shareable", true,
-			"actionIds", true, "expirationDate", true);
+			"modifiedDate", true, "toTicketId", true, "toUserGroupId", true,
+			"toUserId", true, "classNameId", true, "classPK", true, "shareable",
+			true, "actionIds", true, "expirationDate", true);
 	}
 
 	@Test
@@ -628,6 +634,11 @@ public class SharingEntryPersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
+			Long.valueOf(sharingEntry.getToTicketId()),
+			ReflectionTestUtil.<Long>invoke(
+				sharingEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "toTicketId"));
+		Assert.assertEquals(
 			Long.valueOf(sharingEntry.getToUserGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				sharingEntry, "getColumnOriginalValue",
@@ -681,6 +692,8 @@ public class SharingEntryPersistenceTest {
 
 		sharingEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		sharingEntry.setToTicketId(RandomTestUtil.nextLong());
+
 		sharingEntry.setToUserGroupId(RandomTestUtil.nextLong());
 
 		sharingEntry.setToUserId(RandomTestUtil.nextLong());
@@ -705,4 +718,4 @@ public class SharingEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-332387036
+// LIFERAY-SERVICE-BUILDER-HASH:1193723092

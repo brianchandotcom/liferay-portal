@@ -8,14 +8,47 @@ jobs:
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
-            -   name: Create Kind cluster
-                run: kind create cluster
-            -   name: Run Helm test
+            -   name: Install Helm
+                uses: azure/setup-helm@v4
+            -   name: Install kubeconform
                 run: |
-                    helm upgrade -i liferay --wait .
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
 
-                    helm test liferay
-                working-directory: ./cloud/helm
+                    KUBECONFORM_VERSION=v0.7.0
+
+                    curl --fail --location --silent --show-error \
+                        "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz" \
+                        | sudo tar --directory /usr/local/bin --extract --gzip --file - kubeconform
+
+                    kubeconform -v
+            -   name: Update Helm dependencies
+                run: helm dependency update --skip-refresh
+                working-directory: ./cloud/helm/${{matrix.chart}}
+            -   name: Lint Helm chart
+                run: helm lint .
+                working-directory: ./cloud/helm/${{matrix.chart}}
+            -   name: Render and validate Helm chart
+                run: |
+                    set -o pipefail
+
+                    helm template liferay . | kubeconform --strict --summary \
+                        -schema-location default \
+                        -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
+                working-directory: ./cloud/helm/${{matrix.chart}}
+        strategy:
+            fail-fast: false
+            matrix:
+                chart:
+                    -   aws
+                    -   aws-infrastructure
+                    -   aws-infrastructure-provider
+                    -   aws-marketplace
+                    -   default
+                    -   gcp
+                    -   gcp-infrastructure
+                    -   gcp-infrastructure-provider
 on:
     push:
         branches:

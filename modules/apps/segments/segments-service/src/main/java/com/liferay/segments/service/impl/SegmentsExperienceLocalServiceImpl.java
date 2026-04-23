@@ -459,6 +459,13 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
+	public List<SegmentsExperience> getSegmentsExperiences(
+		long[] groupIds, boolean active) {
+
+		return segmentsExperiencePersistence.findByG_A(groupIds, active);
+	}
+
+	@Override
 	public int getSegmentsExperiencesCount(long groupId, long plid) {
 		return segmentsExperiencePersistence.countByG_P(groupId, plid);
 	}

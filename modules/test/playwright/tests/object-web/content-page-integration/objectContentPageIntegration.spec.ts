@@ -48,480 +48,11 @@ const test = mergeTests(
 	templatesPageTest
 );
 
-test.describe('Object Widget', () => {
-	test(
-		'Can add object portlet as a widget on a page',
-		{tag: '@LPS-143122'},
-		async ({
-			apiHelpers,
-			editObjectDetailsPage,
-			page,
-			site,
-			widgetPagePage,
-		}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await test.step('Enable "Show Widget in Page Builder" and save', async () => {
-				await editObjectDetailsPage.goto(
-					objectDefinition.label['en_US']
-				);
-
-				await editObjectDetailsPage.goToDetailsTab();
-
-				await expect(
-					editObjectDetailsPage.showWidgetToggle
-				).toBeChecked();
-
-				await editObjectDetailsPage.saveObjectDefinition();
-
-				await waitForAlert(page, 'Success:');
-			});
-
-			await test.step('Create a widget page and add the object portlet', async () => {
-				const layout = await apiHelpers.jsonWebServicesLayout.addLayout(
-					{
-						groupId: site.id,
-						title: getRandomString(),
-					}
-				);
-
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-				);
-
-				await widgetPagePage.addPortlet(
-					objectDefinition.pluralLabel['en_US']
-				);
-			});
-
-			await test.step('Verify the portlet is displayed with empty state', async () => {
-				await expect(
-					page
-						.getByText(objectDefinition.pluralLabel['en_US'])
-						.first()
-				).toBeVisible();
-
-				await expect(page.getByText('No Results Found')).toBeVisible();
-			});
-		}
-	);
-
-	test(
-		'Cannot add object portlet as widget when widget button is disabled',
-		{tag: '@LPS-143122'},
-		async ({
-			apiHelpers,
-			editObjectDetailsPage,
-			page,
-			site,
-			widgetPagePage,
-		}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await test.step('Navigate to object details and untoggle show widget', async () => {
-				await editObjectDetailsPage.goto(
-					objectDefinition.label['en_US']
-				);
-
-				await editObjectDetailsPage.goToDetailsTab();
-
-				await editObjectDetailsPage.showWidgetToggle.uncheck();
-
-				await editObjectDetailsPage.saveObjectDefinition();
-
-				await waitForAlert(page, 'Success:');
-			});
-
-			await test.step('Search for the object portlet on a widget page and verify it is not available', async () => {
-				const layout = await apiHelpers.jsonWebServicesLayout.addLayout(
-					{
-						groupId: site.id,
-						title: getRandomString(),
-					}
-				);
-
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-				);
-
-				await widgetPagePage.openAddPanel();
-
-				await page.getByLabel('Widgets', {exact: true}).click();
-
-				await page
-					.getByRole('textbox', {name: 'Search Form'})
-					.fill(objectDefinition.pluralLabel['en_US']);
-
-				await expect(
-					page
-						.getByRole('alert')
-						.getByText('There are no widgets on this page')
-				).toBeVisible();
-			});
-		}
-	);
-
-	test(
-		'Object portlet widget disappears from page when widget button is disabled',
-		{tag: '@LPS-143122'},
-		async ({
-			apiHelpers,
-			editObjectDetailsPage,
-			page,
-			site,
-			widgetPagePage,
-		}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			let layout: Layout;
-
-			await test.step('Create a widget page and add the object portlet', async () => {
-				layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-					groupId: site.id,
-					title: getRandomString(),
-				});
-
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-				);
-
-				await widgetPagePage.addPortlet(
-					objectDefinition.pluralLabel['en_US']
-				);
-			});
-
-			await test.step('Disable "Show Widget in Page Builder" and save', async () => {
-				await editObjectDetailsPage.goto(
-					objectDefinition.label['en_US']
-				);
-
-				await editObjectDetailsPage.goToDetailsTab();
-
-				await editObjectDetailsPage.showWidgetToggle.uncheck();
-
-				await editObjectDetailsPage.saveObjectDefinition();
-
-				await waitForAlert(page, 'Success:');
-			});
-
-			await test.step('Navigate back to widget page and verify warning message', async () => {
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-				);
-
-				await expect(
-					page.getByText('This object is not available.')
-				).toBeVisible();
-			});
-		}
-	);
-});
-
-test.describe('Content Pages Mapping', () => {
-	test(
-		'Can map preview URL of image attachment to fragment on content page',
-		{tag: '@LPS-182999'},
-		async ({apiHelpers, page, pageEditorPage, site}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Attachment'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const document = await apiHelpers.headlessDelivery.postDocument(
-				site.id,
-				createReadStream(
-					path.join(__dirname, '..', 'dependencies', 'astronaut.png')
-				),
-				{fileName: 'astronaut.png', title: getRandomString()}
-			);
-
-			const attachmentFieldName = objectFields[0].name!;
-			const applicationName =
-				'c/' + objectDefinition.name!.toLowerCase() + 's';
-
-			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-				{[attachmentFieldName]: document.id},
-				applicationName
-			);
-
-			const imageId = getRandomString();
-
-			const imageFragment = getFragmentDefinition({
-				id: imageId,
-				key: 'BASIC_COMPONENT-image',
-			});
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([imageFragment]),
-				siteId: site.id,
-				title: getRandomString(),
-			});
-
-			await test.step('Map Image fragment to object entry Preview URL', async () => {
-				await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-				await pageEditorPage.selectEditable(imageId, 'image-square');
-
-				await page
-					.getByLabel('Source Selection')
-					.selectOption('Mapping');
-
-				await pageEditorPage.setMappedItem({
-					entity: objectDefinition.label['en_US'],
-					entry: objectEntry.id.toString(),
-					entryLocator: page
-						.frameLocator('iframe[title="Select"]')
-						.getByText(objectEntry.id.toString())
-						.first(),
-					field: 'Preview URL',
-				});
-
-				await pageEditorPage.waitForChangesSaved();
-			});
-
-			await test.step('Verify mapped image is shown in editor', async () => {
-				await expect(
-					page.locator('.component-image img')
-				).toBeVisible();
-			});
-
-			await test.step('Publish and verify image in view mode', async () => {
-				await pageEditorPage.publishPage();
-
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-				);
-
-				await expect(
-					page.locator('.component-image img')
-				).toBeVisible();
-			});
-		}
-	);
-
-	test(
-		'Can map preview URL of non-image attachment to fragment showing blank space',
-		{tag: '@LPS-182999'},
-		async ({apiHelpers, page, pageEditorPage, site}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Attachment'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const pdfPath = createTempFile(
-				'test-document.pdf',
-				'%PDF-1.0 dummy content'
-			);
-
-			const document = await apiHelpers.headlessDelivery.postDocument(
-				site.id,
-				createReadStream(pdfPath),
-				{fileName: 'test-document.pdf', title: getRandomString()}
-			);
-
-			const attachmentFieldName = objectFields[0].name!;
-			const applicationName =
-				'c/' + objectDefinition.name!.toLowerCase() + 's';
-
-			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-				{[attachmentFieldName]: document.id},
-				applicationName
-			);
-
-			const imageId = getRandomString();
-
-			const imageFragment = getFragmentDefinition({
-				id: imageId,
-				key: 'BASIC_COMPONENT-image',
-			});
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([imageFragment]),
-				siteId: site.id,
-				title: getRandomString(),
-			});
-
-			await test.step('Map Image fragment to object entry Preview URL', async () => {
-				await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-				await pageEditorPage.selectEditable(imageId, 'image-square');
-
-				await page
-					.getByLabel('Source Selection')
-					.selectOption('Mapping');
-
-				await pageEditorPage.setMappedItem({
-					entity: objectDefinition.label['en_US'],
-					entry: objectEntry.id.toString(),
-					entryLocator: page
-						.frameLocator('iframe[title="Select"]')
-						.getByText(objectEntry.id.toString())
-						.first(),
-					field: 'Preview URL',
-				});
-
-				await pageEditorPage.waitForChangesSaved();
-			});
-
-			await test.step('Publish and verify non-image shows blank space in view mode', async () => {
-				await pageEditorPage.publishPage();
-
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-				);
-
-				await expect
-					.poll(async () =>
-						page
-							.locator('.component-image img')
-							.evaluate(
-								(image: HTMLImageElement) => image.naturalWidth
-							)
-					)
-					.toBe(0);
-			});
-		}
-	);
-
-	test(
-		'Can view image user profile from specific entry on display page',
-		{tag: '@LPD-86436'},
-		async ({apiHelpers, page, pageEditorPage, site}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const applicationName =
-				'c/' + objectDefinition.name!.toLowerCase() + 's';
-			const textFieldName = objectFields[0].name;
-
-			const entryValue = 'TestEntry_' + getRandomInt();
-
-			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-				{[textFieldName]: entryValue},
-				applicationName
-			);
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition(),
-				siteId: site.id,
-				title: getRandomString(),
-			});
-
-			await test.step('Add Image fragment and map to User Profile Image', async () => {
-				await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-				await pageEditorPage.addFragment('Basic Components', 'Image');
-
-				const imageId = await pageEditorPage.getFragmentId('Image');
-
-				await pageEditorPage.selectEditable(imageId, 'image-square');
-
-				await page
-					.getByLabel('Source Selection')
-					.selectOption('Mapping');
-
-				await pageEditorPage.setMappedItem({
-					entity: objectDefinition.label['en_US'],
-					entry: objectEntry.id.toString(),
-					entryLocator: page
-						.frameLocator('iframe[title="Select"]')
-						.getByText(objectEntry.id.toString())
-						.first(),
-					field: 'User Profile Image',
-				});
-
-				await pageEditorPage.waitForChangesSaved();
-			});
-
-			await test.step('Publish and verify user profile image is visible', async () => {
-				await pageEditorPage.publishPage();
-
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-				);
-
-				await expect(
-					page.locator('.component-image img')
-				).toBeVisible();
-			});
-		}
-	);
-
-	test('can display an object reactivated on the Page Item Selector', async ({
+test.describe('Collection Display', () => {
+	test('can display an object reactivated on the Collection Providers', async ({
 		apiHelpers,
+		collectionsPage,
 		page,
-		pageEditorPage,
 		site,
 		viewObjectDefinitionsPage,
 	}) => {
@@ -547,34 +78,17 @@ test.describe('Content Pages Mapping', () => {
 			objectDefinition.name
 		);
 
-		const headingDefinition = getFragmentDefinition({
-			id: getRandomString(),
-			key: 'BASIC_COMPONENT-heading',
-		});
+		await collectionsPage.goto(site.friendlyUrlPath);
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([headingDefinition]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
-
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-		await page.getByText('Heading Example', {exact: true}).dblclick();
-
-		await page.getByLabel('Select Item').click();
+		await page.getByRole('link', {name: 'Collection Providers'}).click();
 
 		await expect(
-			page
-				.frameLocator('iframe[title="Select"]')
-				.getByRole('menuitem', {name: objectDefinition.name})
+			page.getByText(objectDefinition.name).first()
 		).toBeVisible();
 	});
-});
 
-test.describe('Collection Display', () => {
 	test(
-		'Can display entries on table format in collection display',
+		'can display entries on table format in collection display',
 		{tag: '@LPS-135386'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 			const objectFields = generateObjectFields({
@@ -668,7 +182,7 @@ test.describe('Collection Display', () => {
 	);
 
 	test(
-		'Can search for object entry on search experience in collection providers',
+		'can search for object entry on search experience in collection providers',
 		{tag: '@LPS-135388'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 			const objectFields = generateObjectFields({
@@ -811,7 +325,7 @@ test.describe('Collection Display', () => {
 	);
 
 	test(
-		'Object is displayed to be selected as collection provider on collection display fragment',
+		'object is displayed to be selected as collection provider on collection display fragment',
 		{tag: '@LPS-133865'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 			const objectFields = generateObjectFields({
@@ -859,11 +373,13 @@ test.describe('Collection Display', () => {
 			});
 		}
 	);
+});
 
-	test('can display an object reactivated on the Collection Providers', async ({
+test.describe('Content Pages Mapping', () => {
+	test('can display an object reactivated on the Page Item Selector', async ({
 		apiHelpers,
-		collectionsPage,
 		page,
+		pageEditorPage,
 		site,
 		viewObjectDefinitionsPage,
 	}) => {
@@ -889,19 +405,295 @@ test.describe('Collection Display', () => {
 			objectDefinition.name
 		);
 
-		await collectionsPage.goto(site.friendlyUrlPath);
+		const headingDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
 
-		await page.getByRole('link', {name: 'Collection Providers'}).click();
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await page.getByText('Heading Example', {exact: true}).dblclick();
+
+		await page.getByLabel('Select Item').click();
 
 		await expect(
-			page.getByText(objectDefinition.name).first()
+			page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('menuitem', {name: objectDefinition.name})
 		).toBeVisible();
 	});
+
+	test(
+		'can map preview URL of image attachment to fragment on content page',
+		{tag: '@LPS-182999'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Attachment'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const document = await apiHelpers.headlessDelivery.postDocument(
+				site.id,
+				createReadStream(
+					path.join(__dirname, '..', 'dependencies', 'astronaut.png')
+				),
+				{fileName: 'astronaut.png', title: getRandomString()}
+			);
+
+			const attachmentFieldName = objectFields[0].name!;
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{[attachmentFieldName]: document.id},
+				applicationName
+			);
+
+			const imageId = getRandomString();
+
+			const imageFragment = getFragmentDefinition({
+				id: imageId,
+				key: 'BASIC_COMPONENT-image',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([imageFragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await test.step('Map Image fragment to object entry Preview URL', async () => {
+				await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+				await pageEditorPage.selectEditable(imageId, 'image-square');
+
+				await page
+					.getByLabel('Source Selection')
+					.selectOption('Mapping');
+
+				await pageEditorPage.setMappedItem({
+					entity: objectDefinition.label['en_US'],
+					entry: objectEntry.id.toString(),
+					entryLocator: page
+						.frameLocator('iframe[title="Select"]')
+						.getByText(objectEntry.id.toString())
+						.first(),
+					field: 'Preview URL',
+				});
+
+				await pageEditorPage.waitForChangesSaved();
+			});
+
+			await test.step('Verify mapped image is shown in editor', async () => {
+				await expect(
+					page.locator('.component-image img')
+				).toBeVisible();
+			});
+
+			await test.step('Publish and verify image in view mode', async () => {
+				await pageEditorPage.publishPage();
+
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
+
+				await expect(
+					page.locator('.component-image img')
+				).toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'can map preview URL of non-image attachment to fragment showing blank space',
+		{tag: '@LPS-182999'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Attachment'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const pdfPath = createTempFile(
+				'test-document.pdf',
+				'%PDF-1.0 dummy content'
+			);
+
+			const document = await apiHelpers.headlessDelivery.postDocument(
+				site.id,
+				createReadStream(pdfPath),
+				{fileName: 'test-document.pdf', title: getRandomString()}
+			);
+
+			const attachmentFieldName = objectFields[0].name!;
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{[attachmentFieldName]: document.id},
+				applicationName
+			);
+
+			const imageId = getRandomString();
+
+			const imageFragment = getFragmentDefinition({
+				id: imageId,
+				key: 'BASIC_COMPONENT-image',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([imageFragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await test.step('Map Image fragment to object entry Preview URL', async () => {
+				await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+				await pageEditorPage.selectEditable(imageId, 'image-square');
+
+				await page
+					.getByLabel('Source Selection')
+					.selectOption('Mapping');
+
+				await pageEditorPage.setMappedItem({
+					entity: objectDefinition.label['en_US'],
+					entry: objectEntry.id.toString(),
+					entryLocator: page
+						.frameLocator('iframe[title="Select"]')
+						.getByText(objectEntry.id.toString())
+						.first(),
+					field: 'Preview URL',
+				});
+
+				await pageEditorPage.waitForChangesSaved();
+			});
+
+			await test.step('Publish and verify non-image shows blank space in view mode', async () => {
+				await pageEditorPage.publishPage();
+
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
+
+				await expect
+					.poll(async () =>
+						page
+							.locator('.component-image img')
+							.evaluate(
+								(image: HTMLImageElement) => image.naturalWidth
+							)
+					)
+					.toBe(0);
+			});
+		}
+	);
+
+	test(
+		'can view image user profile from specific entry on display page',
+		{tag: '@LPD-86436'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+			const textFieldName = objectFields[0].name;
+
+			const entryValue = 'TestEntry_' + getRandomInt();
+
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{[textFieldName]: entryValue},
+				applicationName
+			);
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition(),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await test.step('Add Image fragment and map to User Profile Image', async () => {
+				await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+				await pageEditorPage.addFragment('Basic Components', 'Image');
+
+				const imageId = await pageEditorPage.getFragmentId('Image');
+
+				await pageEditorPage.selectEditable(imageId, 'image-square');
+
+				await page
+					.getByLabel('Source Selection')
+					.selectOption('Mapping');
+
+				await pageEditorPage.setMappedItem({
+					entity: objectDefinition.label['en_US'],
+					entry: objectEntry.id.toString(),
+					entryLocator: page
+						.frameLocator('iframe[title="Select"]')
+						.getByText(objectEntry.id.toString())
+						.first(),
+					field: 'User Profile Image',
+				});
+
+				await pageEditorPage.waitForChangesSaved();
+			});
+
+			await test.step('Publish and verify user profile image is visible', async () => {
+				await pageEditorPage.publishPage();
+
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
+
+				await expect(
+					page.locator('.component-image img')
+				).toBeVisible();
+			});
+		}
+	);
 });
 
 test.describe('Display Page', () => {
 	test(
-		'Can define fixed filter for picklist type on display page',
+		'can define fixed filter for picklist type on display page',
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 			const {listTypeDefinition, listTypeEntries} =
@@ -1025,7 +817,7 @@ test.describe('Display Page', () => {
 	);
 
 	test(
-		'Can set pagination as numeric on display page',
+		'can set pagination as numeric on display page',
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 			const objectFields = generateObjectFields({
@@ -1113,7 +905,7 @@ test.describe('Display Page', () => {
 	);
 
 	test(
-		'Can set pagination as simple on display page',
+		'can set pagination as simple on display page',
 		{tag: '@LPS-135004'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 			const objectFields = generateObjectFields({
@@ -1201,7 +993,7 @@ test.describe('Display Page', () => {
 	);
 
 	test(
-		'Cannot select unpublished object for a display page template',
+		'cannot select unpublished object for a display page template',
 		{tag: '@LPS-137871'},
 		async ({apiHelpers, displayPageTemplatesPage, page}) => {
 			const objectName = 'CustomObject' + getRandomInt();
@@ -1244,6 +1036,165 @@ test.describe('Display Page', () => {
 			});
 		}
 	);
+
+	test.describe('Information Template', () => {
+		let contentPageName: string;
+		let informationTemplateName: string;
+
+		test.afterEach(async ({pagesAdminPage, templatesPage}) => {
+			if (contentPageName) {
+				await pagesAdminPage.goto();
+
+				await pagesAdminPage.deletePage(contentPageName);
+
+				contentPageName = '';
+			}
+
+			if (informationTemplateName) {
+				await templatesPage.goto();
+
+				await templatesPage.deleteInformationTemplate(
+					informationTemplateName
+				);
+
+				informationTemplateName = '';
+			}
+		});
+
+		test('verify it is possible to create a information template with an object as an item type and see its entries', async ({
+			apiHelpers,
+			page,
+			pageEditorPage,
+			pagesAdminPage,
+			templatesPage,
+		}) => {
+			const {listTypeDefinition, listTypeEntries} =
+				await postListTypeDefinitionListTypeEntries({
+					apiHelpers,
+				});
+
+			const objectFields = generateObjectFields({
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				objectFieldBusinessTypes: [
+					'Boolean',
+					'Decimal',
+					'Integer',
+					'LongText',
+					'Picklist',
+					'Text',
+				],
+			});
+
+			apiHelpers.data.push({
+				id: listTypeDefinition.id,
+				type: 'listTypeDefinition',
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const {objectEntry: objectEntryValues} =
+				await generateObjectEntryValues({
+					listTypeEntries: listTypeEntries.map(
+						(listTypeEntry) => listTypeEntry.name
+					),
+					objectEntryFormat: 'API',
+					objectFields,
+				});
+
+			const applicationName =
+				'c/' + objectDefinition.name.toLowerCase() + 's';
+
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				objectEntryValues,
+				applicationName
+			);
+
+			informationTemplateName = 'Object Template' + getRandomInt();
+
+			await test.step('create information template and add object fields', async () => {
+				await templatesPage.goto();
+
+				await templatesPage.createInformationTemplate({
+					itemType: objectDefinition.label['en_US'],
+					name: informationTemplateName,
+				});
+
+				for (const objectField of objectFields) {
+					await page
+						.getByRole('button', {name: objectField.label['en_US']})
+						.click();
+				}
+
+				await templatesPage.saveTemplate(informationTemplateName);
+			});
+
+			contentPageName = getRandomString();
+
+			await test.step('create page template with HTML element linked to the informationTemplateName', async () => {
+				await pagesAdminPage.goto();
+
+				await pagesAdminPage.createNewPage({
+					name: contentPageName,
+				});
+
+				await pagesAdminPage.editPage(contentPageName);
+
+				await pageEditorPage.addFragment('Basic Components', 'HTML');
+
+				const htmlFragmentId = await pageEditorPage.getFragmentId('HTML');
+
+				await pageEditorPage.selectEditable(htmlFragmentId, 'element-html');
+
+				await pageEditorPage.setMappedItem({
+					entity: objectDefinition.label['en_US'],
+					entry: objectEntry.id.toString(),
+					entryLocator: page
+						.frameLocator('iframe[title="Select"]')
+						.getByText(objectEntry.id.toString())
+						.first(),
+					field: informationTemplateName,
+				});
+
+				await pageEditorPage.waitForChangesSaved();
+
+				await pageEditorPage.publishPage();
+			});
+
+			await test.step('go to created page and assert object entries', async () => {
+				await page.goto(`/web/guest/${contentPageName}`);
+
+				const entries = Object.values(objectEntryValues)
+					.map((value) => {
+						if (typeof value === 'boolean') {
+							return value ? 'Yes' : 'No';
+						}
+
+						if (
+							typeof value === 'object' &&
+							value !== null &&
+							'key' in (value as object)
+						) {
+							return (value as {key: string}).key;
+						}
+
+						return String(value);
+					})
+					.join(' ');
+
+				await expect(page.getByText(entries)).toBeVisible();
+			});
+		});
+	});
 
 	test('verify if the object entries are displayed when selecting to preview an object entry on a page template', async ({
 		apiHelpers,
@@ -1408,59 +1359,21 @@ test.describe('Display Page', () => {
 
 		await displayPageTemplatesPage.deleteTemplate(objectDefinitionLabel);
 	});
+});
 
-	test.describe('Information Template', () => {
-		let contentPageName: string;
-		let informationTemplateName: string;
-
-		test.afterEach(async ({pagesAdminPage, templatesPage}) => {
-			if (contentPageName) {
-				await pagesAdminPage.goto();
-
-				await pagesAdminPage.deletePage(contentPageName);
-
-				contentPageName = '';
-			}
-
-			if (informationTemplateName) {
-				await templatesPage.goto();
-
-				await templatesPage.deleteInformationTemplate(
-					informationTemplateName
-				);
-
-				informationTemplateName = '';
-			}
-		});
-
-		test('verify it is possible to create a information template with an object as an item type and see its entries', async ({
+test.describe('Object Widget', () => {
+	test(
+		'can add object portlet as a widget on a page',
+		{tag: '@LPS-143122'},
+		async ({
 			apiHelpers,
+			editObjectDetailsPage,
 			page,
-			pageEditorPage,
-			pagesAdminPage,
-			templatesPage,
+			site,
+			widgetPagePage,
 		}) => {
-			const {listTypeDefinition, listTypeEntries} =
-				await postListTypeDefinitionListTypeEntries({
-					apiHelpers,
-				});
-
 			const objectFields = generateObjectFields({
-				listTypeDefinitionExternalReferenceCode:
-					listTypeDefinition.externalReferenceCode,
-				objectFieldBusinessTypes: [
-					'Boolean',
-					'Decimal',
-					'Integer',
-					'LongText',
-					'Picklist',
-					'Text',
-				],
-			});
-
-			apiHelpers.data.push({
-				id: listTypeDefinition.id,
-				type: 'listTypeDefinition',
+				objectFieldBusinessTypes: ['Text'],
 			});
 
 			const objectDefinition =
@@ -1474,97 +1387,184 @@ test.describe('Display Page', () => {
 				type: 'objectDefinition',
 			});
 
-			const {objectEntry: objectEntryValues} =
-				await generateObjectEntryValues({
-					listTypeEntries: listTypeEntries.map(
-						(listTypeEntry) => listTypeEntry.name
-					),
-					objectEntryFormat: 'API',
+			await test.step('Enable "Show Widget in Page Builder" and save', async () => {
+				await editObjectDetailsPage.goto(
+					objectDefinition.label['en_US']
+				);
+
+				await editObjectDetailsPage.goToDetailsTab();
+
+				await expect(
+					editObjectDetailsPage.showWidgetToggle
+				).toBeChecked();
+
+				await editObjectDetailsPage.saveObjectDefinition();
+
+				await waitForAlert(page, 'Success:');
+			});
+
+			await test.step('Create a widget page and add the object portlet', async () => {
+				const layout = await apiHelpers.jsonWebServicesLayout.addLayout(
+					{
+						groupId: site.id,
+						title: getRandomString(),
+					}
+				);
+
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
+
+				await widgetPagePage.addPortlet(
+					objectDefinition.pluralLabel['en_US']
+				);
+			});
+
+			await test.step('Verify the portlet is displayed with empty state', async () => {
+				await expect(
+					page
+						.getByText(objectDefinition.pluralLabel['en_US'])
+						.first()
+				).toBeVisible();
+
+				await expect(page.getByText('No Results Found')).toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'cannot add object portlet as widget when widget button is disabled',
+		{tag: '@LPS-143122'},
+		async ({
+			apiHelpers,
+			editObjectDetailsPage,
+			page,
+			site,
+			widgetPagePage,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					objectFields,
+					status: {code: 0},
 				});
 
-			const applicationName =
-				'c/' + objectDefinition.name.toLowerCase() + 's';
-
-			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-				objectEntryValues,
-				applicationName
-			);
-
-			informationTemplateName = 'Object Template' + getRandomInt();
-
-			await test.step('create information template and add object fields', async () => {
-				await templatesPage.goto();
-
-				await templatesPage.createInformationTemplate({
-					itemType: objectDefinition.label['en_US'],
-					name: informationTemplateName,
-				});
-
-				for (const objectField of objectFields) {
-					await page
-						.getByRole('button', {name: objectField.label['en_US']})
-						.click();
-				}
-
-				await templatesPage.saveTemplate(informationTemplateName);
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
 			});
 
-			contentPageName = getRandomString();
+			await test.step('Navigate to object details and untoggle show widget', async () => {
+				await editObjectDetailsPage.goto(
+					objectDefinition.label['en_US']
+				);
 
-			await test.step('create page template with HTML element linked to the informationTemplateName', async () => {
-				await pagesAdminPage.goto();
+				await editObjectDetailsPage.goToDetailsTab();
 
-				await pagesAdminPage.createNewPage({
-					name: contentPageName,
-				});
+				await editObjectDetailsPage.showWidgetToggle.uncheck();
 
-				await pagesAdminPage.editPage(contentPageName);
+				await editObjectDetailsPage.saveObjectDefinition();
 
-				await pageEditorPage.addFragment('Basic Components', 'HTML');
-
-				const htmlFragmentId = await pageEditorPage.getFragmentId('HTML');
-
-				await pageEditorPage.selectEditable(htmlFragmentId, 'element-html');
-
-				await pageEditorPage.setMappedItem({
-					entity: objectDefinition.label['en_US'],
-					entry: objectEntry.id.toString(),
-					entryLocator: page
-						.frameLocator('iframe[title="Select"]')
-						.getByText(objectEntry.id.toString())
-						.first(),
-					field: informationTemplateName,
-				});
-
-				await pageEditorPage.waitForChangesSaved();
-
-				await pageEditorPage.publishPage();
+				await waitForAlert(page, 'Success:');
 			});
 
-			await test.step('go to created page and assert object entries', async () => {
-				await page.goto(`/web/guest/${contentPageName}`);
+			await test.step('Search for the object portlet on a widget page and verify it is not available', async () => {
+				const layout = await apiHelpers.jsonWebServicesLayout.addLayout(
+					{
+						groupId: site.id,
+						title: getRandomString(),
+					}
+				);
 
-				const entries = Object.values(objectEntryValues)
-					.map((value) => {
-						if (typeof value === 'boolean') {
-							return value ? 'Yes' : 'No';
-						}
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
 
-						if (
-							typeof value === 'object' &&
-							value !== null &&
-							'key' in (value as object)
-						) {
-							return (value as {key: string}).key;
-						}
+				await widgetPagePage.openAddPanel();
 
-						return String(value);
-					})
-					.join(' ');
+				await page.getByLabel('Widgets', {exact: true}).click();
 
-				await expect(page.getByText(entries)).toBeVisible();
+				await page
+					.getByRole('textbox', {name: 'Search Form'})
+					.fill(objectDefinition.pluralLabel['en_US']);
+
+				await expect(
+					page
+						.getByRole('alert')
+						.getByText('There are no widgets on this page')
+				).toBeVisible();
 			});
-		});
-	});
+		}
+	);
+
+	test(
+		'object portlet widget disappears from page when widget button is disabled',
+		{tag: '@LPS-143122'},
+		async ({
+			apiHelpers,
+			editObjectDetailsPage,
+			page,
+			site,
+			widgetPagePage,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			let layout: Layout;
+
+			await test.step('Create a widget page and add the object portlet', async () => {
+				layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+					groupId: site.id,
+					title: getRandomString(),
+				});
+
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
+
+				await widgetPagePage.addPortlet(
+					objectDefinition.pluralLabel['en_US']
+				);
+			});
+
+			await test.step('Disable "Show Widget in Page Builder" and save', async () => {
+				await editObjectDetailsPage.goto(
+					objectDefinition.label['en_US']
+				);
+
+				await editObjectDetailsPage.goToDetailsTab();
+
+				await editObjectDetailsPage.showWidgetToggle.uncheck();
+
+				await editObjectDetailsPage.saveObjectDefinition();
+
+				await waitForAlert(page, 'Success:');
+			});
+
+			await test.step('Navigate back to widget page and verify warning message', async () => {
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
+
+				await expect(
+					page.getByText('This object is not available.')
+				).toBeVisible();
+			});
+		}
+	);
 });

@@ -9,7 +9,11 @@ import ListView from '../../../../components/ListView';
 import OrderStatus from '../../../../components/OrderStatus';
 import Page from '../../../../components/Page';
 import SearchBuilder from '../../../../core/SearchBuilder';
-import {OrderTypes, PaymentStatus} from '../../../../enums/Order';
+import {
+	OrderTypes,
+	PaymentStatus,
+	orderTypeDocumentationURL,
+} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import {getSiteURL} from '../../../../utils/site';
@@ -63,6 +67,27 @@ const LiferayProductsListView = () => {
 								name: i18n.translate('view-details'),
 								onClick: (placedOrder: PlacedOrder) =>
 									navigate(getViewDetailsPath(placedOrder)),
+							},
+							{
+								hidden: (row: PlacedOrder) =>
+									!orderTypeDocumentationURL[
+										row.orderTypeExternalReferenceCode as OrderTypes
+									],
+								name: i18n.translate('documentation'),
+								onClick: (row: PlacedOrder) => {
+									const url =
+										orderTypeDocumentationURL[
+											row.orderTypeExternalReferenceCode as OrderTypes
+										];
+
+									if (url) {
+										window.open(
+											url,
+											'_blank',
+											'noopener,noreferrer'
+										);
+									}
+								},
 							},
 							{
 								hidden: (row: PlacedOrder) =>

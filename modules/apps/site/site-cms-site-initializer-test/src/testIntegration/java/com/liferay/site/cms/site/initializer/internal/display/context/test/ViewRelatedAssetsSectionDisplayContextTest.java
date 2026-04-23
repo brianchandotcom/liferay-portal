@@ -101,7 +101,6 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 		Assert.assertTrue(
 			additionalAPIURLParameters,
 			additionalAPIURLParameters.contains("sort=dateModified:desc"));
-
 		Assert.assertTrue(
 			additionalAPIURLParameters,
 			additionalAPIURLParameters.contains(

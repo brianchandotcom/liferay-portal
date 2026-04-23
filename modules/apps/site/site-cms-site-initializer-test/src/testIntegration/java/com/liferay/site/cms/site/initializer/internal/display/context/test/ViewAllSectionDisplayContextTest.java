@@ -91,7 +91,6 @@ public class ViewAllSectionDisplayContextTest
 		Assert.assertFalse(
 			additionalAPIURLParameters,
 			additionalAPIURLParameters.contains(StringPool.QUESTION));
-
 		Assert.assertTrue(
 			additionalAPIURLParameters,
 			additionalAPIURLParameters.contains("&search=test-query"));

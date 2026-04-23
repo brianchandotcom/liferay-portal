@@ -280,7 +280,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 
 	@priority = 4
 	@refactordone
-	test CanViewWebsiteNotificationForNewDocumentInFolder {
+	test CanViewWebsiteNotificationForNewAndUpdatedDocumentInFolder {
 		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(

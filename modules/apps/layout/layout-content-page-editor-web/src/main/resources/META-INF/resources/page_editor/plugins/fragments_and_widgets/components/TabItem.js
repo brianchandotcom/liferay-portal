@@ -258,7 +258,7 @@ const CardItem = ({
 				'page-editor__fragments-widgets__tab-card-item',
 				{
 					disabled,
-					'page-editor__fragments-widgets__tab-list-item--active':
+					'page-editor__fragments-widgets__tab-card-item--active':
 						isActive,
 				}
 			)}

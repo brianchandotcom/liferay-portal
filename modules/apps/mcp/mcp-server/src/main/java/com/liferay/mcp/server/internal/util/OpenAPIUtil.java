@@ -314,7 +314,7 @@ public class OpenAPIUtil {
 	}
 
 	private static String _getToolDescription(
-		String method, JSONObject operationJSONObject, String pathTemplate) {
+		String method, JSONObject operationJSONObject, String path) {
 
 		boolean hasDescription = operationJSONObject.has("description");
 		boolean hasSummary = operationJSONObject.has("summary");
@@ -330,7 +330,7 @@ public class OpenAPIUtil {
 			return operationJSONObject.getString("summary");
 		}
 
-		return method + " " + pathTemplate;
+		return method + " " + path;
 	}
 
 	private static JSONObject _resolveRef(

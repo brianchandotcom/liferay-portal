@@ -779,7 +779,7 @@ public class ActionUtil {
 				objectDefinition,
 				ServiceContextFactory.getInstance(httpServletRequest));
 
-			String editURL = PortalUtil.addPreservedParameters(
+			return PortalUtil.addPreservedParameters(
 				themeDisplay,
 				StringBundler.concat(
 					PortalUtil.getGroupFriendlyURL(
@@ -787,39 +787,6 @@ public class ActionUtil {
 					_getURLSeparator(),
 					layout.getFriendlyURL(themeDisplay.getLocale()),
 					StringPool.SLASH, classNameId, StringPool.SLASH, id));
-
-			String backURL = ParamUtil.getString(
-				httpServletRequest, "redirect");
-
-			if (Validator.isNotNull(backURL)) {
-				editURL = HttpComponentsUtil.addParameter(
-					editURL, "redirect", backURL);
-			}
-
-			String layoutMode = ParamUtil.getString(
-				httpServletRequest, "p_l_mode");
-
-			if (Objects.equals(layoutMode, Constants.READ)) {
-				editURL = HttpComponentsUtil.addParameter(
-					editURL, "p_l_mode", layoutMode);
-			}
-
-			String windowState = ParamUtil.getString(
-				httpServletRequest, "p_p_state");
-
-			if (Validator.isNotNull(windowState)) {
-				editURL = HttpComponentsUtil.addParameter(
-					editURL, "p_p_state", windowState);
-			}
-
-			int version = ParamUtil.getInteger(httpServletRequest, "version");
-
-			if (version > 0) {
-				editURL = HttpComponentsUtil.addParameter(
-					editURL, "version", version);
-			}
-
-			return editURL;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

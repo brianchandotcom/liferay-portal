@@ -15,11 +15,16 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,15 +46,44 @@ public class EditContentItemStrutsAction implements StrutsAction {
 		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
 			ParamUtil.getLong(httpServletRequest, "objectEntryId"));
 
-		httpServletResponse.sendRedirect(
-			ActionUtil.getEditURL(
-				_formManager, _fragmentEntryLinkListenerRegistry,
-				_fragmentEntryLinkService, _fragmentRendererRegistry,
-				httpServletRequest,
-				String.valueOf(objectEntry.getObjectEntryId()),
-				_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId())));
+		String editURL = ActionUtil.getEditURL(
+			_formManager, _fragmentEntryLinkListenerRegistry,
+			_fragmentEntryLinkService, _fragmentRendererRegistry,
+			httpServletRequest, String.valueOf(objectEntry.getObjectEntryId()),
+			_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId()));
+
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			editURL = HttpComponentsUtil.addParameter(
+				editURL, "redirect", redirect);
+		}
+
+		String layoutMode = ParamUtil.getString(httpServletRequest, "p_l_mode");
+
+		if (Objects.equals(layoutMode, Constants.READ)) {
+			editURL = HttpComponentsUtil.addParameter(
+				editURL, "p_l_mode", layoutMode);
+		}
+
+		String windowState = ParamUtil.getString(
+			httpServletRequest, "p_p_state");
+
+		if (Validator.isNotNull(windowState)) {
+			editURL = HttpComponentsUtil.addParameter(
+				editURL, "p_p_state", windowState);
+		}
+
+		int version = ParamUtil.getInteger(httpServletRequest, "version");
+
+		if (version > 0) {
+			editURL = HttpComponentsUtil.addParameter(
+				editURL, "version", version);
+		}
+
+		httpServletResponse.sendRedirect(editURL);
 
 		return null;
 	}

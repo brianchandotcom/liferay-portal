@@ -480,7 +480,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, String segmentsEntryERC,
+			long userId, long segmentsExperienceId, String segmentsEntryERC,
 			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
 			boolean active)
 		throws PortalException {
@@ -490,14 +490,14 @@ public class SegmentsExperienceLocalServiceImpl
 				segmentsExperienceId);
 
 		return updateSegmentsExperience(
-			segmentsExperienceId, segmentsEntryERC, segmentsEntryScopeERC,
-			nameMap, active,
+			userId, segmentsExperienceId, segmentsEntryERC,
+			segmentsEntryScopeERC, nameMap, active,
 			segmentsExperience.getTypeSettingsUnicodeProperties());
 	}
 
 	@Override
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, String segmentsEntryERC,
+			long userId, long segmentsExperienceId, String segmentsEntryERC,
 			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
 			boolean active, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
@@ -514,8 +514,7 @@ public class SegmentsExperienceLocalServiceImpl
 					" has a locked segments experiment");
 		}
 
-		_checkUnlockedLayout(
-			segmentsExperience.getPlid(), GuestOrUserUtil.getUserId());
+		_checkUnlockedLayout(segmentsExperience.getPlid(), userId);
 
 		segmentsExperience.setSegmentsEntryERC(segmentsEntryERC);
 		segmentsExperience.setSegmentsEntryScopeERC(segmentsEntryScopeERC);
@@ -529,15 +528,14 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience updateSegmentsExperienceActive(
-			long segmentsExperienceId, boolean active)
+			long userId, long segmentsExperienceId, boolean active)
 		throws PortalException {
 
 		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.findByPrimaryKey(
 				segmentsExperienceId);
 
-		_checkUnlockedLayout(
-			segmentsExperience.getPlid(), GuestOrUserUtil.getUserId());
+		_checkUnlockedLayout(segmentsExperience.getPlid(), userId);
 
 		segmentsExperience.setActive(active);
 
@@ -546,7 +544,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience updateSegmentsExperiencePriority(
-			long segmentsExperienceId, int newPriority)
+			long userId, long segmentsExperienceId, int newPriority)
 		throws PortalException {
 
 		SegmentsExperience segmentsExperience =
@@ -559,8 +557,7 @@ public class SegmentsExperienceLocalServiceImpl
 					" has a locked segments experiment");
 		}
 
-		_checkUnlockedLayout(
-			segmentsExperience.getPlid(), GuestOrUserUtil.getUserId());
+		_checkUnlockedLayout(segmentsExperience.getPlid(), userId);
 
 		boolean swap = true;
 

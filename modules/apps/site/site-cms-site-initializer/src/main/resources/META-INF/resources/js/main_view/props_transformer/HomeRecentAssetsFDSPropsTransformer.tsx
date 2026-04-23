@@ -31,8 +31,13 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 	itemsActions?: any[];
 	otherProps: any;
 }) {
+	const {additionalAPIURLParameters, ...remainingAdditionalProps} =
+		additionalProps || {};
+
 	return {
 		...otherProps,
+		additionalAPIURLParameters,
+		additionalProps: remainingAdditionalProps,
 		customRenderers: {
 			tableCell: [
 				{

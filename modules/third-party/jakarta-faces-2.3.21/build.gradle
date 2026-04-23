@@ -1,9 +1,9 @@
 ext {
-	gitHash = "3bf3e0f35965269affb100ca9e40b6b375b3ad6b"
+	gitHash = "a8be466f4f72ac33ef38552b72a6d89396f5ae86"
 	gitHubOwner = "liferay"
 	gitHubRepository = "mojarra"
 	mvnArgument = "package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true"
-	mvnJARInclude = "jakarta.faces-2.3.21.LIFERAY-PATCHED-3.jar"
+	mvnJARInclude = "jakarta.faces-2.3.21.LIFERAY-PATCHED-4.jar"
 	mvnTargetDir = "impl/target"
 }
 

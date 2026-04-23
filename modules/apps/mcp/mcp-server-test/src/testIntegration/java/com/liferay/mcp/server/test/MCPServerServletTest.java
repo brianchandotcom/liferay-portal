@@ -67,7 +67,7 @@ public class MCPServerServletTest {
 	public void testServiceWithChangedProfile() throws Exception {
 		String name = RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry = _addProfileObjectEntry(
+		ObjectEntry objectEntry = _addObjectEntry(
 			name, "GET /test/v1.0/test-entities",
 			"POST /test/v1.0/test-entities");
 
@@ -202,7 +202,7 @@ public class MCPServerServletTest {
 	public void testServiceWithProfile() throws Exception {
 		String name = RandomTestUtil.randomString();
 
-		_addProfileObjectEntry(
+		_addObjectEntry(
 			name, "GET /test/v1.0/test-entities",
 			"POST /test/v1.0/test-entities");
 
@@ -274,7 +274,7 @@ public class MCPServerServletTest {
 		mcpSyncClient.closeGracefully();
 	}
 
-	private ObjectEntry _addProfileObjectEntry(
+	private ObjectEntry _addObjectEntry(
 			String name, String... endpoints)
 		throws Exception {
 

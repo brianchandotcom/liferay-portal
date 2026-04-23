@@ -148,9 +148,9 @@ public class MCPServerServlet extends HttpServlet {
 		}
 
 		Servlet servlet = _getServlet(
+			httpServletRequest.getHeader("Authorization"),
 			_portal.getPortalURL(httpServletRequest) + _portal.getPathModule(),
-			companyId, httpServletRequest.getHeader("Authorization"),
-			mcpServerProfile);
+			companyId, mcpServerProfile);
 
 		servlet.service(httpServletRequest, httpServletResponse);
 	}
@@ -443,7 +443,7 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private Servlet _getServlet(
-		String baseURL, long companyId, String authorization,
+		String authorization, String baseURL, long companyId,
 		MCPServerProfile mcpServerProfile) {
 
 		String key = _getServletKey(

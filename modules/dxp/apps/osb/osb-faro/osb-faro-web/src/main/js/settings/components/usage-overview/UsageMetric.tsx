@@ -2,6 +2,7 @@ import React from 'react';
 import {Text} from '@clayui/core';
 
 interface IUsageMetricProps {
+	children?: React.ReactNode;
 	description: string;
 	title: string;
 }

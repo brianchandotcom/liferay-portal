@@ -37,7 +37,7 @@ const FormDateInput: React.FC<IFormDateInputProps> = ({
 }) => {
 	const {name, value} = field;
 
-	const handleChange = (value): void => {
+	const handleChange = (value: any): void => {
 		const {setFieldValue} = form;
 
 		setFieldValue(name, value);

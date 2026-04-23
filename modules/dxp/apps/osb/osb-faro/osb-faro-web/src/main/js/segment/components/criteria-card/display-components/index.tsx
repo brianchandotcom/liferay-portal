@@ -13,7 +13,7 @@ const DisplayComponent: React.FC<IDisplayComponentProps> = ({
 	property,
 	segmentType
 }) => {
-	const getDisplayComponent = propertyKey => {
+	const getDisplayComponent = (propertyKey: string) => {
 		switch (propertyKey) {
 			case 'account':
 				return AccountDisplay;
@@ -33,9 +33,9 @@ const DisplayComponent: React.FC<IDisplayComponentProps> = ({
 		}
 	};
 
-	const Display: React.FC<IDisplayComponentProps> = getDisplayComponent(
+	const Display = getDisplayComponent(
 		property.propertyKey
-	);
+	) as React.FC<IDisplayComponentProps>;
 
 	return (
 		<Display

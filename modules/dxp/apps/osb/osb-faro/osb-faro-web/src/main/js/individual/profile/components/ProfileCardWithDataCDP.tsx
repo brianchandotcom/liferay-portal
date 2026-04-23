@@ -40,7 +40,7 @@ import {
 	Sizes
 } from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
 import {withError, withLoading, WrapSafeResults} from 'shared/hoc/util';
@@ -136,7 +136,9 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 		{rangeEnd, rangeKey, rangeStart}: RangeSelectors,
 		interval: Interval
 	): SafeRangeSelectors => {
-		const {intervalInitDate} = activityHistory[selectedPoint] || {};
+		const {intervalInitDate} =
+			(selectedPoint !== undefined && activityHistory[selectedPoint]) ||
+			{};
 		const endDate = getEndDate(intervalInitDate, interval);
 
 		const hasSelectedDate = !isNil(endDate) && !isNil(intervalInitDate);
@@ -199,7 +201,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 
 	const handleChangeSelection = (index: number | null) => {
 		resetPage();
-		onPointSelect(index);
+		onPointSelect(index ?? undefined);
 	};
 
 	const handleQuery = (query: string) => {
@@ -210,7 +212,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 	const selected = hasSelectedPoint || selectedPoint;
 
 	const {intervalInitDate, totalEvents = 0} =
-		activityHistory[selectedPoint] || {};
+		(selectedPoint !== undefined && activityHistory[selectedPoint]) || {};
 
 	const date = selected
 		? getDateRangeLabelFromDate(intervalInitDate, interval)
@@ -349,8 +351,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 									{getActivityLabel(
 										(selected
 											? totalEvents
-											: activityTotal
-										)?.toLocaleString()
+											: activityTotal) ?? 0
 									)}
 								</div>
 							</>

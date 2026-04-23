@@ -1,4 +1,4 @@
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 export const EXPERIMENT_QUERY = gql`
 	query Experiment($channelId: String!, $experimentId: String!) {

@@ -1,7 +1,13 @@
 import React from 'react';
 import {SummaryTitle} from './SummaryTitle';
 
-export const SummaryParagraph = ({description, title}) => (
+export const SummaryParagraph = ({
+	description,
+	title
+}: {
+	description?: React.ReactNode;
+	title: React.ReactNode;
+}) => (
 	<>
 		<SummaryTitle className='mb-4' label={title} />
 

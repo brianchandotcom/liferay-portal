@@ -14,6 +14,16 @@ import {EntityTypes, Sizes} from 'shared/util/constants';
 import {RootState} from 'shared/store';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
+interface IFetchAssociatedSegmentsArgs {
+	[key: string]: unknown;
+	delta: number;
+	groupId: string;
+	id: string;
+	orderIOMap?: unknown;
+	page: number;
+	query?: string;
+}
+
 const fetchAssociatedSegments = ({
 	delta,
 	groupId,
@@ -22,7 +32,7 @@ const fetchAssociatedSegments = ({
 	page,
 	query,
 	...otherParams
-}) =>
+}: IFetchAssociatedSegmentsArgs) =>
 	API.individualSegment.search({
 		contactsEntityId: id,
 		contactsEntityType: EntityTypes.Account,
@@ -65,14 +75,17 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 
 	const [total, setTotal] = useState<number>(0);
 
-	const segmentsDataSourceFn = dataSourceParams =>
-		fetchAssociatedSegments({channelId, ...dataSourceParams}).then(
-			response => {
-				setTotal(response.total);
+	const segmentsDataSourceFn = (dataSourceParams: {[key: string]: any}) =>
+		fetchAssociatedSegments({
+			channelId,
+			groupId,
+			id,
+			...dataSourceParams
+		} as unknown as IFetchAssociatedSegmentsArgs).then(response => {
+			setTotal(response.total);
 
-				return response;
-			}
-		);
+			return response;
+		});
 
 	return (
 		<AssociatedSegmentsList

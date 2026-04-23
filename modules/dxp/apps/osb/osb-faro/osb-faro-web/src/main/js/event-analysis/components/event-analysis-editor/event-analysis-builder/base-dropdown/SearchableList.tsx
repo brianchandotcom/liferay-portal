@@ -88,7 +88,7 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 												onItemOptionsClick(
 													item as Attribute
 												)
-										: null
+										: undefined
 								}
 								showInfoCard={showInfoCard}
 							/>

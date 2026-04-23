@@ -19,7 +19,7 @@ interface IMembershipChanges {
 
 const MEMBERSHIP_CHANGE_MAP: Record<
 	MembershipChange,
-	{label: string; displayType: 'success' | 'danger'}
+	{label: string; displayType?: 'success' | 'danger'}
 > = {
 	ADDED: {
 		displayType: 'success',
@@ -30,12 +30,14 @@ const MEMBERSHIP_CHANGE_MAP: Record<
 		label: Liferay.Language.get('removed')
 	},
 	STAYED: {
-		displayType: undefined,
 		label: Liferay.Language.get('stayed')
 	}
 };
 
-const MAP_LABEL_TYPE = [MembershipChange.ADDED, MembershipChange.REMOVED];
+const MAP_LABEL_TYPE: MembershipChange[] = [
+	MembershipChange.ADDED,
+	MembershipChange.REMOVED
+];
 
 const MembershipChanges: React.FC<IMembershipChanges> = ({
 	className,
@@ -43,7 +45,7 @@ const MembershipChanges: React.FC<IMembershipChanges> = ({
 }) => (
 	<td className={getCN('name-cell-root', className)}>
 		<div>{formatUTCDate(createDateTime)}</div>
-		{MAP_LABEL_TYPE.includes(type) && (
+		{type && MAP_LABEL_TYPE.includes(type) && (
 			<Label displayType={MEMBERSHIP_CHANGE_MAP[type].displayType}>
 				{MEMBERSHIP_CHANGE_MAP[type].label}
 			</Label>

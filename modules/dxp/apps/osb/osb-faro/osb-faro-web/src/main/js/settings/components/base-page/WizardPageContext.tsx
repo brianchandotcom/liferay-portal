@@ -23,6 +23,11 @@ async function fetchDataSource({
 	groupId,
 	setDataSource,
 	setLoading
+}: {
+	dataSourceId: string;
+	groupId: string;
+	setDataSource: (ds: DataSource) => void;
+	setLoading: (loading: boolean) => void;
 }) {
 	setLoading(true);
 
@@ -47,8 +52,8 @@ async function fetchDataSource({
 
 export const useWizardPage = () => useContext(WizardPageContext);
 
-export const WizardPageProvider = ({children}) => {
-	const {groupId} = useParams();
+export const WizardPageProvider = ({children}: {children: React.ReactNode}) => {
+	const {groupId = ''} = useParams<{groupId: string}>();
 	const {dataSourceId} = useQueryParams();
 	const [dataSource, setDataSource] = useState<DataSource | null>(null);
 	const [loading, setLoading] = useState(false);

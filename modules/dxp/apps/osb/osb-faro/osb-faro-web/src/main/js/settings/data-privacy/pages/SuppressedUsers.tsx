@@ -2,14 +2,15 @@ import BasePage from 'settings/components/base-page/BasePage';
 import React from 'react';
 import SuppressedUserList from '../hocs/SuppressedUserList';
 import {getDataPrivacy} from 'shared/util/breadcrumbs';
+import {Router} from 'shared/types';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
-export const SuppressedUsers = ({router}) => {
+export const SuppressedUsers = ({router}: {router: Router}) => {
 	const currentUser = useCurrentUser();
 	const {timeZoneId} = useTimeZone();
 
-	const groupId = router.params.groupId;
+	const groupId = router.params.groupId ?? '';
 
 	return (
 		<BasePage

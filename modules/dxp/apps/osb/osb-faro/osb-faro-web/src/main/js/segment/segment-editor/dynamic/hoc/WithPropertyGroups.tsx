@@ -103,12 +103,13 @@ const mapResultToProps = (
 		webBehaviors,
 		interestKeywords,
 		sessionProperties
-	],
-	{type}
+	]: any[],
+	{type}: {type: SegmentTypes}
 ) => {
-	const individualDemographicProperties = individualDemographicsMappings.items.map(
-		convertFieldMappingToIndividualProperty
-	);
+	const individualDemographicProperties =
+		individualDemographicsMappings.items.map(
+			convertFieldMappingToIndividualProperty
+		);
 
 	let individualSubgroupsIList = List([
 		new PropertySubgroup({
@@ -232,7 +233,9 @@ const mapResultToProps = (
 	};
 };
 
-export const withPropertyGroups = WrappedComponent =>
+export const withPropertyGroups = (
+	WrappedComponent: React.ComponentType<any>
+) =>
 	class extends React.Component<{
 		propertyGroupsIList: List<PropertyGroup>;
 	}> {

@@ -1,4 +1,4 @@
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 import {SessionEntityTypes} from 'shared/util/constants';
 
 export interface UserSessionEvent {
@@ -42,9 +42,9 @@ export interface UserSessionVariables {
 	entityType: SessionEntityTypes;
 	keywords?: string;
 	page: number;
-	rangeEnd?: string;
-	rangeKey?: number;
-	rangeStart?: string;
+	rangeEnd?: string | null;
+	rangeKey?: number | null;
+	rangeStart?: string | null;
 	size: number;
 }
 

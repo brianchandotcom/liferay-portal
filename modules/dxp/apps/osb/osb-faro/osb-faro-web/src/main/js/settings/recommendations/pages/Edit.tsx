@@ -16,7 +16,7 @@ interface IEditProps {
 }
 
 const Edit: React.FC<IEditProps> = ({job, router}) => {
-	const {groupId, jobId} = router.params;
+	const {groupId = '', jobId} = router.params;
 
 	const name = get(job, 'name');
 
@@ -53,4 +53,7 @@ const Edit: React.FC<IEditProps> = ({job, router}) => {
 	);
 };
 
-export default compose<any>(withAdminPermission, withRecommendation)(Edit);
+export default compose<React.ComponentType<any>>(
+	withAdminPermission,
+	withRecommendation
+)(Edit);

@@ -43,8 +43,8 @@ export default class StringInput extends React.Component<IStringInputProps> {
 	}
 
 	@autobind
-	handleChange(value) {
-		this.props.onChange({valid: isValid(value), value});
+	handleChange(value: string | React.Key) {
+		this.props.onChange({valid: isValid(value), value: String(value)});
 	}
 
 	render() {

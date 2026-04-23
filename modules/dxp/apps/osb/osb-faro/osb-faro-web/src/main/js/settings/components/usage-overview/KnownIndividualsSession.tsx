@@ -11,7 +11,13 @@ import {UsageMetric} from './UsageMetric';
 import {UsageMetricBarChart} from './UsageMetricBarChart';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
-export const KnownIndividualsSession = ({currentPlan}) => {
+interface IKnownIndividualsSessionProps {
+	currentPlan: any;
+}
+
+export const KnownIndividualsSession = ({
+	currentPlan
+}: IKnownIndividualsSessionProps) => {
 	const {timeZoneId} = useTimeZone();
 	const {count, limit, status} = currentPlan.metrics.get('individuals');
 	const syncedIndividualsCount =
@@ -41,7 +47,11 @@ export const KnownIndividualsSession = ({currentPlan}) => {
 					count={count}
 					items={{
 						itemA: {
-							color: Colors[STATUS_DISPLAY_MAP[status]],
+							color: (Colors as {[key: string]: any})[
+								(STATUS_DISPLAY_MAP as {[key: string]: string})[
+									status
+								]
+							],
 							label: Liferay.Language.get('known-individuals'),
 							value: count
 						}
@@ -57,13 +67,13 @@ export const KnownIndividualsSession = ({currentPlan}) => {
 						[(available > 0 ? available : 0).toLocaleString()]
 					)}
 					limit={limit}
-					percentageText={percentage =>
+					percentageText={(percentage: number | string) =>
 						sub(
 							Liferay.Language.get(
 								'x-known-individuals-were-used'
 							),
 							[Number(percentage)]
-						)
+						) as string
 					}
 				/>
 

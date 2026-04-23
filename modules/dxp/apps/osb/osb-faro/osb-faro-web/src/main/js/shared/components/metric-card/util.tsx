@@ -10,10 +10,41 @@ import {
 	getMetricFormatter
 } from 'shared/util/charts';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
+import {Interval, RangeSelectors} from 'shared/types';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
-import {MetricType} from './metrics';
+import {Metric, MetricType} from './metrics';
 import {toRounded} from 'shared/util/numbers';
 import {toUnix} from 'shared/util/date';
+
+type TMetricResultItem = {
+	histogram: {
+		asymmetricComparison?: boolean;
+		metrics: Array<{
+			key: string;
+			previousValue: number;
+			previousValueKey: string;
+			value: number;
+			valueKey: string;
+		}>;
+	};
+	trend: {
+		percentage: number;
+		trendClassification: string;
+	};
+	value: number;
+};
+
+type TMetricsResult = Record<string, TMetricResultItem>;
+
+type TChartDataSet = {
+	color?: string;
+	data: any;
+	dataName?: string;
+	id: string;
+	name?: string;
+	tooltipTitle?: string;
+	type?: string;
+};
 
 const CHART_DATA_ID_1 = 'data_1';
 const CHART_DATA_ID_2 = 'data_2';
@@ -44,7 +75,7 @@ type TBuildTabs = (props: {
 		content: {
 			details: {
 				color: string;
-				icon: string;
+				icon?: string;
 				label: string;
 			};
 			title: string;
@@ -88,10 +119,10 @@ export const buildTabs: TBuildTabs = ({
 		};
 	});
 
-export const getMetricName = (activeItemIndex, metrics) =>
+export const getMetricName = (activeItemIndex: number, metrics: Metric[]) =>
 	metrics.map(({name}) => name)[activeItemIndex];
 
-export const getActiveItem = (retVal, compareToPrevious) => {
+export const getActiveItem = (retVal: any, compareToPrevious: boolean) => {
 	if (!retVal) {
 		return {
 			chartData: [],
@@ -106,15 +137,15 @@ export const getActiveItem = (retVal, compareToPrevious) => {
 	if (!compareToPrevious && retVal.asymmetricComparison) {
 		retVal = {
 			...retVal,
-			chartData: chartData.map(dataSet => ({
+			chartData: chartData.map((dataSet: TChartDataSet) => ({
 				...dataSet,
 				data: dataSet.data.slice(1)
 			})),
 			intervals: retVal.intervals.slice(1),
-
-			// @ts-ignore
-
-			timeline: {data: timeline.data.slice(1), id: timeline.id}
+			timeline: {
+				data: (timeline as TChartDataSet).data.slice(1),
+				id: (timeline as TChartDataSet).id
+			}
 		};
 
 		if (retVal.compositeData) {
@@ -122,20 +153,23 @@ export const getActiveItem = (retVal, compareToPrevious) => {
 
 			retVal = {
 				...retVal,
-				compositeData: compositeDataKeys.reduce((acc, val) => {
-					acc = {
-						...acc,
-						[val]: retVal.compositeData[val].slice(1)
-					};
+				compositeData: compositeDataKeys.reduce(
+					(acc: Record<string, any>, val) => {
+						acc = {
+							...acc,
+							[val]: retVal.compositeData[val].slice(1)
+						};
 
-					return acc;
-				}, {})
+						return acc;
+					},
+					{}
+				)
 			};
 		}
 	} else if (compareToPrevious && retVal.asymmetricComparison) {
 		retVal = {
 			...retVal,
-			chartData: chartData.map(dataSet => ({
+			chartData: chartData.map((dataSet: TChartDataSet) => ({
 				...dataSet,
 				data:
 					dataSet.id !== 'data_previous'
@@ -156,14 +190,15 @@ export const getActiveItem = (retVal, compareToPrevious) => {
 };
 
 export const getPreviousValueFromCompositeData = (
-	compositeData,
-	dataName,
-	dateKey
+	compositeData: Record<string, any> | undefined,
+	dataName: string | undefined,
+	dateKey: number
 ) => {
-	const data = get(compositeData, dataName);
+	const data = get(compositeData, dataName as string);
 
 	if (data) {
-		return data.find(val => toUnix(val.key) === dateKey)?.previousValue;
+		return data.find((val: {key: string}) => toUnix(val.key) === dateKey)
+			?.previousValue;
 	}
 };
 
@@ -194,7 +229,10 @@ export const formatValue = (
 	});
 };
 
-export const getMetricCardTabsData = (result, metrics) =>
+export const getMetricCardTabsData = (
+	result: TMetricsResult,
+	metrics: Metric[]
+) =>
 	metrics.map(({name, title, type}) => {
 		const metricFormatter = getMetricFormatter(type);
 
@@ -218,11 +256,11 @@ export const getMetricCardTabsData = (result, metrics) =>
 	});
 
 export const getMetricsData = (
-	result,
-	metrics,
-	rangeSelectors = {},
-	chartDataMapFn = getMetricsChartData,
-	interval = INTERVAL_KEY_MAP.day
+	result: TMetricsResult,
+	metrics: Metric[],
+	rangeSelectors: Partial<RangeSelectors> = {},
+	chartDataMapFn: (...args: any[]) => any = getMetricsChartData,
+	interval: string = INTERVAL_KEY_MAP.day
 ) =>
 	metrics.map(({compositeMetrics, name, title, tooltipTitle, type}) =>
 		getMetricData({
@@ -244,12 +282,25 @@ export const getMetricsChartData = ({
 	title,
 	tooltipTitle,
 	type
+}: {
+	histogram: Array<{
+		key: string;
+		previousValue: number;
+		value: number;
+	}>;
+	name: string;
+	title: string;
+	tooltipTitle?: string;
+	type: MetricType;
 }) => [
 	{
 		color: CHART_BLUE,
 		data: getDataFormatter(type)(histogram.map(({value}) => value)),
 		id: CHART_DATA_ID_1,
-		name: tooltipTitle || METRIC_TOOLTIP_LABEL_MAP[name] || title,
+		name:
+			tooltipTitle ||
+			(METRIC_TOOLTIP_LABEL_MAP as Record<string, string>)[name] ||
+			title,
 		tooltipTitle
 	},
 	{
@@ -271,6 +322,11 @@ export const convertHistogramKeysToDate = ({
 	previousValueKey,
 	valueKey,
 	...otherParams
+}: {
+	key: string;
+	previousValueKey: string;
+	valueKey: string;
+	[k: string]: any;
 }) => ({
 	key: toUnix(key),
 	previousValueKey: previousValueKey.split('/').map(toUnix),
@@ -288,6 +344,16 @@ export const getMetricData = ({
 	title,
 	tooltipTitle,
 	type
+}: {
+	chartDataMapFn?: (...args: any[]) => any;
+	compositeMetrics?: Metric[];
+	interval?: string;
+	name: string;
+	rangeSelectors: Partial<RangeSelectors>;
+	result: TMetricsResult;
+	title: string;
+	tooltipTitle?: string;
+	type: MetricType;
 }) => {
 	const metricFormatter = getMetricFormatter(type);
 
@@ -299,7 +365,7 @@ export const getMetricData = ({
 		? {
 				compositeContent: compositeMetrics.reduce(
 					(
-						acc,
+						acc: Record<string, any>,
 						{
 							name: compositeMetricName,
 							title: compositeMetricTitle,
@@ -335,7 +401,7 @@ export const getMetricData = ({
 					{}
 				),
 				compositeData: compositeMetrics.reduce(
-					(acc, {name: compositeMetricName}) => {
+					(acc: Record<string, any>, {name: compositeMetricName}) => {
 						acc[compositeMetricName] =
 							result[compositeMetricName].histogram.metrics;
 
@@ -375,9 +441,9 @@ export const getMetricData = ({
 		dateKeysIMap,
 		format: getAxisFormatter(type),
 		intervals: getIntervals(
-			rangeSelectors.rangeKey,
+			rangeSelectors.rangeKey as RangeSelectors['rangeKey'],
 			histogram.map(({key}) => key),
-			interval,
+			interval as Interval,
 			dateKeysIMap
 		),
 		prevDateKeysIMap: new Map(
@@ -393,6 +459,17 @@ export const getSiteMetricsChartData = ({
 	title,
 	tooltipTitle,
 	type
+}: {
+	compositeData: Record<string, Array<{value: number}>>;
+	histogram: Array<{
+		key: string;
+		previousValue: number;
+		value: number;
+	}>;
+	name: string;
+	title: string;
+	tooltipTitle?: string;
+	type: MetricType;
 }) =>
 	name === 'visitorsMetric'
 		? [
@@ -400,7 +477,7 @@ export const getSiteMetricsChartData = ({
 					color: CHART_BLUE,
 					data: getDataFormatter(type)(
 						compositeData.knownVisitorsMetric.map(
-							({value}) => value
+							({value}: {value: number}) => value
 						)
 					),
 					dataName: 'knownVisitorsMetric',
@@ -413,7 +490,7 @@ export const getSiteMetricsChartData = ({
 					color: CHART_ORANGE,
 					data: getDataFormatter(type)(
 						compositeData.anonymousVisitorsMetric.map(
-							({value}) => value
+							({value}: {value: number}) => value
 						)
 					),
 					dataName: 'anonymousVisitorsMetric',

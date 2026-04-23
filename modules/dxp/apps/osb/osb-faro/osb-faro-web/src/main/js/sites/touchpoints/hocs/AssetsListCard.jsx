@@ -5,7 +5,7 @@ import ClayLink from '@clayui/link';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {compose} from 'redux';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {HOC_CARD_PROPTYPES} from 'shared/util/proptypes';
 import {
 	mapPropsToOptions,

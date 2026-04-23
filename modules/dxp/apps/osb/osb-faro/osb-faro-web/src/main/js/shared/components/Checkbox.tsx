@@ -21,17 +21,19 @@ const Checkbox: React.FC<ICheckboxProps> = ({
 	onChange,
 	...otherProps
 }) => {
-	const _checkboxRef = useRef<HTMLInputElement>();
+	const _checkboxRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		_checkboxRef.current.indeterminate = indeterminate;
+		if (_checkboxRef.current) {
+			_checkboxRef.current.indeterminate = !!indeterminate;
+		}
 	}, [indeterminate]);
 
 	const classes = getCN('custom-control', 'custom-checkbox', className, {
 		['custom-control-inline']: displayInline
 	});
 
-	const handleEventPropagation = event => {
+	const handleEventPropagation = (event: React.MouseEvent) => {
 		event.stopPropagation();
 	};
 

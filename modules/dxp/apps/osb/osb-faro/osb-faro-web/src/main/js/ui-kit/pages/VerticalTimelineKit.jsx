@@ -21,8 +21,7 @@ const NESTED_ITEMS = [
 		subtitle: 'www.liferay.com/testing 3',
 		symbol: 'web-content',
 		time: 1518648993917,
-		title:
-			'Visited Liferay: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat'
+		title: 'Visited Liferay: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat'
 	}
 ];
 

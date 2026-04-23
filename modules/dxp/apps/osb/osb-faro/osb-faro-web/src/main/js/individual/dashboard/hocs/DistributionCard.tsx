@@ -22,12 +22,13 @@ interface IIndividualsDistributionCardProps
 	showAddDataSource?: boolean;
 }
 
-const IndividualsDistributionCard: React.FC<IIndividualsDistributionCardProps> = ({
-	fetchDistribution,
-	id,
-	...otherProps
-}) => {
-	const {channelId, groupId} = useParams();
+const IndividualsDistributionCard: React.FC<
+	IIndividualsDistributionCardProps
+> = ({fetchDistribution, id, ...otherProps}) => {
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 
 	return (
 		<DistributionCard
@@ -35,7 +36,7 @@ const IndividualsDistributionCard: React.FC<IIndividualsDistributionCardProps> =
 			distributionKey='individualsDashboard'
 			fetchDistribution={name => toPromise(fetchDistribution(name))}
 			groupId={groupId}
-			id={id}
+			id={id ?? groupId}
 			noResultsRenderer={() => (
 				<NoResultsDisplay
 					description={

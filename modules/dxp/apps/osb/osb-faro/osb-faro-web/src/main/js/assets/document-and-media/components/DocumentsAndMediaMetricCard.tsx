@@ -15,13 +15,17 @@ import {
 	Metric,
 	RatingsMetric
 } from 'shared/components/metric-card/metrics';
+import {ICommonVariables} from 'shared/types';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const NAME = 'document';
 
-const DocumentsAndMediaMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
-	const variables = commonVariables => useAssetVariables(commonVariables);
+const DocumentsAndMediaMetricCard: React.FC<
+	IGenericMetricBaseCardProps
+> = props => {
+	const variables = (commonVariables: ICommonVariables) =>
+		useAssetVariables(commonVariables);
 
 	const metrics: Metric[] = [
 		DownloadsMetric,

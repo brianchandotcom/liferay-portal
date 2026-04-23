@@ -56,7 +56,10 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 	const [loading, setLoading] = useState(false);
 	const [dataSource, setDataSource] = useState(initialDataSource);
 
-	const {groupId, id} = useParams();
+	const {groupId = '', id = ''} = useParams<{
+		groupId: string;
+		id: string;
+	}>();
 	const currentUser = useCurrentUser();
 
 	type Alert = {
@@ -71,17 +74,17 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
-	const enabledAllAccounts = dataSource.provider.getIn(
+	const enabledAllAccounts = dataSource.provider?.getIn(
 		['accountsConfiguration', 'enableAllAccounts'],
 		false
 	);
 
-	const enabledAllContacts = dataSource.provider.getIn(
+	const enabledAllContacts = dataSource.provider?.getIn(
 		['contactsConfiguration', 'enableAllContacts'],
 		false
 	);
 
-	const enableAllLeads = dataSource.provider.getIn(
+	const enableAllLeads = dataSource.provider?.getIn(
 		['contactsConfiguration', 'enableAllLeads'],
 		false
 	);
@@ -155,7 +158,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 				breadcrumbs.getDataSources({groupId}),
 				breadcrumbs.getDataSourceName({
 					active: true,
-					label: dataSource.name
+					label: dataSource.name ?? ''
 				})
 			]}
 			documentTitle={Liferay.Language.get('configure-data-source')}
@@ -166,7 +169,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 				editable={currentUser.isAdmin()}
 				groupId={groupId}
 				label={label}
-				onUpdateName={async name => {
+				onUpdateName={async (name: string) => {
 					await updateSalesforce({groupId, id, name} as any);
 
 					await handleUpdateDataSource();
@@ -207,9 +210,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 							</div>
 
 							<ConnectSalesforceAuth
-								addAlert={
-									(addAlert as unknown) as Alert.AddAlert
-								}
+								addAlert={addAlert as unknown as Alert.AddAlert}
 								buttonProps={{size: 'sm'}}
 								dataSource={dataSource}
 								onSubmit={handleUpdateDataSource}
@@ -276,6 +277,9 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 					onSubmit={async ({
 						enabledAllAccounts,
 						enabledAllIndividuals
+					}: {
+						enabledAllAccounts: boolean;
+						enabledAllIndividuals: boolean;
 					}) => {
 						await updateSalesforce({
 							accountsConfiguration: {
@@ -312,7 +316,11 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 					handleUpdateDataSource={handleUpdateDataSource}
 					loading={loading}
 					open={open}
-					updateDataSourceFn={updateSalesforce}
+					updateDataSourceFn={
+						updateSalesforce as (params: {
+							[key: string]: any;
+						}) => Promise<any>
+					}
 				/>
 			</Card>
 		</BasePage>
@@ -325,36 +333,49 @@ const AccountAndIndividuals = ({
 	groupId,
 	loading,
 	onSubmit
+}: {
+	currentUser: any;
+	dataSource: DataSource;
+	groupId: string;
+	loading: boolean;
+	onSubmit: (params: {
+		enabledAllAccounts: boolean;
+		enabledAllIndividuals: boolean;
+	}) => void;
 }) => {
 	const [enabledAllAccounts, setEnabledAllAccount] = useState(
-		dataSource.provider.getIn(
+		dataSource.provider?.getIn(
 			['accountsConfiguration', 'enableAllAccounts'],
 			false
 		)
 	);
 
 	const [enabledAllIndividuals, setEnabledAllIndividuals] = useState(
-		dataSource.provider.getIn(
+		dataSource.provider?.getIn(
 			['contactsConfiguration', 'enableAllContacts'],
 			false
 		) ||
-			dataSource.provider.getIn(
+			dataSource.provider?.getIn(
 				['contactsConfiguration', 'enableAllLeads'],
 				false
 			)
 	);
 
 	const accountsCountResponse = useRequest({
-		dataSourceFn: fetchAccountsCount,
+		dataSourceFn: fetchAccountsCount as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {groupId, id: dataSource.id}
 	});
 
 	const userCountResponse = useRequest({
-		dataSourceFn: fetchUserCount,
+		dataSourceFn: fetchUserCount as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {groupId, id: dataSource.id}
 	});
 
-	const hasChangesRef = useRef(null);
+	const hasChangesRef = useRef<boolean | null>(null);
 	const enabledAllAccountsPrevValue = useRef(enabledAllAccounts);
 	const enabledAllIndividualsPrevValue = useRef(enabledAllIndividuals);
 

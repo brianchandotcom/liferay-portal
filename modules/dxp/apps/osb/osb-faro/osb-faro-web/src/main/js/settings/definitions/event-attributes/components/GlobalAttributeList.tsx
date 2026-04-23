@@ -5,24 +5,35 @@ import EventAttributeDefinitionsQuery, {
 import ListComponent from 'shared/hoc/ListComponent';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
+import {Attribute, AttributeTypes} from 'event-analysis/utils/types';
 import {attributeListColumns} from 'shared/util/table-columns';
-import {AttributeTypes} from 'event-analysis/utils/types';
 import {
 	createOrderIOMap,
 	getSortFromOrderIOMap,
 	NAME
 } from 'shared/util/pagination';
 import {mapListResultsToProps} from 'shared/util/mappers';
+import {Sort} from 'shared/types';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+
+interface EventAttributeDefinitionsResult {
+	eventAttributeDefinitions: {
+		eventAttributeDefinitions: Attribute[];
+		total: number;
+	};
+}
 
 const GlobalAttributeList: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
 		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
-	const {channelId, groupId} = useParams();
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 
 	const response = useQuery<
 		EventAttributeDefinitionsData,
@@ -32,18 +43,23 @@ const GlobalAttributeList: React.FC = () => {
 			keyword: query,
 			page: page - 1,
 			size: delta,
-			sort: getSortFromOrderIOMap(orderIOMap),
+			sort: getSortFromOrderIOMap(orderIOMap) as Sort,
 			type: AttributeTypes.Global
 		}
 	});
 
 	return (
 		<ListComponent
-			{...mapListResultsToProps(response, result => ({
-				items:
-					result.eventAttributeDefinitions.eventAttributeDefinitions,
-				total: result.eventAttributeDefinitions.total
-			}))}
+			{...mapListResultsToProps(response, result => {
+				const typedResult =
+					result as unknown as EventAttributeDefinitionsResult;
+
+				return {
+					items: typedResult.eventAttributeDefinitions
+						.eventAttributeDefinitions,
+					total: typedResult.eventAttributeDefinitions.total
+				};
+			})}
 			columns={[
 				attributeListColumns.getName({channelId, groupId}),
 				attributeListColumns.displayName,

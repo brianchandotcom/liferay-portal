@@ -11,9 +11,8 @@ import {withBaseResults} from 'shared/hoc';
 const ExperimentListCard = props => {
 	const {experiments, timeZoneId, ...otherProps} = props;
 
-	const withData = () => WrappedComponent => props => (
-		<WrappedComponent {...props} {...otherProps} items={experiments} />
-	);
+	const withData = () => WrappedComponent => props =>
+		<WrappedComponent {...props} {...otherProps} items={experiments} />;
 
 	const TableWithData = withBaseResults(withData, {
 		emptyDescription: (

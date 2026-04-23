@@ -13,7 +13,8 @@ import SitesTopPagesQuery, {
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import Table from 'shared/components/table';
 import URLConstants from 'shared/util/url-constants';
-import {ApolloError} from 'apollo-client';
+import {ApolloError, useQuery} from '@apollo/client';
+
 import {ENTRANCES_METRIC, EXIT_RATE_METRIC} from 'shared/util/pagination';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {metricsListColumns} from 'shared/util/table-columns';
@@ -23,7 +24,6 @@ import {pickBy} from 'lodash';
 import {RangeSelectors} from 'shared/types';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {setUriQueryValues} from 'shared/util/router';
-import {useQuery} from '@apollo/react-hooks';
 
 const ROW_IDENTIFIER = ['assetId', 'assetTitle'];
 
@@ -31,7 +31,7 @@ const ASSET_TITLE_COLUMN = {
 	cellRenderer: NameCell,
 	cellRendererProps: {
 		nameKey: 'assetTitle',
-		renderSecondaryInfo: ({assetId}) => assetId
+		renderSecondaryInfo: ({assetId}: {assetId: string}) => assetId
 	},
 	className: 'table-cell-expand',
 	label: `${Liferay.Language.get('page-title')}
@@ -105,7 +105,7 @@ const TopPagesCard: React.FC<ITopPagesCardProps> = ({
 	<BaseCard
 		className={className}
 		label={label}
-		legacyDropdownRangeKey={legacyDropdownRangeKey}
+		legacyDropdownRangeKey={legacyDropdownRangeKey ?? true}
 		reportContainer={ReportContainer.TopPagesCard}
 	>
 		{({rangeSelectors}) => (
@@ -131,25 +131,28 @@ const TopPagesCardWithData: React.FC<ITopPageCardWithData> = ({
 			params: {channelId}
 		}
 	} = useContext(BasePage.Context);
-	const {data, error, loading = false} = useQuery<
-		SitesTopPagesQueryData,
-		SitesTopPagesQueryVariables
-	>(SitesTopPagesQuery, {
-		variables: {
-			...getSafeRangeSelectors(rangeSelectors),
-			channelId,
-			size: 5,
-			sort: {
-				column: activeTabId,
-				type: OrderByDirections.Descending
-			},
-			start: 0
+	const {
+		data,
+		error,
+		loading = false
+	} = useQuery<SitesTopPagesQueryData, SitesTopPagesQueryVariables>(
+		SitesTopPagesQuery,
+		{
+			variables: {
+				...getSafeRangeSelectors(rangeSelectors),
+				channelId,
+				size: 5,
+				sort: {
+					column: activeTabId,
+					type: OrderByDirections.Descending
+				},
+				start: 0
+			}
 		}
-	});
-
-	const {getColumns, rowIdentifier} = tabs.find(
-		({tabId}) => tabId === activeTabId
 	);
+
+	const activeTab = tabs.find(({tabId}) => tabId === activeTabId) ?? tabs[0];
+	const {getColumns, rowIdentifier} = activeTab;
 
 	return (
 		<>
@@ -177,7 +180,7 @@ const TopPagesCardWithData: React.FC<ITopPageCardWithData> = ({
 				</TopPagesCardWithStatesRenderer>
 			</Card.Body>
 
-			{!!Object.keys(footer).length && (
+			{footer && !!Object.keys(footer).length && (
 				<Card.Footer>
 					<ClayLink
 						borderless
@@ -210,16 +213,13 @@ const TopPagesCardWithData: React.FC<ITopPageCardWithData> = ({
 interface ITopPagesCardWithStatesRendererProps
 	extends React.HTMLAttributes<HTMLElement> {
 	empty?: boolean;
-	error: ApolloError;
+	error?: ApolloError;
 	loading?: boolean;
 }
 
-const TopPagesCardWithStatesRenderer: React.FC<ITopPagesCardWithStatesRendererProps> = ({
-	children,
-	empty,
-	error,
-	loading
-}) => (
+const TopPagesCardWithStatesRenderer: React.FC<
+	ITopPagesCardWithStatesRendererProps
+> = ({children, empty, error, loading}) => (
 	<StatesRenderer empty={empty} error={!!error} loading={loading}>
 		<StatesRenderer.Loading />
 		<StatesRenderer.Empty

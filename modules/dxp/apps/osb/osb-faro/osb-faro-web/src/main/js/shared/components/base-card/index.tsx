@@ -7,9 +7,10 @@ import {RangeSelectors} from 'shared/types';
 import {ReportContainer} from '../download-report/DownloadPDFReport';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
-interface BaseCardIProps extends React.HTMLAttributes<HTMLElement> {
+interface BaseCardIProps {
 	className?: string;
-	children: (val) => React.ReactNode;
+	id?: string;
+	children: (val: any) => React.ReactNode;
 	description?: string;
 	Header?: React.FC<BaseCardHeaderDefaultIProps>;
 	headerProps?: {[key: string]: any};
@@ -46,10 +47,8 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 
 	const initialRangeSelectors = useQueryRangeSelectors();
 
-	const [
-		localRangeSelectors,
-		setLocalRangeSelectors
-	] = useState<RangeSelectors>(initialRangeSelectors);
+	const [localRangeSelectors, setLocalRangeSelectors] =
+		useState<RangeSelectors>(initialRangeSelectors);
 
 	const currentRangeSelectors = contextRangeSelectors || localRangeSelectors;
 

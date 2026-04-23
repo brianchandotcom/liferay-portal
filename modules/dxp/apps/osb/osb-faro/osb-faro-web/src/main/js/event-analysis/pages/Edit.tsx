@@ -15,7 +15,7 @@ import {normalizeRangeSelectors} from 'shared/util/util';
 import {Routes, toRoute} from 'shared/util/router';
 import {uniqueId} from 'lodash';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 function normalizeItems<T extends {id: string; __typename?: string}>(
 	data: T[]
@@ -48,7 +48,15 @@ interface FilterWithId extends Filter {
 }
 
 const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const {channelId, groupId, id: eventAnalysisId} = useParams();
+	const {
+		channelId,
+		groupId,
+		id: eventAnalysisId = ''
+	} = useParams<{
+		channelId: string;
+		groupId: string;
+		id: string;
+	}>();
 	const {data, error, loading} = useQuery<
 		EventAnalysisData,
 		EventAnalysisVariables
@@ -69,10 +77,11 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				}
 			} = data;
 
-			const breakdowns: BreakdownWithId[] = getItemsWithUniqueId<Breakdown>(
-				eventAnalysisBreakdowns,
-				'breakdown'
-			);
+			const breakdowns: BreakdownWithId[] =
+				getItemsWithUniqueId<Breakdown>(
+					eventAnalysisBreakdowns,
+					'breakdown'
+				);
 			const filters: FilterWithId[] = getItemsWithUniqueId<Filter>(
 				eventAnalysisFilters,
 				'filter'
@@ -124,7 +133,7 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			rangeStart,
 			referencedObjects: {eventDefinition}
 		}
-	} = data;
+	} = data!;
 
 	return (
 		<AttributesProvider initialState={initialAttributesState}>

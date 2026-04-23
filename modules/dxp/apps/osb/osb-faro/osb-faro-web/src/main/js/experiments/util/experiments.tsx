@@ -10,7 +10,11 @@ import {
 	GetStatusNameFn,
 	GetTicksFn,
 	GetVariantLabels,
-	MergedVariantsFn
+	MergedVariant,
+	MergedVariantsFn,
+	MetricName,
+	Variant,
+	VariantMetric
 } from './types';
 import {round} from 'lodash';
 import {toRounded, toThousands, toThousandsBase} from 'shared/util/numbers';
@@ -51,7 +55,15 @@ const STATUS_NAMES = new Map([
 	['TERMINATED', Liferay.Language.get('terminated')]
 ]);
 
-const getExperimentLink = ({action, id, pageURL}) => {
+const getExperimentLink = ({
+	action,
+	id,
+	pageURL
+}: {
+	action?: string;
+	id: string;
+	pageURL: string;
+}) => {
 	const experimentLink = `${pageURL}?segmentsExperimentKey=${id}`;
 
 	if (action) {
@@ -75,46 +87,65 @@ export const getFormattedMedian: GetFormattedMedianFn = (median, metric) => {
 	return toRounded(median, precision);
 };
 
-export const getFormattedMedianLabel = metric =>
+export const getFormattedMedianLabel = (metric: MetricName) =>
 	metric === 'CLICK_RATE'
 		? `${Liferay.Language.get('median')} ${getMetricName(metric)}`
 		: `${getMetricName(metric)} ${Liferay.Language.get('median')}`;
 
-export const getFormattedProbabilityToWin = value => {
+export const getFormattedProbabilityToWin = (
+	value: number
+): string | number => {
 	if (value < 0.1) {
-		value = '< 0.1';
+		return '< 0.1';
 	} else if (value > 99.9) {
-		value = '> 99.9';
-	} else {
-		value = toRounded(value);
+		return '> 99.9';
 	}
 
-	return value;
+	return toRounded(value);
 };
 
 export const getMetricName: GetMetricNameFn = metric =>
-	METRICS_NAMES.get(metric);
+	METRICS_NAMES.get(metric) ?? '';
 
 export const getMetricUnit: GetMetricUnitFn = metric =>
-	METRICS_UNITS.get(metric);
+	METRICS_UNITS.get(metric) ?? '';
 
 export const getStatusColor: GetStatusColorFn = status =>
-	STATUS_COLORS.get(status);
+	STATUS_COLORS.get(status) ?? '';
 
 export const getStatusName: GetStatusNameFn = status =>
-	STATUS_NAMES.get(status).toUpperCase();
+	(STATUS_NAMES.get(status) ?? '').toUpperCase();
 
 export const mergedVariants: MergedVariantsFn = (variants, variantMetrics) =>
-	variants.map(variant => ({
-		...variant,
-		...variantMetrics.find(
+	variants.map(variant => {
+		const metric = variantMetrics.find(
 			({dxpVariantId}) => variant.dxpVariantId === dxpVariantId
-		)
-	}));
+		);
+
+		return {
+			...variant,
+			confidenceInterval: metric?.confidenceInterval ?? [],
+			improvement: metric?.improvement ?? 0,
+			median: metric?.median ?? 0,
+			probabilityToWin: metric?.probabilityToWin ?? 0
+		};
+	});
+
+interface IGetActionsOptions {
+	id: string;
+	onDelete?: () => void;
+	pageURL: string;
+	publishable?: boolean;
+}
 
 export const getActions = (
 	status: string,
-	{id, onDelete, pageURL, publishable} = null
+	{
+		id,
+		onDelete,
+		pageURL,
+		publishable
+	}: IGetActionsOptions = {} as IGetActionsOptions
 ) => {
 	const deleteButton = {
 		displayType: 'secondary',
@@ -220,7 +251,11 @@ export const getBestVariant = ({
 	dxpVariants,
 	goal,
 	metrics: {variantMetrics}
-}) => {
+}: {
+	dxpVariants: Variant[];
+	goal?: {metric: MetricName};
+	metrics: {variantMetrics: VariantMetric[]};
+}): MergedVariant | null => {
 	if (
 		!dxpVariants ||
 		variantMetrics.every(({median}) => median === variantMetrics[0].median)
@@ -229,11 +264,8 @@ export const getBestVariant = ({
 	}
 
 	if (goal?.metric === 'BOUNCE_RATE') {
-		return mergedVariants(
-			dxpVariants,
-			variantMetrics
-		).reduce((prev, current) =>
-			prev.median < current.median ? prev : current
+		return mergedVariants(dxpVariants, variantMetrics).reduce(
+			(prev, current) => (prev.median < current.median ? prev : current)
 		);
 	}
 
@@ -295,9 +327,9 @@ export const getTicks: GetTicksFn = maxValue => {
 export const getShortIntervals: GetShortIntervals = intervals =>
 	getTicks(intervals.length).map(tick => intervals[tick - 1]);
 
-export const toThousandsABTesting = number => {
+export const toThousandsABTesting = (number: number) => {
 	if (number > 1e4) {
-		return toThousandsBase(number, factor =>
+		return toThousandsBase(number, (factor: number) =>
 			Math.trunc(round(number * factor, 2))
 		);
 	}
@@ -305,7 +337,7 @@ export const toThousandsABTesting = number => {
 	return toThousands(number);
 };
 
-export const getLegendData = dxpVariants => {
+export const getLegendData = (dxpVariants: Variant[]) => {
 	const COLORS = [...CHART_COLORS];
 
 	return dxpVariants.map(({control, dxpVariantId, dxpVariantName}) => ({
@@ -315,13 +347,21 @@ export const getLegendData = dxpVariants => {
 	}));
 };
 
-export const getMedianGraphData = ({dxpVariants, metricUnit}) => {
+export const getMedianGraphData = ({
+	dxpVariants,
+	metricUnit
+}: {
+	dxpVariants: MergedVariant[];
+	metricUnit: string;
+}) => {
 	const COLORS = [...CHART_COLORS];
 
 	const type = metricUnit === '%' ? 'percentage' : 'number';
 
 	const formatter =
-		metricUnit === '%' ? value => value : value => `${value}s`;
+		metricUnit === '%'
+			? (value: number) => value
+			: (value: number) => `${value}s`;
 
 	const items = dxpVariants.map(({confidenceInterval, control, median}) => ({
 		intervals: [

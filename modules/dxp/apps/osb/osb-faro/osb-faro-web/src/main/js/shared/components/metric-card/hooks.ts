@@ -1,23 +1,28 @@
-import {DocumentNode} from 'apollo-boost';
+import {DocumentNode, useQuery} from '@apollo/client';
+
 import {fetchPolicyDefinition} from 'shared/util/graphql';
-import {Filters, getFilters, RawFilters} from 'shared/util/filter';
+import {getFilters, RawFilters} from 'shared/util/filter';
 import {
 	getSafeDecodedURIComponent,
 	getSafeRangeSelectors,
 	getSafeTouchpoint
 } from 'shared/util/util';
-import {Interval, RangeSelectors, SafeRangeSelectors} from 'shared/types';
+import {ICommonVariables, Interval, RangeSelectors} from 'shared/types';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/react-hooks';
-
-interface ICommonVariables extends SafeRangeSelectors, Filters {
-	interval: Interval;
-	type?: string;
-}
 
 export const useAssetVariables = (variables: ICommonVariables) => {
 	const {type, ...commonVariables} = variables;
-	const {assetId, channelId, title, touchpoint} = useParams();
+	const {
+		assetId = '',
+		channelId = '',
+		title = '',
+		touchpoint = ''
+	} = useParams<{
+		assetId: string;
+		channelId: string;
+		title: string;
+		touchpoint: string;
+	}>();
 
 	return {
 		assetId: getSafeDecodedURIComponent(assetId),
@@ -40,10 +45,10 @@ type TMetricQuery = {
 };
 
 export const useMetricQuery = ({
+	Query,
 	experienceId,
 	filters,
 	interval,
-	Query,
 	rangeSelectors,
 	variables
 }: TMetricQuery) => {

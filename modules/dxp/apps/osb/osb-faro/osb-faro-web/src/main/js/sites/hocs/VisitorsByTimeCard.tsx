@@ -13,7 +13,7 @@ import ReactDOMServer from 'react-dom/server';
 import URLConstants from 'shared/util/url-constants';
 import VisitorsByTimeQuery from 'shared/queries/VisitorsByTimeQuery';
 import {compose} from 'shared/hoc';
-import {graphql} from '@apollo/react-hoc';
+import {graphql, OperationOption} from '@apollo/client/react/hoc';
 import {IBasePageContext} from 'shared/types';
 import {
 	mapPropsToOptions,
@@ -37,7 +37,15 @@ export const formatHour = (hour: string) => {
 	return `${hourDisplay} ${suffix}`;
 };
 
-export const renderTooltip = ({column, row, value}) =>
+export const renderTooltip = ({
+	column,
+	row,
+	value
+}: {
+	column: string;
+	row: string;
+	value: number;
+}) =>
 	ReactDOMServer.renderToString(
 		<ChartTooltip
 			header={[
@@ -69,7 +77,7 @@ const HeatmapChartWithData = compose<any>(
 	graphql(VisitorsByTimeQuery, {
 		options: mapPropsToOptions,
 		props: mapResultToProps
-	}),
+	} as OperationOption<object, object>),
 	withLoading(),
 	withError({page: false}),
 	withEmpty({
@@ -120,7 +128,7 @@ const VisitorsByTimeCard: React.FC<IVisitorsByTimeCardProps> = ({
 			{({rangeSelectors}) => (
 				<Card.Body>
 					<HeatmapChartWithData
-						columnAxisFormatter={col => col.slice(0, 3)}
+						columnAxisFormatter={(col: string) => col.slice(0, 3)}
 						rangeSelectors={rangeSelectors}
 						renderTooltip={renderTooltip}
 						router={router}
@@ -134,7 +142,7 @@ const VisitorsByTimeCard: React.FC<IVisitorsByTimeCardProps> = ({
 
 VisitorsByTimeCard.propTypes = {
 	className: PropTypes.string,
-	label: PropTypes.string
+	label: PropTypes.string.isRequired
 };
 
 export default VisitorsByTimeCard;

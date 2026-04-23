@@ -21,7 +21,7 @@ type ListItem = {
 };
 
 // TODO: LRAC-4511 Remove developer only mode and add devItems back into items
-const items = (devMode: boolean = false): ListItem[] => [
+const items = (devMode: boolean = false): (ListItem | null)[] => [
 	{
 		header: Liferay.Language.get('people'),
 		items: [
@@ -32,26 +32,34 @@ const items = (devMode: boolean = false): ListItem[] => [
 				route: Routes.SETTINGS_DEFINITIONS_INDIVIDUAL_ATTRIBUTES,
 				title: Liferay.Language.get('individuals')
 			},
-			devMode && {
-				description: Liferay.Language.get(
-					'view-and-manage-the-data-model-of-your-accounts.-this-data-is-automatically-mapped-from-a-salesforce-datasource'
-				),
-				route: Routes.CONTACTS_LIST_ENTITY,
-				routeParams: {type: ACCOUNTS},
-				title: Liferay.Language.get('accounts')
-			}
+			...(devMode
+				? [
+						{
+							description: Liferay.Language.get(
+								'view-and-manage-the-data-model-of-your-accounts.-this-data-is-automatically-mapped-from-a-salesforce-datasource'
+							),
+							route: Routes.CONTACTS_LIST_ENTITY,
+							routeParams: {type: ACCOUNTS},
+							title: Liferay.Language.get('accounts')
+						}
+				  ]
+				: [])
 		]
 	},
 	{
 		header: Liferay.Language.get('behaviors'),
 		items: [
-			devMode && {
-				description: Liferay.Language.get(
-					'view-and-manage-the-tracked-behaviors-in-analytics-cloud.-you-will-also-find-instructions-for-tagging-non-liferay-assets-to-track-them-in-analytics-cloud'
-				),
-				route: Routes.SETTINGS_DEFINITIONS_BEHAVIORS,
-				title: Liferay.Language.get('behaviors')
-			},
+			...(devMode
+				? [
+						{
+							description: Liferay.Language.get(
+								'view-and-manage-the-tracked-behaviors-in-analytics-cloud.-you-will-also-find-instructions-for-tagging-non-liferay-assets-to-track-them-in-analytics-cloud'
+							),
+							route: Routes.SETTINGS_DEFINITIONS_BEHAVIORS,
+							title: Liferay.Language.get('behaviors')
+						}
+				  ]
+				: []),
 			{
 				description: Liferay.Language.get(
 					'view-and-manage-your-default-events-custom-events-and-event-attributes'
@@ -105,7 +113,7 @@ export const Overview: React.FC<IOverviewProps> = ({groupId}) => (
 				<Card>
 					<ClayList>
 						{items(DEVELOPER_MODE)
-							.filter(Boolean)
+							.filter((item): item is ListItem => Boolean(item))
 							.map(({header, items}) => (
 								<React.Fragment key={header}>
 									{header && (

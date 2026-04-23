@@ -39,7 +39,9 @@ export function useDownloadCSV({
 }) {
 	const {channelId, groupId, title} = useParams();
 
-	return (rangeSelectors: RangeSelectors = DEFAULT_RANGE_SELECTORS) => {
+	return (
+		rangeSelectors: RangeSelectors = DEFAULT_RANGE_SELECTORS as unknown as RangeSelectors
+	) => {
 		const searchParams = new URLSearchParams(location.search);
 
 		const field = searchParams.get('field');
@@ -50,8 +52,8 @@ export function useDownloadCSV({
 
 		if (rangeSelectors.rangeKey === RangeKeyTimeRanges.CustomRange) {
 			url += '&rangeKey=CUSTOM';
-			url += `&fromDate=${formatDate(rangeSelectors?.rangeStart)}`;
-			url += `&toDate=${formatDate(rangeSelectors?.rangeEnd)}`;
+			url += `&fromDate=${formatDate(rangeSelectors.rangeStart ?? '')}`;
+			url += `&toDate=${formatDate(rangeSelectors.rangeEnd ?? '')}`;
 		} else {
 			url += `&rangeKey=${rangeSelectors.rangeKey}`;
 		}

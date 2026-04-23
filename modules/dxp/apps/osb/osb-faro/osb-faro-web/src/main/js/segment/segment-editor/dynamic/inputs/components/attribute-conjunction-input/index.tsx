@@ -49,7 +49,9 @@ interface IAttributeFilterConjunctionInputProps {
 	};
 }
 
-const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInputProps> = ({
+const AttributeFilterConjunctionInput: React.FC<
+	IAttributeFilterConjunctionInputProps
+> = ({
 	addEntity,
 	attributes,
 	conjunctionCriterion,
@@ -65,9 +67,8 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 		}
 	}, []);
 
-	const [attributesDisplayed, setAttributesDisplayed] = useState<Attribute[]>(
-		attributes
-	);
+	const [attributesDisplayed, setAttributesDisplayed] =
+		useState<Attribute[]>(attributes);
 	const [searchValue, setSearchValue] = useState<string>('');
 
 	const getAttributeFromContext = (): Attribute => {
@@ -80,23 +81,27 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 	};
 
 	const getAttributeId = (): string => {
-		const [, id] = conjunctionCriterion.propertyName.split('/');
+		const [, id] = (conjunctionCriterion.propertyName ?? '').split('/');
 
 		return id;
 	};
 
-	const handleAttributeChange = value => {
+	const handleAttributeChange = (value: string) => {
 		const attribute = attributes.find(({id}) => id === value);
 
-		setAttribute(attribute);
+		if (attribute) {
+			setAttribute(attribute);
+		}
 	};
 
-	const getAttributes = query => {
+	const getAttributes = (query: string) => {
 		if (!query) return attributes;
 
 		return attributes.filter(
 			({displayName, name}) =>
-				displayName.toLowerCase().includes(query.toLowerCase()) ||
+				(displayName ?? '')
+					.toLowerCase()
+					.includes(query.toLowerCase()) ||
 				name.toLowerCase().includes(query.toLowerCase())
 		);
 	};
@@ -109,7 +114,9 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 
 		const defaultAttributeValue = getDefaultAttributeValue(
 			attribute.dataType,
-			conjunctionCriterion.operatorName
+			conjunctionCriterion.operatorName as unknown as
+				| import('../../../utils/constants').RelationalOperators
+				| import('../../../utils/constants').FunctionalOperators
 		);
 
 		const defaultAttributeOperator = getDefaultAttributeOperator(
@@ -119,7 +126,8 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 		onChange({
 			attribute,
 			criterion: {
-				operatorName: defaultAttributeOperator as Criterion['operatorName'],
+				operatorName:
+					defaultAttributeOperator as unknown as Criterion['operatorName'],
 				propertyName: `attribute/${attribute.id}`,
 				value: defaultAttributeValue
 			},
@@ -164,35 +172,68 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 					/>
 
 					<ClayDropDown.ItemList items={attributesDisplayed}>
-						{({dataType, displayName, id, name}: Attribute) => (
-							<ClayDropDown.Item
-								active={id === attribute.id}
-								key={name}
-								onClick={() => handleAttributeChange(id)}
-								roleItem='option'
-							>
-								<Sticker className='mr-3' display='secondary'>
-									<ClayIcon
-										symbol={DATA_TYPE_ICONS_MAP[dataType]}
-									/>
-								</Sticker>
+						{(item: unknown) => {
+							const {dataType, displayName, id, name} =
+								item as Attribute;
+							return (
+								<ClayDropDown.Item
+									active={id === attribute.id}
+									key={name}
+									onClick={() => handleAttributeChange(id)}
+									roleItem='option'
+								>
+									<Sticker
+										className='mr-3'
+										display='secondary'
+									>
+										<ClayIcon
+											symbol={
+												DATA_TYPE_ICONS_MAP[dataType]
+											}
+										/>
+									</Sticker>
 
-								{displayName || name}
-							</ClayDropDown.Item>
-						)}
+									{displayName ?? name}
+								</ClayDropDown.Item>
+							);
+						}}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</Form.GroupItem>
 
 			<OperatorSelect
 				dataType={attribute.dataType}
-				onChange={onChange}
+				onChange={(params: {criterion: Criterion}) =>
+					onChange({
+						attribute,
+						criterion: params.criterion,
+						touched,
+						valid
+					})
+				}
 				operatorName={operatorName}
 			/>
 
 			<ValueInput
 				dataType={attribute.dataType}
-				onChange={onChange}
+				onChange={params =>
+					onChange({
+						attribute,
+						criterion: params.criterion ?? {},
+						touched: {
+							...touched,
+							attributeValue:
+								params.touched?.attributeValue ??
+								touched.attributeValue
+						},
+						valid: {
+							...valid,
+							attributeValue:
+								params.valid?.attributeValue ??
+								valid.attributeValue
+						}
+					})
+				}
 				operatorName={operatorName}
 				touched={touched.attributeValue}
 				valid={valid.attributeValue}

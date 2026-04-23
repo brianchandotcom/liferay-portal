@@ -50,7 +50,9 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 	});
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
-		dataSourceFn: API.dataSource.search,
+		dataSourceFn: API.dataSource.search as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			delta: 1,
 			groupId
@@ -100,7 +102,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 					primary
 					title={Liferay.Language.get('no-data-sources-connected')}
 				>
-					{authorized && createDataSourceButton}
+					{authorized ? createDataSourceButton : undefined}
 				</NoResultsDisplay>
 			);
 		} else {

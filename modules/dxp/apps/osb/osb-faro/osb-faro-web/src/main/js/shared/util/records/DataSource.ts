@@ -36,23 +36,24 @@ export default class DataSource
 		type: 1,
 		url: null
 	})
-	implements IDataSource {
-	contactsSelected: boolean;
-	createDate?: number;
-	credentials?: Map<string, any>;
-	disabled?: boolean;
-	event?: string;
-	fileName?: string;
-	id?: string;
-	name?: string;
-	properties?: Map<string, any>;
-	provider?: Map<string, any>;
-	providerType?: string;
-	sitesSelected: boolean;
-	state?: string;
-	status?: string;
-	type?: number;
-	url?: string;
+	implements IDataSource
+{
+	declare contactsSelected: boolean;
+	declare createDate?: number;
+	declare credentials?: Map<string, any>;
+	declare disabled?: boolean;
+	declare event?: string;
+	declare fileName?: string;
+	declare id?: string;
+	declare name?: string;
+	declare properties?: Map<string, any>;
+	declare provider?: Map<string, any>;
+	declare providerType?: string;
+	declare sitesSelected: boolean;
+	declare state?: string;
+	declare status?: string;
+	declare type?: number;
+	declare url?: string;
 
 	constructor(props: IDataSource) {
 		super(fromJS(props));

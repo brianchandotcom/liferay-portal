@@ -3,7 +3,7 @@ import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
 
 export interface WithRangeKeyProps {
-	onRangeSelectorsChange?: (val) => void;
+	onRangeSelectorsChange?: (val: RangeSelectors) => void;
 	rangeSelectors?: RangeSelectors;
 }
 
@@ -26,7 +26,7 @@ const withRangeKey = <P extends WithRangeKeyProps>(
 			<WrappedComponent
 				{...(otherProps as P)}
 				onRangeSelectorsChange={useCallback(
-					newVal => setRangeSelectors(newVal),
+					(newVal: RangeSelectors) => setRangeSelectors(newVal),
 					[]
 				)}
 				rangeSelectors={rangeSelectors}

@@ -141,7 +141,7 @@ export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
  */
 export const formatGroupingTime = (
 	datetime: Date | string | number
-): moment.Moment => {
+): string => {
 	const time = moment(datetime);
 
 	return time.isSame(moment(), 'day')
@@ -161,8 +161,8 @@ export const formatSessions = (
 		groupBy(({createDate}) =>
 			moment.utc(createDate).startOf('day').format()
 		),
-		mapValues(items =>
-			items.map(
+		mapValues((items: unknown) =>
+			(items as (UserSession & {createDate: string})[]).map(
 				({
 					browserName,
 					completeDate,
@@ -190,20 +190,24 @@ export const formatSessions = (
 					browserName,
 					device: deviceType,
 					endTime: completeDate,
-					nestedItems: formatEvents(events),
+					nestedItems: formatEvents(
+						events as unknown as UserSessionEvent[]
+					),
 					time: createDate
 				})
 			)
 		),
 		toPairs,
 		orderBy([([time]) => moment(time).unix()], ['desc']),
-		map(([time, items]: any[]) => [
+		map(([time, items]: [string, {nestedItems: unknown[]}[]]) => [
 			{
 				header: true,
 				title: formatGroupingTime(time),
 				totalEvents: items.reduce(
-					(previousValue, currentValue) =>
-						previousValue + currentValue.nestedItems.length,
+					(
+						previousValue: number,
+						currentValue: {nestedItems: unknown[]}
+					) => previousValue + currentValue.nestedItems.length,
 					0
 				)
 			},

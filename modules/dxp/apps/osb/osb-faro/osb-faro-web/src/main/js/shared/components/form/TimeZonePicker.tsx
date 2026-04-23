@@ -27,7 +27,7 @@ const TimeZonePicker: React.FC<ITimeZonePicker> = ({
 	});
 
 	const [selectedCountry, setSelectedCountry] = useState<string>(
-		initialTimeZone && initialTimeZone.country
+		(initialTimeZone && initialTimeZone.country) || ''
 	);
 
 	const getCountries = (): Array<string> =>
@@ -35,7 +35,7 @@ const TimeZonePicker: React.FC<ITimeZonePicker> = ({
 			? Array.from(
 					new Set(
 						timezonesAvailable
-							.map(timeZone => timeZone.country)
+							.map((timeZone: TimeZone) => timeZone.country)
 							.sort()
 					)
 			  )
@@ -44,12 +44,16 @@ const TimeZonePicker: React.FC<ITimeZonePicker> = ({
 	const getTimeZones = (): Array<TimeZone> =>
 		timezonesAvailable
 			? timezonesAvailable.filter(
-					({country}) =>
+					({country}: TimeZone) =>
 						!selectedCountry || country === selectedCountry
 			  )
 			: [];
 
-	const handleSelectCountry = (event): void => {
+	const handleSelectCountry = (
+		event:
+			| React.ChangeEvent<HTMLSelectElement>
+			| React.FocusEvent<HTMLSelectElement>
+	): void => {
 		setSelectedCountry(event.target.value);
 		setFieldTouched(fieldName, 'UTC');
 		setFieldValue(fieldName, 'UTC');

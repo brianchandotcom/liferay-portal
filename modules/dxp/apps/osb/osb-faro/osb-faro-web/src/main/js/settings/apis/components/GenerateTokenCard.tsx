@@ -54,8 +54,10 @@ const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 							{Liferay.Language.get('expiration-date')}
 						</label>
 						<Select
-							onChange={({target: {value}}) => {
-								setExpiresIn(value);
+							onChange={({
+								target: {value}
+							}: React.ChangeEvent<HTMLSelectElement>) => {
+								setExpiresIn(value as ExpirationPeriod);
 							}}
 							value={expiresIn}
 						>

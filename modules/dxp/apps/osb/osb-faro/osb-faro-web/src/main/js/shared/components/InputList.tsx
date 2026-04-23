@@ -55,7 +55,7 @@ const InputList: FC<IInputListProps> = ({
 	const [focused, setFocused] = useState(false);
 	const [valid, setValid] = useState(true);
 
-	const getCharCode = keyCode => {
+	const getCharCode = (keyCode: number) => {
 		if (keyCode >= 96) {
 			return keyCode - 48 * Math.floor(keyCode / 48);
 		}
@@ -63,10 +63,10 @@ const InputList: FC<IInputListProps> = ({
 		return keyCode;
 	};
 
-	const getStringFromKeyCode = keycode =>
+	const getStringFromKeyCode = (keycode: number) =>
 		String.fromCharCode(getCharCode(keycode));
 
-	const handleBlur = event => {
+	const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
 		setFocused(false);
 
 		if (event.target.value && validateOnBlur) {
@@ -88,11 +88,11 @@ const InputList: FC<IInputListProps> = ({
 		setFocused(true);
 	};
 
-	const handleKeyDown = event => {
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		const {
 			keyCode,
 			target: {value}
-		} = event;
+		} = event as any;
 
 		if (value && keyCodesToSplit.includes(keyCode)) {
 			event.preventDefault();
@@ -109,24 +109,29 @@ const InputList: FC<IInputListProps> = ({
 		} else if (!value && keyCode === BACKSPACE && items.length) {
 			event.preventDefault();
 
-			onItemsChange(items.splice(0, items.length - 1));
+			onItemsChange(items.slice(0, items.length - 1));
 		} else {
 			setValid(true);
 		}
 	};
 
-	const handleInputChange = ({target: {value}}) => {
+	const handleInputChange = ({
+		target: {value}
+	}: React.ChangeEvent<HTMLInputElement>) => {
 		onInputChange(value);
 	};
 
-	const handleRemoveItem = index => {
-		onItemsChange([...items.slice(0, index), ...items.slice(index + 1)]);
+	const handleRemoveItem = (index?: number) => {
+		onItemsChange([
+			...items.slice(0, index),
+			...items.slice((index as number) + 1)
+		]);
 	};
 
-	const handlePaste = event => {
+	const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
 		const pastedText = event.clipboardData.getData('Text');
 
-		const keysToSplit = keyCodesToSplit.map(keycode =>
+		const keysToSplit = keyCodesToSplit.map((keycode: number) =>
 			getStringFromKeyCode(keycode)
 		);
 
@@ -172,12 +177,12 @@ const InputList: FC<IInputListProps> = ({
 			<div className='form-control form-control-tag-group'>
 				{items &&
 					items.length > 0 &&
-					items.map((item, i) => (
+					items.map((item: string, i: number) => (
 						<Label
 							display='secondary'
 							index={i}
 							key={i}
-							onRemove={!disabled && handleRemoveItem}
+							onRemove={!disabled ? handleRemoveItem : undefined}
 						>
 							{item}
 						</Label>

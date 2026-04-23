@@ -3,10 +3,17 @@ import getLocationsMapper, {
 } from 'cerebro-shared/hocs/mappers/locations';
 import URLConstants from 'shared/util/url-constants';
 import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
-import {gql} from 'apollo-boost';
-import {graphql} from '@apollo/react-hoc';
+import {gql} from '@apollo/client';
+import {graphql} from '@apollo/client/react/hoc';
+import {OperationOption} from '@apollo/client/react/hoc';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withLocationsCard} from 'cerebro-shared/hocs/LocationsCard';
+
+type DocumentMetricResult = {
+	document: {
+		downloadsMetric: unknown;
+	};
+};
 
 const GEOLOCATION_QUERY = gql`
 	query DocumentsAndMediaMetrics(
@@ -49,7 +56,9 @@ const GEOLOCATION_QUERY = gql`
 const withBlogsLocations = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapper(result => result.document.downloadsMetric)
+		getLocationsMapper(
+			(result: DocumentMetricResult) => result.document.downloadsMetric
+		) as OperationOption<object, object>
 	);
 
 /**
@@ -59,7 +68,9 @@ const withBlogsLocations = () =>
 const withBlogsLocationsCountries = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapperCountries(result => result.document.downloadsMetric)
+		getLocationsMapperCountries(
+			(result: DocumentMetricResult) => result.document.downloadsMetric
+		) as OperationOption<object, object>
 	);
 
 export default withLocationsCard(

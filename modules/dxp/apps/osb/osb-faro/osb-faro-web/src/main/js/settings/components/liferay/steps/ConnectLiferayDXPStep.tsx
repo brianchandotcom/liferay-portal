@@ -1,7 +1,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayForm from '@clayui/form';
 import React, {useEffect, useState} from 'react';
-import {Alert} from 'shared/types';
+import {Alert, Modal} from 'shared/types';
 import {CopyInputValue} from '../../CopyInputValue';
 import {DataSourceStatuses} from 'shared/util/constants';
 import {disconnect, fetchToken} from 'shared/api/data-source';
@@ -15,7 +15,21 @@ import {useQueryParams} from 'shared/hooks/useQueryParams';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
-const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
+interface IConnectLiferayDXPStepProps {
+	addAlert: Alert.AddAlert;
+	close: Modal.close;
+	groupId: string;
+	onNext: () => void;
+	open: Modal.open;
+}
+
+const ConnectLiferayDXPStep = ({
+	addAlert,
+	close,
+	groupId,
+	onNext,
+	open
+}: IConnectLiferayDXPStepProps) => {
 	const {dataSource, refetchDataSource} = useWizardPage();
 	const {dataSourceId} = useQueryParams();
 	const history = useHistory();
@@ -31,7 +45,7 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 			} catch (error) {
 				addAlert({
 					alertType: Alert.Types.Error,
-					message: error.message,
+					message: (error as Error).message,
 					timeout: false
 				});
 			}
@@ -60,7 +74,7 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 										'first-paste-the-token-into-your-x-instance-in-order-to-continue-with-the-data-source-setup'
 									),
 									[Liferay.Language.get('liferay-dxp')]
-								)
+								) as string
 							});
 						} else {
 							onNext();

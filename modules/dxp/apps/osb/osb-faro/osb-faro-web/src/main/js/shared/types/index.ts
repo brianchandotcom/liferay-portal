@@ -1,8 +1,8 @@
 import React from 'react';
+import {Filters} from 'shared/util/filter';
 import {Map, OrderedMap, Set} from 'immutable';
 import {Modal} from './Modal';
 import {OrderByDirections, RangeKeyTimeRanges} from 'shared/util/constants';
-import {OrderParams} from 'shared/util/records';
 
 export {Alert} from './Alert';
 export {Modal} from './Modal';
@@ -82,9 +82,9 @@ export type GraphQLPagination = {
 export interface IPaginationUnsorted extends Omit<IPagination, 'orderIOMap'> {}
 
 export type RangeSelectors = {
-	rangeEnd: string;
+	rangeEnd: string | null;
 	rangeKey: RangeKeyTimeRanges;
-	rangeStart: string;
+	rangeStart: string | null;
 };
 
 export type RawRangeSelectors = {
@@ -94,9 +94,9 @@ export type RawRangeSelectors = {
 };
 
 export type SafeRangeSelectors = {
-	rangeEnd: string;
+	rangeEnd: string | null;
 	rangeKey: number | null;
-	rangeStart: string;
+	rangeStart: string | null;
 };
 
 export interface RESTParams {
@@ -139,6 +139,13 @@ export type Sort = {
 export interface HasModal {
 	close: Modal.close;
 	open: Modal.open;
+}
+
+import {OrderParams} from 'shared/util/records';
+
+export interface ICommonVariables extends SafeRangeSelectors, Filters {
+	interval: Interval;
+	type?: string;
 }
 
 export type Interval = 'D' | 'M' | 'W';

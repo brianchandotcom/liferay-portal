@@ -3,8 +3,8 @@ import React from 'react';
 import {DataTypes} from 'event-analysis/utils/types';
 
 interface IInfoCardPopoverProps {
-	dataType: DataTypes;
-	description: string;
+	dataType?: DataTypes;
+	description?: string;
 	name: string;
 	onEditClick?: (id: string) => void;
 }

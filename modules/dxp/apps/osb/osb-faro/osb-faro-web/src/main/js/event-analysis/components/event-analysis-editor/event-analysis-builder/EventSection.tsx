@@ -21,8 +21,10 @@ const EventSection: React.FC<IEventSectionProps> = ({
 	event,
 	onEventChange
 }) => {
-	const handleEventChange = (event: Event): void => {
-		onEventChange(event);
+	const handleEventChange = (event?: Event): void => {
+		if (event) {
+			onEventChange(event);
+		}
 
 		deleteAllAttributes();
 	};

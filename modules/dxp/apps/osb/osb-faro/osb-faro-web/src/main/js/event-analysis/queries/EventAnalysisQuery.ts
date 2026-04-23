@@ -5,7 +5,7 @@ import {
 	Event,
 	Filter
 } from 'event-analysis/utils/types';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 import {RawRangeSelectors, Sort} from 'shared/types';
 
 interface EventAnalysis extends RawRangeSelectors {
@@ -43,9 +43,8 @@ export interface EventAnalysisVariables {
 	eventAnalysisId: string;
 }
 
-export interface DeleteEventAnalysisData {
-	null;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface DeleteEventAnalysisData {}
 
 export interface EventAnalysisListVariables {
 	channelId: string;
@@ -55,7 +54,7 @@ export interface EventAnalysisListVariables {
 	sort: Sort;
 }
 
-export interface EventAnalysisMutationVariables extends RawRangeSelectors {
+export interface EventAnalysisMutationVariables {
 	analysisType: CalculationTypes;
 	channelId: string;
 	compareToPrevious: boolean;
@@ -63,6 +62,9 @@ export interface EventAnalysisMutationVariables extends RawRangeSelectors {
 	eventAnalysisFilters?: Filter[];
 	eventDefinitionId: string;
 	name: string;
+	rangeEnd: string | null;
+	rangeKey: number | null;
+	rangeStart: string | null;
 	userId: string;
 	userName: string;
 	eventAnalysisId?: string | null;

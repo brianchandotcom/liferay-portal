@@ -1,7 +1,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayForm from '@clayui/form';
 import React from 'react';
-import {Alert} from 'shared/types';
+import {Alert, Modal} from 'shared/types';
 import {ConnectSalesforceAuth} from 'settings/components/salesforce/ConnectSalesforceAuth';
 import {DataSourceStatuses} from 'shared/util/constants';
 import {disconnect} from 'shared/api/data-source';
@@ -13,7 +13,21 @@ import {useHistory} from 'react-router-dom';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
-const ConnectSalesforceStep = ({addAlert, close, groupId, onNext, open}) => {
+interface IConnectSalesforceStepProps {
+	addAlert: Alert.AddAlert;
+	close: Modal.close;
+	groupId: string;
+	onNext: () => void;
+	open: Modal.open;
+}
+
+const ConnectSalesforceStep = ({
+	addAlert,
+	close,
+	groupId,
+	onNext,
+	open
+}: IConnectSalesforceStepProps) => {
 	const history = useHistory();
 	const {dataSource, refetchDataSource} = useWizardPage();
 
@@ -84,7 +98,7 @@ const ConnectSalesforceStep = ({addAlert, close, groupId, onNext, open}) => {
 										id: dataSource.id
 									});
 
-									refetchDataSource(dataSource.id);
+									refetchDataSource(dataSource.id || '');
 
 									addAlert({
 										alertType: Alert.Types.Success,

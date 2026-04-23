@@ -10,9 +10,9 @@ import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useFetchProjects} from 'shared/hooks/useProjects';
 
-const checkDisabled = ({configured}) => configured;
+const checkDisabled = ({configured}: {configured: boolean}) => configured;
 
-export const routingFn = ({projects}) => {
+export const routingFn = ({projects}: {projects: any[]}) => {
 	const basicProjects = getBasicProjects(projects);
 
 	if (basicProjects.length === 1) {

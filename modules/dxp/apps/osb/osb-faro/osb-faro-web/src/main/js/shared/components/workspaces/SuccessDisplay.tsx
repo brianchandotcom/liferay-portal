@@ -5,7 +5,7 @@ import URLConstants from 'shared/util/url-constants';
 import WorkspacesBasePage from 'shared/components/workspaces/BasePage';
 import {sub} from 'shared/util/lang';
 
-const SuccessDisplay = ({friendlyURL}) => {
+const SuccessDisplay = ({friendlyURL}: {friendlyURL: string}) => {
 	const link = (
 		<ClayLink
 			href={`https://analytics.liferay.com/workspace${friendlyURL}`}

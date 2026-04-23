@@ -3,7 +3,7 @@ import NoResultsDisplay, {
 	INoResultsDisplayProps
 } from 'shared/components/NoResultsDisplay';
 import React, {createContext, FC, useContext} from 'react';
-import {ApolloError} from 'apollo-client';
+import {ApolloError} from '@apollo/client';
 import {Sizes} from 'shared/util/constants';
 
 export interface IStatesRendererContextProps
@@ -103,10 +103,10 @@ const LoadingState: FC<ILoadingStateProps> = ({
 };
 
 const StatesRenderer: FC<IStatesRendererContextProps> & {
-	Empty?: FC<IEmptyStateProps>;
-	Error?: FC<IErrorStateProps>;
-	Loading?: FC<ILoadingStateProps>;
-	Success?: FC<ISuccessStateProps>;
+	Empty: FC<IEmptyStateProps>;
+	Error: FC<IErrorStateProps>;
+	Loading: FC<ILoadingStateProps>;
+	Success: FC<ISuccessStateProps>;
 } = ({children, empty, error, loading}) => (
 	<StatesRendererContext.Provider value={{empty, error, loading}}>
 		{children}

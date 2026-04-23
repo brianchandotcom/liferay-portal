@@ -12,7 +12,7 @@ const createWebProperty = ({
 	entityType: AssetTypes;
 	label: string;
 	name: AssetNames;
-	type: PropertyTypes;
+	type?: PropertyTypes;
 }): Property =>
 	new Property({
 		entityName: Liferay.Language.get('individual'),

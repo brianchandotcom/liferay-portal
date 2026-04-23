@@ -1,5 +1,5 @@
 import {COMPOSITION_FRAGMENT} from 'shared/queries/fragments';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 import {SafeRangeSelectors} from 'shared/types';
 
 export interface AcquisitionsQueryData {

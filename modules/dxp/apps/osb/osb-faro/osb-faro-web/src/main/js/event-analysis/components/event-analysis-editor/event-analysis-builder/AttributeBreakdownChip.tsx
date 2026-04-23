@@ -53,7 +53,7 @@ const AttributeBreakdownChip: React.FC<{
 					description={description}
 					displayName={displayName}
 					dragType={DragTypes.AttributeBreakdownChip}
-					id={breakdown.id}
+					id={breakdown.id ?? ''}
 					index={index}
 					label={label}
 					onCloseClick={onCloseClick}

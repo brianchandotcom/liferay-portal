@@ -61,7 +61,9 @@ const InviteUsersModal: React.FC<IInviteUsersModalProps> = ({
 							'enter-email-address'
 						)}
 						validateOnBlur
-						validationFn={validateEmail}
+						validationFn={(value?: string) =>
+							!!value && validateEmail(value)
+						}
 					/>
 				</Input.Group>
 			</Modal.Body>

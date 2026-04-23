@@ -57,7 +57,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 		);
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps: IToolbarProps) {
 		if (
 			hasChanges(
 				prevProps,
@@ -80,7 +80,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
 	@autoCancel
 	@autobind
-	fetchMembers(params) {
+	fetchMembers(params: Record<string, any>) {
 		const {channelId, criteriaString, groupId} = this.props;
 
 		return API.individuals.search({

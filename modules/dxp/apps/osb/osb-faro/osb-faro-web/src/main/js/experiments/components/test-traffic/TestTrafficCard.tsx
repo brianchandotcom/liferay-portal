@@ -6,8 +6,16 @@ import {getAxisFormatter} from 'shared/util/charts';
 import {Sizes} from 'shared/util/constants';
 import {Tooltip} from './Tooltip';
 
-const formatData = experiment => {
-	const chartData = [];
+interface IExperimentWithHistogram {
+	dxpVariants: Array<{
+		dxpVariantName: string;
+		sessionsHistogram: Array<{key: string | number; value: number}>;
+		trafficSplit: number;
+	}>;
+}
+
+const formatData = (experiment: IExperimentWithHistogram) => {
+	const chartData: Array<Record<string, any>> = [];
 	const control = experiment.dxpVariants[0];
 	const variant = experiment.dxpVariants[1];
 
@@ -30,7 +38,7 @@ const formatData = experiment => {
 	};
 };
 
-const TestTraffic = ({experiment}) => (
+const TestTraffic = ({experiment}: {experiment: IExperimentWithHistogram}) => (
 	<Card className='analytics-session-card' minHeight={405}>
 		<Card.Header className='align-items-center d-flex justify-content-between'>
 			<Card.Title>{Liferay.Language.get('test-traffic')}</Card.Title>

@@ -13,7 +13,7 @@ interface IEditEmailReportsModalProps
 	report: Report | null;
 }
 
-const FREQUENCIES = {
+const FREQUENCIES: {[key: string]: string} = {
 	[Frequency.Daily]: Liferay.Language.get('daily'),
 	[Frequency.Weekly]: Liferay.Language.get('weekly'),
 	[Frequency.Monthly]: Liferay.Language.get('monthly')
@@ -27,9 +27,10 @@ const EditEmailReportsModal: React.FC<IEditEmailReportsModalProps> = ({
 	<Modal>
 		<Modal.Header title={Liferay.Language.get('configure-email-reports')} />
 
-		<Form
+		<Form<Report>
 			initialValues={{
-				...report
+				enabled: report?.enabled ?? false,
+				frequency: report?.frequency ?? Frequency.Monthly
 			}}
 			onSubmit={onSave}
 		>

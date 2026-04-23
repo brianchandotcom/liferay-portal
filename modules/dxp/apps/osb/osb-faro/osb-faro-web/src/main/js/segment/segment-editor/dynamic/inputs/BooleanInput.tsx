@@ -8,14 +8,14 @@ import {Property} from 'shared/util/records';
 interface IBooleanInputProps {
 	displayValue: string;
 	id?: string;
-	onChange: (object) => void;
+	onChange: (params: {value: React.Key}) => void;
 	operatorRenderer: React.ElementType;
 	property: Property;
 	value: string;
 }
 export default class BooleanInput extends React.Component<IBooleanInputProps> {
 	@autobind
-	handleChange(value) {
+	handleChange(value: React.Key) {
 		this.props.onChange({value});
 	}
 

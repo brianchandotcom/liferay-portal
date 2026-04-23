@@ -26,7 +26,9 @@ const IndividualDisplay: React.FC<IDisplayComponentProps> = ({
 					<ReferencedEntityDisplay
 						id={value}
 						label={label}
-						type={ENTITY_MAP[propertyName]}
+						type={
+							ENTITY_MAP[propertyName as keyof typeof ENTITY_MAP]
+						}
 					/>
 				);
 			default:
@@ -34,7 +36,7 @@ const IndividualDisplay: React.FC<IDisplayComponentProps> = ({
 		}
 	};
 
-	const operatorKey = maybeFormatToKnownType(operatorName, value);
+	const operatorKey = maybeFormatToKnownType(operatorName ?? '', value);
 	const operatorLabel = getOperatorLabel(operatorKey, type);
 
 	return (

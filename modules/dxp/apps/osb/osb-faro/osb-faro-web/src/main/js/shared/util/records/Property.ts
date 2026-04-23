@@ -23,15 +23,16 @@ export default class Property
 		propertyKey: '',
 		type: null
 	})
-	implements IProperty {
-	entityName: string;
-	entityType: string;
-	id: string;
-	label: string;
-	name: string;
-	options?: {label: string; value: string | boolean}[];
-	propertyKey: string;
-	type: PropertyTypes;
+	implements IProperty
+{
+	declare entityName: string;
+	declare entityType: string;
+	declare id: string;
+	declare label: string;
+	declare name: string;
+	declare options?: {label: string; value: string | boolean}[];
+	declare propertyKey: string;
+	declare type: PropertyTypes;
 
 	constructor(props: IProperty) {
 		super(props);

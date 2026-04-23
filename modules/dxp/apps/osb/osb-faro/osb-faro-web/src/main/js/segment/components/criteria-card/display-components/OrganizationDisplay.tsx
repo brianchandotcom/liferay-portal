@@ -31,7 +31,7 @@ const OrganizationDisplay: React.FC<ICustomDisplayComponentProps> = ({
 
 	const propertyDataType = type.replace('organization-', '');
 
-	const operatorKey = maybeFormatToKnownType(operatorName, value);
+	const operatorKey = maybeFormatToKnownType(operatorName ?? '', value);
 
 	const operatorLabel = getOperatorLabel(operatorKey, type);
 

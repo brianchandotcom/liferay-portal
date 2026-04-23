@@ -19,7 +19,12 @@ import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 import {useRequest} from 'shared/hooks/useRequest';
 
-const lifecycleStagesLabelMap = {
+type DisplayType = 'danger' | 'info' | 'secondary' | 'success' | 'warning';
+
+const lifecycleStagesLabelMap: Record<
+	LifecycleStages,
+	{displayType: DisplayType; label: string}
+> = {
 	[LifecycleStages.AT_RISK]: {
 		displayType: 'danger',
 		label: Liferay.Language.get('at-risk')
@@ -63,7 +68,9 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 	const {selectedChannel} = useChannelContext();
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
-		dataSourceFn: API.dataSource.search,
+		dataSourceFn: API.dataSource.search as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			delta: 1,
 			groupId
@@ -164,6 +171,8 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 									customDataRenderers={{
 										accountLifecycleStageRenderer: ({
 											value
+										}: {
+											value: LifecycleStages;
 										}) =>
 											value &&
 											columns.cmsLabelRenderer({
@@ -171,14 +180,16 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 													lifecycleStagesLabelMap[
 														value
 													].displayType,
-												label:
-													lifecycleStagesLabelMap[
-														value
-													].label
+												label: lifecycleStagesLabelMap[
+													value
+												].label
 											}),
 										accountNameRenderer: ({
 											itemData,
 											value
+										}: {
+											itemData: {id: string | number};
+											value: string;
 										}) =>
 											columns.nameAndLinkRenderer({
 												groupId,
@@ -186,11 +197,20 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 												route: Routes.CONTACTS_ACCOUNT,
 												value
 											}),
-										annualRevenueRenderer: ({value}) => (
-											<div>{toThousands(value)}</div>
-										),
-										dateRenderer: ({value}) =>
-											columns.dateRenderer({value})
+										annualRevenueRenderer: ({
+											value
+										}: {
+											value: number;
+										}) => <div>{toThousands(value)}</div>,
+										dateRenderer: ({
+											value
+										}: {
+											value: string;
+										}) =>
+											columns.dateRenderer({
+												itemData: {},
+												value
+											})
 									}}
 									emptyState={{
 										description: Liferay.Language.get(

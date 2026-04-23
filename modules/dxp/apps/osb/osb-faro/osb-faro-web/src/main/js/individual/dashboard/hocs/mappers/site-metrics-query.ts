@@ -1,9 +1,39 @@
 import moment from 'moment';
 import {getSafeRangeSelectors} from 'shared/util/util';
+import {Interval, RangeSelectors} from 'shared/types';
 import {Map} from 'immutable';
 import {safeResultToProps} from 'shared/util/mappers';
 
-export const mapPropsToOptions = ({channelId, interval, rangeSelectors}) => ({
+interface IHistogramMetric {
+	key: string;
+	value: number;
+	valueKey: string;
+}
+
+interface ISiteMetricsResult {
+	site: {
+		anonymousVisitorsMetric: {histogram: {metrics: IHistogramMetric[]}};
+		knownVisitorsMetric: {histogram: {metrics: IHistogramMetric[]}};
+		visitorsMetric: {histogram: {metrics: IHistogramMetric[]}};
+	};
+}
+
+interface ISiteMetricsDataRow {
+	anonymousVisitors: number;
+	intervalInitDate: number;
+	knownVisitors: number;
+	visitors: number;
+}
+
+export const mapPropsToOptions = ({
+	channelId,
+	interval,
+	rangeSelectors
+}: {
+	channelId: string;
+	interval: Interval;
+	rangeSelectors: RangeSelectors;
+}) => ({
 	variables: {
 		channelId,
 		interval,
@@ -14,8 +44,10 @@ export const mapPropsToOptions = ({channelId, interval, rangeSelectors}) => ({
 export const mapResultToProps = safeResultToProps(
 	({
 		site: {anonymousVisitorsMetric, knownVisitorsMetric, visitorsMetric}
-	}) => ({
-		data: anonymousVisitorsMetric.histogram.metrics.reduce(
+	}: ISiteMetricsResult) => ({
+		data: anonymousVisitorsMetric.histogram.metrics.reduce<
+			ISiteMetricsDataRow[]
+		>(
 			(acc, {key, value}, i) => [
 				...acc,
 				{
@@ -33,7 +65,9 @@ export const mapResultToProps = safeResultToProps(
 				moment.utc(key).valueOf(),
 				valueKey
 					.split('/')
-					.map(valueKeyHalf => moment.utc(valueKeyHalf).valueOf())
+					.map((valueKeyHalf: string) =>
+						moment.utc(valueKeyHalf).valueOf()
+					)
 			])
 		)
 	})

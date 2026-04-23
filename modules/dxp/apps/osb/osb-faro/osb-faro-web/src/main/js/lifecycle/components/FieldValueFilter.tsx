@@ -27,7 +27,9 @@ const FieldValueFilter = ({
 	const {channelId, groupId} = useParams();
 
 	const {data, loading} = useRequest({
-		dataSourceFn: API.accounts.fetchFieldValues,
+		dataSourceFn: API.accounts.fetchFieldValues as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			channelId,
 			fieldMappingFieldName,
@@ -72,8 +74,8 @@ const FieldValueFilter = ({
 		<Picker
 			as={TriggerButton}
 			className='ml-3'
-			onSelectionChange={(item: string) =>
-				updateFilters({[filterKey]: item})
+			onSelectionChange={item =>
+				updateFilters({[filterKey]: String(item)})
 			}
 			searchable
 			triggerIcon='caret-bottom'

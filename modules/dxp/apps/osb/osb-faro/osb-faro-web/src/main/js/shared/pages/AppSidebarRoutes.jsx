@@ -313,7 +313,7 @@ export default class AppSidebarRoutes extends React.PureComponent {
 	static contextType = ChannelContext;
 
 	render() {
-		const {currentUser, groupId, LDPEnabled} = this.props;
+		const {LDPEnabled, currentUser, groupId} = this.props;
 		const {selectedChannel} = this.context;
 
 		return (

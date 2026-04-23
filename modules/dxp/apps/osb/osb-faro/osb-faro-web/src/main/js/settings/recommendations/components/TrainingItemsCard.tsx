@@ -12,7 +12,7 @@ import {EXCLUDE, Filter} from '../utils/utils';
 import {get} from 'lodash';
 import {Modal} from 'shared/types';
 import {sub} from 'shared/util/lang';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 const {
 	pagination: {orderDescending}

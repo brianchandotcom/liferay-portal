@@ -35,10 +35,16 @@ import type {Column} from 'shared/components/table/Row';
 export const isExpired = (expirationDate: string) =>
 	moment.utc(expirationDate).isSameOrBefore(getDateNow());
 
-const getTimestamp = (date: Date) =>
+const getTimestamp = (date: string | Date) =>
 	Math.floor(new Date(date).getTime() / 1000);
 
-const isIndefinite = ({createDate, expirationDate}) =>
+const isIndefinite = ({
+	createDate,
+	expirationDate
+}: {
+	createDate: string;
+	expirationDate: string;
+}) =>
 	getTimestamp(expirationDate) - getTimestamp(createDate) ===
 	Number(ExpirationPeriod.Indefinite);
 
@@ -77,7 +83,7 @@ const TokenList: React.FC<
 		});
 	};
 
-	const handleSuccess = message => {
+	const handleSuccess = (message: string) => {
 		setLoading(false);
 
 		addAlert({
@@ -166,7 +172,11 @@ const TokenList: React.FC<
 								},
 								{
 									accessor: 'expirationDate',
-									cellRenderer: ({data}) => {
+									cellRenderer: ({
+										data
+									}: {
+										data: AccessToken;
+									}) => {
 										if (isIndefinite(data)) {
 											return (
 												<td>
@@ -280,7 +290,13 @@ const ListWithData = compose<any>(
 	withQuery(
 		API.apiTokens.search,
 		({groupId}: {groupId: string}) => ({groupId}),
-		({data, ...otherParams}) => ({
+		({
+			data,
+			...otherParams
+		}: {
+			data: AccessToken[];
+			[key: string]: any;
+		}) => ({
 			tokens: data,
 			...otherParams
 		})

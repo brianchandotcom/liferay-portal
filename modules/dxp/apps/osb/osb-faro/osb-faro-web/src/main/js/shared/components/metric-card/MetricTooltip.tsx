@@ -7,6 +7,7 @@ import {CHART_DATA_PREVIOUS, METRIC_TOOLTIP_LABEL_MAP} from './MetricChart';
 import {find, get} from 'lodash';
 import {getActiveItem, getPreviousValueFromCompositeData} from './util';
 import {getDateTitle} from 'shared/util/charts';
+import {Interval, RangeSelectors} from 'shared/types';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useData} from './MetricBaseCard';
@@ -14,7 +15,23 @@ import {useData} from './MetricBaseCard';
 const CHART_DATA_ID_1 = 'data_1';
 const CHART_DATA_ID_2 = 'data_2';
 
-const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
+type TTooltipPayloadItem = {
+	dataKey?: string;
+	payload: {date: number};
+	value: number;
+};
+
+const useMetricTooltip = ({
+	data,
+	interval,
+	payload,
+	rangeSelectors
+}: {
+	data: any;
+	interval: Interval;
+	payload: TTooltipPayloadItem[];
+	rangeSelectors: RangeSelectors;
+}) => {
 	const {compareToPrevious} = useData();
 
 	const {
@@ -25,10 +42,10 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 		dateKeysIMap,
 		format,
 		prevDateKeysIMap
-	} = useMemo(() => getActiveItem(data, compareToPrevious), [
-		compareToPrevious,
-		data
-	]);
+	} = useMemo(
+		() => getActiveItem(data, compareToPrevious),
+		[compareToPrevious, data]
+	);
 
 	const showCurrentPeriod =
 		compareToPrevious && asymmetricComparison ? payload.length > 1 : true;
@@ -77,9 +94,9 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 			interval
 		);
 
-		const getDataRowName = itemData =>
+		const getDataRowName = (itemData: unknown) =>
 			get(itemData, 'tooltipTitle') ||
-			METRIC_TOOLTIP_LABEL_MAP[name] ||
+			(METRIC_TOOLTIP_LABEL_MAP as Record<string, string>)[name] ||
 			get(itemData, 'name');
 
 		const header = [
@@ -164,6 +181,14 @@ const MetricTooltip = ({
 	payload,
 	rangeSelectors,
 	retentionPeriod
+}: {
+	active?: boolean;
+	compareToPrevious: boolean;
+	data: any;
+	interval: Interval;
+	payload?: TTooltipPayloadItem[];
+	rangeSelectors: RangeSelectors;
+	retentionPeriod?: number;
 }) => {
 	if (active && payload?.length) {
 		const [header, rows] = useMetricTooltip({

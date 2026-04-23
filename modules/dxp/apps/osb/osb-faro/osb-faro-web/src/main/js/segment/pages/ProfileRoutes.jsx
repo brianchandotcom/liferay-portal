@@ -234,18 +234,19 @@ export const SegmentProfileRoutes = () => {
 				)}
 			</BasePage.Header>
 
-			{isBatch && getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_SEGMENT && (
-				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
-						<DownloadPDFReport
-							disabled={false}
-							showDateRange={false}
-							subtitle={selectedChannel?.name}
-							title={title}
-						/>
-					</div>
-				</BasePage.SubHeader>
-			)}
+			{isBatch &&
+				getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_SEGMENT && (
+					<BasePage.SubHeader>
+						<div className='d-flex justify-content-end w-100'>
+							<DownloadPDFReport
+								disabled={false}
+								showDateRange={false}
+								subtitle={selectedChannel?.name}
+								title={title}
+							/>
+						</div>
+					</BasePage.SubHeader>
+				)}
 
 			{isBatch &&
 				getMatchedRoute(NAV_ITEMS) ===

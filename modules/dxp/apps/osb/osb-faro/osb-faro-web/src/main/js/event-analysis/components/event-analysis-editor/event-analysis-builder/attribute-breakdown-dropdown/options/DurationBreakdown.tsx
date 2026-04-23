@@ -25,7 +25,7 @@ const DurationBreakdown: React.FC<IBreakdownProps> = ({
 			const {binSize} = breakdown;
 
 			return {
-				binSize: formatTime(binSize)
+				binSize: formatTime(binSize ?? 0)
 			};
 		}
 

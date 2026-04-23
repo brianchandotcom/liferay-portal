@@ -34,12 +34,12 @@ import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {useInterval} from 'shared/hooks/useInterval';
-import {useLazyQuery} from '@apollo/react-hooks';
+import {useLazyQuery} from '@apollo/client';
 import {withHistory} from 'shared/hoc';
 
 const TIMEOUT_INTERVAL = 5000;
 
-const DXP_VERSIONS = {
+const DXP_VERSIONS: Record<string, {label: string; url: URLConstants}> = {
 	'dxp-2024-q-1-1': {
 		label: 'DXP 2024.Q1.1 Quarterly Release',
 		url: URLConstants.DownloadDXP2024Q11
@@ -96,10 +96,10 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 	fetchDataSource,
 	groupId,
 	history,
-	onboarding,
 	onClose,
 	onDxpConnected,
-	onNext
+	onNext,
+	onboarding
 }) => {
 	const {channelDispatch} = useChannelContext();
 	const [token, setToken] = useState<string>('');
@@ -123,7 +123,7 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 		}
 	);
 
-	let _tokenRequest;
+	let _tokenRequest: ReturnType<typeof setTimeout> | Promise<any> | undefined;
 
 	const getNextToken: (prevToken?: string) => Promise<any> = prevToken =>
 		API.dataSource
@@ -166,12 +166,12 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 
 			history.push(toRoute(Routes.SITES, {channelId, groupId}));
 
-			channelDispatch({
+			channelDispatch?.({
 				payload: getDefaultChannel(channelId, items),
 				type: ActionType.setSelectedChannel
 			});
 
-			channelDispatch({
+			channelDispatch?.({
 				payload: items,
 				type: ActionType.setChannels
 			});
@@ -182,7 +182,7 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 		_tokenRequest = getNextToken().then(setToken);
 
 		return () => {
-			clearTimeout(_tokenRequest);
+			clearTimeout(_tokenRequest as ReturnType<typeof setTimeout>);
 		};
 	}, []);
 
@@ -250,7 +250,7 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 							className='button-root'
 							disabled={dxpConnected}
 							displayType='secondary'
-							onClick={onboarding ? () => onNext() : onClose}
+							onClick={onboarding ? () => onNext?.() : onClose}
 						>
 							{onboarding
 								? Liferay.Language.get('skip')
@@ -263,7 +263,7 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 						className='button-root ml-2'
 						displayType='primary'
 						href={getNavHref()}
-						onClick={() => (onboarding ? onNext() : onClose())}
+						onClick={() => (onboarding ? onNext?.() : onClose())}
 					>
 						{onboarding
 							? Liferay.Language.get('next')
@@ -417,7 +417,11 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 			<div className='d-flex align-items-center justify-content-between'>
 				<div className='flex-grow-1 mr-3'>
 					<Select
-						onChange={({target: {value}}) => setDxpVersion(value)}
+						onChange={({
+							target: {value}
+						}: React.ChangeEvent<HTMLSelectElement>) =>
+							setDxpVersion(value)
+						}
 						value={dxpVersion}
 					>
 						{dxpVersionsList.map(key => (

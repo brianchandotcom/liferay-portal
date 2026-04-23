@@ -30,7 +30,7 @@ import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useHistory, useParams} from 'react-router-dom';
-import {useMutation} from '@apollo/react-hooks';
+import {useMutation} from '@apollo/client';
 import {WithRangeKeyProps} from 'shared/hoc/WithRangeKey';
 
 enum MessageKeys {
@@ -65,7 +65,7 @@ interface IBaseEventAnalysisPageProps
 		React.HTMLAttributes<HTMLElement> {
 	breakdowns?: Breakdowns;
 	compareToPrevious?: boolean;
-	event?: Event;
+	event?: Event | null;
 	filters?: Filters;
 	name?: string;
 }
@@ -74,7 +74,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 	addAlert,
 	close,
 	compareToPrevious: initialCompareToPrevious = false,
-	event: initialEvent = null,
+	event: initialEvent = null as Event | null,
 	name: initialName = '',
 	open,
 	rangeSelectors: initialRangeSelectors
@@ -83,15 +83,19 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 
 	const {selectedChannel} = useChannelContext();
 
-	const {channelId, groupId, id: eventAnalysisId = null} = useParams();
+	const {
+		channelId = '',
+		groupId = '',
+		id: eventAnalysisId
+	} = useParams<{channelId: string; groupId: string; id: string}>();
 
 	const [compareToPrevious, setCompareToPrevious] = useState<boolean>(
-		initialCompareToPrevious
+		initialCompareToPrevious ?? false
 	);
-	const [event, setEvent] = useState<Event>(initialEvent);
-	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
-		initialRangeSelectors
-	);
+	const [event, setEvent] = useState<Event | null>(initialEvent);
+	const [rangeSelectors, setRangeSelectors] = useState<
+		RangeSelectors | undefined
+	>(initialRangeSelectors);
 	const [submitted, setSubmitted] = useState<boolean>(false);
 	const [type, setType] = useState<CalculationTypes>(CalculationTypes.Total);
 
@@ -114,7 +118,10 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 		EventAnalysisMutationVariables
 	>(Mutation);
 
-	const handleSubmit = ({name}, {setSubmitting}) => {
+	const handleSubmit = (
+		{name}: {name: string},
+		{setSubmitting}: {setSubmitting: (submitting: boolean) => void}
+	) => {
 		open(
 			modalTypes.LOADING_MODAL,
 			{
@@ -138,11 +145,11 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					omit(filters[filterId], 'id')
 				),
 				eventAnalysisId,
-				eventDefinitionId: event.id,
+				eventDefinitionId: event!.id,
 				name,
 				userId: String(currentUser.userId),
 				userName: currentUser.name,
-				...getSafeRangeSelectors(rangeSelectors)
+				...getSafeRangeSelectors(rangeSelectors!)
 			}
 		})
 			.then(() => {
@@ -169,16 +176,15 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				({
 					graphQLErrors
 				}: {
-					graphQLErrors: {messageKey: keyof MessageKeys}[];
+					graphQLErrors: {messageKey: MessageKeys}[];
 				}) => {
 					setSubmitting(false);
 					setSubmitted(false);
 
 					close();
 
-					const {alertType, message} = ERRORS[
-						graphQLErrors[0].messageKey
-					];
+					const {alertType, message} =
+						ERRORS[graphQLErrors[0].messageKey];
 
 					addAlert({
 						alertType,
@@ -193,15 +199,15 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 		initialCompareToPrevious !== compareToPrevious;
 
 	const eventChanged: boolean = useMemo(
-		() => hasChanges<Event>(initialEvent || {}, event || {}, 'id'),
+		() => hasChanges(initialEvent || {}, event || {}, 'id'),
 		[initialEvent, event]
 	);
 
 	const rangeSelectorsChanged: boolean = useMemo(
 		() =>
-			hasChanges<RangeSelectors>(
-				initialRangeSelectors,
-				rangeSelectors,
+			hasChanges(
+				(initialRangeSelectors ?? {}) as object,
+				(rangeSelectors ?? {}) as object,
 				'rangeStart',
 				'rangeKey',
 				'rangeEnd'
@@ -213,7 +219,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 		setCompareToPrevious(compareToPrevious);
 	};
 
-	const onEventChange = (event: Event) => {
+	const onEventChange = (event: Event | null) => {
 		setEvent(event);
 	};
 
@@ -235,7 +241,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel?.name
+						label: selectedChannel?.name ?? ''
 					}),
 					breadcrumbs.getEventAnalysis({channelId, groupId})
 				]}
@@ -285,12 +291,12 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				<EventAnalysisEditor
 					channelId={channelId}
 					compareToPrevious={compareToPrevious}
-					event={event}
+					event={event!}
 					onCompareToPreviousChange={onCompareToPreviousChange}
 					onEventChange={onEventChange}
 					onRangeSelectorsChange={onRangeSelectorsChange}
 					onTypeChange={onTypeChange}
-					rangeSelectors={rangeSelectors}
+					rangeSelectors={rangeSelectors!}
 					type={type}
 				/>
 			</BasePage.Body>

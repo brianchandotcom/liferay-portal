@@ -2,6 +2,7 @@ import autobind from 'autobind-decorator';
 import DateInput from './DateInput';
 import Form from 'shared/components/form';
 import React from 'react';
+import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {
 	getCompleteDate,
 	getOperator,
@@ -13,21 +14,24 @@ import {
 	PropertyTypes,
 	SUPPORTED_OPERATORS_MAP
 } from '../utils/constants';
-import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {Option, Picker} from '@clayui/core';
 
 const DATE_OPERATORS = SUPPORTED_OPERATORS_MAP[PropertyTypes.Date];
 
 export default class CustomDateInput extends React.Component<ISegmentEditorCustomInputBase> {
 	@autobind
-	handleDateChange(newDate) {
+	handleDateChange(newDate: Criterion | Criterion[]) {
 		const {onChange, value} = this.props;
 
-		onChange({value: setCompleteDate(value, newDate.value)});
+		const newValue = Array.isArray(newDate)
+			? newDate[0]?.value
+			: newDate.value;
+
+		onChange({value: setCompleteDate(value, newValue)});
 	}
 
 	@autobind
-	handleOperatorChange(newValue) {
+	handleOperatorChange(newValue: React.Key) {
 		const {onChange, value} = this.props;
 
 		onChange({value: setOperator(value, 0, newValue)});
@@ -55,7 +59,8 @@ export default class CustomDateInput extends React.Component<ISegmentEditorCusto
 	}
 
 	render() {
-		const {value, ...otherProps} = this.props;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const {onChange: _onChange, value, ...otherProps} = this.props;
 
 		return (
 			<DateInput

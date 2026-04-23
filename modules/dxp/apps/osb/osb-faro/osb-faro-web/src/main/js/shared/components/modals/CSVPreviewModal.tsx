@@ -18,6 +18,11 @@ interface ICSVPreviewModalProps extends React.HTMLAttributes<HTMLElement> {
 	onClose?: () => void;
 }
 
+type CSVFieldData = {
+	name: string;
+	values: string[];
+};
+
 const CSVPreviewModal: React.FC<ICSVPreviewModalProps> = ({
 	className,
 	fieldName,
@@ -27,7 +32,7 @@ const CSVPreviewModal: React.FC<ICSVPreviewModalProps> = ({
 	name,
 	onClose = noop
 }) => {
-	const [data, setData] = useState([]);
+	const [data, setData] = useState<CSVFieldData[]>([]);
 
 	useEffect(() => {
 		const fetchData = () => {
@@ -67,9 +72,9 @@ const CSVPreviewModal: React.FC<ICSVPreviewModalProps> = ({
 
 					<ClayTable.Body>
 						{!!data.length &&
-							data[0].values.map((val, row) => (
+							data[0].values.map((_val: string, row: number) => (
 								<ClayTable.Row key={row}>
-									{data.map((val, column) => (
+									{data.map((_val, column) => (
 										<ClayTable.Cell
 											key={`${column}-${row}`}
 										>

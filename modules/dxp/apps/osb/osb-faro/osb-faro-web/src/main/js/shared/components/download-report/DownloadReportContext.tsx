@@ -18,15 +18,21 @@ enum ActionTypes {
 
 type DownloadReportAction = {
 	type: ActionTypes;
-	payload: ReportContainer;
+	payload?: ReportContainer;
 };
 
-const downloadReportReducer = (state, action: DownloadReportAction) => {
+const downloadReportReducer = (
+	state: {reportContainers: ReportContainer[]},
+	action: DownloadReportAction
+) => {
 	switch (action.type) {
 		case ActionTypes.SetReportContainer:
 			return {
 				...state,
-				reportContainers: [...state.reportContainers, action.payload]
+				reportContainers: [
+					...state.reportContainers,
+					action.payload as ReportContainer
+				]
 			};
 		case ActionTypes.ClearReportContainers:
 			return {
@@ -41,12 +47,16 @@ const downloadReportReducer = (state, action: DownloadReportAction) => {
 	}
 };
 
-export const DownloadReportProvider = ({children}) => {
+export const DownloadReportProvider = ({
+	children
+}: {
+	children: React.ReactNode;
+}) => {
 	const [{reportContainers}, dispatch] = useReducer(downloadReportReducer, {
 		reportContainers: []
 	});
 
-	const setReportContainer = reportContainer => {
+	const setReportContainer = (reportContainer: ReportContainer) => {
 		dispatch({
 			payload: reportContainer,
 			type: ActionTypes.SetReportContainer
@@ -55,7 +65,6 @@ export const DownloadReportProvider = ({children}) => {
 
 	const clearReportContainers = () => {
 		dispatch({
-			payload: null,
 			type: ActionTypes.ClearReportContainers
 		});
 	};

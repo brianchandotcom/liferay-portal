@@ -108,7 +108,9 @@ const UserList: React.FC<IUserListProps> = ({
 	});
 
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.channels.fetchUsers,
+		dataSourceFn: API.channels.fetchUsers as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			channelId: id,
 			cur: page,
@@ -125,90 +127,90 @@ const UserList: React.FC<IUserListProps> = ({
 		return count === 1 ? users[0].emailAddress : count;
 	};
 
-	const getRemoveUserModalFn = (
-		clearAll?: (object) => void
-	) => selectedIOMap => {
-		const users = selectedIOMap.valueSeq().toArray();
+	const getRemoveUserModalFn =
+		(clearAll?: (params: {type: string}) => void) =>
+		(selectedIOMap: any) => {
+			const users = selectedIOMap.valueSeq().toArray();
 
-		const userIds = users.map(({userId}) => userId);
+			const userIds = users.map(({userId}: {userId: string}) => userId);
 
-		open(modalTypes.CONFIRMATION_MODAL, {
-			closeAfterSubmit: false,
-			message: (
-				<div className='text-secondary'>
-					{
-						getPluralMessage(
-							Liferay.Language.get(
-								'removing-x-from-this-property.-they-will-need-to-be-added-again-to-regain-access-to-this-property'
-							),
-							Liferay.Language.get(
-								'removing-x-users-from-this-property.-they-will-need-to-be-added-again-to-regain-access-to-this-property'
-							),
-							userIds.length,
-							true,
-							[getEmailOrCount(users), propertyName]
-						) as string
-					}
-				</div>
-			),
-			modalVariant: 'modal-warning',
-			onClose: close,
-			onSubmit: () => {
-				API.channels
-					.deleteUsers({
-						channelId: id,
-						groupId,
-						userIds
-					})
-					.then(() => {
-						if (clearAll) {
-							clearAll({type: ActionTypes.ClearAll});
-						}
-
-						refetch();
-
-						addAlert({
-							alertType: Alert.Types.Success,
-							message: getPluralMessage(
+			open(modalTypes.CONFIRMATION_MODAL, {
+				closeAfterSubmit: false,
+				message: (
+					<div className='text-secondary'>
+						{
+							getPluralMessage(
 								Liferay.Language.get(
-									'x-has-been-removed-from-x'
+									'removing-x-from-this-property.-they-will-need-to-be-added-again-to-regain-access-to-this-property'
 								),
 								Liferay.Language.get(
-									'x-users-have-been-removed-from-x'
+									'removing-x-users-from-this-property.-they-will-need-to-be-added-again-to-regain-access-to-this-property'
 								),
 								userIds.length,
 								true,
 								[getEmailOrCount(users), propertyName]
 							) as string
-						});
+						}
+					</div>
+				),
+				modalVariant: 'modal-warning',
+				onClose: close,
+				onSubmit: () => {
+					API.channels
+						.deleteUsers({
+							channelId: id,
+							groupId,
+							userIds
+						})
+						.then(() => {
+							if (clearAll) {
+								clearAll({type: ActionTypes.ClearAll});
+							}
 
-						close();
-					})
-					.catch(() => {
-						addAlert({
-							alertType: Alert.Types.Error,
-							message: getPluralMessage(
-								Liferay.Language.get(
-									'there-was-an-error-removing-x-from-x'
-								),
-								Liferay.Language.get(
-									'there-was-an-error-removing-x-users-from-x'
-								),
-								userIds.length,
-								true,
-								[getEmailOrCount(users), propertyName]
-							) as string,
-							timeout: false
+							refetch();
+
+							addAlert({
+								alertType: Alert.Types.Success,
+								message: getPluralMessage(
+									Liferay.Language.get(
+										'x-has-been-removed-from-x'
+									),
+									Liferay.Language.get(
+										'x-users-have-been-removed-from-x'
+									),
+									userIds.length,
+									true,
+									[getEmailOrCount(users), propertyName]
+								) as string
+							});
+
+							close();
+						})
+						.catch(() => {
+							addAlert({
+								alertType: Alert.Types.Error,
+								message: getPluralMessage(
+									Liferay.Language.get(
+										'there-was-an-error-removing-x-from-x'
+									),
+									Liferay.Language.get(
+										'there-was-an-error-removing-x-users-from-x'
+									),
+									userIds.length,
+									true,
+									[getEmailOrCount(users), propertyName]
+								) as string,
+								timeout: false
+							});
 						});
-					});
-			},
-			showFilterAndOrder: false,
-			submitButtonDisplay: 'warning',
-			submitMessage: Liferay.Language.get('remove'),
-			title: Liferay.Language.get('remove-user'),
-			titleIcon: 'warning-full'
-		});
-	};
+				},
+				showFilterAndOrder: false,
+				submitButtonDisplay: 'warning',
+				submitMessage: Liferay.Language.get('remove'),
+				title: Liferay.Language.get('remove-user'),
+				titleIcon: 'warning-full'
+			});
+		};
 
 	const handleAddUserModal = () => {
 		open(modalTypes.SEARCHABLE_TABLE_MODAL, {
@@ -216,7 +218,14 @@ const UserList: React.FC<IUserListProps> = ({
 				usersListColumns.nameEmailAddress,
 				usersListColumns.getLastLoginDate(timeZoneId)
 			],
-			dataSourceFn: ({delta, orderIOMap, page, query}) =>
+			dataSourceFn: ({
+				delta,
+				orderIOMap,
+				page,
+				query
+			}: {
+				[key: string]: any;
+			}) =>
 				API.channels.fetchUsers({
 					available: true,
 					channelId: id,
@@ -243,10 +252,12 @@ const UserList: React.FC<IUserListProps> = ({
 					handleNoUsersInPropertyModal();
 				}
 			},
-			onSubmit: selectedIOMap => {
+			onSubmit: (selectedIOMap: any) => {
 				const users = selectedIOMap.valueSeq().toArray();
 
-				const userIds = users.map(({userId}) => userId);
+				const userIds = users.map(
+					({userId}: {userId: string}) => userId
+				);
 
 				API.channels
 					.addUsers({
@@ -363,7 +374,7 @@ const UserList: React.FC<IUserListProps> = ({
 				<SelectionProvider>
 					<CrossPageSelect
 						{...sharedProps}
-						renderRowActions={({data}) => {
+						renderRowActions={({data}: {data: User}) => {
 							const rowAction = {
 								'data-testid': 'delete-user',
 								label: Liferay.Language.get('delete'),
@@ -391,6 +402,10 @@ const UserList: React.FC<IUserListProps> = ({
 							selectedItems,
 							selectionDispatch,
 							...otherProps
+						}: {
+							selectedItems: any;
+							selectionDispatch: any;
+							[key: string]: any;
 						}) => (
 							<ListComponent
 								renderNav={() => (

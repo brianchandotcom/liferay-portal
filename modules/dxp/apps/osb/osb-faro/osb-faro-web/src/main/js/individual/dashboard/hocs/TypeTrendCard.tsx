@@ -3,7 +3,7 @@ import IndividualMetricsQuery from 'shared/queries/IndividualMetricsQuery';
 import React from 'react';
 import TypeTrend from '../components/TypeTrend';
 import {compose} from 'redux';
-import {graphql} from '@apollo/react-hoc';
+import {graphql, OperationOption} from '@apollo/client/react/hoc';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {
 	mapPropsToOptions,
@@ -18,7 +18,7 @@ const TypeTrendWithData = compose<any>(
 	graphql(IndividualMetricsQuery, {
 		options: mapPropsToOptions,
 		props: mapResultToProps
-	}),
+	} as OperationOption<object, object>),
 	withLoading(),
 	withError({page: false})
 )(TypeTrend);

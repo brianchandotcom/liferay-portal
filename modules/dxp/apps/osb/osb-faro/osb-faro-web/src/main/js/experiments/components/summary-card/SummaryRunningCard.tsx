@@ -5,13 +5,29 @@ import {
 	getMetricName,
 	toThousandsABTesting
 } from 'experiments/util/experiments';
+import {IExperiment} from './types';
+import {MetricName} from 'experiments/util/types';
 import {sub} from 'shared/util/lang';
 import {SummaryBaseCard} from './SummaryBaseCard';
 import {SummaryParagraph} from './SummaryParagraph';
 import {SummarySection} from './SummarySection';
 import {toRounded} from 'shared/util/numbers';
 
-export const SummaryRunningCard = ({experiment, timeZoneId}) => {
+export const SummaryRunningCard: React.FC<{
+	experiment: IExperiment & {
+		description?: string;
+		metrics: {
+			completion: number;
+			elapsedDays: number;
+			estimatedDaysLeft?: number;
+			variantMetrics: IExperiment['dxpVariants'];
+		};
+		sessions: number;
+		startedDate?: string;
+		type?: string;
+	};
+	timeZoneId: string;
+}> = ({experiment, timeZoneId}) => {
 	const {
 		description,
 		goal,
@@ -22,7 +38,11 @@ export const SummaryRunningCard = ({experiment, timeZoneId}) => {
 		type
 	} = experiment;
 
-	const bestVariant = getBestVariant(experiment);
+	const bestVariant = getBestVariant({
+		dxpVariants: experiment.dxpVariants,
+		goal: goal as {metric: MetricName} | undefined,
+		metrics: experiment.metrics
+	});
 
 	return (
 		<SummaryBaseCard status={status.toLowerCase()}>
@@ -94,18 +114,22 @@ export const SummaryRunningCard = ({experiment, timeZoneId}) => {
 							title={Liferay.Language.get('test-metric')}
 						>
 							<SummarySection.MetricType
-								value={getMetricName(goal.metric)}
+								value={
+									goal &&
+									getMetricName(goal.metric as MetricName)
+								}
 							/>
 
-							{bestVariant && bestVariant.improvement > 0 && (
-								<SummarySection.Variant
-									lift={`${toRounded(
-										bestVariant.improvement,
-										2
-									)}%`}
-									status='up'
-								/>
-							)}
+							{bestVariant?.improvement !== undefined &&
+								bestVariant.improvement > 0 && (
+									<SummarySection.Variant
+										lift={`${toRounded(
+											bestVariant.improvement,
+											2
+										)}%`}
+										status='up'
+									/>
+								)}
 						</SummarySection>
 					</div>
 				</div>

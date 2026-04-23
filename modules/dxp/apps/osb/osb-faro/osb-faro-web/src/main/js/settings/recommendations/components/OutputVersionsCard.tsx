@@ -14,7 +14,7 @@ import {
 import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
 import {getFormattedTitle} from 'shared/components/NoResultsDisplay';
 import {getMapResultToProps} from 'shared/hoc/mappers/metrics';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {
 	JOB_RUN_FREQUENCIES_LABEL_MAP,
 	JOB_RUN_STATUSES_DISPLAY_MAP,
@@ -36,21 +36,21 @@ import {
 	withStatefulPagination
 } from 'shared/hoc';
 
-const getContextItemCount = (contextItemKey: string) => (
-	context: {key: string; value: any}[]
-): string => {
-	const contextItem = context.find(({key}) => key === contextItemKey);
+const getContextItemCount =
+	(contextItemKey: string) =>
+	(context: {key: string; value: any}[]): string => {
+		const contextItem = context.find(({key}) => key === contextItemKey);
 
-	if (contextItem) {
-		return Number(contextItem.value).toLocaleString();
-	}
+		if (contextItem) {
+			return Number(contextItem.value).toLocaleString();
+		}
 
-	return '0';
-};
+		return '0';
+	};
 
 interface IOutputVersionsCardProps {
 	jobId: string;
-	nextRunDate: string;
+	nextRunDate?: string;
 	runFrequency: JobRunFrequencies;
 	timeZoneId: string;
 }
@@ -132,7 +132,7 @@ const OutputVersionsCard: React.FC<IOutputVersionsCardProps> = ({
 					{
 						accessor: 'completedDate',
 						className: 'table-cell-expand',
-						dataFormatter: val =>
+						dataFormatter: (val: string) =>
 							applyTimeZone(val, timeZoneId).calendar(null, {
 								lastDay: CUSTOM_DATE_FORMAT,
 								lastWeek: CUSTOM_DATE_FORMAT,

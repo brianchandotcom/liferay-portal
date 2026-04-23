@@ -9,7 +9,7 @@ import Input from 'shared/components/Input';
 import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React, {useEffect, useRef, useState} from 'react';
-import {Formik, FormikValues} from 'formik';
+import {FormikValues} from 'formik';
 import {NetworkStatus} from '@clayui/data-provider';
 import {paginationDefaults} from 'shared/util/pagination';
 import {sub} from 'shared/util/lang';
@@ -49,11 +49,11 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 	onClose,
 	onSubmit
 }) => {
-	const [items, setItems] = useState([]);
-	const [fileName, setFileName] = useState(null);
+	const [items, setItems] = useState<{label: string; value: string}[]>([]);
+	const [fileName, setFileName] = useState<string | null>(null);
 	const [email, setEmail] = useState('');
 	const [networkStatus, setNetworkStatus] = useState(NetworkStatus.Unused);
-	const [emails, setEmails] = useState([]);
+	const [emails, setEmails] = useState<{label: string; value: string}[]>([]);
 
 	const debouncedEmail = useDebounce(email, 500);
 
@@ -71,10 +71,18 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 			});
 
 			setItems(
-				items.map(({id, properties: {email}}) => ({
-					label: email,
-					value: id
-				}))
+				items.map(
+					({
+						id,
+						properties: {email}
+					}: {
+						id: string;
+						properties: {email: string};
+					}) => ({
+						label: email,
+						value: id
+					})
+				)
 			);
 			setNetworkStatus(NetworkStatus.Unused);
 		}
@@ -82,9 +90,9 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 		fetchIndividuals();
 	}, [debouncedEmail]);
 
-	const _formRef = useRef<Formik>();
+	const _formRef = useRef<any>(null);
 
-	const handleAccessClick = event => {
+	const handleAccessClick = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const {checked} = event.target;
 
 		if (_formRef.current) {
@@ -94,7 +102,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 		}
 	};
 
-	const handleDeleteClick = event => {
+	const handleDeleteClick = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const {checked} = event.target;
 
 		if (_formRef.current) {
@@ -106,13 +114,19 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 		}
 	};
 
-	const handleFileChange = file => {
+	const handleFileChange = (
+		file: {
+			completed?: boolean;
+			response?: string;
+			status?: number;
+		} | null
+	) => {
 		if (file) {
 			const {completed, response, status} = file;
 
 			const fileUploaded = completed && status !== 500;
 
-			setFileName(fileUploaded ? response : null);
+			setFileName(fileUploaded ? response ?? null : null);
 		} else {
 			setFileName(null);
 		}
@@ -123,8 +137,8 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 		deleteRequest,
 		subjectIdType,
 		suppressRequest
-	}) => {
-		let types = [];
+	}: FormikValues) => {
+		let types: string[] = [];
 
 		if (accessRequest) {
 			types = [...types, 'ACCESS'];
@@ -145,13 +159,15 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 			});
 		} else {
 			onSubmit({
-				fileName,
+				fileName: fileName ?? undefined,
 				types
 			});
 		}
 	};
 
-	const handleSuppressClick = event => {
+	const handleSuppressClick = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
 		const {checked} = event.target;
 
 		if (_formRef.current) {
@@ -197,8 +213,8 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 					subjectIdType: SubjectIdType.ByEmail,
 					suppressRequest: false
 				}}
+				innerRef={_formRef as any}
 				onSubmit={handleSubmit}
-				ref={_formRef}
 			>
 				{({handleSubmit, isSubmitting, values}) => (
 					<Form.Form onSubmit={handleSubmit}>

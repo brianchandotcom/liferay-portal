@@ -4,8 +4,8 @@ import React from 'react';
 interface IRequestActionsRendererProps
 	extends React.HTMLAttributes<HTMLTableCellElement> {
 	data: {[key: string]: any};
-	onAccept: ({emailAddress, id}) => any;
-	onDecline: ({emailAddress, id}) => any;
+	onAccept: (params: {emailAddress: string; id: string}) => any;
+	onDecline: (params: {emailAddress: string; id: string}) => any;
 }
 
 const RequestActionsRenderer: React.FC<IRequestActionsRendererProps> = ({

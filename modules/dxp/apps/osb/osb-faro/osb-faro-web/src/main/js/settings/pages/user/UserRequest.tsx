@@ -52,7 +52,13 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 		}
 	});
 
-	const onAccept = ({emailAddress, id}) => {
+	const onAccept = ({
+		emailAddress,
+		id
+	}: {
+		emailAddress: string;
+		id: string;
+	}) => {
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: sub(
 				Liferay.Language.get('are-you-sure-you-want-to-accept-x'),
@@ -70,7 +76,7 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 							message: Liferay.Language.get('user-added')
 						});
 
-						refetch();
+						refetch?.();
 					})
 					.catch(() => {
 						addAlert({
@@ -82,7 +88,13 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 		});
 	};
 
-	const onDecline = ({emailAddress, id}) => {
+	const onDecline = ({
+		emailAddress,
+		id
+	}: {
+		emailAddress: string;
+		id: string;
+	}) => {
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: sub(
 				Liferay.Language.get('are-you-sure-you-want-to-decline-x'),
@@ -102,7 +114,7 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 							)
 						});
 
-						refetch();
+						refetch?.();
 					})
 					.catch(() => {
 						addAlert({
@@ -160,7 +172,7 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 			showCheckbox={false}
 			total={data?.total}
 		>
-			{props => <ListComponent {...props} />}
+			{(props: any) => <ListComponent {...props} />}
 		</CrossPageSelect>
 	);
 };

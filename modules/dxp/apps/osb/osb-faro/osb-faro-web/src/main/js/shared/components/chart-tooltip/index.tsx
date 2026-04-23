@@ -44,7 +44,7 @@ const Columns: React.FC<IColumnsProps> = ({columns}) => (
 						className={className}
 						colSpan={colspan}
 						key={`column-${index}`}
-						style={width && {minWidth: `${width}px`}}
+						style={width ? {minWidth: `${width}px`} : undefined}
 						truncated={truncated}
 						weight={weight}
 					>
@@ -81,7 +81,7 @@ const ChartTooltip: React.FC<IChartTooltipProps> = ({
 					<TooltipTemplate.Row key='body-rows-description'>
 						<TooltipTemplate.Column
 							className='my-2 text-secondary'
-							colSpan={header[0].columns.length}
+							colSpan={header ? header[0].columns.length : 1}
 						>
 							{description}
 						</TooltipTemplate.Column>

@@ -54,7 +54,7 @@ type File = {
 };
 
 const getFileStatusIcon = (file: File) => {
-	const error = file && file.status >= 400;
+	const error = file && file.status && file.status >= 400;
 
 	if (file && file.completed) {
 		if (error) {
@@ -83,7 +83,7 @@ interface IFileItemProps {
 }
 
 export const FileItem: React.FC<IFileItemProps> = ({file, onCancel}) => {
-	const error = file && file.status >= 400;
+	const error = file && file.status && file.status >= 400;
 
 	return (
 		<div className='file-item'>
@@ -140,17 +140,17 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 interface IFileDropTargetProps extends PropsFromRedux {
 	className?: string;
 	fileTypes: string[];
-	onChange: (file: File) => void;
+	onChange: (file: File | null) => void;
 	uploadURL: string;
 	useJaxRS?: boolean;
 }
 
 export class FileDropTarget extends React.Component<IFileDropTargetProps> {
-	state = {
+	state: {file: File | null} = {
 		file: null
 	};
 
-	private _uploader;
+	private _uploader: any;
 
 	componentDidMount() {
 		const {fileTypes, uploadURL, useJaxRS} = this.props;
@@ -178,21 +178,21 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 	}
 
 	@autobind
-	handleFileDrop(data) {
+	handleFileDrop(data: any) {
 		this._uploader.addFiles(data.files);
 	}
 
 	@autobind
-	handleFileProgress(updatedFile) {
+	handleFileProgress(updatedFile: any) {
 		const {
 			props: {onChange},
 			state: {file}
 		} = this;
 
-		const newFile = {
-			...file,
+		const newFile: File = {
+			...(file as object),
 			...updatedFile
-		};
+		} as File;
 
 		this.setState({file: newFile});
 
@@ -207,12 +207,12 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 	}
 
 	@autobind
-	handleUploadError(error) {
+	handleUploadError(error: any) {
 		const {addAlert} = this.props;
 
 		addAlert({
 			alertType: Alert.Types.Warning,
-			message: ERROR_LANG_MAP[error]
+			message: ERROR_LANG_MAP[error as keyof typeof ERROR_LANG_MAP]
 		});
 	}
 

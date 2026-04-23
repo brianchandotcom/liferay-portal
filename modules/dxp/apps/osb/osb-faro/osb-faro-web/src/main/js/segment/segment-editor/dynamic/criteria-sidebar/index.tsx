@@ -15,19 +15,19 @@ interface ICriteriaSidebarProps {
 
 interface ICriteriaSidebarState {
 	searchValue: string;
-	selectedPropertyKey: string;
+	selectedPropertyKey: string | null;
 }
 
 export default class CriteriaSidebar extends React.Component<
 	ICriteriaSidebarProps,
 	ICriteriaSidebarState
 > {
-	state = {
+	state: ICriteriaSidebarState = {
 		searchValue: '',
 		selectedPropertyKey: null
 	};
 
-	constructor(props) {
+	constructor(props: ICriteriaSidebarProps) {
 		super(props);
 
 		const {propertyGroupsIList = List<Property>()} = props;
@@ -39,14 +39,14 @@ export default class CriteriaSidebar extends React.Component<
 	}
 
 	@autobind
-	handlePropertyGroupSelect(selectedPropertyKey) {
+	handlePropertyGroupSelect(selectedPropertyKey: string) {
 		this.setState({
 			selectedPropertyKey
 		});
 	}
 
 	@autobind
-	handleOnSearchChange(value) {
+	handleOnSearchChange(value: string) {
 		this.setState({searchValue: value});
 	}
 
@@ -57,7 +57,8 @@ export default class CriteriaSidebar extends React.Component<
 		} = this;
 
 		const activePropertyGroup = propertyGroupsIList.find(
-			({propertyKey}) => propertyKey === selectedPropertyKey
+			(pg: PropertyGroup | undefined) =>
+				pg?.propertyKey === selectedPropertyKey
 		);
 
 		return (
@@ -86,19 +87,23 @@ export default class CriteriaSidebar extends React.Component<
 								</ClayButton>
 							}
 						>
-							{propertyGroupsIList.map(({label, propertyKey}) => (
-								<ClayDropdown.Item
-									active={propertyKey === selectedPropertyKey}
-									key={propertyKey}
-									onClick={() =>
-										this.handlePropertyGroupSelect(
-											propertyKey
-										)
-									}
-								>
-									{label}
-								</ClayDropdown.Item>
-							))}
+							{propertyGroupsIList
+								.toArray()
+								.map(({label, propertyKey}) => (
+									<ClayDropdown.Item
+										active={
+											propertyKey === selectedPropertyKey
+										}
+										key={propertyKey}
+										onClick={() =>
+											this.handlePropertyGroupSelect(
+												propertyKey
+											)
+										}
+									>
+										{label}
+									</ClayDropdown.Item>
+								))}
 						</ClayDropdown>
 					) : (
 						Liferay.Language.get('properties')
@@ -115,7 +120,7 @@ export default class CriteriaSidebar extends React.Component<
 				<div className='sidebar-collapse'>
 					<CriteriaSidebarCollapse
 						propertyGroupsIList={propertyGroupsIList}
-						propertyKey={selectedPropertyKey}
+						propertyKey={selectedPropertyKey ?? ''}
 						searchValue={searchValue}
 					/>
 				</div>

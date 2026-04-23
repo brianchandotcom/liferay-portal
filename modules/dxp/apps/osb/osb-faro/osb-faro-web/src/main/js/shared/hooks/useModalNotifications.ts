@@ -16,7 +16,7 @@ interface IModalNotificationRenderProps {
 
 const renderTimeZoneAdminModal = (
 	modalType: Modal.modalTypes,
-	{close, groupId, notificationId, open}
+	{close, groupId, notificationId, open}: IModalNotificationRenderProps
 ) =>
 	open(
 		modalType,
@@ -57,7 +57,7 @@ export function useModalNotifications(
 				close();
 			};
 
-			renderFn({
+			renderFn?.({
 				close: () => onClose(notificationList),
 				groupId,
 				notificationId: notificationToRender.id,

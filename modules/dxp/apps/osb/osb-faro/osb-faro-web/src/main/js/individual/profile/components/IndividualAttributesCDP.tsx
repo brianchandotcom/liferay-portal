@@ -7,6 +7,7 @@ import {formatUTCDate} from 'shared/util/date';
 import {SectionHeader} from './SectionHeader';
 
 interface IIndividualAttributesProps {
+	children?: React.ReactNode;
 	contactId?: string;
 	propertiesData: Map<string, any>;
 	showEmptyState?: boolean;

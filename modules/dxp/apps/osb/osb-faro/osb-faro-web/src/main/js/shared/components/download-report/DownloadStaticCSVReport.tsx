@@ -79,8 +79,8 @@ export const DownloadStaticCSVReport: React.FC<IDownloadStaticCSVReport> = ({
 							a.click();
 
 							const count = await API.csv.fetchCount({
-								channelId,
-								groupId,
+								channelId: channelId!,
+								groupId: groupId!,
 								segmentId,
 								type: CSVType.Individual
 							});
@@ -116,7 +116,17 @@ export const DownloadStaticCSVReport: React.FC<IDownloadStaticCSVReport> = ({
 	);
 };
 
-const Modal = ({observer, onClose, onSubmit, typeLang}) => (
+const Modal = ({
+	observer,
+	onClose,
+	onSubmit,
+	typeLang
+}: {
+	observer: any;
+	onClose: () => void;
+	onSubmit: () => void;
+	typeLang: string;
+}) => (
 	<ClayModal observer={observer}>
 		<ClayForm
 			onSubmit={event => {

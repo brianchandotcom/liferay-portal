@@ -46,7 +46,10 @@ export const getIndexFromPropertyName = (
 ): number =>
 	valueIMap
 		.getIn(['criterionGroup', 'items'])
-		.findIndex(entry => entry.get('propertyName') === propertyName);
+		.findIndex(
+			(entry: Map<string, any>) =>
+				entry.get('propertyName') === propertyName
+		);
 
 /**
  * Get the operator name from the criterion at the specified index in the valueIMap.
@@ -90,7 +93,7 @@ export const getTimePeriodLabel = (value: string): string => {
 		timePeriod => timePeriod.value === value
 	);
 
-	return timePeriod ? timePeriod.label : null;
+	return timePeriod ? timePeriod.label : '';
 };
 
 /**
@@ -103,8 +106,8 @@ export const removeItemsByIndex = (
 	valueIMap: CustomValue,
 	indexArray: number[]
 ): CustomValue =>
-	valueIMap.updateIn(['criterionGroup', 'items'], iList =>
-		iList.filterNot((_, i) => indexArray.includes(i))
+	valueIMap.updateIn(['criterionGroup', 'items'], (iList: any) =>
+		iList.filterNot((_: unknown, i: number) => indexArray.includes(i))
 	) as CustomValue;
 
 /**

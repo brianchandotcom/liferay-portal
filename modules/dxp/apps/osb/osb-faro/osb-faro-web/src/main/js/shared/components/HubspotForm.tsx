@@ -4,9 +4,9 @@ const HUBSPOT_ENDPOINT = '//js.hsforms.net/forms/v2.js';
 const HUBSPOT_ID = 'hubspotForm';
 
 const mockJQuery: () => void = () => {
-	window.jQuery =
-		window.jQuery ||
-		(node => {
+	(window as any).jQuery =
+		(window as any).jQuery ||
+		((node: any) => {
 			if (typeof node == 'string') {
 				return document.querySelector(node);
 			}
@@ -29,10 +29,8 @@ const loadScript: () => HTMLElement = () => {
 	return script;
 };
 
-const createForm: (
-	props: React.Props<React.HTMLAttributes<HTMLElement>>
-) => void = props =>
-	window.hbspt.forms.create({
+const createForm: (props: React.HTMLAttributes<HTMLElement>) => void = props =>
+	(window as any).hbspt.forms.create({
 		...props,
 		target: `#${HUBSPOT_ID}`
 	});
@@ -48,7 +46,7 @@ interface IHubspotFormProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const HubspotForm: React.FC<IHubspotFormProps> = props => {
-	if (!window.hbspt) {
+	if (!(window as any).hbspt) {
 		const script = loadScript();
 
 		script.onload = () => {

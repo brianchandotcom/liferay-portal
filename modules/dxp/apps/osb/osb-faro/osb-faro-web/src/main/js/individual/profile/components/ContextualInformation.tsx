@@ -49,6 +49,7 @@ function formatTimeZoneOffset(timeZoneOffset?: string, region?: string) {
 }
 
 interface IContextualInfoProps {
+	children?: React.ReactNode;
 	contactId?: string;
 	contextData: Map<string, any>;
 	email?: string;

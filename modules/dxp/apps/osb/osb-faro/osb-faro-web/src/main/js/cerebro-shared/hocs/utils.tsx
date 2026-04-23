@@ -12,24 +12,23 @@ type TWithError = () => (
 	Component: React.JSXElementConstructor<any>
 ) => (props: any) => React.ReactElement;
 
-const withError: TWithError = () => Component => ({
-	error,
-	errorMessage,
-	...props
-}) => {
-	if (error) {
-		return (
-			<NoResultsDisplay
-				title={
-					errorMessage ||
-					Liferay.Language.get('sorry-an-error-occurred')
-				}
-			/>
-		);
-	}
+const withError: TWithError =
+	() =>
+	Component =>
+	({error, errorMessage, ...props}) => {
+		if (error) {
+			return (
+				<NoResultsDisplay
+					title={
+						errorMessage ||
+						Liferay.Language.get('sorry-an-error-occurred')
+					}
+				/>
+			);
+		}
 
-	return <Component {...props} />;
-};
+		return <Component {...props} />;
+	};
 
 type TWithEmpty = (params?: {
 	emptyDescription?: string | React.ReactElement;
@@ -40,51 +39,56 @@ type TWithEmpty = (params?: {
 	Component: React.JSXElementConstructor<any>
 ) => (props: any) => React.ReactElement;
 
-const withEmpty: TWithEmpty = ({
-	emptyDescription,
-	emptyIcon,
-	emptyTitle,
-	primary
-} = {}) => Component => ({
-	filterEnabled = false,
-	items,
-	noResultsRenderer,
-	query,
-	total,
-	...otherProps
-}) => {
-	if (items && !items.length && !total) {
-		if (query || filterEnabled) {
+const withEmpty: TWithEmpty =
+	({emptyDescription, emptyIcon, emptyTitle, primary} = {}) =>
+	Component =>
+	({
+		filterEnabled = false,
+		items,
+		noResultsRenderer,
+		query,
+		total,
+		...otherProps
+	}) => {
+		if (items && !items.length && !total) {
+			if (query || filterEnabled) {
+				return (
+					<NoResultsDisplay
+						description={Liferay.Language.get(
+							'please-try-a-different-search-term'
+						)}
+						icon={{
+							border: false,
+							size: Sizes.XXXLarge,
+							symbol: 'ac_no_results_found'
+						}}
+						title={Liferay.Language.get(
+							'there-are-no-results-found'
+						)}
+					/>
+				);
+			} else if (noResultsRenderer) {
+				return noResultsRenderer;
+			}
+
 			return (
 				<NoResultsDisplay
-					description={Liferay.Language.get(
-						'please-try-a-different-search-term'
-					)}
-					icon={{
-						border: false,
-						size: Sizes.XXXLarge,
-						symbol: 'ac_no_results_found'
-					}}
-					title={Liferay.Language.get('there-are-no-results-found')}
+					description={emptyDescription}
+					icon={emptyIcon}
+					primary={primary}
+					title={emptyTitle}
 				/>
 			);
-		} else if (noResultsRenderer) {
-			return noResultsRenderer;
 		}
 
 		return (
-			<NoResultsDisplay
-				description={emptyDescription}
-				icon={emptyIcon}
-				primary={primary}
-				title={emptyTitle}
+			<Component
+				{...otherProps}
+				items={items}
+				query={query}
+				total={total}
 			/>
 		);
-	}
-
-	return (
-		<Component {...otherProps} items={items} query={query} total={total} />
-	);
-};
+	};
 
 export {withEmpty, withError};

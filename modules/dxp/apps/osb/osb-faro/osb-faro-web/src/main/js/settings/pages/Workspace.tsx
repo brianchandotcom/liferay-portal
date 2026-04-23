@@ -48,15 +48,17 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 		incidentReportEmailAddresses,
 		name,
 		timeZoneId
-	}) =>
-		updateProject({
-			emailAddressDomains,
-			friendlyURL,
-			groupId,
-			incidentReportEmailAddresses,
-			name,
-			timeZoneId
-		})
+	}: Record<string, any>) =>
+		(
+			updateProject({
+				emailAddressDomains,
+				friendlyURL,
+				groupId,
+				incidentReportEmailAddresses,
+				name,
+				timeZoneId
+			}) as unknown as Promise<any>
+		)
 			.then(() => {
 				if (friendlyURL !== groupId) {
 					history.push(
@@ -71,7 +73,7 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 					message: Liferay.Language.get('workspace-settings-saved')
 				});
 			})
-			.catch(error => {
+			.catch((error: {field?: string}) => {
 				if (!error.field) {
 					addAlert({
 						alertType: Alert.Types.Error,
@@ -104,17 +106,17 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 	);
 };
 
-export default compose(
+export default compose<React.ComponentType<any>>(
 	connector,
 	withHistory,
 	withProject(true),
 	withQuery(
-		({groupId}) =>
+		({groupId}: {groupId: string}) =>
 			API.projects.fetchEmailAddressDomains({
 				groupId
 			}),
-		val => val,
-		({data, error}) => ({
+		(val: any) => val,
+		({data, error}: {data: any; error: any}) => ({
 			emailAddressDomains: error ? [] : data
 		})
 	)

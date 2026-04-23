@@ -7,7 +7,7 @@ import {Alignments, Weights} from 'shared/components/chart-tooltip';
 import {getDate as getDateUtil} from 'shared/util/date';
 import {toThousandsABTesting} from 'experiments/util/experiments';
 
-const formatTooltip = (dataPoint): IChartTooltipProps => {
+const formatTooltip = (dataPoint: any[]): IChartTooltipProps => {
 	const control = dataPoint[0];
 	const variant = dataPoint[1];
 
@@ -101,7 +101,7 @@ const formatTooltip = (dataPoint): IChartTooltipProps => {
 	return {header, rows};
 };
 
-export const Tooltip = ({dataPoint}) => (
+export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => (
 	<div className='bb-tooltip-container position-static'>
 		<ChartTooltip {...formatTooltip(dataPoint)} />
 	</div>

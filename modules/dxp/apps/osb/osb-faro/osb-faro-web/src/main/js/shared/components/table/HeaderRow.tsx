@@ -20,7 +20,7 @@ const HeaderRow: React.FC<IHeaderRowProps> = ({
 	columns,
 	headerLink,
 	onSortOrderChange,
-	orderIOMap,
+	orderIOMap = OrderedMap<string, OrderParams>(),
 	showCheckbox,
 	showInlineRowActions
 }) => (

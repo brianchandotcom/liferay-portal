@@ -11,12 +11,13 @@ interface IBreadcrumbProps {
 	bufferSize?: number;
 	className?: string;
 	items: IBreadcrumbArgs[];
-	onClick?: (id: string) => void;
+	onClick?: (id?: string) => void;
 }
 
 interface IBreadcrumbItemProps {
+	children?: React.ReactNode;
 	item: IBreadcrumbArgs;
-	onClick?: (id: string) => void;
+	onClick?: (id?: string) => void;
 }
 
 const BreadcrumbItem: React.FC<IBreadcrumbItemProps> = ({
@@ -97,7 +98,7 @@ const Breadcrumb: React.FC<IBreadcrumbProps> = ({
 					{items.map(({href, label}, i) => (
 						<ClayDropDown.Item
 							key={i}
-							onClick={() => history.push(href)}
+							onClick={() => href && history.push(href)}
 						>
 							{label}
 						</ClayDropDown.Item>

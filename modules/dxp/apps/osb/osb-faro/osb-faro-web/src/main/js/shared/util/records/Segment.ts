@@ -1,4 +1,4 @@
-import {EntityTypes} from '../constants';
+import {EntityTypes, SegmentTypes} from '../constants';
 import {fromJS, Map, Record} from 'immutable';
 import {SegmentActivationDetails} from 'segment/components/SegmentActivationCard';
 
@@ -19,8 +19,8 @@ interface ISegment {
 	name: string;
 	properties: Map<string, any>;
 	referencedObjects?: Map<string, any>;
-	segmentType: null;
-	sequential: false;
+	segmentType: SegmentTypes | null;
+	sequential: boolean;
 	state: string;
 	status: string;
 	type: EntityTypes.IndividualsSegment;
@@ -57,29 +57,30 @@ export default class Segment
 		type: EntityTypes.IndividualsSegment,
 		userName: null
 	})
-	implements ISegment {
-	activation: SegmentActivationDetails;
-	activeIndividualCount: number;
-	activitiesCount: number;
-	anonymousIndividualCount: number;
-	channelId: string;
-	criteriaString?: string;
-	dateCreated: number;
-	dateModified: number;
-	id: string;
-	includeAnonymousUsers: boolean;
-	individualCount: number;
-	knownIndividualCount: number;
-	lastActivityDate: number;
-	name: string;
-	properties: Map<string, any>;
-	referencedObjects?: Map<string, any>;
-	segmentType: null;
-	sequential: false;
-	state: string;
-	status: string;
-	type: EntityTypes.IndividualsSegment;
-	userName: string;
+	implements ISegment
+{
+	declare activation: SegmentActivationDetails;
+	declare activeIndividualCount: number;
+	declare activitiesCount: number;
+	declare anonymousIndividualCount: number;
+	declare channelId: string;
+	declare criteriaString?: string;
+	declare dateCreated: number;
+	declare dateModified: number;
+	declare id: string;
+	declare includeAnonymousUsers: boolean;
+	declare individualCount: number;
+	declare knownIndividualCount: number;
+	declare lastActivityDate: number;
+	declare name: string;
+	declare properties: Map<string, any>;
+	declare referencedObjects?: Map<string, any>;
+	declare segmentType: SegmentTypes | null;
+	declare sequential: boolean;
+	declare state: string;
+	declare status: string;
+	declare type: EntityTypes.IndividualsSegment;
+	declare userName: string;
 
 	constructor(props = {}) {
 		super(fromJS(props));

@@ -22,7 +22,7 @@ import {Text} from '@clayui/core';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
-const subscriptionStatuses = admin => ({
+const subscriptionStatuses = (admin: boolean) => ({
 	[SubscriptionStatuses.Approaching]: {
 		message: admin
 			? Liferay.Language.get(
@@ -45,7 +45,9 @@ const subscriptionStatuses = admin => ({
 	}
 });
 
-const getAlertStatusCode = currentPlan => {
+const getAlertStatusCode = (currentPlan: {
+	metrics: {get: (key: string) => {status: SubscriptionStatuses}};
+}) => {
 	const individuals = currentPlan.metrics.get('individuals');
 	const pageViews = currentPlan.metrics.get('pageViews');
 
@@ -65,16 +67,29 @@ const getAlertStatusCode = currentPlan => {
 	return null;
 };
 
-export const UsageOverview = ({project}) => {
+export const UsageOverview = ({
+	project
+}: {
+	project: {faroSubscription: any};
+}) => {
 	const [showAlert, setShowAlert] = useState(true);
 	const currentUser = useCurrentUser();
 	const admin = currentUser.isAdmin();
 	const currentPlan = formatPlanData(project.faroSubscription);
 	const {timeZoneId} = useTimeZone();
 	const planType =
-		PLAN_TYPES[currentPlan.name] || PLAN_TYPES[PLANS.basic.name];
+		(PLAN_TYPES as {[key: string]: string})[currentPlan.name] ||
+		(PLAN_TYPES as {[key: string]: string})[
+			(PLANS as {[key: string]: {name: string}}).basic.name
+		];
 
-	let pageActions = [];
+	let pageActions: {
+		displayType: string;
+		href: string;
+		icon: {symbol: string};
+		label: string;
+		target: string;
+	}[] = [];
 
 	if (currentUser.isAdmin()) {
 		pageActions = [
@@ -90,9 +105,14 @@ export const UsageOverview = ({project}) => {
 		];
 	}
 
-	const alertContent = subscriptionStatuses(admin)[
-		getAlertStatusCode(currentPlan)
-	];
+	const alertStatusCode = getAlertStatusCode(currentPlan);
+	const alertContent = alertStatusCode
+		? (
+				subscriptionStatuses(admin) as {
+					[key: string]: {message: string; title: string};
+				}
+		  )[alertStatusCode]
+		: undefined;
 
 	return (
 		<BasePage

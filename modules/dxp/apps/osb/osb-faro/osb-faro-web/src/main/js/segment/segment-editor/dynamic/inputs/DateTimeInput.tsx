@@ -16,10 +16,10 @@ interface IDateTimeInputProps extends ISegmentEditorInputBase {
 
 export default class DateTimeInput extends React.Component<IDateTimeInputProps> {
 	@autobind
-	handleDateChange(value) {
+	handleDateChange(value: string) {
 		this.props.onChange({
 			type: PropertyTypes.Date,
-			value: formatDateToTimeZone(value, null, 'UTC')
+			value: formatDateToTimeZone(value, undefined, 'UTC')
 		});
 	}
 

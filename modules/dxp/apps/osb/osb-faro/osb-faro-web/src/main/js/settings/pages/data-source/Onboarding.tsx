@@ -13,9 +13,11 @@ const PAGE_MAP = {
 };
 
 const DataSourceOnboarding = () => {
-	const {id} = useParams();
+	const {id = ''} = useParams<{id: string}>();
 
-	const Component = PAGE_MAP[id.toUpperCase()];
+	const Component = (PAGE_MAP as {[key: string]: React.ComponentType})[
+		id.toUpperCase()
+	];
 
 	if (Component) {
 		return <Component />;

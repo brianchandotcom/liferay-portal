@@ -27,7 +27,10 @@ const CardTabs: React.FC<ICardTabsProps> = ({
 	size,
 	tabs
 }) => {
-	const handleEmitOnChange = (onClick, tabId): void => {
+	const handleEmitOnChange = (
+		onClick: (() => void) | undefined,
+		tabId: string
+	): void => {
 		onClick && onClick();
 		onChange && onChange(tabId);
 	};

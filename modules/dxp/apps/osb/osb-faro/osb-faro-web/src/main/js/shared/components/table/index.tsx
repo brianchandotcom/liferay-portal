@@ -8,7 +8,10 @@ import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
 import type {Column} from './Row';
 
-export const getRowIdentifierValue = (item, rowIdentifier) => {
+export const getRowIdentifierValue = (
+	item: {[key: string]: any},
+	rowIdentifier: string | string[]
+) => {
 	if (isArray(rowIdentifier)) {
 		return rowIdentifier.reduce((acc, rowIdentifierKey) => {
 			acc = acc.concat(get(item, rowIdentifierKey, rowIdentifierKey));
@@ -96,7 +99,7 @@ const Table: React.FC<ITableProps> = ({
 		}
 	};
 
-	const handleItemClick = item => {
+	const handleItemClick = (item: {[key: string]: any}) => {
 		if (showCheckbox && onSelectItemsChange) {
 			onSelectItemsChange(item);
 		}
@@ -106,8 +109,8 @@ const Table: React.FC<ITableProps> = ({
 		}
 	};
 
-	const sortItems = items => {
-		const orderParams = orderIOMap.first();
+	const sortItems = (items: {[key: string]: any}[]) => {
+		const orderParams = orderIOMap.first() ?? new OrderParams();
 
 		const {field, sortOrder} = orderParams;
 
@@ -203,7 +206,7 @@ const Table: React.FC<ITableProps> = ({
 													? selectedItemsIOMap.has(
 															item?.id
 													  )
-													: null
+													: undefined
 											}
 											showCheckbox={showCheckbox}
 										/>

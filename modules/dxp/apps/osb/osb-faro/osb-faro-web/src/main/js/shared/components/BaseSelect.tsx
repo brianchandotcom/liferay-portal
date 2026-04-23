@@ -6,10 +6,11 @@ import Input from './Input';
 import Loading from 'shared/components/Loading';
 import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
 import {ARROW_DOWN, ARROW_UP, ENTER} from '../util/key-constants';
-import {DocumentNode} from 'apollo-boost';
+import {DocumentNode, useQuery} from '@apollo/client';
+
 import {identity, noop} from 'lodash';
 import {useDebounce} from 'shared/hooks/useDebounce';
-import {useQuery} from '@apollo/react-hooks';
+
 import {useRequest} from 'shared/hooks/useRequest';
 
 const DEBOUNCE_DELAY = 250;
@@ -57,6 +58,7 @@ export const Item: React.FC<IItemProps> = ({
 );
 
 interface IBaseSelectProps extends React.HTMLAttributes<HTMLInputElement> {
+	placeholder?: string;
 	alwaysFetchOnFocus?: boolean;
 	className?: string;
 	containerClass?: string;
@@ -141,7 +143,7 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 		};
 	} else {
 		response = useRequest({
-			dataSourceFn: ({value}) => dataSourceFn(value),
+			dataSourceFn: (({value}: any) => dataSourceFn?.(value)) as any,
 			debounceDelay: DEBOUNCE_DELAY,
 			initialState: {
 				data: [],
@@ -210,7 +212,7 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 		setActive(false);
 	};
 
-	const handleSelect = item => {
+	const handleSelect = (item: any) => {
 		handleOutsideClick();
 
 		onSelect(item);
@@ -290,7 +292,7 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 				<ClayDropDown.Caption>{menuTitle}</ClayDropDown.Caption>
 			)}
 
-			{items.map((item, i) => (
+			{items.map((item: any, i: number) => (
 				<ClayDropDown.Item
 					active={i === focusIndex}
 					className={className}

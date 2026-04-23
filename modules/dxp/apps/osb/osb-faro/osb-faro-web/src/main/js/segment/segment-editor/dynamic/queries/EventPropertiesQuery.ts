@@ -1,5 +1,5 @@
 import {DataTypes} from 'event-analysis/utils/types';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 import {Sort} from 'shared/types';
 
 export type Property = {

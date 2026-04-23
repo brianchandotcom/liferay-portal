@@ -82,28 +82,25 @@ class DistributionCard extends React.Component<
 
 	@autobind
 	handleAddTab(tab: DistributionTab) {
-		const {
-			addAlert,
-			addDistributionTab,
-			distributionKey,
-			groupId,
-			id
-		} = this.props;
+		const {addAlert, addDistributionTab, distributionKey, groupId, id} =
+			this.props;
 
-		return addDistributionTab({
+		const addPromise = addDistributionTab({
 			distributionKey,
 			distributionTab: tab,
 			distributionTabId: tab.id,
 			groupId,
 			id
-		})
-			.then(({payload: {order}}) =>
+		}) as unknown as Promise<{payload: {order: unknown[]}}>;
+
+		return addPromise
+			.then(({payload: {order}}: {payload: {order: unknown[]}}) =>
 				this.setState({
 					selectedTabIndex: order.length - 1,
 					showAddProperty: false
 				})
 			)
-			.catch(({message}) =>
+			.catch(({message}: {message: string}) =>
 				addAlert({
 					alertType: Alert.Types.Error,
 					message,
@@ -114,12 +111,8 @@ class DistributionCard extends React.Component<
 
 	@autobind
 	handleDeleteTab(tabId: string) {
-		const {
-			distributionKey,
-			groupId,
-			id,
-			removeDistributionTab
-		} = this.props;
+		const {distributionKey, groupId, id, removeDistributionTab} =
+			this.props;
 
 		this.setState({selectedTabIndex: 0}, () =>
 			removeDistributionTab({
@@ -133,12 +126,8 @@ class DistributionCard extends React.Component<
 
 	@autobind
 	handleFetchDistributionTabs() {
-		const {
-			distributionKey,
-			fetchDistributionTabs,
-			groupId,
-			id
-		} = this.props;
+		const {distributionKey, fetchDistributionTabs, groupId, id} =
+			this.props;
 
 		fetchDistributionTabs({distributionKey, groupId, id});
 	}
@@ -149,7 +138,7 @@ class DistributionCard extends React.Component<
 
 		this.setState({
 			selectedTabIndex: distributionTabsIList.findIndex(
-				tabIMap => tabIMap.get('id') === tabId
+				(tabIMap: Map<string, string>) => tabIMap.get('id') === tabId
 			)
 		});
 	}

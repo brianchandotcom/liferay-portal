@@ -12,7 +12,7 @@ import {sub} from 'shared/util/lang';
 interface IItemProps {
 	active: boolean;
 	className?: string;
-	field?: string;
+	field: string;
 	label: string;
 	name?: string;
 	onChange: (val: string, field: string) => void;
@@ -51,8 +51,8 @@ const Item: React.FC<IItemProps> = ({
 
 const FlatList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 	className,
-	filterBy,
-	filterByOptions,
+	filterBy = Map(),
+	filterByOptions = [],
 	onChange
 }) => (
 	<>
@@ -84,8 +84,8 @@ const FlatList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 
 const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 	className,
-	filterBy,
-	filterByOptions,
+	filterBy = Map(),
+	filterByOptions = [],
 	onChange
 }) => (
 	<ClayDropDown.Group header={Liferay.Language.get('filter-by')}>
@@ -144,7 +144,13 @@ const FilterOptionsList: React.FC<FilterOptionsListPropsType> = ({
 	...otherProps
 }) => (flat ? <FlatList {...otherProps} /> : <NestedList {...otherProps} />);
 
-export const getFilterAndOrderLabel = ({filterByOptions, orderByOptions}) => {
+export const getFilterAndOrderLabel = ({
+	filterByOptions = [],
+	orderByOptions = []
+}: {
+	filterByOptions?: FilterOptionType[];
+	orderByOptions?: {label: string; value: string}[];
+}) => {
 	if (filterByOptions.length && orderByOptions.length) {
 		return Liferay.Language.get('filter-and-order');
 	} else if (filterByOptions.length) {
@@ -208,13 +214,13 @@ const FilterAndOrder: React.FC<IFilterAndOrderProps> = ({
 					filterByOptions={filterByOptions}
 					flat={flat}
 					onChange={(value, field) => {
-						const {type} = filterByOptions.find(
+						const option = filterByOptions.find(
 							({key}) => key === field
 						);
 
 						onFilterByChange(
 							filterBy.update(field, (values: any = Set()) => {
-								if (type === 'radio') {
+								if (option?.type === 'radio') {
 									return Set([value]);
 								}
 
@@ -260,10 +266,11 @@ const FilterAndOrder: React.FC<IFilterAndOrderProps> = ({
 						{orderByOptions.map(({label, value}) => (
 							<Item
 								active={value === orderField}
+								field='orderBy'
 								key={value}
 								label={label}
 								name={uniqueId('filterAndOrder')}
-								onChange={onOrderFieldChange}
+								onChange={onOrderFieldChange as any}
 								type='radio'
 								value={value}
 							/>

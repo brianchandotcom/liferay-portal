@@ -202,7 +202,7 @@ export interface IDownloadReport {
 	label?: string;
 	infoMessage?: string;
 	showDateRange?: boolean;
-	subtitle: string;
+	subtitle?: string;
 	title: string;
 	url?: string;
 }
@@ -227,8 +227,8 @@ export const formattedContainers = (
 const getContainers = async (
 	containers: TransformedContainer[]
 ): Promise<JSPDFExtensionContainer[]> => {
-	const containerArr = [];
-	const promises = [];
+	const containerArr: JSPDFExtensionContainer[] = [];
+	const promises: Promise<void>[] = [];
 
 	containers.map(({id, layout}) => {
 		const containerElement = document.getElementById(id);
@@ -256,10 +256,10 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	children,
 	dateRangeDescription,
 	disabled,
-	label,
 	infoMessage = Liferay.Language.get(
 		'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
 	),
+	label,
 	showDateRange,
 	subtitle,
 	title,
@@ -415,15 +415,21 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 								</Text>
 							</p>
 
-							{Object.values(containers).map(({id, label}) => (
+							{(
+								Object.values(
+									containers
+								) as TransformedContainer[]
+							).map(({id, label}) => (
 								<Checkbox
 									key={id}
 									label={label}
-									onChange={newValue => {
+									onChange={(newValue: boolean) => {
 										setContainers({
 											...containers,
 											[id]: {
-												...containers[id],
+												...(
+													containers as ContainerList
+												)[id],
 												checked: newValue
 											}
 										});
@@ -438,7 +444,13 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	);
 };
 
-export const Checkbox = ({label, onChange}) => {
+export const Checkbox = ({
+	label,
+	onChange
+}: {
+	label: string;
+	onChange: (val: boolean) => void;
+}) => {
 	const [checked, setChecked] = useState(true);
 
 	return (

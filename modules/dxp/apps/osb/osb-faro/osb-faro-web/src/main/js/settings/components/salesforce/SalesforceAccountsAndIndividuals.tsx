@@ -17,7 +17,9 @@ interface ISalesforceAccountsAndIndividualsProps {
 	type?: string;
 }
 
-const SalesforceAccountsAndIndividuals: React.FC<ISalesforceAccountsAndIndividualsProps> = ({
+const SalesforceAccountsAndIndividuals: React.FC<
+	ISalesforceAccountsAndIndividualsProps
+> = ({
 	accountsSyncedCount,
 	disabled = false,
 	enabledAccount,
@@ -57,13 +59,14 @@ const SalesforceAccountsAndIndividuals: React.FC<ISalesforceAccountsAndIndividua
 						)}
 					</ClayList.ItemText>
 
-					{accountsSyncedCount >= 0 && (
-						<ClayList.ItemText>
-							{sub(Liferay.Language.get('x-items-synced'), [
-								accountsSyncedCount
-							])}
-						</ClayList.ItemText>
-					)}
+					{accountsSyncedCount !== undefined &&
+						accountsSyncedCount >= 0 && (
+							<ClayList.ItemText>
+								{sub(Liferay.Language.get('x-items-synced'), [
+									accountsSyncedCount
+								])}
+							</ClayList.ItemText>
+						)}
 				</ClayList.ItemField>
 			</ClayList.Item>
 
@@ -96,13 +99,14 @@ const SalesforceAccountsAndIndividuals: React.FC<ISalesforceAccountsAndIndividua
 						)}
 					</ClayList.ItemText>
 
-					{individualsSyncedCount >= 0 && (
-						<ClayList.ItemText>
-							{sub(Liferay.Language.get('x-items-synced'), [
-								individualsSyncedCount
-							])}
-						</ClayList.ItemText>
-					)}
+					{individualsSyncedCount !== undefined &&
+						individualsSyncedCount >= 0 && (
+							<ClayList.ItemText>
+								{sub(Liferay.Language.get('x-items-synced'), [
+									individualsSyncedCount
+								])}
+							</ClayList.ItemText>
+						)}
 				</ClayList.ItemField>
 			</ClayList.Item>
 		</ClayList>

@@ -11,9 +11,10 @@ export default class PropertySubgroup
 		label: '',
 		properties: List()
 	})
-	implements IPropertySubgroup {
-	label?: string;
-	properties: List<Property>;
+	implements IPropertySubgroup
+{
+	declare label?: string;
+	declare properties: List<Property>;
 
 	constructor(props: IPropertySubgroup) {
 		super(props);

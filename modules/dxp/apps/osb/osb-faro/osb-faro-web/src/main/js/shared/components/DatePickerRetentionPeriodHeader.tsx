@@ -2,7 +2,11 @@ import React from 'react';
 import {Text as ClayText} from '@clayui/core';
 import {sub} from 'shared/util/lang';
 
-export const DatePickerRetentionPeriodHeader = ({retentionPeriod}) => (
+export const DatePickerRetentionPeriodHeader = ({
+	retentionPeriod
+}: {
+	retentionPeriod: number;
+}) => (
 	<>
 		<ClayText size={2} weight='semi-bold'>
 			{Liferay.Language.get('custom-range').toUpperCase()}

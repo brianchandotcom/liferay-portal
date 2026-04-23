@@ -1,7 +1,13 @@
 import getFiltersMapper from 'cerebro-shared/hocs/mappers/filter';
 import globalFilterAssetQuery from 'shared/queries/globalFilterAssetQuery';
-import {graphql} from '@apollo/react-hoc';
+import {graphql, OperationOption} from '@apollo/client/react/hoc';
 import {withFilterComponent} from 'shared/hoc/Filter';
+
+type JournalMetricResult = {
+	journal: {
+		viewsMetric: unknown;
+	};
+};
 
 /**
  * HOC
@@ -10,7 +16,9 @@ import {withFilterComponent} from 'shared/hoc/Filter';
 const withWebContentFilter = () =>
 	graphql(
 		globalFilterAssetQuery('journal', 'viewsMetric'),
-		getFiltersMapper(result => result.journal.viewsMetric)
+		getFiltersMapper(
+			(result: JournalMetricResult) => result.journal.viewsMetric
+		) as OperationOption<object, object>
 	);
 
 export default withFilterComponent(withWebContentFilter);

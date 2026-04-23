@@ -77,10 +77,8 @@ const canDrop = (
 	},
 	monitor: DropTargetMonitor
 ): boolean => {
-	const {
-		criteriaGroupId: startGroupId,
-		index: startIndex
-	} = monitor.getItem();
+	const {criteriaGroupId: startGroupId, index: startIndex} =
+		monitor.getItem();
 
 	return destGroupId !== startGroupId || destIndex !== startIndex;
 };
@@ -167,7 +165,15 @@ const drop = (
  * @param {Object} props Component's current props
  * @returns {Object} The props to be passed to the drop target.
  */
-function beginDrag({criteriaGroupId, criterion, index}) {
+function beginDrag({
+	criteriaGroupId,
+	criterion,
+	index
+}: {
+	criteriaGroupId: string;
+	criterion: Criterion;
+	index: number;
+}) {
 	return {criteriaGroupId, criterion, index};
 }
 
@@ -207,7 +213,7 @@ interface ICriteriaRowProps extends PropsFromRedux {
 }
 
 interface ICriteriaRowState {
-	selectedProperty: Property;
+	selectedProperty: Property | undefined;
 	supportedOperators: Operator[];
 }
 
@@ -219,13 +225,13 @@ class CriteriaRow extends React.Component<
 		criterion: {}
 	};
 
-	constructor(props) {
+	constructor(props: ICriteriaRowProps) {
 		super(props);
 
 		const selectedProperty = this.getSelectedProperty();
 
 		const supportedOperators = selectedProperty
-			? getSupportedOperatorsFromType(selectedProperty.type)
+			? getSupportedOperatorsFromType(String(selectedProperty.type))
 			: [];
 
 		this.state = {
@@ -242,10 +248,8 @@ class CriteriaRow extends React.Component<
 			state: {supportedOperators}
 		} = this;
 
-		let operatorKey:
-			| Criterion['operatorName']
-			| 'is-known'
-			| 'is-unknown' = operatorName;
+		let operatorKey: Criterion['operatorName'] | 'is-known' | 'is-unknown' =
+			operatorName;
 
 		const valueNull = value === null;
 
@@ -276,7 +280,7 @@ class CriteriaRow extends React.Component<
 		return findPropertyByCriterion(criterion, referencedProperties);
 	}
 
-	getValue(value, key) {
+	getValue(value: any, key: string) {
 		if (isOfKnownType(key)) {
 			return null;
 		} else if (value === null) {
@@ -287,7 +291,7 @@ class CriteriaRow extends React.Component<
 	}
 
 	@autobind
-	handleDelete(event) {
+	handleDelete(event: React.MouseEvent) {
 		event.preventDefault();
 
 		const {index, onDelete} = this.props;
@@ -296,7 +300,7 @@ class CriteriaRow extends React.Component<
 	}
 
 	@autobind
-	handleDuplicate(event) {
+	handleDuplicate(event: React.MouseEvent) {
 		event.preventDefault();
 
 		const {criterion, index, onAdd} = this.props;
@@ -305,7 +309,7 @@ class CriteriaRow extends React.Component<
 	}
 
 	@autobind
-	handleOperatorChange(value) {
+	handleOperatorChange(value: string) {
 		const {
 			props: {criterion, onChange},
 			state: {supportedOperators}
@@ -322,10 +326,10 @@ class CriteriaRow extends React.Component<
 		onChange({
 			...criterion,
 			operatorName: supportedOperators.find(({key}) => key === value)
-				.name,
+				?.name,
 			value: newVal,
 			...params
-		} as Criterion);
+		} as unknown as Criterion);
 	}
 
 	/**
@@ -337,7 +341,7 @@ class CriteriaRow extends React.Component<
 	 * properties to update.
 	 */
 	@autobind
-	handleTypedInputChange(value) {
+	handleTypedInputChange(value: any) {
 		const {criterion, onChange} = this.props;
 
 		if (Array.isArray(value)) {
@@ -375,7 +379,11 @@ class CriteriaRow extends React.Component<
 							label,
 							value: key
 						}))}
-						onSelectionChange={this.handleOperatorChange}
+						onSelectionChange={
+							this.handleOperatorChange as (
+								value: React.Key
+							) => void
+						}
 						selectedKey={selectedOperatorKey}
 					>
 						{({label, value}) => (
@@ -393,7 +401,7 @@ class CriteriaRow extends React.Component<
 			state: {selectedProperty}
 		} = this;
 
-		const {label, options, type} = selectedProperty;
+		const {label, options, type} = selectedProperty ?? ({} as Property);
 
 		const inputComponentsMap = {
 			[PropertyTypes.Behavior]: BehaviorInput,
@@ -422,8 +430,9 @@ class CriteriaRow extends React.Component<
 		};
 
 		const InputComponent: React.ElementType =
-			inputComponentsMap[type || criterion.type] ||
-			inputComponentsMap[PropertyTypes.Text];
+			inputComponentsMap[
+				(type || criterion.type) as keyof typeof inputComponentsMap
+			] || inputComponentsMap[PropertyTypes.Text];
 
 		return (
 			<InputComponent

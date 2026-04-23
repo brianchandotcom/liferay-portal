@@ -49,7 +49,8 @@ const getAssetURL = ({
 }) => {
 	const assetTitle = value || itemData.assetTitle || itemData.id;
 
-	const oldAssetRoute = mapRoutes?.[itemData.assetType];
+	const oldAssetRoute =
+		mapRoutes[itemData.assetType as keyof typeof mapRoutes];
 
 	const route = oldAssetRoute ?? Routes.ASSETS_OBJECT_ENTRY_OVERVIEW;
 
@@ -68,43 +69,52 @@ const getAssetURL = ({
 };
 
 const columns = {
-	assetMetricRenderer: ({value}) => <span>{toThousands(value.value)}</span>,
-	assetTitleRenderer: ({channelId, groupId, rangeSelectorParams}) => ({
-		itemData,
-		value
-	}) => {
-		const URL = getAssetURL({
+	assetMetricRenderer: ({value}: {value: {value: number}}) => (
+		<span>{toThousands(value.value)}</span>
+	),
+	assetTitleRenderer:
+		({
 			channelId,
 			groupId,
-			itemData,
-			rangeSelectorParams,
-			value
-		});
+			rangeSelectorParams
+		}: {
+			channelId: string;
+			groupId: string;
+			rangeSelectorParams: string;
+		}) =>
+		({itemData, value}: {itemData: any; value?: string}) => {
+			const URL = getAssetURL({
+				channelId,
+				groupId,
+				itemData,
+				rangeSelectorParams,
+				value
+			});
 
-		const mimeType = getMimeType({
-			assetType: itemData?.assetType,
-			mimeType: itemData?.mimeType
-		});
+			const mimeType = getMimeType({
+				assetType: itemData?.assetType,
+				mimeType: itemData?.mimeType
+			});
 
-		return (
-			<div className='align-items-center d-flex'>
-				<div className='mr-3'>
-					<ClaySticker
-						className={mimeType.className}
-						displayType='dark'
-					>
-						<ClayIcon symbol={mimeType.icon} />
-					</ClaySticker>
+			return (
+				<div className='align-items-center d-flex'>
+					<div className='mr-3'>
+						<ClaySticker
+							className={mimeType.className}
+							displayType='dark'
+						>
+							<ClayIcon symbol={mimeType.icon} />
+						</ClaySticker>
+					</div>
+
+					<div>
+						<ClayLink displayType='tertiary' href={URL}>
+							{value || itemData.id}
+						</ClayLink>
+					</div>
 				</div>
-
-				<div>
-					<ClayLink displayType='tertiary' href={URL}>
-						{value || itemData.id}
-					</ClayLink>
-				</div>
-			</div>
-		);
-	}
+			);
+		}
 };
 
 const List = () => {
@@ -117,7 +127,7 @@ const List = () => {
 		initialRangeSelectors
 	);
 
-	const [infoPanelData, setInfoPanelData] = useState(null);
+	const [infoPanelData, setInfoPanelData] = useState<any>(null);
 
 	const snapshots = useSnapshots('assetTable');
 
@@ -188,13 +198,13 @@ const List = () => {
 			<BasePage.Header
 				breadcrumbs={[
 					breadcrumbs.getHome({
-						channelId,
-						groupId,
+						channelId: channelId!,
+						groupId: groupId!,
 						label: selectedChannel?.name
 					})
 				]}
 				fluid
-				groupId={groupId}
+				groupId={groupId!}
 			>
 				<BasePage.Header.TitleSection
 					title={Liferay.Language.get('assets')}
@@ -239,8 +249,8 @@ const List = () => {
 								assetMetricRenderer:
 									columns.assetMetricRenderer,
 								assetTitleRenderer: columns.assetTitleRenderer({
-									channelId,
-									groupId,
+									channelId: channelId!,
+									groupId: groupId!,
 									rangeSelectorParams
 								})
 							}}
@@ -261,11 +271,11 @@ const List = () => {
 									},
 									icon: 'view',
 									label: Liferay.Language.get('view'),
-									onClick: ({itemData}) => {
+									onClick: ({itemData}: {itemData: any}) => {
 										history.push(
 											getAssetURL({
-												channelId,
-												groupId,
+												channelId: channelId!,
+												groupId: groupId!,
 												itemData,
 												rangeSelectorParams
 											})
@@ -335,8 +345,7 @@ const List = () => {
 												label: Liferay.Language.get(
 													'downloads'
 												),
-												sortable: true,
-												visible: false
+												sortable: true
 											}
 										]
 									},

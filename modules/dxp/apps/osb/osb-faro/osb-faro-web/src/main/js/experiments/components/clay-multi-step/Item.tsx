@@ -47,7 +47,7 @@ const ClayMultiStepItem: React.FC<ClayMultiStepItemIProps> = ({
 				</ClayLink>
 			</div>
 
-			{Body && <Body status={status} />}
+			{Body && <Body status={status ?? ''} />}
 		</li>
 	);
 };

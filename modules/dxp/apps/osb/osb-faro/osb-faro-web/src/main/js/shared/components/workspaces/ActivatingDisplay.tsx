@@ -47,5 +47,5 @@ const ActivatingDisplay = () => (
 
 export default withPolling(
 	fetchProject,
-	({state}) => state !== ProjectStates.Activating
+	({state}: {state: ProjectStates}) => state !== ProjectStates.Activating
 )(ActivatingDisplay);

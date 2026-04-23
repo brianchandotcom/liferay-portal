@@ -1,5 +1,19 @@
 import {getSafeRangeSelectors} from 'shared/util/util';
+import {Interval, RangeSelectors} from 'shared/types';
 import {safeResultToProps} from 'shared/util/mappers';
+
+interface IIndividualMetric {
+	trend: {percentage: number};
+	value: number;
+}
+
+interface IIndividualMetricsResult {
+	individualMetric: {
+		anonymousIndividualsMetric: IIndividualMetric;
+		knownIndividualsMetric: IIndividualMetric;
+		totalIndividualsMetric: IIndividualMetric;
+	};
+}
 
 export const CHART_DATA_ID_1 = 'knownIndividuals';
 export const CHART_DATA_ID_2 = 'anonymousIndividuals';
@@ -9,7 +23,15 @@ export const LANG_MAP = {
 	[CHART_DATA_ID_2]: Liferay.Language.get('anonymous-visitors')
 };
 
-export const mapPropsToOptions = ({channelId, interval, rangeSelectors}) => ({
+export const mapPropsToOptions = ({
+	channelId,
+	interval,
+	rangeSelectors
+}: {
+	channelId: string;
+	interval: Interval;
+	rangeSelectors: RangeSelectors;
+}) => ({
 	variables: {
 		channelId,
 		interval,
@@ -24,11 +46,12 @@ export const mapResultToProps = safeResultToProps(
 			knownIndividualsMetric,
 			totalIndividualsMetric
 		}
-	}) => ({
+	}: IIndividualMetricsResult) => ({
 		items: [
 			{
 				...totalIndividualsMetric,
 				id: 'totalIndividuals',
+				info: undefined as {content: string; title: string} | undefined,
 				title: Liferay.Language.get('total-individuals')
 			},
 			{

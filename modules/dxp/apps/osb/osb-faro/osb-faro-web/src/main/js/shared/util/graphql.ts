@@ -17,21 +17,28 @@ export type GQLQuery = {
 /**
  * Returns an object of variable keys used in the graphQL query.
  */
-export const getVariableDefinitions = (gqlQuery: GQLQuery) =>
-	gqlQuery.definitions.reduce((acc, {variableDefinitions}) => {
-		variableDefinitions.forEach(({variable}) => {
-			const {
-				name: {value}
-			} = variable;
+export const getVariableDefinitions = (
+	gqlQuery: GQLQuery
+): Record<string, boolean> =>
+	gqlQuery.definitions.reduce<Record<string, boolean>>(
+		(acc, {variableDefinitions}) => {
+			variableDefinitions.forEach(({variable}) => {
+				const {
+					name: {value}
+				} = variable;
 
-			acc[value] = true;
-		});
+				acc[value] = true;
+			});
 
-		return acc;
-	}, {});
+			return acc;
+		},
+		{}
+	);
 
-export const removeUnusedVariables = (variables, validVariables) =>
-	pickBy(variables, (_, key) => validVariables[key]);
+export const removeUnusedVariables = (
+	variables: Record<string, unknown>,
+	validVariables: Record<string, boolean>
+) => pickBy(variables, (_, key) => validVariables[key]);
 
 export const fetchPolicyDefinition = (rangeSelectors: RangeSelectors) =>
 	rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours

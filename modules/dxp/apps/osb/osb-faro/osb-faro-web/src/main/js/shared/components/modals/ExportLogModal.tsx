@@ -30,8 +30,8 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 	title
 }) => {
 	const [dateRange, setDateRange] = useState<DateRange>({
-		end: null,
-		start: null
+		end: '',
+		start: ''
 	});
 
 	const [loading, setLoading] = useState<boolean>(false);

@@ -81,10 +81,17 @@ interface IDashboardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
-	const {channelId, groupId} = useParams();
+	const {channelId, groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
 	const currentUser = useCurrentUser();
+
+	if (!channelId) {
+		return null;
+	}
 
 	const authorized = currentUser.isAdmin();
 	const selectedChannelName = selectedChannel && selectedChannel.name;
@@ -125,15 +132,15 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						{matchedRoute === Routes.SITES && (
 							<DownloadPDFReport
-								disabled={dataSourceStates.empty}
-								subtitle={selectedChannelName}
+								disabled={!!dataSourceStates.empty}
+								subtitle={selectedChannelName ?? undefined}
 								title={Liferay.Language.get('sites-dashboard')}
 							/>
 						)}
 
 						{matchedRoute === Routes.SITES_SEARCH_TERMS && (
 							<DownloadCSVReport
-								disabled={dataSourceStates.empty}
+								disabled={!!dataSourceStates.empty}
 								type={CSVType.SearchTerms}
 								typeLang={Liferay.Language.get('search-terms')}
 							/>
@@ -141,7 +148,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 
 						{matchedRoute === Routes.SITES_TOUCHPOINTS && (
 							<DownloadCSVReport
-								disabled={dataSourceStates.empty}
+								disabled={!!dataSourceStates.empty}
 								type={CSVType.Page}
 								typeLang={Liferay.Language.get('pages')}
 							/>

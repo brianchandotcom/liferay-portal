@@ -1,6 +1,9 @@
 import * as API from 'shared/api';
 import ClayLink from '@clayui/link';
-import Distribution, {CONTEXT_OPTIONS} from 'contacts/components/Distribution';
+import DistributionBase, {
+	CONTEXT_OPTIONS
+} from 'contacts/components/Distribution';
+const Distribution = DistributionBase as React.ComponentType<any>;
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
@@ -28,10 +31,9 @@ interface IIndividualsDistributionProps extends PropsFromRedux {
 	knownIndividualCount: number | null;
 }
 
-export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = ({
-	knownIndividualCount,
-	...otherProps
-}) => {
+export const IndividualsDistribution: React.FC<
+	IIndividualsDistributionProps
+> = ({knownIndividualCount, ...otherProps}) => {
 	const {groupId} = useParams();
 	const dataSourceStates = useDataSource();
 	const currentUser = useCurrentUser();
@@ -137,14 +139,14 @@ export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = 
 
 export default compose<any>(
 	withQuery(
-		({channelId, groupId}) =>
+		({channelId, groupId}: {channelId: string; groupId: string}) =>
 			API.individuals.search({
 				channelId,
 				groupId,
 				includeAnonymousUsers: false
 			}),
-		val => val,
-		({data, error}) => ({
+		(val: unknown) => val,
+		({data, error}: {data: unknown; error: unknown}) => ({
 			knownIndividualCount: error ? 0 : get(data, 'total', null)
 		})
 	),

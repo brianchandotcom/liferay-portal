@@ -8,17 +8,23 @@ import Trend from 'shared/components/Trend';
 import {Colors} from 'shared/util/charts';
 import {getDate as getDateUtil} from 'shared/util/date';
 
-export const Tooltip = ({dataPoint}) => {
+export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => {
 	const control = dataPoint[0];
 	const variant = dataPoint[1];
 
-	const improvementLabel = improvement => {
+	const improvementLabel = (improvement: number | string | undefined) => {
 		if (improvement) {
+			const numericImprovement = Number(improvement);
+
 			return (
 				<Trend
-					color={improvement > 0 ? Colors.positive : Colors.negative}
-					icon={improvement > 0 ? 'caret-top' : 'caret-bottom'}
-					label={improvement}
+					color={
+						numericImprovement > 0
+							? Colors.positive
+							: Colors.negative
+					}
+					icon={numericImprovement > 0 ? 'caret-top' : 'caret-bottom'}
+					label={String(improvement)}
 				/>
 			);
 		}

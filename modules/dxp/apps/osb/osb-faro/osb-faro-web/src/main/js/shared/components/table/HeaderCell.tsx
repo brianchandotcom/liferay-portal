@@ -23,7 +23,13 @@ interface IHeaderCellProps {
 	sortOrder: OrderByDirections;
 }
 
-const ButtonSort = ({children, sortOrder}) => (
+const ButtonSort = ({
+	children,
+	sortOrder
+}: {
+	children: React.ReactNode;
+	sortOrder: OrderByDirections;
+}) => (
 	<div className='align-items-center d-flex justify-content-between'>
 		<div className='text-truncate'>{children}</div>
 

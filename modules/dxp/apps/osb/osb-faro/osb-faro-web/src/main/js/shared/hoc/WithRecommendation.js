@@ -1,6 +1,6 @@
 import RecommendationQuery from 'settings/recommendations/queries/RecommendationQuery';
 import {compose} from 'redux';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {Routes} from 'shared/util/router';
 import {safeResultToProps} from 'shared/util/mappers';
 import {withError, withLoading, withNull} from 'shared/hoc/util';

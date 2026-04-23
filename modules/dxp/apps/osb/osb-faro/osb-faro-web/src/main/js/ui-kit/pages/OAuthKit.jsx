@@ -26,7 +26,7 @@ export default class OAuthKit extends React.Component {
 
 	@autobind
 	handleSubmit({baseUrl, consumerKey, consumerSecret}) {
-		const {setSubmitting} = this._formRef.current.getFormikBag();
+		const {setSubmitting} = this._formRef.current;
 
 		const authWindow = open(
 			null,
@@ -75,8 +75,8 @@ export default class OAuthKit extends React.Component {
 						consumerKey: '',
 						consumerSecret: ''
 					}}
+					innerRef={this._formRef}
 					onSubmit={this.handleSubmit}
-					ref={this._formRef}
 				>
 					{({handleSubmit, isSubmitting, isValid}) => (
 						<Form.Form onSubmit={handleSubmit}>

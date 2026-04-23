@@ -43,14 +43,8 @@ export class Overview extends React.Component {
 	};
 
 	render() {
-		const {
-			channelId,
-			groupId,
-			id,
-			individual,
-			tabId,
-			timeZoneId
-		} = this.props;
+		const {channelId, groupId, id, individual, tabId, timeZoneId} =
+			this.props;
 
 		return (
 			<>

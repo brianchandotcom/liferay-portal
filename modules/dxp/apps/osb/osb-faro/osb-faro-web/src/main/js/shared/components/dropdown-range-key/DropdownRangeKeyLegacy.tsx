@@ -3,12 +3,19 @@ import getCN from 'classnames';
 import React from 'react';
 import {Text as ClayText} from '@clayui/core';
 
+interface IDropdownRangeKeyLegacyProps {
+	onClickSeeMore: () => void;
+	onClickShowDatePicker: () => void;
+	seeMore: boolean;
+	selectedItem?: {[key: string]: any} | null;
+}
+
 export const DropdownRangeKeyLegacy = ({
 	onClickSeeMore,
 	onClickShowDatePicker,
 	seeMore,
 	selectedItem
-}) => (
+}: IDropdownRangeKeyLegacyProps) => (
 	<>
 		{!seeMore && (
 			<ClayDropDown.Item

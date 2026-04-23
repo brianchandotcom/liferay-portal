@@ -16,6 +16,16 @@ import {RootState} from 'shared/store';
 import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
+interface IFetchAssociatedSegmentsArgs {
+	[key: string]: unknown;
+	delta: number;
+	groupId: string;
+	id: string;
+	orderIOMap?: unknown;
+	page: number;
+	query?: string;
+}
+
 const fetchAssociatedSegments = ({
 	delta,
 	groupId,
@@ -24,7 +34,7 @@ const fetchAssociatedSegments = ({
 	page,
 	query,
 	...otherParams
-}) =>
+}: IFetchAssociatedSegmentsArgs) =>
 	API.individualSegment.search({
 		contactsEntityId: id,
 		contactsEntityType: EntityTypes.Individual,
@@ -67,9 +77,14 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 
 	const [total, setTotal] = useState<number>(0);
 
-	const segmentsDataSourceFn = dataSourceParams =>
-		fetchAssociatedSegments({channelId, ...dataSourceParams}).then(
-			response => {
+	const segmentsDataSourceFn = (dataSourceParams: {[key: string]: any}) =>
+		fetchAssociatedSegments({
+			channelId,
+			groupId,
+			id,
+			...dataSourceParams
+		} as unknown as IFetchAssociatedSegmentsArgs).then(
+			(response: {total: number}) => {
 				setTotal(response.total);
 
 				return response;

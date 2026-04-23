@@ -6,8 +6,8 @@ import getMetricsMapper from 'cerebro-shared/hocs/mappers/metrics';
 import React, {useCallback, useState} from 'react';
 import {ASSET_METRICS} from 'shared/util/constants';
 import {compose} from 'redux';
-import {DocumentNode} from 'apollo-boost';
-import {graphql} from '@apollo/react-hoc';
+import {DocumentNode} from '@apollo/client';
+import {graphql} from '@apollo/client/react/hoc';
 import {MetricChart} from 'shared/components/metric-card/MetricChart';
 import {RangeSelectors, Router} from 'shared/types';
 import {withEmpty, withError} from 'cerebro-shared/hocs/utils';
@@ -47,14 +47,14 @@ const Chart: React.FC<IChartProps> = ({
 	rangeSelectors,
 	showPrevious
 }) => {
-	const Chart = CHARTS[chartType].component;
+	const ChartComponent = (CHARTS as any)[chartType].component;
 
 	return (
 		<>
-			<Chart
+			<ChartComponent
 				chartHeight={chartHeight}
 				compareToPrevious={showPrevious}
-				data={items[0]}
+				data={items && items[0]}
 				onCompareToPreviousChange={handleShowPreviousChanged}
 				rangeSelectors={rangeSelectors}
 			/>
@@ -75,19 +75,20 @@ const Chart: React.FC<IChartProps> = ({
 	);
 };
 
-const getMetric = name => {
-	const {title, type} = ASSET_METRICS.find(({key}) => key == name);
-	return [{name, title, type}];
+const getMetric = (name: any) => {
+	const metric = ASSET_METRICS.find(({key}) => key == name);
+
+	return [{name, title: metric?.selectTitle, type: metric?.type}];
 };
 
-const getMapper = ({chartType, metric}) => {
-	const mapper = CHARTS[chartType].mapper;
+const getMapper = ({chartType, metric}: any) => {
+	const mapper = (CHARTS as any)[chartType].mapper;
 
 	if (chartType === 'line') {
-		return mapper(({custom}) => custom, getMetric(metric));
+		return mapper(({custom}: any) => custom, getMetric(metric));
 	}
 
-	return mapper(({custom}) => custom);
+	return mapper(({custom}: any) => custom);
 };
 
 interface IAssetCardProps extends React.HTMLAttributes<HTMLElement> {
@@ -114,17 +115,17 @@ const AssetCard: React.FC<IAssetCardProps> = ({
 	onRemoveAsset,
 	panel
 }) => {
-	const AssetComponent = (compose(
+	const AssetComponent = compose(
 		graphql(itemQuery, getMapper(panel)),
 		withLoading(),
 		withError(),
 		withEmpty()
-	)(Chart) as unknown) as React.FC<IAssetComponent>;
+	)(Chart) as unknown as React.FC<IAssetComponent>;
 
 	const [showPrevious, setShowPrevious] = useState(false);
 
 	const handleShowPreviousChanged = useCallback(
-		newVal => setShowPrevious(newVal),
+		(newVal: any) => setShowPrevious(newVal),
 		[]
 	);
 

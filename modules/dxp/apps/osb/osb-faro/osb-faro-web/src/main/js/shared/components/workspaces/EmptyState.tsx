@@ -11,7 +11,7 @@ import {Routes, toRoute} from 'shared/util/router';
 
 interface IEmptyStateProps extends React.HTMLAttributes<HTMLElement> {
 	close: () => void;
-	open: (string, object) => void;
+	open: (modalType: string, props: object) => void;
 }
 
 const EmptyState: React.FC<IEmptyStateProps> = ({

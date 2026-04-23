@@ -1,9 +1,8 @@
 import cache from './cache';
-import {ApolloClient} from 'apollo-client';
+import {ApolloClient, from, HttpLink} from '@apollo/client';
 import {DEVELOPER_MODE} from 'shared/util/constants';
 import {get} from 'lodash';
-import {HttpLink} from 'apollo-link-http';
-import {onError} from 'apollo-link-error';
+import {onError} from '@apollo/client/link/error';
 import {reloadPage} from 'shared/util/router';
 import {resolvers} from './resolvers/resolvers';
 
@@ -40,7 +39,7 @@ const client = new ApolloClient({
 			notifyOnNetworkStatusChange: true
 		}
 	},
-	link: HttpLink.from([
+	link: from([
 		onError(({operation}) => {
 			const status = get(operation.getContext(), ['response', 'status']);
 

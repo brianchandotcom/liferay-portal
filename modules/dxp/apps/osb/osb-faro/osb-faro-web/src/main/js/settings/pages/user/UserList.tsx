@@ -61,7 +61,9 @@ const UserList: React.FC<IUserListProps> = ({
 	});
 
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.user.fetchMany,
+		dataSourceFn: API.user.fetchMany as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			delta,
 			groupId,
@@ -154,9 +156,9 @@ const UserList: React.FC<IUserListProps> = ({
 							)
 						});
 
-						selectionDispatch({type: ActionTypes.ClearAll});
+						selectionDispatch?.({type: ActionTypes.ClearAll});
 
-						refetch();
+						refetch?.();
 					})
 					.catch(err =>
 						addAlert({
@@ -185,7 +187,7 @@ const UserList: React.FC<IUserListProps> = ({
 					message: Liferay.Language.get('invitations-have-been-sent')
 				});
 
-				refetch();
+				refetch?.();
 
 				close();
 
@@ -198,9 +200,19 @@ const UserList: React.FC<IUserListProps> = ({
 				});
 			});
 
-	const handleUserSave = ({edits, ids}) =>
+	const handleUserSave = ({
+		edits,
+		ids
+	}: {
+		edits: {[key: string]: any};
+		ids: string[];
+	}) =>
 		API.user
-			.updateMany({...edits, groupId, ids})
+			.updateMany({...edits, groupId, ids} as {
+				groupId: string;
+				ids: string[];
+				roleName: string;
+			})
 			.then(data => {
 				addAlert({
 					alertType: Alert.Types.Success,
@@ -213,9 +225,9 @@ const UserList: React.FC<IUserListProps> = ({
 					)
 				});
 
-				selectionDispatch({type: ActionTypes.ClearAll});
+				selectionDispatch?.({type: ActionTypes.ClearAll});
 
-				refetch();
+				refetch?.();
 			})
 			.catch(err =>
 				addAlert({
@@ -227,13 +239,14 @@ const UserList: React.FC<IUserListProps> = ({
 				})
 			);
 
-	const isUserDisabled = user => {
-		const userRow = new User(user);
+	const isUserDisabled = (user?: object) => {
+		const typedUser = user as {id: string};
+		const userRow = new User(typedUser);
 
 		return (
 			!currentUser.isAdmin() ||
 			userRow.isOwner() ||
-			user.id === currentUser.id
+			typedUser?.id === currentUser.id
 		);
 	};
 
@@ -243,6 +256,12 @@ const UserList: React.FC<IUserListProps> = ({
 		edits,
 		itemsSelected,
 		rowEvents
+	}: {
+		data: any;
+		editing: boolean;
+		edits: {[key: string]: any};
+		itemsSelected: boolean;
+		rowEvents: {[key: string]: any};
 	}) => (
 		/* eslint-disable react/jsx-handler-names */
 		<UserActionsRenderer
@@ -372,4 +391,7 @@ const UserList: React.FC<IUserListProps> = ({
 	);
 };
 
-export default compose(connector, withSelectionProvider)(UserList);
+export default compose<React.ComponentType<any>>(
+	connector,
+	withSelectionProvider
+)(UserList);

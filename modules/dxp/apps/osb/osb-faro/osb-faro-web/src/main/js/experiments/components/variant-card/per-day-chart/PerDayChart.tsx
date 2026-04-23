@@ -2,14 +2,28 @@ import React from 'react';
 import {ComposedChart} from '../../ComposedChart';
 import {formatYAxis} from 'experiments/util/experiments';
 import {getMetricUnit} from 'experiments/util/experiments';
+import {MetricName} from 'experiments/util/types';
 import {Tooltip} from './Tooltip';
 
-const formatData = experiment => {
-	const intervals = [];
-	const chartData = [];
+interface IPerDayExperiment {
+	dxpVariants: Array<{dxpVariantName: string}>;
+	goal?: {metric: MetricName};
+	metricsHistogram: Array<{
+		processedDate: string | number;
+		variantMetrics: Array<{
+			confidenceInterval: number[];
+			improvement?: number;
+			median: number;
+		}>;
+	}>;
+}
 
-	const metricUnit = getMetricUnit(experiment.goal?.metric);
-	const format = value => formatYAxis(metricUnit)(value);
+const formatData = (experiment: IPerDayExperiment) => {
+	const intervals: Array<string | number> = [];
+	const chartData: Array<Record<string, any>> = [];
+
+	const metricUnit = getMetricUnit(experiment.goal?.metric as MetricName);
+	const format = (value: number) => formatYAxis(metricUnit)(value);
 
 	experiment.metricsHistogram.forEach(metric => {
 		const control = metric.variantMetrics[0];
@@ -49,7 +63,7 @@ const formatData = experiment => {
 	};
 };
 
-export const PerDayChart = ({experiment}) => (
+export const PerDayChart = ({experiment}: {experiment: IPerDayExperiment}) => (
 	<ComposedChart
 		chartType='area'
 		data={formatData(experiment)}

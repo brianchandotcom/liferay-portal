@@ -44,7 +44,7 @@ import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {
 	useSelectionContext,
@@ -85,7 +85,9 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 			keyword: query,
 			page: page - 1,
 			size: delta,
-			sort: getSortFromOrderIOMap(orderIOMap)
+			sort: getSortFromOrderIOMap(
+				orderIOMap
+			) as EventDefinitionsVariables['sort']
 		}
 	});
 
@@ -104,7 +106,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 			hideEventDefinitions: Event[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
-				selectionDispatch({
+				selectionDispatch?.({
 					payload: {
 						items: hideEventDefinitions
 					},
@@ -124,7 +126,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 			unhideEventDefinitions: Event[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
-				selectionDispatch({
+				selectionDispatch?.({
 					payload: {
 						items: unhideEventDefinitions
 					},
@@ -165,7 +167,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 					}
 				})
 					.then(() => {
-						selectionDispatch({
+						selectionDispatch?.({
 							type: 'clear-all'
 						});
 
@@ -373,7 +375,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 	const authorized = currentUser.isAdmin();
 
 	const hasUnhiddenEvent = (events: OrderedMap<string, Event>) =>
-		events.some(({hidden}) => !hidden);
+		events.some(event => !event?.hidden);
 
 	return (
 		<>
@@ -464,11 +466,12 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 											className='button-root nav-btn'
 											displayType='secondary'
 											onClick={() => {
-												const hideEventFn = hasUnhiddenEvent(
-													selectedItems
-												)
-													? handleHideEvents
-													: handleUnhideEvents;
+												const hideEventFn =
+													hasUnhiddenEvent(
+														selectedItems
+													)
+														? handleHideEvents
+														: handleUnhideEvents;
 
 												hideEventFn(
 													selectedItems.toArray()

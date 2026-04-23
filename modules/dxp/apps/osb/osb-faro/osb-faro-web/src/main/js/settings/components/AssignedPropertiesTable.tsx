@@ -19,6 +19,22 @@ import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
 
+interface IChannel {
+	channelId: string;
+	enabled: boolean;
+}
+
+interface IAssignedPropertiesTableProps {
+	addAlert: (alert: {alertType: string; message: string}) => void;
+	close: (...args: any[]) => void;
+	customColumns?: any[];
+	dataSource: any;
+	handleUpdateDataSource: (...args: any[]) => void;
+	loading?: boolean;
+	open: (...args: any[]) => void;
+	updateDataSourceFn: (params: {[key: string]: any}) => Promise<any>;
+}
+
 const AssignedPropertiesTable = ({
 	addAlert,
 	close,
@@ -28,7 +44,7 @@ const AssignedPropertiesTable = ({
 	loading: initialLoading = false,
 	open,
 	updateDataSourceFn
-}) => {
+}: IAssignedPropertiesTableProps) => {
 	const [loading, setLoading] = useState(initialLoading);
 	const {groupId} = useParams();
 
@@ -44,21 +60,27 @@ const AssignedPropertiesTable = ({
 	);
 
 	const channelDatasources = useRequest({
-		dataSourceFn: fetchChannelDatasources,
+		dataSourceFn: fetchChannelDatasources as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {delta, groupId, id: dataSource.id, orderIOMap, page, query}
 	});
 
-	const channelsConfigurationRef = useRef({
+	const channelsConfigurationRef = useRef<{
+		channels: IChannel[];
+		enableAllChannels: boolean;
+	}>({
 		channels: [],
 		enableAllChannels: false
 	});
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
-	const handleToggleChannel = async item => {
-		const selectedChannelIndex = channelsConfigurationRef.current.channels.findIndex(
-			({channelId}) => channelId === item.channelId
-		);
+	const handleToggleChannel = async (item: IChannel) => {
+		const selectedChannelIndex =
+			channelsConfigurationRef.current.channels.findIndex(
+				({channelId}) => channelId === item.channelId
+			);
 
 		if (selectedChannelIndex !== -1) {
 			const updatedChannelsConfiguration = {
@@ -174,7 +196,15 @@ const AssignedPropertiesTable = ({
 					columns={[
 						{
 							accessor: 'name',
-							cellRenderer: ({data, hrefFormatter}) => (
+							cellRenderer: ({
+								data,
+								hrefFormatter
+							}: {
+								data: {channelId: string; name: string};
+								hrefFormatter: (data: {
+									channelId: string;
+								}) => string;
+							}) => (
 								<td
 									className='table-cell-expand'
 									key={data.channelId}
@@ -187,7 +217,11 @@ const AssignedPropertiesTable = ({
 								</td>
 							),
 							cellRendererProps: {
-								hrefFormatter: ({channelId}) =>
+								hrefFormatter: ({
+									channelId
+								}: {
+									channelId: string;
+								}) =>
 									toRoute(Routes.SETTINGS_CHANNELS_VIEW, {
 										groupId,
 										id: channelId
@@ -199,7 +233,7 @@ const AssignedPropertiesTable = ({
 						...customColumns,
 						{
 							accessor: 'enabled',
-							cellRenderer: ({data}) => (
+							cellRenderer: ({data}: {data: IChannel}) => (
 								<ToggleRenderer
 									addAlert={addAlert}
 									close={close}
@@ -272,17 +306,22 @@ const AssignedPropertiesTable = ({
 									onClick={() =>
 										open(modalTypes.SELECT_CHANNELS_MODAL, {
 											groupId,
-											initialItems: channelsConfigurationRef.current?.channels?.map(
-												({channelId}) => channelId
-											),
+											initialItems:
+												channelsConfigurationRef.current?.channels?.map(
+													({channelId}) => channelId
+												),
 											onClose: close,
-											onSelect: async items => {
+											onSelect: async (
+												items: string[]
+											) => {
 												setLoading(true);
 
 												await updateDataSourceFn({
 													channelsConfiguration: {
 														channels: items.map(
-															channelId => ({
+															(
+																channelId: string
+															) => ({
 																channelId,
 																enabled: true
 															})
@@ -295,7 +334,7 @@ const AssignedPropertiesTable = ({
 
 												await handleUpdateDataSource();
 
-												channelDatasources.refetch();
+												channelDatasources.refetch?.();
 
 												setLoading(false);
 											}
@@ -318,10 +357,24 @@ const AssignedPropertiesTable = ({
 	);
 };
 
-const ToggleRenderer = ({addAlert, close, data, disabled, onChange, open}) => {
+const ToggleRenderer = ({
+	addAlert,
+	close,
+	data,
+	disabled,
+	onChange,
+	open
+}: {
+	addAlert: (alert: {alertType: string; message: string}) => void;
+	close: (...args: any[]) => void;
+	data: IChannel;
+	disabled: boolean;
+	onChange: (channel: IChannel) => void;
+	open: (...args: any[]) => void;
+}) => {
 	const [state, setState] = useState(data.enabled);
 
-	const handleChange = newState => {
+	const handleChange = (newState: boolean) => {
 		setState(newState);
 
 		onChange({

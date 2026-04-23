@@ -5,6 +5,8 @@ import {
 	mergedVariants,
 	toThousandsABTesting
 } from 'experiments/util/experiments';
+import {IExperiment} from './types';
+import {MetricName} from 'experiments/util/types';
 import {sub} from 'shared/util/lang';
 import {SummaryAlert} from './SummaryAlert';
 import {SummaryBaseCard} from './SummaryBaseCard';
@@ -13,7 +15,21 @@ import {SummarySection} from './SummarySection';
 import {SummaryTitle} from './SummaryTitle';
 import {toRounded} from 'shared/util/numbers';
 
-export const SummaryCompletedCard = ({experiment, timeZoneId}) => {
+export const SummaryCompletedCard: React.FC<{
+	experiment: IExperiment & {
+		description?: string;
+		finishedDate?: string;
+		metrics: {
+			completion: number;
+			elapsedDays: number;
+			variantMetrics: IExperiment['dxpVariants'];
+		};
+		sessions: number;
+		startedDate?: string;
+		type?: string;
+	};
+	timeZoneId: string;
+}> = ({experiment, timeZoneId}) => {
 	const {
 		description,
 		dxpVariants,
@@ -120,18 +136,22 @@ export const SummaryCompletedCard = ({experiment, timeZoneId}) => {
 							title={Liferay.Language.get('test-metric')}
 						>
 							<SummarySection.MetricType
-								value={getMetricName(goal.metric)}
+								value={
+									goal &&
+									getMetricName(goal.metric as MetricName)
+								}
 							/>
 
-							{publishedVariant?.improvement > 0 && (
-								<SummarySection.Variant
-									lift={`${toRounded(
-										publishedVariant.improvement,
-										2
-									)}%`}
-									status='up'
-								/>
-							)}
+							{publishedVariant?.improvement !== undefined &&
+								publishedVariant.improvement > 0 && (
+									<SummarySection.Variant
+										lift={`${toRounded(
+											publishedVariant.improvement,
+											2
+										)}%`}
+										status='up'
+									/>
+								)}
 						</SummarySection>
 					</div>
 				</div>

@@ -12,7 +12,7 @@ interface ICriteriaViewProps extends React.HTMLAttributes<HTMLDivElement> {
 	timeZoneId: string;
 }
 
-const CONJUNCTION_MAP = {
+const CONJUNCTION_MAP: Record<string, string> = {
 	[ConjunctionKey.And]: Liferay.Language.get('and'),
 	[ConjunctionKey.Or]: Liferay.Language.get('or')
 };
@@ -25,12 +25,16 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 }) => {
 	const {referencedProperties} = useContext(ReferencedObjectsContext);
 
-	const renderCriteriaGroup = criteria => {
-		const {conjunctionName, criteriaGroupId, items} = criteria;
+	const renderCriteriaGroup = (criteria: Criteria) => {
+		const {conjunctionName, criteriaGroupId, items} = criteria as {
+			conjunctionName: string;
+			criteriaGroupId: string;
+			items: any[];
+		};
 
 		return (
 			<div className='criteria-group' key={criteriaGroupId}>
-				{items.map((criterion, index) => (
+				{items.map((criterion: any, index: number) => (
 					<Fragment key={index}>
 						{index !== 0 && (
 							<div className='conjunction'>
@@ -47,7 +51,7 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 		);
 	};
 
-	const renderCriteriaRow = criterion => {
+	const renderCriteriaRow = (criterion: any) => {
 		const property = findPropertyByCriterion(
 			criterion,
 			referencedProperties

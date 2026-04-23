@@ -128,8 +128,8 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 		anonymousCount: 0,
 		knownCount: 0
 	},
-	selectedPoint,
-	onSelectedPointChange
+	onSelectedPointChange,
+	selectedPoint
 }) => {
 	const [legendHoverItem, setLegendHoverItem] = useState(null);
 	const [mouseOutside, setMouseOutside] = useState(false);

@@ -1,5 +1,5 @@
 import {Attribute, AttributeTypes} from '../utils/types';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 import {Sort} from 'shared/types';
 
 export interface EventAttributeDefinitionsData {

@@ -38,22 +38,20 @@ const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 			? DATA_SOURCE_STATUSES.CONFIGURED
 			: DATA_SOURCE_STATUSES.UNCONFIGURED;
 
-	const {display: contactsDisplay, label: contactslabel} = getLabelProps(
-		contactsSelected
-	);
+	const {display: contactsDisplay, label: contactslabel} =
+		getLabelProps(contactsSelected);
 
-	const {display: sitesDisplay, label: sitesLabel} = getLabelProps(
-		sitesSelected
-	);
+	const {display: sitesDisplay, label: sitesLabel} =
+		getLabelProps(sitesSelected);
 
-	const renderMetricValue = (message, count) => {
+	const renderMetricValue = (message: string, count: number | undefined) => {
 		if (!channelsMetric) {
 			return null;
 		}
 
 		return (
 			<ClayList.ItemText>
-				{sub(message, [toLocale(count)])}
+				{sub(message, [toLocale(count ?? 0)])}
 			</ClayList.ItemText>
 		);
 	};

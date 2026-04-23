@@ -109,7 +109,7 @@ const ProfileCDPEmptyState: React.FC<IProfileCDPEmptyStateProps> = ({
 						primary
 						title={title}
 					>
-						{authorized && (
+						{authorized ? (
 							<ClayLink
 								button
 								className='button-root mt-1'
@@ -121,7 +121,7 @@ const ProfileCDPEmptyState: React.FC<IProfileCDPEmptyStateProps> = ({
 							>
 								{Liferay.Language.get('connect-data-source')}
 							</ClayLink>
-						)}
+						) : undefined}
 					</NoResultsDisplay>
 				</Card.Body>
 			</Card>
@@ -136,7 +136,9 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 	individual
 }) => {
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
-		dataSourceFn: API.dataSource.search,
+		dataSourceFn: API.dataSource.search as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			delta: 1,
 			groupId

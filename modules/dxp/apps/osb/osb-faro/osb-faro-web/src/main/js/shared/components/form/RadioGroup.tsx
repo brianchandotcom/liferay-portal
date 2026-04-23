@@ -22,7 +22,7 @@ const FormRadioGroup: React.FC<IFormRadioGroupProps> = ({
 }) => {
 	const {name, value: checked} = field;
 
-	const handleChange = value => {
+	const handleChange = (value: any) => {
 		const {setFieldValue} = form;
 
 		setFieldValue(name, value);

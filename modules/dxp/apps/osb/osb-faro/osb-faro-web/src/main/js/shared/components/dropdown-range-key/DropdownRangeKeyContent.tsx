@@ -48,9 +48,9 @@ export const DropdownRangeKeyContent: React.FC<
 	const timeRange = formatTimeRange(data.timeRange);
 	const filteredItems = getFilteredItems({
 		legacy,
-		rangeKey: rangeSelectors?.rangeKey,
+		rangeKey: rangeSelectors?.rangeKey as RangeKeyTimeRanges,
 		rangeKeys,
-		retentionPeriod,
+		retentionPeriod: retentionPeriod as number,
 		seeMore,
 		timeRange
 	});
@@ -73,9 +73,11 @@ export const DropdownRangeKeyContent: React.FC<
 			if (query.get('downloadReport')) {
 				if (onRangeSelectorChange) {
 					onRangeSelectorChange({
-						rangeEnd: query.get('rangeEnd'),
-						rangeKey: query.get('rangeKey') as RangeKeyTimeRanges,
-						rangeStart: query.get('rangeStart')
+						rangeEnd: query.get('rangeEnd') || '',
+						rangeKey: query.get(
+							'rangeKey'
+						) as any as RangeKeyTimeRanges,
+						rangeStart: query.get('rangeStart') || ''
 					});
 				}
 			}
@@ -92,9 +94,8 @@ export const DropdownRangeKeyContent: React.FC<
 				onRangeSelectorChange({
 					rangeEnd: customDateRange.end.format(DEFAULT_DATE_FORMAT),
 					rangeKey: RangeKeyTimeRanges.CustomRange,
-					rangeStart: customDateRange.start.format(
-						DEFAULT_DATE_FORMAT
-					)
+					rangeStart:
+						customDateRange.start.format(DEFAULT_DATE_FORMAT)
 				});
 			}
 

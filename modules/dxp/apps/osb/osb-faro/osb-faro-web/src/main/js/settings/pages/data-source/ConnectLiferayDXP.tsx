@@ -8,21 +8,21 @@ import {updateLiferay} from 'shared/api/data-source';
 
 const steps: Step[] = [
 	{
-		content: props => <ConnectLiferayDXPStep {...props} />,
+		content: (props: any) => <ConnectLiferayDXPStep {...props} />,
 		description: Liferay.Language.get(
 			'connect-your-dxp-instance-to-analytics-cloud-to-start-tracking-users-visits-and-interactions-within-your-sites'
 		),
 		title: Liferay.Language.get('connect-your-dxp-analytics')
 	},
 	{
-		content: props => <ReviewSyncedDataStep {...props} />,
+		content: (props: any) => <ReviewSyncedDataStep {...props} />,
 		description: Liferay.Language.get(
 			'while-your-data-continues-syncing-in-the-background,-you-may-proceed-with-the-setup-process.-to-monitor-the-sync-status-at-any-time,-go-to-settings-in-data-sources'
 		),
 		title: Liferay.Language.get('review-synced-data')
 	},
 	{
-		content: props => (
+		content: (props: any) => (
 			<AssignIndividualsDataToPropertiesStep
 				{...props}
 				onSubmit={dataSource => {
@@ -45,7 +45,11 @@ const steps: Step[] = [
 						});
 					}
 				}}
-				updateDataSourceFn={updateLiferay}
+				updateDataSourceFn={
+					updateLiferay as (params: {
+						[key: string]: any;
+					}) => Promise<any>
+				}
 			/>
 		),
 		description: Liferay.Language.get(

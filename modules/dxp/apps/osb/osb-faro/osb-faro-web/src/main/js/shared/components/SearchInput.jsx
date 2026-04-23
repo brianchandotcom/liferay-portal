@@ -82,13 +82,8 @@ export default class SearchInput extends React.Component {
 	}
 
 	render() {
-		const {
-			className,
-			disabled,
-			placeholder,
-			value,
-			...otherProps
-		} = this.props;
+		const {className, disabled, placeholder, value, ...otherProps} =
+			this.props;
 
 		return (
 			<Input.Group className={className}>

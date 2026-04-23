@@ -15,7 +15,7 @@ export interface BaseCardHeaderDefaultIProps
 	label: string;
 	legacy: boolean;
 	onChangeInterval: (val: Interval) => void;
-	onRangeSelectorsChange: (val: any) => void;
+	onRangeSelectorsChange?: (val: any) => void;
 	rangeSelectors: RangeSelectors;
 	showInterval: boolean;
 	showRangeKey?: boolean;
@@ -32,7 +32,7 @@ const BaseCardHeaderDefault: React.FC<BaseCardHeaderDefaultIProps> = ({
 	showInterval,
 	showRangeKey = true
 }) => {
-	const handleRangeSelectorsChange = useCallback(newVal => {
+	const handleRangeSelectorsChange = useCallback((newVal: any) => {
 		onRangeSelectorsChange && onRangeSelectorsChange(newVal);
 
 		if (isHourlyRangeKey(newVal.rangeKey)) {
@@ -41,7 +41,7 @@ const BaseCardHeaderDefault: React.FC<BaseCardHeaderDefaultIProps> = ({
 	}, []);
 
 	const handleChangeInterval = useCallback(
-		newVal => onChangeInterval && onChangeInterval(newVal),
+		(newVal: any) => onChangeInterval && onChangeInterval(newVal),
 		[]
 	);
 

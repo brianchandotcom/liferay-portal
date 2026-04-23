@@ -33,8 +33,8 @@ const InterestTopicsModal: React.FC<IInterestTopicsModalProps> = ({
 		}
 	};
 
-	const validateKeyword = (value: string): boolean =>
-		KEYWORD_VALIDATOR_REGEX.test(value);
+	const validateKeyword = (value?: string): boolean =>
+		!!value && KEYWORD_VALIDATOR_REGEX.test(value);
 
 	return (
 		<Modal

@@ -45,8 +45,8 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 	(
 		{
 			dataType,
-			draggable = true,
 			dragType,
+			draggable = true,
 			id,
 			index,
 			label,
@@ -57,10 +57,12 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 		},
 		ref
 	) => {
-		const _chipRef = useRef<HTMLDivElement>();
-		const _wrapperRef = useRef<HTMLDivElement>();
+		const _chipRef = useRef<HTMLDivElement>(null);
+		const _wrapperRef = useRef<HTMLDivElement>(null);
 
-		const [hoverPosition, setHoverPosition] = useState(null);
+		const [hoverPosition, setHoverPosition] = useState<HoverTypes | null>(
+			null
+		);
 
 		const [{canDrop, isOver}, drop] = useDrop({
 			accept: dragType,
@@ -98,14 +100,12 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 
 				// Determine whether hover is on left or right side of hovered AttributeChip
 				if (_wrapperRef.current) {
-					const {
-						right,
-						width
-					} = _wrapperRef.current.getBoundingClientRect();
+					const {right, width} =
+						_wrapperRef.current.getBoundingClientRect();
 
 					const targetMiddleX = width / 2;
 
-					const {x} = monitor.getClientOffset();
+					const {x} = monitor.getClientOffset() ?? {x: 0};
 
 					const hoverLeft = x < right - targetMiddleX;
 

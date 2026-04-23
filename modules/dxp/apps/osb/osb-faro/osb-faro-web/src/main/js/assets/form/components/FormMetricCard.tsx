@@ -15,13 +15,15 @@ import {
 	AssetMetricQuery,
 	AssetTabsQuery
 } from 'shared/components/metric-card/queries';
+import {ICommonVariables} from 'shared/types';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const NAME = 'form';
 
 const FormMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
-	const variables = commonVariables => useAssetVariables(commonVariables);
+	const variables = (commonVariables: ICommonVariables) =>
+		useAssetVariables(commonVariables);
 
 	const metrics: Metric[] = [
 		SubmissionsMetric,

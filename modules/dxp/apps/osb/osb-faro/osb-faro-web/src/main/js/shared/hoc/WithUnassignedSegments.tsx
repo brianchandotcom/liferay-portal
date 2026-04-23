@@ -49,7 +49,9 @@ const withUnassignedSegments = (
 		const {channels} = useChannelContext();
 
 		const {data, error, loading} = useRequest({
-			dataSourceFn: API.individualSegment.searchUnassigned,
+			dataSourceFn: API.individualSegment.searchUnassigned as (params: {
+				[key: string]: any;
+			}) => Promise<any>,
 			variables: {
 				delta: 10000,
 				groupId
@@ -64,7 +66,7 @@ const withUnassignedSegments = (
 			if (data && !error) {
 				const {items, total} = data;
 
-				unassignedSegmentsDispatch({
+				unassignedSegmentsDispatch?.({
 					payload: items,
 					type: ActionType.setSegments
 				});

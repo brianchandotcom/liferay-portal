@@ -14,7 +14,7 @@ import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {compose, withHistory} from 'shared/hoc';
 import {connect, ConnectedProps, useStore} from 'react-redux';
-import {Formik} from 'formik';
+import {FormikHelpers} from 'formik';
 import {Routes, toRoute} from 'shared/util/router';
 import {sequence} from 'shared/util/promise';
 import {sub} from 'shared/util/lang';
@@ -47,7 +47,9 @@ interface IConfigureWorkspaceProps extends PropsFromRedux {
 	onNext?: (increment?: number) => void;
 }
 
-const ConfigureWorkspaceWithEmailAddressDomains: React.FC<IConfigureWorkspaceProps> = ({
+const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
+	IConfigureWorkspaceProps
+> = ({
 	addAlert,
 	emailAddressDomains: initialEmailAddressDomains,
 	groupId,
@@ -60,31 +62,43 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<IConfigureWorkspacePro
 	const project = store.getState().getIn(['projects', groupId, 'data']);
 	const currentUser = useCurrentUser();
 	const disabled = !currentUser.isAdmin();
-	const formRef = useRef<Formik>();
+	const formRef = useRef<any>(null);
 	const [emailAddressDomains, setEmailAddressDomains] = useState(
 		initialEmailAddressDomains
 	);
 
+	type ConfigureWorkspaceFormValues = {
+		emailAddressDomains: string[];
+		friendlyURL: string;
+	};
+
 	const handleSubmit = (
-		values,
-		{resetForm, setFieldError, setSubmitting}
-	) => {
+		values: ConfigureWorkspaceFormValues,
+		{
+			resetForm,
+			setFieldError,
+			setSubmitting
+		}: FormikHelpers<ConfigureWorkspaceFormValues>
+	): void => {
 		const {initialValues} = formRef.current;
 		const {friendlyURL: initialFriendlyURL} = initialValues;
 
-		updateProject({
-			emailAddressDomains: values.emailAddressDomains,
-			friendlyURL: values.friendlyURL,
-			groupId,
-			incidentReportEmailAddresses: project.incidentReportEmailAddresses,
-			name: project.name,
-			timeZoneId: project.timeZoneId
-		} as any)
+		(
+			updateProject({
+				emailAddressDomains: values.emailAddressDomains,
+				friendlyURL: values.friendlyURL,
+				groupId,
+				incidentReportEmailAddresses:
+					project.incidentReportEmailAddresses,
+				name: project.name,
+				timeZoneId: project.timeZoneId
+			} as any) as unknown as Promise<void>
+		)
 			.then(() => {
 				setSubmitting(false);
 
 				if (initialFriendlyURL === values.friendlyURL) {
-					resetForm(values);
+					resetForm({values});
 				}
 
 				if (values.friendlyURL !== groupId) {
@@ -100,9 +114,9 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<IConfigureWorkspacePro
 					message: Liferay.Language.get('workspace-settings-saved')
 				});
 
-				onNext();
+				onNext?.();
 			})
-			.catch(({field, message}) => {
+			.catch(({field, message}: {field?: string; message: string}) => {
 				setSubmitting(false);
 
 				if (field) {
@@ -125,12 +139,22 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<IConfigureWorkspacePro
 					emailAddressDomains: initialEmailAddressDomains || [],
 					friendlyURL: project?.friendlyURL?.replace('/', '') || ''
 				}}
+				innerRef={formRef as any}
 				onSubmit={handleSubmit}
-				ref={formRef}
 			>
-				{({errors, handleSubmit, isSubmitting, isValid}) => (
+				{({dirty, errors, handleSubmit, isSubmitting, isValid}) => (
 					<Form.Form
-						onSubmit={isValid ? handleSubmit : () => onNext()}
+						onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+							e.preventDefault();
+
+							if (!dirty || !isValid) {
+								onNext?.();
+
+								return;
+							}
+
+							handleSubmit(e);
+						}}
 					>
 						<Modal.Header onClose={onClose} />
 
@@ -253,7 +277,7 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<IConfigureWorkspacePro
 										content: '@',
 										position: 'prepend'
 									}}
-									validate={items =>
+									validate={(items: string[]) =>
 										validateEmailDomainArr(
 											items,
 											emailAddressDomains
@@ -289,7 +313,9 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<IConfigureWorkspacePro
 
 const ConfigureWorkspace: React.FC<IConfigureWorkspaceProps> = props => {
 	const {data, loading} = useRequest({
-		dataSourceFn: API.projects.fetchEmailAddressDomains,
+		dataSourceFn: API.projects.fetchEmailAddressDomains as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			groupId: props.groupId
 		}

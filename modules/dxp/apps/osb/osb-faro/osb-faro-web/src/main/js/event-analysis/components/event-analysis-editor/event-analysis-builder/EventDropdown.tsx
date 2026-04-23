@@ -9,20 +9,20 @@ import EVENT_DEFINITIONS_QUERY, {
 } from 'event-analysis/queries/EventDefinitionsQuery';
 import React, {useState} from 'react';
 import {Align} from '@clayui/drop-down';
+import {Attribute, Event, EventTypes} from 'event-analysis/utils/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
 import {DISPLAY_NAME} from 'shared/util/pagination';
-import {Event, EventTypes} from 'event-analysis/utils/types';
 import {Modal} from 'shared/types';
 import {SafeResults} from 'shared/hoc/util';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 const {
 	pagination: {orderDefault}
 } = Constants;
 
 interface IAnalysisDropdownProps {
-	alignmentPosition?: typeof Align[keyof typeof Align];
+	alignmentPosition?: (typeof Align)[keyof typeof Align];
 	close: Modal.close;
 	eventId?: string;
 	onEventChange: (event: Event) => void;
@@ -94,11 +94,15 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 							<BaseDropdown.SearchableList
 								activeId={eventId}
 								items={eventDefinitions}
-								onEditClick={(event: Event) => {
+								onEditClick={(item?: Attribute | Event) => {
+									if (!item) {
+										return;
+									}
+
 									open(
 										modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 										{
-											id: event.id,
+											id: item.id,
 											mutation: UPDATE_EVENT_DEFINITION,
 											onClose: (save: boolean) => {
 												if (save) {
@@ -113,7 +117,9 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 
 									setActive(false);
 								}}
-								onItemClick={(event: Event) => {
+								onItemClick={(item: Attribute | Event) => {
+									const event = item as Event;
+
 									if (event.id !== eventId) {
 										onEventChange(event);
 

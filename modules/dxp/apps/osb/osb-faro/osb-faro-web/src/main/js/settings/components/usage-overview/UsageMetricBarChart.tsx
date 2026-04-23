@@ -19,7 +19,7 @@ type Items = {
 };
 
 function transformData(items: Items): {[key: string]: number}[] {
-	const data = {};
+	const data: {[key: string]: number} = {};
 
 	Object.keys(items).forEach(key => {
 		data[key] = items[key].value;
@@ -75,7 +75,7 @@ const UsageMetricLegend: React.FC<IUsageMetricLegendProps> = ({
 	payload
 }) => (
 	<div style={{position: 'absolute'}}>
-		{payload.map((entry, index) => (
+		{payload?.map((entry, index) => (
 			<div className='d-inline-block mr-3' key={`item-${index}`}>
 				<Circle
 					className='d-inline-block'

@@ -79,7 +79,7 @@ function createError(message: string, type: ERROR_TYPES) {
  * Check if the error string matches an OAuth type error code.
  * @param {string} - The error message to check.
  */
-export function isOAuthErrorString(error) {
+export function isOAuthErrorString(error: string): boolean {
 	return OAUTH_ERROR_CODES.includes(error);
 }
 
@@ -105,8 +105,12 @@ export function openOAuthWindow({
 
 	authWindow.focus();
 
-	return new Promise((resolve, reject) => {
-		function handleMessage(event) {
+	return new Promise<{
+		code?: string;
+		token?: string;
+		verifier?: string;
+	}>((resolve, reject) => {
+		function handleMessage(event: MessageEvent) {
 			if (event.origin === location.origin) {
 				cleanUp();
 
@@ -172,7 +176,7 @@ export function openOAuthWindow({
  * Should be received by openOAuthWindow.
  * @param {AuthorizationCode} code - Code to exchange for an access token
  */
-export function emitAuthCode({code}) {
+export function emitAuthCode({code}: {code: string}) {
 	if (opener) {
 		opener.postMessage(
 			{code, type: EVENT_TYPES.AC_RECEIVE_AUTH_CODE},
@@ -187,7 +191,7 @@ export function emitAuthCode({code}) {
  * @param {Object} error - The Error Object.
  * @param {string} error.message - The Error message.
  */
-export function emitError({message}) {
+export function emitError({message}: {message: string}) {
 	if (opener) {
 		opener.postMessage(
 			{
@@ -204,7 +208,13 @@ export function emitError({message}) {
  * received by `getTempCredentials`.
  * @param {PartialCredentials} credentials - The temporary credentials.
  */
-export function emitToken({token, verifier}) {
+export function emitToken({
+	token,
+	verifier
+}: {
+	token: string;
+	verifier: string;
+}) {
 	if (opener) {
 		opener.postMessage(
 			{token, type: EVENT_TYPES.AC_RECEIVE_OAUTH_TOKEN, verifier},
@@ -307,7 +317,13 @@ export function getTempCredentials({
  * @param {string} error.message - The error message.
  * @returns {string} The error message to display.
  */
-export function getOAuthWindowErrorMessage({message, type}) {
+export function getOAuthWindowErrorMessage({
+	message,
+	type
+}: {
+	message: string;
+	type: ERROR_TYPES;
+}) {
 	switch (type) {
 		case ERROR_TYPES.AC_RECEIVE_CALLBACK_ERROR:
 			return message;

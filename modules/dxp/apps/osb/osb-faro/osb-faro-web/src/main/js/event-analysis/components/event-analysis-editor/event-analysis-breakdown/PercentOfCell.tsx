@@ -18,7 +18,7 @@ const PercentOfCell: React.FC<IPercentOfCellProps> = ({
 	const isComparingSegment = get(events[0], 'breakdownItems', []).length > 1;
 
 	const data = isComparingSegment
-		? getItems(events[0].breakdownItems, compareToPrevious)
+		? getItems(events[0].breakdownItems ?? [], compareToPrevious)
 		: getItems(events, compareToPrevious);
 
 	return (
@@ -34,14 +34,15 @@ const PercentOfCell: React.FC<IPercentOfCellProps> = ({
 
 			{isComparingSegment && isComparingEvent && (
 				<ul className='percentage-column'>
-					{getItems(events[1].breakdownItems, compareToPrevious).map(
-						({value}, i) => (
-							<li key={i}>{`${round(
-								getPercentage(value, totalValue),
-								2
-							)}%`}</li>
-						)
-					)}
+					{getItems(
+						events[1].breakdownItems ?? [],
+						compareToPrevious
+					).map(({value}, i) => (
+						<li key={i}>{`${round(
+							getPercentage(value, totalValue),
+							2
+						)}%`}</li>
+					))}
 				</ul>
 			)}
 		</>
@@ -54,9 +55,9 @@ const getItems = (
 ): {
 	value: number;
 }[] => {
-	const data = [];
+	const data: {value: number}[] = [];
 
-	events.forEach(({previousValue, value}) => {
+	events.forEach(({previousValue = 0, value}) => {
 		data.push({
 			value
 		});

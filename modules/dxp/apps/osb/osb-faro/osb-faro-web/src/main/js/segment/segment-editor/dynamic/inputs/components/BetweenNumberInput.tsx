@@ -50,7 +50,7 @@ const BetweenNumberInput: React.FC<IBetweenNumberInputProps> = ({
 					onBlur={() => {
 						setInputsTouched({...inputsTouched, start: true});
 					}}
-					onChange={event => {
+					onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
 						const {value: start} = event.target;
 
 						let numberVal: string | number = '';
@@ -87,7 +87,7 @@ const BetweenNumberInput: React.FC<IBetweenNumberInputProps> = ({
 					onBlur={() => {
 						setInputsTouched({...inputsTouched, end: true});
 					}}
-					onChange={event => {
+					onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
 						const {value: end} = event.target;
 
 						let numberVal: string | number = '';

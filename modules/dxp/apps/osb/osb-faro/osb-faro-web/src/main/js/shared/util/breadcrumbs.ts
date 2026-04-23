@@ -2,7 +2,7 @@ import {ACCOUNTS, Routes, SEGMENTS, toRoute} from 'shared/util/router';
 
 type IBasicRouteArgs = {
 	groupId: string;
-	label?: string;
+	label?: string | null;
 };
 
 type IBasicSidebarRouteArgs = IBasicRouteArgs & {
@@ -11,7 +11,7 @@ type IBasicSidebarRouteArgs = IBasicRouteArgs & {
 
 export type IBreadcrumbArgs = {
 	active?: boolean;
-	href?: string;
+	href?: string | null;
 	groupId?: string;
 	id?: string;
 	label: string;

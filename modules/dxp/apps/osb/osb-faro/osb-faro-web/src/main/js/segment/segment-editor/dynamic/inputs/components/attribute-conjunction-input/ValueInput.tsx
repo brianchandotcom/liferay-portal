@@ -54,11 +54,11 @@ const ValueInput: React.FC<IValueInputProps> = ({
 					onBlur={handleAttributeValueBlur}
 					onSelectionChange={value => {
 						onChange({
-							criterion: {value},
+							criterion: {value: value as string},
 							touched: {attributeValue: true},
 							valid: {
 								attributeValue: validateAttributeValue(
-									value,
+									value as string,
 									dataType
 								)
 							}
@@ -156,14 +156,17 @@ const ValueInput: React.FC<IValueInputProps> = ({
 					onChange={({touched, valid, value}) =>
 						onChange({
 							criterion: {value},
-							touched: {attributeValue: touched},
-							valid: {attributeValue: valid}
+							touched: {attributeValue: !!touched},
+							valid: {attributeValue: !!valid}
 						})
 					}
-					operatorName={operatorName}
+					operatorName={
+						operatorName as FunctionalOperators &
+							import('../../../utils/constants').RelationalOperators
+					}
 					touched={touched}
 					valid={valid}
-					value={value}
+					value={value as number | string | BetweenNumber}
 				/>
 			);
 		case DataTypes.String:
@@ -178,7 +181,9 @@ const ValueInput: React.FC<IValueInputProps> = ({
 					<Input
 						data-testid='attribute-value-string-input'
 						onBlur={handleAttributeValueBlur}
-						onChange={event => {
+						onChange={(
+							event: React.ChangeEvent<HTMLInputElement>
+						) => {
 							const {value} = event.target;
 
 							onChange({

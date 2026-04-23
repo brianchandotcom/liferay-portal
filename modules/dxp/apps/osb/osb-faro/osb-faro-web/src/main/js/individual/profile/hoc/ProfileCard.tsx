@@ -27,7 +27,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 		page,
 		query,
 		resetPage
-	} = useStatefulPagination(null, {
+	} = useStatefulPagination(undefined, {
 		initialDelta: DEFAULT_SESSIONS_DELTA
 	});
 

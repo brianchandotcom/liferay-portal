@@ -20,6 +20,7 @@ enum Sizes {
 }
 
 const Label: FC<{
+	children?: React.ReactNode;
 	className?: string;
 	display?: string;
 	index?: number;

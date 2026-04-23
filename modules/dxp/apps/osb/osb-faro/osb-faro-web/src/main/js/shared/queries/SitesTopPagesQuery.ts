@@ -1,4 +1,4 @@
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 import {OrderByDirections} from 'shared/util/constants';
 import {SafeRangeSelectors} from 'shared/types';
 

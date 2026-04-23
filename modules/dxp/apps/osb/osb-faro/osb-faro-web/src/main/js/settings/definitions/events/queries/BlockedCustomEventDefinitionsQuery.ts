@@ -1,5 +1,5 @@
 import {BlockedCustomEvent} from 'event-analysis/utils/types';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 export interface BlockedCustomEventDefinitionsData {
 	blockedCustomEventDefinitions: BlockedCustomEvent[];

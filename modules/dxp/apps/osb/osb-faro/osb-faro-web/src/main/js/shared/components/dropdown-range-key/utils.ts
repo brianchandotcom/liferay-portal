@@ -22,7 +22,7 @@ export function formatDateWithTimezone(
 	return date.clone()[signal](Math.abs(hours), 'hours');
 }
 
-export function formatDateRange(date, rangeKey) {
+export function formatDateRange(date: any, rangeKey: string | number) {
 	if (
 		`${rangeKey}` === RangeKeyTimeRanges.Last24Hours ||
 		`${rangeKey}` === RangeKeyTimeRanges.Yesterday
@@ -33,20 +33,31 @@ export function formatDateRange(date, rangeKey) {
 	return utcFormat('%d %b')(date);
 }
 
-export function formatTimeRange(timeRange) {
+type RawTimeRange = {
+	endDate: string;
+	rangeKey: string | number;
+	startDate: string;
+};
+
+export function formatTimeRange(timeRange: RawTimeRange[]) {
 	return timeRange
-		.map(({endDate, rangeKey, startDate}) => {
+		.map(({endDate, rangeKey, startDate}: RawTimeRange) => {
 			const start = formatDateRange(getDate(startDate), rangeKey);
 			const end = formatDateRange(getDate(endDate), rangeKey);
 			const label = `${start} - ${end}`;
 
 			return {
 				description: startDate && endDate && label,
-				label: TIME_RANGE_LABELS[rangeKey],
+				label: TIME_RANGE_LABELS[
+					rangeKey as keyof typeof TIME_RANGE_LABELS
+				],
 				value: `${rangeKey}` as RangeKeyTimeRanges
 			};
 		})
-		.sort((a, b) => parseInt(a.value) - parseInt(b.value));
+		.sort(
+			(a: {value: string}, b: {value: string}) =>
+				parseInt(a.value) - parseInt(b.value)
+		);
 }
 
 const filterItemsByRetention = (
@@ -140,7 +151,19 @@ export const getFilteredItems: GetFilteredItems = ({
 	return filterItems(timeRange, rangeKey, rangeKeys, retentionPeriod);
 };
 
-export function getSelectedItem({rangeEnd, rangeKey, rangeStart, timeRange}) {
+interface IGetSelectedItemProps {
+	rangeEnd: string | null;
+	rangeKey: string | number;
+	rangeStart: string | null;
+	timeRange: Array<{[key: string]: any}>;
+}
+
+export function getSelectedItem({
+	rangeEnd,
+	rangeKey,
+	rangeStart,
+	timeRange
+}: IGetSelectedItemProps) {
 	if (rangeKey === 'CUSTOM') {
 		return {
 			label: `${moment(rangeStart).format('ll')} - ${moment(
@@ -150,5 +173,5 @@ export function getSelectedItem({rangeEnd, rangeKey, rangeStart, timeRange}) {
 		};
 	}
 
-	return timeRange.find(({value}) => value === rangeKey) || timeRange[0];
+	return timeRange.find(item => item.value === rangeKey) || timeRange[0];
 }

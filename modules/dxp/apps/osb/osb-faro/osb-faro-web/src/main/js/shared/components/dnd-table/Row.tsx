@@ -39,9 +39,9 @@ const Row: React.FC<IRowProps> = ({
 	index,
 	onMove
 }) => {
-	const _itemRef = useRef<HTMLTableRowElement>();
+	const _itemRef = useRef<HTMLTableRowElement>(null);
 
-	const [hoverPosition, setHoverPosition] = useState(null);
+	const [hoverPosition, setHoverPosition] = useState<string | null>(null);
 
 	const [{canDrop, isOver}, drop] = useDrop({
 		accept: ITEM_TYPES.ROW,
@@ -81,14 +81,18 @@ const Row: React.FC<IRowProps> = ({
 			const hoverIndex = index;
 
 			if (_itemRef.current) {
-				const {
-					bottom,
-					height
-				} = _itemRef.current.getBoundingClientRect();
+				const {bottom, height} =
+					_itemRef.current.getBoundingClientRect();
 
 				const targetMiddleY = height / 2;
 
-				const {y} = monitor.getClientOffset();
+				const clientOffset = monitor.getClientOffset();
+
+				if (!clientOffset) {
+					return;
+				}
+
+				const {y} = clientOffset;
 
 				const hoverAbove = y < bottom - targetMiddleY;
 
@@ -117,7 +121,7 @@ const Row: React.FC<IRowProps> = ({
 
 	useEffect(() => {
 		drop(preview(_itemRef));
-	}, []);
+	}, [drop, preview]);
 
 	return (
 		<ClayTable.Row

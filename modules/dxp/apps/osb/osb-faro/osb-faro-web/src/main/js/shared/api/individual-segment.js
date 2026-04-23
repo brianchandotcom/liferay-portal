@@ -262,12 +262,8 @@ export function updateSegmentActivation({
 	segmentActivation,
 	segmentId
 }) {
-	const {
-		frequencyType,
-		scheduleEndDate,
-		scheduleStartDate,
-		scheduleType
-	} = segmentActivation;
+	const {frequencyType, scheduleEndDate, scheduleStartDate, scheduleType} =
+		segmentActivation;
 
 	const data = {
 		frequencyType,

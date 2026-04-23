@@ -11,7 +11,7 @@ interface IIndividual {
 	firstActivityDate: string;
 	id: string;
 	lastActivityDate: string;
-	lastSessionCountry: string;
+	lastSessionCountry: string | null;
 	name: string;
 	properties: Map<string, any>;
 	type: EntityTypes.Individual;
@@ -33,20 +33,21 @@ export default class Individual
 		properties: Map(),
 		type: EntityTypes.Individual
 	})
-	implements IIndividual {
-	accountName: string | null;
-	accounts: List<Map<string, any>>;
-	activitiesCount: number;
-	context: Map<string, any>;
-	dateCreated: string;
-	demographics: Map<string, any>;
-	firstActivityDate: string;
-	id: string;
-	lastActivityDate: string;
-	lastSessionCountry: string | null;
-	name: string;
-	properties: Map<string, any>;
-	type: EntityTypes.Individual;
+	implements IIndividual
+{
+	declare accountName: string | null;
+	declare accounts: List<Map<string, any>>;
+	declare activitiesCount: number;
+	declare context: Map<string, any>;
+	declare dateCreated: string;
+	declare demographics: Map<string, any>;
+	declare firstActivityDate: string;
+	declare id: string;
+	declare lastActivityDate: string;
+	declare lastSessionCountry: string | null;
+	declare name: string;
+	declare properties: Map<string, any>;
+	declare type: EntityTypes.Individual;
 
 	constructor(props = {}) {
 		super(props);

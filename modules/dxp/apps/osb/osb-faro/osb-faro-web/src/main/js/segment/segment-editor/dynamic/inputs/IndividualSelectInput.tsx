@@ -65,7 +65,8 @@ const IndividualSelectInput: React.FC<IIndividualSelectProps> = ({
 	value,
 	...otherProps
 }) => {
-	const entityType: EntityType = ENTITY_MAP[property.name];
+	const propertyName = property.name as keyof typeof ENTITY_MAP;
+	const entityType: EntityType = ENTITY_MAP[propertyName];
 
 	const graphqlEntityType =
 		entityType === EntityType.UserGroups
@@ -97,12 +98,16 @@ const IndividualSelectInput: React.FC<IIndividualSelectProps> = ({
 		<SelectEntityInput
 			channelId={channelId}
 			className='individual-select-input-root'
-			columns={PROPERTY_COLUMNS_MAP[property.name] || [nameCol]}
-			entityLabel={LABEL_MAP[property.name]}
+			columns={
+				PROPERTY_COLUMNS_MAP[
+					propertyName as keyof typeof PROPERTY_COLUMNS_MAP
+				] || [nameCol]
+			}
+			entityLabel={LABEL_MAP[propertyName as keyof typeof LABEL_MAP]}
 			entityType={entityType}
 			graphqlProps={{
 				graphqlQuery:
-					QUERY_MAP[property.name] ||
+					QUERY_MAP[propertyName as keyof typeof QUERY_MAP] ||
 					getDXPEntitiesQuery(graphqlEntityType),
 				mapPropsToOptions,
 				mapResultToProps: getMapResultToProps(graphqlEntityType)

@@ -1,8 +1,8 @@
 import middleware from './configure-middleware';
 import reducers from '../reducers';
-import {compose, createStore} from 'redux';
+import {compose, createStore, StoreEnhancer} from 'redux';
 
-export default function configureStore(initialState) {
+export default function configureStore(initialState: any) {
 	return createStore(
 		reducers,
 		initialState,
@@ -10,7 +10,7 @@ export default function configureStore(initialState) {
 			middleware,
 			window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
 				? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() // eslint-disable-line no-underscore-dangle
-				: f => f
+				: (f: StoreEnhancer<any>) => f
 		)
 	);
 }

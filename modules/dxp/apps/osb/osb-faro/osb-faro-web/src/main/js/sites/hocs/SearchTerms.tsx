@@ -16,7 +16,7 @@ import {
 	getMapResultToProps,
 	mapPropsToOptions
 } from './mappers/composition-query';
-import {graphql} from '@apollo/react-hoc';
+import {graphql, OperationOption} from '@apollo/client/react/hoc';
 import {pickBy} from 'lodash';
 import {setUriQueryValues} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
@@ -35,7 +35,7 @@ const withData = () =>
 		graphql(SearchTermsQuery, {
 			options: mapPropsToOptions,
 			props: getMapResultToProps(CompositionTypes.SearchTerms)
-		}),
+		} as OperationOption<object, object>),
 		withPaginationBar({defaultDelta})
 	);
 
@@ -63,7 +63,13 @@ const TableWithData = withTableData(withData, {
 		symbol: 'ac_satellite'
 	},
 	emptyTitle: Liferay.Language.get('there-are-no-search-terms-found'),
-	getColumns: ({maxCount, totalCount}) => [
+	getColumns: ({
+		maxCount,
+		totalCount
+	}: {
+		maxCount: number;
+		totalCount: number;
+	}) => [
 		compositionListColumns.getName({
 			label: Liferay.Language.get('search-query'),
 			maxWidth: null,
@@ -83,9 +89,12 @@ const TableWithData = withTableData(withData, {
 	rowIdentifier: 'name'
 });
 
-const SearchTerms = ({history}) => {
+const SearchTerms = ({history}: {history: {push: (path: string) => void}}) => {
 	const {selectedChannel} = useChannelContext();
-	const {channelId, groupId} = useParams();
+	const {channelId, groupId} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const {delta, orderIOMap, page} = useQueryPagination({
 		initialOrderIOMap: createOrderIOMap(COUNT)
 	});
@@ -96,7 +105,15 @@ const SearchTerms = ({history}) => {
 
 	const rangeKeys = [Last7Days, Last24Hours, Last30Days, Last90Days];
 
-	const handleRangeKeyValueChange = ({rangeEnd, rangeKey, rangeStart}) => {
+	const handleRangeKeyValueChange = ({
+		rangeEnd,
+		rangeKey,
+		rangeStart
+	}: {
+		rangeEnd?: string | null;
+		rangeKey: number | string | null;
+		rangeStart?: string | null;
+	}) => {
 		history.push(
 			setUriQueryValues(
 				pickBy({

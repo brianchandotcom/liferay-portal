@@ -75,8 +75,8 @@ class Item extends React.Component {
 			item,
 			itemRenderer: ItemInternalComponent,
 			quickActions,
-			selected,
-			selectMultiple
+			selectMultiple,
+			selected
 		} = this.props;
 
 		return (
@@ -151,8 +151,8 @@ class ListView extends React.Component {
 			disabledItemsISet,
 			onClick,
 			onSelectItemsChange,
-			selectedItemsISet,
-			selectMultiple
+			selectMultiple,
+			selectedItemsISet
 		} = this.props;
 
 		if (onSelectItemsChange && !disabledItemsISet.has(item.id)) {
@@ -174,8 +174,8 @@ class ListView extends React.Component {
 			items,
 			onSelectItemsChange,
 			quickActions,
-			selectedItemsISet,
 			selectMultiple,
+			selectedItemsISet,
 			...otherProps
 		} = this.props;
 

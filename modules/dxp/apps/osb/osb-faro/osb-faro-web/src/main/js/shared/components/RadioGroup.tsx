@@ -20,6 +20,7 @@ const Subsection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 interface IOptionProps
 	extends React.ComponentProps<typeof Radio>,
 		React.HTMLAttributes<HTMLInputElement> {
+	label?: React.ReactNode;
 	onChange?: (value: any) => void;
 	value: any;
 }
@@ -51,15 +52,19 @@ const RadioGroup: React.FC<IRadioGroupProps> = ({
 	onChange = noop
 }) => (
 	<div className={getCN('radio-group-root', className, {disabled})}>
-		{React.Children.map(children, (child: React.ReactElement) =>
-			React.cloneElement(child, {
-				checked: checked === child.props.value,
-				disabled,
-				displayInline:
-					inline && isReactNodeArray(children) && children.length > 0,
-				name,
-				onChange
-			})
+		{React.Children.map(
+			children as React.ReactElement,
+			(child: React.ReactElement) =>
+				React.cloneElement(child, {
+					checked: checked === child.props.value,
+					disabled,
+					displayInline:
+						inline &&
+						isReactNodeArray(children) &&
+						children.length > 0,
+					name,
+					onChange
+				})
 		)}
 	</div>
 );

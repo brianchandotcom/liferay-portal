@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import DocumentTitle from 'shared/components/DocumentTitle';
@@ -9,32 +8,32 @@ import UserDropdown from 'shared/components/user-dropdown';
 import withCurrentUser from 'shared/hoc/WithCurrentUser';
 import {Align} from '@clayui/drop-down';
 import {LANGUAGES} from 'shared/util/constants';
-import {PropTypes} from 'prop-types';
 import {Routes} from 'shared/util/router';
+import {User} from 'shared/util/records';
 
-export const BasePageContext = createContext({currentUser: {}});
+export const BasePageContext = createContext<{currentUser: User}>({
+	currentUser: new User()
+});
 
-export class WorkspacesBasePage extends React.Component {
+interface IWorkspacesBasePageProps {
+	backLabel?: string;
+	backURL?: string;
+	children?: React.ReactNode;
+	className?: string;
+	currentUser?: User;
+	details?: React.ReactNode;
+	title?: string;
+}
+
+export class WorkspacesBasePage extends React.Component<IWorkspacesBasePageProps> {
 	static defaultProps = {
 		backLabel: Liferay.Language.get('back'),
 		details: ''
 	};
 
-	static propTypes = {
-		backLabel: PropTypes.string,
-		backUrl: PropTypes.string,
-		details: PropTypes.oneOfType([
-			PropTypes.array,
-			PropTypes.string,
-			PropTypes.func
-		]),
-		title: PropTypes.string
-	};
-
 	getUserMenuItems() {
-		const {
-			currentUser: {emailAddress, languageId}
-		} = this.props;
+		const currentUser = this.props.currentUser || new User();
+		const {emailAddress, languageId} = currentUser;
 
 		return {
 			base: [
@@ -68,15 +67,16 @@ export class WorkspacesBasePage extends React.Component {
 							active,
 							label,
 							onClick: active
-								? null
-								: () =>
+								? undefined
+								: () => {
 										API.user
 											.updateLanguage({
 												languageId: id
 											})
 											.then(() =>
 												window.location.reload()
-											)
+											);
+								  }
 						};
 					})
 				}
@@ -85,15 +85,10 @@ export class WorkspacesBasePage extends React.Component {
 	}
 
 	render() {
-		const {
-			backLabel,
-			backURL,
-			children,
-			className,
-			currentUser,
-			details,
-			title
-		} = this.props;
+		const {backLabel, backURL, children, className, details, title} =
+			this.props;
+
+		const currentUser = this.props.currentUser || new User();
 
 		return (
 			<BasePageContext.Provider value={{currentUser}}>
@@ -101,7 +96,10 @@ export class WorkspacesBasePage extends React.Component {
 					<DocumentTitle title={title} />
 
 					<div className='header-container'>
-						<ClayLink href='https://liferay.com' target='_blank'>
+						<ClayLink
+							href='https://liferay-portal.com'
+							target='_blank'
+						>
 							<ClayIcon
 								className='icon-root liferay-logo'
 								symbol='liferay_logo'
@@ -121,7 +119,8 @@ export class WorkspacesBasePage extends React.Component {
 						<div className='content-container'>
 							{backURL && (
 								<div className='back-container'>
-									<ClayButton
+									<ClayLink
+										button
 										className='button-root'
 										displayType='unstyled'
 										href={backURL}
@@ -132,7 +131,7 @@ export class WorkspacesBasePage extends React.Component {
 										/>
 
 										{backLabel}
-									</ClayButton>
+									</ClayLink>
 								</div>
 							)}
 

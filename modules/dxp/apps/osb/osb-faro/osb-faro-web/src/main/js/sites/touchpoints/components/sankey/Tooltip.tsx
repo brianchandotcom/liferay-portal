@@ -7,7 +7,7 @@ export const Tooltip: React.FC<any> = ({payload}) => {
 
 	const data = payload[0].payload?.payload;
 
-	let description = Liferay.Language.get('page-views');
+	let description: React.ReactNode = Liferay.Language.get('page-views');
 	let name = payload[0].name;
 
 	if (!data?.main) {

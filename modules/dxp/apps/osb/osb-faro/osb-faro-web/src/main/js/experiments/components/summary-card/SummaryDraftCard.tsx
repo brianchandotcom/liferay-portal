@@ -3,20 +3,24 @@ import ClayMultiStep from '../clay-multi-step';
 import getCN from 'classnames';
 import React from 'react';
 import {getMetricName} from 'experiments/util/experiments';
+import {IExperiment} from './types';
+import {MetricName} from 'experiments/util/types';
 import {sub} from 'shared/util/lang';
 import {SummaryBaseCard} from './SummaryBaseCard';
 import {SummaryTitle} from './SummaryTitle';
 
-export const SummaryDraftCard = ({
+export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 	experiment: {dxpExperienceName, dxpSegmentName, dxpVariants, goal, status}
 }) => {
 	const currentStep = dxpVariants ? 3 : goal ? 2 : 1;
 
-	const totalVariants = dxpVariants?.filter(({control}) => !control).length;
+	const totalVariants = dxpVariants?.filter(
+		({control}: {control: boolean}) => !control
+	).length;
 
 	const steps = [
 		{
-			Description: ({className}) => (
+			Description: ({className}: {className?: string}) => (
 				<span className={className}>
 					{dxpExperienceName ? (
 						<>
@@ -45,10 +49,12 @@ export const SummaryDraftCard = ({
 			title: Liferay.Language.get('test-target')
 		},
 		{
-			Description: ({className}) => (
+			Description: ({className}: {className?: string}) => (
 				<span className={className}>
 					{goal ? (
-						<strong>{getMetricName(goal.metric)}</strong>
+						<strong>
+							{getMetricName(goal.metric as MetricName)}
+						</strong>
 					) : (
 						Liferay.Language.get(
 							'choose-a-metric-that-determines-your-campaigns-success'
@@ -59,7 +65,7 @@ export const SummaryDraftCard = ({
 			title: Liferay.Language.get('test-metric')
 		},
 		{
-			Description: ({className}) => (
+			Description: ({className}: {className?: string}) => (
 				<span className={className}>
 					{dxpVariants
 						? sub(
@@ -74,7 +80,7 @@ export const SummaryDraftCard = ({
 			title: Liferay.Language.get('variants')
 		},
 		{
-			Description: ({className}) => (
+			Description: ({className}: {className?: string}) => (
 				<span className={className}>
 					{Liferay.Language.get(
 						'review-traffic-split-and-run-your-test'
@@ -112,7 +118,8 @@ export const SummaryDraftCard = ({
 										className={getCN(
 											'analytics-summary-card-step-content',
 											{
-												[`analytics-summary-card-step-content-${status}`]: status
+												[`analytics-summary-card-step-content-${status}`]:
+													status
 											}
 										)}
 									>

@@ -24,7 +24,7 @@ const WrappedDeleteDataSource = compose<any>(
 	withSheet(),
 	withRequest(
 		API.dataSource.fetchDeletePreview,
-		data => ({entitiesCount: data}),
+		(data: any) => ({entitiesCount: data}),
 		{
 			page: false
 		}
@@ -63,7 +63,7 @@ export const ClearData: React.FC<IClearDataProps> = ({
 					id
 				}),
 				id,
-				label: dataSource.name
+				label: dataSource.name ?? ''
 			}),
 			{
 				active: true,

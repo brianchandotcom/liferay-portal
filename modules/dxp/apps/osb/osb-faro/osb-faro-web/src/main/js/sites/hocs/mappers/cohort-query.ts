@@ -1,13 +1,22 @@
+import {Interval} from 'shared/types';
 import {safeResultToProps} from 'shared/util/mappers';
 
-const mapResultToProps: object = safeResultToProps(
+interface ICohortResult {
+	cohort: {
+		anonymousCohortHeatMapMetrics: unknown[];
+		knownCohortHeatMapMetrics: unknown[];
+		visitorsCohortHeatMapMetrics: unknown[];
+	};
+}
+
+const mapResultToProps = safeResultToProps(
 	({
 		cohort: {
 			anonymousCohortHeatMapMetrics,
 			knownCohortHeatMapMetrics,
 			visitorsCohortHeatMapMetrics
 		}
-	}) => ({
+	}: ICohortResult) => ({
 		data: {
 			anonymousVisitors: {
 				items: anonymousCohortHeatMapMetrics
@@ -27,7 +36,13 @@ const mapResultToProps: object = safeResultToProps(
 	})
 );
 
-const mapPropsToOptions: object = ({channelId, interval}) => ({
+const mapPropsToOptions = ({
+	channelId,
+	interval
+}: {
+	channelId: string;
+	interval: Interval;
+}) => ({
 	variables: {
 		channelId,
 		interval

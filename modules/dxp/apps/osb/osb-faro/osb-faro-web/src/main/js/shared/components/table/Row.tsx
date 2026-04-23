@@ -7,7 +7,7 @@ import {StopClickPropagation} from './cell-components';
 
 export type Column = {
 	accessor: string;
-	cellRenderer?: (params: {[key: string]: any}) => React.ReactElement;
+	cellRenderer?: (params: {[key: string]: any}) => React.ReactNode;
 	cellRendererProps?: {[key: string]: any};
 	className?: string;
 	dataFormatter?: (dataValue: any, data?: object) => React.ReactNode;
@@ -29,8 +29,8 @@ interface IRowProps {
 	onClick?: (data: any) => void;
 	onRowDelete: (data: any) => void;
 	onRowSave: (data: any) => void;
-	renderInlineRowActions?: (params: any) => void; // Can we just remove this?  doesn't seem to be that useful... we can just use it in the columns
-	renderRowActions?: (params: any) => void;
+	renderInlineRowActions?: (params: any) => React.ReactNode; // Can we just remove this?  doesn't seem to be that useful... we can just use it in the columns
+	renderRowActions?: (params: any) => React.ReactNode;
 	rowIndex: number;
 	selected?: boolean;
 	showCheckbox?: boolean;
@@ -57,7 +57,8 @@ const Row: React.FC<IRowProps> = ({
 
 	const handleCheckboxChange = () => onClick(data);
 
-	const handleEventPropagation = event => event.stopPropagation();
+	const handleEventPropagation = (event: React.MouseEvent) =>
+		event.stopPropagation();
 
 	const handleEdit = () =>
 		setState(prevState => ({
@@ -72,7 +73,7 @@ const Row: React.FC<IRowProps> = ({
 			edits: {}
 		}));
 
-	const handleUpdateEdits = (attr, value) =>
+	const handleUpdateEdits = (attr: string, value: any) =>
 		setState(prevState => ({
 			...prevState,
 			edits: {...prevState.edits, [attr]: value}

@@ -21,7 +21,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {getRangeSelectorsFromQuery} from 'shared/util/util';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {hasChanges} from 'shared/util/react';
 import {PropTypes} from 'prop-types';
 import {sub} from 'shared/util/lang';

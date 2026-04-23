@@ -2,13 +2,13 @@ import autobind from 'autobind-decorator';
 import DateTimeInput from './DateTimeInput';
 import Form from 'shared/components/form';
 import React from 'react';
+import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {
 	getCompleteDate,
 	getOperator,
 	setCompleteDate,
 	setOperator
 } from '../utils/custom-inputs';
-import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {Option, Picker} from '@clayui/core';
 import {PropertyTypes, SUPPORTED_OPERATORS_MAP} from '../utils/constants';
 
@@ -16,14 +16,18 @@ const DATE_TIME_OPERATORS = SUPPORTED_OPERATORS_MAP[PropertyTypes.DateTime];
 
 export default class CustomDateTimeInput extends React.Component<ISegmentEditorCustomInputBase> {
 	@autobind
-	handleDateChange(newDate) {
+	handleDateChange(newDate: Criterion | Criterion[]) {
 		const {onChange, value} = this.props;
 
-		onChange({value: setCompleteDate(value, newDate.value)});
+		const newValue = Array.isArray(newDate)
+			? newDate[0]?.value
+			: newDate.value;
+
+		onChange({value: setCompleteDate(value, newValue)});
 	}
 
 	@autobind
-	handleOperatorChange(newValue) {
+	handleOperatorChange(newValue: React.Key) {
 		const {onChange, value} = this.props;
 
 		onChange({value: setOperator(value, 0, newValue)});

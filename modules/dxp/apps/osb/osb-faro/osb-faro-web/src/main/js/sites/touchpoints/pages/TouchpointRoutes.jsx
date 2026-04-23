@@ -65,9 +65,8 @@ function TouchpointRoutes({className, router}) {
 		title,
 		touchpoint
 	} = router.params;
-	const [pathRangeSelectors, setPathRangeSelectors] = useState(
-		rangeSelectors
-	);
+	const [pathRangeSelectors, setPathRangeSelectors] =
+		useState(rangeSelectors);
 	const {selectedChannel} = useChannelContext();
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 	const decodedTitle = getSafeDecodedURIComponent(title);

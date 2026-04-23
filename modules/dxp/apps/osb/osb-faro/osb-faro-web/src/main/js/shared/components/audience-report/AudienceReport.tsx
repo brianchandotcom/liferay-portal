@@ -3,7 +3,8 @@ import AudienceReportStateRenderer from './AudienceReportStateRenderer';
 import HTMLBarChart from 'shared/components/HTMLBarChart';
 import InfoPopover, {IInfoPopoverProps} from 'shared/components/InfoPopover';
 import React from 'react';
-import {DocumentNode} from 'apollo-boost';
+import {DocumentNode, useQuery} from '@apollo/client';
+
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatData} from './util';
 import {getFilters, RawFilters} from 'shared/util/filter';
@@ -15,7 +16,6 @@ import {
 import {IAudienceReportBaseCardProps, Name, TData} from './types';
 import {RangeSelectors} from 'shared/types';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/react-hooks';
 
 const AudienceReportTitle: React.FC<IInfoPopoverProps> = ({content, title}) => (
 	<div className='d-inline-flex gap'>
@@ -108,9 +108,9 @@ interface IAudienceReportProps<TRawData>
 }
 
 function AudienceReport<TRawData>({
+	Query,
 	experienceId,
 	filters,
-	Query,
 	rangeSelectors,
 	...otherProps
 }: IAudienceReportProps<TRawData>) {
@@ -119,11 +119,11 @@ function AudienceReport<TRawData>({
 		fetchPolicy: fetchPolicyDefinition(rangeSelectors),
 		variables: {
 			assetId,
-			touchpoint: getSafeTouchpoint(touchpoint),
+			touchpoint: getSafeTouchpoint(touchpoint as string),
 			...(experienceId && {experienceId}),
 			...(otherProps.name !== Name.ObjectEntry && {
 				channelId,
-				title: getSafeDecodedURIComponent(title)
+				title: getSafeDecodedURIComponent(title as string)
 			}),
 			...getFilters(filters),
 			...getSafeRangeSelectors(rangeSelectors)
@@ -131,7 +131,7 @@ function AudienceReport<TRawData>({
 	});
 
 	return (
-		<AudienceReportStateRenderer error={error} loading={loading}>
+		<AudienceReportStateRenderer error={error!} loading={loading}>
 			<AudienceReportWithData {...otherProps} data={data} />
 		</AudienceReportStateRenderer>
 	);

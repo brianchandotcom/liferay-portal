@@ -17,12 +17,12 @@ const BaseLifecycle = () => {
 				<BasePage.Header
 					breadcrumbs={[
 						breadcrumbs.getHome({
-							channelId,
-							groupId,
-							label: selectedChannel.name
+							channelId: channelId!,
+							groupId: groupId!,
+							label: selectedChannel?.name
 						})
 					]}
-					groupId={groupId}
+					groupId={groupId!}
 				>
 					<BasePage.Row>
 						<BasePage.Header.TitleSection

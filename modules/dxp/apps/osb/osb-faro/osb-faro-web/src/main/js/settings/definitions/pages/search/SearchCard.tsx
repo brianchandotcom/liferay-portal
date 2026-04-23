@@ -14,11 +14,11 @@ import {Alert, Modal} from 'shared/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose, withHistory} from 'shared/hoc';
 import {connect} from 'react-redux';
-import {FieldArray, Formik, FormikTouched, FormikValues} from 'formik';
+import {FieldArray, FormikTouched, FormikValues} from 'formik';
 import {Routes, toRoute} from 'shared/util/router';
 import {sequence} from 'shared/util/promise';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 import {WrapSafeResults} from 'shared/hoc/util';
 
 const QUERY_STRING_SIZE_LIMIT = 512;
@@ -38,7 +38,7 @@ const renderAddButton = (
 	authorized: boolean,
 	currentLength: number,
 	props: React.ButtonHTMLAttributes<HTMLButtonElement>,
-	index: number = null
+	index: number | null = null
 ) => {
 	if (
 		(!currentLength && authorized) ||
@@ -71,17 +71,18 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 	open
 }) => {
 	const currentUser = useCurrentUser();
-	const {data: searchQueryStringsData, error, loading} = useQuery(
-		PreferenceQuery,
-		{
-			fetchPolicy: 'no-cache',
-			variables: {key: SEARCH_QUERY_STRINGS_KEY}
-		}
-	);
+	const {
+		data: searchQueryStringsData,
+		error,
+		loading
+	} = useQuery(PreferenceQuery, {
+		fetchPolicy: 'no-cache',
+		variables: {key: SEARCH_QUERY_STRINGS_KEY}
+	});
 
 	const [updatePreference] = useMutation(PreferenceMutation);
 
-	const _formRef = useRef<Formik>();
+	const _formRef = useRef<any>(null);
 
 	const authorized = currentUser.isAdmin();
 
@@ -90,7 +91,11 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 			? JSON.parse(searchQueryStringsData.preference.value)
 			: [];
 
-	const handleSubmit = ({queryStringList}): void => {
+	const handleSubmit = ({
+		queryStringList
+	}: {
+		queryStringList: string[];
+	}): void => {
 		const currentForm = _formRef.current;
 
 		const searchQueryStrings = queryStringList.map(removeSpecialCharacters);
@@ -174,8 +179,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 						initialValues={{
 							queryStringList: getQueryStringListInitialValue()
 						}}
+						innerRef={_formRef as any}
 						onSubmit={handleSubmit}
-						ref={_formRef}
 					>
 						{({
 							handleSubmit,
@@ -270,7 +275,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																.queryStringList
 																.length,
 															{
-																disabled: isSubmitting,
+																disabled:
+																	isSubmitting,
 																onClick: () =>
 																	arrayHelpers.push(
 																		''

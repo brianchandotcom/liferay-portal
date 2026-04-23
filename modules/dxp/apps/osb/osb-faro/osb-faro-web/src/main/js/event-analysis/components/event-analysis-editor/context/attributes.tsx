@@ -123,7 +123,7 @@ const actionHandlers = {
 
 		return {
 			attributes: Object.assign({}, attributes, {
-				[attribute.id]: attribute
+				[attribute!.id]: attribute!
 			}),
 			breakdownOrder: [...breakdownOrder, id],
 			breakdowns: Object.assign(
@@ -150,7 +150,7 @@ const actionHandlers = {
 
 		return {
 			attributes: Object.assign({}, attributes, {
-				[attribute.id]: attribute
+				[attribute!.id]: attribute!
 			}),
 			breakdownOrder,
 			breakdowns,
@@ -175,9 +175,9 @@ const actionHandlers = {
 		}: AttributesState,
 		{payload: {id} = {}}: Action
 	): AttributesState => {
-		const {attributeId} = breakdowns[id];
+		const {attributeId} = breakdowns[id!];
 
-		const updatedBreakdowns = deletePropertyFromObject(id, breakdowns);
+		const updatedBreakdowns = deletePropertyFromObject(id!, breakdowns);
 
 		return {
 			attributes: isAttributeInUse(
@@ -205,9 +205,9 @@ const actionHandlers = {
 		}: AttributesState,
 		{payload: {id} = {}}: Action
 	): AttributesState => {
-		const {attributeId} = filters[id];
+		const {attributeId} = filters[id!];
 
-		const updatedFilters = deletePropertyFromObject(id, filters);
+		const updatedFilters = deletePropertyFromObject(id!, filters);
 
 		return {
 			attributes: isAttributeInUse(
@@ -233,12 +233,12 @@ const actionHandlers = {
 		}: AttributesState,
 		{payload: {attribute, breakdown, id} = {}}: Action
 	): AttributesState => {
-		const {attributeId: oldAttributeId} = breakdowns[id];
+		const {attributeId: oldAttributeId} = breakdowns[id!];
 
 		const updatedBreakdowns = Object.assign(
-			deletePropertyFromObject(id, breakdowns),
+			deletePropertyFromObject(id!, breakdowns),
 			{
-				[id]: {...breakdown, id}
+				[id!]: {...breakdown, id}
 			}
 		);
 
@@ -249,7 +249,7 @@ const actionHandlers = {
 					? attributes
 					: deletePropertyFromObject(oldAttributeId, attributes),
 				{
-					[attribute.id]: attribute
+					[attribute!.id]: attribute!
 				}
 			),
 			breakdownOrder,
@@ -268,12 +268,12 @@ const actionHandlers = {
 		}: AttributesState,
 		{payload: {attribute, filter, id} = {}}: Action
 	): AttributesState => {
-		const {attributeId: oldAttributeId} = filters[id];
+		const {attributeId: oldAttributeId} = filters[id!];
 
 		const updatedFilters = Object.assign(
-			deletePropertyFromObject(id, filters),
+			deletePropertyFromObject(id!, filters),
 			{
-				[id]: {...filter, id}
+				[id!]: {...filter, id}
 			}
 		);
 
@@ -284,7 +284,7 @@ const actionHandlers = {
 					? attributes
 					: deletePropertyFromObject(oldAttributeId, attributes),
 				{
-					[attribute.id]: attribute
+					[attribute!.id]: attribute!
 				}
 			),
 			breakdownOrder,
@@ -304,7 +304,7 @@ const actionHandlers = {
 		{payload: {from, to} = {}}: Action
 	): AttributesState => ({
 		attributes,
-		breakdownOrder: moveItem([...breakdownOrder], from, to),
+		breakdownOrder: moveItem([...breakdownOrder], from!, to!),
 		breakdowns,
 		filterOrder,
 		filters
@@ -322,7 +322,7 @@ const actionHandlers = {
 		attributes,
 		breakdownOrder,
 		breakdowns,
-		filterOrder: moveItem([...filterOrder], from, to),
+		filterOrder: moveItem([...filterOrder], from!, to!),
 		filters
 	})
 };
@@ -457,14 +457,20 @@ export const AttributesProvider: React.FC<IAttributesProviderProps> = ({
 	);
 };
 
-export const withAttributesProvider = WrappedComponent => props => (
-	<AttributesProvider>
-		<WrappedComponent {...props} />
-	</AttributesProvider>
-);
+export const withAttributesProvider =
+	(WrappedComponent: React.ComponentType<any>) =>
+	(props: Record<string, any>) =>
+		(
+			<AttributesProvider>
+				<WrappedComponent {...props} />
+			</AttributesProvider>
+		);
 
-export const withAttributesConsumer = WrappedComponent => props => (
-	<AttributesContext.Consumer>
-		{attributes => <WrappedComponent {...props} {...attributes} />}
-	</AttributesContext.Consumer>
-);
+export const withAttributesConsumer =
+	(WrappedComponent: React.ComponentType<any>) =>
+	(props: Record<string, any>) =>
+		(
+			<AttributesContext.Consumer>
+				{attributes => <WrappedComponent {...props} {...attributes} />}
+			</AttributesContext.Consumer>
+		);

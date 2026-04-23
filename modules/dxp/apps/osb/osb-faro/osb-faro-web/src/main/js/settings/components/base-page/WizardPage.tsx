@@ -43,7 +43,11 @@ function getSafeStepFromURL(steps: Step[], initStep: string | null) {
 	return step;
 }
 
-function updateSearchParams(history, key: string, value: any) {
+function updateSearchParams(
+	history: ReturnType<typeof useHistory>,
+	key: string,
+	value: any
+) {
 	const params = new URLSearchParams(window.location.search);
 	params.set(key, String(value));
 
@@ -53,8 +57,12 @@ function updateSearchParams(history, key: string, value: any) {
 	});
 }
 
-const WizardSteps = ({addAlert, close, open, steps}) => {
-	const {groupId} = useParams();
+interface IWizardStepsProps extends PropsFromRedux {
+	steps: Step[];
+}
+
+const WizardSteps = ({addAlert, close, open, steps}: IWizardStepsProps) => {
+	const {groupId = ''} = useParams<{groupId: string}>();
 	const history = useHistory();
 	const params = useQueryParams();
 	const {loadingContext, refetchDataSource} = useWizardPage();
@@ -145,8 +153,8 @@ const connector = connect(null, {
 	open
 });
 
-const WizardPage = ({children}) => {
-	const {groupId} = useParams();
+const WizardPage = ({children}: {children: React.ReactNode}) => {
+	const {groupId = ''} = useParams<{groupId: string}>();
 
 	// TODO: Trick to add background white on wizad mode, remove it on revamping.
 

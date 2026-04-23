@@ -44,7 +44,7 @@ const IndividualLinkCell: React.FC<IIndividualLinksProps> = ({
 			className={className}
 			data={{...data, id, name}}
 			disabled={data.individualDeleted || anonymous || disabled}
-			routeFn={({data: {id}}) =>
+			routeFn={({data: {id}}: {data: {id: string}}) =>
 				toRoute(Routes.CONTACTS_INDIVIDUAL, {
 					channelId,
 					groupId,

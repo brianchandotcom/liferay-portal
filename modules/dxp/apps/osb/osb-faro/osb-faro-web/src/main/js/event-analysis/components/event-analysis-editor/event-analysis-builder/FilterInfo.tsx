@@ -6,10 +6,10 @@ import {DATA_TYPE_LABELS_MAP} from 'event-analysis/utils/utils';
 import {DataTypes} from 'event-analysis/utils/types';
 
 interface IFilterInfoProps {
-	dataType: DataTypes;
+	dataType?: DataTypes;
 	description?: string;
 	name: string;
-	onEditClick: (id: string) => void;
+	onEditClick?: (id: string) => void;
 	showDescription?: boolean;
 }
 

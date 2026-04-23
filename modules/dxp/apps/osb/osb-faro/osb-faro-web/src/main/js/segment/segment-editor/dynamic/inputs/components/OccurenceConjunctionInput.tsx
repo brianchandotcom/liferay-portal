@@ -9,10 +9,10 @@ import {Option, Picker} from '@clayui/core';
 
 const MAX_OCCURENCE_COUNT_LIMIT = 2147483647;
 
-const isValidOccurenceCount = occurenceCount =>
+const isValidOccurenceCount = (occurenceCount: number | string) =>
 	isValid(occurenceCount) &&
-	occurenceCount >= 0 &&
-	occurenceCount <= MAX_OCCURENCE_COUNT_LIMIT;
+	Number(occurenceCount) >= 0 &&
+	Number(occurenceCount) <= MAX_OCCURENCE_COUNT_LIMIT;
 
 interface IOccurenceConjunctionInputProps {
 	onChange: (params: {
@@ -44,7 +44,8 @@ const OccurenceConjunctionInput: React.FC<IOccurenceConjunctionInputProps> = ({
 				onSelectionChange={value => {
 					onChange({
 						criterion: {
-							operatorName: value as Criterion['operatorName']
+							operatorName:
+								value as unknown as Criterion['operatorName']
 						}
 					});
 				}}
@@ -64,13 +65,17 @@ const OccurenceConjunctionInput: React.FC<IOccurenceConjunctionInputProps> = ({
 				className='number-input'
 				data-testid='occurence-count-input'
 				min='0'
-				onBlur={({target: {value}}) => {
+				onBlur={({
+					target: {value}
+				}: React.FocusEvent<HTMLInputElement>) => {
 					onChange({
 						touched: true,
 						valid: isValidOccurenceCount(value)
 					});
 				}}
-				onChange={({target: {value}}) => {
+				onChange={({
+					target: {value}
+				}: React.ChangeEvent<HTMLInputElement>) => {
 					let numberVal: string | number = '';
 
 					if (isValid(value)) {

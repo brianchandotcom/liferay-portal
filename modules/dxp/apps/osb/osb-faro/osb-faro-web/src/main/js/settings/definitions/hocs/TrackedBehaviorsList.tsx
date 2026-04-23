@@ -1,6 +1,6 @@
 import Card from 'shared/components/Card';
 import React from 'react';
-import Table from 'shared/components/table';
+import Table, {Column} from 'shared/components/table';
 import {definitionsListColumns} from 'shared/util/table-columns';
 import {NameCell} from 'shared/components/table/cell-components';
 
@@ -24,21 +24,23 @@ const mockBehaviors = [
 
 const TableWithData: React.FC<ITableWithDataProps> = ({authorized}) => (
 	<Table
-		columns={[
-			{
-				accessor: 'name',
-				cellRenderer: NameCell,
-				label: Liferay.Language.get('attribute-name'),
-				sortable: false
-			},
-			{
-				accessor: 'type',
-				className: 'table-cell-expand',
-				label: Liferay.Language.get('event-type'),
-				sortable: false
-			},
-			definitionsListColumns.restrictAccess(authorized)
-		]}
+		columns={
+			[
+				{
+					accessor: 'name',
+					cellRenderer: NameCell,
+					label: Liferay.Language.get('attribute-name'),
+					sortable: false
+				},
+				{
+					accessor: 'type',
+					className: 'table-cell-expand',
+					label: Liferay.Language.get('event-type'),
+					sortable: false
+				},
+				definitionsListColumns.restrictAccess(authorized)
+			] as Column[]
+		}
 		items={mockBehaviors}
 		rowIdentifier='name'
 	/>

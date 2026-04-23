@@ -1,13 +1,9 @@
 import Card from 'shared/components/Card';
-import Form from '../../shared/components/form';
+import Form from 'shared/components/form';
 import React from 'react';
 import {Text} from '@clayui/core';
 
-interface ISegmentEnabledSequentialCardProps {
-	sequential: boolean;
-}
-
-const SegmentEnabledSequentialCard: React.FC<ISegmentEnabledSequentialCardProps> = () => (
+const SegmentEnabledSequentialCard = () => (
 	<Card>
 		<Card.Header>
 			<Card.Title>{Liferay.Language.get('order')}</Card.Title>

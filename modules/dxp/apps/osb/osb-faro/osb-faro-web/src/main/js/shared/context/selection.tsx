@@ -44,7 +44,9 @@ export const selectionReducer = (
 		case 'add': {
 			return {
 				selectedItems: selectedItems.merge(
-					OrderedMap(payload.items.map(item => [item.id, item]))
+					OrderedMap(
+						(payload?.items ?? []).map(item => [item.id, item])
+					)
 				)
 			};
 		}
@@ -54,13 +56,17 @@ export const selectionReducer = (
 			};
 		}
 		case 'remove': {
+			const items = payload?.items ?? [];
 			return {
 				selectedItems: selectedItems.filter(
-					(_, key) => !payload.items.some(({id}) => id === key)
+					(_, key) => !items.some(({id}) => id === key)
 				) as OrderedMap<any, any> // Assert return type from .filter() is OrderedMap until we can update Immutable package
 			};
 		}
 		case 'toggle': {
+			if (!payload?.item) {
+				return {selectedItems};
+			}
 			if (selectedItems.has(payload.item.id)) {
 				return {selectedItems: selectedItems.delete(payload.item.id)};
 			} else {
@@ -110,8 +116,11 @@ export const useSelectionContext = () => {
 	return context;
 };
 
-export const withSelectionProvider = WrappedComponent => props => (
-	<SelectionProvider>
-		<WrappedComponent {...props} />
-	</SelectionProvider>
-);
+export const withSelectionProvider =
+	<P extends object>(WrappedComponent: React.ComponentType<P>) =>
+	(props: P) =>
+		(
+			<SelectionProvider>
+				<WrappedComponent {...props} />
+			</SelectionProvider>
+		);

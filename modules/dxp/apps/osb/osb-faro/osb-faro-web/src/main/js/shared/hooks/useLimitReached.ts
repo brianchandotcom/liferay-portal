@@ -18,7 +18,7 @@ export const useLimitReached = ({
 }) => {
 	const usage = data?.find(
 		item =>
-			(item['type'] || item['name']).toLowerCase() ===
+			(item['type'] || item['name'] || '').toLowerCase() ===
 			featureName.toLowerCase()
 	);
 

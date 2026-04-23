@@ -11,9 +11,10 @@ export default class OrderParams
 		field: null,
 		sortOrder: null
 	})
-	implements IOrderParams {
-	field: string;
-	sortOrder: OrderByDirections;
+	implements IOrderParams
+{
+	declare field: string;
+	declare sortOrder: OrderByDirections;
 
 	constructor(props = {}) {
 		super(props);

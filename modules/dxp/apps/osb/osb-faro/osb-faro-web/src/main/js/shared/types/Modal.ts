@@ -45,14 +45,14 @@ export namespace Modal {
 	export type close = () => {type: actionTypes};
 
 	export type open = (
-		type: modalTypes,
+		type: string,
 		props?: {[key: string]: any},
-		options?: {closeOnBlur: boolean}
+		options?: {closeOnBlur?: boolean}
 	) => {
 		payload: {
 			closeOnBlur: boolean;
 			props: {[key: string]: any};
-			type: modalTypes;
+			type: string;
 		};
 		type: actionTypes;
 	};

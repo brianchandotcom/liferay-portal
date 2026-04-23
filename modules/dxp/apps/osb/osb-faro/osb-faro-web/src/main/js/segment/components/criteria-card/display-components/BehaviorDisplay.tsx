@@ -31,7 +31,7 @@ const BehaviorDisplay: React.FC<IDisplayComponentProps> = ({
 		getPropertyValue(valueIMap, 'value', 0)
 	);
 
-	const operatorKey = maybeFormatToKnownType(operatorName, name);
+	const operatorKey = maybeFormatToKnownType(operatorName ?? '', name);
 
 	const operatorLabel = getOperatorLabel(operatorKey, type);
 
@@ -54,7 +54,11 @@ const BehaviorDisplay: React.FC<IDisplayComponentProps> = ({
 
 			<ReferencedEntityDisplay
 				id={id}
-				label={ASSET_TYPE_LANG_MAP[objectType]}
+				label={
+					ASSET_TYPE_LANG_MAP[
+						objectType as keyof typeof ASSET_TYPE_LANG_MAP
+					]
+				}
 				type={EntityType.Assets}
 			/>
 

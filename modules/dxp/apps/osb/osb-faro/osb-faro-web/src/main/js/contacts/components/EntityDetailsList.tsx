@@ -36,7 +36,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 	_detailsData: any;
 	_knownCount: any;
 
-	constructor(props) {
+	constructor(props: IEntityDetailsListProps) {
 		super(props);
 
 		this.getDetailsData();
@@ -44,8 +44,14 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 	}
 
 	@autobind
-	filterDetails({hideBlanks, query = ''}) {
-		const items = this._detailsData.filter(rowData => {
+	filterDetails({
+		hideBlanks,
+		query = ''
+	}: {
+		hideBlanks: boolean;
+		query?: string;
+	}) {
+		const items = this._detailsData.filter((rowData: {value: string}) => {
 			if (hideBlanks && isBlank(rowData.value)) {
 				return false;
 			}
@@ -56,7 +62,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 							.toString()
 							.toLowerCase()
 							.includes(query.toLowerCase())
-					: ''
+					: false
 			);
 		});
 
@@ -81,7 +87,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 		const {demographicsIMap} = this.props;
 
 		this._detailsData = demographicsIMap
-			.map(values => {
+			.map((values: any) => {
 				const fieldValue = values.get(0);
 
 				return {
@@ -91,7 +97,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 					name: fieldValue.get('name'),
 					sourceName: fieldValue.get('sourceName'),
 					value: values
-						.map(fieldMapping => fieldMapping.get('value'))
+						.map((fieldMapping: any) => fieldMapping.get('value'))
 						.join(', ')
 				};
 			})
@@ -103,12 +109,12 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 		const {demographicsIMap} = this.props;
 
 		this._knownCount = demographicsIMap.filter(
-			values => !isBlank(values.getIn([0, 'value']))
+			(values: any) => !isBlank(values.getIn([0, 'value']))
 		).size;
 	}
 
 	@autobind
-	handleToggleBlankRows(event) {
+	handleToggleBlankRows(event: React.ChangeEvent<HTMLInputElement>) {
 		this.setState({
 			hideBlanks: event.target.checked
 		});

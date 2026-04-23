@@ -11,7 +11,7 @@ import {useParams} from 'react-router-dom';
 import {validContactsConfig} from 'shared/util/data-sources';
 import {withRequest} from 'shared/hoc';
 
-const EnrichedProfilesBody = ({count}) => (
+const EnrichedProfilesBody = ({count}: {count: number}) => (
 	<Card.Body className='d-flex flex-column'>
 		<div className='total d-flex flex-grow-1 text-center justify-content-center align-items-center'>
 			{sub(Liferay.Language.get('x-profiles'), [
@@ -29,12 +29,12 @@ const EnrichedProfilesBody = ({count}) => (
 
 const EnrichedProfilesBodyWithData = React.memo(
 	withRequest(
-		({channelId, groupId}) =>
+		({channelId, groupId}: {channelId: string; groupId: string}) =>
 			API.individuals.fetchEnrichedProfilesCount({channelId, groupId}),
-		({total}) => ({count: total}),
+		({total}: {total: number}) => ({count: total}),
 		{page: false}
 	)(EnrichedProfilesBody)
-);
+) as React.ComponentType<{channelId: string; groupId: string}>;
 
 const renderInfoPopover = () => (
 	<InfoPopover
@@ -52,7 +52,10 @@ interface IEnrichedProfilesCardProps extends React.HTMLAttributes<HTMLElement> {
 const EnrichedProfilesCard: React.FC<IEnrichedProfilesCardProps> = ({
 	dataSources
 }) => {
-	const {channelId, groupId} = useParams();
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const contactsConfigured =
 		!dataSources || dataSources.some(validContactsConfig);
 

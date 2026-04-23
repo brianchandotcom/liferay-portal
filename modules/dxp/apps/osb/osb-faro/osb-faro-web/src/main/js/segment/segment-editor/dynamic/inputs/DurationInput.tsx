@@ -21,7 +21,7 @@ export default class SegmentDurationInput extends React.Component<ISegmentDurati
 	}
 
 	@autobind
-	handleChange(value) {
+	handleChange(value: string | number) {
 		const {onChange} = this.props;
 
 		onChange({valid: isValid(value), value});

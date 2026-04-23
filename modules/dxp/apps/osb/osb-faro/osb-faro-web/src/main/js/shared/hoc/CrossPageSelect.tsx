@@ -43,7 +43,9 @@ export const defaultSort = (
 	items: OrderedMap<any, any>,
 	orderIOMap: OrderedMap<string, OrderParams>
 ): OrderedMap<any, any> => {
-	const {field, sortOrder} = orderIOMap.first();
+	const first = orderIOMap.first() as OrderParams | undefined;
+	const field = first?.field ?? '';
+	const sortOrder = first?.sortOrder;
 
 	const sorted = items.sortBy(item => {
 		if (item[field]) {
@@ -88,7 +90,7 @@ export const fetchLocalData = ({
 	const result =
 		query || filterBy
 			? defaultSort(
-					searchSelectedFn({filterBy, items, query}),
+					searchSelectedFn({filterBy, items, query: query ?? ''}),
 					orderIOMap
 			  )
 			: defaultSort(items, orderIOMap);
@@ -100,26 +102,32 @@ export const fetchLocalData = ({
 	};
 };
 
-export const withLocalData = () => WrappedComponent => props => {
-	const {delta, filterBy, orderIOMap, page, query, searchSelectedFn} = props;
+export const withLocalData =
+	() =>
+	<P extends {[key: string]: any}>(
+		WrappedComponent: React.ComponentType<P>
+	) =>
+	(props: P) => {
+		const {delta, filterBy, orderIOMap, page, query, searchSelectedFn} =
+			props;
 
-	const {selectedItems} = useSelectionContext();
+		const {selectedItems} = useSelectionContext();
 
-	return (
-		<WrappedComponent
-			{...props}
-			{...fetchLocalData({
-				delta,
-				filterBy,
-				items: selectedItems,
-				orderIOMap,
-				page,
-				query,
-				searchSelectedFn
-			})}
-		/>
-	);
-};
+		return (
+			<WrappedComponent
+				{...props}
+				{...fetchLocalData({
+					delta,
+					filterBy,
+					items: selectedItems,
+					orderIOMap,
+					page,
+					query,
+					searchSelectedFn
+				})}
+			/>
+		);
+	};
 
 interface IwithSelectionProps {
 	checkDisabled?: (item?: object) => boolean;
@@ -134,7 +142,7 @@ interface IwithSelectionProps {
  * @returns {Function}
  */
 export const withSelection: (
-	WrappedComponent
+	WrappedComponent: React.ComponentType<any>
 ) => React.FC<IwithSelectionProps> = WrappedComponent => {
 	const WithSelection: React.FC<IwithSelectionProps> = ({
 		checkDisabled = () => false,
@@ -152,16 +160,19 @@ export const withSelection: (
 
 		const selectionProps = {
 			alwaysShowSearch: true,
-			onSelectEntirePage: checked => {
-				selectionDispatch({
+			onSelectEntirePage: (checked: boolean) => {
+				selectionDispatch?.({
 					payload: {
 						items: items.filter(item => !checkDisabled(item))
 					},
 					type: checked ? ACTION_TYPES.add : ACTION_TYPES.remove
 				});
 			},
-			onSelectItemsChange: item =>
-				selectionDispatch({payload: {item}, type: ACTION_TYPES.toggle}),
+			onSelectItemsChange: (item: {id: string}) =>
+				selectionDispatch?.({
+					payload: {item},
+					type: ACTION_TYPES.toggle
+				}),
 			selectedItemsIOMap: selectedItems,
 			selectEntirePage: allChecked,
 			selectEntirePageIndeterminate:
@@ -190,6 +201,10 @@ export const ViewSelectedToggle = ({
 	onClick,
 	selectedItemsCount,
 	showSelected
+}: {
+	onClick: () => void;
+	selectedItemsCount: number;
+	showSelected: boolean;
 }) => (
 	<ClayButton
 		className='button-root'
@@ -209,7 +224,7 @@ export const ViewSelectedToggle = ({
 );
 
 interface ICrossPageSelectProps extends IPagination {
-	children: (val) => React.ReactElement;
+	children: (val: any) => React.ReactElement;
 	onDeltaChange: (delta: number) => void;
 	onFilterByChange: (filterBy: FilterByType) => void;
 	onOrderIOMapChange: (orderIOMap: OrderedMap<string, OrderParams>) => void;
@@ -242,7 +257,7 @@ const CrossPageSelect: React.FC<ICrossPageSelectProps> = ({
 		onQueryChange: onStagedQueryChange,
 		page: stagedPage,
 		query: stagedQuery
-	} = useStatefulPagination(null, {
+	} = useStatefulPagination(undefined, {
 		initialDelta: delta,
 		initialOrderIOMap: orderIOMap
 	});

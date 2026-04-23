@@ -3,9 +3,9 @@ import Card from 'shared/components/Card';
 import MetricChart from './MetricChart';
 import MetricTabs from './MetricTabs';
 import React, {createContext, useContext, useReducer} from 'react';
-import {DocumentNode} from 'apollo-boost';
+import {DocumentNode} from '@apollo/client';
 import {getMetricsChartData} from './util';
-import {Interval, RangeSelectors, Router} from 'shared/types';
+import {ICommonVariables, Interval, RangeSelectors} from 'shared/types';
 import {Metric} from './metrics';
 import {RawFilters} from 'shared/util/filter';
 import {ReportContainer} from '../download-report/DownloadPDFReport';
@@ -20,7 +20,7 @@ const initialState = {
 		name: '',
 		TabsQuery: null
 	},
-	variables: () => {}
+	variables: () => ({})
 };
 
 const MetricContext = createContext(initialState as any);
@@ -58,21 +58,16 @@ interface IMetricBaseCardProps<TChartData>
 		name: string;
 		TabsQuery: DocumentNode;
 	};
-	variables: (commonVariables: {
-		filters: Object;
-		interval: Interval;
-		rangeSelectors: RangeSelectors;
-		router: Router;
-	}) => void;
+	variables: (commonVariables: ICommonVariables) => any;
 }
 
 function MetricBaseCard<TChartData>({
 	chartDataMapFn = getMetricsChartData,
 	emptyDescription,
 	emptyTitle,
+	id,
 	label,
 	legacyDropdownRangeKey = false,
-	id,
 	metrics,
 	queries,
 	reportContainer,
@@ -140,7 +135,25 @@ function MetricBaseCard<TChartData>({
 	);
 }
 
-export const reducer = (state, action) => {
+type TMetricState = {
+	activeItemIndex: number;
+	chartDataMapFn: unknown;
+	compareToPrevious: boolean;
+	metrics: Metric[];
+	queries: {
+		MetricQuery: ((metricName: string) => DocumentNode) | null;
+		name: string;
+		TabsQuery: DocumentNode | null;
+	};
+	variables: (commonVariables: ICommonVariables) => any;
+};
+
+type TMetricAction = {
+	payload: any;
+	type: Actions;
+};
+
+export const reducer = (state: TMetricState, action: TMetricAction) => {
 	const handlerFn = actionHandlers[action.type];
 
 	if (handlerFn) {
@@ -155,7 +168,10 @@ enum Actions {
 	UpdateCompareToPrevious = 'UPDATE_COMPARE_TO_PREVIOUS'
 }
 
-const actionHandlers = {
+const actionHandlers: Record<
+	Actions,
+	(state: TMetricState, action: TMetricAction) => TMetricState
+> = {
 	[Actions.UpdateActiveItemIndex]: (state, {payload}) => ({
 		...state,
 		activeItemIndex: payload

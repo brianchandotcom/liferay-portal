@@ -191,12 +191,8 @@ const buildQueryString = (
 					queryString = queryString.concat(`(${val})`);
 				}
 			} else {
-				const {
-					operatorName,
-					propertyName,
-					type,
-					value
-				} = criterion as Criterion;
+				const {operatorName, propertyName, type, value} =
+					criterion as Criterion;
 
 				const parsedValue = isString(value)
 					? `'${decodeQuotesToOdataQuotes(encodeQuotes(value))}'`
@@ -208,13 +204,13 @@ const buildQueryString = (
 					);
 				} else if (isValueType(CustomFunctionOperators, operatorName)) {
 					const fnName = getFunctionNameFromOperatorName(
-						operatorName
+						operatorName ?? ''
 					);
 
 					const paramKeys = value.keySeq().toJS();
 
 					const paramsString = paramKeys
-						.map(key => {
+						.map((key: string) => {
 							if (
 								(key === 'value' || key === 'operator') &&
 								isNull(value.get(key))
@@ -233,7 +229,7 @@ const buildQueryString = (
 
 							return `${key}='${value.get(key)}'`;
 						})
-						.filter(val => !isUndefined(val))
+						.filter((val: string | undefined) => !isUndefined(val))
 						.join();
 
 					queryString = queryString.concat(
@@ -252,10 +248,9 @@ const buildQueryString = (
 						);
 					}
 				} else if (isValueType(NotOperators, operatorName)) {
-					const baseOperator = (operatorName as string).replace(
-						/not-/g,
-						''
-					) as Conjunctions &
+					const baseOperator = (
+						(operatorName ?? '') as string
+					).replace(/not-/g, '') as Conjunctions &
 						CustomFunctionOperators &
 						FunctionalOperators &
 						RelationalOperators &
@@ -374,7 +369,9 @@ const getOperatorNameFromFunctionName = (
 	name: string,
 	namespace: string
 ): CustomFunctionOperators =>
-	CUSTOM_FUNCTION_OPERATOR_KEY_MAP[`${namespace}.${name}`];
+	CUSTOM_FUNCTION_OPERATOR_KEY_MAP[
+		`${namespace}.${name}` as keyof typeof CUSTOM_FUNCTION_OPERATOR_KEY_MAP
+	];
 
 /**
  * Gets the function name & namespace from the operatorName.
@@ -473,8 +470,8 @@ const hasDifferentConjunctions = ({
  * @param {object} types - A map of supported types.
  * @param {*} value - The value to validate.
  */
-const isValueType = (types: object, value: string): boolean =>
-	Object.values(types).includes(value);
+const isValueType = (types: object, value: string | undefined): boolean =>
+	value !== undefined && Object.values(types).includes(value);
 
 /**
  * Checks if the group is needed; It is unnecessary when there are multiple
@@ -492,7 +489,8 @@ const isRedundantGroup = ({
 
 	return (
 		lastNodeWasGroup ||
-		oDataV4ParserNameMap[prevConjunction] === nextNodeExpressionName ||
+		oDataV4ParserNameMap[prevConjunction ?? ''] ===
+			nextNodeExpressionName ||
 		!isValueType(Conjunctions, nextNodeExpressionName)
 	);
 };
@@ -547,7 +545,7 @@ export const decodeValueFromCriteria = (criteria: Criteria) => {
 		return decodedValue;
 	};
 
-	const formatCriteria = criteria => {
+	const formatCriteria = (criteria: any) => {
 		const newCriteria = {...criteria};
 
 		if (newCriteria.value) {
@@ -622,7 +620,7 @@ const toCriteria = (context: Context): Criteria[] => {
 
 	const expressionName = getExpressionName(oDataASTNode);
 
-	let criterion;
+	let criterion: Criteria[] | undefined;
 
 	if (oDataASTNode.type === EXPRESSION_TYPES.NOT) {
 		criterion = transformNotNode(context);
@@ -640,7 +638,7 @@ const toCriteria = (context: Context): Criteria[] => {
 		criterion = transformGroupNode(context);
 	}
 
-	return criterion;
+	return criterion ?? [];
 };
 
 /**
@@ -658,11 +656,8 @@ const transformCommonNode = ({oDataASTNode}: Context): Criteria[] => {
 		const methodExpressionName = getExpressionName(nextNodeExpression);
 
 		if (methodExpressionName === 'substring') {
-			const [
-				{raw: propertyName},
-				{raw: start},
-				{raw: end}
-			] = nextNodeExpression.value.parameters;
+			const [{raw: propertyName}, {raw: start}, {raw: end}] =
+				nextNodeExpression.value.parameters;
 
 			return [
 				{
@@ -676,8 +671,10 @@ const transformCommonNode = ({oDataASTNode}: Context): Criteria[] => {
 						start: removeQuotes(start)
 					}
 				}
-			] as Criterion[];
+			] as unknown as Criterion[];
 		}
+
+		return [];
 	} else {
 		const anyExpression = get(nextNodeExpression, [
 			'value',
@@ -708,7 +705,7 @@ const transformCommonNode = ({oDataASTNode}: Context): Criteria[] => {
 				valid: true,
 				value
 			}
-		] as Criteria[];
+		] as unknown as Criteria[];
 	}
 };
 
@@ -752,7 +749,7 @@ const transformCustomFunctionNode = ({oDataASTNode}: Context): Criterion[] => {
 	const {name, namespace} = fn.value;
 
 	const customValue = new CustomValue(
-		params.value.reduce((accIMap, cur) => {
+		params.value.reduce((accIMap: Map<string, any>, cur: any) => {
 			const {
 				name: {
 					value: {name}
@@ -826,7 +823,7 @@ const transformCustomFunctionNode = ({oDataASTNode}: Context): Criterion[] => {
 			valid,
 			value: customValue
 		}
-	] as Criterion[];
+	] as unknown as Criterion[];
 };
 
 /**
@@ -845,7 +842,7 @@ const transformFunctionalNode = ({oDataASTNode}: Context): Criterion[] =>
 			valid: true,
 			value: removeQuotes(oDataASTNode.value.parameters[1].raw)
 		}
-	] as Criterion[];
+	] as unknown as Criterion[];
 
 /**
  * Transforms a group expression node into a criterion for the criteria
@@ -883,7 +880,7 @@ const transformNotNode = ({oDataASTNode}: Context): Criteria[] => {
 
 	const nextNodeExpressionName = getExpressionName(nextNodeExpression);
 
-	let returnValue;
+	let returnValue: Criteria[] = [];
 
 	if (nextNodeExpressionName == OPERATORS.Contains) {
 		returnValue = [
@@ -893,7 +890,7 @@ const transformNotNode = ({oDataASTNode}: Context): Criteria[] => {
 				})[0],
 				operatorName: NotOperators.NotContains
 			}
-		];
+		] as unknown as Criteria[];
 	} else if (isValueType(CustomFunctionOperators, nextNodeExpressionName)) {
 		returnValue = [
 			{
@@ -902,7 +899,7 @@ const transformNotNode = ({oDataASTNode}: Context): Criteria[] => {
 				})[0],
 				operatorName: `not-${nextNodeExpressionName}`
 			}
-		];
+		] as unknown as Criteria[];
 	} else if (nextNodeExpression.type == EXPRESSION_TYPES.PROPERTY_PATH) {
 		const anyExpression = nextNodeExpression.value.next.value;
 
@@ -918,7 +915,7 @@ const transformNotNode = ({oDataASTNode}: Context): Criteria[] => {
 					})[0],
 					operatorName: NotOperators.NotContains
 				}
-			];
+			] as unknown as Criteria[];
 		}
 	}
 
@@ -934,7 +931,7 @@ const transformNotNode = ({oDataASTNode}: Context): Criteria[] => {
 const transformOperatorNode = ({oDataASTNode}: Context): Criterion[] => {
 	const valueType = oDataASTNode.value.right.value;
 
-	let value: string | number = removeSurroundingQuotes(
+	let value: string | number | null = removeSurroundingQuotes(
 		oDataASTNode.value.right.raw
 	);
 
@@ -955,7 +952,7 @@ const transformOperatorNode = ({oDataASTNode}: Context): Criterion[] => {
 			valid: true,
 			value
 		}
-	] as Criterion[];
+	] as unknown as Criterion[];
 };
 
 /**

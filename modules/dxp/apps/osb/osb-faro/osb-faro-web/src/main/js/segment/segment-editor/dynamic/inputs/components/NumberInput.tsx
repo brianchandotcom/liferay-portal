@@ -56,7 +56,7 @@ const NumberInput: React.FC<INumberInputProps> = ({
 
 					onBlur && onBlur();
 				}}
-				onChange={event => {
+				onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
 					const {value} = event.target;
 
 					let numberVal: string | number = '';

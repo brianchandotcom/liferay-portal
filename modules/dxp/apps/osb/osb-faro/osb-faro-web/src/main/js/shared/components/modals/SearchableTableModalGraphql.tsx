@@ -8,11 +8,12 @@ import {
 	withSelectionProvider
 } from 'shared/context/selection';
 import {Columns, IPagination} from 'shared/types';
-import {DocumentNode} from 'apollo-boost';
+import {DocumentNode, QueryHookOptions, useQuery} from '@apollo/client';
+
 import {noop} from 'lodash';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
-import {QueryHookOptions, useQuery} from '@apollo/react-hooks';
+
 import {safeResultToProps} from 'shared/util/mappers';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
@@ -24,9 +25,7 @@ interface ISearchableTableModalGraphQLProps extends IPagination {
 	initialOrderIOMap: OrderedMap<string, OrderParams>;
 	instruction?: string;
 	mapPropsToOptions: (props: {[key: string]: any}) => QueryHookOptions;
-	mapResultToProps: (result: {
-		[key: string]: any;
-	}) => {
+	mapResultToProps: (result: {[key: string]: any}) => {
 		items: any[];
 		total: number;
 	};
@@ -38,7 +37,9 @@ interface ISearchableTableModalGraphQLProps extends IPagination {
 	title?: string;
 }
 
-const SearchableTableModalGraphql: React.FC<ISearchableTableModalGraphQLProps> = ({
+const SearchableTableModalGraphql: React.FC<
+	ISearchableTableModalGraphQLProps
+> = ({
 	className,
 	columns,
 	graphqlQuery,
@@ -64,21 +65,19 @@ const SearchableTableModalGraphql: React.FC<ISearchableTableModalGraphQLProps> =
 		orderIOMap,
 		page,
 		query
-	} = useStatefulPagination(null, {initialDelta, initialOrderIOMap});
+	} = useStatefulPagination(undefined, {initialDelta, initialOrderIOMap});
 
 	const {data, error, loading} = useQuery(
 		graphqlQuery,
-		mapPropsToOptions({delta, orderIOMap, page, query, ...otherProps})
+		mapPropsToOptions({...otherProps, delta, orderIOMap, page, query})
 	);
 
-	const {
-		selectedItems: contextSelectedItems,
-		selectionDispatch
-	} = useSelectionContext();
+	const {selectedItems: contextSelectedItems, selectionDispatch} =
+		useSelectionContext();
 
 	useEffect(() => {
 		if (selectedItems.length) {
-			selectionDispatch({
+			selectionDispatch?.({
 				payload: {items: selectedItems},
 				type: ACTION_TYPES.add
 			});

@@ -5,13 +5,13 @@ import CustomStringInput from './CustomStringInput';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 import Form from 'shared/components/form';
 import React from 'react';
+import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {fromJS} from 'immutable';
 import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName,
 	getPropertyValue
 } from '../utils/custom-inputs';
-import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {isNull} from 'lodash';
 import {PropertyTypes} from '../utils/constants';
 
@@ -40,7 +40,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 			.fetchFieldValues({
 				channelId,
 				fieldName: name,
-				groupId,
+				groupId: groupId!,
 				query: getPropertyValue(valueIMap, 'value', 0)
 			})
 			.then(({items}) => items);
@@ -65,7 +65,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 	}
 
 	@autobind
-	handleConjunctionChange(criterion) {
+	handleConjunctionChange(criterion: Criterion | null) {
 		const {onChange, touched, valid, value} = this.props;
 
 		onChange({
@@ -78,7 +78,11 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 	}
 
 	@autobind
-	handleCustomInputChange(criterion) {
+	handleCustomInputChange(criterion: Criterion | Criterion[]) {
+		if (Array.isArray(criterion)) {
+			criterion = criterion[0];
+		}
+
 		const {onChange, touched, valid} = this.props;
 
 		onChange({

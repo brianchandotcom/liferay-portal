@@ -13,6 +13,11 @@ export const pagination = {
 	initialPageNumber: cur
 };
 
+type FDSCellProps<TValue = unknown, TItemData = Record<string, unknown>> = {
+	itemData: TItemData;
+	value: TValue;
+};
+
 export const columns = {
 	cmsLabelRenderer: ({
 		displayType,
@@ -28,10 +33,20 @@ export const columns = {
 			{label}
 		</Label>
 	),
-	dateRenderer: ({value}) => (
+	dateRenderer: ({value}: FDSCellProps<string | number>) => (
 		<div>{value && formatUTCDate(value, CUSTOM_DATE_FORMAT)}</div>
 	),
-	nameAndLinkRenderer: ({groupId, itemData, route, value}) => {
+	nameAndLinkRenderer: ({
+		groupId,
+		itemData,
+		route,
+		value
+	}: {
+		groupId: string;
+		itemData: {id: string | number};
+		route: string;
+		value: string;
+	}) => {
 		const itemTitle = value || itemData.id;
 
 		return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StopClickPropagation = ({children}) => (
+const StopClickPropagation = ({children}: {children: React.ReactNode}) => (
 	/* We are disabling the following rules as we don't actually
 					want this elment to be explicitly interactable. It only
 					serves to stop the propagation of the event to prevent

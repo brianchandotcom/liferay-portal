@@ -27,7 +27,7 @@ const SearchableEntityTableHOC = withStatefulPagination(
 	{
 		initialOrderIOMap: createOrderIOMap('fieldName')
 	},
-	props => omit(props, 'onSearchValueChange')
+	(props: {[key: string]: any}) => omit(props, 'onSearchValueChange')
 );
 
 const connector = connect(null, {close, open});
@@ -49,17 +49,23 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 	const currentUser = useCurrentUser();
 	const {timeZoneId} = useTimeZone();
 
-	const openModal = ({dataSources, fieldName}) => () => {
-		open(modalTypes.INDIVIDUAL_ATTRIBUTES_MODAL, {
-			dataSources,
-			fieldName,
-			onClose: close
-		});
-	};
+	const openModal =
+		({dataSources, fieldName}: {dataSources: any; fieldName: any}) =>
+		() => {
+			open(modalTypes.INDIVIDUAL_ATTRIBUTES_MODAL, {
+				dataSources,
+				fieldName,
+				onClose: close
+			});
+		};
 
 	const authorized = currentUser.isAdmin();
 
-	const FieldNameCell = ({data: {dataSources, fieldName}}) => (
+	const FieldNameCell = ({
+		data: {dataSources, fieldName}
+	}: {
+		data: {dataSources: any; fieldName: any};
+	}) => (
 		<td className='table-cell-expand'>
 			<div className='content-container'>
 				<ClayButton
@@ -100,7 +106,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 						{
 							accessor: 'dataSources',
 							className: 'pr-6',
-							dataFormatter: dataSources =>
+							dataFormatter: (dataSources: any[]) =>
 								dataSources.length > 1
 									? sub(Liferay.Language.get('x-sources'), [
 											dataSources.length
@@ -111,7 +117,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 						{
 							accessor: 'dateModified',
 							className: 'pr-5',
-							dataFormatter: dateModified =>
+							dataFormatter: (dateModified: string) =>
 								applyTimeZone(
 									dateModified,
 									timeZoneId

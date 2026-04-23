@@ -21,33 +21,30 @@ const defaultOptions = {
  * @param {Boolean} [options.page] - Whether the component is a page display or not.
  * @returns {Function} - The new component
  */
-export default (
-	request,
-	mapResultToProps = val => val,
-	options = {}
-) => WrappedComponent => {
-	const {errorProps, page} = {
-		...defaultOptions,
-		...options
+export default (request, mapResultToProps = val => val, options = {}) =>
+	WrappedComponent => {
+		const {errorProps, page} = {
+			...defaultOptions,
+			...options
+		};
+
+		return ({groupId, ...props}) => {
+			const propsToError = isFunction(errorProps)
+				? errorProps({groupId})
+				: errorProps;
+
+			const Composed = compose(
+				withQuery(request, val => val),
+				withError({...propsToError, page}),
+				withLoading()
+			)(({data, ...otherProps}) => (
+				<WrappedComponent
+					groupId={groupId}
+					{...otherProps}
+					{...mapResultToProps(data, otherProps)}
+				/>
+			));
+
+			return <Composed {...props} groupId={groupId} />;
+		};
 	};
-
-	return ({groupId, ...props}) => {
-		const propsToError = isFunction(errorProps)
-			? errorProps({groupId})
-			: errorProps;
-
-		const Composed = compose(
-			withQuery(request, val => val),
-			withError({...propsToError, page}),
-			withLoading()
-		)(({data, ...otherProps}) => (
-			<WrappedComponent
-				groupId={groupId}
-				{...otherProps}
-				{...mapResultToProps(data, otherProps)}
-			/>
-		));
-
-		return <Composed {...props} groupId={groupId} />;
-	};
-};

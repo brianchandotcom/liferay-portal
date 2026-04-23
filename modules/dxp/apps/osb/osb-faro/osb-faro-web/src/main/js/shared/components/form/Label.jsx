@@ -16,13 +16,8 @@ export default class Label extends React.Component {
 	};
 
 	render() {
-		const {
-			children,
-			className,
-			popover,
-			required,
-			...otherProps
-		} = this.props;
+		const {children, className, popover, required, ...otherProps} =
+			this.props;
 
 		return (
 			<label

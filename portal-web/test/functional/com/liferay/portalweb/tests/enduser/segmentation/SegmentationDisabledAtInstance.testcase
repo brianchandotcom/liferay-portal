@@ -158,44 +158,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019 Given the ""Enable Segmentation"" is disabled And there's a warning alert at Simulation panel When user clicks at Close button Then the alert disappears from page"
-	@priority = 4
-	test CloseDisabledSegmentationAlertAtSimulationPanel {
-		task ("Create a layout page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Experience Content Page",
-				type = "content");
-		}
-
-		task ("Create a segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "First Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User3",
-				text = "userfn3");
-		}
-
-		task ("Navigate o simulation panel") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			MobileDevice.previewPG();
-
-			SelectFrameTop();
-		}
-
-		task ("Close warning message") {
-			Segmentation.closeSegmentationDisabledWarning();
-
-			AssertElementNotPresent(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-	}
-
 	@description = "LPS-154019 Given the ""Enable Segmentation"" is disabled When user clicks at Close button at Simulation panel And the page is reloaded Then the alert reappears"
 	@priority = 3
 	test DisabledAlertAfterRefreshAtSimulationPanel {
@@ -496,8 +458,12 @@ definition {
 			SelectFrameTop();
 		}
 
-		task ("Close warning message") {
+		task ("Close warning and check it disappears") {
 			Segmentation.closeSegmentationDisabledWarning();
+
+			AssertElementNotPresent(
+				locator1 = "Message#ERROR_3",
+				value1 = "Segmentation is disabled");
 		}
 
 		task ("Leave then return to page and check if warning reappears") {

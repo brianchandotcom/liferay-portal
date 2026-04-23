@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 /**
  * @author Alan Huang
  */
-public class CompanyThreadLocalUsage {
+public class SafeCloseableMissingClose {
 
 	public void method1(String companyId) {
 		CompanyThreadLocal.setCompanyId(companyId);

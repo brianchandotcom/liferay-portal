@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class CompanyThreadLocalCheck extends BaseCheck {
+public class SafeCloseableMissingCloseCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -22,17 +22,6 @@ public class CompanyThreadLocalCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> methodCallDetailASTs = getMethodCalls(
-			detailAST, "CompanyThreadLocal", "setCompanyId");
-
-		for (DetailAST methodCallDetailAST : methodCallDetailASTs) {
-			log(methodCallDetailAST, _MSG_AVOID_SET_COMPANY_ID_CALL);
-		}
-
-		_checkMissingCloseCall(detailAST);
-	}
-
-	private void _checkMissingCloseCall(DetailAST detailAST) {
 		DetailAST variableDefinitionDetailAST = null;
 		String variableName = null;
 
@@ -89,9 +78,6 @@ public class CompanyThreadLocalCheck extends BaseCheck {
 				variableName, variableName);
 		}
 	}
-
-	private static final String _MSG_AVOID_SET_COMPANY_ID_CALL =
-		"set.company.id.call.avoid";
 
 	private static final String _MSG_MISSING_CLOSE_CALL = "close.call.missing";
 

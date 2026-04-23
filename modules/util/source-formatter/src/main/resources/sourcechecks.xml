@@ -779,6 +779,11 @@
 			<description name="Finds cases where company scoped ids are used, see LPD-45118." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="JavaCompanyThreadLocalCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that `CompanyThreadLocal.lock` and `CompanyThreadLocal.setCompanyId*` methods are not used." />
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaComponentActivateCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks if methods with annotation `@Activate` or `@Deactivate` follow naming conventions." />
@@ -980,11 +985,6 @@
 		<check name="JavaUpgradeClassCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on Upgrade classes." />
-		</check>
-		<check name="JavaUpgradeCompanyThreadLocalCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks that we do not use `CompanyThreadLocal.setCompanyId*` in upgrade classes." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaUpgradeConnectionCheck">
 			<category name="Bug Prevention" />

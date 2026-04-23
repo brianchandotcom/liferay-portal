@@ -17,16 +17,24 @@ export class EditDigitalSalesRoomPage {
 	readonly commentSaveButton;
 	readonly commentsButton: Locator;
 	readonly commentTextarea: Locator;
+	readonly contributorRoleButton: Locator;
+	readonly documentsMenuItem: Locator;
 	readonly editCommentTextarea: Locator;
+	readonly fileUploadButton: Locator;
 	readonly friendlyURLInput: Locator;
+	readonly newButton: Locator;
 	readonly nextButton: Locator;
+	readonly noDocumentsMessage: Locator;
 	readonly onboardingMenuItem: Locator;
 	readonly page: Page;
+	readonly publishButton: Locator;
 	readonly replyButton: Locator;
+	readonly roleKeyButton: Locator;
 	readonly roomCommentsText: Locator;
 	readonly roomNameInput: Locator;
 	readonly saveButton: Locator;
 	readonly selectAccountInput: Locator;
+	readonly selectFileButton: Locator;
 	readonly selectOption: (value: string) => Locator;
 	readonly templatePreviewFrame: FrameLocator;
 
@@ -46,27 +54,60 @@ export class EditDigitalSalesRoomPage {
 		this.commentTextarea = page.getByRole('textbox', {
 			name: 'Add comment.',
 		});
+		this.contributorRoleButton = page.locator(
+			'[data-testid="roleKeyItem_Contributor"]'
+		);
+		this.documentsMenuItem = page.getByRole('menuitem', {
+			name: 'Documents',
+		});
 		this.editCommentTextarea = page
 			.getByRole('textbox', {name: 'Add comment.'})
 			.nth(1);
+		this.fileUploadButton = page.getByRole('menuitem', {
+			name: 'File Upload',
+		});
 		this.friendlyURLInput = page.getByLabel('Friendly URL');
+		this.newButton = page.getByRole('button', {name: 'New'});
 		this.nextButton = page.getByRole('button', {name: 'Next'});
+		this.noDocumentsMessage = page.getByText(
+			'There are no documents or media files in this folder.'
+		);
 		this.onboardingMenuItem = page.getByRole('menuitem', {
 			name: 'Onboarding',
 		});
 		this.page = page;
+		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.replyButton = page.getByRole('button', {name: 'reply'});
+		this.roleKeyButton = page.getByRole('button', {name: 'Viewer'});
 		this.roomCommentsText = page.getByText('Room Comments');
 		this.roomNameInput = page.getByLabel('Room Name');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.selectAccountInput = page.getByRole('combobox', {
 			name: 'Select Account',
 		});
+		this.selectFileButton = page.getByRole('button', {name: 'Select File'});
 		this.selectOption = (value: string) =>
 			page.getByRole('option', {name: value});
 		this.templatePreviewFrame = page
 			.getByLabel('Create New Digital Sales Room')
 			.frameLocator('iframe');
+	}
+
+	async uploadDocument(filePath: string) {
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+
+		await this.documentsMenuItem.click();
+		await this.newButton.click();
+		await this.fileUploadButton.click();
+		await this.selectFileButton.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(filePath);
+
+		await this.publishButton.click();
+
+		await waitForAlert(this.page);
 	}
 
 	async addDigitalSalesRoom({

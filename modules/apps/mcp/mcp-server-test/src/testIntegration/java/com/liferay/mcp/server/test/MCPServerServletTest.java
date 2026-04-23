@@ -68,7 +68,7 @@ public class MCPServerServletTest {
 		String name = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _addProfileObjectEntry(
-			RandomTestUtil.randomString(), name, "GET /test/v1.0/test-entities",
+			name, "GET /test/v1.0/test-entities",
 			"POST /test/v1.0/test-entities");
 
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
@@ -203,7 +203,7 @@ public class MCPServerServletTest {
 		String name = RandomTestUtil.randomString();
 
 		_addProfileObjectEntry(
-			RandomTestUtil.randomString(), name, "GET /test/v1.0/test-entities",
+			name, "GET /test/v1.0/test-entities",
 			"POST /test/v1.0/test-entities");
 
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
@@ -275,7 +275,7 @@ public class MCPServerServletTest {
 	}
 
 	private ObjectEntry _addProfileObjectEntry(
-			String description, String name, String... endpoints)
+			String name, String... endpoints)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -289,7 +289,7 @@ public class MCPServerServletTest {
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				"description", description
+				"description", RandomTestUtil.randomString()
 			).put(
 				"endpoints", StringUtil.merge(endpoints, "\n")
 			).put(

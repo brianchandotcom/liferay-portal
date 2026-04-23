@@ -54,6 +54,10 @@ public class ConfigYAML implements Cloneable {
 		return _compatibilityVersion;
 	}
 
+	public Boolean getForceObjectMethodNameSuffix() {
+		return _forceObjectMethodNameSuffix;
+	}
+
 	public String getGraphQLNamespace() {
 		return _graphQLNamespace;
 	}
@@ -191,6 +195,12 @@ public class ConfigYAML implements Cloneable {
 		_forceClientVersionDescription = forceClientVersionDescription;
 	}
 
+	public void setForceObjectMethodNameSuffix(
+		Boolean forceObjectMethodNameSuffix) {
+
+		_forceObjectMethodNameSuffix = forceObjectMethodNameSuffix;
+	}
+
 	public void setForcePredictableContentApplicationXML(
 		boolean forcePredictableContentApplicationXML) {
 
@@ -305,6 +315,7 @@ public class ConfigYAML implements Cloneable {
 	private String _clientMavenGroupId;
 	private int _compatibilityVersion = 1;
 	private boolean _forceClientVersionDescription = true;
+	private Boolean _forceObjectMethodNameSuffix;
 	private boolean _forcePredictableContentApplicationXML = true;
 	private boolean _forcePredictableOperationId;
 	private boolean _forcePredictableSchemaPropertyName = true;

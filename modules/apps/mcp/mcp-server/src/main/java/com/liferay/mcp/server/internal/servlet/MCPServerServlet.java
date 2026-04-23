@@ -226,7 +226,6 @@ public class MCPServerServlet extends HttpServlet {
 							baseURL + path, mcpSyncServerExchange,
 							String.valueOf(arguments.get("method")));
 					}));
-
 			syncToolSpecifications.add(
 				new McpServerFeatures.SyncToolSpecification(
 					_getTool("get-openapi", toolsJSONObject),
@@ -238,7 +237,6 @@ public class MCPServerServlet extends HttpServlet {
 								"url"
 							)),
 						mcpSyncServerExchange, "GET")));
-
 			syncToolSpecifications.add(
 				new McpServerFeatures.SyncToolSpecification(
 					_getTool("get-openapis", toolsJSONObject),

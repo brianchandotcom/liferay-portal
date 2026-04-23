@@ -46,7 +46,7 @@ public class CommerceOrderAttachmentObjectEntryScopeProvider
 		if (commerceOrder.getCompanyId() != user.getCompanyId()) {
 			throw new NoSuchOrderException(
 				StringBundler.concat(
-					"Unable to find order with ID ", commerceOrderId,
+					"Unable to find commerce order with ID ", commerceOrderId,
 					" and company ", user.getCompanyId()));
 		}
 

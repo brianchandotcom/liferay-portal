@@ -4,6 +4,7 @@
  */
 
 import {MimeTypes} from '../components/AssetIcon';
+import {AssetStatus} from '../utils/constants';
 import {SharingPermission} from './SharingPermission';
 
 export interface IAssetFile {
@@ -70,7 +71,7 @@ export interface IAssetObjectEntry {
 	scopeKey: string;
 	status: {
 		code: number;
-		label: string;
+		label: AssetStatus;
 		label_i18n: string;
 	};
 	systemProperties: IAssetObjectDefinitionBrief & IAssetScope & IAssetVersion;

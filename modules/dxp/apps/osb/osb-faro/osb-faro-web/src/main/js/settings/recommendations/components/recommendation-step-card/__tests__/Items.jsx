@@ -3,7 +3,7 @@ import Form from 'shared/components/form';
 import Items from '../Items';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockRecommendationPageAssetsReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {range} from 'lodash';

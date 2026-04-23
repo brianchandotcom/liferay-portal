@@ -1,10 +1,14 @@
 import EditEmailReportsModal from '../EditEmailReportsModal';
+import mockStore from 'test/mock-store';
 import React from 'react';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
 import {close} from 'shared/actions/modals';
-import {fireEvent, render} from '@testing-library/react';
 import {Frequency} from 'settings/channels/components/EmailReports';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
+import {Provider} from 'react-redux';
 
 jest.mock('shared/actions/alerts', () => ({
 	actionTypes: {},
@@ -15,19 +19,37 @@ jest.mock('shared/actions/alerts', () => ({
 	}))
 }));
 
-addAlert({
-	alertType: Alert.Types.Success,
-	message: Liferay.Language.get('changes-to-email-reports-saved')
-});
-
 jest.unmock('react-dom');
+
+const DefaultComponent = (
+	props: Omit<
+		React.ComponentProps<typeof EditEmailReportsModal>,
+		'onCancel' | 'onSave'
+	>
+) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter>
+			<MockedProvider
+				cache={
+					new InMemoryCache({
+						addTypename: false
+					})
+				}
+			>
+				<EditEmailReportsModal
+					onCancel={close}
+					onSave={() => addAlert()}
+					{...props}
+				/>
+			</MockedProvider>
+		</MemoryRouter>
+	</Provider>
+);
 
 describe('EditEmailReportsModal', () => {
 	it('should render', () => {
 		const {container} = render(
-			<EditEmailReportsModal
-				onCancel={close}
-				onSave={null}
+			<DefaultComponent
 				report={{enabled: false, frequency: Frequency.Monthly}}
 			/>
 		);
@@ -37,9 +59,7 @@ describe('EditEmailReportsModal', () => {
 
 	it('should click the toggle switch, check if its value has changed to true and if frequency options are enabled', () => {
 		const {container} = render(
-			<EditEmailReportsModal
-				onCancel={close}
-				onSave={null}
+			<DefaultComponent
 				report={{enabled: false, frequency: Frequency.Monthly}}
 			/>
 		);
@@ -58,7 +78,7 @@ describe('EditEmailReportsModal', () => {
 
 		expect(frequency).toHaveAttribute('disabled');
 
-		fireEvent.click(toggleSwitch);
+		fireEvent.click(toggleSwitch!);
 
 		expect(toggleSwitch).toHaveAttribute('value', 'true');
 
@@ -67,11 +87,9 @@ describe('EditEmailReportsModal', () => {
 		expect(frequency).not.toHaveAttribute('disabled');
 	});
 
-	it('should configure email reports with the MONTHLY option', () => {
+	it('should configure email reports with the MONTHLY option', async () => {
 		render(
-			<EditEmailReportsModal
-				onCancel={close}
-				onSave={null}
+			<DefaultComponent
 				report={{enabled: true, frequency: Frequency.Monthly}}
 			/>
 		);
@@ -88,24 +106,24 @@ describe('EditEmailReportsModal', () => {
 			'input.toggle-switch-check'
 		);
 
-		fireEvent.click(toggleSwitch);
+		fireEvent.click(toggleSwitch!);
 
-		fireEvent.click(frequency);
+		fireEvent.click(frequency!);
 
-		fireEvent.click(monthly);
+		fireEvent.click(monthly!);
 
-		fireEvent.click(saveBtn);
+		fireEvent.click(saveBtn!);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.advanceTimersByTime(0);
+		});
 
-		expect(addAlert).toBeCalled();
+		await waitFor(() => expect(addAlert).toHaveBeenCalled());
 	});
 
-	it('should configure email reports with the WEEKLY option', () => {
+	it('should configure email reports with the WEEKLY option', async () => {
 		render(
-			<EditEmailReportsModal
-				onCancel={close}
-				onSave={null}
+			<DefaultComponent
 				report={{enabled: true, frequency: Frequency.Weekly}}
 			/>
 		);
@@ -122,24 +140,24 @@ describe('EditEmailReportsModal', () => {
 
 		const weekly = document.querySelector('option[value="weekly"]');
 
-		fireEvent.click(toggleSwitch);
+		fireEvent.click(toggleSwitch!);
 
-		fireEvent.click(frequency);
+		fireEvent.click(frequency!);
 
-		fireEvent.click(weekly);
+		fireEvent.click(weekly!);
 
-		fireEvent.click(saveBtn);
+		fireEvent.click(saveBtn!);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.advanceTimersByTime(0);
+		});
 
-		expect(addAlert).toBeCalled();
+		await waitFor(() => expect(addAlert).toHaveBeenCalled());
 	});
 
-	it('should configure email reports with the DAILY option', () => {
+	it('should configure email reports with the DAILY option', async () => {
 		render(
-			<EditEmailReportsModal
-				onCancel={close}
-				onSave={null}
+			<DefaultComponent
 				report={{enabled: true, frequency: Frequency.Daily}}
 			/>
 		);
@@ -156,16 +174,18 @@ describe('EditEmailReportsModal', () => {
 			'input.toggle-switch-check'
 		);
 
-		fireEvent.click(toggleSwitch);
+		fireEvent.click(toggleSwitch!);
 
-		fireEvent.click(frequency);
+		fireEvent.click(frequency!);
 
-		fireEvent.click(daily);
+		fireEvent.click(daily!);
 
-		fireEvent.click(saveBtn);
+		fireEvent.click(saveBtn!);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.advanceTimersByTime(0);
+		});
 
-		expect(addAlert).toBeCalled();
+		await waitFor(() => expect(addAlert).toHaveBeenCalled());
 	});
 });

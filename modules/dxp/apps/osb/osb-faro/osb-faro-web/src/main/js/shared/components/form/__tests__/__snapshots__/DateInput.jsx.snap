@@ -2,55 +2,69 @@
 
 exports[`DateInput should render 1`] = `
 <div>
-  <div
-    class="form-date-input-root"
+  <form
+    class="form-root"
   >
     <div
-      class="dropdown dropdown-range-key-root"
+      class="form-date-input-root"
     >
+      <label
+        class="form-control-label label-root"
+        for="foo"
+      >
+        <span
+          class="content-container"
+        >
+          Foo Date
+        </span>
+      </label>
       <div
-        aria-expanded="false"
-        aria-haspopup="true"
-        class="dropdown-toggle"
+        class="dropdown dropdown-range-key-root"
       >
         <div
-          class="input-group"
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="dropdown-toggle"
         >
           <div
-            class="input-group-item"
+            class="input-group"
           >
-            <input
-              autocomplete="off"
-              class="input-root form-control input-group-inset input-group-inset-after"
-              data-testid="date-input"
-              id="foo"
-              name="foo"
-              placeholder="YYYY-MM-DD"
-              type="text"
-              value=""
-            />
             <div
-              class="input-group-inset-item input-group-inset-item-after"
+              class="input-group-item"
             >
-              <button
-                aria-label="Choose a date"
-                class="button-root btn btn-unstyled"
-                type="button"
+              <input
+                autocomplete="off"
+                class="input-root form-control input-group-inset input-group-inset-after"
+                data-testid="date-input"
+                id="foo"
+                name="foo"
+                placeholder="YYYY-MM-DD"
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item input-group-inset-item-after"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-calendar icon-root"
-                  role="presentation"
+                <button
+                  aria-label="Choose a date"
+                  class="button-root btn btn-unstyled"
+                  type="button"
                 >
-                  <use
-                    href="#calendar"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    class="lexicon-icon lexicon-icon-calendar icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#calendar"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 `;

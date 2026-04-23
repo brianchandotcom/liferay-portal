@@ -1,30 +1,81 @@
-import * as data from 'test/data';
+import * as pedantic from 'test/pedantic';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import TimeZoneSelectionModal from '../TimeZoneSelectionModal';
-import {mockGetDateNow} from 'test/mock-date';
+import {cleanup, render} from '@testing-library/react';
+import {fromJS} from 'immutable';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {render, waitFor} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/util/date', () => ({
+	...jest.requireActual('shared/util/date'),
+	getDateNow: jest.fn(() => require('moment').utc('2019-01-01T12:10:00Z'))
+}));
+
+const mockGroupId = '23';
+
+const DefaultComponent = props => (
+	<Provider
+		store={mockStore(
+			fromJS({
+				projects: {
+					[mockGroupId]: {
+						data: {
+							timeZone: {
+								timeZoneId: 'UTC'
+							}
+						}
+					}
+				}
+			})
+		)}
+	>
+		<MemoryRouter>
+			<MockedProvider
+				cache={
+					new InMemoryCache({
+						addTypename: false
+					})
+				}
+				mocks={[]}
+			>
+				<TimeZoneSelectionModal
+					groupId={mockGroupId}
+					notificationId='123'
+					onClose={jest.fn()}
+					{...props}
+				/>
+			</MockedProvider>
+		</MemoryRouter>
+	</Provider>
+);
+
 describe('TimeZoneSelectionModal', () => {
-	mockGetDateNow(data.getTimestamp(0));
+	beforeEach(() => {
+		pedantic.disable();
+	});
 
-	it('should render', async () => {
-		const {container} = render(
-			<Provider store={mockStore()}>
-				<StaticRouter>
-					<TimeZoneSelectionModal groupId={23} />
-				</StaticRouter>
-			</Provider>
-		);
+	afterEach(() => {
+		pedantic.enable();
+		cleanup();
+	});
 
-		jest.runAllTimers();
+	it('should render', () => {
+		const {getByText} = render(<DefaultComponent />);
 
-		await waitFor(() => {});
+		expect(getByText('Workspace Timezone')).toBeInTheDocument();
+		expect(
+			getByText(/Your workspace now supports custom timezones/)
+		).toBeInTheDocument();
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Current Time:')).toBeInTheDocument();
+		expect(getByText('12:10 PM')).toBeInTheDocument();
+
+		expect(getByText('Do This Later')).toBeInTheDocument();
+		expect(getByText('Set Timezone')).toBeInTheDocument();
 	});
 });

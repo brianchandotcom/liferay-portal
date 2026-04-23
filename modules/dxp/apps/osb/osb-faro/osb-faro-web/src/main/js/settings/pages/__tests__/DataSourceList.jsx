@@ -8,9 +8,10 @@ import DataSourceList, {
 } from '../DataSourceList';
 import mockStore, {mockStoreData} from 'test/mock-store';
 import React from 'react';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 import {DataSourceStates} from 'shared/util/constants';
 import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {RemoteData} from 'shared/util/records';
 import {Routes} from 'shared/util/router';
@@ -18,60 +19,51 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-const mockNotificationAlertList = NotificationAlertList;
-
 const defaultProps = {
 	groupId: '23'
 };
 
-const DefaultComponent = ({queryString = '', ...otherProps}) => (
-	<Provider store={mockStore(mockStoreData)}>
+const Wrapper = ({children, queryString = '', store = mockStore()}) => (
+	<Provider store={store}>
 		<MemoryRouter
 			initialEntries={[
 				`/workspace/23/settings/data-source${queryString}`
 			]}
 		>
 			<Route path={Routes.SETTINGS_DATA_SOURCE_LIST}>
-				<DataSourceList {...defaultProps} {...otherProps} />
-			</Route>
-		</MemoryRouter>
-	</Provider>
-);
-
-const DefaultUserComponent = () => (
-	<Provider
-		store={mockStore(
-			mockStoreData.setIn(
-				['currentUser'],
-				new RemoteData({data: '24', loading: false})
-			)
-		)}
-	>
-		<MemoryRouter initialEntries={['/workspace/23/settings/data-source']}>
-			<Route path={Routes.SETTINGS_DATA_SOURCE_LIST}>
-				<DataSourceList {...defaultProps} />
+				<MockedProvider addTypename={false}>{children}</MockedProvider>
 			</Route>
 		</MemoryRouter>
 	</Provider>
 );
 
 describe('DataSourceList', () => {
+	beforeEach(() => {
+		jest.spyOn(
+			NotificationAlertList,
+			'useNotificationsAPI'
+		).mockReturnValue({
+			data: [],
+			loading: false,
+			refetch: jest.fn()
+		});
+	});
+
 	afterEach(() => {
-		jest.runAllTimers();
-
-		API.dataSource.search.mockClear();
-
+		API.dataSource.search.mockReset();
 		cleanup();
 	});
 
-	mockNotificationAlertList.useNotificationsAPI = jest.fn(() => ({
-		data: [{}],
-		loading: false,
-		refetch: () => {}
-	}));
-
 	it('should render', async () => {
-		const {container} = render(<DefaultComponent />);
+		API.dataSource.search.mockReturnValue(
+			Promise.resolve({items: [data.mockLiferayDataSource(1)], total: 1})
+		);
+
+		const {container} = render(
+			<Wrapper>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -79,16 +71,14 @@ describe('DataSourceList', () => {
 	});
 
 	it('should render with an empty state', async () => {
-		API.dataSource.search.mockReturnValueOnce(
-			Promise.resolve({items: [], total: 0})
-		);
-
-		API.dataSource.search.mockReturnValueOnce(
+		API.dataSource.search.mockReturnValue(
 			Promise.resolve({items: [], total: 0})
 		);
 
 		const {container} = render(
-			<DefaultComponent queryString='?query=foo' />
+			<Wrapper queryString='?query=foo'>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -97,15 +87,15 @@ describe('DataSourceList', () => {
 	});
 
 	it('should render with a message to connect datasources if there are none', async () => {
-		API.dataSource.search.mockReturnValueOnce(
+		API.dataSource.search.mockReturnValue(
 			Promise.resolve({items: [], total: 0})
 		);
 
-		API.dataSource.search.mockReturnValueOnce(
-			Promise.resolve({items: [], total: 0})
+		const {container} = render(
+			<Wrapper>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
 		);
-
-		const {container} = render(<DefaultComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -113,80 +103,92 @@ describe('DataSourceList', () => {
 	});
 
 	it('should open a dropdown with "Liferay DXP" and "Salesforce" when clicking the "Add Data Source" button', async () => {
-		const {container, getByText} = render(<DefaultComponent />);
+		API.dataSource.search.mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
 
-		await waitForLoadingToBeRemoved(container);
+		render(
+			<Wrapper>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
+		);
 
-		fireEvent.click(getByText('Add Data Source'));
+		await waitForLoadingToBeRemoved();
 
-		expect(getByText('Liferay DXP')).toBeTruthy();
-		expect(getByText('Salesforce')).toBeTruthy();
+		fireEvent.click(screen.getByText('Add Data Source'));
+
+		expect(screen.getByText('Liferay DXP')).toBeInTheDocument();
+		expect(screen.getByText('Salesforce')).toBeInTheDocument();
 	});
 
 	it('should render toast for one data source with invalid credentials', async () => {
-		API.dataSource.search.mockReturnValueOnce(
+		const mockDS = data.mockLiferayDataSource(1, {
+			credentials: {
+				oAuthOwner: {emailAddress: 'test@liferay.com'}
+			},
+			state: DataSourceStates.CredentialsInvalid
+		});
+
+		API.dataSource.search.mockReturnValue(
 			Promise.resolve({
-				items: [
-					data.mockLiferayDataSource(1, {
-						credentials: {
-							oAuthOwner: {emailAddress: 'test@liferay.com'}
-						},
-						state: DataSourceStates.CredentialsInvalid
-					})
-				],
+				items: [mockDS],
 				total: 1
 			})
 		);
 
-		API.dataSource.search.mockReturnValueOnce(
-			Promise.resolve({
-				items: [
-					data.mockLiferayDataSource(1, {
-						credentials: {
-							oAuthOwner: {emailAddress: 'test@liferay.com'}
-						},
-						state: DataSourceStates.CredentialsInvalid
-					})
-				],
-				total: 1
-			})
+		const {container} = render(
+			<Wrapper>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
 		);
-
-		const {container} = render(<DefaultComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
-			container.querySelectorAll('.embedded-alert-list-root')[1]
+			container.querySelector('.embedded-alert-list-root')
 		).toMatchSnapshot();
 	});
 
-	it('should render without an "add data source" button if the user role is member', () => {
-		API.user.fetchCurrentUser.mockReturnValueOnce(
-			Promise.resolve(data.mockMemberUser('24'))
+	it('should render without an "add data source" button if the user role is member', async () => {
+		API.dataSource.search.mockReturnValue(
+			Promise.resolve({items: [], total: 0})
 		);
 
-		const {queryByText} = render(<DefaultUserComponent />);
+		const memberStore = mockStore(
+			mockStoreData.setIn(
+				['currentUser'],
+				new RemoteData({data: '24', loading: false})
+			)
+		);
 
-		jest.runAllTimers();
+		render(
+			<Wrapper store={memberStore}>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
+		);
 
-		expect(queryByText('Add Data Source')).toBeNull();
+		await waitForLoadingToBeRemoved();
+
+		expect(screen.queryByText('Add Data Source')).toBeNull();
 	});
 
 	it('should render with a member-specific message to connect datasources if there are none', async () => {
-		API.user.fetchCurrentUser.mockReturnValueOnce(
-			Promise.resolve(data.mockMemberUser('24'))
-		);
-
-		API.dataSource.search.mockReturnValueOnce(
+		API.dataSource.search.mockReturnValue(
 			Promise.resolve({items: [], total: 0})
 		);
 
-		API.dataSource.search.mockReturnValueOnce(
-			Promise.resolve({items: [], total: 0})
+		const memberStore = mockStore(
+			mockStoreData.setIn(
+				['currentUser'],
+				new RemoteData({data: '24', loading: false})
+			)
 		);
 
-		const {container} = render(<DefaultUserComponent />);
+		const {container} = render(
+			<Wrapper store={memberStore}>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -194,82 +196,100 @@ describe('DataSourceList', () => {
 	});
 
 	it("should render toast for one data source with invalid credentials for a member's view", async () => {
-		API.user.fetchCurrentUser.mockReturnValueOnce(
-			Promise.resolve(data.mockMemberUser('24'))
-		);
+		const mockDS = data.mockLiferayDataSource(1, {
+			credentials: {
+				oAuthOwner: {emailAddress: 'test@liferay.com'}
+			},
+			state: DataSourceStates.CredentialsInvalid
+		});
 
 		API.dataSource.search.mockReturnValue(
 			Promise.resolve({
-				items: [
-					data.mockLiferayDataSource(1, {
-						credentials: {
-							oAuthOwner: {emailAddress: 'test@liferay.com'}
-						},
-						state: DataSourceStates.CredentialsInvalid
-					})
-				],
+				items: [mockDS],
 				total: 1
 			})
 		);
 
-		const {container} = render(<DefaultUserComponent />);
+		const memberStore = mockStore(
+			mockStoreData.setIn(
+				['currentUser'],
+				new RemoteData({data: '24', loading: false})
+			)
+		);
+
+		const {container} = render(
+			<Wrapper store={memberStore}>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
-			container.querySelectorAll('.embedded-alert-list-root')[1]
+			container.querySelector('.embedded-alert-list-root')
 		).toMatchSnapshot();
 	});
 
 	it('should render toast for multiple data sources with invalid credentials', async () => {
+		const mockDS = data.mockLiferayDataSource(1, {
+			credentials: {
+				oAuthOwner: {emailAddress: 'test@liferay.com'}
+			},
+			state: DataSourceStates.CredentialsInvalid
+		});
+
 		API.dataSource.search.mockReturnValue(
 			Promise.resolve({
-				items: [
-					data.mockLiferayDataSource(1, {
-						credentials: {
-							oAuthOwner: {emailAddress: 'test@liferay.com'}
-						},
-						state: DataSourceStates.CredentialsInvalid
-					})
-				],
+				items: [mockDS],
 				total: 2
 			})
 		);
 
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(
+			<Wrapper>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
-			container.querySelectorAll('.embedded-alert-list-root')[1]
+			container.querySelector('.embedded-alert-list-root')
 		).toMatchSnapshot();
 	});
 
 	it("should render toast for multiple data sources with invalid credentials for a member's view", async () => {
-		API.user.fetchCurrentUser.mockReturnValueOnce(
-			Promise.resolve(data.mockMemberUser('24'))
-		);
+		const mockDS = data.mockLiferayDataSource(1, {
+			credentials: {
+				oAuthOwner: {emailAddress: 'test@liferay.com'}
+			},
+			state: DataSourceStates.CredentialsInvalid
+		});
 
 		API.dataSource.search.mockReturnValue(
 			Promise.resolve({
-				items: [
-					data.mockLiferayDataSource(1, {
-						credentials: {
-							oAuthOwner: {emailAddress: 'test@liferay.com'}
-						},
-						state: DataSourceStates.CredentialsInvalid
-					})
-				],
+				items: [mockDS],
 				total: 2
 			})
 		);
 
-		const {container} = render(<DefaultUserComponent />);
+		const memberStore = mockStore(
+			mockStoreData.setIn(
+				['currentUser'],
+				new RemoteData({data: '24', loading: false})
+			)
+		);
+
+		const {container} = render(
+			<Wrapper store={memberStore}>
+				<DataSourceList {...defaultProps} />
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
-			container.querySelectorAll('.embedded-alert-list-root')[1]
+			container.querySelector('.embedded-alert-list-root')
 		).toMatchSnapshot();
 	});
 });
@@ -280,17 +300,24 @@ describe('CellRenderers', () => {
 	it('should show data-source as not configured', () => {
 		const {getByText} = render(<StatusRenderer data={{state: null}} />);
 
-		expect(getByText(/Not Configured/)).toBeTruthy();
+		expect(getByText(/Not Configured/)).toBeInTheDocument();
 	});
 
 	it('should render as disabled if the datasource is in the process of being deleted', () => {
 		const {container} = render(
-			<DataSourceName
-				data={{state: DataSourceStates.InProgressDeleting}}
-			/>
+			<MemoryRouter>
+				<DataSourceName
+					data={{
+						name: 'Test DS',
+						state: DataSourceStates.InProgressDeleting
+					}}
+					hrefFormatter={() => '/test'}
+				/>
+			</MemoryRouter>
 		);
 
 		expect(container.querySelector('a')).toBeNull();
+		expect(screen.getByText('Test DS')).toBeInTheDocument();
 	});
 });
 

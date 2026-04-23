@@ -24,12 +24,12 @@ describe('WithBaseEdit', () => {
 			withBaseEdit
 		)(TestComponent);
 
-		const {container} = renderWithStore(WrappedComponent, {
+		const {getByText} = renderWithStore(WrappedComponent, {
 			groupId: '23',
 			id: '123',
 			segment: data.mockSegment()
 		});
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('foobar')).toBeInTheDocument();
 	});
 });

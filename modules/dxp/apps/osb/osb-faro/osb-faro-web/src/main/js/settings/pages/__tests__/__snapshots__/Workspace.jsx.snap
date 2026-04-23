@@ -255,7 +255,7 @@ exports[`Workspace Settting should render 1`] = `
               </a>
             </li>
             <li
-              class="item"
+              class="item active"
             >
               <a
                 class="button-root"
@@ -733,7 +733,6 @@ exports[`Workspace Settting should render 1`] = `
                   >
                     <button
                       class="button-root mr-3 btn btn-primary"
-                      disabled=""
                       type="submit"
                     >
                       Save

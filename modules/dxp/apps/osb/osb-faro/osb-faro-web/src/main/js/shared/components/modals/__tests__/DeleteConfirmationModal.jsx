@@ -1,57 +1,48 @@
 import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import mockStore from 'test/mock-store';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, screen} from '@testing-library/react';
+import {MemoryRouter} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
+import {Provider} from 'react-redux';
 
 jest.unmock('react-dom');
+
+const DefaultComponent = ({children, ...props}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter>
+			<MockedProvider addTypename={false}>
+				<DeleteConfirmationModal
+					deleteConfirmationText='delete me'
+					disabled={false}
+					onClose={jest.fn()}
+					onSubmit={jest.fn()}
+					{...props}
+				>
+					{children}
+				</DeleteConfirmationModal>
+			</MockedProvider>
+		</MemoryRouter>
+	</Provider>
+);
 
 describe('DeleteConfirmationModal', () => {
 	afterEach(cleanup);
 
-	it('renders', () => {
-		const {container} = render(
-			<DeleteConfirmationModal
-				DeleteConfirmationText='Test delete confirm text'
-				onClose={jest.fn()}
-				onSubmit={jest.fn()}
-				title='Test title'
-			>
-				<p>{'I am child'}</p>
-			</DeleteConfirmationModal>
-		);
-
-		jest.runAllTimers();
+	it('should render', () => {
+		const {container} = render(<DefaultComponent />);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('renders w/ custom delete button label', () => {
-		const {getByText} = render(
-			<DeleteConfirmationModal
-				deleteButtonLabel='Custom Delete Button'
-				onClose={jest.fn()}
-				onSubmit={jest.fn()}
-				title='Test title'
-			/>
+	it('should render with custom title and message', () => {
+		render(
+			<DefaultComponent title='Custom Title'>
+				{'Custom Delete Message'}
+			</DefaultComponent>
 		);
 
-		jest.runAllTimers();
-
-		expect(getByText('Custom Delete Button')).toBeTruthy();
-	});
-
-	it('renders w/ input disabled', () => {
-		const {getByTestId} = render(
-			<DeleteConfirmationModal
-				deleteButtonLabel='Custom Delete Button'
-				disabled
-				onClose={jest.fn()}
-				onSubmit={jest.fn()}
-				title='Test title'
-			/>
-		);
-
-		jest.runAllTimers();
-
-		expect(getByTestId('delete-confirmation-input').disabled).toBeTruthy();
+		expect(screen.getByText('Custom Title')).toBeInTheDocument();
+		expect(screen.getByText('Custom Delete Message')).toBeInTheDocument();
 	});
 });

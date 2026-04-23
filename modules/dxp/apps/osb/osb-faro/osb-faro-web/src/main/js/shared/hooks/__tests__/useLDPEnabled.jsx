@@ -2,8 +2,10 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {fromJS} from 'immutable';
 import {Provider} from 'react-redux';
-import {renderHook} from '@testing-library/react-hooks';
+import {renderHook} from '@testing-library/react';
 import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
+
+jest.unmock('react-dom');
 
 describe('useLDPEnabled', () => {
 	it('should return true when the plan name contains "Data Platform"', () => {

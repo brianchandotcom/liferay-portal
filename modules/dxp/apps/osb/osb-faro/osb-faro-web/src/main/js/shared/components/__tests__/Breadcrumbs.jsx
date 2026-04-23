@@ -25,9 +25,9 @@ describe('Breadcrumbs', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(<DefaultComponent />);
+		const {getByText} = render(<DefaultComponent />);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('one')).toBeInTheDocument();
 	});
 
 	it('should render with two items visible', () => {

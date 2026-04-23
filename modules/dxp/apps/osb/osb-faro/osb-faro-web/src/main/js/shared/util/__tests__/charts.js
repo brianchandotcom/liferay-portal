@@ -592,54 +592,38 @@ describe('getAxisFormatter', () => {
 	});
 
 	it('should be return the value to any', () => {
-		expect(getAxisFormatter()(10)).toEqual(10);
+		expect(getAxisFormatter()(10)).toEqual('10');
 	});
 });
 
 describe('getDataFormatter', () => {
 	it('should be return the value to any', () => {
 		expect(getDataFormatter()([1, 100, 1000, 10000])).toEqual([
-			1,
-			100,
-			1000,
-			10000
+			1, 100, 1000, 10000
 		]);
 	});
 
 	it('should be return the data formatted to percentage', () => {
 		expect(getDataFormatter('percentage')([1, 100, 1000, 10000])).toEqual([
-			1,
-			100,
-			1000,
-			10000
+			1, 100, 1000, 10000
 		]);
 	});
 
 	it('should be return the data formatted to time', () => {
 		expect(getDataFormatter('time')([1, 100, 500, 1000, 10000])).toEqual([
-			0,
-			0,
-			1000,
-			1000,
-			10000
+			0, 0, 1000, 1000, 10000
 		]);
 	});
 
 	it('should be return the data formatted to numbers', () => {
 		expect(getDataFormatter('numbers')([1, 100, 1000, 10000])).toEqual([
-			1,
-			100,
-			1000,
-			10000
+			1, 100, 1000, 10000
 		]);
 	});
 
 	it('should be return the data formatted to ratings', () => {
 		expect(getDataFormatter('ratings')([1, 100, 1000, 10000])).toEqual([
-			1,
-			100,
-			1000,
-			10000
+			1, 100, 1000, 10000
 		]);
 	});
 });
@@ -649,6 +633,6 @@ describe('getMetricFormatter', () => {
 		expect(getMetricFormatter('number')(1)).toEqual('1');
 		expect(getMetricFormatter('percentage')(1)).toEqual('100%');
 		expect(getMetricFormatter('time')(1)).toEqual('00s');
-		expect(getMetricFormatter('any')(1)).toEqual(1);
+		expect(getMetricFormatter('any')(1)).toEqual('1');
 	});
 });

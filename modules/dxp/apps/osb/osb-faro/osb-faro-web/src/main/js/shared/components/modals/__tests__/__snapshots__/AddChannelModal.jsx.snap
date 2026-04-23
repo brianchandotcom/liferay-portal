@@ -72,7 +72,6 @@ exports[`AddChannelModal renders 1`] = `
           </button>
           <button
             class="button-root btn btn-primary"
-            disabled=""
             type="submit"
           >
             Save

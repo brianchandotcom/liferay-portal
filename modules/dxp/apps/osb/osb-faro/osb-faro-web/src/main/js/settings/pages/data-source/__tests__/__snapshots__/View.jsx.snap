@@ -1052,6 +1052,11 @@ exports[`View should render a Liferay data-source page 1`] = `
                       >
                         Used to aggregate data on your users, sites and DXP commerce channels.
                       </p>
+                      <p
+                        class="list-group-text"
+                      >
+                        0 properties are connected to this data source.
+                      </p>
                     </div>
                     <div
                       class="justify-content-center autofit-col"
@@ -1103,6 +1108,11 @@ exports[`View should render a Liferay data-source page 1`] = `
                       >
                         Represents the sites synced from Liferay Portal, under DXP Instance Settings &gt; Analytics Cloud.
                       </p>
+                      <p
+                        class="list-group-text"
+                      >
+                        0 Items Synced
+                      </p>
                     </div>
                     <div
                       class="justify-content-center autofit-col"
@@ -1153,6 +1163,11 @@ exports[`View should render a Liferay data-source page 1`] = `
                         class="list-group-text"
                       >
                         Represents the fields synced from the Contact object within Liferay Portal, under DXP Instance Settings &gt; Analytics Cloud.
+                      </p>
+                      <p
+                        class="list-group-text"
+                      >
+                        0 Items Synced
                       </p>
                     </div>
                     <div

@@ -1,30 +1,31 @@
 import {sequence} from '../promise';
 
 describe('sequence', () => {
-	it('should return the first rejected promise', () => {
+	it('should resolve with the first truthy error and skip remaining validators', () => {
 		expect.assertions(1);
 
-		const rejectVal = 'reject';
+		const errorVal = 'error';
+		const secondValidator = jest.fn(() => Promise.resolve('other'));
 
 		const response = sequence([
-			() => Promise.reject(rejectVal),
-			() => Promise.resolve('resolve'),
-			() => Promise.reject('dont reject')
+			() => Promise.resolve(''),
+			() => Promise.resolve(errorVal),
+			secondValidator
 		])();
 
-		return expect(response).rejects.toBe(rejectVal);
+		return response.then(result => {
+			expect(result).toBe(errorVal);
+		});
 	});
 
-	it('should return the last resolved promise', () => {
+	it('should resolve with a falsy value when all validators pass', () => {
 		expect.assertions(1);
 
-		const resolveVal = 'resolve';
-
 		const response = sequence([
-			() => Promise.resolve('test'),
-			() => Promise.resolve(resolveVal)
+			() => Promise.resolve(''),
+			() => Promise.resolve('')
 		])();
 
-		return expect(response).resolves.toBe(resolveVal);
+		return expect(response).resolves.toBeFalsy();
 	});
 });

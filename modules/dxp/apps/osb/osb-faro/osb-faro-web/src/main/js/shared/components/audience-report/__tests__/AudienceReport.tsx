@@ -1,39 +1,22 @@
 import AudienceReport from '../AudienceReport';
-import client from 'shared/apollo/client';
+import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
+import {MemoryRouter, Route} from 'react-router-dom';
 import {MetricName} from 'shared/types/MetricName';
 import {
 	mockAudienceReportReq,
 	mockPreferenceReq,
 	mockTimeRangeReq
 } from 'test/graphql-data';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {Name} from '../types';
 import {PageAudienceReportQuery} from '../queries';
+import {Provider} from 'react-redux';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {StaticRouter} from 'react-router-dom';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
-
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		channelId: '456',
-		query: {
-			rangeKey: RangeKeyTimeRanges.Last30Days
-		},
-		title: 'Home Page',
-		touchpoint: 'https://www.liferay.com'
-	})
-}));
-
-/**
- * Override Recharts Responsive Container
- * width dimensions fixed to be able to render charts
- */
 
 const tooltipEnabled = jest.fn();
 
@@ -42,12 +25,18 @@ jest.mock('recharts', () => {
 
 	return {
 		...OriginalModule,
-		ResponsiveContainer: ({children}) => (
+		ResponsiveContainer: ({children}: {children: React.ReactNode}) => (
 			<OriginalModule.ResponsiveContainer height={350} width={800}>
 				{children}
 			</OriginalModule.ResponsiveContainer>
 		),
-		Tooltip: ({children, ...props}) => {
+		Tooltip: ({
+			children,
+			...props
+		}: {
+			children: React.ReactNode;
+			active?: boolean;
+		}) => {
 			if (props.active) {
 				tooltipEnabled();
 			}
@@ -61,37 +50,42 @@ jest.mock('recharts', () => {
 	};
 });
 
-const WrappedComponent = ({queryProps}) => (
-	<ApolloProvider client={client}>
-		<StaticRouter>
-			<MockedProvider
-				mocks={[
-					mockTimeRangeReq(),
-					mockPreferenceReq(),
-					mockAudienceReportReq({queryProps})
-				]}
-			>
-				<AudienceReport
-					filters={{devices: [], location: []}}
-					mapper={result =>
-						result?.[queryProps.name]?.[queryProps.metricName]
-					}
-					name={Name.Page}
-					Query={PageAudienceReportQuery(queryProps)}
-					rangeSelectors={{
-						rangeEnd: '',
-						rangeKey: RangeKeyTimeRanges.Last30Days,
-						rangeStart: ''
-					}}
-				/>
-			</MockedProvider>
-		</StaticRouter>
-	</ApolloProvider>
+const WrappedComponent = ({queryProps}: {queryProps: any}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={[
+				'/workspace/123/456/Home%20Page/https%3A%2F%2Fwww.liferay.com'
+			]}
+		>
+			<Route path='/workspace/:groupId/:channelId/:title/:touchpoint'>
+				<MockedProvider
+					{...({freezeResults: false} as any)}
+					mocks={[
+						mockTimeRangeReq(),
+						mockPreferenceReq(),
+						mockAudienceReportReq({queryProps})
+					]}
+				>
+					<AudienceReport
+						filters={{devices: [], location: []}}
+						mapper={(result: any) =>
+							result?.[queryProps.name]?.[queryProps.metricName]
+						}
+						name={Name.Page}
+						Query={PageAudienceReportQuery(queryProps)}
+						rangeSelectors={{
+							rangeEnd: '',
+							rangeKey: RangeKeyTimeRanges.Last30Days,
+							rangeStart: ''
+						}}
+					/>
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
 );
 
-describe('CommerceMetricCard', () => {
-	afterEach(cleanup);
-
+describe('AudienceReport', () => {
 	it('should render', async () => {
 		const {container} = render(
 			<WrappedComponent
@@ -119,11 +113,11 @@ describe('CommerceMetricCard', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const donut = document.querySelector('.recharts-pie-sector');
+		const donut = container.querySelector('.recharts-pie-sector');
 
 		expect(donut).toBeInTheDocument();
 
-		fireEvent.mouseEnter(donut);
+		fireEvent.mouseEnter(donut!);
 
 		expect(tooltipEnabled).toHaveBeenCalledTimes(1);
 	});

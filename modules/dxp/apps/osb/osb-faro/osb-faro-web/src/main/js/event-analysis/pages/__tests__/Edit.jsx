@@ -3,19 +3,14 @@ import client from 'shared/apollo/client';
 import EventAnalysisEdit from '../Edit';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement
-} from '@testing-library/react';
+import {ApolloProvider} from '@apollo/client';
+import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
 import {DISPLAY_NAME} from 'shared/util/pagination';
 import {DndProvider} from 'react-dnd';
 import {EventTypes} from 'event-analysis/utils/types';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockEventAnalysisReq,
 	mockEventAttributeDefinitionsReq,
@@ -106,7 +101,12 @@ describe('Event Analysis Edit', () => {
 
 		expect(getByText('Download Reports')).toBeTruthy();
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.event-analysis-editor-root')
+		).toBeInTheDocument();
+		expect(
+			container.querySelector('input.title-input')
+		).toBeInTheDocument();
 	});
 
 	it('should render event analysis with data', async () => {
@@ -114,7 +114,7 @@ describe('Event Analysis Edit', () => {
 			<WrappedComponent />
 		);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -146,7 +146,7 @@ describe('Event Analysis Edit', () => {
 	it('should check if search autocomplete is working properly', async () => {
 		const {container, queryByText} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -156,13 +156,13 @@ describe('Event Analysis Edit', () => {
 
 		fireEvent.click(addAttributeButton);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		const dropdown = document.querySelector(
 			'.base-dropdown-menu-root.show'
 		);
 
-		await waitForElement(() => dropdown);
+		await waitFor(() => expect(dropdown).toBeTruthy());
 
 		const individualTab = document.querySelector(
 			'[data-testid="INDIVIDUAL"] button'
@@ -170,7 +170,7 @@ describe('Event Analysis Edit', () => {
 
 		fireEvent.click(individualTab);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		expect(queryByText('jobTitle')).toBeTruthy();
 		expect(queryByText('languageId')).toBeTruthy();
@@ -189,7 +189,7 @@ describe('Event Analysis Edit', () => {
 			}
 		});
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		expect(queryByText('jobTitle')).toBeTruthy();
 		expect(queryByText('languageId')).not.toBeTruthy();
@@ -202,7 +202,7 @@ describe('Event Analysis Edit', () => {
 	it('should enable the save button when name is changed', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -222,7 +222,7 @@ describe('Event Analysis Edit', () => {
 	it('should enable the save button when a new breakdown is added', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -234,13 +234,13 @@ describe('Event Analysis Edit', () => {
 
 		fireEvent.click(addAttributeButton);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		const dropdown = document.querySelector(
 			'.base-dropdown-menu-root.show'
 		);
 
-		await waitForElement(() => dropdown);
+		await waitFor(() => expect(dropdown).toBeTruthy());
 
 		const hrefAttributeButton = dropdown.querySelector(
 			'.base-dropdown-list li:nth-child(3) button'
@@ -248,7 +248,7 @@ describe('Event Analysis Edit', () => {
 
 		fireEvent.click(hrefAttributeButton);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		expect(
 			container.querySelectorAll(
@@ -261,7 +261,7 @@ describe('Event Analysis Edit', () => {
 	it('should enable the save button when compareToPrevious checkbox is changed', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -283,7 +283,7 @@ describe('Event Analysis Edit', () => {
 	it('should enable the save button when range selector is changed', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -297,15 +297,15 @@ describe('Event Analysis Edit', () => {
 
 		fireEvent.click(rangeKeyButton);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		const dropdown = document.querySelector('.dropdown-menu.show');
 
-		await waitForElement(() => dropdown);
+		await waitFor(() => expect(dropdown).toBeTruthy());
 
 		fireEvent.click(dropdown.querySelector('ul > li button'));
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		expect(rangeKeyButton.textContent).toEqual('Last 24 hours');
 

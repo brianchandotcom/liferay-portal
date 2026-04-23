@@ -1,35 +1,37 @@
-import client from 'shared/apollo/client';
+import mockStore from 'test/mock-store';
 import React from 'react';
 import Touchpoints from '../Touchpoints';
-import {ApolloProvider} from '@apollo/react-components';
-import {createMemoryHistory} from 'history';
-import {MockedProvider} from '@apollo/react-testing';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq, mockTimeRangeReq} from 'test/graphql-data';
+import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {Router} from 'react-router-dom';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-const WrapperComponent = () => {
-	const history = createMemoryHistory();
-
-	return (
-		<ApolloProvider client={client}>
-			<Router history={history}>
-				<MockedProvider
-					mocks={[mockTimeRangeReq(), mockPreferenceReq()]}
-				>
-					<Touchpoints router={{params: {}, query: {}}} />
-				</MockedProvider>
-			</Router>
-		</ApolloProvider>
-	);
-};
+const DefaultComponent = () => (
+	<Provider store={mockStore()}>
+		<MemoryRouter>
+			<MockedProvider
+				cache={
+					new InMemoryCache({
+						addTypename: false,
+						freezeResults: false
+					})
+				}
+				mocks={[mockTimeRangeReq(), mockPreferenceReq()]}
+			>
+				<Touchpoints router={{params: {}, query: {}}} />
+			</MockedProvider>
+		</MemoryRouter>
+	</Provider>
+);
 
 describe('Sites Dashboard Touchpoints Page', () => {
 	it('render', async () => {
-		const {container} = render(<WrapperComponent />);
+		const {container} = render(<DefaultComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 

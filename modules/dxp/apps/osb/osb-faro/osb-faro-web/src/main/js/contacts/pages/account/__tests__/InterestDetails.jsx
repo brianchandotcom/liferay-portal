@@ -9,12 +9,12 @@ jest.unmock('react-dom');
 
 describe('InterestDetails', () => {
 	beforeAll(() => mockDate());
-	afterAll(() => jest.restoreMocks());
+	afterAll(() => jest.restoreAllMocks());
 
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container} = render(
+		const {container, getByText} = render(
 			<BrowserRouter>
 				<InterestDetails
 					account={{}}
@@ -27,6 +27,6 @@ describe('InterestDetails', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Back to Interests')).toBeInTheDocument();
 	});
 });

@@ -1,9 +1,9 @@
 import client from 'shared/apollo/client';
 import DateInput from '../DateInput';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {cleanup, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Property} from 'shared/util/records';
 
@@ -21,7 +21,7 @@ describe('DateInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {getByText} = render(
 			<WrapperComponent>
 				<DateInput
 					operatorRenderer={() => <div>{'operator'}</div>}
@@ -30,11 +30,11 @@ describe('DateInput', () => {
 			</WrapperComponent>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('operator')).toBeInTheDocument();
 	});
 
 	it('should render with data', () => {
-		const {container} = render(
+		const {getByText} = render(
 			<WrapperComponent>
 				<DateInput
 					displayValue='Start Date'
@@ -45,6 +45,7 @@ describe('DateInput', () => {
 			</WrapperComponent>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Start Date')).toBeInTheDocument();
+		expect(getByText('operator')).toBeInTheDocument();
 	});
 });

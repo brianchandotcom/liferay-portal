@@ -39,14 +39,18 @@ describe('Individuals Dashboard KnownIndividuals List', () => {
 
 		jest.runAllTimers();
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector(
+				'.individuals-dashboard-known-individuals-root'
+			)
+		).toBeInTheDocument();
 	});
 
 	it('renders with data source empty state', () => {
 		mockUseDataSource.useDataSource = jest.fn(() => mockEmptyState);
 
-		const {container} = render(<WrappedComponent />);
+		const {getByText} = render(<WrappedComponent />);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('No Data Sources Connected')).toBeInTheDocument();
 	});
 });

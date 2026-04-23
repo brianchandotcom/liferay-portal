@@ -2,20 +2,24 @@
 
 exports[`Select renders 1`] = `
 <div>
-  <div
-    class=""
+  <form
+    action="#"
   >
-    <select
-      class="form-control select-root"
-      id="test"
-      name="test"
+    <div
+      class=""
     >
-      <option
-        value="red"
+      <select
+        class="form-control select-root"
+        id="test"
+        name="test"
       >
-        red
-      </option>
-    </select>
-  </div>
+        <option
+          value="red"
+        >
+          red
+        </option>
+      </select>
+    </div>
+  </form>
 </div>
 `;

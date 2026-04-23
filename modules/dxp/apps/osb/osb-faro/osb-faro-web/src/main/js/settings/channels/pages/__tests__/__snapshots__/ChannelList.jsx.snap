@@ -548,14 +548,14 @@ exports[`Channels List should render 1`] = `
                             class="table-title text-truncate"
                           >
                             <a
-                              href="/workspace/23/settings/properties/0"
+                              href="/workspace/23/settings/properties/643280225365059871"
                             >
                               <span
                                 class="text-truncate"
                                 data-tooltip="false"
                                 title=""
                               >
-                                Channel 0
+                                Liferay DXP
                               </span>
                             </a>
                           </div>
@@ -563,23 +563,23 @@ exports[`Channels List should render 1`] = `
                         <td
                           class="text-right"
                         >
-                          -
+                          6
                         </td>
                         <td
                           class="text-right"
                         >
-                          -
+                          5
                         </td>
                         <td
                           class="text-right"
                         >
-                          0
+                          643280225365059871
                         </td>
                         <td>
                           All Users
                         </td>
                         <td>
-                          Feb 14, 2020
+                          Sep 20, 2023
                         </td>
                         <td
                           class="row-actions"

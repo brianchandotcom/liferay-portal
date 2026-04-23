@@ -3,18 +3,13 @@ import client from 'shared/apollo/client';
 import EventAnalysisCreate from '../Create';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement
-} from '@testing-library/react';
+import {ApolloProvider} from '@apollo/client';
+import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
 import {DISPLAY_NAME} from 'shared/util/pagination';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockEventDefinitionsReq,
 	mockPreferenceReq,
@@ -86,7 +81,12 @@ describe('Event Analysis Create', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.event-analysis-editor-root')
+		).toBeInTheDocument();
+		expect(
+			container.querySelector('input.title-input')
+		).toBeInTheDocument();
 	});
 
 	it('should render empty state', async () => {
@@ -148,13 +148,13 @@ describe('Event Analysis Create', () => {
 
 		fireEvent.click(addEventButton);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		const dropdown = document.querySelector(
 			'.base-dropdown-menu-root.show'
 		);
 
-		await waitForElement(() => dropdown);
+		await waitFor(() => expect(dropdown).toBeTruthy());
 
 		const assetClickedButton = document.querySelector(
 			'.base-dropdown-list > li button'
@@ -162,7 +162,7 @@ describe('Event Analysis Create', () => {
 
 		fireEvent.click(assetClickedButton);
 
-		jest.runAllTimers();
+		jest.runOnlyPendingTimers();
 
 		expect(getByText('Save Analysis')).toBeEnabled();
 	});

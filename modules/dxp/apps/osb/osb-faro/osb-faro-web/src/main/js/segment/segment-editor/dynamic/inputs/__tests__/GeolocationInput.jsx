@@ -2,10 +2,10 @@ import * as data from 'test/data';
 import client from 'shared/apollo/client';
 import GeolocationInput from '../GeolocationInput';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {createCustomValueMap} from '../../utils/custom-inputs';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Property} from 'shared/util/records';
 import {RelationalOperators, TimeSpans} from '../../utils/constants';
@@ -70,7 +70,7 @@ describe('GeolocationInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container, getAllByText, getByText} = render(
+		const {getAllByText, getByText} = render(
 			<WrapperComponent>
 				<GeolocationInput
 					onChange={jest.fn()}
@@ -84,19 +84,17 @@ describe('GeolocationInput', () => {
 		fireEvent.click(getByText('was'));
 		fireEvent.click(getByText('on'));
 
-		expect(getAllByText('was')[1]).toBeTruthy();
-		expect(getByText('was not')).toBeTruthy();
-		expect(getByText('contained')).toBeTruthy();
-		expect(getByText('did not contain')).toBeTruthy();
+		expect(getAllByText('was')[1]).toBeInTheDocument();
+		expect(getByText('was not')).toBeInTheDocument();
+		expect(getByText('contained')).toBeInTheDocument();
+		expect(getByText('did not contain')).toBeInTheDocument();
 
-		expect(getByText('since')).toBeTruthy();
-		expect(getByText('after')).toBeTruthy();
-		expect(getByText('before')).toBeTruthy();
-		expect(getByText('between')).toBeTruthy();
-		expect(getByText('ever')).toBeTruthy();
-		expect(getAllByText('on')[1]).toBeTruthy();
-
-		expect(container).toMatchSnapshot();
+		expect(getByText('since')).toBeInTheDocument();
+		expect(getByText('after')).toBeInTheDocument();
+		expect(getByText('before')).toBeInTheDocument();
+		expect(getByText('between')).toBeInTheDocument();
+		expect(getByText('ever')).toBeInTheDocument();
+		expect(getAllByText('on')[1]).toBeInTheDocument();
 	});
 
 	it('should render with has-error', () => {

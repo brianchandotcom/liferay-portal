@@ -2,10 +2,10 @@ import client from 'shared/apollo/client';
 import ExperimentOverviewPage from '../ExperimentOverviewPage';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {fireEvent, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockExperimentDraftReq,
 	mockExperimentReq,
@@ -27,7 +27,7 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-const WrappedComponent = ({mocks}) => (
+const WrappedComponent = ({mocks}: {mocks: any[]}) => (
 	<ApolloProvider client={client}>
 		<Provider store={mockStore()}>
 			<MemoryRouter
@@ -63,7 +63,7 @@ describe('ExperimentOverviewPage', () => {
 			name: /delete/i
 		})) as HTMLAnchorElement;
 
-		const header = container.querySelector('.header-root');
+		const header = container.querySelector('.header-root')!;
 
 		expect(header.contains(reviewButton)).toBeTruthy();
 		expect(header.contains(deleteButton)).toBeTruthy();
@@ -97,7 +97,7 @@ describe('ExperimentOverviewPage', () => {
 			name: /terminate/i
 		})) as HTMLAnchorElement;
 
-		const header = container.querySelector('.header-root');
+		const header = container.querySelector('.header-root')!;
 
 		expect(header.contains(terminateButton)).toBeTruthy();
 
@@ -128,7 +128,7 @@ describe('ExperimentOverviewPage', () => {
 			name: /delete/i
 		})) as HTMLAnchorElement;
 
-		const header = container.querySelector('.header-root');
+		const header = container.querySelector('.header-root')!;
 
 		expect(header.contains(publishButton)).toBeTruthy();
 		expect(header.contains(deleteButton)).toBeTruthy();
@@ -166,7 +166,7 @@ describe('ExperimentOverviewPage', () => {
 			name: /delete/i
 		})) as HTMLAnchorElement;
 
-		const header = container.querySelector('.header-root');
+		const header = container.querySelector('.header-root')!;
 
 		expect(header.contains(publishButton)).toBeTruthy();
 		expect(header.contains(deleteButton)).toBeTruthy();
@@ -204,7 +204,7 @@ describe('ExperimentOverviewPage', () => {
 			name: /delete/i
 		})) as HTMLAnchorElement;
 
-		const header = container.querySelector('.header-root');
+		const header = container.querySelector('.header-root')!;
 
 		expect(header.contains(publishButton)).toBeTruthy();
 		expect(header.contains(deleteButton)).toBeTruthy();
@@ -242,7 +242,7 @@ describe('ExperimentOverviewPage', () => {
 			name: /delete/i
 		})) as HTMLAnchorElement;
 
-		const header = container.querySelector('.header-root');
+		const header = container.querySelector('.header-root')!;
 
 		expect(header.contains(publishButton)).toBeTruthy();
 		expect(header.contains(deleteButton)).toBeTruthy();
@@ -354,7 +354,7 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'TERMINATED'}),
 					mockExperimentReq({
 						publishable: true,
-						publishedDXPVariantId: 'DEFAULT',
+						publishedDXPVariantId: 'DEFAULT' as any,
 						status: 'TERMINATED'
 					})
 				]}
@@ -375,7 +375,7 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'TERMINATED'}),
 					mockExperimentReq({
 						publishable: true,
-						publishedDXPVariantId: '44167',
+						publishedDXPVariantId: '44167' as any,
 						status: 'TERMINATED'
 					})
 				]}

@@ -66,7 +66,62 @@ describe('TouchpointsListQuery Mappers', () => {
 	it('should extract items from result', () => {
 		const props = mapResultToProps({data}, context);
 
-		expect(props).toMatchSnapshot();
+		expect(props).toMatchObject({
+			error: null,
+			items: [
+				{
+					title: 'https://www.liferay.com/digital-experience-platform',
+					touchpoint:
+						'https://www.liferay.com/digital-experience-platform'
+				},
+				{
+					title: 'https://www.liferay.com/product/features/assets',
+					touchpoint:
+						'https://www.liferay.com/product/features/assets'
+				},
+				{
+					title: 'https://www.liferay.com/company/gartner/thank-you',
+					touchpoint:
+						'https://www.liferay.com/company/gartner/thank-you'
+				},
+				{
+					title: 'https://www.liferay.com/company/gartner/thank-you',
+					touchpoint:
+						'https://www.liferay.com/resource?folderId=13811&title=Digital+Experience+Platforms+-+Designed+for+Digital+Transformation'
+				},
+				{
+					title: 'https://www.liferay.com/company/gartner/thank-you',
+					touchpoint:
+						'https://www.liferay.com/resource?folderId=1645493&title=Advanced+Liferay+Architecture'
+				},
+				{
+					title: 'https://www.liferay.com/company/gartner/thank-you',
+					touchpoint:
+						'https://www.liferay.com/resource?folderId=3292406&title=Enterprise+Subscription+Benefits'
+				},
+				{
+					title: 'https://www.liferay.com/company/gartner/thank-you',
+					touchpoint:
+						'https://www.liferay.com/resource?folderId=13811&title=Three+Key+Strategies+for+Consistent+Customer+Experiences'
+				},
+				{
+					title: 'https://www.liferay.com/company/gartner/thank-you',
+					touchpoint:
+						'https://www.liferay.com/resource?folderId=13811&title=Portal+Best+Practices'
+				},
+				{
+					title: 'https://www.liferay.com/company/gartner/thank-you',
+					touchpoint:
+						'https://www.liferay.com/resource?folderId=13811&title=The+Evolving+Value+of+a+Portal'
+				},
+				{
+					title: 'https://www.liferay.com/company/gartner/thank-you',
+					touchpoint:
+						'https://www.liferay.com/resource?folderId=1646951&title=Four+Types+of+Portals+That+Solve+Enterprise+Problems'
+				}
+			],
+			loading: false
+		});
 	});
 
 	it('should include assetId in options', () => {

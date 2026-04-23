@@ -32,8 +32,7 @@ describe('Individuals List', () => {
 					activitiesCount: 8,
 					dateCreated: 1769697362927,
 					firstActivityDate: 1769697128235,
-					id:
-						'47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c1',
+					id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c1',
 					lastActivityDate: 1769697160365,
 					name: 'Test Test',
 					profileType: 'KNOWN',
@@ -47,8 +46,7 @@ describe('Individuals List', () => {
 					activitiesCount: 8,
 					dateCreated: 1769697362927,
 					firstActivityDate: 1769697128235,
-					id:
-						'47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c3',
+					id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c3',
 					lastActivityDate: 1769697160365,
 					name: 'John Doe',
 					profileType: 'KNOWN',
@@ -61,8 +59,7 @@ describe('Individuals List', () => {
 					activitiesCount: 3,
 					dateCreated: 1769697362927,
 					firstActivityDate: 1769697128235,
-					id:
-						'47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c2',
+					id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c2',
 					lastActivityDate: 1769697160365,
 					name: 'AC-79742349',
 					profileType: 'ANONYMOUS',
@@ -76,14 +73,15 @@ describe('Individuals List', () => {
 	it('renders', async () => {
 		const history = createMemoryHistory();
 
-		const {container} = render(
+		const {getByText} = render(
 			<Router history={history}>
 				<IndividualsList />
 			</Router>
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Individual Profiles')).toBeInTheDocument();
+		expect(getByText('Test Test')).toBeInTheDocument();
 	});
 });

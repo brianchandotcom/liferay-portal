@@ -205,8 +205,23 @@ describe('FormAbandonmentQuery mapper', () => {
 			}
 		});
 
-		expect(props).toMatchSnapshot();
+		expect(props).toMatchObject({
+			error: null,
+			header: [
+				{
+					icon: 'document',
+					label: '0 Form Steps'
+				},
+				{
+					icon: 'custom-field',
+					label: '0 Fields'
+				}
+			],
+			items: [],
+			loading: false
+		});
 	});
+
 	it('should include options', () => {
 		const options = mapPropsToOptions({
 			filters: {},

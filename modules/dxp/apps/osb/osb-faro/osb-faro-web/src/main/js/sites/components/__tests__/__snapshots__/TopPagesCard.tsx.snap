@@ -177,12 +177,12 @@ exports[`TopPagesCard renders 1`] = `
                       <div
                         class="table-title text-truncate"
                       >
-                        My asset B
+                        -
                       </div>
                       <div
                         class="secondary-info text-truncate"
                       >
-                        456
+                        -
                       </div>
                     </div>
                   </div>
@@ -193,7 +193,7 @@ exports[`TopPagesCard renders 1`] = `
                   <div
                     class="h4 table-title text-truncate"
                   >
-                    20
+                    -
                   </div>
                 </td>
               </tr>

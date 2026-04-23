@@ -4,7 +4,7 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockEmptyState, mockSuccessState} from 'test/__mocks__/mock-objects';
 import {mockIndividualInterestsReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
@@ -46,20 +46,22 @@ describe('Individuals Dashboard Individuals Interests', () => {
 	it('renders', async () => {
 		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
 
-		const {container} = render(<WrappedComponent />);
+		const {getByText} = render(<WrappedComponent />);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
 		jest.runAllTimers();
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Interest Topics')).toBeInTheDocument();
 	});
 
-	it('renders with data source empty state', async () => {
+	it('renders with data source empty state', () => {
 		mockUseDataSource.useDataSource = jest.fn(() => mockEmptyState);
 
-		const {container} = render(<WrappedComponent />);
+		const {getByText} = render(<WrappedComponent />);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			getByText('No Sites Synced from Data Sources')
+		).toBeInTheDocument();
 	});
 });

@@ -10,7 +10,7 @@ describe('StopClickPropagation', () => {
 	it('should render', () => {
 		const {container} = render(<StopClickPropagation />);
 
-		expect({container}).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('should stop event propagation from reaching any parent elements', () => {

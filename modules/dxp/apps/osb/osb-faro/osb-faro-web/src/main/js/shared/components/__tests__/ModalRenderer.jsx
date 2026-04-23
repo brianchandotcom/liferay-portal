@@ -18,7 +18,10 @@ describe('ModalRenderer', () => {
 
 	it('should render', () => {
 		const {container} = render(<ModalRenderer modalsIList={fromJS([])} />);
-		expect(container).toMatchSnapshot();
+
+		expect(
+			container.querySelector('.modal-renderer-root')
+		).toBeInTheDocument();
 	});
 
 	it('should render test modal', () => {
@@ -32,7 +35,8 @@ describe('ModalRenderer', () => {
 				])}
 			/>
 		);
-		expect(container).toMatchSnapshot();
+
+		expect(container.querySelector('.modal-container')).toBeTruthy();
 	});
 
 	it('should add .modal-open to body', () => {
@@ -70,11 +74,11 @@ describe('ModalRenderer', () => {
 			/>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(container.querySelectorAll('.modal-container').length).toBe(2);
 	});
 
 	it('should pass props to modal', () => {
-		const {container} = render(
+		const {getByText} = render(
 			<ModalRenderer
 				modalsIList={fromJS([
 					{
@@ -86,7 +90,8 @@ describe('ModalRenderer', () => {
 				])}
 			/>
 		);
-		expect(container).toMatchSnapshot("should render with title 'FooBar'");
+
+		expect(getByText('FooBar')).toBeTruthy();
 	});
 
 	it('should close modal on click outside', () => {

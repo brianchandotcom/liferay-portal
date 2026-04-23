@@ -24,7 +24,7 @@ const WrapperComponent: React.FC<{children: React.ReactNode}> = ({
 jest.mock(
 	'shared/components/DateRangeInput',
 	() =>
-		function MockDateInput({value}) {
+		function MockDateInput({value}: {value: {start: string; end: string}}) {
 			return (
 				<div data-testid='mock-date-input'>
 					{value.start} {'-'} {value.end}

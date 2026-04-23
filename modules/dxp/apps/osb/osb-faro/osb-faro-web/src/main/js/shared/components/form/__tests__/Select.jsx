@@ -1,41 +1,128 @@
-import React from 'react';
-import Select from '../Select';
-import {cleanup, render} from '@testing-library/react';
-import {mockForm} from 'test/data';
-
 jest.unmock('react-dom');
 
-describe('Select', () => {
-	afterEach(cleanup);
+import mockStore from 'test/mock-store';
+import React from 'react';
+import Select from '../Select';
+import {Field, Form, Formik} from 'formik';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route, Switch} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
+import {Provider} from 'react-redux';
+import {render} from '@testing-library/react';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
-	it('renders', () => {
+describe('Select', () => {
+	it('renders', async () => {
 		const {container} = render(
-			<Select field={{name: 'test'}} form={mockForm()}>
-				<Select.Item value='red'>{'red'}</Select.Item>
-			</Select>
+			<Provider store={mockStore()}>
+				<MemoryRouter>
+					<Switch>
+						<Route path='*'>
+							<MockedProvider
+								cache={
+									new InMemoryCache({
+										addTypename: false
+									})
+								}
+							>
+								<Formik
+									initialValues={{test: 'red'}}
+									onSubmit={jest.fn()}
+								>
+									<Form>
+										<Field component={Select} name='test'>
+											<Select.Item value='red'>
+												{'red'}
+											</Select.Item>
+										</Field>
+									</Form>
+								</Formik>
+							</MockedProvider>
+						</Route>
+					</Switch>
+				</MemoryRouter>
+			</Provider>
 		);
+
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
-	it('renders w/ label', () => {
+	it('renders w/ label', async () => {
 		const {container} = render(
-			<Select field={{name: 'test'}} form={mockForm()} label='foo' />
+			<Provider store={mockStore()}>
+				<MemoryRouter>
+					<Switch>
+						<Route path='*'>
+							<MockedProvider
+								cache={
+									new InMemoryCache({
+										addTypename: false
+									})
+								}
+							>
+								<Formik
+									initialValues={{test: ''}}
+									onSubmit={jest.fn()}
+								>
+									<Form>
+										<Field
+											component={Select}
+											label='foo'
+											name='test'
+										/>
+									</Form>
+								</Formik>
+							</MockedProvider>
+						</Route>
+					</Switch>
+				</MemoryRouter>
+			</Provider>
 		);
+
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container.querySelector('label')).not.toBeNull();
 	});
 
-	it('renders w/ error', () => {
+	it('renders w/ error', async () => {
 		const {container} = render(
-			<Select
-				field={{name: 'test'}}
-				form={mockForm({
-					errors: {test: 'can not be test'},
-					touched: {test: true}
-				})}
-			>
-				<Select.Item value='red'>{'red'}</Select.Item>
-			</Select>
+			<Provider store={mockStore()}>
+				<MemoryRouter>
+					<Switch>
+						<Route path='*'>
+							<MockedProvider
+								cache={
+									new InMemoryCache({
+										addTypename: false
+									})
+								}
+							>
+								<Formik
+									initialErrors={{
+										test: 'can not be test'
+									}}
+									initialTouched={{test: true}}
+									initialValues={{test: 'red'}}
+									onSubmit={jest.fn()}
+								>
+									<Form>
+										<Field component={Select} name='test'>
+											<Select.Item value='red'>
+												{'red'}
+											</Select.Item>
+										</Field>
+									</Form>
+								</Formik>
+							</MockedProvider>
+						</Route>
+					</Switch>
+				</MemoryRouter>
+			</Provider>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.has-error')).not.toBeNull();
 	});

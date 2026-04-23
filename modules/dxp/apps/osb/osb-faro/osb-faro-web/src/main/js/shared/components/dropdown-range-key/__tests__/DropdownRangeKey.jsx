@@ -1,14 +1,12 @@
-import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import {createMemoryHistory} from 'history';
 import {DropdownRangeKey} from '../DropdownRangeKey';
-import {MockedProvider} from '@apollo/react-testing';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq, mockTimeRangeReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
-import {Router} from 'react-router-dom';
 import {SEVEN_MONTHS} from 'shared/util/constants';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
@@ -20,26 +18,28 @@ jest.mock('shared/hooks/useTimeZone', () => ({
 	})
 }));
 
-const WrapperComponent = ({children, retentionPeriodTimeRange}) => {
-	const history = createMemoryHistory();
-
-	return (
-		<ApolloProvider client={client}>
-			<Router history={history}>
-				<Provider store={mockStore()}>
-					<MockedProvider
-						mocks={[
-							mockTimeRangeReq(),
-							mockPreferenceReq(retentionPeriodTimeRange)
-						]}
-					>
-						{children}
-					</MockedProvider>
-				</Provider>
-			</Router>
-		</ApolloProvider>
-	);
-};
+const WrapperComponent = ({children, retentionPeriodTimeRange}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter initialEntries={['/workspace/23']}>
+			<Route path='/workspace/:groupId'>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+					mocks={[
+						mockTimeRangeReq(),
+						mockPreferenceReq(retentionPeriodTimeRange)
+					]}
+				>
+					{children}
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
 
 describe('DropdownRangeKey', () => {
 	afterEach(cleanup);
@@ -57,13 +57,13 @@ describe('DropdownRangeKey', () => {
 	});
 
 	it('should display a message with retention period for 13 months on date picker', async () => {
-		const {container, getByTestId, getByText} = render(
+		const {getByTestId, getByText} = render(
 			<WrapperComponent>
 				<DropdownRangeKey legacy={false} />
 			</WrapperComponent>
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
 		fireEvent.click(getByText(/custom range/i));
 
@@ -89,13 +89,13 @@ describe('DropdownRangeKey', () => {
 	});
 
 	it('should display a message with retention period for 7 months on date picker', async () => {
-		const {container, getByTestId, getByText} = render(
+		const {getByTestId, getByText} = render(
 			<WrapperComponent retentionPeriodTimeRange={SEVEN_MONTHS}>
 				<DropdownRangeKey legacy={false} />
 			</WrapperComponent>
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
 		fireEvent.click(getByText(/custom range/i));
 

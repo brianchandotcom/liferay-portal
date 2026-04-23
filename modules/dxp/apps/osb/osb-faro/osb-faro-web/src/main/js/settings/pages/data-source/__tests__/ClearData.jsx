@@ -1,41 +1,44 @@
 import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {ClearData} from '../ClearData';
 import {DataSource} from 'shared/util/records';
-import {ClearData as DataSourceClearData} from '../ClearData';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
+import {render} from '@testing-library/react';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		groupId: '23'
-	})
-}));
-
 const defaultProps = {
+	addAlert: jest.fn(),
 	dataSource: new DataSource(data.mockLiferayDataSource()),
+	entitiesCount: 10,
 	groupId: '23',
+	history: {push: jest.fn()},
 	id: '26'
 };
 
-describe('DataSourceClearData', () => {
-	afterEach(cleanup);
+const WrappedComponent = props => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={[
+				'/workspace/23/settings/data-source/26/clear-data'
+			]}
+		>
+			<Route path='/workspace/:groupId/settings/data-source/:id/clear-data'>
+				<MockedProvider>
+					<ClearData {...defaultProps} {...props} />
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
 
+describe('ClearData', () => {
 	it('should render', async () => {
-		const {container} = render(
-			<Provider store={mockStore()}>
-				<StaticRouter>
-					<DataSourceClearData {...defaultProps} />
-				</StaticRouter>
-			</Provider>
-		);
-
-		jest.runAllTimers();
+		const {container} = render(<WrappedComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 

@@ -245,7 +245,8 @@ describe('List', () => {
 			);
 
 			const mimeTypeFilter = filters.find(
-				filter => filter.id === 'mimeType'
+				(filter: {apiURL: string; id: string; label: string}) =>
+					filter.id === 'mimeType'
 			);
 
 			expect(mimeTypeFilter).toBeDefined();

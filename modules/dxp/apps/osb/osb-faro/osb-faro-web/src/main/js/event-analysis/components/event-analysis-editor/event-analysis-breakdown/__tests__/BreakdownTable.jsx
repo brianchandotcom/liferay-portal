@@ -5,7 +5,7 @@ import {
 	withAttributesProvider
 } from '../../context/attributes';
 import {cleanup, render} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockEventAnalysisResultReq} from 'test/graphql-data';
 import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
@@ -116,7 +116,11 @@ describe('BreakdownTable', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.breakdown-table-root')
+		).toBeInTheDocument();
+		expect(container.querySelector('.table-root')).toBeInTheDocument();
+		expect(container.querySelector('table')).toBeInTheDocument();
 	});
 
 	it('render with single event', async () => {
@@ -147,7 +151,10 @@ describe('BreakdownTable', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.breakdown-table-root')
+		).toBeInTheDocument();
+		expect(container.querySelector('table')).toBeInTheDocument();
 	});
 
 	it('render with empty state', () => {
@@ -172,8 +179,7 @@ describe('BreakdownTable', () => {
 					__typename: 'BreakdownItem',
 					breakdownItems: [],
 					leafNode: false,
-					name:
-						'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88]',
+					name: 'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88]',
 					previousValue: 5033,
 					value: 3367
 				}

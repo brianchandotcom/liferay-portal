@@ -97,7 +97,6 @@ exports[`DeleteChannelModal renders without data source alert message 1`] = `
           </button>
           <button
             class="button-root btn btn-warning"
-            disabled=""
             type="submit"
           >
             Delete

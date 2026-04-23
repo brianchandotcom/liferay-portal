@@ -5,7 +5,9 @@ import {render} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
-const DefaultComponent = props => (
+const DefaultComponent = (
+	props: Partial<React.ComponentProps<typeof FieldPreviewModal>> = {}
+) => (
 	<FieldPreviewModal
 		dataSourceFn={() => Promise.resolve()}
 		onClose={noop}

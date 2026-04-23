@@ -1,6 +1,8 @@
+jest.unmock('react-dom');
+
 import * as data from 'test/data';
 import {CHART_COLOR_NAMES} from 'shared/util/charts';
-import {CompositeMetric} from '../metrics';
+import {CompositeMetric, MetricType} from '../metrics';
 import {
 	convertHistogramKeysToDate,
 	getMetricsChartData,
@@ -33,11 +35,11 @@ describe('getMetricsChartData', () => {
 		const mockParameters = {
 			histogram: data
 				.mockMetricFragment(10)
-				.histogram.metrics.map(convertHistogramKeysToDate),
+				.histogram.metrics.map(convertHistogramKeysToDate) as any,
 			name: 'fooMetric',
 			title: '',
 			tooltipTitle: '',
-			type: 'number'
+			type: MetricType.Number
 		};
 
 		expect(getMetricsChartData(mockParameters)).toMatchSnapshot();
@@ -56,16 +58,16 @@ describe('getMetricsData', () => {
 				sortField: 'comments',
 				title: 'comments',
 				tooltipTitle: 'Avg. Comments',
-				type: 'number'
+				type: MetricType.Number
 			},
 			{
 				name: 'views',
 				sortField: 'views',
 				title: 'Views',
 				tooltipTitle: 'Avg. Views',
-				type: 'number'
+				type: MetricType.Number
 			}
-		];
+		] as any;
 
 		const result = {
 			comments: {
@@ -113,7 +115,9 @@ describe('getMetricsData', () => {
 				}
 			}
 		};
-		const metricsData = getMetricsData(result, metrics, {rangeKey});
+		const metricsData = getMetricsData(result as any, metrics, {
+			rangeKey: rangeKey as unknown as RangeKeyTimeRanges
+		});
 
 		const dateKeysIMap = new Map([
 			[toUnix(keyDate), [toUnix(valueKeyDate)]]
@@ -123,7 +127,7 @@ describe('getMetricsData', () => {
 		]);
 
 		metricsData.forEach(metricData => {
-			delete metricData.format;
+			delete (metricData as any).format;
 		});
 
 		expect(metricsData).toEqual([
@@ -159,7 +163,7 @@ describe('getMetricsData', () => {
 				dateKeysIMap,
 				intervals: getIntervals(
 					RangeKeyTimeRanges.Last30Days,
-					[toUnix(keyDate)],
+					[toUnix(keyDate)] as number[],
 					'D',
 					dateKeysIMap
 				),
@@ -197,7 +201,7 @@ describe('getMetricsData', () => {
 				dateKeysIMap,
 				intervals: getIntervals(
 					RangeKeyTimeRanges.Last30Days,
-					[toUnix(keyDate)],
+					[toUnix(keyDate)] as number[],
 					'D',
 					dateKeysIMap
 				),
@@ -228,6 +232,8 @@ describe('getSiteMetricsChartData', () => {
 			tooltipTitle,
 			type
 		};
-		expect(getSiteMetricsChartData(mockParameters)).toMatchSnapshot();
+		expect(
+			getSiteMetricsChartData(mockParameters as any)
+		).toMatchSnapshot();
 	});
 });

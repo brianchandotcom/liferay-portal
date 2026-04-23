@@ -72,28 +72,6 @@ exports[`DataSourceDelete should render 1`] = `
             >
               <a
                 class="button-root"
-                href="/workspace/23/settings/apis/tokens"
-              >
-                <span
-                  class="icon-wrapper"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-ac_api icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#ac_api"
-                    />
-                  </svg>
-                </span>
-                APIs
-              </a>
-            </li>
-            <li
-              class="item"
-            >
-              <a
-                class="button-root"
                 href="/workspace/23/settings/definitions"
               >
                 <span
@@ -134,7 +112,7 @@ exports[`DataSourceDelete should render 1`] = `
               </a>
             </li>
             <li
-              class="item"
+              class="item active"
             >
               <a
                 class="button-root"
@@ -153,28 +131,6 @@ exports[`DataSourceDelete should render 1`] = `
                   </svg>
                 </span>
                 Data Sources
-              </a>
-            </li>
-            <li
-              class="item"
-            >
-              <a
-                class="button-root"
-                href="/workspace/23/settings/recommendations"
-              >
-                <span
-                  class="icon-wrapper"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-ac_star icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#ac_star"
-                    />
-                  </svg>
-                </span>
-                Recommendations
               </a>
             </li>
           </ul>
@@ -359,101 +315,10 @@ exports[`DataSourceDelete should render 1`] = `
               <div
                 class="sheet"
               >
-                <div
-                  class="delete-data-source-root"
-                >
-                  <div>
-                    <div
-                      class="entity-item"
-                    >
-                      <button
-                        class="button-root title btn btn-unstyled"
-                        type="button"
-                      >
-                        <h5>
-                          12 Segments
-                        </h5>
-                      </button>
-                      <div
-                        class="secondary-info"
-                      >
-                        Segments with criteria related to this data source will be disabled until the criteria is updated.
-                      </div>
-                    </div>
-                    <div
-                      class="entity-item"
-                    >
-                      <button
-                        class="button-root title btn btn-unstyled"
-                        type="button"
-                      >
-                        <h5>
-                          1 Individuals
-                        </h5>
-                      </button>
-                      <div
-                        class="secondary-info"
-                      >
-                        All attributes related to an Individual from this data source will be removed, which may result in the removal of the Individual.
-                      </div>
-                    </div>
-                  </div>
-                  <form
-                    class="form-root"
-                    data-testid="form"
-                  >
-                    <div
-                      class="sheet-body"
-                    >
-                      <div>
-                        To complete, copy the following sentence to confirm your intention and click delete data source. Once you have deleted This data source, you can not undo this operation.
-                      </div>
-                      <div
-                        class="copy-container"
-                      >
-                        <div
-                          class="h4"
-                        >
-                          Copy the following: 
-                          <span
-                            class="copy-text"
-                          >
-                            Remove Liferay1
-                          </span>
-                        </div>
-                      </div>
-                      <div
-                        class=""
-                      >
-                        <input
-                          class="input-root form-control"
-                          data-testid="confirmation-input"
-                          id="delete"
-                          name="delete"
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                    </div>
-                    <div
-                      class="sheet-footer"
-                    >
-                      <button
-                        class="button-root delete-button btn btn-warning"
-                        disabled=""
-                        type="submit"
-                      >
-                        Delete Data Source
-                      </button>
-                      <a
-                        class="button-root btn btn-secondary"
-                        href="/workspace/23/settings/data-source/26"
-                      >
-                        Cancel
-                      </a>
-                    </div>
-                  </form>
-                </div>
+                <span
+                  aria-hidden="true"
+                  class="loading-root center loading-animation"
+                />
               </div>
             </div>
           </div>

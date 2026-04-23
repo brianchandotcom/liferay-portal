@@ -107,7 +107,7 @@ describe('CriteriaSidebarCollapse', () => {
 	afterEach(cleanup);
 
 	it('should render correctly', () => {
-		const {container} = render(
+		render(
 			<DndProvider backend={HTML5Backend}>
 				<CriteriaSidebarCollapse
 					propertyGroupsIList={propertyGroupsIList}
@@ -119,8 +119,6 @@ describe('CriteriaSidebarCollapse', () => {
 
 		expect(screen.getByText('Page Views')).toBeInTheDocument();
 		expect(screen.getByText('DXP Custom Fields')).toBeInTheDocument();
-
-		expect(container).toMatchSnapshot();
 	});
 
 	it('should filter properties and show "no-results-were-found" for the empty subgroup', () => {

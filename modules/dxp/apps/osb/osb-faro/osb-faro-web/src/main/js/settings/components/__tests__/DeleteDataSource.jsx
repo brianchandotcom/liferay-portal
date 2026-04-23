@@ -1,25 +1,48 @@
-import 'test/mock-modal';
-
 import * as data from 'test/data';
-import * as Router from 'shared/util/router';
+import * as pedantic from 'test/pedantic';
+import mockStore from 'test/mock-store';
 import React from 'react';
 import {
 	cleanup,
 	fireEvent,
 	render,
-	waitForElement
+	screen,
+	waitFor
 } from '@testing-library/react';
 import {DataSource} from 'shared/util/records';
 import {DeleteDataSource} from '../DeleteDataSource';
 import {EntityTypes} from 'shared/util/constants';
+import {fromJS} from 'immutable';
+import {MemoryRouter} from 'react-router-dom';
 import {open} from 'shared/actions/modals';
-import {StaticRouter} from 'react-router';
-
-Router.navigate = jest.fn();
+import {Provider} from 'react-redux';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/actions/modals', () => ({
+	actionTypes: {
+		CLOSE_ALL_MODALS: 'CLOSE_ALL_MODALS',
+		CLOSE_MODAL: 'CLOSE_MODAL',
+		OPEN_MODAL: 'OPEN_MODAL'
+	},
+	close: jest.fn(() => ({meta: {}, payload: {}, type: 'close'})),
+	modalTypes: {
+		CONFIRMATION_MODAL: 'CONFIRMATION_MODAL',
+		SEARCHABLE_ENTITIES_TABLE_MODAL: 'SEARCHABLE_ENTITIES_TABLE_MODAL'
+	},
+	open: jest.fn(() => ({meta: {}, payload: {}, type: 'open'}))
+}));
+
 describe('DeleteDataSource', () => {
+	beforeEach(() => {
+		pedantic.disable();
+	});
+
+	afterEach(() => {
+		pedantic.enable();
+		cleanup();
+	});
+
 	const dataSource = data.getImmutableMock(
 		DataSource,
 		data.mockLiferayDataSource
@@ -35,25 +58,39 @@ describe('DeleteDataSource', () => {
 
 	const groupId = '23';
 
-	afterEach(() => {
-		jest.clearAllMocks();
-
-		cleanup();
-	});
+	const store = mockStore(
+		fromJS({
+			projects: {
+				[groupId]: {
+					data: {
+						timeZone: {
+							timeZoneId: 'UTC'
+						}
+					}
+				}
+			}
+		})
+	);
 
 	const DefaultComponent = props => (
-		<StaticRouter>
-			<DeleteDataSource
-				dataSource={dataSource}
-				deleteMessage='Test delete message'
-				deletePhrase={Liferay.Language.get('remove-x')}
-				entitiesCount={entitiesCount}
-				groupId={groupId}
-				id='123'
-				pageActionText={Liferay.Language.get('delete-data-source')}
-				{...props}
-			/>
-		</StaticRouter>
+		<Provider store={store}>
+			<MemoryRouter>
+				<DeleteDataSource
+					actionRequestFn={jest.fn()}
+					close={jest.fn()}
+					dataSource={dataSource}
+					deleteMessage='Test delete message'
+					deletePhrase={Liferay.Language.get('remove-x')}
+					entitiesCount={entitiesCount}
+					groupId={groupId}
+					id='123'
+					open={open}
+					pageActionConfirmationText='Confirm?'
+					pageActionText={Liferay.Language.get('delete-data-source')}
+					{...props}
+				/>
+			</MemoryRouter>
+		</Provider>
 	);
 
 	it('should render', () => {
@@ -62,98 +99,47 @@ describe('DeleteDataSource', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should successfully validate if the user typed in the full string to delete the datasource', () => {
-		const {queryByTestId, queryByText} = render(<DefaultComponent />);
+	it('should successfully validate if the user typed in the full string to delete the datasource', async () => {
+		render(<DefaultComponent />);
 
-		const deleteButton = queryByText('Delete Data Source');
+		const deleteButton = screen
+			.getByText('Delete Data Source')
+			.closest('button');
+		const confirmationInput = screen.getByTestId('confirmation-input');
 
-		expect(deleteButton).toBeDisabled();
-
-		fireEvent.change(queryByTestId('confirmation-input'), {
+		fireEvent.change(confirmationInput, {
 			target: {value: `remove ${dataSource.name}`}
 		});
 
-		expect(deleteButton).toBeEnabled();
+		await waitFor(() => expect(deleteButton).not.toBeDisabled());
 	});
 
 	it('should not enable delete button if validation is unsuccessful', async () => {
-		const {queryByTestId, queryByText} = render(<DefaultComponent />);
+		render(<DefaultComponent />);
 
-		const deleteButton = queryByText('Delete Data Source');
-
-		expect(deleteButton).toBeDisabled();
-
-		const confirmationInput = queryByTestId('confirmation-input');
+		const deleteButton = screen
+			.getByText('Delete Data Source')
+			.closest('button');
+		const confirmationInput = screen.getByTestId('confirmation-input');
 
 		fireEvent.change(confirmationInput, {
-			target: {value: 'remove'}
+			target: {value: 'wrong string'}
 		});
 
-		const form = await waitForElement(() => queryByTestId('form'));
+		fireEvent.blur(confirmationInput);
 
-		// Firing submit to trigger validation.
-		fireEvent.submit(form);
-
-		expect(deleteButton).toBeDisabled();
+		// Wait for Formik validation to settle
+		await waitFor(() => expect(deleteButton).toBeDisabled());
 	});
 
-	it('should open the data source entities modal', () => {
-		expect(open).not.toBeCalled();
+	it('should open the data source entities modal', async () => {
+		render(<DefaultComponent />);
 
-		const {queryByTestId, queryByText} = render(
-			<DefaultComponent open={open} />
+		fireEvent.click(screen.getByText('12 Segments'));
+
+		expect(open).toHaveBeenCalledWith(
+			'SEARCHABLE_ENTITIES_TABLE_MODAL',
+			expect.any(Object)
 		);
-
-		fireEvent.change(queryByTestId('confirmation-input'), {
-			target: {value: `remove ${dataSource.name}`}
-		});
-
-		fireEvent.click(queryByText('12 Segments'));
-
-		expect(open).toBeCalled();
-	});
-
-	// TODO: LRAC-4906
-	it.skip('should open the confirmation modal', async () => {
-		expect(open).not.toBeCalled();
-
-		const {queryByTestId} = render(<DefaultComponent open={open} />);
-
-		fireEvent.change(queryByTestId('confirmation-input'), {
-			target: {value: `remove ${dataSource.name}`}
-		});
-
-		const form = await waitForElement(() => queryByTestId('form'));
-
-		fireEvent.submit(form);
-
-		// Setting timeout to wait for validation to complete
-		setTimeout(() => {
-			expect(open).toBeCalled();
-		}, 1000);
-	});
-
-	// TODO: LRAC-4906
-	it.skip('should enable "Delete Data Source" button after delete click', async () => {
-		expect(open).not.toBeCalled();
-
-		const {queryByTestId, queryByText} = render(
-			<DefaultComponent open={open} />
-		);
-
-		fireEvent.change(queryByTestId('confirmation-input'), {
-			target: {value: `remove ${dataSource.name}`}
-		});
-
-		const form = await waitForElement(() => queryByTestId('form'));
-
-		fireEvent.submit(form);
-
-		// Setting timeout to wait for validation to complete
-		setTimeout(() => {
-			expect(open).toBeCalled();
-
-			expect(queryByText('Delete Data Source').toBeEnabled());
-		}, 1000);
 	});
 });

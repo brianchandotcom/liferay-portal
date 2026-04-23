@@ -12,7 +12,7 @@ jest.unmock('react-dom');
 
 describe('AccountAssociatedSegments', () => {
 	it('should render', async () => {
-		const {container} = render(
+		const {container, getByText} = render(
 			<StaticRouter>
 				<Provider store={mockStore()}>
 					<AssociatedSegments
@@ -31,6 +31,6 @@ describe('AccountAssociatedSegments', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Associated Segments')).toBeInTheDocument();
 	});
 });

@@ -267,12 +267,12 @@ jest.mock('recharts', () => {
 
 	return {
 		...OriginalModule,
-		ResponsiveContainer: ({children}) => (
+		ResponsiveContainer: ({children}: {children: React.ReactNode}) => (
 			<OriginalModule.ResponsiveContainer height={350} width={800}>
 				{children}
 			</OriginalModule.ResponsiveContainer>
 		),
-		Tooltip: ({children, ...props}) => {
+		Tooltip: ({children, ...props}: {children: React.ReactNode}) => {
 			tooltipEnabled();
 
 			return (
@@ -298,10 +298,12 @@ describe('SegmentGrowthChart', () => {
 
 		expect(chart).toBeInTheDocument();
 
-		fireEvent.mouseEnter(chart);
+		fireEvent.mouseEnter(chart!);
 
 		expect(tooltipEnabled).toHaveBeenCalledTimes(1);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.recharts-wrapper')
+		).toBeInTheDocument();
 	});
 });

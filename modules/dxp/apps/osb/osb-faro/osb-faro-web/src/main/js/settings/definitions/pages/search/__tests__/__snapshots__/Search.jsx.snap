@@ -90,7 +90,7 @@ exports[`Search should render 1`] = `
               </a>
             </li>
             <li
-              class="item"
+              class="item active"
             >
               <a
                 class="button-root"
@@ -425,7 +425,6 @@ exports[`Search should render 1`] = `
                   >
                     <button
                       class="button-root btn btn-primary"
-                      disabled=""
                       type="submit"
                     >
                       Save

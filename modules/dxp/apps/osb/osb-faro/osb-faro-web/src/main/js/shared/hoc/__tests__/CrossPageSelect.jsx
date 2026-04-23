@@ -5,12 +5,14 @@ import CrossPageSelect, {
 	ViewSelectedToggle,
 	withSelection
 } from '../CrossPageSelect';
+import mockStore from 'test/mock-store';
 import React from 'react';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {inputSearchText, selectAllAndToggle} from 'test/helpers';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {OrderedMap} from 'immutable';
+import {Provider} from 'react-redux';
 import {range} from 'lodash';
 import {Routes} from 'shared/util/router';
 import {SelectionProvider} from 'shared/context/selection';
@@ -26,6 +28,8 @@ const mockItemArray = [
 	{id: '6', name: 'tangerine'}
 ];
 
+const mockData = new OrderedMap(mockItemArray.map(item => [item.id, item]));
+
 const defaultProps = {
 	columns: [{accessor: 'name', label: 'name'}],
 	delta: 2,
@@ -38,15 +42,19 @@ const defaultProps = {
 };
 
 const DefaultComponent = props => (
-	<MemoryRouter
-		initialEntries={['/workspace/23/settings/definitions/events/custom']}
-	>
-		<Route path={Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM}>
-			<SelectionProvider>
-				<CrossPageSelect {...defaultProps} {...props} />
-			</SelectionProvider>
-		</Route>
-	</MemoryRouter>
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={[
+				'/workspace/23/settings/definitions/events/custom'
+			]}
+		>
+			<Route path={Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM}>
+				<SelectionProvider>
+					<CrossPageSelect {...defaultProps} {...props} />
+				</SelectionProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
 );
 
 describe('CrossPageSelect', () => {
@@ -59,6 +67,8 @@ describe('CrossPageSelect', () => {
 	});
 
 	it('should render the selected list when the user presses the "view selected link"', () => {
+		jest.useFakeTimers();
+
 		const {container, getByTestId} = render(<DefaultComponent />);
 
 		const firstRowCheckbox = container.querySelector(
@@ -67,13 +77,19 @@ describe('CrossPageSelect', () => {
 
 		fireEvent.click(firstRowCheckbox);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
 		fireEvent.click(getByTestId('view-selected'));
 
-		jest.runAllTimers();
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
 		expect(container).toMatchSnapshot();
+
+		jest.useRealTimers();
 	});
 
 	it('should be able to sort local data when a sort field is clicked', () => {
@@ -131,22 +147,22 @@ describe('defaultSearch', () => {
 
 describe('defaultSort', () => {
 	it('should return the results of a sort on the given items', () => {
-		expect(
-			defaultSort(mockData, createOrderIOMap(NAME)).toArray()
-		).toEqual([
-			mockItemArray[1],
-			mockItemArray[2],
-			mockItemArray[3],
-			mockItemArray[0],
-			mockItemArray[4],
-			mockItemArray[5]
-		]);
+		expect(defaultSort(mockData, createOrderIOMap(NAME)).toArray()).toEqual(
+			[
+				mockItemArray[1],
+				mockItemArray[2],
+				mockItemArray[3],
+				mockItemArray[0],
+				mockItemArray[4],
+				mockItemArray[5]
+			]
+		);
 	});
 });
 
 describe('fetchLocalData', () => {
 	it('should return the paginated results', () => {
-		const mockData = new OrderedMap(
+		const mockLocalData = new OrderedMap(
 			range(9)
 				.map(i => ({id: i, name: `name-${i}`}))
 				.map(item => [item.id, item])
@@ -155,21 +171,19 @@ describe('fetchLocalData', () => {
 		expect(
 			fetchLocalData({
 				delta: 5,
-				items: mockData,
+				items: mockLocalData,
 				orderIOMap: createOrderIOMap(NAME),
 				page: 1,
 				query: ''
 			})
 		).toEqual(
 			expect.objectContaining({
-				items: mockData.slice(0, 5).toArray(),
+				items: mockLocalData.slice(0, 5).toArray(),
 				total: 9
 			})
 		);
 	});
 });
-
-const mockData = new OrderedMap(mockItemArray.map(item => [item.id, item]));
 
 describe('WithSelection', () => {
 	const expectedArgs = {
@@ -222,7 +236,7 @@ describe('WithSelection', () => {
 });
 
 describe('ViewSelectedToggle', () => {
-	const defaultProps = {onClick: jest.fn(), selectedITemsCount: 1};
+	const defaultProps = {onClick: jest.fn(), selectedItemsCount: 1};
 
 	it('should render with the "view selected" message', () => {
 		const {container} = render(

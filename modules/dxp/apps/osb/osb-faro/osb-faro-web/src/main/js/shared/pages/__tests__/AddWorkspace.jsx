@@ -20,10 +20,12 @@ const mockUnconfiguredProject = new Project(
 
 jest.unmock('react-dom');
 
+jest.mock('shared/components/workspaces/AddWorkspaceForm', () => () => null);
+
 describe('AddWorkspace', () => {
 	afterEach(cleanup);
 	it('should render', () => {
-		const {container} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<AddWorkspace
@@ -34,7 +36,7 @@ describe('AddWorkspace', () => {
 			</Provider>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Create Workspace')).toBeInTheDocument();
 	});
 });
 

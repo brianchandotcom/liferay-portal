@@ -1,45 +1,60 @@
-import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
+import PreferenceQuery from 'shared/queries/PreferenceQuery';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {DATA_RETENTION_PERIOD_KEY} from 'shared/util/constants';
+import {fireEvent, render} from '@testing-library/react';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Overview} from '../Overview';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router-dom';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
-
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		groupId: '23'
-	})
-}));
 
 jest.mock('shared/hooks/useCurrentUser', () => ({
 	useCurrentUser: jest.fn()
 }));
 
-describe('Data Privacy Overview', () => {
-	afterEach(cleanup);
+const mockPreferenceReq = (value = '18144000000') => ({
+	request: {
+		query: PreferenceQuery,
+		variables: {
+			key: DATA_RETENTION_PERIOD_KEY
+		}
+	},
+	result: {
+		data: {
+			preference: {
+				__typename: 'Preference',
+				key: DATA_RETENTION_PERIOD_KEY,
+				value
+			}
+		}
+	}
+});
 
-	it('should render', () => {
+const DefaultComponent = ({mocks = [mockPreferenceReq()], ...props}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter initialEntries={['/workspace/23/settings/data-privacy']}>
+			<Route path='/workspace/:groupId/settings/data-privacy'>
+				<MockedProvider mocks={mocks}>
+					<Overview groupId='23' {...props} />
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
+
+describe('Data Privacy Overview', () => {
+	it('should render', async () => {
 		useCurrentUser.mockImplementation(() => ({
 			isAdmin: () => true
 		}));
 
-		const {container, getByText} = render(
-			<ApolloProvider client={client}>
-				<Provider store={mockStore()}>
-					<StaticRouter>
-						<Overview groupId='23' />
-					</StaticRouter>
-				</Provider>
-			</ApolloProvider>
-		);
+		const {container, getByText} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(getByText('Select an option'));
 
@@ -48,28 +63,18 @@ describe('Data Privacy Overview', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with disabled buttons in the Suppressed Users section if the user is not an AC admin', () => {
+	it('should render with disabled buttons in the Suppressed Users section if the user is not an AC admin', async () => {
 		useCurrentUser.mockImplementation(() => ({
 			isAdmin: () => false
 		}));
 
-		const {getByTestId} = render(
-			<ApolloProvider client={client}>
-				<Provider store={mockStore()}>
-					<StaticRouter>
-						<Overview groupId='23' />
-					</StaticRouter>
-				</Provider>
-			</ApolloProvider>
-		);
+		const {container, getByTestId} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
-		expect(getByTestId('export-suppressed-user-button').disabled).toBe(
-			true
-		);
-		expect(getByTestId('data-retention-period-select-input').disabled).toBe(
-			true
-		);
+		expect(getByTestId('export-suppressed-user-button')).toBeDisabled();
+		expect(
+			getByTestId('data-retention-period-select-input')
+		).toBeDisabled();
 	});
 });

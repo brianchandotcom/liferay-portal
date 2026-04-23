@@ -71,6 +71,6 @@ exports[`VisitorsByTimeCard render 1`] = `
 
 exports[`renderTooltip render 1`] = `
 <div>
-  &lt;table class="analytics-tooltip-chart" data-reactroot=""&gt;&lt;thead class="analytics-tooltip-chart-header"&gt;&lt;tr class="analytics-tooltip-chart-row"&gt;&lt;td&gt;&lt;div class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"&gt;Sunday - 12 PM&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody class="analytics-tooltip-chart-body"&gt;&lt;tr class="analytics-tooltip-chart-row"&gt;&lt;td&gt;&lt;div class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-center font-weight-normal"&gt;98 Visitors&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+  &lt;table class="analytics-tooltip-chart"&gt;&lt;thead class="analytics-tooltip-chart-header"&gt;&lt;tr class="analytics-tooltip-chart-row"&gt;&lt;td&gt;&lt;div class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"&gt;Sunday - 12 PM&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody class="analytics-tooltip-chart-body"&gt;&lt;tr class="analytics-tooltip-chart-row"&gt;&lt;td&gt;&lt;div class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-center font-weight-normal"&gt;98 Visitors&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
 </div>
 `;

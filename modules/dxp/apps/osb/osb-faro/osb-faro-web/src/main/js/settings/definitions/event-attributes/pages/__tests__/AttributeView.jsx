@@ -3,13 +3,13 @@ import AttributeView from '../AttributeView';
 import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {act, render} from '@testing-library/react';
+import {ApolloProvider} from '@apollo/client';
 import {getISODate} from 'shared/util/date';
 import {MemoryRouter} from 'react-router';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockEventAttributeDefinitionWithRecentValuesReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
-import {render} from '@testing-library/react';
 import {Route} from 'react-router-dom';
 import {Routes} from 'shared/util/router';
 import {waitForLoading} from 'test/helpers';
@@ -67,26 +67,30 @@ describe('AttributeView', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with a table', () => {
+	it('should render with a table', async () => {
 		const {getByText} = render(
 			<RenderWithRouter>
 				<AttributeView attributeId='0' groupId='23' />
 			</RenderWithRouter>
 		);
 
-		jest.runAllTimers();
+		await act(async () => {
+			jest.runOnlyPendingTimers();
+		});
 
 		expect(getByText('Sample Raw Data')).toBeTruthy();
 	});
 
-	it('should render table with empty data if there is no column accessor value', () => {
+	it('should render table with empty data if there is no column accessor value', async () => {
 		const {getByText} = render(
 			<RenderWithRouter recentValue={{value: ''}}>
 				<AttributeView attributeId='0' groupId='23' />
 			</RenderWithRouter>
 		);
 
-		jest.runAllTimers();
+		await act(async () => {
+			jest.runOnlyPendingTimers();
+		});
 
 		expect(getByText('-')).toBeTruthy();
 	});

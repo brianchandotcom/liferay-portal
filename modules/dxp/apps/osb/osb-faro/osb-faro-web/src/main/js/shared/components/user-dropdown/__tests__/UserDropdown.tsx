@@ -1,7 +1,7 @@
 import React from 'react';
 import UserDropdown, {Menus} from '../index';
-import {BrowserRouter} from 'react-router-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {MemoryRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
@@ -40,16 +40,22 @@ const mockMenus = (): Menus => ({
 	]
 });
 
+const Wrapper = ({children}: {children: React.ReactNode}) => (
+	<MemoryRouter>{children}</MemoryRouter>
+);
+
 describe('UserDropdown', () => {
+	afterEach(cleanup);
+
 	it('should render', () => {
 		const {container} = render(
-			<BrowserRouter>
+			<Wrapper>
 				<UserDropdown
 					initialActiveMenu='base'
 					menus={mockMenus()}
 					userName='Test Test'
 				/>
-			</BrowserRouter>
+			</Wrapper>
 		);
 
 		expect(container).toMatchSnapshot();
@@ -57,136 +63,125 @@ describe('UserDropdown', () => {
 
 	it('should render dropdown menu when clicked', () => {
 		const {container} = render(
-			<BrowserRouter>
+			<Wrapper>
 				<UserDropdown
 					initialActiveMenu='base'
 					menus={mockMenus()}
 					userName='Test Test'
 				/>
-			</BrowserRouter>
+			</Wrapper>
 		);
 
 		const toggleButton = container.querySelector('.user-menu');
 
-		fireEvent.click(toggleButton);
+		fireEvent.click(toggleButton!);
 
-		expect(document.body.querySelector('.dropdown-menu')).toBeTruthy();
+		expect(document.body.querySelector('.user-menu-dropdown')).toBeTruthy();
 		expect(document.body).toMatchSnapshot();
 	});
 
-	it('should descend into nested menu when child button is clicked', () => {
+	it('should descend into nested menu when child button is clicked', async () => {
 		const {container} = render(
-			<BrowserRouter>
+			<Wrapper>
 				<UserDropdown
 					initialActiveMenu='base'
 					menus={mockMenus()}
 					userName='Test Test'
 				/>
-			</BrowserRouter>
+			</Wrapper>
 		);
 
 		const toggleButton = container.querySelector('.user-menu');
 
-		fireEvent.click(toggleButton);
+		fireEvent.click(toggleButton!);
 
-		const dropdownMenu = document.body.querySelector('.dropdown-menu');
+		const languageBtn = screen.getByText('Language');
 
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[0].textContent
-		).toBe('Language');
+		fireEvent.click(languageBtn);
 
-		fireEvent.click(dropdownMenu.getElementsByClassName('button-root')[0]);
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
-		jest.runAllTimers();
-
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[1].textContent
-		).toBe('English');
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[2].textContent
-		).toBe('Japanese');
+		expect(screen.getByText('English')).toBeInTheDocument();
+		expect(screen.getByText('Japanese')).toBeInTheDocument();
 	});
 
-	it('should ascend from nested menu when back button is clicked', () => {
+	it('should ascend from nested menu when back button is clicked', async () => {
 		const {container} = render(
-			<BrowserRouter>
+			<Wrapper>
 				<UserDropdown
 					initialActiveMenu='base'
 					menus={mockMenus()}
 					userName='Test Test'
 				/>
-			</BrowserRouter>
+			</Wrapper>
 		);
 
 		const toggleButton = container.querySelector('.user-menu');
 
-		fireEvent.click(toggleButton);
+		fireEvent.click(toggleButton!);
 
-		const dropdownMenu = document.body.querySelector('.dropdown-menu');
+		const languageBtn = screen.getByText('Language');
 
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[0].textContent
-		).toBe('Language');
+		fireEvent.click(languageBtn);
 
-		fireEvent.click(dropdownMenu.getElementsByClassName('button-root')[0]);
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
-		jest.runAllTimers();
+		expect(screen.getByText('English')).toBeInTheDocument();
 
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[1].textContent
-		).toBe('English');
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[2].textContent
-		).toBe('Japanese');
+		const backBtn = screen.getByLabelText('Back');
 
-		fireEvent.click(dropdownMenu.getElementsByClassName('button-root')[0]);
+		fireEvent.click(backBtn);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[0].textContent
-		).toBe('Language');
+		expect(screen.getByText('Language')).toBeInTheDocument();
 	});
 
-	it('should go back to the initialActiveMenu on close', () => {
+	it('should go back to the initialActiveMenu on close', async () => {
 		const {container} = render(
-			<BrowserRouter>
+			<Wrapper>
 				<UserDropdown
 					initialActiveMenu='base'
 					menus={mockMenus()}
 					userName='Test Test'
 				/>
-			</BrowserRouter>
+			</Wrapper>
 		);
 
 		const toggleButton = container.querySelector('.user-menu');
 
-		fireEvent.click(toggleButton);
+		fireEvent.click(toggleButton!);
 
-		const dropdownMenu = document.body.querySelector('.dropdown-menu');
+		const languageBtn = screen.getByText('Language');
 
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[0].textContent
-		).toBe('Language');
+		fireEvent.click(languageBtn);
 
-		fireEvent.click(dropdownMenu.getElementsByClassName('button-root')[0]);
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
-		jest.runAllTimers();
+		expect(screen.getByText('English')).toBeInTheDocument();
 
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[1].textContent
-		).toBe('English');
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[2].textContent
-		).toBe('Japanese');
+		// Close
+		fireEvent.click(toggleButton!);
 
-		fireEvent.click(toggleButton);
-		fireEvent.click(toggleButton);
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
 
-		jest.runAllTimers();
+		// Open again
+		fireEvent.click(toggleButton!);
 
-		expect(
-			dropdownMenu.getElementsByClassName('button-root')[0].textContent
-		).toBe('Language');
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
+
+		expect(screen.getByText('Language')).toBeInTheDocument();
 	});
 });

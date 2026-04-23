@@ -1,7 +1,7 @@
 import ActiveIndividualsCard from '../ActiveIndividualsCard';
 import client from 'shared/apollo/client';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {ApolloProvider} from '@apollo/client';
 import {cleanup, render} from '@testing-library/react';
 
 jest.unmock('react-dom');

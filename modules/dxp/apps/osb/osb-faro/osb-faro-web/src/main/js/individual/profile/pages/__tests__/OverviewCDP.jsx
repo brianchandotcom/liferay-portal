@@ -4,7 +4,7 @@ import OverviewCDP from '../OverviewCDP';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockEventMetrics,
 	mockPreferenceReq,

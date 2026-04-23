@@ -7,7 +7,7 @@ import {
 	JobRunFrequencies,
 	JobTypes
 } from 'shared/util/constants';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockRecommendationActivitiesReq,
 	mockRecommendationPageAssetsReq

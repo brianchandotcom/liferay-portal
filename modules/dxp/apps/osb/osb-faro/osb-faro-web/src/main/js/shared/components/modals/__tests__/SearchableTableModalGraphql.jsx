@@ -1,17 +1,19 @@
+import mockStore from 'test/mock-store';
 import OrganizationsQuery from 'segment/segment-editor/dynamic/queries/OrganizationsQuery';
 import React from 'react';
 import SearchableTableModalGraphql from '../SearchableTableModalGraphql';
-import {cleanup, render} from '@testing-library/react';
 import {createOrderIOMap} from 'shared/util/pagination';
 import {
 	getMapResultToProps,
 	mapPropsToOptions
 } from 'segment/segment-editor/dynamic/mappers/dxp-entity-bag-mapper';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
-import {mockOrganizationsListReq} from 'test/graphql-data';
-import {noop} from 'lodash';
+import {MockedProvider} from '@apollo/client/testing';
+import {noop, range} from 'lodash';
+import {Provider} from 'react-redux';
+import {render, screen, waitFor} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -22,6 +24,12 @@ const COLUMNS = [
 	}
 ];
 
+const mockItems = range(5).map(i => ({
+	__typename: 'Organization',
+	id: String(i),
+	name: `fooOrganization-${i}`
+}));
+
 const defaultProps = {
 	columns: COLUMNS,
 	graphqlQuery: OrganizationsQuery,
@@ -30,61 +38,88 @@ const defaultProps = {
 	initialOrderIOMap: createOrderIOMap('name'),
 	mapPropsToOptions,
 	mapResultToProps: getMapResultToProps('organizations'),
-	onClose: noop
+	onClose: noop,
+	onSubmit: noop
 };
 
-const DefaultComponent = props => (
-	<MemoryRouter initialEntries={['/workspace/23/settings/data-source']}>
-		<Route path={Routes.SETTINGS_DATA_SOURCE_LIST}>
-			<MockedProvider mocks={[mockOrganizationsListReq()]}>
-				<SearchableTableModalGraphql {...defaultProps} {...props} />
-			</MockedProvider>
-		</Route>
-	</MemoryRouter>
+const DefaultComponent = ({
+	mocks = [
+		{
+			request: {
+				query: OrganizationsQuery,
+				variables: {
+					keywords: '',
+					size: 5,
+					sort: {column: 'name', type: 'ASC'},
+					start: 0
+				}
+			},
+			result: {
+				data: {
+					organizations: {
+						__typename: 'OrganizationBag',
+						dxpEntities: mockItems,
+						total: 5
+					}
+				}
+			}
+		}
+	],
+	...props
+}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter initialEntries={['/workspace/23/settings/data-source']}>
+			<Route path={Routes.SETTINGS_DATA_SOURCE_LIST}>
+				<MockedProvider addTypename={false} mocks={mocks}>
+					<SearchableTableModalGraphql {...defaultProps} {...props} />
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
 );
 
 describe('SearchableTableModalGraphql', () => {
-	afterEach(cleanup);
-
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with a custom title', () => {
+	it('should render with a custom title', async () => {
 		const {container} = render(<DefaultComponent title='Custom Title' />);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.modal-title')).toHaveTextContent(
 			'Custom Title'
 		);
 	});
 
-	it('should render with a custom submit button message', () => {
-		const {container} = render(
-			<DefaultComponent submitMessage='Custom Submit Message' />
-		);
+	it('should render with a custom submit button message', async () => {
+		render(<DefaultComponent submitMessage='Custom Submit Message' />);
 
-		expect(container.querySelector('.btn-primary')).toHaveTextContent(
-			'Custom Submit Message'
-		);
+		await waitForLoadingToBeRemoved();
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('Custom Submit Message')
+			).toBeInTheDocument();
+		});
 	});
 
-	it('should render with preselected items', () => {
+	it('should render with preselected items', async () => {
 		const {container} = render(
 			<DefaultComponent
-				selectedItems={[{id: 0, name: 'fooOrganization-0'}]}
+				selectedItems={[{id: '0', name: 'fooOrganization-0'}]}
 			/>
 		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
-			container.querySelector(
-				'.table > tbody:nth-of-type(1) > tr .custom-checkbox input:checked'
-			).checked
-		).toBeTrue();
+			container.querySelector('input[type="checkbox"]:checked')
+		).toBeTruthy();
 	});
 });

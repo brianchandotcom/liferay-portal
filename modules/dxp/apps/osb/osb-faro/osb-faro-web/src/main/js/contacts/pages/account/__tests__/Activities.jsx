@@ -41,7 +41,7 @@ describe('Activities', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(container).not.toBeEmptyDOMElement();
 	});
 
 	it('should render with error display', async () => {

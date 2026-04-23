@@ -83,7 +83,6 @@ exports[`DeleteDataSource should render 1`] = `
       >
         <button
           class="button-root delete-button btn btn-warning"
-          disabled=""
           type="submit"
         >
           Delete Data Source

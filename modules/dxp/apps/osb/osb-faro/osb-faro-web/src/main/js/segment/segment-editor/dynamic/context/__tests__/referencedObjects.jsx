@@ -218,9 +218,8 @@ describe('referencedObjects', () => {
 			};
 
 			const WrappedComponent = withReferencedObjectsProvider(() => {
-				const WrappedChildComponent = withReferencedObjectsConsumer(
-					ChildComponent
-				);
+				const WrappedChildComponent =
+					withReferencedObjectsConsumer(ChildComponent);
 
 				return <WrappedChildComponent />;
 			});

@@ -1,5 +1,6 @@
-jest.mock('shared/components/workspaces/SuccessDisplay', () => () =>
-	'SuccessDisplay'
+jest.mock(
+	'shared/components/workspaces/SuccessDisplay',
+	() => () => 'SuccessDisplay'
 );
 
 import * as API from 'shared/api';
@@ -7,16 +8,33 @@ import checkProjectState from '../CheckProjectState';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render, waitFor} from '@testing-library/react';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
-class TestComponent extends React.Component {
-	render() {
-		return <div>{'component body'}</div>;
-	}
-}
+const DefaultWrapper = ({children}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter initialEntries={['/']}>
+			<Route path='/'>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+				>
+					{children}
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
+
+const TestComponent = () => <div>{'component body'}</div>;
 
 describe('SuccessDisplayIf', () => {
 	afterEach(cleanup);
@@ -25,9 +43,9 @@ describe('SuccessDisplayIf', () => {
 		const WrappedComponent = checkProjectState(TestComponent);
 
 		const {container} = render(
-			<Provider store={mockStore()}>
+			<DefaultWrapper>
 				<WrappedComponent groupId='23' />
-			</Provider>
+			</DefaultWrapper>
 		);
 
 		expect(container).toMatchSnapshot();
@@ -37,9 +55,9 @@ describe('SuccessDisplayIf', () => {
 		const WrappedComponent = checkProjectState(TestComponent);
 
 		const {container} = render(
-			<Provider store={mockStore()}>
+			<DefaultWrapper>
 				<WrappedComponent groupId='24' />
-			</Provider>
+			</DefaultWrapper>
 		);
 
 		expect(container).toMatchSnapshot();
@@ -49,9 +67,9 @@ describe('SuccessDisplayIf', () => {
 		const WrappedComponent = checkProjectState(TestComponent);
 
 		const {container} = render(
-			<Provider store={mockStore()}>
+			<DefaultWrapper>
 				<WrappedComponent groupId='25' />
-			</Provider>
+			</DefaultWrapper>
 		);
 
 		expect(container).toMatchSnapshot();
@@ -61,9 +79,9 @@ describe('SuccessDisplayIf', () => {
 		const WrappedComponent = checkProjectState(TestComponent);
 
 		const {container} = render(
-			<Provider store={mockStore()}>
+			<DefaultWrapper>
 				<WrappedComponent groupId='26' />
-			</Provider>
+			</DefaultWrapper>
 		);
 
 		expect(container).toMatchSnapshot();
@@ -73,9 +91,9 @@ describe('SuccessDisplayIf', () => {
 		const WrappedComponent = checkProjectState(TestComponent);
 
 		const {container} = render(
-			<Provider store={mockStore()}>
+			<DefaultWrapper>
 				<WrappedComponent groupId='27' />
-			</Provider>
+			</DefaultWrapper>
 		);
 
 		expect(container).toMatchSnapshot();
@@ -85,11 +103,9 @@ describe('SuccessDisplayIf', () => {
 		const WrappedComponent = checkProjectState(TestComponent);
 
 		const {container} = render(
-			<StaticRouter>
-				<Provider store={mockStore()}>
-					<WrappedComponent groupId='28' />
-				</Provider>
-			</StaticRouter>
+			<DefaultWrapper>
+				<WrappedComponent groupId='28' />
+			</DefaultWrapper>
 		);
 
 		expect(container).toMatchSnapshot();
@@ -99,11 +115,9 @@ describe('SuccessDisplayIf', () => {
 		const WrappedComponent = checkProjectState(TestComponent);
 
 		const {container} = render(
-			<StaticRouter>
-				<Provider store={mockStore()}>
-					<WrappedComponent groupId='29' />
-				</Provider>
-			</StaticRouter>
+			<DefaultWrapper>
+				<WrappedComponent groupId='29' />
+			</DefaultWrapper>
 		);
 
 		expect(container).toMatchSnapshot();
@@ -117,14 +131,10 @@ describe('SuccessDisplayIf', () => {
 		const WrappedComponent = checkProjectState(TestComponent);
 
 		const {container} = render(
-			<StaticRouter>
-				<Provider store={mockStore()}>
-					<WrappedComponent groupId='23' />
-				</Provider>
-			</StaticRouter>
+			<DefaultWrapper>
+				<WrappedComponent groupId='23' />
+			</DefaultWrapper>
 		);
-
-		jest.runAllTimers();
 
 		await waitFor(() => {});
 

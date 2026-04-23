@@ -1,64 +1,65 @@
 import * as data from 'test/data';
 import AttributeList from '../AttributeList';
-import client from 'shared/apollo/client';
+import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
 import {AttributeTypes} from 'event-analysis/utils/types';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockEventAttributeDefinitionsReq} from 'test/graphql-data';
+import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {Routes} from 'shared/util/router';
-import {waitForLoading} from 'test/helpers';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
+const DefaultComponent = ({
+	groupId = '23',
+	mocks = [
+		mockEventAttributeDefinitionsReq(
+			[
+				data.mockEventAttributeDefinition(0, {
+					__typename: 'EventAttributeDefinition',
+					dataType: 'STRING'
+				})
+			],
+			{
+				keyword: '',
+				page: 0,
+				size: 2,
+				sort: {column: 'name', type: 'ASC'},
+				type: AttributeTypes.Local
+			}
+		)
+	]
+}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={[
+				`/workspace/${groupId}/456/settings/definitions/event-attributes/custom`
+			]}
+		>
+			<Route path='/workspace/:groupId/:channelId/settings/definitions/event-attributes/custom'>
+				<MockedProvider addTypename={false} mocks={mocks}>
+					<AttributeList />
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
+);
+
 describe('AttributeList', () => {
-	const WrappedComponent = props => (
-		<ApolloProvider client={client}>
-			<MemoryRouter
-				initialEntries={[
-					'/workspace/23/settings/definitions/event-attributes/global?delta=1'
-				]}
-			>
-				<Route
-					path={Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL}
-				>
-					<MockedProvider
-						mocks={[
-							mockEventAttributeDefinitionsReq(
-								[
-									data.mockEventAttributeDefinition(0, {
-										__typename: 'EventAttributeDefinition'
-									})
-								],
-								{
-									type: AttributeTypes.Local
-								}
-							)
-						]}
-					>
-						<AttributeList groupId='23' {...props} />
-					</MockedProvider>
-				</Route>
-			</MemoryRouter>
-		</ApolloProvider>
-	);
-
 	it('should render', async () => {
-		const {container} = render(<WrappedComponent />);
+		const {container} = render(<DefaultComponent />);
 
-		await waitForLoading(container);
-
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render Data Typecast column with a label', () => {
-		const {getByText} = render(<WrappedComponent />);
+	it('should render Data Typecast column with a label', async () => {
+		const {getByText} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved();
 
 		expect(getByText('STRING').parentElement).toHaveClass('label-info');
 	});

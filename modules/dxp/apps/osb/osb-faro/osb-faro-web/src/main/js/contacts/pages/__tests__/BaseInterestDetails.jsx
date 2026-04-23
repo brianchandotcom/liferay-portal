@@ -13,10 +13,10 @@ jest.unmock('react-dom');
 describe('BaseInterestDetails', () => {
 	beforeAll(() => mockDate());
 
-	afterAll(() => jest.restoreMocks());
+	afterAll(() => jest.restoreAllMocks());
 
 	it('should render', async () => {
-		const {container} = render(
+		const {container, getByText} = render(
 			<StaticRouter>
 				<BaseInterestDetails
 					channelId='123'
@@ -37,7 +37,7 @@ describe('BaseInterestDetails', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Back to Interests')).toBeInTheDocument();
 	});
 
 	it('should render an individuals list tab', () => {
@@ -59,8 +59,8 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		const individualsGrandparentElement = getByText('Individuals')
-			.parentElement?.parentElement;
+		const individualsGrandparentElement =
+			getByText('Individuals').parentElement?.parentElement;
 
 		expect(getByText('Individuals')).toBeTruthy();
 
@@ -87,8 +87,8 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		const activePagesGrandparentElement = getByText('Active Pages')
-			.parentElement?.parentElement;
+		const activePagesGrandparentElement =
+			getByText('Active Pages').parentElement?.parentElement;
 
 		expect(getByText('Active Pages')).toBeTruthy();
 
@@ -115,8 +115,8 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		const InactivePagesGrandparentElement = getByText('Inactive Pages')
-			.parentElement?.parentElement;
+		const InactivePagesGrandparentElement =
+			getByText('Inactive Pages').parentElement?.parentElement;
 
 		expect(getByText('Inactive Pages')).toBeTruthy();
 

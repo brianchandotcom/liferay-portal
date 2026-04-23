@@ -2,7 +2,7 @@ import BasePage from 'shared/components/base-page';
 import client from 'shared/apollo/client';
 import Overview from '../Overview';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
+import {ApolloProvider} from '@apollo/client';
 import {ChannelContext} from 'shared/context/channel';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';

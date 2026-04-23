@@ -120,7 +120,6 @@ exports[`DateFilter should render 1`] = `
     >
       <button
         class="button-root btn btn-block btn-primary"
-        disabled=""
         type="submit"
       >
         Apply

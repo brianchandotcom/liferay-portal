@@ -2,18 +2,27 @@ import * as data from 'test/data';
 import AddWorkspaceForm from '../AddWorkspaceForm';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {Project} from 'shared/util/records';
+import {BasePageContext} from '../BasePage';
+import {MemoryRouter} from 'react-router-dom';
+import {Project, User} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
+const mockUser = new User(data.mockUser());
+
 const DefaultComponent = props => (
 	<Provider store={mockStore()}>
-		<StaticRouter>
-			<AddWorkspaceForm {...props} />
-		</StaticRouter>
+		<BasePageContext.Provider value={{currentUser: mockUser}}>
+			<MemoryRouter>
+				<AddWorkspaceForm
+					onSubmit={jest.fn()}
+					project={new Project(data.mockProject())}
+					{...props}
+				/>
+			</MemoryRouter>
+		</BasePageContext.Provider>
 	</Provider>
 );
 

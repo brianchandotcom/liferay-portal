@@ -658,7 +658,7 @@ exports[`ViewSelectedToggle should render with the "view selected" message 1`] =
     type="button"
   >
     <b>
-      View Selected ()
+      View Selected (1)
     </b>
   </button>
 </div>

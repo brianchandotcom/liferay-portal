@@ -1,35 +1,31 @@
-import client from 'shared/apollo/client';
 import ExportLogModal from '../ExportLogModal';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
-import {
-	cleanup,
-	fireEvent,
-	getAllByText,
-	getByLabelText,
-	getByTestId,
-	getByText,
-	render
-} from '@testing-library/react';
-import {MockedProvider} from '@apollo/react-testing';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route, Switch} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {noop} from 'lodash';
 import {Provider} from 'react-redux';
-import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		channelId: '456',
-		groupId: '2000',
-		query: {
-			rangeKey: '30'
-		}
-	})
-}));
+// Mock DateRangeInput to simplify the test and avoid complex portal/calendar logic
+jest.mock('shared/components/DateRangeInput', () => ({onChange}) => (
+	<div data-testid='mock-date-range-input'>
+		<button
+			onClick={() =>
+				onChange({
+					end: require('moment')('2024-01-02'),
+					start: require('moment')('2024-01-01')
+				})
+			}
+		>
+			{'Set Date Range'}
+		</button>
+	</div>
+));
 
 jest.mock('shared/hooks/useTimeZone', () => ({
 	useTimeZone: () => ({
@@ -37,83 +33,124 @@ jest.mock('shared/hooks/useTimeZone', () => ({
 	})
 }));
 
-const WrapperComponent = ({children}) => (
-	<ApolloProvider client={client}>
-		<Provider store={mockStore()}>
-			<MockedProvider mocks={[mockPreferenceReq()]}>
-				{children}
-			</MockedProvider>
-		</Provider>
-	</ApolloProvider>
+const Wrapper = ({children, mocks = [mockPreferenceReq()]}) => (
+	<Provider store={mockStore()}>
+		<MemoryRouter initialEntries={['/workspace/123/456/2000']}>
+			<Switch>
+				<Route path='/workspace/:groupId/:channelId/:assetId'>
+					<MockedProvider
+						cache={
+							new InMemoryCache({
+								addTypename: false
+							})
+						}
+						mocks={mocks}
+					>
+						{children}
+					</MockedProvider>
+				</Route>
+			</Switch>
+		</MemoryRouter>
+	</Provider>
 );
 
-async function assertLoadingStatesForDownload(container) {
-	fireEvent.click(getByLabelText(container, 'Choose Date Range'));
-
-	const datePickerOverlay = getByTestId(document.body, 'overlay');
-
-	// select day 1
-	fireEvent.click(getAllByText(datePickerOverlay, '1')[0]);
-	// select day 2
-	fireEvent.click(getAllByText(datePickerOverlay, '2')[0]);
-
-	fireEvent.click(getByText(container, 'Download'));
-
-	expect(
-		container.querySelector('.button-root .loading-animation')
-	).toBeTruthy();
-
-	await waitForLoadingToBeRemoved(container);
-
-	expect(
-		container.querySelector('.button-root .loading-animation')
-	).toBeNull();
-}
-
 describe('ExportLogModal', () => {
-	afterEach(cleanup);
-
 	it('renders', () => {
 		const {container} = render(
-			<WrapperComponent>
+			<Wrapper>
 				<ExportLogModal
 					description='Test description'
 					onClose={noop}
 					title='Test Title'
 				/>
-			</WrapperComponent>
+			</Wrapper>
 		);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	xit('should have a loading state when download is triggered', async () => {
-		const {container, debug} = render(
-			<WrapperComponent>
+	it('should have a loading state when download is triggered', async () => {
+		let resolveSubmit;
+		const onSubmit = jest.fn(
+			() =>
+				new Promise(resolve => {
+					resolveSubmit = resolve;
+				})
+		);
+
+		const {container} = render(
+			<Wrapper>
 				<ExportLogModal
 					description='Test description'
 					onClose={noop}
-					onSubmit={() => Promise.resolve('csv-string')}
+					onSubmit={onSubmit}
 					title='Test Title'
 				/>
-			</WrapperComponent>
+			</Wrapper>
 		);
 
-		await assertLoadingStatesForDownload(container, debug);
+		// Set date range via mock
+		fireEvent.click(screen.getByText('Set Date Range'));
+
+		const downloadBtn = screen.getByRole('button', {name: /download/i});
+
+		// Wait for the button to be enabled
+		await waitFor(() => expect(downloadBtn).not.toBeDisabled());
+
+		fireEvent.click(downloadBtn);
+
+		// Verify loading indicator appears in the button
+		expect(container.querySelector('.loading-root')).toBeTruthy();
+
+		// Resolve the submission
+		await act(async () => {
+			resolveSubmit('csv-data');
+		});
+
+		// Verify loading indicator is removed
+		await waitFor(() =>
+			expect(container.querySelector('.loading-root')).toBeNull()
+		);
 	});
 
-	xit('should stop loading if the download failed', async () => {
+	it('should stop loading if the download failed', async () => {
+		let rejectSubmit;
+		const onSubmit = jest.fn(
+			() =>
+				new Promise((_, reject) => {
+					rejectSubmit = reject;
+				})
+		);
+
 		const {container} = render(
-			<WrapperComponent>
+			<Wrapper>
 				<ExportLogModal
 					description='Test description'
 					onClose={noop}
-					onSubmit={() => Promise.reject('Request Error')}
+					onSubmit={onSubmit}
 					title='Test Title'
 				/>
-			</WrapperComponent>
+			</Wrapper>
 		);
 
-		await assertLoadingStatesForDownload(container);
+		// Set date range via mock
+		fireEvent.click(screen.getByText('Set Date Range'));
+
+		const downloadBtn = screen.getByRole('button', {name: /download/i});
+
+		await waitFor(() => expect(downloadBtn).not.toBeDisabled());
+
+		fireEvent.click(downloadBtn);
+
+		expect(container.querySelector('.loading-root')).toBeTruthy();
+
+		// Reject the submission
+		await act(async () => {
+			rejectSubmit(new Error('fail'));
+		});
+
+		await waitFor(() =>
+			expect(container.querySelector('.loading-root')).toBeNull()
+		);
 	});
 });

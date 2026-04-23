@@ -50,49 +50,11 @@ exports[`ExportLogModal renders 1`] = `
           class="d-flex"
         >
           <div
-            class="dropdown w-100 dropdown-range-key-root"
+            data-testid="mock-date-range-input"
           >
-            <div
-              aria-expanded="false"
-              aria-haspopup="true"
-              class="dropdown-toggle"
-            >
-              <div
-                class="input-group"
-              >
-                <div
-                  class="input-group-item"
-                >
-                  <input
-                    autocomplete="off"
-                    class="input-root form-control input-group-inset input-group-inset-after"
-                    data-testid="date-range-input"
-                    placeholder="YYYY-MM-DD to YYYY-MM-DD"
-                    readonly=""
-                    type="text"
-                    value=""
-                  />
-                  <div
-                    class="input-group-inset-item input-group-inset-item-after"
-                  >
-                    <button
-                      aria-label="Choose Date Range"
-                      class="button-root btn btn-unstyled"
-                      type="button"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-calendar icon-root"
-                        role="presentation"
-                      >
-                        <use
-                          href="#calendar"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <button>
+              Set Date Range
+            </button>
           </div>
           <button
             class="button-root ml-2 btn btn-primary"

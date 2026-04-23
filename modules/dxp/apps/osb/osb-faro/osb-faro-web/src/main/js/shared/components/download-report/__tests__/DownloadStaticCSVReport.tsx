@@ -1,24 +1,17 @@
 import * as API from 'shared/api';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
-import {BrowserRouter} from 'react-router-dom';
-import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
 import {CSVType} from '../utils';
 import {DownloadStaticCSVReport} from '../DownloadStaticCSVReport';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {InMemoryCache} from '@apollo/client';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 
 jest.unmock('react-dom');
-
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		channelId: '123',
-		groupId: '456'
-	})
-}));
 
 jest.mock('shared/actions/alerts', () => ({
 	actionTypes: {},
@@ -29,168 +22,178 @@ jest.mock('shared/actions/alerts', () => ({
 	}))
 }));
 
-// Mock a.click on DownloadStaticCSVReport to avoid
-// break navigation during running unit tests with jest
+jest.mock('shared/api', () => ({
+	csv: {
+		fetchCount: jest.fn(),
+		fetchCSV: jest.fn()
+	}
+}));
+
+jest.mock('../utils', () => {
+	const original = jest.requireActual('../utils');
+	return {
+		...original,
+		useDownloadCSV: jest.fn(() => () => 'http://test-url.com')
+	};
+});
 
 jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
 
-const WrapperComponent = () => (
+const DefaultComponent = () => (
 	<Provider store={mockStore()}>
-		<BrowserRouter>
-			<DownloadStaticCSVReport
-				disabled={false}
-				type={CSVType.Individual}
-				typeLang={Liferay.Language.get('individuals')}
-			/>
-		</BrowserRouter>
+		<MemoryRouter initialEntries={['/workspace/123/456/individuals']}>
+			<Route path='/workspace/:groupId/:channelId/individuals'>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false
+						})
+					}
+				>
+					<DownloadStaticCSVReport
+						disabled={false}
+						type={CSVType.Individual}
+						typeLang='Individuals'
+					/>
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
 	</Provider>
 );
 
 describe('DownloadStaticCSVReport', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
-		jest.clearAllTimers();
-		cleanup();
 	});
 
-	beforeAll(() => {
-		jest.useFakeTimers();
+	it('renders component', async () => {
+		render(<DefaultComponent />);
 
-		// @ts-ignore
+		const downloadBtn = screen.getByRole('button', {
+			name: /download report/i
+		});
 
-		ReactDOM.createPortal = jest.fn(element => element);
+		fireEvent.click(downloadBtn);
+
+		await waitFor(() => {
+			expect(screen.getByTestId('submit')).toBeInTheDocument();
+		});
+
+		expect(document.body).toMatchSnapshot();
 	});
 
-	afterAll(() => {
-		jest.useRealTimers();
-	});
+	it('displays modal content', async () => {
+		(API.csv.fetchCSV as jest.Mock).mockReturnValue(
+			Promise.resolve({ok: true})
+		);
+		(API.csv.fetchCount as jest.Mock).mockReturnValue(
+			Promise.resolve(9000)
+		);
 
-	it('renders component', () => {
-		const {container, getByRole} = render(<WrapperComponent />);
+		render(<DefaultComponent />);
 
 		fireEvent.click(
-			getByRole('button', {
+			screen.getByRole('button', {
 				name: /download report/i
 			})
 		);
 
-		jest.runAllTimers();
+		await waitFor(() => {
+			expect(
+				screen.getByText(/The generated CSV file supports up to/)
+			).toBeInTheDocument();
+		});
 
-		expect(container).toMatchSnapshot();
-	});
+		expect(screen.getByTestId('cancel')).toBeInTheDocument();
+		expect(screen.getByTestId('submit')).toBeInTheDocument();
 
-	it('displays modal content', () => {
-		// @ts-ignore
+		fireEvent.click(screen.getByTestId('submit'));
 
-		API.csv.fetchCSV.mockReturnValueOnce(Promise.resolve({ok: true}));
-
-		// @ts-ignore
-
-		API.csv.fetchCount.mockReturnValueOnce(Promise.resolve(9000));
-
-		const {getByRole, queryByTestId, queryByText} = render(
-			<WrapperComponent />
-		);
-
-		fireEvent.click(
-			getByRole('button', {
-				name: /download report/i
-			})
-		);
-
-		jest.runAllTimers();
-
-		expect(
-			queryByText(
-				'The generated CSV file supports up to 10,000 entries per export and it will respect the current ordering and search results. Please ensure that any desired changes have been successfully applied before downloading the Individuals list.'
-			)
-		).toBeTruthy();
-
-		expect(queryByTestId('cancel')).toBeTruthy();
-		expect(queryByTestId('submit')).toBeTruthy();
-
-		fireEvent.click(queryByTestId('submit'));
-
-		jest.runAllTimers();
-
-		expect(
-			queryByText(
-				'The generated CSV file supports up to 10,000 entries per export and it will respect the current ordering and search results. Please ensure that any desired changes have been successfully applied before downloading the Individuals list.'
-			)
-		).toBeFalsy();
-
-		expect(queryByTestId('cancel')).toBeFalsy();
-		expect(queryByTestId('submit')).toBeFalsy();
+		await waitFor(() => {
+			expect(screen.queryByTestId('submit')).not.toBeInTheDocument();
+		});
 	});
 
 	it('displays info alert about download CSV report', async () => {
-		// @ts-ignore
+		(API.csv.fetchCSV as jest.Mock).mockReturnValue(
+			Promise.resolve({ok: true})
+		);
+		(API.csv.fetchCount as jest.Mock).mockReturnValue(
+			Promise.resolve(9000)
+		);
 
-		API.csv.fetchCSV.mockReturnValueOnce(Promise.resolve({ok: true}));
-
-		// @ts-ignore
-
-		API.csv.fetchCount.mockReturnValueOnce(Promise.resolve(9000));
-
-		const {getByRole, queryByTestId} = render(<WrapperComponent />);
+		render(<DefaultComponent />);
 
 		fireEvent.click(
-			getByRole('button', {
+			screen.getByRole('button', {
 				name: /download report/i
 			})
 		);
 
-		jest.runAllTimers();
+		await waitFor(() =>
+			expect(screen.getByTestId('submit')).toBeInTheDocument()
+		);
 
-		fireEvent.click(queryByTestId('submit'));
+		fireEvent.click(screen.getByTestId('submit'));
 
 		await waitFor(() => {
-			expect(addAlert).toHaveBeenCalledTimes(1);
+			expect(addAlert).toHaveBeenCalledWith(
+				expect.objectContaining({
+					alertType: Alert.Types.Default
+				})
+			);
 		});
 	});
 
 	it('displays warning alert when csv reached 10,000 entries', async () => {
-		// @ts-ignore
+		(API.csv.fetchCSV as jest.Mock).mockReturnValue(
+			Promise.resolve({ok: true})
+		);
+		(API.csv.fetchCount as jest.Mock).mockReturnValue(
+			Promise.resolve(11000)
+		);
 
-		API.csv.fetchCSV.mockReturnValueOnce(Promise.resolve({ok: true}));
-
-		// @ts-ignore
-
-		API.csv.fetchCount.mockReturnValueOnce(Promise.resolve(11000));
-
-		const {getByRole, queryByTestId} = render(<WrapperComponent />);
+		render(<DefaultComponent />);
 
 		fireEvent.click(
-			getByRole('button', {
+			screen.getByRole('button', {
 				name: /download report/i
 			})
 		);
 
-		jest.runAllTimers();
+		await waitFor(() =>
+			expect(screen.getByTestId('submit')).toBeInTheDocument()
+		);
 
-		fireEvent.click(queryByTestId('submit'));
+		fireEvent.click(screen.getByTestId('submit'));
 
 		await waitFor(() => {
-			expect(addAlert).toHaveBeenCalledTimes(2);
+			expect(addAlert).toHaveBeenCalledWith(
+				expect.objectContaining({
+					alertType: Alert.Types.Warning
+				})
+			);
 		});
 	});
 
 	it('displays error alert when csv returns any type of errors', async () => {
-		// @ts-ignore
+		(API.csv.fetchCSV as jest.Mock).mockReturnValue(
+			Promise.resolve({ok: false})
+		);
 
-		API.csv.fetchCSV.mockReturnValueOnce(Promise.resolve({ok: false}));
-
-		const {getByRole, queryByTestId} = render(<WrapperComponent />);
+		render(<DefaultComponent />);
 
 		fireEvent.click(
-			getByRole('button', {
+			screen.getByRole('button', {
 				name: /download report/i
 			})
 		);
 
-		jest.runAllTimers();
+		await waitFor(() =>
+			expect(screen.getByTestId('submit')).toBeInTheDocument()
+		);
 
-		fireEvent.click(queryByTestId('submit'));
+		fireEvent.click(screen.getByTestId('submit'));
 
 		await waitFor(() => {
 			expect(addAlert).toHaveBeenCalledWith({

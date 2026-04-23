@@ -2,7 +2,7 @@ import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {Accessor, AssetAppearsOnCard} from '../AssetAppearsOnCard';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {AssetTypes} from 'shared/util/constants';
 import {cleanup, render} from '@testing-library/react';
 import {EmptyStateLink, EmptyStateText} from '../AssetAppearsOnCard';
@@ -11,7 +11,7 @@ import {
 	mockPreferenceReq,
 	mockTimeRangeReq
 } from 'test/graphql-data';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {StaticRouter} from 'react-router-dom';
@@ -38,6 +38,12 @@ const WrappedComponent = ({
 	empty = false,
 	emptyStateLink,
 	emptyStateText
+}: {
+	accessors: Accessor[];
+	assetType: AssetTypes;
+	empty?: boolean;
+	emptyStateLink: EmptyStateLink;
+	emptyStateText: EmptyStateText;
 }) => (
 	<Provider store={mockStore()}>
 		<ApolloProvider client={client}>
@@ -71,7 +77,7 @@ describe('AssetAppearsOnCard', () => {
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container} = render(
+		const {getByText} = render(
 			<WrappedComponent
 				accessors={[Accessor.ViewsMetric]}
 				assetType={AssetTypes.Blog}
@@ -80,9 +86,10 @@ describe('AssetAppearsOnCard', () => {
 			/>
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(document.body);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('Asset Appears On')).toBeInTheDocument();
+		expect(getByText('Views')).toBeInTheDocument();
 	});
 
 	it('should have a Views column for Blog', async () => {

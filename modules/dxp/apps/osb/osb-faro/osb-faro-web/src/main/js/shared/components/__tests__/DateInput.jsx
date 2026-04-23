@@ -1,8 +1,8 @@
 import client from 'shared/apollo/client';
 import DateInput from '../DateInput';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
-import {MockedProvider} from '@apollo/react-testing';
+import {ApolloProvider} from '@apollo/client';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {render} from '@testing-library/react';
 
@@ -18,13 +18,13 @@ const WrapperComponent = ({children}) => (
 
 describe('DateInput', () => {
 	it('should render', () => {
-		const {container} = render(
+		const {getByTestId} = render(
 			<WrapperComponent>
 				<DateInput />
 			</WrapperComponent>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByTestId('date-input')).toBeInTheDocument();
 	});
 
 	it('should use the displayFormat prop for displaying the date', () => {

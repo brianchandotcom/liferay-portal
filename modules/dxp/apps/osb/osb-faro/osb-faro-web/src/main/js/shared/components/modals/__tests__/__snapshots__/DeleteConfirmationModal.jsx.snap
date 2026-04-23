@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DeleteConfirmationModal renders 1`] = `
+exports[`DeleteConfirmationModal should render 1`] = `
 <div>
   <div
     aria-modal="true"
@@ -27,7 +27,7 @@ exports[`DeleteConfirmationModal renders 1`] = `
                 href="#warning-full"
               />
             </svg>
-            Test title
+            Confirm
           </div>
           <button
             aria-label="Close"
@@ -49,18 +49,16 @@ exports[`DeleteConfirmationModal renders 1`] = `
         >
           <div
             class="text-secondary"
-          >
-            <p>
-              I am child
-            </p>
-          </div>
+          />
           <div
             class="font-weight-bold mb-3"
           >
             Copy the following: 
             <span
               class="font-weight-normal text-secondary"
-            />
+            >
+              delete me
+            </span>
           </div>
           <div
             class=""
@@ -86,7 +84,6 @@ exports[`DeleteConfirmationModal renders 1`] = `
           </button>
           <button
             class="button-root btn btn-warning"
-            disabled=""
             type="submit"
           >
             Delete

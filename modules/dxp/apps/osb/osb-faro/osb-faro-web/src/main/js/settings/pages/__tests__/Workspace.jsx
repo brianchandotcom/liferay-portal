@@ -3,20 +3,13 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {cleanup, render} from '@testing-library/react';
+import {MemoryRouter, Route} from 'react-router-dom';
 import {Project, User} from 'shared/util/records';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {Workspace} from '../Workspace';
 
 jest.unmock('react-dom');
-
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		groupId: '23'
-	})
-}));
 
 jest.mock('shared/actions/alerts', () => ({
 	actionTypes: {},
@@ -36,9 +29,11 @@ const defaultProps = {
 
 const DefaultComponent = props => (
 	<Provider store={mockStore()}>
-		<StaticRouter>
-			<Workspace {...defaultProps} {...props} />
-		</StaticRouter>
+		<MemoryRouter initialEntries={['/workspace/23/settings/workspace']}>
+			<Route path='/workspace/:groupId/settings/workspace'>
+				<Workspace {...defaultProps} {...props} />
+			</Route>
+		</MemoryRouter>
 	</Provider>
 );
 

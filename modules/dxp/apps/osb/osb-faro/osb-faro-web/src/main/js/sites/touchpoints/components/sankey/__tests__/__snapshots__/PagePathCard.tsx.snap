@@ -988,8 +988,7 @@ exports[`PagePathCard should render 1`] = `
           </svg>
           <div
             class="recharts-tooltip-wrapper"
-            role="dialog"
-            style="transform: translate(undefinedpx, undefinedpx); pointer-events: none; visibility: hidden; position: absolute; top: 0px; left: 0px;"
+            style="visibility: hidden; pointer-events: none; position: absolute; top: 0px; left: 0px;"
             tabindex="-1"
           />
         </div>

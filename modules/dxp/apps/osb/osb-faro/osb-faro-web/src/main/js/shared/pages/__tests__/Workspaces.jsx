@@ -3,7 +3,7 @@ import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import Workspaces, {routingFn} from '../Workspaces';
-import {ApolloProvider} from '@apollo/react-components';
+import {ApolloProvider} from '@apollo/client';
 import {BrowserRouter} from 'react-router-dom';
 import {cleanup, render} from '@testing-library/react';
 import {Map} from 'immutable';

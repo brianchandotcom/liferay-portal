@@ -2,13 +2,13 @@ import client from 'shared/apollo/client';
 import DateFilterConjunctionInput from '../DateFilterConjunctionInput';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from '@apollo/client';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {
 	FunctionalOperators,
 	RelationalOperators
 } from '../../../utils/constants';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 

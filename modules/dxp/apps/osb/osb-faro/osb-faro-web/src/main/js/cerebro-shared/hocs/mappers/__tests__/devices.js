@@ -197,7 +197,65 @@ describe('Shared HOCs Mappers - Devices', () => {
 			}
 		};
 
-		expect(mapper.props(data)).toMatchSnapshot();
+		const result = mapper.props(data);
+
+		expect(result).toMatchObject({
+			browsers: [
+				{value: 2248, valueKey: 'Chrome'},
+				{value: 782, valueKey: 'Firefox'},
+				{value: 137, valueKey: 'Chrome Mobile'},
+				{value: 136, valueKey: 'Safari'},
+				{value: 124, valueKey: 'Mobile Safari'},
+				{value: 109, valueKey: 'Edge'},
+				{value: 39, valueKey: 'Unknown'},
+				{value: 20, valueKey: 'Samsung Browser'},
+				{value: 76, valueKey: 'Others'}
+			],
+			devices: [
+				{
+					data: [
+						{percentage: 0, type: 'Windows', views: 2065},
+						{percentage: 0, type: 'macOS', views: 995},
+						{percentage: 0, type: 'Linux', views: 136},
+						{percentage: 0, type: 'Mac OS X', views: 107},
+						{percentage: 0, type: 'Ubuntu', views: 53},
+						{percentage: 0, type: 'ChromeOS', views: 3},
+						{percentage: 0, type: 'Fedora', views: 2},
+						{percentage: 0, type: 'Unknown', views: 1}
+					],
+					label: 'Desktop',
+					percentageOfTotal: 0,
+					totalViews: 3362,
+					type: 'Desktop'
+				},
+				{
+					data: [
+						{percentage: 0, type: 'Android', views: 151},
+						{percentage: 0, type: 'iOS', views: 61},
+						{percentage: 0, type: 'Unknown', views: 9},
+						{percentage: 0, type: 'FreeBSD', views: 8},
+						{percentage: 0, type: 'Windows Phone', views: 1}
+					],
+					label: 'Phone',
+					percentageOfTotal: 0,
+					totalViews: 230,
+					type: 'SmartPhone'
+				},
+				{
+					data: [
+						{percentage: 0, type: 'iOS', views: 67},
+						{percentage: 0, type: 'Android', views: 12}
+					],
+					label: 'Tablet',
+					percentageOfTotal: 0,
+					totalViews: 79,
+					type: 'Tablet'
+				}
+			],
+			error: null,
+			loading: false,
+			total: undefined
+		});
 	});
 
 	it('should map devices information in correct order', () => {
@@ -266,6 +324,45 @@ describe('Shared HOCs Mappers - Devices', () => {
 			}
 		};
 
-		expect(mapper.props(data)).toMatchSnapshot();
+		const result = mapper.props(data);
+
+		expect(result).toMatchObject({
+			browsers: [{value: 9, valueKey: 'Chrome'}],
+			devices: [
+				{
+					data: [
+						{percentage: 0, type: 'Windows', views: 2},
+						{percentage: 0, type: 'macOS', views: 1}
+					],
+					label: 'Desktop',
+					percentageOfTotal: 0,
+					totalViews: 3,
+					type: 'Desktop'
+				},
+				{
+					data: [{percentage: 0, type: 'Android', views: 4}],
+					label: 'Phone',
+					percentageOfTotal: 0,
+					totalViews: 4,
+					type: 'SmartPhone'
+				},
+				{
+					data: [{percentage: 0, type: 'Tizen', views: 1}],
+					label: 'TV',
+					percentageOfTotal: 0,
+					totalViews: 1,
+					type: 'Tv'
+				},
+				{
+					data: [{type: 'Other', views: 1}],
+					label: 'Others',
+					percentageOfTotal: 0,
+					type: 'Other'
+				}
+			],
+			error: null,
+			loading: false,
+			total: undefined
+		});
 	});
 });

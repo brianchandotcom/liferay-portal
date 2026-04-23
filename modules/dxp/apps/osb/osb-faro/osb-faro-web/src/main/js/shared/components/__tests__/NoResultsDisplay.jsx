@@ -16,7 +16,9 @@ describe('NoResultsDisplay', () => {
 	it('should render component with primary color', () => {
 		const {container} = render(<NoResultsDisplay primary />);
 
-		expect(container.firstChild).toHaveClass('no-results-primary');
+		expect(container.querySelector('.no-results-root')).toHaveClass(
+			'no-results-primary'
+		);
 	});
 
 	it('should render component with description', () => {

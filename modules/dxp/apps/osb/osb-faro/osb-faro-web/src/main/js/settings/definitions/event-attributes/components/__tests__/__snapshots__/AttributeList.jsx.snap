@@ -222,7 +222,7 @@ exports[`AttributeList should render 1`] = `
           class="dropdown-toggle button-root btn btn-sm btn-secondary"
           type="button"
         >
-          1 Item
+          2 Items
           <svg
             class="lexicon-icon lexicon-icon-caret-bottom ml-2"
             role="presentation"

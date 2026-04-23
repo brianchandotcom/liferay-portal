@@ -3,12 +3,13 @@ import React from 'react';
 import SuppressedUserList from '../SuppressedUserList';
 import {cleanup, render} from '@testing-library/react';
 import {GDPRRequestStatuses} from 'shared/util/constants';
+import {InMemoryCache} from '@apollo/client';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockSuppressedUsersListReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
-import {waitForLoading} from 'test/helpers';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -32,14 +33,22 @@ const mockItems = [
 ];
 
 const WrappedComponent = props => (
-	<MockedProvider mocks={[mockSuppressedUsersListReq(mockItems)]}>
-		<Provider store={mockStore()}>
-			<MemoryRouter
-				initialEntries={[
-					'/workspace/23/settings/data-privacy/suppressed-users?delta=5&page=1'
-				]}
-			>
-				<Route path={Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS}>
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={[
+				'/workspace/23/settings/data-privacy/suppressed-users?delta=5&page=1'
+			]}
+		>
+			<Route path={Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS}>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+					mocks={[mockSuppressedUsersListReq(mockItems)]}
+				>
 					<SuppressedUserList
 						currentUser={{isAdmin: () => true}}
 						router={{
@@ -48,10 +57,10 @@ const WrappedComponent = props => (
 						}}
 						{...props}
 					/>
-				</Route>
-			</MemoryRouter>
-		</Provider>
-	</MockedProvider>
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
 );
 
 describe('Suppressed User List', () => {
@@ -60,9 +69,7 @@ describe('Suppressed User List', () => {
 	it('should render', async () => {
 		const {container} = render(<WrappedComponent />);
 
-		await waitForLoading(container);
-
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

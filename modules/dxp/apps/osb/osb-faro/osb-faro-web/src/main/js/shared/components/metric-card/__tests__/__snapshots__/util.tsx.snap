@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`convertHistogramKeysToDate should convert the histogram date key strings to Date types 1`] = `
-Array [
-  Object {
+[
+  {
     "key": 1531699200000,
-    "previousValueKey": Array [
+    "previousValueKey": [
       1531612800000,
     ],
     "value": 15,
-    "valueKey": Array [
+    "valueKey": [
       1531699200000,
     ],
   },
@@ -16,10 +16,10 @@ Array [
 `;
 
 exports[`getMetricsChartData should return data formatted for use in a Metrics chart 1`] = `
-Array [
-  Object {
+[
+  {
     "color": "#4B9BFF",
-    "data": Array [
+    "data": [
       0,
       10,
       20,
@@ -55,9 +55,9 @@ Array [
     "name": "",
     "tooltipTitle": "",
   },
-  Object {
+  {
     "color": "#7EB7FF",
-    "data": Array [
+    "data": [
       0,
       20,
       40,
@@ -92,8 +92,8 @@ Array [
     "id": "data_previous",
     "name": "Previous Period",
   },
-  Object {
-    "data": Array [
+  {
+    "data": [
       1531180800000,
       1531267200000,
       1531353600000,
@@ -131,10 +131,10 @@ Array [
 `;
 
 exports[`getSiteMetricsChartData should return data formatted for use in a Site Metrics chart 1`] = `
-Array [
-  Object {
+[
+  {
     "color": "#4B9BFF",
-    "data": Array [
+    "data": [
       0,
       55,
       110,
@@ -172,9 +172,9 @@ Array [
     "tooltipTitle": "Known",
     "type": "bar",
   },
-  Object {
+  {
     "color": "#FFB46E",
-    "data": Array [
+    "data": [
       0,
       25,
       50,
@@ -212,9 +212,9 @@ Array [
     "tooltipTitle": "Anonymous",
     "type": "bar",
   },
-  Object {
+  {
     "color": "#393A4A",
-    "data": Array [
+    "data": [
       0,
       170,
       340,
@@ -250,8 +250,8 @@ Array [
     "name": "Previous Period",
     "type": "line",
   },
-  Object {
-    "data": Array [
+  {
+    "data": [
       1531180800000,
       1531267200000,
       1531353600000,

@@ -1,37 +1,36 @@
-import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {ApolloProvider} from '@apollo/react-components';
 import {AttributeFilterSection} from '../AttributeFilterSection';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 
 jest.unmock('react-dom');
 
-describe('AttributeFilterSection', () => {
-	const WrappedComponent = props => (
+const WrappedComponent = props => (
+	<Provider store={mockStore()}>
 		<MemoryRouter initialEntries={['/workspace/23/event-analysis']}>
 			<Route path={Routes.EVENT_ANALYSIS}>
-				<ApolloProvider client={client}>
-					<Provider store={mockStore()}>
-						<DndProvider backend={HTML5Backend}>
-							<AttributeFilterSection
-								attributes={[]}
-								filterOrder={[]}
-								filters={[]}
-								{...props}
-							/>
-						</DndProvider>
-					</Provider>
-				</ApolloProvider>
+				<MockedProvider freezeResults={false}>
+					<DndProvider backend={HTML5Backend}>
+						<AttributeFilterSection
+							attributes={[]}
+							filterOrder={[]}
+							filters={[]}
+							{...props}
+						/>
+					</DndProvider>
+				</MockedProvider>
 			</Route>
 		</MemoryRouter>
-	);
+	</Provider>
+);
 
+describe('AttributeFilterSection', () => {
 	it('renders', () => {
 		const {container} = render(<WrappedComponent />);
 

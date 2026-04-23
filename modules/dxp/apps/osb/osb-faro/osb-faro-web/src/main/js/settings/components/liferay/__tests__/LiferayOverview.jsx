@@ -2,46 +2,52 @@ import * as data from 'test/data';
 import LiferayOverview from '../LiferayOverview';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
 import {DataSource} from 'shared/util/records';
+import {MemoryRouter, Route} from 'react-router-dom';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
+import {render} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({
-		groupId: '23',
-		id: 'test'
+jest.mock('shared/hooks/useCurrentUser', () => ({
+	useCurrentUser: () => ({
+		isAdmin: () => true
 	})
 }));
 
 jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn
-}));
-
-jest.mock('shared/hooks/useCurrentUser', () => ({
-	useCurrentUser: () => ({isAdmin: () => true})
+	useRequest: () => ({
+		data: {
+			channelsCount: 5,
+			groupsCount: 10,
+			individualsCount: 100
+		},
+		loading: false
+	})
 }));
 
 const defaultProps = {
-	dataSource: data.getImmutableMock(DataSource, data.mockSalesforceDataSource)
+	dataSource: new DataSource(data.mockLiferayDataSource())
 };
 
-const DefaultComponent = props => (
+const WrappedComponent = props => (
 	<Provider store={mockStore()}>
-		<StaticRouter>
-			<LiferayOverview {...defaultProps} {...props} />
-		</StaticRouter>
+		<MemoryRouter
+			initialEntries={['/workspace/23/settings/data-source/test']}
+		>
+			<Route path='/workspace/:groupId/settings/data-source/:id'>
+				<MockedProvider>
+					<LiferayOverview {...defaultProps} {...props} />
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
 	</Provider>
 );
 
 describe('LiferayOverview', () => {
-	afterEach(cleanup);
-
-	it('should render', () => {
-		const {container} = render(<DefaultComponent />);
+	it('should render', async () => {
+		const {container} = render(<WrappedComponent />);
 
 		expect(container).toMatchSnapshot();
 	});

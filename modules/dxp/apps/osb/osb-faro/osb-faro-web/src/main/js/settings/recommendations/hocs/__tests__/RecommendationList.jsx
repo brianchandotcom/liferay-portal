@@ -3,14 +3,15 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import RecommendationList from '../RecommendationList';
 import RecommendationListQuery from '../../queries/RecommendationListQuery';
+import {InMemoryCache} from '@apollo/client';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {MockedProvider} from '@apollo/react-testing';
+import {MockedProvider} from '@apollo/client/testing';
 import {mockJobBag} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {range} from 'lodash';
 import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
-import {waitForLoading} from 'test/helpers';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -35,33 +36,39 @@ const defaultProps = {
 	router: {params: {groupId: '23'}, query: {delta: '10', page: '1'}}
 };
 
-const DefaultComponent = props => (
-	<MockedProvider mocks={[mockRecommendationListReq()]}>
-		<Provider store={mockStore()}>
-			<MemoryRouter
-				initialEntries={[
-					'/workspace/23/settings/recommendations?delta=10&field=name&sortOrder=DESC'
-				]}
-			>
-				<Route path={Routes.SETTINGS_RECOMMENDATIONS}>
+const WrappedComponent = props => (
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={[
+				'/workspace/23/settings/recommendations?delta=10&field=name&sortOrder=DESC'
+			]}
+		>
+			<Route path={Routes.SETTINGS_RECOMMENDATIONS}>
+				<MockedProvider
+					cache={
+						new InMemoryCache({
+							addTypename: false,
+							freezeResults: false
+						})
+					}
+					mocks={[mockRecommendationListReq()]}
+				>
 					<RecommendationList
 						groupId='23'
 						{...defaultProps}
 						{...props}
 					/>
-				</Route>
-			</MemoryRouter>
-		</Provider>
-	</MockedProvider>
+				</MockedProvider>
+			</Route>
+		</MemoryRouter>
+	</Provider>
 );
 
 describe('RecommendationList', () => {
 	it('should render', async () => {
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(<WrappedComponent />);
 
-		await waitForLoading(container);
-
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

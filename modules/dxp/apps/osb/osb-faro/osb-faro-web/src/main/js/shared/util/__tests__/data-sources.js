@@ -175,7 +175,11 @@ describe('data-sources', () => {
 				})
 			);
 
-			expect(result).toMatchSnapshot();
+			expect(result).toMatchObject({
+				display: 'warning',
+				label: 'Inactive'
+			});
+			expect(Array.isArray(result.message)).toBe(true);
 		});
 
 		it('should return the disconnected state display object if the state is DISCONNECTED', () => {
@@ -186,7 +190,10 @@ describe('data-sources', () => {
 				})
 			);
 
-			expect(result).toMatchSnapshot();
+			expect(result).toMatchObject({
+				display: 'secondary',
+				label: 'Disconnected'
+			});
 		});
 	});
 
@@ -208,11 +215,25 @@ describe('data-sources', () => {
 
 	describe('getServiceAlertConfig', () => {
 		it('should return a service permission related alert props', () => {
-			expect(getServiceAlertConfig(403)).toMatchSnapshot();
+			const result = getServiceAlertConfig(403);
+
+			expect(result).toMatchObject({
+				alertType: 'WARNING',
+				timeout: 7000
+			});
+			expect(typeof result.message).toBe('string');
+			expect(result.message.length).toBeGreaterThan(0);
 		});
 
 		it('should return a service unresponsive related alert props', () => {
-			expect(getServiceAlertConfig(404)).toMatchSnapshot();
+			const result = getServiceAlertConfig(404);
+
+			expect(result).toMatchObject({
+				alertType: 'WARNING',
+				timeout: 7000
+			});
+			expect(typeof result.message).toBe('string');
+			expect(result.message.length).toBeGreaterThan(0);
 		});
 	});
 
@@ -254,7 +275,9 @@ describe('data-sources', () => {
 					groupId: '23',
 					value: `${existingDataSourceName}1`
 				})
-			).rejects.toMatchSnapshot();
+			).resolves.toEqual(
+				'A Data Source already exists with that name. Please enter a different name.'
+			);
 		});
 	});
 

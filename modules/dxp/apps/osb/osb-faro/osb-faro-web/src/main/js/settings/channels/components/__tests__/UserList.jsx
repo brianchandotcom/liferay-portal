@@ -1,66 +1,155 @@
-import 'test/mock-modal';
-
+import * as API from 'shared/api';
+import * as pedantic from 'test/pedantic';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import UserList from '../UserList';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {ClayIconSpriteContext} from '@clayui/icon';
+import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {MemoryRouter} from 'react-router-dom';
 import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/actions/alerts', () => ({
+	actionTypes: {},
+	addAlert: jest.fn(() => ({meta: {}, payload: {}, type: 'addAlert'}))
+}));
+
+jest.mock('shared/actions/modals', () => ({
+	actionTypes: {
+		CLOSE_ALL_MODALS: 'CLOSE_ALL_MODALS',
+		CLOSE_MODAL: 'CLOSE_MODAL',
+		OPEN_MODAL: 'OPEN_MODAL'
+	},
+	close: jest.fn(() => ({meta: {}, payload: {}, type: 'close'})),
+	modalTypes: {
+		CONFIRMATION_MODAL: 'CONFIRMATION_MODAL',
+		SEARCHABLE_TABLE_MODAL: 'SEARCHABLE_TABLE_MODAL'
+	},
+	open: jest.fn(() => ({meta: {}, payload: {}, type: 'open'}))
+}));
+
+// Mock NameCell to avoid potential complex dependencies or meta property issues
+jest.mock('shared/components/table/cell-components/index', () => {
+	const Original = jest.requireActual(
+		'shared/components/table/cell-components/index'
+	);
+	return {
+		...Original,
+		NameCell: ({data}) => <td data-testid='name-cell'>{data.name}</td>
+	};
+});
+
 const defaultProps = {
 	authorized: true,
-	groupId: '23'
+	groupId: '23',
+	id: 'channel-1',
+	propertyName: 'Test Property'
 };
 
-const DefaultComponent = props => (
-	<Provider store={mockStore()}>
-		<StaticRouter>
-			<UserList {...defaultProps} {...props} />
-		</StaticRouter>
+const mockUsers = {
+	items: [
+		{
+			emailAddress: 'test1@liferay.com',
+			id: 'user-1',
+			name: 'User 1',
+			userId: 'user-1'
+		},
+		{
+			emailAddress: 'test2@liferay.com',
+			id: 'user-2',
+			name: 'User 2',
+			userId: 'user-2'
+		}
+	],
+	total: 2
+};
+
+const Wrapper = ({children, store = mockStore()}) => (
+	<Provider store={store}>
+		<MemoryRouter>
+			<ClayIconSpriteContext.Provider value='/o/osb-faro-web/dist/sprite.svg'>
+				{children}
+			</ClayIconSpriteContext.Provider>
+		</MemoryRouter>
 	</Provider>
 );
 
 describe('ChannelUserList', () => {
-	afterEach(cleanup);
+	beforeEach(() => {
+		pedantic.disable();
+		API.channels.fetchUsers.mockReturnValue(Promise.resolve(mockUsers));
+	});
+
+	afterEach(() => {
+		pedantic.enable();
+		cleanup();
+	});
 
 	it('should render', async () => {
-		const {container} = render(<DefaultComponent />);
+		const {container} = render(
+			<Wrapper>
+				<UserList {...defaultProps} />
+			</Wrapper>
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(container).toMatchSnapshot();
+		expect(screen.getByText('User 1')).toBeInTheDocument();
+		expect(screen.getByText('test1@liferay.com')).toBeInTheDocument();
+		expect(screen.getByText('User 2')).toBeInTheDocument();
+		expect(screen.getByText('test2@liferay.com')).toBeInTheDocument();
+
+		expect(screen.getByText('Add User')).toBeInTheDocument();
 	});
 
-	it('should render without checkboxes if user is not an AC admin', () => {
-		const {container, queryByText} = render(
-			<DefaultComponent authorized={false} />
+	it('should render without checkboxes if user is not an AC admin', async () => {
+		const {container} = render(
+			<Wrapper>
+				<UserList {...defaultProps} authorized={false} />
+			</Wrapper>
 		);
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container.querySelector('input[type=checkbox]')).toBeNull();
-		expect(queryByText('Add User')).toBeNull();
+		expect(screen.queryByText('Add User')).toBeNull();
 	});
 
 	it('should open a modal to add users', async () => {
-		const {container, queryByText} = render(<DefaultComponent />);
+		render(
+			<Wrapper>
+				<UserList {...defaultProps} />
+			</Wrapper>
+		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved();
 
-		fireEvent.click(queryByText('Add User'));
+		fireEvent.click(screen.getByText('Add User'));
 
-		expect(open).toBeCalled();
+		expect(open).toHaveBeenCalledWith(
+			'SEARCHABLE_TABLE_MODAL',
+			expect.any(Object)
+		);
 	});
 
 	it('should open a modal to remove users', async () => {
-		const {container, queryByTestId} = render(<DefaultComponent />);
+		render(
+			<Wrapper>
+				<UserList {...defaultProps} />
+			</Wrapper>
+		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved();
 
-		fireEvent.click(queryByTestId('delete-user'));
+		const deleteButtons = screen.getAllByTestId('delete-user');
+		fireEvent.click(deleteButtons[0]);
 
-		expect(open).toBeCalled();
+		expect(open).toHaveBeenCalledWith(
+			'CONFIRMATION_MODAL',
+			expect.any(Object)
+		);
 	});
 });

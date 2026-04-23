@@ -13,10 +13,9 @@ jest.mock('react-router-dom', () => ({
 
 describe('useDownloadCSV', () => {
 	beforeEach(() => {
-		delete window.location;
+		delete (window as {location?: Location}).location;
 
-		// @ts-ignore
-		window.location = new URL(
+		(window as {location: unknown}).location = new URL(
 			'https://analytics.liferay.com/workspace/liferay.com/420253908131944590'
 		);
 	});
@@ -75,8 +74,7 @@ describe('useDownloadCSV', () => {
 	});
 
 	it('should include order by fields if field and sortOrder are present', () => {
-		// @ts-ignore
-		window.location = new URL(
+		(window as {location: unknown}).location = new URL(
 			'https://analytics.liferay.com/workspace/liferay.com/420253908131944590/?field=name&page=1&sortOrder=DESC'
 		);
 

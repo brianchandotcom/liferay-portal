@@ -282,8 +282,12 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 	@Override
 	protected String getBaseSlaveLabel() {
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return _getBaseSlaveLabel();
+		String baseSlaveLabel = _getBaseSlaveLabel();
+
+		if (!JenkinsResultsParserUtil.isCloudCINode() ||
+			!JenkinsResultsParserUtil.isNullOrEmpty(baseSlaveLabel)) {
+
+			return baseSlaveLabel;
 		}
 
 		String slaveLabel = null;
@@ -301,7 +305,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 			return slaveLabel;
 		}
 
-		return _getBaseSlaveLabel();
+		return baseSlaveLabel;
 	}
 
 	protected GroupingStrategy getGroupingStrategy() {

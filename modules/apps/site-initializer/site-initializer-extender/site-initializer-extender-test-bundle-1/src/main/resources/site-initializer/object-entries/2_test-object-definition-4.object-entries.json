@@ -1,19 +1,24 @@
 {
 	"object-entries": [
 		{
-			"field1": "Test Object Entry 1"
+			"field1": "Test Object Entry 1",
+			"r_accountEntryToTestObjectDefinition4_accountEntryERC": "TESTACCOUNT1"
 		},
 		{
-			"field1": "Test Object Entry 2"
+			"field1": "Test Object Entry 2",
+			"r_accountEntryToTestObjectDefinition4_accountEntryERC": "TESTACCOUNT1"
 		},
 		{
-			"field1": "Test Object Entry 3"
+			"field1": "Test Object Entry 3",
+			"r_accountEntryToTestObjectDefinition4_accountEntryERC": "TESTACCOUNT1"
 		},
 		{
-			"field1": "Test Object Entry 4"
+			"field1": "Test Object Entry 4",
+			"r_accountEntryToTestObjectDefinition4_accountEntryERC": "TESTACCOUNT1"
 		},
 		{
-			"field1": "Test Object Entry 5"
+			"field1": "Test Object Entry 5",
+			"r_accountEntryToTestObjectDefinition4_accountEntryERC": "TESTACCOUNT1"
 		}
 	],
 	"objectDefinitionName": "TestObjectDefinition4"

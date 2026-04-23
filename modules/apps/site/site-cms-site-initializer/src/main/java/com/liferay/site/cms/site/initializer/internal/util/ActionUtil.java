@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
@@ -44,14 +45,18 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
+import com.liferay.object.service.ObjectDefinitionSettingLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -73,11 +78,13 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -89,6 +96,7 @@ import com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpacesCo
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -466,6 +474,41 @@ public class ActionUtil {
 					addedFragmentEntryLink);
 			}
 		}
+	}
+
+	public static List<Long> getAcceptedDepotEntryGroupIds(
+		List<Long> depotEntryGroupIds, long objectDefinitionId) {
+
+		if (_isAcceptAllGroups(objectDefinitionId)) {
+			return depotEntryGroupIds;
+		}
+
+		ObjectDefinitionSetting objectDefinitionSetting =
+			ObjectDefinitionSettingLocalServiceUtil.
+				fetchObjectDefinitionSetting(
+					objectDefinitionId,
+					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
+
+		List<Long> acceptedGroupIds = new ArrayList<>();
+
+		for (String groupId :
+				StringUtil.split(objectDefinitionSetting.getValue())) {
+
+			DepotEntry depotEntry =
+				DepotEntryLocalServiceUtil.fetchGroupDepotEntry(
+					GetterUtil.getLong(groupId));
+
+			if (depotEntry != null) {
+				acceptedGroupIds.add(depotEntry.getGroupId());
+			}
+		}
+
+		if (acceptedGroupIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return new ArrayList<>(
+			SetUtil.intersect(acceptedGroupIds, depotEntryGroupIds));
 	}
 
 	public static List<DropdownItem> getAllSectionCreationMenuDropdownItems(
@@ -1567,6 +1610,34 @@ public class ActionUtil {
 		}
 
 		return FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET;
+	}
+
+	private static boolean _isAcceptAllGroups(long objectDefinitionId) {
+		ObjectDefinitionSetting objectDefinitionSetting =
+			ObjectDefinitionSettingLocalServiceUtil.
+				fetchObjectDefinitionSetting(
+					objectDefinitionId,
+					ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
+
+		if ((objectDefinitionSetting != null) &&
+			GetterUtil.getBoolean(objectDefinitionSetting.getValue())) {
+
+			return true;
+		}
+
+		objectDefinitionSetting =
+			ObjectDefinitionSettingLocalServiceUtil.
+				fetchObjectDefinitionSetting(
+					objectDefinitionId,
+					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
+
+		if ((objectDefinitionSetting == null) ||
+			Validator.isNull(objectDefinitionSetting.getValue())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String[] _HIDDEN_INFO_FIELDS = {

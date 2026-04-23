@@ -19,11 +19,13 @@ public class AssetSummaryCategoryDisplay {
 
 		_id = assetSummaryCategory.getId();
 		_name = assetSummaryCategory.getName();
+		_vocabularyId = assetSummaryCategory.getVocabularyId();
 	}
 
 	@JsonProperty("id")
 	private final String _id;
 
 	private final String _name;
+	private final String _vocabularyId;
 
 }

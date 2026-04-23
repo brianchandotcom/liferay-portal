@@ -3843,7 +3843,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT ||
-			permissionChecker.isCompanyAdmin() ||
 			OrganizationPermissionUtil.contains(
 				permissionChecker, organizationId, ActionKeys.MANAGE_USERS)) {
 

@@ -354,4 +354,4 @@ public class Settings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:202987610
+// LIFERAY-REST-BUILDER-HASH:979644661

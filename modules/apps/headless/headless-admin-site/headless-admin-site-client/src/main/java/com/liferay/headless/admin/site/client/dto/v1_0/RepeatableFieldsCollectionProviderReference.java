@@ -132,4 +132,4 @@ public class RepeatableFieldsCollectionProviderReference
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:539075113
+// LIFERAY-REST-BUILDER-HASH:2006079428

@@ -447,4 +447,4 @@ public abstract class PageTemplate implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1050717410
+// LIFERAY-REST-BUILDER-HASH:-1621747587

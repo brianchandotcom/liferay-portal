@@ -498,4 +498,4 @@ public class FormFragmentInstancePageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1474680225
+// LIFERAY-REST-BUILDER-HASH:2147039716

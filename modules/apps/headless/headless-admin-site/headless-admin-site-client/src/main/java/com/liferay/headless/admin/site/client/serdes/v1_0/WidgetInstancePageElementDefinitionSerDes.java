@@ -556,4 +556,4 @@ public class WidgetInstancePageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-328294715
+// LIFERAY-REST-BUILDER-HASH:528543264

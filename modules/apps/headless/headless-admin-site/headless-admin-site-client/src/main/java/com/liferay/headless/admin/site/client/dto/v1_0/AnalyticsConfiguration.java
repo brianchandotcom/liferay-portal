@@ -104,4 +104,4 @@ public class AnalyticsConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1552764970
+// LIFERAY-REST-BUILDER-HASH:2074764805

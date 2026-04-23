@@ -2292,4 +2292,4 @@ public abstract class BaseMasterPageResourceTestCase {
 		_masterPageResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1808485887
+// LIFERAY-REST-BUILDER-HASH:-46514020

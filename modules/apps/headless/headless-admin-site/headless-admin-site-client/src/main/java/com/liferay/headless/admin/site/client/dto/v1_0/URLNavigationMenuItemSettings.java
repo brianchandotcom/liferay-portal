@@ -101,4 +101,4 @@ public class URLNavigationMenuItemSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1899558389
+// LIFERAY-REST-BUILDER-HASH:1368661114

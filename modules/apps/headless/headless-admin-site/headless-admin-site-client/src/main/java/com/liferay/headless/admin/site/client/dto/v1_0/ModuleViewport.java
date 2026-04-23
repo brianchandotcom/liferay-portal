@@ -143,4 +143,4 @@ public class ModuleViewport implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1653857037
+// LIFERAY-REST-BUILDER-HASH:-559989362

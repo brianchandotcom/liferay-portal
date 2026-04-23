@@ -249,4 +249,4 @@ public class AnalyticsConfigurationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1080275236
+// LIFERAY-REST-BUILDER-HASH:-961059543

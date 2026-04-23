@@ -1029,4 +1029,4 @@ public class FragmentViewportStyleSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1910591450
+// LIFERAY-REST-BUILDER-HASH:-1524847573

@@ -322,4 +322,4 @@ public abstract class WidgetPageWidgetInstance
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1627622069
+// LIFERAY-REST-BUILDER-HASH:-476820634

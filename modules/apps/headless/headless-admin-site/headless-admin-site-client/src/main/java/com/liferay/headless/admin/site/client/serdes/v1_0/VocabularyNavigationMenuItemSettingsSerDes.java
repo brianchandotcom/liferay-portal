@@ -416,4 +416,4 @@ public class VocabularyNavigationMenuItemSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-798784786
+// LIFERAY-REST-BUILDER-HASH:-1742110647

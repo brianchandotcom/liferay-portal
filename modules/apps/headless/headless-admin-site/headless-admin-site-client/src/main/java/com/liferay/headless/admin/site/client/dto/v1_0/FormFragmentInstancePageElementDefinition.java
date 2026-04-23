@@ -235,4 +235,4 @@ public class FormFragmentInstancePageElementDefinition
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-82705661
+// LIFERAY-REST-BUILDER-HASH:80397384

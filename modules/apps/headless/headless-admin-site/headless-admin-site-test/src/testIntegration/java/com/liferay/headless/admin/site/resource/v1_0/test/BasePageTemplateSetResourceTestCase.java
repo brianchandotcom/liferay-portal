@@ -2147,4 +2147,4 @@ public abstract class BasePageTemplateSetResourceTestCase {
 			_pageTemplateSetResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-278722161
+// LIFERAY-REST-BUILDER-HASH:1890458834

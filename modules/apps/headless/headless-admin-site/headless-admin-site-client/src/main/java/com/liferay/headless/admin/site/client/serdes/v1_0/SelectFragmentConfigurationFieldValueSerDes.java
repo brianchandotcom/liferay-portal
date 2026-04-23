@@ -282,4 +282,4 @@ public class SelectFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1911517819
+// LIFERAY-REST-BUILDER-HASH:-1047388928

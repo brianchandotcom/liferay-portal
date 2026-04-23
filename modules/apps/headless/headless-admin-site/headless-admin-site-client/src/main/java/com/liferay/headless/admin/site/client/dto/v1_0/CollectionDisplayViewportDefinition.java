@@ -291,4 +291,4 @@ public class CollectionDisplayViewportDefinition
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1854616858
+// LIFERAY-REST-BUILDER-HASH:1385468929

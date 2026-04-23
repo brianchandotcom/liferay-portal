@@ -144,4 +144,4 @@ public interface FriendlyUrlHistoryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1824751402
+// LIFERAY-REST-BUILDER-HASH:1161225918

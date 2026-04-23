@@ -113,3 +113,4 @@ public class TargetCollectionDisplayFragmentConfigurationFieldValue
 	}
 
 }
+// LIFERAY-REST-BUILDER-HASH:1637611018

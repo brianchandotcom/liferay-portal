@@ -103,4 +103,4 @@ public class SuccessNotificationMessage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1245827084
+// LIFERAY-REST-BUILDER-HASH:-926822105

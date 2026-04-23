@@ -129,4 +129,4 @@ public class FavIconItemExternalReference
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1127812259
+// LIFERAY-REST-BUILDER-HASH:54719656

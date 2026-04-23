@@ -165,4 +165,4 @@ public class SitePageNavigationSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-559257043
+// LIFERAY-REST-BUILDER-HASH:-1592818766

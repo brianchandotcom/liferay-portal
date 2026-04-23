@@ -78,4 +78,4 @@ public class FragmentMappedValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-449736771
+// LIFERAY-REST-BUILDER-HASH:-1187305768

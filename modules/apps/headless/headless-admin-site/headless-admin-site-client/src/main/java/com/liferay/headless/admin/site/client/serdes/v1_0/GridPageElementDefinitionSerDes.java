@@ -484,4 +484,4 @@ public class GridPageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1059597045
+// LIFERAY-REST-BUILDER-HASH:1145502352

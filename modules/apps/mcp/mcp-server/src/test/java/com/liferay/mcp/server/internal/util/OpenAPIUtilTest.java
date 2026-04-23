@@ -222,7 +222,7 @@ public class OpenAPIUtilTest {
 		JSONAssert.assertEquals(
 			expectedBody, httpCallArguments.getBody(), true);
 		Assert.assertEquals(expectedMethod, httpCallArguments.getMethod());
-		Assert.assertEquals(expectedUrl, httpCallArguments.getUrl());
+		Assert.assertEquals(expectedUrl, httpCallArguments.getURL());
 	}
 
 	private void _testGetTool(

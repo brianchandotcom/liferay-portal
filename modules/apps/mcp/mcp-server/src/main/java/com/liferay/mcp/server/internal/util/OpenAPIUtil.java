@@ -159,7 +159,7 @@ public class OpenAPIUtil {
 			return _method;
 		}
 
-		public String getUrl() {
+		public String getURL() {
 			return _url;
 		}
 

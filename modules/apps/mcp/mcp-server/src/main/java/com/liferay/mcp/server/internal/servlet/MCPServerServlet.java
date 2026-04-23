@@ -201,7 +201,7 @@ public class MCPServerServlet extends HttpServlet {
 
 							return _call(
 								httpCallArguments.getBody(),
-								httpCallArguments.getUrl(),
+								httpCallArguments.getURL(),
 								mcpSyncServerExchange,
 								httpCallArguments.getMethod());
 						})));

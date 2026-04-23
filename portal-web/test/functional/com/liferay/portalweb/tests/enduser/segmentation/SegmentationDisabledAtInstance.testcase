@@ -42,7 +42,7 @@ definition {
 
 	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user navigates to Experiences menu Then alert is shown including breadcrumb link to segments service"
 	@priority = 3
-	test ClickToReEnableAlertLinkAtAtExperiencesMenu {
+	test ViewAndReEnableAlertAtExperiencesMenu {
 		task ("Open the Experience menu") {
 			Navigator.openURL();
 

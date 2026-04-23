@@ -53,7 +53,7 @@ public class SharingEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -73,6 +73,8 @@ public class SharingEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", toTicketId=");
+		sb.append(toTicketId);
 		sb.append(", toUserGroupId=");
 		sb.append(toUserGroupId);
 		sb.append(", toUserId=");
@@ -136,6 +138,7 @@ public class SharingEntryCacheModel
 			sharingEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		sharingEntryImpl.setToTicketId(toTicketId);
 		sharingEntryImpl.setToUserGroupId(toUserGroupId);
 		sharingEntryImpl.setToUserId(toUserId);
 		sharingEntryImpl.setClassNameId(classNameId);
@@ -170,6 +173,8 @@ public class SharingEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		toTicketId = objectInput.readLong();
 
 		toUserGroupId = objectInput.readLong();
 
@@ -219,6 +224,8 @@ public class SharingEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(toTicketId);
+
 		objectOutput.writeLong(toUserGroupId);
 
 		objectOutput.writeLong(toUserId);
@@ -242,6 +249,7 @@ public class SharingEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long toTicketId;
 	public long toUserGroupId;
 	public long toUserId;
 	public long classNameId;
@@ -251,4 +259,4 @@ public class SharingEntryCacheModel
 	public long expirationDate;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:376552530
+// LIFERAY-SERVICE-BUILDER-HASH:997798964

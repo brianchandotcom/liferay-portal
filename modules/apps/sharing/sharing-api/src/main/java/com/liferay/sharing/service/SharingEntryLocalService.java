@@ -82,9 +82,9 @@ public interface SharingEntryLocalService
 	 * @review
 	 */
 	public SharingEntry addOrUpdateSharingEntry(
-			String externalReferenceCode, long userId, long toUserGroupId,
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
+			String externalReferenceCode, long userId, long toTicketId,
+			long toUserGroupId, long toUserId, long classNameId, long classPK,
+			long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
@@ -125,9 +125,9 @@ public interface SharingEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public SharingEntry addSharingEntry(
-			String externalReferenceCode, long userId, long toUserGroupId,
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
+			String externalReferenceCode, long userId, long toTicketId,
+			long toUserGroupId, long toUserId, long classNameId, long classPK,
+			long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
@@ -321,6 +321,11 @@ public interface SharingEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry fetchSharingEntry(
 		long toUserId, long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SharingEntry fetchSharingEntry(
+		long toTicketId, long toUserGroupId, long toUserId, long classNameId,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry fetchSharingEntryByExternalReferenceCode(
@@ -528,6 +533,12 @@ public interface SharingEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SharingEntry getSharingEntry(
+			long toTicketId, long toUserGroupId, long toUserId,
+			long classNameId, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry getSharingEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException;
@@ -718,4 +729,4 @@ public interface SharingEntryLocalService
 	public SharingEntry updateSharingEntry(SharingEntry sharingEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:739884424
+// LIFERAY-SERVICE-BUILDER-HASH:-916700364

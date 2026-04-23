@@ -15,6 +15,7 @@ import com.liferay.osb.patcher.util.EmailUtil;
 import com.liferay.osb.patcher.util.PatcherFixRelUtil;
 import com.liferay.osb.patcher.util.PatcherFixUtil;
 import com.liferay.osb.patcher.util.PatcherProjectVersionUtil;
+import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.util.comparator.PatcherFixKeyVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -74,6 +76,42 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 		PatcherFixRelUtil.addPatcherFixRel(
 			patcherFix.getPatcherFixId(), parentPatcherFixIds);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix addPatcherFix(
+			long userId, long patcherProductVersionId,
+			long patcherProjectVersionId, String name, String committish,
+			String gitRemoteURL, int type, int status)
+		throws Exception {
+
+		PatcherFix patcherFix = patcherFixPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		patcherFix.setCompanyId(user.getCompanyId());
+		patcherFix.setUserId(user.getUserId());
+		patcherFix.setUserName(user.getFullName());
+
+		patcherFix.setCreateDate(new Date());
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setPatcherProductVersionId(patcherProductVersionId);
+		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
+		patcherFix.setKey(
+			PatcherFixUtil.generateKey(patcherProjectVersionId, name));
+		patcherFix.setKeyVersion(PatcherFixConstants.KEY_VERSION_DEFAULT);
+		patcherFix.setName(StringUtil.merge(PatcherUtil.sortTokens(name)));
+		patcherFix.setCommittish(committish);
+		patcherFix.setGitRemoteURL(gitRemoteURL);
+		patcherFix.setLatestFix(true);
+		patcherFix.setObsolete(false);
+		patcherFix.setType(type);
+		patcherFix.setStatus(status);
+		patcherFix.setStatusDate(new Date());
 
 		return patcherFixPersistence.update(patcherFix);
 	}

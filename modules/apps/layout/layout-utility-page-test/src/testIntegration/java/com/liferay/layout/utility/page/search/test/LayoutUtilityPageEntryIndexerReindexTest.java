@@ -71,7 +71,7 @@ public class LayoutUtilityPageEntryIndexerReindexTest {
 		layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-				layoutUtilityPageEntry.getName());
+				layoutUtilityPageEntry.getName(), serviceContext);
 
 		name = layoutUtilityPageEntry.getName();
 

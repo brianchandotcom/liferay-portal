@@ -88,7 +88,7 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 			long companyId, String expectedFriendlyURLSeparatorsJSON)
 		throws PortalException {
 
-		long endTime = System.currentTimeMillis() + _PROPAGATION_TIMEOUT;
+		long time = System.currentTimeMillis() + _PROPAGATION_TIMEOUT;
 
 		while (true) {
 			FriendlyURLSeparatorCompanyConfiguration
@@ -104,11 +104,11 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 				return;
 			}
 
-			if (System.currentTimeMillis() > endTime) {
+			if (System.currentTimeMillis() > time) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Timed out waiting for the friendly URL separator " +
-							"configuration to propagate for companyId=" +
+							"configuration to propagate for company ID " +
 								companyId);
 				}
 

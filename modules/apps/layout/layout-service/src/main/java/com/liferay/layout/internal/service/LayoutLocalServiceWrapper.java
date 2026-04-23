@@ -196,6 +196,8 @@ public class LayoutLocalServiceWrapper
 		ServiceContext currentServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		boolean pushedServiceContext = false;
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					layout.getCtCollectionId())) {
@@ -213,6 +215,8 @@ public class LayoutLocalServiceWrapper
 				serviceContext.setUserId(user.getUserId());
 
 				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				pushedServiceContext = true;
 			}
 
 			TransactionInvokerUtil.invoke(
@@ -236,7 +240,9 @@ public class LayoutLocalServiceWrapper
 		finally {
 			CopyLayoutThreadLocal.setCopyLayout(copyLayout);
 
-			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
+			if (pushedServiceContext) {
+				ServiceContextThreadLocal.popServiceContext();
+			}
 		}
 	}
 
@@ -333,6 +339,8 @@ public class LayoutLocalServiceWrapper
 		ServiceContext currentServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		boolean pushedServiceContext = false;
+
 		long ctCollectionId = sourceLayout.getCtCollectionId();
 
 		if (ctCollectionId == 0) {
@@ -362,6 +370,8 @@ public class LayoutLocalServiceWrapper
 				serviceContext.setUserId(user.getUserId());
 
 				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				pushedServiceContext = true;
 			}
 
 			return TransactionInvokerUtil.invoke(
@@ -381,7 +391,9 @@ public class LayoutLocalServiceWrapper
 		finally {
 			CopyLayoutThreadLocal.setCopyLayout(copyLayout);
 
-			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
+			if (pushedServiceContext) {
+				ServiceContextThreadLocal.popServiceContext();
+			}
 		}
 	}
 

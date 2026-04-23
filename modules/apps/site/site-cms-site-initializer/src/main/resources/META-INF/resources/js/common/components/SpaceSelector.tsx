@@ -56,18 +56,25 @@ interface ISpaceSelectorProps
 		IItemSelectorProps<Space>,
 		'apiURL' | 'as' | 'items' | 'locator' | 'onItemsChange' | 'children'
 	> {
+	acceptedGroupIds?: number[];
 	onSpaceChange: (space: Space) => void;
 	space?: Space;
 }
 
 export default function SpaceSelector({
+	acceptedGroupIds,
 	onSpaceChange,
 	space,
 	...otherProps
 }: ISpaceSelectorProps) {
+	const baseFilter = "type eq 'Space'";
+	const filter = acceptedGroupIds?.length
+		? `${baseFilter} and siteId in (${acceptedGroupIds.join(',')})`
+		: baseFilter;
+
 	return (
 		<ItemSelector<Space>
-			apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`}
+			apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=${encodeURIComponent(filter)}`}
 			as={SpaceInput}
 			items={space ? [space] : []}
 			locator={{

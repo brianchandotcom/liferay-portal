@@ -90,6 +90,13 @@ const cmsTest = mergeTests(
 	})
 );
 
+const ckEditor4Test = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	})
+);
+
 let contentPageName: string;
 let displayPageId: string;
 let informationTemplateName: string;
@@ -4564,51 +4571,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
-	test('verify that its not possible to paste file on richText field', async ({
-		apiHelpers,
-		page,
-		viewObjectEntriesPage,
-	}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['RichText'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await test.step('go to entry page, try to upload file by pasting it into editor and verify error message', async () => {
-			await viewObjectEntriesPage.goto(objectDefinition.className);
-
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
-
-			const editorFrame = page.frameLocator('iframe[title="editor"]');
-
-			const editorBody = editorFrame.locator('body');
-
-			const file = fs.readFileSync(
-				path.join(__dirname, '../dependencies', 'tree.png')
-			);
-
-			await pasteFile(editorBody, {
-				buffer: file,
-				fileName: 'tree.png',
-				fileType: 'image/png',
-			});
-
-			await expect(editorFrame.locator('img')).not.toBeVisible();
-		});
-	});
-
 	test('verify that relationship API is called only once and uses pagination when adding object entry', async ({
 		apiHelpers,
 		page,
@@ -4925,6 +4887,59 @@ test.describe('Manage object entries through View Object Entries', () => {
 			page.getByRole('cell', {name: secondItemName})
 		).toBeVisible();
 	});
+});
+
+ckEditor4Test.describe('Manage object entries with CKEditor 4', () => {
+	ckEditor4Test(
+		'verify that its not possible to paste file on richText field',
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['RichText'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await ckEditor4Test.step(
+				'go to entry page, try to upload file by pasting it into editor and verify error message',
+				async () => {
+					await viewObjectEntriesPage.goto(
+						objectDefinition.className
+					);
+
+					await viewObjectEntriesPage.clickAddObjectEntry(
+						objectDefinition.label['en_US']
+					);
+
+					const editorFrame = page.frameLocator(
+						'iframe[title="editor"]'
+					);
+
+					const editorBody = editorFrame.locator('body');
+
+					const file = fs.readFileSync(
+						path.join(__dirname, '../dependencies', 'tree.png')
+					);
+
+					await pasteFile(editorBody, {
+						buffer: file,
+						fileName: 'tree.png',
+						fileType: 'image/png',
+					});
+
+					await expect(editorFrame.locator('img')).not.toBeVisible();
+				}
+			);
+		}
+	);
 });
 
 test.describe('Manage object entries through Workflow', () => {

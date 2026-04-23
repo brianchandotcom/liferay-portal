@@ -960,6 +960,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					objectDefinitionId);
 
 			for (ObjectRelationship objectRelationship : objectRelationships) {
+				if (objectRelationship.isEdge()) {
+					continue;
+				}
+
 				ObjectRelatedModelsProvider objectRelatedModelsProvider =
 					_objectRelatedModelsProviderRegistry.
 						getObjectRelatedModelsProvider(

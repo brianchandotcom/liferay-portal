@@ -599,6 +599,10 @@ public class SharingEntryServiceTest {
 
 	@Test
 	public void testFetchSharingEntry() throws Exception {
+		Assert.assertNull(
+			_sharingEntryService.fetchSharingEntry(
+				0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId()));
+
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
 		_sharingEntryLocalService.addSharingEntry(
@@ -611,15 +615,6 @@ public class SharingEntryServiceTest {
 
 		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
-	}
-
-	@Test
-	public void testFetchSharingEntryReturnsNullWhenNotFound()
-		throws Exception {
-
-		Assert.assertNull(
-			_sharingEntryService.fetchSharingEntry(
-				0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId()));
 	}
 
 	@Test

@@ -10,6 +10,7 @@ import {userData} from './performLogin';
 export type ActionId =
 	| 'ACCESS_IN_CONTROL_PANEL'
 	| 'ADD_LAYOUT'
+	| 'ADD_OBJECT_ENTRY'
 	| 'EDIT_ORGANIZATIONS'
 	| 'MANAGE_ADDRESSES'
 	| 'MANAGE_AVAILABLE_ACCOUNTS'

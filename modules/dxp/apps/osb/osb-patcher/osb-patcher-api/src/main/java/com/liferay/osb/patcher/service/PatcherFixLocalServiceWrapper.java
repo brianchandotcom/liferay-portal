@@ -74,6 +74,18 @@ public class PatcherFixLocalServiceWrapper
 			parentPatcherFixIds);
 	}
 
+	@Override
+	public com.liferay.osb.patcher.model.PatcherFix addPatcherFix(
+			long userId, long patcherProductVersionId,
+			long patcherProjectVersionId, String name, String committish,
+			String gitRemoteURL, int type, int status)
+		throws Exception {
+
+		return _patcherFixLocalService.addPatcherFix(
+			userId, patcherProductVersionId, patcherProjectVersionId, name,
+			committish, gitRemoteURL, type, status);
+	}
+
 	/**
 	 * Adds the patcher fix to the database. Also notifies the appropriate model listeners.
 	 *
@@ -803,4 +815,4 @@ public class PatcherFixLocalServiceWrapper
 	private PatcherFixLocalService _patcherFixLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1648386677
+// LIFERAY-SERVICE-BUILDER-HASH:-2075952458

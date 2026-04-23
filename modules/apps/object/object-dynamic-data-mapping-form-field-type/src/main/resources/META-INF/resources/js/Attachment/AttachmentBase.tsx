@@ -51,6 +51,16 @@ type CMSUploadResponse = {
 	title: string;
 };
 
+type FolderEntry = {
+	externalReferenceCode: string;
+	id: number;
+	title: string;
+};
+
+type FolderRef =
+	| {objectEntryFolderExternalReferenceCode: string}
+	| {objectEntryFolderId: number};
+
 interface Space {
 	externalReferenceCode: string;
 }
@@ -119,6 +129,8 @@ export default function AttachmentBase({
 	} = useModal();
 
 	const DEFAULT_FOLDER_ERC = 'L_FILES';
+
+	const HIDDEN_FOLDER_PATH = 'HIDDEN_FILES';
 
 	const isCMSBasicDocument = fileSource === 'CMSBasicDocument';
 
@@ -195,104 +207,105 @@ export default function AttachmentBase({
 			});
 	}, []);
 
+	const findOrCreateFolder = async (
+		folderName: string,
+		parentFolderERC: string,
+		parentFolderId: number | undefined,
+		isVisible: boolean,
+		spaceERC: string
+	): Promise<FolderEntry> => {
+		const searchParams = new URLSearchParams({
+			currentURL: '/web/cms/files',
+			emptySearch: 'true',
+			nestedFields: 'embedded,scope',
+			pageSize: '30',
+			search: folderName,
+		});
+
+		if (parentFolderId) {
+			searchParams.set('filter', `folderId eq ${parentFolderId}`);
+		}
+		else if (isVisible) {
+			searchParams.set(
+				'filter',
+				"cmsRoot eq true and cmsSection eq 'files' and status in (0)"
+			);
+		}
+
+		const searchResponse = await fetch(
+			`/o/search/v1.0/search?${searchParams.toString()}`
+		);
+
+		if (searchResponse.ok) {
+			const {items = []} = await searchResponse.json();
+
+			const match = items.find((item: any) => {
+				const data = item.embedded ?? item;
+
+				return (
+					data.title === folderName &&
+					data.scope?.externalReferenceCode === spaceERC
+				);
+			});
+
+			const folder: FolderEntry | null = match?.embedded ?? match ?? null;
+
+			if (folder) {
+				return folder;
+			}
+		}
+
+		const createResponse = await fetch(
+			`/o/headless-object/v1.0/scopes/${spaceERC}/object-entry-folders`,
+			{
+				body: JSON.stringify({
+					parentObjectEntryFolderExternalReferenceCode:
+						parentFolderERC,
+					title: folderName,
+				}),
+				headers: {'Content-Type': 'application/json'},
+				method: 'POST',
+			}
+		);
+
+		if (!createResponse.ok) {
+			throw new Error(`Unable to create folder ${folderName}`);
+		}
+
+		return createResponse.json();
+	};
+
 	const resolveFolderId = async (
 		isVisible: boolean,
 		spaceERC: string,
 		storageDLFolderPath?: string
-	): Promise<{
-		objectEntryFolderExternalReferenceCode?: string;
-		objectEntryFolderId?: number;
-	}> => {
+	): Promise<FolderRef> => {
 		const folderNames = (storageDLFolderPath || '')
 			.split('/')
-			.map((folderName) => folderName.trim())
+			.map((name) => name.trim())
 			.filter(Boolean);
 
 		if (!folderNames.length) {
 			return {objectEntryFolderExternalReferenceCode: DEFAULT_FOLDER_ERC};
 		}
 
-		let parentObjectEntryFolderExternalReferenceCode = DEFAULT_FOLDER_ERC;
-
-		let parentObjectEntryFolderId: number | undefined;
+		let parentFolderERC = DEFAULT_FOLDER_ERC;
+		let parentFolderId: number | undefined;
 
 		for (const folderName of folderNames) {
-			let folder: any = null;
-
-			const searchParams = new URLSearchParams({
-				currentURL: '/web/cms/files',
-				emptySearch: 'true',
-				nestedFields: 'embedded,scope',
-				pageSize: '30',
-				search: folderName,
-			});
-
-			if (parentObjectEntryFolderId) {
-				searchParams.set(
-					'filter',
-					`folderId eq ${parentObjectEntryFolderId}`
-				);
-			}
-			else if (isVisible) {
-				searchParams.set(
-					'filter',
-					"cmsRoot eq true and cmsSection eq 'files' and status in (0)"
-				);
-			}
-
-			const searchResponse = await fetch(
-				`/o/search/v1.0/search?${searchParams.toString()}`
+			const folder = await findOrCreateFolder(
+				folderName,
+				parentFolderERC,
+				parentFolderId,
+				isVisible,
+				spaceERC
 			);
 
-			if (searchResponse.ok) {
-				const {items = []} = await searchResponse.json();
-
-				const match = items.find((item: any) => {
-					const data = item.embedded ?? item;
-
-					return (
-						data.title === folderName &&
-						data.scope?.externalReferenceCode === spaceERC
-					);
-				});
-
-				folder = match?.embedded ?? match ?? null;
-			}
-
-			if (!folder) {
-				const createBody: any = {
-					parentObjectEntryFolderExternalReferenceCode,
-					title: folderName,
-				};
-
-				const createResponse = await fetch(
-					`/o/headless-object/v1.0/scopes/${spaceERC}/object-entry-folders`,
-					{
-						body: JSON.stringify(createBody),
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						method: 'POST',
-					}
-				);
-
-				if (!createResponse.ok) {
-					throw new Error(`Unable to create folder ${folderName}`);
-				}
-
-				folder = await createResponse.json();
-			}
-
-			parentObjectEntryFolderId = folder.id;
-			parentObjectEntryFolderExternalReferenceCode =
-				folder.externalReferenceCode;
+			parentFolderId = folder.id;
+			parentFolderERC = folder.externalReferenceCode;
 		}
 
-		if (parentObjectEntryFolderId) {
-			return {objectEntryFolderId: parentObjectEntryFolderId};
-		}
-
-		return {objectEntryFolderExternalReferenceCode: DEFAULT_FOLDER_ERC};
+		return {objectEntryFolderId: parentFolderId!};
 	};
 
 	const uploadToCMS = async (
@@ -309,8 +322,8 @@ export default function AttachmentBase({
 
 		const folder = await resolveFolderId(
 			isVisible,
-			String(spaceERC),
-			storageDLFolderPath || 'HIDDEN_FILES'
+			spaceERC,
+			storageDLFolderPath || HIDDEN_FOLDER_PATH
 		);
 
 		const body = {

@@ -1,4 +1,10 @@
-import React, {createContext, ReactNode, useContext, useState} from 'react';
+import React, {
+	createContext,
+	ReactNode,
+	useContext,
+	useMemo,
+	useState
+} from 'react';
 import {
 	buildQueryString,
 	ILifecycleFilterValues
@@ -27,25 +33,28 @@ const LifecycleContext = createContext<ILifecycleContext>({
 export const useLifecycle = (): ILifecycleContext =>
 	useContext(LifecycleContext);
 
+const initialValues: ILifecycleFilterValues = {
+	countryFilter: '',
+	industryFilter: ''
+};
+
 export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
-	const initialValues: ILifecycleFilterValues = {
-		countryFilter: '',
-		industryFilter: ''
-	};
+	const [filterValues, setFilterValues] = useState<ILifecycleFilterValues>(
+		initialValues
+	);
 
-	const [filters, setFilters] = useState<ILifecycleFilters>({
-		...initialValues,
-		filterString: ''
-	});
+	const filters = useMemo<ILifecycleFilters>(
+		() => ({
+			...filterValues,
+			filterString: buildQueryString(filterValues)
+		}),
+		[filterValues]
+	);
 
-	const updateFilters = (newValues: Partial<ILifecycleFilterValues>) => {
-		setFilters(prev => {
-			const merged = {...prev, ...newValues};
-			return {...merged, filterString: buildQueryString(merged)};
-		});
-	};
+	const updateFilters = (newValues: Partial<ILifecycleFilterValues>) =>
+		setFilterValues(prev => ({...prev, ...newValues}));
 
-	const resetFilters = () => setFilters({...initialValues, filterString: ''});
+	const resetFilters = () => setFilterValues(initialValues);
 
 	return (
 		<LifecycleContext.Provider

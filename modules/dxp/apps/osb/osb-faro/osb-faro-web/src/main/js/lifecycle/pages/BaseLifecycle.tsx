@@ -1,10 +1,32 @@
+import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import GlobalFilters from '../components/GlobalFilters';
+import OverviewSection from '../components/OverviewSection';
 import React, {useContext} from 'react';
 import {ChannelContext} from 'shared/context/channel';
-import {LifecycleContextProvider} from '../context/LifecycleContext';
+import {
+	LifecycleContextProvider,
+	useLifecycle
+} from '../context/LifecycleContext';
 import {useParams} from 'react-router-dom';
+import {useRequest} from 'shared/hooks/useRequest';
+
+const LifecycleOverview = ({groupId}: {groupId: string}) => {
+	const {filters} = useLifecycle();
+
+	const {data: overviewData, loading: overviewLoading} = useRequest({
+		dataSourceFn: API.lifecycle.fetchOverviewMetrics,
+		variables: {
+			country: filters.countryFilter,
+			groupId,
+			industry: filters.industryFilter,
+			lifecycleId: 1
+		}
+	});
+
+	return <OverviewSection loading={overviewLoading} metrics={overviewData} />;
+};
 
 const BaseLifecycle = () => {
 	const {selectedChannel} = useContext(ChannelContext);
@@ -36,6 +58,9 @@ const BaseLifecycle = () => {
 						<GlobalFilters />
 					</div>
 				</BasePage.SubHeader>
+				<BasePage.Body>
+					<LifecycleOverview groupId={groupId} />
+				</BasePage.Body>
 			</BasePage>
 		</LifecycleContextProvider>
 	);

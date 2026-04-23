@@ -1247,6 +1247,7 @@ public class LayoutUtil {
 
 				SegmentsExperienceLocalServiceUtil.
 					updateSegmentsExperiencePriority(
+						serviceContext.getUserId(),
 						actualSegmentsExperience.getSegmentsExperienceId(),
 						SegmentsExperienceUtil.getPriority(
 							pageExperience.getKey(), layout,

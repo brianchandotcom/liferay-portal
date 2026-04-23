@@ -120,6 +120,7 @@ public class SegmentsExperienceUtil {
 			segmentsExperience =
 				SegmentsExperienceLocalServiceUtil.
 					updateSegmentsExperiencePriority(
+						serviceContext.getUserId(),
 						segmentsExperience.getSegmentsExperienceId(),
 						segmentsExperiencePriority);
 		}
@@ -131,6 +132,7 @@ public class SegmentsExperienceUtil {
 				layout.getGroupId());
 
 		return SegmentsExperienceLocalServiceUtil.updateSegmentsExperience(
+			serviceContext.getUserId(),
 			segmentsExperience.getSegmentsExperienceId(),
 			segmentsEntryReference.getExternalReferenceCode(),
 			segmentsEntryReference.getScopeExternalReferenceCode(),

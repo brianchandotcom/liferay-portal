@@ -49,6 +49,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
+import java.io.IOException;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -90,13 +92,7 @@ public class LoginActionTest {
 
 	@Test
 	public void testExecuteHasExclusiveState() throws Exception {
-		HttpURLConnection httpURLConnection = _getHttpURLConnection();
-
-		Assert.assertEquals(200, httpURLConnection.getResponseCode());
-
-		URL url = httpURLConnection.getURL();
-
-		String query = url.getQuery();
+		String query = _checkConnectionAndGetURLQuery(_getHttpURLConnection());
 
 		Assert.assertTrue(query.contains("p_p_state=exclusive"));
 	}
@@ -137,13 +133,8 @@ public class LoginActionTest {
 					PropsKeys.DEFAULT_LANDING_PAGE_PATH,
 					RandomTestUtil.randomString())) {
 
-			HttpURLConnection httpURLConnection = _getHttpURLConnection();
-
-			Assert.assertEquals(200, httpURLConnection.getResponseCode());
-
-			URL url = httpURLConnection.getURL();
-
-			String query = url.getQuery();
+			String query = _checkConnectionAndGetURLQuery(
+				_getHttpURLConnection());
 
 			Assert.assertFalse(
 				query.contains(
@@ -159,13 +150,8 @@ public class LoginActionTest {
 					PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME,
 					StringPool.BLANK)) {
 
-			HttpURLConnection httpURLConnection = _getHttpURLConnection();
-
-			Assert.assertEquals(200, httpURLConnection.getResponseCode());
-
-			URL url = httpURLConnection.getURL();
-
-			String query = url.getQuery();
+			String query = _checkConnectionAndGetURLQuery(
+				_getHttpURLConnection());
 
 			Assert.assertTrue(
 				query.contains(
@@ -240,14 +226,21 @@ public class LoginActionTest {
 
 			httpURLConnection.setRequestMethod("GET");
 
-			Assert.assertEquals(200, httpURLConnection.getResponseCode());
-
-			url = httpURLConnection.getURL();
-
-			String query = url.getQuery();
+			String query = _checkConnectionAndGetURLQuery(httpURLConnection);
 
 			Assert.assertTrue(query.contains("p_p_state=normal"));
 		}
+	}
+
+	private String _checkConnectionAndGetURLQuery(
+			HttpURLConnection httpURLConnection)
+		throws IOException {
+
+		Assert.assertEquals(200, httpURLConnection.getResponseCode());
+
+		URL url = httpURLConnection.getURL();
+
+		return url.getQuery();
 	}
 
 	private HttpURLConnection _getHttpURLConnection() throws Exception {

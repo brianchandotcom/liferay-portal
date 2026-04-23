@@ -205,7 +205,7 @@ public class OpenAPIUtilTest {
 			).writeValueAsString(
 				tool.inputSchema()
 			),
-			false);
+			true);
 		Assert.assertEquals(expectedToolName, tool.name());
 	}
 

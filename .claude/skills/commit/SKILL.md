@@ -62,7 +62,7 @@ When a body is warranted:
 
 - Separate it from the title with a blank line.
 - Explain **why** the change is needed — the problem, the prior behavior, or the motivation. Do not restate the code.
-- Wrap lines at 72 characters.
+- Do not wrap lines in the body.
 - Write plain prose rather than bullet points, matching the repository convention.
 
 When `${ARGUMENTS}` carries a hint or description rather than a ticket ID, incorporate it into the message.

@@ -229,10 +229,10 @@ public class SharingEntryServiceTest {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		long ticketId = _getTicketId();
+		Ticket ticket = _addTicket();
 
 		_sharingEntryService.addSharingEntry(
-			externalReferenceCode, ticketId, 0, 0, _classNameId,
+			externalReferenceCode, ticket.getTicketId(), 0, 0, _classNameId,
 			_group.getGroupId(), _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 
@@ -240,7 +240,7 @@ public class SharingEntryServiceTest {
 			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
 				externalReferenceCode, _group.getGroupId());
 
-		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
+		Assert.assertEquals(ticket.getTicketId(), sharingEntry.getToTicketId());
 	}
 
 	@Test(expected = DuplicateSharingEntryException.class)
@@ -578,16 +578,16 @@ public class SharingEntryServiceTest {
 	public void testDeleteSharingEntryByTicket() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
-		long ticketId = _getTicketId();
+		Ticket ticket = _addTicket();
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
-			_group.getGroupId(), _group.getGroupId(), false,
+			null, _fromUser.getUserId(), ticket.getTicketId(), 0, 0,
+			_classNameId, _group.getGroupId(), _group.getGroupId(), false,
 			Collections.singletonList(SharingEntryAction.VIEW), null,
 			_serviceContext);
 
 		_sharingEntryService.deleteSharingEntry(
-			ticketId, 0, 0, _classNameId, _group.getGroupId());
+			ticket.getTicketId(), 0, 0, _classNameId, _group.getGroupId());
 
 		Assert.assertNull(
 			_sharingEntryLocalService.fetchSharingEntry(
@@ -655,18 +655,18 @@ public class SharingEntryServiceTest {
 	public void testGetSharingEntryByTicket() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
-		long ticketId = _getTicketId();
+		Ticket ticket = _addTicket();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
-			_group.getGroupId(), _group.getGroupId(), true,
+			null, _fromUser.getUserId(), ticket.getTicketId(), 0, 0,
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
 			Collections.singletonList(SharingEntryAction.VIEW), null,
 			_serviceContext);
 
 		SharingEntry sharingEntry = _sharingEntryService.getSharingEntry(
-			ticketId, 0, 0, _classNameId, _group.getGroupId());
+			ticket.getTicketId(), 0, 0, _classNameId, _group.getGroupId());
 
-		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
+		Assert.assertEquals(ticket.getTicketId(), sharingEntry.getToTicketId());
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -830,7 +830,7 @@ public class SharingEntryServiceTest {
 			true, null, _serviceContext);
 	}
 
-	private long _getTicketId() throws Exception {
+	private Ticket _addTicket() throws Exception {
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
 			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS,
@@ -840,7 +840,7 @@ public class SharingEntryServiceTest {
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
 
-		return ticket.getTicketId();
+		return ticket;
 	}
 
 	private void _registerSharingPermissionChecker(

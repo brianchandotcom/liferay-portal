@@ -1150,8 +1150,9 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Returns the sharing entry where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the sharing entry where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
@@ -1159,25 +1160,29 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @return the matching sharing entry
 	 * @throws NoSuchEntryException if a matching sharing entry could not be found
 	 */
-	public SharingEntry findByTUG_TU_C_C(
-			long toUserGroupId, long toUserId, long classNameId, long classPK)
+	public SharingEntry findByTT_TUG_TU_C_C(
+			long toTicketId, long toUserGroupId, long toUserId,
+			long classNameId, long classPK)
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the sharing entry where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the sharing entry where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
-	public SharingEntry fetchByTUG_TU_C_C(
-		long toUserGroupId, long toUserId, long classNameId, long classPK);
+	public SharingEntry fetchByTT_TUG_TU_C_C(
+		long toTicketId, long toUserGroupId, long toUserId, long classNameId,
+		long classPK);
 
 	/**
-	 * Returns the sharing entry where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the sharing entry where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
@@ -1185,34 +1190,38 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
-	public SharingEntry fetchByTUG_TU_C_C(
-		long toUserGroupId, long toUserId, long classNameId, long classPK,
-		boolean useFinderCache);
+	public SharingEntry fetchByTT_TUG_TU_C_C(
+		long toTicketId, long toUserGroupId, long toUserId, long classNameId,
+		long classPK, boolean useFinderCache);
 
 	/**
-	 * Removes the sharing entry where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 * Removes the sharing entry where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the sharing entry that was removed
 	 */
-	public SharingEntry removeByTUG_TU_C_C(
-			long toUserGroupId, long toUserId, long classNameId, long classPK)
+	public SharingEntry removeByTT_TUG_TU_C_C(
+			long toTicketId, long toUserGroupId, long toUserId,
+			long classNameId, long classPK)
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the number of sharing entries where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the number of sharing entries where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the number of matching sharing entries
 	 */
-	public int countByTUG_TU_C_C(
-		long toUserGroupId, long toUserId, long classNameId, long classPK);
+	public int countByTT_TUG_TU_C_C(
+		long toTicketId, long toUserGroupId, long toUserId, long classNameId,
+		long classPK);
 
 	/**
 	 * Returns the sharing entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -1386,4 +1395,4 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1738004031
+// LIFERAY-SERVICE-BUILDER-HASH:56757389

@@ -45,6 +45,8 @@ public class AssistantHandlerUtil {
 			assistantHandlerContext.getToolProvider()
 		).tools(
 			assistantHandlerContext.getTools()
+		).maxSequentialToolsInvocations(
+			7
 		).build();
 
 		if (assistant instanceof

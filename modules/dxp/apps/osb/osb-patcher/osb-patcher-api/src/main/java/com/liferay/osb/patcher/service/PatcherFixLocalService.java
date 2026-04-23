@@ -71,6 +71,13 @@ public interface PatcherFixLocalService
 			String name, int type, int status, List<Long> parentPatcherFixIds)
 		throws Exception;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public PatcherFix addPatcherFix(
+			long userId, long patcherProductVersionId,
+			long patcherProjectVersionId, String name, String committish,
+			String gitRemoteURL, int type, int status)
+		throws Exception;
+
 	/**
 	 * Adds the patcher fix to the database. Also notifies the appropriate model listeners.
 	 *
@@ -469,4 +476,4 @@ public interface PatcherFixLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-651926271
+// LIFERAY-SERVICE-BUILDER-HASH:1021463154

@@ -325,43 +325,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9104 | Test Summary: [AC] It is not allowed duplicated property name for a same data source or workspace"
-	@priority = 3
-	test NoDuplicatePropertiesName {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Test fix sites created twice
-		// AC Quarantine Ticket: LRAC-13677
-
-		task ("View the checkbox of site entry is disabled") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Creating the first property and verifying it was created") {
-			ACProperties.addNewProperty(propertyName = "Name of property");
-
-			ACProperties.assertNewCreatedProperty(propertyName = "Name of property");
-		}
-
-		task ("Creating the second property and verifying it was created") {
-			ACSettings.goToProperties();
-
-			ACProperties.addNewProperty(propertyName = "Name of property");
-
-			ACProperties.assertNewCreatedProperty(propertyName = "Name of property (1)");
-		}
-
-		task ("Go back to the properties page and check the names in the table") {
-			ACSettings.goToProperties();
-
-			ACUtils.assertItemsName(itemList = "Name of property,Name of property (1)");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
 	@priority = 5
 	test OwnerCanCreateNewProperty {

@@ -100,11 +100,11 @@ public class OpenAPIUtil {
 
 		String basePath = _getBasePath(endpoint);
 
-		int spaceIndex = endpoint.indexOf(' ');
+		int index = endpoint.indexOf(' ');
 
-		String method = endpoint.substring(0, spaceIndex);
+		String method = endpoint.substring(0, index);
 
-		String path = endpoint.substring(spaceIndex + 1);
+		String path = endpoint.substring(index + 1);
 
 		String nameSegment = basePath.substring(0, basePath.indexOf('/', 1));
 

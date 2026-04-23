@@ -35,6 +35,7 @@ import {CommerceAdminOrdersPage} from '../pages/commerce/commerce-order-web/comm
 import {CommerceAdminReturnsPage} from '../pages/commerce/commerce-order-web/commerceAdminReturnsPage';
 import {OrganizationManagementPage} from '../pages/commerce/commerce-organization-web/organizationManagementPage';
 import {CommercePaymentsPage} from '../pages/commerce/commerce-payment-web/commercePaymentsPage';
+import {OfflinePaymentMethodsSystemSettingPage} from '../pages/commerce/commerce-payment-web/offlinePaymentMethodsSystemSettingPage';
 import {CommerceAdminDiscountDetailsPage} from '../pages/commerce/commerce-pricing-web/commerceAdminDiscountDetailsPage';
 import {CommerceAdminDiscountsPage} from '../pages/commerce/commerce-pricing-web/commerceAdminDiscountsPage';
 import {CommerceAdminPriceListDetailsPage} from '../pages/commerce/commerce-pricing-web/commerceAdminPriceListDetailsPage';
@@ -129,6 +130,7 @@ const commercePagesTest = test.extend<{
 	commerceThemeMiniumCatalogPage: CommerceThemeMiniumCatalogPage;
 	commerceThemeMiniumPage: CommerceThemeMiniumPage;
 	commerceWishListPage: CommerceWishListPage;
+	offlinePaymentMethodsSystemSettingPage: OfflinePaymentMethodsSystemSettingPage;
 	organizationManagementPage: OrganizationManagementPage;
 	pendingOrdersPage: PendingOrdersPage;
 	placedOrderPage: PlacedOrderPage;
@@ -312,6 +314,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceWishListPage: async ({page}, use) => {
 		await use(new CommerceWishListPage(page));
+	},
+	offlinePaymentMethodsSystemSettingPage: async ({page}, use) => {
+		await use(new OfflinePaymentMethodsSystemSettingPage(page));
 	},
 	organizationManagementPage: async ({page}, use) => {
 		await use(new OrganizationManagementPage(page));

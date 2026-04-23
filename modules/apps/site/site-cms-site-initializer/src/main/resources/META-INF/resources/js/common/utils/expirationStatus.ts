@@ -10,7 +10,7 @@ const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 export function isExpiringSoon(
 	status: string | undefined,
-	expirationDate: string | Date | undefined | null
+	expirationDate?: string | Date
 ): boolean {
 	if (status !== 'approved' || !expirationDate) {
 		return false;
@@ -28,8 +28,12 @@ export function isExpiringSoon(
 }
 
 export function formatExpirationDate(
-	expirationDate: string | Date
+	expirationDate?: string | Date
 ): string | null {
+	if (!expirationDate) {
+		return null;
+	}
+
 	return dateFormat(
 		{
 			day: '2-digit',
@@ -46,8 +50,12 @@ export function formatExpirationDate(
 }
 
 export function formatExpirationDateLong(
-	expirationDate: string | Date
+	expirationDate?: string | Date
 ): string | null {
+	if (!expirationDate) {
+		return null;
+	}
+
 	return dateFormat(
 		{
 			dateStyle: 'long',

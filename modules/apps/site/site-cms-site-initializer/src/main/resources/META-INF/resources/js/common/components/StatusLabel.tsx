@@ -40,7 +40,7 @@ interface StatusLabelProps {
 }
 
 const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
-	if (!isExpiringSoon(label, expirationDate)) {
+	if (!isExpiringSoon(label, expirationDate ?? undefined)) {
 		return (
 			<Label displayType={mapLabelToLabelDisplayType[label]}>
 				{Liferay.Language.get(label)}
@@ -48,11 +48,11 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 		);
 	}
 
-	const formattedDate = formatExpirationDate(expirationDate!);
+	const formattedDate = formatExpirationDate(expirationDate ?? undefined);
 	const expiringSoonText = Liferay.Language.get('expiring-soon');
 	const ariaLabel = sub(
 		Liferay.Language.get('expiring-soon.expires-on-x'),
-		formatExpirationDateLong(expirationDate!) ?? ''
+		formatExpirationDateLong(expirationDate ?? undefined) ?? ''
 	);
 
 	return (

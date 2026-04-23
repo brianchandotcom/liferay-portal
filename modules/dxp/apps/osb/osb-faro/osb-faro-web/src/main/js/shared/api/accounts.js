@@ -11,14 +11,14 @@ const {
 export function fetch({accountId, groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `faro/contacts/${groupId}/account/${accountId}`
+		path: `contacts/${groupId}/account/${accountId}`
 	});
 }
 
 export function fetchDetails({accountId, groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `faro/contacts/${groupId}/account/${accountId}/details`
+		path: `contacts/${groupId}/account/${accountId}/details`
 	});
 }
 

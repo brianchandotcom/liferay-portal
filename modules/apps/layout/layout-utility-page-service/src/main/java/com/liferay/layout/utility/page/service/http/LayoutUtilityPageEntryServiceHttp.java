@@ -774,7 +774,8 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			updateLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId,
-				long previewFileEntryId)
+				long previewFileEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -784,7 +785,8 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_updateLayoutUtilityPageEntryParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutUtilityPageEntryId, previewFileEntryId);
+				methodKey, layoutUtilityPageEntryId, previewFileEntryId,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -818,7 +820,8 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			updateLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId,
-				String name)
+				String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -828,7 +831,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_updateLayoutUtilityPageEntryParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutUtilityPageEntryId, name);
+				methodKey, layoutUtilityPageEntryId, name, serviceContext);
 
 			Object returnObj = null;
 
@@ -935,12 +938,14 @@ public class LayoutUtilityPageEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateLayoutUtilityPageEntryParameterTypes18 = new Class[] {
-			long.class, long.class
+			long.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_updateLayoutUtilityPageEntryParameterTypes19 = new Class[] {
-			long.class, String.class
+			long.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:600060082
+// LIFERAY-SERVICE-BUILDER-HASH:272774366

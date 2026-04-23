@@ -274,8 +274,7 @@ public class MCPServerServletTest {
 		mcpSyncClient.closeGracefully();
 	}
 
-	private ObjectEntry _addObjectEntry(
-			String name, String... endpoints)
+	private ObjectEntry _addObjectEntry(String name, String... endpoints)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =

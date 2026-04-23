@@ -134,6 +134,7 @@ export function parsePhoneValue(
 
 	// Including DEFAULT_COUNTRIES to match the more common countries first.
 	// This will be re-adjusted once we can identify the country using the NDC.
+	// See LPD-85417.
 
 	const countriesByIddLength = [...DEFAULT_COUNTRIES, ...countries].sort(
 		(a, b) => b.idd.length - a.idd.length

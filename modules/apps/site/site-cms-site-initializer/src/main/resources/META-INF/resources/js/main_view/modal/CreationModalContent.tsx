@@ -125,6 +125,9 @@ export default function CreationModalContent({
 						required
 					>
 						<SpaceSelector
+							acceptedGroupIds={assetLibraries.map(
+								(library) => library.groupId
+							)}
 							id={groupIdInputId}
 							onSpaceChange={(space) => {
 								setFieldValue(

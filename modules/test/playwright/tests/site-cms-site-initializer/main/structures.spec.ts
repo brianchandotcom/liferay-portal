@@ -12,6 +12,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import postSingleApproverCopy from '../../portal-workflow-kaleo-designer-web/main/utils/postSingleApproverCopy';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
@@ -26,27 +27,6 @@ const test = mergeTests(
 	}),
 	loginTest()
 );
-
-let workflowDefinitionIds: number[] = [];
-
-let workflowDefinitionName: string;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const workFlowDefinition = await postSingleApproverCopy(apiHelpers);
-
-	workflowDefinitionIds.push(workFlowDefinition.id);
-	workflowDefinitionName = workFlowDefinition.name;
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	for (const workflowDefinitionId of workflowDefinitionIds) {
-		await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
-			workflowDefinitionId
-		);
-	}
-
-	workflowDefinitionIds = [];
-});
 
 test(
 	'Structure can be deleted without confirmation if it does not have an approved status',
@@ -237,7 +217,18 @@ test(
 test(
 	'Bulk assign default workflow modal',
 	{tag: '@LPD-76635'},
-	async ({page, structuresPage}) => {
+	async ({apiHelpers, page, structuresPage}) => {
+		let workflowDefinition: WorkflowDefinition;
+
+		await test.step('Create a custom workflow definition', async () => {
+			workflowDefinition = await postSingleApproverCopy(apiHelpers);
+
+			apiHelpers.data.push({
+				id: workflowDefinition.id,
+				type: 'workflowDefinition',
+			});
+		});
+
 		await test.step('Check if the modal show the correct value default value', async () => {
 			await structuresPage.goto();
 
@@ -248,7 +239,7 @@ test(
 			await page
 				.getByLabel('Select Workflow')
 				.first()
-				.selectOption(workflowDefinitionName);
+				.selectOption(workflowDefinition.name);
 
 			await page.getByRole('button', {name: 'Publish'}).click();
 
@@ -299,7 +290,7 @@ test(
 
 			await expect(
 				page.getByLabel('Select Workflow').first()
-			).toHaveValue(workflowDefinitionName);
+			).toHaveValue(workflowDefinition.name);
 
 			await page.getByLabel('Select Workflow').first().selectOption('');
 
@@ -343,7 +334,7 @@ test(
 		await test.step('Check if the Bulk action can update multiple structures', async () => {
 			await page
 				.getByLabel('Default Workflow', {exact: true})
-				.selectOption(workflowDefinitionName);
+				.selectOption(workflowDefinition.name);
 
 			await expect(
 				page.getByRole('button', {name: 'Assign Workflow'})
@@ -366,7 +357,7 @@ test(
 			await expect(page.getByLabel('Default Workflow')).toBeVisible();
 
 			await expect(page.getByLabel('Default Workflow')).toHaveValue(
-				workflowDefinitionName
+				workflowDefinition.name
 			);
 
 			await structuresPage.goto();
@@ -378,9 +369,10 @@ test(
 			await expect(page.getByLabel('Default Workflow')).toBeVisible();
 
 			await expect(page.getByLabel('Default Workflow')).toHaveValue(
-				workflowDefinitionName
+				workflowDefinition.name
 			);
 		});
+
 		await test.step('Check if the Bulk action can clear multiple structures', async () => {
 			await structuresPage.goto();
 

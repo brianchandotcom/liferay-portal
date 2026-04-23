@@ -223,26 +223,26 @@ public class OpenAPIUtil {
 	}
 
 	private static String _getBasePath(String endpoint) {
-		int spaceIndex = endpoint.indexOf(' ');
+		int index = endpoint.indexOf(' ');
 
-		if (spaceIndex < 0) {
+		if (index < 0) {
 			throw new IllegalArgumentException(
 				"Endpoint has no method/path separator: " + endpoint);
 		}
 
-		String path = endpoint.substring(spaceIndex + 1);
+		String path = endpoint.substring(index + 1);
 
-		int firstSlashIndex = path.indexOf('/', 1);
+		index = path.indexOf('/', 1);
 
-		if (firstSlashIndex < 0) {
+		if (index < 0) {
 			throw new IllegalArgumentException(
 				"Endpoint has no base path: " + endpoint);
 		}
 
-		int secondSlashIndex = path.indexOf('/', firstSlashIndex + 1);
+		index = path.indexOf('/', index + 1);
 
-		if (secondSlashIndex > 0) {
-			return path.substring(0, secondSlashIndex);
+		if (index > 0) {
+			return path.substring(0, index);
 		}
 
 		return path;

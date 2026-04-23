@@ -30,12 +30,14 @@ async function checkNewCMSFiles(
 	cmsRootFilesURL: string,
 	lastRequestTime: string
 ) {
-	const url = new URL(cmsRootFilesURL);
+	const url = new URL(cmsRootFilesURL, window.location.origin);
 	const existingFilter = url.searchParams.get('filter') ?? '';
 
 	url.searchParams.set(
 		'filter',
-		`${existingFilter} and dateCreated gt ${lastRequestTime}`
+		existingFilter
+			? `(${existingFilter}) and dateCreated gt ${lastRequestTime}`
+			: `dateCreated gt ${lastRequestTime}`
 	);
 
 	const response = await fetch(url.toString());

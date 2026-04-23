@@ -59,9 +59,9 @@ definition {
 		MessageboardsThread.viewNoReplies(replyBody = "スレッドメッセージの返信");
 	}
 
-	@description = "This is a test for LPS-136929. It checks that categories can be viewed in Arabic."
+	@description = "This is a test for LPS-136929 and LPS-136930. It checks that categories can be viewed in Arabic and Japanese."
 	@priority = 3
-	test CanViewCategoriesInArabic {
+	test CanViewCategoriesInArabicAndJapanese {
 		JSONMBMessage.addCategory(
 			categoryDescription = "وصف الفئة",
 			categoryName = "اسم الفئة",
@@ -76,11 +76,7 @@ definition {
 			categoryName = "اسم الفئة",
 			localizedHeader = "لوحات الرسائل",
 			threadCount = "0 من النقاشات");
-	}
 
-	@description = "This is a test for LPS-136930. It checks that categories can be viewed in Japanese."
-	@priority = 3
-	test CanViewCategoriesInArabicAndJapanese {
 		JSONMBMessage.addCategory(
 			categoryDescription = "カテゴリ説明",
 			categoryName = "種別名",

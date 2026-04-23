@@ -415,6 +415,115 @@ describe('ColorPicker', () => {
 		});
 	});
 
+	describe('When typing in the Editor hex input popup', () => {
+		it('calls onValueSelect with # prefix when a hex value is typed', async () => {
+			const onValueSelect = jest.fn();
+			const {getByLabelText} = renderColorPicker({
+				onValueSelect,
+				value: '#ffb46e',
+			});
+
+			await userEvent.click(getByLabelText('select-color'));
+
+			const hexInput = screen.getByTestId('customHexInput');
+
+			fireEvent.change(hexInput, {target: {value: 'FF0000'}});
+			fireEvent.blur(hexInput);
+
+			await waitFor(() => {
+				expect(onValueSelect).toHaveBeenCalledWith(
+					INPUT_NAME,
+					'#FF0000'
+				);
+			});
+		});
+
+		it('calls onValueSelect with # prefix when a color name is typed', async () => {
+			const onValueSelect = jest.fn();
+			const {getByLabelText} = renderColorPicker({
+				onValueSelect,
+				value: '#ffb46e',
+			});
+
+			await userEvent.click(getByLabelText('select-color'));
+
+			const hexInput = screen.getByTestId('customHexInput');
+
+			fireEvent.change(hexInput, {target: {value: 'red'}});
+			fireEvent.blur(hexInput);
+
+			await waitFor(() => {
+				expect(onValueSelect).toHaveBeenCalledWith(
+					INPUT_NAME,
+					'#FF0000'
+				);
+			});
+		});
+
+		it('calls onValueSelect without double # prefix when value already has #', async () => {
+			const onValueSelect = jest.fn();
+			const {getByLabelText} = renderColorPicker({
+				onValueSelect,
+				value: '#ffb46e',
+			});
+
+			await userEvent.click(getByLabelText('select-color'));
+
+			const hexInput = screen.getByTestId('customHexInput');
+
+			fireEvent.change(hexInput, {target: {value: '#FF0000'}});
+			fireEvent.blur(hexInput);
+
+			await waitFor(() => {
+				expect(onValueSelect).toHaveBeenCalledWith(
+					INPUT_NAME,
+					'#FF0000'
+				);
+			});
+		});
+
+		it('calls onValueSelect with # prefix when an 8-digit hex value is typed', async () => {
+			const onValueSelect = jest.fn();
+			const {getByLabelText} = renderColorPicker({
+				onValueSelect,
+				value: '#ffb46e',
+			});
+
+			await userEvent.click(getByLabelText('select-color'));
+
+			const hexInput = screen.getByTestId('customHexInput');
+
+			fireEvent.change(hexInput, {target: {value: 'FF000080'}});
+			fireEvent.blur(hexInput);
+
+			await waitFor(() => {
+				expect(onValueSelect).toHaveBeenCalledWith(
+					INPUT_NAME,
+					'#FF000080'
+				);
+			});
+		});
+
+		it('does not call onValueSelect with invalid hex value', async () => {
+			const onValueSelect = jest.fn();
+			const {getByLabelText} = renderColorPicker({
+				onValueSelect,
+				value: '#ffb46e',
+			});
+
+			await userEvent.click(getByLabelText('select-color'));
+
+			const hexInput = screen.getByTestId('customHexInput');
+
+			fireEvent.change(hexInput, {target: {value: 'ZZZZZZ'}});
+			fireEvent.blur(hexInput);
+
+			await waitFor(() => {
+				expect(onValueSelect).not.toHaveBeenCalledWith();
+			});
+		});
+	});
+
 	describe('When the value is a CSS color', () => {
 		it('ensures that when a CSS color color longer than 9 characters is typed, the color remains unchanged', async () => {
 			const {baseElement} = renderColorPicker({

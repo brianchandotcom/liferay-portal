@@ -2008,15 +2008,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		_updateLayoutPageTemplateStructure(draftLayout, layoutStructure);
 
-		_layoutLocalService.copyLayoutContent(draftLayout, layout);
-
-		_layoutLocalService.updateStatus(
-			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
-			ServiceContextThreadLocal.getServiceContext());
-
-		_layoutLocalService.updateStatus(
-			userId, plid, WorkflowConstants.STATUS_APPROVED,
-			ServiceContextThreadLocal.getServiceContext());
+		_publishLayout(draftLayout, layout, userId);
 	}
 
 	private boolean _processPageElement(
@@ -2127,6 +2119,20 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 								"values-in-its-page-definition")));
 			}
 		}
+	}
+
+	private void _publishLayout(Layout draftLayout, Layout layout, long userId)
+		throws Exception {
+
+		_layoutLocalService.copyLayoutContent(draftLayout, layout);
+
+		_layoutLocalService.updateStatus(
+			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+			ServiceContextThreadLocal.getServiceContext());
+
+		_layoutLocalService.updateStatus(
+			userId, layout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private String _toTypeName(int layoutPageTemplateEntryType) {

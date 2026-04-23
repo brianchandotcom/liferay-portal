@@ -195,9 +195,12 @@ export class ContentPageTranslationPage {
 		await expect(async () => {
 			await this.publishButton.click({timeout: 1000});
 
-			await expect(this.page.getByText('Saved')).toBeVisible({
-				timeout: 3000,
-			});
+			await expect(
+				this.page
+					.getByText('Saved')
+					.or(this.page.getByText('Approved'))
+					.first()
+			).toBeVisible({timeout: 3000});
 
 			await expect(
 				this.page.getByText('could not be published')

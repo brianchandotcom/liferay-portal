@@ -292,7 +292,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		String name = RandomTestUtil.randomString();
 
 		_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(), name);
+			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(), name,
+			_serviceContext);
 
 		layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());

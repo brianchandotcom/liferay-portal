@@ -25,7 +25,7 @@ function main {
 
 	local include_pattern=""
 
-	if echo "${from_path}" | grep -q "\*"
+	if echo "${from_path}" | grep --quiet "\*"
 	then
 		include_pattern="${from_path##*/}"
 		from_path="${from_path%/*}"

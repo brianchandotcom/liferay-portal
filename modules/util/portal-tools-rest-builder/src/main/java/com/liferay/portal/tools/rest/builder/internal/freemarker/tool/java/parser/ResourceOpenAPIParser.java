@@ -1041,7 +1041,7 @@ public class ResourceOpenAPIParser {
 		ConfigYAML configYAML, List<JavaMethodParameter> javaMethodParameters,
 		String operationId) {
 
-		if (!ConfigUtil.isVersionCompatible(configYAML, 9)) {
+		if (!configYAML.getForceObjectMethodNameSuffix()) {
 			return operationId;
 		}
 

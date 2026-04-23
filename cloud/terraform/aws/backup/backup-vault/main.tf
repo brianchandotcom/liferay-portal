@@ -1,4 +1,7 @@
 resource "aws_backup_vault" "this" {
+	lifecycle {
+		prevent_destroy=true
+	}
 	name=var.backup_vault_name
 }
 resource "aws_iam_role" "this" {

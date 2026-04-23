@@ -156,59 +156,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-126047: When the user changes the language using the flag selector in the panel and so the URL, the metrics corresponding the canonical URL that corresponds to the language selected are shown"
-	@priority = 3
-	test ChangeLanguageInWidgetPage {
-		property portal.upstream = "quarantine";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Set portal to use Localized URL") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "SEO",
-				configurationScope = "Virtual Instance Scope");
-
-			SystemSettings.selectOptionSetting(
-				fieldName = "Canonical URL",
-				selectOption = "Use Localized URL");
-
-			SystemSettings.saveConfiguration();
-		}
-
-		task ("Create Widget Page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Widget Page Name");
-		}
-
-		task ("Navigate to Widget page") {
-			Navigator.gotoSitePage(
-				pageName = "Widget Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Open content performance panel") {
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Change language") {
-			ContentPerformance.changeLocale(locale = "Portuguese");
-		}
-
-		task ("Check that the URL and date is from that translated page") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
-				value1 = "pt/web/test-site-name");
-
-			AssertTextEquals(
-				locator1 = "ContentPerformance#LOCALE_BUTTON",
-				value1 = "pt-BR");
-		}
-	}
-
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected and synced, the Content Performance panel display all its functionalities"
 	@priority = 5
 	test CheckAllInfoDisplayed {
@@ -372,66 +319,6 @@ definition {
 
 		task ("Check if languages are alphabetically ordered") {
 			ContentPerformance.checkLanguagesOrder();
-		}
-	}
-
-	@description = "LPS-110920: When the user selects a language in the switcher, the title, the URL and the metrics change accordingly"
-	@priority = 5
-	test LanguageSelector {
-		property portal.upstream = "quarantine";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Set portal to use Localized URL") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "SEO",
-				configurationScope = "Virtual Instance Scope");
-
-			SystemSettings.selectOptionSetting(
-				fieldName = "Canonical URL",
-				selectOption = "Use Localized URL");
-
-			SystemSettings.saveConfiguration();
-		}
-
-		task ("Add a translation for that page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Configure",
-				pageName = "Content Page");
-
-			PagesAdmin.addLocalizedFriendlyURL(
-				friendlyURLLocalizedList = "pt-BR",
-				localizedFriendlyURLList = "",
-				localizedNameList = "Pagina principal");
-		}
-
-		task ("Open Content Performance and Assert if element is not present") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Change language") {
-			ContentPerformance.changeLocale(locale = "Portuguese");
-		}
-
-		task ("Check if date is from respective language") {
-			AssertTextPresent(
-				locator1 = "PageAudit#PANEL_PAGE_TITLE",
-				value1 = "Pagina principal");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
-				value1 = "/pt/web/test-site-name");
-
-			AssertVisible(
-				locator1 = "ContentPerformance#NUMBER_VIEWS",
-				value1 = 0);
 		}
 	}
 

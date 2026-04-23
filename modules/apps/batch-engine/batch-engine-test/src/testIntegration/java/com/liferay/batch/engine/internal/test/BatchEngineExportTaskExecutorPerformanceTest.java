@@ -12,7 +12,6 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.TestInfo;
-import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -31,14 +30,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Jose Luis Navarro
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class BatchEngineExportTaskExecutorPerformanceTest
 	extends BaseBatchEngineTaskExecutorTest {
 
 	@Test
 	@TestInfo("LPD-85155")
-	public void testExportBlogPostingsPerformance() throws Exception {
+	public void testExportBlogPostings() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		for (int i = 0; i < 3000; i++) {

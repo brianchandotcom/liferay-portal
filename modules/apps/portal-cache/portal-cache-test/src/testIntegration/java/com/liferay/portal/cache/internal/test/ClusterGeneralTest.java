@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -71,9 +72,11 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalServiceUtil;
 import com.liferay.portal.model.impl.CompanyImpl;
+import com.liferay.portal.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
 import com.liferay.portal.test.cluster.tomcat.TomcatNode;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -112,6 +115,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Jiefeng Wu
@@ -320,6 +325,51 @@ public class ClusterGeneralTest implements Serializable {
 	@Test
 	public void testCanUpdateLogLevelsForAllNodesFromSlave() throws Exception {
 		_testCanUpdateLogLevelsForAllNodes(_tomcatNode1, _tomcatNode2, false);
+	}
+
+	@Test
+	public void testCanUpdatePortalPropertiesWithMultipleClusters()
+		throws Exception {
+
+		_testCanUpdatePortalPropertiesWithMultipleClusters(
+			_tomcatNode1, "emailAddress");
+		_testCanUpdatePortalPropertiesWithMultipleClusters(
+			_tomcatNode2, "emailAddress");
+
+		String originalNode2AuthType = _tomcatNode2.syncExecute(
+			() -> ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "COMPANY_SECURITY_AUTH_TYPE", "screenName"));
+
+		try {
+			_testCanUpdatePortalPropertiesWithMultipleClusters(
+				_tomcatNode1, "emailAddress");
+			_testCanUpdatePortalPropertiesWithMultipleClusters(
+				_tomcatNode2, "screenName");
+
+			String originalNode1AuthType = _tomcatNode1.syncExecute(
+				() -> ReflectionTestUtil.getAndSetFieldValue(
+					PropsValues.class, "COMPANY_SECURITY_AUTH_TYPE",
+					"screenName"));
+
+			try {
+				_testCanUpdatePortalPropertiesWithMultipleClusters(
+					_tomcatNode1, "screenName");
+				_testCanUpdatePortalPropertiesWithMultipleClusters(
+					_tomcatNode2, "screenName");
+			}
+			finally {
+				_tomcatNode1.syncExecute(
+					() -> ReflectionTestUtil.getAndSetFieldValue(
+						PropsValues.class, "COMPANY_SECURITY_AUTH_TYPE",
+						originalNode1AuthType));
+			}
+		}
+		finally {
+			_tomcatNode2.syncExecute(
+				() -> ReflectionTestUtil.getAndSetFieldValue(
+					PropsValues.class, "COMPANY_SECURITY_AUTH_TYPE",
+					originalNode2AuthType));
+		}
 	}
 
 	@Test
@@ -564,6 +614,15 @@ public class ClusterGeneralTest implements Serializable {
 
 					return clusterNodes.contains(clusterNode1);
 				}));
+	}
+
+	private long _authenticate(TomcatNode tomcatNode, String login)
+		throws Exception {
+
+		return tomcatNode.syncExecute(
+			() -> AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
+				new MockHttpServletRequest(), login,
+				TestPropsValues.USER_PASSWORD, null));
 	}
 
 	private AutoCloseable _disableClusterableAdviceCallMasterTimeout(
@@ -843,6 +902,37 @@ public class ClusterGeneralTest implements Serializable {
 					return Log4JUtil.getPriority(
 						ClusterGeneralTest.class.getName());
 				}));
+	}
+
+	private void _testCanUpdatePortalPropertiesWithMultipleClusters(
+			TomcatNode tomcatNode, String expectedAuthType)
+		throws Exception {
+
+		if (expectedAuthType.equals("emailAddress")) {
+			Assert.assertEquals(
+				TestPropsValues.getUserId(),
+				_authenticate(tomcatNode, "test@liferay.com"));
+
+			try {
+				_authenticate(tomcatNode, "test");
+
+				Assert.fail();
+			}
+			catch (AuthException authException) {
+			}
+		}
+		else if (expectedAuthType.equals("screenName")) {
+			Assert.assertEquals(
+				TestPropsValues.getUserId(), _authenticate(tomcatNode, "test"));
+
+			try {
+				_authenticate(tomcatNode, "test@liferay.com");
+
+				Assert.fail();
+			}
+			catch (AuthException authException) {
+			}
+		}
 	}
 
 	private void _testControlChannelProperties(

@@ -5,7 +5,7 @@
 
 import {IBulkActionItem} from '@liferay/frontend-data-set-web';
 
-export default function filterFDSBulkActions(
+export default function transformFDSBulkActions(
 	bulkActions: Array<IBulkActionItem>
 ): Array<IBulkActionItem> {
 	return bulkActions.map((action: IBulkActionItem) => {

@@ -140,7 +140,9 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	public long getReindexEntryCount(long companyId) {
 		long indexerCompanyId = getCompanyId();
 
-		if ((indexerCompanyId != 0) && (indexerCompanyId != companyId)) {
+		if (((indexerCompanyId != 0) && (indexerCompanyId != companyId)) ||
+			!_indexerWriter.shouldRun(companyId)) {
+
 			return 0;
 		}
 

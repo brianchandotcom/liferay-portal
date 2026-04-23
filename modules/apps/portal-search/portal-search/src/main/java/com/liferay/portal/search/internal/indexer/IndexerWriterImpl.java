@@ -208,9 +208,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 	@Override
 	public void reindexCompany(long companyId) {
-		if (!isEnabled() ||
-			!_modelIndexerWriterContributor.shouldRun(companyId)) {
-
+		if (!isEnabled() || !shouldRun(companyId)) {
 			return;
 		}
 
@@ -224,6 +222,11 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 	@Override
 	public void setEnabled(boolean enabled) {
 		_indexerEnabled = enabled;
+	}
+
+	@Override
+	public boolean shouldRun(long companyId) {
+		return _modelIndexerWriterContributor.shouldRun(companyId);
 	}
 
 	@Override

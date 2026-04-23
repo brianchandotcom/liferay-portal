@@ -164,7 +164,7 @@ public class OpenAPIUtilTest {
 			() -> OpenAPIUtil.getTool("no-space", _openAPIJSON));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
-			"OpenAPI document has no 'paths' object",
+			"OpenAPI document has no \"paths\" object",
 			() -> OpenAPIUtil.getTool("GET /test/v1.0/items", "{}"));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
@@ -177,7 +177,7 @@ public class OpenAPIUtilTest {
 			() -> OpenAPIUtil.getTool("DELETE /test/v1.0/items", _openAPIJSON));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
-			"Request body has no application/json content",
+			"Request body has no \"application/json\" content",
 			() -> OpenAPIUtil.getTool("POST /test/v1.0/uploads", _openAPIJSON));
 		Assert.assertThrows(
 			JSONException.class,

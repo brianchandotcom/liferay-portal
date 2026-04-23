@@ -107,9 +107,9 @@ public class MCPServerServlet extends HttpServlet {
 
 			String prefix = defaultKey + StringPool.UNDERLINE;
 
-			for (String key : new ArrayList<>(_servlets.keySet())) {
-				if (key.equals(defaultKey) || key.startsWith(prefix)) {
-					Servlet servlet = _servlets.remove(key);
+			for (String servletKey : new ArrayList<>(_servlets.keySet())) {
+				if (servletKey.equals(defaultKey) || servletKey.startsWith(prefix)) {
+					Servlet servlet = _servlets.remove(servletKey);
 
 					if (servlet != null) {
 						servlet.destroy();
@@ -446,11 +446,11 @@ public class MCPServerServlet extends HttpServlet {
 		String authorization, String baseURL, long companyId,
 		MCPServerProfile mcpServerProfile) {
 
-		String key = _getServletKey(
+		String servletKey = _getServletKey(
 			companyId,
 			(mcpServerProfile != null) ? mcpServerProfile._name : null);
 
-		Servlet cachedServlet = _servlets.get(key);
+		Servlet cachedServlet = _servlets.get(servletKey);
 
 		if (cachedServlet != null) {
 			return cachedServlet;
@@ -459,7 +459,7 @@ public class MCPServerServlet extends HttpServlet {
 		Servlet servlet = _buildServlet(
 			baseURL, companyId, authorization, mcpServerProfile);
 
-		cachedServlet = _servlets.putIfAbsent(key, servlet);
+		cachedServlet = _servlets.putIfAbsent(servletKey, servlet);
 
 		if (cachedServlet != null) {
 			servlet.destroy();
@@ -471,13 +471,13 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private String _getServletKey(long companyId, String profileName) {
-		String key = String.valueOf(companyId);
+		String servletKey = String.valueOf(companyId);
 
 		if (profileName != null) {
-			key = key + StringPool.UNDERLINE + profileName;
+			servletKey = servletKey + StringPool.UNDERLINE + profileName;
 		}
 
-		return key;
+		return servletKey;
 	}
 
 	private List<McpServerFeatures.SyncPromptSpecification>

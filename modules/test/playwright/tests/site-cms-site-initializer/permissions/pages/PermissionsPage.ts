@@ -21,10 +21,9 @@ export class PermissionsPage {
 			'button',
 			{name: 'Cancel'}
 		);
-		this.permissionsModalCloseButton = this.page.getByRole('button', {
-			exact: true,
-			name: 'Close',
-		});
+		this.permissionsModalCloseButton = this.page
+			.getByRole('dialog', {name: 'Permissions'})
+			.getByLabel('Close');
 		this.permissionsModalSaveButton = this.permissionsModal.getByRole(
 			'button',
 			{name: 'Save'}

@@ -75,6 +75,8 @@ test(
 
 		await expect(editUserPage.yourPasswordInput).toBeVisible();
 
+		await editUserPage.passwordConfirmationFrameCancelButton.click();
+
 		await deleteUser();
 
 		await addUser();
@@ -83,6 +85,8 @@ test(
 		await editUserPage.saveButton.click();
 
 		await expect(editUserPage.yourPasswordInput).toBeVisible();
+
+		await editUserPage.passwordConfirmationFrameCancelButton.click();
 
 		await deleteUser();
 	}

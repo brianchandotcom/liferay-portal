@@ -1429,11 +1429,11 @@ test('LPD-47225 Can add and remove tags to an account', async ({
 	await accountsPage.accountNameLink(account.name).click();
 
 	await editAccountPage.selectTagsButton.click();
-	await accountTagSelectorPage.selectTag([tags[0].name, tags[2].name]);
+	await accountTagSelectorPage.selectTag([tags[0].name, tags[1].name]);
 
 	await expect(editAccountPage.tagInput(tags[0].name)).toBeVisible();
-	await expect(editAccountPage.tagInput(tags[1].name)).toHaveCount(0);
-	await expect(editAccountPage.tagInput(tags[2].name)).toBeVisible();
+	await expect(editAccountPage.tagInput(tags[1].name)).toBeVisible();
+	await expect(editAccountPage.tagInput(tags[2].name)).toHaveCount(0);
 
 	await editAccountPage.saveButton.click();
 
@@ -1443,8 +1443,8 @@ test('LPD-47225 Can add and remove tags to an account', async ({
 	await accountsPage.accountNameLink(account.name).click();
 
 	await expect(editAccountPage.tagInput(tags[0].name)).toBeVisible();
-	await expect(editAccountPage.tagInput(tags[1].name)).toHaveCount(0);
-	await expect(editAccountPage.tagInput(tags[2].name)).toBeVisible();
+	await expect(editAccountPage.tagInput(tags[1].name)).toBeVisible();
+	await expect(editAccountPage.tagInput(tags[2].name)).toHaveCount(0);
 
 	await editAccountPage.categoryClearAllButton.click();
 

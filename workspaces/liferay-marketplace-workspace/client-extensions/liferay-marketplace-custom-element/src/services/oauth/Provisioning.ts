@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { downloadFile } from '../../utils/file';
-import { MarketplaceSpringBootOAuth2 } from './OAuth2Client';
-import { LicenseKey, LicenseTypePayload } from './types';
+import {downloadFile} from '../../utils/file';
+import {MarketplaceSpringBootOAuth2} from './OAuth2Client';
+import {LicenseKey, LicenseTypePayload} from './types';
 
 class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 	async createAppLicenseKey(payload: LicenseTypePayload) {
@@ -24,7 +24,7 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 		});
 	}
 
-	async createLicenseKeyTypeFreeDomainCheck(payload: {
+	async licenseKeyTypeFreeDomainsCheck(payload: {
 		domains: string;
 		owner: string;
 	}) {
@@ -75,7 +75,7 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 	) {
 		return this.get<APIResponse>(
 			`/order-app-license-keys/${orderId}?${searchParams.toString()}`,
-			{ earlyReturn: true }
+			{earlyReturn: true}
 		);
 	}
 

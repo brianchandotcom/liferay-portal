@@ -36,57 +36,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the deleted page can not be viewed in the live site after publishing."
-	@priority = 4
-	@refactordone
-	test CannotViewDeletedWikiPageAfterPublishing {
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Site Name (Staging)",
-			layoutName = "Staging Test Page",
-			site = "false",
-			widgetName = "Wiki");
-
-		JSONWiki.addWikiPage(
-			groupName = "Site Name (Staging)",
-			site = "false",
-			wikiNodeName = "Main",
-			wikiPageContent = "Wiki Page Content",
-			wikiPageName = "Wiki Page Title");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "staging-test-page",
-			siteURLKey = "site-name-staging",
-			tabURLKey = "all_pages",
-			wikiNodeName = "Main");
-
-		WikiPage.deletePG(wikiPageTitle = "Wiki Page Title");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "staging-test-page",
-			siteURLKey = "site-name",
-			tabURLKey = "all_pages",
-			wikiNodeName = "Main");
-
-		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Title");
-	}
-
 	@description = "This test covers LPS-95501. It asserts added wiki attachment file can be viewed after publishing."
 	@priority = 4
 	@refactordone
@@ -171,6 +120,30 @@ definition {
 			attachmentFileName = "Document_1.jpg",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title");
+
+		WikiNavigator.gotoWidgetSpecificTabByURL(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name-staging",
+			tabURLKey = "all_pages",
+			wikiNodeName = "Main");
+
+		WikiPage.deletePG(wikiPageTitle = "Wiki Page Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		WikiNavigator.gotoWidgetSpecificTabByURL(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			tabURLKey = "all_pages",
+			wikiNodeName = "Main");
+
+		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Title");
 	}
 
 	@description = "This is a test for LPS-95709. It ensures that an attachment for a Wiki frontpage is intact after the entry is published."

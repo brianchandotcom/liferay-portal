@@ -92,6 +92,54 @@ describe('Select', () => {
 		expect(button?.hasAttribute('aria-invalid')).toBe(false);
 	});
 
+	it('filters the dropdown options by the typed query when allowing multiple selections', () => {
+		const props = {
+			multiple: true,
+			name: 'selectName',
+			options: [
+				{
+					label: 'Apple',
+					reference: 'Apple',
+					value: 'apple',
+				},
+				{
+					label: 'Avocado',
+					reference: 'Avocado',
+					value: 'avocado',
+				},
+				{
+					label: 'Banana',
+					reference: 'Banana',
+					value: 'banana',
+				},
+			],
+		};
+
+		const {getByRole, queryByLabelText} = render(
+			<SelectWithProvider {...props} />
+		);
+
+		const combobox = getByRole('combobox');
+
+		userEvent.click(combobox);
+
+		expect(queryByLabelText('Apple')).toBeInTheDocument();
+		expect(queryByLabelText('Avocado')).toBeInTheDocument();
+		expect(queryByLabelText('Banana')).toBeInTheDocument();
+
+		userEvent.type(combobox, 'ap');
+
+		expect(queryByLabelText('Apple')).toBeInTheDocument();
+		expect(queryByLabelText('Avocado')).toBeNull();
+		expect(queryByLabelText('Banana')).toBeNull();
+
+		userEvent.type(combobox, 'b');
+
+		expect(queryByLabelText('Apple')).toBeNull();
+		expect(queryByLabelText('Avocado')).toBeNull();
+		expect(queryByLabelText('Banana')).toBeInTheDocument();
+	});
+
 	it('renders data-option-reference in option elements', () => {
 		const props = {
 			multiple: false,

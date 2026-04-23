@@ -14,6 +14,7 @@ import * as individuals from './individuals';
 import * as individualSegment from './individual-segment';
 import * as interests from './interests';
 import * as issue from './issue';
+import * as lifecycle from './lifecycle';
 import * as notifications from './notifications';
 import * as pagesVisited from './pages-visited';
 import * as preferences from './preferences';
@@ -38,6 +39,7 @@ export {
 	individuals,
 	interests,
 	issue,
+	lifecycle,
 	notifications,
 	pagesVisited,
 	preferences,

@@ -14,6 +14,7 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {Color, ColorCategoryMap} from '../../types/ColorPicker';
+import getValidHexColor from '../../utils/getValidHexColor';
 import ColorPalette from './ColorPalette';
 import TokenButton from './TokenButton';
 
@@ -218,7 +219,11 @@ export default function ColorPickerField({
 											color.toHexString().toUpperCase()
 										);
 									}}
-									onHexBlur={externalOnColorChangeEditor}
+									onHexBlur={(value) =>
+										externalOnColorChangeEditor(
+											getValidHexColor(value)
+										)
+									}
 									onHexChange={(hex: string) =>
 										dispatch({hex})
 									}

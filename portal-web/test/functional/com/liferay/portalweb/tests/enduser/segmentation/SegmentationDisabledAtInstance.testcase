@@ -661,28 +661,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user navigates to Dynamic Collection editor Then alert is shown including breadcrumb link to segments service"
-	@priority = 3
-	test ViewReEnableAlertLinkAtDynamicCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to Collection Admin") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-		}
-
-		task ("Check if warning appears") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
-		}
-	}
-
 	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user navigates to Manual Collection editor Then alert is shown including breadcrumb link to segments service"
 	@priority = 3
 	test ViewReEnableAlertLinkAtManualCollectionEditor {

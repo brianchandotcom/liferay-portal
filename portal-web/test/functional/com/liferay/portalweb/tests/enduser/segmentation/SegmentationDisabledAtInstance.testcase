@@ -480,7 +480,7 @@ definition {
 
 	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Experience menu And user leaves and returns to page Then the alert reappears"
 	@priority = 3
-	test DisabledAlertAfterReturnsAtExperiencesMenu {
+	test CloseAndRecoverAlertAtExperiencesMenu {
 		task ("Create and navigate to the page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

@@ -10,4 +10,6 @@ export const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 
 export const ENTERPRISE_URL = 'https://www.liferay.com/web/lr/cms-upgrade';
 
+export const EXPIRING_SOON_THRESHOLD_DAYS = 7;
+
 export const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';

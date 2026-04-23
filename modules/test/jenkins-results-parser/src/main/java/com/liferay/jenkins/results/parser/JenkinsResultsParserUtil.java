@@ -6607,32 +6607,26 @@ public class JenkinsResultsParserUtil {
 	protected static String initCacheURL() {
 		String cacheDirPath = System.getenv("CACHE_DIR");
 
-		if ((cacheDirPath == null) &&
-			(System.getenv("JENKINS_GITHUB_URL") != null)) {
-
+		if (cacheDirPath == null) {
 			cacheDirPath = "/opt/dev/projects/github";
 		}
 
-		if (cacheDirPath != null) {
-			File cacheDir = new File(cacheDirPath);
+		File cacheDir = new File(cacheDirPath);
 
-			File cacheRepositoryDir = new File(
-				cacheDir, JENKINS_REPOSITORY_NAME);
+		File cacheRepositoryDir = new File(cacheDir, JENKINS_REPOSITORY_NAME);
 
-			if (cacheDir.exists() && cacheRepositoryDir.exists()) {
-				System.out.println(
-					"Using " + cacheDirPath + " for cached files");
+		if (cacheDir.exists() && cacheRepositoryDir.exists()) {
+			System.out.println("Using " + cacheDirPath + " for cached files");
 
-				return "file://" + cacheDirPath;
-			}
+			return "file://" + cacheDirPath;
 		}
 
 		throw new RuntimeException(
 			combine(
 				"Unable to locate local ", JENKINS_REPOSITORY_NAME,
-				" repository. Set CACHE_DIR or JENKINS_GITHUB_URL to a ",
-				"directory containing a ", JENKINS_REPOSITORY_NAME,
-				" checkout."));
+				" repository at ", cacheDirPath,
+				". Set CACHE_DIR to a directory containing a ",
+				JENKINS_REPOSITORY_NAME, " checkout."));
 	}
 
 	protected static String urlDependenciesFile;

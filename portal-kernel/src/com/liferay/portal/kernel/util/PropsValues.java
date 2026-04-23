@@ -2387,6 +2387,9 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_LOG_PROGRESS_ENABLED));
 
+	public static final long UPGRADE_LOG_PROGRESS_INTERVAL = GetterUtil.getLong(
+		PropsUtil.get(PropsKeys.UPGRADE_LOG_PROGRESS_INTERVAL));
+
 	public static final String UPGRADE_REPORT_DIR = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_DIR));
 

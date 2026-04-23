@@ -5,7 +5,6 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.osb.patcher.constants.PatcherFixConstants;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
@@ -16,7 +15,6 @@ import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.osb.patcher.util.JenkinsUtil;
 import com.liferay.osb.patcher.util.PatcherBuildUtil;
-import com.liferay.osb.patcher.util.PatcherFixUtil;
 import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.web.internal.validator.PatcherFixValidator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -25,14 +23,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
-import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -82,46 +77,19 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		patcherFixValidator.validateAdd();
 
-		PatcherFix patcherFix = _patcherFixLocalService.createPatcherFix(
-			_counterLocalService.increment());
-
-		patcherFix.setPatcherProductVersionId(patcherProductVersionId);
-		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
-		patcherFix.setKey(
-			PatcherFixUtil.generateKey(
-				patcherProjectVersionId, patcherFixName));
-		patcherFix.setName(
-			StringUtil.merge(PatcherUtil.sortTokens(patcherFixName)));
-		patcherFix.setKeyVersion(PatcherFixConstants.KEY_VERSION_DEFAULT);
-		patcherFix.setCommittish(committish);
-		patcherFix.setGitRemoteURL(gitRemoteURL);
-		patcherFix.setLatestFix(true);
-		patcherFix.setObsolete(false);
-
-		int status = WorkflowConstants.STATUS_FIX_ADDING;
 		int type = PatcherFixConstants.TYPE_PATCH;
-
-		if (patcherFix.getType() == PatcherFixConstants.TYPE_REBASE) {
-			if (Validator.isNull(committish) ||
-				Validator.isNull(gitRemoteURL)) {
-
-				status = WorkflowConstants.STATUS_FIX_REBASING;
-			}
-
-			type = PatcherFixConstants.TYPE_REBASE;
+	
+		if (workaround) {
+			type = PatcherFixConstants.TYPE_WORKAROUND;
 		}
 		else if (autoFix) {
 			type = PatcherFixConstants.TYPE_AUTO_FIX;
 		}
-		else if (workaround) {
-			type = PatcherFixConstants.TYPE_WORKAROUND;
-		}
 
-		patcherFix.setType(type);
-		patcherFix.setStatus(status);
-		patcherFix.setStatusDate(new Date());
-
-		patcherFix = _patcherFixLocalService.updatePatcherFix(patcherFix);
+		PatcherFix patcherFix = _patcherFixLocalService.addPatcherFix(
+			themeDisplay.getUserId(), patcherProductVersionId,
+			patcherProjectVersionId, patcherFixName, committish, gitRemoteURL,
+			type, WorkflowConstants.STATUS_FIX_ADDING);
 
 		List<PatcherBuild> patcherBuilds =
 			_patcherBuildLocalService.getPatcherFixPatcherBuilds(
@@ -146,9 +114,6 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		JenkinsUtil.sendAgentJenkinsRequest(themeDisplay.getUser(), patcherFix);
 	}
-
-	@Reference
-	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private PatcherBuildLocalService _patcherBuildLocalService;

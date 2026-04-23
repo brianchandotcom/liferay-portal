@@ -95,7 +95,7 @@ public class OpenAPIUtil {
 
 		if (pathsJSONObject == null) {
 			throw new IllegalArgumentException(
-				"OpenAPI document has no 'paths' object");
+				"OpenAPI document has no \"paths\" object");
 		}
 
 		String basePath = _getBasePath(endpoint);

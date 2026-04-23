@@ -478,6 +478,26 @@ export class CommerceAdminChannelDetailsPage {
 		await (await this.closeSidePanelFrame(false, tableName)).click();
 	}
 
+	async activatePaymentMethod(name: string, description: string) {
+		const tableName = 'Payment Methods';
+
+		await (await this.generalCommerceAdminChannelTableLink(name)).click();
+
+		await this.sidePanelFrameLocator
+			.getByLabel('Description', {exact: true})
+			.fill(description);
+
+		if (!(await this.isActive.isChecked())) {
+			await this.isActive.check();
+		}
+
+		await (await this.frameSaveButton(false, tableName)).click();
+
+		await waitForAlert(await this.sidePanelFrame(tableName));
+
+		await (await this.closeSidePanelFrame(false, tableName)).click();
+	}
+
 	async deactivateChannelConfiguration(name: string, tableName: string) {
 		const isActiveCheckbox = await this.isActive;
 

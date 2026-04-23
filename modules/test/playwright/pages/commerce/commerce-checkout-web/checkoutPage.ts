@@ -57,6 +57,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly page: Page;
+	readonly paymentMethodRadio: (name: string) => Locator;
 	readonly paymentTermLink: (label: string) => Locator;
 	readonly paymentTermOption: (label: string) => Locator;
 	readonly phoneNumberInput: Locator;
@@ -165,6 +166,8 @@ export class CheckoutPage extends CommerceDNDTablePage {
 			);
 		};
 		this.page = page;
+		this.paymentMethodRadio = (name: string) =>
+			page.getByRole('radio', {name});
 		this.paymentTermLink = (label: string) =>
 			page.getByRole('link', {name: label});
 		this.paymentTermOption = (label: string) => page.getByLabel(label);

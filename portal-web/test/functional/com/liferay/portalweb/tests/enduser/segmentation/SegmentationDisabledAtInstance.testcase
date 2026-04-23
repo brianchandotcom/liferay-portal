@@ -137,7 +137,7 @@ definition {
 
 	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Segments Admin Then should be forwarded to Segments Service at Instance Settings"
 	@priority = 4
-	test ClickToReEnableAlertLinkAtSegmentsList {
+	test ViewAndReEnableAlertAtSegmentsList {
 		task ("Open the Segments List, click at warning with link and confirm Instance Settings is open") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 

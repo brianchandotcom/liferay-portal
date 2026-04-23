@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.model.Account;
+import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
@@ -53,6 +54,19 @@ public class AccountController extends BaseFaroController {
 		return new AccountDisplay(
 			contactsEngineClient.getAccount(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), id));
+	}
+
+	@GET
+	@Path("/metrics")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public List<AccountMetric> getAccountMetrics(
+			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") long channelId)
+		throws Exception {
+
+		return contactsEngineClient.getAccountMetrics(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			channelId);
 	}
 
 	@GET

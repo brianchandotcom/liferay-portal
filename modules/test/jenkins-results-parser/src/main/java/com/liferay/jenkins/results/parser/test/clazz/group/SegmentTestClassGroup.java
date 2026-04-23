@@ -233,8 +233,12 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 
 	@Override
 	protected String getBaseSlaveLabel() {
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return _getBaseSlaveLabel();
+		String baseSlaveLabel = _getBaseSlaveLabel();
+
+		if (!JenkinsResultsParserUtil.isCloudCINode() ||
+			!JenkinsResultsParserUtil.isNullOrEmpty(baseSlaveLabel)) {
+
+			return baseSlaveLabel;
 		}
 
 		String slaveLabel = null;
@@ -252,7 +256,7 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 			return slaveLabel;
 		}
 
-		return _getBaseSlaveLabel();
+		return baseSlaveLabel;
 	}
 
 	private String _getBaseSlaveLabel() {

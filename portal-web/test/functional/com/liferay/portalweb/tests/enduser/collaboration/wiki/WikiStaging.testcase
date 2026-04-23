@@ -199,7 +199,7 @@ definition {
 	@description = "This ensures that the added front page can be viewed in the live site after publishing."
 	@priority = 4
 	@refactordone
-	test CanViewFrontPageAfterPublishing {
+	test CanViewFrontPageAndAttachmentAfterPublishing {
 		JSONLayout.addWidgetToPublicLayout(
 			column = 1,
 			groupName = "Site Name (Staging)",

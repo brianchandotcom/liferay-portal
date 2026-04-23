@@ -31,7 +31,6 @@ import dev.langchain4j.mcp.McpToolProvider;
 import dev.langchain4j.mcp.client.DefaultMcpClient;
 import dev.langchain4j.mcp.client.McpClient;
 import dev.langchain4j.mcp.client.transport.McpTransport;
-import dev.langchain4j.mcp.client.transport.http.HttpMcpTransport;
 import dev.langchain4j.mcp.client.transport.http.StreamableHttpMcpTransport;
 import dev.langchain4j.model.chat.request.json.JsonAnyOfSchema;
 import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
@@ -115,25 +114,12 @@ public class MCPToolProviderUtil {
 	private static McpTransport _createMcpTransport(
 		Map<String, Object> properties) {
 
-		String url = GetterUtil.getString(properties.get("url"));
-
-		Map<String, String> customHeaders = _createCustomHeaders(
-			GetterUtil.getString(properties.get("authArguments")));
-
-		if (url.endsWith("/sse")) {
-			return new HttpMcpTransport.Builder(
-			).customHeaders(
-				customHeaders
-			).sseUrl(
-				url
-			).build();
-		}
-
 		return new StreamableHttpMcpTransport.Builder(
 		).customHeaders(
-			customHeaders
+			_createCustomHeaders(
+				GetterUtil.getString(properties.get("authArguments")))
 		).url(
-			url
+			GetterUtil.getString(properties.get("url"))
 		).build();
 	}
 

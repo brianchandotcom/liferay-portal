@@ -28,6 +28,10 @@ public class AssetSummaryCategory {
 		return _name;
 	}
 
+	public String getVocabularyId() {
+		return _vocabularyId;
+	}
+
 	public void setEmbeddedResources(Map<String, Object> embeddedResources) {
 		_embeddedResources = embeddedResources;
 	}
@@ -40,8 +44,13 @@ public class AssetSummaryCategory {
 		_name = name;
 	}
 
+	public void setVocabularyId(String vocabularyId) {
+		_vocabularyId = vocabularyId;
+	}
+
 	private Map<String, Object> _embeddedResources = new HashMap<>();
 	private String _id;
 	private String _name;
+	private String _vocabularyId;
 
 }

@@ -333,7 +333,7 @@ definition {
 
 	@priority = 4
 	@refactordone
-	test NoWebsiteNotificationAppearsForNewThreadInCategory {
+	test NoWebsiteNotificationAppearsForNewOrUpdatedThreadInCategory {
 		Navigator.gotoNotifications();
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");

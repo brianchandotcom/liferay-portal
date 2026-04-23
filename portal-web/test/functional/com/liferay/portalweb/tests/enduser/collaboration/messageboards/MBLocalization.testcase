@@ -114,7 +114,7 @@ definition {
 
 	@description = "This is a test for LPS-136932. It checks that a thread can be viewed in Japanese."
 	@priority = 3
-	test CanViewThreadInJapanese {
+	test CanViewThreadInArabicAndJapanese {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "メッセージボードのネジ本体",

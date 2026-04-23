@@ -69,7 +69,7 @@ definition {
 
 	@description = "This is a test for LPS-136777. It checks that a blog can be properly displayed in Japanese in the Blogs widget."
 	@priority = 3
-	test CanViewBlogInJapanese {
+	test CanViewBlogsEntryInArabicAndJapanese {
 		JSONBlog.addEntry(
 			entryContent = "ブログエントリコンテンツ",
 			entryTitle = "ブログエントリタイトル");

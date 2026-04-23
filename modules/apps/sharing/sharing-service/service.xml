@@ -74,7 +74,8 @@
 		<exception>DuplicateSharingEntry</exception>
 		<exception>InvalidSharingEntryAction</exception>
 		<exception>InvalidSharingEntryExpirationDate</exception>
-		<exception>InvalidSharingEntryTarget</exception>
+		<exception>InvalidSharingEntryTicket</exception>
 		<exception>InvalidSharingEntryUser</exception>
+		<exception>InvalidSharingEntryUserGroup</exception>
 	</exceptions>
 </service-builder>

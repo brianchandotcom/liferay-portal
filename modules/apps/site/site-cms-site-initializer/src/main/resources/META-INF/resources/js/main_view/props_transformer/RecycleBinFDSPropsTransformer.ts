@@ -18,16 +18,23 @@ import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer'
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
 
 export default function RecycleBinFDSPropsTransformer({
+	additionalProps,
 	itemsActions = [],
 	...otherProps
 }: {
+	additionalProps: {additionalAPIURLParameters?: string};
 	apiURL: string;
 	id: string;
 	itemsActions?: any[];
 	otherProps: any;
 }) {
+	const {additionalAPIURLParameters, ...remainingAdditionalProps} =
+		additionalProps || {};
+
 	return {
 		...otherProps,
+		additionalAPIURLParameters,
+		additionalProps: remainingAdditionalProps,
 		customRenderers: {
 			tableCell: [
 				{

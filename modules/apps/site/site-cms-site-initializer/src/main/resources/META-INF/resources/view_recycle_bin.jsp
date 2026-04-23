@@ -21,6 +21,7 @@ ViewRecycleBinSectionDisplayContext viewRecycleBinSectionDisplayContext = (ViewR
 		</div>
 
 		<frontend-data-set:headless-display
+			additionalProps="<%= viewRecycleBinSectionDisplayContext.getAdditionalProps() %>"
 			apiURL="<%= viewRecycleBinSectionDisplayContext.getAPIURL() %>"
 			bulkActionDropdownItems="<%= viewRecycleBinSectionDisplayContext.getBulkActionDropdownItems() %>"
 			emptyState="<%= viewRecycleBinSectionDisplayContext.getEmptyState() %>"

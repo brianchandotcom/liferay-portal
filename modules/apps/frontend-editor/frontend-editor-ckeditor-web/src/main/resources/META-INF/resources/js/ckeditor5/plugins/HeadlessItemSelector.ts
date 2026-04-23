@@ -96,8 +96,10 @@ class HeadlessItemSelector extends Plugin {
 
 			buttonView.on('execute', () => {
 				openCMSFileSelectorModal({
-					allowedExtensions: ALLOWED_VIDEO_FILE_EXTENSIONS.join(','),
 					createItemURL: CMS_CREATE_ITEM_URL,
+					filters: [
+						`((objectDefinitionExternalReferenceCode eq 'L_CMS_EXTERNAL_VIDEO') or (extension in ('${ALLOWED_VIDEO_FILE_EXTENSIONS.join("','")}')))`,
+					],
 					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
 					itemTypeLabel: Liferay.Language.get('video'),
 					onSelect: (items) => {

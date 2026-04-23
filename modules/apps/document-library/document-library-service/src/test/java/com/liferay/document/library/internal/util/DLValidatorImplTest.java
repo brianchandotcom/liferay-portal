@@ -131,9 +131,9 @@ public class DLValidatorImplTest {
 		Assert.assertEquals(
 			Long.valueOf(100L), mimeTypeSizeLimit.get("application/pdf"));
 		Assert.assertEquals(
-			Long.valueOf(50L), mimeTypeSizeLimit.get("text/plain"));
-		Assert.assertEquals(
 			Long.valueOf(5L), mimeTypeSizeLimit.get("image/png"));
+		Assert.assertEquals(
+			Long.valueOf(50L), mimeTypeSizeLimit.get("text/plain"));
 	}
 
 	@Test

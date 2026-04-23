@@ -81,7 +81,6 @@ export function DisplayPagePreviewItemSelectorContent() {
 					},
 				}}
 				onActiveChange={setActive}
-				role="listbox"
 				trigger={
 					<button
 						className={classNames(
@@ -96,9 +95,8 @@ export function DisplayPagePreviewItemSelectorContent() {
 			>
 				<ClayDropDown.ItemList>
 					<ClayDropDown.Item
-						aria-selected={!previewItem}
+						aria-current={!previewItem}
 						onClick={() => selectItem(null)}
-						role="option"
 						symbolLeft={!previewItem ? 'check-small' : undefined}
 					>
 						{NO_ITEM_LABEL}
@@ -106,7 +104,7 @@ export function DisplayPagePreviewItemSelectorContent() {
 
 					{recentPreviewItemList.map((recentPreviewItem) => (
 						<ClayDropDown.Item
-							aria-selected={deepEqual(
+							aria-current={deepEqual(
 								previewItem,
 								recentPreviewItem
 							)}

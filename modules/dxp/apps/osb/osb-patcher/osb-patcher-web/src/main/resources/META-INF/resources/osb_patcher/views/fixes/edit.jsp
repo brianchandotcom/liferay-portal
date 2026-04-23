@@ -145,7 +145,7 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 
 		<aui:input helpMessage="enable-to-automatically-fetch-and-backport-code-instead-of-providing-a-manual-branch" label="auto-fix" name="autoFix" onChange='<%= liferayPortletResponse.getNamespace() + "autoFixOnChange();" %>' type="checkbox" value="<%= patcherFix.getType() == PatcherFixConstants.TYPE_AUTO_FIX %>" />
 
-		<aui:fieldset id="manualFixFieldset">
+		<aui:fieldset id='<%= liferayPortletResponse.getNamespace() + "manualFixFieldset" %>'>
 			<aui:input label="branch-name" name="committish" />
 
 			<aui:input label="github-url" name="gitRemoteURL" />
@@ -171,8 +171,9 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 
 <aui:script>
 	var autoFix = document.getElementById('<portlet:namespace />autoFix');
-
-	var manualFixFieldset = document.getElementById('manualFixFieldset');
+	var manualFixFieldset = document.getElementById(
+		'<portlet:namespace />manualFixFieldset'
+	);
 
 	function <portlet:namespace />handleClick() {
 		Liferay.Util.openModal({

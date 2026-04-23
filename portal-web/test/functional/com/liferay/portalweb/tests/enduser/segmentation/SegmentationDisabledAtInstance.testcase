@@ -196,42 +196,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Segments Page And the page is reloaded Then the alert reappears"
-	@priority = 3
-	test DisabledAlertAfterRefreshAtSegmentsPage {
-		task ("Navigate to Segments Admin") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("Close warning message") {
-			Segmentation.closeSegmentationDisabledWarning();
-		}
-
-		task ("Refresh and check if warning reappears") {
-			Refresh();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Go to segments editor") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("Close warning message") {
-			Segmentation.closeSegmentationDisabledWarning();
-		}
-
-		task ("Refresh and check if warning reappears") {
-			Refresh();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-	}
-
 	@description = "LPS-154019 Given the ""Enable Segmentation"" is disabled When user clicks at Close button at Simulation panel And the page is reloaded Then the alert reappears"
 	@priority = 3
 	test DisabledAlertAfterRefreshAtSimulationPanel {
@@ -446,6 +410,18 @@ definition {
 				value1 = "Segmentation is disabled");
 		}
 
+		task ("Refresh and check if warning reappears") {
+			Refresh();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "Segmentation is disabled");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
 		task ("Leave then return to page and check if warning reappears") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 
@@ -466,6 +442,18 @@ definition {
 			AssertElementNotPresent(
 				locator1 = "Message#ERROR_3",
 				value1 = "Segmentation is disabled");
+		}
+
+		task ("Refresh and check if warning reappears") {
+			Refresh();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "Segmentation is disabled");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
 		}
 
 		task ("Leave then return to page and check if warning reappears") {

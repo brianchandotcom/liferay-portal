@@ -33,7 +33,7 @@ import {mapListResultsToProps} from 'shared/util/mappers';
 import {NameCell} from 'shared/components/table/cell-components';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 import {useParams} from 'react-router-dom';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
@@ -62,15 +62,27 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
-	const {channelId, groupId} = useParams();
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const rangeSelectors = useQueryRangeSelectors();
 
-	const {keywords, size, sort} = getGraphQLVariablesFromPagination({
+	const paginationVariables = getGraphQLVariablesFromPagination({
 		delta,
 		orderIOMap,
 		page,
 		query
 	});
+
+	const {keywords, size, sort} = {
+		keywords: paginationVariables.keywords ?? '',
+		size: paginationVariables.size,
+		sort: paginationVariables.sort ?? {
+			column: NAME,
+			type: 'ASCENDING'
+		}
+	};
 
 	const response = useQuery<
 		EventAnalysisListData,
@@ -136,11 +148,13 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 						)
 					});
 
-					selectionDispatch({
+					selectionDispatch?.({
 						type: 'clear-all'
 					});
 
-					refetch();
+					if (refetch) {
+						refetch();
+					}
 
 					onItemsChange();
 				})
@@ -188,7 +202,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 		}
 	};
 
-	const renderRowActions = ({data: {id}}) => {
+	const renderRowActions = ({data: {id}}: {data: {id: string}}) => {
 		if (selectedItems.isEmpty()) {
 			return (
 				<RowActions
@@ -207,7 +221,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 	return (
 		<Card className='event-analysis-list-root' pageDisplay>
 			<CrossPageSelect
-				{...mapListResultsToProps(response, result => ({
+				{...mapListResultsToProps(response, (result: any) => ({
 					items: result.eventAnalyses.eventAnalyses,
 					total: result.eventAnalyses.total
 				}))}
@@ -216,7 +230,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 						accessor: NAME,
 						cellRenderer: NameCell,
 						cellRendererProps: {
-							routeFn: ({data: {id}}) =>
+							routeFn: ({data: {id}}: {data: {id: string}}) =>
 								toRoute(Routes.EVENT_ANALYSIS_EDIT, {
 									channelId,
 									groupId,
@@ -291,4 +305,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 	);
 };
 
-export default compose(withSelectionProvider, connector)(EventAnalysisListCard);
+export default compose<React.ComponentType<any>>(
+	withSelectionProvider,
+	connector
+)(EventAnalysisListCard);

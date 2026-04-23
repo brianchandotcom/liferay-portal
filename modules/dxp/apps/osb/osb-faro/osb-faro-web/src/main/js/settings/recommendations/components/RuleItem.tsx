@@ -14,7 +14,13 @@ const RuleItem: React.FC<IRuleItemProps> = ({name, value}) => {
 
 	return (
 		<div className='rule-item-root d-flex align-items-baseline'>
-			<b>{`${RULE_NAME_LABEL_MAP[name]}:`}</b>
+			<b>
+				{`${
+					RULE_NAME_LABEL_MAP[
+						name as keyof typeof RULE_NAME_LABEL_MAP
+					]
+				}:`}
+			</b>
 
 			{metadataTag && <MetadataTag value={metadataTag} />}
 

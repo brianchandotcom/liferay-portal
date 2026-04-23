@@ -5,14 +5,16 @@ import {useEffect, useState} from 'react';
 
 export const useFetchProjects = () => {
 	const [loading, setLoading] = useState(true);
-	const [data, setData] = useState([]);
+	const [data, setData] = useState<any[]>([]);
 
 	useEffect(() => {
 		async function fetch() {
 			try {
 				const projects = await fetchMany();
 
-				setData(projects.map(result => new Project(fromJS(result))));
+				setData(
+					projects.map((result: any) => new Project(fromJS(result)))
+				);
 				setLoading(false);
 			} catch {
 				throw new Error('Error on fetchProjects');
@@ -30,7 +32,7 @@ export const useFetchProjects = () => {
 
 export const useFetchJoinableProjects = () => {
 	const [loading, setLoading] = useState(true);
-	const [data, setData] = useState([]);
+	const [data, setData] = useState<any[]>([]);
 
 	useEffect(() => {
 		async function fetch() {

@@ -20,7 +20,7 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 
 	const {label, options, type} = property;
 
-	const operatorKey = maybeFormatToKnownType(operatorName, name);
+	const operatorKey = maybeFormatToKnownType(operatorName ?? '', name);
 
 	const operatorLabel = getOperatorLabel(operatorKey, type);
 

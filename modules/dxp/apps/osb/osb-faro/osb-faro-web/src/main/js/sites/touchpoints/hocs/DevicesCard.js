@@ -1,8 +1,8 @@
 import getDevicesMapper from 'cerebro-shared/hocs/mappers/devices';
 import URLConstants from 'shared/util/url-constants';
 import {BROWSER_FRAGMENT, DEVICE_FRAGMENT} from 'shared/queries/fragments';
-import {gql} from 'apollo-boost';
-import {graphql} from '@apollo/react-hoc';
+import {gql} from '@apollo/client';
+import {graphql} from '@apollo/client/react/hoc';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withDevicesCard} from 'shared/hoc/DevicesCard';
 

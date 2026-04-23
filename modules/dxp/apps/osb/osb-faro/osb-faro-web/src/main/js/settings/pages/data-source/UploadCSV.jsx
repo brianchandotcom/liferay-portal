@@ -45,7 +45,7 @@ export default class UploadCSV extends React.Component {
 			state: {fileVersionId}
 		} = this;
 
-		const {name} = this._formRef.current.getFormikBag().values;
+		const {name} = this._formRef.current.values;
 
 		if (fileVersionId) {
 			const url = toRoute(Routes.SETTINGS_CSV_UPLOAD_CONFIGURE, {
@@ -131,7 +131,7 @@ export default class UploadCSV extends React.Component {
 						</div>
 					</Sheet.Header>
 
-					<Form initialValues={{name: ''}} ref={this._formRef}>
+					<Form initialValues={{name: ''}} innerRef={this._formRef}>
 						{({isValid, values: {name}}) => (
 							<Form.Form>
 								<NavigationWarning

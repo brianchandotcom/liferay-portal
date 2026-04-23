@@ -21,7 +21,7 @@ const RelativeMetricBar: FC<IRelativeMetricBarProps> = ({
 	showName = false,
 	totalCount
 }) => {
-	const percent = round(count / totalCount, 2);
+	const percent = totalCount ? round(count / totalCount, 2) : 0;
 
 	const displayName = showName ? name : '';
 

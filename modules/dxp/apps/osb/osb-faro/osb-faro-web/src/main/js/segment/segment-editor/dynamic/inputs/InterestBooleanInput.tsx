@@ -8,7 +8,7 @@ import {Option, Picker} from '@clayui/core';
 
 export default class InterestBooleanInput extends React.Component<ISegmentEditorCustomInputBase> {
 	@autobind
-	handleChange(newValue) {
+	handleChange(newValue: React.Key) {
 		const {onChange, value} = this.props;
 
 		onChange({

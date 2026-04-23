@@ -6,7 +6,10 @@ import {useChannelContext} from 'shared/context/channel';
 import {useParams} from 'react-router-dom';
 
 const IndividualsDashboardCDP = () => {
-	const {channelId, groupId} = useParams();
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const {selectedChannel} = useChannelContext();
 
 	return (

@@ -30,10 +30,10 @@ interface INotificationAlertListProps extends PropsFromRedux {
 
 type NotificationStrategyParams = {
 	groupId: string;
-	modifiedTime?: number;
+	modifiedTime: number;
 	notificationId: string;
 	onClose: (id: string) => void;
-	stripe?: boolean;
+	stripe: boolean;
 };
 
 const notificationStrategies = new Map<string, Function>([
@@ -98,7 +98,8 @@ const connector = connect(null, {addAlert});
 
 export const useNotificationsAPI = (groupId: string) => {
 	const response = useRequest({
-		dataSourceFn: API.notifications.fetchNotifications,
+		dataSourceFn: (({groupId, type}: any) =>
+			API.notifications.fetchNotifications({groupId, type})) as any,
 		variables: {
 			groupId,
 			type: NotificationTypes.Alert
@@ -135,15 +136,24 @@ const NotificationAlertList: React.FC<INotificationAlertListProps> = ({
 			});
 	};
 
-	const filterSubtypes = ({subtype}) => subtypes.includes(subtype);
+	const filterSubtypes = ({subtype}: {subtype: NotificationSubtypes}) =>
+		subtypes.includes(subtype);
 
-	const transformData = ({id, modifiedTime, subtype}) => {
+	const transformData = ({
+		id,
+		modifiedTime,
+		subtype
+	}: {
+		id: string;
+		modifiedTime: string;
+		subtype: NotificationSubtypes;
+	}) => {
 		const transformer = notificationStrategies.get(subtype);
 
 		if (transformer) {
 			return transformer({
 				groupId,
-				modifiedTime,
+				modifiedTime: Number(modifiedTime),
 				notificationId: id,
 				onClose: removeNotification,
 				stripe

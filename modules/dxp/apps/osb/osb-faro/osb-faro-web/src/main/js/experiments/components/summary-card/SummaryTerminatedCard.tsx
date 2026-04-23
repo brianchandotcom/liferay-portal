@@ -6,6 +6,8 @@ import {
 	mergedVariants,
 	toThousandsABTesting
 } from 'experiments/util/experiments';
+import {IExperiment} from './types';
+import {MetricName} from 'experiments/util/types';
 import {sub} from 'shared/util/lang';
 import {SummaryAlert} from './SummaryAlert';
 import {SummaryBaseCard} from './SummaryBaseCard';
@@ -14,7 +16,21 @@ import {SummarySection} from './SummarySection';
 import {SummaryTitle} from './SummaryTitle';
 import {toRounded} from 'shared/util/numbers';
 
-export const SummaryTerminatedCard = ({experiment, timeZoneId}) => {
+export const SummaryTerminatedCard: React.FC<{
+	experiment: IExperiment & {
+		description?: string;
+		finishedDate?: string;
+		metrics: {
+			completion: number;
+			elapsedDays: number;
+			estimatedDaysLeft?: number;
+			variantMetrics: IExperiment['dxpVariants'];
+		};
+		sessions: number;
+		startedDate?: string;
+	};
+	timeZoneId: string;
+}> = ({experiment, timeZoneId}) => {
 	const {
 		description,
 		dxpVariants,
@@ -29,7 +45,11 @@ export const SummaryTerminatedCard = ({experiment, timeZoneId}) => {
 
 	const variants = mergedVariants(dxpVariants, variantMetrics);
 
-	const bestVariant = getBestVariant(experiment);
+	const bestVariant = getBestVariant({
+		dxpVariants: experiment.dxpVariants,
+		goal: goal as {metric: MetricName} | undefined,
+		metrics: experiment.metrics
+	});
 
 	const secondPlaceVariant = variants.find(
 		({dxpVariantId}) => dxpVariantId !== winnerDXPVariantId
@@ -92,7 +112,8 @@ export const SummaryTerminatedCard = ({experiment, timeZoneId}) => {
 										winnerVariant?.dxpVariantName,
 										secondPlaceVariant?.dxpVariantName,
 										Math.abs(
-											winnerVariantMetrics?.improvement
+											winnerVariantMetrics?.improvement ??
+												0
 										).toFixed(2)
 									]
 								) as string
@@ -118,7 +139,8 @@ export const SummaryTerminatedCard = ({experiment, timeZoneId}) => {
 										winnerVariant?.dxpVariantName,
 										secondPlaceVariant?.dxpVariantName,
 										Math.abs(
-											secondPlaceVariantMetrics.improvement
+											secondPlaceVariantMetrics?.improvement ??
+												0
 										).toFixed(2)
 									]
 								) as string
@@ -201,17 +223,20 @@ export const SummaryTerminatedCard = ({experiment, timeZoneId}) => {
 								title={Liferay.Language.get('test-metric')}
 							>
 								<SummarySection.MetricType
-									value={getMetricName(goal.metric)}
+									value={getMetricName(
+										goal.metric as MetricName
+									)}
 								/>
-								{bestVariant && bestVariant.improvement > 0 && (
-									<SummarySection.Variant
-										lift={`${toRounded(
-											bestVariant.improvement,
-											2
-										)}%`}
-										status='up'
-									/>
-								)}
+								{bestVariant?.improvement !== undefined &&
+									bestVariant.improvement > 0 && (
+										<SummarySection.Variant
+											lift={`${toRounded(
+												bestVariant.improvement,
+												2
+											)}%`}
+											status='up'
+										/>
+									)}
 							</SummarySection>
 						)}
 					</div>

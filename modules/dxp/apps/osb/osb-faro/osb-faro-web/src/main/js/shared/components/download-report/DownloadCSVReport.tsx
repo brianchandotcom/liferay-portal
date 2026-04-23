@@ -25,9 +25,9 @@ export interface IDownloadReport {
 const formatRangeSelectors = (rangeSelectors?: RangeSelectors) => {
 	if (rangeSelectors?.rangeKey === RangeKeyTimeRanges.CustomRange) {
 		return {
-			rangeEnd: formatDate(rangeSelectors.rangeEnd),
+			rangeEnd: formatDate(rangeSelectors.rangeEnd ?? ''),
 			rangeKey: RangeKeyTimeRanges.CustomRange,
-			rangeStart: formatDate(rangeSelectors.rangeStart)
+			rangeStart: formatDate(rangeSelectors.rangeStart ?? '')
 		};
 	}
 
@@ -98,19 +98,22 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 								})
 							);
 
-							const formattedRangeSelector = formatRangeSelectors(
-								rangeSelectors
-							);
+							const formattedRangeSelector =
+								formatRangeSelectors(rangeSelectors);
 
 							const count = await fetchCount({
 								assetId,
 								assetType,
-								channelId,
-								fromDate: formattedRangeSelector?.rangeStart,
-								groupId,
+								channelId: channelId!,
+								fromDate:
+									formattedRangeSelector?.rangeStart ??
+									undefined,
+								groupId: groupId!,
 								individualId,
 								rangeKey: formattedRangeSelector?.rangeKey,
-								toDate: formattedRangeSelector?.rangeEnd,
+								toDate:
+									formattedRangeSelector?.rangeEnd ??
+									undefined,
 								type
 							});
 

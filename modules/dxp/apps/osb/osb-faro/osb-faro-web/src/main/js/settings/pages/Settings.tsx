@@ -270,4 +270,4 @@ export const Settings = () => {
 	);
 };
 
-export default compose(checkProjectState, withOnboarding)(Settings);
+export default compose<any>(checkProjectState, withOnboarding)(Settings);

@@ -18,7 +18,7 @@ const InterestDisplay: React.FC<IDisplayComponentProps> = ({
 
 	const operatorLabel = INTEREST_BOOLEAN_OPTIONS.find(
 		({value}) => value === getPropertyValue(valueIMap, 'value', 1)
-	).label;
+	)?.label;
 
 	return (
 		<>

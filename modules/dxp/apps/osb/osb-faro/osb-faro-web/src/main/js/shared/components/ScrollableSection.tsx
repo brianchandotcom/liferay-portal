@@ -6,24 +6,28 @@ import React, {createRef} from 'react';
 import {hasChanges} from 'shared/util/react';
 
 const scrollBy = (ref: React.RefObject<HTMLElement>, val: number): void => {
-	if (ref.current.scrollBy) {
-		ref.current.scrollBy({
-			behavior: 'smooth',
-			left: val
-		});
-	} else {
-		ref.current.scrollLeft += val;
+	if (ref.current) {
+		if (ref.current.scrollBy) {
+			ref.current.scrollBy({
+				behavior: 'smooth',
+				left: val
+			});
+		} else {
+			ref.current.scrollLeft += val;
+		}
 	}
 };
 
 const scrollTo = (ref: React.RefObject<HTMLElement>, val: number): void => {
-	if (ref.current.scrollBy) {
-		ref.current.scrollTo({
-			behavior: 'smooth',
-			left: val
-		});
-	} else {
-		ref.current.scrollLeft = val;
+	if (ref.current) {
+		if (ref.current.scrollTo) {
+			ref.current.scrollTo({
+				behavior: 'smooth',
+				left: val
+			});
+		} else {
+			ref.current.scrollLeft = val;
+		}
 	}
 };
 
@@ -47,8 +51,14 @@ export default class ScrollableSection extends React.Component<
 		window.addEventListener('resize', this.handleShowScroll);
 	}
 
-	componentDidUpdate(prevProps) {
-		if (hasChanges(prevProps, this.props, 'children')) {
+	componentDidUpdate(prevProps: IScrollableSectionProps) {
+		if (
+			hasChanges(
+				prevProps as Record<string, unknown>,
+				this.props as Record<string, unknown>,
+				'children'
+			)
+		) {
 			this.handleShowScroll();
 		}
 	}
@@ -59,7 +69,7 @@ export default class ScrollableSection extends React.Component<
 
 	@autobind
 	handleShowScroll() {
-		if (this._containerRef) {
+		if (this._containerRef.current) {
 			const {offsetWidth, scrollWidth} = this._containerRef.current;
 
 			this.setState({showScroll: offsetWidth < scrollWidth});
@@ -68,16 +78,20 @@ export default class ScrollableSection extends React.Component<
 
 	@autobind
 	handleScrollLeft() {
-		const {offsetWidth} = this._containerRef.current;
+		if (this._containerRef.current) {
+			const {offsetWidth} = this._containerRef.current;
 
-		scrollBy(this._containerRef, Number(`-${offsetWidth}`));
+			scrollBy(this._containerRef, Number(`-${offsetWidth}`));
+		}
 	}
 
 	@autobind
 	handleScrollRight() {
-		const {offsetWidth} = this._containerRef.current;
+		if (this._containerRef.current) {
+			const {offsetWidth} = this._containerRef.current;
 
-		scrollBy(this._containerRef, offsetWidth);
+			scrollBy(this._containerRef, offsetWidth);
+		}
 	}
 
 	/**
@@ -85,7 +99,7 @@ export default class ScrollableSection extends React.Component<
 	 */
 	@autobind
 	scrollToBeg() {
-		if (this._containerRef) {
+		if (this._containerRef.current) {
 			scrollTo(this._containerRef, 0);
 		}
 	}
@@ -95,9 +109,11 @@ export default class ScrollableSection extends React.Component<
 	 */
 	@autobind
 	scrollToEnd() {
-		const {scrollWidth} = this._containerRef.current;
+		if (this._containerRef.current) {
+			const {scrollWidth} = this._containerRef.current;
 
-		scrollTo(this._containerRef, scrollWidth);
+			scrollTo(this._containerRef, scrollWidth);
+		}
 	}
 
 	render() {

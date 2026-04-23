@@ -1,8 +1,8 @@
 import PreferenceQuery from 'shared/queries/PreferenceQuery';
-import {ApolloError} from 'apollo-client';
+import {ApolloError, useQuery} from '@apollo/client';
+
 import {convertMillisecondsToMonths} from 'shared/util/date';
 import {DATA_RETENTION_PERIOD_KEY} from 'shared/util/constants';
-import {useQuery} from '@apollo/react-hooks';
 
 export const useRetentionPeriod = () => {
 	const {data, error, loading} = useQuery(PreferenceQuery, {

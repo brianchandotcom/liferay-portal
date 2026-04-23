@@ -29,9 +29,9 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 	 * const {groupId} = useParams() doesn't work on Modals
 	 */
 	groupId,
+	initialItems = [],
 	onClose,
-	onSelect,
-	initialItems = []
+	onSelect
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
@@ -44,12 +44,14 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 		orderIOMap,
 		page,
 		query
-	} = useStatefulPagination(null, {
+	} = useStatefulPagination(undefined, {
 		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
 	const {data, error, loading} = useRequest({
-		dataSourceFn: API.channels.search,
+		dataSourceFn: API.channels.search as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			cur: page,
 			delta,
@@ -70,7 +72,7 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 
 	useEffect(() => {
 		if (initialItems.length) {
-			selectionDispatch({
+			selectionDispatch?.({
 				payload: {items: initialItems.map(id => ({id}))},
 				type: 'add'
 			});
@@ -82,11 +84,12 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 			hasAutoSelectedRef.current = true;
 
 			const channelsWithSites = data.items.filter(
-				item => item.groupsCount > 0 && !initialItems.includes(item.id)
+				(item: {groupsCount: number; id: string}) =>
+					item.groupsCount > 0 && !initialItems.includes(item.id)
 			);
 
 			if (channelsWithSites.length) {
-				selectionDispatch({
+				selectionDispatch?.({
 					payload: {items: channelsWithSites},
 					type: 'add'
 				});

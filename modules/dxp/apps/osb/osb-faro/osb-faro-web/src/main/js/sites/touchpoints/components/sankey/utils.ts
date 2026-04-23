@@ -25,7 +25,14 @@ export const CHART_COLORS = [
 
 export const URL_COLOR = '#6B6C7E';
 
-export function getFill({hovered, index, payload, selectedNode}) {
+interface IGetFillArgs {
+	hovered: boolean;
+	index: number;
+	payload: {color?: string; id?: string; main?: boolean};
+	selectedNode: string | null | undefined;
+}
+
+export function getFill({hovered, index, payload, selectedNode}: IGetFillArgs) {
 	if (payload.main) {
 		return MAIN_NODE_COLOR;
 	}

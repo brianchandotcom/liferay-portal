@@ -234,20 +234,17 @@ class DropdownMenu extends React.Component {
 
 		const {items, show} = this.props;
 
-		this.state = {...this.state, items, show};
+		this.state = {...this.state, _prevShowProp: show, items, show};
 
 		this._elementRef = React.createRef();
 	}
 
-	/**
-	 * Lifecycle UNSAFE Component Will Receive Props - ReactJS
-	 * @param {object} nextProps
-	 */
-	// eslint-disable-next-line camelcase
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.updateStateByProp(nextProps, 'show', newVal =>
-			this.setState({show: newVal})
-		);
+	static getDerivedStateFromProps({show}, prevState) {
+		if (show !== prevState._prevShowProp) {
+			return {_prevShowProp: show, show};
+		}
+
+		return null;
 	}
 
 	/**

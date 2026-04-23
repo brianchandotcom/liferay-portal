@@ -61,13 +61,29 @@ const NAV_ITEMS = [
 	}
 ];
 
+interface IIndividualProfileRoutesProps {
+	channelId: string;
+	className?: string;
+	groupId: string;
+	id: string;
+	individual: {
+		id: string;
+		name?: string;
+		toJS: () => {
+			accountName: string;
+			lastSessionCountry: string;
+			properties: {email: string};
+		};
+	};
+}
+
 export const IndividualProfileRoutes = ({
 	channelId,
 	className,
 	groupId,
 	id,
 	individual
-}) => {
+}: IIndividualProfileRoutesProps) => {
 	const dataSourceStates = useDataSource();
 
 	const {selectedChannel} = useContext(ChannelContext);
@@ -79,7 +95,9 @@ export const IndividualProfileRoutes = ({
 	const entityName = individual.name || Liferay.Language.get('unknown');
 
 	const {data: dataSourceData} = useRequest({
-		dataSourceFn: API.dataSource.search,
+		dataSourceFn: API.dataSource.search as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			delta: 1,
 			groupId
@@ -125,7 +143,7 @@ export const IndividualProfileRoutes = ({
 					<BasePage.SubHeader>
 						<div className='d-flex justify-content-end w-100'>
 							<DownloadCSVReport
-								disabled={dataSourceStates.empty}
+								disabled={!!dataSourceStates.empty}
 								individualId={individual.id}
 								type={CSVType.Event}
 								typeLang={Liferay.Language.get('events')}

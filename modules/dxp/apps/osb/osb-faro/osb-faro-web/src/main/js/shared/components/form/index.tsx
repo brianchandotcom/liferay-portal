@@ -56,7 +56,7 @@ const FormGroupItem: React.FC<IFormGroupItemProps> = ({
  * Wrap a form component with the Formik Field component.
  * @param {Component} FormComponent
  */
-export const withField = FormComponent =>
+export const withField = (FormComponent: React.ComponentType<any>) =>
 	React.forwardRef<
 		typeof FormComponent,
 		React.ComponentProps<typeof FormComponent>

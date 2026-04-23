@@ -51,7 +51,15 @@ const connector = connect(
 	{close, open}
 );
 
-const WorkspaceLayer = ({close, groupId, open}) => {
+const WorkspaceLayer = ({
+	close,
+	groupId,
+	open
+}: {
+	close: any;
+	groupId: string;
+	open: any;
+}) => {
 	useModalNotifications(close, groupId, open);
 
 	return (

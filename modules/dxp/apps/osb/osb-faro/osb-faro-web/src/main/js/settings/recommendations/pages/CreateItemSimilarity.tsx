@@ -14,7 +14,7 @@ interface ICreateItemSimilarityProps {
 const CreateItemSimilarity: React.FC<ICreateItemSimilarityProps> = ({
 	router
 }) => {
-	const {groupId} = router.params;
+	const {groupId = ''} = router.params;
 
 	return (
 		<BasePage

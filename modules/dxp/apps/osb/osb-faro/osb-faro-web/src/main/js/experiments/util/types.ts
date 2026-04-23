@@ -13,7 +13,7 @@ export type GetStatusColorFn = (status: Status) => string;
 
 export type GetStatusNameFn = (status: Status) => string;
 
-export type GetShortIntervals = (intervals: Array<Date>) => Array<Date>;
+export type GetShortIntervals = <T>(intervals: Array<T>) => Array<T>;
 
 export type GetTicksFn = (maxValue: number) => Array<number>;
 
@@ -49,6 +49,8 @@ export type MergedVariantsFn = (
 	variantMetrics: Array<VariantMetric>
 ) => Array<MergedVariant>;
 
+export type {MergedVariant, MetricName, Status, Variant, VariantMetric};
+
 type Status =
 	| 'COMPLETED'
 	| 'DRAFT'
@@ -69,9 +71,9 @@ type Variant = {
 };
 
 type VariantMetric = {
-	confidenceInterval: Array<number>;
+	confidenceInterval?: Array<number>;
 	dxpVariantId: string;
-	improvement: number;
-	median: number;
-	probabilityToWin: number;
+	improvement?: number;
+	median?: number;
+	probabilityToWin?: number;
 };

@@ -4,7 +4,7 @@ import React from 'react';
 export type CohortHeatMapType = {
 	colorHex: string | null;
 	date: string;
-	dateLabelFn: (string, boolean) => string;
+	dateLabelFn: (date: string, showYear: boolean) => string;
 	periodLabel: string | string[];
 	retention: number;
 	value: number;
@@ -14,7 +14,7 @@ interface ICohortChartProps {
 	aggregatedCounts: CohortHeatMapType[];
 	data: CohortHeatMapType[][];
 	dateLabels: string[];
-	periodLabels: string[];
+	periodLabels: Array<string | string[]>;
 }
 
 export default class CohortChart extends React.Component<ICohortChartProps> {
@@ -51,11 +51,8 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 					{Liferay.Language.get('visitors')}
 				</th>
 
-				{periodLabels.map(periodLabel => (
-					<th
-						className='period table-column-text-center'
-						key={periodLabel}
-					>
+				{periodLabels.map((periodLabel, index) => (
+					<th className='period table-column-text-center' key={index}>
 						{periodLabel}
 					</th>
 				))}
@@ -63,7 +60,7 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 		);
 	}
 
-	renderRow(row, rowIndex) {
+	renderRow(row: CohortHeatMapType[], rowIndex: number) {
 		const {dateLabels} = this.props;
 
 		const rowVisitorsCount = row[0].value;

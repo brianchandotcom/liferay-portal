@@ -3,14 +3,23 @@ import {OrderByDirections} from 'shared/util/constants';
 
 export {getMapResultToProps} from 'sites/hocs/mappers/composition-query';
 
-const mapPropsToOptions: object = ({
+interface IMapPropsArgs {
+	channelId: string;
+	delta: number;
+	id: string;
+	orderIOMap: unknown;
+	page: number;
+	query: string;
+}
+
+const mapPropsToOptions = ({
 	channelId,
 	delta,
 	id,
 	orderIOMap,
 	page,
 	query
-}) => ({
+}: IMapPropsArgs) => ({
 	variables: {
 		active: true,
 		channelId,
@@ -22,7 +31,13 @@ const mapPropsToOptions: object = ({
 	}
 });
 
-const mapCardPropsToOptions: object = ({channelId, id}) => ({
+const mapCardPropsToOptions = ({
+	channelId,
+	id
+}: {
+	channelId: string;
+	id: string;
+}) => ({
 	variables: {
 		active: true,
 		channelId,

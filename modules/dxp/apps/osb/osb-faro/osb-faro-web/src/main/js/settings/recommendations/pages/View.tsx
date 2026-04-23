@@ -10,9 +10,9 @@ import {Alert} from 'shared/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {Filter, Job} from '../utils/utils';
+import {Filter, Job, JobParameter} from '../utils/utils';
 import {get} from 'lodash';
-import {getOperationName} from 'apollo-link';
+import {getOperationName} from '@apollo/client/utilities';
 import {getRecommendations} from 'shared/util/breadcrumbs';
 import {
 	RECOMMENDATION_DELETE_MUTATION,
@@ -21,7 +21,7 @@ import {
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 import {useParams} from 'react-router-dom';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 import {withHistory} from 'shared/hoc';
@@ -41,7 +41,10 @@ interface IViewProps extends PropsFromRedux {
 }
 
 const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
-	const {groupId, jobId} = useParams();
+	const {groupId = '', jobId = ''} = useParams<{
+		groupId: string;
+		jobId: string;
+	}>();
 	const {timeZoneId} = useTimeZone();
 	const currentUser = useCurrentUser();
 
@@ -71,9 +74,9 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 
 	const [runRecommendationJob] = useMutation(RECOMMENDATION_RUN_MUTATION);
 
-	const itemFilters: Filter[] = get(job, 'parameters', []).filter(
-		({name}) => name !== 'includePreviousPeriod'
-	);
+	const itemFilters: Filter[] = (
+		get(job, 'parameters', [] as JobParameter[]) as Filter[]
+	).filter(({name}) => name !== 'includePreviousPeriod');
 
 	const name = get(job, 'name');
 
@@ -102,13 +105,16 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 													onClose: close,
 													onSubmit: ({
 														runDataPeriod
+													}: {
+														runDataPeriod: string;
 													}) => {
 														runRecommendationJob({
-															awaitRefetchQueries: true,
+															awaitRefetchQueries:
+																true,
 															refetchQueries: [
 																getOperationName(
 																	RecommendationJobRunsQuery
-																)
+																) as string
 															],
 															variables: {
 																jobId,
@@ -121,9 +127,10 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																		Alert
 																			.Types
 																			.Success,
-																	message: Liferay.Language.get(
-																		'retraining-has-been-started'
-																	)
+																	message:
+																		Liferay.Language.get(
+																			'retraining-has-been-started'
+																		)
 																});
 
 																close();
@@ -134,10 +141,12 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																		Alert
 																			.Types
 																			.Error,
-																	message: Liferay.Language.get(
-																		'there-was-an-error-processing-your-request.-please-try-again'
-																	),
-																	timeout: false
+																	message:
+																		Liferay.Language.get(
+																			'there-was-an-error-processing-your-request.-please-try-again'
+																		),
+																	timeout:
+																		false
 																});
 															});
 													},
@@ -202,12 +211,15 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																		Alert
 																			.Types
 																			.Success,
-																	message: sub(
-																		Liferay.Language.get(
-																			'x-has-been-deleted'
-																		),
-																		[name]
-																	) as string
+																	message:
+																		sub(
+																			Liferay.Language.get(
+																				'x-has-been-deleted'
+																			),
+																			[
+																				name
+																			]
+																		) as string
 																});
 
 																history.push(
@@ -225,18 +237,21 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																		Alert
 																			.Types
 																			.Error,
-																	message: Liferay.Language.get(
-																		'there-was-an-error-processing-your-request.-please-try-again'
-																	),
-																	timeout: false
+																	message:
+																		Liferay.Language.get(
+																			'there-was-an-error-processing-your-request.-please-try-again'
+																		),
+																	timeout:
+																		false
 																});
 															});
 													},
 													submitButtonDisplay:
 														'warning',
-													submitMessage: Liferay.Language.get(
-														'delete'
-													),
+													submitMessage:
+														Liferay.Language.get(
+															'delete'
+														),
 													title: sub(
 														Liferay.Language.get(
 															'deleting-x'
@@ -267,4 +282,8 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 	);
 };
 
-export default compose<any>(withRecommendation, withHistory, connector)(View);
+export default compose<React.ComponentType<any>>(
+	withRecommendation,
+	withHistory,
+	connector
+)(View);

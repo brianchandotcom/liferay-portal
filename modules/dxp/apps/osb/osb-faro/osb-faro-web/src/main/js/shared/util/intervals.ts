@@ -9,7 +9,7 @@ export const createDateKeysIMap = (
 	history: Array<any>,
 	dateKey: string = 'intervalInitDate'
 ) => {
-	const parseHistory = item => {
+	const parseHistory = (item: Record<string, number>) => {
 		const dateStart = item[dateKey];
 		const dateEnd =
 			interval === 'W'
@@ -19,7 +19,7 @@ export const createDateKeysIMap = (
 		return [dateStart, [dateStart, dateEnd]];
 	};
 
-	return Map<Date, [Date, Date?]>(history.map(parseHistory));
+	return Map<number, [number, number | null]>(history.map(parseHistory));
 };
 
 export const getIntervalHandle = (
@@ -29,7 +29,12 @@ export const getIntervalHandle = (
 ) => {
 	const intervalMapsByRangeKey = getIntervalsFromMap(duration)[timeInterval];
 
-	return intervalMapsByRangeKey && intervalMapsByRangeKey[rangeKey];
+	return (
+		intervalMapsByRangeKey &&
+		(intervalMapsByRangeKey as Record<string, (arr: number[]) => number[]>)[
+			rangeKey
+		]
+	);
 };
 
 export const getIntervalsFromMap = (duration: number) => ({

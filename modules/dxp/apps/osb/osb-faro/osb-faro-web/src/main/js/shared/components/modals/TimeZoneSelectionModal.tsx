@@ -11,7 +11,6 @@ import {
 	formatUTCDate,
 	getDateNow
 } from 'shared/util/date';
-import {Formik} from 'formik';
 import {Modal as ModalType} from 'shared/types';
 import {RootState} from 'shared/store';
 import {TimeZone} from 'shared/util/records';
@@ -38,13 +37,13 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 	onClose,
 	timeZone
 }) => {
-	const _formRef = useRef<Formik>();
+	const _formRef = useRef<any>(null);
 	const [currentTime, setCurrentTime] = useState(
 		formatUTCDate(getDateNow(), FORMAT_LT)
 	);
 
 	const onSubmit = (): void => {
-		const {timeZoneId} = _formRef.current.getFormikBag().values;
+		const {timeZoneId} = _formRef.current.values;
 
 		API.projects.patchTimeZone(groupId, timeZoneId).then(handleClose);
 	};
@@ -63,8 +62,8 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 				initialValues={{
 					timeZoneId: timeZone.timeZoneId
 				}}
+				innerRef={_formRef as any}
 				onSubmit={onSubmit}
-				ref={_formRef}
 			>
 				{({
 					handleSubmit,

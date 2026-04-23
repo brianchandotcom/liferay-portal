@@ -15,12 +15,12 @@ interface IAttributeConjunctionDisplayProps {
 	conjunctionCriterion: Criterion;
 }
 
-const AttributeConjunctionDisplay: React.FC<IAttributeConjunctionDisplayProps> = ({
-	conjunctionCriterion: {operatorName, propertyName, value}
-}) => {
+const AttributeConjunctionDisplay: React.FC<
+	IAttributeConjunctionDisplayProps
+> = ({conjunctionCriterion: {operatorName, propertyName, value}}) => {
 	const {referencedEntities} = useContext(ReferencedObjectsContext);
 
-	const [, id] = propertyName.split('/');
+	const [, id] = (propertyName ?? '').split('/');
 
 	const attributeIMap = referencedEntities.getIn([EntityType.Attributes, id]);
 
@@ -30,9 +30,11 @@ const AttributeConjunctionDisplay: React.FC<IAttributeConjunctionDisplayProps> =
 	const operatorOptions = getOperatorOptions(dataType);
 
 	const {label = Liferay.Language.get('is-fragment')} =
-		operatorOptions?.find(({value}) => value === operatorName) || {};
+		operatorOptions?.find(
+			({value}: {value: string}) => value === operatorName
+		) || {};
 
-	const formatByDataType = (value, dataType) => {
+	const formatByDataType = (value: any, dataType: DataTypes) => {
 		switch (dataType) {
 			case DataTypes.Boolean:
 				return BOOLEAN_LABELS_MAP[value];

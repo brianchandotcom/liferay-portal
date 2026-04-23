@@ -26,7 +26,7 @@ import {Option, Picker} from '@clayui/core';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 
 let RETENTION_OPTIONS = [SEVEN_MONTHS, THIRTEEN_MONTHS];
 
@@ -46,7 +46,17 @@ const getRetentionLabel = (milliseconds: number): string => {
 	]) as string;
 };
 
-const fetchDownload = ({fromDate, groupId, toDate, type}) =>
+const fetchDownload = ({
+	fromDate,
+	groupId,
+	toDate,
+	type
+}: {
+	fromDate: string;
+	groupId: string;
+	toDate: string;
+	type: string;
+}) =>
 	fetch(
 		`/o/proxy/download/${type}/logs?projectGroupId=${groupId}&fromDate=${fromDate}&toDate=${toDate}`,
 		{method: 'GET'}
@@ -73,9 +83,9 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 
 	const currentUser = useCurrentUser();
 
-	const handleDateRetentionPeriodChange = value => {
+	const handleDateRetentionPeriodChange = (value: React.Key) => {
 		const curVal = parseInt(data.preference.value);
-		const newVal = parseInt(value);
+		const newVal = parseInt(String(value));
 
 		const updateDateRetentionPeriod = () =>
 			updatePreference({
@@ -136,7 +146,13 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 			fileName: 'request-log.csv',
 			groupId,
 			onClose: close,
-			onSubmit: ({fromDate, toDate}) =>
+			onSubmit: ({
+				fromDate,
+				toDate
+			}: {
+				fromDate: string;
+				toDate: string;
+			}) =>
 				fetchDownload({
 					fromDate,
 					groupId,
@@ -154,7 +170,13 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 			fileName: 'suppression-list.csv',
 			groupId,
 			onClose: close,
-			onSubmit: ({fromDate, toDate}) =>
+			onSubmit: ({
+				fromDate,
+				toDate
+			}: {
+				fromDate: string;
+				toDate: string;
+			}) =>
 				fetchDownload({
 					fromDate,
 					groupId,

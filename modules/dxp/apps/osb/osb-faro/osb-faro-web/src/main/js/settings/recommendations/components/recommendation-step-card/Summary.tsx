@@ -23,7 +23,7 @@ import {
 	JobRunStatuses,
 	JobTypes
 } from 'shared/util/constants';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 const {
 	pagination: {orderDescending}
@@ -146,7 +146,7 @@ const Summary: React.FC<ISummaryProps> = ({
 			onClick={
 				notEnoughActivitiesWithPrevious
 					? () => setStep(currentStep - 2)
-					: null
+					: undefined
 			}
 		>
 			{children}
@@ -227,7 +227,8 @@ const Summary: React.FC<ISummaryProps> = ({
 					{includePreviousPeriod && (
 						<tr
 							className={getCN({
-								'insufficient-events': notEnoughActivitiesWithPrevious
+								'insufficient-events':
+									notEnoughActivitiesWithPrevious
 							})}
 						>
 							<td className='summary-name table-cell-expand including-previous-period'>

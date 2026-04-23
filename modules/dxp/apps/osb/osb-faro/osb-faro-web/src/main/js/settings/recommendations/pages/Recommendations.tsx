@@ -5,7 +5,7 @@ import {Router} from 'shared/types';
 
 interface IRecommendationsProps {
 	history: {
-		push: (string) => void;
+		push: (value: string) => void;
 	};
 	router: Router;
 }

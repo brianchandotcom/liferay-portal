@@ -47,7 +47,14 @@ const ObjectEntry: React.FC<{
 	router: Router;
 }> = ({className, router}) => {
 	const {
-		params: {assetId, channelId, groupId, title, touchpoint, type}
+		params: {
+			assetId,
+			channelId = '',
+			groupId = '',
+			title = '',
+			touchpoint,
+			type = ''
+		}
 	} = router;
 
 	const [filters, setFilters] = useState({});
@@ -105,7 +112,7 @@ const ObjectEntry: React.FC<{
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadPDFReport
-							disabled={dataSourceStates.empty}
+							disabled={!!dataSourceStates.empty}
 							subtitle={selectedChannel?.name}
 							title={
 								sub(Liferay.Language.get('x-dashboard'), [

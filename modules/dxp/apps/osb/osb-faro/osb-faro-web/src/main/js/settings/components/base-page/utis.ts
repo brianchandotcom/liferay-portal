@@ -1,4 +1,6 @@
-export function updateSearchParams(history, key: string, value: any) {
+import {History} from 'history';
+
+export function updateSearchParams(history: History, key: string, value: any) {
 	const params = new URLSearchParams(window.location.search);
 	params.set(key, String(value));
 

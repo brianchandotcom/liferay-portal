@@ -29,7 +29,7 @@ const StringMatchInput: React.FC<IStringMatchInputProps> = ({
 	onStringMatchChange,
 	stringMatch = ''
 }) => {
-	const _inputRef = useRef<HTMLInputElement>();
+	const _inputRef = useRef<HTMLInputElement>(null);
 
 	const metadataResults: boolean = !!getMetadataTag(stringMatch).length;
 
@@ -41,7 +41,7 @@ const StringMatchInput: React.FC<IStringMatchInputProps> = ({
 
 	useEffect(() => {
 		if (!!metadata || !metadataResults) {
-			_inputRef.current.focus();
+			_inputRef.current?.focus();
 		}
 	}, [metadata, stringMatch]);
 
@@ -89,7 +89,9 @@ const StringMatchInput: React.FC<IStringMatchInputProps> = ({
 					inputValue={stringMatch}
 					itemRenderer={value => <MetadataTag value={value} />}
 					menuTitle={Liferay.Language.get('available-metadata')}
-					onInputValueChange={onStringMatchChange}
+					onInputValueChange={(value: string | number) =>
+						onStringMatchChange(String(value))
+					}
 					onSelect={onMetadataChange}
 				/>
 			)}

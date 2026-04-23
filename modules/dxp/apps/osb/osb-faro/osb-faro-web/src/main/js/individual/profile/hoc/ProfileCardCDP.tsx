@@ -35,7 +35,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 		page,
 		query,
 		resetPage
-	} = useStatefulPagination(null, {
+	} = useStatefulPagination(undefined, {
 		initialDelta: DEFAULT_SESSIONS_DELTA
 	});
 

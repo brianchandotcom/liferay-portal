@@ -12,10 +12,11 @@ export default class TimeZone
 		displayTimeZone: '(UTC) UTC',
 		timeZoneId: 'UTC'
 	})
-	implements ITimeZone {
-	country: string;
-	displayTimeZone: string;
-	timeZoneId: string;
+	implements ITimeZone
+{
+	declare country: string;
+	declare displayTimeZone: string;
+	declare timeZoneId: string;
 
 	constructor(props = {}) {
 		super(props);

@@ -4,8 +4,20 @@ export const escapeGroup = (group: string) =>
 export const escapeString = (str: string) =>
 	str.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1');
 
-export const parse = (str: string) => {
-	const tokens = [];
+export type PathToken =
+	| string
+	| {
+			delimiter: string;
+			name: string | number;
+			optional: boolean;
+			partial: boolean;
+			pattern: string;
+			prefix: string;
+			repeat: boolean;
+	  };
+
+export const parse = (str: string): PathToken[] => {
+	const tokens: PathToken[] = [];
 	let key = 0;
 	let index = 0;
 	let path = '';
@@ -67,71 +79,77 @@ export const parse = (str: string) => {
 	return tokens;
 };
 
-const tokensToFunction = tokens => obj => {
-	let path = '';
+const tokensToFunction =
+	(tokens: PathToken[]) =>
+	(obj: Record<string, string | number | Array<string | number>>) => {
+		let path = '';
 
-	tokens.forEach(token => {
-		if (typeof token === 'string') {
-			path += token;
+		tokens.forEach((token: PathToken) => {
+			if (typeof token === 'string') {
+				path += token;
 
-			return;
-		}
-
-		const value = obj[token.name];
-
-		if (value == null) {
-			if (token.optional) {
 				return;
 			}
 
-			throw new TypeError(`Expected "${token.name}" to be defined`);
-		}
+			const value = obj[token.name];
 
-		const pattern = new RegExp(`^${token.pattern}$`);
-
-		if (Array.isArray(value)) {
-			if (!token.repeat) {
-				throw new TypeError(`Expected "${token.name}" to not repeat`);
-			}
-
-			if (value.length === 0) {
+			if (value == null) {
 				if (token.optional) {
 					return;
 				}
 
-				throw new TypeError(`Expected "${token.name}" to not be empty`);
+				throw new TypeError(`Expected "${token.name}" to be defined`);
 			}
 
-			value.forEach((segmentValue, index) => {
-				const segment = encodeURIComponent(segmentValue);
+			const pattern = new RegExp(`^${token.pattern}$`);
 
-				if (!pattern.test(segment)) {
+			if (Array.isArray(value)) {
+				if (!token.repeat) {
 					throw new TypeError(
-						`Expected all "${token.name}" to match "${token.pattern}", but received "${segment}"`
+						`Expected "${token.name}" to not repeat`
 					);
 				}
 
-				const prefix = index === 0 ? token.prefix : token.delimiter;
+				if (value.length === 0) {
+					if (token.optional) {
+						return;
+					}
 
-				path += prefix + segment;
-			});
+					throw new TypeError(
+						`Expected "${token.name}" to not be empty`
+					);
+				}
 
-			return;
-		}
+				value.forEach((segmentValue, index) => {
+					const segment = encodeURIComponent(segmentValue);
 
-		const segment = encodeURIComponent(String(value));
+					if (!pattern.test(segment)) {
+						throw new TypeError(
+							`Expected all "${token.name}" to match "${token.pattern}", but received "${segment}"`
+						);
+					}
 
-		if (!pattern.test(segment)) {
-			throw new TypeError(
-				`Expected "${token.name}" to match "${token.pattern}", but received "${segment}"`
-			);
-		}
+					const prefix = index === 0 ? token.prefix : token.delimiter;
 
-		path += token.prefix + segment;
-	});
+					path += prefix + segment;
+				});
 
-	return path;
-};
+				return;
+			}
+
+			const segment = encodeURIComponent(String(value));
+
+			if (!pattern.test(segment)) {
+				throw new TypeError(
+					`Expected "${token.name}" to match "${token.pattern}", but received "${segment}"`
+				);
+			}
+
+			path += token.prefix + segment;
+		});
+
+		return path;
+	};
 
 export const compile = (path: string) => {
 	const tokens = parse(path);

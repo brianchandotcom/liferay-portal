@@ -21,7 +21,7 @@ import {withError, withLoading} from 'shared/hoc/util';
  * Details List Columns for CDP
  */
 export const detailsListCDPColumns = {
-	getDataSourceName: groupId => ({
+	getDataSourceName: (groupId: string) => ({
 		accessor: 'dataSourceName',
 		cellRenderer: SourceCell,
 		cellRendererProps: {groupId},
@@ -32,7 +32,8 @@ export const detailsListCDPColumns = {
 		accessor: 'dateModified',
 		cellRenderer: DateCell,
 		cellRendererProps: {
-			dateFormatter: date => formatDateToTimeZone(date, 'll'),
+			dateFormatter: (date: string | number) =>
+				formatDateToTimeZone(date, 'll'),
 			datePath: 'dateModified'
 		},
 		label: Liferay.Language.get('last-modified'),
@@ -55,7 +56,19 @@ export const detailsListCDPColumns = {
 	}
 };
 
-const DetailsCard = ({className = '', description, loading, title, value}) => (
+const DetailsCard = ({
+	className = '',
+	description,
+	loading,
+	title,
+	value
+}: {
+	className?: string;
+	description: string;
+	loading: boolean;
+	title: string;
+	value: React.ReactNode;
+}) => (
 	<Card className={`w-100 ${className}`}>
 		<Card.Header>
 			<ClayText weight='semi-bold'>{title}</ClayText>
@@ -74,11 +87,18 @@ const IndividualDetailsCDP = ({
 	groupId,
 	individualId,
 	showEmptyState
+}: {
+	children?: React.ReactNode;
+	groupId: string;
+	individualId: string;
+	showEmptyState: boolean;
 }) => {
 	const {query} = useQueryParams();
 
 	const response = useRequest({
-		dataSourceFn: API.individuals.fetchDetails,
+		dataSourceFn: API.individuals.fetchDetails as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {groupId, individualId}
 	});
 
@@ -225,6 +245,6 @@ const ListComponent = compose(
 	withLoading({spacer: true}),
 	withError({page: false}),
 	withEmpty()
-)(Table);
+)(Table) as React.ComponentType<any>;
 
 export default IndividualDetailsCDP;

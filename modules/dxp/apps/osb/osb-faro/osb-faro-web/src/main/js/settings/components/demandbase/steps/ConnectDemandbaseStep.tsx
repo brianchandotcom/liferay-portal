@@ -1,11 +1,22 @@
 import ConnectDemandbaseAuth from '../ConnectDemandbaseAuth';
 import React from 'react';
+import {Alert} from 'shared/types';
 import {Routes, toRoute} from 'shared/util/router';
 import {updateSearchParams} from 'settings/components/base-page/utis';
 import {useHistory} from 'react-router-dom';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 
-const ConnectDemandbaseStep = ({addAlert, groupId, onNext}) => {
+interface IConnectDemandbaseStepProps {
+	addAlert: Alert.AddAlert;
+	groupId: string;
+	onNext: () => void;
+}
+
+const ConnectDemandbaseStep = ({
+	addAlert,
+	groupId,
+	onNext
+}: IConnectDemandbaseStepProps) => {
 	const {dataSource} = useWizardPage();
 	const history = useHistory();
 

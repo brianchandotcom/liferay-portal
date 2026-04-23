@@ -14,7 +14,10 @@ import {sub} from 'shared/util/lang';
 import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
-const convertToMoment = (value: string, format): moment.Moment => {
+const convertToMoment = (
+	value: string,
+	format: string
+): moment.Moment | null => {
 	const date = moment(value, format);
 
 	return date.isValid() ? date : null;
@@ -26,8 +29,8 @@ export type DateRange = {
 };
 
 export type MomentDateRange = {
-	end: moment.Moment;
-	start: moment.Moment;
+	end: moment.Moment | null;
+	start: moment.Moment | null;
 };
 
 interface IDateInputProps {
@@ -53,9 +56,9 @@ const DateInput: React.FC<IDateInputProps> = ({
 	format = DEFAULT_DATE_FORMAT,
 	groupId,
 	limitEndDate = true,
+	maxRange = 365,
 	onBlur = noop,
 	onChange = noop,
-	maxRange = 365,
 	showRetentionPeriod = true,
 	value
 }) => {
@@ -64,8 +67,9 @@ const DateInput: React.FC<IDateInputProps> = ({
 	const {timeZoneId} = useTimeZone(groupId);
 	const retentionPeriod = useRetentionPeriod();
 
-	const convertMomentToDisplayFormat = (value: moment.Moment): string =>
-		isNil(value) ? null : value.format(displayFormat || format);
+	const convertMomentToDisplayFormat = (
+		value: moment.Moment | null
+	): string => (isNil(value) ? '' : value.format(displayFormat || format));
 
 	const handleDateSelect = ({end, start}: MomentDateRange) => {
 		onChange({
@@ -157,22 +161,23 @@ const DateInput: React.FC<IDateInputProps> = ({
 			<DatePicker
 				date={momentDateRange}
 				header={
-					showRetentionPeriod ? (
+					showRetentionPeriod && retentionPeriod ? (
 						<DatePickerRetentionPeriodHeader
-							retentionPeriod={retentionPeriod}
+							retentionPeriod={retentionPeriod!}
 						/>
 					) : null
 				}
 				maxDate={
-					limitEndDate &&
-					formatDateWithTimezone(timeZoneId)
-						.clone()
-						.subtract(1, 'days')
+					limitEndDate
+						? formatDateWithTimezone(timeZoneId)
+								.clone()
+								.subtract(1, 'days')
+						: undefined
 				}
 				maxRange={maxRange}
 				minDate={
-					showRetentionPeriod
-						? minDate.subtract(retentionPeriod, 'months')
+					showRetentionPeriod && retentionPeriod
+						? minDate.subtract(retentionPeriod!, 'months')
 						: minDate.subtract(100, 'years')
 				}
 				onSelect={handleDateSelect}

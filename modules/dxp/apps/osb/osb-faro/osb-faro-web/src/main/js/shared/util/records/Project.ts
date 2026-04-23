@@ -39,23 +39,24 @@ export default class Project
 		timeZone: new TimeZone(),
 		userId: null
 	})
-	implements IProject {
-	accountKey: string;
-	accountName: string;
-	corpProjectName: string;
-	corpProjectUuid: string;
-	faroSubscription: Map<string, any>;
-	friendlyURL: string;
-	groupId: number;
-	incidentReportEmailAddresses: List<string>;
-	name: string;
-	ownerEmailAddress: string;
-	recommendationsEnabled: boolean;
-	serverLocation: string;
-	state: string;
-	stateStartDate: number;
-	timeZone: TimeZone;
-	userId: number;
+	implements IProject
+{
+	declare accountKey: string;
+	declare accountName: string;
+	declare corpProjectName: string;
+	declare corpProjectUuid: string;
+	declare faroSubscription: Map<string, any>;
+	declare friendlyURL: string;
+	declare groupId: number;
+	declare incidentReportEmailAddresses: List<string>;
+	declare name: string;
+	declare ownerEmailAddress: string;
+	declare recommendationsEnabled: boolean;
+	declare serverLocation: string;
+	declare state: string;
+	declare stateStartDate: number;
+	declare timeZone: TimeZone;
+	declare userId: number;
 
 	constructor(props = {}) {
 		super(props);

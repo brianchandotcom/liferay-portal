@@ -76,13 +76,16 @@ class DistributionChart extends React.Component<
 		this.handleFetchChartData();
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps: IDistributionChartProps) {
 		if (hasChanges(prevProps, this.props, 'selectedTab')) {
 			this.handleFetchChartData();
 		}
 	}
 
-	formatChartData(fieldDistributions, histogram) {
+	formatChartData(
+		fieldDistributions: Array<{count: number; values: number[]}>,
+		histogram: boolean
+	) {
 		return fieldDistributions.map(({count, values}) => ({
 			count,
 			graphValue: histogram ? (values[0] + values[1]) / 2 : values[0],
@@ -90,13 +93,18 @@ class DistributionChart extends React.Component<
 		}));
 	}
 
-	getYAxisTicks(fieldDistributions, histogram) {
-		return [
+	getYAxisTicks(
+		fieldDistributions: Array<{values: number[]}>,
+		histogram: boolean
+	): number[] {
+		const ticks: Array<number | false | 0> = [
 			...fieldDistributions.map(item => item.values[0]),
 			histogram &&
 				fieldDistributions.length &&
 				fieldDistributions[fieldDistributions.length - 1].values[1]
-		].filter(Boolean);
+		];
+
+		return ticks.filter((t): t is number => typeof t === 'number');
 	}
 
 	@autoCancel
@@ -137,7 +145,8 @@ class DistributionChart extends React.Component<
 			state: {hoverIndex}
 		} = this;
 
-		const individualFieldDistribution = individualFieldDistributionIList.toJS();
+		const individualFieldDistribution =
+			individualFieldDistributionIList.toJS();
 
 		const histogram = propertyType === FieldTypes.Number;
 
@@ -153,11 +162,14 @@ class DistributionChart extends React.Component<
 
 		const fieldDistributionsCount = individualFieldDistribution.length;
 
-		const yAxisDomain = histogram
-			? [yAxisTicks[0], yAxisTicks[yAxisTicks.length - 1]]
+		const yAxisDomain: [number | string, number | string] = histogram
+			? [
+					yAxisTicks[0] as number,
+					yAxisTicks[yAxisTicks.length - 1] as number
+			  ]
 			: [0, 'auto'];
 
-		const yAxisWidth = yAxisTicks.reduce((acc, item) => {
+		const yAxisWidth = yAxisTicks.reduce<number>((acc, item) => {
 			const textWidth = getTextWidth(item.toString());
 
 			return textWidth > acc ? textWidth : acc;
@@ -264,7 +276,10 @@ class DistributionChart extends React.Component<
 											}
 										>
 											{formattedChartData.map(
-												(item, index) => (
+												(
+													item: {count: number},
+													index: number
+												) => (
 													<Cell
 														fill={getBarColor(
 															index,

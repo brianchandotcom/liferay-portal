@@ -1,8 +1,7 @@
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
-export interface BlockCustomEventDefinitionsData {
-	null;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface BlockCustomEventDefinitionsData {}
 
 export interface BlockCustomEventDefinitionsVariables {
 	eventDefinitionIds: string[];

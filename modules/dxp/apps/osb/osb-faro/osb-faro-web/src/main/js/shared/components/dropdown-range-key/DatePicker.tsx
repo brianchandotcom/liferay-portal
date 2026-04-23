@@ -6,11 +6,17 @@ import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {sub} from 'shared/util/lang';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
+interface IDropdownRangeKeyDatePickerProps {
+	customDateRange: MomentDateRange;
+	onCustomRangeChange: (range: MomentDateRange) => void;
+	retentionPeriod: number | null;
+}
+
 export const DropdownRangeKeyDatePicker = ({
 	customDateRange,
 	onCustomRangeChange,
 	retentionPeriod
-}) => {
+}: IDropdownRangeKeyDatePickerProps) => {
 	const {timeZoneId} = useTimeZone();
 
 	return (

@@ -4,6 +4,7 @@ import getCN from 'classnames';
 import React from 'react';
 
 interface ICollapsibleOverlayProps extends React.HTMLFactory<HTMLElement> {
+	children?: React.ReactNode;
 	onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	title: string;
 	visible: boolean;

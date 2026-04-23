@@ -54,7 +54,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 }) => {
 	const [dataSource, setDataSource] = useState(initialDataSource);
 	const [, setLoading] = useState(false);
-	const {groupId, id} = useParams();
+	const {groupId = '', id = ''} = useParams<{groupId: string; id: string}>();
 	const currentUser = useCurrentUser();
 	const [token, setToken] = useState('');
 
@@ -128,7 +128,10 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 		setAlert(alert);
 	}, [dataSource, dataSourceActive]);
 
-	let _tokenRequest;
+	let _tokenRequest:
+		| ReturnType<typeof setTimeout>
+		| Promise<string | void>
+		| undefined;
 
 	const getNextToken = async (prevToken?: string) => {
 		const nextToken = await fetchToken(groupId, id);
@@ -151,12 +154,14 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 		}
 
 		return () => {
-			clearTimeout(_tokenRequest);
+			clearTimeout(_tokenRequest as ReturnType<typeof setTimeout>);
 		};
 	}, [dataSourceActive]);
 
 	const {data: channelsMetric} = useRequest({
-		dataSourceFn: fetchChannelsMetric,
+		dataSourceFn: fetchChannelsMetric as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {groupId, id}
 	});
 
@@ -166,7 +171,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 				breadcrumbs.getDataSources({groupId}),
 				breadcrumbs.getDataSourceName({
 					active: true,
-					label: dataSource.name
+					label: dataSource.name || ''
 				})
 			]}
 			documentTitle={Liferay.Language.get('configure-data-source')}
@@ -177,7 +182,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 				editable={currentUser?.isAdmin()}
 				groupId={groupId}
 				label={label}
-				onUpdateName={async name => {
+				onUpdateName={async (name: string) => {
 					await updateLiferay({groupId, id, name} as any);
 
 					await handleUpdateDataSource();
@@ -331,11 +336,15 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 					dataSource={dataSource}
 					handleUpdateDataSource={handleUpdateDataSource}
 					open={open}
-					updateDataSourceFn={updateLiferay}
+					updateDataSourceFn={
+						updateLiferay as (params: {
+							[key: string]: any;
+						}) => Promise<any>
+					}
 				/>
 			</Card>
 		</BasePage>
 	);
 };
 
-export default compose(connector)(LiferayOverview);
+export default compose<React.ComponentType<any>>(connector)(LiferayOverview);

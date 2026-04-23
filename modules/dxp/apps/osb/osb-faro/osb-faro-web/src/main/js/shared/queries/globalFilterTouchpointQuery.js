@@ -1,5 +1,5 @@
 import {DEVICE_FRAGMENT, GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 /**
  * Global Filter Touchpoint Query

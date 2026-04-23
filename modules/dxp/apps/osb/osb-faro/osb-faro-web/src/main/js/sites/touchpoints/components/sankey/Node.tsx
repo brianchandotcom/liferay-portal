@@ -55,7 +55,7 @@ function normalizeNumber(number: number) {
 	return isNaN(number) ? 0 : number;
 }
 
-const Title = ({title, x, y}) => (
+const Title = ({title, x, y}: {title: string; x: number; y: number}) => (
 	<text
 		className='analytics-sankey-node-title'
 		data-testid='sankey-node-title'

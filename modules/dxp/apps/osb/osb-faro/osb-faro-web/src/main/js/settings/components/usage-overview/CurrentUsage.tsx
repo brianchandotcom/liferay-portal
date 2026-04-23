@@ -4,13 +4,23 @@ import {Text} from '@clayui/core';
 import {toRounded} from 'shared/util/numbers';
 import {UsageMetricBarChart} from './UsageMetricBarChart';
 
+interface ICurrentUsageProps {
+	count: number;
+	items: {
+		[key: string]: {color: string; label: string; value: number};
+	};
+	legendText: React.ReactNode;
+	limit: number;
+	percentageText: (percentage: number | string) => string;
+}
+
 export const CurrentUsage = ({
 	count,
 	items,
 	legendText,
 	limit,
 	percentageText
-}) => {
+}: ICurrentUsageProps) => {
 	const percentage = toRounded(
 		limit > 0 ? (count / limit >= 1 ? 100 : (count / limit) * 100) : 0
 	);

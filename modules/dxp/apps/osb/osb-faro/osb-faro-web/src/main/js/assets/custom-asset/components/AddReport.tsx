@@ -12,10 +12,10 @@ interface IAddReportProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 interface IFormAddReport {
-	onBlurReport: (event: React.SyntheticEvent) => void;
-	onChangeReport: (event: React.SyntheticEvent) => void;
-	onInputReport: (event: React.SyntheticEvent) => void;
-	onSelectThumbReport: (event: React.SelectHTMLAttributes<Event>) => void;
+	onBlurReport: (event: React.SyntheticEvent | any) => void;
+	onChangeReport: (event: React.SyntheticEvent | any) => void;
+	onInputReport: (event: React.SyntheticEvent | any) => void;
+	onSelectThumbReport: (item: any) => void;
 }
 
 type Report = {
@@ -113,9 +113,8 @@ const AddReport: React.FC<IAddReportProps> = ({
 	isEmptyDashboard = false,
 	onGetReport
 }) => {
-	const [displayFormAddReport, setDisplayFormAddReport] = useState<boolean>(
-		false
-	);
+	const [displayFormAddReport, setDisplayFormAddReport] =
+		useState<boolean>(false);
 	const [isEnableToSave, setIsEnableToSave] = useState<boolean>(false);
 	const [report, setReport] = useState<Report>({
 		chartType: '',
@@ -126,7 +125,7 @@ const AddReport: React.FC<IAddReportProps> = ({
 	useEffect(() => {
 		setIsEnableToSave(true);
 
-		Object.keys(report).forEach(key => {
+		(Object.keys(report) as (keyof Report)[]).forEach(key => {
 			if (isEmpty(report[key])) {
 				setIsEnableToSave(false);
 
@@ -155,21 +154,21 @@ const AddReport: React.FC<IAddReportProps> = ({
 		setDisplayFormAddReport(false);
 	};
 
-	const handleChangeReportTitle = ({target}): void => {
+	const handleChangeReportTitle = ({target}: any): void => {
 		setReport({
 			...report,
 			title: target.value.trim().slice(0, 90)
 		});
 	};
 
-	const handleChangeSelectMetric = ({target}): void => {
+	const handleChangeSelectMetric = ({target}: any): void => {
 		setReport({
 			...report,
 			metric: target.value
 		});
 	};
 
-	const handleGetSelectedChartType = ({value}): void => {
+	const handleGetSelectedChartType = ({value}: any): void => {
 		setReport({
 			...report,
 			chartType: value

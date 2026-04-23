@@ -7,6 +7,7 @@ import './external-scripts';
 import App from './App';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
-ReactDOM.render(<App />, document.getElementById('faroApp'));
+const root = createRoot(document.getElementById('faroApp'));
+root.render(<App />);

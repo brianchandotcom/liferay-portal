@@ -3,13 +3,25 @@ import BaseDetails from 'contacts/pages/BaseDetails';
 import React from 'react';
 import {Individual} from 'shared/util/records';
 
-const fetchIndividualDetails = ({groupId, id}) =>
+interface IFieldMapping {
+	name: string;
+	sourceName: string;
+}
+
+interface IFetchDetailsResult {
+	custom: Record<string, [IFieldMapping, ...IFieldMapping[]]>;
+	demographics: Record<string, IFieldMapping[]>;
+}
+
+const fetchIndividualDetails = ({groupId, id}: {groupId: string; id: string}) =>
 	API.individuals
 		.fetchDetails({groupId, individualId: id})
-		.then(({custom, demographics}) => {
-			const retVal = {...demographics};
+		.then(({custom, demographics}: IFetchDetailsResult) => {
+			const retVal: Record<string, IFieldMapping[]> = {...demographics};
 
-			Object.values(custom).forEach(([fieldMapping, ...others]) => {
+			(
+				Object.values(custom) as [IFieldMapping, ...IFieldMapping[]][]
+			).forEach(([fieldMapping, ...others]) => {
 				retVal[`custom-${fieldMapping.name}`] = [
 					{
 						...fieldMapping,

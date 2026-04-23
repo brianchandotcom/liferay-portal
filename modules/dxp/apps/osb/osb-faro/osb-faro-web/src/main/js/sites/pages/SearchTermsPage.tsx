@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
-import SearchTerms from 'sites/hocs/SearchTerms';
+import SearchTermsBase from 'sites/hocs/SearchTerms';
+const SearchTerms = SearchTermsBase as React.ComponentType<any>;
 
 interface ISearchTermsPageProps extends React.HTMLAttributes<HTMLDivElement> {
 	router: {

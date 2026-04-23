@@ -16,7 +16,7 @@ const MembershipChart = withRequest(
 	{
 		page: false
 	}
-)(props => <SegmentGrowthChart {...props} />);
+)((props: any) => <SegmentGrowthChart {...props} />);
 
 interface ISegmentProfileCardProps extends React.HTMLAttributes<HTMLElement> {
 	channelId: string;

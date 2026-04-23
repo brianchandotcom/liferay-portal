@@ -19,7 +19,7 @@ import {getDefinitions, getEventAttributes} from 'shared/util/breadcrumbs';
 import {getSafeDisplayValue} from 'shared/util/util';
 import {HasModal, Modal} from 'shared/types';
 import {SafeResults} from 'shared/hoc/util';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 interface IAttributeViewProps
 	extends React.HTMLAttributes<HTMLElement>,
@@ -95,7 +95,7 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 					pageTitle={name}
 					subTitle={displayName}
 				>
-					<StatesRenderer empty={!recentValues.length}>
+					<StatesRenderer empty={!recentValues?.length}>
 						<StatesRenderer.Empty
 							className='bg-white rounded'
 							description={
@@ -152,7 +152,7 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 										sortable: false
 									}
 								]}
-								items={recentValues}
+								items={recentValues ?? []}
 								rowIdentifier='value'
 							/>
 						</StatesRenderer.Success>

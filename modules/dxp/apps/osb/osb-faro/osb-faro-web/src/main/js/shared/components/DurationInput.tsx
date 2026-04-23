@@ -6,7 +6,7 @@ import {isNumber} from 'lodash';
 const DURATION_MASK = [/\d/, /\d/, ':', /[0-6]/, /\d/, ':', /[0-6]/, /\d/];
 
 interface IDurationInputProps {
-	onBlur?: (event?) => void;
+	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 	onChange: (milliseconds: number | string) => void;
 	value: string | number;
 }
@@ -28,7 +28,7 @@ const DurationInput: React.FC<IDurationInputProps> = ({
 			mask={DURATION_MASK}
 			name='value'
 			onBlur={onBlur}
-			onChange={event => {
+			onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
 				const {value} = event.target;
 
 				setDuration(value);

@@ -9,6 +9,7 @@ interface INameProps {
 	data: {
 		id?: string;
 		name: string;
+		[key: string]: any;
 	};
 	disabled?: boolean;
 	maxWidth?: number;
@@ -51,7 +52,7 @@ const Name: React.FC<INameProps> = ({
 		<td className={getCN('name-cell-root', className)}>
 			<div
 				className='content-container'
-				style={maxWidth && {maxWidth: `${maxWidth}px`}}
+				style={maxWidth ? {maxWidth: `${maxWidth}px`} : undefined}
 			>
 				{!!renderIcon && (
 					<div className='icon-container'>{renderIcon(data)}</div>

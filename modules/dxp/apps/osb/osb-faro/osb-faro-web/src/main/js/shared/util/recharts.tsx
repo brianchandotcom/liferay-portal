@@ -17,8 +17,7 @@ export const ANIMATION_DURATION = {
 
 export const AXIS = {
 	borderStroke: '#E7E7ED',
-	font:
-		'14px "Source Sans Pro", "Source Sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+	font: '14px "Source Sans Pro", "Source Sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
 	gridStroke: '#E7E7ED',
 	textColor: '#6B6C7E'
 };
@@ -58,25 +57,33 @@ export const getTextWidth: (text: any, font?: string) => number = (
 	return Math.ceil(metrics.width) + TEXT_PADDING;
 };
 
-export const getAxisTickText = (axis = 'x', formatter = val => val) => ({
-	payload: {offset, value},
-	textAnchor,
-	x,
-	y
-}) => (
-	<Text
-		style={{
-			fill: AXIS.textColor,
-			font: AXIS.font,
-			fontSize: '0.75rem'
-		}}
-		textAnchor={textAnchor}
-		x={x}
-		y={axis === 'y' ? y + offset : y}
-	>
-		{formatter(value)}
-	</Text>
-);
+type AxisTickProps = {
+	payload: {offset: number; value: number | string};
+	textAnchor?: 'inherit' | 'end' | 'start' | 'middle';
+	x: number;
+	y: number;
+};
+
+export const getAxisTickText =
+	(
+		axis = 'x',
+		formatter: (val: number | string) => string | number = val => val
+	) =>
+	({payload: {offset, value}, textAnchor, x, y}: AxisTickProps) =>
+		(
+			<Text
+				style={{
+					fill: AXIS.textColor,
+					font: AXIS.font,
+					fontSize: '0.75rem'
+				}}
+				textAnchor={textAnchor}
+				x={x}
+				y={axis === 'y' ? y + offset : y}
+			>
+				{formatter(value)}
+			</Text>
+		);
 
 interface IRechartsTooltipProps extends React.HTMLAttributes<HTMLElement> {
 	dateTitle?: string;
@@ -98,13 +105,13 @@ export const RechartsTooltip: FC<IRechartsTooltipProps> = ({
 				{
 					columns: [
 						{
-							label: title,
+							label: title ?? '',
 							weight: Weights.Semibold,
 							width: 150
 						},
 						{
 							align: Alignments.Right,
-							label: dateTitle,
+							label: dateTitle ?? '',
 							weight: Weights.Semibold,
 							width: 55
 						}
@@ -129,31 +136,41 @@ export const RechartsTooltip: FC<IRechartsTooltipProps> = ({
 	</div>
 );
 
-export const getYAxisLabel = (
-	label,
-	position = 'left',
-	yAxisWidth = Y_AXIS_WIDTH
-) => ({viewBox: {height, width, x, y}}) => {
-	const verticalSign = height >= 0 ? 1 : -1;
-
-	const verticalEnd = verticalSign > 0 ? 'end' : 'start';
-
-	const textAnchor = position === 'right' ? 'end' : 'start';
-
-	return (
-		<Text
-			fill={AXIS.textColor}
-			textAnchor={textAnchor}
-			verticalAnchor={verticalEnd}
-			x={position === 'right' ? x + yAxisWidth : x + width - yAxisWidth}
-			y={y - verticalSign * AXIS_LABEL_OFFSET}
-		>
-			{label}
-		</Text>
-	);
+type YAxisLabelViewBox = {
+	viewBox: {height: number; width: number; x: number; y: number};
 };
 
-export const getYAxisWidth = (data, dataKey, minWidth = Y_AXIS_WIDTH) =>
+export const getYAxisLabel =
+	(label: string | number, position = 'left', yAxisWidth = Y_AXIS_WIDTH) =>
+	({viewBox: {height, width, x, y}}: YAxisLabelViewBox) => {
+		const verticalSign = height >= 0 ? 1 : -1;
+
+		const verticalEnd = verticalSign > 0 ? 'end' : 'start';
+
+		const textAnchor = position === 'right' ? 'end' : 'start';
+
+		return (
+			<Text
+				fill={AXIS.textColor}
+				textAnchor={textAnchor}
+				verticalAnchor={verticalEnd}
+				x={
+					position === 'right'
+						? x + yAxisWidth
+						: x + width - yAxisWidth
+				}
+				y={y - verticalSign * AXIS_LABEL_OFFSET}
+			>
+				{label}
+			</Text>
+		);
+	};
+
+export const getYAxisWidth = (
+	data: Record<string, any>[],
+	dataKey: string,
+	minWidth = Y_AXIS_WIDTH
+) =>
 	data.reduce((acc, tick) => {
 		const tickLabel = tick[dataKey];
 

@@ -2,6 +2,7 @@ import AttributeFilterChip from './AttributeFilterChip';
 import AttributeFilterDropdown from './attribute-filter-dropdown';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import DndProvider from 'shared/components/DndProvider';
 import React from 'react';
 import {Align} from '@clayui/drop-down';
 import {Attributes, Breakdowns, Filters} from 'event-analysis/utils/types';
@@ -10,7 +11,6 @@ import {
 	MoveFilter,
 	withAttributesConsumer
 } from '../context/attributes';
-import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 interface IAttributeFilterSectionProps {

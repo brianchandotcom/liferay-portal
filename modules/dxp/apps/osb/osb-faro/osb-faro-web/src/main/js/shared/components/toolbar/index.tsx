@@ -12,7 +12,7 @@ import NavBar from 'shared/components/NavBar';
 import React from 'react';
 import SearchInput from 'shared/components/SearchInput';
 import SubnavTbar from 'shared/components/SubnavTbar';
-import {FilterByType} from 'shared/types';
+import {FilterByType, FilterOptionType} from 'shared/types';
 import {getDefaultSortOrder} from 'shared/util/pagination';
 import {getPluralMessage} from 'shared/util/lang';
 import {Map, OrderedMap, Set} from 'immutable';
@@ -23,16 +23,20 @@ import {useHistory} from 'react-router-dom';
 
 const {cur: defaultPage} = Constants.pagination;
 
-function getFilterLabel(fieldName, fieldValue, filterByOptions) {
+function getFilterLabel(
+	fieldName: string,
+	fieldValue: string | undefined,
+	filterByOptions: FilterOptionType[]
+) {
 	const filterOption = filterByOptions.find(
-		option => option.key === fieldName
+		(option: FilterOptionType) => option.key === fieldName
 	);
 
-	const filterValueObject = filterOption.values.find(
-		valueItem => valueItem.value === fieldValue
+	const filterValueObject = filterOption?.values.find(
+		(valueItem: {value: string}) => valueItem.value === fieldValue
 	);
 
-	return filterValueObject.label;
+	return filterValueObject?.label;
 }
 
 interface IToolbarProps extends React.HTMLAttributes<HTMLElement> {
@@ -41,7 +45,7 @@ interface IToolbarProps extends React.HTMLAttributes<HTMLElement> {
 	disabled?: boolean;
 	disableSearch?: boolean;
 	filterBy?: FilterByType;
-	filterByOptions?: [];
+	filterByOptions?: FilterOptionType[];
 	flatFilter?: boolean;
 	loading?: boolean;
 	maxLength?: number;
@@ -50,9 +54,9 @@ interface IToolbarProps extends React.HTMLAttributes<HTMLElement> {
 	onQueryChange?: (query: string) => void;
 	onSearchValueChange?: (value: string) => void;
 	onSelectAll?: () => void;
-	onSelectEntirePage?: (event: Event) => void;
+	onSelectEntirePage?: (checked: boolean) => void;
 	order?: 'asc' | 'desc'; // TODO: Remove old orders
-	orderByOptions?: [];
+	orderByOptions?: Array<{label: string; value: string}>;
 	orderIOMap?: any;
 	placeholder?: string;
 	query?: string;
@@ -71,8 +75,8 @@ const Toolbar: React.FC<IToolbarProps> = ({
 	autoFocus = false,
 	children,
 	className,
-	disabled = false,
 	disableSearch = false,
+	disabled = false,
 	filterBy = Map(),
 	filterByOptions = [],
 	flatFilter = false,
@@ -101,15 +105,19 @@ const Toolbar: React.FC<IToolbarProps> = ({
 
 	const itemsSelected = selectEntirePage || selectEntirePageIndeterminate;
 
-	const activeFilters = filterBy.some(values => values.some(Boolean));
+	const activeFilters = filterBy.some(
+		values => !!values && values.some(Boolean)
+	);
 
 	const classes = getCN({
 		disabled,
 		'items-selected': itemsSelected
 	});
 
-	const handleCheckboxChange = event => {
-		onSelectEntirePage(event.currentTarget.checked);
+	const handleCheckboxChange = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		onSelectEntirePage?.(event.currentTarget.checked);
 	};
 
 	const handleClearAllFilters = () => {
@@ -120,31 +128,36 @@ const Toolbar: React.FC<IToolbarProps> = ({
 		if (onQueryChange || onFilterByChange) {
 			onQueryChange && onQueryChange('');
 
-			onFilterByChange && onFilterByChange(emptyFilterBy as FilterByType);
+			onFilterByChange &&
+				onFilterByChange(emptyFilterBy as unknown as FilterByType);
 		} else {
 			history.push(
 				setUriFilterValues(
-					emptyFilterBy,
+					emptyFilterBy as unknown as Parameters<
+						typeof setUriFilterValues
+					>[0],
 					setUriQueryValues({page: defaultPage, query: ''})
 				)
 			);
 		}
 	};
 
-	const handleFilterByChange = value => {
+	const handleFilterByChange = (value: FilterByType) => {
 		if (onFilterByChange) {
 			onFilterByChange(value);
 		} else {
 			history.push(
 				setUriFilterValues(
-					value,
+					value as unknown as Parameters<
+						typeof setUriFilterValues
+					>[0],
 					setUriQueryValues({page: defaultPage})
 				)
 			);
 		}
 	};
 
-	const handleFilterRemove = (field, value) => {
+	const handleFilterRemove = (field: string, value: string) => {
 		if (onFilterByChange) {
 			onFilterByChange(
 				filterBy.update(field, (values = Set()) =>
@@ -155,7 +168,8 @@ const Toolbar: React.FC<IToolbarProps> = ({
 			history.push(
 				setUriQueryValues(
 					{
-						[field]: filterBy.get(field).delete(value).toArray(),
+						[field]:
+							filterBy.get(field)?.delete(value).toArray() ?? [],
 						page: defaultPage
 					},
 					window.location.href
@@ -164,7 +178,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 		}
 	};
 
-	const handleOrderFieldChange = field => {
+	const handleOrderFieldChange = (field: string) => {
 		const sortOrder = getDefaultSortOrder(field);
 
 		if (onOrderIOMapChange) {
@@ -190,7 +204,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 		}
 	};
 
-	const handleSearchSubmit = query => {
+	const handleSearchSubmit = (query: string) => {
 		onQueryChange
 			? onQueryChange(query)
 			: history.push(
@@ -341,15 +355,17 @@ const Toolbar: React.FC<IToolbarProps> = ({
 						onRemove={handleFilterRemove}
 						tags={filterBy
 							.map((valuesISet, field) =>
-								valuesISet.filter(Boolean).map(fieldValue => ({
-									field,
-									label: getFilterLabel(
+								(valuesISet ?? Set<string>())
+									.filter(Boolean)
+									.map(fieldValue => ({
 										field,
-										fieldValue,
-										filterByOptions
-									),
-									value: fieldValue
-								}))
+										label: getFilterLabel(
+											field ?? '',
+											fieldValue,
+											filterByOptions
+										),
+										value: fieldValue
+									}))
 							)
 							.flatten()
 							.toArray()}

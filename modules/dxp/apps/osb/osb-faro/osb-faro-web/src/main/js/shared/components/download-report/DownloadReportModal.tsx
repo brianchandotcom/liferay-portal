@@ -17,6 +17,7 @@ export enum ReportType {
 }
 
 interface IDownloadReportModal {
+	children?: React.ReactNode;
 	dateRangeDescription?: string;
 	disabled?: boolean;
 	infoMessage: string;
@@ -45,9 +46,9 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	const history = useHistory();
 	const [openAlert, setOpenAlert] = useState(true);
 	const [submitDisabled, setSubmitDisabled] = useState(false);
-	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
-		initialRangeSelectors
-	);
+	const [rangeSelectors, setRangeSelectors] = useState<
+		RangeSelectors | undefined
+	>(initialRangeSelectors);
 
 	return (
 		<ClayModal observer={observer}>
@@ -124,11 +125,12 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 												)
 											);
 
-											const observer = new MutationObserver(
-												() => {
-													const loadingElement = document.querySelectorAll(
-														'.page-container .loading-animation'
-													);
+											const observer =
+												new MutationObserver(() => {
+													const loadingElement =
+														document.querySelectorAll(
+															'.page-container .loading-animation'
+														);
 
 													if (
 														!loadingElement.length
@@ -137,8 +139,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 
 														onSubmit();
 													}
-												}
-											);
+												});
 
 											observer.observe(document.body, {
 												attributes: true,

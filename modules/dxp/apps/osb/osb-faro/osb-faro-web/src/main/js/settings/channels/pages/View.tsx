@@ -49,7 +49,9 @@ export const ViewContainer: React.FC<Omit<IViewProps, 'channel'>> = ({
 	...otherProps
 }) => {
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.channels.fetch,
+		dataSourceFn: API.channels.fetch as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			channelId: id,
 			groupId
@@ -103,7 +105,7 @@ interface IViewProps
 	extends React.HTMLAttributes<HTMLElement>,
 		PropsFromRedux,
 		IPaginationUnsorted {
-	channel?: Channel;
+	channel: Channel;
 	groupId: string;
 	history: {
 		push: (value: string) => void;
@@ -130,7 +132,7 @@ const View: React.FC<IViewProps> = ({
 		channel.permissionType
 	);
 
-	const updatePermissions = permissionType =>
+	const updatePermissions = (permissionType: number) =>
 		API.channels
 			.update({
 				groupId,
@@ -257,9 +259,8 @@ const View: React.FC<IViewProps> = ({
 												</p>
 											</>
 										),
-										deleteButtonLabel: Liferay.Language.get(
-											'clear-data'
-										),
+										deleteButtonLabel:
+											Liferay.Language.get('clear-data'),
 										deleteConfirmationText: sub(
 											Liferay.Language.get('clear-x'),
 											[name]
@@ -272,9 +273,10 @@ const View: React.FC<IViewProps> = ({
 													ids: [id]
 												})
 												.then(() => {
-													const clearedMessage = Liferay.Language.get(
-														'data-from-x-has-been-cleared'
-													);
+													const clearedMessage =
+														Liferay.Language.get(
+															'data-from-x-has-been-cleared'
+														);
 
 													addAlert({
 														alertType:
@@ -351,9 +353,8 @@ const View: React.FC<IViewProps> = ({
 												</p>
 											</>
 										),
-										deleteButtonLabel: Liferay.Language.get(
-											'delete'
-										),
+										deleteButtonLabel:
+											Liferay.Language.get('delete'),
 										deleteConfirmationText: sub(
 											Liferay.Language.get('delete-x'),
 											[name]
@@ -366,9 +367,10 @@ const View: React.FC<IViewProps> = ({
 													ids: [id]
 												})
 												.then(() => {
-													const deletedMessage = Liferay.Language.get(
-														'x-has-been-deleted'
-													);
+													const deletedMessage =
+														Liferay.Language.get(
+															'x-has-been-deleted'
+														);
 
 													close();
 
@@ -395,7 +397,8 @@ const View: React.FC<IViewProps> = ({
 														defaultChannelId === id
 													) {
 														updateDefaultChannelId({
-															defaultChannelId: null,
+															defaultChannelId:
+																null,
 															groupId
 														});
 													}

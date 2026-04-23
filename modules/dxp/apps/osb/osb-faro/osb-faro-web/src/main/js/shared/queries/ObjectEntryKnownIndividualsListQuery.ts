@@ -1,4 +1,4 @@
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 import {INDIVIDUALS_FRAGMENT} from 'shared/queries/fragments';
 
 export default gql`

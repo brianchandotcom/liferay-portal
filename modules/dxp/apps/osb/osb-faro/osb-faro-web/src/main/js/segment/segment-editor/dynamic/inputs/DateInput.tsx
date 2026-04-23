@@ -13,7 +13,7 @@ interface IEditorDateInputProps extends ISegmentEditorInputBase {
 
 export default class EditorDateInput extends React.Component<IEditorDateInputProps> {
 	@autobind
-	handleDateChange(value) {
+	handleDateChange(value: string) {
 		this.props.onChange({
 			type: PropertyTypes.Date,
 			value

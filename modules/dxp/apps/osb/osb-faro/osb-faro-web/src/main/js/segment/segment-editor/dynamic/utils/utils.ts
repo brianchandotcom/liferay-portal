@@ -61,11 +61,11 @@ export const generateRowId = (): string => `${ROW_ID_NAMESPACE}${uuidv4()}`;
  * Example of returned value: ['group_02', 'group_03']
  */
 export const getChildGroupIds = (criteria: Criteria): string[] => {
-	let childGroupIds = [];
+	let childGroupIds: string[] = [];
 
 	if (isCriterionGroup(criteria) && criteria.items.length) {
 		childGroupIds = criteria.items.reduce(
-			(groupIdList, item) =>
+			(groupIdList: string[], item) =>
 				isCriterionGroup(item)
 					? [
 							...groupIdList,
@@ -73,7 +73,7 @@ export const getChildGroupIds = (criteria: Criteria): string[] => {
 							...getChildGroupIds(item)
 					  ]
 					: groupIdList,
-			[]
+			[] as string[]
 		);
 	}
 
@@ -91,7 +91,7 @@ export const getPropertyNameFromRaw = (propertyLabel: string = ''): string => {
 
 export const getPropertyContextFromRaw = (
 	propertyLabel: string = ''
-): string => {
+): string | null => {
 	const properties = propertyLabel.split('/');
 
 	return properties.length > 1 ? properties[0] : null;
@@ -102,7 +102,9 @@ export const getPropertyContextFromRaw = (
  * Used for displaying the operators available for each criteria row.
  */
 export const getSupportedOperatorsFromType = (type: string = ''): Operator[] =>
-	SUPPORTED_OPERATORS_MAP[type.toLowerCase()] || [];
+	(SUPPORTED_OPERATORS_MAP as Record<string, Operator[]>)[
+		type.toLowerCase()
+	] || [];
 
 /**
  * Checks if value is a CriterionGroup.
@@ -129,7 +131,9 @@ export const isOfKnownType = (key: string): boolean =>
  * Converts an object of key value pairs to a form data object for passing
  * into a fetch body.
  */
-export const objectToFormData = (dataObject: object): FormData => {
+export const objectToFormData = (
+	dataObject: Record<string, string | Blob>
+): FormData => {
 	const formData = new FormData();
 
 	Object.keys(dataObject).forEach(key => {
@@ -167,14 +171,16 @@ export const jsDatetoYYYYMMDD = (dateJsObject: Date): string => {
 export const findPropertyByCriterion = (
 	criterion: Criterion,
 	referencedPropertiesIMap: Map<string, Map<string, Property>>
-): Property => {
+): Property | undefined => {
 	const {operatorName, propertyName, type, value} = criterion;
 
 	if (
 		[
 			CustomFunctionOperators.ActivitiesFilterByCount,
 			NotOperators.NotActivitiesFilterByCount
-		].includes(operatorName)
+		].includes(
+			operatorName as unknown as CustomFunctionOperators | NotOperators
+		)
 	) {
 		const {eventId = propertyName} = parseActivityKey(
 			(value as Map<string, any>).getIn(
@@ -183,12 +189,16 @@ export const findPropertyByCriterion = (
 			)
 		);
 
-		return WEB_BEHAVIORS.find(({name}) => name === eventId);
+		return WEB_BEHAVIORS.find(
+			(property: Property | undefined) => property?.name === eventId
+		);
 	} else if (
 		[
 			CustomFunctionOperators.EventsFilterByCount,
 			NotOperators.NotEventsFilterByCount
-		].includes(operatorName)
+		].includes(
+			operatorName as unknown as CustomFunctionOperators | NotOperators
+		)
 	) {
 		const eventId = value.getIn(
 			['criterionGroup', 'items', 0, 'value'],
@@ -200,16 +210,21 @@ export const findPropertyByCriterion = (
 		[
 			CustomFunctionOperators.AccountsFilter,
 			NotOperators.NotAccountsFilter
-		].includes(operatorName)
+		].includes(
+			operatorName as unknown as CustomFunctionOperators | NotOperators
+		)
 	) {
 		if (getPropertyContextFromRaw(propertyName) !== FieldContexts.Custom) {
-			return ACCOUNT_PROPERTIES.find(({name}) => name === propertyName);
+			return ACCOUNT_PROPERTIES.find(
+				(property: Property | undefined) =>
+					property?.name === propertyName
+			);
 		}
 
 		return referencedPropertiesIMap.getIn(
 			[
 				'account',
-				getPropertyContextFromRaw(propertyName),
+				getPropertyContextFromRaw(propertyName) ?? '',
 				getPropertyNameFromRaw(propertyName)
 			],
 			''
@@ -218,18 +233,21 @@ export const findPropertyByCriterion = (
 		[
 			NotOperators.NotOrganizationsFilter,
 			CustomFunctionOperators.OrganizationsFilter
-		].includes(operatorName)
+		].includes(
+			operatorName as unknown as CustomFunctionOperators & NotOperators
+		)
 	) {
 		if (getPropertyContextFromRaw(propertyName) !== FieldContexts.Custom) {
 			return ORGANIZATION_PROPERTIES.find(
-				({name}) => name === propertyName
+				(property: Property | undefined) =>
+					property?.name === propertyName
 			);
 		}
 
 		return referencedPropertiesIMap.getIn(
 			[
 				'organization',
-				getPropertyContextFromRaw(propertyName),
+				getPropertyContextFromRaw(propertyName) ?? '',
 				getPropertyNameFromRaw(propertyName)
 			],
 			''
@@ -238,19 +256,23 @@ export const findPropertyByCriterion = (
 		[
 			CustomFunctionOperators.SessionsFilter,
 			NotOperators.NotSessionsFilter
-		].includes(operatorName) ||
+		].includes(
+			operatorName as unknown as CustomFunctionOperators | NotOperators
+		) ||
 		type === PropertyTypes.SessionDateTime
 	) {
-		return SESSION_PROPERTIES.find(({name}) => name === propertyName);
+		return SESSION_PROPERTIES.find(
+			(property: Property | undefined) => property?.name === propertyName
+		);
 	} else if (operatorName === CustomFunctionOperators.InterestsFilter) {
-		return createInterestProperty(propertyName);
+		return createInterestProperty(propertyName ?? '');
 	} else if (INDIVIDUAL_PROPERTIES.find(({name}) => name === propertyName)) {
 		return INDIVIDUAL_PROPERTIES.find(({name}) => name === propertyName);
 	} else {
 		return referencedPropertiesIMap.getIn(
 			[
 				'individual',
-				getPropertyContextFromRaw(propertyName),
+				getPropertyContextFromRaw(propertyName) ?? '',
 				getPropertyNameFromRaw(propertyName)
 			],
 			''
@@ -398,7 +420,7 @@ export const convertFieldMappingsToProperties = (
 	> = Map()
 ): Map<string, Map<string, Map<string, Property>>> =>
 	fieldMappingsIMap.map((ownerTypeGroup, key) => {
-		let conversionFn;
+		let conversionFn: ((fieldMappingIMap: any) => Property) | undefined;
 
 		if (key === FieldOwnerTypes.Account) {
 			conversionFn = convertFieldMappingToAccountProperty;
@@ -409,11 +431,15 @@ export const convertFieldMappingsToProperties = (
 		}
 
 		if (conversionFn) {
-			return ownerTypeGroup.map(contextGroup =>
-				contextGroup.reduce(
-					(acc, fieldMappingIMap, key) =>
-						acc.set(key, conversionFn(fieldMappingIMap)),
-					Map()
+			const fn = conversionFn;
+			return ownerTypeGroup!.map(contextGroup =>
+				contextGroup!.reduce(
+					(
+						acc?: Map<string, Property>,
+						fieldMappingIMap?: Map<string, any>,
+						k?: string
+					) => (acc ?? Map()).set(k ?? '', fn(fieldMappingIMap)),
+					Map() as Map<string, Property>
 				)
 			);
 		}
@@ -452,7 +478,7 @@ export const isValid = (value: any): boolean =>
 export const invalidateCriterionWithMissingProperty = (
 	criteria: Criteria,
 	referencedPropertiesIMap: Map<string, Property>
-) => {
+): Criteria => {
 	if (isCriterionGroup(criteria)) {
 		const {items} = criteria;
 
@@ -476,12 +502,14 @@ export const invalidateCriterionWithMissingProperty = (
 			...criteria,
 			valid: isBoolean(criteria.valid)
 				? false
-				: Object.keys(criteria.valid).reduce(
+				: Object.keys(criteria.valid as object).reduce(
 						(acc, key) => ({...acc, [key]: false}),
 						{}
 				  )
 		};
 	}
+
+	return criteria;
 };
 
 export const parseReferencedEntityId = (
@@ -489,7 +517,7 @@ export const parseReferencedEntityId = (
 	referencedEntities: ReferencedEntities,
 	type: EntityType
 ) => {
-	let parsedId = id;
+	let parsedId: string | undefined = id;
 
 	if (
 		type === EntityType.Assets &&
@@ -523,4 +551,6 @@ export const validateSegmentInputs = (criteria: Criteria): boolean => {
 
 		return every(criteria.valid, Boolean);
 	}
+
+	return false;
 };

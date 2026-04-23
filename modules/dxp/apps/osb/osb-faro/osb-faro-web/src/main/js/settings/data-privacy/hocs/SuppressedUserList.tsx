@@ -24,97 +24,108 @@ import {
 	GDPRRequestTypes,
 	Sizes
 } from 'shared/util/constants';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {sub} from 'shared/util/lang';
-import {useMutation} from '@apollo/react-hooks';
+import {useMutation} from '@apollo/client';
 import {User} from 'shared/util/records';
 
 const withData = () =>
 	graphql(
 		SuppressedUsersListQuery,
 		getMetricsMapper(
-			({suppressions: {suppressions, total}}) => ({
+			({
+				suppressions: {suppressions, total}
+			}: {
+				suppressions: {suppressions: any[]; total: number};
+			}) => ({
 				items: suppressions,
 				total
 			}),
 			{
 				fetchPolicy: 'no-cache'
 			},
-			SuppressedUsersListQuery
+			SuppressedUsersListQuery as unknown as null
 		)
 	);
 
-const withQueryOptions = Component => ({
-	addAlert,
-	currentUser,
-	refetch,
-	...otherProps
-}: Pick<ISuppressedUserListProps, 'addAlert' | 'currentUser'> & {
-	refetch: () => Promise<any>;
-}) => {
-	const [unsuppressUser] = useMutation(DataControlRequest);
+const withQueryOptions =
+	(Component: React.ComponentType<any>) =>
+	({
+		addAlert,
+		currentUser,
+		refetch,
+		...otherProps
+	}: Pick<ISuppressedUserListProps, 'addAlert' | 'currentUser'> & {
+		refetch: () => Promise<any>;
+	}) => {
+		const [unsuppressUser] = useMutation(DataControlRequest);
 
-	const authorized = currentUser.isAdmin();
+		const authorized = currentUser.isAdmin();
 
-	return (
-		<Component
-			{...otherProps}
-			renderInlineRowActions={({
-				data: {dataControlTaskStatus, emailAddress}
-			}) =>
-				authorized &&
-				dataControlTaskStatus !== GDPRRequestStatuses.Pending && (
-					<ClayButton
-						className='button-root unsuppress'
-						displayType='secondary'
-						onClick={() => {
-							unsuppressUser({
-								variables: {
-									emailAddresses: [emailAddress],
-									ownerId: String(currentUser.id),
-									types: [GDPRRequestTypes.Unsuppress],
-									userId: String(currentUser.userId),
-									userName: currentUser.name
-								}
-							})
-								.then(() => {
-									addAlert({
-										alertType: Alert.Types.Success,
-										message: sub(
-											Liferay.Language.get(
-												'x-has-been-successfully-unsuppressed'
-											),
-											[emailAddress]
-										) as string
-									});
-
-									refetch();
+		return (
+			<Component
+				{...otherProps}
+				renderInlineRowActions={({
+					data: {dataControlTaskStatus, emailAddress}
+				}: {
+					data: {
+						dataControlTaskStatus: GDPRRequestStatuses;
+						emailAddress: string;
+					};
+				}) =>
+					authorized &&
+					dataControlTaskStatus !== GDPRRequestStatuses.Pending && (
+						<ClayButton
+							className='button-root unsuppress'
+							displayType='secondary'
+							onClick={() => {
+								unsuppressUser({
+									variables: {
+										emailAddresses: [emailAddress],
+										ownerId: String(currentUser.id),
+										types: [GDPRRequestTypes.Unsuppress],
+										userId: String(currentUser.userId),
+										userName: currentUser.name
+									}
 								})
-								.catch(() => {
-									addAlert({
-										alertType: Alert.Types.Error,
-										message: sub(
-											Liferay.Language.get(
-												'there-was-an-error-unsuppressing-x.-please-try-again'
-											),
-											[emailAddress]
-										) as string,
-										timeout: false
+									.then(() => {
+										addAlert({
+											alertType: Alert.Types.Success,
+											message: sub(
+												Liferay.Language.get(
+													'x-has-been-successfully-unsuppressed'
+												),
+												[emailAddress]
+											) as string
+										});
+
+										refetch();
+									})
+									.catch(() => {
+										addAlert({
+											alertType: Alert.Types.Error,
+											message: sub(
+												Liferay.Language.get(
+													'there-was-an-error-unsuppressing-x.-please-try-again'
+												),
+												[emailAddress]
+											) as string,
+											timeout: false
+										});
 									});
-								});
-						}}
-						small
-					>
-						{Liferay.Language.get('unsuppress')}
-					</ClayButton>
-				)
-			}
-		/>
-	);
-};
+							}}
+							small
+						>
+							{Liferay.Language.get('unsuppress')}
+						</ClayButton>
+					)
+				}
+			/>
+		);
+	};
 
 const SuppressedListWithData = withBaseResults(withData, {
-	getColumns: ({timeZoneId}) => [
+	getColumns: ({timeZoneId}: {timeZoneId: string}) => [
 		{
 			accessor: 'emailAddress',
 			className: 'table-cell-expand',
@@ -127,13 +138,13 @@ const SuppressedListWithData = withBaseResults(withData, {
 		},
 		{
 			accessor: 'dataControlTaskCreateDate',
-			dataFormatter: val =>
+			dataFormatter: (val: string) =>
 				formatDateToTimeZone(val, CUSTOM_DATE_FORMAT, timeZoneId),
 			label: Liferay.Language.get('requested-date')
 		},
 		{
 			accessor: 'createDate',
-			dataFormatter: val =>
+			dataFormatter: (val: string) =>
 				formatDateToTimeZone(val, CUSTOM_DATE_FORMAT, timeZoneId),
 			label: Liferay.Language.get('suppression-date')
 		}
@@ -156,9 +167,11 @@ const SuppressedUserList: React.FC<ISuppressedUserListProps> = props => (
 	<Card className='suppressed-user-list-root' pageDisplay>
 		<SuppressedListWithData
 			{...props}
-			checkDisabled={({dataControlTaskStatus}) =>
-				dataControlTaskStatus === GDPRRequestStatuses.Pending
-			}
+			checkDisabled={({
+				dataControlTaskStatus
+			}: {
+				dataControlTaskStatus: GDPRRequestStatuses;
+			}) => dataControlTaskStatus === GDPRRequestStatuses.Pending}
 			entityLabel={Liferay.Language.get('suppressed-users')}
 			noResultsRenderer={
 				<NoResultsDisplay

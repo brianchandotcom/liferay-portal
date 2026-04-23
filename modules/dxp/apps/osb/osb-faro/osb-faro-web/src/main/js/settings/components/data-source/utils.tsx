@@ -4,6 +4,19 @@ import {disconnect} from 'shared/api/data-source';
 import {modalTypes} from 'shared/actions/modals';
 import {Text} from '@clayui/core';
 
+interface IUseDisconnectDataSourceParams {
+	addAlert: (params: {
+		alertType: any;
+		message: string;
+		timeout?: boolean;
+	}) => any;
+	close: () => any;
+	groupId: string;
+	id: string;
+	onSubmit: () => Promise<any> | any;
+	open: (type: any, options?: {[key: string]: any}) => any;
+}
+
 const useDisconnectDataSource = ({
 	addAlert,
 	close,
@@ -11,7 +24,7 @@ const useDisconnectDataSource = ({
 	id,
 	onSubmit,
 	open
-}) => {
+}: IUseDisconnectDataSourceParams) => {
 	const handleDisconnect = useCallback(() => {
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (

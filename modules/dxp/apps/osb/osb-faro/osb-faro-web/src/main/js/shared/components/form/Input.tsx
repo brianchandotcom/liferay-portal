@@ -16,12 +16,14 @@ const INSET_POSITIONS = ['after', 'before'];
 type AppendPositions = 'append' | 'prepend';
 type InsetPositions = 'after' | 'before';
 
-const getOptionalProps = propsConfig => {
-	const validProps = pickBy(propsConfig, ({test, value}) =>
+type PropConfig = {test?: (value: any) => boolean; value: any};
+
+const getOptionalProps = (propsConfig: {[key: string]: PropConfig}) => {
+	const validProps = pickBy(propsConfig, ({test, value}: PropConfig) =>
 		test ? test(value) : value
 	);
 
-	return mapValues(validProps, ({value}) => value);
+	return mapValues(validProps, ({value}: PropConfig) => value);
 };
 
 interface IFormInputProps
@@ -36,7 +38,7 @@ interface IFormInputProps
 	};
 	label: string;
 	mask: any;
-	onChange: (event) => void;
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	popover?: {
 		content: React.ReactNode;
 		title: React.ReactNode;
@@ -105,7 +107,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 	};
 
 	@autobind
-	handleChange(event) {
+	handleChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const {
 			field: {name},
 			form: {setFieldValue},
@@ -129,7 +131,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 			.replace(/\[/g, '.')
 			.replace(/]/g, '')
 			.split('.')
-			.reduce(
+			.reduce<any>(
 				(currentObjectValue, propToAcess) =>
 					currentObjectValue
 						? currentObjectValue[propToAcess]
@@ -138,14 +140,9 @@ export default class FormInput extends React.Component<IFormInputProps> {
 			);
 	}
 
-	renderInput(inputProps) {
-		const {
-			contentAfter,
-			contentAfterEnableMagnet,
-			inset,
-			mask,
-			text
-		} = this.props;
+	renderInput(inputProps: {[key: string]: any}) {
+		const {contentAfter, contentAfterEnableMagnet, inset, mask, text} =
+			this.props;
 
 		const ComponentFn = mask ? MaskedInput : Input;
 

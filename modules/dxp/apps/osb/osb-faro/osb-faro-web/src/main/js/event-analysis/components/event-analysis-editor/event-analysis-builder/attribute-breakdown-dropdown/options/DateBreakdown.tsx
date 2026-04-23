@@ -21,7 +21,7 @@ const DateBreakdown: React.FC<IBreakdownProps> = ({
 			const {dateGrouping} = breakdown;
 
 			return {
-				dateGrouping
+				dateGrouping: dateGrouping ?? DateGroupings.Month
 			};
 		}
 

@@ -22,7 +22,9 @@ const Thumbs: React.FC<IThumbsProps> = ({
 	useEffect(() => {
 		const selectedItem = items.find(({selected}) => selected);
 
-		onSelectThumb(selectedItem);
+		if (selectedItem) {
+			onSelectThumb(selectedItem);
+		}
 	}, [items]);
 
 	const selectThumb = (id: number) => {

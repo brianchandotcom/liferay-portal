@@ -17,7 +17,13 @@ export type Resource = {
 export const UsageOverviewSaaS = () => {
 	const currentUser = useCurrentUser();
 
-	let pageActions = [];
+	let pageActions: {
+		displayType: string;
+		href: string;
+		icon: {symbol: string};
+		label: string;
+		target: string;
+	}[] = [];
 
 	if (currentUser.isAdmin()) {
 		pageActions = [

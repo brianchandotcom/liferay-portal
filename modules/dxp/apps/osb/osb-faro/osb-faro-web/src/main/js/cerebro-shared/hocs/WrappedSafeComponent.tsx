@@ -2,7 +2,7 @@ import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 
-interface IWrappedSafeComponentProps extends React.HTMLAttributes<HTMLElement> {
+interface IWrappedSafeComponentProps {
 	children: (result: any) => React.ReactElement;
 	data: any;
 	error?: any;

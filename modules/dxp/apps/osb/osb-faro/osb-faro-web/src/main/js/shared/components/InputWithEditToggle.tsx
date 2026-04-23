@@ -4,8 +4,7 @@ import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Label from 'shared/components/form/Label';
 import Loading, {Align} from 'shared/components/Loading';
-import React, {createRef, useState} from 'react';
-import {Formik} from 'formik';
+import React, {useRef, useState} from 'react';
 import {Text} from '@clayui/core';
 
 interface IInputWithEditToggleProps {
@@ -14,9 +13,9 @@ interface IInputWithEditToggleProps {
 	inputWidth?: number;
 	label?: string;
 	name?: string;
-	onSubmit: (value, name) => Promise<any>;
+	onSubmit: (value: any, name: string) => Promise<any>;
 	required: boolean;
-	validate: (value) => Promise<any>;
+	validate: (value: any) => Promise<any>;
 	value: string;
 }
 
@@ -33,10 +32,10 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 }) => {
 	const [editing, setEditing] = useState(false);
 
-	const _formRef = createRef<Formik>();
+	const _formRef = useRef<any>(null);
 
-	const handleSubmit = values => {
-		const {resetForm, setSubmitting} = _formRef.current.getFormikActions();
+	const handleSubmit = (values: any) => {
+		const {resetForm, setSubmitting} = _formRef.current;
 
 		if (onSubmit) {
 			onSubmit(values[name], name)
@@ -87,8 +86,8 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 			{editing && (
 				<Form
 					initialValues={{[name]: value}}
+					innerRef={_formRef as any}
 					onSubmit={handleSubmit}
-					ref={_formRef}
 				>
 					{({handleSubmit, isSubmitting, isValid, resetForm}) => (
 						<Form.Form

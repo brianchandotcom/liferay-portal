@@ -31,12 +31,27 @@ interface IInputListProps
 		content: React.ReactNode;
 		position: 'append' | 'prepend';
 	};
-	validationFn: (string) => boolean;
+	validationFn: (value?: string) => boolean | void;
 }
 
-const renderInput: React.FC<
-	{contentAfter; inset; text} & IInputListComponentProps
-> = ({contentAfter, inset, text, ...props}) => {
+type RenderInputProps = {
+	contentAfter?: React.ReactNode;
+	inset?: {
+		content: React.ReactNode;
+		position: 'after' | 'before';
+	};
+	text?: {
+		content: React.ReactNode;
+		position: 'append' | 'prepend';
+	};
+} & IInputListComponentProps;
+
+const renderInput: React.FC<RenderInputProps> = ({
+	contentAfter,
+	inset,
+	text,
+	...props
+}) => {
 	if (!isEmpty(text)) {
 		if (text.position === 'prepend') {
 			return (
@@ -128,7 +143,7 @@ const FormInputList: React.FC<IInputListProps> = ({
 		}
 	}, [inputValue]);
 
-	onChangeInputList(inputValue);
+	onChangeInputList(inputValue || '');
 
 	const classes = getCN(className, {
 		'form-inline-group': inline,
@@ -155,7 +170,7 @@ const FormInputList: React.FC<IInputListProps> = ({
 			<div className='input-group'>
 				{renderInput({
 					contentAfter,
-					inputValue,
+					inputValue: inputValue || '',
 					inset,
 					items,
 					onInputChange,

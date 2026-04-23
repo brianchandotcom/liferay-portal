@@ -14,7 +14,7 @@ export const closeAll = () => ({
 });
 
 export const open = (
-	type,
+	type: string,
 	props: {[key: string]: any} = {},
 	options: {closeOnBlur?: boolean} = {}
 ) => {

@@ -59,6 +59,7 @@ const dateKeys = ['createdDate', 'lastActivityDate'];
 
 interface IAccountMembershipProps {
 	accountData?: Map<string, any>;
+	children?: React.ReactNode;
 	showEmptyState?: boolean;
 }
 

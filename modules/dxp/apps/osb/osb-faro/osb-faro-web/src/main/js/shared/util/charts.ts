@@ -7,7 +7,17 @@ import {INTERVAL_KEY_MAP, isMonthlyRangeKey} from 'shared/util/time';
 import {isNumber} from 'lodash';
 import {Map} from 'immutable';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {toDuration, toRounded, toThousands} from 'shared/util/numbers';
+import {
+	toDuration as toDurationRaw,
+	toRounded,
+	toThousands
+} from 'shared/util/numbers';
+
+const toDuration = toDurationRaw as (
+	time: number | string,
+	format?: string,
+	measurement?: string
+) => string;
 
 export type DataTooltip = {
 	id: string;
@@ -108,7 +118,10 @@ export const dateRangeFormatter = (
  * @param {date} date
  * @param {string} rangeKey
  */
-export const formatTooltipDate = (date, rangeKey) => {
+export const formatTooltipDate = (
+	date: number | string | Date,
+	rangeKey: RangeKeyTimeRanges
+) => {
 	if (
 		rangeKey === RangeKeyTimeRanges.Last24Hours ||
 		rangeKey === RangeKeyTimeRanges.Yesterday
@@ -121,16 +134,18 @@ export const formatTooltipDate = (date, rangeKey) => {
 };
 
 export const formatXAxisDate = (
-	dateKey: Date,
+	dateKey: number | string,
 	rangeKey: string,
 	interval: Interval,
-	dateKeysIMap: Map<Date, [Date, Date?]>
+	dateKeysIMap: Map<number, [number, number | null]>
 ) => {
 	// display date and month
 	let formatter = d3.utcFormat('%b %-d');
 	const monthFormat = d3.utcFormat('%b');
 
-	const [dateStart, dateEnd] = dateKeysIMap.get(dateKey);
+	const dates = dateKeysIMap.get(Number(dateKey));
+	const dateStart = dates ? dates[0] : 0;
+	const dateEnd = dates ? dates[1] : null;
 
 	switch (rangeKey) {
 		case RangeKeyTimeRanges.CustomRange:
@@ -144,11 +159,15 @@ export const formatXAxisDate = (
 				// display date range
 
 				// TODO: Add timezone param
-				return dateRangeFormatter(dateStart, dateEnd, false);
+				return dateRangeFormatter(
+					new Date(dateStart),
+					new Date(dateEnd ?? dateStart),
+					false
+				);
 			}
 			if (interval === INTERVAL_KEY_MAP.month) {
 				// display month
-				return monthFormat(dateStart);
+				return monthFormat(new Date(dateStart));
 			}
 			break;
 		case RangeKeyTimeRanges.Last24Hours:
@@ -160,7 +179,7 @@ export const formatXAxisDate = (
 			break;
 	}
 
-	return formatter(dateStart);
+	return formatter(new Date(dateStart));
 };
 
 /**
@@ -169,11 +188,11 @@ export const formatXAxisDate = (
  * precision.
  * @param {string} type
  */
-export const getAxisFormatter = type => {
+export const getAxisFormatter = (type: string): ((value: number) => string) => {
 	if (type === 'percentage') {
-		return value => `${toRounded(value * 100)}%`;
+		return (value: number) => `${toRounded(value * 100)}%`;
 	} else if (type === 'time') {
-		return value => {
+		return (value: number) => {
 			const displayMilliseconds =
 				value < 2e3 && value !== 1000 ? 'S[ms]' : '';
 
@@ -182,7 +201,7 @@ export const getAxisFormatter = type => {
 			return toDuration(value, format);
 		};
 	} else if (type == 'ratings') {
-		return value => `${(value * 10).toFixed(2)}`;
+		return (value: number) => `${(value * 10).toFixed(2)}`;
 	}
 
 	return getMetricFormatter(type);
@@ -243,12 +262,12 @@ export const getAxisMeasures = (value: number) => {
  * Return the chart max value from a data
  * @param {Array} data
  */
-export const getAxisMeasuresFromData = data =>
+export const getAxisMeasuresFromData = (data: number[][]) =>
 	getAxisMeasures(
 		Math.max(
 			...data
-				.reduce((prev, next) => prev.concat(next), [])
-				.filter(value => typeof value === 'number')
+				.reduce<number[]>((prev, next) => prev.concat(next), [])
+				.filter((value: unknown) => typeof value === 'number')
 		)
 	);
 
@@ -256,7 +275,7 @@ export const getBarColor = (
 	currentBarIndex: number,
 	hoverIndex: number,
 	selectedPoint?: number,
-	color = 'blue'
+	color: keyof typeof BAR_COLORS = 'blue'
 ): string => {
 	if (selectedPoint === currentBarIndex) {
 		return BAR_COLORS[color].selected;
@@ -273,12 +292,13 @@ export const getBarColor = (
  * Return the formatted array to display on charts.
  * @param {string} type
  */
-export const getDataFormatter = type => {
+export const getDataFormatter = (type: string) => {
 	if (type === 'time') {
-		return arr => arr.map(value => Math.round(value / 1e3) * 1e3);
+		return (arr: number[]) =>
+			arr.map((value: number) => Math.round(value / 1e3) * 1e3);
 	}
 
-	return arr => arr;
+	return (arr: number[]) => arr;
 };
 
 /**
@@ -287,7 +307,7 @@ export const getDataFormatter = type => {
  * @param {string} rangeKey
  */
 export const getDateTitle = (
-	dates: [Date, Date?],
+	dates: [number, number | null] | undefined,
 	rangeKey: RangeKeyTimeRanges,
 	interval: Interval
 ): string => {
@@ -298,7 +318,11 @@ export const getDateTitle = (
 	const [startDate, endDate] = dates;
 
 	if (isMonthlyRangeKey(rangeKey) && interval === INTERVAL_KEY_MAP.week) {
-		return dateRangeFormatter(startDate, endDate, true);
+		return dateRangeFormatter(
+			new Date(startDate),
+			new Date(endDate ?? startDate),
+			true
+		);
 	} else if (interval === INTERVAL_KEY_MAP.month) {
 		return moment.utc(startDate).format('YYYY MMM');
 	}
@@ -313,10 +337,10 @@ export const getDateTitle = (
  */
 export const getIntervals = (
 	rangeKey: RangeSelectors['rangeKey'],
-	arr: number[],
+	arr: Array<number | null>,
 	timeInterval: Interval,
 	dateKeysIMap: any
-): number[] => {
+): Array<number | null> => {
 	if (arr.length) {
 		const firstDate = moment(arr[0]);
 		const [lastPeriodStart, lastPeriodEnd] = dateKeysIMap.get(
@@ -340,7 +364,9 @@ export const getIntervals = (
 			validTimeInterval
 		);
 
-		return intervalHandle ? intervalHandle(arr) : arr;
+		return intervalHandle
+			? intervalHandle(arr.filter((v): v is number => v !== null))
+			: arr;
 	}
 
 	return arr;
@@ -349,20 +375,35 @@ export const getIntervals = (
 /**
  * Return the Locations data
  */
-export const getLocationsData = (metrics, location = 'Any') => {
+type LocationMetric = {value: number; valueKey: string};
+type LocationDataItem = {
+	color?: string;
+	group: string;
+	id: string;
+	name: string;
+	total: number;
+	value: string;
+};
+
+export const getLocationsData = (
+	metrics: LocationMetric[],
+	location = 'Any'
+) => {
 	let total = 0;
 
-	metrics.forEach(({value}) => {
+	metrics.forEach(({value}: LocationMetric) => {
 		total += value;
 	});
 
-	const data = metrics.map(({value, valueKey}) => ({
-		group: valueKey,
-		id: valueKey,
-		name: valueKey,
-		total: value,
-		value: `${toRounded((value / total) * 100)}`
-	}));
+	const data: LocationDataItem[] = metrics.map(
+		({value, valueKey}: LocationMetric) => ({
+			group: valueKey,
+			id: valueKey,
+			name: valueKey,
+			total: value,
+			value: `${toRounded((value / total) * 100)}`
+		})
+	);
 
 	let othersLabel;
 
@@ -372,11 +413,13 @@ export const getLocationsData = (metrics, location = 'Any') => {
 		othersLabel = Liferay.Language.get('other-regions');
 	}
 
-	const others = metrics.filter((value, index) => index >= 5);
+	const others = metrics.filter(
+		(value: LocationMetric, index: number) => index >= 5
+	);
 
 	if (others.length > 0) {
 		let totalOthers = 0;
-		others.forEach(({value}) => {
+		others.forEach(({value}: LocationMetric) => {
 			totalOthers += value;
 		});
 
@@ -397,16 +440,18 @@ export const getLocationsData = (metrics, location = 'Any') => {
  * Return the metric formatter
  * @param {string} type
  */
-export const getMetricFormatter = type => {
+export const getMetricFormatter = (
+	type: string
+): ((value: number) => string) => {
 	if (type === 'number') {
-		return value => `${toThousands(value)}`;
+		return (value: number) => `${toThousands(value)}`;
 	} else if (type === 'percentage') {
-		return value => `${toRounded(value * 100)}%`;
+		return (value: number) => `${toRounded(value * 100)}%`;
 	} else if (type === 'time') {
-		return value => toDuration(value);
+		return (value: number) => toDuration(value);
 	} else if (type == 'ratings') {
-		return value => `${(value * 10).toFixed(2)}/10`;
+		return (value: number) => `${(value * 10).toFixed(2)}/10`;
 	} else {
-		return value => value;
+		return (value: number) => String(value);
 	}
 };

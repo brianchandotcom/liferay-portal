@@ -3,6 +3,7 @@ import ClayButton from '@clayui/button';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React, {useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
+import {IExperiment} from '../summary-card/types';
 import {MediansChart} from 'experiments/components/variant-card/MediansChart';
 import {PerDayChart} from 'experiments/components/variant-card/per-day-chart/PerDayChart';
 import {Sizes} from 'shared/util/constants';
@@ -13,7 +14,11 @@ enum VariantView {
 	PerDay = 'per-day'
 }
 
-export const VariantCard = ({experiment}) => {
+export const VariantCard = ({
+	experiment
+}: {
+	experiment: IExperiment & {metricsHistogram?: unknown[]};
+}) => {
 	const [variantView, setVariantView] = useState<VariantView>(
 		VariantView.Medians
 	);
@@ -58,7 +63,9 @@ export const VariantCard = ({experiment}) => {
 
 			<Card.Body>
 				<div className='analytics-variant-card-charts'>
-					<StatesRenderer empty={!experiment.metricsHistogram.length}>
+					<StatesRenderer
+						empty={!experiment.metricsHistogram?.length}
+					>
 						<StatesRenderer.Empty
 							className='my-6'
 							description={Liferay.Language.get(
@@ -74,8 +81,8 @@ export const VariantCard = ({experiment}) => {
 							)}
 						/>
 
-						{!!experiment.metricsHistogram.length && (
-							<Component experiment={experiment} />
+						{!!experiment.metricsHistogram?.length && (
+							<Component experiment={experiment as any} />
 						)}
 					</StatesRenderer>
 

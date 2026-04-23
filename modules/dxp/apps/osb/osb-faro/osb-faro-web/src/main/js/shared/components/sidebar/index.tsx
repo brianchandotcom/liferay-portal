@@ -161,15 +161,16 @@ const Sidebar: React.FC<ISidebarProps> = ({
 							active,
 							label,
 							onClick: active
-								? null
-								: () =>
+								? undefined
+								: () => {
 										API.user
 											.updateLanguage({
 												languageId: id
 											})
 											.then(() =>
 												window.location.reload()
-											)
+											);
+								  }
 						};
 					})
 				}

@@ -10,15 +10,45 @@ import {toThousands} from 'shared/util/numbers';
 const OTHERS = 'others';
 const TOTAL_COUNTRIES_LIST = 5;
 
-const List = ({countries, features, onSelectCountry}) => {
-	const [hoverList, setHoverList] = useState(null);
+interface ICountry {
+	id: string;
+	name: string;
+	total: number;
+	value: number;
+}
 
-	const getLocationName = location =>
+interface IFeatureProperties {
+	name: string;
+	total: number;
+	value: number;
+	[key: string]: any;
+}
+
+interface IFeature {
+	id?: string;
+	properties: IFeatureProperties;
+	[key: string]: any;
+}
+
+interface IListProps {
+	countries: ICountry[];
+	features: IFeature[];
+	onSelectCountry: (feature: IFeature | boolean | null) => void;
+}
+
+const geoMapLangKey: Record<string, string> = GeoMapLangKey;
+
+const List = ({countries, features, onSelectCountry}: IListProps) => {
+	const [hoverList, setHoverList] = useState<number | null>(null);
+
+	const getLocationName = (location: string) =>
 		location.toLowerCase() === OTHERS
 			? Liferay.Language.get('others')
-			: GeoMapLangKey[location];
+			: geoMapLangKey[location];
 
-	const getPathSelected = locationFilter => {
+	const getPathSelected = (
+		locationFilter: string
+	): IFeature | boolean | null => {
 		for (let i = 0; i < features.length; i++) {
 			if (features[i].properties.name.includes(locationFilter)) {
 				return features[i];
@@ -28,7 +58,7 @@ const List = ({countries, features, onSelectCountry}) => {
 		return locationFilter.includes('Other') ? null : true;
 	};
 
-	const handleMouseOverList = (locationList, index) => {
+	const handleMouseOverList = (locationList: string, index: number) => {
 		setHoverList(index < TOTAL_COUNTRIES_LIST ? index : null);
 
 		onSelectCountry(getPathSelected(locationList));
@@ -39,11 +69,11 @@ const List = ({countries, features, onSelectCountry}) => {
 			<tbody>
 				{countries
 					.filter(
-						(value, index) =>
+						(value: ICountry, index: number) =>
 							index < TOTAL_COUNTRIES_LIST || value.id === OTHERS
 					)
-					.map((value, index) => {
-						const classNames = classes =>
+					.map((value: ICountry, index: number) => {
+						const classNames = (classes: string) =>
 							getCN(classes, {
 								['lighten-item']:
 									hoverList !== null && hoverList !== index,
@@ -86,14 +116,14 @@ const List = ({countries, features, onSelectCountry}) => {
 	);
 };
 
-const mergeData = countries => {
+const mergeData = (countries: ICountry[]) => {
 	const countriesJson = require('../../../../resources/META-INF/resources/countries.geo.json');
 	const data = {...countriesJson.data};
 
 	return {
 		...countriesJson,
-		features: data.features.map(feature => {
-			const country = countries.find(country =>
+		features: data.features.map((feature: IFeature) => {
+			const country = countries.find((country: ICountry) =>
 				feature.properties.name.includes(country.id)
 			);
 
@@ -109,12 +139,12 @@ const mergeData = countries => {
 	};
 };
 
-const Tooltip = (payload, metricLabel) => (
+const Tooltip = (payload: IFeature, metricLabel: string) => (
 	<>
 		<div className='arrow' />
 
 		<div className='popover-header'>
-			{GeoMapLangKey[payload.properties.name]}
+			{geoMapLangKey[payload.properties.name]}
 		</div>
 
 		<div className='d-flex justify-content-between popover-body'>
@@ -127,13 +157,22 @@ const Tooltip = (payload, metricLabel) => (
 	</>
 );
 
-export const GeomapCard = ({data, metricLabel}) => {
+interface IGeomapCardProps {
+	data: {
+		countries: ICountry[];
+	};
+	metricLabel: string;
+}
+
+export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 	const mergedData = mergeData(data.countries);
-	const [selectedCountry, setSelectedCountry] = useState(null);
+	const [selectedCountry, setSelectedCountry] = useState<
+		IFeature | boolean | null
+	>(null);
 
 	const chartRef = useRef<any>(null);
 
-	const fillFn = d => {
+	const fillFn = (d: IFeature) => {
 		if (d && d.properties) {
 			const value = d.properties[chartRef.current._color.value];
 
@@ -142,7 +181,11 @@ export const GeomapCard = ({data, metricLabel}) => {
 			}
 
 			if (selectedCountry) {
-				if (d.id === selectedCountry.id) {
+				if (
+					typeof selectedCountry !== 'boolean' &&
+					selectedCountry !== null &&
+					d.id === selectedCountry.id
+				) {
 					return chartRef.current._color.selected;
 				}
 
@@ -163,21 +206,29 @@ export const GeomapCard = ({data, metricLabel}) => {
 			.style('position', 'absolute')
 			.style('display', 'none');
 
-		const handleMouseOver = (_feature, index, selection) => {
+		const handleMouseOver = (
+			_feature: IFeature,
+			index: number,
+			selection: any
+		) => {
 			const node = selection[index];
 
 			d3.select(node).style('fill', chartRef.current._color.selected);
 
-			const html = feature =>
+			const html = (feature: IFeature) =>
 				ReactDOMServer.renderToString(Tooltip(feature, metricLabel));
 
 			tooltip.html(html(_feature)).style('display', null);
 		};
 
-		const handleMouseOut = (_feature, index, selection) => {
+		const handleMouseOut = (
+			_feature: IFeature,
+			index: number,
+			selection: any
+		) => {
 			const node = selection[index];
 
-			d3.select(node).style('fill', value =>
+			d3.select(node).style('fill', (value: any) =>
 				chartRef.current._fillFn(value)
 			);
 
@@ -185,7 +236,13 @@ export const GeomapCard = ({data, metricLabel}) => {
 		};
 
 		const handleMoveTooltip = () => {
-			const {height, width} = tooltip.node().getBoundingClientRect();
+			const tooltipNode = tooltip.node() as HTMLElement | null;
+
+			if (!tooltipNode) {
+				return;
+			}
+
+			const {height, width} = tooltipNode.getBoundingClientRect();
 
 			const tooltipProps = {
 				// @ts-ignore

@@ -46,10 +46,12 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 }) => {
 	const _cachedNameValues = useRef(new Map());
 
-	const handleSubmit = (formValues: {
+	type CreateMappingFormValues = {
 		name: string;
-		type: typeof TYPES[number];
-	}) => {
+		type: {name: string; value: string | null};
+	};
+
+	const handleSubmit = (formValues: CreateMappingFormValues) => {
 		API.fieldMappings
 			.create({
 				groupId,
@@ -103,7 +105,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 				title={Liferay.Language.get('create-new-csv-field')}
 			/>
 
-			<Form
+			<Form<CreateMappingFormValues>
 				initialValues={{name: '', type: {name: '', value: null}}}
 				onSubmit={handleSubmit}
 			>

@@ -25,15 +25,15 @@ export const SummarySection: React.FC<SummarySectionIProps> & {
 	);
 };
 
-const Description = ({value}) => (
+const Description = ({value}: {value: React.ReactNode}) => (
 	<div className='analytics-summary-section-description'>{value}</div>
 );
 
-const Heading = ({value}) => (
+const Heading = ({value}: {value: React.ReactNode}) => (
 	<h2 className='analytics-summary-section-heading'>{value}</h2>
 );
 
-const MetricType = ({value}) => (
+const MetricType = ({value}: {value: React.ReactNode}) => (
 	<div className='analytics-summary-section-metric-type'>
 		<span className='analytics-summary-section-metric-type-icon'>
 			<ClayIcon className='icon-root' symbol='web-content' />
@@ -43,7 +43,7 @@ const MetricType = ({value}) => (
 	</div>
 );
 
-const ProgressBar = ({value}) => (
+const ProgressBar = ({value}: {value: number}) => (
 	<div
 		className={getCN('analytics-summary-section-progress', {
 			complete: value === 100
@@ -56,14 +56,21 @@ const ProgressBar = ({value}) => (
 	</div>
 );
 
-const Variant = ({lift, status}) => {
+const Variant = ({
+	lift,
+	status
+}: {
+	lift: number | string;
+	status: 'up' | 'down';
+}) => {
 	const symbol = status === 'up' ? 'caret-top' : 'caret-bottom';
 
 	return (
 		<div className='analytics-summary-section-variant'>
 			<span
 				className={getCN('analytics-summary-section-variant-status', {
-					[`analytics-summary-section-variant-status-${status}`]: status
+					[`analytics-summary-section-variant-status-${status}`]:
+						status
 				})}
 			>
 				<ClayIcon className='icon-root' symbol={symbol} />

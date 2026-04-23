@@ -14,13 +14,14 @@ import {
 	Metric,
 	ViewsMetric
 } from 'shared/components/metric-card/metrics';
+import {ICommonVariables} from 'shared/types';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const NAME = 'objectEntry';
 
 const ObjectEntryMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
-	const variables = commonVariables =>
+	const variables = (commonVariables: Omit<ICommonVariables, 'type'>) =>
 		useAssetVariables({...commonVariables, type: 'objectEntry'});
 
 	const metrics: Metric[] = [

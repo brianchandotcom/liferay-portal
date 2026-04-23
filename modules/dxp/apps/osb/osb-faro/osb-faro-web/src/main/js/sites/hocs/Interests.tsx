@@ -16,8 +16,9 @@ import {
 	getMapResultToProps,
 	mapPropsToOptions
 } from './mappers/composition-query';
-import {graphql} from '@apollo/react-hoc';
+import {graphql, OperationOption} from '@apollo/client/react/hoc';
 import {pickBy} from 'lodash';
+import {RangeSelectors} from 'shared/types';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useChannelContext} from 'shared/context/channel';
@@ -35,7 +36,7 @@ const withData = () =>
 		graphql(InterestsQuery, {
 			options: mapPropsToOptions,
 			props: getMapResultToProps(CompositionTypes.SiteInterests)
-		}),
+		} as OperationOption<object, object>),
 		withPaginationBar({defaultDelta})
 	);
 
@@ -69,11 +70,17 @@ const TableWithData = withTableData(withData, {
 		maxCount,
 		rangeSelectors,
 		totalCount
+	}: {
+		channelId: string;
+		groupId: string;
+		maxCount: number;
+		rangeSelectors: RangeSelectors;
+		totalCount: number;
 	}) => [
 		compositionListColumns.getName({
 			label: Liferay.Language.get('topic'),
 			maxWidth: 200,
-			routeFn: ({data: {name}}) =>
+			routeFn: ({data: {name}}: {data: {name: string}}) =>
 				name &&
 				setUriQueryValues(
 					pickBy({...rangeSelectors}),
@@ -98,9 +105,12 @@ const TableWithData = withTableData(withData, {
 	rowIdentifier: 'name'
 });
 
-const Interests = ({history}) => {
+const Interests = ({history}: {history: {push: (path: string) => void}}) => {
 	const {selectedChannel} = useChannelContext();
-	const {channelId, groupId} = useParams();
+	const {channelId, groupId} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const {delta, orderIOMap, page} = useQueryPagination({
 		initialOrderIOMap: createOrderIOMap(COUNT)
 	});
@@ -111,7 +121,15 @@ const Interests = ({history}) => {
 
 	const rangeKeys = [Yesterday, Last7Days, Last30Days, Last90Days];
 
-	const handleRangeKeyValueChange = ({rangeEnd, rangeKey, rangeStart}) => {
+	const handleRangeKeyValueChange = ({
+		rangeEnd,
+		rangeKey,
+		rangeStart
+	}: {
+		rangeEnd?: string | null;
+		rangeKey: number | string | null;
+		rangeStart?: string | null;
+	}) => {
 		history.push(
 			setUriQueryValues(
 				pickBy({

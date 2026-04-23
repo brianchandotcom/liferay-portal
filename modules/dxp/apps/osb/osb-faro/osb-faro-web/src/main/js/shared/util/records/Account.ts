@@ -25,16 +25,17 @@ export default class Account
 		status: null,
 		type: EntityTypes.Account
 	})
-	implements IAccount {
-	activitiesCount: number;
-	createTime?: string;
-	id?: string;
-	individualCount: number;
-	name: string;
-	photoURL: string;
-	properties: Map<string, any>;
-	status?: string;
-	type: EntityTypes.Account;
+	implements IAccount
+{
+	declare activitiesCount: number;
+	declare createTime?: string;
+	declare id?: string;
+	declare individualCount: number;
+	declare name: string;
+	declare photoURL: string;
+	declare properties: Map<string, any>;
+	declare status?: string;
+	declare type: EntityTypes.Account;
 
 	constructor(props = {}) {
 		super(props);

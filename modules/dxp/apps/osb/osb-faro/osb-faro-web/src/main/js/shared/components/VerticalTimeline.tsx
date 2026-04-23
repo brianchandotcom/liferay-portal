@@ -58,7 +58,7 @@ type ITimelineItemProps = {
 
 const TimelineItem: FC<ITimelineItemProps> = ({
 	className,
-	initialExpanded,
+	initialExpanded = false,
 	item: {
 		attributes,
 		browserName,
@@ -75,7 +75,7 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 	},
 	timeZoneId
 }) => {
-	const [expanded, setExpanded] = useState(initialExpanded);
+	const [expanded, setExpanded] = useState<boolean>(initialExpanded);
 	const expandable = !!attributes;
 
 	return (
@@ -150,6 +150,7 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 };
 
 const TimelinePanelBody: FC<{
+	children?: React.ReactNode;
 	expandable: boolean;
 	expanded: boolean;
 	setExpanded: (expandable: boolean) => void;
@@ -186,7 +187,7 @@ const TimelinePanelBodyContentDetails: FC<{
 	itemCount: number;
 }> = ({browserName, device, itemCount}) => {
 	const {title: deviceIconTitle, ...otherIconAttributes} =
-		DEVICE_ICONS_MAP[device.toLowerCase()] || DEVICE_ICONS_MAP.any;
+		(DEVICE_ICONS_MAP as any)[device.toLowerCase()] || DEVICE_ICONS_MAP.any;
 
 	return (
 		<div className='timeline-panel-body-content-details'>
@@ -309,7 +310,7 @@ const TimelineItemAttributes: FC<{attributes: UserSessionAttributes}> = ({
 					<TextTruncate
 						className={getCN(
 							'attribute-value',
-							ATTRIBUTE_CLASSES_MAP[key]
+							(ATTRIBUTE_CLASSES_MAP as any)[key]
 						)}
 						title={value || '""'}
 					/>

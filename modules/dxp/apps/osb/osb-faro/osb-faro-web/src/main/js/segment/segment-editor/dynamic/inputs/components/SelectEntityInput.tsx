@@ -69,14 +69,14 @@ const SelectEntityInput: React.FC<ISelectEntityInputProps> = ({
 		const entity = items.first();
 
 		if (items.size === 1) {
-			addEntity({
+			addEntity?.({
 				entityType,
 				payload: Map(entity)
 			});
 
 			onItemsChange(items);
 		} else {
-			addEntities({
+			addEntities?.({
 				entityType,
 				payload: items.map(Map).valueSeq().toArray()
 			});
@@ -112,7 +112,9 @@ const SelectEntityInput: React.FC<ISelectEntityInputProps> = ({
 					dataSourceFn={dataSourceFn}
 					entity={reference && reference.toJS()}
 					error={touched && !valid}
-					initialOrderIOMap={initialOrderIOMap}
+					initialOrderIOMap={
+						initialOrderIOMap as OrderedMap<string, OrderParams>
+					}
 					noResultsProps={{
 						spacer: true,
 						title: getFormattedTitle(entityLabel)

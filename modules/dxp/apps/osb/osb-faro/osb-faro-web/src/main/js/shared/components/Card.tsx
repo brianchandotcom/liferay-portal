@@ -61,10 +61,8 @@ const Card: React.FC<ICardProps> & {
 	reportContainer,
 	testId
 }) => {
-	const {
-		clearReportContainers,
-		setReportContainer
-	} = useDownloadReportContext();
+	const {clearReportContainers, setReportContainer} =
+		useDownloadReportContext();
 
 	useEffect(() => {
 		if (reportContainer) {
@@ -84,7 +82,7 @@ const Card: React.FC<ICardProps> & {
 			className={classes}
 			data-testid={testId}
 			id={reportContainer}
-			style={minHeight && {minHeight: `${minHeight}px`}}
+			style={minHeight ? {minHeight: `${minHeight}px`} : undefined}
 		>
 			{children}
 		</div>

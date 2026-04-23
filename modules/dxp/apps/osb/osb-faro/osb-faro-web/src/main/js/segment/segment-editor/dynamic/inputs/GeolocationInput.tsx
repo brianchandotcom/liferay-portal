@@ -120,8 +120,8 @@ export function updateLocationOperators(
 		name => `context/${name}`
 	);
 
-	return valueIMap.updateIn(['criterionGroup', 'items'], iList =>
-		iList.map(entry => {
+	return valueIMap.updateIn(['criterionGroup', 'items'], (iList: any) =>
+		iList.map((entry: Map<string, any>) => {
 			const locationProperty = locationPropertyNames.includes(
 				entry.get('propertyName')
 			);
@@ -137,15 +137,15 @@ function fetchCountries({
 	channelId,
 	groupId
 }: {
-	channelId: string;
-	groupId: string;
-}): (query: string) => Promise<string[]> {
+	channelId?: string;
+	groupId?: string;
+}): (query?: string) => Promise<string[]> {
 	return query =>
 		API.session
 			.fetchFieldValues({
 				channelId,
 				fieldName: `context/${COUNTRY}`,
-				groupId,
+				groupId: groupId!,
 				query
 			})
 			.then(({items}) => items);
@@ -156,13 +156,13 @@ function fetchRegions({
 	groupId,
 	valueIMap
 }: {
-	channelId: string;
-	groupId: string;
+	channelId?: string;
+	groupId?: string;
 	valueIMap: CustomValue;
-}): (query: string) => Promise<string[]> {
+}): (query?: string) => Promise<string[]> {
 	const countryInputValue = getLocationTypeValue(valueIMap, COUNTRY);
 
-	let filter = [];
+	let filter: string[] = [];
 
 	if (countryInputValue) {
 		filter = [...filter, `context/${COUNTRY} eq '${countryInputValue}'`];
@@ -174,7 +174,7 @@ function fetchRegions({
 				channelId,
 				fieldName: `context/${REGION}`,
 				filter: filter.join(' and '),
-				groupId,
+				groupId: groupId!,
 				query
 			})
 			.then(({items}) => items);
@@ -185,14 +185,14 @@ function fetchCities({
 	groupId,
 	valueIMap
 }: {
-	channelId: string;
-	groupId: string;
+	channelId?: string;
+	groupId?: string;
 	valueIMap: CustomValue;
-}): (query: string) => Promise<string[]> {
+}): (query?: string) => Promise<string[]> {
 	const countryInputValue = getLocationTypeValue(valueIMap, COUNTRY);
 	const regionInputValue = getLocationTypeValue(valueIMap, REGION);
 
-	let filter = [];
+	let filter: string[] = [];
 
 	if (countryInputValue) {
 		filter = [...filter, `context/${COUNTRY} eq '${countryInputValue}'`];
@@ -208,7 +208,7 @@ function fetchCities({
 				channelId,
 				fieldName: `context/${CITY}`,
 				filter: filter.join(' and '),
-				groupId,
+				groupId: groupId!,
 				query
 			})
 			.then(({items}) => items);
@@ -216,7 +216,7 @@ function fetchCities({
 
 interface IButtonInputTriggerProps {
 	className: string;
-	dataSourceFn: (value: string) => Promise<any>;
+	dataSourceFn: (query?: string) => Promise<string[]>;
 	editing: boolean;
 	label: string;
 	onChange: (value: string) => void;
@@ -254,7 +254,7 @@ export default class GeolocationInput extends React.Component<
 	IGeolocationInputProps,
 	{editCity: boolean; editRegion: boolean}
 > {
-	constructor(props) {
+	constructor(props: IGeolocationInputProps) {
 		super(props);
 
 		const {value} = props;
@@ -265,7 +265,7 @@ export default class GeolocationInput extends React.Component<
 		};
 	}
 
-	getConjunctionDateFilterIMap(value) {
+	getConjunctionDateFilterIMap(value: CustomValue) {
 		const conjunctionDateFilterIndex = getIndexFromPropertyName(
 			value,
 			'completeDate'
@@ -282,7 +282,7 @@ export default class GeolocationInput extends React.Component<
 	}
 
 	@autobind
-	handleConjunctionChange(criterion) {
+	handleConjunctionChange(criterion: any) {
 		const {onChange, touched, valid, value} = this.props;
 
 		onChange({
@@ -311,7 +311,7 @@ export default class GeolocationInput extends React.Component<
 	}
 
 	@autobind
-	handleLocationOnBlur(locationType) {
+	handleLocationOnBlur(locationType: string) {
 		const {onChange, value} = this.props;
 
 		const inputValue = getLocationTypeValue(value, locationType);
@@ -326,7 +326,7 @@ export default class GeolocationInput extends React.Component<
 	}
 
 	@autobind
-	handleLocationTypeChange(inputValue, locationType) {
+	handleLocationTypeChange(inputValue: string, locationType: string) {
 		const {onChange, valid, value} = this.props;
 
 		let params: {
@@ -347,10 +347,10 @@ export default class GeolocationInput extends React.Component<
 	}
 
 	@autobind
-	handleOperatorChange(newValue) {
+	handleOperatorChange(newValue: React.Key) {
 		const {onChange, value} = this.props;
 
-		onChange({value: updateLocationOperators(value, newValue)});
+		onChange({value: updateLocationOperators(value, String(newValue))});
 	}
 
 	render() {

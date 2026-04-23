@@ -59,7 +59,9 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 	});
 
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.blockedKeywords.search,
+		dataSourceFn: API.blockedKeywords.search as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			delta,
 			groupId,
@@ -168,7 +170,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 							)
 						});
 
-						selectionDispatch({type: ActionTypes.ClearAll});
+						selectionDispatch?.({type: ActionTypes.ClearAll});
 
 						refetch();
 					})
@@ -278,7 +280,13 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 		);
 	};
 
-	const renderInlineRowActions = ({data: {id}, itemsSelected}) => (
+	const renderInlineRowActions = ({
+		data: {id},
+		itemsSelected
+	}: {
+		data: {id: string};
+		itemsSelected: boolean;
+	}) => (
 		<ClayButton
 			aria-label={Liferay.Language.get('delete')}
 			borderless
@@ -339,7 +347,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 						},
 						{
 							accessor: CREATE_DATE,
-							dataFormatter: date =>
+							dataFormatter: (date: string) =>
 								formatDateToTimeZone(date, 'll', timeZoneId),
 							label: Liferay.Language.get('added')
 						}
@@ -367,4 +375,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 	);
 };
 
-export default compose(connector, withSelectionProvider)(InterestTopics);
+export default compose<React.ComponentType<any>>(
+	connector,
+	withSelectionProvider
+)(InterestTopics);

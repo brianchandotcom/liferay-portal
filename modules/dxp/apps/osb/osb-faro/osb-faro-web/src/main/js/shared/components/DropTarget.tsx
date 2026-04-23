@@ -1,7 +1,8 @@
+import DndProvider from 'shared/components/DndProvider';
 import getCN from 'classnames';
 import React from 'react';
-import {DndProvider, useDrop} from 'react-dnd';
 import {HTML5Backend, NativeTypes} from 'react-dnd-html5-backend';
+import {useDrop} from 'react-dnd';
 
 interface ITargetProps extends React.HTMLAttributes<HTMLElement> {
 	message: React.ReactNode;
@@ -43,7 +44,7 @@ const Target: React.FC<ITargetProps> = ({
 
 export const TYPES = NativeTypes;
 export default Object.assign(
-	props => (
+	(props: any) => (
 		<DndProvider backend={HTML5Backend}>
 			<Target {...props} />
 		</DndProvider>

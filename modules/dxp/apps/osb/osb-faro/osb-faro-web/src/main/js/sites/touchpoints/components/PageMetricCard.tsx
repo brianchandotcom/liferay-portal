@@ -11,6 +11,7 @@ import {
 	ViewsMetric,
 	VisitorsMetric
 } from 'shared/components/metric-card/metrics';
+import {ICommonVariables} from 'shared/types';
 import {
 	PageMetricQuery,
 	PageMetricTabsQuery
@@ -19,7 +20,8 @@ import {ReportContainer} from 'shared/components/download-report/DownloadPDFRepo
 import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
-	const variables = commonVariables => useAssetVariables(commonVariables);
+	const variables = (commonVariables: ICommonVariables) =>
+		useAssetVariables(commonVariables);
 
 	const metrics: Metric[] = [
 		VisitorsMetric,

@@ -3,7 +3,7 @@ import getLocationsMapper, {
 } from 'cerebro-shared/hocs/mappers/locations';
 import SessionLocationsQuery from 'shared/queries/SessionLocationsQuery';
 import URLConstants from 'shared/util/url-constants';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withLocationsCard} from 'cerebro-shared/hocs/LocationsCard';
 

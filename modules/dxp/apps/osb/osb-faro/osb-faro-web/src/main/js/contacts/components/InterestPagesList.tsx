@@ -96,7 +96,13 @@ const InactivePagesList: React.FC<IInterestPages> = ({
 	);
 };
 
-const InterestPagesList = ({dataSourceParams, ...otherProps}) => {
+const InterestPagesList = ({
+	dataSourceParams,
+	...otherProps
+}: {
+	dataSourceParams: {[key: string]: any};
+	[key: string]: any;
+}) => {
 	const {active} = dataSourceParams;
 
 	const PagesListComponent = active ? ActivePagesList : InactivePagesList;

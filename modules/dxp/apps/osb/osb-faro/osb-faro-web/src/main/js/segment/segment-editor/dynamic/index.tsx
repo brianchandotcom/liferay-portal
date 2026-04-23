@@ -2,6 +2,7 @@ import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
 import CriteriaBuilder from './criteria-builder';
 import CriteriaSidebar from './criteria-sidebar';
+import DndProvider from 'shared/components/DndProvider';
 import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
 import Form, {withField} from 'shared/components/form';
 import NavigationWarning from 'shared/components/NavigationWarning';
@@ -13,9 +14,7 @@ import {
 	translateQueryToCriteria,
 	wrapInCriteriaGroup
 } from './utils/odata';
-import {CriterionGroup} from './utils/types';
-import {DndProvider} from 'react-dnd';
-import {Formik} from 'formik';
+import {Criteria, CriterionGroup} from './utils/types';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {
 	invalidateCriterionWithMissingProperty,
@@ -33,7 +32,7 @@ import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 /**
  * Returns an error message if the criteria contains an invalid row.
  */
-export function validateSegmentEditor(criteria) {
+export function validateSegmentEditor(criteria: CriterionGroup | null) {
 	let error;
 
 	if (
@@ -55,8 +54,14 @@ const CriteriaBuilderForm = withField(
 		segmentType,
 		sequential,
 		...fieldProps
+	}: {
+		channelId: string;
+		field: {name: string; value: any};
+		groupId: string;
+		segmentType: SegmentTypes;
+		[key: string]: any;
 	}) => {
-		const handleChange = criteria => {
+		const handleChange = (criteria: Criteria) => {
 			const {
 				form: {setFieldValue}
 			} = fieldProps;
@@ -92,7 +97,7 @@ interface ISegmentEditorProps {
 	onDelete: boolean;
 	onSubmit: (
 		form: FormValues,
-		ref: React.Ref<Formik>,
+		ref: React.RefObject<any>,
 		requestFn: (params: FormValues) => Promise<any>
 	) => void;
 	propertyGroupsIList: List<PropertyGroup>;
@@ -102,15 +107,25 @@ interface ISegmentEditorProps {
 
 class SegmentEditor extends React.Component<ISegmentEditorProps> {
 	static contextType = ReferencedObjectsContext;
+	declare context: React.ContextType<typeof ReferencedObjectsContext>;
 
 	static defaultProps = {
 		segment: new Segment()
 	};
 
-	_formRef = React.createRef<Formik>();
+	state = {
+		enabledSequentialSegment: false
+	};
+
+	_formRef = React.createRef<any>();
 
 	@autobind
-	createSegment({criteria, includeAnonymousUsers, name, sequential}) {
+	createSegment({
+		criteria,
+		includeAnonymousUsers,
+		name,
+		sequential
+	}: FormValues) {
 		const {
 			channelId,
 			groupId,
@@ -123,23 +138,26 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 			: API.individualSegment.create;
 
 		const requestData = {
+			channelId,
 			criteriaString: buildQueryString([criteria]),
 			description: '',
+			groupId,
+			id,
 			includeAnonymousUsers,
 			name: name.trim(),
 			segmentType: type,
 			sequential
 		};
 
-		return request({...requestData, channelId, groupId, id});
+		return request({...requestData});
 	}
 
 	@autobind
 	hasChanges(
-		newIncludeAnonymousUsers,
-		newName,
-		newCriteriaString,
-		newSequential
+		newIncludeAnonymousUsers: boolean,
+		newName: string,
+		newCriteriaString: string,
+		newSequential: boolean
 	) {
 		const {
 			segment: {criteriaString, includeAnonymousUsers, name, sequential}
@@ -154,7 +172,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 	}
 
 	@autobind
-	handleSubmit(form) {
+	handleSubmit(form: FormValues) {
 		const {onSubmit} = this.props;
 
 		onSubmit(form, this._formRef, this.createSegment);
@@ -187,19 +205,19 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 						initialValues={{
 							criteria:
 								id && criteriaString
-									? invalidateCriterionWithMissingProperty(
+									? (invalidateCriterionWithMissingProperty(
 											translateQueryToCriteria(
 												criteriaString
 											),
-											referencedProperties
-									  )
+											referencedProperties as any
+									  ) as CriterionGroup)
 									: wrapInCriteriaGroup([]),
 							includeAnonymousUsers,
 							name,
 							sequential
 						}}
+						innerRef={this._formRef as any}
 						onSubmit={this.handleSubmit}
-						ref={this._formRef}
 					>
 						{({
 							handleSubmit,
@@ -240,7 +258,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 										criteria={criteria}
 										criteriaString={newCriteriaString}
 										groupId={groupId}
-										id={id}
+										id={id ?? ''}
 										includeAnonymousUsers={
 											includeAnonymousUsers
 										}
@@ -263,11 +281,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 													<div className='content-wrapper'>
 														{type ===
 															SegmentTypes.RealTime && (
-															<SegmentEnabledSequentialCard
-																sequential={
-																	sequential
-																}
-															/>
+															<SegmentEnabledSequentialCard />
 														)}
 
 														{segmentState ===
@@ -277,14 +291,14 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 																	{
 																		iconSymbol:
 																			'exclamation-full',
-																		message: Liferay.Language.get(
-																			'some-criteria-are-empty-please-update-to-continue-using-this-segment'
-																		),
+																		message:
+																			Liferay.Language.get(
+																				'some-criteria-are-empty-please-update-to-continue-using-this-segment'
+																			),
 																		title: Liferay.Language.get(
 																			'error'
 																		),
-																		type:
-																			AlertTypes.Danger
+																		type: AlertTypes.Danger
 																	}
 																]}
 															/>

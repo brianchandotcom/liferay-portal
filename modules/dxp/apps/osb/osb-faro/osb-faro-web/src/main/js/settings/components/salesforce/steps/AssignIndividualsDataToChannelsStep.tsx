@@ -5,8 +5,9 @@ import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
-import {Alert} from 'shared/types';
+import {Alert, Modal} from 'shared/types';
 import {ClayCheckbox} from '@clayui/form';
+import {DataSource} from 'shared/util/records';
 import {modalTypes} from 'shared/actions/modals';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
@@ -15,6 +16,15 @@ import {useHistory, useParams} from 'react-router-dom';
 import {useWizardPage} from 'settings/components/base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
+interface IAssignIndividualsDataToPropertiesStepProps {
+	addAlert: Alert.AddAlert;
+	close: Modal.close;
+	onPrev: () => void;
+	onSubmit: (dataSource: DataSource) => void;
+	open: Modal.open;
+	updateDataSourceFn: (params: {[key: string]: any}) => Promise<any>;
+}
+
 const AssignIndividualsDataToPropertiesStep = ({
 	addAlert,
 	close,
@@ -22,10 +32,10 @@ const AssignIndividualsDataToPropertiesStep = ({
 	onSubmit,
 	open,
 	updateDataSourceFn
-}) => {
+}: IAssignIndividualsDataToPropertiesStepProps) => {
 	const history = useHistory();
-	const {groupId} = useParams();
-	const [selectedItems, setSelectedItems] = useState([]);
+	const {groupId = ''} = useParams<{groupId: string}>();
+	const [selectedItems, setSelectedItems] = useState<string[]>([]);
 	const [allChannelsSelected, setAllChannelsSelected] = useState(false);
 	const {dataSource} = useWizardPage();
 	const [loading, setLoading] = useState(false);
@@ -40,7 +50,7 @@ const AssignIndividualsDataToPropertiesStep = ({
 				channelsConfiguration
 					.get('channels')
 					.toJS()
-					.map(channel => channel.channelId)
+					.map((channel: {channelId: string}) => channel.channelId)
 			);
 			setAllChannelsSelected(
 				channelsConfiguration.get('enableAllChannels')
@@ -52,6 +62,10 @@ const AssignIndividualsDataToPropertiesStep = ({
 		<ClayForm
 			onSubmit={async event => {
 				event.preventDefault();
+
+				if (!dataSource) {
+					return;
+				}
 
 				try {
 					setLoading(true);

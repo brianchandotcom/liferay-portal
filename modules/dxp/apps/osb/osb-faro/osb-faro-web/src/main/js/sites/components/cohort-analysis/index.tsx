@@ -33,11 +33,13 @@ interface ICohortCardProps {
 	visitorsType: VisitorsType;
 }
 
+type FormattedHeatMap = Record<string, CohortHeatMapType[]>;
+
 export default class CohortCard extends React.Component<ICohortCardProps> {
-	formatCohortHeatMap(items) {
+	formatCohortHeatMap(items: RawHeatMapType[]): FormattedHeatMap {
 		const {interval, visitorsType} = this.props;
 
-		return items.reduce(
+		return items.reduce<FormattedHeatMap>(
 			(acc, {colDimension, retention, rowDimension, rowKey, value}) => {
 				const period = parseInt(colDimension);
 
@@ -47,14 +49,14 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 							? getColorHex(retention, visitorsType)
 							: null,
 					date: rowKey,
-					dateLabelFn: (date, abbreviated) =>
+					dateLabelFn: (date: string, abbreviated: boolean) =>
 						formatDate(date, interval, abbreviated),
 					periodLabel: getPeriodLabel(period, interval),
 					retention,
 					value
 				};
 
-				const row = get(acc, rowDimension, []);
+				const row = get(acc, rowDimension, [] as CohortHeatMapType[]);
 
 				acc[rowDimension] = row.concat(item);
 
@@ -64,11 +66,11 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 		);
 	}
 
-	getAggregatedCounts(formattedData) {
+	getAggregatedCounts(formattedData: CohortHeatMapType[][]) {
 		return formattedData[0];
 	}
 
-	getDateLabels(formattedData) {
+	getDateLabels(formattedData: CohortHeatMapType[][]) {
 		return formattedData.map(row => {
 			const {date, dateLabelFn} = row[0];
 
@@ -76,7 +78,7 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 		});
 	}
 
-	getHeatMapData(formattedData) {
+	getHeatMapData(formattedData: FormattedHeatMap): CohortHeatMapType[][] {
 		return Object.values(formattedData).slice(1) as CohortHeatMapType[][];
 	}
 
@@ -89,7 +91,7 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 
 		const heatMapData = this.getHeatMapData(formattedData);
 
-		const aggregatedCounts = this.getAggregatedCounts(formattedData);
+		const aggregatedCounts = this.getAggregatedCounts(heatMapData);
 
 		return (
 			<CohortChart
@@ -97,7 +99,7 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 				data={heatMapData}
 				dateLabels={this.getDateLabels(heatMapData)}
 				periodLabels={aggregatedCounts.map(
-					({periodLabel}) => periodLabel
+					({periodLabel}: CohortHeatMapType) => periodLabel
 				)}
 			/>
 		);

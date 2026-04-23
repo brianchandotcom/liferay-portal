@@ -106,7 +106,7 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 	}
 }
 
-export default compose(
+export default compose<React.ComponentType<any>>(
 	withReferencedObjectsConsumer,
 	dropTarget(
 		DragTypes.Property,

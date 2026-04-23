@@ -1,11 +1,10 @@
 import Card from 'shared/components/Card';
 import getCN from 'classnames';
 import React from 'react';
-import {Status} from './types';
 import {SummaryTitle} from './SummaryTitle';
 
 interface SummaryBaseCardIProps extends React.HTMLAttributes<HTMLElement> {
-	status?: Status;
+	status?: string;
 }
 
 const Body: React.FC<React.HTMLAttributes<HTMLElement>> = ({children}) => (
@@ -16,7 +15,13 @@ const Footer: React.FC<React.HTMLAttributes<HTMLElement>> = ({children}) => (
 	<Card.Footer>{children}</Card.Footer>
 );
 
-const Header = ({Description, title}) => (
+const Header = ({
+	Description,
+	title
+}: {
+	Description?: React.ComponentType;
+	title: React.ReactNode;
+}) => (
 	<Card.Header>
 		<SummaryTitle className='mb-2' label={title} />
 

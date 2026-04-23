@@ -12,11 +12,12 @@ import {
 	Job,
 	JOB_RUN_DATA_PERIODS_LIST,
 	JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP,
+	JobParameter,
 	JobProperty
 } from 'settings/recommendations/utils/utils';
 import {get} from 'lodash';
 import {JobRunDataPeriods} from 'shared/util/constants';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 const ACTIVITIES_THRESHOLD = 1000;
 
@@ -40,11 +41,13 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 		}
 	);
 
-	const itemFilters: Filter[] = get(job, 'parameters', []).filter(
-		({name}) => name !== 'includePreviousPeriod'
+	const itemFilters: JobParameter[] = get(job, 'parameters', []).filter(
+		({name}: JobParameter) => name !== 'includePreviousPeriod'
 	);
 
-	const propertyFilters: JobProperty[] = getPropertiesFromItems(itemFilters);
+	const propertyFilters: JobProperty[] = getPropertiesFromItems(
+		itemFilters as Filter[]
+	);
 
 	const validateActivitiesCount = (
 		JobRunDataPeriod: JobRunDataPeriods

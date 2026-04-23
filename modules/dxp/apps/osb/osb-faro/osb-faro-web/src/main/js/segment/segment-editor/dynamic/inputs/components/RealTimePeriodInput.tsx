@@ -22,8 +22,8 @@ export const DEFAULT_OPTIONS = {
 
 const RealTimePeriodInput: React.FC<IRealTimePeriodInputProps> = ({
 	initialInterval = DEFAULT_OPTIONS.interval,
-	onChange,
-	initialTimeWindow = DEFAULT_OPTIONS.timeWindow
+	initialTimeWindow = DEFAULT_OPTIONS.timeWindow,
+	onChange
 }) => {
 	const [interval, setInterval] = useState<number>(initialInterval);
 	const [timeWindow, setTimeWindow] = useState(initialTimeWindow);
@@ -33,20 +33,22 @@ const RealTimePeriodInput: React.FC<IRealTimePeriodInputProps> = ({
 		return Array.from({length: max}, (_, i) => i + 1);
 	}, [timeWindow]);
 
-	const handleIntervalChange = (value: number) => {
-		setInterval(value);
-		onChange(value, timeWindow);
+	const handleIntervalChange = (value: React.Key) => {
+		const numberVal = Number(value);
+		setInterval(numberVal);
+		onChange(numberVal, timeWindow);
 	};
 
-	const handleTimePeriodChange = (newKey: string) => {
+	const handleTimePeriodChange = (newKey: React.Key) => {
+		const newKeyStr = String(newKey);
 		let newInterval = interval;
-		if (interval > HOURS_IN_A_DAY && newKey === HOURS) {
+		if (interval > HOURS_IN_A_DAY && newKeyStr === HOURS) {
 			newInterval = HOURS_IN_A_DAY;
 			setInterval(newInterval);
 		}
 
-		setTimeWindow(newKey);
-		onChange(newInterval, newKey);
+		setTimeWindow(newKeyStr);
+		onChange(newInterval, newKeyStr);
 	};
 
 	return (

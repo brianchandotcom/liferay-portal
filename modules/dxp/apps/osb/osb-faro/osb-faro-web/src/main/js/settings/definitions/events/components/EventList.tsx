@@ -31,7 +31,7 @@ import {OrderedMap} from 'immutable';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {
 	useSelectionContext,
@@ -68,7 +68,9 @@ const EventList: React.FC<IEventListProps> = ({
 			keyword: query,
 			page: page - 1,
 			size: delta,
-			sort: getSortFromOrderIOMap(orderIOMap)
+			sort: getSortFromOrderIOMap(
+				orderIOMap
+			) as EventDefinitionsVariables['sort']
 		}
 	});
 
@@ -82,7 +84,7 @@ const EventList: React.FC<IEventListProps> = ({
 			hideEventDefinitions: Event[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
-				selectionDispatch({
+				selectionDispatch?.({
 					payload: {
 						items: hideEventDefinitions
 					},
@@ -102,7 +104,7 @@ const EventList: React.FC<IEventListProps> = ({
 			unhideEventDefinitions: Event[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
-				selectionDispatch({
+				selectionDispatch?.({
 					payload: {
 						items: unhideEventDefinitions
 					},
@@ -245,7 +247,7 @@ const EventList: React.FC<IEventListProps> = ({
 	};
 
 	const hasUnhiddenEvent = (events: OrderedMap<string, Event>) =>
-		events.some(({hidden}) => !hidden);
+		events.some(event => !event?.hidden);
 
 	return (
 		<CrossPageSelect
@@ -283,11 +285,10 @@ const EventList: React.FC<IEventListProps> = ({
 										className='button-root nav-btn'
 										displayType='secondary'
 										onClick={() => {
-											const hideEventFn = hasUnhiddenEvent(
-												selectedItems
-											)
-												? handleHideEvents
-												: handleUnhideEvents;
+											const hideEventFn =
+												hasUnhiddenEvent(selectedItems)
+													? handleHideEvents
+													: handleUnhideEvents;
 
 											hideEventFn(
 												selectedItems.toArray()

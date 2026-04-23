@@ -65,7 +65,10 @@ interface IAssetsProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const Assets: React.FC<IAssetsProps> = ({className, router}) => {
-	const {channelId, groupId} = useParams();
+	const {channelId, groupId} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
 	const currentUser = useCurrentUser();
@@ -100,7 +103,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
-							disabled={dataSourceStates.empty}
+							disabled={!!dataSourceStates.empty}
 							type={CSVType.Blog}
 							typeLang={Liferay.Language.get('blogs')}
 						/>
@@ -112,7 +115,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
-							disabled={dataSourceStates.empty}
+							disabled={!!dataSourceStates.empty}
 							type={CSVType.Document}
 							typeLang={Liferay.Language.get(
 								'documents-and-media'
@@ -125,7 +128,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
-							disabled={dataSourceStates.empty}
+							disabled={!!dataSourceStates.empty}
 							type={CSVType.Form}
 							typeLang={Liferay.Language.get('forms')}
 						/>
@@ -136,7 +139,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
-							disabled={dataSourceStates.empty}
+							disabled={!!dataSourceStates.empty}
 							type={CSVType.Journal}
 							typeLang={Liferay.Language.get('web-content')}
 						/>

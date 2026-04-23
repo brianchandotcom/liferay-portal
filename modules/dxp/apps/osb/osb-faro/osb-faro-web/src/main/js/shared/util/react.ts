@@ -1,23 +1,28 @@
+import {ComponentType} from 'react';
 import {isEqual} from 'lodash';
 
-export const getDisplayName = WrappedComponent =>
+export const getDisplayName = (WrappedComponent: ComponentType<any>): string =>
 	WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
-type HasChanges = <T>(
-	prev: T | object,
-	next: T | object,
-	...keys: string[]
+type HasChanges = <T extends object>(
+	prev: T,
+	next: T,
+	...keys: Array<keyof T | string>
 ) => boolean;
 
 /**
  * Compare previous state or props object by provided keys to detect changes.
  */
-export const hasChanges: HasChanges = (prev = {}, next = {}, ...keys) => {
+export const hasChanges: HasChanges = (
+	prev = {} as any,
+	next = {} as any,
+	...keys
+) => {
 	for (const key of keys) {
-		if (key in next) {
-			const newVal = next[key];
+		if ((key as string) in next) {
+			const newVal = (next as Record<string, unknown>)[key as string];
 
-			const prevVal = prev[key];
+			const prevVal = (prev as Record<string, unknown>)[key as string];
 
 			if (!isEqual(newVal, prevVal)) {
 				return true;

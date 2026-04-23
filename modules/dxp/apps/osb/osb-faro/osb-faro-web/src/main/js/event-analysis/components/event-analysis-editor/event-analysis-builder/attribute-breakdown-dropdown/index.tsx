@@ -28,14 +28,14 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {DISPLAY_NAME} from 'shared/util/pagination';
 import {OrderByDirections} from 'shared/util/constants';
 import {SafeResults} from 'shared/hoc/util';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 const connector = connect(null, {close, open});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IAttributeBreakdownDropdownProps extends PropsFromRedux {
-	alignmentPosition?: typeof Align[keyof typeof Align];
+	alignmentPosition?: (typeof Align)[keyof typeof Align];
 	attribute?: Attribute;
 	breakdown?: Breakdown;
 	disabledIds: string[];
@@ -45,7 +45,9 @@ interface IAttributeBreakdownDropdownProps extends PropsFromRedux {
 	uneditableIds: string[];
 }
 
-const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = ({
+const AttributeBreakdownDropdown: React.FC<
+	IAttributeBreakdownDropdownProps
+> = ({
 	alignmentPosition = Align.RightTop,
 	attribute,
 	breakdown,
@@ -57,14 +59,11 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 	trigger,
 	uneditableIds
 }) => {
-	const [
-		attributeOwnerType,
-		setAttributeOwnerType
-	] = useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
+	const [attributeOwnerType, setAttributeOwnerType] =
+		useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
 	const [query, setQuery] = useState('');
-	const [selectedAttribute, setSelectedAttribute] = useState<Attribute>(
-		breakdown ? attribute : null
-	);
+	const [selectedAttribute, setSelectedAttribute] =
+		useState<Attribute | null>(breakdown && attribute ? attribute : null);
 
 	const result = useQuery<
 		EventAttributeDefinitionsData,
@@ -110,7 +109,9 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 				if (!active) {
 					setAttributeOwnerType(AttributeOwnerTypes.Event);
 					setQuery('');
-					setSelectedAttribute(breakdown ? attribute : null);
+					setSelectedAttribute(
+						breakdown && attribute ? attribute : null
+					);
 				}
 			}}
 			trigger={trigger}
@@ -143,29 +144,35 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 											eventAttributeDefinitions: Attribute[];
 										};
 									}) => {
-										const modifiedEventAttributeDefinitions = getModifiedEventAttributeDefinitions(
-											{
-												attribute,
-												attributeOwnerType,
-												eventAttributeDefinitions
-											}
-										);
+										const modifiedEventAttributeDefinitions =
+											getModifiedEventAttributeDefinitions(
+												{
+													attribute: attribute!,
+													attributeOwnerType,
+													eventAttributeDefinitions
+												}
+											);
 
 										return (
 											<BaseDropdown.SearchableList
-												activeId={attributeId}
+												activeId={
+													attributeId ?? undefined
+												}
 												disabledIds={disabledIds}
 												items={
 													modifiedEventAttributeDefinitions
 												}
-												onEditClick={(
-													attribute: Attribute
-												) => {
+												onEditClick={item => {
+													if (!item) {
+														return;
+													}
+
 													open(
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 														{
-															id: attribute.id,
-															mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+															id: item.id,
+															mutation:
+																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EventAttributeDefinitionQuery,
 															showTypecast: true
@@ -174,9 +181,9 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 
 													setActive(false);
 												}}
-												onItemClick={(
-													attribute: Attribute
-												) => {
+												onItemClick={item => {
+													const attribute =
+														item as Attribute;
 													const {
 														dataType,
 														description,
@@ -192,12 +199,16 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 													onAttributeSelect({
 														attribute,
 														breakdown: breakdownFn({
-															attributeId: newAttributeId,
-															attributeType: attributeOwnerType,
+															attributeId:
+																newAttributeId,
+															attributeType:
+																attributeOwnerType,
 															description,
-															displayName
+															displayName:
+																displayName ??
+																''
 														}),
-														id: breakdownId
+														id: breakdownId ?? ''
 													});
 
 													setActive(false);
@@ -230,28 +241,29 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 						>
 							<div className='w-100'>
 								<BreakdownOptions
-									attribute={selectedAttribute}
+									attribute={selectedAttribute!}
 									attributeOwnerType={attributeOwnerType}
-									breakdownId={breakdownId}
+									breakdownId={breakdownId ?? undefined}
 									onActiveChange={setActive}
-									onAttributeChange={params => {
+									onAttributeChange={(params: Attribute) => {
 										setSelectedAttribute(params);
 									}}
 									onEditClick={
 										uneditableIds &&
+										selectedAttribute &&
 										uneditableIds.some(
 											uneditableAttributeId =>
 												uneditableAttributeId ===
 												selectedAttribute.id
 										)
-											? null
+											? undefined
 											: () => {
 													open(
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 														{
-															id:
-																selectedAttribute.id,
-															mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+															id: selectedAttribute?.id,
+															mutation:
+																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EventAttributeDefinitionQuery,
 															showTypecast: true

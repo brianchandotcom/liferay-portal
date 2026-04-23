@@ -4,7 +4,7 @@ import FormMetricsQuery from 'shared/queries/FormMetricsQuery';
 import HTMLBarChart from 'shared/components/HTMLBarChart';
 import React from 'react';
 import {compose} from 'redux';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {HOC_CARD_PROPTYPES} from 'shared/util/proptypes';
 import {
 	mapPropsToOptions,

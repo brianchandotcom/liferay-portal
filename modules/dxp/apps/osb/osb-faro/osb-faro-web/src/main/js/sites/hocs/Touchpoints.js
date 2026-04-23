@@ -13,7 +13,7 @@ import {
 } from 'shared/hoc';
 import {createOrderIOMap, VISITORS_METRIC} from 'shared/util/pagination';
 import {getRangeSelectorsFromQuery} from 'shared/util/util';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {
 	metricsListColumns,
 	sitePagesListColumns
@@ -22,14 +22,16 @@ import {Routes} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 
 // LRAC-6976 POC TEMP
-const withData = (useDB = false) => () =>
-	graphql(
-		useDB ? TOUCHPOINTS_QUERY_TEST : TouchpointsQuery,
-		getMetricsMapper(result => ({
-			items: result.pages.assetMetrics,
-			total: result.pages.total
-		}))
-	);
+const withData =
+	(useDB = false) =>
+	() =>
+		graphql(
+			useDB ? TOUCHPOINTS_QUERY_TEST : TouchpointsQuery,
+			getMetricsMapper(result => ({
+				items: result.pages.assetMetrics,
+				total: result.pages.total
+			}))
+		);
 
 // LRAC-6976 POC TEMP
 const getTableWithData = useDB => {

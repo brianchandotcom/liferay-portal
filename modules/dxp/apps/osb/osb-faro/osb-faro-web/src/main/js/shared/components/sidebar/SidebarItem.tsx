@@ -25,7 +25,7 @@ const SidebarItem: React.FC<ISidebarItemProps> = ({
 	const sidebatItemContent = (
 		<span className='link-content-wrapper'>
 			<span className='icon-wrapper'>
-				<ClayIcon className='icon-root' symbol={icon} />
+				<ClayIcon className='icon-root' symbol={icon ?? ''} />
 			</span>
 
 			<span className='item-label'>{label}</span>

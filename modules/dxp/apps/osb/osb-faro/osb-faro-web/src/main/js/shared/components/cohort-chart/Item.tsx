@@ -12,7 +12,8 @@ const Item: React.FC<CohortHeatMapType> = ({
 	retention,
 	value
 }) => {
-	const _ref = useRef();
+	// eslint-disable-next-line no-undef
+	const _ref = useRef<HTMLTableDataCellElement>(null);
 
 	const [visible, setVisible] = useState(false);
 
@@ -39,20 +40,20 @@ const Item: React.FC<CohortHeatMapType> = ({
 			onMouseOut={handleMouseOut}
 			onMouseOver={handleMouseOver}
 			ref={_ref}
-			style={{background: colorHex}}
+			style={{background: colorHex || undefined}}
 		>
 			<span className='retention'>{`${retention.toFixed(2)}%`}</span>
 
 			{ReactDOM.createPortal(
 				<Popover
-					alignElement={_ref.current}
+					alignElement={_ref.current!}
 					content={content}
 					title={sub(Liferay.Language.get('x-cohort'), [
 						dateLabelFn(date, true)
 					])}
 					visible={visible}
 				/>,
-				document.querySelector('body.dxp')
+				document.querySelector('body.dxp') || document.body
 			)}
 		</td>
 	);

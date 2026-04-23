@@ -24,8 +24,11 @@ const {
 const MAX_DELTA = 500;
 
 const Overview = () => {
-	const [dataSources, setDataSources] = useState(null);
-	const {channelId, groupId} = useParams();
+	const [dataSources, setDataSources] = useState<DataSource[] | null>(null);
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const currentUser = useCurrentUser();
 	const authorized = currentUser.isAdmin();
 	const dataSourceStates = useDataSource();
@@ -39,7 +42,7 @@ const Overview = () => {
 				page: cur,
 				query: ''
 			})
-			.then(({items}) => {
+			.then(({items}: {items: unknown[]}) => {
 				setDataSources(items.map(item => new DataSource(fromJS(item))));
 			});
 	}, []);
@@ -103,7 +106,7 @@ const Overview = () => {
 
 							<div className='col-xl-4'>
 								<EnrichedProfilesCard
-									dataSources={dataSources}
+									dataSources={dataSources ?? []}
 								/>
 							</div>
 						</div>

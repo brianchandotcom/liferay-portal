@@ -1,10 +1,11 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
-import {DocumentNode} from 'apollo-boost';
+import {DocumentNode, useQuery} from '@apollo/client';
+
 import {NetworkState} from 'shared/util/constants';
 import {useDebounce} from 'shared/hooks/useDebounce';
-import {useQuery} from '@apollo/react-hooks';
+
 import {useRequest} from 'shared/hooks/useRequest';
 
 type TMappedData = {
@@ -68,7 +69,7 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 		};
 	} else {
 		response = useRequest({
-			dataSourceFn: ({value}) => dataSourceFn(value),
+			dataSourceFn: (({value}: any) => dataSourceFn?.(value)) as any,
 			debounceDelay: DEBOUNCE_DELAY,
 			initialState: {
 				data: [],

@@ -31,7 +31,7 @@ export const fetchFieldValues = ({
 			delta,
 			fieldName,
 			filter,
-			query: escapeSingleQuotes(query)
+			query: query ? escapeSingleQuotes(query) : query
 		},
 		method: 'GET',
 		path: `contacts/${groupId}/session/values`

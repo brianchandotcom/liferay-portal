@@ -1,4 +1,4 @@
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 export const BROWSER_FRAGMENT = gql`
 	fragment browserFragment on Metric {

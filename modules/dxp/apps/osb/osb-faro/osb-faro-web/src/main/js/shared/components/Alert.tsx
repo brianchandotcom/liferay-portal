@@ -70,7 +70,7 @@ const Alert: React.FC<IAlertProps> = ({
 			{children}
 
 			{onClose && (
-				<button className='close' onClick={() => onClose(id)}>
+				<button className='close' onClick={() => onClose(id!)}>
 					<ClayIcon className='icon-root' symbol='times' />
 				</button>
 			)}

@@ -3,7 +3,7 @@ import {compile} from 'shared/util/path-to-regexp';
 import {invert, isEmpty, isString, memoize} from 'lodash';
 import {matchPath} from 'react-router-dom';
 
-function createURL(href) {
+function createURL(href: string): URL {
 	try {
 		return new URL(href);
 	} catch {
@@ -11,15 +11,15 @@ function createURL(href) {
 	}
 }
 
-function isDef(param) {
+function isDef(param: unknown): boolean {
 	return param !== null && param !== undefined;
 }
 
-function addParam(url, key, value) {
+function addParam(url: URL, key: string, value: unknown): void {
 	url.searchParams.delete(key);
 
 	if (isDef(key) && isDef(value)) {
-		url.searchParams.append(key, value);
+		url.searchParams.append(key, String(value));
 	}
 }
 
@@ -173,23 +173,24 @@ export const Routes = buildRoutes({
 												'/interests/:interestId',
 											CONTACTS_INDIVIDUALS_INTERESTS:
 												'/interests',
-											CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS: {
-												path: '/known-individuals',
-												routes: {
-													CONTACTS_INDIVIDUAL: {
-														path: '/:id',
-														routes: {
-															CONTACTS_INDIVIDUAL_DETAILS:
-																'/details',
-															CONTACTS_INDIVIDUAL_INTEREST_DETAILS:
-																'/interests/:interestId',
-															CONTACTS_INDIVIDUAL_INTERESTS:
-																'/interests',
-															CONTACTS_INDIVIDUAL_SEGMENTS: `/${SEGMENTS}`
+											CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS:
+												{
+													path: '/known-individuals',
+													routes: {
+														CONTACTS_INDIVIDUAL: {
+															path: '/:id',
+															routes: {
+																CONTACTS_INDIVIDUAL_DETAILS:
+																	'/details',
+																CONTACTS_INDIVIDUAL_INTEREST_DETAILS:
+																	'/interests/:interestId',
+																CONTACTS_INDIVIDUAL_INTERESTS:
+																	'/interests',
+																CONTACTS_INDIVIDUAL_SEGMENTS: `/${SEGMENTS}`
+															}
 														}
 													}
 												}
-											}
 										}
 									},
 									// Deprecated - Prefer the more specific routes for the entity type
@@ -389,7 +390,9 @@ export function buildRoutes(
 		} else {
 			routes[key] = prefix + pathOrConfig.path;
 
-			buildRoutes(pathOrConfig.routes, routes, routes[key]);
+			if (pathOrConfig.routes) {
+				buildRoutes(pathOrConfig.routes, routes, routes[key]);
+			}
 		}
 	}
 
@@ -399,7 +402,7 @@ export function buildRoutes(
 const getCompiledRoute = memoize(compile);
 
 export function toRoute(route: string, options?: {[key: string]: any}) {
-	return getCompiledRoute(route)(options);
+	return getCompiledRoute(route)(options || {});
 }
 
 const ROUTE_TO_TYPE_MAP = {
@@ -427,7 +430,11 @@ export const assetTypePaths = {
 	journal: Routes.ASSETS_WEB_CONTENT_OVERVIEW
 };
 
-export const toAssetOverviewRoute = (assetType, routeParams, query) => {
+export const toAssetOverviewRoute = (
+	assetType: keyof typeof assetTypePaths,
+	routeParams: {[key: string]: any},
+	query: {[key: string]: any}
+) => {
 	let route = '';
 
 	if (assetType === 'blog') {
@@ -442,15 +449,17 @@ export const toAssetOverviewRoute = (assetType, routeParams, query) => {
 	return !isEmpty(query) ? setUriQueryValues(query, route) : route;
 };
 
-export function getType(routeName) {
+export function getType(routeName: keyof typeof ROUTE_TO_TYPE_MAP) {
 	return ROUTE_TO_TYPE_MAP[routeName];
 }
 
-export function getRouteName(type) {
+export function getRouteName(type: keyof typeof TYPE_TO_ROUTE_MAP) {
 	return TYPE_TO_ROUTE_MAP[type];
 }
 
-export function getDataSourceType(routeName) {
+export function getDataSourceType(
+	routeName: keyof typeof PROVIDER_ROUTE_TO_TYPE_MAP
+) {
 	return PROVIDER_ROUTE_TO_TYPE_MAP[routeName];
 }
 
@@ -462,7 +471,10 @@ export function getDataSourceType(routeName) {
  * @param {string} pathname - The current pathname.
  * @returns {string} Matched path string or null if no match.
  */
-export function getMatchedRoute(routes, pathname = location.pathname) {
+export function getMatchedRoute(
+	routes: {exact?: boolean; route: string}[],
+	pathname = location.pathname
+) {
 	const matchedRoute = routes.find(({exact = true, route}) =>
 		matchPath(pathname, {exact, path: route})
 	);
@@ -482,7 +494,21 @@ export function getMatchedRoute(routes, pathname = location.pathname) {
  * @param {FilterBy} filterBy - A Map of active filters.
  * @param {string} href - The url with filter params added.
  */
-export function setUriFilterValues(filterBy, href = window.location.href) {
+export function setUriFilterValues(
+	filterBy: {
+		forEach: (
+			callback: (
+				valueISet: {
+					filter: (predicate: (value: unknown) => unknown) => {
+						toArray: () => unknown[];
+					};
+				},
+				key: string
+			) => void
+		) => void;
+	},
+	href = window.location.href
+) {
 	const uri = createURL(href);
 
 	filterBy.forEach((valueISet, key) => {
@@ -492,7 +518,7 @@ export function setUriFilterValues(filterBy, href = window.location.href) {
 	return `${uri.pathname}${uri.search}`;
 }
 
-export function setUriQueryValue(href, name, value) {
+export function setUriQueryValue(href: string, name: string, value: unknown) {
 	const uri = createURL(href);
 
 	addParam(uri, name, value);
@@ -500,7 +526,10 @@ export function setUriQueryValue(href, name, value) {
 	return `${uri.pathname}${uri.search}`;
 }
 
-export function setUriQueryValues(values, href = window.location.href) {
+export function setUriQueryValues(
+	values: {[key: string]: any},
+	href = window.location.href
+) {
 	const uri = createURL(href);
 
 	for (const [name, value] of Object.entries(values)) {
@@ -515,7 +544,7 @@ export function setUriQueryValues(values, href = window.location.href) {
  * @param {string} href
  * @param {string} names
  */
-export function removeUriQueryParam(href, ...names) {
+export function removeUriQueryParam(href: string, ...names: string[]) {
 	const uri = createURL(href);
 
 	for (const name of names) {
@@ -525,7 +554,7 @@ export function removeUriQueryParam(href, ...names) {
 	return `${uri.pathname}${uri.search}`;
 }
 
-export function removePageParam(newPath, href = window.location.href) {
+export function removePageParam(newPath: string, href = window.location.href) {
 	const uri = createURL(href);
 
 	if (newPath) {
@@ -537,7 +566,10 @@ export function removePageParam(newPath, href = window.location.href) {
 	return `${uri.pathname}${uri.search}`;
 }
 
-export function resetPaginationParams(newPath, href = window.location.href) {
+export function resetPaginationParams(
+	newPath: string,
+	href = window.location.href
+) {
 	const uri = createURL(href);
 
 	if (newPath) {

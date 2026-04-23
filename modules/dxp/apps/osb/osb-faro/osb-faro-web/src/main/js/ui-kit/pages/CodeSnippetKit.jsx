@@ -9,7 +9,7 @@ class CodeSnippetKit extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}
 			>
-				<CodeSnippet code='Test code snippet' />
+				<CodeSnippet codeLines={['Test code snippet']} />
 			</div>
 		);
 	}

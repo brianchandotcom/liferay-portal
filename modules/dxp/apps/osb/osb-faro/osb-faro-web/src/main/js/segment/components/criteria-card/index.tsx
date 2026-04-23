@@ -24,10 +24,8 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 }) => {
 	const _criteriaViewRef = React.createRef<HTMLDivElement>();
 
-	const {
-		clearReportContainers,
-		setReportContainer
-	} = useDownloadReportContext();
+	const {clearReportContainers, setReportContainer} =
+		useDownloadReportContext();
 
 	useEffect(() => {
 		setReportContainer(ReportContainer.SegmentCriteriaCard);

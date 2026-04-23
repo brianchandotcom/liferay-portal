@@ -1,4 +1,6 @@
-import ActivitiesChartTimeline from 'contacts/components/ActivitiesChartTimeline';
+import ActivitiesChartTimelineBase from 'contacts/components/ActivitiesChartTimeline';
+const ActivitiesChartTimeline =
+	ActivitiesChartTimelineBase as React.ComponentType<any>;
 import React from 'react';
 import {EntityTypes, RangeKeyTimeRanges} from 'shared/util/constants';
 

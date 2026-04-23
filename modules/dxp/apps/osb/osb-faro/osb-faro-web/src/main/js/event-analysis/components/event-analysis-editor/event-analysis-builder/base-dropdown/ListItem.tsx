@@ -15,7 +15,7 @@ interface IListItemProps {
 	item: Attribute | Event;
 	onClick: () => void;
 	onEditClick: () => void;
-	onOptionsClick: (item: any) => void;
+	onOptionsClick?: (item: any) => void;
 	showInfoCard?: boolean;
 }
 
@@ -106,7 +106,7 @@ const ListItem: React.FC<IListItemProps> = ({
 					dataType={
 						isAttribute(item as Attribute)
 							? (item as Attribute).dataType
-							: null
+							: undefined
 					}
 					description={description}
 					name={displayName || name}
@@ -119,7 +119,7 @@ const ListItem: React.FC<IListItemProps> = ({
 
 									onEditClick();
 							  }
-							: null
+							: undefined
 					}
 				/>
 			)}

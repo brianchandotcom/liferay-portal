@@ -21,12 +21,13 @@ const UserRequest = lazy(
 	() => import(/* webpackChunkName: "UserRequest" */ './UserRequest')
 );
 
-export const User = ({className}) => {
-	const {groupId} = useParams();
+export const User = ({className}: {className?: string}) => {
+	const {groupId = ''} = useParams<{groupId: string}>();
 	const currentUser = useCurrentUser();
 	const [userRequest, setUserRequest] = useState<number>(0);
 
-	const onSetUserRequest = userRequest => setUserRequest(userRequest);
+	const onSetUserRequest = (userRequest: number) =>
+		setUserRequest(userRequest);
 
 	API.user
 		.fetchCount({
@@ -60,7 +61,11 @@ export const User = ({className}) => {
 	const initialItem =
 		NAV_ITEMS.find(item => item.route === matchedRoute) ?? NAV_ITEMS[0];
 
-	const [activeLabel, setActiveLabel] = useState(initialItem.label);
+	const [activeTriggerLabel, setActiveTriggerLabel] = useState<string>(
+		initialItem.route === Routes.SETTINGS_USERS
+			? Liferay.Language.get('manage-users')
+			: Liferay.Language.get('requests')
+	);
 
 	return (
 		<BasePage
@@ -75,7 +80,7 @@ export const User = ({className}) => {
 				{currentUser.isAdmin() && (
 					<ClayNavigationBar
 						className='page-subnav mx-4 my-3'
-						triggerLabel={activeLabel}
+						triggerLabel={activeTriggerLabel}
 					>
 						{NAV_ITEMS.map(({label, route}) => (
 							<ClayNavigationBar.Item
@@ -84,7 +89,17 @@ export const User = ({className}) => {
 							>
 								<ClayLink
 									href={toRoute(route, {groupId})}
-									onClick={() => setActiveLabel(label)}
+									onClick={() => {
+										setActiveTriggerLabel(
+											route === Routes.SETTINGS_USERS
+												? Liferay.Language.get(
+														'manage-users'
+												  )
+												: Liferay.Language.get(
+														'requests'
+												  )
+										);
+									}}
 								>
 									{label}
 								</ClayLink>

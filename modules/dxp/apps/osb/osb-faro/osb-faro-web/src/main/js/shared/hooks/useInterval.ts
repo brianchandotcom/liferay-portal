@@ -1,10 +1,7 @@
 import {useEffect} from 'react';
 
-export const useInterval = <ReturnType>(
-	tickFn: () => ReturnType,
-	delay: number = 0
-): void => {
-	let intervalId;
+export const useInterval = <T>(tickFn: () => T, delay: number = 0): void => {
+	let intervalId: ReturnType<typeof setInterval>;
 
 	useEffect(() => {
 		intervalId = setInterval(tickFn, delay);

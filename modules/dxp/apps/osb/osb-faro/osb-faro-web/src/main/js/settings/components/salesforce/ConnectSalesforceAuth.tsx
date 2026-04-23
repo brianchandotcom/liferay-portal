@@ -115,22 +115,24 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 	onCancel,
 	onSubmit
 }) => {
-	const {groupId} = useParams();
+	const {groupId = ''} = useParams<{groupId: string}>();
 
 	const [isUrlCopied, setIsUrlCopied] = useState(false);
 	const [copyTitle, setCopyTitle] = useState(
 		Liferay.Language.get('click-to-copy')
 	);
-	const [inlineAlert, setInlineAlert] = useState(null);
+	const [inlineAlert, setInlineAlert] = useState<string | null>(null);
 	const [showClientId, setShowClientId] = useState(false);
 	const [showClientSecret, setShowClientSecret] = useState(false);
 
-	const _formRef = useRef(null);
+	const _formRef = useRef<{
+		setSubmitting: (submitting: boolean) => void;
+	} | null>(null);
 
 	useEffect(() => {
 		const _clipboard = new Clipboard('[data-clipboard-text]');
 
-		_clipboard.on('success', event => {
+		_clipboard.on('success', (event: {clearSelection: () => void}) => {
 			setCopyTitle(Liferay.Language.get('copied'));
 
 			addAlert({
@@ -152,12 +154,12 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 	return (
 		<Form
 			initialValues={{
-				clientId: dataSource?.credentials.get('oAuthClientId'),
-				clientSecret: dataSource?.credentials.get('oAuthClientSecret'),
+				clientId: dataSource?.credentials?.get('oAuthClientId'),
+				clientSecret: dataSource?.credentials?.get('oAuthClientSecret'),
 				salesForceDataSource: dataSource?.url
 			}}
-			onSubmit={values => {
-				const {setSubmitting} = _formRef.current;
+			onSubmit={(values: any) => {
+				const {setSubmitting} = _formRef.current!;
 
 				const authWindow = open(
 					Routes.LOADING,
@@ -270,7 +272,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 			{({handleSubmit, isSubmitting, isValid, values}) => (
 				<Form.Form
 					className='oauth-form-root'
-					onSubmit={event => {
+					onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
 						if (!isValid) {
 							if (
 								!values.salesForceDataSource &&
@@ -365,7 +367,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 						required
 						type='text'
 						validate={sequence([
-							value =>
+							(value: string) =>
 								validateRequired(
 									value,
 									sub(
@@ -403,7 +405,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 						readOnly={disabled}
 						required
 						type={showClientId ? 'text' : 'password'}
-						validate={value =>
+						validate={(value: string) =>
 							validateRequired(
 								value,
 								sub(
@@ -450,7 +452,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 						readOnly={disabled}
 						required
 						type={showClientSecret ? 'text' : 'password'}
-						validate={value =>
+						validate={(value: string) =>
 							validateRequired(
 								value,
 								sub(

@@ -1,9 +1,19 @@
 import {getSafeRangeSelectors} from 'shared/util/util';
+import {RangeSelectors} from 'shared/types';
 import {safeResultToProps} from 'shared/util/mappers';
 import {sum} from 'lodash';
 import {WEEKDAYS} from 'shared/util/date';
 
-const mapResultToProps: () => object = safeResultToProps(result => {
+interface IHeatMapItem {
+	column: number;
+	value: number;
+}
+
+interface IVisitorsByTimeResult {
+	siteVisitorHeatMap: IHeatMapItem[];
+}
+
+const mapResultToProps = safeResultToProps((result: IVisitorsByTimeResult) => {
 	const data = result.siteVisitorHeatMap;
 	const sumTotal = sum(data.map(({value}) => value));
 
@@ -17,11 +27,14 @@ const mapResultToProps: () => object = safeResultToProps(result => {
 		  };
 });
 
-const mapPropsToOptions: object = ({
+const mapPropsToOptions = ({
 	rangeSelectors,
 	router: {
 		params: {channelId}
 	}
+}: {
+	rangeSelectors: RangeSelectors;
+	router: {params: {channelId: string}};
 }) => ({
 	variables: {
 		channelId,

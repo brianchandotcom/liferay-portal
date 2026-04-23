@@ -8,7 +8,7 @@ interface IConjunctionProps extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 class Conjunction extends React.Component<IConjunctionProps> {
-	getConjunctionLabel(conjunctionName) {
+	getConjunctionLabel(conjunctionName: string) {
 		const conjunction = SUPPORTED_CONJUNCTION_OPTIONS.find(
 			({name}) => name === conjunctionName
 		);

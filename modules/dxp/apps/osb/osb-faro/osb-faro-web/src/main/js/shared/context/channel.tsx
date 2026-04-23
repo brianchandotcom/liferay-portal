@@ -13,18 +13,18 @@ type Action = {
 
 type State = {
 	channels: Array<Channel>;
-	selectedChannel: Channel;
+	selectedChannel: Channel | null;
 };
 
 type ChannelProviderProps = {
 	children: React.ReactNode;
-	selectedChannel?: Channel;
+	selectedChannel?: Channel | null;
 };
 
 export const ChannelContext = React.createContext<{
 	channelDispatch?: React.Dispatch<Action>;
 	channels: Array<Channel>;
-	selectedChannel: Channel;
+	selectedChannel: Channel | null;
 }>({
 	channels: [],
 	selectedChannel: null

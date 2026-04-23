@@ -105,12 +105,22 @@ export class JSPDFExtension {
 		spacingBetweenTexts: number;
 	};
 
-	data: any[];
+	data: any[] = [];
 	doc: JSPDF;
 	textList: {text: Text; options?: {rect?: boolean}}[];
 	floatTextList: FloatText[];
 
-	constructor({containers, date = new Date(), fontFamily, name}) {
+	constructor({
+		containers,
+		date = new Date(),
+		fontFamily,
+		name
+	}: {
+		containers: JSPDFExtensionContainer[];
+		date?: Date;
+		fontFamily: string;
+		name: string;
+	}) {
 		this.doc = new JSPDF();
 
 		this.config = {
@@ -170,6 +180,8 @@ export class JSPDFExtension {
 
 	truncateText(text: string) {
 		if (text) return `${text.substring(0, text.length - 3)}...`;
+
+		return '';
 	}
 
 	getName() {
@@ -179,7 +191,7 @@ export class JSPDFExtension {
 			.toLowerCase()}-${formatDate(this.config.date)}.pdf`;
 	}
 
-	getPosX(posX) {
+	getPosX(posX: PosX) {
 		if (posX === 'right') {
 			return this.config.pageWidth - this.config.paddingX;
 		}
@@ -202,7 +214,7 @@ export class JSPDFExtension {
 		this.doc.setFontSize(this.config.fontSize[text.size].size);
 		this.doc.setTextColor(text.color);
 
-		this.setExtraFont(text.value);
+		this.setExtraFont(text.value || '');
 	}
 
 	getData() {
@@ -223,7 +235,7 @@ export class JSPDFExtension {
 				prevLineHeight +
 				this.config.spacingBetweenTexts * index;
 			const lines = this.doc.splitTextToSize(
-				text.value,
+				text.value ?? '',
 				this.config.pageWidth - this.config.paddingX * 2
 			);
 
@@ -234,7 +246,7 @@ export class JSPDFExtension {
 			if (lines.length > 1 && !text.truncateText) {
 				let linePosY = 0;
 
-				lines.forEach(line => {
+				lines.forEach((line: string) => {
 					data.push({
 						options,
 						text: {
@@ -274,9 +286,9 @@ export class JSPDFExtension {
 		return data;
 	}
 
-	renderContainers(headerHeight) {
+	renderContainers(headerHeight: number) {
 		let containerY = headerHeight + 2;
-		let previousLayout = null;
+		let previousLayout: number | null = null;
 		let previousContainerY = containerY;
 		let previousContainerX = this.config.container.padding;
 
@@ -381,7 +393,7 @@ export class JSPDFExtension {
 			this.setFont(text);
 
 			this.doc.textWithLink(
-				text.value,
+				text.value!,
 				this.getPosX(text.posX),
 				text.posY + this.config.fontSize[text.size].lineHeight,
 				{
@@ -399,7 +411,7 @@ export class JSPDFExtension {
 
 			if (options?.rect) {
 				const padding = 0.8;
-				const textDimensions = this.doc.getTextDimensions(text.value);
+				const textDimensions = this.doc.getTextDimensions(text.value!);
 
 				this.doc.setDrawColor(text.color);
 				this.doc.setFillColor(255, 255, 255);
@@ -414,14 +426,14 @@ export class JSPDFExtension {
 					'FD'
 				);
 
-				this.doc.textWithLink(text.value, x + padding, y + padding, {
+				this.doc.textWithLink(text.value!, x + padding, y + padding, {
 					url: text.url
 				});
 
 				return;
 			}
 
-			this.doc.textWithLink(text.value, x, y, {
+			this.doc.textWithLink(text.value!, x, y, {
 				url: text.url
 			});
 		});

@@ -11,7 +11,7 @@ import {
 	withQueryRangeSelectors
 } from 'shared/hoc';
 import {createOrderIOMap, DOWNLOADS_METRIC, NAME} from 'shared/util/pagination';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {metricsListColumns} from 'shared/util/table-columns';
 import {RangeSelectors} from 'shared/types';
 import {Routes} from 'shared/util/router';
@@ -54,6 +54,8 @@ const TableWithData = withBaseResults(withData, {
 		router: {
 			params: {channelId, groupId}
 		}
+	}: {
+		router: {params: {channelId: string; groupId: string}};
 	}) => [
 		metricsListColumns.getNameEmail({
 			channelId,
@@ -65,10 +67,15 @@ const TableWithData = withBaseResults(withData, {
 	rowIdentifier: 'id'
 });
 
+interface IKnownIndividualsListCardProps {
+	rangeSelectors: RangeSelectors;
+	[key: string]: unknown;
+}
+
 const KnownIndividualsListCard = ({
 	rangeSelectors: initialRangeSelectors,
 	...otherProps
-}) => {
+}: IKnownIndividualsListCardProps) => {
 	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
 		initialRangeSelectors
 	);
@@ -84,7 +91,7 @@ const KnownIndividualsListCard = ({
 	);
 };
 
-export default compose(
+export default compose<React.ComponentType<any>>(
 	withQueryPagination({initialOrderIOMap: createOrderIOMap(NAME)}),
 	withQueryRangeSelectors()
 )(KnownIndividualsListCard);

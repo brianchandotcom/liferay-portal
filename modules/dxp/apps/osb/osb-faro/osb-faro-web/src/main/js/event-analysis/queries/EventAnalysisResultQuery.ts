@@ -4,7 +4,7 @@ import {
 	CalculationTypes,
 	Filter
 } from '../utils/types';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 export interface EventAnalysisResultData {
 	count: number;
@@ -21,9 +21,9 @@ export interface EventAnalysisResultVariables {
 	eventAnalysisFilters?: Filter[];
 	eventDefinitionId: string;
 	page: number;
-	rangeEnd: string;
+	rangeEnd: string | null;
 	rangeKey: number | null;
-	rangeStart: string;
+	rangeStart: string | null;
 	size: number;
 }
 const BREAKDOWN_FIELDS = gql`

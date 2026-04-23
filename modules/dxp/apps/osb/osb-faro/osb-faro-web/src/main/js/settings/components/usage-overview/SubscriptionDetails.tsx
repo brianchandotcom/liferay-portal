@@ -10,7 +10,12 @@ import {
 } from 'shared/util/subscriptions';
 import {Text} from '@clayui/core';
 
-const ItemRenderer = ({name, value}) => (
+interface IItemRendererProps {
+	name: React.ReactNode;
+	value: React.ReactNode;
+}
+
+const ItemRenderer = ({name, value}: IItemRendererProps) => (
 	<div className='d-flex justify-content-between mb-1'>
 		<Text color='secondary' size={3} weight='semi-bold'>
 			{name}
@@ -22,7 +27,15 @@ const ItemRenderer = ({name, value}) => (
 	</div>
 );
 
-export const SubscriptionDetails = ({currentPlan, planType}) => {
+interface ISubscriptionDetailsProps {
+	currentPlan: any;
+	planType: string;
+}
+
+export const SubscriptionDetails = ({
+	currentPlan,
+	planType
+}: ISubscriptionDetailsProps) => {
 	const addOns = getPlanAddOns(currentPlan);
 
 	const LDPEnabled = planType?.includes('Data Platform');
@@ -52,12 +65,16 @@ export const SubscriptionDetails = ({currentPlan, planType}) => {
 
 				<ItemRenderer
 					name={Liferay.Language.get('individuals')}
-					value={PLANS[planType].limits[INDIVIDUALS].toLocaleString()}
+					value={(PLANS as {[key: string]: any})[planType].limits[
+						INDIVIDUALS
+					].toLocaleString()}
 				/>
 
 				<ItemRenderer
 					name={Liferay.Language.get('page-views')}
-					value={PLANS[planType].limits[PAGEVIEWS].toLocaleString()}
+					value={(PLANS as {[key: string]: any})[planType].limits[
+						PAGEVIEWS
+					].toLocaleString()}
 				/>
 
 				<ItemRenderer

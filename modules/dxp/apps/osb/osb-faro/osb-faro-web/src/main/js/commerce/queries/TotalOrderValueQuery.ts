@@ -1,4 +1,4 @@
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 import {Trend} from 'commerce/utils/types';
 
 export interface CommerceTotalOrderValueData {

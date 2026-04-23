@@ -1,4 +1,5 @@
 import * as API from 'shared/api';
+import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {DataSourceStatuses, DataSourceTypes} from 'shared/util/constants';
 import {IStatesRendererContextProps} from 'shared/components/states-renderer/StatesRenderer';
 import {Pagination} from 'shared/types';
@@ -23,15 +24,21 @@ export const useDataSource: (
 ) => IStatesRendererContextProps & IUseDataSourceProps = (
 	queryParams = {
 		delta: 1,
-		orderIOMap: undefined,
+		orderIOMap: createOrderIOMap(NAME),
 		page: 1,
 		query: ''
 	}
 ) => {
 	const {groupId} = useParams();
 
-	const {data = {items: []}, error, loading} = useRequest({
-		dataSourceFn: API.dataSource.search,
+	const {
+		data = {items: []},
+		error,
+		loading
+	} = useRequest({
+		dataSourceFn: API.dataSource.search as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			groupId,
 			...queryParams

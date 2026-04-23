@@ -1,5 +1,5 @@
 import {EntityType} from '../context/referencedObjects';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 /**
  * DXP Entity List Query

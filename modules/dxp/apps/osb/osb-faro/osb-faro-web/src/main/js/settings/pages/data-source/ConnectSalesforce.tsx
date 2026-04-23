@@ -8,36 +8,36 @@ import {updateSalesforce} from 'shared/api/data-source';
 
 const steps: Step[] = [
 	{
-		content: props => <ConnectSalesforceStep {...props} />,
+		content: (props: any) => <ConnectSalesforceStep {...props} />,
 		description: Liferay.Language.get(
 			'to-connect-your-salesforce-environment-with-liferay-analytics-cloud,-generate-a-token-and-paste-the-code-on-the-input-below'
 		),
 		title: Liferay.Language.get('connect-salesforce')
 	},
 	{
-		content: props => <SyncSalesforceDataStep {...props} />,
+		content: (props: any) => <SyncSalesforceDataStep {...props} />,
 		description: Liferay.Language.get(
 			'select-which-salesforce-data-you-would-like-to-sync-to-analytics-cloud'
 		),
 		title: Liferay.Language.get('sync-Salesforce-data')
 	},
 	{
-		content: props => (
+		content: (props: any) => (
 			<AssignIndividualsDataToPropertiesStep
 				{...props}
 				onSubmit={dataSource => {
-					const accountsEnabled = dataSource.provider.getIn([
+					const accountsEnabled = dataSource.provider?.getIn([
 						'accountsConfiguration',
 						'enableAllAccounts'
 					]);
 
-					const contactsConfiguration = dataSource.provider.get(
+					const contactsConfiguration = dataSource.provider?.get(
 						'contactsConfiguration'
 					);
 
 					const individualsEnabled =
-						contactsConfiguration.get('enableAllContacts') &&
-						contactsConfiguration.get('enableAllLeads');
+						contactsConfiguration?.get('enableAllContacts') &&
+						contactsConfiguration?.get('enableAllLeads');
 
 					if (accountsEnabled || individualsEnabled) {
 						props.addAlert({
@@ -55,7 +55,11 @@ const steps: Step[] = [
 						});
 					}
 				}}
-				updateDataSourceFn={updateSalesforce}
+				updateDataSourceFn={
+					updateSalesforce as (params: {
+						[key: string]: any;
+					}) => Promise<any>
+				}
 			/>
 		),
 		description: Liferay.Language.get(

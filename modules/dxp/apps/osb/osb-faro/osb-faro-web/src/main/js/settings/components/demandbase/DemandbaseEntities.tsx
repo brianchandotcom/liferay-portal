@@ -15,7 +15,7 @@ interface IDemandbaseEntities {
 
 const DemandbaseEntities: React.FC<IDemandbaseEntities> = ({
 	accountConnectionStatus,
-	accountsSyncedCount
+	accountsSyncedCount = 0
 }) => (
 	<div className='pt-1'>
 		<ClayList className='mb-0'>

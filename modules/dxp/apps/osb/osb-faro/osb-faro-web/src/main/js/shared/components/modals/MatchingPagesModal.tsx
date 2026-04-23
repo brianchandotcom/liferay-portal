@@ -14,7 +14,7 @@ import {
 	getFilterValueBreakdown
 } from 'settings/recommendations/utils/utils';
 import {getMapResultToProps} from 'shared/hoc/mappers/metrics';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {isArray, isString} from 'lodash';
 import {omit} from 'lodash';
 import {OrderedMap} from 'immutable';
@@ -62,7 +62,7 @@ const TableWithData = withStatefulPagination(
 			'there-were-no-matching-items-for-this-string'
 		),
 		emptyTitle: Liferay.Language.get('no-matches-found'),
-		getColumns: ({secondColumnHeader}) => [
+		getColumns: ({secondColumnHeader}: {secondColumnHeader?: string}) => [
 			{
 				accessor: 'title',
 				className: 'table-cell-expand text-truncate',
@@ -71,11 +71,13 @@ const TableWithData = withStatefulPagination(
 			{
 				accessor: secondColumnHeader || 'url',
 				className: 'secondary-info table-cell-expand text-truncate',
-				dataFormatter: val => {
+				dataFormatter: (val: unknown) => {
 					if (isString(val)) {
 						return val;
 					} else if (isArray(val)) {
-						return val.map(({value}) => value).join(', ');
+						return val
+							.map(({value}: {value: string}) => value)
+							.join(', ');
 					}
 				},
 				label: secondColumnHeader || 'url',
@@ -88,7 +90,7 @@ const TableWithData = withStatefulPagination(
 		initialDelta: 10,
 		initialOrderIOMap: createOrderIOMap(TITLE)
 	},
-	props => omit(props, 'onSearchValueChange'),
+	(props: {[key: string]: any}) => omit(props, 'onSearchValueChange'),
 	false
 );
 

@@ -80,14 +80,19 @@ function transformCountriesInQueryString(countries: string[]) {
 }
 
 const IndividualsList = () => {
-	const {channelId, groupId} = useParams();
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 
-	const paginationParams = useStatefulPagination(null, {
+	const paginationParams = useStatefulPagination(undefined, {
 		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
 	const {data: countriesData, loading: countriesLoading} = useRequest({
-		dataSourceFn: API.individuals.fetchFieldValues,
+		dataSourceFn: API.individuals.fetchFieldValues as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			channelId,
 			fieldMappingFieldName: 'country',
@@ -103,7 +108,7 @@ const IndividualsList = () => {
 				{
 					key: 'countries',
 					label: Liferay.Language.get('country'),
-					values: countries.map(country => ({
+					values: countries.map((country: string) => ({
 						label: country,
 						value: country
 					}))

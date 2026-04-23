@@ -1,7 +1,7 @@
 import getDevicesMapper from 'cerebro-shared/hocs/mappers/devices';
 import SiteDevicesQuery from 'shared/queries/SiteDevicesQuery';
 import URLConstants from 'shared/util/url-constants';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withDevicesCard} from 'shared/hoc/DevicesCard';
 

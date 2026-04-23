@@ -36,7 +36,7 @@ export const filterLangMap = {
 export const getFilters = (
 	filters: RawFilters = {devices: [], location: []}
 ): {[key in FilterTypes]: string} =>
-	['devices', 'location'].reduce(
+	(['devices', 'location'] as FilterTypes[]).reduce(
 		(acc, cur) =>
 			filters[cur] && filters[cur].length
 				? {...acc, [cur]: filters[cur][0]}

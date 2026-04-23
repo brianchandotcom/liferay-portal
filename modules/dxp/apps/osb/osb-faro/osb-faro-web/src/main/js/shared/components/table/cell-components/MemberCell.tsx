@@ -22,7 +22,7 @@ const MemberCell: React.FC<IMemberCellProps> = ({className, data, routeFn}) => {
 
 	const resolvedEmail = email || emailAddress;
 
-	const anonymous = isBlank(resolvedEmail);
+	const anonymous = isBlank(resolvedEmail || '');
 
 	return (
 		<td className={getCN('name-cell-root', className)}>

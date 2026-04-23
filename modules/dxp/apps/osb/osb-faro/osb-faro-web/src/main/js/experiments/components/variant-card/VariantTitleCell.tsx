@@ -11,10 +11,11 @@ interface IVariantTitleProps {
 
 const VariantTitle: React.FC<IVariantTitleProps> = ({labels = [], title}) => {
 	const [showPopover, setShowPopover] = useState(false);
-	const titleRef = useRef();
+	const titleRef = useRef<HTMLDivElement>(null);
 
 	const handleMouseOut = () => setShowPopover(false);
-	const handleMouseOver = event => setShowPopover(isEllipisActive(event));
+	const handleMouseOver = (event: React.SyntheticEvent) =>
+		setShowPopover(isEllipisActive(event));
 
 	return (
 		<td className='table-cell-expanded'>
@@ -42,7 +43,7 @@ const VariantTitle: React.FC<IVariantTitleProps> = ({labels = [], title}) => {
 					title={title}
 					visible={showPopover}
 				/>,
-				document.querySelector('body.dxp')
+				document.querySelector('body.dxp') ?? document.body
 			)}
 		</td>
 	);

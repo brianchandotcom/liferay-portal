@@ -41,7 +41,7 @@ interface ICommerceDashboardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({router}) => {
-	const {channelId, groupId} = useParams();
+	const {channelId, groupId} = useParams<RouterParams>();
 	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
 	const currentUser = useCurrentUser();

@@ -44,11 +44,11 @@ const FormSelect: React.FC<IFormSelectProps> = ({
 		'has-success': touched && !error && !disabled
 	});
 
-	const handleChange = event => {
+	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		field.onChange(event);
 
 		if (onChange) {
-			onChange(event);
+			onChange(event as any);
 		}
 	};
 

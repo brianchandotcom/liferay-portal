@@ -5,7 +5,6 @@
 
 import * as d3 from 'd3';
 import React from 'react';
-import {Grid, PointOptions} from 'billboard.js';
 
 const DEFAULT_COLOR = {
 	range: {
@@ -208,9 +207,9 @@ class GeomapBase {
 export interface IProps {
 	elementProps?: React.HTMLAttributes<HTMLDivElement>;
 	forwardRef: React.MutableRefObject<any>;
-	grid?: Grid;
+	grid?: any;
 	predictionDate?: any;
-	point?: PointOptions;
+	point?: any;
 	pollingInterval?: number;
 	[key: string]: any;
 }

@@ -23,10 +23,11 @@ export default class Notification
 		subtype: null,
 		type: null
 	})
-	implements INotification {
-	id: string;
-	subtype: NotificationSubtypes;
-	type: NotificationTypes;
+	implements INotification
+{
+	declare id: string;
+	declare subtype: NotificationSubtypes;
+	declare type: NotificationTypes;
 
 	constructor(props = {}) {
 		super(props);

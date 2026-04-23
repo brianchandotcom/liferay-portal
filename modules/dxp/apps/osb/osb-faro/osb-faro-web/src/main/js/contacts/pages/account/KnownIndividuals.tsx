@@ -18,7 +18,13 @@ import {RootState} from 'shared/store';
 import {Sizes} from 'shared/util/constants';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
-const fetchIndividuals = ({id, ...otherParams}) =>
+const fetchIndividuals = ({
+	id,
+	...otherParams
+}: {
+	[key: string]: any;
+	id: string;
+}) =>
 	API.individuals.search({
 		...otherParams,
 		accountId: id

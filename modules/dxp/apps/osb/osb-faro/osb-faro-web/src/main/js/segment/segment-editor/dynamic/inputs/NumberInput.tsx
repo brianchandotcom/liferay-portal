@@ -22,7 +22,7 @@ export default class NumberInput extends React.Component<INumberInputProps> {
 	}
 
 	@autobind
-	handleChange(event) {
+	handleChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const {value} = event.target;
 
 		const {onChange} = this.props;

@@ -16,14 +16,19 @@ export function getOperatorLabel(
 	operatorKey: string,
 	type: PropertyTypes
 ): string {
-	let supportedOperators;
+	type OperatorsMap = typeof SUPPORTED_OPERATORS_MAP;
+	let supportedOperators:
+		| OperatorsMap[keyof OperatorsMap]
+		| typeof GEOLOCATION_OPTIONS;
 
 	switch (type) {
 		case PropertyTypes.AccountDate:
 		case PropertyTypes.AccountNumber:
 		case PropertyTypes.AccountText:
 			supportedOperators =
-				SUPPORTED_OPERATORS_MAP[type.replace('account-', '')];
+				SUPPORTED_OPERATORS_MAP[
+					type.replace('account-', '') as keyof OperatorsMap
+				];
 			break;
 		case PropertyTypes.OrganizationBoolean:
 		case PropertyTypes.OrganizationDate:
@@ -31,13 +36,17 @@ export function getOperatorLabel(
 		case PropertyTypes.OrganizationNumber:
 		case PropertyTypes.OrganizationText:
 			supportedOperators =
-				SUPPORTED_OPERATORS_MAP[type.replace('organization-', '')];
+				SUPPORTED_OPERATORS_MAP[
+					type.replace('organization-', '') as keyof OperatorsMap
+				];
 			break;
 		case PropertyTypes.SessionDateTime:
 		case PropertyTypes.SessionNumber:
 		case PropertyTypes.SessionText:
 			supportedOperators =
-				SUPPORTED_OPERATORS_MAP[type.replace('session-', '')];
+				SUPPORTED_OPERATORS_MAP[
+					type.replace('session-', '') as keyof OperatorsMap
+				];
 			break;
 		case PropertyTypes.SessionGeolocation:
 			supportedOperators = GEOLOCATION_OPTIONS;
@@ -51,14 +60,19 @@ export function getOperatorLabel(
 		case PropertyTypes.OrganizationSelectText:
 		case PropertyTypes.Text:
 		default:
-			supportedOperators = SUPPORTED_OPERATORS_MAP[type];
+			supportedOperators =
+				SUPPORTED_OPERATORS_MAP[type as keyof OperatorsMap];
 	}
 
-	const operator = supportedOperators.find(
-		({key, value}) => (key || value) === operatorKey
-	);
+	const operator = (
+		supportedOperators as Array<{
+			key?: string;
+			label: string;
+			value?: string;
+		}>
+	).find(({key, value}) => (key || value) === operatorKey);
 
-	return operator ? operator.label : null;
+	return operator ? operator.label : '';
 }
 
 export function maybeFormatToKnownType(

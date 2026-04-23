@@ -10,7 +10,7 @@ import {
 	getMapResultToProps,
 	mapCardPropsToOptions
 } from 'contacts/hoc/mappers/interests-query';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {Routes, toRoute} from 'shared/util/router';
 import {withTableData} from 'shared/hoc';
 

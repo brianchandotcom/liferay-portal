@@ -179,7 +179,7 @@ const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: name,
-							value: options.length ? options[0].value : ''
+							value: options?.length ? options[0].value : ''
 						},
 						{
 							operatorName: RelationalOperators.GT,
@@ -191,7 +191,7 @@ const getDefaultValue = (property: Property): any => {
 			]);
 		case PropertyTypes.Text:
 			if (options && !!options.length) {
-				return options[0].value;
+				return options![0].value;
 			}
 
 			return '';
@@ -217,7 +217,8 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 
 	const filterProperties = (): List<PropertySubgroup> => {
 		const propertyGroup = propertyGroupsIList.find(
-			propertyGroup => propertyKey === propertyGroup.propertyKey
+			(propertyGroup: PropertyGroup | undefined) =>
+				propertyKey === propertyGroup?.propertyKey
 		);
 
 		const propertySubgroupsIList = propertyGroup
@@ -226,16 +227,20 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 
 		if (searchValue) {
 			return propertySubgroupsIList.map(
-				({label, properties}) =>
+				(subgroup: PropertySubgroup | undefined) =>
 					new PropertySubgroup({
-						label,
-						properties: properties.filter(({label}) => {
-							const propertyLabel = label.toLowerCase();
+						label: subgroup?.label ?? '',
+						properties: (subgroup?.properties ?? List()).filter(
+							(property: Property | undefined) => {
+								const propertyLabel = (
+									property?.label ?? ''
+								).toLowerCase();
 
-							return propertyLabel.includes(
-								searchValue.toLowerCase()
-							);
-						}) as List<Property>
+								return propertyLabel.includes(
+									searchValue.toLowerCase()
+								);
+							}
+						) as List<Property>
 					})
 			) as List<PropertySubgroup>;
 		}
@@ -246,7 +251,10 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 	const filteredProperties = filterProperties();
 
 	const noResults = filteredProperties
-		.filterNot(({properties}) => properties.isEmpty())
+		.filterNot(
+			(subgroup: PropertySubgroup | undefined) =>
+				!!subgroup?.properties.isEmpty()
+		)
 		.isEmpty();
 
 	if (!!searchValue && noResults) {
@@ -304,7 +312,7 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 
 	return (
 		<ul className='property-subgroups-list active'>
-			{filteredProperties.map(({label, properties}, i) => (
+			{filteredProperties.toArray().map(({label, properties}, i) => (
 				<li key={`${label}-${i}`}>
 					{label && (
 						<div className='property-subgroup-label'>{label}</div>
@@ -316,13 +324,9 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 						</div>
 					) : (
 						<ul className='properties-list'>
-							{properties.map((property, i) => {
-								const {
-									label,
-									name,
-									propertyKey,
-									type
-								} = property;
+							{properties.toArray().map((property, i) => {
+								const {label, name, propertyKey, type} =
+									property;
 
 								return (
 									<CriteriaSidebarItem

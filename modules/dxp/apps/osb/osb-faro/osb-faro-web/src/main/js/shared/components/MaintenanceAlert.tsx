@@ -17,7 +17,7 @@ interface IMaintenanceAlertProps {
 	currentUserId: string;
 	groupId: string;
 	project: Project;
-	setMaintenanceSeen: (boolean) => void;
+	setMaintenanceSeen: (params: any) => void;
 	stripe: boolean;
 }
 
@@ -83,12 +83,12 @@ export class MaintenanceAlert extends React.Component<IMaintenanceAlertProps> {
 }
 
 export const mapState = (
-	store,
+	store: any,
 	{
 		match: {
 			params: {groupId}
 		}
-	}
+	}: any
 ) => {
 	const currentUserId = store.getIn(['currentUser', 'data']);
 

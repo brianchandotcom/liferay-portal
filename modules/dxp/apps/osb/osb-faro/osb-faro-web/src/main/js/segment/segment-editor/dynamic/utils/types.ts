@@ -17,7 +17,7 @@ export type Context = {
 export type CriterionGroup = {
 	conjunctionName: string;
 	criteriaGroupId: string;
-	items?: (CriterionGroup | Criterion)[];
+	items: (CriterionGroup | Criterion)[];
 };
 
 export type Criterion = {
@@ -69,8 +69,8 @@ export interface ISegmentEditorInputBase {
 	groupId?: string;
 	id?: string;
 	onChange: (params: Criterion | Criterion[]) => void;
-	operatorRenderer?: React.ElementType;
-	property?: Property;
+	operatorRenderer: React.ElementType;
+	property: Property;
 	timeZoneId?: string;
 	touched?: boolean | object;
 	valid?: boolean | object;
@@ -78,5 +78,6 @@ export interface ISegmentEditorInputBase {
 }
 
 export interface ISegmentEditorCustomInputBase extends ISegmentEditorInputBase {
+	property: Property;
 	value: CustomValue;
 }

@@ -20,7 +20,7 @@ enum SessionView {
 	PerVariant = 'per-variant'
 }
 
-const TotalSessionsTooltip = ({dataPoint}) => {
+const TotalSessionsTooltip = ({dataPoint}: {dataPoint: any[]}) => {
 	const header = [
 		{
 			columns: [
@@ -61,7 +61,7 @@ const TotalSessionsTooltip = ({dataPoint}) => {
 	);
 };
 
-const PerVariantTooltip = ({dataPoint}) => {
+const PerVariantTooltip = ({dataPoint}: {dataPoint: any[]}) => {
 	const control = dataPoint[0];
 	const variant = dataPoint[1];
 
@@ -117,8 +117,17 @@ const PerVariantTooltip = ({dataPoint}) => {
 	);
 };
 
-const formatTotalSessionsData = experiment => {
-	const chartData = [];
+interface IExperimentWithHistogram {
+	dxpVariants: Array<{
+		dxpVariantName: string;
+		sessionsHistogram: Array<{key: string | number; value: number}>;
+	}>;
+	sessionsHistogram: Array<{key: string | number; value: number}>;
+}
+
+const formatTotalSessionsData = (experiment: IExperimentWithHistogram) => {
+	// eslint-disable-next-line camelcase
+	const chartData: Array<{data_control: number; key: string | number}> = [];
 	const control = experiment.dxpVariants[0];
 	const variant = experiment.dxpVariants[1];
 
@@ -141,8 +150,14 @@ const formatTotalSessionsData = experiment => {
 	};
 };
 
-const formatPerVariantsData = experiment => {
-	const chartData = [];
+const formatPerVariantsData = (experiment: IExperimentWithHistogram) => {
+	const chartData: Array<{
+		// eslint-disable-next-line camelcase
+		data_control: number;
+		// eslint-disable-next-line camelcase
+		data_variant: number;
+		key: string | number;
+	}> = [];
 	const control = experiment.dxpVariants[0];
 	const variant = experiment.dxpVariants[1];
 
@@ -166,7 +181,10 @@ const formatPerVariantsData = experiment => {
 	};
 };
 
-const formatData = (sessionView: SessionView, experiment) => {
+const formatData = (
+	sessionView: SessionView,
+	experiment: IExperimentWithHistogram
+) => {
 	if (sessionView === SessionView.Total) {
 		return formatTotalSessionsData(experiment);
 	}
@@ -174,7 +192,11 @@ const formatData = (sessionView: SessionView, experiment) => {
 	return formatPerVariantsData(experiment);
 };
 
-export const SessionsCard = ({experiment}) => {
+export const SessionsCard = ({
+	experiment
+}: {
+	experiment: IExperimentWithHistogram;
+}) => {
 	const [sessionView, setSessionView] = useState<SessionView>(
 		SessionView.Total
 	);

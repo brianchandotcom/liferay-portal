@@ -81,17 +81,15 @@ export default class Tabs extends React.Component<ITabsProps> {
 
 	private _scrollableSectionRef = createRef<ScrollableSection>();
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps: ITabsProps) {
 		const {itemsIList} = this.props;
 
 		const count = itemsIList.size;
 		const prevCount = prevProps.itemsIList.size;
 
-		if (this._scrollableSectionRef && prevCount) {
-			const {
-				scrollToBeg,
-				scrollToEnd
-			} = this._scrollableSectionRef.current;
+		if (this._scrollableSectionRef.current && prevCount) {
+			const {scrollToBeg, scrollToEnd} =
+				this._scrollableSectionRef.current;
 
 			if (count > prevCount) {
 				scrollToEnd();
@@ -115,7 +113,7 @@ export default class Tabs extends React.Component<ITabsProps> {
 			<div className='tabs-root d-flex align-items-center justify-content-between'>
 				<ScrollableSection ref={this._scrollableSectionRef}>
 					<ul className='d-flex'>
-						{itemsIList.map(({id, title}, i) => (
+						{itemsIList.toArray().map(({id, title}, i) => (
 							<TabItem
 								active={
 									selectedTabIndex === i && !showAddProperty

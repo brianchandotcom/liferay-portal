@@ -8,7 +8,7 @@ interface ICopyButtonProps {
 	buttonText?: string;
 	className?: string;
 	displayType?: ButtonProps['displayType'];
-	onClick?: (any) => void;
+	onClick?: (event: React.MouseEvent) => void;
 	position?: string;
 	text: string;
 }

@@ -12,6 +12,7 @@ import RealTimePeriodInput, {
 	DEFAULT_OPTIONS
 } from './components/RealTimePeriodInput';
 import {Attribute, DataTypes} from 'event-analysis/utils/types';
+import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {CustomValue} from 'shared/util/records';
 import {fromJS, Map} from 'immutable';
 import {FunctionalOperators, RelationalOperators} from '../utils/constants';
@@ -20,22 +21,21 @@ import {
 	getIndexFromPropertyName
 } from '../utils/custom-inputs';
 import {isBoolean, isNil} from 'lodash';
-import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {NAME} from 'shared/util/pagination';
 import {OrderByDirections, SegmentTypes} from 'shared/util/constants';
 import {SafeResults} from 'shared/hoc/util';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 type Touched = {
 	attribute: boolean;
-	attributeValue: string;
+	attributeValue: boolean;
 	dateFilter: boolean;
 	occurenceCount: boolean;
 };
 
 type Valid = {
 	attribute: boolean;
-	attributeValue: string;
+	attributeValue: boolean;
 	dateFilter: boolean;
 	occurenceCount: boolean;
 };
@@ -56,10 +56,8 @@ const EventInput: React.FC<IEventInputProps> = ({
 	valid,
 	value: valueIMap
 }) => {
-	const [
-		selectedCustomAttribute,
-		setSelectedCustomAttribute
-	] = useState<Attribute | null>(null);
+	const [selectedCustomAttribute, setSelectedCustomAttribute] =
+		useState<Attribute | null>(null);
 	const {id: eventId, options} = property;
 
 	const getRealTimePeriodFromCriterion = useCallback((): {
@@ -157,7 +155,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 		handleRealTimePeriodChange
 	]);
 
-	const getConjunctionDateFilterIMap = value => {
+	const getConjunctionDateFilterIMap = (value: CustomValue) => {
 		const conjunctionCriterion = value.getIn([
 			'criterionGroup',
 			'items',
@@ -175,6 +173,11 @@ const EventInput: React.FC<IEventInputProps> = ({
 			criterion,
 			touched: conjunctionTouched,
 			valid: conjunctionValid
+		}: {
+			attribute?: Attribute;
+			criterion: Criterion;
+			touched: {attribute: boolean; attributeValue: boolean};
+			valid: {attribute: boolean; attributeValue: boolean};
 		}) => {
 			onChange({
 				touched: {...touched, ...conjunctionTouched},
@@ -193,7 +196,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 	);
 
 	const handleDateFilterConjunctionChange = useCallback(
-		criterion => {
+		(criterion: Criterion | null) => {
 			let value: Map<string, any>;
 
 			if (isNil(criterion)) {
@@ -225,6 +228,10 @@ const EventInput: React.FC<IEventInputProps> = ({
 			criterion,
 			touched: occurenceCountTouched,
 			valid: occurenceCountValid
+		}: {
+			criterion?: Criterion;
+			touched?: boolean;
+			valid?: boolean;
 		}) => {
 			let params: {
 				touched?: Touched;
@@ -282,8 +289,8 @@ const EventInput: React.FC<IEventInputProps> = ({
 	);
 
 	if (
-		options.length &&
-		options.some(option => option.label === 'hidden' && option.value)
+		options!.length &&
+		options!.some(option => option.label === 'hidden' && option.value)
 	) {
 		return (
 			<div className='criteria-statement'>
@@ -319,7 +326,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 	return (
 		<div className='criteria-statement'>
 			<SafeResults {...result} page={false} pageDisplay={false}>
-				{data => {
+				{(data: any) => {
 					const attributes =
 						data?.eventProperties?.eventProperties || [];
 
@@ -353,7 +360,13 @@ const EventInput: React.FC<IEventInputProps> = ({
 								</Form.GroupItem>
 
 								<OccurenceConjunctionInput
-									onChange={handleOccurenceConjunctionChange}
+									onChange={
+										handleOccurenceConjunctionChange as (params: {
+											criterion?: Criterion;
+											touched?: boolean;
+											valid?: boolean;
+										}) => void
+									}
 									operatorName={
 										valueIMap.get(
 											'operator'

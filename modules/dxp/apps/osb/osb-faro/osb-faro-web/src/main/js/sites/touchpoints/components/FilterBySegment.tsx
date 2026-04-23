@@ -27,7 +27,7 @@ import {
 } from 'shared/queries/SegmentPageViewsQuery';
 import {sub} from 'shared/util/lang';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
 
@@ -51,10 +51,10 @@ const filterBySegment: React.FC<IFilterBySegment> = ({
 	const {delta, orderIOMap, page, query} = useQueryPagination({
 		initialOrderIOMap: createOrderIOMap(NAME, getDefaultSortOrder(NAME))
 	});
-	const [selectedItem, setSelectedItem] = useState(null);
+	const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
 	const {data, loading} = useRequest({
-		dataSourceFn: API.individualSegment.search,
+		dataSourceFn: API.individualSegment.search as any,
 		variables: {
 			channelId,
 			delta,
@@ -72,17 +72,17 @@ const filterBySegment: React.FC<IFilterBySegment> = ({
 		fetchPolicy: 'network-only',
 		skip: !data?.items.length,
 		variables: {
-			canonicalUrl: getSafeTouchpoint(touchpoint),
-			channelId,
-			segmentIds: data?.items.map(({id}) => id),
-			title: getSafeDecodedURIComponent(title),
+			canonicalUrl: getSafeTouchpoint(touchpoint as string) ?? '',
+			channelId: channelId as string,
+			segmentIds: data?.items.map(({id}: any) => id),
+			title: getSafeDecodedURIComponent(title as string),
 			...getSafeRangeSelectors(rangeSelectors)
 		}
 	});
 
 	const items = useMemo(
 		() =>
-			data?.items.map(item => {
+			data?.items.map((item: any) => {
 				const selectedSegmentData = segmentData?.segmentPageViews.find(
 					({segmentId}) => segmentId === item.id
 				);
@@ -103,7 +103,7 @@ const filterBySegment: React.FC<IFilterBySegment> = ({
 					groupId={groupId}
 					items={items}
 					loading={loading || segmentLoading}
-					onFilterChange={item => {
+					onFilterChange={(item: Item | null) => {
 						setSelectedItem(item);
 
 						onFilterChange(item);
@@ -153,7 +153,13 @@ const filterBySegment: React.FC<IFilterBySegment> = ({
 	);
 };
 
-const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
+const Dropdown = ({
+	channelId,
+	groupId,
+	items,
+	loading,
+	onFilterChange
+}: any) => {
 	const [value, setValue] = useState('');
 
 	const filteredItems = useMemo(() => {
@@ -162,7 +168,7 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 		}
 
 		return items.filter(
-			({name}) => name.match(new RegExp(value, 'i')) !== null
+			({name}: any) => name.match(new RegExp(value, 'i')) !== null
 		);
 	}, [items, value]);
 
@@ -200,13 +206,13 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 					}
 				]}
 			>
-				{(item: Item) => (
+				{(item: any) => (
 					<ClayDropDown.Group
 						header={item.name}
 						items={item.children}
 						key={item.name}
 					>
-						{(item: Item) => (
+						{(item: any) => (
 							<ClayDropDown.Item
 								disabled={item.disabled}
 								key={item.name}
@@ -240,7 +246,7 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 								)}
 							</div>
 						}
-						title={null}
+						title={undefined}
 					/>
 				</ClayDropDown.Section>
 			)}
@@ -277,7 +283,7 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 								</ClayLink>
 							</div>
 						}
-						title={null}
+						title={undefined}
 					/>
 				</ClayDropDown.Section>
 			)}

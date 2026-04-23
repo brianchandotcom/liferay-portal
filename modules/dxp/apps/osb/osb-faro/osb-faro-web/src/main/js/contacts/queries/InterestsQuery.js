@@ -1,6 +1,6 @@
 import {COMPOSITION_FRAGMENT} from 'shared/queries/fragments';
 import {CompositionTypes} from 'shared/util/constants';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 const INTERESTS_ID_MAP = {
 	[CompositionTypes.AccountInterests]: 'accountId',

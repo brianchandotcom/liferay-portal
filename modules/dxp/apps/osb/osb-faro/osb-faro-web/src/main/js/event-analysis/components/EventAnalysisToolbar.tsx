@@ -33,7 +33,7 @@ const EventAnalysisToolbar: React.FC<IEventAnalysisToolbarProps> = ({
 			<div className='d-flex event-analysis-toolbar-right-content'>
 				<div className='event-analysis-download-report mr-2'>
 					<DownloadPDFReport
-						disabled={dataSourceStates.empty}
+						disabled={!!dataSourceStates.empty}
 						infoMessage={Liferay.Language.get(
 							'the-report-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
 						)}

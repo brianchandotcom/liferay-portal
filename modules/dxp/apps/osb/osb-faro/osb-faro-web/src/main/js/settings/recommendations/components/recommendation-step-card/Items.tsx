@@ -12,18 +12,24 @@ import {FieldArray} from 'formik';
 import {Filter, getPropertiesFromItems} from '../../utils/utils';
 import {get} from 'lodash';
 import {Modal} from 'shared/types';
-import {useLazyQuery, useQuery} from '@apollo/react-hooks';
+import {useLazyQuery, useQuery} from '@apollo/client';
 
 const {
 	pagination: {orderDescending}
 } = Constants;
 
-const CountCell: React.FC<{
-	className: string;
-	data: Filter;
-	close: Modal.close;
-	open: Modal.open;
-}> = ({className, close, data: {name, value}, open}) => {
+const CountCell = (params: {[key: string]: any}) => {
+	const {
+		className,
+		close,
+		data: {name, value},
+		open
+	} = params as {
+		className: string;
+		close: Modal.close;
+		data: Filter;
+		open: Modal.open;
+	};
 	const {data, loading} = useQuery(RecommendationPageAssetsQuery, {
 		variables: {
 			propertyFilters: [
@@ -67,14 +73,18 @@ const CountCell: React.FC<{
 	);
 };
 
-const RuleCell: React.FC<{
-	className: string;
-	data: Filter;
-}> = ({className, data: {name, value}}) => (
-	<td className={className}>
-		<RuleItem name={name} value={value} />
-	</td>
-);
+const RuleCell = (params: {[key: string]: any}) => {
+	const {
+		className,
+		data: {name, value}
+	} = params as {className: string; data: Filter};
+
+	return (
+		<td className={className}>
+			<RuleItem name={name} value={value} />
+		</td>
+	);
+};
 
 interface IItemsProps {
 	close: Modal.close;
@@ -84,10 +94,8 @@ interface IItemsProps {
 }
 
 const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
-	const [
-		getPageAssetsTotal,
-		{data, loading: pagesTotalLoading}
-	] = useLazyQuery(RecommendationPageAssetsQuery);
+	const [getPageAssetsTotal, {data, loading: pagesTotalLoading}] =
+		useLazyQuery(RecommendationPageAssetsQuery);
 
 	useEffect(() => {
 		getPageAssetsTotal({
@@ -153,7 +161,7 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 								open(modalTypes.NEW_RULE_MODAL, {
 									groupId,
 									onClose: close,
-									onSubmit: filter => {
+									onSubmit: (filter: Filter) => {
 										if (
 											!itemFilters.find(
 												item => item.id === filter.id

@@ -45,7 +45,7 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 			} catch (error) {
 				addAlert({
 					alertType: Alert.Types.Error,
-					message: error.message,
+					message: (error as Error).message,
 					timeout: false
 				});
 			}

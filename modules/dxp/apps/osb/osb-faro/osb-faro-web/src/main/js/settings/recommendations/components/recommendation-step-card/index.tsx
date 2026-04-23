@@ -25,10 +25,10 @@ import {
 import {Router} from 'shared/types';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
-import {useMutation} from '@apollo/react-hooks';
+import {useMutation} from '@apollo/client';
 import {withHistory} from 'shared/hoc';
 
-const STEPS = [
+const STEPS: {component: React.ComponentType<any>; title: string}[] = [
 	{
 		component: BasicSettings,
 		title: Liferay.Language.get('basic-settings')
@@ -81,7 +81,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 		RECOMMENDATION_UPDATE_MUTATION
 	);
 
-	const handleNext = event => {
+	const handleNext = (event: React.MouseEvent) => {
 		event.preventDefault();
 
 		setCurrentStep(currentStep + 1);
@@ -96,8 +96,16 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 			runFrequency,
 			runNow,
 			type
+		}: {
+			includePreviousPeriod: string | boolean;
+			itemFilters: Filter[];
+			name: string;
+			runDataPeriod: JobRunDataPeriods;
+			runFrequency: JobRunFrequencies;
+			runNow: boolean;
+			type: JobTypes;
 		},
-		{setSubmitting}
+		{setSubmitting}: {setSubmitting: (value: boolean) => void}
 	) => {
 		let parameters = [
 			{
@@ -112,7 +120,12 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 					name: 'includePreviousPeriod',
 					value: includePreviousPeriod
 				},
-				...itemFilters.map(({name, value}) => ({name, value}))
+				...itemFilters.map(
+					({name, value}: {name: string; value: string}) => ({
+						name,
+						value
+					})
+				)
 			];
 		}
 
@@ -180,28 +193,23 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 
 	const getInitialValues = () => {
 		if (job) {
-			const {
-				id,
-				name,
-				parameters,
-				runDataPeriod,
-				runFrequency,
-				type
-			} = job;
+			const {id, name, parameters, runDataPeriod, runFrequency, type} =
+				job;
 
-			const includePreviousPeriodParameter: JobParameter = parameters.find(
-				({name}) => name === 'includePreviousPeriod'
-			);
+			const includePreviousPeriodParameter: JobParameter | undefined =
+				parameters.find(
+					({name}: JobParameter) => name === 'includePreviousPeriod'
+				);
 
 			const itemFilters: Filter[] = parameters.reduce(
-				(acc, {name, value}) => {
+				(acc: Filter[], {name, value}: JobParameter) => {
 					if (name === 'includePreviousPeriod') {
 						return acc;
 					}
 
 					return [...acc, {id: `${name} - ${value}`, name, value}];
 				},
-				[]
+				[] as Filter[]
 			);
 
 			return {
@@ -248,7 +256,10 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 
 	return (
 		<Card className='recommendation-step-card-root'>
-			<Form initialValues={getInitialValues()} onSubmit={handleSubmit}>
+			<Form
+				initialValues={getInitialValues() as any}
+				onSubmit={handleSubmit}
+			>
 				{({
 					dirty,
 					errors,

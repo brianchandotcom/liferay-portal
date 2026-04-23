@@ -73,7 +73,10 @@ const AccountCard: React.FC<IAccountCardProps> = ({
 										metrics?.trend?.trendClassification
 									)
 								}}
-								symbol={getIcon(metrics?.trend?.percentage)}
+								symbol={
+									getIcon(metrics?.trend?.percentage ?? 0) ??
+									''
+								}
 							/>
 						)}
 					{sub(
@@ -103,9 +106,11 @@ const AccountCard: React.FC<IAccountCardProps> = ({
 	);
 };
 
-const TotalAccounts = ({groupId}) => {
+const TotalAccounts = ({groupId}: {groupId: string}) => {
 	const {data, loading} = useRequest({
-		dataSourceFn: API.accounts.fetchMetrics,
+		dataSourceFn: API.accounts.fetchMetrics as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			groupId
 		}

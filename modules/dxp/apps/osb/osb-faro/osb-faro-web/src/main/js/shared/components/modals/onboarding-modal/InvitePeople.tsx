@@ -132,7 +132,9 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 										'enter-email-address'
 									)}
 									validateOnBlur
-									validationFn={validateEmail}
+									validationFn={(value?: string) =>
+										!!value && validateEmail(value)
+									}
 								/>
 							</Input.GroupItem>
 						</Input.Group>

@@ -15,7 +15,7 @@ export const useRequest = ({
 	skipRequest = false,
 	variables
 }: {
-	dataSourceFn: (params: {[key: string]: any}) => Promise<any>;
+	dataSourceFn?: (params: {[key: string]: any}) => Promise<any> | undefined;
 	debounceDelay?: number;
 	initialState?: {
 		data: any;
@@ -32,9 +32,18 @@ export const useRequest = ({
 
 	const debouncedDataSourceFn = useCallback<any>(
 		debounce(debounceDelay)(vars => {
+			if (!dataSourceFn) {
+				return;
+			}
+
 			requestAbortControllerRef.current = new AbortController();
 
-			dataSourceFn(vars)
+			const promise = dataSourceFn(vars);
+			if (!promise) {
+				return;
+			}
+
+			promise
 				.then(result => {
 					if (requestAbortControllerRef.current?.signal.aborted) {
 						return;

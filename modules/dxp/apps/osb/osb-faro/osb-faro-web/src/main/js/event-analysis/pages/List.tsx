@@ -18,7 +18,10 @@ import {useRequest} from 'shared/hooks/useRequest';
 
 const List = () => {
 	const {selectedChannel} = useChannelContext();
-	const {channelId, groupId} = useParams();
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const currentUser = useCurrentUser();
 
 	const {empty, error, loading} = useDataSource();
@@ -29,7 +32,9 @@ const List = () => {
 		loading: usageLoading,
 		refetch
 	} = useRequest({
-		dataSourceFn: fetchFeatureUsages,
+		dataSourceFn: fetchFeatureUsages as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {groupId}
 	});
 

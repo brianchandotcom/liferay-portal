@@ -46,7 +46,7 @@ const AttributeFilterChip: React.FC<{
 					displayName={displayName}
 					draggable={false}
 					dragType={DragTypes.AttributeFilterChip}
-					id={filter.id}
+					id={filter.id ?? ''}
 					index={index}
 					label={label}
 					onCloseClick={onCloseClick}

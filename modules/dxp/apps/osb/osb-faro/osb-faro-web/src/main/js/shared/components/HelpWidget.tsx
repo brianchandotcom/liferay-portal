@@ -66,7 +66,8 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 	groupId,
 	open
 }) => {
-	const basicTier = faroSubscriptionIMap.get('name') === PLANS.basic.name;
+	const basicTier =
+		faroSubscriptionIMap.get('name') === (PLANS as any).basic.name;
 
 	return (
 		<div className='help-widget-root'>

@@ -32,11 +32,11 @@ interface IChannelsMenuProps extends React.HTMLAttributes<HTMLElement> {
 
 interface IChannelsButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	channel?: Channel;
+	channel?: Channel | null;
 }
 
 export const getDefaultChannel = (
-	defaultChannelId: string,
+	defaultChannelId: string | undefined,
 	channels: Channel[]
 ) => {
 	if (channels && !!channels.length) {
@@ -69,7 +69,7 @@ export const ChannelsMenu: React.FC<IChannelsMenuProps> = ({
 			<ChannelsButton
 				channel={channel}
 				className={className}
-				onClick={channel && handleActive}
+				onClick={channel ? handleActive : undefined}
 				ref={triggerElementRef}
 			/>
 

@@ -7,7 +7,7 @@ import {sub} from 'shared/util/lang';
 
 interface IFieldPreviewModalProps extends React.HTMLAttributes<HTMLDivElement> {
 	dataSourceFn: () => Promise<any>;
-	fieldName: string;
+	fieldName?: string;
 	onClose: () => void;
 	sourceName: string;
 }

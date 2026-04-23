@@ -13,7 +13,7 @@ interface IFilterProps {
 type Item = {
 	category: string;
 	checked?: boolean;
-	items: Item[];
+	items: Item[] | null;
 	hasSearch: boolean;
 	inputType: string;
 	label: string;
@@ -31,7 +31,7 @@ const Filter: React.FC<IFilterProps> = ({
 
 	const [items, setItems] = useState(initialItems);
 
-	const _elementRef = useRef(null);
+	const _elementRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		document.addEventListener('click', handleDocClick);
@@ -66,15 +66,11 @@ const Filter: React.FC<IFilterProps> = ({
 			return {...item, items: childItems};
 		});
 
-	const updateRadioItems = ({category, label}: Partial<Item>): void => {
+	const updateRadioItems = ({category, label}: Item): void => {
 		handleUpdateFilters({...selectedItems, [category]: [label]});
 	};
 
-	const updateCheckboxItems = ({
-		category,
-		checked,
-		label
-	}: Partial<Item>): void => {
+	const updateCheckboxItems = ({category, checked, label}: Item): void => {
 		const categoryItems = selectedItems[category] || [];
 
 		if (checked) {
@@ -105,17 +101,19 @@ const Filter: React.FC<IFilterProps> = ({
 	};
 
 	const handleDocClick = ({target}: Event): void => {
+		if (!_elementRef.current) return;
+
 		const dropdown = _elementRef.current.querySelector(
 			'.analytics-dropdown'
 		);
-		const dropdownMenu = Object.assign(
+		const dropdownMenu: Element[] = Object.assign(
 			[],
 			document.querySelectorAll('.analytics-dropdown-menu')
 		);
 
 		if (
-			dropdown.contains(target) ||
-			dropdownMenu.find(menu => menu.contains(target))
+			(dropdown && dropdown.contains(target as Node)) ||
+			dropdownMenu.find(menu => menu.contains(target as Node))
 		)
 			return;
 

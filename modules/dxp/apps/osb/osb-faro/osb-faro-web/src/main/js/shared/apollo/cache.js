@@ -1,3 +1,3 @@
-import {InMemoryCache} from 'apollo-cache-inmemory';
+import {InMemoryCache} from '@apollo/client';
 
 export default new InMemoryCache();

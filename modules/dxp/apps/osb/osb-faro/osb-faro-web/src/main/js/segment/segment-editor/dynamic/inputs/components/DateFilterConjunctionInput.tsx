@@ -39,18 +39,17 @@ interface IDateFilterConjunctionInputProps {
 		touched: boolean;
 		valid: boolean;
 	};
-	onChange: (conjunctionCriterion: Criterion) => void;
+	onChange: (conjunctionCriterion: Criterion | null) => void;
 }
 
-const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = ({
-	conjunctionCriterion,
-	onChange
-}) => {
+const DateFilterConjunctionInput: React.FC<
+	IDateFilterConjunctionInputProps
+> = ({conjunctionCriterion, onChange}) => {
 	const [conjunction, setConjunction] = useState(
 		getInitialConjunction(conjunctionCriterion)
 	);
 
-	const handleConjunctionChange = value => {
+	const handleConjunctionChange = (value: React.Key) => {
 		const {propertyName, value: dateFilter} = conjunctionCriterion;
 
 		switch (value) {
@@ -61,7 +60,7 @@ const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = (
 					touched: false,
 					valid: true,
 					value: TimeSpans.Last24Hours
-				} as Criterion);
+				} as unknown as Criterion);
 				break;
 			case Between:
 				onChange({
@@ -70,7 +69,7 @@ const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = (
 					touched: false,
 					valid: false,
 					value: Map({end: '', start: ''})
-				} as Criterion);
+				} as unknown as Criterion);
 				break;
 			case EVER:
 				onChange(null);
@@ -84,11 +83,11 @@ const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = (
 					value: [SINCE, Between, EVER].includes(conjunction)
 						? ''
 						: dateFilter
-				} as Criterion);
+				} as unknown as Criterion);
 				break;
 		}
 
-		setConjunction(value);
+		setConjunction(value as FunctionalOperators | RelationalOperators);
 	};
 
 	const handleDateFilterBlur = () => {
@@ -98,7 +97,9 @@ const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = (
 		});
 	};
 
-	const handleDateFilterChange = dateFilter => {
+	const handleDateFilterChange = (
+		dateFilter: string | {end?: string; start?: string}
+	) => {
 		const {operatorName, propertyName} = conjunctionCriterion;
 
 		onChange({
@@ -107,7 +108,8 @@ const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = (
 			touched: true,
 			valid:
 				operatorName === Between
-					? !!dateFilter.end && !!dateFilter.start
+					? !!(dateFilter as {end?: string; start?: string}).end &&
+					  !!(dateFilter as {end?: string; start?: string}).start
 					: !!dateFilter,
 			value: dateFilter
 		});

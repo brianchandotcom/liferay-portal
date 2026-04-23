@@ -39,22 +39,25 @@ export const useQueryPagination = ({
 	} = useQueryParams();
 
 	const getFilterByFromFields = (): FilterByType => {
-		const filterProps = pick(otherParams, filterFields);
+		const filterProps = pick(otherParams, filterFields as string[]);
 
 		return Map(
-			Object.keys(filterProps).reduce((acc, currentKey) => {
-				const filterValues = filterProps[currentKey] as string;
+			Object.keys(filterProps).reduce<{[key: string]: Set<string>}>(
+				(acc, currentKey) => {
+					const filterValues = filterProps[currentKey] as string;
 
-				acc[currentKey] = filterValues
-					? Set(filterValues.split(','))
-					: Set();
+					acc[currentKey] = filterValues
+						? Set(filterValues.split(','))
+						: Set();
 
-				return acc;
-			}, {})
+					return acc;
+				},
+				{}
+			)
 		);
 	};
 
-	let orderIOMap = initialOrderIOMap;
+	let orderIOMap = initialOrderIOMap ?? OrderedMap<string, OrderParams>();
 
 	if (field && sortOrder) {
 		orderIOMap = createOrderIOMap(field, sortOrder);

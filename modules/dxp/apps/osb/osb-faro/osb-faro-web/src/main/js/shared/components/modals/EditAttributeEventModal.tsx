@@ -14,7 +14,8 @@ import {Attribute, DataTypes, Event} from 'event-analysis/utils/types';
 import {connect, ConnectedProps} from 'react-redux';
 import {DATA_TYPE_LABELS_MAP} from 'event-analysis/utils/utils';
 import {debounce, get} from 'lodash/fp';
-import {DocumentNode} from 'apollo-boost';
+import {DocumentNode, useMutation, useQuery} from '@apollo/client';
+
 import {
 	EventAttributeDefinitionData,
 	EventAttributeDefinitionVariables,
@@ -29,7 +30,6 @@ import {Modal as ModalType} from 'shared/types/Modal';
 import {SafeResults} from 'shared/hoc/util';
 import {sequence} from 'shared/util/promise';
 import {sub} from 'shared/util/lang';
-import {useMutation, useQuery} from '@apollo/react-hooks';
 
 const DATA_TYPE_OPTIONS = [
 	DataTypes.Boolean,
@@ -75,7 +75,7 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 		showTypecast ? 'eventAttributeDefinition' : 'eventDefinition'
 	);
 
-	const validateDisplayName = debounce(250)(
+	const debouncedValidateDisplayName = debounce(250)(
 		(value: string): Promise<string> => {
 			let error = '';
 
@@ -119,6 +119,9 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 		}
 	);
 
+	const validateDisplayName = (value: any): Promise<any> =>
+		Promise.resolve(debouncedValidateDisplayName(value));
+
 	return (
 		<Modal>
 			<SafeResults {...result} page={false} pageDisplay={false}>
@@ -126,12 +129,8 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 					eventAttributeDefinition: Attribute;
 					eventDefinition: Event;
 				}) => {
-					const {
-						dataType,
-						description,
-						displayName,
-						name
-					} = dataMapper(item);
+					const {dataType, description, displayName, name} =
+						dataMapper(item);
 
 					return (
 						<>

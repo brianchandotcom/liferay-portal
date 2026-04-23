@@ -59,7 +59,10 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 	const [dataSource, setDataSource] = useState(initialDataSource);
 	const [token, setToken] = useState('');
 
-	const {groupId, id} = useParams();
+	const {groupId = '', id = ''} = useParams<{
+		groupId: string;
+		id: string;
+	}>();
 	const currentUser = useCurrentUser();
 
 	type Alert = {
@@ -74,7 +77,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
-	const accountStatus = dataSource.provider.getIn([
+	const accountStatus = dataSource.provider?.getIn([
 		'accountsConfiguration',
 		'accountsStatus'
 	]);
@@ -124,7 +127,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 		setAlert(alert);
 	}, [dataSourceActive, accountStatus]);
 
-	let _tokenRequest;
+	let _tokenRequest: ReturnType<typeof setTimeout> | Promise<any> | undefined;
 
 	const getNextToken = async (prevToken?: string) => {
 		const nextToken = await fetchToken(groupId, id);
@@ -147,7 +150,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 		}
 
 		return () => {
-			clearTimeout(_tokenRequest);
+			clearTimeout(_tokenRequest as ReturnType<typeof setTimeout>);
 		};
 	}, [dataSourceActive]);
 
@@ -170,7 +173,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 				breadcrumbs.getDataSources({groupId}),
 				breadcrumbs.getDataSourceName({
 					active: true,
-					label: dataSource.name
+					label: dataSource.name ?? ''
 				})
 			]}
 			documentTitle={Liferay.Language.get('configure-data-source')}
@@ -181,7 +184,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 				editable={currentUser.isAdmin()}
 				groupId={groupId}
 				label={label}
-				onUpdateName={async name => {
+				onUpdateName={async (name: string) => {
 					await updateDemandbase({groupId, id, name} as any);
 
 					await handleUpdateDataSource();
@@ -300,66 +303,82 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 				<AssignedPropertiesTable
 					addAlert={addAlert}
 					close={close}
-					customColumns={[
-						{
-							accessor: 'accounts',
-							cellRenderer: ({data}) => (
-								<td key={data.channelId}>
-									<div className='table-title text-truncate'>
-										<Text>{data.count}</Text>
-									</div>
-								</td>
-							),
-							label: Liferay.Language.get('accounts')
-						},
-						{
-							accessor: 'intentData',
-							cellRenderer: ({data}) => (
-								<td key={data.channelId}>
-									<div className='table-title text-truncate'>
-										<Text>{data.count}</Text>
-									</div>
-								</td>
-							),
-							label: Liferay.Language.get('intent-data')
-						},
-						{
-							accessor: 'buyingCommittee',
-							cellRenderer: ({data}) => (
-								<td key={data.channelId}>
-									<div className='table-title text-truncate'>
-										<Text>{data.count}</Text>
-									</div>
-								</td>
-							),
-							label: Liferay.Language.get('buying-committee')
-						},
-						{
-							accessor: 'customAttributes',
-							cellRenderer: ({data}) => (
-								<td key={data.channelId}>
-									<div className='table-title text-truncate'>
-										<Text>{data.count}</Text>
-									</div>
-								</td>
-							),
-							label: Liferay.Language.get('custom-attributes')
-						}
-					]}
+					customColumns={
+						[
+							{
+								accessor: 'accounts',
+								cellRenderer: ({data}: {data: any}) => (
+									<td key={data.channelId}>
+										<div className='table-title text-truncate'>
+											<Text>{data.count}</Text>
+										</div>
+									</td>
+								),
+								label: Liferay.Language.get('accounts')
+							},
+							{
+								accessor: 'intentData',
+								cellRenderer: ({data}: {data: any}) => (
+									<td key={data.channelId}>
+										<div className='table-title text-truncate'>
+											<Text>{data.count}</Text>
+										</div>
+									</td>
+								),
+								label: Liferay.Language.get('intent-data')
+							},
+							{
+								accessor: 'buyingCommittee',
+								cellRenderer: ({data}: {data: any}) => (
+									<td key={data.channelId}>
+										<div className='table-title text-truncate'>
+											<Text>{data.count}</Text>
+										</div>
+									</td>
+								),
+								label: Liferay.Language.get('buying-committee')
+							},
+							{
+								accessor: 'customAttributes',
+								cellRenderer: ({data}: {data: any}) => (
+									<td key={data.channelId}>
+										<div className='table-title text-truncate'>
+											<Text>{data.count}</Text>
+										</div>
+									</td>
+								),
+								label: Liferay.Language.get('custom-attributes')
+							}
+						] as unknown as any[]
+					}
 					dataSource={dataSource}
 					handleUpdateDataSource={handleUpdateDataSource}
 					loading={loading}
 					open={open}
-					updateDataSourceFn={updateDemandbase}
+					updateDataSourceFn={
+						updateDemandbase as (params: {
+							[key: string]: any;
+						}) => Promise<any>
+					}
 				/>
 			</Card>
 		</BasePage>
 	);
 };
 
-const DemandbaseEntityList = ({accountStatus, dataSource, groupId}) => {
+const DemandbaseEntityList = ({
+	accountStatus,
+	dataSource,
+	groupId
+}: {
+	accountStatus: any;
+	dataSource: DataSource;
+	groupId: string;
+}) => {
 	const accountsCountResponse = useRequest({
-		dataSourceFn: fetchDemandbaseAccountsCount,
+		dataSourceFn: fetchDemandbaseAccountsCount as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {groupId, id: dataSource.id}
 	});
 

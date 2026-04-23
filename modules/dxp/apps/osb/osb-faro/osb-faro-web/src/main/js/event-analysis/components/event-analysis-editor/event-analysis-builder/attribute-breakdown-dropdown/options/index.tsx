@@ -17,7 +17,9 @@ import {
 	DataTypes
 } from 'event-analysis/utils/types';
 
-const BREAKDOWNS_MAP = {
+import {IBreakdownProps} from 'event-analysis/utils/types';
+
+const BREAKDOWNS_MAP: Partial<Record<DataTypes, React.FC<IBreakdownProps>>> = {
 	[DataTypes.Date]: DateBreakdown,
 	[DataTypes.Duration]: DurationBreakdown,
 	[DataTypes.Number]: NumberBreakdown
@@ -54,9 +56,13 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 		name
 	} = attribute;
 
-	const breakdown = breakdowns[breakdownId];
+	const breakdown = breakdownId ? breakdowns[breakdownId] : undefined;
 
 	const BreakdownBody = BREAKDOWNS_MAP[dataType];
+
+	if (!BreakdownBody) {
+		return null;
+	}
 
 	return (
 		<div className='attribute-options'>
@@ -64,7 +70,7 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 				<ClayButton
 					className='button-root back-to-attributes-button'
 					displayType='unstyled'
-					onClick={() => onAttributeChange(null)}
+					onClick={() => onAttributeChange(undefined)}
 					size='sm'
 				>
 					<ClayIcon
@@ -86,25 +92,27 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 				attributeId={attributeId}
 				attributeOwnerType={attributeOwnerType}
 				breakdown={
-					breakdown?.attributeId === attributeId ? breakdown : null
+					breakdown?.attributeId === attributeId
+						? breakdown
+						: undefined
 				}
 				description={description}
-				displayName={displayName}
-				onSubmit={newBreakdown => {
+				displayName={displayName ?? ''}
+				onSubmit={(newBreakdown: IBreakdownProps['breakdown']) => {
 					if (breakdownId) {
 						editBreakdown({
 							attribute,
-							breakdown: newBreakdown,
+							breakdown: newBreakdown!,
 							id: breakdownId
 						});
 					} else {
 						addBreakdown({
 							attribute,
-							breakdown: newBreakdown
+							breakdown: newBreakdown!
 						});
 					}
 
-					onAttributeChange(null);
+					onAttributeChange(undefined);
 
 					onActiveChange(false);
 				}}

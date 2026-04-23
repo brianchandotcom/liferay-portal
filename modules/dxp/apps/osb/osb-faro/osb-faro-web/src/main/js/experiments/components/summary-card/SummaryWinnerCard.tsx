@@ -5,6 +5,8 @@ import {
 	mergedVariants,
 	toThousandsABTesting
 } from 'experiments/util/experiments';
+import {IExperiment} from './types';
+import {MetricName} from 'experiments/util/types';
 import {sub} from 'shared/util/lang';
 import {SummaryAlert} from './SummaryAlert';
 import {SummaryBaseCard} from './SummaryBaseCard';
@@ -13,7 +15,20 @@ import {SummarySection} from './SummarySection';
 import {SummaryTitle} from './SummaryTitle';
 import {toRounded} from 'shared/util/numbers';
 
-export const SummaryWinnerCard = ({experiment, timeZoneId}) => {
+export const SummaryWinnerCard: React.FC<{
+	experiment: IExperiment & {
+		description?: string;
+		metrics: {
+			completion: number;
+			elapsedDays: number;
+			variantMetrics: IExperiment['dxpVariants'];
+		};
+		sessions: number;
+		startedDate?: string;
+		type?: string;
+	};
+	timeZoneId: string;
+}> = ({experiment, timeZoneId}) => {
 	const {
 		description,
 		dxpVariants,
@@ -57,10 +72,10 @@ export const SummaryWinnerCard = ({experiment, timeZoneId}) => {
 									'control-has-outperformed-x-by-at-least-x'
 								),
 								[
-									secondPlaceVariant.dxpVariantName,
+									secondPlaceVariant?.dxpVariantName ?? '',
 									`${toRounded(
 										Math.abs(
-											secondPlaceVariant.improvement
+											secondPlaceVariant?.improvement ?? 0
 										),
 										2
 									)}%`
@@ -87,7 +102,7 @@ export const SummaryWinnerCard = ({experiment, timeZoneId}) => {
 								[
 									winnerVariant?.dxpVariantName,
 									`${toRounded(
-										winnerVariant?.improvement,
+										winnerVariant?.improvement ?? 0,
 										2
 									)}%`
 								]
@@ -145,13 +160,15 @@ export const SummaryWinnerCard = ({experiment, timeZoneId}) => {
 								title={Liferay.Language.get('test-metric')}
 							>
 								<SummarySection.MetricType
-									value={getMetricName(goal.metric)}
+									value={getMetricName(
+										goal.metric as MetricName
+									)}
 								/>
-								{winnerVariant &&
-									winnerVariant?.improvement > 0 && (
+								{winnerVariant?.improvement !== undefined &&
+									winnerVariant.improvement > 0 && (
 										<SummarySection.Variant
 											lift={`${toRounded(
-												winnerVariant?.improvement,
+												winnerVariant.improvement,
 												2
 											)}%`}
 											status='up'

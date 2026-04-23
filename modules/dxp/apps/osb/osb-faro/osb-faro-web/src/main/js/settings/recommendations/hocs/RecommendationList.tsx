@@ -44,7 +44,7 @@ import {RootState} from 'shared/store';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const {
@@ -143,9 +143,9 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 					message: successMessage as string
 				});
 
-				selectionDispatch({type: ACTION_TYPES.clearAll});
+				selectionDispatch?.({type: ACTION_TYPES.clearAll});
 
-				refetch();
+				refetch?.();
 
 				history.push(
 					setUriQueryValues(
@@ -209,9 +209,8 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 										onClose: close,
 										onSubmit: handleSubmit,
 										submitButtonDisplay: 'warning',
-										submitMessage: Liferay.Language.get(
-											'delete'
-										),
+										submitMessage:
+											Liferay.Language.get('delete'),
 										title: sub(
 											Liferay.Language.get('deleting-x'),
 											[
@@ -266,7 +265,7 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 						accessor: 'name',
 						cellRenderer: NameCell,
 						cellRendererProps: {
-							routeFn: ({data: {id}}) =>
+							routeFn: ({data: {id}}: {data: {id: string}}) =>
 								toRoute(
 									Routes.SETTINGS_RECOMMENDATION_MODEL_VIEW,
 									{
@@ -350,7 +349,7 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 	);
 };
 
-export default compose<any>(
+export default compose<React.ComponentType<any>>(
 	withSelectionProvider,
 	connector
 )(RecommendationList);

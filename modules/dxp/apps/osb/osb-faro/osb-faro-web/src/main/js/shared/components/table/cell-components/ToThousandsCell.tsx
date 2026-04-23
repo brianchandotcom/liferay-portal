@@ -1,7 +1,7 @@
 import React from 'react';
 import {toThousands} from 'shared/util/numbers';
 
-const ToThousandsCell = ({data}) => {
+const ToThousandsCell = ({data}: {data: any}) => {
 	const formattedCount = toThousands(data.individualCount);
 
 	return (

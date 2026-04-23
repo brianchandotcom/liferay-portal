@@ -4,7 +4,8 @@ import Popover from 'shared/components/Popover';
 import React, {useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 
-export interface IInfoPopoverProps extends React.HTMLAttributes<HTMLElement> {
+export interface IInfoPopoverProps {
+	className?: string;
 	content?: React.ReactText;
 	popOverAttr?: {className: string};
 	title?: string;
@@ -16,7 +17,7 @@ const InfoPopover: React.FC<IInfoPopoverProps> = ({
 	popOverAttr,
 	title
 }) => {
-	const _iconSpanRef = useRef();
+	const _iconSpanRef = useRef<HTMLSpanElement>(null);
 
 	const [showPopover, setShowPopover] = useState(false);
 
@@ -35,13 +36,13 @@ const InfoPopover: React.FC<IInfoPopoverProps> = ({
 
 			{ReactDOM.createPortal(
 				<Popover
-					alignElement={_iconSpanRef.current}
+					alignElement={_iconSpanRef.current!}
 					content={content}
 					title={title}
 					visible={showPopover}
 					{...popOverAttr}
 				/>,
-				document.querySelector('body.dxp')
+				document.querySelector('body.dxp') || document.body
 			)}
 		</>
 	);

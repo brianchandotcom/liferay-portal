@@ -9,8 +9,8 @@ import {withField} from 'shared/components/form';
 interface ITitleEditorProps {
 	editable?: boolean;
 	inputName: string;
-	onBlur?: (event) => void;
-	onChange: (event) => void;
+	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	placeholder?: string;
 	value?: string;
 }
@@ -30,7 +30,7 @@ export class TitleEditor extends React.Component<
 	private _titleInput = createRef<HTMLInputElement>();
 
 	@autobind
-	handleBlur(event) {
+	handleBlur(event: React.FocusEvent<HTMLInputElement>) {
 		const {onBlur} = this.props;
 
 		this.setState({editing: false});
@@ -41,7 +41,7 @@ export class TitleEditor extends React.Component<
 	}
 
 	@autobind
-	handleEdit(event) {
+	handleEdit(event: React.MouseEvent | React.KeyboardEvent) {
 		event.preventDefault();
 
 		const {editable} = this.props;
@@ -51,14 +51,14 @@ export class TitleEditor extends React.Component<
 	}
 
 	@autobind
-	handleKeyDown(event) {
-		if (event.keyCode === ENTER) {
+	handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+		if (event.keyCode === ENTER && this._titleInput.current) {
 			this._titleInput.current.blur();
 		}
 	}
 
 	@autobind
-	handleKeyDownEdit(event) {
+	handleKeyDownEdit(event: React.KeyboardEvent<HTMLSpanElement>) {
 		event.preventDefault();
 
 		if (event.keyCode === ENTER) {
@@ -72,7 +72,7 @@ export class TitleEditor extends React.Component<
 			{
 				editing: !this.state.editing
 			},
-			() => this._titleInput.current.select()
+			() => this._titleInput.current?.select()
 		);
 	}
 
@@ -138,21 +138,23 @@ export class TitleEditor extends React.Component<
 	}
 }
 
-export default withField(({field: {name, ...otherFields}, ...otherProps}) => {
-	const handleChange = event => {
-		const {
-			form: {setFieldValue}
-		} = otherProps;
+export default withField(
+	({field: {name, ...otherFields}, ...otherProps}: any) => {
+		const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+			const {
+				form: {setFieldValue}
+			} = otherProps;
 
-		setFieldValue(name, event.target.value);
-	};
+			setFieldValue(name, event.target.value);
+		};
 
-	return (
-		<TitleEditor
-			{...otherFields}
-			{...otherProps}
-			inputName={name}
-			onChange={handleChange}
-		/>
-	);
-});
+		return (
+			<TitleEditor
+				{...otherFields}
+				{...otherProps}
+				inputName={name}
+				onChange={handleChange}
+			/>
+		);
+	}
+);

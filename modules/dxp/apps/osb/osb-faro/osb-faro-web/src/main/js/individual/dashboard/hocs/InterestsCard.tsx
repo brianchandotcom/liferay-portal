@@ -16,10 +16,13 @@ import {OrderByDirections} from 'shared/util/constants';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {Routes, toRoute} from 'shared/util/router';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 
 const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const {channelId, groupId} = useParams();
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const {
 		data = {
 			individualInterests: {compositions: [], maxCount: 0, totalCount: 0}
@@ -47,11 +50,11 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		individualInterests: {compositions: items, maxCount, totalCount}
 	} = data;
 
-	const columns: Column[] = [
+	const columns = [
 		compositionListColumns.getName({
 			label: Liferay.Language.get('topic'),
 			maxWidth: 200,
-			routeFn: ({data: {name}}) =>
+			routeFn: ({data: {name}}: {data: {name: string}}) =>
 				name &&
 				toRoute(Routes.CONTACTS_INDIVIDUALS_INTEREST_DETAILS, {
 					channelId,
@@ -69,7 +72,7 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			metricName: Liferay.Language.get('total-individuals'),
 			totalCount
 		})
-	];
+	] as Column[];
 
 	return (
 		<Card

@@ -45,17 +45,15 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 	const [itemsIList, setItemsIList] = useState<List<any>>(fromJS(items));
 	const [selectedKey, setSelectedKey] = useState(optionsLabel);
 
-	const {
-		selectedItems: selectedItemsIOMap,
-		selectionDispatch
-	} = useSelectionContext();
+	const {selectedItems: selectedItemsIOMap, selectionDispatch} =
+		useSelectionContext();
 
 	useEffect(() => {
 		items.length &&
-			selectionDispatch({payload: {items}, type: ACTION_TYPES.add});
+			selectionDispatch?.({payload: {items}, type: ACTION_TYPES.add});
 	}, []);
 
-	const handleEdits = newVal => {
+	const handleEdits = (newVal: string) => {
 		setItemsIList(
 			itemsIList.map(itemIMap =>
 				selectedItemsIOMap.has(itemIMap.get('id'))
@@ -66,8 +64,8 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 		setSelectedKey(newVal);
 	};
 
-	const handleItemsChange = item => {
-		selectionDispatch({payload: {item}, type: ACTION_TYPES.toggle});
+	const handleItemsChange = (item: {[key: string]: any}) => {
+		selectionDispatch?.({payload: {item}, type: ACTION_TYPES.toggle});
 	};
 
 	const handleSave = () => {

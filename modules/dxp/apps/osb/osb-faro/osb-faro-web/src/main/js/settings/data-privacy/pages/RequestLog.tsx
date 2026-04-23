@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 export const RequestLog = () => {
-	const {groupId} = useParams();
+	const {groupId = ''} = useParams<{groupId: string}>();
 	const currentUser = useCurrentUser();
 	const {timeZoneId} = useTimeZone();
 

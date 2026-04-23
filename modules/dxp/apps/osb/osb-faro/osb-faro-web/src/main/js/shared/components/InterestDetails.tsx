@@ -6,7 +6,7 @@ import React from 'react';
 import TouchpointsQuery from 'shared/queries/TouchpointsQuery';
 import URLConstants from 'shared/util/url-constants';
 import {createOrderIOMap, VISITORS_METRIC} from 'shared/util/pagination';
-import {graphql} from '@apollo/react-hoc';
+import {graphql} from '@apollo/client/react/hoc';
 import {
 	metricsListColumns,
 	sitePagesListColumns
@@ -61,7 +61,11 @@ const TableWithData: React.FC<ITableWithDataProps> = withRangeKey(
 			false
 		),
 		emptyTitle: Liferay.Language.get('empty-title-pages'),
-		getColumns: ({channelId, groupId, rangeSelectors}) => [
+		getColumns: ({
+			channelId,
+			groupId,
+			rangeSelectors
+		}: ITableWithDataProps) => [
 			sitePagesListColumns.getTitleUrl({
 				channelId,
 				groupId,
@@ -115,10 +119,10 @@ const InterestDetails: React.FC<IInterestDetailsProps> = ({
 			</Card.Header>
 
 			<TableWithData
-				channelId={channelId}
+				channelId={channelId!}
 				delta={delta}
-				groupId={groupId}
-				interestId={interestId}
+				groupId={groupId!}
+				interestId={interestId!}
 				orderIOMap={orderIOMap}
 				page={page}
 				query={query}

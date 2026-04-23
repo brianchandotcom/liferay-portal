@@ -44,9 +44,9 @@ export default class BaseConfigurationItem extends React.Component {
 	render() {
 		const {
 			buttonParams: {
-				label = Liferay.Language.get('configure'),
 				disabled,
 				href,
+				label = Liferay.Language.get('configure'),
 				...otherButtonParams
 			},
 			completion,

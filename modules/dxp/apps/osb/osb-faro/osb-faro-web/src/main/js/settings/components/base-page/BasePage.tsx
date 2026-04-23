@@ -15,9 +15,18 @@ import {matchPath, useLocation, useParams} from 'react-router-dom';
 import {PageActions} from 'shared/components/base-page/Header';
 import {Routes, toRoute} from 'shared/util/router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {User} from 'shared/util/records';
 import {useStore} from 'react-redux';
 
-function getSidebarSections({currentUser, groupId, recommendationsEnabled}) {
+function getSidebarSections({
+	currentUser,
+	groupId,
+	recommendationsEnabled
+}: {
+	currentUser: User;
+	groupId: string;
+	recommendationsEnabled: boolean;
+}) {
 	return [
 		{
 			items: [
@@ -57,7 +66,12 @@ function getSidebarSections({currentUser, groupId, recommendationsEnabled}) {
 						groupId
 					})
 				}
-			].filter(Boolean),
+			].filter(Boolean) as Array<{
+				icon: string;
+				label: string;
+				route: string;
+				url: string;
+			}>,
 			label: Liferay.Language.get('workspace-data')
 		},
 		{
@@ -98,6 +112,7 @@ function getSidebarSections({currentUser, groupId, recommendationsEnabled}) {
 
 interface ISettingsBasePageProps {
 	breadcrumbItems?: Array<IBreadcrumbArgs>;
+	children?: React.ReactNode;
 	className?: string;
 	documentTitle?: string;
 	pageActions?: Array<any>;
@@ -118,7 +133,7 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 	pageTitle,
 	subTitle
 }) => {
-	const {groupId} = useParams();
+	const {groupId = ''} = useParams<{groupId: string}>();
 	const location = useLocation();
 	const currentUser = useCurrentUser();
 	const notificationResponse = useNotificationsAPI(groupId);

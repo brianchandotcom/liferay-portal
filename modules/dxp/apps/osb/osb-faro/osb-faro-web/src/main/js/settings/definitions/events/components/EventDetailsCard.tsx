@@ -5,6 +5,7 @@ import React, {useEffect, useState} from 'react';
 import Table from 'shared/components/table';
 import {Attribute} from 'event-analysis/utils/types';
 import {attributeListColumns} from 'shared/util/table-columns';
+import {Column} from 'shared/components/table';
 import {Map, OrderedMap} from 'immutable';
 
 interface IEventDetailsCardProps {
@@ -36,11 +37,11 @@ const EventDetailsCard: React.FC<IEventDetailsCardProps> = ({
 	);
 
 	useEffect(() => {
-		const attributesRepresentations = [];
+		const attributesRepresentations: string[] = [];
 
 		selectedAttributes.forEach(attribute => {
-			const name = attribute.get('name');
-			const sampleValue = attribute.get('sampleValue');
+			const name = attribute?.get('name');
+			const sampleValue = attribute?.get('sampleValue');
 
 			attributesRepresentations.push(`'${name}': '${sampleValue}',`);
 		});
@@ -83,16 +84,18 @@ const EventDetailsCard: React.FC<IEventDetailsCardProps> = ({
 
 			<Table
 				className='mb-0'
-				columns={[
-					attributeListColumns.getName({
-						channelId: 'channelId',
-						groupId
-					}),
-					attributeListColumns.displayName,
-					attributeListColumns.description,
-					attributeListColumns.sampleValue,
-					attributeListColumns.dataType
-				].map(column => ({...column, sortable: false}))}
+				columns={
+					[
+						attributeListColumns.getName({
+							channelId: 'channelId',
+							groupId
+						}),
+						attributeListColumns.displayName,
+						attributeListColumns.description,
+						attributeListColumns.sampleValue,
+						attributeListColumns.dataType
+					].map(column => ({...column, sortable: false})) as Column[]
+				}
 				items={eventAttributes}
 				onSelectItemsChange={selectedAttribute =>
 					selectedAttributes.has(selectedAttribute.id)

@@ -4,17 +4,17 @@ import ErrorDisplay from 'shared/components/ErrorDisplay';
 import React, {useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import TrendComponent from 'shared/components/Trend';
-import {ApolloError} from 'apollo-client';
-import {DocumentNode} from 'apollo-boost';
+import {ApolloError, DocumentNode, useQuery} from '@apollo/client';
+
 import {getIcon, getStatsColor} from 'shared/util/metrics';
 import {getSafeRangeSelectors} from 'shared/util/util';
-import {RangeSelectors, RawRangeSelectors} from 'shared/types';
+import {RangeSelectors, SafeRangeSelectors} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {toRounded} from 'shared/util/numbers';
 import {Trend} from 'commerce/utils/types';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/react-hooks';
+
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 type Currency = {
@@ -40,17 +40,13 @@ interface ICommerceMetricCardWithStatesRendererProps
 	loading?: boolean;
 }
 
-interface TGraphQlVariables extends RawRangeSelectors {
+interface TGraphQlVariables extends SafeRangeSelectors {
 	channelId: string;
 }
 
-const CommerceCardWithStatesRenderer: React.FC<ICommerceMetricCardWithStatesRendererProps> = ({
-	children,
-	empty = false,
-	emptyTitle,
-	error,
-	loading = false
-}) => (
+const CommerceCardWithStatesRenderer: React.FC<
+	ICommerceMetricCardWithStatesRendererProps
+> = ({children, empty = false, emptyTitle, error, loading = false}) => (
 	<StatesRenderer empty={empty} error={!!error} loading={loading}>
 		<StatesRenderer.Loading />
 		<StatesRenderer.Empty
@@ -68,13 +64,13 @@ const CommerceCardWithStatesRenderer: React.FC<ICommerceMetricCardWithStatesRend
 );
 
 function CommerceMetricCard<TGraphQlData>({
+	Query,
 	description,
 	emptyTitle,
 	label,
-	mapper,
-	Query
+	mapper
 }: ICommerceMetricCardProps<TGraphQlData>): React.ReactElement {
-	const {channelId} = useParams();
+	const {channelId} = useParams<{channelId: string}>();
 	const initialRangeSelectors = useQueryRangeSelectors();
 	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
 		initialRangeSelectors
@@ -91,7 +87,7 @@ function CommerceMetricCard<TGraphQlData>({
 	);
 	const currentUser = useCurrentUser();
 
-	const result = mapper(data);
+	const result = data ? mapper(data) : [];
 
 	const {currencyCode, trend, value} = getCurrency(result);
 

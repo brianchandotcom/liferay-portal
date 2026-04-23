@@ -18,13 +18,14 @@ export default class DistributionTab
 		propertyType: null,
 		title: ''
 	})
-	implements IDistributionTab {
-	context: string;
-	id: string;
-	numberOfBins: number;
-	propertyId: string;
-	propertyType: string;
-	title: string;
+	implements IDistributionTab
+{
+	declare context: string;
+	declare id: string;
+	declare numberOfBins: number;
+	declare propertyId: string;
+	declare propertyType: string;
+	declare title: string;
 
 	constructor(props: IDistributionTab) {
 		super(props);

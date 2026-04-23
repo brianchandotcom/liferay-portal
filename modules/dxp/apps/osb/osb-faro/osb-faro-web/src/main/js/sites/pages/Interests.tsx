@@ -1,4 +1,5 @@
-import Interests from 'sites/hocs/Interests';
+import InterestsBase from 'sites/hocs/Interests';
+const Interests = InterestsBase as React.ComponentType<any>;
 import React from 'react';
 
 interface IInterestsPageProps extends React.HTMLAttributes<HTMLDivElement> {

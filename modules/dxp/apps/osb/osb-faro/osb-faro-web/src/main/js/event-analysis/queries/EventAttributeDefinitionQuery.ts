@@ -1,6 +1,6 @@
 import {Attribute} from '../utils/types';
 import {DataTypes} from 'event-analysis/utils/types';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 export interface EventAttributeDefinitionData {
 	eventDefinition: Attribute;

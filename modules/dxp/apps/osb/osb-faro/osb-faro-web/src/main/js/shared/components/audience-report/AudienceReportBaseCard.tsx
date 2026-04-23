@@ -27,7 +27,7 @@ function AudienceReportBaseCard({
 						{...props}
 						experienceId={experienceId}
 						filters={filters}
-						mapper={result => result?.[name]?.[metricName]}
+						mapper={(result: any) => result?.[name]?.[metricName]}
 						name={name}
 						Query={AudienceReportQuery({
 							metricName,

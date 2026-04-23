@@ -10,6 +10,7 @@ import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {connect, ConnectedProps} from 'react-redux';
+import {FormikHelpers} from 'formik';
 import {IHelpWidgetScreenProps} from './types';
 import {sequence} from 'shared/util/promise';
 
@@ -17,21 +18,32 @@ const connector = connect(null, {addAlert});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const ReportIssue: React.FC<
-	IHelpWidgetScreenProps & PropsFromRedux & {addAlert: Alert.AddAlert}
-> = ({addAlert, groupId, onClose, onNext}) => {
-	const onSubmit = ({description, issueTitle}, {setSubmitting}) => {
+type ReportIssueFormValues = {
+	description: string;
+	issueTitle: string;
+};
+
+const ReportIssue: React.FC<IHelpWidgetScreenProps & PropsFromRedux> = ({
+	addAlert,
+	groupId,
+	onClose,
+	onNext
+}) => {
+	const onSubmit = (
+		{description, issueTitle}: ReportIssueFormValues,
+		{setSubmitting}: FormikHelpers<ReportIssueFormValues>
+	) => {
 		API.issue
 			.create({
 				currentUrl: window.location.href,
 				description,
-				groupId,
+				groupId: groupId ?? '',
 				title: issueTitle
 			})
 			.then(() => {
 				setSubmitting(false);
 
-				onNext();
+				onNext?.();
 			})
 			.catch(() => {
 				addAlert({

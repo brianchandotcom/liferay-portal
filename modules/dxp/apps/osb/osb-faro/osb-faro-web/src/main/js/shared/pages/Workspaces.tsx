@@ -19,7 +19,14 @@ import {
 } from 'shared/hooks/useProjects';
 import {useIncidentAlert} from 'shared/hooks/useIncidentAlert';
 
-export const routingFn = ({projects}) => {
+type ProjectLike = {
+	corpProjectUuid?: string;
+	faroSubscription: {name: string};
+	groupId?: string;
+	[key: string]: any;
+};
+
+export const routingFn = ({projects}: {projects: ProjectLike[]}) => {
 	if (projects.length === 1 && !projects[0].groupId) {
 		return toRoute(Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID, {
 			corpProjectUuid: projects[0].corpProjectUuid
@@ -34,6 +41,11 @@ const WorkspacesContent = ({
 	loading,
 	loadingJoinableProjects,
 	projects
+}: {
+	joinableProjects: ProjectLike[];
+	loading: boolean;
+	loadingJoinableProjects: boolean;
+	projects: ProjectLike[];
 }) => {
 	if (loading) {
 		return <Loading spacer />;
@@ -41,7 +53,8 @@ const WorkspacesContent = ({
 
 	const filteredProjects = projects.filter(
 		({faroSubscription, groupId}) =>
-			faroSubscription.name !== PLANS.basic.name || groupId
+			faroSubscription.name !==
+				(PLANS as {[key: string]: any}).basic.name || groupId
 	);
 
 	if (!projects.length && !joinableProjects.length) {
@@ -102,10 +115,8 @@ const Workspaces: any = () => {
 		onClose
 	} = useIncidentAlert();
 
-	const {
-		data: joinableProjects,
-		loading: loadingJoinableProjects
-	} = useFetchJoinableProjects();
+	const {data: joinableProjects, loading: loadingJoinableProjects} =
+		useFetchJoinableProjects();
 
 	if (projects.length === 1 && !projects[0].groupId) {
 		return toRoute(Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID, {
@@ -131,10 +142,11 @@ const Workspaces: any = () => {
 		}
 	};
 
-	const handleTitle = () => {
+	const handleTitle = (): string => {
 		if (projects.length || (!projects.length && !joinableProjects.length)) {
 			return Liferay.Language.get('your-workspaces');
 		}
+		return '';
 	};
 
 	const route = routingFn({projects});

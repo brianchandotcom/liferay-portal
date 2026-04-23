@@ -97,6 +97,7 @@ interface IBehaviorInputProps extends ISegmentEditorCustomInputBase {
 
 export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	static contextType = ReferencedObjectsContext;
+	declare context: React.ContextType<typeof ReferencedObjectsContext>;
 
 	_completedAnalytics = false;
 
@@ -116,7 +117,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	}
 
 	@autobind
-	assetsDataFn({delta, orderIOMap, page, query}) {
+	assetsDataFn({delta, orderIOMap, page, query}: {[key: string]: any}) {
 		const {
 			channelId,
 			groupId,
@@ -135,7 +136,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		});
 	}
 
-	createActivityKey(asset) {
+	createActivityKey(asset: {id: string}) {
 		const {property} = this.props;
 
 		return `${property.entityType}#${property.name}#${asset.id}`;
@@ -170,7 +171,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		return id;
 	}
 
-	getConjunctionDateFilterIMap(value) {
+	getConjunctionDateFilterIMap(value: CustomValue) {
 		const conjunctionDateFilterIndex = getIndexFromPropertyName(
 			value,
 			'day'
@@ -182,7 +183,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	}
 
 	@autobind
-	handleAssetSelect(items) {
+	handleAssetSelect(items: import('immutable').OrderedMap<string, any>) {
 		const {
 			context: {addEntities, addEntity},
 			props: {onChange, touched, valid, value}
@@ -193,7 +194,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		const propertyIndex = getIndexFromPropertyName(value, ACTIVITY_KEY);
 
 		if (items.size === 1) {
-			addEntity({entityType: EntityType.Assets, payload: Map(asset)});
+			addEntity?.({entityType: EntityType.Assets, payload: Map(asset)});
 
 			onChange({
 				valid: {...valid, asset: true},
@@ -205,7 +206,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 				)
 			});
 		} else {
-			addEntities({
+			addEntities?.({
 				entityType: EntityType.Assets,
 				payload: items.map(Map).valueSeq().toArray()
 			});
@@ -213,7 +214,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 			onChange(
 				items
 					.valueSeq()
-					.map(assetItem => ({
+					.map((assetItem: any) => ({
 						touched,
 						valid: {...valid, asset: true},
 						value: setPropertyValue(
@@ -229,7 +230,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	}
 
 	@autobind
-	handleDateFilterConjunctionChange(criterion) {
+	handleDateFilterConjunctionChange(criterion: Criterion | null) {
 		const {onChange, touched, valid, value} = this.props;
 
 		onChange({
@@ -357,8 +358,12 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 							activityAssetsListColumns.nameUrl,
 							...columns
 						]}
-						dataSourceFn={this.assetsDataFn}
-						entity={this.getAssetFromContext()}
+						dataSourceFn={
+							this.assetsDataFn as (params: {
+								[key: string]: any;
+							}) => Promise<any>
+						}
+						entity={this.getAssetFromContext() ?? {}}
 						error={touched.asset && !valid.asset}
 						groupId={groupId}
 						initialOrderIOMap={createOrderIOMap(COUNT)}

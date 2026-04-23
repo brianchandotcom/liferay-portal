@@ -4,12 +4,28 @@ import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {connect} from 'react-redux';
 import {EXPERIMENT_DELETE_MUTATION} from 'experiments/queries/ExperimentMutation';
+import {Observer} from '@clayui/modal/lib/types';
 import {Routes, toRoute} from 'shared/util/router';
 import {useHistory, useParams} from 'react-router-dom';
-import {useMutation} from '@apollo/react-hooks';
+import {useMutation} from '@apollo/client';
 
-const DeleteExperimentModal = ({addAlert, experimentId, observer, onClose}) => {
-	const {channelId, groupId} = useParams();
+interface IDeleteExperimentModalProps {
+	addAlert: (alert: {alertType: string; message: string}) => void;
+	experimentId: string;
+	observer: Observer;
+	onClose: () => void;
+}
+
+const DeleteExperimentModal = ({
+	addAlert,
+	experimentId,
+	observer,
+	onClose
+}: IDeleteExperimentModalProps) => {
+	const {channelId, groupId} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const history = useHistory();
 	const [mutate] = useMutation(EXPERIMENT_DELETE_MUTATION);
 

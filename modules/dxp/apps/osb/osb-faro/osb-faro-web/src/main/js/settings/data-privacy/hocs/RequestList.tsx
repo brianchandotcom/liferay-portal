@@ -42,7 +42,7 @@ import {
 	toRoute,
 	TYPES
 } from 'shared/util/router';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 import {useParams} from 'react-router-dom';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
@@ -131,13 +131,14 @@ export const FILTER_BY_OPTIONS = [
 
 export const getTodaysDate = () => moment().utc();
 
-const isDisabled = ({
-	completeDate,
-	status
-}: {
-	completeDate: string;
-	status: GDPRRequestStatuses;
-}): boolean => !completeDate || status !== GDPRRequestStatuses.Completed;
+const isDisabled = (item?: object): boolean => {
+	const {completeDate, status} = (item ?? {}) as {
+		completeDate?: string;
+		status?: GDPRRequestStatuses;
+	};
+
+	return !completeDate || status !== GDPRRequestStatuses.Completed;
+};
 
 /**
  * Function for searching and filtering requests.
@@ -225,9 +226,11 @@ const RequestList: React.FC<IRequestListProps> = ({
 	const authorized = currentUser.isAdmin();
 
 	const formattedFilterBy = filterBy
-		.filterNot(val => val.isEmpty())
+		?.filterNot(val => !!val && val.isEmpty())
 		.map((val, key) =>
-			getFilterOptionType(key) === 'radio' ? parseInt(val.first()) : val
+			getFilterOptionType(key as string) === 'radio' && val
+				? parseInt(val.first() ?? '')
+				: val
 		)
 		.toJS();
 
@@ -332,9 +335,11 @@ const RequestList: React.FC<IRequestListProps> = ({
 					},
 					{
 						accessor: 'emailAddress',
-						cellRenderer: ({data: {emailAddresses}}) => (
-							<td>{emailAddresses.join(', ')}</td>
-						),
+						cellRenderer: ({
+							data: {emailAddresses}
+						}: {
+							data: {emailAddresses: string[]};
+						}) => <td>{emailAddresses.join(', ')}</td>,
 						label: Liferay.Language.get('email')
 					},
 					{

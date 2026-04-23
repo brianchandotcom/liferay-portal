@@ -17,12 +17,15 @@ import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 const ExperimentsListPage = () => {
-	const {channelId, groupId} = useParams();
+	const {channelId = '', groupId = ''} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const {delta, orderIOMap, page, query} = useQueryPagination({
 		initialOrderIOMap: createOrderIOMap(MODIFIED_DATE)
 	});
@@ -31,7 +34,11 @@ const ExperimentsListPage = () => {
 	const currentUser = useCurrentUser();
 	const {timeZoneId} = useTimeZone();
 
-	const {data = {}, error, loading} = useQuery(EXPERIMENT_LIST_QUERY, {
+	const {
+		data = {},
+		error,
+		loading
+	} = useQuery(EXPERIMENT_LIST_QUERY, {
 		fetchPolicy: 'network-only',
 		variables: {
 			...getGraphQLVariablesFromPagination({

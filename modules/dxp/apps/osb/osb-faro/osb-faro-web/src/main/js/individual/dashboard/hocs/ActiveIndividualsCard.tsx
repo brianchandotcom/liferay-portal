@@ -4,7 +4,7 @@ import Card from 'shared/components/Card';
 import IndividualSiteMetricsQuery from 'shared/queries/IndividualSiteMetricsQuery';
 import React from 'react';
 import {compose} from 'redux';
-import {graphql} from '@apollo/react-hoc';
+import {graphql, OperationOption} from '@apollo/client/react/hoc';
 import {
 	mapPropsToOptions,
 	mapResultToProps
@@ -17,7 +17,7 @@ const ChartWithData = compose<any>(
 	graphql(IndividualSiteMetricsQuery, {
 		options: mapPropsToOptions,
 		props: mapResultToProps
-	}),
+	} as OperationOption<object, object>),
 	withError({page: false})
 )(ActiveIndividualsChart);
 

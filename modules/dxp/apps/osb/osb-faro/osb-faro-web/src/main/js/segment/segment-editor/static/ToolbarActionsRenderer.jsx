@@ -44,12 +44,8 @@ export default class ToolbarActionsRenderer extends React.Component {
 	}
 
 	render() {
-		const {
-			buttonDisplay,
-			className,
-			selectedItemsIOMap,
-			showAdded
-		} = this.props;
+		const {buttonDisplay, className, selectedItemsIOMap, showAdded} =
+			this.props;
 
 		const itemsSelected = !selectedItemsIOMap.isEmpty();
 

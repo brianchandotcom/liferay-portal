@@ -134,7 +134,7 @@ const DropZone: React.FC<IDropZoneProps> = ({
 	</div>
 );
 
-export default compose(
+export default compose<React.ComponentType<any>>(
 	withReferencedObjectsConsumer,
 	dropTarget(
 		acceptedDragTypes,

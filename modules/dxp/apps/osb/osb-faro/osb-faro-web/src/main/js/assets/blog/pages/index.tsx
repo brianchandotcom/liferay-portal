@@ -55,8 +55,8 @@ const Blog: React.FC<{
 
 	const dataSourceStates = useDataSource();
 
-	const decodedTitle = getSafeDecodedURIComponent(title);
-	const decodedType = getSafeDecodedURIComponent(type);
+	const decodedTitle = getSafeDecodedURIComponent(title as string);
+	const decodedType = getSafeDecodedURIComponent(type as string);
 
 	const rangeSelectorsFromQuery = useQueryRangeSelectors();
 
@@ -70,14 +70,17 @@ const Blog: React.FC<{
 			<BasePage.Header
 				breadcrumbs={[
 					breadcrumbs.getHome({
-						channelId,
-						groupId,
+						channelId: channelId!,
+						groupId: groupId!,
 						label: selectedChannel?.name
 					}),
-					breadcrumbs.getAssets({channelId, groupId}),
+					breadcrumbs.getAssets({
+						channelId: channelId!,
+						groupId: groupId!
+					}),
 					breadcrumbs.getEntityName({label: decodedTitle})
 				]}
-				groupId={groupId}
+				groupId={groupId!}
 			>
 				{type && (
 					<BasePage.Header.TitleSection
@@ -105,7 +108,7 @@ const Blog: React.FC<{
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadPDFReport
-							disabled={dataSourceStates.empty}
+							disabled={!!dataSourceStates.empty}
 							subtitle={selectedChannel?.name}
 							title={
 								sub(Liferay.Language.get('x-dashboard'), [
@@ -124,7 +127,7 @@ const Blog: React.FC<{
 						<DownloadCSVReport
 							assetId={assetId}
 							assetType='blog'
-							disabled={dataSourceStates.empty}
+							disabled={!!dataSourceStates.empty}
 							type={CSVType.Individual}
 							typeLang={Liferay.Language.get('known-individuals')}
 						/>

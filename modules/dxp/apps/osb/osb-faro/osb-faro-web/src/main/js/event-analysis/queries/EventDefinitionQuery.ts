@@ -1,5 +1,5 @@
 import {Event} from '../utils/types';
-import {gql} from 'apollo-boost';
+import {gql} from '@apollo/client';
 
 export interface EventDefinitionData {
 	eventDefinition: Event;

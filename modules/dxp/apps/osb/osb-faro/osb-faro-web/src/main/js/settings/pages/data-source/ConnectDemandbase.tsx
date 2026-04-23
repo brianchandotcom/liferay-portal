@@ -7,7 +7,7 @@ import {updateDemandbase} from 'shared/api/data-source';
 
 const steps: Step[] = [
 	{
-		content: props => <ConnectDemandbaseStep {...props} />,
+		content: (props: any) => <ConnectDemandbaseStep {...props} />,
 		description: Liferay.Language.get(
 			'connect-your-demandbase-account-to-analytics-cloud-to-start-importing-company-people-and-engagement-data'
 		),
@@ -15,7 +15,7 @@ const steps: Step[] = [
 	},
 
 	{
-		content: props => (
+		content: (props: any) => (
 			<AssignIndividualsDataToPropertiesStep
 				{...props}
 				onSubmit={() => {
@@ -26,7 +26,11 @@ const steps: Step[] = [
 						)
 					});
 				}}
-				updateDataSourceFn={updateDemandbase}
+				updateDataSourceFn={
+					updateDemandbase as (params: {
+						[key: string]: any;
+					}) => Promise<any>
+				}
 			/>
 		),
 		description: Liferay.Language.get(

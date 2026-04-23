@@ -5,7 +5,6 @@ import Modal from 'shared/components/modal';
 import React, {useRef, useState} from 'react';
 import ToggleSwitch from 'shared/components/ToggleSwitch';
 import {every, noop} from 'lodash';
-import {Formik} from 'formik';
 
 interface IToggleSwitchModalProps {
 	className?: string;
@@ -27,25 +26,24 @@ const ToggleSwitchModal: React.FC<IToggleSwitchModalProps> = ({
 	toggleAllMessage,
 	...otherProps
 }) => {
-	const _formRef = useRef<Formik>();
+	const _formRef = useRef<any>(null);
 
 	const [checkAll, setCheckAll] = useState(false);
 
-	const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const {checked, name} = event.target;
+	const handleFormChange = (event: React.FormEvent<HTMLInputElement>) => {
+		const {checked, name} = event.target as HTMLInputElement;
 
-		const {values} = _formRef.current.getFormikBag();
+		const {values} = _formRef.current;
 
 		setCheckAll(every({...values, [name]: checked}, Boolean));
 	};
 
 	const handleSelectAllChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.FormEvent<HTMLInputElement>
 	) => {
-		const {checked} = event.target;
+		const {checked} = event.target as HTMLInputElement;
 
-		const {setFieldValue} = _formRef.current.getFormikActions();
-		const {values} = _formRef.current.getFormikBag();
+		const {setFieldValue, values} = _formRef.current;
 
 		Object.keys(values).map(key => setFieldValue(key, checked));
 
@@ -73,13 +71,16 @@ const ToggleSwitchModal: React.FC<IToggleSwitchModalProps> = ({
 			)}
 
 			<Form
-				initialValues={items.reduce((acc, item) => {
-					acc[item] = false;
+				initialValues={items.reduce<{[key: string]: boolean}>(
+					(acc, item) => {
+						acc[item] = false;
 
-					return acc;
-				}, {})}
+						return acc;
+					},
+					{}
+				)}
+				innerRef={_formRef as any}
 				onSubmit={onSubmit}
-				ref={_formRef}
 			>
 				{({handleSubmit}) => (
 					<Form.Form

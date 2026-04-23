@@ -11,7 +11,8 @@ import {
 	applyTimeZone,
 	DATE_MASK,
 	DATE_TIME_MASK,
-	DEFAULT_DATE_FORMAT
+	DEFAULT_DATE_FORMAT,
+	DEFAULT_TIMEZONE_ID
 } from 'shared/util/date';
 import {DatePickerRetentionPeriodHeader} from './DatePickerRetentionPeriodHeader';
 import {formatDateWithTimezone} from './dropdown-range-key/utils';
@@ -87,7 +88,9 @@ const DateInput: React.FC<IDateInputProps> = ({
 
 	const retentionPeriod = useRetentionPeriod();
 
-	const minDate = formatDateWithTimezone(timeZoneId).clone();
+	const minDate = formatDateWithTimezone(
+		timeZoneId || DEFAULT_TIMEZONE_ID
+	).clone();
 
 	return (
 		<ClayDropDown
@@ -157,19 +160,21 @@ const DateInput: React.FC<IDateInputProps> = ({
 			<DatePicker
 				date={date.isValid() ? date : null}
 				header={
-					showRetentionPeriod ? (
+					showRetentionPeriod && retentionPeriod ? (
 						<DatePickerRetentionPeriodHeader
-							retentionPeriod={retentionPeriod}
+							retentionPeriod={retentionPeriod!}
 						/>
 					) : null
 				}
-				maxDate={formatDateWithTimezone(timeZoneId)
+				maxDate={formatDateWithTimezone(
+					timeZoneId || DEFAULT_TIMEZONE_ID
+				)
 					.clone()
 					.subtract(1, 'days')}
 				maxRange={365}
 				minDate={
-					showRetentionPeriod
-						? minDate.subtract(retentionPeriod, 'months')
+					showRetentionPeriod && retentionPeriod
+						? minDate.subtract(retentionPeriod!, 'months')
 						: minDate.subtract(100, 'years')
 				}
 				onSelect={handleDateSelect}

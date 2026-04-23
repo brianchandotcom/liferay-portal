@@ -85,20 +85,24 @@ const getSections = (
 ): BarComparisonTableItems[] => {
 	const isComparingEvent = events.length > 1;
 
-	const sections = [];
-	let data = [];
+	const sections: BarComparisonTableItems[] = [];
+	let data: BarComparisonTableItems = [];
 
 	const addToData = (
-		{name, previousValue = undefined, value},
-		color,
-		index
+		{
+			name,
+			previousValue = 0,
+			value
+		}: {name: string; previousValue?: number; value: number},
+		color: BAR_COMPARISON_COLORS,
+		index: number
 	) => {
 		data.push({
 			isPreviousValue: false,
 			name,
 			percent: value / topValue,
 			style: {
-				backgroundColor:
+				'background-color':
 					value > 0
 						? MAP_COLORS[color][index].current
 						: EMPTY_BAR_COLOR
@@ -112,7 +116,7 @@ const getSections = (
 				name: Liferay.Language.get('previous-value'),
 				percent: previousValue / topValue,
 				style: {
-					backgroundColor:
+					'background-color':
 						previousValue > 0
 							? MAP_COLORS[color][index].previous
 							: EMPTY_BAR_COLOR
@@ -132,7 +136,7 @@ const getSections = (
 		}
 
 		if (isComparingSegment) {
-			event.breakdownItems.forEach((item, i) => {
+			(event.breakdownItems ?? []).forEach((item, i) => {
 				addToData(item, color, i);
 			});
 		} else {

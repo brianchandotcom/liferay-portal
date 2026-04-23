@@ -48,7 +48,10 @@ const Avatar: React.FC<IAvatarProps> = ({
 		>
 			{type === EntityTypes.Individual &&
 				!image &&
-				getInitials(properties.givenName, properties.familyName)}
+				getInitials(
+					properties?.givenName ?? '',
+					properties?.familyName ?? ''
+				)}
 		</Sticker>
 	);
 };

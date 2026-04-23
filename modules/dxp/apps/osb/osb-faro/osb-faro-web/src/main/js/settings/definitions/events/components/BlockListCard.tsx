@@ -42,14 +42,15 @@ import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {
 	useSelectionContext,
 	withSelectionProvider
 } from 'shared/context/selection';
 
-const EVENT_LIMIT_REACHED = /Processing request will exceed custom event definition limit/;
+const EVENT_LIMIT_REACHED =
+	/Processing request will exceed custom event definition limit/;
 
 const connector = connect(
 	(store: RootState, {groupId}: {groupId: string}) => ({
@@ -96,7 +97,9 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 			keyword: query,
 			page: page - 1,
 			size: delta,
-			sort: getSortFromOrderIOMap(orderIOMap)
+			sort: getSortFromOrderIOMap(
+				orderIOMap
+			) as BlockedCustomEventDefinitionsVariables['sort']
 		}
 	});
 
@@ -115,7 +118,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 			hideBlockedEventDefinitions: BlockedCustomEvent[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
-				selectionDispatch({
+				selectionDispatch?.({
 					payload: {
 						items: hideBlockedEventDefinitions
 					},
@@ -135,7 +138,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 			unhideBlockedEventDefinitions: BlockedCustomEvent[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
-				selectionDispatch({
+				selectionDispatch?.({
 					payload: {
 						items: unhideBlockedEventDefinitions
 					},
@@ -258,7 +261,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 			}
 		})
 			.then(() => {
-				selectionDispatch({
+				selectionDispatch?.({
 					type: 'clear-all'
 				});
 
@@ -309,7 +312,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 				removeAlert(LIMIT_REACHED_ALERT_ID);
 			})
 			.catch(err => {
-				let message = Liferay.Language.get(
+				let message: React.ReactNode = Liferay.Language.get(
 					'there-was-an-error-processing-your-request.-please-try-again'
 				);
 
@@ -374,7 +377,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 	const authorized = currentUser.isAdmin();
 
 	const hasUnhiddenEvent = (events: OrderedMap<string, BlockedCustomEvent>) =>
-		events.some(({hidden}) => !hidden);
+		events.some(event => !event?.hidden);
 
 	return (
 		<Card pageDisplay>
@@ -462,11 +465,12 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 											className='button-root nav-btn'
 											displayType='secondary'
 											onClick={() => {
-												const hideEventFn = hasUnhiddenEvent(
-													selectedItems
-												)
-													? handleHideEvents
-													: handleUnhideEvents;
+												const hideEventFn =
+													hasUnhiddenEvent(
+														selectedItems
+													)
+														? handleHideEvents
+														: handleUnhideEvents;
 
 												hideEventFn(
 													selectedItems.toArray()

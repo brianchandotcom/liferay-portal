@@ -58,13 +58,8 @@ class PopoverBase extends React.Component {
 	 * Lifecycle Render - ReactJS
 	 */
 	render() {
-		const {
-			children,
-			className,
-			placement,
-			visible,
-			...otherProps
-		} = this.props;
+		const {children, className, placement, visible, ...otherProps} =
+			this.props;
 		const classes = getCN('popover', className, {
 			[`clay-popover-${placement}`]: placement,
 			['hide']: !visible

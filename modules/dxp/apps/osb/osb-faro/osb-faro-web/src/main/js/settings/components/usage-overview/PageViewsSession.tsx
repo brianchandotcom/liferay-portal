@@ -8,7 +8,11 @@ import {sub} from 'shared/util/lang';
 import {UsageMetric} from './UsageMetric';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
-export const PageViewsSession = ({currentPlan}) => {
+interface IPageViewsSessionProps {
+	currentPlan: any;
+}
+
+export const PageViewsSession = ({currentPlan}: IPageViewsSessionProps) => {
 	const {timeZoneId} = useTimeZone();
 	const {count, limit, status} = currentPlan.metrics.get('pageViews');
 	const available = limit - count;
@@ -35,7 +39,11 @@ export const PageViewsSession = ({currentPlan}) => {
 				count={count}
 				items={{
 					itemA: {
-						color: Colors[STATUS_DISPLAY_MAP[status]],
+						color: (Colors as {[key: string]: any})[
+							(STATUS_DISPLAY_MAP as {[key: string]: string})[
+								status
+							]
+						],
 						label: Liferay.Language.get('page-views'),
 						value: count
 					}
@@ -45,7 +53,7 @@ export const PageViewsSession = ({currentPlan}) => {
 					[(available > 0 ? available : 0).toLocaleString()]
 				)}
 				limit={limit}
-				percentageText={percentage =>
+				percentageText={(percentage: number | string) =>
 					Number(percentage) === 1
 						? Liferay.Language.get('1-page-view-was-used')
 						: Liferay.Language.get('x-page-views-were-used')

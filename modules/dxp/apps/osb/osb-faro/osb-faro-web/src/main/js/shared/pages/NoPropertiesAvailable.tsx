@@ -103,14 +103,14 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 
 export default compose<any>(
 	withRequest(
-		({groupId}) =>
+		({groupId}: {groupId: string}) =>
 			API.dataSource.search({
 				delta: 1,
 				groupId,
 				page: defaultPage,
 				query: ''
 			}),
-		({total}) => ({
+		({total}: {total: number}) => ({
 			dataSources: !!total
 		})
 	),

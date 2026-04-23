@@ -20,19 +20,31 @@ import {getShortIntervals} from 'experiments/util/experiments';
 
 const {stark: CHART_BLUE} = CHART_COLOR_NAMES;
 
+interface IComposedChartProps {
+	chartType?: 'line' | 'area';
+	data: {
+		controlLabel: string;
+		data: Array<Record<string, any>>;
+		format: (value: any) => string;
+		intervals: Array<string | number>;
+		variantLabel?: string;
+	};
+	Tooltip: React.ComponentType<any>;
+}
+
 export const ComposedChart = ({
+	Tooltip,
 	chartType = 'line',
-	data: initialData,
-	Tooltip
-}) => {
+	data: initialData
+}: IComposedChartProps) => {
 	const {controlLabel, data, format, intervals, variantLabel} = initialData;
 
-	const [hoverLegend, setHoverLegend] = useState(null);
+	const [hoverLegend, setHoverLegend] = useState<string | null>(null);
 
-	const getStrokeOpacity = key =>
+	const getStrokeOpacity = (key: string) =>
 		hoverLegend === key || !hoverLegend ? 1 : 0.2;
 
-	const getFillOpacity = key =>
+	const getFillOpacity = (key: string) =>
 		hoverLegend === key || !hoverLegend ? 0.1 : 0.2;
 
 	let customIntervals = intervals;
@@ -43,7 +55,10 @@ export const ComposedChart = ({
 	}
 
 	const groupedData = data
-		.map(item => [item['data_control'], item['data_variant']])
+		.map((item: Record<string, any>) => [
+			item['data_control'],
+			item['data_variant']
+		])
 		.flat();
 
 	return (
@@ -176,7 +191,8 @@ export const ComposedChart = ({
 					align='right'
 					iconSize={8}
 					onMouseEnter={
-						(({dataKey}) => setHoverLegend(dataKey)) as any
+						(({dataKey}: {dataKey: string}) =>
+							setHoverLegend(dataKey)) as any
 					}
 					onMouseLeave={() => setHoverLegend(null)}
 					verticalAlign='bottom'

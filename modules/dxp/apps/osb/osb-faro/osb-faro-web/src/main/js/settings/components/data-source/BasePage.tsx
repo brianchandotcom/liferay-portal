@@ -16,7 +16,7 @@ import {sub} from 'shared/util/lang';
 import {truncate} from 'lodash';
 import {withHistory} from 'shared/hoc';
 
-const getPageDescription = dataSource =>
+const getPageDescription = (dataSource: DataSource) =>
 	dataSource
 		? [dataSource.name, dataSource.url]
 				.filter(item => item)
@@ -159,7 +159,10 @@ const BaseDataSourcePage: React.FC<IBaseDataSourcePageProps> = ({
 	);
 };
 
-const getOwnChildren = (store, ownProps) => ({
+const getOwnChildren = (
+	_store: any,
+	ownProps: {children: React.ReactNode}
+) => ({
 	passedChildren: ownProps.children
 });
 

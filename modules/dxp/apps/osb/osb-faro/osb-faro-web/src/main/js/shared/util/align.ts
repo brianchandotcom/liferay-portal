@@ -9,10 +9,24 @@ export const POSITIONS = {
 	TopRight: 1
 };
 
-export type Position = typeof POSITIONS[keyof typeof POSITIONS];
+export type Position = (typeof POSITIONS)[keyof typeof POSITIONS];
 
-export function align(element, alignElement, position, autoBestAlign = true) {
-	let bestRegion;
+type Region = {
+	bottom: number;
+	height: number;
+	left: number;
+	right: number;
+	top: number;
+	width: number;
+};
+
+export function align(
+	element: HTMLElement,
+	alignElement: HTMLElement,
+	position: Position,
+	autoBestAlign = true
+): Position {
+	let bestRegion: Region;
 
 	if (autoBestAlign) {
 		const suggestion = suggestAlignBestRegion(
@@ -32,8 +46,10 @@ export function align(element, alignElement, position, autoBestAlign = true) {
 		bestRegion.top += window.scrollY;
 		bestRegion.left += window.scrollX;
 
-		let offsetParent = element;
-		while ((offsetParent = offsetParent.offsetParent)) {
+		let offsetParent: HTMLElement | null = element;
+		while (
+			(offsetParent = offsetParent.offsetParent as HTMLElement | null)
+		) {
 			bestRegion.top -= offsetParent.offsetTop;
 			bestRegion.left -= offsetParent.offsetLeft;
 		}
@@ -45,7 +61,11 @@ export function align(element, alignElement, position, autoBestAlign = true) {
 	return position;
 }
 
-function getAlignRegion(element, alignElement, position) {
+function getAlignRegion(
+	element: HTMLElement,
+	alignElement: HTMLElement,
+	position: Position
+): Region {
 	const r1 = alignElement.getBoundingClientRect();
 	const r2 = element.getBoundingClientRect();
 	let top = 0;
@@ -97,7 +117,11 @@ function getAlignRegion(element, alignElement, position) {
 	};
 }
 
-function suggestAlignBestRegion(element, alignElement, position) {
+function suggestAlignBestRegion(
+	element: HTMLElement,
+	alignElement: HTMLElement,
+	position: Position
+): {position: Position; region: Region} {
 	let bestArea = 0;
 	let bestPosition = position;
 	let bestRegion = getAlignRegion(element, alignElement, bestPosition);
@@ -109,6 +133,12 @@ function suggestAlignBestRegion(element, alignElement, position) {
 	for (let i = 0; i < 8; ) {
 		if (intersectRegion(viewportRegion, tryRegion)) {
 			const visibleRegion = intersection(viewportRegion, tryRegion);
+
+			if (!visibleRegion) {
+				tryPosition = (position + ++i) % 8;
+				tryRegion = getAlignRegion(element, alignElement, tryPosition);
+				continue;
+			}
 
 			const area = visibleRegion.width * visibleRegion.height;
 
@@ -139,7 +169,7 @@ function getViewportRegion() {
 	return makeRegion(height, height, 0, width, 0, width);
 }
 
-function insideRegion(r1, r2) {
+function insideRegion(r1: Region, r2: Region): boolean {
 	return (
 		r2.top >= r1.top &&
 		r2.bottom <= r1.bottom &&
@@ -148,11 +178,20 @@ function insideRegion(r1, r2) {
 	);
 }
 
-function intersectRect(x0, y0, x1, y1, x2, y2, x3, y3) {
+function intersectRect(
+	x0: number,
+	y0: number,
+	x1: number,
+	y1: number,
+	x2: number,
+	y2: number,
+	x3: number,
+	y3: number
+): boolean {
 	return !(x2 > x1 || x3 < x0 || y2 > y1 || y3 < y0);
 }
 
-function intersectRegion(r1, r2) {
+function intersectRegion(r1: Region, r2: Region): boolean {
 	return intersectRect(
 		r1.top,
 		r1.left,
@@ -165,7 +204,7 @@ function intersectRegion(r1, r2) {
 	);
 }
 
-function intersection(r1, r2) {
+function intersection(r1: Region, r2: Region): Region | null {
 	if (!intersectRegion(r1, r2)) {
 		return null;
 	}
@@ -177,7 +216,14 @@ function intersection(r1, r2) {
 	return makeRegion(bottom, bottom - top, left, right, top, right - left);
 }
 
-function makeRegion(bottom, height, left, right, top, width) {
+function makeRegion(
+	bottom: number,
+	height: number,
+	left: number,
+	right: number,
+	top: number,
+	width: number
+): Region {
 	return {
 		bottom,
 		height,

@@ -9,10 +9,18 @@ import {useParams} from 'react-router-dom';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
-const SyncSalesforceDataStep = ({onNext, onPrev}) => {
+interface ISyncSalesforceDataStepProps {
+	onNext: () => void;
+	onPrev: () => void;
+}
+
+const SyncSalesforceDataStep = ({
+	onNext,
+	onPrev
+}: ISyncSalesforceDataStepProps) => {
 	const [loading, setLoading] = useState(false);
 	const {dataSource} = useWizardPage();
-	const {groupId} = useParams();
+	const {groupId = ''} = useParams<{groupId: string}>();
 	const [enabledAccount, setEnabledAccount] = useState(false);
 	const [enabledIndividual, setEnabledIndividual] = useState(false);
 
@@ -40,6 +48,10 @@ const SyncSalesforceDataStep = ({onNext, onPrev}) => {
 		<ClayForm
 			onSubmit={async event => {
 				event.preventDefault();
+
+				if (!dataSource) {
+					return;
+				}
 
 				try {
 					setLoading(true);

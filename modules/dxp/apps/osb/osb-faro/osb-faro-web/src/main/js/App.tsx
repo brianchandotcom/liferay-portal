@@ -9,8 +9,11 @@ import React, {lazy, Suspense, useEffect, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import store from 'shared/store';
 import UnassignedSegmentsProvider from 'shared/context/unassignedSegments';
-import {ApolloProvider} from '@apollo/react-components';
-import {ApolloProvider as ApolloProviderHooks} from '@apollo/react-hooks';
+import {
+	ApolloProvider,
+	ApolloProvider as ApolloProviderHooks
+} from '@apollo/client';
+
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayLinkContext} from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -69,7 +72,7 @@ const OAuthReceive = lazy(
 		)
 );
 
-const RoutesContainer = ({children}) => {
+const RoutesContainer = ({children}: {children: React.ReactNode}) => {
 	const location = useLocation();
 
 	const matchingPath = matchPath<any>(location.pathname, {
@@ -96,11 +99,11 @@ const RoutesContainer = ({children}) => {
 		return <Loading />;
 	}
 
-	if (location?.state?.notFoundError) {
+	if ((location?.state as any)?.notFoundError) {
 		return <ErrorPage />;
 	}
 
-	return children;
+	return children as React.ReactElement;
 };
 
 const App = () => {
@@ -110,7 +113,10 @@ const App = () => {
 		store.subscribe(throttle(() => saveState(store.getState()), 1000));
 	}, []);
 
-	const handleUserConfirmation = (message, callback) => {
+	const handleUserConfirmation = (
+		message: string,
+		callback: (confirmed: boolean) => void
+	) => {
 		store.dispatch(
 			open(modalTypes.CONFIRMATION_MODAL, {
 				cancelMessage: Liferay.Language.get('stay-on-page'),
@@ -144,7 +150,7 @@ const App = () => {
 								href,
 								...otherProps
 							}: {
-								children: React.ReactNode;
+								children?: React.ReactNode;
 								externalLink?: boolean;
 								href?: string;
 							}) => {

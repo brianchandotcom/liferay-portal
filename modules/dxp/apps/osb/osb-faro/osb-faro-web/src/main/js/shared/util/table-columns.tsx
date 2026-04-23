@@ -30,6 +30,18 @@ import {getSafeDecodedURIComponent} from './util';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 
+type ChannelGroupParams = {
+	channelId: string | undefined;
+	groupId: string | undefined;
+};
+
+type CellRendererProps = {
+	className?: string;
+	data: any;
+};
+
+type RouteFn = (props: {data: any}) => string | undefined;
+
 /**
  * Accounts List Columns
  */
@@ -37,7 +49,7 @@ export const accountsListColumns = {
 	activitiesCount: {
 		accessor: 'activitiesCount',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('total-activities')
 	},
 	emailAddress: {
@@ -45,11 +57,11 @@ export const accountsListColumns = {
 		label: Liferay.Language.get('email'),
 		sortable: false
 	},
-	getName: ({channelId, groupId}) => ({
+	getName: ({channelId, groupId}: ChannelGroupParams) => ({
 		accessor: 'name',
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			routeFn: ({data: {id}}) =>
+			routeFn: ({data: {id}}: {data: {id: string}}) =>
 				toRoute(Routes.CONTACTS_ACCOUNT, {channelId, groupId, id})
 		},
 		className: 'table-cell-expand',
@@ -58,7 +70,7 @@ export const accountsListColumns = {
 	individualCount: {
 		accessor: 'individualCount',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('individuals')
 	},
 	name: {
@@ -80,7 +92,7 @@ export const activityAssetsListColumns = {
 	commentCount: {
 		accessor: 'count',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('comments')
 	},
 	downloadCount: {
@@ -92,7 +104,11 @@ export const activityAssetsListColumns = {
 		accessor: 'name',
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			renderSecondaryInfo: ({dataSourceAssetPK}) => (
+			renderSecondaryInfo: ({
+				dataSourceAssetPK
+			}: {
+				dataSourceAssetPK: string;
+			}) => (
 				<TextTruncate
 					title={getSafeDecodedURIComponent(dataSourceAssetPK)}
 				/>
@@ -105,13 +121,13 @@ export const activityAssetsListColumns = {
 	submissionCount: {
 		accessor: 'count',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('submissions')
 	},
 	viewCount: {
 		accessor: 'count',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('views')
 	}
 };
@@ -144,7 +160,7 @@ export const assetsListColumns = {
 export const attributeListColumns = {
 	dataType: {
 		accessor: 'dataType',
-		cellRenderer: ({data: {dataType}}) => (
+		cellRenderer: ({data: {dataType}}: {data: {dataType: string}}) => (
 			<td>
 				<Label display='info' size='lg' uppercase>
 					{dataType}
@@ -157,7 +173,7 @@ export const attributeListColumns = {
 	description: {
 		accessor: 'description',
 		className: 'table-cell-expand text-truncate',
-		dataFormatter: value =>
+		dataFormatter: (value: string) =>
 			value || <i>{Liferay.Language.get('no-description')}</i>,
 		label: Liferay.Language.get('description'),
 		sortable: false
@@ -167,11 +183,11 @@ export const attributeListColumns = {
 		className: 'table-cell-expand-small text-truncate',
 		label: Liferay.Language.get('display-name')
 	},
-	getName: ({channelId, groupId}) => ({
+	getName: ({channelId, groupId}: ChannelGroupParams) => ({
 		accessor: 'name',
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			routeFn: ({data: {id}}) =>
+			routeFn: ({data: {id}}: {data: {id: string}}) =>
 				toRoute(Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_VIEW, {
 					attributeId: id,
 					channelId,
@@ -203,7 +219,13 @@ export const membershipChangesColumns = {
 	},
 	firstSeen: {
 		accessor: 'firstSeenTime',
-		cellRenderer: ({className, data: {firstSeenTime}}) => (
+		cellRenderer: ({
+			className,
+			data: {firstSeenTime}
+		}: {
+			className?: string;
+			data: {firstSeenTime: string | number};
+		}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
 					{formatUTCDate(firstSeenTime) || '-'}
@@ -224,7 +246,13 @@ export const membershipChangesColumns = {
 	},
 	lastActive: {
 		accessor: 'lastActivityTime',
-		cellRenderer: ({className, data: {lastActivityTime}}) => (
+		cellRenderer: ({
+			className,
+			data: {lastActivityTime}
+		}: {
+			className?: string;
+			data: {lastActivityTime: string | number};
+		}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
 					{formatUTCDate(lastActivityTime) || '-'}
@@ -251,7 +279,13 @@ export const membershipChangesColumns = {
 export const IndividualsListCDPColumns = {
 	accountNames: {
 		accessor: 'accountName',
-		cellRenderer: ({className, data: {accountName}}) => (
+		cellRenderer: ({
+			className,
+			data: {accountName}
+		}: {
+			className?: string;
+			data: {accountName: string};
+		}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>{accountName || null}</div>
 			</td>
@@ -261,7 +295,13 @@ export const IndividualsListCDPColumns = {
 	},
 	country: {
 		accessor: 'countries',
-		cellRenderer: ({className, data: {properties}}) => (
+		cellRenderer: ({
+			className,
+			data: {properties}
+		}: {
+			className?: string;
+			data: {properties: {country?: string}};
+		}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
 					{properties.country || null}
@@ -273,7 +313,13 @@ export const IndividualsListCDPColumns = {
 	},
 	firstSeen: {
 		accessor: 'firstActivityDate',
-		cellRenderer: ({className, data: {firstActivityDate}}) => (
+		cellRenderer: ({
+			className,
+			data: {firstActivityDate}
+		}: {
+			className?: string;
+			data: {firstActivityDate: string | number};
+		}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
 					{formatUTCDate(firstActivityDate) || '-'}
@@ -283,11 +329,11 @@ export const IndividualsListCDPColumns = {
 		label: Liferay.Language.get('first-seen'),
 		sortable: true
 	},
-	getNameEmail: ({channelId, groupId}) => ({
+	getNameEmail: ({channelId, groupId}: ChannelGroupParams) => ({
 		accessor: 'name',
 		cellRenderer: MemberCell,
 		cellRendererProps: {
-			routeFn: ({data: {id}}) =>
+			routeFn: ({data: {id}}: {data: {id: string}}) =>
 				toRoute(Routes.CONTACTS_INDIVIDUAL, {channelId, groupId, id})
 		},
 		className: 'table-cell-expand',
@@ -298,7 +344,13 @@ export const IndividualsListCDPColumns = {
 	}),
 	lastActive: {
 		accessor: 'lastActivityDate',
-		cellRenderer: ({className, data: {lastActivityDate}}) => (
+		cellRenderer: ({
+			className,
+			data: {lastActivityDate}
+		}: {
+			className?: string;
+			data: {lastActivityDate: string | number};
+		}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
 					{lastActivityDate ? formatUTCDate(lastActivityDate) : null}
@@ -320,22 +372,28 @@ export const IndividualsListCDPColumns = {
  * Changes List Columns
  */
 export const changesListColumns = {
-	getDateFirst: timeZoneId => ({
+	getDateFirst: (timeZoneId: string) => ({
 		accessor: 'dateFirst',
-		dataFormatter: value =>
+		dataFormatter: (value: string | number | null | undefined) =>
 			!isNil(value) && formatDateToTimeZone(value, 'll', timeZoneId),
 		label: Liferay.Language.get('first-seen')
 	}),
-	getIndividualName: ({channelId, groupId}) => ({
+	getIndividualName: ({channelId, groupId}: ChannelGroupParams) => ({
 		accessor: 'individualName',
 		cellRenderer: IndividualLinkCell,
 		cellRendererProps: {channelId, groupId},
 		label: Liferay.Language.get('name'),
 		title: true
 	}),
-	getOperation: timeZoneId => ({
+	getOperation: (timeZoneId: string) => ({
 		accessor: 'dateChanged',
-		dataFormatter: (value, {dateChanged, operation}) =>
+		dataFormatter: (
+			value: unknown,
+			{
+				dateChanged,
+				operation
+			}: {dateChanged: string | number; operation: string}
+		) =>
 			operation && [
 				<span key='MEMBERSHIP_CHANGE'>
 					{applyTimeZone(dateChanged, timeZoneId).calendar(null, {
@@ -372,6 +430,12 @@ export const compositionListColumns = {
 		routeFn = noop,
 		sortable,
 		tooltip = false
+	}: {
+		label: React.ReactNode;
+		maxWidth?: number | null;
+		routeFn?: RouteFn | typeof noop;
+		sortable?: boolean;
+		tooltip?: boolean;
 	}) => ({
 		accessor: 'name',
 		cellRenderer: NameCell,
@@ -383,10 +447,17 @@ export const compositionListColumns = {
 		label,
 		sortable
 	}),
-	getPercentOf: ({metricName, totalCount}) => ({
+	getPercentOf: ({
+		metricName,
+		totalCount
+	}: {
+		metricName: string;
+		totalCount: number;
+	}) => ({
 		accessor: 'count',
 		className: 'table-column-text-end',
-		dataFormatter: data => `${((data / totalCount) * 100).toFixed(2)}%`,
+		dataFormatter: (data: number) =>
+			`${((data / totalCount) * 100).toFixed(2)}%`,
 		label: sub(Liferay.Language.get('percent-of-x'), [metricName]),
 		sortable: false,
 		title: true
@@ -398,6 +469,13 @@ export const compositionListColumns = {
 		showName = false,
 		sortable = false,
 		totalCount
+	}: {
+		empty?: boolean;
+		label: React.ReactNode;
+		maxCount: number;
+		showName?: boolean;
+		sortable?: boolean;
+		totalCount: number;
 	}) => ({
 		accessor: 'count',
 		cellRenderer: RelativeMetricBarCell,
@@ -417,9 +495,9 @@ export const compositionListColumns = {
  * Definitions List Columns
  */
 export const definitionsListColumns = {
-	restrictAccess: authorized => ({
+	restrictAccess: (authorized: boolean | undefined) => ({
 		accessor: 'restricted',
-		cellRenderer: ({data: {restricted}}) => (
+		cellRenderer: ({data: {restricted}}: {data: {restricted: boolean}}) => (
 			<td>
 				<div className='d-flex justify-content-center'>
 					<Checkbox
@@ -453,15 +531,15 @@ export const definitionsListColumns = {
  * Details List Columns
  */
 export const detailsListColumns = {
-	getDataSourceName: groupId => ({
+	getDataSourceName: (groupId: string | undefined) => ({
 		accessor: 'dataSourceName',
 		cellRenderer: SourceCell,
 		cellRendererProps: {groupId},
 		label: Liferay.Language.get('data-source')
 	}),
-	getDateModified: timeZoneId => ({
+	getDateModified: (timeZoneId: string | undefined) => ({
 		accessor: 'dateModified',
-		dataFormatter: dateModified =>
+		dataFormatter: (dateModified: string | number | null | undefined) =>
 			!isNil(dateModified) &&
 			applyTimeZone(dateModified, timeZoneId).fromNow(),
 		label: Liferay.Language.get('last-modified')
@@ -485,7 +563,13 @@ export const detailsListColumns = {
 export const eventListColumns = {
 	description: {
 		accessor: 'description',
-		cellRenderer: ({className, data: {description, hidden}}) => (
+		cellRenderer: ({
+			className,
+			data: {description, hidden}
+		}: {
+			className?: string;
+			data: {description: string; hidden: boolean};
+		}) => (
 			<td className={getCN(className, {'table-cell-secondary': hidden})}>
 				{description}
 			</td>
@@ -496,7 +580,13 @@ export const eventListColumns = {
 	},
 	displayName: {
 		accessor: 'displayName',
-		cellRenderer: ({className, data: {displayName, hidden}}) => (
+		cellRenderer: ({
+			className,
+			data: {displayName, hidden}
+		}: {
+			className?: string;
+			data: {displayName: string; hidden: boolean};
+		}) => (
 			<td className={getCN(className, {'table-cell-secondary': hidden})}>
 				{displayName}
 			</td>
@@ -504,15 +594,15 @@ export const eventListColumns = {
 		className: 'table-cell-expand-small text-truncate',
 		label: Liferay.Language.get('display-name')
 	},
-	getLastSeenDate: timeZoneId => ({
+	getLastSeenDate: (timeZoneId: string) => ({
 		accessor: 'lastSeenDate',
-		cellRenderer: ({className, data}) => (
+		cellRenderer: ({className, data}: CellRendererProps) => (
 			<DateCell
 				className={getCN(className, {
 					'table-cell-secondary': data.hidden
 				})}
 				data={data}
-				dateFormatter={date =>
+				dateFormatter={(date: string | number) =>
 					formatDateToTimeZone(date, 'll', timeZoneId)
 				}
 				datePath='lastSeenDate'
@@ -520,9 +610,9 @@ export const eventListColumns = {
 		),
 		label: Liferay.Language.get('last-seen')
 	}),
-	getName: ({groupId}) => ({
+	getName: ({groupId}: {groupId: string}) => ({
 		accessor: 'name',
-		cellRenderer: ({className, data, ...otherProps}) => (
+		cellRenderer: ({className, data, ...otherProps}: CellRendererProps) => (
 			<NameCell
 				{...otherProps}
 				className={getCN(className, {
@@ -532,7 +622,7 @@ export const eventListColumns = {
 			/>
 		),
 		cellRendererProps: {
-			routeFn: ({data: {id}}) =>
+			routeFn: ({data: {id}}: {data: {id: string}}) =>
 				toRoute(Routes.SETTINGS_DEFINITIONS_EVENTS_VIEW, {
 					eventId: id,
 					groupId
@@ -543,7 +633,7 @@ export const eventListColumns = {
 	}),
 	hidden: {
 		accessor: 'hidden',
-		cellRenderer: ({data: {hidden}}) => (
+		cellRenderer: ({data: {hidden}}: {data: {hidden: boolean}}) => (
 			<td className='text-right'>
 				{hidden && (
 					<ClayIcon
@@ -557,7 +647,13 @@ export const eventListColumns = {
 	},
 	lastSeenURL: {
 		accessor: 'lastSeenURL',
-		cellRenderer: ({className, data: {hidden, lastSeenURL}}) => (
+		cellRenderer: ({
+			className,
+			data: {hidden, lastSeenURL}
+		}: {
+			className?: string;
+			data: {hidden: boolean; lastSeenURL: string};
+		}) => (
 			<td className={getCN(className, {'table-cell-secondary': hidden})}>
 				{lastSeenURL}
 			</td>
@@ -568,7 +664,7 @@ export const eventListColumns = {
 	},
 	name: {
 		accessor: 'name',
-		cellRenderer: ({className, data, ...otherProps}) => (
+		cellRenderer: ({className, data, ...otherProps}: CellRendererProps) => (
 			<NameCell
 				{...otherProps}
 				className={getCN(className, {
@@ -595,7 +691,7 @@ export const individualsListColumns = {
 	activitiesCount: {
 		accessor: 'activitiesCount',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('total-activities')
 	},
 	email: {
@@ -603,12 +699,12 @@ export const individualsListColumns = {
 		label: Liferay.Language.get('email'),
 		sortable: false
 	},
-	getDateCreated: timeZoneId => ({
+	getDateCreated: (timeZoneId: string) => ({
 		accessor: 'dateCreated',
-		cellRenderer: ({data}) => (
+		cellRenderer: ({data}: CellRendererProps) => (
 			<DateCell
 				data={data}
-				dateFormatter={date =>
+				dateFormatter={(date: string | number) =>
 					formatDateToTimeZone(date, 'll', timeZoneId)
 				}
 				datePath='dateCreated'
@@ -616,35 +712,36 @@ export const individualsListColumns = {
 		),
 		label: Liferay.Language.get('first-seen')
 	}),
-	getLastActivityDate: timeZoneId => ({
+	getLastActivityDate: (timeZoneId: string) => ({
 		accessor: 'lastActivityDate',
-		dataFormatter: data =>
+		dataFormatter: (data: string | number | null | undefined) =>
 			!isNil(data) && formatDateToTimeZone(data, 'll', timeZoneId),
 		label: Liferay.Language.get('last-activity')
 	}),
-	getName: ({channelId, groupId}) => ({
+	getName: ({channelId, groupId}: ChannelGroupParams) => ({
 		accessor: 'name',
 		cellRenderer: IndividualLinkCell,
 		cellRendererProps: {channelId, groupId},
 		label: Liferay.Language.get('name'),
 		title: true
 	}),
-	getNameEmail: ({channelId, groupId}) => ({
+	getNameEmail: ({channelId, groupId}: ChannelGroupParams) => ({
 		accessor: 'name',
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			renderSecondaryInfo: data => get(data, 'properties.email'),
-			routeFn: ({data: {id}}) =>
+			renderSecondaryInfo: (data: any) => get(data, 'properties.email'),
+			routeFn: ({data: {id}}: {data: {id: string}}) =>
 				toRoute(Routes.CONTACTS_INDIVIDUAL, {channelId, groupId, id})
 		},
 		className: 'table-cell-expand',
 		label: Liferay.Language.get('name-email')
 	}),
-	getNameJobTitle: ({channelId, groupId}) => ({
+	getNameJobTitle: ({channelId, groupId}: ChannelGroupParams) => ({
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			renderSecondaryInfo: data => get(data, 'properties.jobTitle'),
-			routeFn: ({data: {id}}) =>
+			renderSecondaryInfo: (data: any) =>
+				get(data, 'properties.jobTitle'),
+			routeFn: ({data: {id}}: {data: {id: string}}) =>
 				toRoute(Routes.CONTACTS_INDIVIDUAL, {channelId, groupId, id})
 		},
 		className: 'name',
@@ -660,7 +757,7 @@ export const individualsListColumns = {
 		accessor: 'name',
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			renderSecondaryInfo: data => get(data, 'properties.email')
+			renderSecondaryInfo: (data: any) => get(data, 'properties.email')
 		},
 		className: 'table-cell-expand',
 		label: Liferay.Language.get('name-email')
@@ -677,7 +774,13 @@ export const individualsListColumns = {
  */
 
 export const interestListColumns = {
-	getInterestMetricBar: ({countKey, total}) => ({
+	getInterestMetricBar: ({
+		countKey,
+		total
+	}: {
+		countKey: string;
+		total: number;
+	}) => ({
 		cellRenderer: RelativeMetricBarCell,
 		cellRendererProps: {countKey, total},
 		className: 'table-cell-expand',
@@ -688,7 +791,7 @@ export const interestListColumns = {
 		groupId,
 		id,
 		maxWidth,
-		routeFn = ({data: {name}}) =>
+		routeFn = ({data: {name}}: {data: {name: string}}) =>
 			name &&
 			toRoute(Routes.CONTACTS_INTEREST_DETAILS, {
 				channelId,
@@ -698,6 +801,13 @@ export const interestListColumns = {
 				type
 			}),
 		type
+	}: {
+		channelId: string | undefined;
+		groupId: string | undefined;
+		id: string | undefined;
+		maxWidth?: number | null;
+		routeFn?: (props: {data: {name: string}}) => string | undefined;
+		type: string;
 	}) => ({
 		accessor: 'name',
 		cellRenderer: NameCell,
@@ -707,10 +817,17 @@ export const interestListColumns = {
 		},
 		label: Liferay.Language.get('interest')
 	}),
-	getPercentOf: ({metricName, total}) => ({
+	getPercentOf: ({
+		metricName,
+		total
+	}: {
+		metricName: string;
+		total: number;
+	}) => ({
 		accessor: 'count',
 		className: 'table-column-text-end',
-		dataFormatter: data => `${((data / total) * 100).toFixed(2)}%`,
+		dataFormatter: (data: number) =>
+			`${((data / total) * 100).toFixed(2)}%`,
 		label: sub(Liferay.Language.get('percent-of-x'), [metricName]),
 		sortable: false,
 		title: true
@@ -737,7 +854,7 @@ export const metricsListColumns = {
 	abandonmentsMetric: {
 		accessor: 'abandonmentsMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => `${(data * 100).toFixed(2)}%`,
+		dataFormatter: (data: number) => `${(data * 100).toFixed(2)}%`,
 		label: Liferay.Language.get('abandonment')
 	},
 	avgTimeOnPageMetric: {
@@ -749,13 +866,13 @@ export const metricsListColumns = {
 	bounceRateMetric: {
 		accessor: 'bounceRateMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => `${(data * 100).toFixed(1)}%`,
+		dataFormatter: (data: number) => `${(data * 100).toFixed(1)}%`,
 		label: Liferay.Language.get('bounce-rate')
 	},
 	commentsMetric: {
 		accessor: 'commentsMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('comments')
 	},
 	completionTimeMetric: {
@@ -767,27 +884,27 @@ export const metricsListColumns = {
 	downloadsMetric: {
 		accessor: 'downloadsMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('downloads')
 	},
 	entrancesMetric: {
 		accessor: 'entrancesMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('entrances')
 	},
 	exitRateMetric: {
 		accessor: 'exitRateMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => `${(data * 100).toFixed(2)}%`,
+		dataFormatter: (data: number) => `${(data * 100).toFixed(2)}%`,
 		label: Liferay.Language.get('exit-percentage')
 	},
-	getCreateDate: timeZoneId => ({
+	getCreateDate: (timeZoneId: string) => ({
 		accessor: 'createDate',
-		cellRenderer: ({data}) => (
+		cellRenderer: ({data}: CellRendererProps) => (
 			<DateCell
 				data={data}
-				dateFormatter={date =>
+				dateFormatter={(date: string | number) =>
 					formatDateToTimeZone(date, 'll', timeZoneId)
 				}
 				datePath='createDate'
@@ -795,12 +912,18 @@ export const metricsListColumns = {
 		),
 		label: Liferay.Language.get('added')
 	}),
-	getNameEmail: ({channelId, groupId, route}) => ({
+	getNameEmail: ({
+		channelId,
+		groupId,
+		route
+	}: ChannelGroupParams & {route: string}) => ({
 		accessor: 'name',
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			renderSecondaryInfo: ({email}) => <TextTruncate title={email} />,
-			routeFn: ({data: {id}}) =>
+			renderSecondaryInfo: ({email}: {email: string}) => (
+				<TextTruncate title={email} />
+			),
+			routeFn: ({data: {id}}: {data: {id: string}}) =>
 				toRoute(route, {
 					channelId,
 					groupId,
@@ -811,15 +934,29 @@ export const metricsListColumns = {
 		label: Liferay.Language.get('name-email'),
 		sortable: false
 	}),
-	getTitleId: ({channelId, groupId, label, rangeSelectors, route}) => ({
+	getTitleId: ({
+		channelId,
+		groupId,
+		label,
+		rangeSelectors,
+		route
+	}: ChannelGroupParams & {
+		label: React.ReactNode;
+		rangeSelectors: Record<string, any>;
+		route: string;
+	}) => ({
 		accessor: 'assetTitle',
 		cellRenderer: NameCell,
 		cellRendererProps: {
 			nameKey: 'assetTitle',
-			renderSecondaryInfo: ({assetId}) => (
+			renderSecondaryInfo: ({assetId}: {assetId: string}) => (
 				<TextTruncate title={assetId} />
 			),
-			routeFn: ({data: {assetId, assetTitle, id}}) => {
+			routeFn: ({
+				data: {assetId, assetTitle, id}
+			}: {
+				data: {assetId?: string; assetTitle?: string; id?: string};
+			}) => {
 				if (assetId) {
 					return setUriQueryValues(
 						pickBy(rangeSelectors),
@@ -844,12 +981,19 @@ export const metricsListColumns = {
 	impressionMadeMetric: {
 		accessor: 'impressionMadeMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('impressions')
 	},
 	modifiedDate: {
 		accessor: 'modifiedDate',
-		cellRenderer: ({data: {modifiedByUserName, modifiedDate}}) => {
+		cellRenderer: ({
+			data: {modifiedByUserName, modifiedDate}
+		}: {
+			data: {
+				modifiedByUserName: string;
+				modifiedDate: string | number | null | undefined;
+			};
+		}) => {
 			const date =
 				!isNil(modifiedDate) && moment(modifiedDate).format('ll');
 
@@ -869,7 +1013,7 @@ export const metricsListColumns = {
 	ratingsMetric: {
 		accessor: 'ratingsMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => `${(data * 10).toFixed(2)}/10`,
+		dataFormatter: (data: number) => `${(data * 10).toFixed(2)}/10`,
 		label: Liferay.Language.get('rating')
 	},
 	readingTimeMetric: {
@@ -881,19 +1025,19 @@ export const metricsListColumns = {
 	submissionsMetric: {
 		accessor: 'submissionsMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('submissions')
 	},
 	viewsMetric: {
 		accessor: 'viewsMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('views')
 	},
 	visitorsMetric: {
 		accessor: 'visitorsMetric',
 		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
+		dataFormatter: (data: number | string) => data.toLocaleString(),
 		label: Liferay.Language.get('unique-visitors')
 	}
 };
@@ -926,15 +1070,27 @@ export const organizationsListColumns = [
  */
 
 export const sitePagesListColumns = {
-	getTitleUrl: ({channelId, groupId, rangeSelectors, route}) => ({
+	getTitleUrl: ({
+		channelId,
+		groupId,
+		rangeSelectors,
+		route
+	}: ChannelGroupParams & {
+		rangeSelectors: Record<string, any>;
+		route: string;
+	}) => ({
 		accessor: 'assetTitle',
 		cellRenderer: NameCell,
 		cellRendererProps: {
 			nameKey: 'assetTitle',
-			renderSecondaryInfo: ({assetId}) => (
+			renderSecondaryInfo: ({assetId}: {assetId: string}) => (
 				<TextTruncate title={getSafeDecodedURIComponent(assetId)} />
 			),
-			routeFn: ({data: {assetId, assetTitle}}) =>
+			routeFn: ({
+				data: {assetId, assetTitle}
+			}: {
+				data: {assetId: string; assetTitle?: string};
+			}) =>
 				setUriQueryValues(
 					pickBy(rangeSelectors),
 					toRoute(route, {
@@ -964,15 +1120,23 @@ export const pagesListColumns = {
 		className: 'table-cell-expand text-truncate',
 		label: Liferay.Language.get('url')
 	},
-	getTitleUrl: ({channelId, groupId, route}) => ({
+	getTitleUrl: ({
+		channelId,
+		groupId,
+		route
+	}: ChannelGroupParams & {route: string}) => ({
 		accessor: 'title',
 		cellRenderer: NameCell,
 		cellRendererProps: {
 			nameKey: 'title',
-			renderSecondaryInfo: ({assetId}) => (
+			renderSecondaryInfo: ({assetId}: {assetId: string}) => (
 				<TextTruncate title={assetId} />
 			),
-			routeFn: ({data: {dataSourceId, title, url}}) =>
+			routeFn: ({
+				data: {dataSourceId, title, url}
+			}: {
+				data: {dataSourceId: string; title: string; url: string};
+			}) =>
 				toRoute(route, {
 					channelId,
 					groupId,
@@ -998,14 +1162,14 @@ export const pagesListColumns = {
 	},
 	title: {
 		accessor: 'title',
-		dataFormatter: data => <TextTruncate title={data} />,
+		dataFormatter: (data: string) => <TextTruncate title={data} />,
 		label: Liferay.Language.get('page-title'),
 		title: true
 	},
 	url: {
 		accessor: 'url',
 		className: 'table-cell-expand',
-		dataFormatter: data => <TextTruncate title={data} />,
+		dataFormatter: (data: string) => <TextTruncate title={data} />,
 		label: Liferay.Language.get('url')
 	},
 	viewCount: {
@@ -1019,12 +1183,12 @@ export const pagesListColumns = {
  * Segments List Columns
  */
 export const segmentsListColumns = {
-	getDateCreated: timeZoneId => ({
+	getDateCreated: (timeZoneId: string) => ({
 		accessor: 'dateCreated',
-		cellRenderer: ({data}) => (
+		cellRenderer: ({data}: CellRendererProps) => (
 			<DateCell
 				data={data}
-				dateFormatter={date =>
+				dateFormatter={(date: string | number) =>
 					formatDateToTimeZone(date, 'll', timeZoneId)
 				}
 				datePath='dateCreated'
@@ -1032,11 +1196,11 @@ export const segmentsListColumns = {
 		),
 		label: Liferay.Language.get('date-created')
 	}),
-	getName: ({channelId, groupId}) => ({
+	getName: ({channelId, groupId}: ChannelGroupParams) => ({
 		accessor: 'name',
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			routeFn: ({data: {id}}) =>
+			routeFn: ({data: {id}}: {data: {id: string}}) =>
 				toRoute(Routes.CONTACTS_SEGMENT, {
 					channelId,
 					groupId,
@@ -1046,19 +1210,19 @@ export const segmentsListColumns = {
 		className: 'table-cell-expand',
 		label: Liferay.Language.get('name')
 	}),
-	getOwnerName: timeZoneId => ({
+	getOwnerName: (timeZoneId: string) => ({
 		accessor: 'dateModified',
 		cellRenderer: CreatedByCell,
 		cellRendererProps: {timeZoneId},
 		label: Liferay.Language.get('last-modified')
 	}),
-	getSegmentType: LDPEnabled => {
+	getSegmentType: (LDPEnabled: boolean) => {
 		if (!LDPEnabled) return null;
 
 		return {
 			accessor: 'segmentType',
-			cellRenderer: ({data}) => {
-				const segmentTypeMap = {
+			cellRenderer: ({data}: CellRendererProps) => {
+				const segmentTypeMap: Record<string, string> = {
 					BATCH: Liferay.Language.get('batch'),
 					REAL_TIME: Liferay.Language.get('real-time')
 				};
@@ -1072,7 +1236,7 @@ export const segmentsListColumns = {
 	individualAddedDate: {
 		cellRenderer: DateCell,
 		cellRendererProps: {
-			dateFormatter: date =>
+			dateFormatter: (date: string | number) =>
 				moment(date).calendar(null, {
 					sameElse: 'll'
 				}),
@@ -1100,11 +1264,11 @@ export const usersListColumns = {
 		label: Liferay.Language.get('email'),
 		sortable: false
 	},
-	getLastLoginDate: timeZoneId => ({
+	getLastLoginDate: (timeZoneId: string) => ({
 		accessor: 'lastLoginDate',
 		cellRenderer: DateCell,
 		cellRendererProps: {
-			dateFormatter: date =>
+			dateFormatter: (date: string | number) =>
 				applyTimeZone(date, timeZoneId).calendar(null, {
 					sameElse: 'll'
 				}),
@@ -1125,7 +1289,7 @@ export const usersListColumns = {
 		accessor: 'name',
 		cellRenderer: NameCell,
 		cellRendererProps: {
-			renderSecondaryInfo: data => get(data, 'emailAddress')
+			renderSecondaryInfo: (data: any) => get(data, 'emailAddress')
 		},
 		className: 'table-cell-expand',
 		label: Liferay.Language.get('name-email')

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -35,8 +36,9 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
-import com.liferay.sharing.exception.InvalidSharingEntryTargetException;
+import com.liferay.sharing.exception.InvalidSharingEntryTicketException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
+import com.liferay.sharing.exception.InvalidSharingEntryUserGroupException;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -139,25 +141,26 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testAddOrUpdateSharingEntryUpdatesSharingEntryByTicket()
 		throws Exception {
 
-		long ticketId = _getTicketId();
+		Ticket ticket = _addTicket();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
-			_group.getGroupId(), _group.getGroupId(), true,
+			null, _fromUser.getUserId(), ticket.getTicketId(), 0, 0,
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 
 		SharingEntry sharingEntry =
 			_sharingEntryLocalService.addOrUpdateSharingEntry(
-				null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
-				_group.getGroupId(), _group.getGroupId(), false,
+				null, _fromUser.getUserId(), ticket.getTicketId(), 0, 0,
+				_classNameId, _group.getGroupId(), _group.getGroupId(), false,
 				Arrays.asList(
 					SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 				null, _serviceContext);
 
-		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
+		Assert.assertEquals(ticket.getTicketId(), sharingEntry.getToTicketId());
 		Assert.assertFalse(sharingEntry.isShareable());
 		Assert.assertEquals(
 			SharingEntryAction.UPDATE.getBitwiseValue() |
@@ -287,44 +290,29 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testAddSharingEntryToTicket() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		long ticketId = _getTicketId();
+		Ticket ticket = _addTicket();
 
 		_sharingEntryLocalService.addSharingEntry(
-			externalReferenceCode, _fromUser.getUserId(), ticketId, 0, 0,
-			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+			externalReferenceCode, _fromUser.getUserId(), ticket.getTicketId(),
+			0, 0, _classNameId, _group.getGroupId(), _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 
 		SharingEntry sharingEntry =
 			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
 				externalReferenceCode, _group.getGroupId());
 
-		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
+		Assert.assertEquals(ticket.getTicketId(), sharingEntry.getToTicketId());
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(0, sharingEntry.getToUserId());
 
 		try {
 			_sharingEntryLocalService.addSharingEntry(
-				RandomTestUtil.randomString(), _fromUser.getUserId(), ticketId,
-				0, _toUser.getUserId(), _classNameId, _group.getGroupId(),
-				_group.getGroupId(), true,
-				Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(
-				exception instanceof InvalidSharingEntryTargetException);
-		}
-
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		try {
-			_sharingEntryLocalService.addSharingEntry(
-				RandomTestUtil.randomString(), _fromUser.getUserId(), ticketId,
-				userGroup.getUserGroupId(), 0, _classNameId,
+				RandomTestUtil.randomString(), _fromUser.getUserId(),
+				ticket.getTicketId(), 0, _toUser.getUserId(), _classNameId,
 				_group.getGroupId(), _group.getGroupId(), true,
 				Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 
@@ -332,7 +320,23 @@ public class SharingEntryLocalServiceTest {
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
-				exception instanceof InvalidSharingEntryTargetException);
+				exception instanceof InvalidSharingEntryTicketException);
+		}
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		try {
+			_sharingEntryLocalService.addSharingEntry(
+				RandomTestUtil.randomString(), _fromUser.getUserId(),
+				ticket.getTicketId(), userGroup.getUserGroupId(), 0,
+				_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception instanceof InvalidSharingEntryTicketException);
 		}
 		finally {
 			_userGroupLocalService.deleteUserGroup(userGroup);
@@ -378,7 +382,7 @@ public class SharingEntryLocalServiceTest {
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
-				exception instanceof InvalidSharingEntryTargetException);
+				exception instanceof InvalidSharingEntryUserGroupException);
 		}
 
 		try {
@@ -490,6 +494,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchTicketException.class)
+	@TestInfo("LPD-86507")
 	public void testAddSharingEntryWithNonexistentTicket() throws Exception {
 		_sharingEntryLocalService.addSharingEntry(
 			null, _fromUser.getUserId(), RandomTestUtil.randomLong(), 0, 0,
@@ -497,7 +502,8 @@ public class SharingEntryLocalServiceTest {
 			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryTargetException.class)
+	@Test(expected = InvalidSharingEntryUserException.class)
+	@TestInfo("LPD-86507")
 	public void testAddSharingEntryWithNoTarget() throws Exception {
 		_sharingEntryLocalService.addSharingEntry(
 			RandomTestUtil.randomString(), _fromUser.getUserId(), 0, 0, 0,
@@ -804,24 +810,30 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testFetchSharingEntryByTicket() throws Exception {
-		long ticketId = _getTicketId();
+		Ticket ticket = _addTicket();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
-			_group.getGroupId(), _group.getGroupId(), true,
+			null, _fromUser.getUserId(), ticket.getTicketId(), 0, 0,
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
-			ticketId, 0, 0, _classNameId, _group.getGroupId());
+			ticket.getTicketId(), 0, 0, _classNameId, _group.getGroupId());
 
-		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
+		Assert.assertEquals(ticket.getTicketId(), sharingEntry.getToTicketId());
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(0, sharingEntry.getToUserId());
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testFetchSharingEntryByUser() throws Exception {
+		Assert.assertNull(
+			_sharingEntryLocalService.fetchSharingEntry(
+				0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId()));
+
 		_sharingEntryLocalService.addSharingEntry(
 			null, _fromUser.getUserId(), 0, 0, _toUser.getUserId(),
 			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
@@ -836,6 +848,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testFetchSharingEntryByUserGroup() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
@@ -861,32 +874,25 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testFetchSharingEntryReturnsNullWhenNotFound()
-		throws Exception {
-
-		Assert.assertNull(
-			_sharingEntryLocalService.fetchSharingEntry(
-				0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId()));
-	}
-
-	@Test
+	@TestInfo("LPD-86507")
 	public void testGetSharingEntryByTicket() throws Exception {
-		long ticketId = _getTicketId();
+		Ticket ticket = _addTicket();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, _fromUser.getUserId(), ticketId, 0, 0, _classNameId,
-			_group.getGroupId(), _group.getGroupId(), true,
+			null, _fromUser.getUserId(), ticket.getTicketId(), 0, 0,
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.getSharingEntry(
-			ticketId, 0, 0, _classNameId, _group.getGroupId());
+			ticket.getTicketId(), 0, 0, _classNameId, _group.getGroupId());
 
-		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
+		Assert.assertEquals(ticket.getTicketId(), sharingEntry.getToTicketId());
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(0, sharingEntry.getToUserId());
 	}
 
 	@Test(expected = NoSuchEntryException.class)
+	@TestInfo("LPD-86507")
 	public void testGetSharingEntryThrowsWhenNotFound() throws Exception {
 		_sharingEntryLocalService.getSharingEntry(
 			0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId());
@@ -1436,17 +1442,8 @@ public class SharingEntryLocalServiceTest {
 			_serviceContext);
 	}
 
-	private void _expireSharingEntry(SharingEntry sharingEntry) {
-		Instant instant = Instant.now();
-
-		sharingEntry.setExpirationDate(
-			Date.from(instant.minus(1, ChronoUnit.DAYS)));
-
-		_sharingEntryLocalService.updateSharingEntry(sharingEntry);
-	}
-
-	private long _getTicketId() throws Exception {
-		Ticket ticket = _ticketLocalService.addTicket(
+	private Ticket _addTicket() throws Exception {
+		return _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
 			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS,
 			JSONUtil.put(
@@ -1454,8 +1451,15 @@ public class SharingEntryLocalServiceTest {
 			).toString(),
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
+	}
 
-		return ticket.getTicketId();
+	private void _expireSharingEntry(SharingEntry sharingEntry) {
+		Instant instant = Instant.now();
+
+		sharingEntry.setExpirationDate(
+			Date.from(instant.minus(1, ChronoUnit.DAYS)));
+
+		_sharingEntryLocalService.updateSharingEntry(sharingEntry);
 	}
 
 	private long _classNameId;

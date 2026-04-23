@@ -31,28 +31,28 @@ public class OpenAPIUtil {
 	public static HttpCallArguments getHttpCallArguments(
 		Map<String, Object> arguments, String baseURL, String endpoint) {
 
-		int spaceIndex = endpoint.indexOf(' ');
+		int index = endpoint.indexOf(' ');
 
-		String pathTemplate = endpoint.substring(spaceIndex + 1);
+		String pathTemplate = endpoint.substring(index + 1);
 
 		String path = pathTemplate;
 
 		StringBundler sb = new StringBundler();
 
-		for (Map.Entry<String, Object> argumentEntry : arguments.entrySet()) {
-			String paramName = argumentEntry.getKey();
+		for (Map.Entry<String, Object> entry : arguments.entrySet()) {
+			String name = entry.getKey();
 
-			if (paramName.equals("body")) {
+			if (name.equals("body")) {
 				continue;
 			}
 
-			Object value = argumentEntry.getValue();
+			Object value = entry.getValue();
 
 			if (value == null) {
 				continue;
 			}
 
-			String placeholder = "{" + paramName + "}";
+			String placeholder = "{" + name + "}";
 			String valueString = String.valueOf(value);
 
 			if (pathTemplate.contains(placeholder)) {
@@ -60,7 +60,7 @@ public class OpenAPIUtil {
 			}
 			else if (!valueString.isEmpty()) {
 				sb.append((sb.index() == 0) ? '?' : '&');
-				sb.append(URLCodec.encodeURL(paramName));
+				sb.append(URLCodec.encodeURL(name));
 				sb.append('=');
 				sb.append(URLCodec.encodeURL(valueString));
 			}
@@ -80,7 +80,7 @@ public class OpenAPIUtil {
 		}
 
 		return new HttpCallArguments(
-			bodyString, endpoint.substring(0, spaceIndex), baseURL + path + sb);
+			bodyString, endpoint.substring(0, index), baseURL + path + sb);
 	}
 
 	public static String getOpenAPIURL(String endpoint) {

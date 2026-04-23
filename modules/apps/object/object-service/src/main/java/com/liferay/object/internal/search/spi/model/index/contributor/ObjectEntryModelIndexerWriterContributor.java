@@ -90,6 +90,10 @@ public class ObjectEntryModelIndexerWriterContributor
 
 	@Override
 	public boolean shouldRun(long companyId) {
+		if (ReindexCacheThreadLocal.isFullMode()) {
+			return false;
+		}
+
 		if (_companyId == companyId) {
 			return true;
 		}

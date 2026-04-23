@@ -33,14 +33,14 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
-import com.liferay.sharing.exception.InvalidSharingEntryTargetException;
+import com.liferay.sharing.exception.InvalidSharingEntryTicketException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
+import com.liferay.sharing.exception.InvalidSharingEntryUserGroupException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryTable;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.base.SharingEntryLocalServiceBaseImpl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -150,7 +150,9 @@ public class SharingEntryLocalServiceImpl
 
 		_validateSharingEntryActions(sharingEntryActions);
 
-		_validateTarget(userId, toTicketId, toUserGroupId, toUserId);
+		_validateTicket(toTicketId, toUserGroupId, toUserId);
+		_validateUserGroup(toTicketId, toUserGroupId, toUserId);
+		_validateUser(userId, toTicketId, toUserGroupId, toUserId);
 
 		_validateExpirationDate(expirationDate);
 
@@ -847,48 +849,82 @@ public class SharingEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateTarget(
-			long fromUserId, long toTicketId, long toUserGroupId, long toUserId)
+	private void _validateTicket(
+			long toTicketId, long toUserGroupId, long toUserId)
 		throws PortalException {
 
-		if (toTicketId > 0) {
-			_ticketLocalService.getTicket(toTicketId);
+		if (toTicketId <= 0) {
+			return;
 		}
 
 		if (toUserGroupId > 0) {
-			_userGroupLocalService.getUserGroup(toUserGroupId);
-		}
-
-		List<String> targets = new ArrayList<>();
-
-		if (toTicketId > 0) {
-			targets.add("ticket");
-		}
-
-		if (toUserGroupId > 0) {
-			targets.add("user group");
+			throw new InvalidSharingEntryTicketException(
+				"A sharing entry cannot be associated with a ticket and a " +
+					"user group at the same time");
 		}
 
 		if (toUserId > 0) {
-			targets.add("user");
+			throw new InvalidSharingEntryTicketException(
+				"A sharing entry cannot be associated with a ticket and a " +
+					"user at the same time");
 		}
 
-		if (targets.isEmpty()) {
-			throw new InvalidSharingEntryTargetException(
+		_ticketLocalService.getTicket(toTicketId);
+	}
+
+	private void _validateUser(
+			long fromUserId, long toTicketId, long toUserGroupId, long toUserId)
+		throws InvalidSharingEntryUserException {
+
+		if ((toTicketId <= 0) && (toUserGroupId <= 0) && (toUserId <= 0)) {
+			throw new InvalidSharingEntryUserException(
 				"A sharing entry must be associated with a ticket, a user, " +
 					"or a user group");
 		}
 
-		if (targets.size() > 1) {
-			throw new InvalidSharingEntryTargetException(
-				"A sharing entry cannot be associated with more than one " +
-					"target at the same time: " + String.join(", ", targets));
+		if (toUserId <= 0) {
+			return;
 		}
 
-		if ((toUserId > 0) && (fromUserId == toUserId)) {
+		if (toTicketId > 0) {
+			throw new InvalidSharingEntryUserException(
+				"A sharing entry cannot be associated with a user and a " +
+					"ticket at the same time");
+		}
+
+		if (toUserGroupId > 0) {
+			throw new InvalidSharingEntryUserException(
+				"A sharing entry cannot be associated with a user and a user " +
+					"group at the same time");
+		}
+
+		if (fromUserId == toUserId) {
 			throw new InvalidSharingEntryUserException(
 				"From user cannot be the same as to user");
 		}
+	}
+
+	private void _validateUserGroup(
+			long toTicketId, long toUserGroupId, long toUserId)
+		throws PortalException {
+
+		if (toUserGroupId <= 0) {
+			return;
+		}
+
+		if (toTicketId > 0) {
+			throw new InvalidSharingEntryUserGroupException(
+				"A sharing entry cannot be associated with a user group and " +
+					"a ticket at the same time");
+		}
+
+		if (toUserId > 0) {
+			throw new InvalidSharingEntryUserGroupException(
+				"A sharing entry cannot be associated with a user group and " +
+					"a user at the same time");
+		}
+
+		_userGroupLocalService.getUserGroup(toUserGroupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

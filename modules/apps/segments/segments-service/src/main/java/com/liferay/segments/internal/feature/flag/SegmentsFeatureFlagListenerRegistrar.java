@@ -5,13 +5,10 @@
 
 package com.liferay.segments.internal.feature.flag;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
@@ -82,47 +79,27 @@ public class SegmentsFeatureFlagListenerRegistrar {
 
 			_companyLocalService.forEachCompany(
 				company -> {
-					for (Group group :
-							_groupLocalService.getGroups(
-								company.getCompanyId(),
-								GroupConstants.ANY_PARENT_GROUP_ID, true)) {
+					long[] groupIds = TransformUtil.transformToLongArray(
+						_groupLocalService.getGroups(
+							company.getCompanyId(),
+							GroupConstants.ANY_PARENT_GROUP_ID, true),
+						GroupModel::getGroupId);
 
-						try {
-							_updateSegmentsEntries(
-								enabled,
-								_segmentsEntryLocalService.getSegmentsEntries(
-									group.getGroupId(), QueryUtil.ALL_POS,
-									QueryUtil.ALL_POS, null));
-							_updateSegmentsExperiences(
-								enabled,
-								_segmentsExperienceLocalService.
-									getSegmentsExperiences(
-										group.getGroupId(), !enabled));
-						}
-						catch (PortalException portalException) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(
-									"Unable to update segments entries and " +
-										"segments experiences for group " +
-											group.getGroupId(),
-									portalException);
-							}
-						}
-					}
+					_updateSegmentsEntries(enabled, groupIds);
+					_updateSegmentsExperiences(enabled, groupIds);
 				});
 		}
 
-		private void _updateSegmentsEntries(
-			boolean active, List<SegmentsEntry> segmentsEntries) {
+		private void _updateSegmentsEntries(boolean active, long[] groupIds) {
+			List<SegmentsEntry> segmentsEntries =
+				_segmentsEntryLocalService.getSegmentsEntries(
+					groupIds, !active,
+					new String[] {
+						SegmentsEntryConstants.SOURCE_DEFAULT,
+						SegmentsEntryConstants.SOURCE_REFERRED
+					});
 
 			for (SegmentsEntry segmentsEntry : segmentsEntries) {
-				if (Objects.equals(
-						segmentsEntry.getSource(),
-						SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND)) {
-
-					continue;
-				}
-
 				segmentsEntry.setActive(active);
 
 				_segmentsEntryLocalService.updateSegmentsEntry(segmentsEntry);
@@ -130,7 +107,11 @@ public class SegmentsFeatureFlagListenerRegistrar {
 		}
 
 		private void _updateSegmentsExperiences(
-			boolean active, List<SegmentsExperience> segmentsExperiences) {
+			boolean active, long[] groupIds) {
+
+			List<SegmentsExperience> segmentsExperiences =
+				_segmentsExperienceLocalService.getSegmentsExperiences(
+					groupIds, !active);
 
 			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 				SegmentsEntry segmentsEntry =
@@ -151,9 +132,6 @@ public class SegmentsFeatureFlagListenerRegistrar {
 					segmentsExperience);
 			}
 		}
-
-		private static final Log _log = LogFactoryUtil.getLog(
-			SegmentsFeatureFlagListener.class);
 
 	}
 

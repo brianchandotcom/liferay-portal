@@ -49,11 +49,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Centralized ModelSearchConfigurator for ObjectEntry that handles full
- * reindex of all ObjectEntries across all ObjectDefinitions in a single
- * sequential table scan, replacing the N per-definition filtered queries
- * with one full scan for better I/O performance.
- *
  * @author Shuyang Zhou
  */
 @Component(service = ModelSearchConfigurator.class)

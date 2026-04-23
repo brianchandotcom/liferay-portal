@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class XMLCDATACheck extends BaseFileCheck {
+public class XMLEmbeddedJSONCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

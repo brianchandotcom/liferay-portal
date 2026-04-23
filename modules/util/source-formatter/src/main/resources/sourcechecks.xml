@@ -2097,10 +2097,6 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `build.xml`." />
 		</check>
-		<check name="XMLCDATACheck">
-			<category name="Bug Prevention" />
-			<description name="Performs several checks on `CDATA` inside `xml`." />
-		</check>
 		<check name="XMLCustomSQLOrderCheck">
 			<category name="Styling" />
 			<description name="Checks the order of attributes in `custom-sql` file." />
@@ -2120,6 +2116,10 @@
 		<check name="XMLEchoMessageCheck">
 			<category name="Styling" />
 			<description name="Checks the echo message attributes in `*.xml` file." />
+		</check>
+		<check name="XMLEmbeddedJSONCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on JSON embedded in XML." />
 		</check>
 		<check name="XMLFriendlyURLRoutesFileCheck">
 			<category name="Styling" />

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,14 +125,6 @@ public class ViewHomeQuickActionsDisplayContext {
 		).build();
 	}
 
-	private JSONArray _getDepotEntriesJSONArray() {
-		return _getDepotEntriesJSONArray(
-			TransformUtil.transform(
-				_depotEntryLocalService.getDepotEntries(
-					_themeDisplay.getCompanyId(), DepotConstants.TYPE_SPACE),
-				DepotEntry::getGroupId));
-	}
-
 	private JSONArray _getDepotEntriesJSONArray(List<Long> groupIds) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -184,7 +177,10 @@ public class ViewHomeQuickActionsDisplayContext {
 	private List<Map<String, Object>> _getQuickActions() throws Exception {
 		List<Map<String, Object>> quickActions = new ArrayList<>();
 
-		JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray();
+		List<Long> depotEntryGroupIds = TransformUtil.transform(
+			_depotEntryLocalService.getDepotEntries(
+				_themeDisplay.getCompanyId(), DepotConstants.TYPE_SPACE),
+			DepotEntry::getGroupId);
 
 		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionService.getCMSObjectDefinitions(
@@ -196,6 +192,15 @@ public class ViewHomeQuickActionsDisplayContext {
 				});
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray(
+				ActionUtil.getAcceptedDepotEntryGroupIds(
+					depotEntryGroupIds,
+					objectDefinition.getObjectDefinitionId()));
+
+			if (depotEntriesJSONArray.length() == 0) {
+				continue;
+			}
+
 			String actionIcon = _icons.get(
 				objectDefinition.getExternalReferenceCode());
 

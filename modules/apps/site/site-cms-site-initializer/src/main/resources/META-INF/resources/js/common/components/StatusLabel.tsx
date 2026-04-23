@@ -28,9 +28,9 @@ const mapLabelToLabelDisplayType: {[key in AssetStatus]: LabelDisplayType} = {
 	[ASSET_STATUS.DENIED]: 'danger',
 	[ASSET_STATUS.DRAFT]: 'secondary',
 	[ASSET_STATUS.EXPIRED]: 'danger',
+	[ASSET_STATUS.IN_TRASH]: 'info',
 	[ASSET_STATUS.INACTIVE]: 'secondary',
 	[ASSET_STATUS.INCOMPLETE]: 'warning',
-	[ASSET_STATUS.IN_TRASH]: 'info',
 	[ASSET_STATUS.PENDING]: 'info',
 	[ASSET_STATUS.SCHEDULED]: 'info',
 };

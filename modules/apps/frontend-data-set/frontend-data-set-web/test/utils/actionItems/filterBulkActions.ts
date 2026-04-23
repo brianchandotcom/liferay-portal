@@ -53,7 +53,7 @@ describe('filterBulkActions', () => {
 	});
 
 	describe('when isVisible is defined', () => {
-		fit('filters actions based on the isVisible callback', () => {
+		it('filters actions based on the isVisible callback', () => {
 			const isVisibleFn = jest.fn(
 				({selectedItems = []}: {selectedItems?: Array<any>}) => {
 					return selectedItems.every((item: any) => {

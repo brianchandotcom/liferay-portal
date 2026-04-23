@@ -447,28 +447,14 @@ public class MCPServerServlet extends HttpServlet {
 		String authorization, String baseURL, long companyId,
 		MCPServerProfile mcpServerProfile) {
 
-		String servletKey = _getServletKey(
-			companyId,
-			(mcpServerProfile != null) ? mcpServerProfile._name : null);
-
-		Servlet cachedServlet = _servlets.get(servletKey);
-
-		if (cachedServlet != null) {
-			return cachedServlet;
+		synchronized (this) {
+			return _servlets.computeIfAbsent(
+				_getServletKey(
+					companyId,
+					(mcpServerProfile != null) ? mcpServerProfile._name : null),
+				servletKey -> _buildServlet(
+					baseURL, companyId, authorization, mcpServerProfile));
 		}
-
-		Servlet servlet = _buildServlet(
-			baseURL, companyId, authorization, mcpServerProfile);
-
-		cachedServlet = _servlets.putIfAbsent(servletKey, servlet);
-
-		if (cachedServlet != null) {
-			servlet.destroy();
-
-			return cachedServlet;
-		}
-
-		return servlet;
 	}
 
 	private String _getServletKey(long companyId, String profileName) {

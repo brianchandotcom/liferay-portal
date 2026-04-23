@@ -144,8 +144,7 @@ public class OpenAPIUtil {
 		).inputSchema(
 			_getInputJsonSchema(
 				operationJSONObject,
-				pathItemJSONObject.getJSONArray("parameters"),
-				rootJSONObject)
+				pathItemJSONObject.getJSONArray("parameters"), rootJSONObject)
 		).build();
 	}
 

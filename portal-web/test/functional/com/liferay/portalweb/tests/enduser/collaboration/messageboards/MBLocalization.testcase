@@ -93,9 +93,9 @@ definition {
 			threadCount = "スレッド 0");
 	}
 
-	@description = "This is a test for LPS-136931. It checks that a thread can be viewed in Arabic."
+	@description = "This is a test for LPS-136931 and LPS-136932. It checks that a thread can be viewed in Arabic and Japanese."
 	@priority = 3
-	test CanViewThreadInArabic {
+	test CanViewThreadInArabicAndJapanese {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "نص رسالة الموضوع",
@@ -110,11 +110,7 @@ definition {
 			threadBody = "نص رسالة الموضوع",
 			threadSubject = "موضوع رسالة الموضوع",
 			userName = "Test Test");
-	}
 
-	@description = "This is a test for LPS-136932. It checks that a thread can be viewed in Japanese."
-	@priority = 3
-	test CanViewThreadInArabicAndJapanese {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "メッセージボードのネジ本体",

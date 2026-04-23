@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
+import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -228,6 +229,8 @@ public class DBUpgrader {
 				LogContext.class, UpgradeLogContext.getInstance(), null);
 		}
 
+		UpgradeLogProgressTracker.start();
+
 		_stopWatch = new StopWatch();
 
 		_stopWatch.start();
@@ -248,6 +251,8 @@ public class DBUpgrader {
 	}
 
 	public static void stopUpgradeLogAppender() {
+		UpgradeLogProgressTracker.stop();
+
 		if ((_appender != null) && _appender.isStarted()) {
 			_stopWatch.stop();
 

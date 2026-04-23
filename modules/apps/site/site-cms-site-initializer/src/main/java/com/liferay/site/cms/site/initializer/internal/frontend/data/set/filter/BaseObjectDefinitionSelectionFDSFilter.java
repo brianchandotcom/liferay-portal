@@ -26,12 +26,12 @@ public abstract class BaseObjectDefinitionSelectionFDSFilter
 
 	@Override
 	public String getEntityFieldType() {
-		return FDSEntityFieldTypes.INTEGER;
+		return FDSEntityFieldTypes.STRING;
 	}
 
 	@Override
 	public String getId() {
-		return "objectDefinitionId";
+		return "objectDefinitionExternalReferenceCode";
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public abstract class BaseObjectDefinitionSelectionFDSFilter
 			selectionFDSFilterItems.add(
 				new SelectionFDSFilterItem(
 					objectDefinition.getLabel(locale),
-					objectDefinition.getObjectDefinitionId()));
+					objectDefinition.getExternalReferenceCode()));
 		}
 
 		return selectionFDSFilterItems;

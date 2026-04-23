@@ -55,15 +55,72 @@ import org.skyscreamer.jsonassert.JSONAssert;
  */
 @FeatureFlag("LPD-63311")
 @RunWith(Arquillian.class)
-public class MCPServerTest {
+public class MCPServerServletTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@FeatureFlag("LPD-86164")
 	@Test
-	public void testWithoutProfile() throws Exception {
+	public void testServiceWithChangedProfile() throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _addProfileObjectEntry(
+			RandomTestUtil.randomString(), name, "GET /test/v1.0/test-entities",
+			"POST /test/v1.0/test-entities");
+
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
+
+		mcpSyncClient.initialize();
+
+		McpSchema.ListToolsResult listToolsResult = mcpSyncClient.listTools();
+
+		List<McpSchema.Tool> tools = listToolsResult.tools();
+
+		Assert.assertEquals(tools.toString(), 2, tools.size());
+
+		_assertTool(
+			tools.get(0), "getTestEntitiesPage",
+			"get_test_v1.0_test_entities.json");
+		_assertTool(
+			tools.get(1), "postTestEntity",
+			"post_test_v1.0_test_entities.json");
+
+		mcpSyncClient.closeGracefully();
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			HashMapBuilder.<String, Serializable>put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"endpoints", "GET /test/v1.0/test-entities"
+			).put(
+				"name", name
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		mcpSyncClient = _getMcpSyncClient(name);
+
+		mcpSyncClient.initialize();
+
+		listToolsResult = mcpSyncClient.listTools();
+
+		tools = listToolsResult.tools();
+
+		Assert.assertEquals(tools.toString(), 1, tools.size());
+
+		_assertTool(
+			tools.get(0), "getTestEntitiesPage",
+			"get_test_v1.0_test_entities.json");
+
+		mcpSyncClient.closeGracefully();
+	}
+
+	@Test
+	public void testServiceWithoutProfile() throws Exception {
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(null);
 
 		mcpSyncClient.initialize();
@@ -142,12 +199,12 @@ public class MCPServerTest {
 
 	@FeatureFlag("LPD-86164")
 	@Test
-	public void testWithProfile() throws Exception {
+	public void testServiceWithProfile() throws Exception {
 		String name = RandomTestUtil.randomString();
 
 		_addProfileObjectEntry(
-			"Test entities agent - can read and create test entities", name,
-			"GET /test/v1.0/test-entities", "POST /test/v1.0/test-entities");
+			RandomTestUtil.randomString(), name, "GET /test/v1.0/test-entities",
+			"POST /test/v1.0/test-entities");
 
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
 
@@ -172,7 +229,7 @@ public class MCPServerTest {
 				HashMapBuilder.<String, Object>put(
 					"body",
 					HashMapBuilder.<String, Object>put(
-						"name", "Test Entity 1"
+						"name", name
 					).put(
 						"type", "ChildTestEntity1"
 					).build()
@@ -185,7 +242,7 @@ public class MCPServerTest {
 		Assert.assertFalse(content.text(), callToolResult.isError());
 
 		Assert.assertEquals(
-			"Test Entity 1",
+			name,
 			JSONFactoryUtil.createJSONObject(
 				content.text()
 			).getString(
@@ -211,66 +268,8 @@ public class MCPServerTest {
 				),
 				"name"
 			).contains(
-				"Test Entity 1"
+				name
 			));
-
-		mcpSyncClient.closeGracefully();
-	}
-
-	@FeatureFlag("LPD-86164")
-	@Test
-	public void testWithProfileConfigurationChange() throws Exception {
-		String name = RandomTestUtil.randomString();
-
-		ObjectEntry objectEntry = _addProfileObjectEntry(
-			RandomTestUtil.randomString(), name, "GET /test/v1.0/test-entities",
-			"POST /test/v1.0/test-entities");
-
-		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
-
-		mcpSyncClient.initialize();
-
-		McpSchema.ListToolsResult listToolsResult = mcpSyncClient.listTools();
-
-		List<McpSchema.Tool> tools = listToolsResult.tools();
-
-		Assert.assertEquals(tools.toString(), 2, tools.size());
-
-		_assertTool(
-			tools.get(0), "getTestEntitiesPage",
-			"get_test_v1.0_test_entities.json");
-		_assertTool(
-			tools.get(1), "postTestEntity",
-			"post_test_v1.0_test_entities.json");
-
-		mcpSyncClient.closeGracefully();
-
-		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			HashMapBuilder.<String, Serializable>put(
-				"description",
-				"Test entities agent - can only read test entities"
-			).put(
-				"endpoints", "GET /test/v1.0/test-entities"
-			).put(
-				"name", name
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		mcpSyncClient = _getMcpSyncClient(name);
-
-		mcpSyncClient.initialize();
-
-		listToolsResult = mcpSyncClient.listTools();
-
-		tools = listToolsResult.tools();
-
-		Assert.assertEquals(tools.toString(), 1, tools.size());
-
-		_assertTool(
-			tools.get(0), "getTestEntitiesPage",
-			"get_test_v1.0_test_entities.json");
 
 		mcpSyncClient.closeGracefully();
 	}
@@ -308,7 +307,7 @@ public class MCPServerTest {
 
 		JSONAssert.assertEquals(
 			StringUtil.read(
-				MCPServerTest.class.getResourceAsStream(
+				MCPServerServletTest.class.getResourceAsStream(
 					"dependencies/" + expectedSchemaFileName)),
 			new ObjectMapper(
 			).writeValueAsString(

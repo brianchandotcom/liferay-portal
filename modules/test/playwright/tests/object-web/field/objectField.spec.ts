@@ -3048,7 +3048,7 @@ test.describe('Manage object fields default value properties', () => {
 				objectDefinition.label['en_US']
 			);
 
-			const richTextEditor = page.frameLocator('iframe[title="editor"]');
+			const richTextEditor = page.getByLabel('Rich Text Editor').nth(1);
 
 			await expect(richTextEditor.getByRole('paragraph')).toHaveText(
 				'defaultValueRichText'

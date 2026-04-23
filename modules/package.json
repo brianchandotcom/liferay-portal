@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"prettier": "3.2.5"
+	},
 	"devDependencies": {
 		"@liferay/eslint-plugin": "1.9.1",
 		"@liferay/prettier-plugin": "1.1.5",
@@ -27,7 +30,6 @@
 	"private": true,
 	"resolutions": {
 		"@types/html-minifier-terser": "5.1.0",
-		"prettier": "3.2.5",
 		"ua-parser-js": "^0.7.30"
 	},
 	"scripts": {

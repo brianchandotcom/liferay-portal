@@ -81,8 +81,7 @@ public class ProvisioningHubService extends BaseService {
 				_log.info(
 					StringBundler.concat(
 						"Missing properties to provision LDP for account ",
-						koroneikiAccount.getKey(), ": ",
-						properties));
+						koroneikiAccount.getKey(), ": ", properties));
 			}
 
 			return;

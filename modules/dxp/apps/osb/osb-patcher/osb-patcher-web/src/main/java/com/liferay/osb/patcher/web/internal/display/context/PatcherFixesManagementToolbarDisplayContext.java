@@ -402,6 +402,17 @@ public class PatcherFixesManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
+					_getType() == PatcherFixConstants.TYPE_AUTO_FIX);
+				dropdownItem.setHref(
+					getPortletURL(), "type", PatcherFixConstants.TYPE_AUTO_FIX);
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest,
+						PatcherFixConstants.LABEL_AUTO_FIX));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
 					_getType() == PatcherFixConstants.TYPE_PATCH);
 				dropdownItem.setHref(
 					getPortletURL(), "type", PatcherFixConstants.TYPE_PATCH);

@@ -252,9 +252,6 @@ public class FragmentCollectionContributorPropagationTest {
 		String modifiedHTML =
 			"<div>" + RandomTestUtil.randomString() + "</div>";
 
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		try {
 			_setUpServiceContext();
 
@@ -276,8 +273,7 @@ public class FragmentCollectionContributorPropagationTest {
 			_assertCompanyContext(TestPropsValues.getCompanyId());
 		}
 		finally {
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		Map<Long, String> companyIdsMap =

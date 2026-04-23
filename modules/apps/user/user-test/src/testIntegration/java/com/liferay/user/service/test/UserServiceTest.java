@@ -120,7 +120,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testAddOrganizationUserWithPermission() throws Exception {
+	public void testAddOrganizationUsers() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		User user1 = UserTestUtil.addUser();

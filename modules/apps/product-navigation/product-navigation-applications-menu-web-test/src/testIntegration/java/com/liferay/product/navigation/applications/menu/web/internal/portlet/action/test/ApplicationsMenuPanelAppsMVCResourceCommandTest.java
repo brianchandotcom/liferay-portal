@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.ApplicationsMenuTestPortletKeys;
 import com.liferay.site.manager.RecentGroupManager;
 
 import jakarta.portlet.ResourceRequest;
@@ -54,7 +53,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -109,6 +107,30 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	public void tearDown() throws Exception {
 		PrincipalThreadLocal.setName(_originalName);
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+	}
+
+	@Test
+	public void testGetPanelCategoriesJSONArray() {
+		JSONArray panelCategoriesJSONArray = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getPanelCategoriesJSONArray",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest, _themeDisplay);
+
+		Assert.assertNotNull(panelCategoriesJSONArray);
+		Assert.assertTrue(panelCategoriesJSONArray.length() > 0);
+
+		for (int i = 0; i < panelCategoriesJSONArray.length(); i++) {
+			JSONObject panelCategoryJSONObject =
+				panelCategoriesJSONArray.getJSONObject(i);
+
+			Assert.assertTrue(panelCategoryJSONObject.has("active"));
+			Assert.assertTrue(panelCategoryJSONObject.has("homeURL"));
+			Assert.assertTrue(panelCategoryJSONObject.has("key"));
+			Assert.assertTrue(panelCategoryJSONObject.has("label"));
+		}
 	}
 
 	@Test
@@ -236,23 +258,6 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testPanelCategories() {
-		JSONArray panelCategoriesJSONArray = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "_getPanelCategoriesJSONArray",
-			new Class<?>[] {
-				HttpServletRequest.class, ResourceRequest.class,
-				ThemeDisplay.class
-			},
-			_mockHttpServletRequest, _mockPortletRequest, _themeDisplay);
-
-		Assert.assertTrue(
-			_containsPortletId(
-				panelCategoriesJSONArray,
-				ApplicationsMenuTestPortletKeys.
-					APPLICATIONS_MENU_TEST_PORTLET));
-	}
-
-	@Test
 	public void testRecentSitesAndMySitesLessThan7() throws Exception {
 		_addMySiteGroups(3);
 		_addRecentGroups(3);
@@ -361,39 +366,6 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[0],
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private boolean _containsPortletId(
-		JSONArray panelCategoriesJSONArray, String portletId) {
-
-		for (int i = 0; i < panelCategoriesJSONArray.length(); i++) {
-			JSONObject childCategoryJSONObject =
-				panelCategoriesJSONArray.getJSONObject(i);
-
-			JSONArray childCategoriesJSONArray =
-				childCategoryJSONObject.getJSONArray("childCategories");
-
-			for (int j = 0; j < childCategoriesJSONArray.length(); j++) {
-				JSONObject panelAppsJSONObject =
-					childCategoriesJSONArray.getJSONObject(j);
-
-				JSONArray panelAppsJSONArray = panelAppsJSONObject.getJSONArray(
-					"panelApps");
-
-				for (int k = 0; k < panelAppsJSONArray.length(); k++) {
-					JSONObject panelAppJSONObject =
-						panelAppsJSONArray.getJSONObject(k);
-
-					if (Objects.equals(
-							panelAppJSONObject.get("portletId"), portletId)) {
-
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

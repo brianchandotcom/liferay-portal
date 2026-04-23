@@ -113,9 +113,6 @@ public class BlogsEntryInfoItemFieldValuesProviderTest {
 
 	@Test
 	public void testGetInfoItemFieldValuesWithCoverImage() throws Exception {
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		ServiceContextThreadLocal.pushServiceContext(
@@ -151,17 +148,13 @@ public class BlogsEntryInfoItemFieldValuesProviderTest {
 				blogsEntry.getCoverImageURL(themeDisplay), webImage.getURL());
 		}
 		finally {
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 
 	@Test
 	public void testGetInfoItemFieldValuesWithCoverImageAndSmallImage()
 		throws Exception {
-
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
@@ -200,16 +193,12 @@ public class BlogsEntryInfoItemFieldValuesProviderTest {
 				blogsEntry.getSmallImageURL(themeDisplay), webImage.getURL());
 		}
 		finally {
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 
 	@Test
 	public void testGetInfoItemFieldValuesWithSmallImage() throws Exception {
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		ServiceContextThreadLocal.pushServiceContext(
@@ -245,8 +234,7 @@ public class BlogsEntryInfoItemFieldValuesProviderTest {
 				blogsEntry.getSmallImageURL(themeDisplay), webImage.getURL());
 		}
 		finally {
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 

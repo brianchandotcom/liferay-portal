@@ -206,9 +206,6 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 				0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
 				0, 0, null, null, serviceContext);
 
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		ServiceContextThreadLocal.pushServiceContext(
 			_getServiceContext(_getThemeDisplay()));
 
@@ -227,8 +224,7 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 			_assertInfoFieldValue(fieldName2, journalArticle);
 		}
 		finally {
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 
@@ -272,9 +268,6 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 
 	@Test
 	public void testGetInfoItemFieldValuesWithSmallImage() throws Exception {
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		ServiceContextThreadLocal.pushServiceContext(
@@ -330,8 +323,7 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 				webImage.getURL());
 		}
 		finally {
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 

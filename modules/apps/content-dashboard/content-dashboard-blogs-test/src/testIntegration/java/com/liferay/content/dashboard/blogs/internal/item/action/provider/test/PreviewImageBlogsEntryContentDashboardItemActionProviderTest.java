@@ -74,9 +74,6 @@ public class PreviewImageBlogsEntryContentDashboardItemActionProviderTest {
 
 	@Test
 	public void testGetContentDashboardItemAction() throws Exception {
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		try {
 			FileEntry fileEntry = _getTempFileEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
@@ -120,8 +117,7 @@ public class PreviewImageBlogsEntryContentDashboardItemActionProviderTest {
 				contentDashboardItemAction.getURL());
 		}
 		finally {
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 
@@ -140,9 +136,6 @@ public class PreviewImageBlogsEntryContentDashboardItemActionProviderTest {
 
 	@Test
 	public void testIsShow() throws Exception {
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		try {
 			FileEntry fileEntry = _getTempFileEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
@@ -181,8 +174,7 @@ public class PreviewImageBlogsEntryContentDashboardItemActionProviderTest {
 					blogsEntry, mockHttpServletRequest));
 		}
 		finally {
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 

@@ -76,7 +76,7 @@ public class SseUtil {
 					"nodeName", nodeName
 				).toString()
 			).name(
-				name
+				Validator.isBlank(name) ? nodeName : name
 			).build());
 	}
 

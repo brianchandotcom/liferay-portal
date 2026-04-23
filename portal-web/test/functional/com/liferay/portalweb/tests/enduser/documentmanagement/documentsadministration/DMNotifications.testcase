@@ -374,51 +374,6 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			contentType = "Documents and Media",
 			notificationType = "Website");
 
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		JSONDocument.subscribeToFolder(
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		DMNavigator.openToAddEntry(
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.editDocument(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.docx",
-			dmDocumentTitle = "DM Document Title");
-
-		Button.clickPublish();
-
-		Notifications.viewBadgeCount(notificationCount = 0);
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Notifications.viewBadgeCount(notificationCount = 0);
-	}
-
-	@priority = 4
-	@refactordone
-	test NoWebsiteNotificationAppearsForUpdatedDocumentInFolder {
-		property portal.acceptance = "true";
-
-		Navigator.gotoNotifications();
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 		NotificationsPortlet.disableUserDeliveries(
 			actionType = "Updates",
 			contentType = "Documents and Media",
@@ -451,6 +406,18 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			folderName = "DM Folder Name",
 			groupName = "Guest",
 			siteURLKey = "guest");
+
+		DMNavigator.openToAddEntry(
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title 2");
+
+		Button.clickPublish();
 
 		Notifications.viewBadgeCount(notificationCount = 0);
 

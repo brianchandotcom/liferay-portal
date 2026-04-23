@@ -77,7 +77,7 @@ definition {
 
 	@description = "This is a test for LPS-136775. It checks that a blog can be properly displayed in Japanese in the Blogs Aggregator."
 	@priority = 3
-	test CanViewBlogInJapaneseViaBlogsAggregator {
+	test CanViewBlogsEntryInArabicAndJapaneseViaBlogsAggregator {
 		JSONLayout.addWidgetToPublicLayout(
 			column = 1,
 			groupName = "Guest",

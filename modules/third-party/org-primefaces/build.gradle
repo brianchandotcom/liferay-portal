@@ -2,6 +2,10 @@ ext {
 	jakartaFacesModule = true
 }
 
+if (JavaVersion.current() != JavaVersion.VERSION_17) {
+	throw new GradleException("Project ${project.name} requires JDK 17.")
+}
+
 apply from: "../../build-jakarta-transformer.gradle"
 
 dependencies {

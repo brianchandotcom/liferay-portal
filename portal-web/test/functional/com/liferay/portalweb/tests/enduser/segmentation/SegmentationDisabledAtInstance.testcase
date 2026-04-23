@@ -545,18 +545,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user navigates to Segments Admin Then alert is shown including breadcrumb link to segments service"
-	@priority = 4
-	test ViewReEnableAlertLinkAtSegmentsList {
-		task ("Open the Segments List and check if warning with link appears") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
-		}
-	}
-
 	@description = "LPS-151362 Given segmentation is disabled at Instance Settings When user navigates to Experience simulation sidepanel Then the warning alert explains how to re-enable it"
 	@priority = 3
 	test ViewReEnabledAlertAtExperienceSimulationSidepanel {

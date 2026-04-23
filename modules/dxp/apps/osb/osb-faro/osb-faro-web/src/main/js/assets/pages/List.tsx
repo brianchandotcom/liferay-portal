@@ -174,7 +174,7 @@ const List = () => {
 				id: 'mimeType',
 				itemKey: 'id',
 				itemLabel: 'name',
-				label: Liferay.Language.get('mime-type'),
+				label: Liferay.Language.get('file-type'),
 				multiple: true,
 				searchable: true,
 				type: 'selection'

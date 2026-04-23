@@ -1,8 +1,8 @@
 ext {
-	gitHash = "dd6ba7a8e7f364b37d28a84320c5b127cd1394c0"
+	gitHash = "1ea717abe2b553442a239af965753c0d283dc0fd"
 	gitHubOwner = "liferay"
 	gitHubRepository = "primefaces"
-	mvnJARInclude = "primefaces-15.0.6.LIFERAY-PATCHED-2.jar"
+	mvnJARInclude = "primefaces-15.0.6.LIFERAY-PATCHED-3.jar"
 	mvnTargetDir = "primefaces/target"
 }
 

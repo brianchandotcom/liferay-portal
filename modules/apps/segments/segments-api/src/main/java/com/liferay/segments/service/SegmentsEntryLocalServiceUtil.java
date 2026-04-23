@@ -354,6 +354,12 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static List<SegmentsEntry> getSegmentsEntries(
+		long[] groupIds, boolean active, String[] sources) {
+
+		return getService().getSegmentsEntries(groupIds, active, sources);
+	}
+
+	public static List<SegmentsEntry> getSegmentsEntries(
 		long[] segmentsEntryIds, int start, int end) {
 
 		return getService().getSegmentsEntries(segmentsEntryIds, start, end);
@@ -506,4 +512,4 @@ public class SegmentsEntryLocalServiceUtil {
 			SegmentsEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1718748102
+// LIFERAY-SERVICE-BUILDER-HASH:-667194267

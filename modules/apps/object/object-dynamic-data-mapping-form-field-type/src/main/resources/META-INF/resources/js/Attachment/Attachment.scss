@@ -49,6 +49,20 @@
 	@include attachment(flex, 1rem, 1rem, 0, 0, 5px, 0, 5px);
 }
 
+.lfr-objects__cms-drag-overlay {
+	align-items: center;
+	background: rgba(var(--primary-rgb, 11, 95, 255), 0.06);
+	border: 2px dashed var(--primary, #0b5fff);
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 10;
+}
+
 .col-ddm .col-md-4 {
 	.lfr-objects__attachment {
 		@include attachment(block, 1rem, 0.2rem, 1rem, 5px, 0, 0.3rem, 0.5rem);

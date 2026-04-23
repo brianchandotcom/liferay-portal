@@ -176,13 +176,13 @@ public class MCPServerServlet extends HttpServlet {
 						).build())
 				).build();
 
-		List<McpServerFeatures.SyncToolSpecification> toolSpecifications =
+		List<McpServerFeatures.SyncToolSpecification> syncToolSpecifications =
 			new ArrayList<>();
 
 		if (mcpServerProfile != null) {
 			Map<String, String> openAPIJSONStringCache = new HashMap<>();
 
-			toolSpecifications.addAll(
+			syncToolSpecifications.addAll(
 				TransformUtil.transformToList(
 					mcpServerProfile._endpoints,
 					endpoint -> new McpServerFeatures.SyncToolSpecification(
@@ -208,7 +208,7 @@ public class MCPServerServlet extends HttpServlet {
 		else {
 			JSONObject toolsJSONObject = _getToolsJSONObject(baseURL);
 
-			toolSpecifications.add(
+			syncToolSpecifications.add(
 				new McpServerFeatures.SyncToolSpecification(
 					_getTool("call-http-endpoint", toolsJSONObject),
 					(mcpSyncServerExchange, callToolRequest) -> {
@@ -227,7 +227,7 @@ public class MCPServerServlet extends HttpServlet {
 							String.valueOf(arguments.get("method")));
 					}));
 
-			toolSpecifications.add(
+			syncToolSpecifications.add(
 				new McpServerFeatures.SyncToolSpecification(
 					_getTool("get-openapi", toolsJSONObject),
 					(mcpSyncServerExchange, callToolRequest) -> _call(
@@ -239,7 +239,7 @@ public class MCPServerServlet extends HttpServlet {
 							)),
 						mcpSyncServerExchange, "GET")));
 
-			toolSpecifications.add(
+			syncToolSpecifications.add(
 				new McpServerFeatures.SyncToolSpecification(
 					_getTool("get-openapis", toolsJSONObject),
 					(mcpSyncServerExchange, callToolRequest) -> _call(
@@ -257,7 +257,7 @@ public class MCPServerServlet extends HttpServlet {
 				true
 			).build()
 		).tools(
-			toolSpecifications
+			syncToolSpecifications
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();

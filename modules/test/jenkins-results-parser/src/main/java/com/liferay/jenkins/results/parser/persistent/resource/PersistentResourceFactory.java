@@ -101,7 +101,7 @@ public class PersistentResourceFactory {
 		}
 		catch (TimeoutException timeoutException) {
 			System.out.println(
-				"WARNING: Failed to touch persistent resources: " +
+				"WARNING: Unable to touch persistent resources: " +
 					timeoutException.getMessage());
 		}
 	}

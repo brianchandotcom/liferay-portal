@@ -934,7 +934,6 @@ public abstract class BaseTopLevelBuild
 				}
 
 			});
-
 		archiveCallables.add(
 			new Callable<Object>() {
 

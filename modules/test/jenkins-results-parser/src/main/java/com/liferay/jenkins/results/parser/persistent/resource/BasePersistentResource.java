@@ -127,7 +127,7 @@ public abstract class BasePersistentResource implements PersistentResource {
 				allSucceeded = false;
 
 				System.out.println(
-					"WARNING: Failed to touch " + getType() + " S3 resource: " +
+					"WARNING: Unable to touch " + getType() + " S3 resource: " +
 						ioException.getMessage());
 			}
 
@@ -143,7 +143,7 @@ public abstract class BasePersistentResource implements PersistentResource {
 					allSucceeded = false;
 
 					System.out.println(
-						"WARNING: Failed to touch " + getType() +
+						"WARNING: Unable to touch " + getType() +
 							" S3 artifact " + artifact.getName() + ": " +
 								ioException.getMessage());
 				}

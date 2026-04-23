@@ -5,7 +5,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {MultiSelectItem, MultipleSelectBaseProps} from './select.d';
 
@@ -24,6 +24,7 @@ const MultipleSelectBase = ({
 	value: values,
 }: MultipleSelectBaseProps<string[] | string>) => {
 	const [items, setItems] = useState<MultiSelectItem[]>([]);
+	const [query, setQuery] = useState('');
 
 	const accessibleProps = {
 		...(label && {
@@ -58,11 +59,23 @@ const MultipleSelectBase = ({
 		setItems(newItems);
 	}, [options, values]);
 
+	const filteredOptions = useMemo(
+		() =>
+			options.filter(({label}) => {
+				if (!label) {
+					return false;
+				}
+
+				return label.toLowerCase().includes(query.toLowerCase());
+			}),
+		[options, query]
+	);
+
 	const handleAsyncOptions = useCallback(() => {
 		return new Promise((resolve) => {
-			resolve(options);
+			resolve(filteredOptions);
 		});
-	}, [options]);
+	}, [filteredOptions]);
 
 	return (
 		<ClayMultiSelect
@@ -71,6 +84,7 @@ const MultipleSelectBase = ({
 			disabled={readOnly}
 			items={items}
 			messages={messages}
+			onChange={setQuery}
 			onItemsChange={(itemsChanged: MultiSelectItem[]) => {
 				const uniqueItems = [
 					...new Set(itemsChanged.map((item) => item.value)),
@@ -91,7 +105,8 @@ const MultipleSelectBase = ({
 			placeholder={
 				!items.length ? Liferay.Language.get('choose-options') : ''
 			}
-			sourceItems={options}
+			sourceItems={filteredOptions}
+			value={query}
 		>
 			{(item) => (
 				<ClayMultiSelect.Item key={item.value} textValue={item.label}>

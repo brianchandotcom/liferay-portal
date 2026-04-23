@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -224,6 +225,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testAddSharingEntryToTicket() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
@@ -575,6 +577,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testDeleteSharingEntryByTicket() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
@@ -595,6 +598,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testFetchSharingEntry() throws Exception {
 		Assert.assertNull(
 			_sharingEntryService.fetchSharingEntry(
@@ -652,6 +656,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-86507")
 	public void testGetSharingEntryByTicket() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
@@ -831,7 +836,7 @@ public class SharingEntryServiceTest {
 	}
 
 	private Ticket _addTicket() throws Exception {
-		Ticket ticket = _ticketLocalService.addTicket(
+		return _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
 			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS,
 			JSONUtil.put(
@@ -839,8 +844,6 @@ public class SharingEntryServiceTest {
 			).toString(),
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
-
-		return ticket;
 	}
 
 	private void _registerSharingPermissionChecker(

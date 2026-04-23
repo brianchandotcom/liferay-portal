@@ -19,7 +19,7 @@ import restoreItemAction from './actions/restoreItemAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
-import filterFDSBulkActions from './utils/filterFDSBulkActions';
+import transformFDSBulkActions from './utils/transformFDSBulkActions';
 
 export default function RecycleBinFDSPropsTransformer({
 	additionalProps,
@@ -41,7 +41,7 @@ export default function RecycleBinFDSPropsTransformer({
 		...otherProps,
 		additionalAPIURLParameters,
 		additionalProps: remainingAdditionalProps,
-		bulkActions: filterFDSBulkActions(bulkActions),
+		bulkActions: transformFDSBulkActions(bulkActions),
 		customRenderers: {
 			tableCell: [
 				{

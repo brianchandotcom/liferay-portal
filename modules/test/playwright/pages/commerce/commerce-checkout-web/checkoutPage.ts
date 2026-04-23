@@ -28,6 +28,8 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	readonly assertDataDeliveryGroupModal: (data: string) => Locator;
 	readonly addressInput: Locator;
 	readonly cityInput: Locator;
+	readonly commerceAddressOptions: Locator;
+	readonly commerceAddressSelect: Locator;
 	readonly commerceBillingAddress: Locator;
 	readonly commerceShippingAddress: Locator;
 	readonly configurationIFrame: FrameLocator;
@@ -87,6 +89,11 @@ export class CheckoutPage extends CommerceDNDTablePage {
 		);
 		this.addressInput = page.getByPlaceholder('Address', {exact: true});
 		this.cityInput = page.getByPlaceholder('City', {exact: true});
+		this.commerceAddressSelect = page.locator(
+			'select[id$="_commerceAddress"]'
+		);
+		this.commerceAddressOptions =
+			this.commerceAddressSelect.locator('option');
 		this.commerceBillingAddress = page.getByTestId(
 			'commerceBillingAddress'
 		);

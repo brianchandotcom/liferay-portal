@@ -279,6 +279,131 @@ describe('Analytics', () => {
 		expect(getItem(AnalyticsType.Keys.UserId)).not.toEqual(userId);
 	});
 
+	describe('Demandbase account message', () => {
+		const COMPANY_PROFILE = {
+			company_name: 'Acme Corp',
+			industry: 'Software',
+			web_site: 'acme.com',
+		};
+
+		afterEach(() => {
+			delete (window as any).Demandbase;
+			localStorage.removeItem(AnalyticsType.Keys.DemandbaseAccount);
+			localStorage.removeItem(AnalyticsType.Queues.AccountMessage);
+		});
+
+		it('builds the demandbase-account endpoint from endpointUrl', () => {
+			expect(Analytics.config.demandbaseAccountEndpoint).toBe(
+				'https://ac-server.io/demandbase-account'
+			);
+		});
+
+		it('enqueues an account message when CompanyProfile is present', async () => {
+			(window as any).Demandbase = {
+				IpApi: {CompanyProfile: COMPANY_PROFILE},
+			};
+
+			await Analytics.setIdentity(ANALYTICS_IDENTITY);
+			await wait(10);
+
+			const items = Analytics[
+				AnalyticsType.Queues.AccountMessage
+			].getItems() as any[];
+
+			expect(items.length).toBe(1);
+			expect(items[0].userId).toBe(getItem(AnalyticsType.Keys.UserId));
+			expect(items[0].companyProfile).toEqual(COMPANY_PROFILE);
+			expect(items[0].emailAddressHashed).toBe(
+				Analytics.config.identity.emailAddressHashed
+			);
+			expect(items[0].emailAddressHashed).toBeTruthy();
+		});
+
+		it('does not enqueue an account message when Demandbase is absent', async () => {
+			await Analytics.setIdentity(ANALYTICS_IDENTITY);
+			await wait(10);
+
+			const items =
+				Analytics[AnalyticsType.Queues.AccountMessage].getItems();
+
+			expect(items.length).toBe(0);
+		});
+
+		it('does not re-enqueue the account message for the same userId and profile', async () => {
+			(window as any).Demandbase = {
+				IpApi: {CompanyProfile: COMPANY_PROFILE},
+			};
+
+			await Analytics.setIdentity(ANALYTICS_IDENTITY);
+			await wait(10);
+
+			Analytics[AnalyticsType.Queues.AccountMessage].reset();
+
+			await Analytics.setIdentity(ANALYTICS_IDENTITY);
+			await wait(10);
+
+			const items =
+				Analytics[AnalyticsType.Queues.AccountMessage].getItems();
+
+			expect(items.length).toBe(0);
+		});
+
+		it('does not throw when reading Demandbase throws', async () => {
+			Object.defineProperty(window, 'Demandbase', {
+				configurable: true,
+				get() {
+					throw new Error('boom');
+				},
+			});
+
+			await expect(
+				Analytics.setIdentity(ANALYTICS_IDENTITY)
+			).resolves.toBeDefined();
+
+			await wait(10);
+		});
+
+		it('_waitForDemandbase resolves immediately when CompanyProfile is available', async () => {
+			(window as any).Demandbase = {
+				IpApi: {CompanyProfile: COMPANY_PROFILE},
+			};
+
+			await expect(Analytics._waitForDemandbase(100)).resolves.toEqual(
+				COMPANY_PROFILE
+			);
+		});
+
+		it('_waitForDemandbase resolves null on timeout when Demandbase never loads', async () => {
+			await expect(Analytics._waitForDemandbase(50)).resolves.toBeNull();
+		});
+
+		it('_waitForDemandbase resolves via registerCallback when invoked', async () => {
+			let registered: ((data: unknown) => void) | undefined;
+
+			(window as any).Demandbase = {
+				IpApi: {CompanyProfile: undefined},
+				Utilities: {
+					Callbacks: {
+						registerCallback: (fn: (data: unknown) => void) => {
+							registered = fn;
+						},
+					},
+				},
+			};
+
+			const promise = Analytics._waitForDemandbase(2000);
+
+			setTimeout(() => {
+				(window as any).Demandbase.IpApi.CompanyProfile =
+					COMPANY_PROFILE;
+
+				registered?.(COMPANY_PROFILE);
+			}, 50);
+
+			await expect(promise).resolves.toEqual(COMPANY_PROFILE);
+		});
+	});
+
 	describe('send()', () => {
 		it('is exposed as an Analytics method', () => {
 			expect(typeof Analytics.send).toBe('function');

@@ -12,6 +12,7 @@ const FARO_BACKEND_ENDPOINT_URL = 'https://ac-backend-server.io';
 export const INITIAL_ANALYTICS_CONFIG: AnalyticsType.Config = {
 	channelId: '4321',
 	dataSourceId: '1234',
+	demandbaseAccountEndpoint: '',
 	endpointUrl: ENDPOINT_URL,
 	faroBackendUrl: FARO_BACKEND_ENDPOINT_URL,
 	flushInterval: 0,

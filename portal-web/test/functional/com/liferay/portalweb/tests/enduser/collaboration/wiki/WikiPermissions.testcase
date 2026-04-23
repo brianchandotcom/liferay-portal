@@ -155,7 +155,7 @@ definition {
 	@description = "This ensures that a regular role with permissions can edit a wiki node."
 	@priority = 4
 	@refactordone
-	test CanEditWikiNodeWithPermissions {
+	test CanEditAndDeleteWikiNodeWithPermissions {
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",

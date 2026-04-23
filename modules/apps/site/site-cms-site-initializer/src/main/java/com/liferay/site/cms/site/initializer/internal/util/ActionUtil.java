@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
@@ -96,7 +95,6 @@ import com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpacesCo
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -479,32 +477,36 @@ public class ActionUtil {
 	public static List<Long> getAcceptedDepotEntryGroupIds(
 		List<Long> depotEntryGroupIds, long objectDefinitionId) {
 
-		if (_isAcceptAllGroups(objectDefinitionId)) {
+		ObjectDefinitionSetting acceptAllGroupsSetting =
+			ObjectDefinitionSettingLocalServiceUtil.
+				fetchObjectDefinitionSetting(
+					objectDefinitionId,
+					ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
+
+		if ((acceptAllGroupsSetting != null) &&
+			GetterUtil.getBoolean(acceptAllGroupsSetting.getValue())) {
+
 			return depotEntryGroupIds;
 		}
 
-		ObjectDefinitionSetting objectDefinitionSetting =
+		ObjectDefinitionSetting acceptedGroupIdsSetting =
 			ObjectDefinitionSettingLocalServiceUtil.
 				fetchObjectDefinitionSetting(
 					objectDefinitionId,
 					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
 
+		if ((acceptedGroupIdsSetting == null) ||
+			Validator.isNull(acceptedGroupIdsSetting.getValue())) {
+
+			return depotEntryGroupIds;
+		}
+
 		List<Long> acceptedGroupIds = new ArrayList<>();
 
 		for (String groupId :
-				StringUtil.split(objectDefinitionSetting.getValue())) {
+				StringUtil.split(acceptedGroupIdsSetting.getValue())) {
 
-			DepotEntry depotEntry =
-				DepotEntryLocalServiceUtil.fetchGroupDepotEntry(
-					GetterUtil.getLong(groupId));
-
-			if (depotEntry != null) {
-				acceptedGroupIds.add(depotEntry.getGroupId());
-			}
-		}
-
-		if (acceptedGroupIds.isEmpty()) {
-			return Collections.emptyList();
+			acceptedGroupIds.add(GetterUtil.getLong(groupId));
 		}
 
 		return new ArrayList<>(
@@ -1599,34 +1601,6 @@ public class ActionUtil {
 		}
 
 		return FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET;
-	}
-
-	private static boolean _isAcceptAllGroups(long objectDefinitionId) {
-		ObjectDefinitionSetting objectDefinitionSetting =
-			ObjectDefinitionSettingLocalServiceUtil.
-				fetchObjectDefinitionSetting(
-					objectDefinitionId,
-					ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
-
-		if ((objectDefinitionSetting != null) &&
-			GetterUtil.getBoolean(objectDefinitionSetting.getValue())) {
-
-			return true;
-		}
-
-		objectDefinitionSetting =
-			ObjectDefinitionSettingLocalServiceUtil.
-				fetchObjectDefinitionSetting(
-					objectDefinitionId,
-					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
-
-		if ((objectDefinitionSetting == null) ||
-			Validator.isNull(objectDefinitionSetting.getValue())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String[] _HIDDEN_INFO_FIELDS = {

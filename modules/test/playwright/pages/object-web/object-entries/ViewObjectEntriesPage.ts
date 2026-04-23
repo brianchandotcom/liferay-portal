@@ -300,7 +300,7 @@ export class ViewObjectEntriesPage {
 	}
 
 	async selectDropdownItemWithSearch(optionName: string) {
-		await this.page.getByPlaceholder('Search').click();
+		await this.page.getByRole('textbox', {name: 'Search'}).click();
 		await this.page.getByRole('menuitem', {name: optionName}).click();
 	}
 

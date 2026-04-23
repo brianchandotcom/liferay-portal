@@ -50,6 +50,8 @@ interface IProps {
 	filterKey: 'countryFilter' | 'industryFilter';
 }
 
+const ALL_VALUES_KEY = 'all';
+
 const FieldValueFilter = ({
 	className,
 	entityLabel,
@@ -81,12 +83,18 @@ const FieldValueFilter = ({
 			label={filters[filterKey]}
 			loading={loading}
 			onSelectionChange={(item: string) =>
-				updateFilters({[filterKey]: item})
+				updateFilters({
+					[filterKey]: item === ALL_VALUES_KEY ? '' : item
+				})
 			}
 			searchable
+			selectedKey={filters[filterKey] || ALL_VALUES_KEY}
 			triggerIcon='caret-bottom'
-			value={filters[filterKey]}
 		>
+			<Option key={ALL_VALUES_KEY}>
+				{sub(Liferay.Language.get('all-x'), [entityLabel])}
+			</Option>
+
 			{(data?.items ?? []).map((item: string) => (
 				<Option key={item}>{item}</Option>
 			))}

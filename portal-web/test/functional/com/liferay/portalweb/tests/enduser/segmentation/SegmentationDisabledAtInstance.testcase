@@ -104,7 +104,7 @@ definition {
 
 	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Manual Collection editor Then should be forwarded to Segments Service at Instance Settings"
 	@priority = 3
-	test ClickToReEnableAlertLinkAtManualCollectionEditor {
+	test ViewAndReEnableAlertAtManualCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",

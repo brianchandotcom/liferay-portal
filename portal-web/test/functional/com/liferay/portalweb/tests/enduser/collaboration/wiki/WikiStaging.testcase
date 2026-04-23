@@ -87,68 +87,6 @@ definition {
 		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Title");
 	}
 
-	@description = "This is a use case for LPS-73992. It asserts removed wiki attachment file can not be viewed after publishing."
-	@priority = 4
-	@refactordone
-	test CannotViewRemovedAttachmentAfterPublishing {
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Site Name (Staging)",
-			layoutName = "Staging Test Page",
-			site = "false",
-			widgetName = "Wiki");
-
-		JSONWiki.addWikiPage(
-			groupName = "Site Name (Staging)",
-			site = "false",
-			wikiNodeName = "Main",
-			wikiPageContent = "Wiki Page Content",
-			wikiPageName = "Wiki Page Title");
-
-		JSONWiki.addAttachmentToWikiPage(
-			fileName = "Document_1.jpg",
-			groupName = "Site Name (Staging)",
-			mimeType = "image/jpeg",
-			site = "false",
-			wikiNodeName = "Main",
-			wikiPageName = "Wiki Page Title");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
-
-		WikiPage.removeAttachmentViaPageEdit(attachmentFileName = "Document_1.jpg");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
-
-		WikiPage.viewPageNoAttachment(
-			attachmentFileName = "Document_1.jpg",
-			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
-	}
-
 	@description = "This test covers LPS-95501. It asserts added wiki attachment file can be viewed after publishing."
 	@priority = 4
 	@refactordone
@@ -206,6 +144,33 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 
 		ItemSelector.viewWikiAttachment(imageFileName = "Document_1.jpg");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.removeAttachmentViaPageEdit(attachmentFileName = "Document_1.jpg");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewPageNoAttachment(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
 	}
 
 	@description = "This is a test for LPS-95709. It ensures that an attachment for a Wiki frontpage is intact after the entry is published."

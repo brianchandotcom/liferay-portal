@@ -30,6 +30,8 @@ Below you will find the main building blocks for daily development.
 
 Code is deployed to a running server. The server lives in a `bundles` directory outside the repo. Its location is configured in `app.server.properties` via `app.server.parent.dir`, and can be overridden per-developer in `app.server.${USER}.properties`. The `<bundles>` placeholder below refers to that resolved path.
 
+Logs are available at `<bundles>/logs/liferay.<yyyy-MM-dd>.log`. Check them to analyze deployment issues, runtime failures, test failures, etc...
+
 - **Most modules** — the default:
 
     ```bash

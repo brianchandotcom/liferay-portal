@@ -169,7 +169,6 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-
 <aui:script>
 	var autoFix = document.getElementById('<portlet:namespace />autoFix');
 

@@ -214,8 +214,6 @@ public class ObjectEntryAssetRenderer
 				themeDisplay.getURLCurrent()
 			).setParameter(
 				"objectEntryId", _objectEntry.getObjectEntryId()
-			).setParameter(
-				"p_l_mode", Constants.EDIT
 			).buildPortletURL();
 		}
 

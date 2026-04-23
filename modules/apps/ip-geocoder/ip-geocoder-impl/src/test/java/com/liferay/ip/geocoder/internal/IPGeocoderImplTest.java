@@ -55,7 +55,7 @@ public class IPGeocoderImplTest {
 	}
 
 	@Test
-	public void testGetIPInfoWhenCountryHasNullIsoCode() throws Exception {
+	public void testGetIPInfoWhenCountryIsoCodeIsNull() throws Exception {
 		_setUpDatabaseReader(null);
 
 		IPInfo ipInfo = _ipGeocoderImpl.getIPInfo(_getHttpServletRequest());
@@ -65,7 +65,7 @@ public class IPGeocoderImplTest {
 	}
 
 	@Test
-	public void testGetIPInfoWhenCountryHasValidIsoCode() throws Exception {
+	public void testGetIPInfoWhenCountryIsoCodeIsValid() throws Exception {
 		_setUpDatabaseReader("US");
 
 		IPInfo ipInfo = _ipGeocoderImpl.getIPInfo(_getHttpServletRequest());

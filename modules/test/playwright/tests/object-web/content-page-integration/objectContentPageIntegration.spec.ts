@@ -1151,9 +1151,13 @@ test.describe('Display Page', () => {
 
 				await pageEditorPage.addFragment('Basic Components', 'HTML');
 
-				const htmlFragmentId = await pageEditorPage.getFragmentId('HTML');
+				const htmlFragmentId =
+					await pageEditorPage.getFragmentId('HTML');
 
-				await pageEditorPage.selectEditable(htmlFragmentId, 'element-html');
+				await pageEditorPage.selectEditable(
+					htmlFragmentId,
+					'element-html'
+				);
 
 				await pageEditorPage.setMappedItem({
 					entity: objectDefinition.label['en_US'],

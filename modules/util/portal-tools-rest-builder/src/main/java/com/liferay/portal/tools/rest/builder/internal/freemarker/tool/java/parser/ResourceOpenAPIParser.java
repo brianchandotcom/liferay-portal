@@ -1041,7 +1041,7 @@ public class ResourceOpenAPIParser {
 		ConfigYAML configYAML, List<JavaMethodParameter> javaMethodParameters,
 		String operationId) {
 
-		if (!configYAML.getForceObjectMethodNameSuffix()) {
+		if (!Boolean.TRUE.equals(configYAML.getForceObjectMethodNameSuffix())) {
 			return operationId;
 		}
 

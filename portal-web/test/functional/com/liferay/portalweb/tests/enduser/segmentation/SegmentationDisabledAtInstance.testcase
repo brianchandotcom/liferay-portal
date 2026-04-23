@@ -158,33 +158,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019 Given the ""Enable Segmentation"" is disabled And there's a warning alert at Experience menu When user clicks at Close button Then the alert disappears from page"
-	@priority = 4
-	test CloseDisabledSegmentationAlertAtExperiencesMenu {
-		task ("Create and navigate to the page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Experience Content Page",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-		}
-
-		task ("Open Experiences menu") {
-			PageEditor.openExperienceMenu();
-		}
-
-		task ("Close warning message") {
-			Segmentation.closeSegmentationDisabledWarning();
-
-			AssertTextNotEquals.assertNotPartialMatch(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-	}
-
 	@description = "LPS-154019 Given the ""Enable Segmentation"" is disabled And there's a warning alert at Manual Collection Editor page When user clicks at Close button Then the alert disappears from page"
 	@priority = 4
 	test CloseDisabledSegmentationAlertAtManualCollectionEditor {
@@ -496,8 +469,12 @@ definition {
 			PageEditor.openExperienceMenu();
 		}
 
-		task ("Close warning message") {
+		task ("Close warning and check it disappears") {
 			Segmentation.closeSegmentationDisabledWarning();
+
+			AssertTextNotEquals.assertNotPartialMatch(
+				locator1 = "Message#ERROR_3",
+				value1 = "Segmentation is disabled");
 		}
 
 		task ("Leave then return to page and check if warning reappears") {

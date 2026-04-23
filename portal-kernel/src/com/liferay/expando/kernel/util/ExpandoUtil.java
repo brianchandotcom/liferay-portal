@@ -91,11 +91,11 @@ public class ExpandoUtil {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"Expando attribute \"", entry.getKey(),
-								"\" has no value for default locale ",
-								siteDefaultLanguageId,
-								"; using value from locale ",
-								LocaleUtil.toLanguageId(localeEntry.getKey())));
+								"Using value from locale ",
+								LocaleUtil.toLanguageId(localeEntry.getKey()),
+								" for expando attribute \"", entry.getKey(),
+								"\" because default locale ",
+								siteDefaultLanguageId, " has no value"));
 					}
 
 					break;

@@ -67,6 +67,10 @@ export function LayoutTypeSelector({className = 'ml-3', layoutType}) {
 							onClick={() => {
 								setActive(false);
 
+								if (type === layoutType) {
+									return;
+								}
+
 								setLoading(true);
 
 								setPreviewLayout(

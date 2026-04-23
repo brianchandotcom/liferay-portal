@@ -209,7 +209,6 @@ public class SharingEntryLocalServiceTest {
 			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
 				externalReferenceCode, _group.getGroupId());
 
-		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(
 			externalReferenceCode, sharingEntry.getExternalReferenceCode());
 	}
@@ -302,7 +301,6 @@ public class SharingEntryLocalServiceTest {
 			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
 				externalReferenceCode, _group.getGroupId());
 
-		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(0, sharingEntry.getToUserId());
@@ -366,7 +364,6 @@ public class SharingEntryLocalServiceTest {
 			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
 				externalReferenceCode, _group.getGroupId());
 
-		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 
@@ -398,7 +395,6 @@ public class SharingEntryLocalServiceTest {
 					fetchSharingEntryByExternalReferenceCode(
 						externalReferenceCode, _group.getGroupId());
 
-			Assert.assertNotNull(sharingEntry);
 			Assert.assertEquals(
 				userGroup.getUserGroupId(), sharingEntry.getToUserGroupId());
 			Assert.assertEquals(0, sharingEntry.getToUserId());
@@ -489,7 +485,6 @@ public class SharingEntryLocalServiceTest {
 			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
 				externalReferenceCode, _group.getGroupId());
 
-		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(
 			externalReferenceCode, sharingEntry.getExternalReferenceCode());
 	}
@@ -820,7 +815,6 @@ public class SharingEntryLocalServiceTest {
 		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
 			ticketId, 0, 0, _classNameId, _group.getGroupId());
 
-		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(0, sharingEntry.getToUserId());
@@ -836,7 +830,6 @@ public class SharingEntryLocalServiceTest {
 		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
 			0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId());
 
-		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(0, sharingEntry.getToTicketId());
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
@@ -857,7 +850,6 @@ public class SharingEntryLocalServiceTest {
 					0, userGroup.getUserGroupId(), 0, _classNameId,
 					_group.getGroupId());
 
-			Assert.assertNotNull(sharingEntry);
 			Assert.assertEquals(0, sharingEntry.getToTicketId());
 			Assert.assertEquals(
 				userGroup.getUserGroupId(), sharingEntry.getToUserGroupId());
@@ -889,7 +881,6 @@ public class SharingEntryLocalServiceTest {
 		SharingEntry sharingEntry = _sharingEntryLocalService.getSharingEntry(
 			ticketId, 0, 0, _classNameId, _group.getGroupId());
 
-		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(ticketId, sharingEntry.getToTicketId());
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(0, sharingEntry.getToUserId());

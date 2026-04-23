@@ -40,7 +40,7 @@ public class DuplicateAssetVocabularyExternalReferenceCodeExceptionMapper
 		return new Problem(
 			Response.Status.CONFLICT,
 			"A taxonomy vocabulary with the same external reference code " +
-				"already exists.");
+				"already exists");
 	}
 
 }

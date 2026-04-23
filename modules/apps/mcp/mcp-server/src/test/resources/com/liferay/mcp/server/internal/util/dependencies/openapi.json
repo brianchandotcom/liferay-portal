@@ -46,14 +46,14 @@
 		"/": {
 			"get": {
 				"operationId": "getItemsPage",
-				"summary": "Get items"
+				"summary": "This is the summary"
 			}
 		},
 		"/v1.0/items": {
 			"get": {
-				"description": "Returns a list",
+				"description": "This is the description",
 				"operationId": "getItems",
-				"summary": "Get all items"
+				"summary": "This is the summary"
 			},
 			"post": {
 				"operationId": "postItem",
@@ -70,11 +70,11 @@
 		},
 		"/v1.0/items/{itemId}": {
 			"get": {
-				"description": "Get an item by ID",
+				"description": "This is the description",
 				"operationId": "getItem",
 				"parameters": [
 					{
-						"description": "Filter by active status",
+						"description": "This is the description",
 						"in": "query",
 						"name": "active",
 						"schema": {
@@ -82,7 +82,7 @@
 						}
 					},
 					{
-						"description": "Fields to include",
+						"description": "This is the description",
 						"in": "query",
 						"name": "fields",
 						"schema": {
@@ -90,7 +90,7 @@
 						}
 					},
 					{
-						"description": "The item ID",
+						"description": "This is the description",
 						"in": "path",
 						"name": "itemId",
 						"schema": {
@@ -98,7 +98,7 @@
 						}
 					},
 					{
-						"description": "The page number",
+						"description": "This is the description",
 						"in": "query",
 						"name": "page",
 						"schema": {
@@ -109,7 +109,7 @@
 			},
 			"parameters": [
 				{
-					"description": "path-level description",
+					"description": "This is the description",
 					"in": "path",
 					"name": "itemId",
 					"schema": {

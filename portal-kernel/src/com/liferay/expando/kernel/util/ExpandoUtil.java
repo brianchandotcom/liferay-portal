@@ -94,7 +94,7 @@ public class ExpandoUtil {
 								"Expando attribute \"", entry.getKey(),
 								"\" has no value for default locale ",
 								siteDefaultLanguageId,
-								"; using value from locale ",
+								", using value from locale ",
 								LocaleUtil.toLanguageId(localeEntry.getKey())));
 					}
 

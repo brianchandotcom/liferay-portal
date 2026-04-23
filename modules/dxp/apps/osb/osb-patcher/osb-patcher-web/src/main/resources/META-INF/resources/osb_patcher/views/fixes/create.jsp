@@ -67,7 +67,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		<aui:input helpMessage="enable-to-automatically-fetch-and-backport-code-instead-of-providing-a-manual-branch" label="auto-fix" name="autoFix" onChange='<%= liferayPortletResponse.getNamespace() + "autoFixOnChange();" %>' type="checkbox" value="<%= true %>" />
 
-		<aui:fieldset id="manualFixFieldset" style="display: none;">
+		<aui:fieldset id='<%= liferayPortletResponse.getNamespace() + "manualFixFieldset" %>' style="display: none;">
 			<aui:input label="branch-name" name="committish" />
 
 			<aui:input label="github-url" name="gitRemoteURL" />
@@ -85,9 +85,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 <aui:script>
 	var autoFix = document.getElementById('<portlet:namespace />autoFix');
-
-	var manualFixFieldset = document.getElementById('manualFixFieldset');
-
+	var manualFixFieldset = document.getElementById(
+		'<portlet:namespace />manualFixFieldset'
+	);
 	var select = document.getElementById(
 		'<portlet:namespace />patcherProjectVersionId'
 	);

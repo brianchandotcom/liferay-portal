@@ -27,8 +27,8 @@ function main {
 
 	if echo "${from_path}" | grep --quiet "\*"
 	then
-		include_pattern="${from_path##*/}"
 		from_path="${from_path%/*}"
+		include_pattern="${from_path##*/}"
 	fi
 
 	local source_uri=":${provider_type}:${bucket_name}/${from_path}"

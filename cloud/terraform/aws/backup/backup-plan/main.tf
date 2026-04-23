@@ -11,6 +11,9 @@ resource "aws_backup_plan" "this" {
 		}
 		for_each=var.backup_rules
 	}
+	lifecycle {
+		prevent_destroy=true
+	}
 	name=var.backup_plan_name
 }
 resource "aws_backup_selection" "this" {

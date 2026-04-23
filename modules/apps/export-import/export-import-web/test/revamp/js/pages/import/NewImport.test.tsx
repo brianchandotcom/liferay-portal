@@ -5,7 +5,7 @@
 
 // eslint-disable-next-line @liferay/portal/no-cross-module-deep-import
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
-import {render, screen, waitFor} from '@testing-library/react';
+import {act, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -30,13 +30,27 @@ jest.mock(
 const renderComponent = () =>
 	render(<NewImport backURL="/some/back/url" groupId={0} />);
 
+let user: ReturnType<typeof userEvent.setup>;
+
 const uploadFile = async (fileName = 'site.lar') => {
+	jest.useFakeTimers();
+
+	const fakeUser = userEvent.setup({
+		advanceTimers: jest.advanceTimersByTime,
+	});
+
 	const file = new File(['test'], fileName, {type: '.lar'});
 	const fileInput = document.querySelector(
 		'input[type="file"]'
 	) as HTMLInputElement;
 
-	await userEvent.upload(fileInput, file);
+	await fakeUser.upload(fileInput, file);
+
+	act(() => {
+		jest.runAllTimers();
+	});
+
+	jest.useRealTimers();
 };
 
 describe('NewImport', () => {
@@ -44,6 +58,10 @@ describe('NewImport', () => {
 		global.Liferay.Util.formatStorage = jest.fn(
 			(bytes: number) => `${bytes} B`
 		);
+	});
+
+	beforeEach(() => {
+		user = userEvent.setup();
 	});
 
 	it('renders the FileSelectionStep with the Name field', async () => {
@@ -69,7 +87,7 @@ describe('NewImport', () => {
 
 		const nameInput = screen.getByLabelText(/^name/i);
 
-		await userEvent.click(nameInput);
+		await user.click(nameInput);
 		nameInput.blur();
 
 		await screen.findByText('this-field-is-required');
@@ -84,12 +102,9 @@ describe('NewImport', () => {
 
 		await uploadFile('site.lar');
 
-		await waitFor(
-			() => {
-				expect(nameInput).toHaveValue('site');
-			},
-			{timeout: 3000}
-		);
+		await waitFor(() => {
+			expect(nameInput).toHaveValue('site');
+		});
 	});
 
 	it('preserves the user-provided Name when a file is uploaded', async () => {
@@ -97,16 +112,13 @@ describe('NewImport', () => {
 
 		const nameInput = screen.getByLabelText(/^name/i) as HTMLInputElement;
 
-		await userEvent.type(nameInput, 'My custom import');
+		await user.type(nameInput, 'My custom import');
 
 		await uploadFile('site.lar');
 
-		await waitFor(
-			() => {
-				expect(nameInput).toHaveValue('My custom import');
-			},
-			{timeout: 3000}
-		);
+		await waitFor(() => {
+			expect(nameInput).toHaveValue('My custom import');
+		});
 	});
 
 	it('re-fills the Name field with the new file name when Name has been cleared', async () => {
@@ -116,27 +128,21 @@ describe('NewImport', () => {
 
 		await uploadFile('first.lar');
 
-		await waitFor(
-			() => {
-				expect(nameInput).toHaveValue('first');
-			},
-			{timeout: 3000}
-		);
+		await waitFor(() => {
+			expect(nameInput).toHaveValue('first');
+		});
 
-		await userEvent.clear(nameInput);
+		await user.clear(nameInput);
 
-		await userEvent.click(
+		await user.click(
 			await screen.findByRole('button', {name: /remove-file/i})
 		);
 
 		await uploadFile('second.lar');
 
-		await waitFor(
-			() => {
-				expect(nameInput).toHaveValue('second');
-			},
-			{timeout: 3000}
-		);
+		await waitFor(() => {
+			expect(nameInput).toHaveValue('second');
+		});
 	});
 
 	it('does not re-fill the Name after the user manually clears it while the same file is still selected', async () => {
@@ -146,14 +152,11 @@ describe('NewImport', () => {
 
 		await uploadFile('site.lar');
 
-		await waitFor(
-			() => {
-				expect(nameInput).toHaveValue('site');
-			},
-			{timeout: 3000}
-		);
+		await waitFor(() => {
+			expect(nameInput).toHaveValue('site');
+		});
 
-		await userEvent.clear(nameInput);
+		await user.clear(nameInput);
 
 		expect(nameInput).toHaveValue('');
 	});

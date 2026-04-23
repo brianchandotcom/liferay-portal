@@ -7,6 +7,7 @@ package com.liferay.fragment.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -67,9 +68,19 @@ public class FragmentEntryLinkStagingTest {
 	public void testFragmentEntryLinkCopiedWhenLocalStagingActivated()
 		throws Exception {
 
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
 		FragmentEntryLink liveFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				null, _layout,
+				null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), _layout.getGroupId()),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				null, 0,
 				SegmentsExperienceLocalServiceUtil.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
 
@@ -148,9 +159,22 @@ public class FragmentEntryLinkStagingTest {
 
 		Layout draftStagingLayout = stagingLayout.fetchDraftLayout();
 
+		_stagingGroup = FragmentStagingTestUtil.enableLocalStaging(_liveGroup);
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
 		FragmentEntryLink stagingFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				null, draftStagingLayout,
+				null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(),
+					draftStagingLayout.getGroupId()),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				draftStagingLayout, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(), null, 0,
 				SegmentsExperienceLocalServiceUtil.
 					fetchDefaultSegmentsExperienceId(
 						draftStagingLayout.getPlid()));
@@ -214,6 +238,10 @@ public class FragmentEntryLinkStagingTest {
 					fragmentEntryLink.getFragmentEntryScopeERC(),
 					fragmentEntryLink.getGroupId())));
 	}
+
+	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

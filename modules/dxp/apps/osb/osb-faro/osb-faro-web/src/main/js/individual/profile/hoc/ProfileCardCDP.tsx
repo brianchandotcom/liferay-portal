@@ -4,7 +4,7 @@ import React from 'react';
 import {Individual} from 'shared/util/records';
 import {pickBy} from 'lodash';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
-import {SectionHeader} from '../components/SectionHeader';
+import {SectionHeader} from 'shared/components/SectionHeader';
 import {useHistory} from 'react-router-dom';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 

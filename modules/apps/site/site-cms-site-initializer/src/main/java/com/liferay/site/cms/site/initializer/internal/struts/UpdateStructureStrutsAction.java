@@ -100,22 +100,19 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				throwable = throwable.getCause();
 			}
 
-			if (throwable != null) {
+			// See com.liferay.portal.vulcan.jaxrs.exception
+			// .mapper.BaseExceptionMapper#toResponse
 
-				// See com.liferay.portal.vulcan.jaxrs.exception
-				// .mapper.BaseExceptionMapper#toResponse
+			Class<?> clazz = throwable.getClass();
 
-				Class<?> clazz = throwable.getClass();
+			List<String> segments = StringUtil.split(
+				clazz.getName(), CharPool.PERIOD);
 
-				List<String> segments = StringUtil.split(
-					clazz.getName(), CharPool.PERIOD);
-
-				jsonObject.put(
-					"type",
-					StringUtil.replace(
-						segments.get(segments.size() - 1), CharPool.DOLLAR,
-						CharPool.PERIOD));
-			}
+			jsonObject.put(
+				"type",
+				StringUtil.replace(
+					segments.get(segments.size() - 1), CharPool.DOLLAR,
+					CharPool.PERIOD));
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);

@@ -82,4 +82,4 @@ public class DirectFragmentImageValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1077954785
+// LIFERAY-REST-BUILDER-HASH:-1872606684

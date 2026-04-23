@@ -282,4 +282,4 @@ public class LengthFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1287924373
+// LIFERAY-REST-BUILDER-HASH:-1670982374

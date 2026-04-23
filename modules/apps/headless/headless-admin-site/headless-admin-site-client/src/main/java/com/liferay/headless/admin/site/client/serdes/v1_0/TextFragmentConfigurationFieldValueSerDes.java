@@ -278,4 +278,4 @@ public class TextFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:224052068
+// LIFERAY-REST-BUILDER-HASH:538948137

@@ -243,4 +243,4 @@ public class ClassSubtypeReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1086998904
+// LIFERAY-REST-BUILDER-HASH:53997901

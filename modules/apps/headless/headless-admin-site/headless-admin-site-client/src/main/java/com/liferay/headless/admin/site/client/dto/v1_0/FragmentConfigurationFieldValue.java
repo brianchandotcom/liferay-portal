@@ -126,4 +126,4 @@ public abstract class FragmentConfigurationFieldValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1927976130
+// LIFERAY-REST-BUILDER-HASH:-1544718557

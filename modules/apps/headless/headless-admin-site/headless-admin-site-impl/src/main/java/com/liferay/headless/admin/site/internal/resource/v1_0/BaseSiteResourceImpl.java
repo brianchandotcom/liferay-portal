@@ -1757,4 +1757,4 @@ public abstract class BaseSiteResourceImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-808861850
+// LIFERAY-REST-BUILDER-HASH:-1314291966

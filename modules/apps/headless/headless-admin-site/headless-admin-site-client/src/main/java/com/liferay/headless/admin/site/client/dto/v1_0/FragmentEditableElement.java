@@ -102,4 +102,4 @@ public class FragmentEditableElement implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:876485283
+// LIFERAY-REST-BUILDER-HASH:1084325864

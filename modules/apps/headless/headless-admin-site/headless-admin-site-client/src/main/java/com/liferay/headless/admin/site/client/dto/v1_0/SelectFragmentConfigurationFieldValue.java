@@ -107,4 +107,4 @@ public class SelectFragmentConfigurationFieldValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1890653250
+// LIFERAY-REST-BUILDER-HASH:-238011321

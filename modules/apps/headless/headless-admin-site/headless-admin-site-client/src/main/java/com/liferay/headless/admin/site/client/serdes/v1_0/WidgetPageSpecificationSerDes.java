@@ -473,4 +473,4 @@ public class WidgetPageSpecificationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2135229198
+// LIFERAY-REST-BUILDER-HASH:-256688755

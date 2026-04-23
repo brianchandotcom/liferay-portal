@@ -102,4 +102,4 @@ public class Mapping implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1204611471
+// LIFERAY-REST-BUILDER-HASH:2042387050

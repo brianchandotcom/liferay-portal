@@ -773,4 +773,4 @@ public class SearchResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-613360104
+// LIFERAY-REST-BUILDER-HASH:-733302728

@@ -79,4 +79,4 @@ public class ParentTaxonomyCategory implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:862797448
+// LIFERAY-REST-BUILDER-HASH:-246261277

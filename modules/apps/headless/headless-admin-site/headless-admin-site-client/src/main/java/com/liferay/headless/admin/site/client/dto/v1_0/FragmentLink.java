@@ -140,4 +140,4 @@ public class FragmentLink implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-867739018
+// LIFERAY-REST-BUILDER-HASH:-229700165

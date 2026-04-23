@@ -117,4 +117,4 @@ public abstract class HTMLFragmentValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-588527897
+// LIFERAY-REST-BUILDER-HASH:-1577220990

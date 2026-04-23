@@ -121,4 +121,4 @@ public abstract class NavigationMenuValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-513338804
+// LIFERAY-REST-BUILDER-HASH:400495271

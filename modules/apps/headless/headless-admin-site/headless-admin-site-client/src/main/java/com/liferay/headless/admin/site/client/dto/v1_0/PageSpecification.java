@@ -261,4 +261,4 @@ public abstract class PageSpecification implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1345313757
+// LIFERAY-REST-BUILDER-HASH:-138249502

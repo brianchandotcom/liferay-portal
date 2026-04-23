@@ -118,4 +118,4 @@ public abstract class BackgroundImageValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1259188536
+// LIFERAY-REST-BUILDER-HASH:545212643

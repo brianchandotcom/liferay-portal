@@ -345,47 +345,6 @@ definition {
 			contentType = "Message Boards",
 			notificationType = "Website");
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Category Description",
-			categoryName = "MB Category Name",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
-
-		Notifications.viewBadgeCount(notificationCount = 0);
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		MessageboardsThread.addPG(
-			categoryName = "MB Category Name",
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Notifications.viewBadgeCount(notificationCount = 0);
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Notifications.viewBadgeCount(notificationCount = 0);
-	}
-
-	@priority = 4
-	@refactordone
-	test NoWebsiteNotificationAppearsForUpdatedThreadInCategory {
-		Navigator.gotoNotifications();
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		IFrame.selectConfigurationFrame();
-
 		NotificationsPortlet.disableUserDeliveries(
 			actionType = "Updates",
 			contentType = "Message Boards",
@@ -417,6 +376,8 @@ definition {
 			threadSubject = "MB Thread Message Subject",
 			userName = "Test Test");
 
+		Notifications.viewBadgeCount(notificationCount = 0);
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
@@ -429,6 +390,14 @@ definition {
 			threadBodyEdit = "MB Thread Message Body Edit",
 			threadSubject = "MB Thread Message Subject",
 			threadSubjectEdit = "MB Thread Message Subject Edit");
+
+		MessageboardsThread.addPG(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject 2");
 
 		Notifications.viewBadgeCount(notificationCount = 0);
 

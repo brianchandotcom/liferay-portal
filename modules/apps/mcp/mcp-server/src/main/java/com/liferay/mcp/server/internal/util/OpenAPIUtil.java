@@ -136,17 +136,16 @@ public class OpenAPIUtil {
 				"OpenAPI path item has no operation for method: " + method);
 		}
 
-		McpSchema.JsonSchema inputJsonSchema = _getInputJsonSchema(
-			operationJSONObject, pathItemJSONObject.getJSONArray("parameters"),
-			rootJSONObject);
-
 		return McpSchema.Tool.builder(
 		).name(
 			operationJSONObject.getString("operationId")
 		).description(
 			_getToolDescription(method, operationJSONObject, path)
 		).inputSchema(
-			inputJsonSchema
+			_getInputJsonSchema(
+				operationJSONObject,
+				pathItemJSONObject.getJSONArray("parameters"),
+				rootJSONObject)
 		).build();
 	}
 

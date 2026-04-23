@@ -258,6 +258,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 import org.hamcrest.CoreMatchers;
 
@@ -3683,9 +3684,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		_testCopyObjectEntryGroup(
 			depotEntry.getGroupId(), objectDefinitionSetting);
-		_testCopyObjectEntryWithRelatedEntries(
-			depotEntry.getGroupId(), objectEntryFolder1);
 		_testCopyObjectEntryWithAttachmentField(
+			depotEntry.getGroupId(), objectEntryFolder1);
+		_testCopyObjectEntryWithRelatedEntries(
 			depotEntry.getGroupId(), objectEntryFolder1);
 	}
 
@@ -11466,6 +11467,54 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _testCopyObjectEntryWithAttachmentField(
+			BiConsumer<Long, Long> fileEntryIdAssertionBiConsumer, long groupId,
+			ObjectDefinition objectDefinition,
+			ObjectEntryFolder objectEntryFolder, String objectFieldName)
+		throws Exception {
+
+		com.liferay.portal.kernel.repository.model.FileEntry tempFileEntry =
+			TempFileEntryUtil.addTempFileEntry(
+				groupId, adminUser.getUserId(), objectDefinition.getPortletId(),
+				TempFileEntryUtil.getTempFileName(
+					RandomTestUtil.randomString() + ".txt"),
+				FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
+				ContentTypes.TEXT_PLAIN);
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_createDTOConverterContext(adminUser), objectDefinition,
+			new ObjectEntry() {
+				{
+					objectEntryFolderId =
+						objectEntryFolder.getObjectEntryFolderId();
+					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName, tempFileEntry.getFileEntryId()
+					).build();
+				}
+			},
+			String.valueOf(groupId));
+
+		long originalFileEntryId = MapUtil.getLong(
+			_objectEntryLocalService.getValues(objectEntry.getId()),
+			objectFieldName);
+
+		Assert.assertTrue(originalFileEntryId > 0);
+
+		ObjectEntry copiedObjectEntry =
+			_defaultObjectEntryManager.copyObjectEntry(
+				_createDTOConverterContext(adminUser), objectEntry.getId(),
+				objectEntryFolder.getObjectEntryFolderId(), false);
+
+		long copiedFileEntryId = MapUtil.getLong(
+			_objectEntryLocalService.getValues(copiedObjectEntry.getId()),
+			objectFieldName);
+
+		Assert.assertTrue(copiedFileEntryId > 0);
+
+		fileEntryIdAssertionBiConsumer.accept(
+			originalFileEntryId, copiedFileEntryId);
+	}
+
+	private void _testCopyObjectEntryWithAttachmentField(
 			long groupId, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
@@ -11473,59 +11522,86 @@ public class DefaultObjectEntryManagerImplTest
 			Arrays.asList(
 				new AttachmentObjectFieldBuilder(
 				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
+					RandomTestUtil.randomLocaleStringMap()
 				).name(
 					"attachmentObjectFieldName1"
 				).objectFieldSettings(
 					Arrays.asList(
-						_createObjectFieldSetting(
+						new ObjectFieldSettingBuilder(
+						).name(
 							ObjectFieldSettingConstants.
-								NAME_ACCEPTED_FILE_EXTENSIONS,
-							"txt"),
-						_createObjectFieldSetting(
-							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
 							ObjectFieldSettingConstants.
-								VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT),
-						_createObjectFieldSetting(
-							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE,
-							"100"),
-						_createObjectFieldSetting(
+								VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
 							ObjectFieldSettingConstants.
-								NAME_SHOW_FILES_IN_LIBRARY,
-							"false"))
+								NAME_SHOW_FILES_IN_LIBRARY
+						).value(
+							"false"
+						).build())
 				).build(),
 				new AttachmentObjectFieldBuilder(
 				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
+					RandomTestUtil.randomLocaleStringMap()
 				).name(
 					"attachmentObjectFieldName2"
 				).objectFieldSettings(
 					Arrays.asList(
-						_createObjectFieldSetting(
+						new ObjectFieldSettingBuilder(
+						).name(
 							ObjectFieldSettingConstants.
-								NAME_ACCEPTED_FILE_EXTENSIONS,
-							"txt"),
-						_createObjectFieldSetting(
-							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
 							ObjectFieldSettingConstants.
-								VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT),
-						_createObjectFieldSetting(
-							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE,
-							"100"),
-						_createObjectFieldSetting(
+								VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
 							ObjectFieldSettingConstants.
-								NAME_SHOW_FILES_IN_LIBRARY,
-							"true"),
-						_createObjectFieldSetting(
+								NAME_SHOW_FILES_IN_LIBRARY
+						).value(
+							"true"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP
+						).value(
+							String.valueOf(groupId)
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
 							ObjectFieldSettingConstants.
-								NAME_STORAGE_DEPOT_GROUP,
-							String.valueOf(groupId)),
-						_createObjectFieldSetting(
-							ObjectFieldSettingConstants.
-								NAME_STORAGE_DL_FOLDER_PATH,
-							RandomTestUtil.randomString()))
+								NAME_STORAGE_DL_FOLDER_PATH
+						).value(
+							RandomTestUtil.randomString()
+						).build())
 				).build()),
 			ObjectDefinitionConstants.SCOPE_DEPOT);
 
@@ -11539,93 +11615,20 @@ public class DefaultObjectEntryManagerImplTest
 
 			// showFilesInLibrary is false
 
-			com.liferay.portal.kernel.repository.model.FileEntry
-				tempFileEntry1 = TempFileEntryUtil.addTempFileEntry(
-					groupId, adminUser.getUserId(),
-					objectDefinition.getPortletId(),
-					TempFileEntryUtil.getTempFileName(
-						RandomTestUtil.randomString() + ".txt"),
-					FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
-					ContentTypes.TEXT_PLAIN);
-
-			ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
-				_createDTOConverterContext(adminUser), objectDefinition,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"attachmentObjectFieldName1",
-							tempFileEntry1.getFileEntryId()
-						).build();
-
-						setObjectEntryFolderId(
-							objectEntryFolder.getObjectEntryFolderId());
-					}
-				},
-				String.valueOf(groupId));
-
-			ObjectEntry copiedObjectEntry =
-				_defaultObjectEntryManager.copyObjectEntry(
-					_createDTOConverterContext(adminUser), objectEntry.getId(),
-					objectEntryFolder.getObjectEntryFolderId(), false);
-
-			Map<String, Serializable> originalValues =
-				_objectEntryLocalService.getValues(objectEntry.getId());
-
-			Map<String, Serializable> copiedValues =
-				_objectEntryLocalService.getValues(copiedObjectEntry.getId());
-
-			long originalFileEntryId = GetterUtil.getLong(
-				originalValues.get("attachmentObjectFieldName1"));
-			long copiedFileEntryId = GetterUtil.getLong(
-				copiedValues.get("attachmentObjectFieldName1"));
-
-			Assert.assertTrue(originalFileEntryId > 0);
-			Assert.assertTrue(copiedFileEntryId > 0);
-			Assert.assertNotEquals(originalFileEntryId, copiedFileEntryId);
+			_testCopyObjectEntryWithAttachmentField(
+				(originalFileEntryId, copiedFileEntryId) ->
+					Assert.assertNotEquals(
+						(long)originalFileEntryId, (long)copiedFileEntryId),
+				groupId, objectDefinition, objectEntryFolder,
+				"attachmentObjectFieldName1");
 
 			// showFilesInLibrary is true
 
-			com.liferay.portal.kernel.repository.model.FileEntry
-				tempFileEntry2 = TempFileEntryUtil.addTempFileEntry(
-					groupId, adminUser.getUserId(),
-					objectDefinition.getPortletId(),
-					TempFileEntryUtil.getTempFileName(
-						RandomTestUtil.randomString() + ".txt"),
-					FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
-					ContentTypes.TEXT_PLAIN);
-
-			objectEntry = _defaultObjectEntryManager.addObjectEntry(
-				_createDTOConverterContext(adminUser), objectDefinition,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"attachmentObjectFieldName2",
-							tempFileEntry2.getFileEntryId()
-						).build();
-
-						setObjectEntryFolderId(
-							objectEntryFolder.getObjectEntryFolderId());
-					}
-				},
-				String.valueOf(groupId));
-
-			copiedObjectEntry = _defaultObjectEntryManager.copyObjectEntry(
-				_createDTOConverterContext(adminUser), objectEntry.getId(),
-				objectEntryFolder.getObjectEntryFolderId(), false);
-
-			originalValues = _objectEntryLocalService.getValues(
-				objectEntry.getId());
-
-			copiedValues = _objectEntryLocalService.getValues(
-				copiedObjectEntry.getId());
-
-			originalFileEntryId = GetterUtil.getLong(
-				originalValues.get("attachmentObjectFieldName2"));
-			copiedFileEntryId = GetterUtil.getLong(
-				copiedValues.get("attachmentObjectFieldName2"));
-
-			Assert.assertTrue(originalFileEntryId > 0);
-			Assert.assertEquals(originalFileEntryId, copiedFileEntryId);
+			_testCopyObjectEntryWithAttachmentField(
+				(originalFileEntryId, copiedFileEntryId) -> Assert.assertEquals(
+					(long)originalFileEntryId, (long)copiedFileEntryId),
+				groupId, objectDefinition, objectEntryFolder,
+				"attachmentObjectFieldName2");
 		}
 		finally {
 			objectDefinitionLocalService.deleteObjectDefinition(
@@ -11639,7 +11642,6 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectDefinition parentObjectDefinition = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_DEPOT);
-
 		ObjectDefinition childObjectDefinition = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_DEPOT);
 
@@ -11668,66 +11670,68 @@ public class DefaultObjectEntryManagerImplTest
 				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
 				String.valueOf(groupId));
 
-			// One to many relationship
+			// Many to many relationship
 
-			ObjectRelationship oneToManyObjectRelationship =
+			ObjectRelationship manyToManyObjectRelationship =
 				_objectRelationshipLocalService.addObjectRelationship(
 					null, adminUser.getUserId(),
 					parentObjectDefinition.getObjectDefinitionId(),
 					childObjectDefinition.getObjectDefinitionId(), 0,
-					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
+					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+					false, RandomTestUtil.randomLocaleStringMap(),
 					StringUtil.randomId(), false,
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
 			ObjectEntry parentObjectEntry =
 				_defaultObjectEntryManager.addObjectEntry(
 					_simpleDTOConverterContext, parentObjectDefinition,
 					new ObjectEntry() {
 						{
+							objectEntryFolderId =
+								objectEntryFolder.getObjectEntryFolderId();
 							properties = HashMapBuilder.<String, Object>put(
 								"textObjectFieldName",
 								RandomTestUtil.randomString()
 							).build();
-
-							setObjectEntryFolderId(
-								objectEntryFolder.getObjectEntryFolderId());
 						}
 					},
 					String.valueOf(groupId));
 
-			_defaultObjectEntryManager.addRelatedObjectEntry(
-				_simpleDTOConverterContext,
-				parentObjectEntry.getExternalReferenceCode(),
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
+			ObjectEntry childObjectEntry1 =
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, childObjectDefinition,
+					new ObjectEntry() {
+						{
+							objectEntryFolderId =
+								objectEntryFolder.getObjectEntryFolderId();
+							properties = HashMapBuilder.<String, Object>put(
+								"textObjectFieldName",
+								RandomTestUtil.randomString()
+							).build();
+						}
+					},
+					String.valueOf(groupId));
+			ObjectEntry childObjectEntry2 =
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, childObjectDefinition,
+					new ObjectEntry() {
+						{
+							objectEntryFolderId =
+								objectEntryFolder.getObjectEntryFolderId();
+							properties = HashMapBuilder.<String, Object>put(
+								"textObjectFieldName",
+								RandomTestUtil.randomString()
+							).build();
+						}
+					},
+					String.valueOf(groupId));
 
-						setObjectEntryFolderId(
-							objectEntryFolder.getObjectEntryFolderId());
-					}
-				},
-				oneToManyObjectRelationship, String.valueOf(groupId));
-
-			_defaultObjectEntryManager.addRelatedObjectEntry(
-				_simpleDTOConverterContext,
-				parentObjectEntry.getExternalReferenceCode(),
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-
-						setObjectEntryFolderId(
-							objectEntryFolder.getObjectEntryFolderId());
-					}
-				},
-				oneToManyObjectRelationship, String.valueOf(groupId));
-
-			// Relationship edge true
+			ObjectRelationshipTestUtil.relateObjectEntries(
+				parentObjectEntry.getId(), childObjectEntry1.getId(),
+				manyToManyObjectRelationship, adminUser.getUserId());
+			ObjectRelationshipTestUtil.relateObjectEntries(
+				parentObjectEntry.getId(), childObjectEntry2.getId(),
+				manyToManyObjectRelationship, adminUser.getUserId());
 
 			ObjectEntry copiedParentObjectEntry =
 				_defaultObjectEntryManager.copyObjectEntry(
@@ -11737,32 +11741,105 @@ public class DefaultObjectEntryManagerImplTest
 			Page<ObjectEntry> page =
 				_defaultObjectEntryManager.getRelatedObjectEntries(
 					_simpleDTOConverterContext, copiedParentObjectEntry.getId(),
-					oneToManyObjectRelationship, null);
+					manyToManyObjectRelationship, null);
+
+			Collection<ObjectEntry> objectEntries = page.getItems();
 
 			Assert.assertEquals(
-				page.getItems(
-				).toString(),
-				2,
-				page.getItems(
-				).size());
+				objectEntries.toString(), 2, objectEntries.size());
+
+			page = _defaultObjectEntryManager.getRelatedObjectEntries(
+				_simpleDTOConverterContext, parentObjectEntry.getId(),
+				manyToManyObjectRelationship, null);
+
+			objectEntries = page.getItems();
+
+			Assert.assertEquals(
+				objectEntries.toString(), 2, objectEntries.size());
+
+			// One to many relationship with inheritance
+
+			ObjectRelationship oneToManyObjectRelationship =
+				_objectRelationshipLocalService.addObjectRelationship(
+					null, adminUser.getUserId(),
+					parentObjectDefinition.getObjectDefinitionId(),
+					childObjectDefinition.getObjectDefinitionId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+					RandomTestUtil.randomLocaleStringMap(),
+					StringUtil.randomId(), false,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+			parentObjectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, parentObjectDefinition,
+				new ObjectEntry() {
+					{
+						objectEntryFolderId =
+							objectEntryFolder.getObjectEntryFolderId();
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				String.valueOf(groupId));
+
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				parentObjectEntry.getExternalReferenceCode(),
+				new ObjectEntry() {
+					{
+						objectEntryFolderId =
+							objectEntryFolder.getObjectEntryFolderId();
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				oneToManyObjectRelationship, String.valueOf(groupId));
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				parentObjectEntry.getExternalReferenceCode(),
+				new ObjectEntry() {
+					{
+						objectEntryFolderId =
+							objectEntryFolder.getObjectEntryFolderId();
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				oneToManyObjectRelationship, String.valueOf(groupId));
+
+			copiedParentObjectEntry =
+				_defaultObjectEntryManager.copyObjectEntry(
+					_simpleDTOConverterContext, parentObjectEntry.getId(),
+					objectEntryFolder.getObjectEntryFolderId(), false);
+
+			page = _defaultObjectEntryManager.getRelatedObjectEntries(
+				_simpleDTOConverterContext, copiedParentObjectEntry.getId(),
+				oneToManyObjectRelationship, null);
+
+			objectEntries = page.getItems();
+
+			Assert.assertEquals(
+				objectEntries.toString(), 2, objectEntries.size());
 
 			for (ObjectEntry copiedChildObjectEntry : page.getItems()) {
+				Status status = copiedChildObjectEntry.getStatus();
+
 				AssertUtils.assertEquals(
-					WorkflowConstants.STATUS_DRAFT,
-					copiedChildObjectEntry.getStatus(
-					).getCode());
+					WorkflowConstants.STATUS_DRAFT, status.getCode());
 			}
 
 			page = _defaultObjectEntryManager.getRelatedObjectEntries(
 				_simpleDTOConverterContext, parentObjectEntry.getId(),
 				oneToManyObjectRelationship, null);
 
-			Assert.assertEquals(
-				2,
-				page.getItems(
-				).size());
+			objectEntries = page.getItems();
 
-			// Relationship edge false
+			Assert.assertEquals(
+				objectEntries.toString(), 2, objectEntries.size());
+
+			// One to many relationship without inheritance
 
 			oneToManyObjectRelationship =
 				_objectRelationshipLocalService.updateObjectRelationship(
@@ -11780,104 +11857,10 @@ public class DefaultObjectEntryManagerImplTest
 				_simpleDTOConverterContext, copiedParentObjectEntry.getId(),
 				oneToManyObjectRelationship, null);
 
-			Assert.assertEquals(
-				page.getItems(
-				).toString(),
-				0,
-				page.getItems(
-				).size());
-
-			// Many to many relationship
-
-			ObjectRelationship manyToManyObjectRelationship =
-				_objectRelationshipLocalService.addObjectRelationship(
-					null, adminUser.getUserId(),
-					parentObjectDefinition.getObjectDefinitionId(),
-					childObjectDefinition.getObjectDefinitionId(), 0,
-					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-					false,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					StringUtil.randomId(), false,
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
-
-			parentObjectEntry = _defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, parentObjectDefinition,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-
-						setObjectEntryFolderId(
-							objectEntryFolder.getObjectEntryFolderId());
-					}
-				},
-				String.valueOf(groupId));
-
-			ObjectEntry childObjectEntry1 =
-				_defaultObjectEntryManager.addObjectEntry(
-					_simpleDTOConverterContext, childObjectDefinition,
-					new ObjectEntry() {
-						{
-							properties = HashMapBuilder.<String, Object>put(
-								"textObjectFieldName",
-								RandomTestUtil.randomString()
-							).build();
-
-							setObjectEntryFolderId(
-								objectEntryFolder.getObjectEntryFolderId());
-						}
-					},
-					String.valueOf(groupId));
-
-			ObjectEntry childObjectEntry2 =
-				_defaultObjectEntryManager.addObjectEntry(
-					_simpleDTOConverterContext, childObjectDefinition,
-					new ObjectEntry() {
-						{
-							properties = HashMapBuilder.<String, Object>put(
-								"textObjectFieldName",
-								RandomTestUtil.randomString()
-							).build();
-
-							setObjectEntryFolderId(
-								objectEntryFolder.getObjectEntryFolderId());
-						}
-					},
-					String.valueOf(groupId));
-
-			ObjectRelationshipTestUtil.relateObjectEntries(
-				parentObjectEntry.getId(), childObjectEntry1.getId(),
-				manyToManyObjectRelationship, adminUser.getUserId());
-			ObjectRelationshipTestUtil.relateObjectEntries(
-				parentObjectEntry.getId(), childObjectEntry2.getId(),
-				manyToManyObjectRelationship, adminUser.getUserId());
-
-			copiedParentObjectEntry =
-				_defaultObjectEntryManager.copyObjectEntry(
-					_simpleDTOConverterContext, parentObjectEntry.getId(),
-					objectEntryFolder.getObjectEntryFolderId(), false);
-
-			page = _defaultObjectEntryManager.getRelatedObjectEntries(
-				_simpleDTOConverterContext, copiedParentObjectEntry.getId(),
-				manyToManyObjectRelationship, null);
+			objectEntries = page.getItems();
 
 			Assert.assertEquals(
-				page.getItems(
-				).toString(),
-				2,
-				page.getItems(
-				).size());
-
-			page = _defaultObjectEntryManager.getRelatedObjectEntries(
-				_simpleDTOConverterContext, parentObjectEntry.getId(),
-				manyToManyObjectRelationship, null);
-
-			Assert.assertEquals(
-				2,
-				page.getItems(
-				).size());
+				objectEntries.toString(), 0, objectEntries.size());
 		}
 		finally {
 			objectDefinitionLocalService.deleteObjectDefinition(

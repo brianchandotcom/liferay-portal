@@ -1,0 +1,42 @@
+defaults:
+    run:
+        shell: bash
+jobs:
+    test-cloud-terraform:
+        if: ${{github.repository == 'liferay/liferay-portal'}}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Setup Terraform
+                uses: hashicorp/setup-terraform@v3
+                with:
+                    terraform_version: "1.5.0"
+            -   name: Initialize Terraform
+                run: terraform init -backend=false -input=false
+                working-directory: ./cloud/terraform/${{matrix.stack}}
+            -   name: Validate Terraform
+                run: terraform validate
+                working-directory: ./cloud/terraform/${{matrix.stack}}
+        strategy:
+            fail-fast: false
+            matrix:
+                stack:
+                    -   aws/backup/backup-plan
+                    -   aws/backup/backup-restore-workflow
+                    -   aws/backup/backup-vault
+                    -   aws/dependencies
+                    -   aws/ecr
+                    -   aws/eks
+                    -   aws/gitops/platform
+                    -   aws/gitops/resources
+                    -   aws/grafana
+                    -   gcp/gitops/platform
+                    -   gcp/gitops/resources
+                    -   gcp/gke
+on:
+    push:
+        branches:
+            -   master
+        paths:
+            -   cloud/terraform/**

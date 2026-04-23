@@ -23,7 +23,7 @@ describe('StatusLabel', () => {
 		['incomplete', 'warning'],
 		['pending', 'info'],
 		['scheduled', 'info'],
-	])('renders with the "%s" status', (label, displayType) => {
+	] as const)('renders with the "%s" status', (label, displayType) => {
 		render(<StatusLabel label={label} />);
 
 		const labelElement = screen.getByText(label);

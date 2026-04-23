@@ -19,9 +19,9 @@ export const ASSET_STATUS = {
 	DENIED: 'denied',
 	DRAFT: 'draft',
 	EXPIRED: 'expired',
+	IN_TRASH: 'in-trash',
 	INACTIVE: 'inactive',
 	INCOMPLETE: 'incomplete',
-	IN_TRASH: 'in-trash',
 	PENDING: 'pending',
 	SCHEDULED: 'scheduled',
 } as const;

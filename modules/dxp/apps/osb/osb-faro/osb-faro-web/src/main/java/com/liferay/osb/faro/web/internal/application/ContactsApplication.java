@@ -15,6 +15,7 @@ import com.liferay.osb.faro.web.internal.controller.contacts.AssetSummaryControl
 import com.liferay.osb.faro.web.internal.controller.contacts.AssetSummaryMimeTypeController;
 import com.liferay.osb.faro.web.internal.controller.contacts.AssetSummaryTagController;
 import com.liferay.osb.faro.web.internal.controller.contacts.AssetSummaryTypeController;
+import com.liferay.osb.faro.web.internal.controller.contacts.AssetSummaryVocabularyController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ContactsCardController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ContactsCardTemplateController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ContactsLayoutController;
@@ -59,6 +60,7 @@ public class ContactsApplication extends BaseApplication {
 		controllers.add(_assetSummaryMimeTypeController);
 		controllers.add(_assetSummaryTagController);
 		controllers.add(_assetSummaryTypeController);
+		controllers.add(_assetSummaryVocabularyController);
 		controllers.add(_contactsCardController);
 		controllers.add(_contactsCardTemplateController);
 		controllers.add(_contactsLayoutController);
@@ -103,6 +105,9 @@ public class ContactsApplication extends BaseApplication {
 
 	@Reference
 	private AssetSummaryTypeController _assetSummaryTypeController;
+
+	@Reference
+	private AssetSummaryVocabularyController _assetSummaryVocabularyController;
 
 	@Reference
 	private ContactsCardController _contactsCardController;

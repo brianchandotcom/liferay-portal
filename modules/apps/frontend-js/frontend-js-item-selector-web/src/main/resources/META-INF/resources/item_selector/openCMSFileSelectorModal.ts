@@ -112,6 +112,7 @@ const FDS_PROPS: Omit<
 				const fallbackStickerProps = {
 					stickerProps: {
 						className: 'file-icon-color-5',
+						displayType: 'unstyled',
 					},
 				};
 
@@ -131,6 +132,7 @@ const FDS_PROPS: Omit<
 									mimeType
 								),
 							}),
+							displayType: 'unstyled',
 						},
 					};
 				}

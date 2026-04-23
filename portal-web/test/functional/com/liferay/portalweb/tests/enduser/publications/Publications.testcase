@@ -208,7 +208,7 @@ definition {
 
 		ApplicationsMenu.openApplicationsMenu();
 
-		Navigator.gotoNavTab(navTab = "Applications");
+		ApplicationsMenu.gotoPanel(panel = "Applications");
 
 		PublicationsNavigator.openPublicationsAdmin();
 

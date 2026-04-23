@@ -286,15 +286,6 @@ public class OpenAPIUtil {
 		JSONObject propertiesJSONObject = JSONFactoryUtil.createJSONObject();
 		JSONArray requiredJSONArray = JSONFactoryUtil.createJSONArray();
 
-		Set<String> processedParameterNames = new HashSet<>();
-
-		_addParameters(
-			operationJSONObject.getJSONArray("parameters"),
-			processedParameterNames, propertiesJSONObject, requiredJSONArray);
-		_addParameters(
-			pathParametersJSONArray, processedParameterNames,
-			propertiesJSONObject, requiredJSONArray);
-
 		if (operationJSONObject.has("requestBody")) {
 			JSONObject bodySchemaJSONObject = _getBodySchemaJSONObject(
 				operationJSONObject);
@@ -310,6 +301,15 @@ public class OpenAPIUtil {
 
 			requiredJSONArray.put("body");
 		}
+
+		Set<String> processedParameterNames = new HashSet<>();
+
+		_addParameters(
+			operationJSONObject.getJSONArray("parameters"),
+			processedParameterNames, propertiesJSONObject, requiredJSONArray);
+		_addParameters(
+			pathParametersJSONArray, processedParameterNames,
+			propertiesJSONObject, requiredJSONArray);
 
 		return _objectMapper.readValue(
 			JSONUtil.put(

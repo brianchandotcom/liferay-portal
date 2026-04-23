@@ -63,7 +63,7 @@ public class AuthorizationTokenResourceImpl
 				setServiceURL(aiHubCellConfiguration::serviceURL);
 				setUserToken(
 					() -> JWTTokenUtil.generateToken(
-						TimeUnit.MINUTES.toMillis(1),
+						TimeUnit.MINUTES.toMillis(10),
 						contextCompany.getVirtualHostname(),
 						contextUser.getUserId()));
 			}

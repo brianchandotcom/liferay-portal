@@ -2891,10 +2891,6 @@ public class JenkinsResultsParserUtil {
 			if (file.exists()) {
 				remoteURL = fileURL;
 			}
-			else {
-				remoteURL = remoteURL.replace(
-					Build.DEPENDENCIES_URL_TOKEN, urlDependenciesHttp);
-			}
 		}
 
 		if (remoteURL.startsWith("file")) {
@@ -5302,22 +5298,6 @@ public class JenkinsResultsParserUtil {
 			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
-		if (url.startsWith("file:") &&
-			url.contains("liferay-jenkins-results-parser-samples-ee")) {
-
-			File file = new File(url.replace("file:", ""));
-
-			if (!file.exists()) {
-				if (url.contains("json?")) {
-					url = url.substring(0, url.indexOf("json?") + 4);
-				}
-
-				if (url.contains("json[qt]")) {
-					url = url.substring(0, url.indexOf("json[qt]") + 4);
-				}
-			}
-		}
-
 		if (url.contains("/userContent/") && (timeout == 0)) {
 			timeout = 5000;
 		}
@@ -6686,8 +6666,6 @@ public class JenkinsResultsParserUtil {
 	}
 
 	protected static String urlDependenciesFile;
-	protected static String urlDependenciesHttp =
-		URL_CACHE + "/liferay-jenkins-results-parser-samples-ee/1/";
 
 	static {
 		File dependenciesDir = new File("src/test/resources/dependencies/");

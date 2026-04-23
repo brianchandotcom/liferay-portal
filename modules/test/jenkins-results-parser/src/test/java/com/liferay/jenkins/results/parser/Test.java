@@ -218,12 +218,6 @@ public class Test {
 				"${dependencies.url}");
 		}
 
-		if (message.contains(JenkinsResultsParserUtil.urlDependenciesHttp)) {
-			message = message.replace(
-				JenkinsResultsParserUtil.urlDependenciesHttp,
-				"${dependencies.url}");
-		}
-
 		return message.replaceAll("[^\\S\\r\\n]+\n", "\n");
 	}
 

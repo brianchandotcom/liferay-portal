@@ -2211,8 +2211,6 @@ public abstract class BaseBuild implements Build {
 			JenkinsResultsParserUtil.combine(
 				"(", Pattern.quote(Build.DEPENDENCIES_URL_TOKEN), "|",
 				Pattern.quote(JenkinsResultsParserUtil.urlDependenciesFile),
-				"|",
-				Pattern.quote(JenkinsResultsParserUtil.urlDependenciesHttp),
 				")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
 				".*/(?<buildNumber>\\d+)/?"));
 	}

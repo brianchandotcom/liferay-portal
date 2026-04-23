@@ -494,8 +494,7 @@ public class DataSourceFactoryUtil {
 			catch (SQLException sqlException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Could not determine SQL Server driver version to " +
-							"apply useBulkCopyForBatchInsert",
+						"Unable to determine SQL Server driver version",
 						sqlException);
 				}
 

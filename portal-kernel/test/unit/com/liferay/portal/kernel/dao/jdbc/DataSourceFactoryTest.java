@@ -91,9 +91,6 @@ public class DataSourceFactoryTest {
 
 	@Test
 	public void testDestroyDataSource() throws Exception {
-
-		// Destroy JDNI data source
-
 		DataSource dataSource1 = DataSourceFactoryUtil.initDataSource(
 			"org.hsqldb.jdbc.JDBCDriver",
 			"jdbc:hsqldb:" + _path.toAbsolutePath() + "/lportal;", "sa",
@@ -123,8 +120,6 @@ public class DataSourceFactoryTest {
 			Assert.assertFalse(connection.isClosed());
 		}
 
-		// Destroy other data source
-
 		DataSourceFactoryUtil.destroyDataSource(dataSource1);
 
 		try (Connection connection = dataSource1.getConnection()) {
@@ -139,7 +134,7 @@ public class DataSourceFactoryTest {
 	}
 
 	@Test
-	public void testJNDIDataSourceFailure() throws Exception {
+	public void testInitDataSource() throws Exception {
 		PropsUtil.set(
 			PropsKeys.JNDI_ENVIRONMENT + Context.INITIAL_CONTEXT_FACTORY,
 			"org.apache.naming.java.javaURLContextFactory");

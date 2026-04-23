@@ -33,7 +33,7 @@ export async function goToObjectEntity({
 				.click({timeout: 2000});
 
 			await page
-				.getByRole('tab', {name: siteScope})
+				.getByRole('menuitem', {name: siteScope})
 				.click({timeout: 2000});
 
 			await page

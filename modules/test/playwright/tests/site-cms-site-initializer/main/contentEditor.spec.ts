@@ -1776,11 +1776,6 @@ test(
 			trigger: card.locator('button'),
 		});
 
-		await page
-			.getByRole('dialog')
-			.getByRole('button', {name: 'Delete Entry'})
-			.click();
-
 		await waitForAlert(page, `Success:${title} was moved`, {
 			autoClose: false,
 		});
@@ -1861,17 +1856,17 @@ test(
 
 		// Fill the fields
 
-		const firstText = page
+		const titleTextboxes = page
 			.locator('.lfr-layout-structure-item-form-relationship')
-			.getByRole('textbox', {exact: true, name: 'Title'})
-			.first();
+			.getByRole('textbox', {exact: true, name: 'Title'});
+
+		await expect(titleTextboxes).toHaveCount(2);
+
+		const firstText = titleTextboxes.first();
 
 		await firstText.fill('First Text');
 
-		const secondText = page
-			.locator('.lfr-layout-structure-item-form-relationship')
-			.getByRole('textbox', {exact: true, name: 'Title'})
-			.last();
+		const secondText = titleTextboxes.last();
 
 		await secondText.fill('Second Text');
 
@@ -1899,11 +1894,6 @@ test(
 			target: page.getByRole('menuitem', {name: 'Delete'}),
 			trigger: card.locator('button'),
 		});
-
-		await page
-			.getByRole('dialog')
-			.getByRole('button', {name: 'Delete Entry'})
-			.click();
 
 		await waitForAlert(page, `Success:${title} was moved`, {
 			autoClose: false,

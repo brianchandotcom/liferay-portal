@@ -64,6 +64,11 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="source" />
 		</finder>
+		<finder name="G_A_SRC" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="active" />
+			<finder-column arrayable-operator="OR" name="source" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="SegmentsEntryRel" remote-service="true">
 

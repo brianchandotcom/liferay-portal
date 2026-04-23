@@ -4,6 +4,20 @@
  */
 
 interface Window {
+	Demandbase?: {
+		IpApi?: {
+			CompanyProfile?: {
+				[key: string]: unknown;
+			};
+		};
+		Utilities?: {
+			Callbacks?: {
+				registerCallback?: (
+					callback: (data: unknown) => void
+				) => void;
+			};
+		};
+	};
 	Liferay: {
 		FeatureFlags?: {
 			[key: string]: boolean;

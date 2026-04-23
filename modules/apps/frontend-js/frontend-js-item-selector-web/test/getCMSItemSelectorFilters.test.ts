@@ -41,6 +41,12 @@ describe('getCMSItemSelectorFilters', () => {
 			'dateReview',
 		]);
 
+		const spaceFilter = filters.find(
+			(f) => f.id === 'groupIds'
+		) as ISelectionFilterConfig;
+
+		expect(spaceFilter?.apiURL).toContain("filter=type eq 'Space'");
+
 		const typeFilter = filters.find(
 			(f) => f.id === 'objectDefinitionId'
 		) as ISelectionFilterConfig;

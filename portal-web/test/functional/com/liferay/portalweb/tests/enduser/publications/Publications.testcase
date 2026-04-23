@@ -206,10 +206,6 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		ApplicationsMenu.openApplicationsMenu();
-
-		Navigator.gotoNavTab(navTab = "Applications");
-
 		PublicationsNavigator.openPublicationsAdmin();
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");

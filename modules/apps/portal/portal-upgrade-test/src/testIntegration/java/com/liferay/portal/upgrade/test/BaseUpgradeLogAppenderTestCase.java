@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
+import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -511,6 +512,36 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"upgrade.report.jvm.arguments", inputArguments.get(0));
 
 		_assertReport(inputArguments.get(0));
+	}
+
+	@Test
+	public void testLastKnownProgressesInDiagnosticsReport() throws Exception {
+		Map<String, Long> lastKnownProgresses =
+			ReflectionTestUtil.getFieldValue(
+				UpgradeLogProgressTracker.class, "_lastKnownProgresses");
+
+		lastKnownProgresses.clear();
+
+		_appender.start();
+
+		try {
+			long currentRow = RandomTestUtil.randomLong();
+
+			String upgradeProcessClassName =
+				"com.liferay.test.SampleUpgradeProcess";
+
+			lastKnownProgresses.put(upgradeProcessClassName, currentRow);
+
+			_appender.stop();
+
+			_assertReportDiagnostics(
+				StringBundler.concat(
+					upgradeProcessClassName, " processed approximately ",
+					currentRow, " rows"));
+		}
+		finally {
+			lastKnownProgresses.clear();
+		}
 	}
 
 	@Test

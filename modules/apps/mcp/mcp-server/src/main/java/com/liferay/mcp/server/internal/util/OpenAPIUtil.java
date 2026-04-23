@@ -33,9 +33,7 @@ public class OpenAPIUtil {
 
 		int index = endpoint.indexOf(' ');
 
-		String pathTemplate = endpoint.substring(index + 1);
-
-		String path = pathTemplate;
+		String path = endpoint.substring(index + 1);
 
 		StringBundler sb = new StringBundler();
 
@@ -55,7 +53,7 @@ public class OpenAPIUtil {
 			String placeholder = "{" + name + "}";
 			String valueString = String.valueOf(value);
 
-			if (pathTemplate.contains(placeholder)) {
+			if (path.contains(placeholder)) {
 				path = StringUtil.replace(path, placeholder, valueString);
 			}
 			else if (!valueString.isEmpty()) {
@@ -66,9 +64,9 @@ public class OpenAPIUtil {
 			}
 		}
 
-		Object body = arguments.get("body");
-
 		String bodyString = null;
+
+		Object body = arguments.get("body");
 
 		if (body instanceof Map bodyMap) {
 			bodyString = JSONFactoryUtil.createJSONObject(

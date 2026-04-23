@@ -41,20 +41,26 @@ export class RulesBuilderPage {
 			.filter({hasText: 'ActionsDoAutofillFrom Data'})
 			.getByRole('combobox')
 			.nth(1);
-		this.conditionLeftFormFieldSelect = page.getByTestId('field-left-id');
-		this.conditionOperatorSelect = page.getByTestId('field-operator-id');
-		this.conditionOperatorValueSourceSelect = page.getByTestId(
-			'field-binary-operator-id'
+		this.conditionLeftFormFieldSelect = page.locator(
+			'[data-testid="field-left-id"]'
+		);
+		this.conditionOperatorSelect = page.locator(
+			'[data-testid="field-operator-id"]'
+		);
+		this.conditionOperatorValueSourceSelect = page.locator(
+			'[data-testid="field-binary-operator-id"]'
 		);
 		this.conditionRightFormFieldInput = page.locator('#field-right-id');
-		this.conditionRightFormFieldSelect = page.getByTestId('field-right-id');
+		this.conditionRightFormFieldSelect = page.locator(
+			'[data-testid="field-right-id"]'
+		);
 		this.dataProviderInputSelect = page
 			.locator('div.data-provider-parameter-container')
-			.nth(0)
+			.filter({hasText: "Data Provider's Input:"})
 			.getByRole('combobox');
 		this.dataProviderOutputSelect = page
 			.locator('div.data-provider-parameter-container')
-			.nth(1)
+			.filter({hasText: "Data Provider's Output:"})
 			.getByRole('combobox');
 		this.page = page;
 		this.rulesTab = page.getByRole('button', {name: 'Rules'});

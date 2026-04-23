@@ -40,6 +40,8 @@ public interface IndexerWriter<T extends BaseModel<?>> {
 
 	public void setEnabled(boolean enabled);
 
+	public boolean shouldRun(long companyId);
+
 	public void updatePermissionFields(T baseModel);
 
 }

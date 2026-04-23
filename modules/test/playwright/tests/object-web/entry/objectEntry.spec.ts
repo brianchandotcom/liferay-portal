@@ -521,6 +521,8 @@ cmsTest.describe('Manage attachment ObjectField storage locations', () => {
 
 			await viewObjectEntriesPage.selectFileButton.first().click();
 
+			await page.getByRole('img', {name: spaceName}).click();
+
 			await page.getByLabel(fileTitle, {exact: true}).click();
 
 			await page
@@ -544,6 +546,100 @@ cmsTest.describe('Manage attachment ObjectField storage locations', () => {
 			await expect(
 				viewObjectEntriesPage.page.getByText(fileName)
 			).toBeVisible();
+
+			await expect(
+				viewObjectEntriesPage.page.getByText('astronaut.png')
+			).toBeVisible();
+		}
+	);
+
+	cmsTest(
+		'can upload file to CMS through CMSFilesItemSelector',
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const spaceName = getRandomString();
+
+			await test.step('Create a new Space', async () => {
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
+			});
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: [
+					{
+						businessType: 'Attachment',
+						name: 'cmsBasicDocument',
+						objectFieldSettings: [
+							{
+								name: 'acceptedFileExtensions',
+								value: 'jpeg, jpg, pdf, png, txt',
+							},
+							{
+								name: 'maximumFileSize',
+								value: 0,
+							},
+							{
+								name: 'fileSource',
+								value: 'CMSBasicDocument',
+							},
+						],
+					},
+				],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.selectFileButton.first().click();
+
+			await page.getByRole('img', {name: spaceName}).click();
+
+			await page
+				.getByTestId('managementToolbar')
+				.locator('[data-testid="fdsCreationActionButton"]')
+				.click();
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			await page.getByRole('button', {name: 'Select Files'}).click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(
+				path.join(__dirname, '../dependencies', 'astronaut.png')
+			);
+
+			await page.getByRole('button', {name: 'Upload (1)'}).click();
+
+			await page.getByLabel('astronaut.png', {exact: true}).click();
+
+			await page
+				.getByRole('button', {exact: true, name: 'Select'})
+				.click();
+
+			await page
+				.getByRole('button', {name: 'astronaut.png'})
+				.waitFor({state: 'visible'});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page);
 
 			await expect(
 				viewObjectEntriesPage.page.getByText('astronaut.png')
@@ -727,6 +823,8 @@ cmsTest.describe('Manage attachment ObjectField storage locations', () => {
 			);
 
 			await viewObjectEntriesPage.selectFileButton.click();
+
+			await page.getByRole('img', {name: space.name}).click();
 
 			await expect(page.getByText('No Results Found')).toBeVisible();
 		}

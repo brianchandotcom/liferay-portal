@@ -152,7 +152,7 @@ definition {
 	@description = "This test covers LPS-95501. It asserts added wiki attachment file can be viewed after publishing."
 	@priority = 4
 	@refactordone
-	test CanViewAttachmentAfterPublish {
+	test CanPublishWikiPageLifecycleToLive {
 		JSONLayout.addWidgetToPublicLayout(
 			column = 1,
 			groupName = "Site Name (Staging)",

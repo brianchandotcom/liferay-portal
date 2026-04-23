@@ -622,7 +622,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_searchUtilMockedStatic.when(
 			() -> SearchUtil.getSearchResultViewURL(
 				Mockito.any(), Mockito.any(), Mockito.eq(className),
-				Mockito.eq(classPK), Mockito.eq(false), Mockito.isNull())
+				Mockito.eq(classPK), Mockito.eq(false))
 		).thenReturn(
 			className + classPK
 		);

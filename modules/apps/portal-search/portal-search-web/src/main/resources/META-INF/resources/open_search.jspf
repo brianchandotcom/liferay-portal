@@ -124,7 +124,7 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 					String summary = element.elementText("summary");
 					%>
 
-					<a class="entry-title" href="<%= com.liferay.portal.search.web.internal.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, entryClassName, entryClassPK, searchDisplayContext.isViewInContext(), currentURL) %>">
+					<a class="entry-title" href="<%= com.liferay.portal.search.web.internal.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, entryClassName, entryClassPK, searchDisplayContext.isViewInContext()) %>">
 						<%= HighlightUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
 					</a>
 

@@ -55,7 +55,6 @@ Hits hits = searchDisplayContext.getHits();
 				com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayContextBuilder searchResultSummaryDisplayContextBuilder = new com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayContextBuilder();
 
 				searchResultSummaryDisplayContextBuilder.setAssetEntryLocalService(com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil.getService());
-				searchResultSummaryDisplayContextBuilder.setCurrentURL(currentURL);
 				searchResultSummaryDisplayContextBuilder.setDocument(document);
 				searchResultSummaryDisplayContextBuilder.setFastDateFormatFactory(com.liferay.portal.kernel.util.FastDateFormatFactoryUtil.getFastDateFormatFactory());
 				searchResultSummaryDisplayContextBuilder.setGroupLocalService(com.liferay.portal.kernel.service.GroupLocalServiceUtil.getService());

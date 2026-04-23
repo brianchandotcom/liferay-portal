@@ -353,8 +353,6 @@ test(
 
 			await accountUserSelectorPage.assignButton.click();
 
-			await waitForAlert(page);
-
 			await expect(
 				accountRolesPage.assignUsersTable.cell(user.name)
 			).toBeVisible();

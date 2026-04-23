@@ -46,6 +46,7 @@ export class EditUserPage {
 	readonly categoryGridCell: (categoryName: string) => Locator;
 	readonly categoryInput: (vocabularyName: string) => Locator;
 	readonly categoryOption: (categoryName: string) => Locator;
+	readonly passwordConfirmationFrameCancelButton: Locator;
 	readonly changeImageButton: Locator;
 	readonly clearImageButton: Locator;
 	readonly confirmButton: Locator;
@@ -817,6 +818,10 @@ export class EditUserPage {
 			'button',
 			{name: 'Confirm'}
 		);
+		this.passwordConfirmationFrameCancelButton =
+			this.passwordConfirmationFrame.getByRole('button', {
+				name: 'Cancel',
+			});
 		this.yourPasswordInput =
 			this.passwordConfirmationFrame.getByLabel('Your Password');
 	}

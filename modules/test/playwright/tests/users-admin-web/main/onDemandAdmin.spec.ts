@@ -70,12 +70,6 @@ test(
 					.or(newPage.getByTestId('globalMenu'))
 					.click();
 
-				await newPage
-					.getByRole('menuitem', {
-						name: 'Control Panel',
-					})
-					.click();
-
 				await expect(
 					newPage.getByRole('menuitem', {
 						exact: true,

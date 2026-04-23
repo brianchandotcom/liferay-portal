@@ -82,9 +82,17 @@ test(
 
 		await contentsPage.goto();
 
+		await contentsPage.deleteContent('Untitled Asset');
+
+		await contentsPage.goto();
+
 		await contentsPage.createContent(structureLabel, 'Default');
 
 		await expect(page.getByText('Publish', {exact: true})).toBeVisible();
+
+		await contentsPage.goto();
+
+		await contentsPage.deleteContent('Untitled Asset');
 
 		// Edit again to check they were persisted
 

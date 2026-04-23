@@ -39,7 +39,7 @@ class BaseQueue {
 	/**
 	 * Adds an item to the queue.
 	 */
-	addItem(item: AnalyticsType.Event | AnalyticsType.Identity) {
+	addItem(item: AnalyticsType.QueueItem) {
 		this._enqueue(item);
 
 		verifyStorageLimitForKey(this.name, this.maxSize);
@@ -70,10 +70,8 @@ class BaseQueue {
 	/**
 	 * Add a message to the queue and process messages.
 	 */
-	_enqueue(entry: AnalyticsType.Event | AnalyticsType.Identity) {
-		const queue = this.getItems<
-			AnalyticsType.Event | AnalyticsType.Identity
-		>();
+	_enqueue(entry: AnalyticsType.QueueItem) {
+		const queue = this.getItems<AnalyticsType.QueueItem>();
 
 		queue.push(entry);
 
@@ -88,8 +86,7 @@ class BaseQueue {
 	}
 
 	hasItems() {
-		return !!this.getItems<AnalyticsType.Event | AnalyticsType.Identity>()
-			.length;
+		return !!this.getItems<AnalyticsType.QueueItem>().length;
 	}
 
 	acquireLock() {

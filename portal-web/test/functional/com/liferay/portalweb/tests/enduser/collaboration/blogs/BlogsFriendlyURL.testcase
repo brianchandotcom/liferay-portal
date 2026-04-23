@@ -220,49 +220,6 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "The entry could not be found.");
 	}
 
-	@description = "This ensures that an old friendlyURL can be restored from the history."
-	@priority = 5
-	test CanRestoreOldFriendlyURL {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name");
-
-		BlogsNavigator.openToEditEntryInSite(
-			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		Blogs.expandPanel(panel = "Friendly URL");
-
-		BlogsEntry.addCustomURL(customURL = "custom-url");
-
-		PortletEntry.publish();
-
-		BlogsNavigator.openToEditEntryInSite(
-			entryTitle = "Blogs Entry Title",
-			friendlyURL = "custom-url",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		BlogsNavigator.gotoFriendlyURLHistory();
-
-		BlogsEntry.restoreOldFriendlyURL(
-			activeURL = "custom-url",
-			oldFriendlyURL = "blogs-entry-title",
-			restoredURL = "blogs-entry-title");
-
-		PortletEntry.publish();
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/blogs-entry-title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
 	@priority = 5
 	test CanViewRestoreAndRemoveOldFriendlyURL {
@@ -301,6 +258,27 @@ definition {
 		BlogsEntry.viewOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/hola-adi%C3%B3s");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			friendlyURL = "hola-adi%C3%B3s",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.restoreOldFriendlyURL(
+			activeURL = "hola-adiós",
+			oldFriendlyURL = "blogs-entry-title",
+			restoredURL = "blogs-entry-title");
+
+		PortletEntry.publish();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/blogs-entry-title");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

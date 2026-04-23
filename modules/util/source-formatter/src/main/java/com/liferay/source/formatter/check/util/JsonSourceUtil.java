@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,6 +60,50 @@ public class JsonSourceUtil extends SourceUtil {
 
 			return null;
 		}
+	}
+
+	public static String removeJSONComments(String content) {
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf("/*", x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (ToolsUtil.isInsideQuotes(content, x)) {
+				continue;
+			}
+
+			int y = content.indexOf("*/", x + 2);
+
+			return content.substring(0, x) + content.substring(y + 2);
+		}
+
+		x = -1;
+
+		while (true) {
+			x = content.indexOf("//", x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (ToolsUtil.isInsideQuotes(content, x)) {
+				continue;
+			}
+
+			int y = content.indexOf("\n", x);
+
+			if (y != -1) {
+				return content.substring(0, x) + content.substring(y);
+			}
+
+			return content.substring(0, x);
+		}
+
+		return content;
 	}
 
 	public static JSONArray sortJSONArray(

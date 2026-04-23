@@ -22,7 +22,9 @@ public class XMLEmbeddedJSONCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		return _formatJSONInCDATA(content);
+		content = _formatJSONInCDATA(content);
+
+		return _formatJSONInFencedCodeBlock(content);
 	}
 
 	private String _formatJSONInCDATA(String content) {
@@ -30,6 +32,8 @@ public class XMLEmbeddedJSONCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			String cdataValue = matcher.group(5);
+
+			cdataValue = JsonSourceUtil.removeJSONComments(cdataValue);
 
 			JSONObject jsonObject = JsonSourceUtil.getJSONObject(cdataValue);
 
@@ -60,6 +64,8 @@ public class XMLEmbeddedJSONCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String cdataValue = matcher.group(3);
 
+			cdataValue = JsonSourceUtil.removeJSONComments(cdataValue);
+
 			JSONObject jsonObject = JsonSourceUtil.getJSONObject(cdataValue);
 
 			if (jsonObject == null) {
@@ -87,9 +93,39 @@ public class XMLEmbeddedJSONCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _formatJSONInFencedCodeBlock(String content) {
+		Matcher matcher = _fencedCodeBlockPattern.matcher(content);
+
+		while (matcher.find()) {
+			String jsonString = matcher.group(1);
+
+			String newJsonString = JsonSourceUtil.removeJSONComments(
+				jsonString);
+
+			JSONObject jsonObject = JsonSourceUtil.getJSONObject(newJsonString);
+
+			if (jsonObject == null) {
+				continue;
+			}
+
+			newJsonString = JsonSourceUtil.fixIndentation(jsonObject, "");
+
+			if (jsonString.equals(newJsonString)) {
+				continue;
+			}
+
+			return StringUtil.replaceFirst(
+				content, jsonString, newJsonString, matcher.start());
+		}
+
+		return content;
+	}
+
 	private static final Pattern _cdataPattern1 = Pattern.compile(
 		"(\n(\t*)<([\\w-]+)( .+)?>)<\\!\\[CDATA\\[(.*?)\\]\\]>(</\\3>\n)");
 	private static final Pattern _cdataPattern2 = Pattern.compile(
 		"(\n(\t*)<\\!\\[CDATA\\[)(.*?)\\]\\]>\n", Pattern.DOTALL);
+	private static final Pattern _fencedCodeBlockPattern = Pattern.compile(
+		"\n```json\n(.+?\n)```", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
 }

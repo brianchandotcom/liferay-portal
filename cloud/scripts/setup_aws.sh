@@ -32,6 +32,20 @@ function main {
 
 	if jq --exit-status '.variables.tfstate_bucket_name' "${1}" &> /dev/null
 	then
+		if ! jq --exit-status '.variables.deployment_name' "${1}" &> /dev/null
+		then
+			echo "Configuration is missing required key: variables.deployment_name." >&2
+
+			exit 1
+		fi
+
+		if ! jq --exit-status '.variables.region' "${1}" &> /dev/null
+		then
+			echo "Configuration is missing required key: variables.region." >&2
+
+			exit 1
+		fi
+
 		bucket_name="$(jq --raw-output '.variables.tfstate_bucket_name' "${1}")"
 		deployment_name="$(jq --raw-output '.variables.deployment_name' "${1}")"
 		region="$(jq --raw-output '.variables.region' "${1}")"

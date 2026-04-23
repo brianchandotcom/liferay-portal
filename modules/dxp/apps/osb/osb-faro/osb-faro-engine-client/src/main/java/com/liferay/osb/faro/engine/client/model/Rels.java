@@ -57,6 +57,9 @@ public interface Rels {
 
 	public static final String ASSET_SUMMARY_TYPES = "asset-summary-types";
 
+	public static final String ASSET_SUMMARY_VOCABULARIES =
+		"asset-summary-vocabularies";
+
 	public static final String ASSETS = "assets";
 
 	public static final String BLOCKED_KEYWORD = "blocked-keyword";

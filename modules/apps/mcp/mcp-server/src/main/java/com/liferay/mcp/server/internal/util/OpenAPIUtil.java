@@ -261,14 +261,14 @@ public class OpenAPIUtil {
 
 		if (jsonObject == null) {
 			throw new IllegalArgumentException(
-				"Request body has no application/json content");
+				"Request body has no \"application/json\" content");
 		}
 
 		JSONObject schemaJSONObject = jsonObject.getJSONObject("schema");
 
 		if (schemaJSONObject == null) {
 			throw new IllegalArgumentException(
-				"Request body application/json has no schema");
+				"Request body \"application/json\" has no schema");
 		}
 
 		return schemaJSONObject;

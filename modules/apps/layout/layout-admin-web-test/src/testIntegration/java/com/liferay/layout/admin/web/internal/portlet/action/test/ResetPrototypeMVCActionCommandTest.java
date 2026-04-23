@@ -7,11 +7,8 @@ package com.liferay.layout.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -48,7 +45,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -114,7 +110,9 @@ public class ResetPrototypeMVCActionCommandTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		FragmentEntry fragmentEntry = _addFragmentEntry();
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
@@ -166,24 +164,6 @@ public class ResetPrototypeMVCActionCommandTest {
 		Assert.assertEquals(
 			fragmentLayoutStructureItems.toString(), 1,
 			fragmentLayoutStructureItems.size());
-	}
-
-	private FragmentEntry _addFragmentEntry() throws Exception {
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(),
-				_layoutSetPrototypeGroup.getGroupId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				_serviceContext);
-
-		return _fragmentEntryLocalService.addFragmentEntry(
-			null, TestPropsValues.getUserId(),
-			_layoutSetPrototypeGroup.getGroupId(),
-			fragmentCollection.getFragmentCollectionId(), null,
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			"Fragment Entry HTML", StringPool.BLANK, false, null, null, 0,
-			false, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
 	private LayoutStructure _getLayoutStructure(
@@ -360,10 +340,8 @@ public class ResetPrototypeMVCActionCommandTest {
 	}
 
 	@Inject
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
-
-	@Inject
-	private FragmentEntryLocalService _fragmentEntryLocalService;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@DeleteAfterTestRun
 	private Group _group;

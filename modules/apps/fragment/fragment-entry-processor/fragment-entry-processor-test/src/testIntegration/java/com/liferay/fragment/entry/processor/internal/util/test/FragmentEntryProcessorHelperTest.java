@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -586,6 +587,51 @@ public class FragmentEntryProcessorHelperTest {
 					"fieldId", "AssetTag_tagNames"
 				),
 				LocaleUtil.SPAIN));
+	}
+
+	@Test
+	public void testGetFieldValueWithoutPermissions() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "My Text",
+						"myText")),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getGroupId(), objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"myText", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_userLocalService.getGuestUser(
+					TestPropsValues.getCompanyId()))) {
+
+			Assert.assertEquals(
+				StringPool.BLANK,
+				_getFieldValue(
+					JSONUtil.put(
+						"className", objectDefinition.getClassName()
+					).put(
+						"classNameId",
+						_portal.getClassNameId(objectDefinition.getClassName())
+					).put(
+						"classPK", objectEntry.getObjectEntryId()
+					).put(
+						"fieldId", "myText"
+					),
+					LocaleUtil.getSiteDefault()));
+		}
 	}
 
 	@Test

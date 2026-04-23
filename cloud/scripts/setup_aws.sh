@@ -34,14 +34,14 @@ function main {
 	then
 		if ! jq --exit-status '.variables.deployment_name' "${1}" &> /dev/null
 		then
-			echo "Configuration is missing required key: variables.deployment_name." >&2
+			echo "The configuration JSON file must contain a key named \"variables.deployment_name\"." >&2
 
 			exit 1
 		fi
 
 		if ! jq --exit-status '.variables.region' "${1}" &> /dev/null
 		then
-			echo "Configuration is missing required key: variables.region." >&2
+			echo "The configuration JSON file must contain a key named \"variables.region\"." >&2
 
 			exit 1
 		fi

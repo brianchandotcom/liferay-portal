@@ -39,14 +39,14 @@ public class AssistantHandlerUtil {
 
 		Assistant assistant = aiServices.streamingChatModel(
 			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
+		).maxSequentialToolsInvocations(
+			7
 		).systemMessageProvider(
 			assistantHandlerContext.getSystemMessageProviderFunction()
 		).toolProvider(
 			assistantHandlerContext.getToolProvider()
 		).tools(
 			assistantHandlerContext.getTools()
-		).maxSequentialToolsInvocations(
-			7
 		).build();
 
 		if (assistant instanceof

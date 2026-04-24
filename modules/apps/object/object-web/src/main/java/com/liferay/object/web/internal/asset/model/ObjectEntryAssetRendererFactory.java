@@ -8,7 +8,6 @@ package com.liferay.object.web.internal.asset.model;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -44,7 +43,6 @@ public class ObjectEntryAssetRendererFactory
 
 	public ObjectEntryAssetRendererFactory(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		DepotEntryLocalService depotEntryLocalService,
 		DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
 		ObjectDefinition objectDefinition,
 		ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
@@ -59,7 +57,6 @@ public class ObjectEntryAssetRendererFactory
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
-		_depotEntryLocalService = depotEntryLocalService;
 		_dlAppLocalService = dlAppLocalService;
 		_dlURLHelper = dlURLHelper;
 		_objectDefinition = objectDefinition;
@@ -80,8 +77,8 @@ public class ObjectEntryAssetRendererFactory
 
 		ObjectEntryAssetRenderer objectEntryAssetRenderer =
 			new ObjectEntryAssetRenderer(
-				_assetDisplayPageFriendlyURLProvider, _depotEntryLocalService,
-				_dlAppLocalService, _dlURLHelper, _objectDefinition,
+				_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
+				_dlURLHelper, _objectDefinition,
 				_objectEntryLocalService.getObjectEntry(classPK),
 				_objectEntryDisplayContextFactory, _objectEntryService,
 				_objectFieldLocalService);
@@ -119,8 +116,7 @@ public class ObjectEntryAssetRendererFactory
 
 	@Override
 	public boolean hasPermission(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws Exception {
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		if (Objects.equals(actionId, ActionKeys.DOWNLOAD) &&
 			_objectDefinition.isCMS()) {
@@ -187,7 +183,6 @@ public class ObjectEntryAssetRendererFactory
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final DLAppLocalService _dlAppLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final ObjectDefinition _objectDefinition;

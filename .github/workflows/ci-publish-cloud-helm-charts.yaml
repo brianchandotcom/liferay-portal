@@ -39,10 +39,29 @@ jobs:
                     AWS_INFRA_VERSION="$(_chart_version aws-infrastructure)-pr-${PR_NUMBER}-g${SHORT_SHA}"
                     AWS_INFRA_PROVIDER_VERSION="$(_chart_version aws-infrastructure-provider)-pr-${PR_NUMBER}-g${SHORT_SHA}"
 
-                    cat > /tmp/pr-comment.md << EOF
-                    ## Helm Charts Published
+                    _upsert_comment() {
+                        local marker="${1}"
+                        local body_file="${2}"
 
-                    Charts for this PR are available at \`${REGISTRY}\`. To test on a cluster, run:
+                        local comment_id
+                        comment_id=$(gh api repos/${{github.repository}}/issues/"${PR_NUMBER}"/comments \
+                            --jq ".[] | select(.body | contains(\"${marker}\")) | .id" | head -1)
+
+                        if [ -n "${comment_id}" ]
+                        then
+                            gh api repos/${{github.repository}}/issues/comments/"${comment_id}" \
+                                --method PATCH \
+                                -f body="$(cat "${body_file}")"
+                        else
+                            gh pr comment "${PR_NUMBER}" --body-file "${body_file}"
+                        fi
+                    }
+
+                    cat > /tmp/gcp-comment.md << EOF
+                    <!-- argocd-gcp-charts -->
+                    ## GCP Helm Charts
+
+                    Charts for this PR are available at \`${REGISTRY}\`. To test on a GCP cluster, run:
 
                     \`\`\`bash
                     ARGOCD_NS=\$(kubectl get pods -A -l app.kubernetes.io/name=argocd-server -o jsonpath='{.items[0].metadata.namespace}')
@@ -51,7 +70,6 @@ jobs:
                     kubectl patch appproject liferay-application -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
                     kubectl patch appproject liferay-infrastructure -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
 
-                    # GCP — update ApplicationSets and Application to use PR charts
                     kubectl patch applicationset liferay-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
                       {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${GCP_VERSION}"},
@@ -67,8 +85,22 @@ jobs:
                       {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${GCP_INFRA_PROVIDER_VERSION}"},
                       {"op":"replace","path":"/spec/sources/0/chart","value":"liferay-gcp-infrastructure-provider"}
                     ]'
+                    \`\`\`
+                    EOF
 
-                    # AWS — update ApplicationSets and Application to use PR charts
+                    cat > /tmp/aws-comment.md << EOF
+                    <!-- argocd-aws-charts -->
+                    ## AWS Helm Charts
+
+                    Charts for this PR are available at \`${REGISTRY}\`. To test on an AWS cluster, run:
+
+                    \`\`\`bash
+                    ARGOCD_NS=\$(kubectl get pods -A -l app.kubernetes.io/name=argocd-server -o jsonpath='{.items[0].metadata.namespace}')
+
+                    # Permit GHCR in ArgoCD AppProjects (only needed once per cluster)
+                    kubectl patch appproject liferay-application -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
+                    kubectl patch appproject liferay-infrastructure -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
+
                     kubectl patch applicationset liferay-aws-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
                       {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${AWS_VERSION}"},
@@ -87,8 +119,8 @@ jobs:
                     \`\`\`
                     EOF
 
-                    gh pr comment "${PR_NUMBER}" --edit-last --body-file /tmp/pr-comment.md 2>/dev/null || \
-                        gh pr comment "${PR_NUMBER}" --body-file /tmp/pr-comment.md
+                    _upsert_comment "argocd-gcp-charts" /tmp/gcp-comment.md
+                    _upsert_comment "argocd-aws-charts" /tmp/aws-comment.md
     delete-packages-pr:
         if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
         runs-on: ubuntu-latest

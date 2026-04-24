@@ -5,11 +5,49 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.search.query.QueryVisitor;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface TermQuery extends Query {
+public class TermQuery extends BaseQueryImpl {
 
-	public QueryTerm getQueryTerm();
+	public TermQuery(QueryTerm queryTerm) {
+		_queryTerm = queryTerm;
+	}
+
+	public TermQuery(String field, String value) {
+		this(new QueryTerm(field, value));
+	}
+
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visitQuery(this);
+	}
+
+	public QueryTerm getQueryTerm() {
+		return _queryTerm;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", queryTerm=");
+		sb.append(_queryTerm);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private final QueryTerm _queryTerm;
 
 }

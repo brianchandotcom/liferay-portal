@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactory;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 
@@ -29,7 +30,7 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 		String field, String value, BooleanClauseOccur booleanClauseOccur) {
 
 		return new BooleanClause<>(
-			new TermQueryImpl(field, value), booleanClauseOccur);
+			new TermQuery(field, value), booleanClauseOccur);
 	}
 
 	@Override

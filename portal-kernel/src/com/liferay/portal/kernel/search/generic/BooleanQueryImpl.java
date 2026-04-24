@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.search.BaseBooleanQueryImpl;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryTerm;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.query.FieldQueryFactoryUtil;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
@@ -93,10 +95,10 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public Query addExactTerm(String field, String value) {
-		TermQueryImpl termQueryImpl = new TermQueryImpl(
+		TermQuery termQuery = new TermQuery(
 			new QueryTerm(field, String.valueOf(value)));
 
-		return add(termQueryImpl, BooleanClauseOccur.SHOULD);
+		return add(termQuery, BooleanClauseOccur.SHOULD);
 	}
 
 	@Override

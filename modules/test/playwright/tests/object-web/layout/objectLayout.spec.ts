@@ -32,6 +32,144 @@ export const test = mergeTests(
 );
 
 test.describe('Manage custom layouts through object layout tab', () => {
+	test('can add a block to a layout', async ({
+		apiHelpers,
+		objectLayoutsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+		const blockName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutTab(getRandomString());
+
+		await objectLayoutsPage.createObjectLayoutBlock({
+			objectLayoutRegularBlockName: blockName,
+		});
+
+		await expect(
+			objectLayoutsPage.iframeLocator.getByText(blockName)
+		).toBeVisible();
+	});
+
+	test('can add a field to the second column of a block', async ({
+		apiHelpers,
+		objectLayoutsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutTab(getRandomString());
+
+		await objectLayoutsPage.createObjectLayoutBlock({
+			objectLayoutRegularBlockName: getRandomString(),
+		});
+
+		await objectLayoutsPage.openObjectLayoutObjectField();
+
+		await objectLayoutsPage.addObjectLayoutObjectField('textField', 2);
+
+		await expect(
+			objectLayoutsPage.layoutTabPanel.getByText('textField')
+		).toBeVisible();
+	});
+
+	test('can add a field to the third column of a block', async ({
+		apiHelpers,
+		objectLayoutsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutTab(getRandomString());
+
+		await objectLayoutsPage.createObjectLayoutBlock({
+			objectLayoutRegularBlockName: getRandomString(),
+		});
+
+		await objectLayoutsPage.openObjectLayoutObjectField();
+
+		await objectLayoutsPage.addObjectLayoutObjectField('textField', 3);
+
+		await expect(
+			objectLayoutsPage.layoutTabPanel.getByText('textField')
+		).toBeVisible();
+	});
+
+	test('can add a tab of type Fields', async ({
+		apiHelpers,
+		objectLayoutsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+		const tabName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutTab(tabName);
+
+		await expect(
+			objectLayoutsPage.iframeLocator.getByText(tabName)
+		).toBeVisible();
+	});
+
 	test('can add seo block when creating its layout', async ({
 		apiHelpers,
 		objectLayoutsPage,
@@ -99,6 +237,48 @@ test.describe('Manage custom layouts through object layout tab', () => {
 				'entry-a-friendlyurl'
 			);
 		});
+	});
+
+	test('can cancel an in-progress layout update', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await page.getByRole('link', {name: objectLayoutName}).click();
+
+		await objectLayoutsPage.iframeLocator
+			.getByRole('tab', {name: 'Info'})
+			.click();
+
+		await objectLayoutsPage.iframeLocator
+			.getByRole('textbox')
+			.fill('Layout Updated');
+
+		await objectLayoutsPage.iframeLocator
+			.getByRole('button', {name: 'Cancel'})
+			.first()
+			.click();
+
+		await page.reload();
+
+		await expect(page.getByText(objectLayoutName).first()).toBeVisible();
+		await expect(page.getByText('Layout Updated')).toBeHidden();
 	});
 
 	test('can create, read, update and delete relationship child entry when selected', async ({
@@ -341,65 +521,60 @@ test.describe('Manage custom layouts through object layout tab', () => {
 		});
 	});
 
-	test('can view all fields of an object when creating its layout', async ({
+	test('can delete a field from a layout', async ({
 		apiHelpers,
 		objectLayoutsPage,
 		page,
 	}) => {
-		const objectFields = getRandomObjectFieldText({
-			objectFieldsQuantity: 20,
-		});
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
 				status: {code: 0},
 			});
 
-		const objectLayoutName = getRandomString();
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await objectLayoutsPage.goto(objectDefinition.name);
 
+		const objectLayoutName = getRandomString();
+
 		await objectLayoutsPage.createObjectLayout(objectLayoutName);
 
-		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
-
-		await objectLayoutsPage.createObjectLayoutTab(getRandomString());
-
-		await objectLayoutsPage.createObjectLayoutBlock({
+		await objectLayoutsPage.createObjectLayoutContent({
+			objectFieldNames: ['textField'],
+			objectLayoutName,
 			objectLayoutRegularBlockName: getRandomString(),
+			objectLayoutTabName: getRandomString(),
 		});
 
-		await objectLayoutsPage.openObjectLayoutObjectField();
+		await objectLayoutsPage.iframeLocator.getByText('textField').hover();
 
-		objectFields.forEach(({label}) => {
-			expect(
-				page
-					.frameLocator('iframe')
-					.getByRole('option', {name: label.en_US})
-			).toBeVisible();
-		});
+		await page
+			.frameLocator('iframe')
+			.getByLabel('More Actions')
+			.nth(2)
+			.click();
 
-		// Clean up
+		await page
+			.frameLocator('iframe')
+			.getByRole('menuitem', {name: 'Delete'})
+			.click();
 
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		await objectDefinitionAPIClient.deleteObjectDefinition(
-			objectDefinition.id
-		);
+		await expect(
+			objectLayoutsPage.iframeLocator.getByText('textField')
+		).toBeHidden();
 	});
 
-	test('can view entries with custom layout created', async ({
+	test('can delete a layout', async ({
 		apiHelpers,
 		objectLayoutsPage,
 		page,
-		viewObjectEntriesPage,
 	}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
-				titleObjectFieldName: 'textField',
 			});
 
 		apiHelpers.data.push({
@@ -407,231 +582,84 @@ test.describe('Manage custom layouts through object layout tab', () => {
 			type: 'objectDefinition',
 		});
 
-		const blockName = getRandomString();
-
-		await test.step('create layout and set it as default', async () => {
-			await objectLayoutsPage.goto(objectDefinition.name);
-
-			const objectLayoutName = getRandomString();
-
-			await objectLayoutsPage.createObjectLayout(objectLayoutName);
-
-			await objectLayoutsPage.createObjectLayoutContent({
-				objectFieldNames: ['textField'],
-				objectLayoutName,
-				objectLayoutRegularBlockName: blockName,
-				objectLayoutTabName: getRandomString(),
-			});
-
-			await objectLayoutsPage.setObjectLayoutAsDefault();
-
-			await page
-				.frameLocator('iframe')
-				.getByRole('button', {name: 'Save'})
-				.first()
-				.click();
-		});
-
-		await test.step('add object entry and assert that blockname is visible', async () => {
-			await viewObjectEntriesPage.goto(objectDefinition.className);
-
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
-
-			await viewObjectEntriesPage.fillObjectEntry({
-				objectFieldBusinessType: 'Text',
-				objectFieldLabel: 'textField',
-				objectFieldValue: 'Entry A',
-			});
-
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-			await waitForAlert(page);
-
-			await viewObjectEntriesPage.backButton.click();
-
-			await page.waitForLoadState('networkidle');
-
-			await page
-				.getByRole('row', {name: 'Entry A'})
-				.getByRole('link')
-				.click();
-
-			await expect(
-				page.locator('label').filter({hasText: blockName})
-			).toBeVisible();
-
-			await expect(page.getByLabel('textField')).toBeVisible();
-		});
-	});
-
-	test(
-		'cannot save layout as default when other is already set',
-		{tag: ['@LPS-165850']},
-		async ({apiHelpers, objectLayoutsPage, page}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await objectLayoutsPage.goto(objectDefinition.name);
-
-			await objectLayoutsPage.goto(objectDefinition.label.en_US);
-
-			const objectLayout1Name = getRandomString();
-
-			await objectLayoutsPage.createObjectLayout(objectLayout1Name);
-
-			await objectLayoutsPage.createObjectLayoutContent({
-				objectFieldNames: [objectFields[0].label.en_US],
-				objectLayoutName: objectLayout1Name,
-				objectLayoutRegularBlockName: getRandomString(),
-				objectLayoutTabName: getRandomString(),
-			});
-
-			await objectLayoutsPage.setObjectLayoutAsDefault();
-
-			await page
-				.frameLocator('iframe')
-				.getByRole('button', {name: 'Save'})
-				.first()
-				.click();
-
-			const objectLayout2Name = getRandomString();
-
-			await objectLayoutsPage.createObjectLayout(objectLayout2Name);
-
-			await objectLayoutsPage.createObjectLayoutContent({
-				objectFieldNames: [objectFields[0].label.en_US],
-				objectLayoutName: objectLayout2Name,
-				objectLayoutRegularBlockName: getRandomString(),
-				objectLayoutTabName: getRandomString(),
-			});
-
-			await objectLayoutsPage.setObjectLayoutAsDefault();
-
-			await page
-				.frameLocator('iframe')
-				.getByRole('button', {name: 'Save'})
-				.first()
-				.click();
-
-			await waitForAlert(
-				page,
-				'Error:There can only be one default object layout',
-				{type: 'danger'}
-			);
-		}
-	);
-
-	test('seo and categorization blocks can be added and removed from layout', async ({
-		apiHelpers,
-		objectLayoutsPage,
-		page,
-		viewObjectEntriesPage,
-	}) => {
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				enableFriendlyURLCustomization: true,
-				status: {code: 0},
-				titleObjectFieldName: 'textField',
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+		await objectLayoutsPage.goto(objectDefinition.name);
 
 		const objectLayoutName = getRandomString();
 
-		await test.step('create layout with SEO and Categorization collapsible blocks and set it as default', async () => {
-			await objectLayoutsPage.goto(objectDefinition.name);
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
 
-			await objectLayoutsPage.createObjectLayout(objectLayoutName);
+		await page
+			.getByRole('row')
+			.filter({hasText: objectLayoutName})
+			.locator('.dropdown-toggle')
+			.click();
 
-			await objectLayoutsPage.createObjectLayoutContent({
-				hasCategorizationBlock: true,
-				hasSeoBlock: true,
-				objectFieldNames: ['textField'],
-				objectLayoutName,
-				objectLayoutRegularBlockName: getRandomString(),
-				objectLayoutTabName: getRandomString(),
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await waitForAlert(page);
+
+		await expect(page.getByText(objectLayoutName)).toBeHidden();
+	});
+
+	test("can update a layout's name", async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
 			});
 
-			await objectLayoutsPage.toggleCollapsible('Categorization');
-
-			await objectLayoutsPage.toggleCollapsible('SEO');
-
-			await objectLayoutsPage.setObjectLayoutAsDefault();
-
-			await page
-				.frameLocator('iframe')
-				.getByRole('button', {name: 'Save'})
-				.first()
-				.click();
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
 		});
 
-		await test.step('verify SEO and Categorization blocks are visible and collapsible', async () => {
-			await viewObjectEntriesPage.goto(objectDefinition.className);
+		await objectLayoutsPage.goto(objectDefinition.name);
 
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
+		const objectLayoutName = getRandomString();
 
-			await expect(
-				page.getByRole('button', {name: 'Categorization'})
-			).toBeVisible();
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
 
-			await expect(page.getByRole('button', {name: 'SEO'})).toBeVisible();
+		await objectLayoutsPage.createObjectLayoutContent({
+			objectFieldNames: ['textField'],
+			objectLayoutName,
+			objectLayoutRegularBlockName: getRandomString(),
+			objectLayoutTabName: getRandomString(),
 		});
 
-		await test.step('edit layout and remove SEO and Categorization blocks', async () => {
-			await objectLayoutsPage.goto(objectDefinition.name);
+		await objectLayoutsPage.setObjectLayoutAsDefault();
 
-			await page.getByRole('link', {name: objectLayoutName}).click();
+		await objectLayoutsPage.iframeLocator
+			.getByRole('button', {name: 'Save'})
+			.first()
+			.click();
 
-			await objectLayoutsPage.layoutTab.click();
+		await waitForAlert(page, 'The object layout was updated successfully');
 
-			const frame = page.locator('iframe').contentFrame();
-			const itemsToDelete = 2;
+		await page.getByRole('link', {name: objectLayoutName}).click();
 
-			for (let i = 0; i < itemsToDelete; i++) {
-				await frame
-					.getByRole('button', {name: 'More Actions'})
-					.last()
-					.click();
-				await frame.getByRole('menuitem', {name: 'Delete'}).click();
-			}
+		await objectLayoutsPage.iframeLocator
+			.getByRole('tab', {name: 'Info'})
+			.click();
 
-			await objectLayoutsPage.saveUpdateLayoutButton.click();
-		});
+		const updatedObjectLayoutName = getRandomString();
 
-		await test.step('verify that blocks are not visible anymore', async () => {
-			await viewObjectEntriesPage.goto(objectDefinition.className);
+		await objectLayoutsPage.iframeLocator
+			.getByRole('textbox')
+			.fill(updatedObjectLayoutName);
 
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
+		await objectLayoutsPage.iframeLocator
+			.getByRole('button', {name: 'Save'})
+			.first()
+			.click();
 
-			await expect(
-				page.getByRole('button', {name: 'Categorization'})
-			).not.toBeVisible();
+		await waitForAlert(page, 'The object layout was updated successfully');
 
-			await expect(
-				page.getByRole('button', {name: 'SEO'})
-			).not.toBeVisible();
-		});
+		await expect(
+			page.getByText(updatedObjectLayoutName).first()
+		).toBeVisible();
 	});
 
 	test('can update an entry on the relationship tab with update permission', async ({
@@ -792,6 +820,303 @@ test.describe('Manage custom layouts through object layout tab', () => {
 		).toBeVisible();
 	});
 
+	test('can view all fields of an object when creating its layout', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+	}) => {
+		const objectFields = getRandomObjectFieldText({
+			objectFieldsQuantity: 20,
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutTab(getRandomString());
+
+		await objectLayoutsPage.createObjectLayoutBlock({
+			objectLayoutRegularBlockName: getRandomString(),
+		});
+
+		await objectLayoutsPage.openObjectLayoutObjectField();
+
+		objectFields.forEach(({label}) => {
+			expect(
+				page
+					.frameLocator('iframe')
+					.getByRole('option', {name: label.en_US})
+			).toBeVisible();
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			objectDefinition.id
+		);
+	});
+
+	test('can view entries with custom layout created', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const blockName = getRandomString();
+
+		await test.step('create layout and set it as default', async () => {
+			await objectLayoutsPage.goto(objectDefinition.name);
+
+			const objectLayoutName = getRandomString();
+
+			await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+			await objectLayoutsPage.createObjectLayoutContent({
+				objectFieldNames: ['textField'],
+				objectLayoutName,
+				objectLayoutRegularBlockName: blockName,
+				objectLayoutTabName: getRandomString(),
+			});
+
+			await objectLayoutsPage.setObjectLayoutAsDefault();
+
+			await page
+				.frameLocator('iframe')
+				.getByRole('button', {name: 'Save'})
+				.first()
+				.click();
+		});
+
+		await test.step('add object entry and assert that blockname is visible', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldBusinessType: 'Text',
+				objectFieldLabel: 'textField',
+				objectFieldValue: 'Entry A',
+			});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page);
+
+			await viewObjectEntriesPage.backButton.click();
+
+			await page.waitForLoadState('networkidle');
+
+			await page
+				.getByRole('row', {name: 'Entry A'})
+				.getByRole('link')
+				.click();
+
+			await expect(
+				page.locator('label').filter({hasText: blockName})
+			).toBeVisible();
+
+			await expect(page.getByLabel('textField')).toBeVisible();
+		});
+	});
+
+	test('cannot add a Relationship tab as the first tab', async ({
+		apiHelpers,
+		objectLayoutsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
+
+		await objectLayoutsPage.addTab.click();
+
+		await expect(
+			objectLayoutsPage.iframeLocator.getByRole('menuitem', {
+				name: 'Relationship Tab',
+			})
+		).toBeHidden();
+	});
+
+	test('cannot add a Relationship tab to an object without relationships', async ({
+		apiHelpers,
+		objectLayoutsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutTab(getRandomString());
+
+		await objectLayoutsPage.addTab.click();
+
+		await expect(
+			objectLayoutsPage.iframeLocator.getByRole('menuitem', {
+				name: 'Relationship Tab',
+			})
+		).toBeHidden();
+	});
+
+	test(
+		'cannot save layout as default when other is already set',
+		{tag: ['@LPS-165850']},
+		async ({apiHelpers, objectLayoutsPage, page}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await objectLayoutsPage.goto(objectDefinition.name);
+
+			await objectLayoutsPage.goto(objectDefinition.label.en_US);
+
+			const objectLayout1Name = getRandomString();
+
+			await objectLayoutsPage.createObjectLayout(objectLayout1Name);
+
+			await objectLayoutsPage.createObjectLayoutContent({
+				objectFieldNames: [objectFields[0].label.en_US],
+				objectLayoutName: objectLayout1Name,
+				objectLayoutRegularBlockName: getRandomString(),
+				objectLayoutTabName: getRandomString(),
+			});
+
+			await objectLayoutsPage.setObjectLayoutAsDefault();
+
+			await page
+				.frameLocator('iframe')
+				.getByRole('button', {name: 'Save'})
+				.first()
+				.click();
+
+			const objectLayout2Name = getRandomString();
+
+			await objectLayoutsPage.createObjectLayout(objectLayout2Name);
+
+			await objectLayoutsPage.createObjectLayoutContent({
+				objectFieldNames: [objectFields[0].label.en_US],
+				objectLayoutName: objectLayout2Name,
+				objectLayoutRegularBlockName: getRandomString(),
+				objectLayoutTabName: getRandomString(),
+			});
+
+			await objectLayoutsPage.setObjectLayoutAsDefault();
+
+			await page
+				.frameLocator('iframe')
+				.getByRole('button', {name: 'Save'})
+				.first()
+				.click();
+
+			await waitForAlert(
+				page,
+				'Error:There can only be one default object layout',
+				{type: 'danger'}
+			);
+		}
+	);
+
+	test('cannot set a layout as default without the required fields on the first tab', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.openObjectLayoutConfiguration(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutTab(getRandomString());
+
+		await objectLayoutsPage.createObjectLayoutBlock({
+			objectLayoutRegularBlockName: getRandomString(),
+		});
+
+		await objectLayoutsPage.setObjectLayoutAsDefault();
+
+		await objectLayoutsPage.iframeLocator
+			.getByRole('button', {name: 'Save'})
+			.first()
+			.click();
+
+		await expect(
+			page.getByText('Error:Please add at least one field')
+		).toBeVisible();
+	});
+
 	test('cannot update an entry on the relationship tab without update permission', async ({
 		apiHelpers,
 		objectLayoutsPage,
@@ -944,5 +1269,104 @@ test.describe('Manage custom layouts through object layout tab', () => {
 		await expect(page.getByLabel('textField')).toBeDisabled();
 
 		await expect(viewObjectEntriesPage.saveObjectEntryButton).toBeHidden();
+	});
+
+	test('seo and categorization blocks can be added and removed from layout', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				enableFriendlyURLCustomization: true,
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectLayoutName = getRandomString();
+
+		await test.step('create layout with SEO and Categorization collapsible blocks and set it as default', async () => {
+			await objectLayoutsPage.goto(objectDefinition.name);
+
+			await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+			await objectLayoutsPage.createObjectLayoutContent({
+				hasCategorizationBlock: true,
+				hasSeoBlock: true,
+				objectFieldNames: ['textField'],
+				objectLayoutName,
+				objectLayoutRegularBlockName: getRandomString(),
+				objectLayoutTabName: getRandomString(),
+			});
+
+			await objectLayoutsPage.toggleCollapsible('Categorization');
+
+			await objectLayoutsPage.toggleCollapsible('SEO');
+
+			await objectLayoutsPage.setObjectLayoutAsDefault();
+
+			await page
+				.frameLocator('iframe')
+				.getByRole('button', {name: 'Save'})
+				.first()
+				.click();
+		});
+
+		await test.step('verify SEO and Categorization blocks are visible and collapsible', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await expect(
+				page.getByRole('button', {name: 'Categorization'})
+			).toBeVisible();
+
+			await expect(page.getByRole('button', {name: 'SEO'})).toBeVisible();
+		});
+
+		await test.step('edit layout and remove SEO and Categorization blocks', async () => {
+			await objectLayoutsPage.goto(objectDefinition.name);
+
+			await page.getByRole('link', {name: objectLayoutName}).click();
+
+			await objectLayoutsPage.layoutTab.click();
+
+			const frame = page.locator('iframe').contentFrame();
+			const itemsToDelete = 2;
+
+			for (let i = 0; i < itemsToDelete; i++) {
+				await frame
+					.getByRole('button', {name: 'More Actions'})
+					.last()
+					.click();
+				await frame.getByRole('menuitem', {name: 'Delete'}).click();
+			}
+
+			await objectLayoutsPage.saveUpdateLayoutButton.click();
+		});
+
+		await test.step('verify that blocks are not visible anymore', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await expect(
+				page.getByRole('button', {name: 'Categorization'})
+			).not.toBeVisible();
+
+			await expect(
+				page.getByRole('button', {name: 'SEO'})
+			).not.toBeVisible();
+		});
 	});
 });

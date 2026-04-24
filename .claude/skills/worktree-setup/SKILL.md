@@ -51,7 +51,7 @@ liferay-portal-hotfix     →  lportal_hotfix
 liferay-portal            →  lportal (main — never touch)
 ```
 
-Rule: strip `liferay-portal-` prefix, lowercase, replace non-alphanumeric with `_`, collapse consecutive `_`, truncate to 56 characters, prepend `lportal_`.
+Rule: strip `liferay-portal-` prefix, lowercase, replace nonalphanumeric with `_`, collapse consecutive `_`, truncate to 56 characters, prepend `lportal_`.
 
 ## Full Setup
 
@@ -94,7 +94,7 @@ If `ant all` fails, stop and surface the full error to the user — do not conti
 
 1. Parse `app.server.parent.dir`, replacing `${project.dir}` with the repo root
 
-1. Fallback: `<REPO_ROOT>/bundle/`
+1. Fallback: `<REPO_ROOT>/bundle`
 
 1. Find the `tomcat-*` directory inside it
 
@@ -155,7 +155,7 @@ Use `"${SED_INPLACE[@]}" 's/osgi\.console=[0-9]*/osgi.console=<TARGET>/'` to han
 
 These get **wiped on rebuild** — always overwrite.
 
-Detect the Elasticsearch version by checking which configuration file already exists in `<BUNDLE>/osgi/configs/`:
+Detect the Elasticsearch version by checking which configuration file already exists in `<BUNDLE>/osgi/configs`:
 - `com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config` → elasticsearch8
 - `com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config` → elasticsearch7
 - Neither exists → default to elasticsearch8
@@ -227,7 +227,7 @@ If existing JDBC properties exist, read the username/password from them before r
 **Always** attempt to create the database (even on reruns):
 
 ```bash
-mysql --user root --execute 'CREATE DATABASE IF NOT EXISTS <DB_NAME> CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;'
+mysql --execute 'CREATE DATABASE IF NOT EXISTS <DB_NAME> CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;' --user root
 ```
 
 If `mysql` CLI is unavailable or fails, print the command for the user to run manually. Show errors — never swallow them with `2>/dev/null`.
@@ -319,7 +319,7 @@ Resolve the worktree's absolute path from `git worktree list --porcelain` output
 <BUNDLE>/tomcat-*/bin/catalina.sh stop
 
 # 2. Drop the database
-mysql --user root --execute 'DROP DATABASE IF EXISTS <DB_NAME>;'
+mysql --execute 'DROP DATABASE IF EXISTS <DB_NAME>;' --user root
 
 # 3. Remove the worktree (use absolute path from git worktree list)
 git worktree remove <ABSOLUTE_WORKTREE_PATH>

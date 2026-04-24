@@ -34,38 +34,38 @@ Logs are available at `<bundles>/logs/liferay.<yyyy-MM-dd>.log`. Check them when
 
 - **Most modules** — the default:
 
-    ```bash
-    cd <module-root> && <gradlew> deploy
-    ```
+	```bash
+	cd <module-root> && <gradlew> deploy
+	```
 
 - **Portal modules** (`portal-kernel`, `portal-impl`, `portal-test`):
 
-    ```bash
-    cd <module-root> && ant deploy install-portal-snapshot
-    ```
-    For `portal-test`, also copy the built jar into the bundle:
+	```bash
+	cd <module-root> && ant deploy install-portal-snapshot
+	```
+	For `portal-test`, also copy the built jar into the bundle:
 
-    ```bash
-    cp <bundles>/osgi/test/com.liferay.portal.test.jar <bundles>/osgi/modules
-    ```
-    These require restarting the server.
+	```bash
+	cp <bundles>/osgi/test/com.liferay.portal.test.jar <bundles>/osgi/modules
+	```
+	These require restarting the server.
 
 - **`*-test-util` modules**:
 
-    ```bash
-    cd <module-root> && <gradlew> deploy
-    ```
+	```bash
+	cd <module-root> && <gradlew> deploy
+	```
 
-    Then copy the resulting `com.liferay.<name>.test.util.jar` from `<bundles>/osgi/test` to `<bundles>/osgi/modules`.
+	Then copy the resulting `com.liferay.<name>.test.util.jar` from `<bundles>/osgi/test` to `<bundles>/osgi/modules`.
 
 - **Gradle plugin modules** (under `modules/sdk/gradle-plugins*`):
 
-    ```bash
-    cd <module-root> && <gradlew> installCache updateFileVersions
-    cd <repo-root>/modules/sdk/gradle-plugins && <gradlew> installCache updateFileVersions
-    cd <repo-root>/modules/sdk/gradle-plugins-defaults && <gradlew> installCache updateFileVersions
-    cd <repo-root> && ant setup-sdk
-    ```
+	```bash
+	cd <module-root> && <gradlew> installCache updateFileVersions
+	cd <repo-root>/modules/sdk/gradle-plugins && <gradlew> installCache updateFileVersions
+	cd <repo-root>/modules/sdk/gradle-plugins-defaults && <gradlew> installCache updateFileVersions
+	cd <repo-root> && ant setup-sdk
+	```
 
 ### Test
 
@@ -101,17 +101,17 @@ cd <module-root> && <gradlew> testIntegration --tests <TestClassName>
 Functional tests are a last resort, reserved for complete UI flows that cannot be covered at a lower level.
 
 - **Playwright**
-    Tests live under `modules/test/playwright/tests/<component>/<variant>`, and each variant is a project in `modules/test/playwright/playwright.config.ts`:
+	Tests live under `modules/test/playwright/tests/<component>/<variant>`, and each variant is a project in `modules/test/playwright/playwright.config.ts`:
 
-    ```bash
-    cd <repo-root>/modules/test/playwright && yarn test <test-file-path>
-    ```
+	```bash
+	cd <repo-root>/modules/test/playwright && yarn test <test-file-path>
+	```
 - **Poshi**
-    Poshi is a legacy tool kept only for maintenance:
+	Poshi is a legacy tool kept only for maintenance:
 
-    ```bash
-    cd <repo-root> && HOSTNAME=localhost ant -buildfile build-test.xml run-selenium-test -Dtest.class=<TestClassName>
-    ```
+	```bash
+	cd <repo-root> && HOSTNAME=localhost ant -buildfile build-test.xml run-selenium-test -Dtest.class=<TestClassName>
+	```
 
 ### Format Source
 

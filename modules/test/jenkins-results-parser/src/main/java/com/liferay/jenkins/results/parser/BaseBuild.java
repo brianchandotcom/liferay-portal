@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3392,6 +3393,18 @@ public abstract class BaseBuild implements Build {
 		return jenkinsReportTableRowElements;
 	}
 
+	private String _getSuiteClassName(JSONObject suiteJSONObject) {
+		JSONArray casesJSONArray = suiteJSONObject.optJSONArray("cases");
+
+		if ((casesJSONArray == null) || casesJSONArray.isEmpty()) {
+			return suiteJSONObject.getString("name");
+		}
+
+		JSONObject caseJSONObject = casesJSONArray.getJSONObject(0);
+
+		return caseJSONObject.getString("className");
+	}
+
 	private synchronized void _initTestClassResults() {
 		if (!isCompleted() || (_testClassResults != null)) {
 			return;
@@ -3442,17 +3455,58 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
+		Map<String, JSONObject> mergedSuiteJSONObjects = new LinkedHashMap<>();
+
 		for (JSONArray suitesJSONArray : suitesJSONArrays) {
 			for (int i = 0; i < suitesJSONArray.length(); i++) {
 				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
 
-				TestClassResult testClassResult =
-					TestClassResultFactory.newTestClassResult(
-						this, suiteJSONObject);
+				String suiteClassName = _getSuiteClassName(suiteJSONObject);
 
-				_testClassResults.put(
-					testClassResult.getClassName(), testClassResult);
+				JSONObject mergedSuiteJSONObject = mergedSuiteJSONObjects.get(
+					suiteClassName);
+
+				if (mergedSuiteJSONObject == null) {
+					mergedSuiteJSONObject = new JSONObject();
+
+					mergedSuiteJSONObject.put(
+						"cases", new JSONArray()
+					).put(
+						"duration", 0
+					).put(
+						"name", suiteJSONObject.opt("name")
+					);
+
+					mergedSuiteJSONObjects.put(
+						suiteClassName, mergedSuiteJSONObject);
+				}
+
+				JSONArray casesJSONArray = suiteJSONObject.optJSONArray(
+					"cases");
+
+				if (casesJSONArray != null) {
+					JSONArray mergedCasesJSONArray =
+						mergedSuiteJSONObject.getJSONArray("cases");
+
+					for (int j = 0; j < casesJSONArray.length(); j++) {
+						mergedCasesJSONArray.put(casesJSONArray.get(j));
+					}
+				}
+
+				mergedSuiteJSONObject.put(
+					"duration",
+					mergedSuiteJSONObject.optDouble("duration", 0) +
+						suiteJSONObject.optDouble("duration", 0));
 			}
+		}
+
+		for (JSONObject suiteJSONObject : mergedSuiteJSONObjects.values()) {
+			TestClassResult testClassResult =
+				TestClassResultFactory.newTestClassResult(
+					this, suiteJSONObject);
+
+			_testClassResults.put(
+				testClassResult.getClassName(), testClassResult);
 		}
 	}
 

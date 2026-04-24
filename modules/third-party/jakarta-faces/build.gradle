@@ -12,26 +12,23 @@ dependencies {
 	compileOnly group: "com.liferay", name: "jakarta.faces", transitive: false, version: "2.3.21.LIFERAY-PATCHED-4"
 }
 
-// TODO SF this very ugly block
-
 jar {
 	doLast {
 		File jarFile = archiveFile.get().asFile
 		File tempDir = file("$buildDir/tmp/jarExtract")
 
 		copy {
-			from zipTree(jarFile)
-			into tempDir
-
-			includeEmptyDirs = false
-
 			eachFile {
 				if (it.path.contains("javax.faces")) {
 					it.path = it.path.replace("javax.faces", "jakarta.faces")
 				}
 			}
+
+			from zipTree(jarFile)
+			includeEmptyDirs = false
+			into tempDir
 		}
 
-		ant.jar(destfile: jarFile, basedir: tempDir, manifest: file("$tempDir/META-INF/MANIFEST.MF"))
+		ant.jar(basedir: tempDir, destfile: jarFile, manifest: file("$tempDir/META-INF/MANIFEST.MF"))
 	}
 }

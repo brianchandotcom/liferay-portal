@@ -13,6 +13,7 @@ import {getCMSItemSelectorGroupedFilters} from '@liferay/frontend-js-item-select
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import SharedIcon from '../../common/components/SharedIcon';
 import StatusLabel from '../../common/components/StatusLabel';
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
@@ -273,6 +274,17 @@ export default function AssetsFDSPropsTransformer({
 									});
 								}}
 								options={options}
+								trailingIcon={
+									itemData?.embedded?.systemProperties
+										?.collaboratorBrief && (
+										<SharedIcon
+											className="c-ml-2"
+											spaceName={
+												itemData?.embedded?.scopeKey
+											}
+										/>
+									)
+								}
 								value={value}
 							/>
 						);
